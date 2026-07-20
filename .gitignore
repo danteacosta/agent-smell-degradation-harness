@@ -4,3 +4,9 @@ __pycache__/
 *.pyc
 .env
 .worktrees/
+.venv/
+*.egg-info/
+
+eval/last_run.json
+eval/traces/
+eval/sim_report.json
