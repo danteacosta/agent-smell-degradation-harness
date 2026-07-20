@@ -10,5 +10,5 @@ gate:
 analysis:
 	python -m eval.analysis_report
 experiment:
-	@echo "make experiment is Tier 2 (live LLM); not enabled in Tier 1"
+	python -m eval.experiment
 all: test eval simulate gate
