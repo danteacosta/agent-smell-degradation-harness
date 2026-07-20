@@ -20,6 +20,7 @@ def prepare_requirement(
     pair: dict[str, Any],
     variant: str,
     policy: str,
+    rewrite_mode: str = "oracle",
 ) -> PreparedRequirement:
     if variant == "clean":
         return PreparedRequirement(
@@ -36,7 +37,11 @@ def prepare_requirement(
         )
 
     if policy == "rewrite":
-        rewritten = rewrite_requirement(pair["smelly_requirement"], pair)
+        rewritten = rewrite_requirement(
+            pair["smelly_requirement"],
+            pair,
+            mode=rewrite_mode,  # type: ignore[arg-type]
+        )
         detection = detect_smell(pair["smelly_requirement"], pair["smell"])
         return PreparedRequirement(
             text=rewritten.text,
@@ -44,6 +49,7 @@ def prepare_requirement(
             mitigation_meta={
                 "rewrite_changed": rewritten.changed,
                 "rewrite_char_delta": len(rewritten.text) - len(pair["smelly_requirement"]),
+                "rewrite_mode": rewrite_mode,
                 "smell_type": detection.smell_type,
             },
             generation_variant="clean",
