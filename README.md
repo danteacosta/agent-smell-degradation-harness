@@ -1,6 +1,6 @@
 # Agent Smell Degradation Harness
 
-Offline twin of [`rag-reliability-harness`](https://github.com/example/rag-reliability-harness) for measuring requirement-smell-induced semantic degradation in LLM agent episodes.
+Offline twin of [`rag-reliability-harness`](https://github.com/danteacosta/rag-reliability-harness) for measuring requirement-smell-induced semantic degradation in LLM agent episodes.
 
 [![eval-gate](.github/workflows/eval.yml/badge.svg)](.github/workflows/eval.yml)
 

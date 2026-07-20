@@ -1,7 +1,7 @@
 # Sister harness interop
 
 This repo (`agent-smell-degradation-harness`) is a **sister harness** to
-[`rag-reliability-harness`](https://github.com/example/rag-reliability-harness).
+[`rag-reliability-harness`](https://github.com/danteacosta/rag-reliability-harness).
 They share **documented contracts**, not runtime code.
 
 ## Boundary
