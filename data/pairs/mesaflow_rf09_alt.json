@@ -1,0 +1,18 @@
+{
+  "intent_id": "RF-09-ALT",
+  "clean_requirement": "Flag new orders as delayed once they exceed 5 minutes waiting.",
+  "smelly_requirement": "Flag new orders delayed after a while.",
+  "smell": {
+    "category": "semantic",
+    "type": "vague_threshold",
+    "injection_rule": "replace exact threshold with vague temporal phrase"
+  },
+  "oracle_spec": {
+    "codegen": {"delay_threshold_minutes": 5, "comparator": ">"},
+    "test_gen": {
+      "must_reject_minutes": [0, 5],
+      "must_accept_minutes": [6],
+      "criterion": "delay_minutes > 5"
+    }
+  }
+}

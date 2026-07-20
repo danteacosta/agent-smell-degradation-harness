@@ -1,0 +1,17 @@
+{
+  "intent_id": "RF-13-SOFT",
+  "clean_requirement": "Display exactly the 5 oldest active orders",
+  "smelly_requirement": "Display several of the oldest active orders",
+  "smell": {
+    "category": "semantic",
+    "type": "cardinality_ambiguity",
+    "injection_rule": "replace exact count with soft quantity phrasing"
+  },
+  "oracle_spec": {
+    "codegen": {"cardinality": 5, "selection": "oldest_active"},
+    "test_gen": {
+      "exact_cardinality": 5,
+      "criterion": "display exactly 5 oldest active orders"
+    }
+  }
+}
