@@ -7,6 +7,7 @@ from typing import Any
 from agents.stub import StubAgent
 from eval.metrics import aggregate_metrics
 from eval.oracles import score_artifact
+from mitigation.pipeline import prepare_requirement
 from observability.tracing import ProvenanceRecorder
 from pairs.loader import load_all_pairs
 from taxonomy.label import label_degradation
@@ -26,18 +27,23 @@ def _run_episode(
     agent: StubAgent,
     traces_dir: Path,
     skip_semantic_provenance: bool,
+    policy: str,
 ) -> dict[str, Any]:
     intent_id = pair["intent_id"]
     episode_id = _episode_id(intent_id, task_family, variant)
     trace_path = traces_dir / f"{episode_id}.jsonl"
 
-    requirement_text = (
-        pair["clean_requirement"] if variant == "clean" else pair["smelly_requirement"]
-    )
+    prepared = prepare_requirement(pair, variant=variant, policy=policy)
+    requirement_text = prepared.text
+    generation_variant = prepared.generation_variant
     smell = None if variant == "clean" else pair["smell"]
     smell_type = "" if variant == "clean" else pair["smell"]["type"]
 
-    artifact = agent.generate(pair, variant=variant, task_family=task_family)
+    artifact = agent.generate(
+        pair,
+        variant=generation_variant,
+        task_family=task_family,
+    )
     oracle_spec = pair["oracle_spec"][task_family]
     oracle_result = score_artifact(intent_id, task_family, artifact, oracle_spec)
     semantic_label = "ok" if oracle_result.passed else "degraded"
@@ -63,6 +69,8 @@ def _run_episode(
         "task_family": task_family,
         "smell": smell,
         "requirement_text": requirement_text,
+        "policy": policy,
+        "mitigation_meta": prepared.mitigation_meta,
         "artifact": artifact,
         "oracle_passed": oracle_result.passed,
         "semantic_label": semantic_label,
@@ -82,6 +90,7 @@ def _write_episodes_jsonl(episodes: list[dict[str, Any]], path: Path) -> None:
 def run_eval(
     *,
     failure_mode: str | None = None,
+    policy: str = "direct",
     skip_semantic_provenance: bool = False,
     output_path: Path,
     traces_dir: Path,
@@ -102,6 +111,7 @@ def run_eval(
                         agent,
                         traces_dir,
                         skip_semantic_provenance,
+                        policy,
                     )
                 )
 
