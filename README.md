@@ -85,6 +85,19 @@ Tier 3 adds offline rewrite/clarify mitigation policies, an H5 trade-off report,
 
 Mitigation policies (`rewrite`, `clarify`) run before stub generation on smelly variants; the trade-off report records benefit vs overhead but does **not** claim mitigation is always positive. Export guide: [docs/dissertation/README.md](docs/dissertation/README.md).
 
+## Pre-experiment tooling
+
+Offline preflight before live LLM runs (secret-free; default CI unchanged):
+
+| Command | Purpose |
+|---------|---------|
+| `make dry-run` | Write `runs/<run_id>/manifest.json` and `prompts/*.txt` with no API calls |
+| `python -m eval.experiment --mock-live` | Exercise `LiveAgent` + `MockTransport` under `runs/` |
+| `python -m eval.thesis_analysis --episodes PATH` | H1 paired-degradation tables and negative-boundary flags |
+| `make thesis-analysis` | Analyze `eval/last_run_episodes.jsonl` after `make eval` |
+
+Pair loading validates schema; oracle scoring is tolerant of extra artifact keys. IRR utilities live in `protocol/irr.py` with annotation templates under `data/annotation/`. Mitigation `rewrite` supports `mode=template` to reconstruct requirements from oracle specs instead of copying clean text verbatim.
+
 ## Design & sister harness
 
 - Full design spec: [docs/superpowers/specs/2026-07-20-agent-smell-degradation-harness-design.md](docs/superpowers/specs/2026-07-20-agent-smell-degradation-harness-design.md)
