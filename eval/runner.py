@@ -9,6 +9,7 @@ from eval.metrics import aggregate_metrics
 from eval.oracles import score_artifact
 from observability.tracing import ProvenanceRecorder
 from pairs.loader import load_all_pairs
+from taxonomy.label import label_degradation
 
 TASK_FAMILIES = ("codegen", "test_gen")
 VARIANTS = ("clean", "smelly")
@@ -30,10 +31,22 @@ def _run_episode(
     episode_id = _episode_id(intent_id, task_family, variant)
     trace_path = traces_dir / f"{episode_id}.jsonl"
 
+    requirement_text = (
+        pair["clean_requirement"] if variant == "clean" else pair["smelly_requirement"]
+    )
+    smell = None if variant == "clean" else pair["smell"]
+    smell_type = "" if variant == "clean" else pair["smell"]["type"]
+
     artifact = agent.generate(pair, variant=variant, task_family=task_family)
     oracle_spec = pair["oracle_spec"][task_family]
     oracle_result = score_artifact(intent_id, task_family, artifact, oracle_spec)
     semantic_label = "ok" if oracle_result.passed else "degraded"
+    degradation = label_degradation(
+        intent_id=intent_id,
+        smell_type=smell_type,
+        oracle_passed=oracle_result.passed,
+        task_family=task_family,
+    )
 
     has_semantic_provenance = False
     rec = ProvenanceRecorder(trace_path)
@@ -46,13 +59,24 @@ def _run_episode(
     return {
         "episode_id": episode_id,
         "intent_id": intent_id,
-        "task_family": task_family,
         "variant": variant,
+        "task_family": task_family,
+        "smell": smell,
+        "requirement_text": requirement_text,
+        "artifact": artifact,
         "oracle_passed": oracle_result.passed,
         "semantic_label": semantic_label,
-        "has_semantic_provenance": has_semantic_provenance,
         "provenance_path": str(trace_path),
+        "has_semantic_provenance": has_semantic_provenance,
+        "degradation_mode": degradation.mode,
+        "degradation_severity": degradation.severity,
     }
+
+
+def _write_episodes_jsonl(episodes: list[dict[str, Any]], path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lines = [json.dumps(ep, sort_keys=True) for ep in episodes]
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def run_eval(
@@ -61,6 +85,7 @@ def run_eval(
     skip_semantic_provenance: bool = False,
     output_path: Path,
     traces_dir: Path,
+    episodes_path: Path | None = None,
 ) -> dict[str, Any]:
     traces_dir.mkdir(parents=True, exist_ok=True)
     agent = StubAgent(failure_mode=failure_mode)
@@ -83,4 +108,6 @@ def run_eval(
     metrics = aggregate_metrics(episodes)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
+    if episodes_path is not None:
+        _write_episodes_jsonl(episodes, episodes_path)
     return metrics

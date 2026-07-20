@@ -10,6 +10,7 @@ def main() -> None:
     run_eval(
         output_path=repo_root / "eval" / "last_run.json",
         traces_dir=repo_root / "eval" / "traces",
+        episodes_path=repo_root / "eval" / "last_run_episodes.jsonl",
     )
 
 

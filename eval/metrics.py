@@ -32,6 +32,14 @@ def compute_semantic_provenance_coverage(episodes: list[dict[str, Any]]) -> floa
     return covered / len(episodes)
 
 
+def compute_taxonomy_modes(episodes: list[dict[str, Any]]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for ep in episodes:
+        mode = ep["degradation_mode"]
+        counts[mode] = counts.get(mode, 0) + 1
+    return counts
+
+
 def aggregate_metrics(episodes: list[dict[str, Any]]) -> dict[str, Any]:
     pair_results: dict[tuple[str, str], dict[str, bool]] = {}
     for ep in episodes:
@@ -49,4 +57,5 @@ def aggregate_metrics(episodes: list[dict[str, Any]]) -> dict[str, Any]:
         "degradation_detected": paired_rate > 0,
         "episode_count": len(episodes),
         "task_families_exercised": task_families,
+        "taxonomy_modes": compute_taxonomy_modes(episodes),
     }
