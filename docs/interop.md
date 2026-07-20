@@ -31,12 +31,16 @@ and tier-gated thesis overlays (`taxonomy/`, `protocol/`, `baselines/`,
 |----------|----------|---------|
 | Provenance traces | JSONL under run output dirs | Spans/events for plans, tools, validators, cost/latency |
 | Eval metrics | `eval/last_run.json` | Latest paired Δ and oracle results from `make eval` |
+| Episode export | `eval/last_run_episodes.jsonl` | Per-episode records from `make eval` (taxonomy + oracle fields) |
+| Analysis report | `eval/analysis_report.json` | Effect + observability gates from `make analysis` |
+| Experiment export | `eval/experiment_run.json` | Replication summary from `make experiment` |
+| Experiment episodes | `eval/experiment_run_episodes.jsonl` | Combined episodes with `replication_id` from experiment runs |
 | Thresholds | `eval/thresholds.yaml` | Gate limits consumed by `gates/` |
 | CI baselines | `eval/baselines/*.json` | Reference metrics for regression checks |
 
 **Gate contract:** `make gate` reads `eval/last_run.json` produced by
-`make eval`. `make simulate` injects failure modes for ATDD but must **not**
-overwrite `eval/last_run.json` (see Task 9 in the Tier 0–1 plan).
+`make eval`. `make simulate`, `make analysis`, and `make experiment` must **not**
+overwrite `eval/last_run.json` unless explicitly requested (`--also-last-run` on experiment).
 
 ## ATDD
 

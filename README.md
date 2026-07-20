@@ -60,6 +60,18 @@ Requirement pairs are seeded from **MesaFlow** as a local, curated starting set.
 
 Full tier definitions, thesis contribution mapping, and decision gates: [design spec](docs/superpowers/specs/2026-07-20-agent-smell-degradation-harness-design.md). Tier 2 and Tier 3 implementation plans are follow-on work after Tier 0–1 DoD (see [plans README](docs/superpowers/plans/README.md)).
 
+## Tier 2 (offline overlays)
+
+Tier 2 adds taxonomy labels, observability baselines, analysis reports, and an optional live experiment path — all without breaking Tier 1 CI.
+
+| Command | Purpose |
+|---------|---------|
+| `make analysis` | Run happy + smell-blind evals; write `eval/analysis_report.json` with effect/observability flags |
+| `make experiment` | Live experiment entrypoint (refuses without credentials; use `--stub-as-live` for offline schema demo) |
+| `pip install -e ".[live]"` | Optional OpenAI adapter (`agents/live.py`); raises `NotConfiguredError` without API key |
+
+Analysis and experiment exports are gitignored; `make gate` still reads only `eval/last_run.json` from `make eval`.
+
 ## Design & sister harness
 
 - Full design spec: [docs/superpowers/specs/2026-07-20-agent-smell-degradation-harness-design.md](docs/superpowers/specs/2026-07-20-agent-smell-degradation-harness-design.md)

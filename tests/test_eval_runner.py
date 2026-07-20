@@ -8,7 +8,7 @@ def test_happy_path_default_stub(tmp_path):
     output_path = tmp_path / "metrics.json"
     traces_dir = tmp_path / "traces"
 
-    metrics = run_eval(
+    metrics, _ = run_eval(
         failure_mode=None,
         output_path=output_path,
         traces_dir=traces_dir,

@@ -8,7 +8,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
-live = []  # Tier 2
+live = ["openai>=1.0"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

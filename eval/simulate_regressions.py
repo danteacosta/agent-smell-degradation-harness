@@ -50,7 +50,7 @@ def simulate_mode(
 
     config = MODES[mode]
     metrics_path = traces_dir.parent / "metrics.json"
-    metrics = run_eval(
+    metrics, _ = run_eval(
         failure_mode=config["failure_mode"],
         skip_semantic_provenance=config["skip_semantic_provenance"],
         output_path=metrics_path,

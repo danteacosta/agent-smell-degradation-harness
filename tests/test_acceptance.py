@@ -14,7 +14,7 @@ THRESHOLDS = load_thresholds(ROOT / "eval" / "thresholds.yaml")
 
 def test_at1_happy_path_gate_passes_offline(tmp_path):
     """AT1: offline happy path — run_eval then check_gate passes without API keys."""
-    metrics = run_eval(
+    metrics, _ = run_eval(
         output_path=tmp_path / "last_run.json",
         traces_dir=tmp_path / "traces",
     )
@@ -25,7 +25,7 @@ def test_at1_happy_path_gate_passes_offline(tmp_path):
 
 def test_at2_smell_blind_fails_gate(tmp_path):
     """AT2: FM1 smell-blind injection fails the full gate."""
-    metrics = run_eval(
+    metrics, _ = run_eval(
         failure_mode="smell-blind",
         output_path=tmp_path / "last_run.json",
         traces_dir=tmp_path / "traces",
@@ -36,7 +36,7 @@ def test_at2_smell_blind_fails_gate(tmp_path):
 
 def test_at3_oracle_mismatch_fails_gate(tmp_path):
     """AT3: FM2 oracle-mismatch fails the full gate."""
-    metrics = run_eval(
+    metrics, _ = run_eval(
         failure_mode="oracle-mismatch",
         output_path=tmp_path / "last_run.json",
         traces_dir=tmp_path / "traces",
@@ -47,7 +47,7 @@ def test_at3_oracle_mismatch_fails_gate(tmp_path):
 
 def test_at4_provenance_collapse_fails_gate(tmp_path):
     """AT4: FM3 provenance-collapse (skip semantic provenance) fails the full gate."""
-    metrics = run_eval(
+    metrics, _ = run_eval(
         skip_semantic_provenance=True,
         output_path=tmp_path / "last_run.json",
         traces_dir=tmp_path / "traces",

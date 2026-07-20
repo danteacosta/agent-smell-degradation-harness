@@ -8,6 +8,12 @@ __pycache__/
 *.egg-info/
 
 eval/last_run.json
+eval/last_run_episodes.jsonl
 eval/traces/
 eval/sim_report.json
+eval/analysis_report.json
+eval/experiment_run.json
+eval/experiment_run_episodes.jsonl
 eval/.simulate_work/
+eval/.analysis_work/
+eval/.experiment_work/
