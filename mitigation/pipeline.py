@@ -43,6 +43,7 @@ def prepare_requirement(
             policy=policy,
             mitigation_meta={
                 "rewrite_changed": rewritten.changed,
+                "rewrite_char_delta": len(rewritten.text) - len(pair["smelly_requirement"]),
                 "smell_type": detection.smell_type,
             },
             generation_variant="clean",
