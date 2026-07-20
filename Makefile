@@ -1,4 +1,4 @@
-.PHONY: test eval simulate gate experiment all
+.PHONY: test eval simulate gate analysis experiment all
 test:
 	pytest -q
 eval:
@@ -7,6 +7,8 @@ simulate:
 	python -m eval.simulate_regressions $(if $(MODE),--mode $(MODE),)
 gate:
 	python -m gates
+analysis:
+	python -m eval.analysis_report
 experiment:
 	@echo "make experiment is Tier 2 (live LLM); not enabled in Tier 1"
 all: test eval simulate gate

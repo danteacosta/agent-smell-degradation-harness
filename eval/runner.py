@@ -86,7 +86,7 @@ def run_eval(
     output_path: Path,
     traces_dir: Path,
     episodes_path: Path | None = None,
-) -> dict[str, Any]:
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     traces_dir.mkdir(parents=True, exist_ok=True)
     agent = StubAgent(failure_mode=failure_mode)
     episodes: list[dict[str, Any]] = []
@@ -110,4 +110,4 @@ def run_eval(
     output_path.write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
     if episodes_path is not None:
         _write_episodes_jsonl(episodes, episodes_path)
-    return metrics
+    return metrics, episodes

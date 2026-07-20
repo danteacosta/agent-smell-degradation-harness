@@ -35,7 +35,7 @@ def test_happy_path_clean_episodes_have_none_mode(tmp_path):
     episodes_path = tmp_path / "episodes.jsonl"
     traces_dir = tmp_path / "traces"
 
-    metrics = run_eval(
+    metrics, _ = run_eval(
         failure_mode=None,
         output_path=output_path,
         traces_dir=traces_dir,
@@ -61,7 +61,7 @@ def test_smell_blind_episodes_have_taxonomy_modes(tmp_path):
     episodes_path = tmp_path / "episodes.jsonl"
     traces_dir = tmp_path / "traces"
 
-    metrics = run_eval(
+    metrics, _ = run_eval(
         failure_mode="smell-blind",
         output_path=output_path,
         traces_dir=traces_dir,
@@ -89,7 +89,7 @@ def test_last_run_json_remains_gate_compatible(tmp_path):
     output_path = tmp_path / "last_run.json"
     traces_dir = tmp_path / "traces"
 
-    metrics = run_eval(
+    metrics, _ = run_eval(
         failure_mode=None,
         output_path=output_path,
         traces_dir=traces_dir,
