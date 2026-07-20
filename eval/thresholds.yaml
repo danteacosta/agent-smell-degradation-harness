@@ -1,0 +1,6 @@
+floors:
+  oracle_pass_rate_clean: 1.0
+  semantic_provenance_coverage: 1.0
+ceilings:
+  paired_degradation_rate: 0.0
+require_degradation_detector: true

@@ -1,0 +1,18 @@
+{
+  "intent_id": "RF-04",
+  "clean_requirement": "Order ID must follow P- plus exactly three digits, e.g. P-014",
+  "smelly_requirement": "Order ID starts with P- followed by sequential digits",
+  "smell": {
+    "category": "semantic",
+    "type": "identifier_format",
+    "injection_rule": "replace exact digit count with vague sequential phrasing"
+  },
+  "oracle_spec": {
+    "codegen": {"order_id_pattern": "^P-\\d{3}$"},
+    "test_gen": {
+      "must_reject_ids": ["P-1", "P-1004", "X-014"],
+      "must_accept_ids": ["P-014"],
+      "criterion": "P- plus exactly three digits"
+    }
+  }
+}
