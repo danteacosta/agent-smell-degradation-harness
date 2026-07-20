@@ -1,0 +1,18 @@
+{
+  "intent_id": "RF-09",
+  "clean_requirement": "New orders are delayed after more than 5 minutes.",
+  "smelly_requirement": "New orders delayed after significant time.",
+  "smell": {
+    "category": "semantic",
+    "type": "vague_threshold",
+    "injection_rule": "replace exact threshold with vague temporal phrase"
+  },
+  "oracle_spec": {
+    "codegen": {"delay_threshold_minutes": 5, "comparator": ">"},
+    "test_gen": {
+      "must_reject_minutes": [0, 5],
+      "must_accept_minutes": [6],
+      "criterion": "delay_minutes > 5"
+    }
+  }
+}

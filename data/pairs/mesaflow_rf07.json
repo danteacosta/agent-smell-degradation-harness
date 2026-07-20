@@ -1,0 +1,18 @@
+{
+  "intent_id": "RF-07",
+  "clean_requirement": "Cards must be ordered from oldest to newest by time",
+  "smelly_requirement": "Cards ordered by order antiquity",
+  "smell": {
+    "category": "semantic",
+    "type": "ordering_ambiguity",
+    "injection_rule": "replace explicit time ordering with vague antiquity phrasing"
+  },
+  "oracle_spec": {
+    "codegen": {"sort_key": "elapsed_time_asc"},
+    "test_gen": {
+      "required_sort_key": "elapsed_time_asc",
+      "forbidden_sort_keys": ["order_code", "seed"],
+      "criterion": "cards oldest to newest by time"
+    }
+  }
+}
