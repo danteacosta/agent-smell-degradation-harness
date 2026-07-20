@@ -49,6 +49,17 @@ make simulate MODE=smell-blind
 
 Requirement pairs are seeded from **MesaFlow** as a local, curated starting set. MesaFlow is a development seed — not a peer-reviewed claim of external validity for thesis or production use.
 
+## Roadmap (Tier 0→3)
+
+| Tier | Focus | Exit gate |
+|------|-------|-----------|
+| **0** | Repo skeleton, episode schema, MesaFlow seed pairs, empty overlay stubs | Benchmark seed exists |
+| **1** | Stub agents, FM1–FM3, offline `make all` + CI | **Public repo DoD** (current) |
+| **2** | Taxonomy (**C1**), observability baselines (**C4**), live `make experiment` | Effect + observability gates |
+| **3** | Mitigation (**C5**), full protocol stats (**C3**), dissertation packaging | Mitigation gate; dissertation DoD |
+
+Full tier definitions, thesis contribution mapping, and decision gates: [design spec](docs/superpowers/specs/2026-07-20-agent-smell-degradation-harness-design.md). Tier 2 and Tier 3 implementation plans are follow-on work after Tier 0–1 DoD (see [plans README](docs/superpowers/plans/README.md)).
+
 ## Design & sister harness
 
 - Full design spec: [docs/superpowers/specs/2026-07-20-agent-smell-degradation-harness-design.md](docs/superpowers/specs/2026-07-20-agent-smell-degradation-harness-design.md)
