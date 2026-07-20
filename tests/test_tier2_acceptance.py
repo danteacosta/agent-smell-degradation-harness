@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -89,21 +90,21 @@ def test_tier2_live_agent_not_configured_without_key(monkeypatch):
         LiveAgent()
 
 
-def test_tier2_make_all_still_passes_and_gate_keys_intact():
-    python = ROOT / ".venv" / "bin" / "python"
+def test_tier2_make_all_still_passes_and_gate_keys_intact(tmp_path):
+    """Regression: eval → simulate → gate stay green without a local .venv path."""
+    metrics_path = tmp_path / "last_run.json"
+    traces_dir = tmp_path / "traces"
+    metrics, _ = run_eval(output_path=metrics_path, traces_dir=traces_dir)
+    assert TIER1_KEYS.issubset(metrics.keys())
+    ok, failures = check_gate(metrics, THRESHOLDS)
+    assert ok is True, failures
 
-    for module in ("eval", "eval.simulate_regressions", "gates"):
+    for module in ("eval.simulate_regressions",):
         result = subprocess.run(
-            [str(python), "-m", module],
+            [sys.executable, "-m", module],
             cwd=ROOT,
             capture_output=True,
             text=True,
             check=False,
         )
         assert result.returncode == 0, f"{module}: {result.stdout}{result.stderr}"
-
-    last_run = json.loads((ROOT / "eval" / "last_run.json").read_text(encoding="utf-8"))
-    assert TIER1_KEYS.issubset(last_run.keys())
-
-    ok, failures = check_gate(last_run, THRESHOLDS)
-    assert ok is True, failures
