@@ -120,9 +120,20 @@ make experiment → live adapter → N replications
 
 Provider/API failures are labeled separately from semantic degradation.
 
-## 6. Offline failure modes (Tier 1)
+## 6. Policies vs failure modes
 
-Mirror the three-mode pattern of the sister harness:
+These are **orthogonal**:
+
+| Concept | What it is | Examples |
+|---------|------------|----------|
+| **Agent policy** | How the runner *behaves* on a requirement | `direct`, `static_smell`, `rewrite`, `clarify` |
+| **Failure mode (FM)** | A *regression injection* used by `make simulate` to verify the gate | FM1–FM3 below |
+
+Default offline happy path uses policy `direct` with stubs that respect clean constraints. Simulate injects FMs **on top of** (or instead of) correct stub behavior — same idea as sister harness regression simulation.
+
+### Offline failure modes (Tier 1)
+
+Mirror the three-mode pattern of the sister harness. Injection interface (Tier 1): CLI flag and/or env var on the simulate entrypoint, e.g. `make simulate MODE=smell-blind` / `AGENT_SIM_MODE=oracle-mismatch`, documented in README to match sister-harness ergonomics.
 
 | ID | Mode | Injected behavior | Gate expectation |
 |----|------|-------------------|------------------|
@@ -133,9 +144,22 @@ Mirror the three-mode pattern of the sister harness:
 ## 7. Pilot substrate (Tier 1 task families)
 
 1. **Code generation / repair** (primary) — MesaFlow RF-04, RF-07, RF-09, RF-13 seeds.
-2. **Test / acceptance-criteria generation** (second) — executable oracles where possible.
+2. **Test / acceptance-criteria generation** (second) — **same MesaFlow intents**, different artifact type.
 
 Optional later: automated traceability (Vogelsang-aligned generalization).
+
+### Shared intent strategy (codegen + test_gen)
+
+Both Tier 1 families reuse the **same four `intent_id`s**. What changes is `task_family` and the expected artifact:
+
+| `task_family` | Artifact under test | Oracle style |
+|---------------|---------------------|--------------|
+| `codegen` | Implementation snippet / module behavior | Executable checks (format, sort key, threshold, cardinality) |
+| `test_gen` | Generated tests or acceptance criteria for the same intent | Meta-oracle: generated tests must encode the *clean* constraint; fail if they assert a weakened/smelly interpretation |
+
+Example for RF-09: clean codegen must treat delay as `T > 5` minutes; clean `test_gen` must produce a criterion/test that fails when `T ≤ 5` is accepted. A smell-blind stub that emits vague tests (“after significant time”) fails the meta-oracle.
+
+This keeps the paired benchmark coherent (one intent grid × two task families) without inventing a second unrelated corpus in Tier 1.
 
 ### MesaFlow seed intents (pilot)
 
@@ -148,12 +172,22 @@ Optional later: automated traceability (Vogelsang-aligned generalization).
 
 ## 8. Roadmap — clear path to full thesis (C1–C5)
 
+Thesis contribution mapping used below:
+
+| ID | Contribution |
+|----|----------------|
+| **C1** | Taxonomy: smell categories ↔ degradation modes |
+| **C2** | Paired benchmark (`pairs/` + artifacts + labels + traces) |
+| **C3** | Evaluation protocol (paired design, replications, reliability, workload characterization) |
+| **C4** | Provenance-based observability baseline vs static/output/operational |
+| **C5** | Mitigation baseline (rewrite / clarify) inside the protocol |
+
 | Tier | Deliverable | Exit gate | Thesis map |
 |------|-------------|-----------|------------|
-| **0** | Repo skeleton, episode schema, `docs/interop.md`, 4 MesaFlow pairs, empty overlay stubs | Benchmark seed exists | C2 seed |
-| **1** | Stub agents for codegen + test_gen; FM1–FM3; `make simulate` / `make gate`; GitHub Actions offline | **Public repo DoD** | C2 + minimal C3 |
-| **2** | Taxonomy overlay (C1); provenance vs static/output/operational baselines (C4); `make experiment` live | Effect gate + observability gate | C1, C4, H1–H4 |
-| **3** | Mitigation overlay (C5); full protocol stats (C3); dissertation packaging | Mitigation gate; **dissertation DoD** | C3, C5, H5 |
+| **0** | Repo skeleton, episode schema, `docs/interop.md`, 4 MesaFlow pairs × 2 families (schema-ready), empty overlay stubs | Benchmark seed exists | **C2** seed |
+| **1** | Stub agents for codegen + test_gen on shared intents; FM1–FM3; `make simulate` / `make gate`; GitHub Actions offline | **Public repo DoD** | **C2** + minimal **C3** |
+| **2** | Taxonomy overlay (**C1**); provenance vs static/output/operational baselines (**C4**); `make experiment` live | Effect gate + observability gate | C1, C4, H1–H4 |
+| **3** | Mitigation overlay (**C5**); full protocol stats (**C3**); dissertation packaging | Mitigation gate; **dissertation DoD** | C3, C5, H5 |
 
 ### Decision gates (from thesis §13)
 
