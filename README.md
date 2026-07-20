@@ -56,9 +56,9 @@ Requirement pairs are seeded from **MesaFlow** as a local, curated starting set.
 | **0** | Repo skeleton, episode schema, MesaFlow seed pairs, empty overlay stubs | Benchmark seed exists |
 | **1** | Stub agents, FM1–FM3, offline `make all` + CI | **Public repo DoD** (current) |
 | **2** | Taxonomy (**C1**), observability baselines (**C4**), live `make experiment` | Effect + observability gates |
-| **3** | Mitigation (**C5**), full protocol stats (**C3**), dissertation packaging | Mitigation gate; dissertation DoD |
+| **3** | Mitigation (**C5**), full protocol stats (**C3**), dissertation packaging | Mitigation gate; dissertation DoD (**current**) |
 
-Full tier definitions, thesis contribution mapping, and decision gates: [design spec](docs/superpowers/specs/2026-07-20-agent-smell-degradation-harness-design.md). Tier 2 and Tier 3 implementation plans are follow-on work after Tier 0–1 DoD (see [plans README](docs/superpowers/plans/README.md)).
+Full tier definitions, thesis contribution mapping, and decision gates: [design spec](docs/superpowers/specs/2026-07-20-agent-smell-degradation-harness-design.md). Implementation plans: [plans README](docs/superpowers/plans/README.md).
 
 ## Tier 2 (offline overlays)
 
@@ -71,6 +71,19 @@ Tier 2 adds taxonomy labels, observability baselines, analysis reports, and an o
 | `pip install -e ".[live]"` | Optional OpenAI adapter (`agents/live.py`); raises `NotConfiguredError` without API key |
 
 Analysis and experiment exports are gitignored; `make gate` still reads only `eval/last_run.json` from `make eval`.
+
+## Tier 3 (mitigation + dissertation packaging)
+
+Tier 3 adds offline rewrite/clarify mitigation policies, an H5 trade-off report, and a dissertation export bundle — still secret-free and non-blocking for Tier 1 CI.
+
+| Command | Purpose |
+|---------|---------|
+| `make mitigation` | Compare `direct` / `rewrite` / `clarify` under smell-blind; write `eval/mitigation_report.json` |
+| `make dissertation` | Aggregate analysis + mitigation + paired stats; write `eval/dissertation_bundle.json` |
+| `python -m eval.mitigation_report` | Same as `make mitigation` |
+| `python -m eval.dissertation_bundle` | Same as `make dissertation` |
+
+Mitigation policies (`rewrite`, `clarify`) run before stub generation on smelly variants; the trade-off report records benefit vs overhead but does **not** claim mitigation is always positive. Export guide: [docs/dissertation/README.md](docs/dissertation/README.md).
 
 ## Design & sister harness
 

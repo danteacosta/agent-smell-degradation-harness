@@ -12,8 +12,13 @@ eval/last_run_episodes.jsonl
 eval/traces/
 eval/sim_report.json
 eval/analysis_report.json
+eval/mitigation_report.json
+eval/dissertation_bundle.json
 eval/experiment_run.json
 eval/experiment_run_episodes.jsonl
 eval/.simulate_work/
 eval/.analysis_work/
 eval/.experiment_work/
+eval/.mitigation_work/
+eval/.dissertation_work/
+docs/dissertation/BUNDLE_SUMMARY.md
