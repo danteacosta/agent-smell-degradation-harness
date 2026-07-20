@@ -1,4 +1,4 @@
-.PHONY: test eval simulate gate analysis experiment all
+.PHONY: test eval simulate gate analysis experiment mitigation dissertation all
 test:
 	pytest -q
 eval:
@@ -11,4 +11,8 @@ analysis:
 	python -m eval.analysis_report
 experiment:
 	python -m eval.experiment
+mitigation:
+	python -m eval.mitigation_report
+dissertation:
+	python -m eval.dissertation_bundle
 all: test eval simulate gate

@@ -33,13 +33,15 @@ and tier-gated thesis overlays (`taxonomy/`, `protocol/`, `baselines/`,
 | Eval metrics | `eval/last_run.json` | Latest paired Δ and oracle results from `make eval` |
 | Episode export | `eval/last_run_episodes.jsonl` | Per-episode records from `make eval` (taxonomy + oracle fields) |
 | Analysis report | `eval/analysis_report.json` | Effect + observability gates from `make analysis` |
+| Mitigation report | `eval/mitigation_report.json` | H5 trade-off (direct vs rewrite vs clarify) from `make mitigation` |
+| Dissertation bundle | `eval/dissertation_bundle.json` | Thesis export from `make dissertation` |
 | Experiment export | `eval/experiment_run.json` | Replication summary from `make experiment` |
 | Experiment episodes | `eval/experiment_run_episodes.jsonl` | Combined episodes with `replication_id` from experiment runs |
 | Thresholds | `eval/thresholds.yaml` | Gate limits consumed by `gates/` |
 | CI baselines | `eval/baselines/*.json` | Reference metrics for regression checks |
 
 **Gate contract:** `make gate` reads `eval/last_run.json` produced by
-`make eval`. `make simulate`, `make analysis`, and `make experiment` must **not**
+`make eval`. `make simulate`, `make analysis`, `make mitigation`, `make dissertation`, and `make experiment` must **not**
 overwrite `eval/last_run.json` unless explicitly requested (`--also-last-run` on experiment).
 
 ## ATDD
