@@ -10,3 +10,4 @@ __pycache__/
 eval/last_run.json
 eval/traces/
 eval/sim_report.json
+eval/.simulate_work/

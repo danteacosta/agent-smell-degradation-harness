@@ -4,7 +4,7 @@ test:
 eval:
 	python -m eval
 simulate:
-	python -m eval.simulate_regressions
+	python -m eval.simulate_regressions $(if $(MODE),--mode $(MODE),)
 gate:
 	python -m gates
 experiment:
