@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Agent Smell Degradation Harness"
+version: 0.1.0
+date-released: 2026-07-20
+authors:
+  - family-names: Acosta
+    given-names: Dante
+repository-code: "https://github.com/danteacosta/agent-smell-degradation-harness"
+license: MIT
+keywords:
+  - llm-agents
+  - requirement-smells
+  - evaluation-harness
+  - semantic-degradation
+preferred-citation: |
+  Acosta, D. (2026). Agent Smell Degradation Harness (Version 0.1.0) [Computer software].
+  https://github.com/danteacosta/agent-smell-degradation-harness

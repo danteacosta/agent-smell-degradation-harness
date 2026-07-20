@@ -38,6 +38,14 @@ _WEAKENINGS: dict[str, dict[str, dict[str, Any]]] = {
 }
 
 
+_INTENT_SMELL_TYPES = {
+    "RF-04": "identifier_format",
+    "RF-07": "ordering_ambiguity",
+    "RF-09": "vague_threshold",
+    "RF-13": "cardinality_ambiguity",
+}
+
+
 class StubAgent:
     def __init__(
         self,
@@ -51,10 +59,20 @@ class StubAgent:
         oracle = copy.deepcopy(pair["oracle_spec"][task_family])
 
         if self.failure_mode == "oracle-mismatch":
-            return self._weaken(oracle, pair["intent_id"], task_family)
+            return self._weaken(
+                oracle,
+                pair["intent_id"],
+                task_family,
+                pair.get("smell", {}).get("type", ""),
+            )
 
         if self.failure_mode == "smell-blind" and variant == "smelly":
-            return self._weaken(oracle, pair["intent_id"], task_family)
+            return self._weaken(
+                oracle,
+                pair["intent_id"],
+                task_family,
+                pair.get("smell", {}).get("type", ""),
+            )
 
         return oracle
 
@@ -63,8 +81,15 @@ class StubAgent:
         oracle: dict[str, Any],
         intent_id: str,
         task_family: str,
+        smell_type: str = "",
     ) -> dict[str, Any]:
         overrides = _WEAKENINGS.get(intent_id, {}).get(task_family, {})
+        if not overrides and smell_type:
+            for source_intent, source_smell in _INTENT_SMELL_TYPES.items():
+                if source_smell == smell_type:
+                    overrides = _WEAKENINGS.get(source_intent, {}).get(task_family, {})
+                    if overrides:
+                        break
         weakened = copy.deepcopy(oracle)
         weakened.update(overrides)
         return weakened

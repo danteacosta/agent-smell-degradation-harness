@@ -96,11 +96,34 @@ def run_eval(
     traces_dir: Path,
     episodes_path: Path | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
-    traces_dir.mkdir(parents=True, exist_ok=True)
     agent = StubAgent(failure_mode=failure_mode)
+    return run_eval_with_agent(
+        agent,
+        pairs=load_all_pairs(),
+        policy=policy,
+        skip_semantic_provenance=skip_semantic_provenance,
+        output_path=output_path,
+        traces_dir=traces_dir,
+        episodes_path=episodes_path,
+    )
+
+
+def run_eval_with_agent(
+    agent: Any,
+    *,
+    pairs: list[dict[str, Any]] | None = None,
+    policy: str = "direct",
+    skip_semantic_provenance: bool = False,
+    output_path: Path,
+    traces_dir: Path,
+    episodes_path: Path | None = None,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    traces_dir.mkdir(parents=True, exist_ok=True)
+    if pairs is None:
+        pairs = load_all_pairs()
     episodes: list[dict[str, Any]] = []
 
-    for pair in load_all_pairs():
+    for pair in pairs:
         for task_family in TASK_FAMILIES:
             for variant in VARIANTS:
                 episodes.append(
