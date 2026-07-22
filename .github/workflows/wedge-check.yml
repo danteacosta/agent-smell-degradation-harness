@@ -10,4 +10,6 @@ jobs:
           python-version: "3.12"
       - run: pip install -e ".[dev]"
       - run: pytest -q tests/test_wedge.py tests/test_wedge_acceptance.py
-      - run: python -m wedge --fixture demo-smelly
+      - run: python -m wedge --fixture demo-clean --expect-decision approve
+      - run: python -m wedge --fixture demo-smelly --expect-decision clarify
+      - run: python -m wedge --fixture demo-degraded --expect-decision warn

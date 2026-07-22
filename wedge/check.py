@@ -254,6 +254,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Wedge reliability check")
     parser.add_argument("--fixture", choices=sorted(FIXTURES), help="Run built-in demo fixture")
     parser.add_argument("--traces-dir", type=Path, default=Path("eval/traces"))
+    parser.add_argument(
+        "--expect-decision",
+        choices=[d.value for d in Decision],
+        help="Exit 0 if decision matches (for CI assertions on warn/clarify fixtures)",
+    )
     args = parser.parse_args(argv)
 
     if not args.fixture:
@@ -261,6 +266,8 @@ def main(argv: list[str] | None = None) -> int:
 
     result = run_fixture(args.fixture, traces_dir=args.traces_dir)
     print(json.dumps(result, indent=2))
+    if args.expect_decision is not None:
+        return 0 if result["decision"] == args.expect_decision else 1
     return 0 if result["decision"] == Decision.APPROVE.value else 1
 
 
