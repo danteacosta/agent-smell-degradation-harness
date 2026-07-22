@@ -30,4 +30,5 @@ include = [
   "protocol*",
   "baselines*",
   "mitigation*",
+  "wedge*",
 ]

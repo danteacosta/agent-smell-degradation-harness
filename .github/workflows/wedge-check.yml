@@ -1,0 +1,13 @@
+name: wedge-check
+on: [push, pull_request]
+jobs:
+  wedge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: pytest -q tests/test_wedge.py tests/test_wedge_acceptance.py
+      - run: python -m wedge --fixture demo-smelly

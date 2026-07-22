@@ -11,7 +11,7 @@ from pairs.validate import validate_pair
 
 def test_load_all_pairs_validates_schema():
     pairs = load_all_pairs()
-    assert len(pairs) >= 6
+    assert len(pairs) >= 7
 
 
 def test_missing_intent_id_raises():

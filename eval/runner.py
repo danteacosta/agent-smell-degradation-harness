@@ -6,6 +6,7 @@ from typing import Any
 
 from agents.stub import StubAgent
 from eval.metrics import aggregate_metrics
+from eval.mutation import score_test_gen_mutation
 from eval.oracles import score_artifact
 from mitigation.pipeline import prepare_requirement
 from observability.tracing import ProvenanceRecorder
@@ -56,13 +57,25 @@ def _run_episode(
 
     has_semantic_provenance = False
     rec = ProvenanceRecorder(trace_path)
-    rec.operational("latency", {"ms": 0, "episode_id": episode_id})
+    rec.operational("latency", {"ms": 0, "episode_id": episode_id}, tier="A")
     if not skip_semantic_provenance:
-        rec.semantic("constraint_extract", dict(artifact))
+        rec.semantic("constraint_extract", dict(artifact), tier="A")
         has_semantic_provenance = True
+
+    mutation_score = None
+    if task_family == "test_gen":
+        mutation_score = score_test_gen_mutation(intent_id, artifact, pair["oracle_spec"])
+
+    rec.oracle_verdict(
+        {
+            "passed": oracle_result.passed,
+            "task_family": task_family,
+            "mutation_score": mutation_score,
+        }
+    )
     rec.close()
 
-    return {
+    episode: dict[str, Any] = {
         "episode_id": episode_id,
         "intent_id": intent_id,
         "variant": variant,
@@ -79,6 +92,9 @@ def _run_episode(
         "degradation_mode": degradation.mode,
         "degradation_severity": degradation.severity,
     }
+    if mutation_score is not None:
+        episode["mutation_score"] = mutation_score
+    return episode
 
 
 def _write_episodes_jsonl(episodes: list[dict[str, Any]], path: Path) -> None:
