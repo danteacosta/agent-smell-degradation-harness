@@ -1,4 +1,4 @@
-.PHONY: test eval simulate gate analysis experiment mitigation dissertation all dry-run thesis-analysis
+.PHONY: test eval simulate gate analysis experiment mitigation dissertation all dry-run thesis-analysis wedge-check
 test:
 	pytest -q
 eval:
@@ -19,4 +19,9 @@ mitigation:
 	python -m eval.mitigation_report
 dissertation:
 	python -m eval.dissertation_bundle
+wedge-check:
+	pytest -q tests/test_wedge.py tests/test_wedge_acceptance.py
+	python -m wedge --fixture demo-clean
+	@python -m wedge --fixture demo-smelly; test $$? -ne 0
+	@python -m wedge --fixture demo-degraded; test $$? -ne 0
 all: test eval simulate gate

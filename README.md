@@ -1,8 +1,25 @@
 # Agent Smell Degradation Harness
 
+**Product wedge:** a reliability layer / CI check for coding agents — given a spec and agent run, emit **approve / warn / request clarification** before intent loss reaches production.
+
+**Thesis RQ:** Does Tier A provenance detect smell-induced semantic degradation beyond static smell detection and operational metrics alone?
+
+Design for this wedge: [wedge-first reliability check spec](docs/superpowers/specs/2026-07-22-wedge-first-reliability-check-design.md)
+
 Offline twin of [`rag-reliability-harness`](https://github.com/danteacosta/rag-reliability-harness) for measuring requirement-smell-induced semantic degradation in LLM agent episodes.
 
 [![eval-gate](.github/workflows/eval.yml/badge.svg)](.github/workflows/eval.yml)
+
+## Wedge check (local / CI)
+
+```bash
+python -m wedge --fixture demo-clean     # approve
+python -m wedge --fixture demo-smelly    # clarify (smell + direct policy)
+python -m wedge --fixture demo-degraded  # warn (Tier B degradation)
+make wedge-check
+```
+
+Consumer wiring guide: [docs/wedge.md](docs/wedge.md)
 
 ## Flow
 
@@ -14,8 +31,11 @@ flowchart LR
   oracle["oracles / validators"]
   eval["eval metrics (paired Δ)"]
   gate["gates (CI thresholds)"]
+  wedge["wedge check (approve|warn|clarify)"]
 
   pairs --> agent --> prov --> oracle --> eval --> gate
+  prov --> wedge
+  oracle --> wedge
 ```
 
 ## Failure modes
@@ -95,10 +115,12 @@ Offline preflight before live LLM runs (secret-free; default CI unchanged):
 | `python -m eval.experiment --mock-live` | Exercise `LiveAgent` + `MockTransport` under `runs/` |
 | `python -m eval.thesis_analysis --episodes PATH` | H1 paired-degradation tables and negative-boundary flags |
 | `make thesis-analysis` | Analyze `eval/last_run_episodes.jsonl` after `make eval` |
+| `python -m eval.h2_detection` | H2 group-split AUROC: static vs operational vs Tier A provenance |
 
 Pair loading validates schema; oracle scoring is tolerant of extra artifact keys. IRR utilities live in `protocol/irr.py` with annotation templates under `data/annotation/`. Mitigation `rewrite` supports `mode=template` to reconstruct requirements from oracle specs instead of copying clean text verbatim.
 
 ## Design & sister harness
 
 - Full design spec: [docs/superpowers/specs/2026-07-20-agent-smell-degradation-harness-design.md](docs/superpowers/specs/2026-07-20-agent-smell-degradation-harness-design.md)
+- Wedge-first strategy: [docs/superpowers/specs/2026-07-22-wedge-first-reliability-check-design.md](docs/superpowers/specs/2026-07-22-wedge-first-reliability-check-design.md)
 - Sister narrative and shared contracts (no shared code): [docs/interop.md](docs/interop.md) — parallel layout with `rag-reliability-harness` (`eval/`, `gates/`, `observability/`, threshold-driven gates, injectable failure modes, offline-first CI).

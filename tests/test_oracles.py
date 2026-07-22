@@ -34,7 +34,7 @@ def test_rf09_test_gen_rejects_vague():
 
 @pytest.mark.parametrize(
     "intent_id",
-    ["RF-04", "RF-07", "RF-09", "RF-13"],
+    ["RF-04", "RF-07", "RF-09", "RF-11", "RF-13"],
 )
 def test_codegen_passes_matching_artifact(intent_id: str):
     pair = _pair(intent_id)
@@ -60,7 +60,7 @@ def test_codegen_rejects_weakened_artifact(intent_id: str, weak_artifact: dict):
 
 @pytest.mark.parametrize(
     "intent_id",
-    ["RF-04", "RF-07", "RF-09", "RF-13"],
+    ["RF-04", "RF-07", "RF-09", "RF-11", "RF-13"],
 )
 def test_test_gen_passes_matching_artifact(intent_id: str):
     pair = _pair(intent_id)

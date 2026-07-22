@@ -35,6 +35,14 @@ _WEAKENINGS: dict[str, dict[str, dict[str, Any]]] = {
             "criterion": "display old active orders in sufficient quantity",
         },
     },
+    "RF-11": {
+        "codegen": {"refund_window_minutes": 15},
+        "test_gen": {
+            "must_reject_minutes": [],
+            "must_accept_minutes": [15],
+            "criterion": "refund within reasonable time",
+        },
+    },
 }
 
 
@@ -43,6 +51,7 @@ _INTENT_SMELL_TYPES = {
     "RF-07": "ordering_ambiguity",
     "RF-09": "vague_threshold",
     "RF-13": "cardinality_ambiguity",
+    "RF-11": "numerical_inconsistency",
 }
 
 

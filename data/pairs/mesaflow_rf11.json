@@ -1,0 +1,18 @@
+{
+  "intent_id": "RF-11",
+  "clean_requirement": "Refunds must be processed within 10 minutes of approval.",
+  "smelly_requirement": "Refunds must be processed within 10 minutes of approval. Late refunds after 15 minutes are escalated.",
+  "smell": {
+    "category": "semantic",
+    "type": "numerical_inconsistency",
+    "injection_rule": "append conflicting 15-minute escalation clause to 10-minute window"
+  },
+  "oracle_spec": {
+    "codegen": {"refund_window_minutes": 10},
+    "test_gen": {
+      "must_reject_minutes": [15],
+      "must_accept_minutes": [10],
+      "criterion": "refund_window_minutes == 10"
+    }
+  }
+}
