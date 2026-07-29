@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import ast
 import dataclasses
-import inspect
 from pathlib import Path
 
 import pytest
@@ -73,6 +72,23 @@ def test_feature_episode_input_copies_only_pre_final_episode_fields(tmp_path: Pa
         "hidden_terminal_sentinel",
     ):
         assert not hasattr(input_episode, terminal_attribute)
+
+
+def test_feature_episode_input_is_immune_to_caller_smell_mutation(tmp_path: Path):
+    trace_path = tmp_path / "trace.jsonl"
+    _write_trace(trace_path, {"first": 1})
+    smell = {"type": "vague_threshold", "details": {"window": 15}}
+    feature_input = FeatureEpisodeInput.from_episode(_episode(smell=smell))
+    original_features = extract_pre_final_features(feature_input, trace_path)
+
+    smell["type"] = "replacement"
+    smell["details"]["window"] = 30
+
+    assert feature_input.smell == {
+        "type": "vague_threshold",
+        "details": {"window": 15},
+    }
+    assert extract_pre_final_features(feature_input, trace_path) == original_features
 
 
 def test_pre_final_features_use_tier_a_trace_and_ignore_tier_b(tmp_path: Path):
@@ -234,12 +250,13 @@ class _FeaturePlaneForbiddenReferences(ast.NodeVisitor):
         self.generic_visit(node)
 
 
-def test_feature_plane_ast_has_no_final_label_or_oracle_dependencies():
-    import observability.feature_plane as feature_plane
+def test_feature_plane_cannot_import_label_plane():
+    import feature_plane
 
-    source = inspect.getsource(feature_plane)
+    implementation_dir = Path(feature_plane.__file__).parent
     references = _FeaturePlaneForbiddenReferences()
-    references.visit(ast.parse(source))
+    for source_path in implementation_dir.glob("*.py"):
+        references.visit(ast.parse(source_path.read_text(encoding="utf-8")))
 
     assert not references.forbidden_imports
     assert not references.forbidden_references
