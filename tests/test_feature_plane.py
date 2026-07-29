@@ -7,7 +7,11 @@ from pathlib import Path
 
 import pytest
 
-from observability.feature_plane import FeatureEpisodeInput, extract_pre_final_features
+from observability.feature_plane import (
+    FeatureEpisodeInput,
+    extract_pre_final_features,
+    semantic_risk,
+)
 from observability.tracing import ProvenanceRecorder
 
 
@@ -72,7 +76,6 @@ def test_pre_final_features_use_tier_a_trace_and_ignore_tier_b(tmp_path: Path):
         "constraint_event_present": 1,
         "constraint_field_count": 2,
         "constraint_has_comparator": 1,
-        "constraint_risk": 0.0,
         "semantic_event_count": 1,
     }
 
@@ -106,7 +109,7 @@ def test_pre_final_features_are_invariant_to_final_episode_data(tmp_path: Path):
         ({"first": 1}, 0.0),
     ],
 )
-def test_constraint_risk_is_neutral_and_trace_derived(
+def test_semantic_risk_is_neutral_and_trace_derived(
     tmp_path: Path,
     constraint_payload: dict[str, object] | None,
     expected_risk: float,
@@ -117,7 +120,7 @@ def test_constraint_risk_is_neutral_and_trace_derived(
 
     features = extract_pre_final_features(feature_input)
 
-    assert features["provenance_semantic"]["constraint_risk"] == expected_risk
+    assert semantic_risk(features["provenance_semantic"]) == expected_risk
 
 
 def test_feature_plane_source_has_no_final_label_or_oracle_dependencies():
