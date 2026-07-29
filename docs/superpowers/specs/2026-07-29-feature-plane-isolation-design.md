@@ -15,14 +15,14 @@ Eliminate oracle and terminal-artifact leakage from pre-final feature extraction
 
 Introduce two top-level ownership boundaries:
 
-- `feature_plane/` owns pre-final, deployable feature extraction. Its extractor accepts the episode's input-facing fields and filtered provenance events. It produces static-smell, operational, and semantic-provenance feature families using only event shape: presence, count, payload field count, and comparator presence.
-- `label_plane/` owns terminal evaluation. Existing oracle and mutation scoring remain in their current implementation locations for this focused change, but are exposed from this boundary so later migrations have an explicit destination.
+- `feature_plane/` owns pre-final, deployable feature extraction. Its public input is an explicit `FeatureEpisodeInput` model containing only `intent_id`, `task_family`, `variant`, `smell`, and `requirement_text`, plus a provenance path. It cannot accept the source episode dictionary, which may carry terminal fields. The extractor loads the trace and filters it to Tier A itself before any feature family runs. It produces static-smell, operational, and semantic-provenance feature families using only event shape: presence, count, payload field count, and comparator presence.
+- `label_plane/` owns terminal evaluation. It exposes `score_artifact(...)` and `score_test_gen_mutation(...)` as its public API and delegates initially to the existing implementations. Evaluation callers migrate to these imports; `feature_plane` must never import them.
 
-`observability.features.extract_tier_a_features` remains as a compatibility wrapper during the migration and delegates to `feature_plane`. It must not retain oracle-loading code.
+`observability.features.extract_tier_a_features` remains as a compatibility wrapper during the migration and delegates to `feature_plane`. It builds `FeatureEpisodeInput` only from the allowlisted fields and must not retain oracle-loading code. It must ignore an episode's artifact, oracle, label, and mutation fields.
 
 ## Data flow
 
-`requirement input + Tier A events -> feature_plane -> H2 detector`
+`allowlisted requirement input + raw trace -> feature_plane (own Tier A filter) -> H2 detector`
 
 `artifact + oracle specification -> label_plane -> evaluation labels`
 
@@ -41,7 +41,9 @@ These are observable before final-artifact evaluation and do not encode a hidden
 
 ## Tests
 
-Add behavior tests proving Tier B data is ignored and semantic features are invariant when only an artifact or oracle differs. Add an architectural test that rejects prohibited imports and `oracle_spec` references in `feature_plane`. Update H2 expectations to the neutral feature contract.
+Add behavior tests proving Tier B data is ignored by the extractor itself and semantic features are invariant when only an artifact, oracle, label, or mutation score differs. Add a source/data-access test that rejects prohibited imports, `oracle_spec` references, and terminal-field access in `feature_plane`; add the required `test_feature_plane_cannot_import_label_plane`. Add compatibility-wrapper and H2 integration tests for the neutral feature contract.
+
+The static feature family is limited to `smell` and `requirement_text`; the operational family is limited to Tier A latency and event count. These sources are explicitly non-terminal and must be tested as such.
 
 ## Non-goals
 
