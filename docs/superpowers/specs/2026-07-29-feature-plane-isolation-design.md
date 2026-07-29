@@ -43,7 +43,7 @@ H2, deployable-baseline scoring, and wedge Tier-A risk migrate from the removed 
 
 ## Tests
 
-Add behavior tests proving Tier B data is ignored by the extractor itself and semantic features are invariant when only an artifact, oracle, label, or mutation score differs. Add a source/data-access test that rejects prohibited imports, `oracle_spec` references, and terminal-field access in `feature_plane`; add the required `test_feature_plane_cannot_import_label_plane`. Add compatibility-wrapper and H2 integration tests for the neutral feature contract.
+Add behavior tests proving Tier B data is ignored by the extractor itself and semantic features are invariant when only an artifact, oracle, label, or mutation score differs. Add a source/data-access test that rejects prohibited imports, `oracle_spec` references, and terminal-field access in `feature_plane`; add the required `test_feature_plane_cannot_import_label_plane`. Extend that boundary test to the deployable delegation code in `baselines.features`, explicitly exempting only its retrospective `output_only` family. Add compatibility-wrapper, H2, baseline-comparison, and wedge integration tests for the neutral feature contract, proving none require the removed semantic fields.
 
 The static feature family is limited to `smell` and `requirement_text`; the operational family is limited to Tier A latency and event count. These sources are explicitly non-terminal and must be tested as such.
 
