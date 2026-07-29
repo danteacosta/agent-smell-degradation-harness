@@ -50,20 +50,25 @@ Expected: FAIL because `feature_plane` does not exist.
 
 - [ ] **Step 3: Write failing temporal-isolation tests.**
 
-Use a JSONL trace with two Tier-A events and one Tier-B `oracle_verdict`. Assert the extracted operational count is 2. Create two source episodes differing only in `artifact`, `oracle_spec`, `oracle_passed`, `semantic_label`, and `mutation_score`; after `FeatureEpisodeInput.from_episode`, assert equal feature results.
+Use a JSONL trace with one Tier-A operational event, one Tier-A `constraint_extract` payload containing two fields including `comparator`, and one Tier-B semantic `oracle_verdict`. Assert exactly: `constraint_event_present == 1`, `constraint_field_count == 2`, `constraint_has_comparator == 1`, `semantic_event_count == 1`, and operational event count is 2. Create two source episodes differing only in `artifact`, `oracle_spec`, `oracle_passed`, `semantic_label`, and `mutation_score`; after `FeatureEpisodeInput.from_episode`, assert equal feature results.
 
 - [ ] **Step 4: Write failing architecture tests.**
 
 ```python
 def test_feature_plane_cannot_import_label_plane():
     source = _package_source("feature_plane")
-    for forbidden in ("label_plane", "eval.oracles", "pairs.loader", "oracle_spec"):
+    for forbidden in (
+        "label_plane", "eval.oracles", "pairs.loader", "oracle_spec",
+        "artifact", "oracle_passed", "semantic_label", "mutation_score",
+    ):
         assert forbidden not in source
 
-def test_deployable_baseline_delegation_cannot_read_terminal_data():
+def test_baseline_delegates_deployable_families_to_feature_plane():
     source = Path("baselines/features.py").read_text(encoding="utf-8")
     for forbidden in ("pairs.loader", "oracle_spec", 'episode.get("artifact")'):
         assert forbidden not in source
+    assert "extract_pre_final_features" in source
+    assert source.count('episode.get("oracle_passed")') == 1
 ```
 
 - [ ] **Step 5: Run the focused tests and confirm RED.**
@@ -109,7 +114,7 @@ It loads JSONL itself, drops events with `tier == "B"` and events named `oracle_
 }
 ```
 
-It must not receive or inspect an artifact, oracle, label, or mutation score. Implement `semantic_risk(features)`: return `1.0` when the constraint event is missing, otherwise `0.0`.
+It must not receive or inspect an artifact, oracle, label, or mutation score. Implement `semantic_risk(semantic_features: Mapping[str, float | int])`: it accepts exactly the `provenance_semantic` family, returns `1.0` when the constraint event is missing and otherwise `0.0`.
 
 - [ ] **Step 4: Make the compatibility adapter delegate.**
 
@@ -183,7 +188,7 @@ git commit -m "refactor: expose terminal scoring through label plane"
 
 - [ ] **Step 1: Write failing consumer regressions.**
 
-Make H2, `compare_baselines`, and wedge Tier-A risk consume a semantic family with only `constraint_event_present`, `constraint_field_count`, `constraint_has_comparator`, and `semantic_event_count`. Assert no consumer requires `constraint_match` or `is_weak_comparator`.
+Make H2, `compare_baselines`, and wedge Tier-A risk consume a semantic family with only `constraint_event_present`, `constraint_field_count`, `constraint_has_comparator`, and `semantic_event_count`, passing that family explicitly to `semantic_risk`. Assert no consumer requires `constraint_match` or `is_weak_comparator`. For `baselines.features`, assert its deployable static, operational, and provenance-semantic results equal `feature_plane.extract_pre_final_features(...)`; assert only `output_only` reads `oracle_passed`.
 
 - [ ] **Step 2: Verify RED.**
 
@@ -197,7 +202,7 @@ Have `baselines.features.extract_features` delegate static, operational, and pro
 
 - [ ] **Step 4: Use the neutral semantic risk.**
 
-Replace score logic in `baselines.compare`, `eval.h2_detection`, and wedge Tier-A risk with `feature_plane.semantic_risk`. Preserve the independent label-plane warnings in wedge.
+Replace score logic in `baselines.compare`, `eval.h2_detection`, and wedge Tier-A risk with `feature_plane.semantic_risk(features["provenance_semantic"])`. Preserve the independent label-plane warnings in wedge.
 
 - [ ] **Step 5: Verify GREEN.**
 
@@ -241,4 +246,3 @@ Expected: no whitespace errors; one-way dependencies from feature-plane to neith
 git add <verified-files>
 git commit -m "test: verify feature plane isolation"
 ```
-
