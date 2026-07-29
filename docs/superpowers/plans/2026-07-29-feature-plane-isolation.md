@@ -63,12 +63,16 @@ def test_feature_plane_cannot_import_label_plane():
     ):
         assert forbidden not in source
 
-def test_baseline_delegates_deployable_families_to_feature_plane():
-    source = Path("baselines/features.py").read_text(encoding="utf-8")
-    for forbidden in ("pairs.loader", "oracle_spec", 'episode.get("artifact")'):
-        assert forbidden not in source
-    assert "extract_pre_final_features" in source
-    assert source.count('episode.get("oracle_passed")') == 1
+def test_baseline_allows_terminal_access_only_in_output_only():
+    tree = ast.parse(Path("baselines/features.py").read_text(encoding="utf-8"))
+    terminal_names = {"artifact", "oracle_spec", "oracle_passed", "semantic_label", "mutation_score"}
+    for function in (node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)):
+        reads = _episode_field_reads(function)
+        if function.name == "_extract_output_only":
+            assert reads <= {"oracle_passed"}
+        else:
+            assert not (reads & terminal_names)
+    assert "extract_pre_final_features" in ast.unparse(tree)
 ```
 
 - [ ] **Step 5: Run the focused tests and confirm RED.**
@@ -114,7 +118,7 @@ It loads JSONL itself, drops events with `tier == "B"` and events named `oracle_
 }
 ```
 
-It must not receive or inspect an artifact, oracle, label, or mutation score. Implement `semantic_risk(semantic_features: Mapping[str, float | int])`: it accepts exactly the `provenance_semantic` family, returns `1.0` when the constraint event is missing and otherwise `0.0`.
+It must not receive or inspect an artifact, oracle, label, or mutation score. Implement `semantic_risk(semantic_features: Mapping[str, float | int])`: it accepts exactly the `provenance_semantic` family and returns `1.0` when the constraint event is missing, `0.5` when it exists with an empty payload (`constraint_field_count == 0`), and `0.0` otherwise. `constraint_has_comparator` remains a neutral observable feature but does not raise risk, because non-numeric requirements need not have a comparator. Add explicit unit cases for all three risk levels.
 
 - [ ] **Step 4: Make the compatibility adapter delegate.**
 
