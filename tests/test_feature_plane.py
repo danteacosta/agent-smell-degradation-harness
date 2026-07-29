@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+import dataclasses
 import inspect
 from pathlib import Path
 
@@ -46,10 +47,9 @@ def _write_trace(
 
 
 def test_feature_episode_input_copies_only_pre_final_episode_fields(tmp_path: Path):
-    provenance_jsonl = _write_trace(tmp_path / "trace.jsonl", {"first": 1})
+    _write_trace(tmp_path / "trace.jsonl", {"first": 1})
     input_episode = FeatureEpisodeInput.from_episode(
-        _episode(hidden_terminal_sentinel={"must_not_cross": "feature_plane"}),
-        provenance_jsonl,
+        _episode(hidden_terminal_sentinel={"must_not_cross": "feature_plane"})
     )
 
     assert input_episode.intent_id == "RF-09"
@@ -57,7 +57,13 @@ def test_feature_episode_input_copies_only_pre_final_episode_fields(tmp_path: Pa
     assert input_episode.variant == "smelly"
     assert input_episode.smell == {"type": "vague_threshold"}
     assert input_episode.requirement_text == "Refund delayed orders after 15 minutes."
-    assert input_episode.provenance_jsonl == provenance_jsonl
+    assert {field.name for field in dataclasses.fields(FeatureEpisodeInput)} == {
+        "intent_id",
+        "task_family",
+        "variant",
+        "smell",
+        "requirement_text",
+    }
     for terminal_attribute in (
         "artifact",
         "oracle_spec",
@@ -70,14 +76,11 @@ def test_feature_episode_input_copies_only_pre_final_episode_fields(tmp_path: Pa
 
 
 def test_pre_final_features_use_tier_a_trace_and_ignore_tier_b(tmp_path: Path):
-    feature_input = FeatureEpisodeInput.from_episode(
-        _episode(),
-        _write_trace(
-            tmp_path / "trace.jsonl", {"first": 1, "comparator": ">"}
-        ),
-    )
+    trace_path = tmp_path / "trace.jsonl"
+    _write_trace(trace_path, {"first": 1, "comparator": ">"})
+    feature_input = FeatureEpisodeInput.from_episode(_episode())
 
-    features = extract_pre_final_features(feature_input)
+    features = extract_pre_final_features(feature_input, trace_path)
 
     assert features["operational"]["event_count"] == 2
     assert features["provenance_semantic"] == {
@@ -90,26 +93,23 @@ def test_pre_final_features_use_tier_a_trace_and_ignore_tier_b(tmp_path: Path):
 
 def test_pre_final_features_are_invariant_to_tier_b_oracle_payload(tmp_path: Path):
     tier_a_payload = {"first": 1, "comparator": ">"}
-    passing_input = FeatureEpisodeInput.from_episode(
-        _episode(),
-        _write_trace(
-            tmp_path / "passing.jsonl", tier_a_payload, {"passed": True, "score": 1}
-        ),
-    )
-    failing_input = FeatureEpisodeInput.from_episode(
-        _episode(),
-        _write_trace(
-            tmp_path / "failing.jsonl", tier_a_payload, {"passed": False, "score": 0}
-        ),
-    )
+    passing_path = tmp_path / "passing.jsonl"
+    failing_path = tmp_path / "failing.jsonl"
+    _write_trace(passing_path, tier_a_payload, {"passed": True, "score": 1})
+    _write_trace(failing_path, tier_a_payload, {"passed": False, "score": 0})
+    passing_input = FeatureEpisodeInput.from_episode(_episode())
+    failing_input = FeatureEpisodeInput.from_episode(_episode())
 
-    assert extract_pre_final_features(passing_input) == extract_pre_final_features(
-        failing_input
+    assert extract_pre_final_features(
+        passing_input, passing_path
+    ) == extract_pre_final_features(
+        failing_input, failing_path
     )
 
 
 def test_pre_final_features_are_invariant_to_final_episode_data(tmp_path: Path):
-    provenance_jsonl = _write_trace(tmp_path / "trace.jsonl", {"first": 1})
+    trace_path = tmp_path / "trace.jsonl"
+    _write_trace(trace_path, {"first": 1})
     source = _episode()
     changed_only_final_data = _episode(
         artifact={"unrelated": "replacement"},
@@ -120,10 +120,10 @@ def test_pre_final_features_are_invariant_to_final_episode_data(tmp_path: Path):
     )
 
     source_features = extract_pre_final_features(
-        FeatureEpisodeInput.from_episode(source, provenance_jsonl)
+        FeatureEpisodeInput.from_episode(source), trace_path
     )
     changed_features = extract_pre_final_features(
-        FeatureEpisodeInput.from_episode(changed_only_final_data, provenance_jsonl)
+        FeatureEpisodeInput.from_episode(changed_only_final_data), trace_path
     )
 
     assert source_features == changed_features
@@ -142,11 +142,11 @@ def test_semantic_risk_is_neutral_and_trace_derived(
     constraint_payload: dict[str, object] | None,
     expected_risk: float,
 ):
-    feature_input = FeatureEpisodeInput.from_episode(
-        _episode(), _write_trace(tmp_path / "trace.jsonl", constraint_payload)
-    )
+    trace_path = tmp_path / "trace.jsonl"
+    _write_trace(trace_path, constraint_payload)
+    feature_input = FeatureEpisodeInput.from_episode(_episode())
 
-    features = extract_pre_final_features(feature_input)
+    features = extract_pre_final_features(feature_input, trace_path)
 
     assert semantic_risk(features["provenance_semantic"]) == expected_risk
 

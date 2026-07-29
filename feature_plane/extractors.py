@@ -1,15 +1,19 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 from typing import Any, Mapping
 
 from .models import FeatureEpisodeInput
 
 
-def _events(provenance_jsonl: str) -> list[Mapping[str, Any]]:
+def _events(provenance_path: str | Path) -> list[Mapping[str, Any]]:
+    path = Path(provenance_path)
+    if not path.exists():
+        return []
     return [
         event
-        for line in provenance_jsonl.splitlines()
+        for line in path.read_text(encoding="utf-8").splitlines()
         if line.strip()
         for event in (json.loads(line),)
         if isinstance(event, Mapping)
@@ -30,8 +34,9 @@ def _static_smell(feature_input: FeatureEpisodeInput) -> dict[str, int]:
 
 def extract_pre_final_features(
     feature_input: FeatureEpisodeInput,
+    provenance_path: str | Path,
 ) -> dict[str, dict[str, float | int]]:
-    events = _events(feature_input.provenance_jsonl)
+    events = _events(provenance_path)
     latency_ms = next(
         (
             float(event.get("payload", {}).get("ms", 0))

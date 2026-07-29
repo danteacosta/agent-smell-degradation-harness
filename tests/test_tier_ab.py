@@ -96,7 +96,7 @@ def test_legacy_tier_a_compatibility_contract_delegates_to_pre_final_features(
     }
 
     assert extract_tier_a_features(episode, trace_path) == extract_pre_final_features(
-        FeatureEpisodeInput.from_episode(episode, trace_path.read_text(encoding="utf-8"))
+        FeatureEpisodeInput.from_episode(episode), trace_path
     )
 
 
@@ -192,7 +192,6 @@ def test_baseline_delegates_pre_final_families_through_feature_plane(monkeypatch
             "smell": {"type": "vague_threshold"},
             "requirement_text": "delayed after significant time",
         },
-        "",
     )
     expected_pre_final = {"delegated": {"value": 1}}
 

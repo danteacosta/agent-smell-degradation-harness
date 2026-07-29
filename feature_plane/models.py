@@ -13,17 +13,13 @@ class FeatureEpisodeInput:
     variant: str
     smell: Mapping[str, Any] | None
     requirement_text: str
-    provenance_jsonl: str
-
     @classmethod
-    def from_episode(
-        cls, episode: Mapping[str, Any], provenance_jsonl: str
-    ) -> FeatureEpisodeInput:
+    def from_episode(cls, episode: Mapping[str, Any]) -> FeatureEpisodeInput:
+        smell = episode.get("smell")
         return cls(
             intent_id=str(episode["intent_id"]),
             task_family=str(episode["task_family"]),
             variant=str(episode["variant"]),
-            smell=episode.get("smell"),
+            smell=dict(smell) if isinstance(smell, Mapping) else None,
             requirement_text=str(episode.get("requirement_text", "")),
-            provenance_jsonl=provenance_jsonl,
         )
