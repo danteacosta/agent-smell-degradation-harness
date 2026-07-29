@@ -6,8 +6,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from eval.mutation import score_test_gen_mutation
-from eval.oracles import score_artifact
+from label_plane import score_artifact, score_test_gen_mutation
 from mitigation.detect import detect_smell
 from observability.features import extract_tier_a_features
 from wedge.decisions import Decision

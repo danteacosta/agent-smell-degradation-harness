@@ -6,8 +6,7 @@ from typing import Any
 
 from agents.stub import StubAgent
 from eval.metrics import aggregate_metrics
-from eval.mutation import score_test_gen_mutation
-from eval.oracles import score_artifact
+from label_plane import score_artifact, score_test_gen_mutation
 from mitigation.pipeline import prepare_requirement
 from observability.tracing import ProvenanceRecorder
 from pairs.loader import load_all_pairs

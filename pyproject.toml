@@ -25,6 +25,7 @@ include = [
   "agents*",
   "observability*",
   "feature_plane*",
+  "label_plane*",
   "eval*",
   "gates*",
   "taxonomy*",
