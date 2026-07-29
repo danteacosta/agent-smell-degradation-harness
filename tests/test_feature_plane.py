@@ -48,7 +48,8 @@ def _write_trace(
 def test_feature_episode_input_copies_only_pre_final_episode_fields(tmp_path: Path):
     provenance_jsonl = _write_trace(tmp_path / "trace.jsonl", {"first": 1})
     input_episode = FeatureEpisodeInput.from_episode(
-        _episode(), provenance_jsonl
+        _episode(hidden_terminal_sentinel={"must_not_cross": "feature_plane"}),
+        provenance_jsonl,
     )
 
     assert input_episode.intent_id == "RF-09"
@@ -63,6 +64,7 @@ def test_feature_episode_input_copies_only_pre_final_episode_fields(tmp_path: Pa
         "oracle_passed",
         "semantic_label",
         "mutation_score",
+        "hidden_terminal_sentinel",
     ):
         assert not hasattr(input_episode, terminal_attribute)
 
