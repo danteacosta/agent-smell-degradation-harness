@@ -18,11 +18,11 @@ Introduce two top-level ownership boundaries:
 - `feature_plane/` owns pre-final, deployable feature extraction. Its public input is an explicit `FeatureEpisodeInput` model containing only `intent_id`, `task_family`, `variant`, `smell`, and `requirement_text`, plus a provenance path. It cannot accept the source episode dictionary, which may carry terminal fields. The extractor loads the trace and filters it to Tier A itself before any feature family runs. It produces static-smell, operational, and semantic-provenance feature families using only event shape: presence, count, payload field count, and comparator presence.
 - `label_plane/` owns terminal evaluation. It exposes `score_artifact(...)` and `score_test_gen_mutation(...)` as its public API and delegates initially to the existing implementations. Evaluation callers migrate to these imports; `feature_plane` must never import them.
 
-`observability.features.extract_tier_a_features` remains as a compatibility wrapper during the migration and delegates to `feature_plane`. It builds `FeatureEpisodeInput` only from the allowlisted fields and must not retain oracle-loading code. It must ignore an episode's artifact, oracle, label, and mutation fields.
+`observability.features.extract_tier_a_features` remains as a compatibility wrapper during the migration and delegates to `feature_plane`. It builds `FeatureEpisodeInput` only from the allowlisted fields and must not retain oracle-loading code. It must ignore an episode's artifact, oracle, label, and mutation fields. `baselines.features` delegates its static, operational, and provenance-semantic families to the same feature-plane API; its intentionally retrospective `output_only` family remains separate and clearly labelled as a non-deployable upper bound.
 
 ## Data flow
 
-`allowlisted requirement input + raw trace -> feature_plane (own Tier A filter) -> H2 detector`
+`allowlisted requirement input + raw trace -> feature_plane (own Tier A filter) -> H2 detector / deployable baseline / wedge Tier-A risk`
 
 `artifact + oracle specification -> label_plane -> evaluation labels`
 
@@ -38,6 +38,8 @@ The semantic-provenance family replaces oracle-dependent `constraint_match`, `pa
 - `semantic_event_count`
 
 These are observable before final-artifact evaluation and do not encode a hidden expected answer. Existing static-smell and operational features retain their current behavior.
+
+H2, deployable-baseline scoring, and wedge Tier-A risk migrate from the removed fields to a neutral completeness score based on absent constraint extraction and its observable shape. Their terminal oracle/mutation decision paths remain label-plane consumers and are not used to construct Tier-A features.
 
 ## Tests
 
