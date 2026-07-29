@@ -138,22 +138,49 @@ class _EpisodeMappingReads(ast.NodeVisitor):
         self.generic_visit(node)
 
 
-def test_baseline_reads_final_episode_fields_only_for_output_only():
+def test_baseline_never_reads_non_output_terminal_episode_fields():
     source = Path(baseline_features.__file__).read_text(encoding="utf-8")
     reads = _EpisodeMappingReads()
     reads.visit(ast.parse(source))
-    terminal_names = {
+    forbidden_terminal_names = {
         "artifact",
         "oracle_spec",
-        "oracle_passed",
         "semantic_label",
         "mutation_score",
     }
 
-    assert reads.reads["_extract_output_only"] & terminal_names == {"oracle_passed"}
     for function_name, fields in reads.reads.items():
-        if function_name != "_extract_output_only":
-            assert not fields & terminal_names, function_name
+        assert not fields & forbidden_terminal_names, function_name
+
+
+def test_baseline_oracle_passed_can_affect_only_output_only(tmp_path: Path):
+    trace_path = tmp_path / "trace.jsonl"
+    trace_path.write_text("", encoding="utf-8")
+    base_episode = {
+        "intent_id": "RF-09",
+        "task_family": "codegen",
+        "variant": "smelly",
+        "smell": {"type": "vague_threshold"},
+        "requirement_text": "delayed after significant time",
+    }
+
+    failed_features = baseline_features.extract_features(
+        {**base_episode, "oracle_passed": False}, trace_path
+    )
+    passed_features = baseline_features.extract_features(
+        {**base_episode, "oracle_passed": True}, trace_path
+    )
+
+    assert failed_features["output_only"] != passed_features["output_only"]
+    assert {
+        family: values
+        for family, values in failed_features.items()
+        if family != "output_only"
+    } == {
+        family: values
+        for family, values in passed_features.items()
+        if family != "output_only"
+    }
 
 
 def test_baseline_delegates_pre_final_families_through_feature_plane(monkeypatch: pytest.MonkeyPatch):

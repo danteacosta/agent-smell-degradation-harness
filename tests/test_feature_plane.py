@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-import dataclasses
+import ast
 import inspect
-import json
 from pathlib import Path
 
 import pytest
@@ -32,33 +31,40 @@ def _episode(**overrides: object) -> dict[str, object]:
     return episode
 
 
-def _write_trace(path: Path, constraint_payload: dict[str, object] | None) -> str:
+def _write_trace(
+    path: Path,
+    constraint_payload: dict[str, object] | None,
+    oracle_payload: dict[str, object] | None = None,
+) -> str:
     recorder = ProvenanceRecorder(path)
     recorder.operational("latency", {"ms": 1}, tier="A")
     if constraint_payload is not None:
         recorder.semantic("constraint_extract", constraint_payload, tier="A")
-    recorder.oracle_verdict({"passed": False}, tier="B")
+    recorder.oracle_verdict(oracle_payload or {"passed": False}, tier="B")
     recorder.close()
     return path.read_text(encoding="utf-8")
 
 
 def test_feature_episode_input_copies_only_pre_final_episode_fields(tmp_path: Path):
+    provenance_jsonl = _write_trace(tmp_path / "trace.jsonl", {"first": 1})
     input_episode = FeatureEpisodeInput.from_episode(
-        _episode(), _write_trace(tmp_path / "trace.jsonl", {"first": 1})
+        _episode(), provenance_jsonl
     )
 
-    assert set(input_episode.__dict__) == {
-        "intent_id",
-        "task_family",
-        "variant",
-        "smell",
-        "requirement_text",
-        "provenance_jsonl",
-    }
-    assert {field.name for field in dataclasses.fields(FeatureEpisodeInput)} == set(
-        input_episode.__dict__
-    )
-    assert not hasattr(input_episode, "artifact")
+    assert input_episode.intent_id == "RF-09"
+    assert input_episode.task_family == "codegen"
+    assert input_episode.variant == "smelly"
+    assert input_episode.smell == {"type": "vague_threshold"}
+    assert input_episode.requirement_text == "Refund delayed orders after 15 minutes."
+    assert input_episode.provenance_jsonl == provenance_jsonl
+    for terminal_attribute in (
+        "artifact",
+        "oracle_spec",
+        "oracle_passed",
+        "semantic_label",
+        "mutation_score",
+    ):
+        assert not hasattr(input_episode, terminal_attribute)
 
 
 def test_pre_final_features_use_tier_a_trace_and_ignore_tier_b(tmp_path: Path):
@@ -78,6 +84,26 @@ def test_pre_final_features_use_tier_a_trace_and_ignore_tier_b(tmp_path: Path):
         "constraint_has_comparator": 1,
         "semantic_event_count": 1,
     }
+
+
+def test_pre_final_features_are_invariant_to_tier_b_oracle_payload(tmp_path: Path):
+    tier_a_payload = {"first": 1, "comparator": ">"}
+    passing_input = FeatureEpisodeInput.from_episode(
+        _episode(),
+        _write_trace(
+            tmp_path / "passing.jsonl", tier_a_payload, {"passed": True, "score": 1}
+        ),
+    )
+    failing_input = FeatureEpisodeInput.from_episode(
+        _episode(),
+        _write_trace(
+            tmp_path / "failing.jsonl", tier_a_payload, {"passed": False, "score": 0}
+        ),
+    )
+
+    assert extract_pre_final_features(passing_input) == extract_pre_final_features(
+        failing_input
+    )
 
 
 def test_pre_final_features_are_invariant_to_final_episode_data(tmp_path: Path):
@@ -123,19 +149,95 @@ def test_semantic_risk_is_neutral_and_trace_derived(
     assert semantic_risk(features["provenance_semantic"]) == expected_risk
 
 
-def test_feature_plane_source_has_no_final_label_or_oracle_dependencies():
+def _is_forbidden_module(module_name: str) -> bool:
+    return module_name in {"label_plane", "eval.oracles", "pairs.loader"} or module_name.endswith(
+        ".label_plane"
+    )
+
+
+class _FeaturePlaneForbiddenReferences(ast.NodeVisitor):
+    def __init__(self) -> None:
+        self.forbidden_imports: set[str] = set()
+        self.forbidden_references: set[str] = set()
+
+    def visit_Import(self, node: ast.Import) -> None:
+        self.forbidden_imports.update(
+            alias.name for alias in node.names if _is_forbidden_module(alias.name)
+        )
+
+    def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
+        module = node.module or ""
+        if _is_forbidden_module(module):
+            self.forbidden_imports.add(module)
+        self.forbidden_imports.update(
+            f"{module}.{alias.name}"
+            for alias in node.names
+            if _is_forbidden_module(f"{module}.{alias.name}")
+        )
+
+    def visit_Name(self, node: ast.Name) -> None:
+        if node.id in {
+            "oracle_spec",
+            "artifact",
+            "oracle_passed",
+            "semantic_label",
+            "mutation_score",
+        }:
+            self.forbidden_references.add(node.id)
+
+    def visit_Attribute(self, node: ast.Attribute) -> None:
+        if node.attr in {
+            "oracle_spec",
+            "artifact",
+            "oracle_passed",
+            "semantic_label",
+            "mutation_score",
+        }:
+            self.forbidden_references.add(node.attr)
+        self.generic_visit(node)
+
+    def visit_Subscript(self, node: ast.Subscript) -> None:
+        if (
+            isinstance(node.slice, ast.Constant)
+            and node.slice.value
+            in {
+                "oracle_spec",
+                "artifact",
+                "oracle_passed",
+                "semantic_label",
+                "mutation_score",
+            }
+        ):
+            self.forbidden_references.add(node.slice.value)
+        self.generic_visit(node)
+
+    def visit_Call(self, node: ast.Call) -> None:
+        is_mapping_get = isinstance(node.func, ast.Attribute) and node.func.attr == "get"
+        is_getattr = isinstance(node.func, ast.Name) and node.func.id == "getattr"
+        field_argument = 0 if is_mapping_get else 1
+        if (
+            (is_mapping_get or is_getattr)
+            and len(node.args) > field_argument
+            and isinstance(node.args[field_argument], ast.Constant)
+            and node.args[field_argument].value
+            in {
+                "oracle_spec",
+                "artifact",
+                "oracle_passed",
+                "semantic_label",
+                "mutation_score",
+            }
+        ):
+            self.forbidden_references.add(node.args[field_argument].value)
+        self.generic_visit(node)
+
+
+def test_feature_plane_ast_has_no_final_label_or_oracle_dependencies():
     import observability.feature_plane as feature_plane
 
     source = inspect.getsource(feature_plane)
+    references = _FeaturePlaneForbiddenReferences()
+    references.visit(ast.parse(source))
 
-    for forbidden_dependency in (
-        "label_plane",
-        "eval.oracles",
-        "pairs.loader",
-        "oracle_spec",
-        "artifact",
-        "oracle_passed",
-        "semantic_label",
-        "mutation_score",
-    ):
-        assert forbidden_dependency not in source
+    assert not references.forbidden_imports
+    assert not references.forbidden_references
