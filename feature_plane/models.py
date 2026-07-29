@@ -24,6 +24,11 @@ class FeatureEpisodeInput:
     variant: str
     smell: Mapping[str, Any] | None
     requirement_text: str
+
+    def __post_init__(self) -> None:
+        if isinstance(self.smell, Mapping):
+            object.__setattr__(self, "smell", _freeze(self.smell))
+
     @classmethod
     def from_episode(cls, episode: Mapping[str, Any]) -> FeatureEpisodeInput:
         smell = episode.get("smell")
@@ -31,6 +36,6 @@ class FeatureEpisodeInput:
             intent_id=str(episode["intent_id"]),
             task_family=str(episode["task_family"]),
             variant=str(episode["variant"]),
-            smell=_freeze(smell) if isinstance(smell, Mapping) else None,
+            smell=smell if isinstance(smell, Mapping) else None,
             requirement_text=str(episode.get("requirement_text", "")),
         )

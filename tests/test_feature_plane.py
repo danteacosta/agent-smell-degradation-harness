@@ -91,6 +91,22 @@ def test_feature_episode_input_is_immune_to_caller_smell_mutation(tmp_path: Path
     assert extract_pre_final_features(feature_input, trace_path) == original_features
 
 
+def test_direct_feature_episode_input_freezes_smell_metadata():
+    smell = {"type": "vague_threshold", "details": {"window": 15}}
+    feature_input = FeatureEpisodeInput(
+        intent_id="RF-09",
+        task_family="codegen",
+        variant="smelly",
+        smell=smell,
+        requirement_text="Refund delayed orders after 15 minutes.",
+    )
+
+    with pytest.raises(TypeError):
+        feature_input.smell["type"] = "replacement"  # type: ignore[index]
+    with pytest.raises(TypeError):
+        feature_input.smell["details"]["window"] = 30  # type: ignore[index]
+
+
 def test_pre_final_features_use_tier_a_trace_and_ignore_tier_b(tmp_path: Path):
     trace_path = tmp_path / "trace.jsonl"
     _write_trace(trace_path, {"first": 1, "comparator": ">"})
