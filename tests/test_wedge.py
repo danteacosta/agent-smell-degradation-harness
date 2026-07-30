@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from wedge.check import run_fixture
+from wedge.check import _tier_a_risk, run_fixture
 from wedge.decisions import Decision
 
 
@@ -31,3 +31,17 @@ def test_wedge_result_schema():
         "tier_b_degraded",
     }
     json.dumps(result)
+
+
+def test_wedge_tier_a_risk_uses_trace_derived_semantic_risk():
+    assert _tier_a_risk(
+        {
+            "static_smell": {"smell_present": 0},
+            "provenance_semantic": {
+                "constraint_event_present": 1,
+                "constraint_field_count": 2,
+                "constraint_has_comparator": 1,
+                "semantic_event_count": 1,
+            },
+        }
+    ) == 0.0

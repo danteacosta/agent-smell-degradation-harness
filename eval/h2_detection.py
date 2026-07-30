@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from baselines.score import mann_whitney_auroc
+from feature_plane import semantic_risk
 from eval.runner import run_eval
 from observability.features import extract_tier_a_features
 
@@ -24,10 +25,7 @@ def _family_score(family: str, features: dict[str, Any]) -> float:
         operational = features["operational"]
         return float(operational["event_count"]) + float(operational["latency_ms"]) / 1000.0
     if family == "provenance_semantic":
-        semantic = features["provenance_semantic"]
-        if semantic.get("is_weak_comparator"):
-            return 1.0
-        return float(1 - semantic.get("constraint_match", 0))
+        return semantic_risk(features["provenance_semantic"])
     return 0.0
 
 

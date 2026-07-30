@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from eval.h2_detection import evaluate_group_split, group_kfold_intent_ids
+from eval.h2_detection import _family_score, evaluate_group_split, group_kfold_intent_ids
 from eval.runner import run_eval
 
 
@@ -32,3 +32,17 @@ def test_h2_group_split_computes_provenance_auroc(tmp_path: Path):
     assert "provenance_semantic" in report["mean_auroc"]
     assert 0.0 <= report["mean_auroc"]["provenance_semantic"] <= 1.0
     assert report["folds"]
+
+
+def test_h2_provenance_score_uses_trace_derived_semantic_risk():
+    assert _family_score(
+        "provenance_semantic",
+        {
+            "provenance_semantic": {
+                "constraint_event_present": 1,
+                "constraint_field_count": 2,
+                "constraint_has_comparator": 1,
+                "semantic_event_count": 1,
+            }
+        },
+    ) == 0.0

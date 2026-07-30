@@ -195,8 +195,11 @@ def test_baseline_delegates_pre_final_families_through_feature_plane(monkeypatch
     )
     expected_pre_final = {"delegated": {"value": 1}}
 
-    def fake_extract(feature_input: FeatureEpisodeInput) -> dict[str, dict[str, int]]:
+    def fake_extract(
+        feature_input: FeatureEpisodeInput, provenance_path: str
+    ) -> dict[str, dict[str, int]]:
         assert feature_input == delegated_input
+        assert provenance_path == ""
         return expected_pre_final
 
     monkeypatch.setattr(baseline_features, "extract_pre_final_features", fake_extract)
