@@ -1,6 +1,5 @@
-"""Neutral portable run contracts; no agent-smell domain fields."""
+"""Deprecated compatibility facade; use :mod:`agent_reliability_protocol`."""
 
-from .contracts import Evidence, EvidenceReference, EvidenceStage, GateDecision, DecisionReason, EpisodeIdentity, RunManifest
-from .events import LifecycleEvent, export_jsonl, redact
+from agent_reliability_protocol import DecisionReason, Evidence, GateDecision, LifecycleEvent, RunManifest
 
-__all__ = ["DecisionReason", "EpisodeIdentity", "Evidence", "EvidenceReference", "EvidenceStage", "GateDecision", "LifecycleEvent", "RunManifest", "export_jsonl", "redact"]
+__all__ = ["DecisionReason", "Evidence", "GateDecision", "LifecycleEvent", "RunManifest"]

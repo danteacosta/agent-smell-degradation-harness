@@ -15,14 +15,14 @@ from eval.runner import run_eval_with_agent
 from eval.task_adapters import AcceptanceCriteriaAdapter, TraceabilityAdapter
 from pairs.loader import load_all_pairs
 from agent_reliability_protocol import GateDecision, RunManifest, export_contract
-from protocol_next.events import export_jsonl
 
 PREPILOT_INTENT_COUNT = 12
 PREPILOT_REPLICATIONS = 5
 
 
 def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
-    export_jsonl(path, rows)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(json.dumps(row, sort_keys=True) for row in rows) + "\n", encoding="utf-8")
 
 
 def _twelve_intents() -> list[dict[str, Any]]:
