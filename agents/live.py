@@ -70,10 +70,16 @@ class LiveAgent:
         *,
         transport: Transport | None = None,
         model: str = "gpt-4o-mini",
-        provider: Provider | str | None = None,
+        provider: Provider | str | None = "openai",
         require_creds: bool = True,
     ) -> None:
         self.model = model
+        if isinstance(provider, str) and provider != "openai":
+            raise ValueError(
+                "Provider instances are required for non-OpenAI providers; "
+                "pass ReplayProvider, MockProvider, or StubProvider instead"
+            )
+
         provider_label = provider if isinstance(provider, str) else None
         selected_provider = provider if not isinstance(provider, str) else None
 
@@ -81,6 +87,9 @@ class LiveAgent:
             raise ValueError("Provide either a provider or a transport, not both")
         if selected_provider is None and transport is not None:
             selected_provider = MockProvider(transport)
+            # The prompt-only transport is the legacy OpenAI injection seam.
+            # Preserve its historical metadata unless a provider object is explicit.
+            provider_label = "openai"
         if selected_provider is None:
             if require_creds:
                 if not _openai_available():

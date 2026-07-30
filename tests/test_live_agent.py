@@ -8,7 +8,7 @@ import pytest
 
 from agents.live import LiveAgent, NotConfiguredError
 from agents.mock_transport import MockTransport
-from agents.providers import ReplayProvider
+from agents.providers import MockProvider, ReplayProvider
 from pairs.loader import load_all_pairs
 
 
@@ -28,12 +28,22 @@ def test_mock_transport_generates_parseable_artifact():
     oracle = pair["oracle_spec"]["codegen"]
     response = json.dumps({**oracle, "extra_field": "ignored"})
     transport = MockTransport([response])
-    agent = LiveAgent(transport=transport, model="mock-model", provider="mock")
+    agent = LiveAgent(provider=MockProvider(transport), model="mock-model")
 
     artifact = agent.generate(pair, variant="clean", task_family="codegen")
 
     assert artifact["delay_threshold_minutes"] == 5
     assert artifact["comparator"] == ">"
+
+
+def test_explicit_mock_provider_records_mock_metadata():
+    pair = _rf09_pair()
+    oracle = pair["oracle_spec"]["codegen"]
+    agent = LiveAgent(provider=MockProvider(MockTransport([json.dumps(oracle)])))
+
+    _artifact, meta = agent.generate_with_meta(pair, variant="clean", task_family="codegen")
+
+    assert meta["provider"] == "mock"
 
 
 def test_generate_with_meta_returns_expected_keys():
@@ -100,6 +110,11 @@ def test_replay_provider_is_used_for_live_agent_calls():
     assert artifact == oracle
     assert provider.calls_made == 1
     assert meta["provider"] == "replay"
+
+
+def test_named_unconfigured_provider_is_rejected_without_openai_fallback():
+    with pytest.raises(ValueError, match="Provider instances"):
+        LiveAgent(provider="replay")
 
 
 def test_default_live_agent_routes_completion_to_openai(monkeypatch):

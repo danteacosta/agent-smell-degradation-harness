@@ -11,6 +11,7 @@ from typing import Any
 
 from agents.live import LiveAgent, _build_prompt
 from agents.mock_transport import MockTransport
+from agents.providers import MockProvider
 from agents.stub import StubAgent
 from eval.manifest import build_manifest
 from eval.metrics import aggregate_metrics
@@ -166,8 +167,7 @@ def run_mock_live(
     _write_manifest(run_dir, config, repo_root)
 
     responses = _build_mock_responses(pairs)
-    transport = MockTransport(responses)
-    agent = LiveAgent(transport=transport, model=model, provider="mock")
+    agent = LiveAgent(provider=MockProvider(MockTransport(responses)), model=model)
 
     metrics, episodes = run_eval_with_agent(
         agent,
