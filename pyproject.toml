@@ -30,6 +30,7 @@ include = [
   "gates*",
   "taxonomy*",
   "protocol*",
+  "protocol_next*",
   "baselines*",
   "mitigation*",
   "wedge*",
