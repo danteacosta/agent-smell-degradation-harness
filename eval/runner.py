@@ -11,6 +11,7 @@ from mitigation.pipeline import prepare_requirement
 from observability.tracing import ProvenanceRecorder
 from pairs.loader import load_all_pairs
 from taxonomy.label import label_degradation
+from protocol_next.events import export_jsonl
 from eval.task_adapters import (
     DEFAULT_TASK_ADAPTERS,
     DEFAULT_VALIDATORS,
@@ -168,9 +169,7 @@ def _run_episode(
 
 
 def _write_episodes_jsonl(episodes: list[dict[str, Any]], path: Path) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    lines = [json.dumps(ep, sort_keys=True) for ep in episodes]
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    export_jsonl(path, episodes)
 
 
 def run_eval(

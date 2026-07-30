@@ -14,14 +14,15 @@ from eval.manifest import build_manifest
 from eval.runner import run_eval_with_agent
 from eval.task_adapters import AcceptanceCriteriaAdapter, TraceabilityAdapter
 from pairs.loader import load_all_pairs
+from protocol_next.contracts import RunManifest
+from protocol_next.events import export_jsonl
 
 PREPILOT_INTENT_COUNT = 12
 PREPILOT_REPLICATIONS = 5
 
 
 def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("\n".join(json.dumps(row, sort_keys=True) for row in rows) + "\n")
+    export_jsonl(path, rows)
 
 
 def _twelve_intents() -> list[dict[str, Any]]:
@@ -88,6 +89,13 @@ def run_pre_pilot(*, output_root: Path, run_id: str = "prepilot-v4") -> dict[str
     }
     configuration_id = configuration_id_for(config)
     manifest = build_manifest(config, repo_root=Path(__file__).resolve().parents[1])
+    manifest["protocol_next"] = RunManifest(
+        run_id=run_id,
+        experiment_id="agent-smell-prepilot",
+        configuration=config,
+        input_hashes={"pairs": manifest["pairs_hash"]},
+        metadata={"format": "protocol_next"},
+    ).to_dict()
     run_dir.mkdir(parents=True, exist_ok=True)
     (run_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 
