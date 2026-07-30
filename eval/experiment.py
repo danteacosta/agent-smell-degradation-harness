@@ -240,7 +240,10 @@ def run_experiment(
         episodes_path = rep_dir / "episodes.jsonl"
         traces_dir = rep_dir / "traces"
 
-        metrics, episodes = run_eval(
+        agent = StubAgent() if stub_as_live else LiveAgent(model=model)
+        metrics, episodes = run_eval_with_agent(
+            agent,
+            pairs=None,
             output_path=metrics_path,
             traces_dir=traces_dir,
             episodes_path=episodes_path,
@@ -286,7 +289,10 @@ def run_experiment(
     experiment_run_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
     if also_last_run:
-        run_eval(
+        agent = StubAgent() if stub_as_live else LiveAgent(model=model)
+        run_eval_with_agent(
+            agent,
+            pairs=None,
             output_path=eval_dir / "last_run.json",
             traces_dir=eval_dir / "traces",
             episodes_path=eval_dir / "last_run_episodes.jsonl",

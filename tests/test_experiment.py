@@ -96,3 +96,31 @@ def test_experiment_replications_add_replication_id(tmp_path):
     episodes = _load_episodes(eval_dir / "experiment_run_episodes.jsonl")
     replication_ids = {ep["replication_id"] for ep in episodes}
     assert replication_ids == {0, 1}
+
+
+def test_live_experiment_routes_evaluation_through_live_agent(tmp_path, monkeypatch):
+    repo = tmp_path / "repo"
+    (repo / "eval").mkdir(parents=True)
+    captured = {}
+
+    class FakeLiveAgent:
+        def __init__(self, *, model):
+            captured["model"] = model
+
+    def fake_run_eval_with_agent(agent, **kwargs):
+        captured["agent"] = agent
+        captured["kwargs"] = kwargs
+        return {"paired_degradation_rate": 0.0}, []
+
+    monkeypatch.setattr("eval.experiment.LiveAgent", FakeLiveAgent)
+    monkeypatch.setattr("eval.experiment.run_eval_with_agent", fake_run_eval_with_agent)
+    monkeypatch.setattr(
+        "eval.experiment.run_eval",
+        lambda **_kwargs: pytest.fail("live experiment must not use StubAgent runner"),
+    )
+
+    report = run_experiment(repo_root=repo, model="provider-model")
+
+    assert report["mode"] == "live"
+    assert captured["model"] == "provider-model"
+    assert isinstance(captured["agent"], FakeLiveAgent)
