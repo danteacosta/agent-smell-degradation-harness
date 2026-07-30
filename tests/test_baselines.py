@@ -38,7 +38,12 @@ def test_extract_features_shape(tmp_path):
     assert "smell_present" in feats["static_smell"]
     assert "oracle_passed" in feats["output_only"]
     assert feats["operational"]["event_count"] >= 1
-    assert "constraint_match" in feats["provenance_semantic"]
+    assert feats["provenance_semantic"] == {
+        "constraint_event_present": 1,
+        "constraint_field_count": 2,
+        "constraint_has_comparator": 0,
+        "semantic_event_count": 1,
+    }
 
 
 def test_compare_baselines_ranks_provenance_on_smell_blind(tmp_path):

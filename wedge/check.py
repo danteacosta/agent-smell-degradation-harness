@@ -6,10 +6,10 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from eval.mutation import score_test_gen_mutation
-from eval.oracles import score_artifact
+from label_plane import score_artifact, score_test_gen_mutation
 from mitigation.detect import detect_smell
 from observability.features import extract_tier_a_features
+from feature_plane import semantic_risk
 from wedge.decisions import Decision
 
 FIXTURES: dict[str, dict[str, Any]] = {
@@ -150,10 +150,7 @@ def _tier_a_risk(features: dict[str, dict[str, float | int]]) -> float:
     semantic = features.get("provenance_semantic", {})
     static = features.get("static_smell", {})
     risk = float(static.get("smell_present", 0))
-    if semantic.get("constraint_match") == 0:
-        risk += 0.5
-    if semantic.get("is_weak_comparator"):
-        risk += 0.5
+    risk += semantic_risk(semantic)
     return min(risk, 1.0)
 
 

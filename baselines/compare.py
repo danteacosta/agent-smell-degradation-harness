@@ -4,6 +4,7 @@ from typing import Any
 
 from baselines.features import extract_features
 from baselines.score import mann_whitney_auroc
+from feature_plane import semantic_risk
 
 FAMILIES = ("static_smell", "output_only", "operational", "provenance_semantic")
 
@@ -21,9 +22,7 @@ def _family_score(family: str, features: dict[str, Any]) -> float:
     if family == "operational":
         return float(family_features["event_count"]) + float(family_features["latency_ms"]) / 1000.0
     if family == "provenance_semantic":
-        if family_features.get("is_weak_comparator"):
-            return 1.0
-        return float(1 - family_features.get("constraint_match", 0))
+        return semantic_risk(family_features)
     return 0.0
 
 

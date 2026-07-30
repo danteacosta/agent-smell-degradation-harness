@@ -6,6 +6,8 @@ import re
 import time
 from typing import Any, Protocol
 
+from agents.providers import MockProvider, OpenAIProvider, Provider, ProviderRequest
+
 
 class NotConfiguredError(Exception):
     """Raised when live LLM adapter dependencies or credentials are missing."""
@@ -68,36 +70,49 @@ class LiveAgent:
         *,
         transport: Transport | None = None,
         model: str = "gpt-4o-mini",
-        provider: str = "openai",
+        provider: Provider | str | None = "openai",
         require_creds: bool = True,
     ) -> None:
         self.model = model
-        self.provider = provider
-        self._transport = transport
-
-        if transport is not None:
-            return
-
-        if require_creds:
-            if not _openai_available():
-                raise NotConfiguredError(
-                    "openai package not installed; install with pip install -e '.[live]'"
-                )
-            api_key = _resolve_api_key()
-            if not api_key:
-                raise NotConfiguredError(
-                    "Missing API key; set OPENAI_API_KEY or AGENT_LIVE_API_KEY"
-                )
-            self._api_key = api_key
-
-    def _complete(self, prompt: str) -> tuple[str, float]:
-        start = time.perf_counter()
-        if self._transport is not None:
-            response = self._transport.complete(prompt)
-        else:
-            raise NotConfiguredError(
-                "LiveAgent.generate requires an injected transport or live API wiring"
+        if isinstance(provider, str) and provider != "openai":
+            raise ValueError(
+                "Provider instances are required for non-OpenAI providers; "
+                "pass ReplayProvider, MockProvider, or StubProvider instead"
             )
+
+        provider_label = provider if isinstance(provider, str) else None
+        selected_provider = provider if not isinstance(provider, str) else None
+
+        if selected_provider is not None and transport is not None:
+            raise ValueError("Provide either a provider or a transport, not both")
+        if selected_provider is None and transport is not None:
+            selected_provider = MockProvider(transport)
+            # The prompt-only transport is the legacy OpenAI injection seam.
+            # Preserve its historical metadata unless a provider object is explicit.
+            provider_label = "openai"
+        if selected_provider is None:
+            if require_creds:
+                if not _openai_available():
+                    raise NotConfiguredError(
+                        "openai package not installed; install with pip install -e '.[live]'"
+                    )
+                api_key = _resolve_api_key()
+                if not api_key:
+                    raise NotConfiguredError(
+                        "Missing API key; set OPENAI_API_KEY or AGENT_LIVE_API_KEY"
+                    )
+            else:
+                api_key = _resolve_api_key()
+                if not api_key:
+                    raise NotConfiguredError("OpenAIProvider requires an API key")
+            selected_provider = OpenAIProvider(api_key=api_key, model=model)
+
+        self._provider = selected_provider
+        self.provider = provider_label or selected_provider.name
+
+    def _complete(self, request: ProviderRequest) -> tuple[str, float]:
+        start = time.perf_counter()
+        response = self._provider.complete(request)
         latency_ms = (time.perf_counter() - start) * 1000.0
         return response, latency_ms
 
@@ -113,7 +128,14 @@ class LiveAgent:
         total_latency_ms = 0.0
 
         for attempt in range(self.MAX_PARSE_RETRIES + 1):
-            response, latency_ms = self._complete(prompt)
+            response, latency_ms = self._complete(
+                ProviderRequest(
+                    prompt=prompt,
+                    pair=pair,
+                    variant=variant,
+                    task_family=task_family,
+                )
+            )
             total_latency_ms += latency_ms
             try:
                 artifact = _extract_json(response)

@@ -7,7 +7,8 @@ from pathlib import Path
 
 import pytest
 
-from eval.experiment import run_experiment
+from eval.experiment import main, run_experiment
+from eval.task_adapters import AcceptanceCriteriaAdapter
 
 
 def _load_episodes(path: Path) -> list[dict]:
@@ -81,6 +82,9 @@ def test_experiment_also_last_run_overwrites_when_requested(tmp_path):
     written = json.loads(last_run.read_text())
     assert "sentinel" not in written
     assert written["paired_degradation_rate"] == 0.0
+    experiment_episode = _load_episodes(eval_dir / "experiment_run_episodes.jsonl")[0]
+    last_run_episode = _load_episodes(eval_dir / "last_run_episodes.jsonl")[0]
+    assert experiment_episode["episode_id"] != last_run_episode["episode_id"]
 
 
 def test_experiment_replications_add_replication_id(tmp_path):
@@ -96,3 +100,81 @@ def test_experiment_replications_add_replication_id(tmp_path):
     episodes = _load_episodes(eval_dir / "experiment_run_episodes.jsonl")
     replication_ids = {ep["replication_id"] for ep in episodes}
     assert replication_ids == {0, 1}
+
+
+def test_mock_live_executes_each_requested_replication_with_distinct_identity(tmp_path):
+    repo = tmp_path / "repo"
+    (repo / "eval").mkdir(parents=True)
+
+    report = run_experiment(
+        mock_live=True,
+        replications=2,
+        repo_root=repo,
+        run_id="mock-identity",
+    )
+
+    episodes = _load_episodes(repo / "runs" / "mock-identity" / "episodes.jsonl")
+    assert report["episode_count"] == len(episodes)
+    assert {episode["replication_id"] for episode in episodes} == {0, 1}
+    assert len({episode["episode_id"] for episode in episodes}) == len(episodes)
+
+
+def test_experiment_forwards_configured_adapters_to_exclude_codegen(tmp_path):
+    repo = tmp_path / "repo"
+    (repo / "eval").mkdir(parents=True)
+
+    run_experiment(
+        stub_as_live=True,
+        repo_root=repo,
+        task_adapters=(AcceptanceCriteriaAdapter(),),
+        validators=(),
+    )
+
+    episodes = _load_episodes(repo / "eval" / "experiment_run_episodes.jsonl")
+    assert {episode["task_family"] for episode in episodes} == {"test_gen"}
+
+
+def test_experiment_cli_builds_requested_adapter_and_validator_configuration(
+    tmp_path,
+    monkeypatch,
+):
+    captured = {}
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(
+        "eval.experiment.run_experiment",
+        lambda **kwargs: captured.update(kwargs),
+    )
+
+    main(["--stub-as-live", "--task-adapters", "test_gen", "--validators"])
+
+    assert [adapter.task_family for adapter in captured["task_adapters"]] == ["test_gen"]
+    assert captured["validators"] == ()
+
+
+def test_live_experiment_routes_evaluation_through_live_agent(tmp_path, monkeypatch):
+    repo = tmp_path / "repo"
+    (repo / "eval").mkdir(parents=True)
+    captured = {}
+
+    class FakeLiveAgent:
+        def __init__(self, *, model):
+            captured["model"] = model
+
+    def fake_run_eval_with_agent(agent, **kwargs):
+        captured["agent"] = agent
+        captured["kwargs"] = kwargs
+        return {"paired_degradation_rate": 0.0}, []
+
+    monkeypatch.setattr("eval.experiment.LiveAgent", FakeLiveAgent)
+    monkeypatch.setattr("eval.experiment.run_eval_with_agent", fake_run_eval_with_agent)
+    monkeypatch.setattr(
+        "eval.experiment.run_eval",
+        lambda **_kwargs: pytest.fail("live experiment must not use StubAgent runner"),
+    )
+
+    report = run_experiment(repo_root=repo, model="provider-model")
+
+    assert report["mode"] == "live"
+    assert captured["model"] == "provider-model"
+    assert isinstance(captured["agent"], FakeLiveAgent)

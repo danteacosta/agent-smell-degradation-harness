@@ -1,4 +1,4 @@
-.PHONY: test eval simulate gate analysis experiment mitigation dissertation all dry-run thesis-analysis wedge-check
+.PHONY: test eval simulate gate analysis experiment mitigation dissertation all dry-run thesis-analysis wedge-check prepilot
 test:
 	pytest -q
 eval:
@@ -15,6 +15,8 @@ dry-run:
 	python -m eval.experiment --dry-run
 thesis-analysis:
 	python -m eval.thesis_analysis --episodes eval/last_run_episodes.jsonl
+prepilot:
+	python -m eval.prepilot
 mitigation:
 	python -m eval.mitigation_report
 dissertation:

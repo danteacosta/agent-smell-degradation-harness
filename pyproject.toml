@@ -4,6 +4,7 @@ version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = [
   "pyyaml>=6.0",
+  "agent-reliability-protocol @ git+https://github.com/danteacosta/agent-reliability-protocol.git@v0.1.1",
 ]
 
 [project.optional-dependencies]
@@ -24,10 +25,13 @@ include = [
   "pairs*",
   "agents*",
   "observability*",
+  "feature_plane*",
+  "label_plane*",
   "eval*",
   "gates*",
   "taxonomy*",
   "protocol*",
+  "protocol_next*",
   "baselines*",
   "mitigation*",
   "wedge*",

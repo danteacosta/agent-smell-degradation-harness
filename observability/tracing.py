@@ -9,8 +9,14 @@ Tier = Literal["A", "B"]
 
 
 class ProvenanceRecorder:
-    def __init__(self, path: Path | str) -> None:
+    def __init__(
+        self,
+        path: Path | str,
+        *,
+        episode_identity: dict[str, Any] | None = None,
+    ) -> None:
         self._path = Path(path)
+        self._episode_identity = episode_identity
         self._path.parent.mkdir(parents=True, exist_ok=True)
         self._file: TextIO = self._path.open("a", encoding="utf-8")
 
@@ -55,6 +61,8 @@ class ProvenanceRecorder:
             "tier": tier,
             "ts": datetime.now(timezone.utc).isoformat(),
         }
+        if self._episode_identity is not None:
+            record["episode_identity"] = self._episode_identity
         self._file.write(json.dumps(record) + "\n")
 
     def close(self) -> None:
