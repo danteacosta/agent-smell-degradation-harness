@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any, Sequence
 
 from agents.stub import StubAgent
+from eval.identity import configuration_id_for, create_episode_identity, new_run_id
 from eval.metrics import aggregate_metrics
 from mitigation.pipeline import prepare_requirement
 from observability.tracing import ProvenanceRecorder
@@ -18,10 +19,6 @@ from eval.task_adapters import (
 )
 
 VARIANTS = ("clean", "smelly")
-
-
-def _episode_id(intent_id: str, task_family: str, variant: str) -> str:
-    return f"{intent_id}_{task_family}_{variant}"
 
 
 def _interpret_requirement(
@@ -55,11 +52,25 @@ def _run_episode(
     traces_dir: Path,
     skip_semantic_provenance: bool,
     policy: str,
+    experiment_id: str,
+    run_id: str,
+    replication_id: int,
+    configuration_id: str,
 ) -> dict[str, Any]:
     task_family = task_adapter.task_family
     intent_id = pair["intent_id"]
-    episode_id = _episode_id(intent_id, task_family, variant)
-    trace_path = traces_dir / f"{episode_id}.jsonl"
+    identity = create_episode_identity(
+        experiment_id=experiment_id,
+        run_id=run_id,
+        replication_id=replication_id,
+        intent_id=intent_id,
+        workload_id=str(pair.get("workload_id", intent_id)),
+        variant_id=variant,
+        task_id=task_family,
+        configuration_id=configuration_id,
+    )
+    episode_id = identity.episode_id
+    trace_path = traces_dir / identity.trace_name
 
     prepared = prepare_requirement(pair, variant=variant, policy=policy)
     requirement_text = prepared.text
@@ -68,7 +79,7 @@ def _run_episode(
     smell_type = "" if variant == "clean" else pair["smell"]["type"]
 
     has_semantic_provenance = False
-    rec = ProvenanceRecorder(trace_path)
+    rec = ProvenanceRecorder(trace_path, episode_identity=identity.as_dict())
     rec.operational(
         "input.received",
         {
@@ -136,8 +147,7 @@ def _run_episode(
     rec.close()
 
     episode: dict[str, Any] = {
-        "episode_id": episode_id,
-        "intent_id": intent_id,
+        **identity.as_dict(),
         "variant": variant,
         "task_family": task_family,
         "smell": smell,
@@ -173,8 +183,21 @@ def run_eval(
     episodes_path: Path | None = None,
     task_adapters: Sequence[TaskAdapter] = DEFAULT_TASK_ADAPTERS,
     validators: Sequence[EpisodeValidator] = DEFAULT_VALIDATORS,
+    experiment_id: str = "evaluation",
+    run_id: str | None = None,
+    replication_id: int = 0,
+    configuration_id: str | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     agent = StubAgent(failure_mode=failure_mode)
+    if configuration_id is None:
+        configuration_id = configuration_id_for(
+            {
+                "policy": policy,
+                "failure_mode": failure_mode,
+                "skip_semantic_provenance": skip_semantic_provenance,
+                "task_ids": [adapter.task_family for adapter in task_adapters],
+            }
+        )
     return run_eval_with_agent(
         agent,
         pairs=load_all_pairs(),
@@ -185,6 +208,10 @@ def run_eval(
         episodes_path=episodes_path,
         task_adapters=task_adapters,
         validators=validators,
+        experiment_id=experiment_id,
+        run_id=run_id,
+        replication_id=replication_id,
+        configuration_id=configuration_id,
     )
 
 
@@ -199,10 +226,18 @@ def run_eval_with_agent(
     episodes_path: Path | None = None,
     task_adapters: Sequence[TaskAdapter] = DEFAULT_TASK_ADAPTERS,
     validators: Sequence[EpisodeValidator] = DEFAULT_VALIDATORS,
+    experiment_id: str = "evaluation",
+    run_id: str | None = None,
+    replication_id: int = 0,
+    configuration_id: str | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     traces_dir.mkdir(parents=True, exist_ok=True)
     if pairs is None:
         pairs = load_all_pairs()
+    if run_id is None:
+        run_id = new_run_id()
+    if configuration_id is None:
+        configuration_id = configuration_id_for({"policy": policy})
     episodes: list[dict[str, Any]] = []
 
     for pair in pairs:
@@ -217,6 +252,10 @@ def run_eval_with_agent(
                         traces_dir,
                         skip_semantic_provenance,
                         policy,
+                        experiment_id,
+                        run_id,
+                        replication_id,
+                        configuration_id,
                     )
                 )
 

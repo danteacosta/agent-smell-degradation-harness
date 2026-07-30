@@ -81,6 +81,9 @@ def test_experiment_also_last_run_overwrites_when_requested(tmp_path):
     written = json.loads(last_run.read_text())
     assert "sentinel" not in written
     assert written["paired_degradation_rate"] == 0.0
+    experiment_episode = _load_episodes(eval_dir / "experiment_run_episodes.jsonl")[0]
+    last_run_episode = _load_episodes(eval_dir / "last_run_episodes.jsonl")[0]
+    assert experiment_episode["episode_id"] != last_run_episode["episode_id"]
 
 
 def test_experiment_replications_add_replication_id(tmp_path):
@@ -96,6 +99,23 @@ def test_experiment_replications_add_replication_id(tmp_path):
     episodes = _load_episodes(eval_dir / "experiment_run_episodes.jsonl")
     replication_ids = {ep["replication_id"] for ep in episodes}
     assert replication_ids == {0, 1}
+
+
+def test_mock_live_executes_each_requested_replication_with_distinct_identity(tmp_path):
+    repo = tmp_path / "repo"
+    (repo / "eval").mkdir(parents=True)
+
+    report = run_experiment(
+        mock_live=True,
+        replications=2,
+        repo_root=repo,
+        run_id="mock-identity",
+    )
+
+    episodes = _load_episodes(repo / "runs" / "mock-identity" / "episodes.jsonl")
+    assert report["episode_count"] == len(episodes)
+    assert {episode["replication_id"] for episode in episodes} == {0, 1}
+    assert len({episode["episode_id"] for episode in episodes}) == len(episodes)
 
 
 def test_live_experiment_routes_evaluation_through_live_agent(tmp_path, monkeypatch):

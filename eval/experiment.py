@@ -13,10 +13,13 @@ from agents.live import LiveAgent, _build_prompt
 from agents.mock_transport import MockTransport
 from agents.providers import MockProvider
 from agents.stub import StubAgent
+from eval.identity import configuration_id_for, new_run_id
 from eval.manifest import build_manifest
 from eval.metrics import aggregate_metrics
 from eval.runner import VARIANTS, run_eval, run_eval_with_agent
 from eval.task_adapters import DEFAULT_TASK_ADAPTERS
+
+EXPERIMENT_ID = "agent-smell-degradation"
 
 
 def _resolve_api_key() -> str | None:
@@ -40,7 +43,7 @@ Live experiment (requires openai + key):
 
 
 def _make_run_id() -> str:
-    return datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+    return f"{datetime.now(UTC).strftime('%Y%m%dT%H%M%SZ')}-{new_run_id()}"
 
 
 def _filter_pairs(
@@ -56,15 +59,9 @@ def _filter_pairs(
 def _write_episodes_jsonl(
     episodes: list[dict[str, Any]],
     path: Path,
-    *,
-    replication_id: int = 0,
 ) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    lines = []
-    for episode in episodes:
-        row = dict(episode)
-        row["replication_id"] = replication_id
-        lines.append(json.dumps(row, sort_keys=True))
+    lines = [json.dumps(episode, sort_keys=True) for episode in episodes]
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -159,7 +156,6 @@ def run_mock_live(
 
     config = {
         "mode": "mock-live",
-        "run_id": run_id,
         "model": model,
         "policy": policy,
         "seed": seed,
@@ -169,17 +165,27 @@ def run_mock_live(
     }
     _write_manifest(run_dir, config, repo_root)
 
-    responses = _build_mock_responses(pairs)
-    agent = LiveAgent(provider=MockProvider(MockTransport(responses)), model=model)
-
-    metrics, episodes = run_eval_with_agent(
-        agent,
-        pairs=pairs,
-        policy=policy,
-        output_path=run_dir / "metrics.json",
-        traces_dir=traces_dir,
-        episodes_path=run_dir / "episodes.jsonl",
-    )
+    configuration_id = configuration_id_for(config)
+    episodes: list[dict[str, Any]] = []
+    for replication_id in range(replications):
+        agent = LiveAgent(
+            provider=MockProvider(MockTransport(_build_mock_responses(pairs))),
+            model=model,
+        )
+        _metrics, replication_episodes = run_eval_with_agent(
+            agent,
+            pairs=pairs,
+            policy=policy,
+            output_path=run_dir / f"metrics_rep_{replication_id}.json",
+            traces_dir=traces_dir / f"rep_{replication_id}",
+            experiment_id=EXPERIMENT_ID,
+            run_id=run_id,
+            replication_id=replication_id,
+            configuration_id=configuration_id,
+        )
+        episodes.extend(replication_episodes)
+    metrics = aggregate_metrics(episodes)
+    (run_dir / "metrics.json").write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
     _write_episodes_jsonl(episodes, run_dir / "episodes.jsonl")
 
     return {
@@ -207,6 +213,8 @@ def run_experiment(
 ) -> dict[str, Any]:
     if repo_root is None:
         repo_root = Path(__file__).resolve().parents[1]
+    if run_id is None:
+        run_id = _make_run_id()
 
     if dry_run:
         return run_dry_run(
@@ -237,6 +245,16 @@ def run_experiment(
     runs: list[dict[str, Any]] = []
     combined_episodes: list[dict[str, Any]] = []
 
+    config = {
+        "mode": "stub-as-live" if stub_as_live else "live",
+        "model": model,
+        "policy": policy,
+        "seed": seed,
+        "replications": replications,
+        "intents": intents or [],
+    }
+    configuration_id = configuration_id_for(config)
+
     for replication_id in range(replications):
         rep_dir = work_dir / f"rep_{replication_id}"
         metrics_path = rep_dir / "metrics.json"
@@ -251,19 +269,13 @@ def run_experiment(
             traces_dir=traces_dir,
             episodes_path=episodes_path,
             policy=policy,
-        )
-        _write_episodes_jsonl(
-            episodes,
-            episodes_path,
+            experiment_id=EXPERIMENT_ID,
+            run_id=run_id,
             replication_id=replication_id,
+            configuration_id=configuration_id,
         )
-
-        enriched = []
-        for episode in episodes:
-            row = dict(episode)
-            row["replication_id"] = replication_id
-            enriched.append(row)
-        combined_episodes.extend(enriched)
+        _write_episodes_jsonl(episodes, episodes_path)
+        combined_episodes.extend(episodes)
 
         runs.append(
             {
@@ -283,6 +295,9 @@ def run_experiment(
 
     report: dict[str, Any] = {
         "mode": "stub-as-live" if stub_as_live else "live",
+        "experiment_id": EXPERIMENT_ID,
+        "run_id": run_id,
+        "configuration_id": configuration_id,
         "replications": replications,
         "runs": runs,
         "episodes_path": str(experiment_episodes_path.relative_to(repo_root)),
@@ -300,6 +315,9 @@ def run_experiment(
             traces_dir=eval_dir / "traces",
             episodes_path=eval_dir / "last_run_episodes.jsonl",
             policy=policy,
+            experiment_id=EXPERIMENT_ID,
+            run_id=f"{run_id}-last-run",
+            configuration_id=configuration_id,
         )
 
     return report

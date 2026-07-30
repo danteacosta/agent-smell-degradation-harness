@@ -54,7 +54,7 @@ def test_runner_records_ordered_lifecycle_with_pre_final_interpretation(tmp_path
 
     events = [
         json.loads(line)
-        for line in (tmp_path / "traces" / "RF-LIFECYCLE_codegen_clean.jsonl")
+        for line in next((tmp_path / "traces").glob("*RF-LIFECYCLE*clean*codegen*.jsonl"))
         .read_text(encoding="utf-8")
         .splitlines()
     ]
