@@ -14,7 +14,7 @@ from eval.manifest import build_manifest
 from eval.runner import run_eval_with_agent
 from eval.task_adapters import AcceptanceCriteriaAdapter, TraceabilityAdapter
 from pairs.loader import load_all_pairs
-from protocol_next.contracts import RunManifest
+from agent_reliability_protocol import GateDecision, RunManifest, export_contract
 from protocol_next.events import export_jsonl
 
 PREPILOT_INTENT_COUNT = 12
@@ -89,15 +89,19 @@ def run_pre_pilot(*, output_root: Path, run_id: str = "prepilot-v4") -> dict[str
     }
     configuration_id = configuration_id_for(config)
     manifest = build_manifest(config, repo_root=Path(__file__).resolve().parents[1])
-    manifest["protocol_next"] = RunManifest(
+    protocol_manifest = RunManifest(
         run_id=run_id,
-        experiment_id="agent-smell-prepilot",
-        configuration=config,
-        input_hashes={"pairs": manifest["pairs_hash"]},
+        started_at=manifest["timestamp"],
+        decision=GateDecision.passed(),
+        identifiers={"experiment_id": "agent-smell-prepilot"},
+        hashes={"pairs": manifest["pairs_hash"]},
         metadata={"format": "protocol_next"},
-    ).to_dict()
+        configuration=config,
+    )
+    manifest["protocol_next"] = protocol_manifest.to_dict()
     run_dir.mkdir(parents=True, exist_ok=True)
     (run_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    export_contract(protocol_manifest, run_dir / "protocol_manifest.json")
 
     episodes: list[dict[str, Any]] = []
     for replication_id in range(PREPILOT_REPLICATIONS):
