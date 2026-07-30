@@ -8,6 +8,8 @@ Design for this wedge: [wedge-first reliability check spec](docs/superpowers/spe
 
 Offline twin of [`rag-reliability-harness`](https://github.com/danteacosta/rag-reliability-harness) for measuring requirement-smell-induced semantic degradation in LLM agent episodes.
 
+Evaluation task coverage is configured through domain adapters: acceptance-criteria generation is the primary task, traceability is a completed-episode validator, and code generation remains an optional adapter. The default configuration preserves the existing `codegen` and `test_gen` benchmark coverage.
+
 [![eval-gate](.github/workflows/eval.yml/badge.svg)](.github/workflows/eval.yml)
 
 ## Wedge check (local / CI)

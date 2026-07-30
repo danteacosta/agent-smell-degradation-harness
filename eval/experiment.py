@@ -15,7 +15,8 @@ from agents.providers import MockProvider
 from agents.stub import StubAgent
 from eval.manifest import build_manifest
 from eval.metrics import aggregate_metrics
-from eval.runner import TASK_FAMILIES, VARIANTS, run_eval, run_eval_with_agent
+from eval.runner import VARIANTS, run_eval, run_eval_with_agent
+from eval.task_adapters import DEFAULT_TASK_ADAPTERS
 
 
 def _resolve_api_key() -> str | None:
@@ -79,7 +80,8 @@ def _build_mock_responses(pairs: list[dict[str, Any]]) -> list[str]:
     weaken_agent = StubAgent(failure_mode="smell-blind")
     responses: list[str] = []
     for pair in pairs:
-        for task_family in TASK_FAMILIES:
+        for task_adapter in DEFAULT_TASK_ADAPTERS:
+            task_family = task_adapter.task_family
             for variant in VARIANTS:
                 if variant == "clean":
                     artifact = copy.deepcopy(pair["oracle_spec"][task_family])
@@ -114,7 +116,8 @@ def run_dry_run(
     prompts_dir.mkdir(parents=True, exist_ok=True)
 
     for pair in pairs:
-        for task_family in TASK_FAMILIES:
+        for task_adapter in DEFAULT_TASK_ADAPTERS:
+            task_family = task_adapter.task_family
             for variant in VARIANTS:
                 prompt = _build_prompt(pair, variant, task_family)
                 filename = f"{pair['intent_id']}_{task_family}_{variant}.txt"

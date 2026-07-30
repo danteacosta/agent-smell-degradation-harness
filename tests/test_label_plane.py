@@ -17,7 +17,7 @@ def test_label_plane_reexports_existing_evaluation_scorers():
 
 def test_production_scorer_callers_depend_on_label_plane():
     repo_root = Path(__file__).resolve().parents[1]
-    for relative_path in ("eval/runner.py", "wedge/check.py"):
+    for relative_path in ("eval/task_adapters.py", "wedge/check.py"):
         tree = ast.parse((repo_root / relative_path).read_text(encoding="utf-8"))
         imports = [
             node

@@ -2,17 +2,21 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, Sequence
 
 from agents.stub import StubAgent
 from eval.metrics import aggregate_metrics
-from label_plane import score_artifact, score_test_gen_mutation
 from mitigation.pipeline import prepare_requirement
 from observability.tracing import ProvenanceRecorder
 from pairs.loader import load_all_pairs
 from taxonomy.label import label_degradation
+from eval.task_adapters import (
+    DEFAULT_TASK_ADAPTERS,
+    DEFAULT_VALIDATORS,
+    EpisodeValidator,
+    TaskAdapter,
+)
 
-TASK_FAMILIES = ("codegen", "test_gen")
 VARIANTS = ("clean", "smelly")
 
 
@@ -45,13 +49,14 @@ def _extract_constraints(interpretation: dict[str, str]) -> dict[str, str]:
 
 def _run_episode(
     pair: dict[str, Any],
-    task_family: str,
+    task_adapter: TaskAdapter,
     variant: str,
     agent: StubAgent,
     traces_dir: Path,
     skip_semantic_provenance: bool,
     policy: str,
 ) -> dict[str, Any]:
+    task_family = task_adapter.task_family
     intent_id = pair["intent_id"]
     episode_id = _episode_id(intent_id, task_family, variant)
     trace_path = traces_dir / f"{episode_id}.jsonl"
@@ -102,31 +107,30 @@ def _run_episode(
         {"episode_id": episode_id, "artifact_field_count": len(artifact)},
         tier="A",
     )
-    oracle_spec = pair["oracle_spec"][task_family]
-    oracle_result = score_artifact(intent_id, task_family, artifact, oracle_spec)
-    semantic_label = "ok" if oracle_result.passed else "degraded"
+    task_evaluation = task_adapter.evaluate(
+        intent_id=intent_id,
+        artifact=artifact,
+        oracle_spec=pair["oracle_spec"],
+    )
+    semantic_label = "ok" if task_evaluation.passed else "degraded"
     degradation = label_degradation(
         intent_id=intent_id,
         smell_type=smell_type,
-        oracle_passed=oracle_result.passed,
+        oracle_passed=task_evaluation.passed,
         task_family=task_family,
     )
 
     rec.operational("latency", {"ms": 0, "episode_id": episode_id}, tier="A")
-    mutation_score = None
-    if task_family == "test_gen":
-        mutation_score = score_test_gen_mutation(intent_id, artifact, pair["oracle_spec"])
-
     rec.oracle_verdict(
         {
-            "passed": oracle_result.passed,
+            "passed": task_evaluation.passed,
             "task_family": task_family,
-            "mutation_score": mutation_score,
+            "mutation_score": task_evaluation.mutation_score,
         }
     )
     rec.operational(
         "evaluation.completed",
-        {"episode_id": episode_id, "passed": oracle_result.passed},
+        {"episode_id": episode_id, "passed": task_evaluation.passed},
         tier="B",
     )
     rec.close()
@@ -141,15 +145,15 @@ def _run_episode(
         "policy": policy,
         "mitigation_meta": prepared.mitigation_meta,
         "artifact": artifact,
-        "oracle_passed": oracle_result.passed,
+        "oracle_passed": task_evaluation.passed,
         "semantic_label": semantic_label,
         "provenance_path": str(trace_path),
         "has_semantic_provenance": has_semantic_provenance,
         "degradation_mode": degradation.mode,
         "degradation_severity": degradation.severity,
     }
-    if mutation_score is not None:
-        episode["mutation_score"] = mutation_score
+    if task_evaluation.mutation_score is not None:
+        episode["mutation_score"] = task_evaluation.mutation_score
     return episode
 
 
@@ -167,6 +171,8 @@ def run_eval(
     output_path: Path,
     traces_dir: Path,
     episodes_path: Path | None = None,
+    task_adapters: Sequence[TaskAdapter] = DEFAULT_TASK_ADAPTERS,
+    validators: Sequence[EpisodeValidator] = DEFAULT_VALIDATORS,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     agent = StubAgent(failure_mode=failure_mode)
     return run_eval_with_agent(
@@ -177,6 +183,8 @@ def run_eval(
         output_path=output_path,
         traces_dir=traces_dir,
         episodes_path=episodes_path,
+        task_adapters=task_adapters,
+        validators=validators,
     )
 
 
@@ -189,6 +197,8 @@ def run_eval_with_agent(
     output_path: Path,
     traces_dir: Path,
     episodes_path: Path | None = None,
+    task_adapters: Sequence[TaskAdapter] = DEFAULT_TASK_ADAPTERS,
+    validators: Sequence[EpisodeValidator] = DEFAULT_VALIDATORS,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     traces_dir.mkdir(parents=True, exist_ok=True)
     if pairs is None:
@@ -196,12 +206,12 @@ def run_eval_with_agent(
     episodes: list[dict[str, Any]] = []
 
     for pair in pairs:
-        for task_family in TASK_FAMILIES:
+        for task_adapter in task_adapters:
             for variant in VARIANTS:
                 episodes.append(
                     _run_episode(
                         pair,
-                        task_family,
+                        task_adapter,
                         variant,
                         agent,
                         traces_dir,
@@ -209,6 +219,14 @@ def run_eval_with_agent(
                         policy,
                     )
                 )
+
+    for episode in episodes:
+        validation = {
+            validator.name: validator.validate(Path(episode["provenance_path"]))
+            for validator in validators
+        }
+        if "traceability" in validation:
+            episode["traceability_valid"] = validation["traceability"]
 
     metrics = aggregate_metrics(episodes)
     output_path.parent.mkdir(parents=True, exist_ok=True)
