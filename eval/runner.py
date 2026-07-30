@@ -20,6 +20,21 @@ def _episode_id(intent_id: str, task_family: str, variant: str) -> str:
     return f"{intent_id}_{task_family}_{variant}"
 
 
+def _interpret_requirement(
+    requirement_text: str,
+    task_family: str,
+    variant: str,
+    policy: str,
+) -> dict[str, str]:
+    """Capture the input-derived interpretation available before generation."""
+    return {
+        "requirement_text": requirement_text,
+        "task_family": task_family,
+        "variant": variant,
+        "policy": policy,
+    }
+
+
 def _run_episode(
     pair: dict[str, Any],
     task_family: str,
@@ -39,10 +54,45 @@ def _run_episode(
     smell = None if variant == "clean" else pair["smell"]
     smell_type = "" if variant == "clean" else pair["smell"]["type"]
 
+    has_semantic_provenance = False
+    rec = ProvenanceRecorder(trace_path)
+    rec.operational(
+        "input.received",
+        {
+            "episode_id": episode_id,
+            "intent_id": intent_id,
+            "task_family": task_family,
+            "variant": variant,
+        },
+        tier="A",
+    )
+    interpretation = _interpret_requirement(
+        requirement_text,
+        task_family,
+        variant,
+        policy,
+    )
+    rec.semantic("interpretation.completed", interpretation, tier="A")
+    if not skip_semantic_provenance:
+        # Retain the existing semantic-provenance signal, but make it a real
+        # T1 checkpoint derived solely from available requirement input.
+        rec.semantic("constraint_extract", interpretation, tier="A")
+        has_semantic_provenance = True
+    rec.semantic(
+        "plan.completed",
+        {"task_family": task_family, "generation_variant": generation_variant},
+        tier="A",
+    )
+    rec.operational("execution.started", {"episode_id": episode_id}, tier="A")
     artifact = agent.generate(
         pair,
         variant=generation_variant,
         task_family=task_family,
+    )
+    rec.operational(
+        "artifact.completed",
+        {"episode_id": episode_id, "artifact_field_count": len(artifact)},
+        tier="A",
     )
     oracle_spec = pair["oracle_spec"][task_family]
     oracle_result = score_artifact(intent_id, task_family, artifact, oracle_spec)
@@ -54,13 +104,7 @@ def _run_episode(
         task_family=task_family,
     )
 
-    has_semantic_provenance = False
-    rec = ProvenanceRecorder(trace_path)
     rec.operational("latency", {"ms": 0, "episode_id": episode_id}, tier="A")
-    if not skip_semantic_provenance:
-        rec.semantic("constraint_extract", dict(artifact), tier="A")
-        has_semantic_provenance = True
-
     mutation_score = None
     if task_family == "test_gen":
         mutation_score = score_test_gen_mutation(intent_id, artifact, pair["oracle_spec"])
@@ -71,6 +115,11 @@ def _run_episode(
             "task_family": task_family,
             "mutation_score": mutation_score,
         }
+    )
+    rec.operational(
+        "evaluation.completed",
+        {"episode_id": episode_id, "passed": oracle_result.passed},
+        tier="B",
     )
     rec.close()
 
