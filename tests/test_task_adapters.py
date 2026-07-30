@@ -55,3 +55,25 @@ def test_traceability_adapter_validates_the_completed_episode_trace(tmp_path):
 
     assert len(episodes) == 2
     assert all(episode["traceability_valid"] is True for episode in episodes)
+
+
+class _MissingTraceability:
+    name = "traceability"
+
+    def validate(self, provenance_path):
+        return False
+
+
+def test_traceability_validation_controls_accepted_provenance_metrics(tmp_path):
+    metrics, episodes = run_eval_with_agent(
+        _OracleAgent(),
+        pairs=[_pair()],
+        task_adapters=(CodeGenerationAdapter(),),
+        validators=(_MissingTraceability(),),
+        output_path=tmp_path / "metrics.json",
+        traces_dir=tmp_path / "traces",
+    )
+
+    assert all(episode["traceability_valid"] is False for episode in episodes)
+    assert all(episode["has_semantic_provenance"] is False for episode in episodes)
+    assert metrics["semantic_provenance_coverage"] == 0.0

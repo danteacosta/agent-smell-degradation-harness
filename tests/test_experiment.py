@@ -7,7 +7,8 @@ from pathlib import Path
 
 import pytest
 
-from eval.experiment import run_experiment
+from eval.experiment import main, run_experiment
+from eval.task_adapters import AcceptanceCriteriaAdapter
 
 
 def _load_episodes(path: Path) -> list[dict]:
@@ -116,6 +117,39 @@ def test_mock_live_executes_each_requested_replication_with_distinct_identity(tm
     assert report["episode_count"] == len(episodes)
     assert {episode["replication_id"] for episode in episodes} == {0, 1}
     assert len({episode["episode_id"] for episode in episodes}) == len(episodes)
+
+
+def test_experiment_forwards_configured_adapters_to_exclude_codegen(tmp_path):
+    repo = tmp_path / "repo"
+    (repo / "eval").mkdir(parents=True)
+
+    run_experiment(
+        stub_as_live=True,
+        repo_root=repo,
+        task_adapters=(AcceptanceCriteriaAdapter(),),
+        validators=(),
+    )
+
+    episodes = _load_episodes(repo / "eval" / "experiment_run_episodes.jsonl")
+    assert {episode["task_family"] for episode in episodes} == {"test_gen"}
+
+
+def test_experiment_cli_builds_requested_adapter_and_validator_configuration(
+    tmp_path,
+    monkeypatch,
+):
+    captured = {}
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(
+        "eval.experiment.run_experiment",
+        lambda **kwargs: captured.update(kwargs),
+    )
+
+    main(["--stub-as-live", "--task-adapters", "test_gen", "--validators"])
+
+    assert [adapter.task_family for adapter in captured["task_adapters"]] == ["test_gen"]
+    assert captured["validators"] == ()
 
 
 def test_live_experiment_routes_evaluation_through_live_agent(tmp_path, monkeypatch):

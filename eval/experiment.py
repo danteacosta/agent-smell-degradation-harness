@@ -7,7 +7,7 @@ import os
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Sequence
 
 from agents.live import LiveAgent, _build_prompt
 from agents.mock_transport import MockTransport
@@ -17,7 +17,12 @@ from eval.identity import configuration_id_for, new_run_id
 from eval.manifest import build_manifest
 from eval.metrics import aggregate_metrics
 from eval.runner import VARIANTS, run_eval, run_eval_with_agent
-from eval.task_adapters import DEFAULT_TASK_ADAPTERS
+from eval.task_adapters import (
+    DEFAULT_TASK_ADAPTERS,
+    DEFAULT_VALIDATORS,
+    EpisodeValidator,
+    TaskAdapter,
+)
 
 EXPERIMENT_ID = "agent-smell-degradation"
 
@@ -73,11 +78,14 @@ def _write_manifest(run_dir: Path, config: dict[str, Any], repo_root: Path) -> d
     return manifest
 
 
-def _build_mock_responses(pairs: list[dict[str, Any]]) -> list[str]:
+def _build_mock_responses(
+    pairs: list[dict[str, Any]],
+    task_adapters: Sequence[TaskAdapter],
+) -> list[str]:
     weaken_agent = StubAgent(failure_mode="smell-blind")
     responses: list[str] = []
     for pair in pairs:
-        for task_adapter in DEFAULT_TASK_ADAPTERS:
+        for task_adapter in task_adapters:
             task_family = task_adapter.task_family
             for variant in VARIANTS:
                 if variant == "clean":
@@ -101,6 +109,8 @@ def run_dry_run(
     policy: str = "direct",
     seed: int | None = None,
     replications: int = 1,
+    task_adapters: Sequence[TaskAdapter] = DEFAULT_TASK_ADAPTERS,
+    validators: Sequence[EpisodeValidator] = DEFAULT_VALIDATORS,
 ) -> dict[str, Any]:
     from pairs.loader import load_all_pairs
 
@@ -113,7 +123,7 @@ def run_dry_run(
     prompts_dir.mkdir(parents=True, exist_ok=True)
 
     for pair in pairs:
-        for task_adapter in DEFAULT_TASK_ADAPTERS:
+        for task_adapter in task_adapters:
             task_family = task_adapter.task_family
             for variant in VARIANTS:
                 prompt = _build_prompt(pair, variant, task_family)
@@ -129,6 +139,8 @@ def run_dry_run(
         "replications": replications,
         "intents": intents or [],
         "pair_count": len(pairs),
+        "task_ids": [adapter.task_family for adapter in task_adapters],
+        "validator_names": [validator.name for validator in validators],
     }
     _write_manifest(run_dir, config, repo_root)
 
@@ -144,6 +156,8 @@ def run_mock_live(
     policy: str = "direct",
     seed: int | None = None,
     replications: int = 1,
+    task_adapters: Sequence[TaskAdapter] = DEFAULT_TASK_ADAPTERS,
+    validators: Sequence[EpisodeValidator] = DEFAULT_VALIDATORS,
 ) -> dict[str, Any]:
     from pairs.loader import load_all_pairs
 
@@ -162,6 +176,8 @@ def run_mock_live(
         "replications": replications,
         "intents": intents or [],
         "pair_count": len(pairs),
+        "task_ids": [adapter.task_family for adapter in task_adapters],
+        "validator_names": [validator.name for validator in validators],
     }
     _write_manifest(run_dir, config, repo_root)
 
@@ -169,7 +185,9 @@ def run_mock_live(
     episodes: list[dict[str, Any]] = []
     for replication_id in range(replications):
         agent = LiveAgent(
-            provider=MockProvider(MockTransport(_build_mock_responses(pairs))),
+            provider=MockProvider(
+                MockTransport(_build_mock_responses(pairs, task_adapters))
+            ),
             model=model,
         )
         _metrics, replication_episodes = run_eval_with_agent(
@@ -182,6 +200,8 @@ def run_mock_live(
             run_id=run_id,
             replication_id=replication_id,
             configuration_id=configuration_id,
+            task_adapters=task_adapters,
+            validators=validators,
         )
         episodes.extend(replication_episodes)
     metrics = aggregate_metrics(episodes)
@@ -210,6 +230,8 @@ def run_experiment(
     policy: str = "direct",
     seed: int | None = None,
     run_id: str | None = None,
+    task_adapters: Sequence[TaskAdapter] = DEFAULT_TASK_ADAPTERS,
+    validators: Sequence[EpisodeValidator] = DEFAULT_VALIDATORS,
 ) -> dict[str, Any]:
     if repo_root is None:
         repo_root = Path(__file__).resolve().parents[1]
@@ -225,6 +247,8 @@ def run_experiment(
             policy=policy,
             seed=seed,
             replications=replications,
+            task_adapters=task_adapters,
+            validators=validators,
         )
 
     if mock_live:
@@ -236,6 +260,8 @@ def run_experiment(
             policy=policy,
             seed=seed,
             replications=replications,
+            task_adapters=task_adapters,
+            validators=validators,
         )
 
     eval_dir = repo_root / "eval"
@@ -252,6 +278,8 @@ def run_experiment(
         "seed": seed,
         "replications": replications,
         "intents": intents or [],
+        "task_ids": [adapter.task_family for adapter in task_adapters],
+        "validator_names": [validator.name for validator in validators],
     }
     configuration_id = configuration_id_for(config)
 
@@ -273,6 +301,8 @@ def run_experiment(
             run_id=run_id,
             replication_id=replication_id,
             configuration_id=configuration_id,
+            task_adapters=task_adapters,
+            validators=validators,
         )
         _write_episodes_jsonl(episodes, episodes_path)
         combined_episodes.extend(episodes)
@@ -318,6 +348,8 @@ def run_experiment(
             experiment_id=EXPERIMENT_ID,
             run_id=f"{run_id}-last-run",
             configuration_id=configuration_id,
+            task_adapters=task_adapters,
+            validators=validators,
         )
 
     return report
@@ -355,12 +387,47 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--seed", type=int, default=None, help="Random seed for manifest")
     parser.add_argument("--policy", default="direct", help="Mitigation policy")
     parser.add_argument(
+        "--task-adapters",
+        nargs="+",
+        choices=[adapter.task_family for adapter in DEFAULT_TASK_ADAPTERS],
+        default=None,
+        help="Task families to run (default: historical benchmark coverage)",
+    )
+    parser.add_argument(
+        "--validators",
+        nargs="*",
+        choices=[validator.name for validator in DEFAULT_VALIDATORS],
+        default=None,
+        help="Episode validators; pass with no values to disable validation",
+    )
+    parser.add_argument(
         "--intents",
         nargs="*",
         default=None,
         help="Optional intent_id filter",
     )
     args = parser.parse_args(argv)
+
+    task_adapters = (
+        DEFAULT_TASK_ADAPTERS
+        if args.task_adapters is None
+        else tuple(
+            adapter
+            for task_family in args.task_adapters
+            for adapter in DEFAULT_TASK_ADAPTERS
+            if adapter.task_family == task_family
+        )
+    )
+    validators = (
+        DEFAULT_VALIDATORS
+        if args.validators is None
+        else tuple(
+            validator
+            for validator_name in args.validators
+            for validator in DEFAULT_VALIDATORS
+            if validator.name == validator_name
+        )
+    )
 
     if args.replications < 1:
         print("error: --replications must be >= 1", file=sys.stderr)
@@ -383,6 +450,8 @@ def main(argv: list[str] | None = None) -> None:
             policy=args.policy,
             seed=args.seed,
             repo_root=repo_root,
+            task_adapters=task_adapters,
+            validators=validators,
         )
         return
 
@@ -400,6 +469,8 @@ def main(argv: list[str] | None = None) -> None:
         policy=args.policy,
         seed=args.seed,
         repo_root=repo_root,
+        task_adapters=task_adapters,
+        validators=validators,
     )
 
 

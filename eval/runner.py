@@ -266,6 +266,7 @@ def run_eval_with_agent(
         }
         if "traceability" in validation:
             episode["traceability_valid"] = validation["traceability"]
+            episode["has_semantic_provenance"] = validation["traceability"]
 
     metrics = aggregate_metrics(episodes)
     output_path.parent.mkdir(parents=True, exist_ok=True)
