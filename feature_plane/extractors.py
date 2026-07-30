@@ -55,6 +55,12 @@ def extract_pre_final_features(
         ),
         None,
     )
+    constraint_events = [
+        event
+        for event in events
+        if event.get("kind") == "semantic"
+        and event.get("name") == "constraint_extract"
+    ]
     return {
         "static_smell": _static_smell(feature_input),
         "operational": {"event_count": len(events), "latency_ms": latency_ms},
@@ -65,8 +71,6 @@ def extract_pre_final_features(
                 isinstance(constraint_payload, Mapping)
                 and "comparator" in constraint_payload
             ),
-            "semantic_event_count": sum(
-                event.get("kind") == "semantic" for event in events
-            ),
+            "semantic_event_count": len(constraint_events),
         },
     }

@@ -35,6 +35,14 @@ def _interpret_requirement(
     }
 
 
+def _extract_constraints(interpretation: dict[str, str]) -> dict[str, str]:
+    """Expose the stable T1 semantic signal without terminal-artifact data."""
+    return {
+        "requirement_text": interpretation["requirement_text"],
+        "task_family": interpretation["task_family"],
+    }
+
+
 def _run_episode(
     pair: dict[str, Any],
     task_family: str,
@@ -76,7 +84,7 @@ def _run_episode(
     if not skip_semantic_provenance:
         # Retain the existing semantic-provenance signal, but make it a real
         # T1 checkpoint derived solely from available requirement input.
-        rec.semantic("constraint_extract", interpretation, tier="A")
+        rec.semantic("constraint_extract", _extract_constraints(interpretation), tier="A")
         has_semantic_provenance = True
     rec.semantic(
         "plan.completed",

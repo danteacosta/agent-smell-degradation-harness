@@ -97,3 +97,13 @@ def test_runner_records_ordered_lifecycle_with_pre_final_interpretation(tmp_path
     ) < next(
         index for index, event in enumerate(events) if event["name"] == "artifact.completed"
     )
+    artifact_completed = next(
+        index for index, event in enumerate(events) if event["name"] == "artifact.completed"
+    )
+    oracle_verdict = next(
+        index for index, event in enumerate(events) if event["name"] == "oracle_verdict"
+    )
+    evaluation_completed = next(
+        index for index, event in enumerate(events) if event["name"] == "evaluation.completed"
+    )
+    assert artifact_completed < oracle_verdict < evaluation_completed

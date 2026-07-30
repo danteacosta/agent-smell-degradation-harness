@@ -123,6 +123,26 @@ def test_pre_final_features_use_tier_a_trace_and_ignore_tier_b(tmp_path: Path):
     }
 
 
+def test_pre_final_semantic_features_ignore_lifecycle_metadata_events(tmp_path: Path):
+    trace_path = tmp_path / "trace.jsonl"
+    recorder = ProvenanceRecorder(trace_path)
+    recorder.semantic("interpretation.completed", {"requirement_text": "Refund."}, tier="A")
+    recorder.semantic("constraint_extract", {"first": 1}, tier="A")
+    recorder.semantic("plan.completed", {"task_family": "codegen"}, tier="A")
+    recorder.close()
+
+    features = extract_pre_final_features(
+        FeatureEpisodeInput.from_episode(_episode()), trace_path
+    )
+
+    assert features["provenance_semantic"] == {
+        "constraint_event_present": 1,
+        "constraint_field_count": 1,
+        "constraint_has_comparator": 0,
+        "semantic_event_count": 1,
+    }
+
+
 def test_pre_final_features_are_invariant_to_tier_b_oracle_payload(tmp_path: Path):
     tier_a_payload = {"first": 1, "comparator": ">"}
     passing_path = tmp_path / "passing.jsonl"
