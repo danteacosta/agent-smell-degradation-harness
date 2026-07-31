@@ -13,6 +13,7 @@ from eval.identity import configuration_id_for
 from eval.manifest import build_manifest
 from eval.runner import run_eval_with_agent
 from eval.task_adapters import AcceptanceCriteriaAdapter, TraceabilityAdapter
+from label_plane.datasets import validate_design_metadata
 from pairs.loader import load_all_pairs
 from agent_reliability_protocol import GateDecision, RunManifest, export_contract
 
@@ -27,13 +28,43 @@ def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
 
 def _twelve_intents() -> list[dict[str, Any]]:
     source = load_all_pairs()
-    selected = [copy.deepcopy(pair) for pair in source]
-    for index in range(PREPILOT_INTENT_COUNT - len(selected)):
-        pair = copy.deepcopy(source[index % len(source)])
-        pair["workload_id"] = pair["intent_id"]
-        pair["intent_id"] = f"PREPILOT-{len(selected) + 1:02d}-{pair['intent_id']}"
-        selected.append(pair)
-    return selected
+    if len(source) != PREPILOT_INTENT_COUNT:
+        raise ValueError(
+            "prepilot requires 12 independent source intents; "
+            f"found {len(source)} (refusing to pad or rename duplicates)"
+        )
+    intent_ids = [str(pair.get("intent_id", "")) for pair in source]
+    if len(set(intent_ids)) != PREPILOT_INTENT_COUNT or not all(intent_ids):
+        raise ValueError("prepilot requires 12 unique, non-empty source intent IDs")
+
+    # Validate the complete experimental design before any agent execution.
+    # The source-pair files are expanded only into their declared clean/smelly
+    # variants and fixed replications; no synthetic source intent is created.
+    design_records: list[dict[str, Any]] = []
+    for pair in source:
+        source_intent = str(pair["intent_id"])
+        smell = pair.get("smell") if isinstance(pair.get("smell"), dict) else {}
+        project_id = pair.get("project_id", pair.get("project", ""))
+        defect_family = smell.get("category", smell.get("type", ""))
+        for variant, requirement_key in (
+            ("clean", "clean_requirement"),
+            ("smelly", "smelly_requirement"),
+        ):
+            requirement_text = pair.get(requirement_key, "")
+            for replication_id in range(PREPILOT_REPLICATIONS):
+                design_records.append(
+                    {
+                        "source_intent_id": source_intent,
+                        "project_id": project_id,
+                        "variant": variant,
+                        "replication_id": replication_id,
+                        "defect_family": defect_family,
+                        "source": pair.get("source", source_intent),
+                        "requirement_text": requirement_text,
+                    }
+                )
+    validate_design_metadata({"records": design_records})
+    return [copy.deepcopy(pair) for pair in source]
 
 
 def _group_splits(intent_ids: list[str], k: int = 3) -> dict[str, Any]:
