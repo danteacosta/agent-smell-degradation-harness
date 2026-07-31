@@ -13,12 +13,14 @@
 ### Task 1: Freeze the shared ARP envelope
 
 **Files:**
-- Modify: `src/agent_reliability_protocol/models.py`
+- Modify: `src/agent_reliability_protocol/contracts.py`
 - Modify: `src/agent_reliability_protocol/events.py`
+- Modify: `src/agent_reliability_protocol/interchange.py`
 - Create: `tests/test_cross_consumer_envelope.py`
 
-- [ ] Add failing tests for lifecycle event round-trip, monotonic sequence, checkpoint, and manifest compatibility.
-- [ ] Implement only neutral ARP v2 fields and validation.
+- [ ] Add failing tests for ARP 2.0.5 lifecycle event round-trip, monotonic sequence, checkpoint/order, schema negotiation, run/intent/project identity, and hard failure on invalid envelopes.
+- [ ] Implement only neutral ARP v2 fields and validation; keep package pinning at `v2.0.5`.
+- [ ] Add a shared fixture replayed by agent-smell and RAG with no local/protocol_next producer in the execution path.
 - [ ] Run ARP tests and commit.
 
 ### Task 2: Migrate the RAG consumer to ARP
@@ -33,6 +35,8 @@
 - [ ] Add a failing integration test proving the producer emits ARP `RunManifest` and lifecycle events.
 - [ ] Replace duplicate local domain models with ARP imports; retain RAG-specific payloads as adapters.
 - [ ] Add product gate report serialization and SARIF projection.
+- [ ] Add deterministic versioned policy config, approve/warn/block exit-code semantics, stable reason/evidence IDs, and hard-fail contract errors.
+- [ ] Add isolation tests proving RAG operational metrics cannot enter H1-H3 artifacts.
 - [ ] Run the RAG suite and commit.
 
 ### Task 3: Make the thesis feature and label planes explicit
@@ -45,9 +49,9 @@
 - Create: `feature_plane/upper_bound.py`
 - Test: `tests/`
 
-- [ ] Add failing tests that reject smell/variant/oracle/final-artifact fields from deployable features.
+- [ ] Add failing tests that reject smell/variant/oracle/final-artifact/terminal-validation/label fields, including nested and serialized payloads and post-cutoff events.
 - [ ] Implement separate deployable and metadata-upper-bound schemas.
-- [ ] Make checkpoint extraction consume ARP events only.
+- [ ] Make checkpoint extraction consume provider-produced ARP T0-T3 events only; assert upper-bound features are not used by primary selection or estimands.
 - [ ] Run focused tests and commit.
 
 ### Task 4: Align confirmatory estimands and splits
@@ -59,10 +63,10 @@
 - Modify: `eval/prepilot.py`
 - Test: `tests/`
 
-- [ ] Add failing tests for ordinal paired deltas, intent-clustered bootstrap, paired permutation, PR-AUC, calibration, false-alert rate, warning coverage, and practical margins.
-- [ ] Implement grouped train/test selection and calibrated thresholds within folds.
-- [ ] Reject duplicated source intents and require explicit project/variant provenance.
-- [ ] Remove boolean-only acceptance gates.
+- [ ] Add failing tests for ordinal paired deltas, intent-clustered bootstrap/permutation, PR-AUC, calibration, false-alert rate, warning coverage, practical margins, and estimand IDs.
+- [ ] Implement grouped train/calibration/test selection with disjoint source-intent/project groups; retain variants/replications together and calibrate only on training groups.
+- [ ] Reject duplicated/near-cloned source intents, require project holdouts, enforce 12×2×5 counts, and emit deterministic split manifests.
+- [ ] Remove boolean-only acceptance gates and define missing-group behavior explicitly.
 - [ ] Run the full scientific suite and commit.
 
 ### Task 5: Add real traceability and annotation contracts
@@ -74,8 +78,8 @@
 - Create: `tasks/traceability.py`
 - Test: `tests/`
 
-- [ ] Add failing tests for traceability links against target artifacts and blinded annotation metadata.
-- [ ] Implement the task adapter, rubric, adjudication, and IRR export.
+- [ ] Add failing tests for traceability links with artifact IDs, hashes, claim/line spans, and missing/stale/tampered/self-reported links.
+- [ ] Implement an acceptance-criteria rubric, blinded sampling metadata, duplicate subset, IRR statistic and CI, disagreement/missing-label policy, adjudication provenance, and raw-label export.
 - [ ] Keep LLM judges secondary and never part of the primary label.
 - [ ] Run tests and commit.
 
@@ -89,5 +93,6 @@
 
 - [ ] Add a one-command product demo producing approve/warn/block plus SARIF/JSON evidence.
 - [ ] Document thesis-vs-product boundaries and limitations.
+- [ ] Add import-dependency and artifact-schema isolation tests; thesis never imports product policy and product never consumes thesis labels.
 - [ ] Run all repository suites, diff checks, and cross-consumer fixture checks.
 - [ ] Push branches, open/update PRs, and publish release notes.
