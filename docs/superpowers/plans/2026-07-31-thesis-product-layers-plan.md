@@ -20,7 +20,7 @@
 
 - [ ] Add failing tests for ARP 2.0.5 lifecycle event round-trip, monotonic sequence, checkpoint/order, schema negotiation, run/intent/project identity, and hard failure on invalid envelopes.
 - [ ] Implement only neutral ARP v2 fields and validation; keep package pinning at `v2.0.5`.
-- [ ] Add a shared fixture replayed by agent-smell and RAG with no local/protocol_next producer in the execution path.
+- [ ] Add a real agent-smell thesis-run producer test emitting `RunManifest` plus ordered T0–T3 events, a shared fixture replayed by both consumers, and a runtime import guard proving `protocol_next` is fixture-only.
 - [ ] Run ARP tests and commit.
 
 ### Task 2: Migrate the RAG consumer to ARP
@@ -36,6 +36,7 @@
 - [ ] Replace duplicate local domain models with ARP imports; retain RAG-specific payloads as adapters.
 - [ ] Add product gate report serialization and SARIF projection.
 - [ ] Add deterministic versioned policy config, approve/warn/block exit-code semantics, stable reason/evidence IDs, and hard-fail contract errors.
+- [ ] Test every policy branch: precedence block>warn>approve; exit codes 0/10/20; contract error 30; SARIF note/warning/error; neutral ARP pass/fail remains distinct.
 - [ ] Add isolation tests proving RAG operational metrics cannot enter H1-H3 artifacts.
 - [ ] Run the RAG suite and commit.
 
@@ -52,6 +53,7 @@
 - [ ] Add failing tests that reject smell/variant/oracle/final-artifact/terminal-validation/label fields, including nested and serialized payloads and post-cutoff events.
 - [ ] Implement separate deployable and metadata-upper-bound schemas.
 - [ ] Make checkpoint extraction consume provider-produced ARP T0-T3 events only; assert upper-bound features are not used by primary selection or estimands.
+- [ ] Add a static import guard against label/oracle modules and a training API test that rejects upper-bound features.
 - [ ] Run focused tests and commit.
 
 ### Task 4: Align confirmatory estimands and splits
@@ -64,8 +66,8 @@
 - Test: `tests/`
 
 - [ ] Add failing tests for ordinal paired deltas, intent-clustered bootstrap/permutation, PR-AUC, calibration, false-alert rate, warning coverage, practical margins, and estimand IDs.
-- [ ] Implement grouped train/calibration/test selection with disjoint source-intent/project groups; retain variants/replications together and calibrate only on training groups.
-- [ ] Reject duplicated/near-cloned source intents, require project holdouts, enforce 12×2×5 counts, and emit deterministic split manifests.
+- [ ] Implement grouped train/calibration/test selection with disjoint source-intent/project groups; select models on train groups, fit calibration/thresholds on calibration groups, and evaluate only on held-out test groups. Emit the exact ordinal-delta and PR-AUC estimand IDs and CI/p-value methods.
+- [ ] Reject duplicated/near-cloned source intents before counting, using canonicalized token hashes plus a declared similarity threshold and explicit approved-paraphrase exceptions; require project holdouts, enforce 12×2×5 counts, and emit deterministic split manifests.
 - [ ] Remove boolean-only acceptance gates and define missing-group behavior explicitly.
 - [ ] Run the full scientific suite and commit.
 
@@ -80,6 +82,7 @@
 
 - [ ] Add failing tests for traceability links with artifact IDs, hashes, claim/line spans, and missing/stale/tampered/self-reported links.
 - [ ] Implement an acceptance-criteria rubric, blinded sampling metadata, duplicate subset, IRR statistic and CI, disagreement/missing-label policy, adjudication provenance, and raw-label export.
+- [ ] Predeclare Krippendorff alpha, bootstrap CI, ≥0.70 target, <0.60 adjudication/claim-narrowing policy, blinded fields, rubric training, and duplicate-subset size in the annotation schema and BDD tests.
 - [ ] Keep LLM judges secondary and never part of the primary label.
 - [ ] Run tests and commit.
 
