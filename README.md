@@ -1,6 +1,6 @@
 # Agent Smell Degradation Harness
 
-**Product wedge:** a reliability layer / CI check for coding agents — given a spec and agent run, emit **approve / warn / request clarification** before intent loss reaches production.
+**Product wedge:** a reliability layer / CI check for coding agents — given a spec and agent run, emit **approve / warn / block** before intent loss reaches production. The product surface is deliberately separate from the confirmatory thesis protocol.
 
 **Research questions:** RQ1 measures degradation induced by defective requirements; RQ2 tests whether pre-final, oracle-free observability improves deployable warning. RQ3 evaluates clarification only when that optional extension is enabled.
 
@@ -76,6 +76,8 @@ Requirement pairs are seeded from **MesaFlow** as a local, curated starting set.
 Acceptance-criteria generation is the primary workload; traceability is an external completed-episode validation; code generation is optional. The feature plane consumes only pre-final evidence, while the independent label plane owns terminal evaluation. The principal scientific output is an observability boundary map across workload, defect family, checkpoint, model and deployment metrics—not a new requirement-smell taxonomy.
 
 The reproducible pre-pilot uses 12 intents × clean/smelly variants × 5 replications and writes manifests, episodes, events, artifacts, labels, features and analysis. Run it with `make prepilot`.
+
+The acceptance boundary, estimands, leakage rules, split invariants, and product policy are documented in [Thesis and Product Boundary](docs/thesis-product-boundary.md). A pre-pilot manifest must contain 12 independent source intents; renaming duplicated seed records does not satisfy the count.
 
 ## Offline overlays
 
