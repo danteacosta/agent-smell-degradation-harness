@@ -12,7 +12,7 @@ def test_prepilot_protocol_manifest_validates_with_shared_protocol(tmp_path):
     assert check_contract("manifest", manifest) == []
 
 
-def test_shared_protocol_v011_accepts_legacy_protocol_next_manifest():
+def test_shared_protocol_v2_accepts_legacy_protocol_next_manifest():
     legacy = {
         "schema_version": "protocol_next/v1",
         "run_id": "legacy-run",
@@ -22,6 +22,6 @@ def test_shared_protocol_v011_accepts_legacy_protocol_next_manifest():
         "hashes": {"input": "legacy-hash"},
     }
 
-    assert __version__ == "0.1.1"
+    assert __version__ == "2.0.5"
     assert check_contract("manifest", legacy) == []
     assert upgrade_manifest(legacy)["schema_version"] == "arp/v1"
