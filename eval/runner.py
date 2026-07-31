@@ -72,6 +72,8 @@ def _run_episode(
     episode_id = identity.episode_id
     trace_path = traces_dir / identity.trace_name
 
+    # `direct` is the only core policy.  The optional clarification extension
+    # may explicitly request another policy for its separate experiments.
     prepared = prepare_requirement(pair, variant=variant, policy=policy)
     requirement_text = prepared.text
     generation_variant = prepared.generation_variant

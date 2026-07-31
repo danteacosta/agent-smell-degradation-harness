@@ -1,4 +1,4 @@
-.PHONY: test eval simulate gate analysis experiment mitigation dissertation all dry-run thesis-analysis wedge-check prepilot
+.PHONY: test eval simulate gate analysis experiment all dry-run thesis-analysis wedge-check prepilot extension-clarification extension-dissertation
 test:
 	pytest -q
 eval:
@@ -17,9 +17,11 @@ thesis-analysis:
 	python -m eval.thesis_analysis --episodes eval/last_run_episodes.jsonl
 prepilot:
 	python -m eval.prepilot
-mitigation:
+# Optional clarification experiments deliberately live outside the scientific
+# pipeline.  They are never prerequisites for pre-pilot, pilot, or CI gates.
+extension-clarification:
 	python -m eval.mitigation_report
-dissertation:
+extension-dissertation:
 	python -m eval.dissertation_bundle
 wedge-check:
 	pytest -q tests/test_wedge.py tests/test_wedge_acceptance.py
