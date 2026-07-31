@@ -39,3 +39,33 @@ class FeatureEpisodeInput:
             smell=smell if isinstance(smell, Mapping) else None,
             requirement_text=str(episode.get("requirement_text", "")),
         )
+
+
+@dataclass(frozen=True, slots=True)
+class DeployableFeatureInput:
+    """The strict, deployable pre-final input contract.
+
+    This model deliberately contains only information available before the
+    terminal label is produced.  ``variant`` and ``smell`` remain on the
+    legacy :class:`FeatureEpisodeInput` for backwards-compatible retrospective
+    analyses, but are not part of this contract.
+    """
+
+    intent_id: str
+    task_family: str
+    requirement_text: str
+
+    @classmethod
+    def from_episode(cls, episode: Mapping[str, Any]) -> "DeployableFeatureInput":
+        """Copy only the allowlisted fields from an episode mapping.
+
+        Reading explicit keys (rather than copying a mapping and filtering it
+        later) makes terminal fields impossible to smuggle into the feature
+        plane, including nested ``artifact``/oracle/label values.
+        """
+
+        return cls(
+            intent_id=str(episode["intent_id"]),
+            task_family=str(episode["task_family"]),
+            requirement_text=str(episode.get("requirement_text", "")),
+        )
