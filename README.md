@@ -2,7 +2,7 @@
 
 **Product wedge:** a reliability layer / CI check for coding agents — given a spec and agent run, emit **approve / warn / request clarification** before intent loss reaches production.
 
-**Thesis RQ:** Does Tier A provenance detect smell-induced semantic degradation beyond static smell detection and operational metrics alone?
+**Research questions:** RQ1 measures degradation induced by defective requirements; RQ2 tests whether pre-final, oracle-free observability improves deployable warning. RQ3 evaluates clarification only when that optional extension is enabled.
 
 Design for this wedge: [wedge-first reliability check spec](docs/superpowers/specs/2026-07-22-wedge-first-reliability-check-design.md)
 
@@ -17,7 +17,7 @@ Evaluation task coverage is configured through domain adapters: acceptance-crite
 ```bash
 python -m wedge --fixture demo-clean     # approve
 python -m wedge --fixture demo-smelly    # clarify (smell + direct policy)
-python -m wedge --fixture demo-degraded  # warn (Tier B degradation)
+python -m wedge --fixture demo-degraded  # warn (terminal-label regression)
 make wedge-check
 ```
 
@@ -28,7 +28,7 @@ Consumer wiring guide: [docs/wedge.md](docs/wedge.md)
 ```mermaid
 flowchart LR
   pairs["pairs (clean | smelly)"]
-  agent["stub agent"]
+  agent["provider adapter (stub/replay/live)"]
   prov["provenance JSONL"]
   oracle["oracles / validators"]
   eval["eval metrics (paired Δ)"]
@@ -37,7 +37,7 @@ flowchart LR
 
   pairs --> agent --> prov --> oracle --> eval --> gate
   prov --> wedge
-  oracle --> wedge
+  oracle --> eval
 ```
 
 ## Failure modes
@@ -71,20 +71,15 @@ make simulate MODE=smell-blind
 
 Requirement pairs are seeded from **MesaFlow** as a local, curated starting set. MesaFlow is a development seed — not a peer-reviewed claim of external validity for thesis or production use.
 
-## Roadmap (Tier 0→3)
+## V4 scientific contract
 
-| Tier | Focus | Exit gate |
-|------|-------|-----------|
-| **0** | Repo skeleton, episode schema, MesaFlow seed pairs, empty overlay stubs | Benchmark seed exists |
-| **1** | Stub agents, FM1–FM3, offline `make all` + CI | **Public repo DoD** (current) |
-| **2** | Taxonomy (**C1**), observability baselines (**C4**), live `make experiment` | Effect + observability gates |
-| **3** | Mitigation (**C5**), full protocol stats (**C3**), dissertation packaging | Mitigation gate; dissertation DoD (**current**) |
+Acceptance-criteria generation is the primary workload; traceability is an external completed-episode validation; code generation is optional. The feature plane consumes only pre-final evidence, while the independent label plane owns terminal evaluation. The principal scientific output is an observability boundary map across workload, defect family, checkpoint, model and deployment metrics—not a new requirement-smell taxonomy.
 
-Full tier definitions, thesis contribution mapping, and decision gates: [design spec](docs/superpowers/specs/2026-07-20-agent-smell-degradation-harness-design.md). Implementation plans: [plans README](docs/superpowers/plans/README.md).
+The reproducible pre-pilot uses 12 intents × clean/smelly variants × 5 replications and writes manifests, episodes, events, artifacts, labels, features and analysis. Run it with `make prepilot`.
 
-## Tier 2 (offline overlays)
+## Offline overlays
 
-Tier 2 adds taxonomy labels, observability baselines, analysis reports, and an optional live experiment path — all without breaking Tier 1 CI.
+Offline overlays add deployable baselines, analysis reports, and an optional live experiment path without changing the core CI gate.
 
 | Command | Purpose |
 |---------|---------|
@@ -94,18 +89,16 @@ Tier 2 adds taxonomy labels, observability baselines, analysis reports, and an o
 
 Analysis and experiment exports are gitignored; `make gate` still reads only `eval/last_run.json` from `make eval`.
 
-## Tier 3 (mitigation + dissertation packaging)
+## Optional clarification extension
 
-Tier 3 adds offline rewrite/clarify mitigation policies, an H5 trade-off report, and a dissertation export bundle — still secret-free and non-blocking for Tier 1 CI.
+Clarification and rewrite experiments are optional extensions. They do not block the pre-pilot, pilot, defense, or the core CI pipeline; when enabled, their effect is reported as conditional E3 rather than a mandatory thesis claim.
 
 | Command | Purpose |
 |---------|---------|
-| `make mitigation` | Compare `direct` / `rewrite` / `clarify` under smell-blind; write `eval/mitigation_report.json` |
-| `make dissertation` | Aggregate analysis + mitigation + paired stats; write `eval/dissertation_bundle.json` |
-| `python -m eval.mitigation_report` | Same as `make mitigation` |
-| `python -m eval.dissertation_bundle` | Same as `make dissertation` |
+| `make extension-clarification` | Compare optional `direct` / `rewrite` / `clarify` policies; write `eval/mitigation_report.json` |
+| `make extension-dissertation` | Build the optional extension report bundle |
 
-Mitigation policies (`rewrite`, `clarify`) run before stub generation on smelly variants; the trade-off report records benefit vs overhead but does **not** claim mitigation is always positive. Export guide: [docs/dissertation/README.md](docs/dissertation/README.md).
+The default runner, pre-pilot and CI use `direct`; clarification experiments opt in explicitly through the extension commands. Their trade-off report is conditional E3, not an unconditional mitigation claim. Export guide: [docs/dissertation/README.md](docs/dissertation/README.md).
 
 ## Pre-experiment tooling
 
@@ -117,9 +110,9 @@ Offline preflight before live LLM runs (secret-free; default CI unchanged):
 | `python -m eval.experiment --mock-live` | Exercise `LiveAgent` + `MockTransport` under `runs/` |
 | `python -m eval.thesis_analysis --episodes PATH` | H1 paired-degradation tables and negative-boundary flags |
 | `make thesis-analysis` | Analyze `eval/last_run_episodes.jsonl` after `make eval` |
-| `python -m eval.h2_detection` | H2 group-split AUROC: static vs operational vs Tier A provenance |
+| `python -m eval.h2_detection` | Group-split detector comparison for deployable pre-final signals |
 
-Pair loading validates schema; oracle scoring is tolerant of extra artifact keys. IRR utilities live in `protocol/irr.py` with annotation templates under `data/annotation/`. Mitigation `rewrite` supports `mode=template` to reconstruct requirements from oracle specs instead of copying clean text verbatim.
+Pair loading validates schema; oracle scoring is tolerant of extra artifact keys. IRR utilities live in `protocol/irr.py` with annotation templates under `data/annotation/`.
 
 ## Design & sister harness
 
