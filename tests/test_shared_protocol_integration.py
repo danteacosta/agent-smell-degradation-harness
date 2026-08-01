@@ -20,6 +20,6 @@ def test_shared_protocol_v2_accepts_legacy_protocol_next_manifest():
         "hashes": {"input": "legacy-hash"},
     }
 
-    assert __version__ == "2.0.5"
+    assert __version__ == "2.0.6"
     assert check_contract("manifest", legacy) == []
     assert upgrade_manifest(legacy)["schema_version"] == "arp/v1"

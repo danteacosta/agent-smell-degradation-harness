@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any, Sequence
 
 from agents.stub import StubAgent
+from agent_reliability_protocol import validate_lifecycle_sequence
 from eval.identity import configuration_id_for, create_episode_identity, new_run_id
 from eval.metrics import aggregate_metrics
 from mitigation.pipeline import prepare_requirement
@@ -81,7 +82,11 @@ def _run_episode(
     smell_type = "" if variant == "clean" else pair["smell"]["type"]
 
     has_semantic_provenance = False
-    rec = ProvenanceRecorder(trace_path, episode_identity=identity.as_dict())
+    rec = ProvenanceRecorder(
+        trace_path,
+        episode_identity=identity.as_dict(),
+        arp_context=identity.as_dict(),
+    )
     rec.operational(
         "input.received",
         {
@@ -147,6 +152,12 @@ def _run_episode(
         tier="B",
     )
     rec.close()
+    trace_events = [
+        json.loads(line)
+        for line in trace_path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    validate_lifecycle_sequence(trace_events)
 
     episode: dict[str, Any] = {
         **identity.as_dict(),

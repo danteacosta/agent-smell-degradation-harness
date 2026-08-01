@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Protocol
@@ -14,6 +15,10 @@ from label_plane import score_artifact, score_test_gen_mutation
 class TaskEvaluation:
     passed: bool
     mutation_score: float | None = None
+
+
+def _canonical_artifact(artifact: dict[str, Any]) -> bytes:
+    return json.dumps(artifact, sort_keys=True, separators=(",", ":")).encode("utf-8")
 
 
 class TaskAdapter(Protocol):
@@ -101,9 +106,55 @@ class TraceabilityAdapter:
         )
 
 
+class TraceabilityTaskAdapter:
+    """Resolve requirement claims to hashed spans in a generated artifact.
+
+    This adapter is intentionally independent of the terminal oracle.  The
+    task reference contains claim-to-path links, while the generated artifact
+    is the observable target. Missing, stale, tampered, and self-reported
+    links are failures rather than silently accepted evidence.
+    """
+
+    task_family = "traceability"
+
+    @staticmethod
+    def artifact_hash(artifact: dict[str, Any]) -> str:
+        return hashlib.sha256(_canonical_artifact(artifact)).hexdigest()
+
+    def evaluate(
+        self,
+        *,
+        intent_id: str,
+        artifact: dict[str, Any],
+        oracle_spec: dict[str, Any],
+    ) -> TaskEvaluation:
+        del intent_id
+        links = oracle_spec.get("links", [])
+        if not isinstance(links, list) or not links:
+            return TaskEvaluation(False)
+        expected_hash = self.artifact_hash(artifact)
+        for link in links:
+            if not isinstance(link, dict) or link.get("self_reported"):
+                return TaskEvaluation(False)
+            path = str(link.get("artifact_path", ""))
+            if not path.startswith("/"):
+                return TaskEvaluation(False)
+            value: Any = artifact
+            for segment in path.strip("/").split("/"):
+                if not isinstance(value, dict) or segment not in value:
+                    return TaskEvaluation(False)
+                value = value[segment]
+            if str(link.get("artifact_sha256")) != expected_hash:
+                return TaskEvaluation(False)
+        return TaskEvaluation(True)
+
+
 # Preserve the historical benchmark coverage and episode ordering by default.
 DEFAULT_TASK_ADAPTERS: tuple[TaskAdapter, ...] = (
     CodeGenerationAdapter(),
     AcceptanceCriteriaAdapter(),
 )
+# External acceptance runs opt into this adapter explicitly; the historical
+# benchmark remains unchanged until a traceability task manifest is supplied.
+EXTERNAL_TASK_ADAPTERS: tuple[TaskAdapter, ...] = (TraceabilityTaskAdapter(),)
 DEFAULT_VALIDATORS: tuple[EpisodeValidator, ...] = (TraceabilityAdapter(),)

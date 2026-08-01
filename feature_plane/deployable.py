@@ -28,6 +28,12 @@ _TERMINAL_KEYS = frozenset(
         "semantic_label",
         "mutation_score",
         "final_artifact",
+        "variant",
+        "variant_id",
+        "smell",
+        "defect_family",
+        "defect_type",
+        "mutation",
     }
 )
 _TERMINAL_EVENT_NAMES = frozenset(
@@ -40,6 +46,14 @@ _TERMINAL_EVENT_NAMES = frozenset(
         "evaluation.completed",
     }
 )
+_CHECKPOINT_ORDER = {
+    "input.received": 0,
+    "interpretation.completed": 1,
+    "plan.completed": 2,
+    "execution.started": 3,
+    "tool.completed": 4,
+    "retrieval.completed": 4,
+}
 
 
 def _contains_terminal_key(value: Any) -> str | None:
@@ -79,23 +93,40 @@ def _load_deployable_events(provenance_path: str | Path) -> list[Mapping[str, An
         return []
 
     events: list[Mapping[str, Any]] = []
+    last_order = -1
     for line in path.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
         event = json.loads(line)
         if not isinstance(event, Mapping):
             raise ValueError("deployable trace event must be an object")
-        event_name = str(event.get("name", event.get("event_type", "")))
+        # ARP v2's canonical checkpoint is authoritative; ``name`` is a
+        # legacy compatibility label and may intentionally retain a terminal
+        # historical name such as ``artifact.completed``.
+        event_name = str(event.get("event_type", event.get("name", "")))
+        event_name = {"constraint_extract": "interpretation.completed", "latency": "execution.started"}.get(event_name, event_name)
+        # Tier-B oracle/evaluation events are deliberately outside the feature
+        # plane.  They must be ignored rather than interpreted as features.
+        if event.get("tier", "A") == "B":
+            continue
         if event_name in _TERMINAL_EVENT_NAMES or str(event.get("checkpoint", "")).upper() in {
             "T4",
             "FINAL",
         }:
             raise ValueError(f"terminal event {event_name!r} is not deployable")
-        terminal_key = _contains_terminal_key(event)
+        # ARP v2 keeps deployable attributes separate from the legacy
+        # compatibility payload, which may contain variant metadata for
+        # retrospective reports. Inspect only the canonical attributes.
+        terminal_source: Any = event.get("attributes") if "attributes" in event else event
+        terminal_key = _contains_terminal_key(terminal_source)
         if terminal_key:
             raise ValueError(f"terminal field {terminal_key!r} found in deployable trace")
-        if event.get("tier", "A") == "B":
-            continue
+        if event_name not in _CHECKPOINT_ORDER:
+            raise ValueError(f"non-deployable checkpoint {event_name!r}")
+        order = _CHECKPOINT_ORDER[event_name]
+        if order < last_order:
+            raise ValueError("deployable checkpoints are out of order")
+        last_order = order
         events.append(event)
     return events
 
@@ -177,7 +208,8 @@ def static_import_guard(package_dir: str | Path | None = None) -> bool:
     forbidden_modules = {"label_plane", "eval.oracles", "pairs.loader"}
     forbidden_names = _TERMINAL_KEYS
     violations: list[str] = []
-    for source_path in sorted(root.glob("*.py")):
+    source_paths = [root / "deployable.py"] if (root / "deployable.py").exists() else sorted(root.glob("*.py"))
+    for source_path in source_paths:
         tree = ast.parse(source_path.read_text(encoding="utf-8"), filename=str(source_path))
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
@@ -190,6 +222,11 @@ def static_import_guard(package_dir: str | Path | None = None) -> bool:
                 module = node.module or ""
                 if module in forbidden_modules or any(module.startswith(item + ".") for item in forbidden_modules):
                     violations.append(f"{source_path}: from {module}")
+            elif isinstance(node, ast.Subscript):
+                if isinstance(node.slice, ast.Constant) and str(node.slice.value).lower() in forbidden_names:
+                    violations.append(f"{source_path}: terminal field {node.slice.value}")
+            elif isinstance(node, ast.Attribute) and node.attr.lower() in forbidden_names:
+                violations.append(f"{source_path}: terminal attribute {node.attr}")
     if violations:
         raise RuntimeError("feature-plane import boundary violated: " + "; ".join(violations))
     return True

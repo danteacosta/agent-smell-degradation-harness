@@ -16,7 +16,7 @@ def _episode_label(episode: dict[str, Any]) -> int:
 def _family_score(family: str, features: dict[str, Any]) -> float:
     family_features = features[family]
     if family == "static_smell":
-        return float(family_features["smell_present"])
+        return float(family_features.get("requirement_length", 0)) / 1000.0
     if family == "output_only":
         return float(1 - family_features["oracle_passed"])
     if family == "operational":

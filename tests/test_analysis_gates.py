@@ -14,6 +14,7 @@ def test_build_analysis_report_shape(tmp_path):
         "baselines",
         "observability_gate_passed",
         "paired_stats",
+        "estimands",
     }
 
     assert report["happy"]["paired_degradation_rate"] == 0.0
