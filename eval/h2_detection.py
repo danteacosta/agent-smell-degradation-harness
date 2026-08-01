@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from baselines.score import mann_whitney_auroc
-from feature_plane import semantic_risk
+from feature_plane import DeployableFeatureInput, extract_deployable_features, semantic_risk
 from eval.runner import run_eval
 from observability.features import extract_tier_a_features
 
@@ -20,13 +20,28 @@ def _episode_label(episode: dict[str, Any]) -> int:
 
 def _family_score(family: str, features: dict[str, Any]) -> float:
     if family == "static_smell":
-        return float(features["static_smell"]["smell_present"])
+        static = features["static_smell"]
+        return float(static.get("requirement_length", static.get("smell_present", 0))) / 1000.0
     if family == "operational":
         operational = features["operational"]
         return float(operational["event_count"]) + float(operational["latency_ms"]) / 1000.0
     if family == "provenance_semantic":
         return semantic_risk(features["provenance_semantic"])
     return 0.0
+
+
+def _average_precision(scores: list[float], labels: list[int]) -> float:
+    positives = sum(labels)
+    if positives == 0:
+        return 0.0
+    ranked = sorted(zip(scores, labels), key=lambda item: item[0], reverse=True)
+    hits = 0
+    area = 0.0
+    for rank, (_, label) in enumerate(ranked, start=1):
+        if label:
+            hits += 1
+            area += hits / rank
+    return area / positives
 
 
 def group_kfold_intent_ids(intent_ids: list[str], k: int) -> list[list[str]]:
@@ -60,25 +75,37 @@ def evaluate_group_split(
 
         labels = [_episode_label(ep) for ep in test_eps]
         family_aurocs: dict[str, float] = {}
+        family_pr_auc: dict[str, float] = {}
         for family in FAMILIES:
             scores = []
             for episode in test_eps:
-                features = extract_tier_a_features(episode, episode["provenance_path"])
+                deployable = extract_deployable_features(
+                    DeployableFeatureInput.from_episode(episode), episode["provenance_path"]
+                )
+                features = {
+                    "static_smell": deployable["static"],
+                    "operational": deployable["operational"],
+                    "provenance_semantic": deployable["provenance"],
+                }
                 scores.append(_family_score(family, features))
             family_aurocs[family] = mann_whitney_auroc(scores, labels)
+            family_pr_auc[family] = _average_precision(scores, labels)
 
         fold_reports.append(
             {
                 "fold": fold_index,
                 "test_intents": sorted(test_intents),
                 "auroc": family_aurocs,
+                "pr_auc": family_pr_auc,
             }
         )
 
     aggregate: dict[str, list[float]] = {family: [] for family in FAMILIES}
+    pr_aggregate: dict[str, list[float]] = {family: [] for family in FAMILIES}
     for report in fold_reports:
         for family in FAMILIES:
             aggregate[family].append(report["auroc"][family])
+            pr_aggregate[family].append(report["pr_auc"][family])
 
     summary = {
         family: sum(values) / len(values) if values else 0.5
@@ -89,6 +116,10 @@ def evaluate_group_split(
         "k": k,
         "folds": fold_reports,
         "mean_auroc": summary,
+        "mean_pr_auc": {
+            family: sum(values) / len(values) if values else 0.0
+            for family, values in pr_aggregate.items()
+        },
     }
 
 

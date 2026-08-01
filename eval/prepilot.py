@@ -13,8 +13,12 @@ from eval.identity import configuration_id_for
 from eval.manifest import build_manifest
 from eval.runner import run_eval_with_agent
 from eval.task_adapters import AcceptanceCriteriaAdapter, TraceabilityAdapter
+from feature_plane import DeployableFeatureInput, extract_deployable_features
+from label_plane.datasets import validate_design_metadata
 from pairs.loader import load_all_pairs
 from agent_reliability_protocol import GateDecision, RunManifest, export_contract
+from agent_reliability_protocol.interchange import validate_thesis_envelope
+from protocol.paired_stats import clustered_bootstrap_ci, paired_permutation_pvalue
 
 PREPILOT_INTENT_COUNT = 12
 PREPILOT_REPLICATIONS = 5
@@ -27,13 +31,43 @@ def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
 
 def _twelve_intents() -> list[dict[str, Any]]:
     source = load_all_pairs()
-    selected = [copy.deepcopy(pair) for pair in source]
-    for index in range(PREPILOT_INTENT_COUNT - len(selected)):
-        pair = copy.deepcopy(source[index % len(source)])
-        pair["workload_id"] = pair["intent_id"]
-        pair["intent_id"] = f"PREPILOT-{len(selected) + 1:02d}-{pair['intent_id']}"
-        selected.append(pair)
-    return selected
+    if len(source) != PREPILOT_INTENT_COUNT:
+        raise ValueError(
+            "prepilot requires 12 independent source intents; "
+            f"found {len(source)} (refusing to pad or rename duplicates)"
+        )
+    intent_ids = [str(pair.get("intent_id", "")) for pair in source]
+    if len(set(intent_ids)) != PREPILOT_INTENT_COUNT or not all(intent_ids):
+        raise ValueError("prepilot requires 12 unique, non-empty source intent IDs")
+
+    # Validate the complete experimental design before any agent execution.
+    # The source-pair files are expanded only into their declared clean/smelly
+    # variants and fixed replications; no synthetic source intent is created.
+    design_records: list[dict[str, Any]] = []
+    for pair in source:
+        source_intent = str(pair["intent_id"])
+        smell = pair.get("smell") if isinstance(pair.get("smell"), dict) else {}
+        project_id = pair.get("project_id", pair.get("project", ""))
+        defect_family = smell.get("category", smell.get("type", ""))
+        for variant, requirement_key in (
+            ("clean", "clean_requirement"),
+            ("smelly", "smelly_requirement"),
+        ):
+            requirement_text = pair.get(requirement_key, "")
+            for replication_id in range(PREPILOT_REPLICATIONS):
+                design_records.append(
+                    {
+                        "source_intent_id": source_intent,
+                        "project_id": project_id,
+                        "variant": variant,
+                        "replication_id": replication_id,
+                        "defect_family": defect_family,
+                        "source": pair.get("source", source_intent),
+                        "requirement_text": requirement_text,
+                    }
+                )
+    validate_design_metadata({"records": design_records})
+    return [copy.deepcopy(pair) for pair in source]
 
 
 def _group_splits(intent_ids: list[str], k: int = 3) -> dict[str, Any]:
@@ -61,17 +95,53 @@ def _group_splits(intent_ids: list[str], k: int = 3) -> dict[str, Any]:
 def _analysis(episodes: list[dict[str, Any]]) -> tuple[dict[str, Any], dict[str, Any]]:
     clean = [episode["oracle_passed"] for episode in episodes if episode["variant"] == "clean"]
     smelly = [episode["oracle_passed"] for episode in episodes if episode["variant"] == "smelly"]
-    e1 = sum(clean) / len(clean) - sum(smelly) / len(smelly)
+    severity_scale = {"low": 0.0, "medium": 1.0, "high": 2.0}
+    grouped: dict[tuple[str, int], dict[str, float]] = {}
+    for episode in episodes:
+        raw = episode.get("degradation_severity", 0)
+        severity = float(raw) if isinstance(raw, (int, float)) else severity_scale.get(str(raw), 0.0)
+        key = (str(episode["intent_id"]), int(episode.get("replication_id", 0)))
+        grouped.setdefault(key, {})[str(episode["variant"])] = severity
+    deltas_by_intent: dict[str, list[float]] = {}
+    for (intent_id, _replication), variants in grouped.items():
+        if "clean" in variants and "smelly" in variants:
+            deltas_by_intent.setdefault(intent_id, []).append(variants["clean"] - variants["smelly"])
+    cluster_means = [sum(values) / len(values) for values in deltas_by_intent.values() if values]
+    e1 = sum(cluster_means) / len(cluster_means) if cluster_means else 0.0
     e2 = sum(episode["has_semantic_provenance"] for episode in episodes) / len(episodes)
     estimands = {
-        "E1_clean_minus_smelly_pass_rate": e1,
+        "E1_clean_minus_smelly_ordinal_delta": e1,
+        "E1_ci95": dict(zip(("low", "high"), clustered_bootstrap_ci(deltas_by_intent))),
+        "E1_paired_permutation_pvalue": paired_permutation_pvalue(deltas_by_intent),
+        "E1_clean_minus_smelly_pass_rate_legacy": sum(clean) / len(clean) - sum(smelly) / len(smelly),
         "E2_accepted_provenance_coverage": e2,
+        "E2_pre_final_provenance_pr_auc": _provenance_pr_auc(episodes),
     }
     boundary_map = {
-        "E1": {"estimand": "clean minus smelly oracle pass rate", "value": e1},
+        "E1": {"estimand": "clean minus smelly ordinal severity delta", "value": e1, "cluster": "intent_id"},
         "E2": {"estimand": "traceability-validated provenance coverage", "value": e2},
     }
     return estimands, boundary_map
+
+
+def _provenance_pr_auc(episodes: list[dict[str, Any]]) -> float:
+    scores: list[float] = []
+    labels: list[int] = []
+    for episode in episodes:
+        features = extract_deployable_features(
+            DeployableFeatureInput.from_episode(episode), episode["provenance_path"]
+        )
+        scores.append(float(features["provenance"]["constraint_count"] == 0))
+        labels.append(int(episode.get("variant") == "smelly" and not episode.get("oracle_passed")))
+    positives = sum(labels)
+    if positives == 0:
+        return 0.0
+    hits = area = 0.0
+    for rank, (_, label) in enumerate(sorted(zip(scores, labels), reverse=True), start=1):
+        if label:
+            hits += 1
+            area += hits / rank
+    return area / positives
 
 
 def run_pre_pilot(*, output_root: Path, run_id: str = "prepilot-v4") -> dict[str, str | int]:
@@ -143,6 +213,8 @@ def run_pre_pilot(*, output_root: Path, run_id: str = "prepilot-v4") -> dict[str
         for line in Path(episode["provenance_path"]).read_text().splitlines():
             if line:
                 events.append(json.loads(line))
+        episode_events = [event for event in events if event.get("episode_id") == episode["episode_id"]]
+        validate_thesis_envelope(protocol_manifest, episode_events)
     _write_jsonl(run_dir / "events.jsonl", events)
     _write_jsonl(run_dir / "features" / "pre_final.jsonl", [
         {"episode_id": episode["episode_id"], "has_semantic_provenance": episode["has_semantic_provenance"]}
