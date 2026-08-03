@@ -64,12 +64,15 @@ def test_missing_label_requires_reason_and_exports_disagreement_and_adjudication
 def test_secondary_judgement_cannot_be_adjudicated_as_primary():
     from label_plane.adjudication import adjudicate
     from label_plane.human_annotation import HumanAnnotation
+    from label_plane.llm_judge_secondary import secondary_judge
 
     secondary = HumanAnnotation(
         item_id="e-1", annotator_id="llm", label="clean", source="llm_judge_secondary"
     )
     with pytest.raises(ValueError, match="secondary"):
         adjudicate([secondary])
+    with pytest.raises(ValueError, match="secondary"):
+        adjudicate([secondary_judge(lambda _artifact: "clean", {})])
 
 
 def test_duplicate_subset_is_reproducible_and_must_be_double_coded():
