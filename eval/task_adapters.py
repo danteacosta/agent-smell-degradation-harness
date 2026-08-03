@@ -129,7 +129,8 @@ class TraceabilityTaskAdapter:
         oracle_spec: dict[str, Any],
     ) -> TaskEvaluation:
         del intent_id
-        links = oracle_spec.get("links", [])
+        traceability_spec = oracle_spec.get("traceability", {})
+        links = oracle_spec.get("links", traceability_spec.get("links", []))
         if not isinstance(links, list) or not links:
             return TaskEvaluation(False)
         expected_hash = self.artifact_hash(artifact)
@@ -147,6 +148,20 @@ class TraceabilityTaskAdapter:
             if str(link.get("artifact_sha256")) != expected_hash:
                 return TaskEvaluation(False)
         return TaskEvaluation(True)
+
+
+def load_traceability_manifest(path: Path | str | None = None) -> dict[str, Any]:
+    """Load the versioned adversarial traceability task contract."""
+    manifest_path = Path(path) if path else Path(__file__).resolve().parents[1] / "tasks" / "traceability.json"
+    payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "traceability/v1":
+        raise ValueError("unsupported traceability task manifest")
+    cases = payload.get("cases")
+    if not isinstance(cases, list) or not cases:
+        raise ValueError("traceability task manifest requires cases")
+    if not all(case.get("oracle_independent") is True for case in cases):
+        raise ValueError("traceability cases must be oracle-independent")
+    return payload
 
 
 # Preserve the historical benchmark coverage and episode ordering by default.

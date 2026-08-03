@@ -311,6 +311,7 @@ def run_experiment(
             {
                 "replication_id": replication_id,
                 "metrics": metrics,
+                "provider_run": metrics.get("provider_run"),
                 "episodes_path": str(episodes_path.relative_to(repo_root)),
             }
         )

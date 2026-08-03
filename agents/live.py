@@ -109,6 +109,17 @@ class LiveAgent:
 
         self._provider = selected_provider
         self.provider = provider_label or selected_provider.name
+        provider_name = str(selected_provider.name)
+        # Keep offline replay/mock transports distinguishable from a network
+        # provider in the exported run manifest, even when the legacy
+        # prompt-only transport retains the ``openai`` provider label.
+        if transport is not None:
+            self.run_mode = "mock"
+        elif provider_name in {"replay", "mock"}:
+            self.run_mode = provider_name
+        else:
+            self.run_mode = "live"
+        self.model_version = self.model
 
     def _complete(self, request: ProviderRequest) -> tuple[str, float]:
         start = time.perf_counter()

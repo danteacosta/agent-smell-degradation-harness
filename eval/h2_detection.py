@@ -7,6 +7,8 @@ from pathlib import Path
 from typing import Any
 
 from baselines.score import mann_whitney_auroc
+from eval.calibration import CalibrationError, evaluate_threshold, fit_threshold, select_family
+from eval.splits import apply_split_manifest, build_grouped_split_manifest
 from feature_plane import DeployableFeatureInput, extract_deployable_features, semantic_risk
 from eval.runner import run_eval
 from observability.features import extract_tier_a_features
@@ -119,6 +121,88 @@ def evaluate_group_split(
         "mean_pr_auc": {
             family: sum(values) / len(values) if values else 0.0
             for family, values in pr_aggregate.items()
+        },
+    }
+
+
+def _episode_family_scores(episodes: list[dict[str, Any]]) -> dict[str, list[float]]:
+    """Build deployable scores without allowing terminal labels into features."""
+
+    scores = {family: [] for family in FAMILIES}
+    for episode in episodes:
+        supplied = episode.get("h2_scores") or episode.get("feature_scores")
+        if isinstance(supplied, dict) and all(family in supplied for family in FAMILIES):
+            for family in FAMILIES:
+                scores[family].append(float(supplied[family]))
+            continue
+        deployable = extract_deployable_features(
+            DeployableFeatureInput.from_episode(episode), episode.get("provenance_path", "")
+        )
+        features = {
+            "static_smell": deployable["static"],
+            "operational": deployable["operational"],
+            "provenance_semantic": deployable["provenance"],
+        }
+        for family in FAMILIES:
+            scores[family].append(_family_score(family, features))
+    return scores
+
+
+def evaluate_confirmatory(
+    episodes: list[dict[str, Any]],
+    *,
+    seed: int = 0,
+    split_manifest: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Run the preregistered H2 train/calibration/test protocol.
+
+    Candidate feature-family selection is fit on train groups, the threshold
+    is fit on calibration groups, and every reported held-out metric is
+    computed exactly once on untouched test groups.  The split manifest is
+    returned verbatim as provenance so a result can be reproduced or audited.
+    """
+
+    if not episodes:
+        raise ValueError("H2 confirmatory evaluation requires episodes")
+    manifest = split_manifest or build_grouped_split_manifest(episodes, seed=seed)
+    partitions = apply_split_manifest(episodes, manifest)
+    split_scores: dict[str, dict[str, list[float]]] = {
+        split: {family: [] for family in FAMILIES} for split in ("train", "calibration", "test")
+    }
+    split_labels: dict[str, list[int]] = {split: [] for split in ("train", "calibration", "test")}
+    # Recompute score rows from each partition; this is intentionally simple
+    # and prevents accidental positional leakage if a caller supplies a custom
+    # manifest with a different partition ordering.
+    for split, rows in partitions.items():
+        row_scores = _episode_family_scores(list(rows))
+        split_scores[split] = row_scores
+        split_labels[split] = [_episode_label(episode) for episode in rows]
+        if not {0, 1}.issubset(set(split_labels[split])):
+            raise CalibrationError(
+                f"{split} group must contain both clean and degraded labels for confirmatory H2"
+            )
+    selection = select_family(split_scores["train"], split_labels["train"], split="train")
+    selected_family = selection["selected_family"]
+    calibration = fit_threshold(
+        split_scores["calibration"][selected_family],
+        split_labels["calibration"],
+        split="calibration",
+    )
+    held_out = evaluate_threshold(
+        split_scores["test"][selected_family],
+        split_labels["test"],
+        calibration["threshold"],
+        split="test",
+    )
+    return {
+        "protocol": "H2-confirmatory-v1",
+        "selected_family": selected_family,
+        "split": manifest,
+        "model_selection": selection,
+        "calibration": calibration,
+        "held_out": {
+            **held_out,
+            "family": selected_family,
         },
     }
 

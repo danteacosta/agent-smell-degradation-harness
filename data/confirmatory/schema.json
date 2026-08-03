@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent-smell confirmatory source manifest",
+  "type": "object",
+  "required": ["schema_version", "expected", "near_clone_threshold", "approved_paraphrases", "records"],
+  "properties": {
+    "schema_version": {"const": "confirmatory-v1"},
+    "status": {"type": "string"},
+    "expected": {
+      "type": "object",
+      "required": ["intents", "variants", "replications"],
+      "properties": {
+        "intents": {"const": 12},
+        "variants": {"const": ["clean", "smelly"]},
+        "replications": {"const": 5}
+      },
+      "additionalProperties": false
+    },
+    "near_clone_threshold": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+    "approved_paraphrases": {"type": "array"},
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source_intent_id", "source", "source_sha256", "provenance_url", "project_id",
+          "defect_family", "clean_requirement", "smelly_requirement", "natural_variant",
+          "contamination_notes"
+        ],
+        "properties": {
+          "source_intent_id": {"type": "string", "minLength": 1},
+          "source": {"type": "string", "minLength": 1},
+          "source_sha256": {"type": "string", "pattern": "^[0-9a-fA-F]{64}$"},
+          "provenance_url": {"type": "string", "format": "uri"},
+          "project_id": {"type": "string", "minLength": 1},
+          "defect_family": {"type": "string", "minLength": 1},
+          "clean_requirement": {"type": "string", "minLength": 1},
+          "smelly_requirement": {"type": "string", "minLength": 1},
+          "natural_variant": {"type": "boolean"},
+          "contamination_notes": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

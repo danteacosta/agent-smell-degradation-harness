@@ -8,6 +8,7 @@ from agents.stub import StubAgent
 from agent_reliability_protocol import validate_lifecycle_sequence
 from eval.identity import configuration_id_for, create_episode_identity, new_run_id
 from eval.metrics import aggregate_metrics
+from eval.provider_manifest import ProviderRunMetadata, summarize_provider_runs
 from mitigation.pipeline import prepare_requirement
 from observability.tracing import ProvenanceRecorder
 from pairs.loader import load_all_pairs
@@ -115,11 +116,25 @@ def _run_episode(
         tier="A",
     )
     rec.operational("execution.started", {"episode_id": episode_id}, tier="A")
-    artifact = agent.generate(
-        pair,
-        variant=generation_variant,
-        task_family=task_family,
-    )
+    provider_meta: dict[str, Any]
+    if hasattr(agent, "generate_with_meta"):
+        artifact, provider_meta = agent.generate_with_meta(
+            pair,
+            variant=generation_variant,
+            task_family=task_family,
+        )
+    else:
+        artifact = agent.generate(
+            pair,
+            variant=generation_variant,
+            task_family=task_family,
+        )
+        provider_meta = {
+            "provider": getattr(agent, "provider", "deterministic-stub"),
+            "model": getattr(agent, "model", "stub-v1"),
+            "latency_ms": 0.0,
+            "cost_usd": 0.0,
+        }
     rec.operational(
         "artifact.completed",
         {"episode_id": episode_id, "artifact_field_count": len(artifact)},
@@ -138,7 +153,11 @@ def _run_episode(
         task_family=task_family,
     )
 
-    rec.operational("latency", {"ms": 0, "episode_id": episode_id}, tier="A")
+    rec.operational(
+        "latency",
+        {"ms": provider_meta.get("latency_ms", 0.0), "episode_id": episode_id},
+        tier="A",
+    )
     rec.oracle_verdict(
         {
             "passed": task_evaluation.passed,
@@ -161,6 +180,8 @@ def _run_episode(
 
     episode: dict[str, Any] = {
         **identity.as_dict(),
+        "source_intent_id": pair.get("source_intent_id", pair["intent_id"]),
+        "project_id": pair.get("project_id", pair.get("project", "")),
         "variant": variant,
         "task_family": task_family,
         "smell": smell,
@@ -174,6 +195,13 @@ def _run_episode(
         "has_semantic_provenance": has_semantic_provenance,
         "degradation_mode": degradation.mode,
         "degradation_severity": degradation.severity,
+        "provider_meta": {
+            "provider": str(provider_meta.get("provider", "unknown")),
+            "model": str(provider_meta.get("model", "unknown")),
+            "latency_ms": float(provider_meta.get("latency_ms", 0.0)),
+            "cost_usd": float(provider_meta.get("cost_usd", 0.0)),
+            "cost_reported": "cost_usd" in provider_meta,
+        },
     }
     if task_evaluation.mutation_score is not None:
         episode["mutation_score"] = task_evaluation.mutation_score
@@ -281,6 +309,32 @@ def run_eval_with_agent(
             episode["has_semantic_provenance"] = validation["traceability"]
 
     metrics = aggregate_metrics(episodes)
+    provider_name = str(getattr(agent, "provider", "deterministic-stub"))
+    mode = str(
+        getattr(
+            agent,
+            "run_mode",
+            "live" if hasattr(agent, "generate_with_meta") else "stub",
+        )
+    )
+    provider_model = str(getattr(agent, "model", "stub-v1"))
+    cost_reported = all(bool(ep["provider_meta"].get("cost_reported")) for ep in episodes)
+    provider_runs = [
+        ProviderRunMetadata(
+            run_id=run_id,
+            mode=mode,
+            provider=provider_name,
+            model=provider_model,
+            model_version=str(getattr(agent, "model_version", provider_model)),
+            seed=getattr(agent, "seed", None),
+            configuration_hash=configuration_id,
+            episode_count=len(episodes),
+            total_latency_ms=sum(float(ep["provider_meta"]["latency_ms"]) for ep in episodes),
+            total_cost_usd=sum(float(ep["provider_meta"]["cost_usd"]) for ep in episodes),
+            extra={"cost_status": "reported_per_episode" if cost_reported else "not_reported"},
+        )
+    ]
+    metrics["provider_run"] = summarize_provider_runs(provider_runs)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
     if episodes_path is not None:
