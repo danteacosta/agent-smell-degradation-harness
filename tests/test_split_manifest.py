@@ -48,6 +48,15 @@ def test_manifest_rejects_missing_project_group():
         build_grouped_split_manifest(episodes)
 
 
+def test_runtime_intent_id_is_canonicalized_to_source_intent_id():
+    episodes = _episodes()
+    for row in episodes:
+        row.pop("source_intent_id")
+    manifest = build_grouped_split_manifest(episodes)
+    assert all("source_intent_id" in row for row in manifest["assignments"])
+    assert sum(len(rows) for rows in apply_split_manifest(episodes, manifest).values()) == len(episodes)
+
+
 def test_manifest_rejects_insufficient_disjoint_groups():
     episodes = _episodes()
     for row in episodes:

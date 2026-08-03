@@ -25,6 +25,15 @@ def _required_group(record: Mapping[str, Any], key: str, *, index: int) -> str:
     return str(value)
 
 
+def _source_intent(record: Mapping[str, Any], *, index: int) -> str:
+    """Accept runtime ``intent_id`` while emitting canonical source IDs."""
+
+    value = record.get("source_intent_id", record.get("intent_id"))
+    if value is None or not str(value).strip():
+        raise ValueError(f"record {index} is missing required grouping field source_intent_id")
+    return str(value)
+
+
 def _component_groups(records: Sequence[Mapping[str, Any]]) -> list[dict[str, list[str]]]:
     """Build bipartite connected components for intent/project groups."""
 
@@ -44,7 +53,7 @@ def _component_groups(records: Sequence[Mapping[str, Any]]) -> list[dict[str, li
 
     pairs: list[tuple[str, str]] = []
     for index, record in enumerate(records):
-        source = _required_group(record, "source_intent_id", index=index)
+        source = _source_intent(record, index=index)
         project = _required_group(record, "project_id", index=index)
         intent_node = ("intent", source)
         project_node = ("project", project)
@@ -126,8 +135,8 @@ def build_grouped_split_manifest(
                 assignments[(source, project)] = split
         counts[split] += sum(
             1
-            for record in records
-            if str(record["source_intent_id"]) in component["source_intent_ids"]
+            for record_index, record in enumerate(records)
+            if _source_intent(record, index=record_index) in component["source_intent_ids"]
         )
 
     assignment_rows = [
@@ -174,7 +183,7 @@ def apply_split_manifest(
         raise ValueError("split manifest must contain train, calibration, and test assignments")
     partitions: dict[str, list[Mapping[str, Any]]] = {split: [] for split in SPLITS}
     for index, record in enumerate(records):
-        source = _required_group(record, "source_intent_id", index=index)
+        source = _source_intent(record, index=index)
         project = _required_group(record, "project_id", index=index)
         split = assignments.get((source, project))
         if split is None:
