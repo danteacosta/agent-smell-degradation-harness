@@ -88,7 +88,13 @@ def _is_missing(value: Any) -> bool:
 def _as_matrix(data: Any) -> list[list[Any]]:
     """Normalize annotator×unit, mapping, or HumanAnnotation input."""
     if isinstance(data, Mapping):
-        rows = list(data.values())
+        values = list(data.values())
+        if values and all(isinstance(value, Mapping) for value in values):
+            # Convenient interchange form: item_id -> annotator_id -> label.
+            items = sorted(data)
+            annotators = sorted({str(annotator) for value in values for annotator in value})
+            return [[data[item].get(annotator) for item in items] for annotator in annotators]
+        rows = values
     else:
         rows = list(data)
     if not rows:

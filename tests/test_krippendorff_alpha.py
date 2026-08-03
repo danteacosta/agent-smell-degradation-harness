@@ -30,3 +30,12 @@ def test_alpha_rejects_unknown_measurement_level():
     with pytest.raises(ValueError, match="measurement"):
         krippendorff_alpha([["a"], ["b"]], level_of_measurement="interval")
 
+
+def test_alpha_accepts_item_to_annotator_mapping():
+    from protocol.irr import krippendorff_alpha
+
+    data = {
+        "item-1": {"annotator-a": "ok", "annotator-b": "ok"},
+        "item-2": {"annotator-a": "bad", "annotator-b": "bad"},
+    }
+    assert krippendorff_alpha(data) == 1.0
