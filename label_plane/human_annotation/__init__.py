@@ -1,16 +1,66 @@
-"""Human annotation records are independent label-plane evidence."""
+"""Primary human annotation records and deterministic export helpers.
 
-from dataclasses import dataclass
+The annotation layer deliberately stores only what a primary annotator could
+see.  Experimental condition, oracle output, model identity and terminal
+artifacts belong to the experiment manifest and are never copied into a
+blinded annotation record.
+"""
+
+from __future__ import annotations
+
+import csv
+import json
+from dataclasses import asdict, dataclass
+from pathlib import Path
+from typing import Any, Iterable
 
 
 @dataclass(frozen=True, slots=True)
 class HumanAnnotation:
     annotator_id: str
-    label: str
+    label: str | None
+    item_id: str = ""
+    rubric_version: str = ""
+    duplicate_subset: bool = False
+    missing_reason: str | None = None
+    source: str = "human_primary"
 
     def __post_init__(self) -> None:
-        if not self.annotator_id or not self.label:
-            raise ValueError("human annotations require annotator_id and label")
+        if not self.annotator_id:
+            raise ValueError("human annotations require annotator_id")
+        if self.label is None or not str(self.label).strip():
+            if not self.missing_reason or not str(self.missing_reason).strip():
+                raise ValueError("missing labels require missing_reason")
+        elif self.missing_reason:
+            raise ValueError("missing_reason is only valid for missing labels")
+        if not self.source:
+            raise ValueError("human annotations require source")
+
+    @property
+    def is_missing(self) -> bool:
+        return self.label is None or not str(self.label).strip()
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
 
 
-__all__ = ["HumanAnnotation"]
+def export_annotations(path: Path | str, annotations: Iterable[HumanAnnotation]) -> None:
+    """Export raw labels, including missing-label reasons, deterministically."""
+
+    rows = [annotation.to_dict() for annotation in annotations]
+    rows.sort(key=lambda row: (str(row.get("item_id", "")), str(row["annotator_id"])))
+    destination = Path(path)
+    if destination.suffix.lower() == ".csv":
+        fields = [
+            "item_id", "annotator_id", "label", "rubric_version",
+            "duplicate_subset", "missing_reason", "source",
+        ]
+        with destination.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=fields)
+            writer.writeheader()
+            writer.writerows({key: row.get(key) for key in fields} for row in rows)
+    else:
+        destination.write_text(json.dumps(rows, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+__all__ = ["HumanAnnotation", "export_annotations"]
