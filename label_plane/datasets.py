@@ -9,11 +9,27 @@ import unicodedata
 from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 V4_DATASET_ROOT = Path(__file__).resolve().parents[1] / "datasets" / "v4"
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+CONFIRMATORY_DATASET_ROOT = REPOSITORY_ROOT / "data" / "confirmatory"
+CONFIRMATORY_MANIFEST_PATH = CONFIRMATORY_DATASET_ROOT / "manifest.json"
 _REQUIRED_RECORD_KEYS = {
     "intent_id", "source", "license", "source_sha256", "preserved_intent",
     "manipulation", "single_defect", "natural_variant", "contamination_notes",
+}
+_REQUIRED_CONFIRMATORY_SOURCE_KEYS = {
+    "source_intent_id",
+    "source",
+    "source_sha256",
+    "provenance_url",
+    "project_id",
+    "defect_family",
+    "clean_requirement",
+    "smelly_requirement",
+    "natural_variant",
+    "contamination_notes",
 }
 
 
@@ -178,6 +194,228 @@ def validate_design_metadata(
         "replication_count": expected_replications,
         "variant_count": len(expected_variants),
     }
+
+
+def load_confirmatory_manifest(
+    path: Path | str = CONFIRMATORY_MANIFEST_PATH,
+) -> dict[str, Any]:
+    """Load the checked-in source manifest for the confirmatory experiment.
+
+    The source manifest is deliberately separate from the generated episode
+    rows.  It contains one row per source intent; :func:`validate_confirmatory_manifest`
+    expands each row into the two experimental variants and five repeated
+    measurements.  Loading never makes an incomplete seed appear complete.
+    """
+
+    manifest_path = Path(path)
+    try:
+        value = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except OSError as exc:
+        raise ValueError(f"confirmatory manifest is not readable: {manifest_path}") from exc
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"confirmatory manifest is not valid JSON: {manifest_path}") from exc
+    if not isinstance(value, dict):
+        raise ValueError("confirmatory manifest must be a JSON object")
+    return value
+
+
+def _resolve_source(source: str, *, manifest_path: Path) -> Path:
+    candidate = Path(source)
+    if candidate.is_absolute():
+        return candidate
+    # Relative paths are repository-relative, not relative to the manifest's
+    # directory.  This keeps manifests portable when copied to a run bundle.
+    return REPOSITORY_ROOT / candidate
+
+
+def _validate_source_record(
+    record: dict[str, Any],
+    *,
+    index: int,
+    manifest_path: Path,
+) -> None:
+    missing = _REQUIRED_CONFIRMATORY_SOURCE_KEYS - record.keys()
+    if missing:
+        raise ValueError(f"confirmatory source record {index} missing keys: {sorted(missing)}")
+    source_intent = str(record["source_intent_id"]).strip()
+    project = str(record["project_id"]).strip()
+    defect_family = str(record["defect_family"]).strip()
+    if not source_intent:
+        raise ValueError(f"confirmatory source record {index} has empty source_intent_id")
+    if not project:
+        raise ValueError(f"confirmatory source record {index} requires non-empty project_id")
+    if not defect_family:
+        raise ValueError(f"confirmatory source record {index} requires non-empty defect_family")
+    for field in ("clean_requirement", "smelly_requirement", "contamination_notes"):
+        if not str(record[field]).strip():
+            raise ValueError(f"confirmatory source record {index} requires non-empty {field}")
+    if not isinstance(record["natural_variant"], bool):
+        raise ValueError(f"confirmatory source record {index} natural_variant must be boolean")
+    provenance_url = str(record["provenance_url"]).strip()
+    parsed = urlparse(provenance_url)
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        raise ValueError(
+            f"confirmatory source record {index} requires an http(s) provenance_url"
+        )
+    source = str(record["source"]).strip()
+    if not source:
+        raise ValueError(f"confirmatory source record {index} requires non-empty source")
+    source_path = _resolve_source(source, manifest_path=manifest_path)
+    if not source_path.exists() or not source_path.is_file():
+        raise ValueError(f"confirmatory source does not exist: {source}")
+    expected_hash = str(record["source_sha256"]).strip().lower()
+    actual_hash = hashlib.sha256(source_path.read_bytes()).hexdigest()
+    if expected_hash != actual_hash:
+        raise ValueError(f"confirmatory source hash mismatch: {source_intent}")
+
+
+def _expanded_confirmatory_records(
+    manifest: dict[str, Any],
+    *,
+    manifest_path: Path,
+    expected_intents: int,
+    expected_variants: tuple[str, ...],
+    expected_replications: int,
+) -> list[dict[str, Any]]:
+    source_records = manifest.get("records")
+    if not isinstance(source_records, list) or not source_records:
+        raise ValueError("confirmatory manifest requires non-empty source records")
+    source_ids = [str(item.get("source_intent_id", "")).strip() if isinstance(item, dict) else "" for item in source_records]
+    if len(set(source_ids)) != len(source_ids):
+        raise ValueError("confirmatory manifest contains duplicate source_intent_id values")
+    if len(source_ids) != expected_intents or not all(source_ids):
+        raise ValueError(
+            f"confirmatory design requires {expected_intents} distinct source intents; got {len(source_ids)}"
+        )
+
+    expanded: list[dict[str, Any]] = []
+    for index, raw in enumerate(source_records):
+        if not isinstance(raw, dict):
+            raise ValueError(f"confirmatory source record {index} must be an object")
+        _validate_source_record(raw, index=index, manifest_path=manifest_path)
+        for variant, requirement_key in (("clean", "clean_requirement"), ("smelly", "smelly_requirement")):
+            if variant not in expected_variants:
+                raise ValueError(f"confirmatory expected_variants must include {variant!r}")
+            for replication_id in range(expected_replications):
+                expanded.append(
+                    {
+                        "source_intent_id": str(raw["source_intent_id"]),
+                        "project_id": str(raw["project_id"]),
+                        "variant": variant,
+                        "replication_id": replication_id,
+                        "defect_family": str(raw["defect_family"]),
+                        "source": str(raw["source"]),
+                        "source_sha256": str(raw["source_sha256"]),
+                        "provenance_url": str(raw["provenance_url"]),
+                        "natural_variant": bool(raw["natural_variant"]),
+                        "contamination_notes": str(raw["contamination_notes"]),
+                        "requirement_text": str(raw[requirement_key]),
+                        # The clean text is the stable source-intent identity
+                        # used for near-clone checks across variants.
+                        "source_intent_text": str(raw["clean_requirement"]),
+                    }
+                )
+    return expanded
+
+
+def validate_confirmatory_manifest(
+    manifest: dict[str, Any],
+    *,
+    manifest_path: Path | str = CONFIRMATORY_MANIFEST_PATH,
+) -> dict[str, Any]:
+    """Validate and materialize the confirmatory 12×2×5 design.
+
+    This is the single fail-closed boundary for the confirmatory dataset.  It
+    requires independent, provenance-backed source intents; it does not infer
+    missing projects, create synthetic intents, or pad a short seed.  The
+    returned object is deterministic and suitable for writing into a run
+    manifest or dissertation bundle.
+    """
+
+    if not isinstance(manifest, dict):
+        raise ValueError("confirmatory manifest must be a JSON object")
+    expected = manifest.get("expected", {})
+    if not isinstance(expected, dict):
+        raise ValueError("confirmatory manifest expected must be an object")
+    expected_intents = int(expected.get("intents", 12))
+    expected_replications = int(expected.get("replications", 5))
+    raw_variants = expected.get("variants", ["clean", "smelly"])
+    if not isinstance(raw_variants, list) or any(not isinstance(item, str) for item in raw_variants):
+        raise ValueError("confirmatory manifest expected.variants must be a list of strings")
+    expected_variants = tuple(raw_variants)
+    if expected_intents != 12 or expected_replications != 5 or expected_variants != ("clean", "smelly"):
+        raise ValueError("confirmatory design is frozen at 12 intents × 2 variants × 5 replications")
+    threshold = float(manifest.get("near_clone_threshold", 0.92))
+    if not 0.0 < threshold <= 1.0:
+        raise ValueError("near_clone_threshold must be in (0, 1]")
+    approved = manifest.get("approved_paraphrases", [])
+    if not isinstance(approved, list):
+        raise ValueError("approved_paraphrases must be a list")
+    resolved_manifest_path = Path(manifest_path)
+    expanded = _expanded_confirmatory_records(
+        manifest,
+        manifest_path=resolved_manifest_path,
+        expected_intents=expected_intents,
+        expected_variants=expected_variants,
+        expected_replications=expected_replications,
+    )
+    counts = validate_design_metadata(
+        {
+            "records": expanded,
+            "approved_paraphrases": approved,
+        },
+        expected_intents=expected_intents,
+        expected_variants=expected_variants,
+        expected_replications=expected_replications,
+        min_projects=3,
+        near_clone_threshold=threshold,
+    )
+    source_records = sorted(
+        (dict(record) for record in manifest["records"]),
+        key=lambda record: str(record["source_intent_id"]),
+    )
+    ordered_records = sorted(
+        expanded,
+        key=lambda record: (
+            str(record["source_intent_id"]),
+            expected_variants.index(str(record["variant"])),
+            int(record["replication_id"]),
+        ),
+    )
+    project_holdouts: dict[str, list[str]] = {}
+    for record in source_records:
+        project_holdouts.setdefault(str(record["project_id"]), []).append(str(record["source_intent_id"]))
+    project_holdouts = {project: sorted(intent_ids) for project, intent_ids in sorted(project_holdouts.items())}
+    canonical = {
+        "schema_version": str(manifest.get("schema_version", "confirmatory-v1")),
+        "expected": {
+            "intents": expected_intents,
+            "variants": list(expected_variants),
+            "replications": expected_replications,
+        },
+        "near_clone_threshold": threshold,
+        "approved_paraphrases": approved,
+        "source_records": source_records,
+        "records": ordered_records,
+        "project_holdouts": project_holdouts,
+        "counts": counts,
+    }
+    serialized = json.dumps(canonical, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return {**canonical, "manifest_sha256": hashlib.sha256(serialized.encode("utf-8")).hexdigest()}
+
+
+def build_confirmatory_manifest(
+    manifest: dict[str, Any] | None = None,
+    *,
+    path: Path | str = CONFIRMATORY_MANIFEST_PATH,
+) -> dict[str, Any]:
+    """Load (or accept) and validate the deterministic confirmatory manifest."""
+
+    manifest_path = Path(path)
+    return validate_confirmatory_manifest(
+        load_confirmatory_manifest(manifest_path) if manifest is None else manifest,
+        manifest_path=manifest_path,
+    )
 
 
 # Names used by experiment runners and external protocol checks.
