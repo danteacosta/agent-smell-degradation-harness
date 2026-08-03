@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from baselines.score import mann_whitney_auroc
-from eval.calibration import evaluate_threshold, fit_threshold, select_family
+from eval.calibration import CalibrationError, evaluate_threshold, fit_threshold, select_family
 from eval.splits import apply_split_manifest, build_grouped_split_manifest
 from feature_plane import DeployableFeatureInput, extract_deployable_features, semantic_risk
 from eval.runner import run_eval
@@ -177,6 +177,10 @@ def evaluate_confirmatory(
         row_scores = _episode_family_scores(list(rows))
         split_scores[split] = row_scores
         split_labels[split] = [_episode_label(episode) for episode in rows]
+        if not {0, 1}.issubset(set(split_labels[split])):
+            raise CalibrationError(
+                f"{split} group must contain both clean and degraded labels for confirmatory H2"
+            )
     selection = select_family(split_scores["train"], split_labels["train"], split="train")
     selected_family = selection["selected_family"]
     calibration = fit_threshold(
