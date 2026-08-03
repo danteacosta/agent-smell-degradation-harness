@@ -9,6 +9,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import random
+import json
+from pathlib import Path
 from typing import Any, Iterable, Mapping
 
 
@@ -94,7 +96,19 @@ def validate_duplicate_subset(annotations: Iterable[Any], duplicate_item_ids: It
         raise ValueError(f"duplicate subset items must be double-coded: {missing}")
 
 
+def load_annotation_rubric(path: Path | str | None = None) -> dict[str, Any]:
+    """Load the frozen human-label policy used by collection tooling."""
+
+    rubric_path = Path(path) if path else Path(__file__).resolve().parents[1] / "tasks" / "annotation_rubric.json"
+    payload = json.loads(rubric_path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "human-annotation/v1":
+        raise ValueError("unsupported annotation rubric")
+    if not payload.get("labels") or not payload.get("missing_label_policy", {}).get("never_impute"):
+        raise ValueError("annotation rubric must freeze labels and no-imputation policy")
+    return payload
+
+
 __all__ = [
-    "BlindedAnnotationTask", "select_duplicate_subset", "validate_blinded_payload",
-    "validate_duplicate_subset",
+    "BlindedAnnotationTask", "load_annotation_rubric", "select_duplicate_subset",
+    "validate_blinded_payload", "validate_duplicate_subset",
 ]
