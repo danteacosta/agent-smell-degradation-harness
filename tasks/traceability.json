@@ -1,0 +1,16 @@
+{
+  "schema_version": "traceability/v1",
+  "description": "Oracle-independent claim-to-artifact traceability cases for confirmatory runs.",
+  "cases": [
+    {"case_id": "valid", "expected": "pass", "oracle_independent": true, "link_required": true},
+    {"case_id": "missing-link", "expected": "missing", "oracle_independent": true, "link_required": true},
+    {"case_id": "stale-hash", "expected": "stale", "oracle_independent": true, "link_required": true},
+    {"case_id": "tampered-hash", "expected": "tampered", "oracle_independent": true, "link_required": true},
+    {"case_id": "self-reported", "expected": "self_reported", "oracle_independent": true, "link_required": true}
+  ],
+  "link_schema": {
+    "required": ["claim", "artifact_path", "artifact_sha256"],
+    "forbidden": ["self_reported"],
+    "hash": "sha256(canonical_artifact_json)"
+  }
+}

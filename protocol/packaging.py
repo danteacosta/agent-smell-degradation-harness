@@ -80,6 +80,22 @@ def build_dissertation_bundle(repo_root: Path, work_dir: Path) -> dict[str, Any]
             "analysis_report": "eval/analysis_report.json",
             "mitigation_report": "eval/mitigation_report.json",
         },
+        "reproducibility": {
+            "offline": True,
+            "analysis_version": "confirmatory-thesis-v1",
+            "required_files": [
+                "data/confirmatory/manifest.json",
+                "data/confirmatory/schema.json",
+                "tasks/traceability.json",
+                "tasks/annotation_rubric.json",
+                "eval/analysis_report.json",
+                "eval/thresholds.yaml",
+                "docs/thesis/preregistration.md",
+                "docs/thesis/power_analysis.md",
+                "protocol/power.py",
+            ],
+            "network_required": False,
+        },
     }
 
 

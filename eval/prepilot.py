@@ -10,11 +10,17 @@ from typing import Any
 
 from agents.stub import StubAgent
 from eval.identity import configuration_id_for
+from eval.h2_detection import evaluate_confirmatory
 from eval.manifest import build_manifest
 from eval.runner import run_eval_with_agent
-from eval.task_adapters import AcceptanceCriteriaAdapter, TraceabilityAdapter
+from eval.task_adapters import (
+    AcceptanceCriteriaAdapter,
+    TraceabilityAdapter,
+    TraceabilityTaskAdapter,
+    load_traceability_manifest,
+)
 from feature_plane import DeployableFeatureInput, extract_deployable_features
-from label_plane.datasets import validate_design_metadata
+from label_plane.datasets import build_confirmatory_manifest, validate_design_metadata
 from pairs.loader import load_all_pairs
 from agent_reliability_protocol import GateDecision, RunManifest, export_contract
 from agent_reliability_protocol.interchange import validate_thesis_envelope
@@ -39,6 +45,24 @@ def _twelve_intents() -> list[dict[str, Any]]:
     intent_ids = [str(pair.get("intent_id", "")) for pair in source]
     if len(set(intent_ids)) != PREPILOT_INTENT_COUNT or not all(intent_ids):
         raise ValueError("prepilot requires 12 unique, non-empty source intent IDs")
+
+    # The source manifest is the frozen confirmatory boundary. It supplies
+    # provenance/project identity and must agree exactly with runtime pairs
+    # before any agent execution is permitted.
+    confirmatory = build_confirmatory_manifest()
+    manifest_records = {
+        str(record["source_intent_id"]): record
+        for record in confirmatory["source_records"]
+    }
+    if set(intent_ids) != set(manifest_records):
+        raise ValueError(
+            "runtime pair IDs must exactly match confirmatory manifest source intents"
+        )
+    for pair in source:
+        record = manifest_records[str(pair["intent_id"])]
+        pair["source_intent_id"] = str(record["source_intent_id"])
+        pair["project_id"] = str(record["project_id"])
+        pair["provenance_url"] = str(record["provenance_url"])
 
     # Validate the complete experimental design before any agent execution.
     # The source-pair files are expanded only into their declared clean/smelly
@@ -148,7 +172,15 @@ def run_pre_pilot(*, output_root: Path, run_id: str = "prepilot-v4") -> dict[str
     """Create the fixed 12 intents × 2 variants × 5 replications offline export."""
     run_dir = output_root / run_id
     pairs = _twelve_intents()
-    adapters = (AcceptanceCriteriaAdapter(),)
+    load_traceability_manifest()
+    if not all(
+        isinstance(pair.get("oracle_spec", {}).get("traceability"), dict)
+        for pair in pairs
+    ):
+        raise ValueError(
+            "confirmatory prepilot requires traceability oracle specs for every source intent"
+        )
+    adapters = (AcceptanceCriteriaAdapter(), TraceabilityTaskAdapter())
     validators = (TraceabilityAdapter(),)
     config = {
         "mode": "offline-prepilot",
@@ -224,8 +256,12 @@ def run_pre_pilot(*, output_root: Path, run_id: str = "prepilot-v4") -> dict[str
     analysis_dir = run_dir / "analysis"
     (analysis_dir / "estimands.json").write_text(json.dumps(estimands, indent=2) + "\n")
     (analysis_dir / "boundary_map.json").write_text(json.dumps(boundary_map, indent=2) + "\n")
+    h2_report = evaluate_confirmatory(episodes, seed=0)
+    (analysis_dir / "h2_confirmatory.json").write_text(
+        json.dumps(h2_report, indent=2) + "\n"
+    )
     (analysis_dir / "group_splits.json").write_text(
-        json.dumps(_group_splits([pair["intent_id"] for pair in pairs]), indent=2) + "\n"
+        json.dumps(h2_report["split"], indent=2) + "\n"
     )
     return {"run_dir": str(run_dir), "episode_count": len(episodes)}
 

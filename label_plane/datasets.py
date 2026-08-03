@@ -267,6 +267,22 @@ def _validate_source_record(
     actual_hash = hashlib.sha256(source_path.read_bytes()).hexdigest()
     if expected_hash != actual_hash:
         raise ValueError(f"confirmatory source hash mismatch: {source_intent}")
+    # Repository-local pair sources are JSON contracts.  Hash equality alone
+    # is not enough: the manifest's canonical requirements must still refer
+    # to the source intent being collected.  External URL-backed sources may
+    # use another format and are covered by their immutable hash/provenance.
+    if source_path.suffix.lower() == ".json":
+        try:
+            source_payload = json.loads(source_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            raise ValueError(f"confirmatory source is not readable JSON: {source}") from exc
+        if isinstance(source_payload, dict):
+            if str(source_payload.get("intent_id", source_intent)).strip() != source_intent:
+                raise ValueError(f"confirmatory source intent mismatch: {source_intent}")
+            for field in ("clean_requirement", "smelly_requirement"):
+                source_text = source_payload.get(field)
+                if isinstance(source_text, str) and source_text != str(record[field]):
+                    raise ValueError(f"confirmatory requirement mismatch: {source_intent}/{field}")
 
 
 def _expanded_confirmatory_records(

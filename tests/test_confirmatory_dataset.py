@@ -100,6 +100,29 @@ def test_confirmatory_manifest_rejects_source_hash_tampering(tmp_path: Path):
         validate_confirmatory_manifest(manifest)
 
 
+def test_confirmatory_manifest_rejects_pair_text_mismatch(tmp_path: Path):
+    manifest = _complete_manifest(tmp_path)
+    source = Path(manifest["records"][0]["source"])  # type: ignore[index]
+    source.write_text(
+        json.dumps(
+            {
+                "intent_id": "intent-00",
+                "clean_requirement": "Different source text.",
+                "smelly_requirement": "Different vague source text.",
+                "smell": {"category": "threshold", "type": "vague", "injection_rule": "replace"},
+                "oracle_spec": {"codegen": {}, "test_gen": {}},
+            },
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    manifest["records"][0]["source_sha256"] = hashlib.sha256(source.read_bytes()).hexdigest()  # type: ignore[index]
+
+    with pytest.raises(ValueError, match="requirement mismatch"):
+        validate_confirmatory_manifest(manifest)
+
+
 def test_confirmatory_manifest_rejects_missing_provenance_and_project(tmp_path: Path):
     manifest = _complete_manifest(tmp_path)
     manifest["records"][0]["provenance_url"] = ""  # type: ignore[index]
