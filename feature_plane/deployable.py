@@ -199,7 +199,9 @@ def extract_deployable_features(
         "provenance": {
             "constraint_event_present": int(bool(interpretation or legacy)),
             "constraint_count": constraint_count,
-            "constraint_field_count": len(interpretation),
+            "constraint_field_count": len(
+                [key for key in interpretation if key != "source_event_name"]
+            ),
             "constraint_has_comparator": int(any(token in comparator_text for token in ("<", ">", "="))),
             "quantity_count": len(quantities) if isinstance(quantities, list) else 0,
             "unresolved_reference_count": len(unresolved) if isinstance(unresolved, list) else 0,
