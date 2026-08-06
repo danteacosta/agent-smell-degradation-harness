@@ -102,6 +102,7 @@ class ProvenanceRecorder:
         }
         if self._episode_identity is not None:
             record["episode_identity"] = self._episode_identity
+        record["source_refs"] = list(payload.get("source_refs", []))
         self._file.write(json.dumps(record) + "\n")
         self._sequence += 1
         self._last_event_id = record["event_id"]

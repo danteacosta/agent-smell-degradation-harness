@@ -13,5 +13,10 @@
 | `oracle_passed` | label | executable outcome | no |
 | `semantic_label` | label | adjudicated terminal label | no |
 | `traceability_links` | label/evidence | hashed claim-to-artifact links | no |
+| `episode_handoff` | audit/QC | versioned pre-final or post-evaluation sidecar with source references | no |
+| `semantic_lint_findings` | audit/QC | deterministic provenance and plane-boundary findings | no |
+| `source_refs` | provenance | source kind, identifier, optional content hash and event sequence | no |
 
 The manifest records provenance and hashes for every row. The feature plane may consume only input fields and provider-produced T0–T3 attributes before the terminal cutoff.
+
+Handoff and lint artifacts are retained for reproducibility and failure diagnosis, but are excluded from H1/H2 feature extraction and from primary labels. Product candidate memory is maintained outside the thesis dataset and is never joined into confirmatory rows.
