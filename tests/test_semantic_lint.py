@@ -1,4 +1,32 @@
 from observability.semantic_lint import lint_event, validate_events
+from eval.runner import run_eval_with_agent
+
+
+def test_eval_exports_semantic_lint_summary(tmp_path):
+    class FakeAgent:
+        provider = "replay"
+        model = "model"
+
+        def generate_with_meta(self, pair, variant, task_family):
+            return pair["oracle_spec"][task_family], {
+                "provider": self.provider,
+                "model": self.model,
+                "latency_ms": 1.0,
+                "cost_usd": 0.0,
+            }
+
+    pair = {
+        "intent_id": "I-1",
+        "workload_id": "w-1",
+        "clean_requirement": "Do the thing.",
+        "smelly_requirement": "Do the thing.",
+        "smell": {"type": "vague", "category": "ambiguity"},
+        "oracle_spec": {"codegen": {"ok": True}, "test_gen": {"ok": True}},
+    }
+    _, episodes = run_eval_with_agent(
+        FakeAgent(), pairs=[pair], output_path=tmp_path / "metrics.json", traces_dir=tmp_path / "traces"
+    )
+    assert episodes[0]["semantic_lint"]["finding_count"] == 0
 
 
 def test_lint_reports_missing_provenance():

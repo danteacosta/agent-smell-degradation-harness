@@ -11,6 +11,7 @@ from eval.metrics import aggregate_metrics
 from eval.provider_manifest import ProviderRunMetadata, summarize_provider_runs
 from mitigation.pipeline import prepare_requirement
 from observability.tracing import ProvenanceRecorder
+from observability.semantic_lint import validate_events
 from pairs.loader import load_all_pairs
 from taxonomy.label import label_degradation
 from eval.task_adapters import (
@@ -177,6 +178,7 @@ def _run_episode(
         if line.strip()
     ]
     validate_lifecycle_sequence(trace_events)
+    semantic_lint_findings = validate_events(trace_events)
 
     episode: dict[str, Any] = {
         **identity.as_dict(),
@@ -193,6 +195,10 @@ def _run_episode(
         "semantic_label": semantic_label,
         "provenance_path": str(trace_path),
         "has_semantic_provenance": has_semantic_provenance,
+        "semantic_lint": {
+            "finding_count": len(semantic_lint_findings),
+            "findings": [finding.__dict__ for finding in semantic_lint_findings],
+        },
         "degradation_mode": degradation.mode,
         "degradation_severity": degradation.severity,
         "provider_meta": {

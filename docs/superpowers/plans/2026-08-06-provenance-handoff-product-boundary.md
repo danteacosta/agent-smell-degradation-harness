@@ -50,6 +50,8 @@
 - [ ] Document that product memory is separate from the RAG corpus store and thesis label plane.
 - [ ] Run the RAG suite.
 
+The product slice also exposes bounded typed retrieval over accepted candidates and records post-run lint findings in the closed-loop status/event stream. It does not alter the product gate decision.
+
 ### Task 4: Verify and record thesis changes (ASD worktree plus connected Google Doc)
 
 **Files:**
