@@ -163,8 +163,18 @@ def extract_deployable_features(
     interpretation = checkpoint("interpretation.completed")
     plan = checkpoint("plan.completed")
     execution = checkpoint("tool.completed")
-    legacy = checkpoint("constraint_extract")
-    if not interpretation and legacy:
+    legacy = next(
+        (
+            _event_payload(event) or {}
+            for event in events
+            if str(event.get("name", "")) == "constraint_extract"
+        ),
+        {},
+    )
+    if legacy:
+        # The legacy stub emitted a metadata-only interpretation followed by
+        # ``constraint_extract``. Preserve that retrospective contract while
+        # keeping confirmatory providers on the richer canonical payload.
         interpretation = legacy
     constraints = interpretation.get("constraints", [])
     quantities = interpretation.get("quantities", [])
@@ -202,11 +212,15 @@ def extract_deployable_features(
             "validation_attempt_count": int(execution.get("validation_attempts", 0)),
             "error_count": len(execution.get("errors", [])) if isinstance(execution.get("errors", []), list) else 0,
             "retrieval_event_count": int(execution.get("retrieval_events", 0)),
-            "semantic_event_count": sum(
-                1
-                for event in events
-                if str(event.get("kind", "")).lower() == "semantic"
-                or str(event.get("event_type", "")).startswith(("interpretation", "constraint", "plan"))
+            "semantic_event_count": (
+                sum(1 for event in events if str(event.get("name", "")) == "constraint_extract")
+                if legacy
+                else sum(
+                    1
+                    for event in events
+                    if str(event.get("kind", "")).lower() == "semantic"
+                    or str(event.get("event_type", "")).startswith(("interpretation", "constraint", "plan"))
+                )
             ),
         },
     }

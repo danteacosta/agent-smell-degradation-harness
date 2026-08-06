@@ -12,5 +12,6 @@
     "eval/confirmatory_report.py": "a4dc682806f1574cd1f4272ed666c252d22d58430e679e411c46bb06fb52ac40",
     "label_plane/human_annotation/__init__.py": "3bea840960c89be5449d2574a9d37ff65125904dd49bfc5652915b1adf92c306",
     "eval/runner.py": "af95b10e61b0016f1259b2b162dde4557603b9eba8dfc07c4e79a97fb1b54004"
+    ,"feature_plane/deployable.py": "d462282ce96c1ff0a9c8274eee93742bab1fa2969665925e8466c79d7632abb0"
   }
 }
