@@ -22,6 +22,18 @@ def average_precision(scores: Sequence[float], labels: Sequence[int]) -> float:
     return area / positives
 
 
+def shuffled_negative_control(scores: Sequence[float], labels: Sequence[int], *, seed: int = 0) -> dict[str, Any]:
+    """Report a deterministic label-independent control for leakage checks."""
+    shuffled = list(scores)
+    random.Random(seed).shuffle(shuffled)
+    return {"control": "shuffled_scores", "seed": seed, "pr_auc": average_precision(shuffled, labels), "n": len(labels)}
+
+
+def ablation_pr_auc(scores_by_family: Mapping[str, Sequence[float]], labels: Sequence[int]) -> dict[str, float]:
+    """Report each deployable family alone; no post-hoc family selection."""
+    return {family: average_precision(scores, labels) for family, scores in sorted(scores_by_family.items())}
+
+
 def clustered_pr_auc_delta(
     rows: Sequence[Mapping[str, Any]],
     provenance_scores: Sequence[float],
@@ -98,4 +110,4 @@ def finalize_h2_claim(effect: dict[str, Any], *, margin: float = 0.05) -> dict[s
     return effect
 
 
-__all__ = ("average_precision", "clustered_pr_auc_delta", "finalize_h2_claim")
+__all__ = ("ablation_pr_auc", "average_precision", "clustered_pr_auc_delta", "finalize_h2_claim", "shuffled_negative_control")

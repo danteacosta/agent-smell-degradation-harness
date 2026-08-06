@@ -13,7 +13,7 @@ from feature_plane import DeployableFeatureInput, extract_deployable_features, s
 from eval.runner import run_eval
 from observability.features import extract_tier_a_features
 from eval.feature_manifest import validate_feature_manifest
-from eval.confirmatory_report import clustered_pr_auc_delta, finalize_h2_claim
+from eval.confirmatory_report import ablation_pr_auc, clustered_pr_auc_delta, finalize_h2_claim, shuffled_negative_control
 from label_plane.human_annotation import load_primary_label_manifest
 from eval.sample_gate import validate_confirmatory_design
 
@@ -298,6 +298,12 @@ def evaluate_confirmatory(
             else "computed-from-traces"
         }
         report["primary_effect"] = primary_effect
+        report["robustness"] = {
+            "negative_control": shuffled_negative_control(
+                test_scores["provenance_semantic"], split_labels["test"], seed=seed
+            ),
+            "ablations_pr_auc": ablation_pr_auc(test_scores, split_labels["test"]),
+        }
     return report
 
 
