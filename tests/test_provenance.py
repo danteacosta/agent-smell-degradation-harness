@@ -1,3 +1,5 @@
+import json
+
 from observability.tracing import ProvenanceRecorder
 
 
@@ -10,3 +12,4 @@ def test_records_semantic_and_operational_events(tmp_path):
     lines = path.read_text().strip().splitlines()
     assert len(lines) == 2
     assert '"kind": "semantic"' in lines[1]
+    assert json.loads(lines[0])["source_refs"][0]["kind"] == "episode"

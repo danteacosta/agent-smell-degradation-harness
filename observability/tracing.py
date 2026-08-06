@@ -79,14 +79,25 @@ class ProvenanceRecorder:
             for key, value in payload.items()
             if key not in {"variant", "variant_id", "smell", "defect_family", "defect_type", "mutation"}
         }
+        event_id = str(uuid.uuid4())
+        sequence_number = self._sequence
+        episode_id = str(self._arp_context.get("episode_id", "unknown"))
+        source_refs = list(payload.get("source_refs", [])) or [
+            {
+                "kind": "episode",
+                "identifier": episode_id,
+                "event_id": event_id,
+                "sequence_number": sequence_number,
+            }
+        ]
         record = {
-            "event_id": str(uuid.uuid4()),
+            "event_id": event_id,
             "schema_version": "2.0.5",
             "experiment_id": str(self._arp_context.get("experiment_id", "unknown")),
             "run_id": str(self._arp_context.get("run_id", "unknown")),
-            "episode_id": str(self._arp_context.get("episode_id", "unknown")),
+            "episode_id": episode_id,
             "replication_id": int(self._arp_context.get("replication_id", 0)),
-            "sequence_number": self._sequence,
+            "sequence_number": sequence_number,
             "checkpoint": event_name,
             "event_type": event_name,
             "started_at": timestamp,
@@ -102,6 +113,7 @@ class ProvenanceRecorder:
         }
         if self._episode_identity is not None:
             record["episode_identity"] = self._episode_identity
+        record["source_refs"] = source_refs
         self._file.write(json.dumps(record) + "\n")
         self._sequence += 1
         self._last_event_id = record["event_id"]

@@ -15,6 +15,8 @@ The design is exactly 12 independent source intents × 2 natural variants × 5 r
 
 The grouped split is deterministic and disjoint by source intent and project: train for model selection, calibration for threshold fitting, and test for the final estimate. No terminal artifact, oracle value, label, or post-cutoff event may enter deployable features.
 
+Each episode may emit a versioned `episode_handoff/v1` JSON sidecar and semantic-lint report. These are auditability and quality-control artifacts only: they are not generation inputs, deployable H2 features, labels, or analysis outcomes. A `pre_final` handoff is fail-closed to provider-produced T0–T3 facts and source references bound to the pre-final event sequence; a `post_eval` handoff may contain labels and outcomes but is label-plane data. Strict lint failure marks the episode invalid before confirmatory analysis; it does not trigger post-hoc exclusion or alter the estimand.
+
 ## Exclusions and missingness
 
 No post-hoc exclusions are permitted. Missing provider output, missing traceability, invalid ARP envelope, missing human label, or failed provenance hash is recorded as missing and blocks the affected confirmatory estimate. No imputation is used for the primary estimands.
