@@ -119,12 +119,13 @@ def build_grouped_split_manifest(
     }
     assignments: dict[tuple[str, str], str] = {}
     counts = {split: 0 for split in SPLITS}
-    # Ensure every partition exists when there are exactly three components;
-    # subsequent components are assigned to the partition furthest below its
-    # requested record count.  Stable ordering makes this deterministic.
+    # Seed two components per split when possible so a six-project design can
+    # support the preregistered project holdout precision gate.  Subsequent
+    # components are assigned to the partition furthest below its requested
+    # record count. Stable ordering makes this deterministic.
     for component_index, component in enumerate(ordered):
-        if component_index < len(SPLITS):
-            split = SPLITS[component_index]
+        if component_index < 2 * len(SPLITS):
+            split = SPLITS[component_index % len(SPLITS)]
         else:
             split = max(
                 SPLITS,

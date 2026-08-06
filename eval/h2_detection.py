@@ -12,11 +12,25 @@ from eval.splits import apply_split_manifest, build_grouped_split_manifest
 from feature_plane import DeployableFeatureInput, extract_deployable_features, semantic_risk
 from eval.runner import run_eval
 from observability.features import extract_tier_a_features
+from eval.feature_manifest import validate_feature_manifest
+from eval.confirmatory_report import clustered_pr_auc_delta, finalize_h2_claim
+from label_plane.human_annotation import load_primary_label_manifest
+from eval.sample_gate import validate_confirmatory_design
 
 FAMILIES = ("static_smell", "operational", "provenance_semantic")
 
 
-def _episode_label(episode: dict[str, Any]) -> int:
+def _episode_label(
+    episode: dict[str, Any], primary_labels: dict[str, int] | None = None
+) -> int:
+    if primary_labels is not None:
+        episode_id = str(episode.get("episode_id", ""))
+        if episode_id not in primary_labels:
+            raise ValueError(f"missing primary human label for {episode_id}")
+        label = primary_labels[episode_id]
+        if label not in (0, 1):
+            raise ValueError(f"primary human label for {episode_id} must be binary")
+        return label
     return 1 if episode.get("variant") == "smelly" and not episode.get("oracle_passed") else 0
 
 
@@ -125,11 +139,32 @@ def evaluate_group_split(
     }
 
 
-def _episode_family_scores(episodes: list[dict[str, Any]]) -> dict[str, list[float]]:
+def _episode_family_scores(
+    episodes: list[dict[str, Any]],
+    *,
+    feature_manifest: dict[str, Any] | None = None,
+    confirmatory: bool = False,
+) -> dict[str, list[float]]:
     """Build deployable scores without allowing terminal labels into features."""
 
     scores = {family: [] for family in FAMILIES}
+    manifest_rows: dict[str, Any] = {}
+    if feature_manifest is not None:
+        validate_feature_manifest(feature_manifest, episodes)
+        manifest_rows = {
+            str(row["episode_id"]): row for row in feature_manifest["rows"]
+        }
     for episode in episodes:
+        episode_id = str(episode.get("episode_id", ""))
+        if confirmatory and feature_manifest is None and (
+            "h2_scores" in episode or "feature_scores" in episode
+        ):
+            raise ValueError("confirmatory H2 score injection requires a feature manifest")
+        if episode_id in manifest_rows:
+            supplied = manifest_rows[episode_id]["scores"]
+            for family in FAMILIES:
+                scores[family].append(float(supplied[family]))
+            continue
         supplied = episode.get("h2_scores") or episode.get("feature_scores")
         if isinstance(supplied, dict) and all(family in supplied for family in FAMILIES):
             for family in FAMILIES:
@@ -153,6 +188,10 @@ def evaluate_confirmatory(
     *,
     seed: int = 0,
     split_manifest: dict[str, Any] | None = None,
+    confirmatory: bool = False,
+    primary_labels: dict[str, int] | dict[str, Any] | None = None,
+    feature_manifest: dict[str, Any] | None = None,
+    enforce_design: bool = True,
 ) -> dict[str, Any]:
     """Run the preregistered H2 train/calibration/test protocol.
 
@@ -164,8 +203,22 @@ def evaluate_confirmatory(
 
     if not episodes:
         raise ValueError("H2 confirmatory evaluation requires episodes")
+    if confirmatory and primary_labels is None:
+        raise ValueError("confirmatory H2 requires primary human labels")
+    if confirmatory and isinstance(primary_labels, dict) and "schema_version" in primary_labels:
+        primary_labels = load_primary_label_manifest(
+            primary_labels, (str(episode.get("episode_id", "")) for episode in episodes)
+        )
+    if confirmatory and feature_manifest is None and any(
+        "h2_scores" in episode or "feature_scores" in episode for episode in episodes
+    ):
+        raise ValueError("confirmatory H2 score injection requires a feature manifest")
+    if feature_manifest is not None:
+        validate_feature_manifest(feature_manifest, episodes)
     manifest = split_manifest or build_grouped_split_manifest(episodes, seed=seed)
     partitions = apply_split_manifest(episodes, manifest)
+    if confirmatory and enforce_design:
+        validate_confirmatory_design(episodes, partitions)
     split_scores: dict[str, dict[str, list[float]]] = {
         split: {family: [] for family in FAMILIES} for split in ("train", "calibration", "test")
     }
@@ -174,9 +227,14 @@ def evaluate_confirmatory(
     # and prevents accidental positional leakage if a caller supplies a custom
     # manifest with a different partition ordering.
     for split, rows in partitions.items():
-        row_scores = _episode_family_scores(list(rows))
+        row_scores = _episode_family_scores(
+            list(rows), feature_manifest=feature_manifest, confirmatory=confirmatory
+        )
         split_scores[split] = row_scores
-        split_labels[split] = [_episode_label(episode) for episode in rows]
+        split_labels[split] = [
+            _episode_label(episode, primary_labels if confirmatory else None)
+            for episode in rows
+        ]
         if not {0, 1}.issubset(set(split_labels[split])):
             raise CalibrationError(
                 f"{split} group must contain both clean and degraded labels for confirmatory H2"
@@ -194,7 +252,34 @@ def evaluate_confirmatory(
         calibration["threshold"],
         split="test",
     )
-    return {
+    primary_effect: dict[str, Any] | None = None
+    if confirmatory:
+        train_candidates = selection["candidates"]
+        baseline_family = max(
+            ("static_smell", "operational"),
+            key=lambda family: (
+                float(train_candidates[family]["pr_auc"]),
+                float(train_candidates[family]["auroc"]),
+                family,
+            ),
+        )
+        test_rows = list(partitions["test"])
+        test_scores = _episode_family_scores(
+            test_rows, feature_manifest=feature_manifest, confirmatory=confirmatory
+        )
+        primary_effect = clustered_pr_auc_delta(
+            test_rows,
+            test_scores["provenance_semantic"],
+            test_scores[baseline_family],
+            split_labels["test"],
+            cluster_key="source_intent_id",
+            draws=2000,
+            seed=seed,
+        )
+        primary_effect["baseline_family"] = baseline_family
+        primary_effect["provenance_family"] = "provenance_semantic"
+        primary_effect = finalize_h2_claim(primary_effect, margin=0.05)
+    report = {
         "protocol": "H2-confirmatory-v1",
         "selected_family": selected_family,
         "split": manifest,
@@ -205,6 +290,15 @@ def evaluate_confirmatory(
             "family": selected_family,
         },
     }
+    if confirmatory:
+        report["labels"] = {"source": "primary_human_adjudicated"}
+        report["features"] = {
+            "schema_version": str(feature_manifest["schema_version"])
+            if feature_manifest
+            else "computed-from-traces"
+        }
+        report["primary_effect"] = primary_effect
+    return report
 
 
 def main(argv: list[str] | None = None) -> int:
