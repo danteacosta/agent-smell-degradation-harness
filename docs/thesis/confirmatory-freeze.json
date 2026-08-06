@@ -1,0 +1,16 @@
+{
+  "schema_version": "confirmatory-freeze/v1",
+  "status": "candidate",
+  "hash_algorithm": "sha256",
+  "files": {
+    "docs/thesis-product-boundary.md": "87d05ec945c02e1933a48fbacc4389b1c7abfa70f8890f3553099116597c87ed",
+    "docs/thesis/preregistration.md": "bb3399ee3fb314894aea1be4f34288eed22ef81dbe36b69a6a75262e3f6f3968",
+    "tasks/annotation_rubric.json": "7447bfb65d9c196f58874c30d31edf50b9a739f38885a700537b48e6f7603780",
+    "eval/feature_manifest.py": "15320ad00cf6ad40229c0a804d9bf28ac39588c818366e42f00eb6080079ae13",
+    "eval/h2_detection.py": "266a886431040088132a1fd475d379a9c7743089d7524a5694b6248e0f9a4177",
+    "eval/splits.py": "65121310875281b656bea930d013f310eca036a0de26980a0b216f5964f06fff",
+    "eval/confirmatory_report.py": "a4dc682806f1574cd1f4272ed666c252d22d58430e679e411c46bb06fb52ac40",
+    "label_plane/human_annotation/__init__.py": "3bea840960c89be5449d2574a9d37ff65125904dd49bfc5652915b1adf92c306",
+    "eval/runner.py": "af95b10e61b0016f1259b2b162dde4557603b9eba8dfc07c4e79a97fb1b54004"
+  }
+}
