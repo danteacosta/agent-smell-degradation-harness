@@ -17,6 +17,7 @@ from eval.identity import configuration_id_for, new_run_id
 from eval.manifest import build_manifest
 from eval.metrics import aggregate_metrics
 from eval.runner import VARIANTS, run_eval, run_eval_with_agent
+from eval.freeze import validate_freeze
 from eval.task_adapters import (
     DEFAULT_TASK_ADAPTERS,
     DEFAULT_VALIDATORS,
@@ -232,6 +233,8 @@ def run_experiment(
     run_id: str | None = None,
     task_adapters: Sequence[TaskAdapter] = DEFAULT_TASK_ADAPTERS,
     validators: Sequence[EpisodeValidator] = DEFAULT_VALIDATORS,
+    confirmatory: bool = False,
+    freeze_path: Path | None = None,
 ) -> dict[str, Any]:
     if repo_root is None:
         repo_root = Path(__file__).resolve().parents[1]
@@ -262,6 +265,18 @@ def run_experiment(
             replications=replications,
             task_adapters=task_adapters,
             validators=validators,
+        )
+
+    if confirmatory:
+        if stub_as_live:
+            raise ValueError("confirmatory execution cannot use stub-as-live")
+        freeze_file = freeze_path or (repo_root / "docs" / "thesis" / "confirmatory-freeze.json")
+        if not freeze_file.is_file():
+            raise ValueError("confirmatory provider execution requires confirmatory-freeze.json")
+        validate_freeze(
+            json.loads(freeze_file.read_text(encoding="utf-8")),
+            repository_root=repo_root,
+            require_confirmed=True,
         )
 
     eval_dir = repo_root / "eval"
@@ -303,6 +318,7 @@ def run_experiment(
             configuration_id=configuration_id,
             task_adapters=task_adapters,
             validators=validators,
+            confirmatory=confirmatory,
         )
         _write_episodes_jsonl(episodes, episodes_path)
         combined_episodes.extend(episodes)
@@ -372,6 +388,11 @@ def main(argv: list[str] | None = None) -> None:
         "--mock-live",
         action="store_true",
         help="Run LiveAgent with MockTransport under runs/ (offline)",
+    )
+    parser.add_argument(
+        "--confirmatory",
+        action="store_true",
+        help="Require a confirmed freeze and real provider checkpoints",
     )
     parser.add_argument(
         "--replications",
@@ -472,6 +493,7 @@ def main(argv: list[str] | None = None) -> None:
         repo_root=repo_root,
         task_adapters=task_adapters,
         validators=validators,
+        confirmatory=args.confirmatory,
     )
 
 

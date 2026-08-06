@@ -83,7 +83,9 @@ def _contains_terminal_key(value: Any) -> str | None:
 
 
 def _event_payload(event: Mapping[str, Any]) -> Mapping[str, Any] | None:
-    payload = event.get("payload", event.get("attributes"))
+    # Canonical ARP attributes are the feature-plane boundary.  The legacy
+    # payload may contain experiment metadata and is intentionally ignored.
+    payload = event.get("attributes", event.get("payload"))
     return payload if isinstance(payload, Mapping) else None
 
 
@@ -151,27 +153,40 @@ def extract_deployable_features(
         ),
         0.0,
     )
-    constraint_events = [
-        event
-        for event in events
-        if str(event.get("name", event.get("event_type", ""))) == "constraint_extract"
-    ]
-    payload = _event_payload(constraint_events[0]) if constraint_events else next(
+    def checkpoint(name: str) -> Mapping[str, Any]:
+        for event in events:
+            event_name = str(event.get("checkpoint", event.get("event_type", event.get("name", ""))))
+            if event_name == name:
+                return _event_payload(event) or {}
+        return {}
+
+    interpretation = checkpoint("interpretation.completed")
+    plan = checkpoint("plan.completed")
+    execution = checkpoint("tool.completed")
+    legacy = next(
         (
-            event_payload
-            for event_payload in (_event_payload(event) for event in events)
-            if event_payload and "constraint_count" in event_payload
+            _event_payload(event) or {}
+            for event in events
+            if str(event.get("name", "")) == "constraint_extract"
         ),
-        None,
+        {},
     )
-    attributes = _event_payload(constraint_events[0]) if constraint_events else payload
-    constraint_count = 0
-    if payload:
-        raw_count = payload.get("constraint_count", payload.get("count"))
-        if isinstance(raw_count, (int, float)):
-            constraint_count = int(raw_count)
-        elif payload:
-            constraint_count = len(payload)
+    if legacy:
+        # The legacy stub emitted a metadata-only interpretation followed by
+        # ``constraint_extract``. Preserve that retrospective contract while
+        # keeping confirmatory providers on the richer canonical payload.
+        interpretation = legacy
+    constraints = interpretation.get("constraints", [])
+    quantities = interpretation.get("quantities", [])
+    unresolved = interpretation.get("unresolved_references", [])
+    assumptions = interpretation.get("assumptions", [])
+    contradictions = interpretation.get("contradictions", [])
+    validation_checks = plan.get("validation_checks", [])
+    planned_tools = plan.get("planned_tools", [])
+    coverage_targets = plan.get("coverage_targets", [])
+    raw_count = interpretation.get("constraint_count", interpretation.get("count"))
+    constraint_count = int(raw_count) if isinstance(raw_count, (int, float)) else len(constraints)
+    comparator_text = " ".join(str(value) for value in constraints)
     return {
         "static": {
             "requirement_length": len(feature_input.requirement_text),
@@ -182,14 +197,32 @@ def extract_deployable_features(
             "latency_ms": latency_ms,
         },
         "provenance": {
+            "constraint_event_present": int(bool(interpretation or legacy)),
             "constraint_count": constraint_count,
-            "constraint_field_count": len(attributes or {}),
-            "constraint_has_comparator": int(bool(attributes and "comparator" in attributes)),
-            "semantic_event_count": sum(
-                1
-                for event in events
-                if str(event.get("kind", "")).lower() == "semantic"
-                or str(event.get("event_type", "")).startswith(("interpretation", "constraint", "plan"))
+            "constraint_field_count": len(
+                [key for key in interpretation if key != "source_event_name"]
+            ),
+            "constraint_has_comparator": int(any(token in comparator_text for token in ("<", ">", "="))),
+            "quantity_count": len(quantities) if isinstance(quantities, list) else 0,
+            "unresolved_reference_count": len(unresolved) if isinstance(unresolved, list) else 0,
+            "assumption_count": len(assumptions) if isinstance(assumptions, list) else 0,
+            "contradiction_count": len(contradictions) if isinstance(contradictions, list) else 0,
+            "validation_check_count": len(validation_checks) if isinstance(validation_checks, list) else 0,
+            "planned_tool_count": len(planned_tools) if isinstance(planned_tools, list) else 0,
+            "coverage_target_count": len(coverage_targets) if isinstance(coverage_targets, list) else 0,
+            "revision_count": int(execution.get("revisions", 0)),
+            "validation_attempt_count": int(execution.get("validation_attempts", 0)),
+            "error_count": len(execution.get("errors", [])) if isinstance(execution.get("errors", []), list) else 0,
+            "retrieval_event_count": int(execution.get("retrieval_events", 0)),
+            "semantic_event_count": (
+                sum(1 for event in events if str(event.get("name", "")) == "constraint_extract")
+                if legacy
+                else sum(
+                    1
+                    for event in events
+                    if str(event.get("kind", "")).lower() == "semantic"
+                    or str(event.get("event_type", "")).startswith(("interpretation", "constraint", "plan"))
+                )
             ),
         },
     }

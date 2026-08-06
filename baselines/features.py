@@ -51,10 +51,10 @@ def extract_features(episode: dict[str, Any], provenance_path: str | Path) -> di
         "static_smell": {"smell_present": 0, "requirement_length": deployable["static"]["requirement_length"]},
         "operational": deployable["operational"],
         "provenance_semantic": {
-            "constraint_event_present": int(provenance["constraint_count"] > 0),
+            "constraint_event_present": int(provenance["constraint_event_present"]),
             "constraint_field_count": provenance["constraint_field_count"],
             "constraint_has_comparator": provenance["constraint_has_comparator"],
-            "semantic_event_count": int(provenance["constraint_count"] > 0),
+            "semantic_event_count": int(provenance["semantic_event_count"] > 0),
         },
         "output_only": _extract_output_only(episode),
     }
