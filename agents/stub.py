@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import re
 from typing import Any
 
 from agents.policies import Policy
@@ -84,6 +85,45 @@ class StubAgent:
             )
 
         return oracle
+
+    def observe_checkpoints(
+        self, pair: dict[str, Any], *, variant: str, task_family: str
+    ) -> dict[str, dict[str, Any]]:
+        """Emit an explicitly stub-labelled checkpoint for offline schema tests."""
+
+        requirement = str(
+            pair["clean_requirement"] if variant == "clean" else pair["smelly_requirement"]
+        )
+        quantities = [
+            {"value": int(value), "unit": unit.lower()}
+            for value, unit in re.findall(r"\b(\d+)\s*([A-Za-z]+)", requirement)
+        ]
+        vague_terms = {
+            "old", "some", "significant", "reasonable", "sufficient", "several", "while"
+        }
+        unresolved = sorted(
+            {word.lower() for word in re.findall(r"[A-Za-z]+", requirement) if word.lower() in vague_terms}
+        )
+        return {
+            "interpretation": {
+                "constraints": [requirement],
+                "quantities": quantities,
+                "unresolved_references": unresolved,
+                "assumptions": [],
+                "contradictions": [],
+            },
+            "plan": {
+                "validation_checks": [task_family],
+                "planned_tools": [],
+                "coverage_targets": ["requirement constraints"],
+            },
+            "execution": {
+                "revisions": 0,
+                "validation_attempts": 1,
+                "errors": [],
+                "retrieval_events": 0,
+            },
+        }
 
     def _weaken(
         self,

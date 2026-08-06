@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any, Sequence
 
 from agents.stub import StubAgent
+from agents.checkpoints import validate_checkpoint_payload
 from agent_reliability_protocol import validate_lifecycle_sequence
 from eval.identity import configuration_id_for, create_episode_identity, new_run_id
 from eval.metrics import aggregate_metrics
@@ -51,7 +52,7 @@ def _run_episode(
     pair: dict[str, Any],
     task_adapter: TaskAdapter,
     variant: str,
-    agent: StubAgent,
+    agent: Any,
     traces_dir: Path,
     skip_semantic_provenance: bool,
     policy: str,
@@ -59,6 +60,7 @@ def _run_episode(
     run_id: str,
     replication_id: int,
     configuration_id: str,
+    confirmatory: bool,
 ) -> dict[str, Any]:
     task_family = task_adapter.task_family
     intent_id = pair["intent_id"]
@@ -99,23 +101,39 @@ def _run_episode(
         },
         tier="A",
     )
-    interpretation = _interpret_requirement(
-        requirement_text,
-        task_family,
-        variant,
-        policy,
-    )
-    rec.semantic("interpretation.completed", interpretation, tier="A")
-    if not skip_semantic_provenance:
-        # Retain the existing semantic-provenance signal, but make it a real
-        # T1 checkpoint derived solely from available requirement input.
-        rec.semantic("constraint_extract", _extract_constraints(interpretation), tier="A")
-        has_semantic_provenance = True
-    rec.semantic(
-        "plan.completed",
-        {"task_family": task_family, "generation_variant": generation_variant},
-        tier="A",
-    )
+    checkpoint_meta: dict[str, Any] = {}
+    if confirmatory:
+        observer = getattr(agent, "observe_checkpoints", None)
+        if observer is None:
+            raise ValueError("confirmatory run requires provider checkpoints")
+        observed = observer(pair, variant=generation_variant, task_family=task_family)
+        if isinstance(observed, tuple):
+            checkpoint_payload, checkpoint_meta = observed
+        else:
+            checkpoint_payload = observed
+        if not isinstance(checkpoint_payload, dict):
+            raise ValueError("provider checkpoints must be an object")
+        checkpoint_payload = validate_checkpoint_payload(checkpoint_payload)
+        rec.semantic("interpretation.completed", checkpoint_payload["interpretation"], tier="A")
+        rec.semantic("plan.completed", checkpoint_payload["plan"], tier="A")
+        rec.operational("tool.completed", checkpoint_payload["execution"], tier="A")
+        has_semantic_provenance = not skip_semantic_provenance
+    else:
+        interpretation = _interpret_requirement(
+            requirement_text,
+            task_family,
+            variant,
+            policy,
+        )
+        rec.semantic("interpretation.completed", interpretation, tier="A")
+        if not skip_semantic_provenance:
+            rec.semantic("constraint_extract", _extract_constraints(interpretation), tier="A")
+            has_semantic_provenance = True
+        rec.semantic(
+            "plan.completed",
+            {"task_family": task_family, "generation_variant": generation_variant},
+            tier="A",
+        )
     rec.operational("execution.started", {"episode_id": episode_id}, tier="A")
     provider_meta: dict[str, Any]
     if hasattr(agent, "generate_with_meta"):
@@ -207,6 +225,7 @@ def _run_episode(
             "latency_ms": float(provider_meta.get("latency_ms", 0.0)),
             "cost_usd": float(provider_meta.get("cost_usd", 0.0)),
             "cost_reported": "cost_usd" in provider_meta,
+            "checkpoint": checkpoint_meta,
         },
     }
     if task_evaluation.mutation_score is not None:
@@ -233,6 +252,7 @@ def run_eval(
     run_id: str | None = None,
     replication_id: int = 0,
     configuration_id: str | None = None,
+    confirmatory: bool = False,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     agent = StubAgent(failure_mode=failure_mode)
     if configuration_id is None:
@@ -258,6 +278,7 @@ def run_eval(
         run_id=run_id,
         replication_id=replication_id,
         configuration_id=configuration_id,
+        confirmatory=confirmatory,
     )
 
 
@@ -276,6 +297,7 @@ def run_eval_with_agent(
     run_id: str | None = None,
     replication_id: int = 0,
     configuration_id: str | None = None,
+    confirmatory: bool = False,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     traces_dir.mkdir(parents=True, exist_ok=True)
     if pairs is None:
@@ -302,6 +324,7 @@ def run_eval_with_agent(
                         run_id,
                         replication_id,
                         configuration_id,
+                        confirmatory,
                     )
                 )
 

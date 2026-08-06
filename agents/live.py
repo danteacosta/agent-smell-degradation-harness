@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 import re
 import time
@@ -60,6 +61,20 @@ def _build_prompt(pair: dict[str, Any], variant: str, task_family: str) -> str:
     )
 
 
+def _build_checkpoint_prompt(pair: dict[str, Any], variant: str, task_family: str) -> str:
+    requirement = (
+        pair["clean_requirement"] if variant == "clean" else pair["smelly_requirement"]
+    )
+    return (
+        "You are producing pre-final observability only. Do not produce an artifact, "
+        "oracle verdict, label, smell name, or variant classification.\n"
+        f"Task family: {task_family}\nRequirement:\n{requirement}\n\n"
+        "Return one JSON object with exactly these sections and fields: "
+        "interpretation={constraints:list, quantities:list, unresolved_references:list, "
+        "assumptions:list, contradictions:list}; "
+        "plan={validation_checks:list, planned_tools:list, coverage_targets:list}; "
+        "execution={revisions:integer, validation_attempts:integer, errors:list, retrieval_events:integer}."
+    )
 class LiveAgent:
     """Optional live LLM adapter; requires `[live]` extra and an API key unless transport is injected."""
 
@@ -167,6 +182,35 @@ class LiveAgent:
         raise ValueError(
             f"Failed to parse JSON from transport after {self.MAX_PARSE_RETRIES} retries: {last_error}"
         )
+
+    def observe_checkpoints(
+        self,
+        pair: dict[str, Any],
+        *,
+        variant: str,
+        task_family: str,
+    ) -> tuple[dict[str, Any], dict[str, Any]]:
+        """Ask the provider for a pre-final checkpoint summary before generation."""
+
+        prompt = _build_checkpoint_prompt(pair, variant, task_family)
+        response, latency_ms = self._complete(
+            ProviderRequest(
+                prompt=prompt,
+                pair=pair,
+                variant=variant,
+                task_family=task_family,
+            )
+        )
+        payload = _extract_json(response)
+        from agents.checkpoints import validate_checkpoint_payload
+
+        normalized = validate_checkpoint_payload(payload)
+        return normalized, {
+            "checkpoint_schema": "pre-final/v1",
+            "checkpoint_request_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+            "checkpoint_response_sha256": hashlib.sha256(response.encode("utf-8")).hexdigest(),
+            "checkpoint_latency_ms": round(latency_ms, 3),
+        }
 
     def generate(self, pair: dict[str, Any], variant: str, task_family: str) -> dict[str, Any]:
         artifact, _meta = self.generate_with_meta(pair, variant, task_family)
