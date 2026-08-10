@@ -44,11 +44,22 @@ Given a requirement and a pre-final trace, the public replay command must:
 - include a replay version, ARP wire schema (`2.0.5`), ARP package version
   (`2.0.6`), trace hash, and report hash in the report.
 
-The exact entry point is:
+The exact fixture entry point is:
 
 ```text
 python -m replay --fixture clean --json out/report.json --sarif out/report.sarif
 ```
+
+Arbitrary bundles use the same contract through:
+
+```text
+python -m replay --bundle path/to/bundle --json out/report.json --sarif out/report.sarif
+```
+
+`--fixture NAME` resolves only the checked-in synthetic fixture. `--bundle DIR`
+requires `manifest.json`, `requirement.json`, and the trace named by the
+manifest; an optional `expected.json` is test-only and is never read by the
+gate.
 
 The clean fixture deterministically maps to `approve`; the controlled
 constraint-loss fixture deterministically maps to `block`. `warn` is reserved
@@ -64,21 +75,51 @@ The bundle layout is fixed:
 
 ```text
 replay/fixtures/manifest.json       # deployable case IDs, versions, trace hashes
+replay/fixtures/requirement.json    # requirement text and task family
 replay/fixtures/traces/*.jsonl      # only T1/T2/T3 ARP events
 replay/fixtures/expected.json       # test-only expected decisions/evidence
 ```
 
-Each trace must contain exactly one ordered T1 interpretation, T2 plan, and
-T3 tool/execution checkpoint with an allowlisted `attributes` payload. The
-manifest hashes raw trace bytes with SHA-256. Replay and ARP versions are
-checked before feature extraction. The expected sidecar is never loaded by
-the gate and may contain mutation labels only for tests.
+The manifest includes `checkpoint_schema_version: "pre-final/v1"` alongside
+`replay_version: "constraint-replay/v1"` and the ARP wire/package versions.
 
-The benchmark has at least four fixed cases: clean, controlled constraint
-loss, negative-control loss in a non-relevant field, and an operational-only
-latency change. It reports output-only and operational baselines, false alerts,
-and fixture-ID-independent results. All fixtures are explicitly non-
-confirmatory thesis evidence.
+Each trace must contain exactly one ordered T1/T2/T3 event. The canonical event
+names and payloads are frozen as follows:
+
+| rank (canonical `checkpoint` value) | `event_type` | required `attributes` |
+| --- | --- | --- |
+| T1 | `interpretation.completed` | `constraints`, `unresolved_references`, `assumptions`, `contradictions` (arrays of strings), `quantities` (array of `{value, unit}` objects) |
+| T2 | `plan.completed` | `validation_checks`, `planned_tools`, `coverage_targets` (arrays of strings) |
+| T3 | `tool.completed` | `revisions`, `validation_attempts`, `retrieval_events` (non-negative integer), `errors` (array of strings) |
+
+Every event also has `event_id` (non-empty string), `sequence_number` (1, 2,
+3), `checkpoint` equal to its canonical event name, `event_type`, `schema_version`
+(`2.0.5`, the ARP wire SemVer), and `attributes`; terminal/oracle/final-artifact
+keys are forbidden. The surrounding ARP envelope also requires
+`experiment_id`, `run_id`, `episode_id`, `replication_id`, `started_at`,
+`ended_at`, `content_reference`, and `parent_event_id`, with one shared
+experiment/run/episode, replication `0`, chronological timestamps, and parent
+IDs pointing to the preceding event (or `null` for T1). The checkpoint payload
+schema is separately frozen as `pre-final/v1` in the manifest and validator;
+it is not used as the ARP event `schema_version`. The manifest hashes raw trace
+bytes with SHA-256. Replay and ARP versions are checked before feature
+extraction. The expected sidecar is never loaded by the gate and may contain
+mutation labels only for tests. Retrospective output-only values live under a
+namespaced, non-deployable diagnostic sidecar.
+
+The benchmark has five fixed cases: clean (`approve`), controlled constraint
+loss (`block`), a valid weak signal (`warn`), negative-control loss in a
+non-relevant field (`approve`), and operational-only latency change (`approve`).
+The false-alert invariant is zero false alerts over the two negative cases (2
+total). It reports output-only and operational baselines, false alerts, and
+fixture-ID-independent results. All fixtures are explicitly non-confirmatory
+thesis evidence.
+
+Report hashes are SHA-256 over UTF-8 JSON with sorted keys, compact separators,
+normalized finite numbers (`-0` becomes `0`), and no trailing newline.
+`report_sha256`, paths, timestamps, environment values, and non-deployable
+diagnostics are excluded from the hashed projection, so the hash is
+non-circular and portable.
 
 ## Data flow
 
@@ -99,7 +140,9 @@ It is a demonstration artifact, not a substitute for the confirmatory dataset.
   extensions are filtered before serialization, never used for the decision.
 - Terminal labels, oracle verdicts, and final artifacts are rejected from the
   deployable feature path.
-- The GitHub Action does not require API keys.
+- The GitHub Action does not require API keys. It requests `security-events:
+  write` only for SARIF upload when available and always uploads JSON/SARIF as
+  ordinary artifacts, so fork pull requests remain reviewable without secrets.
 - Changing expected labels or mutation metadata cannot change a gate decision.
 
 ## Acceptance tests
@@ -112,8 +155,9 @@ It is a demonstration artifact, not a substitute for the confirmatory dataset.
 3. Replaying the same bundle twice yields the same canonical report hash.
 4. Mutating trace bytes, checkpoint order/schema, replay version, or ARP
    compatibility fails closed with exit code `30`.
-5. Changing expected sidecar labels and fixture IDs leaves the deployable
-   decision unchanged.
+5. Changing expected sidecar labels, mutation metadata, diagnostic output-only
+   values, and fixture IDs leaves deployable features/baselines and the
+   decision unchanged; only non-deployable case metadata may differ.
 6. The action uploads valid SARIF with `if: always()` and stable exit codes;
    forked pull requests require no secrets.
 7. All three `main` branches have explicit licenses (Apache-2.0 for the
