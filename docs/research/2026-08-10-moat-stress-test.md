@@ -39,6 +39,11 @@ evidence of generalization, adoption, or ROI.
 - ASD, RAG, and ARP now have explicit release metadata and contribution/security
   guidance. RAG remains pinned to immutable ARP v2.0.6; the ARP package remains
   MIT-licensed and was not retagged.
+- The product boundary now includes SDK-free normalization contracts for
+  Phoenix, Langfuse, and Braintrust exports, a versioned policy/failure-case
+  registry, ROI metric computation, dependency constraints, and a documented
+  shadow-to-warn-to-block pilot. These are integration and measurement
+  primitives, not evidence that a customer adopted the product.
 - Local verification is 313 ASD tests, 104 RAG tests, and 26 ARP tests; the
   GitHub checks for the merged PRs are green. These are engineering checks,
   not confirmatory thesis results.
@@ -50,7 +55,7 @@ evidence of generalization, adoption, or ROI.
 | Protocol | ARP v2.0.6 package with a 2.0.5 wire-schema compatibility matrix; ASD and RAG consumers are separated; replay validates the installed ARP lifecycle contract. | 4/10 | Independent providers/frameworks emitting the same typed T1-T3 contract and third-party consumers using it. |
 | Workflow | Local/CI approve-warn-block, deterministic JSON/SARIF evidence, five-case replay benchmark, and fork-safe artifact upload. | 4/10 | A low-friction GitHub Action with integrations for Phoenix/Langfuse/Braintrust traces, policy packs, historical baselines, and measurable reduction in escaped semantic regressions. |
 | Distribution | Public repositories now have explicit license, NOTICE, contribution, and security metadata; merged replay and release-hygiene PRs are reproducible. | 1/10 | A permissively licensed, documented starter kit, reference integrations, users contributing traces/failure cases, and published benchmark results. |
-| Commercial | No live customer deployment or ROI evidence. | 0/10 | Proprietary cross-customer failure priors, calibrated policy history, incident/lead-time outcomes, enterprise privacy controls, and deployment support. |
+| Commercial | No live customer deployment or ROI evidence; pilot instrumentation and policy history schema now exist. | 0/10 | Proprietary cross-customer failure priors, calibrated policy history, incident/lead-time outcomes, enterprise privacy controls, and deployment support. |
 
 ## Falsification tests
 
