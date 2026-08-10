@@ -1,0 +1,7 @@
+[
+  {"case_id":"clean-constraint-preserved","category":"clean","confirmatory":false,"expected_decision":"approve"},
+  {"case_id":"constraint-loss","category":"semantic-loss","confirmatory":false,"expected_decision":"block"},
+  {"case_id":"weak-constraint-signal","category":"ambiguous","confirmatory":false,"expected_decision":"warn"},
+  {"case_id":"negative-control-assumption","category":"non-relevant","confirmatory":false,"expected_decision":"approve"},
+  {"case_id":"operational-latency","category":"operational-only","confirmatory":false,"expected_decision":"approve"}
+]

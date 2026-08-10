@@ -43,6 +43,12 @@ pull requests remain reviewable. See the [ARP contract](https://github.com/dante
 the sister [RAG reliability harness](https://github.com/danteacosta/rag-reliability-harness),
 and [the thesis/product boundary](docs/thesis-product-boundary.md).
 
+The demo workflow keeps Code Scanning upload disabled because its synthetic
+block is intentionally an alert. A real installation can set the repository
+variable `REPLAY_UPLOAD_SARIF=true` after replacing the fixtures with its own
+policy-approved bundle; fork pull requests continue using the artifact
+fallback.
+
 ## Flow
 
 ```mermaid
@@ -75,9 +81,14 @@ Each mode is injectable for ATDD: pre-harness baseline catch rate 0.0 → post-h
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -e ".[dev]"
+pip install -c constraints.txt -e ".[dev]"
 make all
 ```
+
+After dependencies are cached (or supplied in `./wheelhouse`), replay can run
+fully offline with `pip install --no-index --find-links ./wheelhouse -c
+constraints.txt -e .`. The constraints pin the ARP release and test/runtime
+packages; a clean machine still needs a one-time dependency acquisition.
 
 `make all` runs `test` → `eval` → `simulate` → `gate` in order (see [interop contracts](docs/interop.md)).
 
@@ -104,6 +115,10 @@ The current orientation and related-work review is versioned in [2026-08-10 orie
 The current collection blocker and acceptance checklist are documented in [confirmatory data acquisition](docs/research/confirmatory-data-acquisition.md). The checked-in seven-source seed is development-only. Confirmatory provider execution rejects stub mode and supports OpenAI and Anthropic adapters; offline replay remains schema validation, not thesis evidence.
 
 The scientific and commercial moat audit is recorded in [2026-08-10 moat stress test](docs/research/2026-08-10-moat-stress-test.md). Its conclusion is intentionally conservative: the stack is protocol-ready with a promising wedge, but the moat is not demonstrated until external data, independent labels, provider diversity, adoption, and ROI evidence exist.
+
+The executable customer-validation sequence and metric schema are in the
+[product pilot protocol](docs/product-pilot.md). It starts in shadow mode and
+does not treat synthetic replay outcomes as customer evidence.
 
 ## Offline overlays
 
