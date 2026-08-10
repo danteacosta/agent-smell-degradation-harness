@@ -81,6 +81,8 @@ The acceptance boundary, estimands, leakage rules, split invariants, and product
 
 The current orientation and related-work review is versioned in [2026-08-10 orientation review](docs/research/2026-08-10-orientation-review.md). It records the novelty boundary, EASY alignment, direct comparison with prefix monitors, and the evidence still required before a confirmatory claim.
 
+The current collection blocker and acceptance checklist are documented in [confirmatory data acquisition](docs/research/confirmatory-data-acquisition.md). The checked-in seven-source seed is development-only. Confirmatory provider execution rejects stub mode and supports OpenAI and Anthropic adapters; offline replay remains schema validation, not thesis evidence.
+
 ## Offline overlays
 
 Offline overlays add deployable baselines, analysis reports, and an optional live experiment path without changing the core CI gate.

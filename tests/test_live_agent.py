@@ -8,7 +8,7 @@ import pytest
 
 from agents.live import LiveAgent, NotConfiguredError
 from agents.mock_transport import MockTransport
-from agents.providers import MockProvider, ReplayProvider
+from agents.providers import AnthropicProvider, MockProvider, ReplayProvider
 from pairs.loader import load_all_pairs
 
 
@@ -148,3 +148,45 @@ def test_default_live_agent_routes_completion_to_openai(monkeypatch):
     assert calls[0]["model"] == "test-model"
     assert calls[0]["messages"][0]["role"] == "user"
     assert "Task family: codegen" in calls[0]["messages"][0]["content"]
+
+
+def test_anthropic_provider_routes_completion_without_openai_fallback(monkeypatch):
+    pair = _rf09_pair()
+    oracle = pair["oracle_spec"]["codegen"]
+    calls = []
+
+    class FakeAnthropic:
+        def __init__(self, *, api_key):
+            self.messages = SimpleNamespace(create=self.create)
+
+        def create(self, **kwargs):
+            calls.append(kwargs)
+            return SimpleNamespace(
+                content=[SimpleNamespace(text=json.dumps(oracle))],
+            )
+
+    monkeypatch.setitem(sys.modules, "anthropic", SimpleNamespace(Anthropic=FakeAnthropic))
+    provider = AnthropicProvider(api_key="test-key", model="claude-test")
+    response = provider.complete(
+        __import__("agents.providers", fromlist=["ProviderRequest"]).ProviderRequest(
+            prompt="return json",
+            pair=pair,
+            variant="clean",
+            task_family="codegen",
+        )
+    )
+
+    assert json.loads(response) == oracle
+    assert calls[0]["model"] == "claude-test"
+
+
+def test_named_anthropic_provider_is_constructed_from_anthropic_credentials(monkeypatch):
+    monkeypatch.setitem(
+        sys.modules,
+        "anthropic",
+        SimpleNamespace(Anthropic=lambda **_kwargs: SimpleNamespace(messages=None)),
+    )
+    monkeypatch.setenv("AGENT_LIVE_API_KEY", "test-key")
+    agent = LiveAgent(provider="anthropic", model="claude-test")
+    assert agent.provider == "anthropic"
+    assert agent.run_mode == "live"

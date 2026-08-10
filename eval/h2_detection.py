@@ -12,7 +12,7 @@ from eval.splits import apply_split_manifest, build_grouped_split_manifest
 from feature_plane import DeployableFeatureInput, extract_deployable_features, semantic_risk
 from eval.runner import run_eval
 from observability.features import extract_tier_a_features
-from eval.feature_manifest import validate_feature_manifest
+from eval.feature_manifest import feature_manifest_sha256, validate_feature_manifest
 from eval.confirmatory_report import ablation_pr_auc, clustered_pr_auc_delta, finalize_h2_claim, shuffled_negative_control
 from label_plane.human_annotation import load_primary_label_manifest
 from eval.sample_gate import validate_confirmatory_design
@@ -144,13 +144,25 @@ def _episode_family_scores(
     *,
     feature_manifest: dict[str, Any] | None = None,
     confirmatory: bool = False,
+    validate_manifest: bool = True,
 ) -> dict[str, list[float]]:
     """Build deployable scores without allowing terminal labels into features."""
 
     scores = {family: [] for family in FAMILIES}
     manifest_rows: dict[str, Any] = {}
-    if feature_manifest is not None:
-        validate_feature_manifest(feature_manifest, episodes)
+    embedded_scores = any(
+        "h2_scores" in episode or "feature_scores" in episode for episode in episodes
+    )
+    if confirmatory and feature_manifest is None and embedded_scores:
+        raise ValueError("confirmatory H2 score injection requires a feature manifest")
+    if confirmatory and feature_manifest is not None and embedded_scores:
+        raise ValueError("confirmatory episodes cannot carry embedded feature scores")
+    if feature_manifest is not None and validate_manifest:
+        feature_manifest = validate_feature_manifest(
+            feature_manifest,
+            episodes,
+            strict=confirmatory,
+        )
         manifest_rows = {
             str(row["episode_id"]): row for row in feature_manifest["rows"]
         }
@@ -209,12 +221,19 @@ def evaluate_confirmatory(
         primary_labels = load_primary_label_manifest(
             primary_labels, (str(episode.get("episode_id", "")) for episode in episodes)
         )
-    if confirmatory and feature_manifest is None and any(
+    embedded_scores = any(
         "h2_scores" in episode or "feature_scores" in episode for episode in episodes
-    ):
+    )
+    if confirmatory and feature_manifest is None and embedded_scores:
         raise ValueError("confirmatory H2 score injection requires a feature manifest")
+    if confirmatory and feature_manifest is not None and embedded_scores:
+        raise ValueError("confirmatory episodes cannot carry embedded feature scores")
     if feature_manifest is not None:
-        validate_feature_manifest(feature_manifest, episodes)
+        feature_manifest = validate_feature_manifest(
+            feature_manifest,
+            episodes,
+            strict=confirmatory,
+        )
     manifest = split_manifest or build_grouped_split_manifest(episodes, seed=seed)
     partitions = apply_split_manifest(episodes, manifest)
     if confirmatory and enforce_design:
@@ -228,7 +247,10 @@ def evaluate_confirmatory(
     # manifest with a different partition ordering.
     for split, rows in partitions.items():
         row_scores = _episode_family_scores(
-            list(rows), feature_manifest=feature_manifest, confirmatory=confirmatory
+            list(rows),
+            feature_manifest=feature_manifest,
+            confirmatory=confirmatory,
+            validate_manifest=False,
         )
         split_scores[split] = row_scores
         split_labels[split] = [
@@ -265,7 +287,10 @@ def evaluate_confirmatory(
         )
         test_rows = list(partitions["test"])
         test_scores = _episode_family_scores(
-            test_rows, feature_manifest=feature_manifest, confirmatory=confirmatory
+            test_rows,
+            feature_manifest=feature_manifest,
+            confirmatory=confirmatory,
+            validate_manifest=False,
         )
         primary_effect = clustered_pr_auc_delta(
             test_rows,
@@ -279,6 +304,15 @@ def evaluate_confirmatory(
         primary_effect["baseline_family"] = baseline_family
         primary_effect["provenance_family"] = "provenance_semantic"
         primary_effect = finalize_h2_claim(primary_effect, margin=0.05)
+        test_pr_auc_by_family = {
+            family: _average_precision(test_scores[family], split_labels["test"])
+            for family in FAMILIES
+        }
+        test_prevalence = (
+            sum(split_labels["test"]) / len(split_labels["test"])
+            if split_labels["test"]
+            else 0.0
+        )
     report = {
         "protocol": "H2-confirmatory-v1",
         "selected_family": selected_family,
@@ -297,7 +331,22 @@ def evaluate_confirmatory(
             if feature_manifest
             else "computed-from-traces"
         }
+        if feature_manifest is not None:
+            report["features"]["manifest_sha256"] = feature_manifest_sha256(feature_manifest)
         report["primary_effect"] = primary_effect
+        report["test_pr_auc_by_family"] = test_pr_auc_by_family
+        report["test_label_prevalence"] = test_prevalence
+        report["baseline"] = {
+            "family": primary_effect["baseline_family"],
+            "test_pr_auc": primary_effect["baseline_pr_auc"],
+        }
+        report["claim_decision"] = primary_effect["claim"]
+        report["operational_utility"] = {
+            "false_alerts_per_100_test_episodes": (
+                held_out["fp"] * 100.0 / held_out["n"] if held_out["n"] else 0.0
+            ),
+            "lead_time_status": "not_estimable_without_timestamped_terminal_event",
+        }
         report["robustness"] = {
             "negative_control": shuffled_negative_control(
                 test_scores["provenance_semantic"], split_labels["test"], seed=seed

@@ -178,3 +178,24 @@ def test_live_experiment_routes_evaluation_through_live_agent(tmp_path, monkeypa
     assert report["mode"] == "live"
     assert captured["model"] == "provider-model"
     assert isinstance(captured["agent"], FakeLiveAgent)
+
+
+def test_live_experiment_can_select_second_provider(tmp_path, monkeypatch):
+    repo = tmp_path / "repo"
+    (repo / "eval").mkdir(parents=True)
+    captured = {}
+
+    class FakeLiveAgent:
+        def __init__(self, *, model, provider="openai"):
+            captured["model"] = model
+            captured["provider"] = provider
+
+    monkeypatch.setattr("eval.experiment.LiveAgent", FakeLiveAgent)
+    monkeypatch.setattr(
+        "eval.experiment.run_eval_with_agent",
+        lambda agent, **kwargs: ({"paired_degradation_rate": 0.0}, []),
+    )
+
+    run_experiment(repo_root=repo, model="claude-test", provider="anthropic")
+
+    assert captured == {"model": "claude-test", "provider": "anthropic"}

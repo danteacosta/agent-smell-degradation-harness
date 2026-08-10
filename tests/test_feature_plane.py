@@ -181,6 +181,56 @@ def test_pre_final_features_are_invariant_to_final_episode_data(tmp_path: Path):
     assert source_features == changed_features
 
 
+def test_pre_final_features_capture_rich_provider_checkpoint_variation(tmp_path: Path):
+    clean_path = tmp_path / "rich-clean.jsonl"
+    risky_path = tmp_path / "rich-risky.jsonl"
+    for path, unresolved, contradictions in (
+        (clean_path, [], []),
+        (risky_path, ["old reference"], ["two conflicting windows"]),
+    ):
+        recorder = ProvenanceRecorder(path)
+        recorder.semantic(
+            "interpretation.completed",
+            {
+                "constraints": ["delay_minutes > 5"],
+                "quantities": [{"value": 5, "unit": "minutes"}],
+                "unresolved_references": unresolved,
+                "assumptions": [],
+                "contradictions": contradictions,
+            },
+            tier="A",
+        )
+        recorder.semantic(
+            "plan.completed",
+            {
+                "validation_checks": ["boundary"],
+                "planned_tools": ["validator"],
+                "coverage_targets": ["threshold"],
+            },
+            tier="A",
+        )
+        recorder.operational(
+            "tool.completed",
+            {
+                "revisions": 2 if contradictions else 0,
+                "validation_attempts": 1,
+                "errors": ["validation failed"] if contradictions else [],
+                "retrieval_events": 0,
+            },
+            tier="A",
+        )
+        recorder.close()
+
+    feature_input = FeatureEpisodeInput.from_episode(_episode())
+    clean = extract_pre_final_features(feature_input, clean_path)
+    risky = extract_pre_final_features(feature_input, risky_path)
+
+    assert clean["provenance_semantic"]["constraint_count"] == 1
+    assert risky["provenance_semantic"]["unresolved_reference_count"] == 1
+    assert risky["provenance_semantic"]["contradiction_count"] == 1
+    assert semantic_risk(clean["provenance_semantic"]) < semantic_risk(risky["provenance_semantic"])
+
+
 @pytest.mark.parametrize(
     ("constraint_payload", "expected_risk"),
     [

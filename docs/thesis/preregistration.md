@@ -2,6 +2,12 @@
 
 Status: protocol freeze candidate, version `confirmatory-thesis-v2`.
 
+The current checked-in manifest remains blocked: it is a seven-source local
+development seed with no project IDs or external provenance. The 12×2×5
+configuration is a structured pre-pilot; the confirmatory claim requires the
+larger design and collection criteria in
+docs/research/confirmatory-data-acquisition.md.
+
 ## Hypotheses and estimands
 
 - **H1 (`H1.ordinal_delta`)**: clean-minus-defective ordinal severity differs from zero. The estimand is the mean paired delta, clustered by source intent; the interval is an intent-cluster bootstrap 95% CI and the p-value is a paired sign-flip randomization test at the intent-cluster level.

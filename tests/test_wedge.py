@@ -45,3 +45,18 @@ def test_wedge_tier_a_risk_uses_trace_derived_semantic_risk():
             },
         }
     ) == 0.0
+
+
+def test_wedge_alert_contains_actionable_constraint_evidence():
+    result = run_fixture("demo-degraded")
+    assert result["evidence"]
+    finding = result["evidence"][0]
+    assert set(finding) >= {
+        "constraint",
+        "checkpoint",
+        "confidence",
+        "recommended_action",
+    }
+    assert finding["checkpoint"] == "pre-final"
+    assert 0.0 <= finding["confidence"] <= 1.0
+    assert finding["recommended_action"]

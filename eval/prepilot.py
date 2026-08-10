@@ -257,6 +257,11 @@ def run_pre_pilot(*, output_root: Path, run_id: str = "prepilot-v4") -> dict[str
     (analysis_dir / "estimands.json").write_text(json.dumps(estimands, indent=2) + "\n")
     (analysis_dir / "boundary_map.json").write_text(json.dumps(boundary_map, indent=2) + "\n")
     h2_report = evaluate_confirmatory(episodes, seed=0)
+    h2_report["status"] = "non_confirmatory_pilot"
+    h2_report["labels"] = {
+        "source": "oracle_validation_only",
+        "confirmatory_claim_allowed": False,
+    }
     (analysis_dir / "h2_confirmatory.json").write_text(
         json.dumps(h2_report, indent=2) + "\n"
     )

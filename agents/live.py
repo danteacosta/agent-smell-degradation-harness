@@ -7,7 +7,7 @@ import re
 import time
 from typing import Any, Protocol
 
-from agents.providers import MockProvider, OpenAIProvider, Provider, ProviderRequest
+from agents.providers import AnthropicProvider, MockProvider, OpenAIProvider, Provider, ProviderRequest
 
 
 class NotConfiguredError(Exception):
@@ -18,13 +18,24 @@ class Transport(Protocol):
     def complete(self, prompt: str) -> str: ...
 
 
-def _resolve_api_key() -> str | None:
+def _resolve_api_key(provider: str = "openai") -> str | None:
+    if provider == "anthropic":
+        return os.environ.get("AGENT_LIVE_API_KEY") or os.environ.get("ANTHROPIC_API_KEY")
     return os.environ.get("AGENT_LIVE_API_KEY") or os.environ.get("OPENAI_API_KEY")
 
 
 def _openai_available() -> bool:
     try:
         import openai  # noqa: F401
+
+        return True
+    except ImportError:
+        return False
+
+
+def _anthropic_available() -> bool:
+    try:
+        import anthropic  # noqa: F401
 
         return True
     except ImportError:
@@ -89,7 +100,7 @@ class LiveAgent:
         require_creds: bool = True,
     ) -> None:
         self.model = model
-        if isinstance(provider, str) and provider != "openai":
+        if isinstance(provider, str) and provider not in {"openai", "anthropic"}:
             raise ValueError(
                 "Provider instances are required for non-OpenAI providers; "
                 "pass ReplayProvider, MockProvider, or StubProvider instead"
@@ -107,20 +118,30 @@ class LiveAgent:
             provider_label = "openai"
         if selected_provider is None:
             if require_creds:
-                if not _openai_available():
+                available = (
+                    _openai_available()
+                    if provider_label == "openai"
+                    else _anthropic_available()
+                )
+                package_name = "openai" if provider_label == "openai" else "anthropic"
+                if not available:
                     raise NotConfiguredError(
-                        "openai package not installed; install with pip install -e '.[live]'"
+                        f"{package_name} package not installed; install the live provider extra"
                     )
-                api_key = _resolve_api_key()
+                api_key = _resolve_api_key(provider_label)
                 if not api_key:
                     raise NotConfiguredError(
-                        "Missing API key; set OPENAI_API_KEY or AGENT_LIVE_API_KEY"
+                        "Missing API key; set ANTHROPIC_API_KEY/OPENAI_API_KEY or AGENT_LIVE_API_KEY"
                     )
             else:
-                api_key = _resolve_api_key()
+                api_key = _resolve_api_key(provider_label)
                 if not api_key:
-                    raise NotConfiguredError("OpenAIProvider requires an API key")
-            selected_provider = OpenAIProvider(api_key=api_key, model=model)
+                    raise NotConfiguredError(f"{provider_label.title()}Provider requires an API key")
+            selected_provider = (
+                OpenAIProvider(api_key=api_key, model=model)
+                if provider_label == "openai"
+                else AnthropicProvider(api_key=api_key, model=model)
+            )
 
         self._provider = selected_provider
         self.provider = provider_label or selected_provider.name

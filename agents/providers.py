@@ -45,6 +45,32 @@ class OpenAIProvider:
         return content
 
 
+class AnthropicProvider:
+    """Anthropic Messages adapter, imported only for live runs."""
+
+    name = "anthropic"
+
+    def __init__(self, *, api_key: str, model: str) -> None:
+        from anthropic import Anthropic
+
+        self._client = Anthropic(api_key=api_key)
+        self._model = model
+
+    def complete(self, request: ProviderRequest) -> str:
+        response = self._client.messages.create(
+            model=self._model,
+            max_tokens=4096,
+            messages=[{"role": "user", "content": request.prompt}],
+        )
+        content = getattr(response, "content", None)
+        if not content:
+            raise ValueError("Anthropic response did not contain message content")
+        text = getattr(content[0], "text", None)
+        if not text:
+            raise ValueError("Anthropic response did not contain text content")
+        return str(text)
+
+
 class ReplayProvider:
     """Deterministic response queue for recorded or test completions."""
 

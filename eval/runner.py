@@ -299,6 +299,11 @@ def run_eval_with_agent(
     configuration_id: str | None = None,
     confirmatory: bool = False,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    if confirmatory and (
+        str(getattr(agent, "run_mode", "stub")) == "stub"
+        or str(getattr(agent, "provider", "")) == "stub"
+    ):
+        raise ValueError("confirmatory execution requires real provider checkpoints, not a stub")
     traces_dir.mkdir(parents=True, exist_ok=True)
     if pairs is None:
         pairs = load_all_pairs()

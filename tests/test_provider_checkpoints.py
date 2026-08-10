@@ -6,6 +6,7 @@ import pytest
 
 from eval.runner import run_eval_with_agent
 from eval.task_adapters import AcceptanceCriteriaAdapter
+from agents.stub import StubAgent
 
 
 def _pair() -> dict:
@@ -87,6 +88,18 @@ def test_confirmatory_run_rejects_agents_without_provider_checkpoints(tmp_path):
     with pytest.raises(ValueError, match="provider checkpoints"):
         run_eval_with_agent(
             ArtifactOnly(),
+            pairs=[_pair()],
+            task_adapters=(AcceptanceCriteriaAdapter(),),
+            confirmatory=True,
+            output_path=tmp_path / "metrics.json",
+            traces_dir=tmp_path / "traces",
+        )
+
+
+def test_confirmatory_run_rejects_stub_mode_even_when_it_can_emit_checkpoint_shape(tmp_path):
+    with pytest.raises(ValueError, match="real provider"):
+        run_eval_with_agent(
+            StubAgent(),
             pairs=[_pair()],
             task_adapters=(AcceptanceCriteriaAdapter(),),
             confirmatory=True,

@@ -228,6 +228,7 @@ def run_experiment(
     repo_root: Path | None = None,
     intents: list[str] | None = None,
     model: str = "gpt-4o-mini",
+    provider: str = "openai",
     policy: str = "direct",
     seed: int | None = None,
     run_id: str | None = None,
@@ -289,6 +290,7 @@ def run_experiment(
     config = {
         "mode": "stub-as-live" if stub_as_live else "live",
         "model": model,
+        "provider": provider,
         "policy": policy,
         "seed": seed,
         "replications": replications,
@@ -304,7 +306,14 @@ def run_experiment(
         episodes_path = rep_dir / "episodes.jsonl"
         traces_dir = rep_dir / "traces"
 
-        agent = StubAgent() if stub_as_live else LiveAgent(model=model)
+        agent = (
+            StubAgent()
+            if stub_as_live
+            else LiveAgent(
+                model=model,
+                **({"provider": provider} if provider != "openai" else {}),
+            )
+        )
         metrics, episodes = run_eval_with_agent(
             agent,
             pairs=None,
@@ -354,7 +363,14 @@ def run_experiment(
     experiment_run_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
     if also_last_run:
-        agent = StubAgent() if stub_as_live else LiveAgent(model=model)
+        agent = (
+            StubAgent()
+            if stub_as_live
+            else LiveAgent(
+                model=model,
+                **({"provider": provider} if provider != "openai" else {}),
+            )
+        )
         run_eval_with_agent(
             agent,
             pairs=None,
@@ -406,6 +422,12 @@ def main(argv: list[str] | None = None) -> None:
         help="Also write eval/last_run.json (overwrites gate artifact)",
     )
     parser.add_argument("--model", default="gpt-4o-mini", help="Model identifier for manifest")
+    parser.add_argument(
+        "--provider",
+        choices=("openai", "anthropic"),
+        default="openai",
+        help="Live provider adapter",
+    )
     parser.add_argument("--seed", type=int, default=None, help="Random seed for manifest")
     parser.add_argument("--policy", default="direct", help="Mitigation policy")
     parser.add_argument(
@@ -469,6 +491,7 @@ def main(argv: list[str] | None = None) -> None:
             replications=args.replications,
             intents=args.intents,
             model=args.model,
+            provider=args.provider,
             policy=args.policy,
             seed=args.seed,
             repo_root=repo_root,
@@ -488,6 +511,7 @@ def main(argv: list[str] | None = None) -> None:
         also_last_run=args.also_last_run,
         intents=args.intents,
         model=args.model,
+        provider=args.provider,
         policy=args.policy,
         seed=args.seed,
         repo_root=repo_root,

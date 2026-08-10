@@ -61,7 +61,7 @@ def extract_pre_final_features(
         if event.get("kind") == "semantic"
         and event.get("name") == "constraint_extract"
     ]
-    return {
+    features = {
         "static_smell": _static_smell(feature_input),
         "operational": {"event_count": len(events), "latency_ms": latency_ms},
         "provenance_semantic": {
@@ -74,3 +74,93 @@ def extract_pre_final_features(
             "semantic_event_count": len(constraint_events),
         },
     }
+    interpretation = next(
+        (
+            event.get("payload")
+            for event in events
+            if event.get("kind") == "semantic"
+            and event.get("name") == "interpretation.completed"
+            and isinstance(event.get("payload"), Mapping)
+        ),
+        None,
+    )
+    plan = next(
+        (
+            event.get("payload")
+            for event in events
+            if event.get("kind") == "semantic"
+            and event.get("name") == "plan.completed"
+            and isinstance(event.get("payload"), Mapping)
+        ),
+        None,
+    )
+    execution = next(
+        (
+            event.get("payload")
+            for event in events
+            if event.get("name") == "tool.completed"
+            and isinstance(event.get("payload"), Mapping)
+        ),
+        None,
+    )
+    rich_checkpoint_payload = interpretation is not None and any(
+        key in interpretation
+        for key in (
+            "constraints",
+            "quantities",
+            "unresolved_references",
+            "assumptions",
+            "contradictions",
+        )
+    )
+    if rich_checkpoint_payload:
+        constraints = interpretation.get("constraints", [])
+        quantities = interpretation.get("quantities", [])
+        unresolved = interpretation.get("unresolved_references", [])
+        assumptions = interpretation.get("assumptions", [])
+        contradictions = interpretation.get("contradictions", [])
+        plan = plan or {}
+        execution = execution or {}
+        semantic = features["provenance_semantic"]
+        semantic.update(
+            {
+                "constraint_event_present": 1,
+                "constraint_field_count": len(interpretation),
+                "constraint_count": len(constraints) if isinstance(constraints, list) else 0,
+                "quantity_count": len(quantities) if isinstance(quantities, list) else 0,
+                "unresolved_reference_count": len(unresolved) if isinstance(unresolved, list) else 0,
+                "assumption_count": len(assumptions) if isinstance(assumptions, list) else 0,
+                "contradiction_count": len(contradictions) if isinstance(contradictions, list) else 0,
+                "validation_check_count": (
+                    len(plan.get("validation_checks", []))
+                    if isinstance(plan.get("validation_checks", []), list)
+                    else 0
+                ),
+                "planned_tool_count": (
+                    len(plan.get("planned_tools", []))
+                    if isinstance(plan.get("planned_tools", []), list)
+                    else 0
+                ),
+                "coverage_target_count": (
+                    len(plan.get("coverage_targets", []))
+                    if isinstance(plan.get("coverage_targets", []), list)
+                    else 0
+                ),
+                "revision_count": int(execution.get("revisions", 0)),
+                "validation_attempt_count": int(execution.get("validation_attempts", 0)),
+                "error_count": (
+                    len(execution.get("errors", []))
+                    if isinstance(execution.get("errors", []), list)
+                    else 0
+                ),
+                "retrieval_event_count": int(execution.get("retrieval_events", 0)),
+                "semantic_event_count": sum(
+                    1
+                    for event in events
+                    if event.get("kind") == "semantic"
+                    and event.get("name")
+                    in {"interpretation.completed", "plan.completed"}
+                ),
+            }
+        )
+    return features

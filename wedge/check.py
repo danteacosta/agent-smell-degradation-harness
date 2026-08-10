@@ -154,6 +154,40 @@ def _tier_a_risk(features: dict[str, dict[str, float | int]]) -> float:
     return min(risk, 1.0)
 
 
+def _actionable_evidence(
+    features: dict[str, dict[str, float | int]],
+    *,
+    tier_a_risk: float,
+    decision: Decision,
+) -> list[dict[str, Any]]:
+    if decision == Decision.APPROVE and tier_a_risk <= 0:
+        return []
+    semantic = features.get("provenance_semantic", {})
+    constraint_count = int(semantic.get("constraint_count", 0))
+    unresolved = int(semantic.get("unresolved_reference_count", 0))
+    contradictions = int(semantic.get("contradiction_count", 0))
+    if constraint_count == 0:
+        constraint = "requirement constraint preservation"
+    else:
+        constraint = f"{constraint_count} provider-recognized requirement constraint(s)"
+    details = []
+    if unresolved:
+        details.append(f"{unresolved} unresolved reference(s)")
+    if contradictions:
+        details.append(f"{contradictions} contradiction(s)")
+    if not details:
+        details.append("pre-final provenance or smell signal requires review")
+    return [
+        {
+            "constraint": constraint,
+            "checkpoint": "pre-final",
+            "confidence": round(min(max(float(tier_a_risk), 0.0), 1.0), 3),
+            "evidence": details,
+            "recommended_action": "review the requirement and generated acceptance criteria before merge",
+        }
+    ]
+
+
 def evaluate_episode(
     *,
     requirement_text: str,
@@ -214,6 +248,7 @@ def evaluate_episode(
         decision = Decision.WARN
         reasons.append("tier A provenance risk elevated")
 
+    evidence = _actionable_evidence(tier_a, tier_a_risk=tier_a_risk, decision=decision)
     return {
         "decision": decision.value,
         "reasons": reasons,
@@ -222,6 +257,7 @@ def evaluate_episode(
         "tier_b_degraded": tier_b_degraded,
         "oracle_passed": oracle_result.passed,
         "mutation_score": mutation_score,
+        "evidence": evidence,
     }
 
 
