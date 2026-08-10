@@ -17,6 +17,7 @@ from .schema import (
     sha256_bytes,
     validate_bundle_mapping,
 )
+from .policy import DEFAULT_POLICY
 
 _EXIT_CODES = {"approve": 0, "warn": 10, "block": 20}
 _FIXTURE_DIAGNOSTICS = {
@@ -179,6 +180,7 @@ def run_bundle(bundle: Mapping[str, Any]) -> dict[str, Any]:
             "replay_version": REPLAY_VERSION,
             "arp_wire_version": ARP_WIRE_VERSION,
             "arp_package_version": ARP_PACKAGE_VERSION,
+            "policy_version": DEFAULT_POLICY.version,
             "decision": decision,
             "exit_code": _EXIT_CODES[decision],
             "trace_sha256": trace_hash,
@@ -233,6 +235,7 @@ def to_sarif(report: Mapping[str, Any], optional_extensions: Mapping[str, Any] |
         "decision": decision,
         "exit_code": report.get("exit_code", 30),
         "trace_sha256": report.get("trace_sha256"),
+        "policy_version": report.get("policy_version"),
         "evidence": report.get("semantic_evidence", []),
     }
     # Optional provider extensions are intentionally not copied.  This keeps
