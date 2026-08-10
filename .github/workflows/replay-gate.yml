@@ -1,0 +1,54 @@
+name: constraint-replay-gate
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install replay package
+        run: python -m pip install -e ".[dev]"
+      - name: Run clean and controlled-loss fixtures
+        id: replay
+        continue-on-error: true
+        run: |
+          set +e
+          python -m replay --fixture clean --json out/clean-report.json --sarif out/clean-report.sarif
+          clean_status=$?
+          python -m replay --fixture constraint-loss --json out/loss-report.json --sarif out/loss-report.sarif
+          loss_status=$?
+          test "$clean_status" -eq 0
+          test "$loss_status" -eq 20
+      - name: Upload replay artifacts (fork-safe fallback)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: constraint-replay-reports
+          path: out/*-report.*
+          if-no-files-found: error
+      - name: Upload SARIF when security-events permission is available
+        if: always() && github.event.pull_request.head.repo.fork == false
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: out/loss-report.sarif
+      - name: Preserve gate decision
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          clean = json.loads(Path("out/clean-report.json").read_text())
+          loss = json.loads(Path("out/loss-report.json").read_text())
+          if clean.get("exit_code") != 0 or loss.get("exit_code") != 20:
+              raise SystemExit("unexpected replay gate decision")
+          PY

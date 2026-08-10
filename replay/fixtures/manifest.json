@@ -1,0 +1,14 @@
+{
+  "replay_version": "constraint-replay/v1",
+  "checkpoint_schema_version": "pre-final/v1",
+  "arp_wire_version": "2.0.5",
+  "arp_package_version": "2.0.6",
+  "requirement": "requirement.json",
+  "cases": [
+    {"case_id":"clean","trace":"traces/clean.jsonl","trace_sha256":"85c5dde1a1c818c08915241fe3610d9361e436f1a1accd535d054da97e1c4ee5"},
+    {"case_id":"constraint-loss","trace":"traces/constraint-loss.jsonl","trace_sha256":"f854b91590821e70b0ec01ae74776db999b6551666c0277217e6d4cdf675e2f3"},
+    {"case_id":"constraint-warning","trace":"traces/constraint-warning.jsonl","trace_sha256":"74c5cb8d6a44bc17c792832f29182e4b1cb620a924cf672e8ac8e0a689d8b653"},
+    {"case_id":"negative-control","trace":"traces/negative-control.jsonl","trace_sha256":"41f9efa82bbf0826eefe73f9feb55ef7f8ad9ab9326b6809bb8817505a2dbbfc"},
+    {"case_id":"latency-only","trace":"traces/latency-only.jsonl","trace_sha256":"e5470e1c7048e4151cec7a4b8d3c48f1b1fa0c647918e1c18075d8d013bb9a6f"}
+  ]
+}

@@ -23,6 +23,26 @@ make wedge-check
 
 Consumer wiring guide: [docs/wedge.md](docs/wedge.md)
 
+## Constraint replay gate (pre-merge)
+
+The canonical pre-merge path is the offline replay gate. It consumes an ARP
+2.0.5 pre-final trace (package 2.0.6) and adds constraint-level preservation
+evidence; it does not replace tracing systems such as OpenTelemetry, Phoenix,
+or Langfuse. The checked-in fixtures are synthetic and non-confirmatory.
+
+```bash
+python -m replay --fixture clean --json out/report.json --sarif out/report.sarif
+# arbitrary public bundle:
+python -m replay --bundle path/to/bundle --json out/report.json --sarif out/report.sarif
+```
+
+The command runs without provider credentials after one dependency install and
+returns `0/10/20/30` for approve/warn/block/invalid-contract. JSON and SARIF
+are deterministic, and the GitHub Action uploads both as artifacts so fork
+pull requests remain reviewable. See the [ARP contract](https://github.com/danteacosta/agent-reliability-protocol),
+the sister [RAG reliability harness](https://github.com/danteacosta/rag-reliability-harness),
+and [the thesis/product boundary](docs/thesis-product-boundary.md).
+
 ## Flow
 
 ```mermaid
