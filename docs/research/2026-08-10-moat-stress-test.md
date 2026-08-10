@@ -19,15 +19,37 @@ and product moat, or is it primarily another tracing/evaluation harness?
 
 ## Moat verdict
 
-The current moat is potential, not demonstrated.
+The moat is still a hypothesis, but the pre-data foundation is now executable
+and reviewable rather than merely designed. The implementation closes the
+reproducibility, leakage, and release-hygiene risks; it does not manufacture
+evidence of generalization, adoption, or ROI.
+
+## Foundation completed in this cycle
+
+- ASD now ships a versioned `constraint-replay/v1` bundle with five public
+  synthetic cases: clean approve, controlled loss block, weak signal warn, and
+  two negative controls that must approve.
+- The replay CLI accepts both a checked-in fixture and an arbitrary bundle,
+  validates the full ARP 2.0.5 lifecycle envelope through the installed ARP
+  2.0.6 validator, and fails closed with exit `30` for contract mutations.
+- Reports include deterministic trace/report hashes, deployable features,
+  namespaced retrospective baselines, bounded evidence, and JSON/SARIF parity;
+  the GitHub Action keeps SARIF as a fork-safe artifact so a synthetic block
+  does not masquerade as a CI infrastructure failure.
+- ASD, RAG, and ARP now have explicit release metadata and contribution/security
+  guidance. RAG remains pinned to immutable ARP v2.0.6; the ARP package remains
+  MIT-licensed and was not retagged.
+- Local verification is 313 ASD tests, 104 RAG tests, and 26 ARP tests; the
+  GitHub checks for the merged PRs are green. These are engineering checks,
+  not confirmatory thesis results.
 
 | Layer | Current evidence | Moat strength today | What makes it defensible |
 | --- | --- | ---: | --- |
 | Scientific | Leakage-resistant protocol, feature/label separation, strict manifest binding, and a narrow H2 estimand. | 3/10 | A confirmed cross-project dataset with human labels and provider-produced T1-T3 traces showing incremental warning value over generic baselines. |
 | Data | Seven local development records; no project IDs, external provenance, live traces, or frozen human labels. | 0/10 | A licensed, versioned corpus of requirement-smell pairs, traces, adjudications, silent failures, and outcomes that others cannot recreate cheaply. |
-| Protocol | ARP v2.0.6 package with a 2.0.5 wire-schema compatibility matrix; ASD and RAG consumers are separated. | 2/10 | Independent providers/frameworks emitting the same typed T1-T3 contract and third-party consumers using it. |
-| Workflow | Local/CI approve-warn-block, JSON/SARIF evidence, and utility fields. | 2/10 | A low-friction GitHub Action with integrations for Phoenix/Langfuse/Braintrust traces, policy packs, historical baselines, and measurable reduction in escaped semantic regressions. |
-| Distribution | Public repositories, but currently 0 stars, 0 issues, 0 pull requests, and no license files visible on the ASD/RAG repositories. | 0/10 | A permissively licensed, documented starter kit, reference integrations, users contributing traces/failure cases, and published benchmark results. |
+| Protocol | ARP v2.0.6 package with a 2.0.5 wire-schema compatibility matrix; ASD and RAG consumers are separated; replay validates the installed ARP lifecycle contract. | 4/10 | Independent providers/frameworks emitting the same typed T1-T3 contract and third-party consumers using it. |
+| Workflow | Local/CI approve-warn-block, deterministic JSON/SARIF evidence, five-case replay benchmark, and fork-safe artifact upload. | 4/10 | A low-friction GitHub Action with integrations for Phoenix/Langfuse/Braintrust traces, policy packs, historical baselines, and measurable reduction in escaped semantic regressions. |
+| Distribution | Public repositories now have explicit license, NOTICE, contribution, and security metadata; merged replay and release-hygiene PRs are reproducible. | 1/10 | A permissively licensed, documented starter kit, reference integrations, users contributing traces/failure cases, and published benchmark results. |
 | Commercial | No live customer deployment or ROI evidence. | 0/10 | Proprietary cross-customer failure priors, calibrated policy history, incident/lead-time outcomes, enterprise privacy controls, and deployment support. |
 
 ## Falsification tests

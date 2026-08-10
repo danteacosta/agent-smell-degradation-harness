@@ -6,3 +6,7 @@
   dataset and human-label acceptance gate.
 - [2026-08-10 moat stress test](2026-08-10-moat-stress-test.md): scientific,
   data, protocol, workflow, distribution, and commercial moat audit.
+- The merged replay foundation is documented in
+  [the thesis/product boundary](../thesis-product-boundary.md) and exercised
+  by `python -m replay --fixture clean`; its fixtures remain
+  non-confirmatory until the external dataset and human-label gates are met.
