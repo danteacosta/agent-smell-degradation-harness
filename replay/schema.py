@@ -184,4 +184,24 @@ def validate_bundle_mapping(bundle: Mapping[str, Any]) -> dict[str, Any]:
         _attributes_for(expected_name, event["attributes"])
         previous_end = ended
         previous_id = event["event_id"]
+    _validate_with_arp(events)
     return {"manifest": dict(manifest), "requirement": dict(requirement), "events": [dict(event) for event in events]}
+
+
+def _validate_with_arp(events: list[Mapping[str, Any]]) -> None:
+    """Run the installed ARP 2.0.6 lifecycle validator when available.
+
+    The local validator above owns the replay-specific payload and chronology
+    invariants. ARP remains the compatibility authority for its wire envelope;
+    a provider trace that ARP rejects is never allowed into the gate.
+    """
+
+    try:
+        from agent_reliability_protocol import LifecycleEvent, validate_lifecycle_sequence
+    except ImportError:
+        return
+    try:
+        parsed = [LifecycleEvent.from_dict(event) for event in events]
+        validate_lifecycle_sequence(parsed)
+    except (TypeError, ValueError, KeyError) as exc:
+        raise ContractError(f"ARP 2.0.6 rejected lifecycle trace: {exc}") from exc
