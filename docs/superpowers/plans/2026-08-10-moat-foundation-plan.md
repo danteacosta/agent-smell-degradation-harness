@@ -18,7 +18,7 @@
 - Modify: `pyproject.toml` (include `replay*` package)
 - Create: `tests/test_replay_contract.py`
 
-- [ ] **Step 1: Write failing tests** for `constraint-replay/v1`, required requirement/trace fields, deterministic canonical hash, raw-byte SHA-256, exact ARP wire/package versions (`2.0.5`/`2.0.6`), and rejection of terminal/oracle fields. Include trace-byte/hash, checkpoint-order/schema, replay-version, and ARP-compatibility mutations; each must yield an `invalid-contract` report with exit code `30`.
+- [ ] **Step 1: Write failing tests** for `constraint-replay/v1`, required requirement/trace fields, deterministic canonical hash, raw-byte SHA-256, exact ARP wire/package versions (`2.0.5`/`2.0.6`), and rejection of terminal/oracle fields. Include trace-byte/hash, checkpoint-order/schema, replay-version, and ARP-compatibility mutations as typed validation failures; CLI invalid-contract reports and exit code `30` are covered in Task 4.
 - [ ] **Step 2: Run** `pytest -q tests/test_replay_contract.py` and verify the new imports/API fail.
 - [ ] **Step 3: Implement** a small typed mapping validator and canonical hash helper; require exactly one ordered T1/T2/T3 event with allowlisted `attributes`, reject malformed provider evidence, and keep expected labels/mutation metadata out of the deployable path.
 - [ ] **Step 4: Run** the focused tests and verify they pass.
@@ -35,7 +35,7 @@
 - Create: `replay/fixtures/expected.json` (test-only sidecar)
 - Create: `tests/test_replay_fixtures.py`
 
-- [ ] **Step 1: Write failing tests** proving all four fixtures validate, contain exactly ordered typed T1/T2/T3 events, and differ only in the declared mutation operator. Validate `expected.json` evidence fields and prove the gate never loads that sidecar.
+- [ ] **Step 1: Write failing tests** proving all four fixtures validate, contain exactly ordered typed T1/T2/T3 events, and differ only in the declared mutation operator. Validate the `expected.json` sidecar schema; runtime sidecar non-loading is covered in Task 3.
 - [ ] **Step 2: Run** the focused fixture tests and verify they fail because the files do not exist.
 - [ ] **Step 3: Add** clean, controlled constraint-loss, non-relevant-field negative-control, and operational-latency cases with no terminal labels or final artifacts; keep expected decisions only in the sidecar.
 - [ ] **Step 4: Run** the focused tests and inspect the fixture hashes.
@@ -48,11 +48,11 @@
 - Create: `tests/test_replay_runner.py`
 - Modify: `README.md`
 
-- [ ] **Step 1: Write failing tests** for clean `approve`, exact constraint-loss `block`, valid below-threshold `warn`, stable report hash, required report fields, false-alert rate (false alerts / total negative-control and latency cases), output-only/operational baseline fields, and fixture-ID/expected-sidecar independence. Assert evidence `confidence` is in `[0,1]` and `recommended_action` is one of `review|clarify|block`; mutate terminal labels/final artifacts/output-only values and prove the deployable decision/features/baselines are unchanged (report metadata may change only with case ID).
+- [ ] **Step 1: Write failing tests** for clean `approve`, exact constraint-loss `block`, valid below-threshold `warn`, stable report hash, required report fields, false-alert rate (false alerts / total negative-control and latency cases), output-only/operational baseline fields, and fixture-ID/expected-sidecar independence. Assert evidence `confidence` is in `[0,1]` and `recommended_action` is one of `review|clarify|block`; mutate terminal labels/final artifacts/output-only values and prove the deployable decision/features/baselines are unchanged. Retrospective output-only values may change, but remain namespaced and never feed the gate (report metadata may change only with case ID).
 - [ ] **Step 2: Run** `pytest -q tests/test_replay_runner.py` and verify the runner is missing.
 - [ ] **Step 3: Implement** replay loading through the installed ARP 2.0.6 validator plus existing strict deployable extraction/checkpoint validation, fail-closed invalid-contract reports, bounded evidence schema, namespaced non-deployable baseline calculation, stable canonical serialization (excluding paths/timestamps), and explicit `non_confirmatory_demo` status.
 - [ ] **Step 4: Run** focused tests twice and assert identical hashes.
-- [ ] **Step 5: Document** the exact ten-minute command `python -m replay --fixture clean --json out/report.json --sarif out/report.sarif`, expected outputs, generic-baseline comparison, explicit cross-links to ARP/RAG, and the differentiation statement.
+- [ ] **Step 5: Document** the exact ten-minute command `python -m replay --fixture clean --json out/report.json --sarif out/report.sarif`, expected outputs, generic-baseline comparison, explicit cross-links to ARP/RAG, the differentiation statement, and coexistence with the legacy `wedge` `clarify` command in `docs/thesis-product-boundary.md` or `docs/wedge.md`.
 - [ ] **Step 6: Commit** `feat: add reproducible constraint replay benchmark`.
 
 ### Task 4: Add SARIF and stable CLI exit codes
@@ -83,16 +83,20 @@
 ### Task 6: License and release hygiene across the stack
 
 **Files:**
-- Create: `/Users/dantecosta/Projects/agent-smell-degradation-harness/LICENSE`, `NOTICE`, `CONTRIBUTING.md`, `SECURITY.md`
-- Create: `/Users/dantecosta/Projects/rag-reliability-harness/LICENSE`, `NOTICE`, `CONTRIBUTING.md`, `SECURITY.md`
-- Create: `/Users/dantecosta/Projects/agent-reliability-protocol/LICENSE`, `NOTICE`, `CONTRIBUTING.md`, `SECURITY.md`
+- Create: `<ASD_WORKTREE>/LICENSE`, `NOTICE`, `CONTRIBUTING.md`, `SECURITY.md` (Apache-2.0)
+- Create: `<RAG_WORKTREE>/LICENSE`, `NOTICE`, `CONTRIBUTING.md`, `SECURITY.md`
+- Create: `<ARP_WORKTREE>/LICENSE`, `NOTICE`, `CONTRIBUTING.md`, `SECURITY.md` (MIT, matching immutable v2.0.6 metadata)
 - Modify: each repository `README.md`, `pyproject.toml`, `CHANGELOG.md`/release metadata, attribution, and release links
 
-- [ ] **Step 1: Write repository acceptance checks** for license/NOTICE presence, explicit license metadata (including the existing ARP MIT-to-Apache release decision), version/install commands, contribution/security links, dependency/fixture attribution, cross-repository links, replay quickstart, and consumer pins to ARP 2.0.6.
+- [ ] **Step 1: Write repository acceptance checks** for license/NOTICE presence, explicit license metadata (Apache harnesses; MIT ARP v2.0.6), version/install commands, contribution/security links, dependency/fixture attribution, cross-repository links, replay quickstart, and consumer pins to ARP 2.0.6.
 - [ ] **Step 2: Run** checks before adding metadata to prove the gap.
-- [ ] **Step 3: Add** Apache-2.0 text, NOTICE attribution, maintainer guidance, security disclosure route, and consistent release metadata. For ARP, update `project.license`, version/tag/release notes, then update both consumer pins and verify package metadata before tagging.
+- [ ] **Step 3: Add** Apache-2.0 text to ASD/RAG, MIT text and matching metadata to ARP, NOTICE attribution, maintainer guidance, security disclosure route, and consistent release links. Do not rewrite or retag immutable ARP v2.0.6; verify both consumers remain pinned to it.
 - [ ] **Step 4: Run** all three repository suites, package/install smoke with network only for dependency setup, offline replay smoke with credentials/network disabled, exact elapsed-time check under ten minutes, and static documentation checks.
 - [ ] **Step 5: Prepare** commits/tags and release notes independently; publish only after explicit user confirmation.
+
+Implementation uses the active isolated worktrees (`<ASD_WORKTREE>`,
+`<RAG_WORKTREE>`, and `<ARP_WORKTREE>`). Canonical `main` paths are read-only
+verification/release targets and are not edited during implementation.
 
 ### Task 7: Final verification and artifact handoff
 

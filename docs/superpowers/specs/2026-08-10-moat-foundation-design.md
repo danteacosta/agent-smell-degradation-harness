@@ -12,8 +12,10 @@ able to demonstrate constraint-loss detection through a standard CI artifact.
 
 This first implementation cycle covers the smallest end-to-end proof:
 
-1. Apache-2.0 licensing and release hygiene for ASD, RAG, and ARP (`main`),
-   including `LICENSE`, `NOTICE`, `CONTRIBUTING.md`, and `SECURITY.md`.
+1. Explicit licensing and release hygiene for ASD, RAG, and ARP (`main`):
+   Apache-2.0 for the two harnesses, preserving ARP's already-published MIT
+   license at immutable v2.0.6, with `LICENSE`, `NOTICE`, `CONTRIBUTING.md`,
+   and `SECURITY.md` in each repository.
 2. A versioned ASD replay bundle containing requirements, typed pre-final
    traces, expected constraint evidence, and a deterministic report.
 3. A benchmark runner with controlled semantic mutations and generic baselines
@@ -114,8 +116,9 @@ It is a demonstration artifact, not a substitute for the confirmatory dataset.
    decision unchanged.
 6. The action uploads valid SARIF with `if: always()` and stable exit codes;
    forked pull requests require no secrets.
-7. All three `main` branches have Apache-2.0, `NOTICE`, contribution/security
-   guidance, dependency/fixture attribution, and release links before tagging.
+7. All three `main` branches have explicit licenses (Apache-2.0 for the
+   harnesses, MIT for ARP v2.0.6), `NOTICE`, contribution/security guidance,
+   dependency/fixture attribution, and release links before tagging.
 
 ## Non-goals
 
