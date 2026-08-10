@@ -1,0 +1,7 @@
+{
+  "clean": {"decision":"approve","trace":"traces/clean.jsonl","mutation":"none"},
+  "constraint-loss": {"decision":"block","trace":"traces/constraint-loss.jsonl","mutation":"constraint-loss"},
+  "constraint-warning": {"decision":"warn","trace":"traces/constraint-warning.jsonl","mutation":"weak-constraint"},
+  "negative-control": {"decision":"approve","trace":"traces/negative-control.jsonl","mutation":"non-relevant-assumption"},
+  "latency-only": {"decision":"approve","trace":"traces/latency-only.jsonl","mutation":"latency"}
+}

@@ -26,6 +26,13 @@ The product layer is a CI reliability gate. It consumes ARP plus deployable/oper
 
 Policy precedence is `block > warn > approve`. Product metrics (latency, cost, coverage, false-alert rate) are operational diagnostics and are never written into H1–H3 artifacts. Product behavior must not alter thesis labels, estimands, or split manifests.
 
+The strict pre-merge implementation is `python -m replay`: it accepts a
+fixture or an arbitrary bundle containing a requirement and ARP pre-final
+trace, then emits JSON/SARIF constraint evidence. This is distinct from the
+legacy `python -m wedge` compatibility command, which retains its historical
+`clarify` decision for local demos. The replay gate never reads
+`expected.json`, terminal labels, final artifacts, or output-only diagnostics.
+
 ## Novelty boundary
 
 The project does not claim a new requirements-smell taxonomy or a first demonstration that smells affect LLM tasks. Its contribution is the reproducible, leakage-resistant measurement of when provider-produced pre-final provenance adds warning value for constraint-preservation failures, including negative boundaries where failures remain silent.

@@ -1,6 +1,7 @@
 [project]
 name = "agent-smell-degradation-harness"
 version = "0.1.0"
+license = {text = "Apache-2.0"}
 requires-python = ">=3.11"
 dependencies = [
   "pyyaml>=6.0",
@@ -35,4 +36,5 @@ include = [
   "baselines*",
   "mitigation*",
   "wedge*",
+  "replay*",
 ]
