@@ -242,6 +242,10 @@ def to_sarif(report: Mapping[str, Any], optional_extensions: Mapping[str, Any] |
         "ruleId": rule_id,
         "level": level,
         "message": {"text": f"constraint replay decision: {decision}"},
+        "locations": [{"physicalLocation": {
+            "artifactLocation": {"uri": "replay/fixtures/requirement.json"},
+            "region": {"startLine": 1},
+        }}],
         "properties": properties,
     }
     return {
