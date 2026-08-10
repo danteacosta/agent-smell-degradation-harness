@@ -62,9 +62,9 @@
 - Create: `tests/test_replay_cli.py`
 - Modify: `replay/runner.py`
 
-- [ ] **Step 1: Write failing tests** for JSON/SARIF output, exit codes `0/10/20/30`, malformed fixture failure, exact evidence properties, SARIF 2.1.0 rule IDs, and JSON/SARIF decision consistency.
+- [ ] **Step 1: Write failing tests** for JSON/SARIF output, exit codes `0/10/20/30`, malformed fixture failure, exact evidence properties, SARIF 2.1.0 rule IDs, JSON/SARIF decision consistency, and malformed/extra optional SARIF extensions being filtered without changing the deployable decision.
 - [ ] **Step 2: Run** the focused CLI tests and verify failure.
-- [ ] **Step 3: Implement** `python -m replay --fixture ... --json ... --sarif ...` with deterministic output and machine-readable errors.
+- [ ] **Step 3: Implement** `python -m replay --fixture ... --json ... --sarif ...` with deterministic output and machine-readable errors; filter only untrusted optional SARIF extensions after the decision has been computed.
 - [ ] **Step 4: Run** CLI tests and the four-fixture benchmark smoke flow.
 - [ ] **Step 5: Commit** `feat: expose replay gate as SARIF CLI`.
 
@@ -85,7 +85,7 @@
 **Files:**
 - Create: `<ASD_WORKTREE>/LICENSE`, `NOTICE`, `CONTRIBUTING.md`, `SECURITY.md` (Apache-2.0)
 - Create: `<RAG_WORKTREE>/LICENSE`, `NOTICE`, `CONTRIBUTING.md`, `SECURITY.md`
-- Create: `<ARP_WORKTREE>/LICENSE`, `NOTICE`, `CONTRIBUTING.md`, `SECURITY.md` (MIT, matching immutable v2.0.6 metadata)
+- Create: `/private/tmp/arp-moat-foundation/LICENSE`, `NOTICE`, `CONTRIBUTING.md`, `SECURITY.md` (MIT, matching immutable v2.0.6 metadata)
 - Modify: each repository `README.md`, `pyproject.toml`, `CHANGELOG.md`/release metadata, attribution, and release links
 
 - [ ] **Step 1: Write repository acceptance checks** for license/NOTICE presence, explicit license metadata (Apache harnesses; MIT ARP v2.0.6), version/install commands, contribution/security links, dependency/fixture attribution, cross-repository links, replay quickstart, and consumer pins to ARP 2.0.6.
@@ -94,8 +94,9 @@
 - [ ] **Step 4: Run** all three repository suites, package/install smoke with network only for dependency setup, offline replay smoke with credentials/network disabled, exact elapsed-time check under ten minutes, and static documentation checks.
 - [ ] **Step 5: Prepare** commits/tags and release notes independently; publish only after explicit user confirmation.
 
-Implementation uses the active isolated worktrees (`<ASD_WORKTREE>`,
-`<RAG_WORKTREE>`, and `<ARP_WORKTREE>`). Canonical `main` paths are read-only
+Implementation uses the active isolated worktrees (`/Users/dantecosta/Projects/agent-smell-degradation-harness/.worktrees/moat-foundation`,
+`/Users/dantecosta/Projects/rag-reliability-harness/.worktrees/product-layer`,
+and `/private/tmp/arp-moat-foundation`). Canonical `main` paths are read-only
 verification/release targets and are not edited during implementation.
 
 ### Task 7: Final verification and artifact handoff
