@@ -83,6 +83,8 @@ The current orientation and related-work review is versioned in [2026-08-10 orie
 
 The current collection blocker and acceptance checklist are documented in [confirmatory data acquisition](docs/research/confirmatory-data-acquisition.md). The checked-in seven-source seed is development-only. Confirmatory provider execution rejects stub mode and supports OpenAI and Anthropic adapters; offline replay remains schema validation, not thesis evidence.
 
+The scientific and commercial moat audit is recorded in [2026-08-10 moat stress test](docs/research/2026-08-10-moat-stress-test.md). Its conclusion is intentionally conservative: the stack is protocol-ready with a promising wedge, but the moat is not demonstrated until external data, independent labels, provider diversity, adoption, and ROI evidence exist.
+
 ## Offline overlays
 
 Offline overlays add deployable baselines, analysis reports, and an optional live experiment path without changing the core CI gate.
