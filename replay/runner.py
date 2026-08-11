@@ -17,7 +17,7 @@ from .schema import (
     sha256_bytes,
     validate_bundle_mapping,
 )
-from .policy import DEFAULT_POLICY
+from .policy import DEFAULT_POLICY, GatePolicy
 
 _EXIT_CODES = {"approve": 0, "warn": 10, "block": 20}
 _FIXTURE_DIAGNOSTICS = {
@@ -122,29 +122,16 @@ def _features(bundle: Mapping[str, Any]) -> dict[str, dict[str, float | int]]:
     return features
 
 
-def _decision(features: Mapping[str, Mapping[str, float | int]]) -> tuple[str, list[dict[str, Any]]]:
+def _policy_facts(features: Mapping[str, Mapping[str, float | int]]) -> dict[str, int]:
     provenance = features["provenance"]
-    constraints = int(provenance.get("constraint_count", 0))
-    unresolved = int(provenance.get("unresolved_reference_count", 0))
-    contradictions = int(provenance.get("contradiction_count", 0))
-    checks = int(provenance.get("validation_check_count", 0))
-    coverage = int(provenance.get("coverage_target_count", 0))
-    errors = int(provenance.get("error_count", 0))
-    if not constraints or contradictions or errors or not checks:
-        return "block", [{
-            "constraint": "requirement constraints",
-            "checkpoint": "interpretation.completed",
-            "confidence": 0.95,
-            "recommended_action": "block",
-        }]
-    if unresolved or not coverage:
-        return "warn", [{
-            "constraint": "requirement constraints",
-            "checkpoint": "interpretation.completed",
-            "confidence": 0.55,
-            "recommended_action": "clarify",
-        }]
-    return "approve", []
+    return {
+        "constraint_count": int(provenance.get("constraint_count", 0)),
+        "validation_check_count": int(provenance.get("validation_check_count", 0)),
+        "coverage_target_count": int(provenance.get("coverage_target_count", 0)),
+        "unresolved_reference_count": int(provenance.get("unresolved_reference_count", 0)),
+        "contradiction_count": int(provenance.get("contradiction_count", 0)),
+        "error_count": int(provenance.get("error_count", 0)),
+    }
 
 
 def _hash_projection(report: Mapping[str, Any]) -> dict[str, Any]:
@@ -160,9 +147,10 @@ def _hash_projection(report: Mapping[str, Any]) -> dict[str, Any]:
     return projection
 
 
-def run_bundle(bundle: Mapping[str, Any]) -> dict[str, Any]:
+def run_bundle(bundle: Mapping[str, Any], *, policy: GatePolicy | None = None) -> dict[str, Any]:
     try:
         validated = validate_bundle_mapping(bundle)
+        active_policy = policy or DEFAULT_POLICY
         raw = bundle.get("_trace_raw")
         if not isinstance(raw, bytes):
             raw = "\n".join(json.dumps(event, ensure_ascii=False, separators=(",", ":")) for event in validated["events"]).encode("utf-8") + b"\n"
@@ -171,7 +159,7 @@ def run_bundle(bundle: Mapping[str, Any]) -> dict[str, Any]:
         if manifest_hash and manifest_hash != trace_hash:
             raise ContractError("trace_sha256 does not match replay input")
         features = _features(validated)
-        decision, evidence = _decision(features)
+        decision, evidence = active_policy.evaluate(_policy_facts(features))
         diagnostic = copy.deepcopy(bundle.get("diagnostic") or {})
         diagnostic.setdefault("output_only", {"available": False, "source": "test-only-sidecar"})
         diagnostic.setdefault("operational", {"latency_ms": features["operational"].get("latency_ms", 0.0)})
@@ -180,7 +168,8 @@ def run_bundle(bundle: Mapping[str, Any]) -> dict[str, Any]:
             "replay_version": REPLAY_VERSION,
             "arp_wire_version": ARP_WIRE_VERSION,
             "arp_package_version": ARP_PACKAGE_VERSION,
-            "policy_version": DEFAULT_POLICY.version,
+            "policy_version": active_policy.version,
+            "policy_hash": active_policy.sha256,
             "decision": decision,
             "exit_code": _EXIT_CODES[decision],
             "trace_sha256": trace_hash,

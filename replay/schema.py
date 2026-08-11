@@ -23,6 +23,10 @@ _TERMINAL_KEYS = {
     "final_artifact", "variant", "variant_id", "smell", "defect_family",
     "defect_type", "mutation", "expected", "expected_decision",
 }
+_MANIFEST_KEYS = {
+    "replay_version", "checkpoint_schema_version", "arp_wire_version", "arp_package_version",
+    "requirement", "cases", "case_id", "trace", "trace_sha256", "status", "source",
+}
 
 
 class ContractError(ValueError):
@@ -132,6 +136,9 @@ def validate_bundle_mapping(bundle: Mapping[str, Any]) -> dict[str, Any]:
     events = bundle["events"]
     if not isinstance(manifest, Mapping):
         raise ContractError("manifest must be an object")
+    if not set(manifest).issubset(_MANIFEST_KEYS):
+        raise ContractError("manifest contains unknown deployable fields")
+    _reject_terminal(manifest, "manifest")
     expected_versions = {
         "replay_version": REPLAY_VERSION,
         "checkpoint_schema_version": CHECKPOINT_SCHEMA_VERSION,
@@ -143,10 +150,13 @@ def validate_bundle_mapping(bundle: Mapping[str, Any]) -> dict[str, Any]:
             raise ContractError(f"manifest {field} must be {expected}")
     if not isinstance(manifest.get("case_id"), str) or not manifest["case_id"]:
         raise ContractError("manifest case_id must be non-empty")
-    if not isinstance(requirement, Mapping) or not isinstance(requirement.get("text"), str) or not requirement["text"].strip():
+    if not isinstance(requirement, Mapping) or set(requirement) != {"text", "task_family"}:
+        raise ContractError("requirement contains unknown deployable fields")
+    if not isinstance(requirement.get("text"), str) or not requirement["text"].strip():
         raise ContractError("requirement.text must be non-empty")
     if not isinstance(requirement.get("task_family"), str) or not requirement["task_family"].strip():
         raise ContractError("requirement.task_family must be non-empty")
+    _reject_terminal(requirement, "requirement")
     if not isinstance(events, list) or len(events) != 3:
         raise ContractError("trace must contain exactly three checkpoint events")
     identity: tuple[Any, ...] | None = None

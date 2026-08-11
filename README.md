@@ -85,10 +85,15 @@ pip install -c constraints.txt -e ".[dev]"
 make all
 ```
 
-After dependencies are cached (or supplied in `./wheelhouse`), replay can run
-fully offline with `pip install --no-index --find-links ./wheelhouse -c
-constraints.txt -e .`. The constraints pin the ARP release and test/runtime
-packages; a clean machine still needs a one-time dependency acquisition.
+The Make targets use the active project interpreter. In automation, the
+equivalent explicit form is `PYTHON=.venv/bin/python make all`; no globally
+installed `pytest` executable is required.
+
+After dependencies are acquired and cached (or supplied in `./wheelhouse`),
+replay can execute offline with `pip install --no-index --find-links
+./wheelhouse -c constraints.txt -e .`. The constraints pin the ARP release and
+test/runtime packages; because ARP is a direct VCS dependency, a clean machine
+still needs a one-time acquisition/build step before offline installation.
 
 `make all` runs `test` → `eval` → `simulate` → `gate` in order (see [interop contracts](docs/interop.md)).
 
@@ -111,6 +116,11 @@ The reproducible pre-pilot uses 12 intents × clean/smelly variants × 5 replica
 The acceptance boundary, estimands, leakage rules, split invariants, and product policy are documented in [Thesis and Product Boundary](docs/thesis-product-boundary.md). A pre-pilot manifest must contain 12 independent source intents; renaming duplicated seed records does not satisfy the count.
 
 The current orientation and related-work review is versioned in [2026-08-10 orientation review](docs/research/2026-08-10-orientation-review.md). It records the novelty boundary, EASY alignment, direct comparison with prefix monitors, and the evidence still required before a confirmatory claim.
+
+The master's scope, academic contribution, non-claims, and chapter boundary are
+frozen in [Master's Thesis Scope](docs/thesis/masters-scope.md). H1/H2 remain
+planned conditional claims until the external data, provider, annotation,
+preregistration, and shadow-pilot gates pass.
 
 The current collection blocker and acceptance checklist are documented in [confirmatory data acquisition](docs/research/confirmatory-data-acquisition.md). The checked-in seven-source seed is development-only. Confirmatory provider execution rejects stub mode and supports OpenAI and Anthropic adapters; offline replay remains schema validation, not thesis evidence.
 

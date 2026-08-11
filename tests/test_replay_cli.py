@@ -63,3 +63,25 @@ def test_optional_sarif_extensions_are_filtered() -> None:
     result = sarif["runs"][0]["results"][0]
     assert "unexpected" not in result["properties"]
     assert result["properties"]["decision"] == "approve"
+
+
+def test_cli_accepts_custom_policy_and_reports_policy_hash(tmp_path: Path) -> None:
+    policy_path = tmp_path / "policy.json"
+    policy_path.write_text(
+        json.dumps({
+            "schema_version": "constraint-policy/v1",
+            "version": "custom/v1",
+            "block_when": ["unresolved_reference"],
+            "warn_when": [],
+        }),
+        encoding="utf-8",
+    )
+    output_path = tmp_path / "report.json"
+    result = _run(
+        "--fixture", "constraint-warning", "--policy", str(policy_path), "--json", str(output_path)
+    )
+    assert result.returncode == 20
+    report = json.loads(output_path.read_text(encoding="utf-8"))
+    assert report["decision"] == "block"
+    assert report["policy_version"] == "custom/v1"
+    assert len(report["policy_hash"]) == 64

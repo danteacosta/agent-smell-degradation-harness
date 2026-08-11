@@ -4,7 +4,7 @@ This repository contains two deliberately separate layers.
 
 ## Thesis protocol
 
-The thesis layer is the confirmatory experiment. Its accepted claim is limited to the observable boundary of material constraint-preservation failure induced by requirement defects in acceptance-criteria/test generation. The primary H2 label is human/adjudicated severity 2–3 versus 0–1; ordinal severity and executability, coverage, traceability, and verifiability are secondary. Traceability is an independent validation task. Only ARP 2.0.5 lifecycle events through T0–T3 may enter deployable features. Oracle verdicts, terminal validators, final artifacts, requirement defect metadata, labels, and upper-bound metadata remain outside the primary model.
+The thesis layer is the planned confirmatory experiment. Its conditional claim is limited to the observable boundary of material constraint-preservation failure induced by requirement defects in acceptance-criteria/test generation. The primary H2 label is human/adjudicated severity 2–3 versus 0–1; ordinal severity and executability, coverage, traceability, and verifiability are secondary. Traceability is an independent validation task. Only ARP 2.0.5 lifecycle events through T0–T3 may enter deployable features. Oracle verdicts, terminal validators, final artifacts, requirement defect metadata, labels, and upper-bound metadata remain outside the primary model. The current seven-source seed and all stub/oracle/pre-pilot outputs are non-confirmatory until the external data-acquisition gate passes.
 
 The scientific estimands are:
 
