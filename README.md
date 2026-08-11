@@ -117,6 +117,11 @@ The acceptance boundary, estimands, leakage rules, split invariants, and product
 
 The current orientation and related-work review is versioned in [2026-08-10 orientation review](docs/research/2026-08-10-orientation-review.md). It records the novelty boundary, EASY alignment, direct comparison with prefix monitors, and the evidence still required before a confirmatory claim.
 
+The master's scope, academic contribution, non-claims, and chapter boundary are
+frozen in [Master's Thesis Scope](docs/thesis/masters-scope.md). H1/H2 remain
+planned conditional claims until the external data, provider, annotation,
+preregistration, and shadow-pilot gates pass.
+
 The current collection blocker and acceptance checklist are documented in [confirmatory data acquisition](docs/research/confirmatory-data-acquisition.md). The checked-in seven-source seed is development-only. Confirmatory provider execution rejects stub mode and supports OpenAI and Anthropic adapters; offline replay remains schema validation, not thesis evidence.
 
 The scientific and commercial moat audit is recorded in [2026-08-10 moat stress test](docs/research/2026-08-10-moat-stress-test.md). Its conclusion is intentionally conservative: the stack is protocol-ready with a promising wedge, but the moat is not demonstrated until external data, independent labels, provider diversity, adoption, and ROI evidence exist.
