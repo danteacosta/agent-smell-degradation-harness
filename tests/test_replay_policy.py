@@ -68,4 +68,3 @@ def test_policy_facts_are_closed_and_typed() -> None:
         DEFAULT_POLICY.evaluate({**facts, "unexpected": 0})
     with pytest.raises(ValueError):
         DEFAULT_POLICY.evaluate({**facts, "error_count": True})
-
