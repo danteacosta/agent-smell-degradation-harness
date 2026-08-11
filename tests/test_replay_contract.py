@@ -101,3 +101,14 @@ def test_contract_mutations_fail_closed_as_typed_validation_errors(mutation) -> 
     mutation(bundle)
     with pytest.raises(ContractError):
         validate_bundle_mapping(bundle)
+
+
+def test_unknown_manifest_and_requirement_fields_fail_closed() -> None:
+    bundle = valid_bundle()
+    bundle["manifest"]["audit_only"] = {"source": "test"}
+    with pytest.raises(ContractError):
+        validate_bundle_mapping(bundle)
+    bundle = valid_bundle()
+    bundle["requirement"]["mutation"] = "hidden"
+    with pytest.raises(ContractError):
+        validate_bundle_mapping(bundle)
