@@ -85,10 +85,15 @@ pip install -c constraints.txt -e ".[dev]"
 make all
 ```
 
-After dependencies are cached (or supplied in `./wheelhouse`), replay can run
-fully offline with `pip install --no-index --find-links ./wheelhouse -c
-constraints.txt -e .`. The constraints pin the ARP release and test/runtime
-packages; a clean machine still needs a one-time dependency acquisition.
+The Make targets use the active project interpreter. In automation, the
+equivalent explicit form is `PYTHON=.venv/bin/python make all`; no globally
+installed `pytest` executable is required.
+
+After dependencies are acquired and cached (or supplied in `./wheelhouse`),
+replay can execute offline with `pip install --no-index --find-links
+./wheelhouse -c constraints.txt -e .`. The constraints pin the ARP release and
+test/runtime packages; because ARP is a direct VCS dependency, a clean machine
+still needs a one-time acquisition/build step before offline installation.
 
 `make all` runs `test` → `eval` → `simulate` → `gate` in order (see [interop contracts](docs/interop.md)).
 
