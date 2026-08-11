@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from .policy import load_policy
 from .runner import load_bundle, load_fixture, run_bundle, to_sarif
 from .schema import REPLAY_VERSION, ContractError, canonical_json_bytes, sha256_bytes
 
@@ -39,6 +40,7 @@ def build_parser() -> argparse.ArgumentParser:
     source.add_argument("--bundle", help="path to an arbitrary replay bundle")
     parser.add_argument("--json", help="JSON report path; defaults to stdout")
     parser.add_argument("--sarif", help="SARIF report path")
+    parser.add_argument("--policy", help="JSON policy document path")
     return parser
 
 
@@ -49,7 +51,8 @@ def main(argv: list[str] | None = None) -> int:
             bundle = load_fixture(args.fixture, Path(__file__).parent / "fixtures")
         else:
             bundle = load_bundle(args.bundle)
-        report = run_bundle(bundle)
+        policy = load_policy(args.policy) if args.policy else None
+        report = run_bundle(bundle, policy=policy)
     except (ContractError, OSError, ValueError) as exc:
         report = _invalid_report(exc)
     _write(args.json, report)
