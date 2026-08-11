@@ -45,7 +45,7 @@ def test_utility_metrics_cover_roi_inputs() -> None:
         [
             RunOutcome("block", True, 40.0, False, 0.02, 120.0),
             RunOutcome("warn", False, 80.0, False, 0.03, None),
-            RunOutcome("approve", True, 0.0, True, 0.01, 300.0),
+            RunOutcome("approve", True, 0.0, True, 0.01, None),
         ]
     )
     assert summary["captured_regressions"] == 1
@@ -53,3 +53,21 @@ def test_utility_metrics_cover_roi_inputs() -> None:
     assert summary["escaped_incidents"] == 1
     assert summary["cost_per_run_usd"] == 0.02
     assert summary["lead_time_ms"] == 120.0
+
+
+def test_utility_outcomes_reject_impossible_values() -> None:
+    import math
+    import pytest
+
+    invalid = [
+        {"decision": "bogus"},
+        {"decision": "approve", "regression": 1},
+        {"decision": "approve", "review_seconds": -1},
+        {"decision": "approve", "cost_usd": math.nan},
+        {"decision": "approve", "failure_time_ms": 4.0},
+    ]
+    for overrides in invalid:
+        values = {"decision": "approve", "regression": False, "review_seconds": 0.0, "escaped_incident": False, "cost_usd": 0.0, "failure_time_ms": None}
+        values.update(overrides)
+        with pytest.raises(ValueError):
+            RunOutcome(**values)

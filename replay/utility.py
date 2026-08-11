@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 from statistics import mean
 from typing import Any
 
@@ -13,6 +14,20 @@ class RunOutcome:
     escaped_incident: bool
     cost_usd: float
     failure_time_ms: float | None
+
+    def __post_init__(self) -> None:
+        if self.decision not in {"approve", "warn", "block"}:
+            raise ValueError("decision must be approve, warn, or block")
+        if type(self.regression) is not bool or type(self.escaped_incident) is not bool:
+            raise ValueError("regression and escaped_incident must be booleans")
+        for name, value in (("review_seconds", self.review_seconds), ("cost_usd", self.cost_usd)):
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0:
+                raise ValueError(f"{name} must be a finite non-negative number")
+        if self.failure_time_ms is not None:
+            if isinstance(self.failure_time_ms, bool) or not isinstance(self.failure_time_ms, (int, float)) or not math.isfinite(self.failure_time_ms) or self.failure_time_ms < 0:
+                raise ValueError("failure_time_ms must be None or a finite non-negative number")
+            if not self.regression or self.decision not in {"warn", "block"}:
+                raise ValueError("failure_time_ms requires a captured regression")
 
 
 def summarize_outcomes(outcomes: list[RunOutcome]) -> dict[str, Any]:
