@@ -26,7 +26,7 @@ Consumer wiring guide: [docs/wedge.md](docs/wedge.md)
 ## Constraint replay gate (pre-merge)
 
 The canonical pre-merge path is the offline replay gate. It consumes an ARP
-2.0.5 pre-final trace (package 2.0.6) and adds constraint-level preservation
+2.0.5 legacy replay trace (read through the ARP 3.0 compatibility surface) and adds constraint-level preservation
 evidence; it does not replace tracing systems such as OpenTelemetry, Phoenix,
 or Langfuse. The checked-in fixtures are synthetic and non-confirmatory.
 
@@ -48,6 +48,16 @@ block is intentionally an alert. A real installation can set the repository
 variable `REPLAY_UPLOAD_SARIF=true` after replacing the fixtures with its own
 policy-approved bundle; fork pull requests continue using the artifact
 fallback.
+
+## Confirmatory trace boundary
+
+Confirmatory collection emits native ARP 3.0 records under
+`agent-smell-degradation/v1`. It accepts only a single instrumented runtime
+execution that returns T1 interpretation, T2 plan, T3 execution checkpoints,
+and the resulting artifact together. Prompted checkpoint summaries, stubs,
+mocks, and replay remain non-confirmatory. T4 artifact/evaluation data is
+stored only in the label-plane profile extension and is excluded by the
+deployable feature loader.
 
 ## Flow
 

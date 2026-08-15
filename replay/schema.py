@@ -10,7 +10,7 @@ from typing import Any
 REPLAY_VERSION = "constraint-replay/v1"
 CHECKPOINT_SCHEMA_VERSION = "pre-final/v1"
 ARP_WIRE_VERSION = "2.0.5"
-ARP_PACKAGE_VERSION = "2.0.6"
+ARP_PACKAGE_VERSION = "3.0.0"
 
 EVENT_NAMES = (
     "interpretation.completed",
@@ -199,7 +199,7 @@ def validate_bundle_mapping(bundle: Mapping[str, Any]) -> dict[str, Any]:
 
 
 def _validate_with_arp(events: list[Mapping[str, Any]]) -> None:
-    """Run the installed ARP 2.0.6 lifecycle validator when available.
+    """Run the installed ARP 3.0 compatibility validator when available.
 
     The local validator above owns the replay-specific payload and chronology
     invariants. ARP remains the compatibility authority for its wire envelope;
@@ -214,4 +214,4 @@ def _validate_with_arp(events: list[Mapping[str, Any]]) -> None:
         parsed = [LifecycleEvent.from_dict(event) for event in events]
         validate_lifecycle_sequence(parsed)
     except (TypeError, ValueError, KeyError) as exc:
-        raise ContractError(f"ARP 2.0.6 rejected lifecycle trace: {exc}") from exc
+        raise ContractError(f"ARP 3.0.0 rejected lifecycle trace: {exc}") from exc

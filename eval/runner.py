@@ -2,16 +2,23 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Any, Mapping, Sequence
 
 from agents.stub import StubAgent
-from agents.checkpoints import validate_checkpoint_payload
-from agent_reliability_protocol import validate_lifecycle_sequence
+from agents.checkpoints import AgentExecution, validate_agent_execution
+from agent_reliability_protocol import (
+    LifecycleEventV3,
+    check_contract,
+    validate_lifecycle_sequence,
+    validate_lifecycle_sequence_v3,
+)
+from arp_profiles import AGENT_SMELL_PROFILE, validate_agent_smell_run
 from eval.identity import configuration_id_for, create_episode_identity, new_run_id
 from eval.metrics import aggregate_metrics
 from eval.provider_manifest import ProviderRunMetadata, summarize_provider_runs
 from mitigation.pipeline import prepare_requirement
 from observability.tracing import ProvenanceRecorder
+from protocol.arp3 import write_confirmatory_manifest
 from observability.semantic_lint import validate_events
 from pairs.loader import load_all_pairs
 from taxonomy.label import label_degradation
@@ -61,6 +68,8 @@ def _run_episode(
     replication_id: int,
     configuration_id: str,
     confirmatory: bool,
+    split: str | None,
+    source_revision: str | None,
 ) -> dict[str, Any]:
     task_family = task_adapter.task_family
     intent_id = pair["intent_id"]
@@ -86,10 +95,15 @@ def _run_episode(
     smell_type = "" if variant == "clean" else pair["smell"]["type"]
 
     has_semantic_provenance = False
+    arp_context = identity.as_dict()
+    if confirmatory:
+        arp_context = {**arp_context, "run_id": episode_id}
     rec = ProvenanceRecorder(
         trace_path,
         episode_identity=identity.as_dict(),
-        arp_context=identity.as_dict(),
+        arp_context=arp_context,
+        wire_version="3.0.0" if confirmatory else "2.0.5",
+        profile=AGENT_SMELL_PROFILE if confirmatory else None,
     )
     rec.operational(
         "input.received",
@@ -102,21 +116,28 @@ def _run_episode(
         tier="A",
     )
     checkpoint_meta: dict[str, Any] = {}
+    artifact: Mapping[str, Any] | dict[str, Any]
+    provider_meta: dict[str, Any]
     if confirmatory:
-        observer = getattr(agent, "observe_checkpoints", None)
-        if observer is None:
-            raise ValueError("confirmatory run requires provider checkpoints")
-        observed = observer(pair, variant=generation_variant, task_family=task_family)
-        if isinstance(observed, tuple):
-            checkpoint_payload, checkpoint_meta = observed
-        else:
-            checkpoint_payload = observed
-        if not isinstance(checkpoint_payload, dict):
-            raise ValueError("provider checkpoints must be an object")
-        checkpoint_payload = validate_checkpoint_payload(checkpoint_payload)
-        rec.semantic("interpretation.completed", checkpoint_payload["interpretation"], tier="A")
-        rec.semantic("plan.completed", checkpoint_payload["plan"], tier="A")
-        rec.operational("tool.completed", checkpoint_payload["execution"], tier="A")
+        executor = getattr(agent, "execute_with_checkpoints", None)
+        if executor is None:
+            raise ValueError("confirmatory run requires one native execution with runtime checkpoints")
+        execution = executor(pair, variant=generation_variant, task_family=task_family)
+        if not isinstance(execution, AgentExecution):
+            raise ValueError("native checkpoint execution must return AgentExecution")
+        execution = validate_agent_execution(execution, not_before=rec.last_ended_at)
+        for observation in execution.checkpoints:
+            writer = rec.semantic if observation.checkpoint in {"interpretation.completed", "plan.completed"} else rec.operational
+            writer(
+                observation.checkpoint,
+                dict(observation.payload),
+                tier="A",
+                started_at=observation.started_at,
+                ended_at=observation.ended_at,
+            )
+        artifact = dict(execution.artifact)
+        provider_meta = dict(execution.provider_meta)
+        checkpoint_meta = {"provenance": "runtime_native", "count": len(execution.checkpoints)}
         has_semantic_provenance = not skip_semantic_provenance
     else:
         interpretation = _interpret_requirement(
@@ -134,26 +155,25 @@ def _run_episode(
             {"task_family": task_family, "generation_variant": generation_variant},
             tier="A",
         )
-    rec.operational("execution.started", {"episode_id": episode_id}, tier="A")
-    provider_meta: dict[str, Any]
-    if hasattr(agent, "generate_with_meta"):
-        artifact, provider_meta = agent.generate_with_meta(
-            pair,
-            variant=generation_variant,
-            task_family=task_family,
-        )
-    else:
-        artifact = agent.generate(
-            pair,
-            variant=generation_variant,
-            task_family=task_family,
-        )
-        provider_meta = {
-            "provider": getattr(agent, "provider", "deterministic-stub"),
-            "model": getattr(agent, "model", "stub-v1"),
-            "latency_ms": 0.0,
-            "cost_usd": 0.0,
-        }
+        rec.operational("execution.started", {"episode_id": episode_id}, tier="A")
+        if hasattr(agent, "generate_with_meta"):
+            artifact, provider_meta = agent.generate_with_meta(
+                pair,
+                variant=generation_variant,
+                task_family=task_family,
+            )
+        else:
+            artifact = agent.generate(
+                pair,
+                variant=generation_variant,
+                task_family=task_family,
+            )
+            provider_meta = {
+                "provider": getattr(agent, "provider", "deterministic-stub"),
+                "model": getattr(agent, "model", "stub-v1"),
+                "latency_ms": 0.0,
+                "cost_usd": 0.0,
+            }
     rec.operational(
         "artifact.completed",
         {"episode_id": episode_id, "artifact_field_count": len(artifact)},
@@ -172,30 +192,71 @@ def _run_episode(
         task_family=task_family,
     )
 
-    rec.operational(
-        "latency",
-        {"ms": provider_meta.get("latency_ms", 0.0), "episode_id": episode_id},
-        tier="A",
-    )
-    rec.oracle_verdict(
-        {
-            "passed": task_evaluation.passed,
-            "task_family": task_family,
-            "mutation_score": task_evaluation.mutation_score,
-        }
-    )
-    rec.operational(
-        "evaluation.completed",
-        {"episode_id": episode_id, "passed": task_evaluation.passed},
-        tier="B",
-    )
+    if confirmatory:
+        rec.operational(
+            "evaluation.completed",
+            {
+                "episode_id": episode_id,
+                "passed": task_evaluation.passed,
+                "task_family": task_family,
+                "mutation_score": task_evaluation.mutation_score,
+                "latency_ms": provider_meta.get("latency_ms", 0.0),
+            },
+            tier="B",
+        )
+    else:
+        rec.operational(
+            "latency",
+            {"ms": provider_meta.get("latency_ms", 0.0), "episode_id": episode_id},
+            tier="A",
+        )
+        rec.oracle_verdict(
+            {
+                "passed": task_evaluation.passed,
+                "task_family": task_family,
+                "mutation_score": task_evaluation.mutation_score,
+            }
+        )
+        rec.operational(
+            "evaluation.completed",
+            {"episode_id": episode_id, "passed": task_evaluation.passed},
+            tier="B",
+        )
     rec.close()
     trace_events = [
         json.loads(line)
         for line in trace_path.read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
-    validate_lifecycle_sequence(trace_events)
+    manifest_path: Path | None = None
+    if confirmatory:
+        if split is None or source_revision is None:
+            raise ValueError("confirmatory execution requires split and source_revision")
+        manifest_path = trace_path.with_suffix(".manifest.json")
+        manifest = write_confirmatory_manifest(
+            manifest_path,
+            identity={**identity.as_dict(), "episode_id": episode_id},
+            requirement_text=requirement_text,
+            experiment_id=experiment_id,
+            project_id=str(pair.get("project_id", pair.get("project", ""))),
+            source_intent_id=str(pair.get("source_intent_id", pair["intent_id"])),
+            variant=variant,
+            split=split,
+            source_revision=source_revision,
+            configuration_hash=configuration_id,
+            provider=str(provider_meta.get("provider", getattr(agent, "provider", "unknown"))),
+            model_version=str(provider_meta.get("model", getattr(agent, "model_version", "unknown"))),
+        )
+        for event in trace_events:
+            errors = check_contract("event", event)
+            if errors:
+                raise ValueError("invalid ARP 3.0 event: " + "; ".join(errors))
+        validate_lifecycle_sequence_v3([LifecycleEventV3.from_dict(event) for event in trace_events])
+        profile_errors = validate_agent_smell_run(manifest, trace_events)
+        if profile_errors:
+            raise ValueError("invalid confirmatory ARP profile: " + "; ".join(profile_errors))
+    else:
+        validate_lifecycle_sequence(trace_events)
     semantic_lint_findings = validate_events(trace_events)
 
     episode: dict[str, Any] = {
@@ -212,6 +273,7 @@ def _run_episode(
         "oracle_passed": task_evaluation.passed,
         "semantic_label": semantic_label,
         "provenance_path": str(trace_path),
+        "arp_manifest_path": str(manifest_path) if manifest_path is not None else None,
         "has_semantic_provenance": has_semantic_provenance,
         "semantic_lint": {
             "finding_count": len(semantic_lint_findings),
@@ -253,6 +315,8 @@ def run_eval(
     replication_id: int = 0,
     configuration_id: str | None = None,
     confirmatory: bool = False,
+    split: str | None = None,
+    source_revision: str | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     agent = StubAgent(failure_mode=failure_mode)
     if configuration_id is None:
@@ -279,6 +343,8 @@ def run_eval(
         replication_id=replication_id,
         configuration_id=configuration_id,
         confirmatory=confirmatory,
+        split=split,
+        source_revision=source_revision,
     )
 
 
@@ -298,17 +364,23 @@ def run_eval_with_agent(
     replication_id: int = 0,
     configuration_id: str | None = None,
     confirmatory: bool = False,
+    split: str | None = None,
+    source_revision: str | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
-    if confirmatory and (
-        str(getattr(agent, "run_mode", "stub")) == "stub"
-        or str(getattr(agent, "provider", "")) == "stub"
-    ):
-        raise ValueError("confirmatory execution requires real provider checkpoints, not a stub")
+    run_mode = str(getattr(agent, "run_mode", "stub"))
+    if confirmatory and run_mode not in {"live", "runtime"}:
+        raise ValueError("confirmatory execution requires real provider checkpoints from a live/runtime run, not stub, mock, or replay")
     if confirmatory and str(getattr(agent, "checkpoint_provenance", "")) != "runtime_native":
         raise ValueError(
             "confirmatory execution requires runtime-native checkpoints; "
             "prompted checkpoint snapshots are non-confirmatory"
         )
+    if confirmatory and not callable(getattr(agent, "execute_with_checkpoints", None)):
+        raise ValueError("confirmatory run requires one native execution with runtime checkpoints")
+    if confirmatory and split not in {"train", "calibration", "test"}:
+        raise ValueError("confirmatory execution requires a frozen train/calibration/test split")
+    if confirmatory and (source_revision is None or not source_revision.strip()):
+        raise ValueError("confirmatory execution requires an immutable source_revision")
     traces_dir.mkdir(parents=True, exist_ok=True)
     if pairs is None:
         pairs = load_all_pairs()
@@ -335,6 +407,8 @@ def run_eval_with_agent(
                         replication_id,
                         configuration_id,
                         confirmatory,
+                        split,
+                        source_revision,
                     )
                 )
 

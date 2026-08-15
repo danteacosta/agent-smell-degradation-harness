@@ -5,7 +5,7 @@ license = {text = "Apache-2.0"}
 requires-python = ">=3.11"
 dependencies = [
   "pyyaml>=6.0",
-  "agent-reliability-protocol @ git+https://github.com/danteacosta/agent-reliability-protocol.git@v2.0.6",
+  "agent-reliability-protocol @ git+https://github.com/danteacosta/agent-reliability-protocol.git@cce07c90bb83ebd80070927708845e44b2911ef6",
 ]
 
 [project.optional-dependencies]
@@ -32,7 +32,6 @@ include = [
   "gates*",
   "taxonomy*",
   "protocol*",
-  "protocol_next*",
   "baselines*",
   "mitigation*",
   "wedge*",

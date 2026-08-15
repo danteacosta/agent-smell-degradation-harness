@@ -26,16 +26,18 @@ reported as confirmatory until all external gates pass:
 
 - at least 24 independent source intents across at least 6 projects, with
   provenance, licensing, near-clone checks, and at least 8 intents per split;
-- at least two real provider/model configurations producing genuine T1/T2/T3
-  checkpoints with immutable provider metadata and cutoff hashes;
+- at least two real provider/model configurations producing genuine,
+  runtime-native ARP 3.0 T1/T2/T3 checkpoints from the same execution that
+  produces the artifact, with immutable provider metadata and cutoff hashes;
 - blinded primary human labels, a double-coded subset, adjudication, missing
   label policy, Krippendorff's alpha, and bootstrap confidence intervals;
 - a frozen feature manifest and deterministic train/calibration/test H2 report;
 - a shadow pilot measuring false alerts, lead time, review time, escaped
   incidents, and cost per run.
 
-The current seven-source seed, stub runs, oracle-derived labels, synthetic
-replay fixtures, and product smoke reports are development evidence only.
+The current seven-source seed, stub runs, prompted checkpoint summaries,
+oracle-derived labels, synthetic replay fixtures, and product smoke reports
+are development evidence only.
 
 ## Relation to requirements-smell research
 
