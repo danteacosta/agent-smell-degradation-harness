@@ -16,7 +16,13 @@
 | `episode_handoff` | audit/QC | versioned pre-final or post-evaluation sidecar with source references | no |
 | `semantic_lint_findings` | audit/QC | deterministic provenance and plane-boundary findings | no |
 | `source_refs` | provenance | source kind, identifier, optional content hash and event sequence | no |
+| `features` | derived pre-final | numeric static, operational, and provenance families recomputed at T3 | yes |
+| `checkpoint_features.T1/T2/T3` | derived pre-final | numeric provenance family recomputed at each frozen cutoff | yes |
 
-The manifest records provenance and hashes for every row. The feature plane may consume only input fields and provider-produced T0–T3 attributes before the terminal cutoff.
+The `h2-features/v3` manifest records provenance and hashes for every row and
+forbids precomputed scores. Validation recomputes every declared feature from
+the bound trace and verifies the T1/T2/T3 event IDs and cutoff sequences. The
+feature plane may consume only input fields and provider-produced T0–T3
+attributes before the terminal cutoff.
 
 Handoff and lint artifacts are retained for reproducibility and failure diagnosis, but are excluded from H1/H2 feature extraction and from primary labels. Product candidate memory is maintained outside the thesis dataset and is never joined into confirmatory rows.

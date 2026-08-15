@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from eval.feature_manifest import trace_sha256
+from eval.feature_manifest import build_feature_manifest
 from eval.h2_detection import evaluate_confirmatory
 
 
@@ -41,44 +41,38 @@ def _labels(episodes: list[dict[str, object]]) -> dict[str, int]:
 
 
 def _feature_manifest(episodes: list[dict[str, object]], root: Path) -> dict[str, object]:
-    rows = []
     for row in episodes:
         path = root / f"{row['episode_id']}.jsonl"
-        path.write_text(
-            json.dumps(
-                {
-                    "event_id": f"event-{row['episode_id']}",
-                    "checkpoint": "interpretation.completed",
-                    "event_type": "interpretation.completed",
-                    "sequence_number": 1,
-                    "attributes": {"constraints": ["x"]},
-                }
-            )
-            + "\n",
-            encoding="utf-8",
-        )
-        row["provenance_path"] = str(path)
-        rows.append(
+        degraded = int(row["variant"] == "smelly")
+        events = [
             {
-                "episode_id": row["episode_id"],
-                "trace_sha256": trace_sha256(path),
-                "feature_version": "pre-final/v2",
-                "checkpoint_event_ids": [f"event-{row['episode_id']}"],
-                "cutoff_sequence": 1,
-                "scores": {
-                    "static_smell": 0.1,
-                    "operational": 0.2,
-                    "provenance_semantic": 0.3,
+                "event_id": f"event-{row['episode_id']}-t1",
+                "checkpoint": "interpretation.completed",
+                "event_type": "interpretation.completed",
+                "sequence_number": 1,
+                "attributes": {
+                    "constraints": ["x"],
+                    "unresolved_references": ["x"] if degraded else [],
                 },
-            }
-        )
-    return {
-        "schema_version": "h2-features/v2",
-        "feature_version": "pre-final/v2",
-        "source_plane": "pre_final",
-        "analysis_version": "h2-confirmatory-v1",
-        "rows": rows,
-    }
+            },
+            {
+                "event_id": f"event-{row['episode_id']}-t2",
+                "checkpoint": "plan.completed",
+                "event_type": "plan.completed",
+                "sequence_number": 2,
+                "attributes": {"validation_checks": [] if degraded else ["check x"]},
+            },
+            {
+                "event_id": f"event-{row['episode_id']}-t3",
+                "checkpoint": "tool.completed",
+                "event_type": "tool.completed",
+                "sequence_number": 3,
+                "attributes": {"errors": ["lost x"] if degraded else []},
+            },
+        ]
+        path.write_text("".join(json.dumps(event) + "\n" for event in events), encoding="utf-8")
+        row["provenance_path"] = str(path)
+    return build_feature_manifest(episodes)
 
 
 def test_confirmatory_h2_requires_primary_human_labels():
@@ -139,12 +133,12 @@ def test_confirmatory_h2_rejects_incomplete_trace_binding(
         )
 
 
-def test_confirmatory_h2_rejects_non_finite_score(tmp_path: Path):
+def test_confirmatory_h2_rejects_non_finite_raw_feature(tmp_path: Path):
     episodes = _episodes()
     for row in episodes:
         row.pop("h2_scores", None)
     feature_manifest = _feature_manifest(episodes, tmp_path)
-    feature_manifest["rows"][0]["scores"]["provenance_semantic"] = float("nan")  # type: ignore[index]
+    feature_manifest["rows"][0]["features"]["provenance_semantic"]["constraint_count"] = float("nan")  # type: ignore[index]
     with pytest.raises(ValueError, match="finite"):
         evaluate_confirmatory(
             episodes,
@@ -155,7 +149,7 @@ def test_confirmatory_h2_rejects_non_finite_score(tmp_path: Path):
         )
 
 
-def test_confirmatory_h2_accepts_bound_scores_and_never_uses_oracle_label(tmp_path: Path):
+def test_confirmatory_h2_fits_bound_raw_features_and_never_uses_oracle_label(tmp_path: Path):
     episodes = _episodes()
     for row in episodes:
         row.pop("h2_scores", None)
@@ -168,7 +162,34 @@ def test_confirmatory_h2_accepts_bound_scores_and_never_uses_oracle_label(tmp_pa
         enforce_design=False,
     )
     assert report["labels"]["source"] == "primary_human_adjudicated"
-    assert report["features"]["schema_version"] == "h2-features/v2"
+    assert report["features"]["schema_version"] == "h2-features/v3"
+    assert report["features"]["representation"] == "trace-bound-raw-numeric"
+    assert all(model["fit_split"] == "train" for model in report["fitted_models"].values())
+    assert set(report["checkpoint_boundary"]) == {"T1", "T2", "T3"}
+    assert all(
+        boundary["held_out_split"] == "test"
+        for boundary in report["checkpoint_boundary"].values()
+    )
+
+
+def test_confirmatory_h2_rejects_precomputed_scores_in_v3(tmp_path: Path):
+    episodes = _episodes()
+    for row in episodes:
+        row.pop("h2_scores", None)
+    feature_manifest = _feature_manifest(episodes, tmp_path)
+    feature_manifest["rows"][0]["scores"] = {  # type: ignore[index]
+        "static_smell": 0.1,
+        "operational": 0.2,
+        "provenance_semantic": 0.3,
+    }
+    with pytest.raises(ValueError, match="precomputed scores"):
+        evaluate_confirmatory(
+            episodes,
+            confirmatory=True,
+            primary_labels=_labels(episodes),
+            feature_manifest=feature_manifest,
+            enforce_design=False,
+        )
 
 
 def test_confirmatory_h2_reports_delta_ci_and_claim_decision(tmp_path: Path):
