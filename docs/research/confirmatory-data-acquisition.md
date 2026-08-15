@@ -32,8 +32,10 @@ Before changing the manifest to confirmed:
 5. complete blinded human labels, double coding, adjudication, missing-label
    export, Krippendorff alpha, and bootstrap CI;
 6. validate the T0-T3/T4 temporal boundary and label-plane isolation for every
-   episode, then export a feature manifest and confirmatory H2 report before inspecting the
-   terminal outcomes.
+   episode, then export an `h2-features/v3` manifest whose raw T1/T2/T3 features
+   are recomputed from the hash-bound traces; fit all family/checkpoint models
+   on train only and export the confirmatory H2 report before inspecting the
+   held-out outcomes. Precomputed score manifests are ineligible.
 
 No record may be padded by renaming, paraphrasing without a declared
 exception, or duplicating a project/intention.

@@ -54,6 +54,16 @@ _CHECKPOINT_ORDER = {
     "tool.completed": 4,
     "retrieval.completed": 4,
 }
+_CUTOFF_ORDER = {
+    "T1": 1,
+    "T2": 2,
+    "T3": 4,
+    "interpretation.completed": 1,
+    "plan.completed": 2,
+    "execution.started": 3,
+    "tool.completed": 4,
+    "retrieval.completed": 4,
+}
 
 
 def _contains_terminal_key(value: Any) -> str | None:
@@ -89,11 +99,20 @@ def _event_payload(event: Mapping[str, Any]) -> Mapping[str, Any] | None:
     return payload if isinstance(payload, Mapping) else None
 
 
-def _load_deployable_events(provenance_path: str | Path) -> list[Mapping[str, Any]]:
+def _load_deployable_events(
+    provenance_path: str | Path,
+    *,
+    cutoff: str | None = None,
+) -> list[Mapping[str, Any]]:
     path = Path(provenance_path)
     if not path.exists():
         return []
 
+    cutoff_order: int | None = None
+    if cutoff is not None:
+        if cutoff not in _CUTOFF_ORDER:
+            raise ValueError(f"unknown deployable checkpoint cutoff {cutoff!r}")
+        cutoff_order = _CUTOFF_ORDER[cutoff]
     events: list[Mapping[str, Any]] = []
     last_order = -1
     label_plane_started = False
@@ -133,6 +152,8 @@ def _load_deployable_events(provenance_path: str | Path) -> list[Mapping[str, An
         if order < last_order:
             raise ValueError("deployable checkpoints are out of order")
         last_order = order
+        if cutoff_order is not None and order > cutoff_order:
+            continue
         events.append(event)
     return events
 
@@ -140,6 +161,8 @@ def _load_deployable_events(provenance_path: str | Path) -> list[Mapping[str, An
 def extract_deployable_features(
     feature_input: DeployableFeatureInput,
     provenance_path: str | Path,
+    *,
+    cutoff: str | None = None,
 ) -> dict[str, dict[str, float | int]]:
     """Extract only allowlisted, pre-final feature families.
 
@@ -148,7 +171,7 @@ def extract_deployable_features(
     instead of being silently interpreted as a deployable signal.
     """
 
-    events = _load_deployable_events(provenance_path)
+    events = _load_deployable_events(provenance_path, cutoff=cutoff)
     latency_ms = next(
         (
             float((_event_payload(event) or {}).get("ms", 0))

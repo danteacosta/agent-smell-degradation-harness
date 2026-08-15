@@ -59,10 +59,17 @@ The contribution is defensible when stated as the combination of:
 1. a requirements-conditioned, provider-produced T1/T2/T3 feature plane;
 2. strict separation of features from terminal labels and oracle metadata;
 3. paired clean/defective variants with project holdout;
-4. train-only family selection, calibration-only threshold fitting, and
-   untouched test evaluation;
+4. trace-recomputed raw feature manifests, train-only model and family fitting,
+   calibration-only threshold fitting, and untouched test evaluation;
 5. independent human labels plus clustered uncertainty; and
 6. operational metrics that distinguish ranking from an actionable gate.
+
+The H2 implementation now fits one auditable dependency-free ranker per feature
+family on train rows only and reports a separate held-out T1/T2/T3 boundary map.
+This closes the earlier loophole in which a frozen manifest could contain
+precomputed scores. It does not turn the development corpus into evidence: the
+models and boundary map remain unestimated until eligible provider traces and
+independent labels are collected.
 
 The novelty is a hypothesis until the confirmatory evidence exists. The thesis
 must not claim a new smell taxonomy, the first smell effect on LLMs, or a

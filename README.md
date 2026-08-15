@@ -123,7 +123,7 @@ Acceptance-criteria generation is the primary workload; traceability is an exter
 
 The reproducible pre-pilot uses 12 intents × clean/smelly variants × 5 replications and writes manifests, episodes, events, artifacts, labels, features and analysis. Run it with `make prepilot`.
 
-The acceptance boundary, estimands, leakage rules, split invariants, and product policy are documented in [Thesis and Product Boundary](docs/thesis-product-boundary.md). A pre-pilot manifest must contain 12 independent source intents; renaming duplicated seed records does not satisfy the count.
+The acceptance boundary, estimands, leakage rules, split invariants, and product policy are documented in [Thesis and Product Boundary](docs/thesis-product-boundary.md). Confirmatory H2 uses an `h2-features/v3` raw-feature manifest, recomputes its contents from hash-bound T1/T2/T3 traces, fits each family/checkpoint model on train only, calibrates only on calibration, and evaluates once on test. A pre-pilot manifest must contain 12 independent source intents; renaming duplicated seed records does not satisfy the count.
 
 The current orientation and related-work review is versioned in [2026-08-10 orientation review](docs/research/2026-08-10-orientation-review.md). It records the novelty boundary, EASY alignment, direct comparison with prefix monitors, and the evidence still required before a confirmatory claim.
 
