@@ -15,6 +15,8 @@ from agents.checkpoints import AgentExecution, CheckpointObservation
 def _pair() -> dict:
     return {
         "intent_id": "checkpoint-1",
+        "source_intent_id": "checkpoint-1",
+        "project_id": "fixture-project",
         "clean_requirement": "Reject requests after 5 minutes.",
         "smelly_requirement": "Reject old requests.",
         "smell": {"type": "vague_threshold"},
