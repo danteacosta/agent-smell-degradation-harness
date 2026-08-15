@@ -62,12 +62,11 @@ def _build_prompt(pair: dict[str, Any], variant: str, task_family: str) -> str:
     requirement = (
         pair["clean_requirement"] if variant == "clean" else pair["smelly_requirement"]
     )
-    oracle_keys = list(pair["oracle_spec"][task_family].keys())
+    output_keys = list(pair["generation_contract"][task_family]["output_keys"])
     return (
         f"Task family: {task_family}\n"
-        f"Variant: {variant}\n"
         f"Requirement:\n{requirement}\n\n"
-        f"Respond with a single JSON object containing exactly these keys: {oracle_keys}\n"
+        f"Respond with a single JSON object containing exactly these keys: {output_keys}\n"
         "Do not include markdown or commentary."
     )
 
@@ -90,6 +89,7 @@ class LiveAgent:
     """Optional live LLM adapter; requires `[live]` extra and an API key unless transport is injected."""
 
     MAX_PARSE_RETRIES = 2
+    checkpoint_provenance = "prompted_snapshot"
 
     def __init__(
         self,

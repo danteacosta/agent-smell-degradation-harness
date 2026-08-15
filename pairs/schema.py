@@ -5,6 +5,7 @@ REQUIRED_TOP_LEVEL_KEYS = (
     "clean_requirement",
     "smelly_requirement",
     "smell",
+    "generation_contract",
     "oracle_spec",
 )
 

@@ -79,7 +79,7 @@ def test_template_rewrite_not_verbatim_clean_copy():
 
 def test_make_all_still_green():
     """Run the non-test make targets; pytest is already the test runner."""
-    venv_bin = ROOT / ".venv" / "bin"
+    venv_bin = Path(sys.executable).parent
     env = {**os.environ, "PATH": f"{venv_bin}:{os.environ.get('PATH', '')}"}
     for target in ("eval", "simulate", "gate"):
         result = subprocess.run(

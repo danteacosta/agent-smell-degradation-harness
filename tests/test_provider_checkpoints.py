@@ -28,6 +28,7 @@ class _CheckpointAgent:
     provider = "replay"
     model = "checkpoint-fixture"
     run_mode = "replay"
+    checkpoint_provenance = "runtime_native"
 
     def observe_checkpoints(self, pair, *, variant, task_family):
         return {
@@ -100,6 +101,21 @@ def test_confirmatory_run_rejects_stub_mode_even_when_it_can_emit_checkpoint_sha
     with pytest.raises(ValueError, match="real provider"):
         run_eval_with_agent(
             StubAgent(),
+            pairs=[_pair()],
+            task_adapters=(AcceptanceCriteriaAdapter(),),
+            confirmatory=True,
+            output_path=tmp_path / "metrics.json",
+            traces_dir=tmp_path / "traces",
+        )
+
+
+def test_confirmatory_run_rejects_prompted_checkpoint_snapshots(tmp_path):
+    class PromptedSnapshotAgent(_CheckpointAgent):
+        checkpoint_provenance = "prompted_snapshot"
+
+    with pytest.raises(ValueError, match="runtime-native checkpoints"):
+        run_eval_with_agent(
+            PromptedSnapshotAgent(),
             pairs=[_pair()],
             task_adapters=(AcceptanceCriteriaAdapter(),),
             confirmatory=True,

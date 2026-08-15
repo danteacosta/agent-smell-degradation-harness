@@ -12,7 +12,7 @@
     {
       "source_intent_id": "RF-04",
       "source": "data/pairs/mesaflow_rf04.json",
-      "source_sha256": "7ccae62536d4d401a1a4a08f9e7de3a3c9b1106807687286bf74a32b8f1d779a",
+      "source_sha256": "43b4482a64cafd5f7565f17cffe011ef614c620b03c434f5b51ea63a60b13d26",
       "provenance_url": "",
       "project_id": "",
       "defect_family": "identifier_format_ambiguity",
@@ -24,7 +24,7 @@
     {
       "source_intent_id": "RF-07",
       "source": "data/pairs/mesaflow_rf07.json",
-      "source_sha256": "2fb31b142fdf78e7d02e80610496266d3148f486ecb586644ee96100dd9aecc5",
+      "source_sha256": "37682b49523fa03f50a7a77609c029283151b323668d35f4fd709ff24121b49e",
       "provenance_url": "",
       "project_id": "",
       "defect_family": "ordering_ambiguity",
@@ -36,7 +36,7 @@
     {
       "source_intent_id": "RF-09",
       "source": "data/pairs/mesaflow_rf09.json",
-      "source_sha256": "c113af038be50dc2e3868d60acf47b34935a51cc3356301870f6cecdb2968824",
+      "source_sha256": "218313937ad28861aa49761aae81392cc8f52f1687785ece17c9c6a8f8b25dc3",
       "provenance_url": "",
       "project_id": "",
       "defect_family": "wrong_numeric_threshold",
@@ -48,7 +48,7 @@
     {
       "source_intent_id": "RF-09-ALT",
       "source": "data/pairs/mesaflow_rf09_alt.json",
-      "source_sha256": "0b659f05290ae3d0bade92217dc2477f75d5819b6a295e6083247f750476a171",
+      "source_sha256": "f67a2e7491ce40bf60b1b2a5adc9d88762ed6c079558574555c61d23d9a311ee",
       "provenance_url": "",
       "project_id": "",
       "defect_family": "wrong_numeric_threshold",
@@ -60,7 +60,7 @@
     {
       "source_intent_id": "RF-11",
       "source": "data/pairs/mesaflow_rf11.json",
-      "source_sha256": "7bf6c9fd173b010681b36eab52e2216aa061938a104f5f2b6bd083dce4f14415",
+      "source_sha256": "177495caf7330dc5c8b5e4c337d4e82d6c9a9c40d8677b1f5cf13ea81c961acc",
       "provenance_url": "",
       "project_id": "",
       "defect_family": "numerical_inconsistency",
@@ -72,7 +72,7 @@
     {
       "source_intent_id": "RF-13",
       "source": "data/pairs/mesaflow_rf13.json",
-      "source_sha256": "468d30fd2b53493f4c7d61d23d1aa1cd539708c19a24683024f02063f5870977",
+      "source_sha256": "f8b819faf974a6c3a8fe38dd48d8c3740bbcc970f73293bc08a9fdf78f9d2be7",
       "provenance_url": "",
       "project_id": "",
       "defect_family": "cardinality_ambiguity",
@@ -84,7 +84,7 @@
     {
       "source_intent_id": "RF-13-SOFT",
       "source": "data/pairs/extra_rf_cardinal_soft.json",
-      "source_sha256": "e6e7c383544abd181b6ddcd24d347b87d31ee96599b2ef4334464023de149cbc",
+      "source_sha256": "b3344f47fdebce7568ad8662fe9eceba6df7cfbfee15af3750fdc992ab516b2a",
       "provenance_url": "",
       "project_id": "",
       "defect_family": "cardinality_ambiguity",

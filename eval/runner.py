@@ -304,6 +304,11 @@ def run_eval_with_agent(
         or str(getattr(agent, "provider", "")) == "stub"
     ):
         raise ValueError("confirmatory execution requires real provider checkpoints, not a stub")
+    if confirmatory and str(getattr(agent, "checkpoint_provenance", "")) != "runtime_native":
+        raise ValueError(
+            "confirmatory execution requires runtime-native checkpoints; "
+            "prompted checkpoint snapshots are non-confirmatory"
+        )
     traces_dir.mkdir(parents=True, exist_ok=True)
     if pairs is None:
         pairs = load_all_pairs()

@@ -7,6 +7,10 @@
     "type": "identifier_format",
     "injection_rule": "replace exact digit count with vague sequential phrasing"
   },
+  "generation_contract": {
+    "codegen": {"output_keys": ["order_id_pattern"]},
+    "test_gen": {"output_keys": ["must_reject_ids", "must_accept_ids", "criterion"]}
+  },
   "oracle_spec": {
     "codegen": {"order_id_pattern": "^P-\\d{3}$"},
     "test_gen": {

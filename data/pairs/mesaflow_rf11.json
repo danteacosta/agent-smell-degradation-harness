@@ -7,6 +7,10 @@
     "type": "numerical_inconsistency",
     "injection_rule": "append conflicting 15-minute escalation clause to 10-minute window"
   },
+  "generation_contract": {
+    "codegen": {"output_keys": ["refund_window_minutes"]},
+    "test_gen": {"output_keys": ["criterion", "must_accept_minutes", "must_reject_minutes"]}
+  },
   "oracle_spec": {
     "codegen": {"refund_window_minutes": 10},
     "test_gen": {

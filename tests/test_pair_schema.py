@@ -25,7 +25,11 @@ def test_missing_oracle_family_raises():
         "clean_requirement": "c",
         "smelly_requirement": "s",
         "smell": {"category": "semantic", "type": "t", "injection_rule": "r"},
-        "oracle_spec": {"codegen": {}},
+        "generation_contract": {
+            "codegen": {"output_keys": ["value"]},
+            "test_gen": {"output_keys": ["criterion"]},
+        },
+        "oracle_spec": {"codegen": {"value": 1}},
     }
     with pytest.raises(ValueError, match="test_gen"):
         validate_pair(pair, source="test")
@@ -44,3 +48,13 @@ def test_rf09_alt_shares_oracle_with_rf09():
     alt = next(p for p in pairs if p["intent_id"] == "RF-09-ALT")
     assert rf09["oracle_spec"] == alt["oracle_spec"]
     assert alt["clean_requirement"] != rf09["clean_requirement"]
+
+
+def test_generation_contract_is_value_free_and_matches_oracle_shape():
+    for pair in load_all_pairs():
+        serialized_contract = json.dumps(pair["generation_contract"], sort_keys=True)
+        for family, oracle in pair["oracle_spec"].items():
+            assert set(pair["generation_contract"][family]["output_keys"]) == set(oracle)
+            for value in oracle.values():
+                if isinstance(value, (int, float)):
+                    assert f": {value}" not in serialized_contract

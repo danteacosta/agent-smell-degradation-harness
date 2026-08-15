@@ -7,6 +7,10 @@
     "type": "cardinality_ambiguity",
     "injection_rule": "replace exact count with soft quantity phrasing"
   },
+  "generation_contract": {
+    "codegen": {"output_keys": ["cardinality", "selection"]},
+    "test_gen": {"output_keys": ["criterion", "exact_cardinality"]}
+  },
   "oracle_spec": {
     "codegen": {"cardinality": 5, "selection": "oldest_active"},
     "test_gen": {
