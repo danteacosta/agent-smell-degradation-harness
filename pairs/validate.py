@@ -21,6 +21,10 @@ def validate_pair(pair: dict[str, Any], *, source: str = "pair") -> None:
         if key not in smell:
             raise ValueError(f"{source}: smell missing required key '{key}'")
 
+    generation_contract = pair["generation_contract"]
+    if not isinstance(generation_contract, dict):
+        raise ValueError(f"{source}: 'generation_contract' must be an object")
+
     oracle_spec = pair["oracle_spec"]
     if not isinstance(oracle_spec, dict):
         raise ValueError(f"{source}: 'oracle_spec' must be an object")
@@ -29,3 +33,20 @@ def validate_pair(pair: dict[str, Any], *, source: str = "pair") -> None:
             raise ValueError(f"{source}: oracle_spec missing task family '{family}'")
         if not isinstance(oracle_spec[family], dict):
             raise ValueError(f"{source}: oracle_spec['{family}'] must be an object")
+        contract = generation_contract.get(family)
+        if not isinstance(contract, dict):
+            raise ValueError(f"{source}: generation_contract missing task family '{family}'")
+        output_keys = contract.get("output_keys")
+        if (
+            not isinstance(output_keys, list)
+            or not output_keys
+            or not all(isinstance(key, str) and key.strip() for key in output_keys)
+            or len(set(output_keys)) != len(output_keys)
+        ):
+            raise ValueError(
+                f"{source}: generation_contract['{family}'].output_keys must be unique non-empty strings"
+            )
+        if set(output_keys) != set(oracle_spec[family]):
+            raise ValueError(
+                f"{source}: generation contract and oracle fields disagree for '{family}'"
+            )

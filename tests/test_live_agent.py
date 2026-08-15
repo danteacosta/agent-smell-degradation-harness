@@ -6,7 +6,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from agents.live import LiveAgent, NotConfiguredError
+from agents.live import LiveAgent, NotConfiguredError, _build_prompt
 from agents.mock_transport import MockTransport
 from agents.providers import AnthropicProvider, MockProvider, ReplayProvider
 from pairs.loader import load_all_pairs
@@ -59,6 +59,18 @@ def test_generate_with_meta_returns_expected_keys():
     assert meta["parse_retries"] == 0
     assert meta["model"] == "gpt-4o-mini"
     assert meta["provider"] == "openai"
+
+
+def test_generation_prompt_does_not_disclose_variant_or_oracle_values():
+    pair = _rf09_pair()
+
+    prompt = _build_prompt(pair, variant="smelly", task_family="codegen")
+
+    assert "Variant:" not in prompt
+    assert "smelly" not in prompt.lower()
+    assert str(pair["oracle_spec"]["codegen"]["delay_threshold_minutes"]) not in prompt
+    for output_key in pair["generation_contract"]["codegen"]["output_keys"]:
+        assert output_key in prompt
 
 
 def test_retries_on_json_parse_failure():

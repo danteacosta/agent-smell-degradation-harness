@@ -7,6 +7,10 @@
     "type": "vague_threshold",
     "injection_rule": "replace exact threshold with vague temporal phrase"
   },
+  "generation_contract": {
+    "codegen": {"output_keys": ["comparator", "delay_threshold_minutes"]},
+    "test_gen": {"output_keys": ["criterion", "must_accept_minutes", "must_reject_minutes"]}
+  },
   "oracle_spec": {
     "codegen": {"delay_threshold_minutes": 5, "comparator": ">"},
     "test_gen": {

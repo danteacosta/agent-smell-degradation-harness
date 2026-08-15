@@ -7,6 +7,10 @@
     "type": "ordering_ambiguity",
     "injection_rule": "replace explicit time ordering with vague antiquity phrasing"
   },
+  "generation_contract": {
+    "codegen": {"output_keys": ["sort_key"]},
+    "test_gen": {"output_keys": ["criterion", "forbidden_sort_keys", "required_sort_key"]}
+  },
   "oracle_spec": {
     "codegen": {"sort_key": "elapsed_time_asc"},
     "test_gen": {
