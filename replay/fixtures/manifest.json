@@ -2,7 +2,7 @@
   "replay_version": "constraint-replay/v1",
   "checkpoint_schema_version": "pre-final/v1",
   "arp_wire_version": "2.0.5",
-  "arp_package_version": "2.0.6",
+  "arp_package_version": "3.0.0",
   "requirement": "requirement.json",
   "cases": [
     {"case_id":"clean","trace":"traces/clean.jsonl","trace_sha256":"85c5dde1a1c818c08915241fe3610d9361e436f1a1accd535d054da97e1c4ee5"},

@@ -96,6 +96,7 @@ def _load_deployable_events(provenance_path: str | Path) -> list[Mapping[str, An
 
     events: list[Mapping[str, Any]] = []
     last_order = -1
+    label_plane_started = False
     for line in path.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
@@ -115,7 +116,10 @@ def _load_deployable_events(provenance_path: str | Path) -> list[Mapping[str, An
             "T4",
             "FINAL",
         }:
-            raise ValueError(f"terminal event {event_name!r} is not deployable")
+            label_plane_started = True
+            continue
+        if label_plane_started:
+            raise ValueError(f"pre-final checkpoint {event_name!r} occurs after the label plane")
         # ARP v2 keeps deployable attributes separate from the legacy
         # compatibility payload, which may contain variant metadata for
         # retrospective reports. Inspect only the canonical attributes.

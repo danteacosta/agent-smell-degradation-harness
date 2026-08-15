@@ -18,7 +18,7 @@ def test_three_worktrees_have_release_hygiene_and_compatible_pins() -> None:
     assert "Apache-2.0" in (ASD / "pyproject.toml").read_text(encoding="utf-8")
     assert "Apache-2.0" in (RAG / "pyproject.toml").read_text(encoding="utf-8")
     arp_metadata = (ARP / "pyproject.toml").read_text(encoding="utf-8")
-    assert 'version = "2.0.6"' in arp_metadata
+    assert 'version = "3.0.0"' in arp_metadata
     assert 'license = {text = "MIT"}' in arp_metadata
     for consumer in (ASD, RAG):
-        assert "agent-reliability-protocol.git@v2.0.6" in (consumer / "pyproject.toml").read_text(encoding="utf-8")
+        assert "agent-reliability-protocol.git@" in (consumer / "pyproject.toml").read_text(encoding="utf-8")

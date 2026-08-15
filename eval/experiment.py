@@ -236,6 +236,8 @@ def run_experiment(
     validators: Sequence[EpisodeValidator] = DEFAULT_VALIDATORS,
     confirmatory: bool = False,
     freeze_path: Path | None = None,
+    confirmatory_split: str | None = None,
+    source_revision: str | None = None,
 ) -> dict[str, Any]:
     if repo_root is None:
         repo_root = Path(__file__).resolve().parents[1]
@@ -279,6 +281,10 @@ def run_experiment(
             repository_root=repo_root,
             require_confirmed=True,
         )
+        if confirmatory_split not in {"train", "calibration", "test"}:
+            raise ValueError("confirmatory execution requires a frozen train/calibration/test split")
+        if not source_revision:
+            raise ValueError("confirmatory execution requires an immutable source revision")
 
     eval_dir = repo_root / "eval"
     work_dir = eval_dir / ".experiment_work"
@@ -328,6 +334,8 @@ def run_experiment(
             task_adapters=task_adapters,
             validators=validators,
             confirmatory=confirmatory,
+            split=confirmatory_split,
+            source_revision=source_revision,
         )
         _write_episodes_jsonl(episodes, episodes_path)
         combined_episodes.extend(episodes)
@@ -409,6 +417,17 @@ def main(argv: list[str] | None = None) -> None:
         "--confirmatory",
         action="store_true",
         help="Require a confirmed freeze and real provider checkpoints",
+    )
+    parser.add_argument(
+        "--confirmatory-split",
+        choices=("train", "calibration", "test"),
+        default=None,
+        help="Frozen grouped split for native ARP 3.0 confirmatory manifests",
+    )
+    parser.add_argument(
+        "--source-revision",
+        default=None,
+        help="Immutable harness source revision for confirmatory manifests",
     )
     parser.add_argument(
         "--replications",
@@ -518,6 +537,8 @@ def main(argv: list[str] | None = None) -> None:
         task_adapters=task_adapters,
         validators=validators,
         confirmatory=args.confirmatory,
+        confirmatory_split=args.confirmatory_split,
+        source_revision=args.source_revision,
     )
 
 

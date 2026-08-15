@@ -41,8 +41,8 @@ class ProviderRunMetadata:
         for name in ("run_id", "mode", "provider", "model", "model_version", "configuration_hash"):
             if not str(getattr(self, name)).strip():
                 raise ValueError(f"{name} is required")
-        if self.mode not in {"stub", "replay", "mock", "live"}:
-            raise ValueError("mode must be stub, replay, mock, or live")
+        if self.mode not in {"stub", "replay", "mock", "live", "runtime"}:
+            raise ValueError("mode must be stub, replay, mock, live, or runtime")
         if self.episode_count < 0 or self.total_latency_ms < 0 or self.total_cost_usd < 0:
             raise ValueError("provider counters must be non-negative")
         _assert_no_secrets(self.extra)
