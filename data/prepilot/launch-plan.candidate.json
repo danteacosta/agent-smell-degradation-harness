@@ -1,0 +1,78 @@
+{
+  "schema_version": "prepilot-launch/v1",
+  "status": "blocked",
+  "claim_level": "non_confirmatory_pre_pilot",
+  "decision_request": "Authorize the 120-episode pre-pilot after the listed gates pass.",
+  "design": {
+    "primary_task": "acceptance_criteria_generation",
+    "primary_defect_family": "incompleteness_missing_condition",
+    "independent_intents": 12,
+    "variants_per_intent": 2,
+    "replications": 5,
+    "episode_count": 120
+  },
+  "corpus": {
+    "manifest_path": "data/prepilot/corpus-manifest.json",
+    "manifest_frozen": false,
+    "unique_intents": 7,
+    "all_sources_licensed": false,
+    "all_project_ids_present": false,
+    "near_clone_screening_complete": false,
+    "manipulation_checks_complete": false,
+    "development_seed_replaced": false
+  },
+  "provider_configurations": [
+    {
+      "slot": "configuration-a",
+      "provider": "TBD",
+      "model": "TBD",
+      "model_version": "TBD",
+      "mode": "runtime",
+      "checkpoint_source": "runtime_native",
+      "qualification_passed": false,
+      "qualification_report_path": "",
+      "t1_t3_before_t4": false,
+      "prompted_snapshot": false,
+      "configuration_hash": ""
+    },
+    {
+      "slot": "configuration-b",
+      "provider": "TBD",
+      "model": "TBD",
+      "model_version": "TBD",
+      "mode": "runtime",
+      "checkpoint_source": "runtime_native",
+      "qualification_passed": false,
+      "qualification_report_path": "",
+      "t1_t3_before_t4": false,
+      "prompted_snapshot": false,
+      "configuration_hash": ""
+    }
+  ],
+  "annotation": {
+    "rubric_path": "tasks/annotation_rubric.json",
+    "rubric_frozen": false,
+    "trained_annotators": 0,
+    "duplicate_subset_fraction": 0.2,
+    "duplicate_subset_selected_outcome_blind": false,
+    "blinding_verified": false,
+    "adjudication_owner": ""
+  },
+  "budget": {
+    "estimated_provider_cost_usd": 0.0,
+    "contingency_fraction": 0.25,
+    "approved_cap_usd": 0.0,
+    "estimated_annotation_hours": 0.0,
+    "cost_basis": "TBD after provider qualification smoke tests"
+  },
+  "go_no_go": {
+    "advisor_authorized_pre_pilot": false,
+    "corpus_gate": false,
+    "provider_gate": false,
+    "annotation_gate": false,
+    "leakage_gate": false,
+    "budget_gate": false,
+    "reproducibility_gate": false
+  },
+  "confirmatory_precision_plan_status": "candidate"
+}

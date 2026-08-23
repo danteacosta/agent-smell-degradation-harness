@@ -1,0 +1,28 @@
+{
+  "schema_version": "prepilot-corpus/v1",
+  "status": "template",
+  "records": [
+    {
+      "source_intent_id": "TBD",
+      "project_id": "TBD",
+      "source_url": "TBD",
+      "license": "TBD",
+      "retrieved_at": "TBD",
+      "canonical_text_sha256": "TBD",
+      "clean_requirement_sha256": "TBD",
+      "defective_requirement_sha256": "TBD",
+      "defect_family": "incompleteness_missing_condition",
+      "removed_constraint_id": "TBD",
+      "near_clone_group": "TBD",
+      "near_clone_reviewed": false,
+      "manipulation_check": {
+        "defect_present": false,
+        "no_secondary_defect": false,
+        "intent_preserved": false,
+        "clean_variant_realistic": false,
+        "constraint_independently_auditable": false,
+        "reviewer_id": "TBD"
+      }
+    }
+  ]
+}
