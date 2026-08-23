@@ -129,6 +129,26 @@ def test_named_unconfigured_provider_is_rejected_without_openai_fallback():
         LiveAgent(provider="replay")
 
 
+def test_real_provider_can_be_promoted_to_confirmatory_runtime():
+    class FakeLiveProvider:
+        name = "openai"
+
+        def complete(self, request):
+            raise AssertionError("not called while constructing runtime")
+
+    agent = LiveAgent(provider=FakeLiveProvider(), model="provider-model")
+    runtime = agent.as_runtime_checkpoint_agent()
+    assert runtime.run_mode == "runtime"
+    assert runtime.checkpoint_provenance == "runtime_native"
+    assert runtime.model == "provider-model"
+
+
+def test_replay_provider_cannot_be_promoted_to_confirmatory_runtime():
+    agent = LiveAgent(provider=ReplayProvider([]), model="replay-model")
+    with pytest.raises(ValueError, match="real live provider"):
+        agent.as_runtime_checkpoint_agent()
+
+
 def test_default_live_agent_routes_completion_to_openai(monkeypatch):
     pair = _rf09_pair()
     oracle = pair["oracle_spec"]["codegen"]

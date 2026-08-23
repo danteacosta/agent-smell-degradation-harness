@@ -19,6 +19,8 @@ from label_plane.human_annotation import load_primary_label_manifest
 from eval.sample_gate import validate_confirmatory_design
 
 FAMILIES = ("static_smell", "operational", "provenance_semantic")
+CONFIRMATORY_MODELS = ("B0", "B1", "B2", "B3")
+CHECKPOINT_MODEL = {"T1": "B1", "T2": "B2", "T3": "B3"}
 
 
 def _episode_label(
@@ -227,6 +229,41 @@ def _episode_family_features(
     return result
 
 
+def _nested_model_features(
+    episodes: list[dict[str, Any]],
+    feature_manifest: dict[str, Any],
+    model_name: str,
+) -> list[dict[str, float]]:
+    """Compose preregistered nested rows with stable, collision-free names.
+
+    B0 = static + operational.  B1/B2/B3 add the cumulative provenance
+    representation available at T1/T2/T3 respectively.  The estimator and
+    preprocessing are identical for all four models.
+    """
+
+    if model_name not in CONFIRMATORY_MODELS:
+        raise ValueError(f"unknown confirmatory model {model_name}")
+    base = _episode_family_features(episodes, feature_manifest)
+    checkpoint = None if model_name == "B0" else f"T{model_name[1:]}"
+    provenance: list[dict[str, float]] | None = None
+    if checkpoint is not None:
+        provenance = _episode_family_features(
+            episodes, feature_manifest, checkpoint=checkpoint
+        )["provenance_semantic"]
+    rows: list[dict[str, float]] = []
+    for index in range(len(episodes)):
+        row = {
+            **{f"static__{key}": value for key, value in base["static_smell"][index].items()},
+            **{f"operational__{key}": value for key, value in base["operational"][index].items()},
+        }
+        if provenance is not None:
+            row.update(
+                {f"provenance__{key}": value for key, value in provenance[index].items()}
+            )
+        rows.append(row)
+    return rows
+
+
 def evaluate_confirmatory(
     episodes: list[dict[str, Any]],
     *,
@@ -236,13 +273,15 @@ def evaluate_confirmatory(
     primary_labels: dict[str, int] | dict[str, Any] | None = None,
     feature_manifest: dict[str, Any] | None = None,
     enforce_design: bool = True,
+    precision_plan: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Run the preregistered H2 train/calibration/test protocol.
 
-    Candidate feature-family selection is fit on train groups, the threshold
-    is fit on calibration groups, and every reported held-out metric is
-    computed exactly once on untouched test groups.  The split manifest is
-    returned verbatim as provenance so a result can be reproduced or audited.
+    Confirmatory H2 uses a fixed nested comparison: B0 (static + operational)
+    versus B3 (B0 + provenance observed through T3).  B1 and B2 are temporal
+    boundary analyses.  No family is selected from in-sample PR-AUC.  The
+    threshold is fit on calibration groups and the held-out test is touched
+    once.  Nonconfirmatory calls retain the legacy exploratory family path.
     """
 
     if not episodes:
@@ -268,12 +307,17 @@ def evaluate_confirmatory(
             episodes,
             strict=confirmatory,
         )
-    manifest = split_manifest or build_grouped_split_manifest(episodes, seed=seed)
+    manifest = split_manifest or build_grouped_split_manifest(
+        episodes,
+        seed=seed,
+        min_groups_per_split=2 if confirmatory and enforce_design else 1,
+    )
     partitions = apply_split_manifest(episodes, manifest)
     if confirmatory and enforce_design:
-        validate_confirmatory_design(episodes, partitions)
+        validate_confirmatory_design(episodes, partitions, precision_plan=precision_plan)
+    score_keys = CONFIRMATORY_MODELS if confirmatory else FAMILIES
     split_scores: dict[str, dict[str, list[float]]] = {
-        split: {family: [] for family in FAMILIES}
+        split: {key: [] for key in score_keys}
         for split in ("train", "calibration", "test")
     }
     split_labels: dict[str, list[int]] = {split: [] for split in ("train", "calibration", "test")}
@@ -291,32 +335,29 @@ def evaluate_confirmatory(
     if confirmatory:
         assert feature_manifest is not None
         split_features = {
-            split: _episode_family_features(list(rows), feature_manifest)
+            split: {
+                model_name: _nested_model_features(
+                    list(rows), feature_manifest, model_name
+                )
+                for model_name in CONFIRMATORY_MODELS
+            }
             for split, rows in partitions.items()
         }
-        for family in FAMILIES:
+        for model_name in CONFIRMATORY_MODELS:
             model = StandardizedMeanDifferenceRanker.fit(
-                split_features["train"][family], split_labels["train"]
+                split_features["train"][model_name], split_labels["train"]
             )
-            fitted_models[family] = model
+            fitted_models[model_name] = model
             for split in ("train", "calibration", "test"):
-                split_scores[split][family] = [
-                    model.score(row) for row in split_features[split][family]
+                split_scores[split][model_name] = [
+                    model.score(row) for row in split_features[split][model_name]
                 ]
-        for checkpoint in ("T1", "T2", "T3"):
-            checkpoint_features = {
-                split: _episode_family_features(
-                    list(rows), feature_manifest, checkpoint=checkpoint
-                )["provenance_semantic"]
-                for split, rows in partitions.items()
-            }
-            model = StandardizedMeanDifferenceRanker.fit(
-                checkpoint_features["train"], split_labels["train"]
-            )
-            test_checkpoint_scores = [
-                model.score(row) for row in checkpoint_features["test"]
-            ]
+        for checkpoint, model_name in CHECKPOINT_MODEL.items():
+            model = fitted_models[model_name]
+            test_checkpoint_scores = split_scores["test"][model_name]
             checkpoint_boundary[checkpoint] = {
+                "model_name": model_name,
+                "includes_baseline": True,
                 "model": model.to_dict(),
                 "held_out_split": "test",
                 "held_out_n": len(test_checkpoint_scores),
@@ -330,8 +371,19 @@ def evaluate_confirmatory(
     else:
         for split, rows in partitions.items():
             split_scores[split] = _episode_family_scores(list(rows))
-    selection = select_family(split_scores["train"], split_labels["train"], split="train")
-    selected_family = selection["selected_family"]
+    if confirmatory:
+        selected_family = "B3"
+        selection = {
+            "strategy": "preregistered_fixed_nested_model",
+            "fit_split": "protocol",
+            "selected_family": "B3",
+            "baseline_model": "B0",
+            "candidate_models": list(CONFIRMATORY_MODELS),
+            "in_sample_selection": False,
+        }
+    else:
+        selection = select_family(split_scores["train"], split_labels["train"], split="train")
+        selected_family = selection["selected_family"]
     calibration = fit_threshold(
         split_scores["calibration"][selected_family],
         split_labels["calibration"],
@@ -345,32 +397,27 @@ def evaluate_confirmatory(
     )
     primary_effect: dict[str, Any] | None = None
     if confirmatory:
-        train_candidates = selection["candidates"]
-        baseline_family = max(
-            ("static_smell", "operational"),
-            key=lambda family: (
-                float(train_candidates[family]["pr_auc"]),
-                float(train_candidates[family]["auroc"]),
-                family,
-            ),
-        )
         test_rows = list(partitions["test"])
         test_scores = split_scores["test"]
         primary_effect = clustered_pr_auc_delta(
             test_rows,
-            test_scores["provenance_semantic"],
-            test_scores[baseline_family],
+            test_scores["B3"],
+            test_scores["B0"],
             split_labels["test"],
             cluster_key="source_intent_id",
             draws=2000,
             seed=seed,
         )
-        primary_effect["baseline_family"] = baseline_family
-        primary_effect["provenance_family"] = "provenance_semantic"
+        primary_effect["baseline_model"] = "B0"
+        primary_effect["provenance_model"] = "B3"
+        # Compatibility aliases retain the report contract while making the
+        # model-level estimand explicit.
+        primary_effect["baseline_family"] = "static+operational"
+        primary_effect["provenance_family"] = "static+operational+provenance_T1-T3"
         primary_effect = finalize_h2_claim(primary_effect, margin=0.05)
-        test_pr_auc_by_family = {
-            family: _average_precision(test_scores[family], split_labels["test"])
-            for family in FAMILIES
+        test_pr_auc_by_model = {
+            model_name: _average_precision(test_scores[model_name], split_labels["test"])
+            for model_name in CONFIRMATORY_MODELS
         }
         test_prevalence = (
             sum(split_labels["test"]) / len(split_labels["test"])
@@ -378,7 +425,7 @@ def evaluate_confirmatory(
             else 0.0
         )
     report = {
-        "protocol": "H2-confirmatory-v1",
+        "protocol": "H2-confirmatory-v2" if confirmatory else "H2-confirmatory-v1",
         "selected_family": selected_family,
         "split": manifest,
         "model_selection": selection,
@@ -401,10 +448,11 @@ def evaluate_confirmatory(
             family: model.to_dict() for family, model in fitted_models.items()
         }
         report["checkpoint_boundary"] = checkpoint_boundary
-        report["test_pr_auc_by_family"] = test_pr_auc_by_family
+        report["test_pr_auc_by_model"] = test_pr_auc_by_model
         report["test_label_prevalence"] = test_prevalence
         report["baseline"] = {
-            "family": primary_effect["baseline_family"],
+            "model": "B0",
+            "features": ["static_smell", "operational"],
             "test_pr_auc": primary_effect["baseline_pr_auc"],
         }
         report["claim_decision"] = primary_effect["claim"]
@@ -416,7 +464,7 @@ def evaluate_confirmatory(
         }
         report["robustness"] = {
             "negative_control": shuffled_negative_control(
-                test_scores["provenance_semantic"], split_labels["test"], seed=seed
+                test_scores["B3"], split_labels["test"], seed=seed
             ),
             "ablations_pr_auc": ablation_pr_auc(test_scores, split_labels["test"]),
         }

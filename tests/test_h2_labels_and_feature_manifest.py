@@ -205,17 +205,15 @@ def test_confirmatory_h2_reports_delta_ci_and_claim_decision(tmp_path: Path):
         enforce_design=False,
     )
     effect = report["primary_effect"]
-    assert effect["baseline_family"] in {"static_smell", "operational"}
+    assert effect["baseline_model"] == "B0"
+    assert effect["provenance_model"] == "B3"
     assert effect["delta_pr_auc"] == pytest.approx(
         effect["provenance_pr_auc"] - effect["baseline_pr_auc"]
     )
     assert effect["margin"] == pytest.approx(0.05)
     assert effect["bootstrap"]["clusters"] == 3
     assert effect["claim"] in {"supported", "not_supported", "descriptive_only"}
-    assert set(report["test_pr_auc_by_family"]) == {
-        "static_smell",
-        "operational",
-        "provenance_semantic",
-    }
+    assert set(report["test_pr_auc_by_model"]) == {"B0", "B1", "B2", "B3"}
+    assert report["model_selection"]["in_sample_selection"] is False
     assert 0.0 <= report["test_label_prevalence"] <= 1.0
     assert report["claim_decision"] == effect["claim"]

@@ -1,6 +1,6 @@
 # Confirmatory Preregistration: Agent-Requirement Smell Degradation
 
-Status: protocol freeze candidate, version `confirmatory-thesis-v2`.
+Status: protocol freeze candidate, version `confirmatory-thesis-v3`.
 
 The current checked-in manifest remains blocked: it is a seven-source local
 development seed with no project IDs or external provenance. The 12×2×5
@@ -11,23 +11,21 @@ docs/research/confirmatory-data-acquisition.md.
 ## Hypotheses and estimands
 
 - **H1 (`H1.ordinal_delta`)**: clean-minus-defective ordinal severity differs from zero. The estimand is the mean paired delta, clustered by source intent; the interval is an intent-cluster bootstrap 95% CI and the p-value is a paired sign-flip randomization test at the intent-cluster level.
-- **H2 (`H2.pre_final_pr_auc`)**: pre-final provider-produced evidence detects material constraint-preservation failure on held-out source-intent/project groups. The primary binary label is human/adjudicated severity 2–3 versus severity 0–1; ordinal severity is secondary. The primary protocol is one deterministic grouped train/calibration/test split: raw numeric features are recomputed from hash-bound traces; one ranker per feature family is fit on train only; family and best-baseline selection use train predictions; calibration and threshold fitting use calibration; and final PR-AUC is computed once on untouched test groups. Precomputed score manifests are ineligible. The primary effect is `ΔPR-AUC = PR-AUC(provenance) − PR-AUC(best deployable baseline)`, with a frozen practical margin of `ΔPR-AUC ≥ 0.05`. The interval is a source-intent-cluster bootstrap with 2,000 draws, seed frozen in the run manifest, and degenerate resamples retained/reported. The confirmatory claim requires both the margin and a 95% interval excluding zero; repeated grouped folds are exploratory sensitivity analyses only. AUROC is secondary. Static and operational baselines are reported separately.
+- **H2 (`H2.pre_final_pr_auc`)**: pre-final runtime-observed evidence detects material constraint-preservation failure on held-out source-intent/project groups. The primary binary label is human/adjudicated severity 2–3 versus severity 0–1; ordinal severity is secondary. The fixed nested models use the same ranker and preprocessing: `B0 = static + operational`, `B1 = B0 + provenance through T1`, `B2 = B0 + provenance through T2`, and `B3 = B0 + provenance through T3`. No model or family is selected from in-sample performance. The primary effect is `ΔPR-AUC = PR-AUC(B3) − PR-AUC(B0)`, with a frozen practical margin of `ΔPR-AUC ≥ 0.05`; B1 and B2 form the planned temporal-boundary analysis. Calibration and threshold fitting use calibration only, and final PR-AUC is computed once on untouched test groups. The interval is a source-intent-cluster bootstrap with 2,000 draws and a frozen seed; degenerate resamples are reported. The claim requires both the margin and a 95% interval excluding zero. Repeated grouped folds, alternative estimators, and isolated feature-family results are exploratory.
 
 Replications are repeated measures, not independent sampling units. All variants of an intent remain in the same split.
 
 ## Confirmatory design
 
-The structured pre-pilot design is exactly 12 independent source intents × 2 variants × 5 replications, spanning at least 3 projects. It is not confirmatory. The minimum confirmatory design is 24 independent source intents across at least 6 projects, with at least 4 intents per project and at least 8 intents in each train/calibration/test partition after project holdout. A frozen precision simulation may increase these minima but may not reduce them. A dataset manifest records source URLs, project, defect family, canonical text hash, approved-paraphrase exceptions, and dataset hash. Duplicate or near-clone source intents fail closed.
+The structured pre-pilot design is exactly 12 independent source intents × 2 variants × 5 replications. A 24-intent/6-project corpus is a pilot floor, not a confirmatory sample-size justification. Confirmatory execution requires a frozen `h2-precision-plan/v1` produced before outcomes are inspected, at least 60 independent intents, at least 8 projects, at least 4 intents per project, at least 2 projects per partition, and at least 12 test intents. The current design-stage candidate is 100 intents across 12 projects; it reached the candidate thresholds only under the explicit synthetic assumptions recorded in `data/confirmatory/precision-plan.candidate.json` and therefore remains unfrozen. The final design may be changed within the planned 60–100 intent / 8–12 project range only from outcome-blind sensitivity simulation and must be frozen before collection. A dataset manifest records source URLs, project, defect family, canonical text hash, approved-paraphrase exceptions, and dataset hash. Duplicate or near-clone source intents fail closed.
 
 The grouped split is deterministic and disjoint by source intent and project: train for model selection, calibration for threshold fitting, and test for the final estimate. No terminal artifact, oracle value, label, or post-cutoff event may enter deployable features.
 
-The checkpoint boundary analysis fits independent provenance rankers at T1,
-T2, and T3 using train rows only, then reports PR-AUC and AUROC on the untouched
-test rows at each cutoff. It is a planned boundary map, not three opportunities
-to select the most favorable primary result; H2's primary effect remains the
-frozen T3 provenance comparison above.
+The checkpoint boundary analysis reports B1, B2, and B3 on the untouched test
+rows. It is a planned cumulative boundary map, not three opportunities to
+select the most favorable result; H2 remains the frozen B3-versus-B0 contrast.
 
-Each episode may emit a versioned `episode_handoff/v1` JSON sidecar and semantic-lint report. These are auditability and quality-control artifacts only: they are not generation inputs, deployable H2 features, labels, or analysis outcomes. A confirmatory provider must emit genuine provider-produced T1 interpretation, T2 plan, and T3 execution summaries with provider/model/version/configuration identifiers, request/response hashes, source event IDs, and timestamps preceding T4. A `pre_final` handoff is fail-closed to those T0–T3 facts and source references bound to the pre-final event sequence; a `post_eval` handoff may contain labels and outcomes but is label-plane data. Strict lint failure marks the episode invalid before confirmatory analysis; it does not trigger post-hoc exclusion or alter the estimand.
+Each episode may emit a versioned `episode_handoff/v1` JSON sidecar and semantic-lint report. These are auditability and quality-control artifacts only. The staged provider runtime now emits T1 and T2 as bounded external provider responses, invokes a deterministic contract-validation tool for T3, and requests the terminal artifact only afterward, all within one episode. `runtime_native` means emitted by the instrumented runtime while the episode is active; it does not mean chain-of-thought, hidden activations, or retrospective prompting. Provider/model/version/configuration identifiers, stage request/response hashes, source event IDs, and monotonic timestamps preceding T4 are mandatory. The implementation is protocol-eligible but not empirically qualified until two real provider/model configurations pass the runtime qualification suite. `LiveAgent.observe_checkpoints()` remains `prompted_snapshot` and is ineligible. A `pre_final` handoff is fail-closed to T0–T3 facts; a `post_eval` handoff may contain labels and outcomes only in the label plane.
 
 ## Exclusions and missingness
 
@@ -41,7 +39,7 @@ Secondary LLM judges are exploratory only and cannot replace primary labels.
 
 ## Analysis freeze
 
-The preregistration, ARP compatibility matrix, feature schema, annotation rubric, split algorithm, and analysis code are frozen in a hash manifest before any provider run. A confirmatory provider run is refused unless the manifest is marked `confirmed` and all hashes match. The dataset manifest hash, code SHA, environment lock, split manifest, threshold version, feature manifest, and analysis version are exported before inspecting confirmatory outcomes. Pilot/stub runs are explicitly labelled and never pooled with real-provider confirmatory runs.
+The preregistration, precision plan, runtime producer, ARP compatibility matrix, feature schema, annotation rubric, split algorithm, and analysis code are frozen in a hash manifest before any provider run. The checked-in manifest is intentionally `candidate`; a confirmatory provider run is refused unless it is marked `confirmed` and every hash matches. Pilot/stub runs are explicitly labelled and never pooled with real-provider confirmatory runs.
 
 ## Related-work positioning and novelty boundary
 

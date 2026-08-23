@@ -76,7 +76,7 @@ The moat claim should be rejected if any of these occur:
 
 Before calling the project defensible, publish:
 
-- at least 24 independent intents across 6 projects, with licensing and
+- a frozen precision plan, never fewer than 60 independent intents across 8 projects (current candidate: 100/12), with licensing and
   near-clone checks;
 - two providers/models and two agent/framework configurations;
 - blinded double annotation, adjudication, Krippendorff alpha, and clustered

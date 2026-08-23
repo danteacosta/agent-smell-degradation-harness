@@ -20,13 +20,16 @@ claim.
 
 Before changing the manifest to confirmed:
 
-1. collect at least 24 independent source intents across at least 6 projects;
+1. freeze an outcome-blind `h2-precision-plan/v1`, then collect at least its
+   required design; the unconditional floor is 60 independent intents across
+   8 projects and the current candidate is 100 intents/12 projects;
 2. record source URL/license, project ID, defect family, canonical hash, and
    near-clone result for each source intent;
 3. run at least two real provider/model configurations through one instrumented
    execution per episode, emitting native ARP 3.0 `agent-smell-degradation/v1`
    T1 interpretation, T2 plan, and T3 execution events with monotonic runtime
-   timestamps; prompted summaries and replay are ineligible;
+   timestamps; `runtime_native` means externally materialized bounded events,
+   not chain-of-thought. Retrospective prompted snapshots and replay are ineligible;
 4. freeze request/response/configuration hashes, cost, latency, model version,
    trace hash, and checkpoint cutoff for every episode;
 5. complete blinded human labels, double coding, adjudication, missing-label
@@ -35,7 +38,9 @@ Before changing the manifest to confirmed:
    episode, then export an `h2-features/v3` manifest whose raw T1/T2/T3 features
    are recomputed from the hash-bound traces; fit all family/checkpoint models
    on train only and export the confirmatory H2 report before inspecting the
-   held-out outcomes. Precomputed score manifests are ineligible.
+   held-out outcomes. The fixed models are B0=static+operational and
+   B1/B2/B3=B0 plus cumulative provenance through T1/T2/T3; precomputed scores
+   and in-sample family selection are ineligible.
 
 No record may be padded by renaming, paraphrasing without a declared
 exception, or duplicating a project/intention.
