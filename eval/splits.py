@@ -88,9 +88,9 @@ def build_grouped_split_manifest(
     records: Sequence[Mapping[str, Any]],
     *,
     seed: int = 0,
-    train_fraction: float = 0.6,
+    train_fraction: float = 0.5,
     calibration_fraction: float = 0.2,
-    test_fraction: float = 0.2,
+    test_fraction: float = 0.3,
     min_groups_per_split: int = 1,
 ) -> dict[str, Any]:
     """Return a reproducible train/calibration/test assignment manifest.

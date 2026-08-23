@@ -1,24 +1,33 @@
 {
-  "schema_version": "h2-precision-plan/v1",
+  "schema_version": "h2-precision-plan/v2",
   "status": "candidate",
   "design": {
-    "intents": 100,
-    "projects": 12
+    "intents": 220,
+    "projects": 36,
+    "split_fractions": {
+      "train": 0.5,
+      "calibration": 0.2,
+      "test": 0.3
+    },
+    "minimum_test_projects": 11,
+    "minimum_test_intents": 60
   },
   "simulation": {
-    "method": "project_cluster_bootstrap_pr_auc_delta-v1",
+    "method": "frozen_test_project_cluster_bootstrap_pr_auc_delta-v2",
+    "evaluation_scope": "test_partition_only",
+    "cluster_key": "project_id",
     "simulations": 200,
     "bootstrap_draws": 500,
     "seed": 23,
-    "estimated_margin_power": 0.875,
-    "median_ci_width": 0.11516456422050714,
-    "p90_ci_width": 0.1582928188253634,
+    "estimated_margin_power": 0.86,
+    "median_ci_width": 0.13442118699649597,
+    "p90_ci_width": 0.1865115128770266,
     "degenerate_rate": 0.0
   },
   "assumptions": {
     "prevalence": 0.5,
     "baseline_effect": 0.45,
-    "provenance_increment": 0.7,
+    "provenance_increment": 0.5,
     "practical_margin": 0.05
   },
   "thresholds": {
@@ -26,5 +35,5 @@
     "max_median_ci_width": 0.2,
     "max_degenerate_rate": 0.05
   },
-  "decision": "candidate_only_run_sensitivity_grid_before_freeze"
+  "decision": "candidate_only_pre_pilot_must_inform_outcome_blind_final_grid"
 }

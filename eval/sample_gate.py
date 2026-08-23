@@ -9,11 +9,12 @@ from typing import Any
 PILOT_MIN_INTENTS = 24
 PILOT_MIN_PROJECTS = 6
 MIN_CONFIRMATORY_INTENTS = 60
-MIN_CONFIRMATORY_PROJECTS = 8
+MIN_CONFIRMATORY_PROJECTS = 12
 MIN_INTENTS_PER_PROJECT = 4
 MIN_PROJECTS_PER_SPLIT = 2
-MIN_TEST_INTENTS = 12
-PRECISION_PLAN_SCHEMA = "h2-precision-plan/v1"
+MIN_TEST_PROJECTS = 6
+MIN_TEST_INTENTS = 24
+PRECISION_PLAN_SCHEMA = "h2-precision-plan/v2"
 
 
 def _counts(episodes: Sequence[Mapping[str, Any]], partitions: Mapping[str, Sequence[Mapping[str, Any]]]) -> dict[str, Any]:
@@ -62,6 +63,10 @@ def validate_confirmatory_design(
     if not all(isinstance(value, Mapping) for value in (simulation, thresholds, design)):
         raise ValueError("confirmatory precision plan is incomplete")
     assert isinstance(simulation, Mapping) and isinstance(thresholds, Mapping) and isinstance(design, Mapping)
+    if simulation.get("evaluation_scope") != "test_partition_only":
+        raise ValueError("confirmatory precision plan must simulate the frozen test partition")
+    if simulation.get("cluster_key") != "project_id":
+        raise ValueError("confirmatory precision plan must resample project_id clusters")
     if float(simulation["median_ci_width"]) > float(thresholds["max_median_ci_width"]):
         raise ValueError("confirmatory precision plan fails its CI-width threshold")
     if float(simulation["degenerate_rate"]) > float(thresholds["max_degenerate_rate"]):
@@ -71,6 +76,12 @@ def validate_confirmatory_design(
     counts = _counts(episodes, partitions)
     required_intents = max(MIN_CONFIRMATORY_INTENTS, int(design["intents"]))
     required_projects = max(MIN_CONFIRMATORY_PROJECTS, int(design["projects"]))
+    required_test_projects = max(
+        MIN_TEST_PROJECTS, int(design.get("minimum_test_projects", MIN_TEST_PROJECTS))
+    )
+    required_test_intents = max(
+        MIN_TEST_INTENTS, int(design.get("minimum_test_intents", MIN_TEST_INTENTS))
+    )
     failures = []
     if counts["intent_count"] < required_intents:
         failures.append(f"requires at least {required_intents} independent intents")
@@ -80,11 +91,13 @@ def validate_confirmatory_design(
         failures.append(f"requires at least {MIN_INTENTS_PER_PROJECT} intents per project")
     if min(counts["split_projects"].values(), default=0) < MIN_PROJECTS_PER_SPLIT:
         failures.append(f"requires at least {MIN_PROJECTS_PER_SPLIT} projects per split")
-    if counts["split_intents"].get("test", 0) < MIN_TEST_INTENTS:
-        failures.append(f"requires at least {MIN_TEST_INTENTS} test intents")
+    if counts["split_projects"].get("test", 0) < required_test_projects:
+        failures.append(f"requires at least {required_test_projects} test projects")
+    if counts["split_intents"].get("test", 0) < required_test_intents:
+        failures.append(f"requires at least {required_test_intents} test intents")
     if failures:
         raise ValueError("confirmatory design gate failed: " + "; ".join(failures))
     return {"status": "confirmatory", "counts": counts, "precision_plan": {"schema_version": PRECISION_PLAN_SCHEMA, "design": dict(design), "simulation": dict(simulation), "thresholds": dict(thresholds)}}
 
 
-__all__ = ("MIN_CONFIRMATORY_INTENTS", "MIN_CONFIRMATORY_PROJECTS", "MIN_INTENTS_PER_PROJECT", "MIN_PROJECTS_PER_SPLIT", "MIN_TEST_INTENTS", "PILOT_MIN_INTENTS", "PILOT_MIN_PROJECTS", "PRECISION_PLAN_SCHEMA", "validate_confirmatory_design", "validate_pilot_design")
+__all__ = ("MIN_CONFIRMATORY_INTENTS", "MIN_CONFIRMATORY_PROJECTS", "MIN_INTENTS_PER_PROJECT", "MIN_PROJECTS_PER_SPLIT", "MIN_TEST_PROJECTS", "MIN_TEST_INTENTS", "PILOT_MIN_INTENTS", "PILOT_MIN_PROJECTS", "PRECISION_PLAN_SCHEMA", "validate_confirmatory_design", "validate_pilot_design")

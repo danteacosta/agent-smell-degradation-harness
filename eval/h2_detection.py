@@ -404,7 +404,7 @@ def evaluate_confirmatory(
             test_scores["B3"],
             test_scores["B0"],
             split_labels["test"],
-            cluster_key="source_intent_id",
+            cluster_key="project_id",
             draws=2000,
             seed=seed,
         )

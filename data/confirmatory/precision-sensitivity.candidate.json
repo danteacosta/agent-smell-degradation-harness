@@ -1,0 +1,54 @@
+{
+  "schema_version": "h2-precision-sensitivity/v1",
+  "status": "design_diagnostic",
+  "design": {
+    "intents": 220,
+    "projects": 36,
+    "split_fractions": {
+      "train": 0.5,
+      "calibration": 0.2,
+      "test": 0.3
+    },
+    "split_project_quotas": {
+      "train": 18,
+      "calibration": 7,
+      "test": 11
+    },
+    "expected_test_intents": 67
+  },
+  "fixed_assumptions": {
+    "prevalence": 0.5,
+    "baseline_effect": 0.45,
+    "practical_margin": 0.05,
+    "simulations": 200,
+    "bootstrap_draws": 500,
+    "seed": 23
+  },
+  "scenarios": [
+    {
+      "provenance_increment": 0.35,
+      "estimated_margin_power": 0.495,
+      "median_ci_width": 0.12467163623957034,
+      "p90_ci_width": 0.18660506235970586,
+      "degenerate_rate": 0.0,
+      "decision": "fails_power_target"
+    },
+    {
+      "provenance_increment": 0.5,
+      "estimated_margin_power": 0.86,
+      "median_ci_width": 0.13442118699649597,
+      "p90_ci_width": 0.1865115128770266,
+      "degenerate_rate": 0.0,
+      "decision": "passes_candidate_thresholds"
+    },
+    {
+      "provenance_increment": 0.7,
+      "estimated_margin_power": 0.985,
+      "median_ci_width": 0.1370685218318088,
+      "p90_ci_width": 0.19663832143617388,
+      "degenerate_rate": 0.0,
+      "decision": "passes_candidate_thresholds"
+    }
+  ],
+  "interpretation": "The weak-signal scenario fails. This file is planning evidence only and cannot freeze the confirmatory sample before the outcome-blind pre-pilot variance update."
+}

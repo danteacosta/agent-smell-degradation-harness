@@ -11,14 +11,14 @@ from eval.h2_detection import evaluate_confirmatory
 
 def _episodes() -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
-    for index in range(9):
+    for index in range(15):
         for variant in ("clean", "smelly"):
             rows.append(
                 {
                     "episode_id": f"E-{index}-{variant}",
                     "intent_id": f"I-{index}",
                     "source_intent_id": f"I-{index}",
-                    "project_id": f"P-{index % 3}",
+                    "project_id": f"P-{index}",
                     "task_family": "acceptance_criteria",
                     "requirement_text": "Reject requests after 5 minutes.",
                     "variant": variant,
@@ -211,7 +211,9 @@ def test_confirmatory_h2_reports_delta_ci_and_claim_decision(tmp_path: Path):
         effect["provenance_pr_auc"] - effect["baseline_pr_auc"]
     )
     assert effect["margin"] == pytest.approx(0.05)
-    assert effect["bootstrap"]["clusters"] == 3
+    assert effect["bootstrap"]["clusters"] == 4
+    assert effect["bootstrap"]["cluster_key"] == "project_id"
+    assert effect["leave_one_cluster_out"]["draws"] == 4
     assert effect["claim"] in {"supported", "not_supported", "descriptive_only"}
     assert set(report["test_pr_auc_by_model"]) == {"B0", "B1", "B2", "B3"}
     assert report["model_selection"]["in_sample_selection"] is False

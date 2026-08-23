@@ -40,7 +40,7 @@ def clustered_pr_auc_delta(
     baseline_scores: Sequence[float],
     labels: Sequence[int],
     *,
-    cluster_key: str = "source_intent_id",
+    cluster_key: str = "project_id",
     draws: int = 2000,
     seed: int = 0,
 ) -> dict[str, Any]:
@@ -82,6 +82,26 @@ def clustered_pr_auc_delta(
     bootstrap.sort()
     low = bootstrap[max(0, int(0.025 * (len(bootstrap) - 1)))]
     high = bootstrap[min(len(bootstrap) - 1, int(0.975 * (len(bootstrap) - 1)))]
+    leave_one_cluster_out = []
+    if len(cluster_ids) > 3:
+        for omitted in cluster_ids:
+            indices = [
+                index
+                for cluster_id in cluster_ids
+                if cluster_id != omitted
+                for index in groups[cluster_id]
+            ]
+            omitted_labels = [labels[index] for index in indices]
+            if len(set(omitted_labels)) < 2:
+                continue
+            leave_one_cluster_out.append(
+                average_precision(
+                    [provenance_scores[index] for index in indices], omitted_labels
+                )
+                - average_precision(
+                    [baseline_scores[index] for index in indices], omitted_labels
+                )
+            )
     return {
         "provenance_pr_auc": observed_prov,
         "baseline_pr_auc": observed_base,
@@ -93,6 +113,16 @@ def clustered_pr_auc_delta(
             "degenerate_draws": degenerate,
             "seed": seed,
             "cluster_key": cluster_key,
+        },
+        "leave_one_cluster_out": {
+            "draws": len(leave_one_cluster_out),
+            "min": min(leave_one_cluster_out) if leave_one_cluster_out else None,
+            "max": max(leave_one_cluster_out) if leave_one_cluster_out else None,
+            "max_abs_shift_from_observed": (
+                max(abs(value - observed_delta) for value in leave_one_cluster_out)
+                if leave_one_cluster_out
+                else None
+            ),
         },
         "claim": "not_supported",
     }

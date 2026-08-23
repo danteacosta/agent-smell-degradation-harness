@@ -28,10 +28,17 @@ def test_confirmatory_design_requires_project_and_intent_precision():
 
 def _precision_plan() -> dict[str, object]:
     return {
-        "schema_version": "h2-precision-plan/v1",
+        "schema_version": "h2-precision-plan/v2",
         "status": "frozen",
-        "design": {"intents": 60, "projects": 8},
+        "design": {
+            "intents": 120,
+            "projects": 30,
+            "minimum_test_projects": 6,
+            "minimum_test_intents": 24,
+        },
         "simulation": {
+            "evaluation_scope": "test_partition_only",
+            "cluster_key": "project_id",
             "median_ci_width": 0.18,
             "degenerate_rate": 0.01,
             "estimated_margin_power": 0.82,
@@ -52,7 +59,7 @@ def test_confirmatory_design_requires_frozen_precision_plan():
 
 
 def test_confirmatory_design_accepts_precision_governed_minimum():
-    episodes = _episodes(60)
+    episodes = _episodes(120)
     manifest = build_grouped_split_manifest(episodes)
     result = validate_confirmatory_design(
         episodes,
@@ -60,5 +67,19 @@ def test_confirmatory_design_accepts_precision_governed_minimum():
         precision_plan=_precision_plan(),
     )
     assert result["status"] == "confirmatory"
-    assert result["counts"]["project_count"] == 15
-    assert result["counts"]["split_intents"]["test"] >= 12
+    assert result["counts"]["project_count"] == 30
+    assert result["counts"]["split_projects"]["test"] >= 6
+    assert result["counts"]["split_intents"]["test"] >= 24
+
+
+def test_confirmatory_design_rejects_intent_clustered_precision_plan():
+    episodes = _episodes(120)
+    manifest = build_grouped_split_manifest(episodes)
+    plan = _precision_plan()
+    plan["simulation"]["cluster_key"] = "source_intent_id"  # type: ignore[index]
+    with pytest.raises(ValueError, match="project_id clusters"):
+        validate_confirmatory_design(
+            episodes,
+            apply_split_manifest(episodes, manifest),
+            precision_plan=plan,
+        )
