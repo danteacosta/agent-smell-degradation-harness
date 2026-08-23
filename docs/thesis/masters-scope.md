@@ -24,9 +24,12 @@ to exclude zero.
 H1 and H2 are planned conditional claims, not current results. They cannot be
 reported as confirmatory until all external gates pass:
 
-- a frozen outcome-blind H2 precision plan; at least 60 independent source
-  intents across at least 8 projects, with the current design-stage candidate
-  at 100 intents/12 projects; 24 intents/6 projects is a pilot floor only;
+- a frozen outcome-blind H2 precision plan that simulates the untouched test
+  partition and resamples projects; the unconditional floor is 60 independent
+  source intents/12 projects with at least 6 test projects and 24 test intents.
+  The conservative design-stage candidate is 220 intents/36 projects under a
+  50/20/30 project split, but remains unfrozen because its weak-signal scenario
+  misses the target; 24 intents/6 projects is a pilot floor only;
 - at least two real provider/model configurations producing genuine,
   runtime-native ARP 3.0 T1/T2/T3 checkpoints from the same execution that
   produces the artifact, with immutable provider metadata and cutoff hashes;

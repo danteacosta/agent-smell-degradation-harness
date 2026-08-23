@@ -20,9 +20,12 @@ claim.
 
 Before changing the manifest to confirmed:
 
-1. freeze an outcome-blind `h2-precision-plan/v1`, then collect at least its
-   required design; the unconditional floor is 60 independent intents across
-   8 projects and the current candidate is 100 intents/12 projects;
+1. freeze an outcome-blind `h2-precision-plan/v2`, then collect at least its
+   required design; the simulation must evaluate only the frozen test partition
+   and resample `project_id`. The unconditional floor is 60 independent intents
+   across 12 projects with at least 6 test projects/24 test intents; the current
+   conservative candidate is 220 intents/36 projects with 11 test projects and
+   remains unfrozen pending the pre-pilot variance update;
 2. record source URL/license, project ID, defect family, canonical hash, and
    near-clone result for each source intent;
 3. run at least two real provider/model configurations through one instrumented
@@ -40,7 +43,8 @@ Before changing the manifest to confirmed:
    on train only and export the confirmatory H2 report before inspecting the
    held-out outcomes. The fixed models are B0=static+operational and
    B1/B2/B3=B0 plus cumulative provenance through T1/T2/T3; precomputed scores
-   and in-sample family selection are ineligible.
+   and in-sample family selection are ineligible. The primary H2 interval
+   resamples test projects, and leave-one-project-out stability is reported.
 
 No record may be padded by renaming, paraphrasing without a declared
 exception, or duplicating a project/intention.

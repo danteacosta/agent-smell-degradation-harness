@@ -31,6 +31,27 @@ def test_h2_precision_simulation_is_deterministic_and_project_clustered():
         intents=60, projects=10, simulations=5, bootstrap_draws=30, seed=7
     )
     assert first == second
-    assert first["design"] == {"intents": 60, "projects": 10}
+    assert first["method"].endswith("-v2")
+    assert first["evaluation_scope"] == "test_partition_only"
+    assert first["cluster_key"] == "project_id"
+    assert first["design"]["intents"] == 60
+    assert first["design"]["projects"] == 10
+    assert first["design"]["split_project_quotas"] == {
+        "train": 5,
+        "calibration": 2,
+        "test": 3,
+    }
     assert 0 <= first["degenerate_rate"] <= 1
     assert first["median_ci_width"] >= 0
+
+
+def test_h2_precision_uses_only_frozen_test_projects():
+    result = simulate_h2_precision(
+        intents=150,
+        projects=30,
+        simulations=2,
+        bootstrap_draws=20,
+        seed=13,
+    )
+    assert result["design"]["split_project_quotas"]["test"] == 9
+    assert result["design"]["expected_test_intents"] == 45

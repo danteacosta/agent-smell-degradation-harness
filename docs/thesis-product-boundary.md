@@ -9,9 +9,9 @@ The thesis layer is the planned confirmatory experiment. Its conditional claim i
 The scientific estimands are:
 
 - `H1.ordinal_delta`: mean clean-minus-defective ordinal severity delta, clustered by source intent, with intent-cluster bootstrap 95% CI and paired sign-flip permutation p-value;
-- `H2.pre_final_pr_auc`: held-out PR-AUC for pre-final human labels under fixed nested models: B0=static+operational and B1/B2/B3=B0 plus cumulative provenance through T1/T2/T3. There is no in-sample family selection. Threshold fitting uses calibration and test groups remain untouched. The primary effect is B3−B0, with a frozen `ΔPR-AUC ≥ 0.05` margin and source-intent-cluster bootstrap CI.
+- `H2.pre_final_pr_auc`: held-out PR-AUC for pre-final human labels under fixed nested models: B0=static+operational and B1/B2/B3=B0 plus cumulative provenance through T1/T2/T3. There is no in-sample family selection. Threshold fitting uses calibration and test projects remain untouched. The primary effect is B3−B0, with a frozen `ΔPR-AUC ≥ 0.05` margin, project-cluster bootstrap CI, and leave-one-project-out stability report.
 
-Replications are repeated measures and variants stay together. The 12×2×5 design is a structured pre-pilot; 24 intents/6 projects is only a pilot floor. Confirmatory project generalization requires a frozen outcome-blind precision plan, never fewer than 60 intents/8 projects, and currently has a 100-intent/12-project design candidate. A manifest that reaches a count by duplicating source intents fails closed.
+Replications are repeated measures and variants stay together. The 12×2×5 design is a structured pre-pilot; 24 intents/6 projects is only a pilot floor. Confirmatory project generalization requires a frozen outcome-blind precision plan, never fewer than 60 intents/12 projects or 6 test projects/24 test intents. The current conservative candidate is 220 intents/36 projects with a 50/20/30 project split; it is not a commitment because the weak-signal sensitivity scenario fails. A manifest that reaches a count by duplicating source intents fails closed.
 
 ## Product protocol
 

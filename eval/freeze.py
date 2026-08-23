@@ -16,6 +16,7 @@ DEFAULT_FREEZE_FILES = (
     "agents/staged_runtime.py",
     "baselines/features.py",
     "data/confirmatory/precision-plan.candidate.json",
+    "data/confirmatory/precision-sensitivity.candidate.json",
     "docs/thesis-product-boundary.md",
     "docs/thesis/power_analysis.md",
     "docs/thesis/preregistration.md",

@@ -66,6 +66,113 @@ def _contract_errors(pair: Mapping[str, Any], task_family: str) -> list[str]:
     return errors
 
 
+_STAGE_FIELDS = {
+    "interpretation": (
+        "constraints",
+        "quantities",
+        "unresolved_references",
+        "assumptions",
+        "contradictions",
+    ),
+    "plan": ("validation_checks", "planned_tools", "coverage_targets"),
+}
+_COVERAGE_STOPWORDS = {
+    "a", "an", "and", "as", "at", "be", "by", "for", "from", "in", "is",
+    "of", "on", "or", "the", "to", "with",
+}
+
+
+def _stage_lists(
+    payload: Mapping[str, Any], stage: str
+) -> tuple[dict[str, list[Any]], list[str]]:
+    expected = _STAGE_FIELDS[stage]
+    errors: list[str] = []
+    values: dict[str, list[Any]] = {}
+    unexpected = sorted(set(payload) - set(expected))
+    if unexpected:
+        errors.append(f"{stage} contains unexpected keys: {unexpected}")
+    for field in expected:
+        value = payload.get(field)
+        if not isinstance(value, list):
+            errors.append(f"{stage}.{field} must be a list")
+            values[field] = []
+            continue
+        values[field] = value
+        if any(not isinstance(item, str) or not item.strip() for item in value):
+            errors.append(f"{stage}.{field} contains a non-text or empty item")
+    return values, errors
+
+
+def _tokens(value: Any) -> set[str]:
+    return {
+        token
+        for token in re.findall(r"[a-z0-9]+", str(value).lower())
+        if token not in _COVERAGE_STOPWORDS and len(token) > 1
+    }
+
+
+def _covered(item: Any, evidence: list[Any]) -> bool:
+    target = _tokens(item)
+    if not target:
+        return False
+    for candidate in evidence:
+        observed = _tokens(candidate)
+        if target <= observed or len(target & observed) / len(target) >= 0.5:
+            return True
+    return False
+
+
+def _semantic_plan_diagnostics(
+    pair: Mapping[str, Any],
+    task_family: str,
+    interpretation: Mapping[str, Any],
+    plan: Mapping[str, Any],
+) -> dict[str, Any]:
+    interpreted, interpretation_errors = _stage_lists(interpretation, "interpretation")
+    planned, plan_errors = _stage_lists(plan, "plan")
+    coverage_evidence = planned["validation_checks"] + planned["coverage_targets"]
+    uncovered_constraints = [
+        value
+        for value in interpreted["constraints"]
+        if not _covered(value, coverage_evidence)
+    ]
+    unresolved = (
+        interpreted["unresolved_references"]
+        + interpreted["assumptions"]
+        + interpreted["contradictions"]
+    )
+    unacknowledged_uncertainty = [
+        value for value in unresolved if not _covered(value, coverage_evidence)
+    ]
+    errors = _contract_errors(pair, task_family) + interpretation_errors + plan_errors
+    if interpreted["constraints"] and not coverage_evidence:
+        errors.append("plan has no validation checks or coverage targets")
+    if uncovered_constraints:
+        errors.append(
+            f"plan leaves {len(uncovered_constraints)} interpreted constraints uncovered"
+        )
+    if unacknowledged_uncertainty:
+        errors.append(
+            "plan leaves "
+            f"{len(unacknowledged_uncertainty)} unresolved references, assumptions, "
+            "or contradictions unacknowledged"
+        )
+    return {
+        "validator": "semantic-plan-contract-validator/v2",
+        "errors": errors,
+        "constraint_count": len(interpreted["constraints"]),
+        "quantity_count": len(interpreted["quantities"]),
+        "unresolved_reference_count": len(interpreted["unresolved_references"]),
+        "assumption_count": len(interpreted["assumptions"]),
+        "contradiction_count": len(interpreted["contradictions"]),
+        "validation_check_count": len(planned["validation_checks"]),
+        "planned_tool_count": len(planned["planned_tools"]),
+        "coverage_target_count": len(planned["coverage_targets"]),
+        "uncovered_constraint_count": len(uncovered_constraints),
+        "unacknowledged_uncertainty_count": len(unacknowledged_uncertainty),
+    }
+
+
 class StagedProviderRuntime:
     """A real provider-backed executor for :class:`RuntimeCheckpointAgent`.
 
@@ -134,13 +241,18 @@ class StagedProviderRuntime:
 
         execution_started = _now_iso(self._clock)
         tool_started = _now_iso(self._clock)
-        errors = _contract_errors(pair, task_family)
+        diagnostics = _semantic_plan_diagnostics(
+            pair, task_family, interpretation, plan
+        )
         tool_ended = _now_iso(self._clock)
         execution = {
             "revisions": 0,
             "validation_attempts": 1,
-            "errors": errors,
+            "errors": diagnostics["errors"],
             "retrieval_events": 0,
+        }
+        t3_metadata = {
+            key: value for key, value in diagnostics.items() if key != "errors"
         }
 
         output_keys = pair["generation_contract"][task_family]["output_keys"]
@@ -174,7 +286,7 @@ class StagedProviderRuntime:
                     "runtime": "staged-provider/v1",
                     "runtime_semantics": "externally-materialized-bounded-summaries",
                     "latency_ms": round(total_latency, 3),
-                    "stages": [t1, t2, final],
+                    "stages": [t1, t2, {"stage": "T3", **t3_metadata}, final],
                 },
             )
         )
