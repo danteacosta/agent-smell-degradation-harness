@@ -31,3 +31,15 @@ def test_boundary_links_external_gate_and_non_confirmatory_status() -> None:
     assert "60 independent intents" in acquisition
     assert "current\n   conservative candidate is 220 intents/36 projects" in acquisition
     assert "no frozen human/adjudicated primary labels" in acquisition
+
+
+def test_prepilot_launch_pack_preserves_claim_boundary() -> None:
+    launch = (ROOT / "docs" / "research" / "prepilot-launch-pack.md").read_text(encoding="utf-8")
+    for phrase in (
+        "non-confirmatory 120-episode",
+        "two distinct real provider/model configurations",
+        "It cannot support H1 or H2",
+        "Credentials never enter that file",
+        "The current 220/36 candidate may increase or decrease",
+    ):
+        assert phrase in launch
