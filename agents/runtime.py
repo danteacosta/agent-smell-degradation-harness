@@ -6,6 +6,8 @@ from collections.abc import Callable
 from typing import Any
 
 from .checkpoints import AgentExecution, validate_agent_execution
+from .providers import Provider
+from .staged_runtime import Clock, StagedProviderRuntime
 
 
 NativeExecutor = Callable[[dict[str, Any], str, str], AgentExecution]
@@ -37,6 +39,25 @@ class RuntimeCheckpointAgent:
         self.provider = provider
         self.model = model
         self.model_version = model_version
+
+    @classmethod
+    def from_provider(
+        cls,
+        provider_adapter: Provider,
+        *,
+        model: str,
+        model_version: str,
+        clock: Clock | None = None,
+    ) -> "RuntimeCheckpointAgent":
+        """Build the qualified staged runtime using an existing provider adapter."""
+
+        runtime = StagedProviderRuntime(provider_adapter, clock=clock)
+        return cls(
+            runtime.execute,
+            provider=provider_adapter.name,
+            model=model,
+            model_version=model_version,
+        )
 
     def execute_with_checkpoints(
         self,

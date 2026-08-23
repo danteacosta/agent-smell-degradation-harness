@@ -3,16 +3,25 @@
   "status": "candidate",
   "hash_algorithm": "sha256",
   "files": {
-    "docs/thesis-product-boundary.md": "09da1a5921a64817aeba82db5856c442e7e1d8198e33b61b55e06facc91323cc",
-    "docs/thesis/preregistration.md": "459e314e5ddfed0ac428d8b593c5081774d7402543cea40d2fbd60c78b32c59b",
-    "tasks/annotation_rubric.json": "7447bfb65d9c196f58874c30d31edf50b9a739f38885a700537b48e6f7603780",
-    "eval/feature_manifest.py": "84a26e9b21889e4e7c3653ee580fa4c4db8ea8c1ced7ac533a775b4585a052cb",
-    "eval/h2_detection.py": "5015a2618753dcbea1399b11e1323445c352c61eb018fd11ea09c54c1b19b192",
-    "eval/splits.py": "65121310875281b656bea930d013f310eca036a0de26980a0b216f5964f06fff",
+    "agents/checkpoints.py": "b0da0f2dc2c4e3df7e317682ba35ba5c2628dc006e4c44e0d9110094128ee5ea",
+    "agents/live.py": "48403dd110264c2fa38783eb64ccc4a5739be1518e532fd0b652a4e45485f511",
+    "agents/runtime.py": "d8f8e28097c4f25736cf6aafc2a0e21c548f248d6b7a3fd74326bef4dc1a8586",
+    "agents/staged_runtime.py": "b2d189d283bd7f3d6210c860cc6b204f9e4272987bd745c779139aadbb42a6bb",
+    "baselines/features.py": "541f3e2caf6822ecf1136346e00af44429ee81002d1577b36e246bb13d066a62",
+    "data/confirmatory/precision-plan.candidate.json": "fdd37ddb397f1cd15556938ed84144f25bbcf35147ac32dbb9691e6ff6ab7b7a",
+    "docs/thesis-product-boundary.md": "ed246c1f29e6c50f2db9ecc099c350d13fd2389db14c928be76e739871e83c5f",
+    "docs/thesis/power_analysis.md": "0b355b8ec6031febbb99af5ed87934768abfa0eb5cf067a8542c3e9764de8a2e",
+    "docs/thesis/preregistration.md": "785bc40cfc691ffd7dbda3e8a0e47ae7a48e9f87b88e3200d5287e88257fa534",
     "eval/confirmatory_report.py": "7ab182fd8ca575cd71a5e0710363b0545e8eae053555e5269f33eccbc065eec6",
-    "label_plane/human_annotation/__init__.py": "3bea840960c89be5449d2574a9d37ff65125904dd49bfc5652915b1adf92c306",
+    "eval/experiment.py": "7f08be7666b9621f7771d6837c66cf740ec587eb7d684fe34d4fe8432182b01a",
+    "eval/feature_manifest.py": "84a26e9b21889e4e7c3653ee580fa4c4db8ea8c1ced7ac533a775b4585a052cb",
+    "eval/h2_detection.py": "fdcf3d22edb1568be14f2e1e53c898e3ea9b163b97624cb1dc820a3cfcc9e93e",
     "eval/runner.py": "5a07cbc5dbcb0d292803debd899b9eb7c65a8ecf3041c005afc082264b052ae0",
+    "eval/sample_gate.py": "518287cdae8d91688ded3e92bdff353f4d00b47ae0e6566a1ffd1163617c7acc",
+    "eval/splits.py": "f01fa560b4d515131bb07f62e3464c88460869c03182c24ecc9dcd3704ac9326",
     "feature_plane/deployable.py": "0e6e3e392a71620af3c1a1324d261c17ae611cde8326d296b939a330ed7f6895",
-    "baselines/features.py": "541f3e2caf6822ecf1136346e00af44429ee81002d1577b36e246bb13d066a62"
+    "label_plane/human_annotation/__init__.py": "3bea840960c89be5449d2574a9d37ff65125904dd49bfc5652915b1adf92c306",
+    "protocol/power.py": "fe06a1e8916b0325e4dde8fe8fb28d3dbd3f29a52c5f40090a7598c0de7eb65f",
+    "tasks/annotation_rubric.json": "7447bfb65d9c196f58874c30d31edf50b9a739f38885a700537b48e6f7603780"
   }
 }

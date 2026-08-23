@@ -123,7 +123,7 @@ Acceptance-criteria generation is the primary workload; traceability is an exter
 
 The reproducible pre-pilot uses 12 intents × clean/smelly variants × 5 replications and writes manifests, episodes, events, artifacts, labels, features and analysis. Run it with `make prepilot`.
 
-The acceptance boundary, estimands, leakage rules, split invariants, and product policy are documented in [Thesis and Product Boundary](docs/thesis-product-boundary.md). Confirmatory H2 uses an `h2-features/v3` raw-feature manifest, recomputes its contents from hash-bound T1/T2/T3 traces, fits each family/checkpoint model on train only, calibrates only on calibration, and evaluates once on test. A pre-pilot manifest must contain 12 independent source intents; renaming duplicated seed records does not satisfy the count.
+The acceptance boundary, estimands, leakage rules, split invariants, and product policy are documented in [Thesis and Product Boundary](docs/thesis-product-boundary.md). Confirmatory H2 uses an `h2-features/v3` raw-feature manifest, recomputes its contents from hash-bound T1/T2/T3 traces, fits fixed nested B0–B3 models with one estimator, calibrates only on calibration, and evaluates B3−B0 once on test. No family is selected by training PR-AUC. A pre-pilot manifest must contain 12 independent source intents; 24 intents/6 projects is a pilot floor, while confirmation requires a frozen precision plan and never fewer than 60 intents/8 projects.
 
 The current orientation and related-work review is versioned in [2026-08-10 orientation review](docs/research/2026-08-10-orientation-review.md). It records the novelty boundary, EASY alignment, direct comparison with prefix monitors, and the evidence still required before a confirmatory claim.
 
@@ -132,7 +132,7 @@ frozen in [Master's Thesis Scope](docs/thesis/masters-scope.md). H1/H2 remain
 planned conditional claims until the external data, provider, annotation,
 preregistration, and shadow-pilot gates pass.
 
-The current collection blocker and acceptance checklist are documented in [confirmatory data acquisition](docs/research/confirmatory-data-acquisition.md). The checked-in seven-source seed is development-only. Confirmatory provider execution rejects stub mode and supports OpenAI and Anthropic adapters; offline replay remains schema validation, not thesis evidence.
+The current collection blocker and acceptance checklist are documented in [confirmatory data acquisition](docs/research/confirmatory-data-acquisition.md). The checked-in seven-source seed is development-only. `RuntimeCheckpointAgent.from_provider()` supplies a staged OpenAI/Anthropic-compatible producer whose bounded T1/T2/T3 events precede terminal generation; empirical qualification on two real configurations is still required. `LiveAgent.observe_checkpoints()` remains a nonconfirmatory prompted snapshot, and offline replay remains schema validation rather than thesis evidence.
 
 The scientific and commercial moat audit is recorded in [2026-08-10 moat stress test](docs/research/2026-08-10-moat-stress-test.md). Its conclusion is intentionally conservative: the stack is protocol-ready with a promising wedge, but the moat is not demonstrated until external data, independent labels, provider diversity, adoption, and ROI evidence exist.
 

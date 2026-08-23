@@ -1,4 +1,4 @@
-.PHONY: test eval simulate gate analysis experiment all dry-run thesis-analysis wedge-check prepilot extension-clarification extension-dissertation
+.PHONY: test eval simulate gate analysis experiment all dry-run thesis-analysis wedge-check prepilot freeze-candidate extension-clarification extension-dissertation
 
 PYTHON ?= $(shell if [ -x .venv/bin/python ]; then echo .venv/bin/python; else echo python3; fi)
 
@@ -20,6 +20,8 @@ thesis-analysis:
 	$(PYTHON) -m eval.thesis_analysis --episodes eval/last_run_episodes.jsonl
 prepilot:
 	$(PYTHON) -m eval.prepilot
+freeze-candidate:
+	$(PYTHON) -m eval.freeze --status candidate
 # Optional clarification experiments deliberately live outside the scientific
 # pipeline.  They are never prerequisites for pre-pilot, pilot, or CI gates.
 extension-clarification:

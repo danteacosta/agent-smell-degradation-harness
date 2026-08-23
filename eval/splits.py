@@ -91,6 +91,7 @@ def build_grouped_split_manifest(
     train_fraction: float = 0.6,
     calibration_fraction: float = 0.2,
     test_fraction: float = 0.2,
+    min_groups_per_split: int = 1,
 ) -> dict[str, Any]:
     """Return a reproducible train/calibration/test assignment manifest.
 
@@ -106,9 +107,14 @@ def build_grouped_split_manifest(
     if any(value <= 0 for value in fractions) or abs(sum(fractions) - 1.0) > 1e-9:
         raise ValueError("split fractions must be positive and sum to 1")
     components = _component_groups(records)
-    if len(components) < 3:
+    if min_groups_per_split < 1:
+        raise ValueError("min_groups_per_split must be positive")
+    if len(components) < len(SPLITS) * min_groups_per_split:
+        required_groups = len(SPLITS) * min_groups_per_split
+        required_label = "three" if required_groups == 3 else str(required_groups)
         raise ValueError(
-            "confirmatory split requires at least three disjoint source/project groups"
+            f"confirmatory split requires at least {required_label} "
+            "disjoint source/project groups for the requested holdout"
         )
     ordered = _stable_component_order(components, seed)
     total_records = len(records)
@@ -119,18 +125,44 @@ def build_grouped_split_manifest(
     }
     assignments: dict[tuple[str, str], str] = {}
     counts = {split: 0 for split in SPLITS}
-    # Seed two components per split when possible so a six-project design can
-    # support the preregistered project holdout precision gate.  Subsequent
-    # components are assigned to the partition furthest below its requested
-    # record count. Stable ordering makes this deterministic.
-    for component_index, component in enumerate(ordered):
-        if component_index < 2 * len(SPLITS):
-            split = SPLITS[component_index % len(SPLITS)]
-        else:
-            split = max(
-                SPLITS,
-                key=lambda candidate: (targets[candidate] - counts[candidate], -SPLITS.index(candidate)),
-            )
+    # Convert fractions to deterministic component quotas, subject to an
+    # explicit minimum.  This avoids the old six-group round-robin behavior
+    # that silently turned a nominal 60/20/20 split into 33/33/33.
+    quotas = {split: min_groups_per_split for split in SPLITS}
+    remaining = len(components) - sum(quotas.values())
+    while remaining:
+        split = max(
+            SPLITS,
+            key=lambda candidate: (
+                len(components) * fractions[SPLITS.index(candidate)] - quotas[candidate],
+                -SPLITS.index(candidate),
+            ),
+        )
+        quotas[split] += 1
+        remaining -= 1
+    assigned_groups = {split: 0 for split in SPLITS}
+    component_sizes = {
+        tuple(component["source_intent_ids"]): sum(
+            1
+            for record_index, record in enumerate(records)
+            if _source_intent(record, index=record_index) in component["source_intent_ids"]
+        )
+        for component in ordered
+    }
+    ordered = sorted(
+        ordered,
+        key=lambda component: (-component_sizes[tuple(component["source_intent_ids"])], ordered.index(component)),
+    )
+    for component in ordered:
+        eligible = [split for split in SPLITS if assigned_groups[split] < quotas[split]]
+        split = max(
+            eligible,
+            key=lambda candidate: (
+                targets[candidate] - counts[candidate],
+                quotas[candidate] - assigned_groups[candidate],
+                -SPLITS.index(candidate),
+            ),
+        )
         for source in component["source_intent_ids"]:
             for project in component["project_ids"]:
                 assignments[(source, project)] = split
@@ -139,6 +171,7 @@ def build_grouped_split_manifest(
             for record_index, record in enumerate(records)
             if _source_intent(record, index=record_index) in component["source_intent_ids"]
         )
+        assigned_groups[split] += 1
 
     assignment_rows = [
         {
@@ -163,9 +196,11 @@ def build_grouped_split_manifest(
         "assignments": assignment_rows,
         "provenance": {
             "seed": seed,
-            "algorithm": "stable-bipartite-component-greedy-v1",
+            "algorithm": "stable-bipartite-component-quota-greedy-v2",
             "record_count": total_records,
             "group_count": len(components),
+            "group_quotas": quotas,
+            "record_counts": counts,
             "assignment_hash": assignment_hash,
         },
     }

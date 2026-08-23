@@ -1,4 +1,9 @@
-"""Versioned, provider-produced pre-final checkpoint summaries."""
+"""Versioned, externally materialized pre-final checkpoint summaries.
+
+``runtime_native`` denotes events emitted by the instrumented runtime during
+the episode.  It never denotes model chain-of-thought or privileged hidden
+state.
+"""
 
 from __future__ import annotations
 

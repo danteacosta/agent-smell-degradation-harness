@@ -14,21 +14,24 @@ holdout, calibration, and cluster-aware uncertainty.
 
 ## Primary workload and claims
 
-Acceptance-criteria/test generation is the only primary workload. H1 measures
+Acceptance-criteria generation is the only primary workload. H1 measures
 the paired clean-minus-defective ordinal severity difference. H2 measures the
-held-out PR-AUC delta between provider-produced pre-final provenance and the
-best deployable baseline. The primary practical margin is frozen at
+held-out PR-AUC delta between fixed nested models B3 (`static + operational +
+provenance through T3`) and B0 (`static + operational`). The primary practical margin is frozen at
 `ΔPR-AUC >= 0.05`; the claim additionally requires the pre-registered interval
 to exclude zero.
 
 H1 and H2 are planned conditional claims, not current results. They cannot be
 reported as confirmatory until all external gates pass:
 
-- at least 24 independent source intents across at least 6 projects, with
-  provenance, licensing, near-clone checks, and at least 8 intents per split;
+- a frozen outcome-blind H2 precision plan; at least 60 independent source
+  intents across at least 8 projects, with the current design-stage candidate
+  at 100 intents/12 projects; 24 intents/6 projects is a pilot floor only;
 - at least two real provider/model configurations producing genuine,
   runtime-native ARP 3.0 T1/T2/T3 checkpoints from the same execution that
   produces the artifact, with immutable provider metadata and cutoff hashes;
+  here runtime-native means externally materialized by the instrumented
+  runtime, never chain-of-thought or a retrospective snapshot;
 - blinded primary human labels, a double-coded subset, adjudication, missing
   label policy, Krippendorff's alpha, and bootstrap confidence intervals;
 - a frozen feature manifest and deterministic train/calibration/test H2 report;
@@ -59,13 +62,14 @@ The contribution is defensible when stated as the combination of:
 1. a requirements-conditioned, provider-produced T1/T2/T3 feature plane;
 2. strict separation of features from terminal labels and oracle metadata;
 3. paired clean/defective variants with project holdout;
-4. trace-recomputed raw feature manifests, train-only model and family fitting,
-   calibration-only threshold fitting, and untouched test evaluation;
+4. trace-recomputed raw feature manifests, one fixed estimator for B0–B3,
+   calibration-only threshold fitting, and untouched test evaluation without
+   in-sample family selection;
 5. independent human labels plus clustered uncertainty; and
 6. operational metrics that distinguish ranking from an actionable gate.
 
-The H2 implementation now fits one auditable dependency-free ranker per feature
-family on train rows only and reports a separate held-out T1/T2/T3 boundary map.
+The H2 implementation now fits the same auditable dependency-free ranker to
+the preregistered nested B0–B3 rows and reports the held-out T1/T2/T3 boundary map.
 This closes the earlier loophole in which a frozen manifest could contain
 precomputed scores. It does not turn the development corpus into evidence: the
 models and boundary map remain unestimated until eligible provider traces and
@@ -78,7 +82,7 @@ if it maps silent regions and shows where process observability does not help.
 
 ## Scope discipline
 
-In scope: H1, H2, acceptance-criteria/test generation, two provider
+In scope: H1, H2, acceptance-criteria generation, two provider
 configurations, the ARP/replay artifact, confirmatory annotation protocol, and
 traceability as an external validation slice.
 

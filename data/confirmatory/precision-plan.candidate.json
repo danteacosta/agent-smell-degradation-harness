@@ -1,0 +1,30 @@
+{
+  "schema_version": "h2-precision-plan/v1",
+  "status": "candidate",
+  "design": {
+    "intents": 100,
+    "projects": 12
+  },
+  "simulation": {
+    "method": "project_cluster_bootstrap_pr_auc_delta-v1",
+    "simulations": 200,
+    "bootstrap_draws": 500,
+    "seed": 23,
+    "estimated_margin_power": 0.875,
+    "median_ci_width": 0.11516456422050714,
+    "p90_ci_width": 0.1582928188253634,
+    "degenerate_rate": 0.0
+  },
+  "assumptions": {
+    "prevalence": 0.5,
+    "baseline_effect": 0.45,
+    "provenance_increment": 0.7,
+    "practical_margin": 0.05
+  },
+  "thresholds": {
+    "target_margin_power": 0.8,
+    "max_median_ci_width": 0.2,
+    "max_degenerate_rate": 0.05
+  },
+  "decision": "candidate_only_run_sensitivity_grid_before_freeze"
+}

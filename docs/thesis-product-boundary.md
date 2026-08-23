@@ -9,9 +9,9 @@ The thesis layer is the planned confirmatory experiment. Its conditional claim i
 The scientific estimands are:
 
 - `H1.ordinal_delta`: mean clean-minus-defective ordinal severity delta, clustered by source intent, with intent-cluster bootstrap 95% CI and paired sign-flip permutation p-value;
-- `H2.pre_final_pr_auc`: held-out PR-AUC for pre-final human labels, compared with deployable static and operational baselines; best-baseline selection uses train groups, threshold fitting uses calibration groups, and test groups are untouched until evaluation. The primary effect is provenance minus best baseline, with a frozen `ΔPR-AUC ≥ 0.05` margin and source-intent-cluster bootstrap CI.
+- `H2.pre_final_pr_auc`: held-out PR-AUC for pre-final human labels under fixed nested models: B0=static+operational and B1/B2/B3=B0 plus cumulative provenance through T1/T2/T3. There is no in-sample family selection. Threshold fitting uses calibration and test groups remain untouched. The primary effect is B3−B0, with a frozen `ΔPR-AUC ≥ 0.05` margin and source-intent-cluster bootstrap CI.
 
-Replications are repeated measures. Variants stay together. The 12×2×5 design is a structured pilot only. Confirmatory project generalization requires at least 24 independent intents across 6 projects, at least 4 intents per project, and at least 8 intents per split after project holdout. A manifest that reaches a count by duplicating source intents fails closed.
+Replications are repeated measures and variants stay together. The 12×2×5 design is a structured pre-pilot; 24 intents/6 projects is only a pilot floor. Confirmatory project generalization requires a frozen outcome-blind precision plan, never fewer than 60 intents/8 projects, and currently has a 100-intent/12-project design candidate. A manifest that reaches a count by duplicating source intents fails closed.
 
 ## Product protocol
 

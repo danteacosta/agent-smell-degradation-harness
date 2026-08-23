@@ -236,3 +236,16 @@ class LiveAgent:
     def generate(self, pair: dict[str, Any], variant: str, task_family: str) -> dict[str, Any]:
         artifact, _meta = self.generate_with_meta(pair, variant, task_family)
         return artifact
+
+    def as_runtime_checkpoint_agent(self):
+        """Promote a real live provider to the staged confirmatory runtime."""
+
+        if self.run_mode != "live":
+            raise ValueError("runtime checkpoint promotion requires a real live provider")
+        from agents.runtime import RuntimeCheckpointAgent
+
+        return RuntimeCheckpointAgent.from_provider(
+            self._provider,
+            model=self.model,
+            model_version=self.model_version,
+        )

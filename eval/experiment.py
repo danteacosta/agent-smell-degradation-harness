@@ -312,14 +312,18 @@ def run_experiment(
         episodes_path = rep_dir / "episodes.jsonl"
         traces_dir = rep_dir / "traces"
 
-        agent = (
-            StubAgent()
-            if stub_as_live
-            else LiveAgent(
+        if stub_as_live:
+            agent = StubAgent()
+        else:
+            live_agent = LiveAgent(
                 model=model,
                 **({"provider": provider} if provider != "openai" else {}),
             )
-        )
+            agent = (
+                live_agent.as_runtime_checkpoint_agent()
+                if confirmatory
+                else live_agent
+            )
         metrics, episodes = run_eval_with_agent(
             agent,
             pairs=None,
