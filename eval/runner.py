@@ -70,6 +70,7 @@ def _run_episode(
     confirmatory: bool,
     split: str | None,
     source_revision: str | None,
+    clarification_answers: Mapping[str, str] | None,
 ) -> dict[str, Any]:
     task_family = task_adapter.task_family
     intent_id = pair["intent_id"]
@@ -88,9 +89,19 @@ def _run_episode(
 
     # `direct` is the only core policy.  The optional clarification extension
     # may explicitly request another policy for its separate experiments.
-    prepared = prepare_requirement(pair, variant=variant, policy=policy)
+    clarification_answer = None
+    if clarification_answers is not None:
+        clarification_answer = clarification_answers.get(intent_id)
+    prepared = prepare_requirement(
+        pair,
+        variant=variant,
+        policy=policy,
+        clarification_answer=clarification_answer,
+    )
     requirement_text = prepared.text
     generation_variant = prepared.generation_variant
+    generation_pair = dict(pair)
+    generation_pair[f"{generation_variant}_requirement"] = requirement_text
     smell = None if variant == "clean" else pair["smell"]
     smell_type = "" if variant == "clean" else pair["smell"]["type"]
 
@@ -122,7 +133,11 @@ def _run_episode(
         executor = getattr(agent, "execute_with_checkpoints", None)
         if executor is None:
             raise ValueError("confirmatory run requires one native execution with runtime checkpoints")
-        execution = executor(pair, variant=generation_variant, task_family=task_family)
+        execution = executor(
+            generation_pair,
+            variant=generation_variant,
+            task_family=task_family,
+        )
         if not isinstance(execution, AgentExecution):
             raise ValueError("native checkpoint execution must return AgentExecution")
         execution = validate_agent_execution(execution, not_before=rec.last_ended_at)
@@ -158,13 +173,13 @@ def _run_episode(
         rec.operational("execution.started", {"episode_id": episode_id}, tier="A")
         if hasattr(agent, "generate_with_meta"):
             artifact, provider_meta = agent.generate_with_meta(
-                pair,
+                generation_pair,
                 variant=generation_variant,
                 task_family=task_family,
             )
         else:
             artifact = agent.generate(
-                pair,
+                generation_pair,
                 variant=generation_variant,
                 task_family=task_family,
             )
@@ -317,6 +332,7 @@ def run_eval(
     confirmatory: bool = False,
     split: str | None = None,
     source_revision: str | None = None,
+    clarification_answers: Mapping[str, str] | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     agent = StubAgent(failure_mode=failure_mode)
     if configuration_id is None:
@@ -345,6 +361,7 @@ def run_eval(
         confirmatory=confirmatory,
         split=split,
         source_revision=source_revision,
+        clarification_answers=clarification_answers,
     )
 
 
@@ -366,6 +383,7 @@ def run_eval_with_agent(
     confirmatory: bool = False,
     split: str | None = None,
     source_revision: str | None = None,
+    clarification_answers: Mapping[str, str] | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     run_mode = str(getattr(agent, "run_mode", "stub"))
     if confirmatory and run_mode not in {"live", "runtime"}:
@@ -409,6 +427,7 @@ def run_eval_with_agent(
                         confirmatory,
                         split,
                         source_revision,
+                        clarification_answers,
                     )
                 )
 

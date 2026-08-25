@@ -5,7 +5,12 @@ from typing import Any
 from eval.runner import run_eval
 
 MITIGATION_THRESHOLD = 0.5
-MITIGATION_POLICIES = ("direct", "rewrite", "clarify")
+RQ3_POLICIES = ("direct", "structured_rewrite", "targeted_clarification")
+ORACLE_UPPER_BOUNDS = (
+    "oracle_rewrite_upper_bound",
+    "oracle_clarification_upper_bound",
+)
+MITIGATION_POLICIES = RQ3_POLICIES + ORACLE_UPPER_BOUNDS
 
 
 def _summary_metrics(metrics: dict[str, Any]) -> dict[str, Any]:
@@ -39,7 +44,7 @@ def is_mitigation_beneficial(
     *,
     threshold: float = MITIGATION_THRESHOLD,
 ) -> bool:
-    """True when rewrite/clarify materially reduce paired degradation vs direct."""
+    """True when both oracle-free interventions improve materially vs direct."""
     if (
         rewrite_rate <= direct_rate - threshold
         and clarify_rate <= direct_rate - threshold
@@ -57,7 +62,8 @@ def _gate_detail(
 ) -> str:
     if beneficial:
         return (
-            "rewrite/clarify reduced paired_degradation_rate vs direct under smell-blind "
+            "oracle-free rewrite/clarification reduced paired_degradation_rate vs direct "
+            "under smell-blind "
             f"(direct={direct_rate:.3f}, rewrite={rewrite_rate:.3f}, "
             f"clarify={clarify_rate:.3f})"
         )
@@ -69,7 +75,7 @@ def _gate_detail(
 
 
 def build_mitigation_report(work_dir) -> dict[str, Any]:
-    """Run smell-blind policy comparison and assemble H5 trade-off report."""
+    """Run smell-blind policy comparison for the conditional RQ3 extension."""
     from pathlib import Path
 
     root = Path(work_dir)
@@ -96,22 +102,29 @@ def build_mitigation_report(work_dir) -> dict[str, Any]:
             episodes_path=policy_dir / "episodes.jsonl",
         )
         policy_results[policy] = _summary_metrics(metrics)
-        if policy == "rewrite":
+        if policy == "structured_rewrite":
             rewrite_episodes = episodes
 
     direct_rate = policy_results["direct"]["paired_degradation_rate"]
-    rewrite_rate = policy_results["rewrite"]["paired_degradation_rate"]
-    clarify_rate = policy_results["clarify"]["paired_degradation_rate"]
+    rewrite_rate = policy_results["structured_rewrite"]["paired_degradation_rate"]
+    clarify_rate = policy_results["targeted_clarification"]["paired_degradation_rate"]
     beneficial = is_mitigation_beneficial(direct_rate, rewrite_rate, clarify_rate)
 
     return {
         "direct": policy_results["direct"],
-        "rewrite": policy_results["rewrite"],
-        "clarify": policy_results["clarify"],
+        "structured_rewrite": policy_results["structured_rewrite"],
+        "targeted_clarification": policy_results["targeted_clarification"],
+        "oracle_upper_bounds": {
+            "admissible_for_rq3": False,
+            "reason": "These policies read the clean pair and are development-only ceilings.",
+            "oracle_rewrite": policy_results["oracle_rewrite_upper_bound"],
+            "oracle_clarification": policy_results["oracle_clarification_upper_bound"],
+        },
         "happy_direct": _summary_metrics(happy_metrics),
         "mitigation_beneficial": beneficial,
+        "claim_status": "rq3_candidate" if beneficial else "no_oracle_free_benefit_in_stub",
         "overhead": {
-            "clarify_steps_mean": 1.0,
+            "clarification_requests_mean": 1.0,
             "rewrite_char_delta_mean": _rewrite_char_delta_mean(rewrite_episodes),
         },
         "gate": {

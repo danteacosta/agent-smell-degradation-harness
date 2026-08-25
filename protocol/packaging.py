@@ -36,9 +36,15 @@ def _analysis_summary(analysis: dict[str, Any]) -> dict[str, Any]:
 def _mitigation_summary(mitigation: dict[str, Any]) -> dict[str, Any]:
     return {
         "mitigation_beneficial": mitigation["mitigation_beneficial"],
+        "claim_status": mitigation["claim_status"],
         "direct_paired_degradation_rate": mitigation["direct"]["paired_degradation_rate"],
-        "rewrite_paired_degradation_rate": mitigation["rewrite"]["paired_degradation_rate"],
-        "clarify_paired_degradation_rate": mitigation["clarify"]["paired_degradation_rate"],
+        "structured_rewrite_paired_degradation_rate": mitigation[
+            "structured_rewrite"
+        ]["paired_degradation_rate"],
+        "targeted_clarification_paired_degradation_rate": mitigation[
+            "targeted_clarification"
+        ]["paired_degradation_rate"],
+        "oracle_upper_bounds": mitigation["oracle_upper_bounds"],
         "overhead": mitigation["overhead"],
         "gate": mitigation["gate"],
     }
@@ -142,16 +148,18 @@ def render_bundle_summary(bundle: dict[str, Any]) -> str:
             f"- Smell-blind paired degradation rate: "
             f"{analysis['smell_blind_paired_degradation_rate']:.3f}",
             "",
-            "## Mitigation (H5)",
+            "## Conditional mitigation extension (RQ3)",
             "",
             f"- Mitigation beneficial: {mitigation['mitigation_beneficial']}",
             f"- Direct paired degradation rate: "
             f"{mitigation['direct_paired_degradation_rate']:.3f}",
-            f"- Rewrite paired degradation rate: "
-            f"{mitigation['rewrite_paired_degradation_rate']:.3f}",
-            f"- Clarify paired degradation rate: "
-            f"{mitigation['clarify_paired_degradation_rate']:.3f}",
-            f"- Clarify steps (mean): {mitigation['overhead']['clarify_steps_mean']}",
+            f"- Structured rewrite paired degradation rate: "
+            f"{mitigation['structured_rewrite_paired_degradation_rate']:.3f}",
+            f"- Targeted clarification paired degradation rate: "
+            f"{mitigation['targeted_clarification_paired_degradation_rate']:.3f}",
+            f"- Clarification requests (mean): "
+            f"{mitigation['overhead']['clarification_requests_mean']}",
+            "- Oracle upper bounds are development-only and excluded from RQ3.",
             "",
             "## Reliability (synthetic)",
             "",

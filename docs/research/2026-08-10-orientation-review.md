@@ -15,9 +15,10 @@ holdout.
 
 | Source | What it establishes | Consequence for this thesis |
 | --- | --- | --- |
-| [Márcio Ribeiro's research portfolio](https://sites.google.com/a/ic.ufal.br/marcio/research) | EASY has a sustained empirical program on natural-language test smells, catalogs, transformations, perception, and reliability. | Reuse the group's smell taxonomy/rubric and empirical discipline; do not claim a new smell taxonomy. |
+| [Márcio Ribeiro's research portfolio](https://sites.google.com/a/ic.ufal.br/marcio/research) | EASY has a sustained empirical program on natural-language test smells, catalogs, transformations, perception, and reliability. | Use the program to position a downstream propagation study; do not rename it as a requirements-smell program or claim a new taxonomy. |
 | [Manual Tests Do Smell!](https://arxiv.org/abs/2308.01386) | Natural-language test smells can be catalogued and detected with empirical evaluation. | Establishes the upstream smell/detection baseline; this work should study downstream propagation and observability. |
 | [Catalog of Transformations to Remove Smells](https://arxiv.org/abs/2404.16992) | Smells can be associated with actionable transformations and professional perception. | Supports a controlled clean/defective pair design and motivates a future remediation extension, not a second primary thesis. |
+| [On the Harmfulness of Smells in Natural Language Test Cases](https://doi.org/10.1109/ESEM64174.2025.00023) | Smells matter scientifically when they measurably harm task performance, not merely because they occur. | Motivates measuring material constraint loss and operational consequences rather than counting lexical indicators. |
 | [NALABS](https://arxiv.org/abs/2202.05641) and [requirements-smell QA](https://arxiv.org/abs/1611.08847) | Requirements and test-language quality can be operationalized as smell signals. | Static smell indicators are legitimate baselines, but cannot be the claimed novel contribution. |
 | [On the Impact of Requirements Smells in Prompts](https://arxiv.org/abs/2501.04810) | Smell effects in LLM-supported traceability are task- and metric-dependent. | Pre-register one primary construct and report traceability as external validation rather than mixing outcomes. |
 | [Practitioners' perceptions on requirements smells](https://www.sciencedirect.com/science/article/pii/S0950584925001624) | Severity/frequency differ by smell type and lifecycle stage; ambiguity and unverifiability matter to practitioners. | Use type-specific labels and human annotation; avoid treating every smell as one scalar phenomenon. |
@@ -40,7 +41,8 @@ scientific moat.
 ## Downstream work required before a confirmatory claim
 
 1. Map each adopted EASY smell to an expected constraint-preservation failure
-   and a versioned annotation rubric.
+   and a versioned secondary annotation rubric; keep it separate from the
+   primary constraint-loss label.
 2. Collect the required independent intents and projects with source,
    license, project IDs, and near-clone checks.
 3. Run at least two real providers/models with genuine T1--T3 checkpoints and
@@ -58,4 +60,3 @@ their public credibility depends on one released ARP contract, synchronized
 canonical `main` branches, reproducible install instructions, and a public
 dataset/replay bundle. The current local seed, stub runs, and synthetic product
 fixtures must remain explicitly non-confirmatory.
-

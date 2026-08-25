@@ -23,13 +23,17 @@ def test_build_mitigation_report_smell_blind_policies(tmp_path):
     report = build_mitigation_report(tmp_path / "work")
 
     assert report["direct"]["paired_degradation_rate"] > 0.0
-    assert report["rewrite"]["paired_degradation_rate"] == 0.0
-    assert report["clarify"]["paired_degradation_rate"] == 0.0
+    assert report["structured_rewrite"]["paired_degradation_rate"] > 0.0
+    assert report["targeted_clarification"]["paired_degradation_rate"] > 0.0
+    assert report["oracle_upper_bounds"]["oracle_rewrite"]["paired_degradation_rate"] == 0.0
+    assert report["oracle_upper_bounds"]["oracle_clarification"]["paired_degradation_rate"] == 0.0
+    assert report["oracle_upper_bounds"]["admissible_for_rq3"] is False
     assert report["happy_direct"]["paired_degradation_rate"] == 0.0
-    assert report["mitigation_beneficial"] is True
-    assert report["overhead"]["clarify_steps_mean"] == 1.0
+    assert report["mitigation_beneficial"] is False
+    assert report["claim_status"] == "no_oracle_free_benefit_in_stub"
+    assert report["overhead"]["clarification_requests_mean"] == 1.0
     assert report["overhead"]["rewrite_char_delta_mean"] != 0.0
-    assert report["gate"]["passed"] is True
+    assert report["gate"]["passed"] is False
     assert "rewrite" in report["gate"]["detail"]
 
 
@@ -38,5 +42,5 @@ def test_write_mitigation_report_json(tmp_path):
     report = write_mitigation_report(tmp_path / "work", output_path)
 
     assert output_path.exists()
-    assert report["gate"]["passed"] is True
+    assert report["gate"]["passed"] is False
     assert "mitigation_beneficial" in report

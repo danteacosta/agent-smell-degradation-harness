@@ -1,6 +1,6 @@
 {
   "schema_version": "human-annotation/v1",
-  "rubric_version": "rubric-v1",
+  "rubric_version": "rubric-v2",
   "labels": ["clean", "minor", "moderate", "severe", "not_visible"],
   "missing_label_policy": {
     "allowed": ["not_visible", "technical_failure", "insufficient_context"],
@@ -18,6 +18,30 @@
     "bootstrap_seed": 0,
     "target": 0.7,
     "adjudication_threshold": 0.6
+  },
+  "secondary_output_smell_analysis": {
+    "status": "preregistered_secondary",
+    "unit": "generated_acceptance_criteria",
+    "labels": ["absent", "present", "uncertain", "not_visible"],
+    "visible_fields": ["generated_acceptance_criteria"],
+    "blind_fields": [
+      "requirement_variant",
+      "defect_family",
+      "primary_outcome",
+      "oracle_result",
+      "detector_prediction"
+    ],
+    "fields": [
+      "catalog_source",
+      "catalog_category",
+      "affected_condition",
+      "evidence_span",
+      "annotator_rationale"
+    ],
+    "catalog_scope": "natural-language test smells only",
+    "primary_outcome_independent": true,
+    "excluded_from_h1_h2": true,
+    "no_automatic_inference_from_requirement_smell": true
   },
   "secondary_llm_judges": "exploratory_only"
 }
