@@ -158,14 +158,14 @@ Analysis and experiment exports are gitignored; `make gate` still reads only `ev
 
 ## Optional clarification extension
 
-Clarification and rewrite experiments are optional extensions. They do not block the pre-pilot, pilot, defense, or the core CI pipeline; when enabled, their effect is reported as conditional E3 rather than a mandatory thesis claim.
+Clarification and rewrite experiments are optional extensions. They do not block the pre-pilot, pilot, defense, or the core CI pipeline; when enabled, their effect is reported as conditional E3 rather than a mandatory thesis claim. The RQ3-admissible policies (`structured_rewrite` and `targeted_clarification`) use only the received requirement plus an independently supplied clarification answer. Development-only oracle upper bounds are reported separately and can never support RQ3.
 
 | Command | Purpose |
 |---------|---------|
-| `make extension-clarification` | Compare optional `direct` / `rewrite` / `clarify` policies; write `eval/mitigation_report.json` |
+| `make extension-clarification` | Compare `direct`, two oracle-free RQ3 policies, and two explicitly excluded oracle upper bounds; write `eval/mitigation_report.json` |
 | `make extension-dissertation` | Build the optional extension report bundle |
 
-The default runner, pre-pilot and CI use `direct`; clarification experiments opt in explicitly through the extension commands. Their trade-off report is conditional E3, not an unconditional mitigation claim. Export guide: [docs/dissertation/README.md](docs/dissertation/README.md).
+The default runner, pre-pilot and CI use `direct`; clarification experiments opt in explicitly through the extension commands. Independently sourced answers can be passed to `run_eval(..., clarification_answers={intent_id: answer})`. Legacy names `rewrite` and `clarify` fail closed because they do not state whether oracle access is allowed. The trade-off report is conditional E3, not an unconditional mitigation claim. Export guide: [docs/dissertation/README.md](docs/dissertation/README.md).
 
 ## Pre-experiment tooling
 

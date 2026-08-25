@@ -16,7 +16,7 @@ from eval.experiment import run_dry_run
 from eval.oracles import score_artifact
 from eval.runner import run_eval
 from eval.thesis_analysis import write_thesis_analysis
-from mitigation.rewrite import rewrite_requirement
+from mitigation.rewrite import oracle_rewrite_upper_bound
 from pairs.loader import load_all_pairs
 from protocol.irr import compare_annotations
 
@@ -72,7 +72,9 @@ def test_thesis_analysis_runs_on_eval_episodes(tmp_path):
 
 def test_template_rewrite_not_verbatim_clean_copy():
     pair = next(p for p in load_all_pairs() if p["intent_id"] == "RF-09")
-    out = rewrite_requirement(pair["smelly_requirement"], pair, mode="template")
+    out = oracle_rewrite_upper_bound(
+        pair["smelly_requirement"], pair, mode="oracle_template"
+    )
     assert out.text != pair["clean_requirement"]
     assert "5" in out.text
 

@@ -37,6 +37,24 @@ Primary labels are human/adjudicated according to the versioned annotation rubri
 
 Secondary LLM judges are exploratory only and cannot replace primary labels.
 
+As a preregistered secondary outcome, annotators separately record whether the
+generated acceptance criteria exhibit a recognizable natural-language test
+smell, its catalog source/category, the affected condition, and an evidence
+span. This output-smell label is not inferred from the upstream treatment and
+is excluded from H1 and H2. The primary scientific outcome remains material
+constraint loss.
+
+## Conditional RQ3 mitigation extension
+
+RQ3 is enabled only after the confirmatory gates are viable. It compares two
+oracle-free interventions: a structure-preserving rewrite of the received text
+and a targeted clarification question whose answer is supplied independently.
+Neither intervention may read the clean pair, oracle specification, defect
+label, or terminal outcome. Intent distortion, latency, cost, interaction
+burden, and paired ordinal effect are reported. Perfect restoration from the
+clean pair or oracle remains a development upper bound and is never admissible
+as RQ3 evidence.
+
 ## Analysis freeze
 
 The preregistration, precision plan, runtime producer, ARP compatibility matrix, feature schema, annotation rubric, split algorithm, and analysis code are frozen in a hash manifest before any provider run. The checked-in manifest is intentionally `candidate`; a confirmatory provider run is refused unless it is marked `confirmed` and every hash matches. Pilot/stub runs are explicitly labelled and never pooled with real-provider confirmatory runs.

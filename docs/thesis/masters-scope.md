@@ -45,18 +45,32 @@ The current seven-source seed, stub runs, prompted checkpoint summaries,
 oracle-derived labels, synthetic replay fixtures, and product smoke reports
 are development evidence only.
 
-## Relation to requirements-smell research
+## From natural-language test smells to requirement-induced constraint loss
 
-Requirements smells are the controlled upstream treatment and a static baseline,
-not the claimed novelty. Existing smell taxonomies and studies establish that
-smell effects are task- and metric-dependent. The thesis asks the downstream
-question: which constraint-preservation failures are visible in the agent's
-pre-final process, under what checkpoints, and with what operational cost?
+Natural-language test-smell research has progressed from cataloguing and
+detecting smells, through systematic transformations, to controlled evidence
+about harmfulness. This thesis extends that trajectory without proposing
+another catalog: it studies whether a controlled upstream requirement defect
+propagates into material constraint loss in agent-generated acceptance criteria
+and whether the loss is observable before the terminal artifact.
 
-This makes the project complementary to the EASY group's requirements-smell
-program: the smell rubric and transformations can provide a principled
-experimental treatment, while the thesis contributes process observability,
+A requirement smell is a risk indicator. The confirmatory treatment is the
+independently reviewed removal of one test-relevant condition, not the mere
+presence of a lexical marker. Static smell signals remain baselines because
+prior effects are task- and metric-dependent.
+
+This makes the project complementary to the EASY group's natural-language
+test-smell program. Its catalogs inform a preregistered secondary analysis of
+whether defective requirements induce recognizable smells in generated
+acceptance criteria; its transformations inform exploratory intervention
+design. Neither defines the primary H1/H2 treatment or outcome. The thesis
+contributes upstream-to-downstream propagation, process observability,
 label-plane separation, and a reproducible evaluation boundary.
+
+The optional RQ3 compares a structure-preserving rewrite and a targeted
+clarification question. Both must operate without the clean pair or oracle.
+Perfect restorations that read those fields are retained only as development
+upper bounds and are excluded from scientific claims.
 
 ## Academic relevance and originality
 

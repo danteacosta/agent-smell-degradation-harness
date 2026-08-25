@@ -24,6 +24,7 @@ def test_build_dissertation_bundle_exports_required_sections(tmp_path):
     assert bundle["taxonomy_modes"]
     assert bundle["analysis_summary"]["effect_detected"] is True
     assert "mitigation_beneficial" in bundle["mitigation_summary"]
+    assert bundle["mitigation_summary"]["oracle_upper_bounds"]["admissible_for_rq3"] is False
     assert bundle["paired_stats"]["proportion_diff"] > 0.0
     assert bundle["reliability"]["synthetic"] is True
 
@@ -34,6 +35,7 @@ def test_render_bundle_summary_includes_mitigation_and_limitation(tmp_path):
     summary = render_bundle_summary(bundle)
 
     assert "Mitigation beneficial" in summary
+    assert "excluded from RQ3" in summary
     assert "Synthetic demo only" in summary
 
 

@@ -8,8 +8,8 @@ manifest, not in the annotator-visible JSON.
 from __future__ import annotations
 
 from dataclasses import dataclass
-import random
 import json
+import random
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
@@ -36,7 +36,7 @@ class BlindedAnnotationTask:
         record: Mapping[str, Any],
         *,
         duplicate_subset: bool = False,
-        rubric_version: str = "rubric-v1",
+        rubric_version: str = "rubric-v2",
     ) -> "BlindedAnnotationTask":
         item_id = str(record.get("episode_id") or record.get("item_id") or "")
         text = str(record.get("requirement_text") or record.get("prompt") or "")
@@ -47,6 +47,55 @@ class BlindedAnnotationTask:
         payload = {
             "item_id": self.item_id,
             "presented_text": self.presented_text,
+            "rubric_version": self.rubric_version,
+            "duplicate_subset": self.duplicate_subset,
+        }
+        assert not _FORBIDDEN_FIELDS.intersection(payload)
+        return payload
+
+
+@dataclass(frozen=True, slots=True)
+class BlindedOutputSmellTask:
+    """Secondary task that exposes only the generated acceptance criteria."""
+
+    item_id: str
+    generated_acceptance_criteria: str
+    rubric_version: str = "rubric-v2"
+    duplicate_subset: bool = False
+
+    def __post_init__(self) -> None:
+        if not self.item_id or not self.generated_acceptance_criteria.strip():
+            raise ValueError(
+                "output-smell task requires item_id and generated acceptance criteria"
+            )
+        if not self.rubric_version:
+            raise ValueError("output-smell task requires rubric_version")
+
+    @classmethod
+    def from_record(
+        cls,
+        record: Mapping[str, Any],
+        *,
+        duplicate_subset: bool = False,
+        rubric_version: str = "rubric-v2",
+    ) -> "BlindedOutputSmellTask":
+        item_id = str(record.get("episode_id") or record.get("item_id") or "")
+        generated = record.get(
+            "generated_acceptance_criteria", record.get("artifact_text", "")
+        )
+        if isinstance(generated, Mapping):
+            generated = json.dumps(generated, sort_keys=True)
+        return cls(
+            item_id=item_id,
+            generated_acceptance_criteria=str(generated),
+            rubric_version=rubric_version,
+            duplicate_subset=duplicate_subset,
+        )
+
+    def to_annotation_payload(self) -> dict[str, Any]:
+        payload = {
+            "item_id": self.item_id,
+            "generated_acceptance_criteria": self.generated_acceptance_criteria,
             "rubric_version": self.rubric_version,
             "duplicate_subset": self.duplicate_subset,
         }
@@ -109,6 +158,6 @@ def load_annotation_rubric(path: Path | str | None = None) -> dict[str, Any]:
 
 
 __all__ = [
-    "BlindedAnnotationTask", "load_annotation_rubric", "select_duplicate_subset",
-    "validate_blinded_payload", "validate_duplicate_subset",
+    "BlindedAnnotationTask", "BlindedOutputSmellTask", "load_annotation_rubric",
+    "select_duplicate_subset", "validate_blinded_payload", "validate_duplicate_subset",
 ]

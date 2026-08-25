@@ -28,7 +28,7 @@ TIER1_KEYS = {
 }
 
 
-def test_tier3_rewrite_clarify_reduce_degradation_vs_direct(tmp_path):
+def test_tier3_oracle_free_policies_do_not_fake_stub_recovery(tmp_path):
     metrics_direct, _ = run_eval(
         failure_mode="smell-blind",
         policy="direct",
@@ -37,34 +37,34 @@ def test_tier3_rewrite_clarify_reduce_degradation_vs_direct(tmp_path):
     )
     metrics_rewrite, _ = run_eval(
         failure_mode="smell-blind",
-        policy="rewrite",
+        policy="structured_rewrite",
         output_path=tmp_path / "rewrite.json",
         traces_dir=tmp_path / "traces_rewrite",
     )
     metrics_clarify, _ = run_eval(
         failure_mode="smell-blind",
-        policy="clarify",
+        policy="targeted_clarification",
         output_path=tmp_path / "clarify.json",
         traces_dir=tmp_path / "traces_clarify",
     )
 
     assert metrics_direct["paired_degradation_rate"] > 0.0
-    assert metrics_rewrite["paired_degradation_rate"] == 0.0
-    assert metrics_clarify["paired_degradation_rate"] == 0.0
+    assert metrics_rewrite["paired_degradation_rate"] > 0.0
+    assert metrics_clarify["paired_degradation_rate"] > 0.0
 
 
 def test_tier3_mitigation_report_gate_fields(tmp_path):
     report = build_mitigation_report(tmp_path / "work")
 
     assert "mitigation_beneficial" in report
-    assert report["gate"]["passed"] is True
-    assert report["overhead"]["clarify_steps_mean"] == 1.0
+    assert report["gate"]["passed"] is False
+    assert report["overhead"]["clarification_requests_mean"] == 1.0
     assert "rewrite_char_delta_mean" in report["overhead"]
 
     output_path = tmp_path / "mitigation_report.json"
     write_mitigation_report(tmp_path / "work2", output_path)
     written = json.loads(output_path.read_text(encoding="utf-8"))
-    assert written["gate"]["passed"] is True
+    assert written["gate"]["passed"] is False
 
 
 def test_tier3_dissertation_bundle_exports_without_secrets(tmp_path):
@@ -82,7 +82,7 @@ def test_tier3_dissertation_bundle_exports_without_secrets(tmp_path):
         assert secret_key not in serialized
 
     assert bundle["reliability"]["synthetic"] is True
-    assert bundle["mitigation_summary"]["gate"]["passed"] is True
+    assert bundle["mitigation_summary"]["gate"]["passed"] is False
     assert output_path.exists()
     assert summary_path.exists()
 
