@@ -43,13 +43,18 @@ def _source_record(tmp_path: Path, index: int, *, project: str = "project-a") ->
         "smelly_requirement": requirements[index].replace(" the ", " ", 1) + " after some time.",
         "natural_variant": False,
         "contamination_notes": "No model output or evaluation answer was used.",
+        "project_domain": "ecommerce-order-management",
+        "lifecycle_role": "functional-requirement",
+        "lifecycle_phase": "specification",
+        "conditional_semantics": [],
+        "conditional_semantics_schema": "conditional-semantics/v1",
     }
 
 
 def _complete_manifest(tmp_path: Path) -> dict[str, object]:
     records = [_source_record(tmp_path, index, project=f"project-{index % 3}") for index in range(12)]
     return {
-        "schema_version": "confirmatory-v1",
+        "schema_version": "confirmatory-v2",
         "expected": {"intents": 12, "variants": ["clean", "smelly"], "replications": 5},
         "near_clone_threshold": 0.92,
         "approved_paraphrases": [],
@@ -129,6 +134,28 @@ def test_confirmatory_manifest_rejects_missing_provenance_and_project(tmp_path: 
     manifest["records"][1]["project_id"] = ""  # type: ignore[index]
 
     with pytest.raises(ValueError, match="provenance_url"):
+        validate_confirmatory_manifest(manifest)
+
+
+def test_confirmatory_manifest_requires_context_metadata(tmp_path: Path):
+    manifest = _complete_manifest(tmp_path)
+    manifest["records"][0].pop("project_domain")  # type: ignore[index]
+
+    with pytest.raises(ValueError, match="project_domain"):
+        validate_confirmatory_manifest(manifest)
+
+
+def test_confirmatory_manifest_rejects_malformed_conditional_semantics(tmp_path: Path):
+    manifest = _complete_manifest(tmp_path)
+    manifest["records"][0]["conditional_semantics"] = [{  # type: ignore[index]
+        "antecedent": "the request is late",
+        "consequent": "the request is rejected",
+        "necessity_status": "invalid",
+        "temporal_relation": "next_state",
+        "negative_case": {"status": "specified", "description": "the request is on time"},
+    }]
+
+    with pytest.raises(ValueError, match="conditional_semantics"):
         validate_confirmatory_manifest(manifest)
 
 

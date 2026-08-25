@@ -13,6 +13,8 @@ import json
 from collections.abc import Mapping
 from typing import Any
 
+from protocol.conditional_semantics import validate_conditional_semantics
+
 from .schema import (
     ARP_PACKAGE_VERSION,
     ARP_WIRE_VERSION,
@@ -62,7 +64,10 @@ def _typed_attributes(name: str, attributes: Mapping[str, Any]) -> dict[str, Any
     result = copy.deepcopy(dict(attributes))
     if name == "interpretation.completed":
         required = {"constraints", "quantities", "unresolved_references", "assumptions", "contradictions"}
-        if set(result) != required:
+        extended = required | {"conditional_semantics"}
+        if set(result) == required:
+            result["conditional_semantics"] = []
+        elif set(result) != extended:
             raise ContractError("T1 attributes do not match pre-final/v1")
         for field in ("constraints", "unresolved_references", "assumptions", "contradictions"):
             values = result[field]
@@ -73,6 +78,10 @@ def _typed_attributes(name: str, attributes: Mapping[str, Any]) -> dict[str, Any
                 raise ContractError("T1.quantities items must contain value and unit")
             if isinstance(quantity["value"], bool) or not isinstance(quantity["value"], (int, float)) or not isinstance(quantity["unit"], str):
                 raise ContractError("T1.quantity value/unit types are invalid")
+        try:
+            result["conditional_semantics"] = validate_conditional_semantics(result["conditional_semantics"])
+        except ValueError as error:
+            raise ContractError(str(error)) from error
     elif name == "plan.completed":
         required = {"validation_checks", "planned_tools", "coverage_targets"}
         if set(result) != required or any(not isinstance(result[field], list) or not all(isinstance(item, str) for item in result[field]) for field in required):

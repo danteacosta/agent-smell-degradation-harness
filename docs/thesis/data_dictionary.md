@@ -4,7 +4,12 @@
 |---|---|---|---|
 | `source_intent_id` | dataset | independent source requirement identity | no |
 | `project_id` | dataset | project holdout group | no |
+| `project_domain` | dataset | project/product domain used for heterogeneity and external-validity checks | no |
+| `lifecycle_role` | dataset | role of the requirement in the lifecycle | no |
+| `lifecycle_phase` | dataset | lifecycle phase in which the source requirement is situated | no |
 | `defect_family` | dataset | controlled smell/degradation family | no |
+| `conditional_semantics` | dataset/T1 | bounded annotation of antecedent, consequent, necessity, temporal relation, and negative case | no |
+| `conditional_semantics_schema` | dataset/T1 | explicit version of the bounded conditional-semantics contract | no |
 | `variant` | design | clean or natural smelly variant | no |
 | `replication_id` | design | repeated measurement index | no |
 | `requirement_text` | input | provider-visible requirement text | yes |
@@ -26,3 +31,17 @@ feature plane may consume only input fields and provider-produced T0–T3
 attributes before the terminal cutoff.
 
 Handoff and lint artifacts are retained for reproducibility and failure diagnosis, but are excluded from H1/H2 feature extraction and from primary labels. Product candidate memory is maintained outside the thesis dataset and is never joined into confirmatory rows.
+
+`conditional_semantics` is an explicit list. Each item contains `antecedent`,
+`consequent`, `necessity_status` (`sufficient_only`, `also_necessary`, or
+`undetermined`), `temporal_relation`, and `negative_case` (`specified`,
+`not_specified`, or `not_applicable`). The empty list means that no conditional
+clause was identified. These annotations are interpretation evidence, not
+terminal labels, smell outcomes, or oracle data. Project-domain and lifecycle
+fields are context metadata for planned heterogeneity analyses; they are never
+copied into `features`.
+
+The source manifest is versioned as `confirmatory-v2` because these required
+metadata fields are not backward-compatible with the previous source contract.
+The current development seed is still blocked from confirmatory claims by its
+missing external provenance and project assignments.

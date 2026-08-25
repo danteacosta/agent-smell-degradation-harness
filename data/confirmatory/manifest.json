@@ -1,5 +1,5 @@
 {
-  "schema_version": "confirmatory-v1",
+  "schema_version": "confirmatory-v2",
   "status": "blocked_until_provenance_complete",
   "expected": {
     "intents": 12,
@@ -19,7 +19,12 @@
       "clean_requirement": "Order ID must follow P- plus exactly three digits, e.g. P-014",
       "smelly_requirement": "Order ID starts with P- followed by sequential digits",
       "natural_variant": false,
-      "contamination_notes": "Local curated MesaFlow development seed; not confirmatory evidence."
+      "contamination_notes": "Local curated MesaFlow development seed; not confirmatory evidence.",
+      "project_domain": "ecommerce-order-management",
+      "lifecycle_role": "functional-requirement",
+      "lifecycle_phase": "specification",
+      "conditional_semantics": [],
+      "conditional_semantics_schema": "conditional-semantics/v1"
     },
     {
       "source_intent_id": "RF-07",
@@ -31,7 +36,12 @@
       "clean_requirement": "Cards must be ordered from oldest to newest by time",
       "smelly_requirement": "Cards ordered by order antiquity",
       "natural_variant": false,
-      "contamination_notes": "Local curated MesaFlow development seed; not confirmatory evidence."
+      "contamination_notes": "Local curated MesaFlow development seed; not confirmatory evidence.",
+      "project_domain": "ecommerce-order-management",
+      "lifecycle_role": "functional-requirement",
+      "lifecycle_phase": "specification",
+      "conditional_semantics": [],
+      "conditional_semantics_schema": "conditional-semantics/v1"
     },
     {
       "source_intent_id": "RF-09",
@@ -43,7 +53,20 @@
       "clean_requirement": "New orders are delayed after more than 5 minutes.",
       "smelly_requirement": "New orders delayed after significant time.",
       "natural_variant": false,
-      "contamination_notes": "Local curated MesaFlow development seed; not confirmatory evidence."
+      "contamination_notes": "Local curated MesaFlow development seed; not confirmatory evidence.",
+      "project_domain": "ecommerce-order-management",
+      "lifecycle_role": "functional-requirement",
+      "lifecycle_phase": "specification",
+      "conditional_semantics": [
+        {
+          "antecedent": "a new order has waited more than five minutes",
+          "consequent": "the new order is delayed",
+          "necessity_status": "sufficient_only",
+          "temporal_relation": "eventually",
+          "negative_case": {"status": "specified", "description": "the order has waited five minutes or less"}
+        }
+      ],
+      "conditional_semantics_schema": "conditional-semantics/v1"
     },
     {
       "source_intent_id": "RF-09-ALT",
@@ -55,7 +78,20 @@
       "clean_requirement": "Flag new orders as delayed once they exceed 5 minutes waiting.",
       "smelly_requirement": "Flag new orders delayed after a while.",
       "natural_variant": false,
-      "contamination_notes": "Local alternate phrasing; not an independent confirmatory intent."
+      "contamination_notes": "Local alternate phrasing; not an independent confirmatory intent.",
+      "project_domain": "ecommerce-order-management",
+      "lifecycle_role": "functional-requirement",
+      "lifecycle_phase": "specification",
+      "conditional_semantics": [
+        {
+          "antecedent": "a new order has waited more than five minutes",
+          "consequent": "the new order is delayed",
+          "necessity_status": "sufficient_only",
+          "temporal_relation": "eventually",
+          "negative_case": {"status": "specified", "description": "the order has waited five minutes or less"}
+        }
+      ],
+      "conditional_semantics_schema": "conditional-semantics/v1"
     },
     {
       "source_intent_id": "RF-11",
@@ -67,7 +103,20 @@
       "clean_requirement": "Refunds must be processed within 10 minutes of approval.",
       "smelly_requirement": "Refunds must be processed within 10 minutes of approval. Late refunds after 15 minutes are escalated.",
       "natural_variant": false,
-      "contamination_notes": "Local curated MesaFlow development seed; not confirmatory evidence."
+      "contamination_notes": "Local curated MesaFlow development seed; not confirmatory evidence.",
+      "project_domain": "ecommerce-order-management",
+      "lifecycle_role": "functional-requirement",
+      "lifecycle_phase": "specification",
+      "conditional_semantics": [
+        {
+          "antecedent": "a refund has been approved",
+          "consequent": "the refund is processed within ten minutes",
+          "necessity_status": "undetermined",
+          "temporal_relation": "during",
+          "negative_case": {"status": "specified", "description": "the refund is processed after ten minutes"}
+        }
+      ],
+      "conditional_semantics_schema": "conditional-semantics/v1"
     },
     {
       "source_intent_id": "RF-13",
@@ -79,7 +128,12 @@
       "clean_requirement": "Display exactly the 5 oldest active orders",
       "smelly_requirement": "Display old active orders in sufficient quantity",
       "natural_variant": false,
-      "contamination_notes": "Local curated MesaFlow development seed; not confirmatory evidence."
+      "contamination_notes": "Local curated MesaFlow development seed; not confirmatory evidence.",
+      "project_domain": "ecommerce-order-management",
+      "lifecycle_role": "functional-requirement",
+      "lifecycle_phase": "specification",
+      "conditional_semantics": [],
+      "conditional_semantics_schema": "conditional-semantics/v1"
     },
     {
       "source_intent_id": "RF-13-SOFT",
@@ -91,7 +145,12 @@
       "clean_requirement": "Display exactly the 5 oldest active orders",
       "smelly_requirement": "Display several of the oldest active orders",
       "natural_variant": false,
-      "contamination_notes": "Local alternate phrasing; not an independent confirmatory intent."
+      "contamination_notes": "Local alternate phrasing; not an independent confirmatory intent.",
+      "project_domain": "ecommerce-order-management",
+      "lifecycle_role": "functional-requirement",
+      "lifecycle_phase": "specification",
+      "conditional_semantics": [],
+      "conditional_semantics_schema": "conditional-semantics/v1"
     }
   ]
 }

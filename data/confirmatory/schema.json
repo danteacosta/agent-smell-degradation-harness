@@ -4,7 +4,7 @@
   "type": "object",
   "required": ["schema_version", "expected", "near_clone_threshold", "approved_paraphrases", "records"],
   "properties": {
-    "schema_version": {"const": "confirmatory-v1"},
+    "schema_version": {"const": "confirmatory-v2"},
     "status": {"type": "string"},
     "expected": {
       "type": "object",
@@ -25,7 +25,8 @@
         "required": [
           "source_intent_id", "source", "source_sha256", "provenance_url", "project_id",
           "defect_family", "clean_requirement", "smelly_requirement", "natural_variant",
-          "contamination_notes"
+          "contamination_notes", "project_domain", "lifecycle_role", "lifecycle_phase",
+          "conditional_semantics", "conditional_semantics_schema"
         ],
         "properties": {
           "source_intent_id": {"type": "string", "minLength": 1},
@@ -37,7 +38,56 @@
           "clean_requirement": {"type": "string", "minLength": 1},
           "smelly_requirement": {"type": "string", "minLength": 1},
           "natural_variant": {"type": "boolean"},
-          "contamination_notes": {"type": "string", "minLength": 1}
+          "contamination_notes": {"type": "string", "minLength": 1},
+          "project_domain": {
+            "enum": ["ecommerce-order-management", "finance", "healthcare", "public-sector", "developer-tools"]
+          },
+          "lifecycle_role": {
+            "enum": ["functional-requirement", "non-functional-requirement", "acceptance-criterion", "operational-policy"]
+          },
+          "lifecycle_phase": {
+            "enum": ["elicitation", "specification", "validation", "maintenance"]
+          },
+          "conditional_semantics_schema": {"const": "conditional-semantics/v1"},
+          "conditional_semantics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "antecedent", "consequent", "necessity_status", "temporal_relation", "negative_case"
+              ],
+              "properties": {
+                "antecedent": {"type": "string", "minLength": 1},
+                "consequent": {"type": "string", "minLength": 1},
+                "necessity_status": {
+                  "enum": ["sufficient_only", "also_necessary", "undetermined"]
+                },
+                "temporal_relation": {
+                  "enum": ["during", "next_state", "eventually", "irrelevant", "undetermined"]
+                },
+                "negative_case": {
+                  "type": "object",
+                  "required": ["status", "description"],
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "status": {"const": "specified"},
+                        "description": {"type": "string", "minLength": 1}
+                      }
+                    },
+                    {
+                      "properties": {
+                        "status": {"enum": ["not_specified", "not_applicable"]},
+                        "description": {"type": "null"}
+                      }
+                    }
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          }
         },
         "additionalProperties": false
       }

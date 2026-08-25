@@ -25,6 +25,19 @@ The checkpoint boundary analysis reports B1, B2, and B3 on the untouched test
 rows. It is a planned cumulative boundary map, not three opportunities to
 select the most favorable result; H2 remains the frozen B3-versus-B0 contrast.
 
+T1 interpretation includes the additive `conditional_semantics` field. For
+each conditional clause, the runtime records the antecedent, consequent,
+`necessity_status`, `temporal_relation`, and an explicit `negative_case`; an
+empty list is used when no conditional clause is present. Legacy development
+traces normalize to an empty list, while confirmatory staged-provider runs
+require the field. Project domain, lifecycle role, and lifecycle phase are
+required source metadata for planned heterogeneity and external-validity
+checks. They remain outside deployable features and cannot redefine H1/H2
+post hoc.
+The structured annotation is retained for auditability and a planned secondary
+interpretation analysis; it is not converted into an H2 feature unless a new
+feature definition is frozen before confirmatory collection.
+
 Each episode may emit a versioned `episode_handoff/v1` JSON sidecar and semantic-lint report. These are auditability and quality-control artifacts only. The staged provider runtime now emits T1 and T2 as bounded external provider responses, invokes a deterministic T1→T2 semantic-plan coverage validator for T3, and requests the terminal artifact only afterward, all within one episode. T3 reports schema/contract errors, uncovered interpreted constraints, and unacknowledged unresolved references, assumptions, or contradictions without reading T4, an oracle, or a label. `runtime_native` means emitted by the instrumented runtime while the episode is active; it does not mean chain-of-thought, hidden activations, or retrospective prompting. Provider/model/version/configuration identifiers, stage request/response hashes, source event IDs, and monotonic timestamps preceding T4 are mandatory. The implementation is protocol-eligible but not empirically qualified until two real provider/model configurations pass the runtime qualification suite. `LiveAgent.observe_checkpoints()` remains `prompted_snapshot` and is ineligible. A `pre_final` handoff is fail-closed to T0–T3 facts; a `post_eval` handoff may contain labels and outcomes only in the label plane.
 
 ## Exclusions and missingness
@@ -63,6 +76,12 @@ The preregistration, precision plan, runtime producer, ARP compatibility matrix,
 
 Requirements smells, smell taxonomies, and their effects on LLM-supported software engineering are established research areas. Prior work has already measured requirements-smell effects on automated traceability with multiple models and projects, reporting mixed task-dependent outcomes. This thesis therefore does not claim novelty from detecting smells or merely showing that prompt wording can matter.
 
+The scope also follows the earlier quality-assurance evidence that smell
+categories can be difficult to distinguish in practice, and the conditional
+requirements evidence that readers disagree about formal meaning. These works
+motivate explicit context metadata and conditional-semantics annotations rather
+than a larger smell taxonomy.
+
 The contribution is narrower: a leakage-resistant paired protocol for measuring the incremental value of provider-produced pre-final provenance for constraint-preservation failures, with independent labels, project holdout, calibration, cluster uncertainty, and an explicit boundary between detectable and silent degradation. Recent prefix-monitor work is treated as a direct comparator and motivates reporting operational utility in addition to ranking metrics.
 
-References: [On the Impact of Requirements Smells in Prompts](https://arxiv.org/abs/2501.04810), [Characterizing Requirements Smells](https://arxiv.org/abs/2404.11106), [ClarifyGPT](https://doi.org/10.1145/3660810), and [PrefixGuard](https://arxiv.org/abs/2605.06455).
+References: [Rapid quality assurance with Requirements Smells](https://www.sciencedirect.com/science/article/abs/pii/S0164121216000789), [How Do Practitioners Interpret Conditionals in Requirements?](https://arxiv.org/abs/2109.02063), [On the Impact of Requirements Smells in Prompts](https://arxiv.org/abs/2501.04810), [Characterizing Requirements Smells](https://arxiv.org/abs/2404.11106), [ClarifyGPT](https://doi.org/10.1145/3660810), and [PrefixGuard](https://arxiv.org/abs/2605.06455).

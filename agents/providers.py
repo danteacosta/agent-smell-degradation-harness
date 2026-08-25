@@ -17,6 +17,31 @@ class ProviderRequest:
     task_family: str
 
 
+def provider_visible_pair(
+    pair: dict[str, Any],
+    *,
+    variant: str,
+    task_family: str,
+) -> dict[str, Any]:
+    """Build the minimum context a provider may inspect.
+
+    The full pair remains local to the harness for contract checks and labels.
+    Providers receive neither variants nor source annotations, oracle data,
+    smell metadata, project metadata, nor the paired alternative requirement.
+    """
+
+    requirement_key = "clean_requirement" if variant == "clean" else "smelly_requirement"
+    requirement = pair.get(requirement_key)
+    contract = pair.get("generation_contract", {})
+    task_contract = contract.get(task_family, {}) if isinstance(contract, dict) else {}
+    output_keys = task_contract.get("output_keys", []) if isinstance(task_contract, dict) else []
+    return {
+        "requirement": requirement,
+        "task_family": task_family,
+        "output_keys": list(output_keys) if isinstance(output_keys, list) else [],
+    }
+
+
 class Provider(Protocol):
     name: str
 

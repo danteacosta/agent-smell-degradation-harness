@@ -43,6 +43,7 @@ def test_complete_vendor_export_builds_and_replays(source: str) -> None:
     assert bundle["manifest"]["status"] == "non_confirmatory_adapter_demo"
     assert bundle["manifest"]["trace_sha256"]
     assert bundle["_trace_raw"].endswith(b"\n")
+    assert bundle["events"][0]["attributes"]["conditional_semantics"] == []
     assert run_bundle(bundle)["decision"] == "approve"
     assert "provider" not in bundle["manifest"]
     assert "model" not in bundle["manifest"]

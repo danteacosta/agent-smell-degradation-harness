@@ -77,11 +77,38 @@ def test_valid_bundle_and_canonical_hash_are_stable() -> None:
     bundle = valid_bundle()
     validated = validate_bundle_mapping(bundle)
     assert validated["manifest"]["arp_wire_version"] == "2.0.5"
+    assert validated["events"][0]["attributes"]["conditional_semantics"] == []
     first = sha256_bytes(canonical_json_bytes(bundle))
     second = sha256_bytes(canonical_json_bytes(copy.deepcopy(bundle)))
     assert first == second
     assert hashlib.sha256(canonical_json_bytes(bundle)).hexdigest() == first
     assert not canonical_json_bytes(bundle).endswith(b"\n")
+
+
+def test_extended_conditional_semantics_survives_replay_validation() -> None:
+    bundle = valid_bundle()
+    bundle["events"][0]["attributes"]["conditional_semantics"] = [{
+        "antecedent": "the request exceeds five minutes",
+        "consequent": "the request is rejected",
+        "necessity_status": "sufficient_only",
+        "temporal_relation": "next_state",
+        "negative_case": {"status": "specified", "description": "the request is at or below five minutes"},
+    }]
+    validated = validate_bundle_mapping(bundle)
+    assert validated["events"][0]["attributes"]["conditional_semantics"][0]["temporal_relation"] == "next_state"
+
+
+def test_malformed_conditional_semantics_fail_closed() -> None:
+    bundle = valid_bundle()
+    bundle["events"][0]["attributes"]["conditional_semantics"] = [{
+        "antecedent": "the request exceeds five minutes",
+        "consequent": "the request is rejected",
+        "necessity_status": "invalid",
+        "temporal_relation": "next_state",
+        "negative_case": {"status": "specified", "description": "the request is at or below five minutes"},
+    }]
+    with pytest.raises(ContractError, match="necessity_status"):
+        validate_bundle_mapping(bundle)
 
 
 @pytest.mark.parametrize(

@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from datetime import datetime, timedelta, timezone
 
+import pytest
+
 from agents.providers import ReplayProvider
 from agents.runtime import RuntimeCheckpointAgent
 
@@ -15,6 +17,13 @@ def test_staged_provider_materializes_checkpoints_before_artifact() -> None:
             "unresolved_references": [],
             "assumptions": [],
             "contradictions": [],
+            "conditional_semantics": [{
+                "antecedent": "a request exceeds five minutes",
+                "consequent": "the request is rejected",
+                "necessity_status": "sufficient_only",
+                "temporal_relation": "next_state",
+                "negative_case": {"status": "specified", "description": "the request is at or below five minutes"},
+            }],
         }),
         json.dumps({
             "validation_checks": ["check boundary"],
@@ -54,25 +63,29 @@ def test_staged_provider_materializes_checkpoints_before_artifact() -> None:
     assert t3["errors"] == []
     assert result.provider_meta["stages"][2]["validator"] == "semantic-plan-contract-validator/v2"
     assert result.provider_meta["stages"][2]["uncovered_constraint_count"] == 0
+    assert result.provider_meta["stages"][2]["conditional_clause_count"] == 1
+    assert result.checkpoints[0].payload["conditional_semantics"][0]["necessity_status"] == "sufficient_only"
     assert result.provider_meta["runtime"] == "staged-provider/v1"
     assert all("sha256" in key for key in ("request_sha256", "response_sha256"))
 
 
 def test_staged_prompts_do_not_disclose_variant_or_oracle() -> None:
     captured: list[str] = []
+    captured_requests: list[tuple[dict, str]] = []
 
     class CapturingProvider:
         name = "capture"
 
         def __init__(self) -> None:
             self.responses = iter([
-                {"constraints": [], "quantities": [], "unresolved_references": [], "assumptions": [], "contradictions": []},
+                {"constraints": [], "quantities": [], "unresolved_references": [], "assumptions": [], "contradictions": [], "conditional_semantics": []},
                 {"validation_checks": [], "planned_tools": [], "coverage_targets": []},
                 {"criterion": "bounded"},
             ])
 
         def complete(self, request):
             captured.append(request.prompt)
+            captured_requests.append((request.pair, request.variant))
             return json.dumps(next(self.responses))
 
     pair = {
@@ -91,6 +104,35 @@ def test_staged_prompts_do_not_disclose_variant_or_oracle() -> None:
     assert "secret" not in joined
     assert "variant:" not in joined
     assert result.provider_meta["provider"] == "capture"
+    assert captured_requests[0][0] == {
+        "requirement": "Incomplete requirement.",
+        "task_family": "acceptance_criteria",
+        "output_keys": ["criterion"],
+    }
+    assert all(variant == "opaque" for _pair, variant in captured_requests)
+
+
+def test_staged_provider_requires_conditional_semantics_before_artifact() -> None:
+    provider = ReplayProvider([
+        json.dumps({
+            "constraints": [],
+            "quantities": [],
+            "unresolved_references": [],
+            "assumptions": [],
+            "contradictions": [],
+        }),
+        json.dumps({"criterion": "must not be requested"}),
+    ])
+    pair = {
+        "clean_requirement": "Return one criterion.",
+        "smelly_requirement": "Return something.",
+        "generation_contract": {"acceptance_criteria": {"output_keys": ["criterion"]}},
+    }
+    with pytest.raises(ValueError, match="conditional_semantics"):
+        RuntimeCheckpointAgent.from_provider(
+            provider, model="m", model_version="v"
+        ).execute_with_checkpoints(pair, variant="clean", task_family="acceptance_criteria")
+    assert provider.calls_made == 1
 
 
 def test_t3_materializes_cross_stage_coverage_failures_before_artifact() -> None:
@@ -101,6 +143,7 @@ def test_t3_materializes_cross_stage_coverage_failures_before_artifact() -> None
             "unresolved_references": ["which clock is authoritative"],
             "assumptions": [],
             "contradictions": [],
+            "conditional_semantics": [],
         }),
         json.dumps({
             "validation_checks": ["check the response schema"],
@@ -135,6 +178,7 @@ def test_malformed_plan_stops_before_t3_and_terminal_artifact() -> None:
             "unresolved_references": [],
             "assumptions": [],
             "contradictions": [],
+            "conditional_semantics": [],
         }),
         "not-json",
         json.dumps({"criterion": "must never be requested"}),
@@ -175,6 +219,7 @@ def test_provider_failure_stops_before_terminal_artifact() -> None:
                 "unresolved_references": [],
                 "assumptions": [],
                 "contradictions": [],
+                "conditional_semantics": [],
             })
 
     provider = FailingProvider()

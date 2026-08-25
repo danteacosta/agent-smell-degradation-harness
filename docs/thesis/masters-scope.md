@@ -59,6 +59,26 @@ independently reviewed removal of one test-relevant condition, not the mere
 presence of a lexical marker. Static smell signals remain baselines because
 prior effects are task- and metric-dependent.
 
+This interpretation is deliberately contextual. Requirements-smell quality
+assurance work shows that lightweight detection can surface useful defects but
+that some smell categories are not clearly distinguishable in practice
+([Rapid quality assurance with Requirements Smells](https://www.sciencedirect.com/science/article/abs/pii/S0164121216000789)).
+Recent evidence on smells in LLM prompts likewise reports mixed, task-dependent
+effects rather than a universal degradation law
+([On the Impact of Requirements Smells in Prompts](https://arxiv.org/abs/2501.04810)).
+Accordingly, the thesis treats smell family and project/lifecycle context as
+heterogeneity variables and does not redefine the primary treatment or outcome
+after seeing results.
+
+For conditional requirements, T1 records the antecedent, consequent, whether
+the antecedent is sufficient or also necessary, the temporal relation, and the
+explicitly specified negative case. This is a measurement safeguard, not a
+claim that one formalization is correct: practitioners have been shown to
+disagree about whether an antecedent is sufficient or necessary and about the
+formal interpretation of natural-language conditionals
+([How Do Practitioners Interpret Conditionals in Requirements?](https://arxiv.org/abs/2109.02063)).
+Requirements without a conditional clause record an empty semantic list.
+
 This makes the project complementary to the EASY group's natural-language
 test-smell program. Its catalogs inform a preregistered secondary analysis of
 whether defective requirements induce recognizable smells in generated
@@ -102,6 +122,11 @@ if it maps silent regions and shows where process observability does not help.
 In scope: H1, H2, acceptance-criteria generation, two provider
 configurations, the ARP/replay artifact, confirmatory annotation protocol, and
 traceability as an external validation slice.
+
+Each source record also records project domain, lifecycle role, and lifecycle
+phase. These fields support planned heterogeneity and external-validity
+checks; they are dataset metadata and cannot enter deployable feature rows or
+labels.
 
 Out of scope for the primary thesis: a full production SaaS, memory/RAG
 retrieval quality, a new smell catalog, automatic remediation, all agent task

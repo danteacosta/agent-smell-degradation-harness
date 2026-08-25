@@ -7,7 +7,14 @@ import re
 import time
 from typing import Any, Protocol
 
-from agents.providers import AnthropicProvider, MockProvider, OpenAIProvider, Provider, ProviderRequest
+from agents.providers import (
+    AnthropicProvider,
+    MockProvider,
+    OpenAIProvider,
+    Provider,
+    ProviderRequest,
+    provider_visible_pair,
+)
 
 
 class NotConfiguredError(Exception):
@@ -81,7 +88,9 @@ def _build_checkpoint_prompt(pair: dict[str, Any], variant: str, task_family: st
         f"Task family: {task_family}\nRequirement:\n{requirement}\n\n"
         "Return one JSON object with exactly these sections and fields: "
         "interpretation={constraints:list, quantities:list, unresolved_references:list, "
-        "assumptions:list, contradictions:list}; "
+        "assumptions:list, contradictions:list, conditional_semantics:list}; "
+        "each conditional_semantics item must contain antecedent, consequent, "
+        "necessity_status, temporal_relation, and negative_case={status, description}; "
         "plan={validation_checks:list, planned_tools:list, coverage_targets:list}; "
         "execution={revisions:integer, validation_attempts:integer, errors:list, retrieval_events:integer}."
     )
@@ -178,8 +187,8 @@ class LiveAgent:
             response, latency_ms = self._complete(
                 ProviderRequest(
                     prompt=prompt,
-                    pair=pair,
-                    variant=variant,
+                    pair=provider_visible_pair(pair, variant=variant, task_family=task_family),
+                    variant="opaque",
                     task_family=task_family,
                 )
             )
@@ -217,8 +226,8 @@ class LiveAgent:
         response, latency_ms = self._complete(
             ProviderRequest(
                 prompt=prompt,
-                pair=pair,
-                variant=variant,
+                pair=provider_visible_pair(pair, variant=variant, task_family=task_family),
+                variant="opaque",
                 task_family=task_family,
             )
         )

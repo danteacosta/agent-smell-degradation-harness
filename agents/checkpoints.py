@@ -12,6 +12,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
+from protocol.conditional_semantics import validate_conditional_semantics
+
 CHECKPOINT_SCHEMA_VERSION = "pre-final/v1"
 REQUIRED_SECTIONS = ("interpretation", "plan", "execution")
 SECTION_FIELDS = {
@@ -21,6 +23,7 @@ SECTION_FIELDS = {
         "unresolved_references",
         "assumptions",
         "contradictions",
+        "conditional_semantics",
     ),
     "plan": ("validation_checks", "planned_tools", "coverage_targets"),
     "execution": ("revisions", "validation_attempts", "errors", "retrieval_events"),
@@ -49,7 +52,11 @@ class AgentExecution:
     provider_meta: Mapping[str, Any]
 
 
-def validate_checkpoint_payload(payload: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
+def validate_checkpoint_payload(
+    payload: Mapping[str, Any],
+    *,
+    require_conditional_semantics: bool = False,
+) -> dict[str, dict[str, Any]]:
     """Validate and normalize a provider checkpoint payload.
 
     Only the versioned allowlist is admitted to the feature plane. Unknown
@@ -65,13 +72,24 @@ def validate_checkpoint_payload(payload: Mapping[str, Any]) -> dict[str, dict[st
         if not isinstance(value, Mapping):
             raise ValueError(f"checkpoint section {section} must be an object")
         allowed = set(SECTION_FIELDS[section])
-        if set(value) != allowed:
+        legacy_allowed = allowed - {"conditional_semantics"}
+        if section == "interpretation" and set(value) == legacy_allowed:
+            if require_conditional_semantics:
+                raise ValueError("interpretation.conditional_semantics is required")
+            row = {**dict(value), "conditional_semantics": []}
+        elif set(value) == allowed:
+            row = dict(value)
+        else:
             raise ValueError(f"checkpoint section {section} has an invalid field set")
-        row = dict(value)
         for field in SECTION_FIELDS[section]:
             if field in {"revisions", "validation_attempts", "retrieval_events"}:
                 if not isinstance(row[field], int) or row[field] < 0:
                     raise ValueError(f"checkpoint field {section}.{field} must be a non-negative integer")
+            elif section == "interpretation" and field == "conditional_semantics":
+                try:
+                    row[field] = validate_conditional_semantics(row[field])
+                except ValueError as error:
+                    raise ValueError(str(error)) from error
             elif not isinstance(row[field], list):
                 raise ValueError(f"checkpoint field {section}.{field} must be a list")
         normalized[section] = row
@@ -82,6 +100,7 @@ def validate_agent_execution(
     execution: AgentExecution,
     *,
     not_before: str | None = None,
+    require_conditional_semantics: bool = False,
 ) -> AgentExecution:
     if tuple(observation.checkpoint for observation in execution.checkpoints) != CHECKPOINT_ORDER:
         raise ValueError("runtime checkpoints must follow interpretation, plan, execution start, and tool completion")
@@ -119,7 +138,8 @@ def validate_agent_execution(
                 {
                     key: observation.payload if key == section else _empty_section(key)
                     for key in REQUIRED_SECTIONS
-                }
+                },
+                require_conditional_semantics=require_conditional_semantics,
             )[section]
         normalized.append(
             CheckpointObservation(

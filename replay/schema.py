@@ -7,6 +7,8 @@ import math
 from collections.abc import Mapping
 from typing import Any
 
+from protocol.conditional_semantics import validate_conditional_semantics
+
 REPLAY_VERSION = "constraint-replay/v1"
 CHECKPOINT_SCHEMA_VERSION = "pre-final/v1"
 ARP_WIRE_VERSION = "2.0.5"
@@ -80,16 +82,20 @@ def _strings(value: Any, path: str) -> None:
         raise ContractError(f"{path} must be an array of strings")
 
 
-def _attributes_for(name: str, value: Any) -> None:
+def _attributes_for(name: str, value: Any) -> dict[str, Any]:
     if not isinstance(value, Mapping):
         raise ContractError(f"{name}.attributes must be an object")
+    normalized = dict(value)
     if name == "interpretation.completed":
         required = {"constraints", "quantities", "unresolved_references", "assumptions", "contradictions"}
-        if set(value) != required:
+        extended = required | {"conditional_semantics"}
+        if set(normalized) == required:
+            normalized["conditional_semantics"] = []
+        elif set(normalized) != extended:
             raise ContractError("T1 attributes do not match pre-final/v1")
         for field in ("constraints", "unresolved_references", "assumptions", "contradictions"):
-            _strings(value[field], f"T1.{field}")
-        quantities = value["quantities"]
+            _strings(normalized[field], f"T1.{field}")
+        quantities = normalized["quantities"]
         if not isinstance(quantities, list):
             raise ContractError("T1.quantities must be an array")
         for item in quantities:
@@ -97,6 +103,10 @@ def _attributes_for(name: str, value: Any) -> None:
                 raise ContractError("T1.quantities items must contain value and unit")
             if not isinstance(item["unit"], str) or not isinstance(item["value"], (int, float)) or isinstance(item["value"], bool):
                 raise ContractError("T1.quantity value/unit types are invalid")
+        try:
+            normalized["conditional_semantics"] = validate_conditional_semantics(normalized["conditional_semantics"])
+        except ValueError as error:
+            raise ContractError(str(error)) from error
     elif name == "plan.completed":
         required = {"validation_checks", "planned_tools", "coverage_targets"}
         if set(value) != required:
@@ -113,7 +123,8 @@ def _attributes_for(name: str, value: Any) -> None:
         _strings(value["errors"], "T3.errors")
     else:
         raise ContractError(f"unsupported checkpoint {name}")
-    _reject_terminal(value, f"{name}.attributes")
+    _reject_terminal(normalized, f"{name}.attributes")
+    return normalized
 
 
 def _timestamp(value: Any, path: str) -> dt.datetime:
@@ -160,6 +171,7 @@ def validate_bundle_mapping(bundle: Mapping[str, Any]) -> dict[str, Any]:
     if not isinstance(events, list) or len(events) != 3:
         raise ContractError("trace must contain exactly three checkpoint events")
     identity: tuple[Any, ...] | None = None
+    normalized_events: list[dict[str, Any]] = []
     previous_end: dt.datetime | None = None
     previous_id: str | None = None
     for expected_sequence, (expected_name, event) in enumerate(zip(EVENT_NAMES, events), start=1):
@@ -191,11 +203,13 @@ def validate_bundle_mapping(bundle: Mapping[str, Any]) -> dict[str, Any]:
             raise ContractError("T1 parent_event_id must be null")
         if expected_sequence > 1 and event["parent_event_id"] != previous_id:
             raise ContractError("parent_event_id must reference the preceding event")
-        _attributes_for(expected_name, event["attributes"])
+        normalized_event = dict(event)
+        normalized_event["attributes"] = _attributes_for(expected_name, event["attributes"])
+        normalized_events.append(normalized_event)
         previous_end = ended
         previous_id = event["event_id"]
     _validate_with_arp(events)
-    return {"manifest": dict(manifest), "requirement": dict(requirement), "events": [dict(event) for event in events]}
+    return {"manifest": dict(manifest), "requirement": dict(requirement), "events": normalized_events}
 
 
 def _validate_with_arp(events: list[Mapping[str, Any]]) -> None:

@@ -70,6 +70,7 @@ def _twelve_intents() -> list[dict[str, Any]]:
     design_records: list[dict[str, Any]] = []
     for pair in source:
         source_intent = str(pair["intent_id"])
+        source_record = manifest_records[source_intent]
         smell = pair.get("smell") if isinstance(pair.get("smell"), dict) else {}
         project_id = pair.get("project_id", pair.get("project", ""))
         defect_family = smell.get("category", smell.get("type", ""))
@@ -87,6 +88,10 @@ def _twelve_intents() -> list[dict[str, Any]]:
                         "replication_id": replication_id,
                         "defect_family": defect_family,
                         "source": pair.get("source", source_intent),
+                        "project_domain": str(source_record["project_domain"]),
+                        "lifecycle_role": str(source_record["lifecycle_role"]),
+                        "lifecycle_phase": str(source_record["lifecycle_phase"]),
+                        "conditional_semantics": copy.deepcopy(source_record["conditional_semantics"]),
                         "requirement_text": requirement_text,
                     }
                 )

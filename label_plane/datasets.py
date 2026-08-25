@@ -11,10 +11,35 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+from protocol.conditional_semantics import (
+    CONDITIONAL_SEMANTICS_SCHEMA_VERSION,
+    validate_conditional_semantics,
+)
+
 V4_DATASET_ROOT = Path(__file__).resolve().parents[1] / "datasets" / "v4"
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 CONFIRMATORY_DATASET_ROOT = REPOSITORY_ROOT / "data" / "confirmatory"
 CONFIRMATORY_MANIFEST_PATH = CONFIRMATORY_DATASET_ROOT / "manifest.json"
+CONFIRMATORY_SCHEMA_VERSION = "confirmatory-v2"
+PROJECT_DOMAIN_VALUES = frozenset({
+    "ecommerce-order-management",
+    "finance",
+    "healthcare",
+    "public-sector",
+    "developer-tools",
+})
+LIFECYCLE_ROLE_VALUES = frozenset({
+    "functional-requirement",
+    "non-functional-requirement",
+    "acceptance-criterion",
+    "operational-policy",
+})
+LIFECYCLE_PHASE_VALUES = frozenset({
+    "elicitation",
+    "specification",
+    "validation",
+    "maintenance",
+})
 _REQUIRED_RECORD_KEYS = {
     "intent_id", "source", "license", "source_sha256", "preserved_intent",
     "manipulation", "single_defect", "natural_variant", "contamination_notes",
@@ -30,6 +55,11 @@ _REQUIRED_CONFIRMATORY_SOURCE_KEYS = {
     "smelly_requirement",
     "natural_variant",
     "contamination_notes",
+    "project_domain",
+    "lifecycle_role",
+    "lifecycle_phase",
+    "conditional_semantics",
+    "conditional_semantics_schema",
 }
 
 
@@ -246,6 +276,26 @@ def _validate_source_record(
         raise ValueError(f"confirmatory source record {index} requires non-empty project_id")
     if not defect_family:
         raise ValueError(f"confirmatory source record {index} requires non-empty defect_family")
+    for field in ("project_domain", "lifecycle_role", "lifecycle_phase"):
+        if not isinstance(record[field], str) or not record[field].strip():
+            raise ValueError(f"confirmatory source record {index} requires non-empty {field}")
+    controlled_values = {
+        "project_domain": PROJECT_DOMAIN_VALUES,
+        "lifecycle_role": LIFECYCLE_ROLE_VALUES,
+        "lifecycle_phase": LIFECYCLE_PHASE_VALUES,
+    }
+    for field, allowed in controlled_values.items():
+        if record[field] not in allowed:
+            raise ValueError(f"confirmatory source record {index} has unsupported {field}: {record[field]!r}")
+    if record["conditional_semantics_schema"] != CONDITIONAL_SEMANTICS_SCHEMA_VERSION:
+        raise ValueError(
+            f"confirmatory source record {index} conditional_semantics_schema must be "
+            f"{CONDITIONAL_SEMANTICS_SCHEMA_VERSION}"
+        )
+    try:
+        record["conditional_semantics"] = validate_conditional_semantics(record["conditional_semantics"])
+    except ValueError as error:
+        raise ValueError(f"confirmatory source record {index} has invalid conditional_semantics: {error}") from error
     for field in ("clean_requirement", "smelly_requirement", "contamination_notes"):
         if not str(record[field]).strip():
             raise ValueError(f"confirmatory source record {index} requires non-empty {field}")
@@ -325,6 +375,11 @@ def _expanded_confirmatory_records(
                         "provenance_url": str(raw["provenance_url"]),
                         "natural_variant": bool(raw["natural_variant"]),
                         "contamination_notes": str(raw["contamination_notes"]),
+                        "project_domain": str(raw["project_domain"]),
+                        "lifecycle_role": str(raw["lifecycle_role"]),
+                        "lifecycle_phase": str(raw["lifecycle_phase"]),
+                        "conditional_semantics": list(raw["conditional_semantics"]),
+                        "conditional_semantics_schema": str(raw["conditional_semantics_schema"]),
                         "requirement_text": str(raw[requirement_key]),
                         # The clean text is the stable source-intent identity
                         # used for near-clone checks across variants.
@@ -350,6 +405,8 @@ def validate_confirmatory_manifest(
 
     if not isinstance(manifest, dict):
         raise ValueError("confirmatory manifest must be a JSON object")
+    if manifest.get("schema_version") != CONFIRMATORY_SCHEMA_VERSION:
+        raise ValueError(f"confirmatory manifest schema_version must be {CONFIRMATORY_SCHEMA_VERSION}")
     expected = manifest.get("expected", {})
     if not isinstance(expected, dict):
         raise ValueError("confirmatory manifest expected must be an object")
@@ -403,7 +460,7 @@ def validate_confirmatory_manifest(
         project_holdouts.setdefault(str(record["project_id"]), []).append(str(record["source_intent_id"]))
     project_holdouts = {project: sorted(intent_ids) for project, intent_ids in sorted(project_holdouts.items())}
     canonical = {
-        "schema_version": str(manifest.get("schema_version", "confirmatory-v1")),
+        "schema_version": CONFIRMATORY_SCHEMA_VERSION,
         "expected": {
             "intents": expected_intents,
             "variants": list(expected_variants),

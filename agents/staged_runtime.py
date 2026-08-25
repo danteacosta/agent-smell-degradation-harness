@@ -15,8 +15,14 @@ import time
 from datetime import datetime, timezone
 from typing import Any, Callable, Mapping
 
-from .checkpoints import AgentExecution, CheckpointObservation, validate_agent_execution
-from .providers import Provider, ProviderRequest
+from .checkpoints import (
+    AgentExecution,
+    CheckpointObservation,
+    validate_agent_execution,
+    validate_checkpoint_payload,
+)
+from .providers import Provider, ProviderRequest, provider_visible_pair
+from protocol.conditional_semantics import validate_conditional_semantics
 
 
 Clock = Callable[[], datetime]
@@ -73,6 +79,7 @@ _STAGE_FIELDS = {
         "unresolved_references",
         "assumptions",
         "contradictions",
+        "conditional_semantics",
     ),
     "plan": ("validation_checks", "planned_tools", "coverage_targets"),
 }
@@ -98,9 +105,52 @@ def _stage_lists(
             values[field] = []
             continue
         values[field] = value
+        if field == "conditional_semantics":
+            try:
+                values[field] = validate_conditional_semantics(value)
+            except ValueError as error:
+                errors.append(str(error))
+            continue
         if any(not isinstance(item, str) or not item.strip() for item in value):
             errors.append(f"{stage}.{field} contains a non-text or empty item")
     return values, errors
+
+
+def _validate_provider_stage(
+    payload: Mapping[str, Any],
+    stage: str,
+) -> dict[str, Any]:
+    """Validate a provider response before the runtime requests the artifact."""
+
+    empty_interpretation = {
+        "constraints": [],
+        "quantities": [],
+        "unresolved_references": [],
+        "assumptions": [],
+        "contradictions": [],
+        "conditional_semantics": [],
+    }
+    empty_plan = {
+        "validation_checks": [],
+        "planned_tools": [],
+        "coverage_targets": [],
+    }
+    empty_execution = {
+        "revisions": 0,
+        "validation_attempts": 0,
+        "errors": [],
+        "retrieval_events": 0,
+    }
+    sections: dict[str, Mapping[str, Any]] = {
+        "interpretation": empty_interpretation,
+        "plan": empty_plan,
+        "execution": empty_execution,
+    }
+    sections[stage] = payload
+    return validate_checkpoint_payload(
+        sections,
+        require_conditional_semantics=True,
+    )[stage]
 
 
 def _tokens(value: Any) -> set[str]:
@@ -165,6 +215,11 @@ def _semantic_plan_diagnostics(
         "unresolved_reference_count": len(interpreted["unresolved_references"]),
         "assumption_count": len(interpreted["assumptions"]),
         "contradiction_count": len(interpreted["contradictions"]),
+        "conditional_clause_count": len(interpreted["conditional_semantics"]),
+        "conditional_negative_case_missing_count": sum(
+            item["negative_case"]["status"] == "not_specified"
+            for item in interpreted["conditional_semantics"]
+        ),
         "validation_check_count": len(planned["validation_checks"]),
         "planned_tool_count": len(planned["planned_tools"]),
         "coverage_target_count": len(planned["coverage_targets"]),
@@ -195,7 +250,12 @@ class StagedProviderRuntime:
         started = _now_iso(self._clock)
         start_perf = time.perf_counter()
         response = self._provider.complete(
-            ProviderRequest(prompt=prompt, pair=pair, variant=variant, task_family=task_family)
+            ProviderRequest(
+                prompt=prompt,
+                pair=provider_visible_pair(pair, variant=variant, task_family=task_family),
+                variant="opaque",
+                task_family=task_family,
+            )
         )
         latency_ms = (time.perf_counter() - start_perf) * 1000.0
         ended = _now_iso(self._clock)
@@ -219,13 +279,20 @@ class StagedProviderRuntime:
         interpretation, t1 = self._complete(
             base
             + "Return JSON with exactly: constraints, quantities, unresolved_references, "
-            "assumptions, contradictions. Every value must be a list. This is an observable "
+            "assumptions, contradictions, conditional_semantics. Every value must be a list. "
+            "conditional_semantics items must contain antecedent, consequent, necessity_status "
+            "(sufficient_only|also_necessary|undetermined), temporal_relation "
+            "(during|next_state|eventually|irrelevant|undetermined), and negative_case "
+            "({status: specified|not_specified|not_applicable, description: string|null}). "
+            "Use an empty conditional_semantics list when the requirement has no conditional clause. "
+            "This is an observable "
             "task summary; do not reveal hidden reasoning, labels, variants, or an artifact.",
             pair,
             variant,
             task_family,
             "T1",
         )
+        interpretation = _validate_provider_stage(interpretation, "interpretation")
         plan, t2 = self._complete(
             base
             + "Observable interpretation:\n"
@@ -238,6 +305,7 @@ class StagedProviderRuntime:
             task_family,
             "T2",
         )
+        plan = _validate_provider_stage(plan, "plan")
 
         execution_started = _now_iso(self._clock)
         tool_started = _now_iso(self._clock)
@@ -288,7 +356,8 @@ class StagedProviderRuntime:
                     "latency_ms": round(total_latency, 3),
                     "stages": [t1, t2, {"stage": "T3", **t3_metadata}, final],
                 },
-            )
+            ),
+            require_conditional_semantics=True,
         )
 
 
