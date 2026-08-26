@@ -1,0 +1,93 @@
+{
+  "intent_id": "ARTA-NFR-002",
+  "source_intent_id": "nfr-6",
+  "source": {
+    "dataset": "ARTA",
+    "source_file": "database/text_requirements.json",
+    "source_record_id": 6,
+    "title": "SE",
+    "type": "functional",
+    "project": "nfr",
+    "dataset_commit": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+    "source_file_sha256": "3b25b3e1660629a6e72340e32b17e1861cf12e20eedeeb5d0ea06f95ea747aa9",
+    "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/text_requirements.json#L39-L44",
+    "dataset_url": "https://zenodo.org/records/4266727"
+  },
+  "source_excerpt": "The product shall ensure that it can only be accessed by authorized users.  The product will be able to distinguish between authorized and unauthorized users in all access attempts",
+  "source_sha256": "3b25b3e1660629a6e72340e32b17e1861cf12e20eedeeb5d0ea06f95ea747aa9",
+  "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/text_requirements.json#L39-L44",
+  "project_id": "nfr",
+  "project_domain": "general-software",
+  "lifecycle_role": "functional-requirement",
+  "lifecycle_phase": "specification",
+  "evidence_span": [
+    {
+      "text": "only be accessed by authorized users",
+      "semantic_role": "authorization_decision"
+    },
+    {
+      "text": "distinguish between authorized and unauthorized users",
+      "semantic_role": "classification_only"
+    }
+  ],
+  "clean_requirement": "The product shall grant access only when the user is authorized; unauthorized users shall be denied.",
+  "smelly_requirement": "The product shall distinguish between authorized and unauthorized users in every access attempt.",
+  "removed_condition": "The enforcement outcome that denies unauthorized users is omitted; classification alone is not access control.",
+  "natural_variant": false,
+  "contamination_notes": "The source contains both an access-control statement and a classification statement. The smelly mutation keeps the classification idea but removes the observable deny decision, isolating an incompleteness/loophole contrast.",
+  "licensing_notes": "The ARTA repository is MIT-licensed, but the original NFR document and its individual requirement texts may have separate terms. This record stores the excerpt for research provenance; redistribution and publication of the full source corpus require a separate license check.",
+  "smell": {
+    "category": "semantic",
+    "type": "vague_authorization",
+    "injection_rule": "retain user classification but remove the required deny outcome",
+    "literature_mapping": [
+      "incomplete system response",
+      "loophole",
+      "completeness"
+    ]
+  },
+  "generation_contract": {
+    "codegen": {
+      "output_keys": ["access_policy"]
+    },
+    "behavior_codegen": {
+      "output_keys": ["source_code"],
+      "language": "python",
+      "entry_point": "evaluate",
+      "side_effect_policy": "pure function only"
+    },
+    "test_gen": {
+      "output_keys": ["criterion", "must_allow", "must_deny"]
+    }
+  },
+  "oracle_spec": {
+    "codegen": {
+      "access_policy": "deny_unauthorized"
+    },
+    "behavior_codegen": {
+      "_execution": {
+        "language": "python",
+        "entry_point": "evaluate",
+        "input_schema": {
+          "type": "object",
+          "required": ["authorized"],
+          "properties": {"authorized": {"type": "boolean"}}
+        },
+        "hidden_tests": [
+          {"id": "authorized_user", "input": {"authorized": true}, "expected_output": "allow"},
+          {"id": "unauthorized_user", "input": {"authorized": false}, "expected_output": "deny"}
+        ],
+        "removed_condition_test_ids": ["unauthorized_user"],
+        "reference_implementations": {
+          "clean": "def evaluate(authorized):\n    return 'allow' if authorized else 'deny'",
+          "smelly_plausible": "def evaluate(authorized):\n    return 'allow'"
+        }
+      }
+    },
+    "test_gen": {
+      "criterion": "allow authorized users and deny unauthorized users",
+      "must_allow": [true],
+      "must_deny": [false]
+    }
+  }
+}

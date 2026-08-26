@@ -1,0 +1,94 @@
+{
+  "intent_id": "ARTA-ERTMS-001",
+  "source_intent_id": "ertms-3",
+  "source": {
+    "dataset": "ARTA",
+    "source_file": "database/xml_ertms.json",
+    "source_record_id": 3,
+    "title": "requirment3",
+    "type": "functional",
+    "project": "ertms",
+    "dataset_commit": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+    "source_file_sha256": "edb4ce124de307f7e639378b6211e96e21856466da4dfb4cbf5cb75eef7774e8",
+    "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_ertms.json#L18-L23",
+    "dataset_url": "https://zenodo.org/records/4266727"
+  },
+  "source_excerpt": "If the supervision is performed by a RBC it shall be possible to prevent movements of a traction unit in its area if not authorised by the RBC.",
+  "source_sha256": "edb4ce124de307f7e639378b6211e96e21856466da4dfb4cbf5cb75eef7774e8",
+  "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_ertms.json#L18-L23",
+  "project_id": "ertms",
+  "project_domain": "railway-control",
+  "lifecycle_role": "functional-requirement",
+  "lifecycle_phase": "specification",
+  "evidence_span": [
+    {
+      "text": "If the supervision is performed by a RBC",
+      "semantic_role": "scope_condition"
+    },
+    {
+      "text": "if not authorised by the RBC",
+      "semantic_role": "authorization_condition"
+    }
+  ],
+  "clean_requirement": "The system shall block a traction-unit movement only when RBC supervision is active and the movement is not authorized by that RBC.",
+  "smelly_requirement": "The system shall block a traction-unit movement whenever the movement is not authorized.",
+  "removed_condition": "The scope condition requiring active RBC supervision is removed.",
+  "natural_variant": false,
+  "contamination_notes": "The clean form makes the two conditions explicit for execution. The smelly mutation keeps the unauthorized-movement condition but removes the RBC-scope condition, allowing the hidden test to distinguish over-blocking from the intended behavior.",
+  "licensing_notes": "The ARTA repository is MIT-licensed, but ERTMS source standards and specifications may be controlled or copyrighted by their issuing bodies. Keep this excerpt for research traceability and verify redistribution rights before external publication.",
+  "smell": {
+    "category": "semantic",
+    "type": "incomplete_condition",
+    "injection_rule": "remove the RBC-supervision guard from a conditional safety requirement",
+    "literature_mapping": [
+      "incomplete condition",
+      "conditional ambiguity",
+      "completeness"
+    ]
+  },
+  "generation_contract": {
+    "codegen": {
+      "output_keys": ["movement_policy"]
+    },
+    "behavior_codegen": {
+      "output_keys": ["source_code"],
+      "language": "python",
+      "entry_point": "evaluate",
+      "side_effect_policy": "pure function only"
+    },
+    "test_gen": {
+      "output_keys": ["criterion", "must_block", "must_allow"]
+    }
+  },
+  "oracle_spec": {
+    "codegen": {
+      "movement_policy": "block_unauthorized_under_rbc"
+    },
+    "behavior_codegen": {
+      "_execution": {
+        "language": "python",
+        "entry_point": "evaluate",
+        "input_schema": {
+          "type": "object",
+          "required": ["rbc_supervision", "authorized"],
+          "properties": {"rbc_supervision": {"type": "boolean"}, "authorized": {"type": "boolean"}}
+        },
+        "hidden_tests": [
+          {"id": "rbc_unauthorized", "input": {"rbc_supervision": true, "authorized": false}, "expected_output": "block"},
+          {"id": "rbc_authorized", "input": {"rbc_supervision": true, "authorized": true}, "expected_output": "allow"},
+          {"id": "no_rbc_unauthorized", "input": {"rbc_supervision": false, "authorized": false}, "expected_output": "allow"}
+        ],
+        "removed_condition_test_ids": ["no_rbc_unauthorized"],
+        "reference_implementations": {
+          "clean": "def evaluate(rbc_supervision, authorized):\n    return 'block' if rbc_supervision and not authorized else 'allow'",
+          "smelly_plausible": "def evaluate(rbc_supervision, authorized):\n    return 'block' if not authorized else 'allow'"
+        }
+      }
+    },
+    "test_gen": {
+      "criterion": "block iff RBC supervision is active and the movement is unauthorized",
+      "must_block": [{"rbc_supervision": true, "authorized": false}],
+      "must_allow": [{"rbc_supervision": true, "authorized": true}, {"rbc_supervision": false, "authorized": false}]
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "intent_id": "ARTA-NFR-001",
+  "source_intent_id": "nfr-1",
+  "source": {
+    "dataset": "ARTA",
+    "source_file": "database/text_requirements.json",
+    "source_record_id": 1,
+    "title": "PE",
+    "type": "functional",
+    "project": "nfr",
+    "dataset_commit": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+    "source_file_sha256": "3b25b3e1660629a6e72340e32b17e1861cf12e20eedeeb5d0ea06f95ea747aa9",
+    "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/text_requirements.json#L4-L10",
+    "dataset_url": "https://zenodo.org/records/4266727"
+  },
+  "source_excerpt": "The system shall refresh the display every 60 seconds.",
+  "source_sha256": "3b25b3e1660629a6e72340e32b17e1861cf12e20eedeeb5d0ea06f95ea747aa9",
+  "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/text_requirements.json#L4-L10",
+  "project_id": "nfr",
+  "project_domain": "general-software",
+  "lifecycle_role": "functional-requirement",
+  "lifecycle_phase": "specification",
+  "evidence_span": [
+    {
+      "text": "every 60 seconds",
+      "semantic_role": "exact_refresh_interval"
+    }
+  ],
+  "clean_requirement": "The system shall refresh the display exactly every 60 seconds.",
+  "smelly_requirement": "The system shall refresh the display regularly.",
+  "removed_condition": "The exact 60-second refresh interval is no longer specified.",
+  "natural_variant": false,
+  "contamination_notes": "The source excerpt is published by ARTA. The clean wording is a controlled reconstruction that makes the source threshold explicit; the smelly wording removes only that test-relevant threshold.",
+  "licensing_notes": "The ARTA repository is MIT-licensed, but the original NFR document and its individual requirement texts may have separate terms. This record stores the excerpt for research provenance; redistribution and publication of the full source corpus require a separate license check.",
+  "smell": {
+    "category": "semantic",
+    "type": "vague_threshold",
+    "injection_rule": "replace the exact refresh interval with a vague frequency adverb",
+    "literature_mapping": [
+      "ambiguous adverb/adjective",
+      "open-ended or non-verifiable term",
+      "verifiability"
+    ]
+  },
+  "generation_contract": {
+    "codegen": {
+      "output_keys": ["refresh_interval_seconds"]
+    },
+    "behavior_codegen": {
+      "output_keys": ["source_code"],
+      "language": "python",
+      "entry_point": "evaluate",
+      "side_effect_policy": "pure function only"
+    },
+    "test_gen": {
+      "output_keys": ["criterion", "must_refresh_seconds", "must_not_refresh_seconds"]
+    }
+  },
+  "oracle_spec": {
+    "codegen": {
+      "refresh_interval_seconds": 60
+    },
+    "behavior_codegen": {
+      "_execution": {
+        "language": "python",
+        "entry_point": "evaluate",
+        "input_schema": {
+          "type": "object",
+          "required": ["elapsed_seconds"],
+          "properties": {"elapsed_seconds": {"type": "number", "minimum": 0}}
+        },
+        "hidden_tests": [
+          {"id": "before_interval", "input": {"elapsed_seconds": 59}, "expected_output": false},
+          {"id": "at_interval", "input": {"elapsed_seconds": 60}, "expected_output": true},
+          {"id": "after_interval", "input": {"elapsed_seconds": 61}, "expected_output": true}
+        ],
+        "removed_condition_test_ids": ["before_interval", "at_interval"],
+        "reference_implementations": {
+          "clean": "def evaluate(elapsed_seconds):\n    return elapsed_seconds >= 60",
+          "smelly_plausible": "def evaluate(elapsed_seconds):\n    return elapsed_seconds >= 30"
+        }
+      }
+    },
+    "test_gen": {
+      "criterion": "refresh when elapsed_seconds is at least 60",
+      "must_refresh_seconds": [60, 61],
+      "must_not_refresh_seconds": [0, 59]
+    }
+  }
+}

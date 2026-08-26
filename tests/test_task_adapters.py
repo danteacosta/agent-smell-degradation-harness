@@ -3,6 +3,7 @@ from __future__ import annotations
 from eval.runner import run_eval_with_agent
 from eval.task_adapters import (
     AcceptanceCriteriaAdapter,
+    BehavioralCodeGenerationAdapter,
     CodeGenerationAdapter,
     TraceabilityAdapter,
 )
@@ -77,3 +78,55 @@ def test_traceability_validation_controls_accepted_provenance_metrics(tmp_path):
     assert all(episode["traceability_valid"] is False for episode in episodes)
     assert all(episode["has_semantic_provenance"] is False for episode in episodes)
     assert metrics["semantic_provenance_coverage"] == 0.0
+
+
+def test_behavioral_codegen_adapter_scores_hidden_behavior_not_source_text():
+    adapter = BehavioralCodeGenerationAdapter()
+    oracle_spec = {
+        "behavior_codegen": {
+            "source_code": "def evaluate(value):\n    return value > 5\n",
+            "_execution": {
+                "hidden_tests": [
+                    {"id": "below", "args": [4], "expected_output": False},
+                    {"id": "above", "args": [6], "expected_output": True},
+                ],
+                "removed_condition_test_ids": ["below"],
+            },
+        }
+    }
+
+    result = adapter.evaluate(
+        intent_id="DISCOVERY-001",
+        artifact={"source_code": "def evaluate(value):\n    return value > 5\n"},
+        oracle_spec=oracle_spec,
+    )
+
+    assert result.passed is True
+    assert result.behavior_status == "passed"
+    assert result.target_condition_failures == 0
+
+
+def test_behavioral_codegen_adapter_marks_removed_condition_failure():
+    adapter = BehavioralCodeGenerationAdapter()
+    oracle_spec = {
+        "behavior_codegen": {
+            "source_code": "def evaluate(value):\n    return value > 5\n",
+            "_execution": {
+                "hidden_tests": [
+                    {"id": "below", "args": [4], "expected_output": False},
+                    {"id": "above", "args": [6], "expected_output": True},
+                ],
+                "removed_condition_test_ids": ["below"],
+            },
+        }
+    }
+
+    result = adapter.evaluate(
+        intent_id="DISCOVERY-001",
+        artifact={"source_code": "def evaluate(value):\n    return value >= 0\n"},
+        oracle_spec=oracle_spec,
+    )
+
+    assert result.passed is False
+    assert result.behavior_status == "failed_target_condition"
+    assert result.target_condition_failures == 1

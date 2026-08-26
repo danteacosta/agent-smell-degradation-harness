@@ -1,0 +1,94 @@
+{
+  "intent_id": "ARTA-GAMMA-001",
+  "source_intent_id": "gamma-11",
+  "source": {
+    "dataset": "ARTA",
+    "source_file": "database/xml_gamma.json",
+    "source_record_id": 11,
+    "title": "requirment11",
+    "type": "functional",
+    "project": "gamma",
+    "dataset_commit": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+    "source_file_sha256": "bb7ed7ef71c5f4e6683f6befcdeae5a9913000f2b3eb644e07974f50199b35d6",
+    "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_gamma.json#L74-L79",
+    "dataset_url": "https://zenodo.org/records/4266727"
+  },
+  "source_excerpt": "Upon the USB being plugged in the system shall be able to be deployed and operational in less than 1 minute.",
+  "source_sha256": "bb7ed7ef71c5f4e6683f6befcdeae5a9913000f2b3eb644e07974f50199b35d6",
+  "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_gamma.json#L74-L79",
+  "project_id": "gamma",
+  "project_domain": "ecommerce",
+  "lifecycle_role": "functional-requirement",
+  "lifecycle_phase": "specification",
+  "evidence_span": [
+    {
+      "text": "Upon the USB being plugged in",
+      "semantic_role": "trigger_event"
+    },
+    {
+      "text": "in less than 1 minute",
+      "semantic_role": "exact_time_bound"
+    }
+  ],
+  "clean_requirement": "After a USB is plugged in, the system shall be deployed and operational in less than 60 seconds.",
+  "smelly_requirement": "After a USB is plugged in, the system shall be deployed and operational quickly.",
+  "removed_condition": "The measurable deployment deadline of less than 60 seconds is removed.",
+  "natural_variant": false,
+  "contamination_notes": "The source gives a concrete one-minute bound. The clean form converts it to seconds for deterministic execution; the smelly form replaces the bound with an untestable adverb.",
+  "licensing_notes": "The ARTA repository is MIT-licensed, but the original GAMMA-J Web Store specification may have separate copyright terms. Verify the original document terms before publishing excerpts beyond this research repository.",
+  "smell": {
+    "category": "semantic",
+    "type": "vague_threshold",
+    "injection_rule": "replace the one-minute upper bound with the vague adverb quickly",
+    "literature_mapping": [
+      "ambiguous adverb/adjective",
+      "subjective language",
+      "verifiability"
+    ]
+  },
+  "generation_contract": {
+    "codegen": {
+      "output_keys": ["deployment_deadline_seconds"]
+    },
+    "behavior_codegen": {
+      "output_keys": ["source_code"],
+      "language": "python",
+      "entry_point": "evaluate",
+      "side_effect_policy": "pure function only"
+    },
+    "test_gen": {
+      "output_keys": ["criterion", "must_be_operational_seconds", "must_not_be_operational_seconds"]
+    }
+  },
+  "oracle_spec": {
+    "codegen": {
+      "deployment_deadline_seconds": 60
+    },
+    "behavior_codegen": {
+      "_execution": {
+        "language": "python",
+        "entry_point": "evaluate",
+        "input_schema": {
+          "type": "object",
+          "required": ["usb_plugged", "elapsed_seconds"],
+          "properties": {"usb_plugged": {"type": "boolean"}, "elapsed_seconds": {"type": "number", "minimum": 0}}
+        },
+        "hidden_tests": [
+          {"id": "operational_before_deadline", "input": {"usb_plugged": true, "elapsed_seconds": 59}, "expected_output": true},
+          {"id": "not_operational_at_deadline", "input": {"usb_plugged": true, "elapsed_seconds": 60}, "expected_output": false},
+          {"id": "usb_not_plugged", "input": {"usb_plugged": false, "elapsed_seconds": 10}, "expected_output": false}
+        ],
+        "removed_condition_test_ids": ["not_operational_at_deadline"],
+        "reference_implementations": {
+          "clean": "def evaluate(usb_plugged, elapsed_seconds):\n    return usb_plugged and elapsed_seconds < 60",
+          "smelly_plausible": "def evaluate(usb_plugged, elapsed_seconds):\n    return usb_plugged and elapsed_seconds < 120"
+        }
+      }
+    },
+    "test_gen": {
+      "criterion": "be operational only when USB is plugged and elapsed time is below 60 seconds",
+      "must_be_operational_seconds": [59],
+      "must_not_be_operational_seconds": [60]
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "intent_id": "ARTA-ERTMS-002",
+  "source_intent_id": "ertms-16",
+  "source": {
+    "dataset": "ARTA",
+    "source_file": "database/xml_ertms.json",
+    "source_record_id": 16,
+    "title": "requirment16",
+    "type": "functional",
+    "project": "ertms",
+    "dataset_commit": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+    "source_file_sha256": "edb4ce124de307f7e639378b6211e96e21856466da4dfb4cbf5cb75eef7774e8",
+    "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_ertms.json#L109-L114",
+    "dataset_url": "https://zenodo.org/records/4266727"
+  },
+  "source_excerpt": "In case the transition has to be acknowledged and the driver fails to acknowledge as required, the ETCS shall initiate a brake application",
+  "source_sha256": "edb4ce124de307f7e639378b6211e96e21856466da4dfb4cbf5cb75eef7774e8",
+  "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_ertms.json#L109-L114",
+  "project_id": "ertms",
+  "project_domain": "railway-control",
+  "lifecycle_role": "functional-requirement",
+  "lifecycle_phase": "specification",
+  "evidence_span": [
+    {
+      "text": "the driver fails to acknowledge as required",
+      "semantic_role": "missing_acknowledgement_condition"
+    }
+  ],
+  "clean_requirement": "If a transition requires acknowledgement and the driver does not acknowledge it, ETCS shall initiate a brake application.",
+  "smelly_requirement": "If a transition requires acknowledgement, ETCS shall initiate a brake application.",
+  "removed_condition": "The requirement that the driver fail to acknowledge is removed, so the brake can be applied even after a valid acknowledgement.",
+  "natural_variant": false,
+  "contamination_notes": "The source directly supplies the missing-acknowledgement trigger and brake response. The clean form normalizes the wording; the smelly mutation removes only the driver-failure condition.",
+  "licensing_notes": "The ARTA repository is MIT-licensed, but ERTMS source standards and specifications may be controlled or copyrighted by their issuing bodies. Keep this excerpt for research traceability and verify redistribution rights before external publication.",
+  "smell": {
+    "category": "semantic",
+    "type": "incomplete_condition",
+    "injection_rule": "delete the missing-acknowledgement predicate from a safety response",
+    "literature_mapping": [
+      "incomplete condition",
+      "incomplete system response",
+      "completeness"
+    ]
+  },
+  "generation_contract": {
+    "codegen": {
+      "output_keys": ["brake_policy"]
+    },
+    "behavior_codegen": {
+      "output_keys": ["source_code"],
+      "language": "python",
+      "entry_point": "evaluate",
+      "side_effect_policy": "pure function only"
+    },
+    "test_gen": {
+      "output_keys": ["criterion", "must_apply_brake", "must_continue"]
+    }
+  },
+  "oracle_spec": {
+    "codegen": {
+      "brake_policy": "brake_after_missing_ack"
+    },
+    "behavior_codegen": {
+      "_execution": {
+        "language": "python",
+        "entry_point": "evaluate",
+        "input_schema": {
+          "type": "object",
+          "required": ["ack_required", "acknowledged"],
+          "properties": {"ack_required": {"type": "boolean"}, "acknowledged": {"type": "boolean"}}
+        },
+        "hidden_tests": [
+          {"id": "required_ack_missing", "input": {"ack_required": true, "acknowledged": false}, "expected_output": "apply_brake"},
+          {"id": "required_ack_received", "input": {"ack_required": true, "acknowledged": true}, "expected_output": "continue"},
+          {"id": "ack_not_required", "input": {"ack_required": false, "acknowledged": false}, "expected_output": "continue"}
+        ],
+        "removed_condition_test_ids": ["required_ack_received"],
+        "reference_implementations": {
+          "clean": "def evaluate(ack_required, acknowledged):\n    return 'apply_brake' if ack_required and not acknowledged else 'continue'",
+          "smelly_plausible": "def evaluate(ack_required, acknowledged):\n    return 'apply_brake' if ack_required else 'continue'"
+        }
+      }
+    },
+    "test_gen": {
+      "criterion": "apply the brake only when acknowledgement is required and missing",
+      "must_apply_brake": [{"ack_required": true, "acknowledged": false}],
+      "must_continue": [{"ack_required": true, "acknowledged": true}, {"ack_required": false, "acknowledged": false}]
+    }
+  }
+}

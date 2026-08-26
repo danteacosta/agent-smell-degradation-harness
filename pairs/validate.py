@@ -28,7 +28,8 @@ def validate_pair(pair: dict[str, Any], *, source: str = "pair") -> None:
     oracle_spec = pair["oracle_spec"]
     if not isinstance(oracle_spec, dict):
         raise ValueError(f"{source}: 'oracle_spec' must be an object")
-    for family in REQUIRED_TASK_FAMILIES:
+    families = set(REQUIRED_TASK_FAMILIES) | set(generation_contract) | set(oracle_spec)
+    for family in sorted(families):
         if family not in oracle_spec:
             raise ValueError(f"{source}: oracle_spec missing task family '{family}'")
         if not isinstance(oracle_spec[family], dict):
@@ -46,7 +47,16 @@ def validate_pair(pair: dict[str, Any], *, source: str = "pair") -> None:
             raise ValueError(
                 f"{source}: generation_contract['{family}'].output_keys must be unique non-empty strings"
             )
-        if set(output_keys) != set(oracle_spec[family]):
+        if family == "behavior_codegen":
+            if set(output_keys) != {"source_code"} or set(oracle_spec[family]) != {"_execution"}:
+                raise ValueError(
+                    f"{source}: behavior_codegen requires source_code and private _execution metadata"
+                )
+            continue
+        oracle_fields = {
+            key for key in oracle_spec[family] if not str(key).startswith("_")
+        }
+        if set(output_keys) != oracle_fields:
             raise ValueError(
                 f"{source}: generation contract and oracle fields disagree for '{family}'"
             )

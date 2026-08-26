@@ -9,12 +9,20 @@ from pathlib import Path
 from typing import Any, Protocol
 
 from label_plane import score_artifact, score_test_gen_mutation
+from eval.codegen_sandbox import (
+    evaluate as evaluate_generated_code,
+    evaluate_trusted_fixture,
+)
 
 
 @dataclass(frozen=True, slots=True)
 class TaskEvaluation:
     passed: bool
     mutation_score: float | None = None
+    behavior_status: str | None = None
+    target_condition_failures: int = 0
+    unrelated_condition_failures: int = 0
+    behavior_report: dict[str, Any] | None = None
 
 
 def _canonical_artifact(artifact: dict[str, Any]) -> bytes:
@@ -86,6 +94,112 @@ class CodeGenerationAdapter:
             oracle_spec[self.task_family],
         )
         return TaskEvaluation(passed=result.passed)
+
+
+class BehavioralCodeGenerationAdapter:
+    """Execute the small, restricted implementation used by discovery cases."""
+
+    task_family = "behavior_codegen"
+
+    def __init__(self, *, allow_trusted_fixture: bool = False) -> None:
+        self.allow_trusted_fixture = allow_trusted_fixture
+
+    @staticmethod
+    def _hidden_tests(execution_spec: dict[str, Any]) -> list[dict[str, Any]]:
+        tests: list[dict[str, Any]] = []
+        argument_names = list(
+            execution_spec.get("argument_names", [])
+            or execution_spec.get("input_schema", {}).get("required", [])
+        )
+        for case in execution_spec.get("hidden_tests", []):
+            if not isinstance(case, dict):
+                continue
+            if "args" in case:
+                args = case.get("args", [])
+                kwargs = case.get("kwargs", {})
+            else:
+                value = case.get("input")
+                if isinstance(value, dict) and argument_names and all(name in value for name in argument_names):
+                    args = [value[name] for name in argument_names]
+                else:
+                    args = [value]
+                kwargs = {}
+            expected = case.get("expected", case.get("expected_output"))
+            tests.append(
+                {
+                    "id": str(case.get("id", len(tests))),
+                    "args": args,
+                    "kwargs": kwargs,
+                    "expected": expected,
+                }
+            )
+        return tests
+
+    def evaluate(
+        self,
+        *,
+        intent_id: str,
+        artifact: dict[str, Any],
+        oracle_spec: dict[str, Any],
+    ) -> TaskEvaluation:
+        del intent_id
+        spec = oracle_spec.get(self.task_family, {})
+        execution_spec = spec.get("_execution", {}) if isinstance(spec, dict) else {}
+        source = artifact.get("source_code") if isinstance(artifact, dict) else None
+        if not isinstance(execution_spec, dict) or not isinstance(source, str):
+            return TaskEvaluation(False, behavior_status="invalid")
+
+        hidden_tests = self._hidden_tests(execution_spec)
+        report = evaluate_generated_code(
+            source,
+            hidden_tests,
+            timeout_seconds=float(execution_spec.get("timeout_seconds", 1.0)),
+        )
+        references = execution_spec.get("reference_implementations", {})
+        if (
+            report.get("status") == "unsafe_not_run"
+            and self.allow_trusted_fixture
+            and isinstance(references, dict)
+            and source in references.values()
+        ):
+            report = evaluate_trusted_fixture(source, hidden_tests)
+        case_ids = {
+            index: str(case.get("id", index))
+            for index, case in enumerate(execution_spec.get("hidden_tests", []))
+            if isinstance(case, dict)
+        }
+        target_ids = {
+            str(value) for value in execution_spec.get("removed_condition_test_ids", [])
+        }
+        failed_ids = {
+            case_ids.get(index, str(index))
+            for index, case in enumerate(report.get("cases", []))
+            if case.get("status") != "passed"
+        }
+        target_failures = len(failed_ids & target_ids)
+        unrelated_failures = len(failed_ids - target_ids)
+        status = str(report.get("status", "invalid"))
+        if status == "passed":
+            behavior_status = "passed"
+        elif status == "timeout":
+            behavior_status = "timeout"
+        elif status in {"rejected", "unsafe_not_run"}:
+            behavior_status = status
+        elif report.get("errors"):
+            behavior_status = "crash"
+        elif target_failures and not unrelated_failures:
+            behavior_status = "failed_target_condition"
+        elif unrelated_failures:
+            behavior_status = "failed_unrelated_condition"
+        else:
+            behavior_status = "invalid"
+        return TaskEvaluation(
+            passed=behavior_status == "passed",
+            behavior_status=behavior_status,
+            target_condition_failures=target_failures,
+            unrelated_condition_failures=unrelated_failures,
+            behavior_report=report,
+        )
 
 
 class TraceabilityAdapter:

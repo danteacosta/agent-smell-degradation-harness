@@ -136,6 +136,25 @@ frozen in [Master's Thesis Scope](docs/thesis/masters-scope.md). H1/H2 remain
 planned conditional claims until the external data, provider, annotation,
 preregistration, and shadow-pilot gates pass.
 
+## Requirements-smell discovery
+
+The discovery track makes the advisor's clean-versus-smelly comparison
+executable. It uses 12 source-traceable ARTA requirements from six projects,
+creates a controlled pair for each one, generates acceptance criteria and a
+small side-effect-free Python function, then runs hidden tests that exercise
+the removed condition. The offline run needs no provider credential:
+
+```bash
+make discovery
+make discovery-verify
+```
+
+The compact, reviewable bundle is stored under
+`artifacts/experiments/runs/<run-id>/`. It includes generated clean/smelly
+code, hidden-test reports, source diffs, metrics, episode records and corpus
+provenance. This is discovery evidence only; live-provider, licensing,
+blinded-label and preregistration gates remain separate.
+
 The current collection blocker and acceptance checklist are documented in [confirmatory data acquisition](docs/research/confirmatory-data-acquisition.md). The checked-in seven-source seed is development-only. `RuntimeCheckpointAgent.from_provider()` supplies a staged OpenAI/Anthropic-compatible producer whose bounded T1/T2/T3 events precede terminal generation; empirical qualification on two real configurations is still required. `LiveAgent.observe_checkpoints()` remains a nonconfirmatory prompted snapshot, and offline replay remains schema validation rather than thesis evidence.
 
 The scientific and commercial moat audit is recorded in [2026-08-10 moat stress test](docs/research/2026-08-10-moat-stress-test.md). Its conclusion is intentionally conservative: the stack is protocol-ready with a promising wedge, but the moat is not demonstrated until external data, independent labels, provider diversity, adoption, and ROI evidence exist.

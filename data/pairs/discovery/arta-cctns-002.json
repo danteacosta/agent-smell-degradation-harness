@@ -1,0 +1,94 @@
+{
+  "intent_id": "ARTA-CCTNS-002",
+  "source_intent_id": "cctns-8",
+  "source": {
+    "dataset": "ARTA",
+    "source_file": "database/xml_cctns.json",
+    "source_record_id": 8,
+    "title": "requirment8",
+    "type": "functional",
+    "project": "cctns",
+    "dataset_commit": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+    "source_file_sha256": "a9c4461214accb4509f5825f04d793ed92a4290b46f56fb5f0358b5b7cb050f8",
+    "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_cctns.json#L53-L58",
+    "dataset_url": "https://zenodo.org/records/4266727"
+  },
+  "source_excerpt": "An audit trail is a record of actions taken by either the user or the system triggers. This includes actions taken by users or Administrators, or actions initiated automatically by the system as a result of system parameters. The System must keep an unalterable audit trail capable of automatically capturing and storing information about: All the actions (create/read/update/delete) that are taken upon the critical entities (case, suspect, property,...) in the system The user initiating and or carrying out the action;The date and time of the event.Administrative parameters The word unalterable is to mean that the audit trail data cannot be modified in any way or deleted by any user; it may be subject to re-department and copying to removable media if required, so long as its contents remain unchanged.",
+  "source_sha256": "a9c4461214accb4509f5825f04d793ed92a4290b46f56fb5f0358b5b7cb050f8",
+  "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_cctns.json#L53-L58",
+  "project_id": "cctns",
+  "project_domain": "public-sector",
+  "lifecycle_role": "functional-requirement",
+  "lifecycle_phase": "specification",
+  "evidence_span": [
+    {
+      "text": "unalterable audit trail",
+      "semantic_role": "immutability_constraint"
+    },
+    {
+      "text": "user initiating ... date and time ... administrative parameters",
+      "semantic_role": "required_audit_fields"
+    }
+  ],
+  "clean_requirement": "For a critical-entity action, the system shall retain an immutable audit record containing the actor, timestamp, action and administrative parameters.",
+  "smelly_requirement": "For a critical-entity action, the system shall retain an audit record containing the actor, timestamp, action and administrative parameters.",
+  "removed_condition": "The immutability obligation is removed, so a later operation may alter or delete the audit record.",
+  "natural_variant": false,
+  "contamination_notes": "The source is a long compound requirement. The clean form extracts the executable core and the smelly form removes only the explicit immutability condition; the other required fields remain unchanged.",
+  "licensing_notes": "The ARTA repository is MIT-licensed, but CCTNS source documents may be government procurement material with separate reproduction rules. Verify the original document terms before publishing excerpts beyond this research repository.",
+  "smell": {
+    "category": "semantic",
+    "type": "incomplete_response",
+    "injection_rule": "remove the immutable-storage postcondition while retaining the audit fields",
+    "literature_mapping": [
+      "incomplete system response",
+      "completeness",
+      "verifiability"
+    ]
+  },
+  "generation_contract": {
+    "codegen": {
+      "output_keys": ["audit_policy"]
+    },
+    "behavior_codegen": {
+      "output_keys": ["source_code"],
+      "language": "python",
+      "entry_point": "evaluate",
+      "side_effect_policy": "pure function only"
+    },
+    "test_gen": {
+      "output_keys": ["criterion", "must_accept", "must_reject"]
+    }
+  },
+  "oracle_spec": {
+    "codegen": {
+      "audit_policy": "immutable_required_fields"
+    },
+    "behavior_codegen": {
+      "_execution": {
+        "language": "python",
+        "entry_point": "evaluate",
+        "input_schema": {
+          "type": "object",
+          "required": ["actor", "timestamp", "action", "administrative_parameters", "immutable"],
+          "properties": {"actor": {"type": "string"}, "timestamp": {"type": "string"}, "action": {"type": "string"}, "administrative_parameters": {"type": "object"}, "immutable": {"type": "boolean"}}
+        },
+        "hidden_tests": [
+          {"id": "complete_immutable_record", "input": {"actor": "u1", "timestamp": "2026-01-01T00:00:00Z", "action": "update", "administrative_parameters": {"case": "c1"}, "immutable": true}, "expected_output": true},
+          {"id": "mutable_record", "input": {"actor": "u1", "timestamp": "2026-01-01T00:00:00Z", "action": "update", "administrative_parameters": {"case": "c1"}, "immutable": false}, "expected_output": false},
+          {"id": "missing_actor", "input": {"actor": "", "timestamp": "2026-01-01T00:00:00Z", "action": "update", "administrative_parameters": {"case": "c1"}, "immutable": true}, "expected_output": false}
+        ],
+        "removed_condition_test_ids": ["mutable_record"],
+        "reference_implementations": {
+          "clean": "def evaluate(actor, timestamp, action, administrative_parameters, immutable):\n    return bool(actor and timestamp and action and administrative_parameters is not None and immutable)",
+          "smelly_plausible": "def evaluate(actor, timestamp, action, administrative_parameters, immutable):\n    return bool(actor and timestamp and action and administrative_parameters is not None)"
+        }
+      }
+    },
+    "test_gen": {
+      "criterion": "accept only complete, immutable audit records",
+      "must_accept": [{"actor": "u1", "timestamp": "2026-01-01T00:00:00Z", "action": "update", "administrative_parameters": {"case": "c1"}, "immutable": true}],
+      "must_reject": [{"actor": "u1", "timestamp": "2026-01-01T00:00:00Z", "action": "update", "administrative_parameters": {"case": "c1"}, "immutable": false}, {"actor": "", "timestamp": "2026-01-01T00:00:00Z", "action": "update", "administrative_parameters": {"case": "c1"}, "immutable": true}]
+    }
+  }
+}

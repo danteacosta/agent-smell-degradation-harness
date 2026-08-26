@@ -1,0 +1,93 @@
+{
+  "intent_id": "ARTA-FUN-001",
+  "source_intent_id": "fun-12",
+  "source": {
+    "dataset": "ARTA",
+    "source_file": "database/xml_fun.json",
+    "source_record_id": 12,
+    "title": "requirment12",
+    "type": "functional",
+    "project": "fun",
+    "dataset_commit": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+    "source_file_sha256": "4bc90d8a6ff5763bd963188ed312258e66d1a4cc1774c96ebf33af32e39d7c61",
+    "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_fun.json#L81-L86",
+    "dataset_url": "https://zenodo.org/records/4266727"
+  },
+  "source_excerpt": "2.2.11     It shall only be possible for the user who initiated the call to talk, other users can only \nlisten. (M) \nGroup voice calls",
+  "source_sha256": "4bc90d8a6ff5763bd963188ed312258e66d1a4cc1774c96ebf33af32e39d7c61",
+  "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_fun.json#L81-L86",
+  "project_id": "fun",
+  "project_domain": "railway-telecommunications",
+  "lifecycle_role": "functional-requirement",
+  "lifecycle_phase": "specification",
+  "evidence_span": [
+    {
+      "text": "only be possible for the user who initiated the call to talk",
+      "semantic_role": "speaker_permission"
+    },
+    {
+      "text": "other users can only listen",
+      "semantic_role": "non_initiator_restriction"
+    }
+  ],
+  "clean_requirement": "In a group voice call, only the initiating user shall be allowed to speak; all other users shall be restricted to listening.",
+  "smelly_requirement": "In a group voice call, users shall be able to communicate by voice.",
+  "removed_condition": "The permission rule restricting speech to the initiator is removed.",
+  "natural_variant": false,
+  "contamination_notes": "The source directly supplies the clean permission rule. The smelly wording preserves the broad voice-call intent but removes the speaker restriction, creating the silent authorization gap shown by the discovery design.",
+  "licensing_notes": "The ARTA repository is MIT-licensed, but EIRENE/UIC source specifications may have separate copyright and standards-distribution terms. Verify the original document terms before publishing excerpts beyond this research repository.",
+  "smell": {
+    "category": "semantic",
+    "type": "loophole",
+    "injection_rule": "replace the explicit speaker authorization condition with a general voice-communication statement",
+    "literature_mapping": [
+      "loophole",
+      "incomplete system response",
+      "verifiability"
+    ]
+  },
+  "generation_contract": {
+    "codegen": {
+      "output_keys": ["speech_policy"]
+    },
+    "behavior_codegen": {
+      "output_keys": ["source_code"],
+      "language": "python",
+      "entry_point": "evaluate",
+      "side_effect_policy": "pure function only"
+    },
+    "test_gen": {
+      "output_keys": ["criterion", "must_allow_speak", "must_allow_listen"]
+    }
+  },
+  "oracle_spec": {
+    "codegen": {
+      "speech_policy": "initiator_only"
+    },
+    "behavior_codegen": {
+      "_execution": {
+        "language": "python",
+        "entry_point": "evaluate",
+        "input_schema": {
+          "type": "object",
+          "required": ["speaker_is_initiator"],
+          "properties": {"speaker_is_initiator": {"type": "boolean"}}
+        },
+        "hidden_tests": [
+          {"id": "initiator_may_speak", "input": {"speaker_is_initiator": true}, "expected_output": "speak"},
+          {"id": "other_user_must_listen", "input": {"speaker_is_initiator": false}, "expected_output": "listen"}
+        ],
+        "removed_condition_test_ids": ["other_user_must_listen"],
+        "reference_implementations": {
+          "clean": "def evaluate(speaker_is_initiator):\n    return 'speak' if speaker_is_initiator else 'listen'",
+          "smelly_plausible": "def evaluate(speaker_is_initiator):\n    return 'speak'"
+        }
+      }
+    },
+    "test_gen": {
+      "criterion": "only the call initiator may speak; all other participants may listen",
+      "must_allow_speak": [true],
+      "must_allow_listen": [false]
+    }
+  }
+}

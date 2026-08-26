@@ -66,7 +66,23 @@ class StubAgent:
         self.policy = policy
 
     def generate(self, pair: dict, variant: str, task_family: str) -> dict[str, Any]:
+        controlled = pair.get("controlled_artifacts", {})
+        if isinstance(controlled, dict):
+            selected = controlled.get(variant, {})
+            if isinstance(selected, dict) and isinstance(selected.get(task_family), dict):
+                return copy.deepcopy(selected[task_family])
+
+        if task_family == "behavior_codegen":
+            execution = pair.get("oracle_spec", {}).get(task_family, {}).get("_execution", {})
+            references = execution.get("reference_implementations", {})
+            reference_name = "smelly_plausible" if self.failure_mode == "smell-blind" and variant == "smelly" else "clean"
+            source_code = references.get(reference_name)
+            if isinstance(source_code, str):
+                return {"source_code": source_code}
+
         oracle = copy.deepcopy(pair["oracle_spec"][task_family])
+        if isinstance(oracle, dict):
+            oracle = {key: value for key, value in oracle.items() if not str(key).startswith("_")}
 
         if self.failure_mode == "oracle-mismatch":
             return self._weaken(

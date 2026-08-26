@@ -307,6 +307,11 @@ def _run_episode(
     }
     if task_evaluation.mutation_score is not None:
         episode["mutation_score"] = task_evaluation.mutation_score
+    if task_evaluation.behavior_status is not None:
+        episode["behavior_status"] = task_evaluation.behavior_status
+        episode["target_condition_failures"] = task_evaluation.target_condition_failures
+        episode["unrelated_condition_failures"] = task_evaluation.unrelated_condition_failures
+        episode["behavior_report"] = task_evaluation.behavior_report
     return episode
 
 

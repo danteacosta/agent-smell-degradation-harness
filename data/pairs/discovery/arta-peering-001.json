@@ -1,0 +1,89 @@
+{
+  "intent_id": "ARTA-PEERING-001",
+  "source_intent_id": "peering-7",
+  "source": {
+    "dataset": "ARTA",
+    "source_file": "database/xml_peering.json",
+    "source_record_id": 7,
+    "title": "requirment7",
+    "type": "functional",
+    "project": "peering",
+    "dataset_commit": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+    "source_file_sha256": "674717b9d2f5a23b56a77ba8e094040f71b4456bc3bb6b3b8cb6edbbc9f8bf5c",
+    "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_peering.json#L46-L51",
+    "dataset_url": "https://zenodo.org/records/4266727"
+  },
+  "source_excerpt": "Malicious requests are detected and rejected.",
+  "source_sha256": "674717b9d2f5a23b56a77ba8e094040f71b4456bc3bb6b3b8cb6edbbc9f8bf5c",
+  "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_peering.json#L46-L51",
+  "project_id": "peering",
+  "project_domain": "networking",
+  "lifecycle_role": "functional-requirement",
+  "lifecycle_phase": "specification",
+  "evidence_span": [
+    {
+      "text": "detected and rejected",
+      "semantic_role": "detection_and_response"
+    }
+  ],
+  "clean_requirement": "The system shall detect malicious requests and reject them.",
+  "smelly_requirement": "The system shall detect malicious requests.",
+  "removed_condition": "The rejection response is removed; detection can occur without preventing the request.",
+  "natural_variant": false,
+  "contamination_notes": "The source contains a paired detection-and-response requirement. The smelly mutation removes only the response, preserving the same threat-detection intent while making a silent security failure observable.",
+  "licensing_notes": "The ARTA repository is MIT-licensed, but the original Peering project specification may have separate copyright terms. Verify the original document terms before publishing excerpts beyond this research repository.",
+  "smell": {
+    "category": "semantic",
+    "type": "incomplete_system_response",
+    "injection_rule": "delete the rejection response while retaining malicious-request detection",
+    "literature_mapping": [
+      "incomplete system response",
+      "completeness",
+      "loophole"
+    ]
+  },
+  "generation_contract": {
+    "codegen": {
+      "output_keys": ["malicious_request_policy"]
+    },
+    "behavior_codegen": {
+      "output_keys": ["source_code"],
+      "language": "python",
+      "entry_point": "evaluate",
+      "side_effect_policy": "pure function only"
+    },
+    "test_gen": {
+      "output_keys": ["criterion", "must_reject", "must_allow"]
+    }
+  },
+  "oracle_spec": {
+    "codegen": {
+      "malicious_request_policy": "detect_and_reject"
+    },
+    "behavior_codegen": {
+      "_execution": {
+        "language": "python",
+        "entry_point": "evaluate",
+        "input_schema": {
+          "type": "object",
+          "required": ["malicious"],
+          "properties": {"malicious": {"type": "boolean"}}
+        },
+        "hidden_tests": [
+          {"id": "malicious_request", "input": {"malicious": true}, "expected_output": "reject"},
+          {"id": "benign_request", "input": {"malicious": false}, "expected_output": "allow"}
+        ],
+        "removed_condition_test_ids": ["malicious_request"],
+        "reference_implementations": {
+          "clean": "def evaluate(malicious):\n    return 'reject' if malicious else 'allow'",
+          "smelly_plausible": "def evaluate(malicious):\n    return 'allow'"
+        }
+      }
+    },
+    "test_gen": {
+      "criterion": "reject malicious requests and allow benign requests",
+      "must_reject": [true],
+      "must_allow": [false]
+    }
+  }
+}

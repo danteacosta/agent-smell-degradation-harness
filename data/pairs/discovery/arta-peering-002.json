@@ -1,0 +1,90 @@
+{
+  "intent_id": "ARTA-PEERING-002",
+  "source_intent_id": "peering-9",
+  "source": {
+    "dataset": "ARTA",
+    "source_file": "database/xml_peering.json",
+    "source_record_id": 9,
+    "title": "requirment9",
+    "type": "functional",
+    "project": "peering",
+    "dataset_commit": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+    "source_file_sha256": "674717b9d2f5a23b56a77ba8e094040f71b4456bc3bb6b3b8cb6edbbc9f8bf5c",
+    "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_peering.json#L60-L65",
+    "dataset_url": "https://zenodo.org/records/4266727"
+  },
+  "source_excerpt": "Both anticipated and unanticipated user requests (traffic) are considered.",
+  "source_sha256": "674717b9d2f5a23b56a77ba8e094040f71b4456bc3bb6b3b8cb6edbbc9f8bf5c",
+  "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_peering.json#L60-L65",
+  "project_id": "peering",
+  "project_domain": "networking",
+  "lifecycle_role": "functional-requirement",
+  "lifecycle_phase": "specification",
+  "evidence_span": [
+    {
+      "text": "Both anticipated and unanticipated user requests",
+      "semantic_role": "coverage_scope"
+    }
+  ],
+  "clean_requirement": "The system shall consider both anticipated and unanticipated user requests.",
+  "smelly_requirement": "The system shall consider anticipated user requests.",
+  "removed_condition": "Coverage of unanticipated requests is removed.",
+  "natural_variant": false,
+  "contamination_notes": "The source explicitly contains the paired coverage categories. The smelly mutation removes only the unanticipated category, producing a completeness gap while preserving the general request-handling intent.",
+  "licensing_notes": "The ARTA repository is MIT-licensed, but the original Peering project specification may have separate copyright terms. Verify the original document terms before publishing excerpts beyond this research repository.",
+  "smell": {
+    "category": "semantic",
+    "type": "vague_completeness",
+    "injection_rule": "drop the unanticipated-request coverage obligation",
+    "literature_mapping": [
+      "completeness",
+      "open-ended or non-verifiable term",
+      "incomplete requirement"
+    ]
+  },
+  "generation_contract": {
+    "codegen": {
+      "output_keys": ["traffic_coverage"]
+    },
+    "behavior_codegen": {
+      "output_keys": ["source_code"],
+      "language": "python",
+      "entry_point": "evaluate",
+      "side_effect_policy": "pure function only"
+    },
+    "test_gen": {
+      "output_keys": ["criterion", "must_cover", "must_not_omit"]
+    }
+  },
+  "oracle_spec": {
+    "codegen": {
+      "traffic_coverage": "anticipated_and_unanticipated"
+    },
+    "behavior_codegen": {
+      "_execution": {
+        "language": "python",
+        "entry_point": "evaluate",
+        "input_schema": {
+          "type": "object",
+          "required": ["anticipated", "unanticipated"],
+          "properties": {"anticipated": {"type": "boolean"}, "unanticipated": {"type": "boolean"}}
+        },
+        "hidden_tests": [
+          {"id": "both_categories", "input": {"anticipated": true, "unanticipated": true}, "expected_output": true},
+          {"id": "anticipated_only", "input": {"anticipated": true, "unanticipated": false}, "expected_output": false},
+          {"id": "unanticipated_only", "input": {"anticipated": false, "unanticipated": true}, "expected_output": false}
+        ],
+        "removed_condition_test_ids": ["anticipated_only", "unanticipated_only"],
+        "reference_implementations": {
+          "clean": "def evaluate(anticipated, unanticipated):\n    return anticipated and unanticipated",
+          "smelly_plausible": "def evaluate(anticipated, unanticipated):\n    return anticipated"
+        }
+      }
+    },
+    "test_gen": {
+      "criterion": "cover anticipated and unanticipated requests together",
+      "must_cover": [{"anticipated": true, "unanticipated": true}],
+      "must_not_omit": [{"anticipated": true, "unanticipated": false}, {"anticipated": false, "unanticipated": true}]
+    }
+  }
+}

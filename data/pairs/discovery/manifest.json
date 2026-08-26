@@ -1,0 +1,32 @@
+{
+  "schema_version": "requirements-smell-discovery-v2",
+  "corpus_id": "arta-requirements-smell-discovery",
+  "case_count": 12,
+  "minimum_case_count": 10,
+  "source_dataset": {
+    "name": "ARTA requirements dataset",
+    "repository": "https://github.com/m-zakeri/ARTA",
+    "dataset_record": "https://zenodo.org/records/4266727",
+    "commit": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c"
+  },
+  "required_projects": ["nfr", "cctns", "ertms", "fun", "gamma", "peering"],
+  "families": {
+    "codegen": "historical declarative codegen contract; no executable evaluator metadata",
+    "test_gen": "historical acceptance-test contract",
+    "behavior_codegen": "discovery-only Python source contract with private execution oracle"
+  },
+  "records": [
+    {"intent_id": "ARTA-NFR-001", "filename": "arta-nfr-001.json", "project_id": "nfr", "source_intent_id": "nfr-1", "smell_type": "vague_threshold"},
+    {"intent_id": "ARTA-NFR-002", "filename": "arta-nfr-002.json", "project_id": "nfr", "source_intent_id": "nfr-6", "smell_type": "vague_authorization"},
+    {"intent_id": "ARTA-CCTNS-001", "filename": "arta-cctns-001.json", "project_id": "cctns", "source_intent_id": "cctns-4", "smell_type": "incomplete_condition"},
+    {"intent_id": "ARTA-CCTNS-002", "filename": "arta-cctns-002.json", "project_id": "cctns", "source_intent_id": "cctns-8", "smell_type": "incomplete_response"},
+    {"intent_id": "ARTA-ERTMS-001", "filename": "arta-ertms-001.json", "project_id": "ertms", "source_intent_id": "ertms-3", "smell_type": "incomplete_condition"},
+    {"intent_id": "ARTA-ERTMS-002", "filename": "arta-ertms-002.json", "project_id": "ertms", "source_intent_id": "ertms-16", "smell_type": "incomplete_condition"},
+    {"intent_id": "ARTA-FUN-001", "filename": "arta-fun-001.json", "project_id": "fun", "source_intent_id": "fun-12", "smell_type": "loophole"},
+    {"intent_id": "ARTA-FUN-002", "filename": "arta-fun-002.json", "project_id": "fun", "source_intent_id": "fun-18", "smell_type": "cardinality_ambiguity"},
+    {"intent_id": "ARTA-GAMMA-001", "filename": "arta-gamma-001.json", "project_id": "gamma", "source_intent_id": "gamma-11", "smell_type": "vague_threshold"},
+    {"intent_id": "ARTA-GAMMA-002", "filename": "arta-gamma-002.json", "project_id": "gamma", "source_intent_id": "gamma-12", "smell_type": "cardinality_ambiguity"},
+    {"intent_id": "ARTA-PEERING-001", "filename": "arta-peering-001.json", "project_id": "peering", "source_intent_id": "peering-7", "smell_type": "incomplete_system_response"},
+    {"intent_id": "ARTA-PEERING-002", "filename": "arta-peering-002.json", "project_id": "peering", "source_intent_id": "peering-9", "smell_type": "vague_completeness"}
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "intent_id": "ARTA-FUN-002",
+  "source_intent_id": "fun-18",
+  "source": {
+    "dataset": "ARTA",
+    "source_file": "database/xml_fun.json",
+    "source_record_id": 18,
+    "title": "requirment18",
+    "type": "functional",
+    "project": "fun",
+    "dataset_commit": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+    "source_file_sha256": "4bc90d8a6ff5763bd963188ed312258e66d1a4cc1774c96ebf33af32e39d7c61",
+    "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_fun.json#L123-L128",
+    "dataset_url": "https://zenodo.org/records/4266727"
+  },
+  "source_excerpt": "2.2.17     The  system  shall  support  multi-party  voice  communications  between  up  to  six \ndifferent parties. (M)",
+  "source_sha256": "4bc90d8a6ff5763bd963188ed312258e66d1a4cc1774c96ebf33af32e39d7c61",
+  "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_fun.json#L123-L128",
+  "project_id": "fun",
+  "project_domain": "railway-telecommunications",
+  "lifecycle_role": "functional-requirement",
+  "lifecycle_phase": "specification",
+  "evidence_span": [
+    {
+      "text": "up to six different parties",
+      "semantic_role": "maximum_cardinality"
+    }
+  ],
+  "clean_requirement": "The system shall support multi-party voice communication for one through six different parties, and reject a seventh party.",
+  "smelly_requirement": "The system shall support multi-party voice communication for different parties.",
+  "removed_condition": "The maximum of six parties is omitted.",
+  "natural_variant": false,
+  "contamination_notes": "The source provides the six-party upper bound. The clean form makes rejection of a seventh party explicit for the oracle; the smelly mutation removes only the cardinality limit.",
+  "licensing_notes": "The ARTA repository is MIT-licensed, but EIRENE/UIC source specifications may have separate copyright and standards-distribution terms. Verify the original document terms before publishing excerpts beyond this research repository.",
+  "smell": {
+    "category": "semantic",
+    "type": "cardinality_ambiguity",
+    "injection_rule": "remove the explicit upper bound from a multi-party communication requirement",
+    "literature_mapping": [
+      "comparatives or quantitative omission",
+      "open-ended or non-verifiable term",
+      "verifiability"
+    ]
+  },
+  "generation_contract": {
+    "codegen": {
+      "output_keys": ["party_limit"]
+    },
+    "behavior_codegen": {
+      "output_keys": ["source_code"],
+      "language": "python",
+      "entry_point": "evaluate",
+      "side_effect_policy": "pure function only"
+    },
+    "test_gen": {
+      "output_keys": ["criterion", "must_accept_party_counts", "must_reject_party_counts"]
+    }
+  },
+  "oracle_spec": {
+    "codegen": {
+      "party_limit": 6
+    },
+    "behavior_codegen": {
+      "_execution": {
+        "language": "python",
+        "entry_point": "evaluate",
+        "input_schema": {
+          "type": "object",
+          "required": ["party_count"],
+          "properties": {"party_count": {"type": "integer", "minimum": 0}}
+        },
+        "hidden_tests": [
+          {"id": "six_parties", "input": {"party_count": 6}, "expected_output": true},
+          {"id": "seven_parties", "input": {"party_count": 7}, "expected_output": false},
+          {"id": "zero_parties", "input": {"party_count": 0}, "expected_output": false}
+        ],
+        "removed_condition_test_ids": ["seven_parties"],
+        "reference_implementations": {
+          "clean": "def evaluate(party_count):\n    return 1 <= party_count <= 6",
+          "smelly_plausible": "def evaluate(party_count):\n    return party_count >= 1"
+        }
+      }
+    },
+    "test_gen": {
+      "criterion": "accept exactly one through six parties",
+      "must_accept_party_counts": [1, 6],
+      "must_reject_party_counts": [0, 7]
+    }
+  }
+}

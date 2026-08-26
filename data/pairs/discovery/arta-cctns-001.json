@@ -1,0 +1,97 @@
+{
+  "intent_id": "ARTA-CCTNS-001",
+  "source_intent_id": "cctns-4",
+  "source": {
+    "dataset": "ARTA",
+    "source_file": "database/xml_cctns.json",
+    "source_record_id": 4,
+    "title": "requirment4",
+    "type": "functional",
+    "project": "cctns",
+    "dataset_commit": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+    "source_file_sha256": "a9c4461214accb4509f5825f04d793ed92a4290b46f56fb5f0358b5b7cb050f8",
+    "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_cctns.json#L25-L30",
+    "dataset_url": "https://zenodo.org/records/4266727"
+  },
+  "source_excerpt": "The solution should send alerts (e.g., email, SMS) to the user if the user chooses to whenever any action has been taken on the alert.",
+  "source_sha256": "a9c4461214accb4509f5825f04d793ed92a4290b46f56fb5f0358b5b7cb050f8",
+  "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_cctns.json#L25-L30",
+  "project_id": "cctns",
+  "project_domain": "public-sector",
+  "lifecycle_role": "functional-requirement",
+  "lifecycle_phase": "specification",
+  "evidence_span": [
+    {
+      "text": "if the user chooses to",
+      "semantic_role": "opt_in_condition"
+    },
+    {
+      "text": "whenever any action has been taken on the alert",
+      "semantic_role": "trigger_event"
+    }
+  ],
+  "clean_requirement": "The solution shall send an alert after an action on an alert only when the user has opted in.",
+  "smelly_requirement": "The solution shall send an alert after any action has been taken on an alert.",
+  "removed_condition": "The user's explicit opt-in condition is removed.",
+  "natural_variant": false,
+  "contamination_notes": "The source is retained verbatim. The clean form normalizes the source grammar while preserving its event and permission semantics; the smelly form removes only opt-in.",
+  "licensing_notes": "The ARTA repository is MIT-licensed, but CCTNS source documents may be government procurement material with separate reproduction rules. Verify the original document terms before publishing excerpts beyond this research repository.",
+  "smell": {
+    "category": "semantic",
+    "type": "incomplete_condition",
+    "injection_rule": "remove the user opt-in predicate while retaining the alert event",
+    "literature_mapping": [
+      "incomplete condition",
+      "incomplete system response",
+      "completeness"
+    ]
+  },
+  "generation_contract": {
+    "codegen": {
+      "output_keys": ["alert_policy"]
+    },
+    "behavior_codegen": {
+      "output_keys": ["source_code"],
+      "language": "python",
+      "entry_point": "evaluate",
+      "side_effect_policy": "pure function only"
+    },
+    "test_gen": {
+      "output_keys": ["criterion", "must_alert", "must_not_alert"]
+    }
+  },
+  "oracle_spec": {
+    "codegen": {
+      "alert_policy": "opt_in_after_action"
+    },
+    "behavior_codegen": {
+      "_execution": {
+        "language": "python",
+        "entry_point": "evaluate",
+        "input_schema": {
+          "type": "object",
+          "required": ["opted_in", "action_taken"],
+          "properties": {
+            "opted_in": {"type": "boolean"},
+            "action_taken": {"type": "boolean"}
+          }
+        },
+        "hidden_tests": [
+          {"id": "opted_in_after_action", "input": {"opted_in": true, "action_taken": true}, "expected_output": true},
+          {"id": "not_opted_in_after_action", "input": {"opted_in": false, "action_taken": true}, "expected_output": false},
+          {"id": "opted_in_without_action", "input": {"opted_in": true, "action_taken": false}, "expected_output": false}
+        ],
+        "removed_condition_test_ids": ["not_opted_in_after_action"],
+        "reference_implementations": {
+          "clean": "def evaluate(opted_in, action_taken):\n    return opted_in and action_taken",
+          "smelly_plausible": "def evaluate(opted_in, action_taken):\n    return action_taken"
+        }
+      }
+    },
+    "test_gen": {
+      "criterion": "alert iff an action occurred and the user opted in",
+      "must_alert": [{"opted_in": true, "action_taken": true}],
+      "must_not_alert": [{"opted_in": false, "action_taken": true}, {"opted_in": true, "action_taken": false}]
+    }
+  }
+}
