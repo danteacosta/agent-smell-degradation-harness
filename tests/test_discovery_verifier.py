@@ -154,6 +154,8 @@ def test_efficacy_metrics_report_confusion_pairing_and_strata():
     assert intervals["recall"]["confidence"] == 0.95
     assert intervals["recall"]["lower"] < intervals["recall"]["estimate"]
     assert intervals["recall"]["upper"] == 1.0
+    assert metrics["interval_status"] == "inconclusive"
+    assert metrics["interval_criteria"]["recall_lower_at_least_0_80"] is False
 
 
 def test_repeated_rows_are_deduplicated_and_stability_checks_replication_ids():

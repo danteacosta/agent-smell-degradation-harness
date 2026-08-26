@@ -22,5 +22,6 @@ eval/.experiment_work/
 eval/.mitigation_work/
 eval/.dissertation_work/
 /runs/
+/artifacts/experiments/.discovery-work/
 bridge/
 docs/dissertation/BUNDLE_SUMMARY.md

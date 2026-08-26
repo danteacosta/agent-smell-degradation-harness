@@ -320,13 +320,13 @@ def run_discovery(
     if bundle_dir.exists():
         raise FileExistsError(f"artifact bundle already exists: {bundle_dir}")
 
-    work_dir = repo_root / "runs" / f"discovery-{run_id}"
+    work_dir = artifact_root / ".discovery-work" / run_id
     episodes: list[dict[str, Any]] = []
     replication_metrics: list[dict[str, Any]] = []
     task_ids = list(DISCOVERY_TASK_FAMILIES)
     run_model = model if mode == "live" else "stub-smell-blind"
     configuration_id = configuration_id_for(
-        {"mode": mode, "model": run_model, "task_ids": task_ids}
+        {"mode": mode, "model": run_model, "task_ids": task_ids, "replications": replications}
     )
     for replication_id in range(replications):
         task_adapters = (
@@ -353,9 +353,7 @@ def run_discovery(
             experiment_id="requirements-smell-discovery",
             run_id=run_id,
             replication_id=replication_id,
-            configuration_id=configuration_id_for(
-                {"mode": mode, "model": run_model, "task_ids": [a.task_family for a in task_adapters]}
-            ),
+            configuration_id=configuration_id,
         )
         replication_metrics.append(metrics)
         episodes.extend(rep_episodes)

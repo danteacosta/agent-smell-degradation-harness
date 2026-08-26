@@ -165,6 +165,28 @@ project/smell strata. A `promising` status means the frozen discovery rule pack
 met the local pilot criteria (recall >= 0.80, false-alert rate <= 0.20 and
 paired discrimination >= 0.80); it is not a universal efficiency claim.
 
+The hardened v7 rerun uses five repetitions of the deterministic offline stub.
+This produces 240 total decisions: 120 `test_gen` decisions that are
+observability-only and 120 raw `behavior_codegen` rows. The primary efficacy
+matrix deduplicates those repetitions by `(intent_id, variant, task_family)`,
+leaving 24 unique behavior cases. Wilson 95% intervals are reported on those
+unique cases (and on the 12 complete clean/smelly pairs); repeated stub rows
+are a pipeline-stability check, not independent model evidence. The v7 run is
+therefore useful for validating the detector and artifact pipeline, but it does
+not establish LLM generalization, production latency/cost, or population-level
+precision.
+
+One detector regression was fixed before v7: the completeness rule now uses
+word boundaries, so `all` inside `shall` cannot suppress the
+`incomplete_completeness_scope` signal. The ERTMS omission case can still be a
+genuine false negative when the omitted supervision scope is absent from the
+final requirement text. On macOS, behavior reports use `trusted_fixture`,
+which executes checked-in reference functions in the parent process with
+restricted builtins; it is not a production subprocess sandbox. Real-model
+evaluation remains a separate run requiring two provider/model configurations,
+independent repetitions, measured cost/latency/error rates, and Linux/CI
+sandbox execution.
+
 The current collection blocker and acceptance checklist are documented in [confirmatory data acquisition](docs/research/confirmatory-data-acquisition.md). The checked-in seven-source seed is development-only. `RuntimeCheckpointAgent.from_provider()` supplies a staged OpenAI/Anthropic-compatible producer whose bounded T1/T2/T3 events precede terminal generation; empirical qualification on two real configurations is still required. `LiveAgent.observe_checkpoints()` remains a nonconfirmatory prompted snapshot, and offline replay remains schema validation rather than thesis evidence.
 
 The scientific and commercial moat audit is recorded in [2026-08-10 moat stress test](docs/research/2026-08-10-moat-stress-test.md). Its conclusion is intentionally conservative: the stack is protocol-ready with a promising wedge, but the moat is not demonstrated until external data, independent labels, provider diversity, adoption, and ROI evidence exist.

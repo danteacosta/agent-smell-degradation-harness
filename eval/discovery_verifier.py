@@ -603,21 +603,38 @@ def compute_efficacy_metrics(
         for row in rows
         if row.get("provider_cost_usd") is not None
     ]
+    confidence_intervals = {
+        "recall": wilson_interval(base["confusion"]["tp"], base["positive_count"]),
+        "precision": wilson_interval(base["confusion"]["tp"], base["alert_count"]),
+        "specificity": wilson_interval(base["confusion"]["tn"], base["negative_count"]),
+        "false_alert_rate": wilson_interval(base["confusion"]["fp"], base["negative_count"]),
+        "paired_discrimination": wilson_interval(paired["wins"], paired["pair_count"]),
+        "unit": "unique_behavior_case_or_pair",
+        "interpretation": "descriptive_until_independent_replications",
+    }
+    interval_criteria = {
+        "recall_lower_at_least_0_80": (
+            confidence_intervals["recall"]["lower"] is not None
+            and confidence_intervals["recall"]["lower"] >= 0.80
+        ),
+        "false_alert_upper_at_most_0_20": (
+            confidence_intervals["false_alert_rate"]["upper"] is not None
+            and confidence_intervals["false_alert_rate"]["upper"] <= 0.20
+        ),
+        "paired_discrimination_lower_at_least_0_80": (
+            confidence_intervals["paired_discrimination"]["lower"] is not None
+            and confidence_intervals["paired_discrimination"]["lower"] >= 0.80
+        ),
+    }
     return {
         "schema_version": SCHEMA_VERSION,
         "rule_pack": RULE_PACK_VERSION,
         "status": status,
         **base,
         "paired_discrimination": paired,
-        "confidence_intervals": {
-            "recall": wilson_interval(base["confusion"]["tp"], base["positive_count"]),
-            "precision": wilson_interval(base["confusion"]["tp"], base["alert_count"]),
-            "specificity": wilson_interval(base["confusion"]["tn"], base["negative_count"]),
-            "false_alert_rate": wilson_interval(base["confusion"]["fp"], base["negative_count"]),
-            "paired_discrimination": wilson_interval(paired["wins"], paired["pair_count"]),
-            "unit": "unique_behavior_case_or_pair",
-            "interpretation": "descriptive_until_independent_replications",
-        },
+        "confidence_intervals": confidence_intervals,
+        "interval_criteria": interval_criteria,
+        "interval_status": "supported" if all(interval_criteria.values()) else "inconclusive",
         "criteria": criteria,
         "leakage_rejections": int(leakage_rejections),
         "mean_lead_time_ms": _mean_lead_time_ms(rows),
@@ -712,6 +729,7 @@ def _verification_readme(metrics: Mapping[str, Any]) -> str:
             f"- Paired discrimination: `{(metrics.get('paired_discrimination') or {}).get('rate')}`",
             f"- Confidence interval method: `{intervals.get('method', 'wilson')}` at `{intervals.get('confidence', 0.95)}`",
             f"- Interval unit: `{intervals.get('unit', 'unique_behavior_case_or_pair')}`",
+            f"- Interval support status: `{metrics.get('interval_status')}`",
             f"- Repeated observations agree: `{stability.get('all_repetitions_agree')}`",
             f"- Mean lead time before artifact completion (ms): `{metrics.get('mean_lead_time_ms')}`",
             "",

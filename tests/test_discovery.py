@@ -50,3 +50,29 @@ def test_offline_discovery_materializes_both_variants_and_behavior_results(tmp_p
     assert "\n-" in comparison
     assert "\n+" in comparison
     assert "allow'+" not in comparison
+
+
+def test_offline_discovery_reports_deterministic_repeat_stability(tmp_path):
+    result = run_discovery(
+        mode="offline",
+        replications=5,
+        run_id="test-discovery-repeated",
+        artifact_root=tmp_path,
+    )
+    bundle = tmp_path / "runs" / "test-discovery-repeated"
+
+    assert result["episode_count"] == 240
+    assert result["expected_episode_count"] == 240
+    verification = result["verification"]
+    assert verification["decision_count"] == 240
+    assert verification["behavior_decision_count"] == 120
+    assert verification["non_behavior_decision_count"] == 120
+    assert verification["raw_eligible_count"] == 120
+    assert verification["unique_eligible_count"] == 24
+    assert verification["eligible_count"] == 24
+    assert verification["replication_stability"]["observed_replications"] == [0, 1, 2, 3, 4]
+    assert verification["replication_stability"]["all_repetitions_agree"] is True
+    run = json.loads((bundle / "run.json").read_text(encoding="utf-8"))
+    assert run["replication_kind"] == "deterministic_pipeline_repeat"
+    assert run["independent_replication_claim"] is False
+    assert run["expected_episode_count"] == 240
