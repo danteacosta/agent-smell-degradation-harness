@@ -41,3 +41,12 @@ def test_offline_discovery_materializes_both_variants_and_behavior_results(tmp_p
     assert len(list((bundle / "comparisons").glob("*.md"))) == 12
     assert len(list((bundle / "observable-traces").glob("*.jsonl"))) == 48
     assert result["verification"]["eligible_count"] == 24
+    for path in (bundle / "generated-code").glob("*.py"):
+        content = path.read_bytes()
+        assert content.endswith(b"\n")
+        assert not content.endswith(b"\n\n")
+    comparison = (bundle / "comparisons" / "arta-ertms-001.md").read_text(encoding="utf-8")
+    assert "```diff\n" in comparison
+    assert "\n-" in comparison
+    assert "\n+" in comparison
+    assert "allow'+" not in comparison

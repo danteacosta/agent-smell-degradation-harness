@@ -7,6 +7,8 @@ import pytest
 
 from eval.discovery_verifier import (
     compute_efficacy_metrics,
+    deduplicate_repeated_rows,
+    derive_observable_signals,
     score_observable_episode,
     verify_bundle,
 )
@@ -85,6 +87,19 @@ def test_observable_score_ignores_terminal_episode_fields(tmp_path: Path):
     assert "source_code" not in serialized
 
 
+def test_completeness_scope_uses_word_boundaries_for_all_marker():
+    smelly = derive_observable_signals(
+        "The system shall consider anticipated user requests.", {}
+    )
+    clean = derive_observable_signals(
+        "The system shall consider both anticipated and unanticipated user requests.",
+        {},
+    )
+
+    assert "incomplete_completeness_scope" in {signal["code"] for signal in smelly}
+    assert "incomplete_completeness_scope" not in {signal["code"] for signal in clean}
+
+
 def test_observable_score_is_independent_of_variant_and_smell_metadata(tmp_path: Path):
     trace = _trace(tmp_path / "trace.jsonl")
     requirement = "The system shall detect malicious requests."
@@ -128,6 +143,71 @@ def test_efficacy_metrics_report_confusion_pairing_and_strata():
     assert metrics["paired_discrimination"]["rate"] == 1.0
     assert metrics["strata"]["project_id"]["P-1"]["recall"] == 1.0
     assert metrics["status"] == "promising"
+    intervals = metrics["confidence_intervals"]
+    assert intervals["recall"]["successes"] == 2
+    assert intervals["recall"]["trials"] == 2
+    assert intervals["precision"]["trials"] == 2
+    assert intervals["specificity"]["trials"] == 2
+    assert intervals["false_alert_rate"]["trials"] == 2
+    assert intervals["paired_discrimination"]["trials"] == 2
+    assert intervals["recall"]["method"] == "wilson"
+    assert intervals["recall"]["confidence"] == 0.95
+    assert intervals["recall"]["lower"] < intervals["recall"]["estimate"] < intervals["recall"]["upper"]
+
+
+def test_repeated_rows_are_deduplicated_and_stability_checks_replication_ids():
+    rows = []
+    for replication_id in range(5):
+        for variant, label, score, decision in (
+            ("clean", 0, 0.1, "approve"),
+            ("smelly", 1, 0.8, "block"),
+        ):
+            rows.append(
+                {
+                    "episode_id": f"episode-{replication_id}-{variant}",
+                    "intent_id": "I-1",
+                    "task_family": "behavior_codegen",
+                    "variant": variant,
+                    "replication_id": replication_id,
+                    "label": label,
+                    "risk_score": score,
+                    "decision": decision,
+                }
+            )
+
+    unique_rows, stability = deduplicate_repeated_rows(rows, expected_replications=5)
+
+    assert len(unique_rows) == 2
+    assert stability["key_count"] == 2
+    assert stability["observed_replications"] == [0, 1, 2, 3, 4]
+    assert stability["missing_replications"] == []
+    assert stability["duplicate_replications"] == []
+    assert stability["unstable_key_count"] == 0
+    assert stability["all_repetitions_agree"] is True
+
+
+def test_repeated_rows_report_missing_and_duplicate_replications():
+    base = {
+        "episode_id": "episode",
+        "intent_id": "I-1",
+        "task_family": "behavior_codegen",
+        "variant": "smelly",
+        "label": 1,
+        "risk_score": 0.8,
+        "decision": "block",
+    }
+    rows = [
+        {**base, "replication_id": 0, "episode_id": "episode-0"},
+        {**base, "replication_id": 0, "episode_id": "episode-0-duplicate"},
+        {**base, "replication_id": 2, "episode_id": "episode-2"},
+    ]
+
+    _unique_rows, stability = deduplicate_repeated_rows(rows, expected_replications=3)
+
+    assert stability["observed_replications"] == [0, 2]
+    assert stability["missing_replications"] == [1]
+    assert stability["duplicate_replications"] == [0]
+    assert stability["all_repetitions_agree"] is False
 
 
 def test_efficacy_metrics_are_inconclusive_without_both_classes():
