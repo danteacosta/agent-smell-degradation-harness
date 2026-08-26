@@ -232,6 +232,11 @@ def _materialize_artifacts(
 
     pair_map = {pair["intent_id"]: pair for pair in pairs}
     grouped_code: dict[str, dict[str, str]] = {}
+
+    def normalize_source(source: str) -> str:
+        normalized = source.replace("\r\n", "\n").replace("\r", "\n")
+        return normalized.rstrip("\n") + "\n"
+
     for episode in episodes:
         source_trace = Path(str(episode.get("provenance_path", "")))
         episode_digest = hashlib.sha256(
@@ -254,6 +259,7 @@ def _materialize_artifacts(
         source = artifact.get("source_code") if isinstance(artifact, dict) else None
         if not isinstance(source, str):
             continue
+        source = normalize_source(source)
         safe_id = intent_id.lower().replace("/", "-")
         code_path = generated_dir / f"{safe_id}__{variant}.py"
         code_path.write_text(source, encoding="utf-8")

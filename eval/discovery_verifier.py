@@ -19,6 +19,7 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from feature_plane import DeployableFeatureInput, extract_deployable_features
+from eval.uncertainty import wilson_interval
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BUNDLE_ROOT = REPO_ROOT / "artifacts" / "experiments" / "runs"
@@ -276,7 +277,7 @@ def derive_observable_signals(
             source="text",
         )
     if "consider" in lowered and "anticipated" in lowered and not re.search(
-        r"unanticipated|both|all", lowered
+        r"\b(?:unanticipated|both|all)\b", lowered
     ):
         _add_signal(
             signals,
@@ -451,6 +452,84 @@ def _binary_metrics(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
     }
 
 
+def deduplicate_repeated_rows(
+    rows: Sequence[Mapping[str, Any]],
+    *,
+    expected_replications: int | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Select one representative per case and audit repeated observations."""
+
+    groups: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        key = (
+            str(row.get("intent_id", "")),
+            str(row.get("variant", "")),
+            str(row.get("task_family", "")),
+        )
+        groups[key].append(dict(row))
+
+    expected_ids = (
+        set(range(expected_replications))
+        if expected_replications is not None and expected_replications > 0
+        else None
+    )
+    representatives: list[dict[str, Any]] = []
+    observed_ids: set[int] = set()
+    missing_by_key: dict[str, list[int]] = {}
+    duplicate_by_key: dict[str, list[int]] = {}
+    unstable_keys: list[str] = []
+
+    for key, group in groups.items():
+        rep_map: dict[int, list[dict[str, Any]]] = defaultdict(list)
+        unnumbered: list[dict[str, Any]] = []
+        for row in group:
+            replication_id = row.get("replication_id")
+            if isinstance(replication_id, int) and not isinstance(replication_id, bool):
+                rep_map[replication_id].append(row)
+                observed_ids.add(replication_id)
+            else:
+                unnumbered.append(row)
+
+        key_label = "|".join(key)
+        duplicate_ids = sorted(replication for replication, items in rep_map.items() if len(items) > 1)
+        if duplicate_ids:
+            duplicate_by_key[key_label] = duplicate_ids
+        observed_for_key = set(rep_map)
+        missing_ids = sorted(expected_ids - observed_for_key) if expected_ids is not None else []
+        if missing_ids:
+            missing_by_key[key_label] = missing_ids
+
+        representative = rep_map.get(0, unnumbered or [group[0]])[0]
+        representatives.append(representative)
+        comparable = [row for items in rep_map.values() for row in items] + unnumbered
+        stable = all(
+            (
+                row.get("risk_score") == representative.get("risk_score")
+                and row.get("decision") == representative.get("decision")
+                and row.get("label") == representative.get("label")
+            )
+            for row in comparable
+        )
+        if missing_ids or duplicate_ids or not stable:
+            unstable_keys.append(key_label)
+
+    missing_replications = (
+        sorted(expected_ids - observed_ids) if expected_ids is not None else []
+    )
+    return representatives, {
+        "key_count": len(groups),
+        "expected_replications": expected_replications,
+        "observed_replications": sorted(observed_ids),
+        "missing_replications": missing_replications,
+        "missing_replications_by_key": missing_by_key,
+        "duplicate_replications": sorted({replication for values in duplicate_by_key.values() for replication in values}),
+        "duplicate_replications_by_key": duplicate_by_key,
+        "unstable_key_count": len(unstable_keys),
+        "unstable_keys": unstable_keys,
+        "all_repetitions_agree": not unstable_keys,
+    }
+
+
 def _paired_discrimination(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
     pairs: dict[tuple[str, str], dict[str, Mapping[str, Any]]] = defaultdict(dict)
     for row in rows:
@@ -530,6 +609,15 @@ def compute_efficacy_metrics(
         "status": status,
         **base,
         "paired_discrimination": paired,
+        "confidence_intervals": {
+            "recall": wilson_interval(base["confusion"]["tp"], base["positive_count"]),
+            "precision": wilson_interval(base["confusion"]["tp"], base["alert_count"]),
+            "specificity": wilson_interval(base["confusion"]["tn"], base["negative_count"]),
+            "false_alert_rate": wilson_interval(base["confusion"]["fp"], base["negative_count"]),
+            "paired_discrimination": wilson_interval(paired["wins"], paired["pair_count"]),
+            "unit": "unique_behavior_case_or_pair",
+            "interpretation": "descriptive_until_independent_replications",
+        },
         "criteria": criteria,
         "leakage_rejections": int(leakage_rejections),
         "mean_lead_time_ms": _mean_lead_time_ms(rows),
@@ -604,6 +692,8 @@ def _behavior_label(episode: Mapping[str, Any]) -> int | None:
 
 
 def _verification_readme(metrics: Mapping[str, Any]) -> str:
+    intervals = metrics.get("confidence_intervals") or {}
+    stability = metrics.get("replication_stability") or {}
     return "\n".join(
         [
             "# Verification efficacy report",
@@ -611,13 +701,24 @@ def _verification_readme(metrics: Mapping[str, Any]) -> str:
             "This is a discovery-only, oracle-separated benchmark.",
             "The verifier reads only `decisions.jsonl` inputs derived from pre-final observations;",
             "`labels.jsonl` is written after decisions and contains the independent behavior labels.",
+            "Only `behavior_codegen` decisions with a terminal behavior label enter the binary efficacy matrix;",
+            "`test_gen` decisions are observability-only and are not efficacy cases.",
             "",
             f"- Status: `{metrics.get('status')}`",
-            f"- Eligible behavior episodes: `{metrics.get('eligible_count')}`",
+            f"- Raw eligible behavior rows: `{metrics.get('raw_eligible_count', metrics.get('eligible_count'))}`",
+            f"- Unique eligible behavior cases: `{metrics.get('unique_eligible_count', metrics.get('eligible_count'))}`",
             f"- Recall/warning coverage: `{metrics.get('recall')}`",
             f"- Clean false-alert rate: `{metrics.get('false_alert_rate')}`",
             f"- Paired discrimination: `{(metrics.get('paired_discrimination') or {}).get('rate')}`",
+            f"- Confidence interval method: `{intervals.get('method', 'wilson')}` at `{intervals.get('confidence', 0.95)}`",
+            f"- Interval unit: `{intervals.get('unit', 'unique_behavior_case_or_pair')}`",
+            f"- Repeated observations agree: `{stability.get('all_repetitions_agree')}`",
             f"- Mean lead time before artifact completion (ms): `{metrics.get('mean_lead_time_ms')}`",
+            "",
+            "Five offline repetitions of the deterministic stub are pipeline-stability checks,",
+            "not independent model samples; their duplicate rows are deduplicated for primary metrics.",
+            "On macOS, `trusted_fixture` executes checked-in reference functions in the parent process",
+            "with restricted builtins. It is not production subprocess isolation against hostile code.",
             "",
             "The thresholds are frozen in the run output. `promising` means only that this",
             "versioned pilot met the development criteria; it is not a population-level claim.",
@@ -638,6 +739,17 @@ def verify_bundle(
     if not episodes_path.is_file():
         raise VerificationInputError(f"bundle is missing {episodes_path}")
     episodes = _read_jsonl(episodes_path)
+    run_config: dict[str, Any] = {}
+    run_path = root / "run.json"
+    if run_path.is_file():
+        run_value = json.loads(run_path.read_text(encoding="utf-8"))
+        if isinstance(run_value, Mapping):
+            run_config = dict(run_value)
+    expected_episode_count = run_config.get("expected_episode_count")
+    if expected_episode_count is not None and len(episodes) != int(expected_episode_count):
+        raise VerificationInputError(
+            f"expected {expected_episode_count} episodes, found {len(episodes)}"
+        )
     decisions: list[dict[str, Any]] = []
     labels: list[dict[str, Any]] = []
     labeled_rows: list[dict[str, Any]] = []
@@ -686,6 +798,7 @@ def verify_bundle(
         provider_meta = provider_meta if isinstance(provider_meta, Mapping) else {}
         label_row = {
             "episode_id": str(episode.get("episode_id", "")),
+            "replication_id": episode.get("replication_id"),
             "intent_id": str(episode.get("intent_id", "")),
             "project_id": episode.get("project_id"),
             "variant": episode.get("variant"),
@@ -705,7 +818,17 @@ def verify_bundle(
         labels.append(label_row)
         labeled_rows.append(label_row)
 
-    metrics = compute_efficacy_metrics(labeled_rows, leakage_rejections=leakage_rejections)
+    expected_replications = run_config.get("replications")
+    if expected_replications is not None:
+        expected_replications = int(expected_replications)
+    unique_labeled_rows, replication_stability = deduplicate_repeated_rows(
+        labeled_rows,
+        expected_replications=expected_replications,
+    )
+    metrics = compute_efficacy_metrics(
+        unique_labeled_rows,
+        leakage_rejections=leakage_rejections,
+    )
     behavior_decision_count = sum(
         str(episode.get("task_family", "")) == "behavior_codegen" for episode in episodes
     )
@@ -715,6 +838,10 @@ def verify_bundle(
             "behavior_decision_count": behavior_decision_count,
             "behavior_ineligible_count": behavior_decision_count - len(labels),
             "non_behavior_decision_count": len(decisions) - behavior_decision_count,
+            "raw_eligible_count": len(labeled_rows),
+            "unique_eligible_count": len(unique_labeled_rows),
+            "replication_stability": replication_stability,
+            "analysis_unit": "unique_behavior_case_or_pair",
         }
     )
     verification_dir = root / "verification"
