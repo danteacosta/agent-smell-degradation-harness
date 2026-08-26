@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from eval.runner import run_eval_with_agent
 from eval.task_adapters import (
     AcceptanceCriteriaAdapter,
@@ -12,6 +14,12 @@ from eval.task_adapters import (
 class _OracleAgent:
     def generate(self, pair, variant, task_family):
         return pair["oracle_spec"][task_family]
+
+
+def _skip_when_sandbox_is_unavailable(result):
+    if result.behavior_status == "unsafe_not_run":
+        pytest.skip("the host cannot apply every required sandbox control")
+    return result
 
 
 def _pair() -> dict:
@@ -95,11 +103,11 @@ def test_behavioral_codegen_adapter_scores_hidden_behavior_not_source_text():
         }
     }
 
-    result = adapter.evaluate(
+    result = _skip_when_sandbox_is_unavailable(adapter.evaluate(
         intent_id="DISCOVERY-001",
         artifact={"source_code": "def evaluate(value):\n    return value > 5\n"},
         oracle_spec=oracle_spec,
-    )
+    ))
 
     assert result.passed is True
     assert result.behavior_status == "passed"
@@ -121,11 +129,11 @@ def test_behavioral_codegen_adapter_marks_removed_condition_failure():
         }
     }
 
-    result = adapter.evaluate(
+    result = _skip_when_sandbox_is_unavailable(adapter.evaluate(
         intent_id="DISCOVERY-001",
         artifact={"source_code": "def evaluate(value):\n    return value >= 0\n"},
         oracle_spec=oracle_spec,
-    )
+    ))
 
     assert result.passed is False
     assert result.behavior_status == "failed_target_condition"
