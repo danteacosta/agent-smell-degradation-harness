@@ -10,10 +10,16 @@ from dataclasses import asdict, dataclass
 from typing import Any, Mapping
 
 
+_SECRET_MARKERS = ("secret", "token", "password", "api_key", "apikey", "authorization")
+
+
 def configuration_id_for(configuration: Mapping[str, Any]) -> str:
     """Return a stable identifier for the execution configuration."""
+    for key in configuration:
+        if any(marker in str(key).casefold() for marker in _SECRET_MARKERS):
+            raise ValueError("secret or credential fields cannot be hashed into configuration identity")
     encoded = json.dumps(configuration, sort_keys=True, separators=(",", ":"), default=str)
-    return f"cfg-{hashlib.sha256(encoded.encode('utf-8')).hexdigest()[:12]}"
+    return f"cfg-{hashlib.sha256(encoded.encode('utf-8')).hexdigest()}"
 
 
 def new_run_id() -> str:

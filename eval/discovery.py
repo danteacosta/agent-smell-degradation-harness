@@ -323,6 +323,11 @@ def run_discovery(
     work_dir = repo_root / "runs" / f"discovery-{run_id}"
     episodes: list[dict[str, Any]] = []
     replication_metrics: list[dict[str, Any]] = []
+    task_ids = list(DISCOVERY_TASK_FAMILIES)
+    run_model = model if mode == "live" else "stub-smell-blind"
+    configuration_id = configuration_id_for(
+        {"mode": mode, "model": run_model, "task_ids": task_ids}
+    )
     for replication_id in range(replications):
         task_adapters = (
             AcceptanceCriteriaAdapter(),
@@ -330,7 +335,6 @@ def run_discovery(
         )
         if mode == "offline":
             agent: Any = StubAgent(failure_mode="smell-blind")
-            run_model = "stub-smell-blind"
         elif mode == "live":
             if os.environ.get("AGENT_EXPERIMENT") != "1":
                 raise ValueError("live discovery requires AGENT_EXPERIMENT=1")
@@ -361,13 +365,18 @@ def run_discovery(
         "schema_version": "requirements-smell-discovery-run/v1",
         "status": "discovery_only",
         "mode": mode,
-        "model": model if mode == "live" else "stub-smell-blind",
+        "model": run_model,
         "run_id": run_id,
         "replications": replications,
         "case_count": len(pairs),
         "episode_count": len(episodes),
-        "expected_episode_count": len(pairs) * 2 * len(DISCOVERY_TASK_FAMILIES),
+        "expected_episode_count": len(pairs) * 2 * len(DISCOVERY_TASK_FAMILIES) * replications,
         "task_families": list(DISCOVERY_TASK_FAMILIES),
+        "configuration_id": configuration_id,
+        "replication_kind": (
+            "live_provider_replication" if mode == "live" else "deterministic_pipeline_repeat"
+        ),
+        "independent_replication_claim": mode == "live",
         "source_revision": _git_revision(repo_root),
         "created_at": datetime.now(UTC).isoformat(),
         "replication_metrics": replication_metrics,

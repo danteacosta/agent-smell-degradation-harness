@@ -88,3 +88,39 @@ def test_runner_exports_provider_metadata_without_prompt_or_artifact(tmp_path) -
     assert episodes[0]["provider_meta"]["latency_ms"] == 12.5
     assert "prompt" not in metrics["provider_run"]
     assert "artifact" not in metrics["provider_run"]
+
+
+def test_runner_propagates_non_secret_prompt_identity(tmp_path) -> None:
+    class PromptAwareAgent:
+        provider = "replay"
+        model = "recorded-model"
+
+        def generate_with_meta(self, pair, variant, task_family):
+            return pair["oracle_spec"][task_family], {
+                "provider": self.provider,
+                "model": self.model,
+                "latency_ms": 12.5,
+                "cost_usd": 0.01,
+                "prompt_sha256": "a" * 64,
+                "prompt_template_version": "discovery-generation/v1",
+            }
+
+    pair = {
+        "intent_id": "I-1",
+        "workload_id": "w-1",
+        "clean_requirement": "Do the thing.",
+        "smelly_requirement": "Do the thing.",
+        "smell": {"type": "vague", "category": "ambiguity"},
+        "oracle_spec": {"codegen": {"ok": True}, "test_gen": {"ok": True}},
+    }
+    metrics, episodes = run_eval_with_agent(
+        PromptAwareAgent(),
+        pairs=[pair],
+        output_path=tmp_path / "metrics.json",
+        traces_dir=tmp_path / "traces",
+    )
+
+    assert episodes[0]["provider_meta"]["prompt_sha256"] == "a" * 64
+    extra = metrics["provider_run"]["metadata"][0]["extra"]
+    assert extra["prompt_template_versions"] == ["discovery-generation/v1"]
+    assert extra["prompt_sha256s"] == ["a" * 64]

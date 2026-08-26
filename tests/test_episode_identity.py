@@ -3,8 +3,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from agents.stub import StubAgent
-from eval.identity import create_episode_identity
+from eval.identity import configuration_id_for, create_episode_identity
 from eval.runner import run_eval_with_agent
 
 
@@ -27,6 +29,19 @@ def test_episode_identity_is_reproducible_and_replication_safe():
     assert first.episode_id != another_replication.episode_id
     assert first.episode_id in first.trace_name
     assert another_replication.replication_id == 1
+
+
+def test_configuration_id_is_full_canonical_sha256_and_rejects_secrets():
+    first = configuration_id_for({"mode": "offline", "model": "stub", "tasks": ["a"]})
+    equivalent = configuration_id_for({"tasks": ["a"], "model": "stub", "mode": "offline"})
+    changed = configuration_id_for({"mode": "offline", "model": "other", "tasks": ["a"]})
+
+    assert first == equivalent
+    assert first.startswith("cfg-")
+    assert len(first.removeprefix("cfg-")) == 64
+    assert first != changed
+    with pytest.raises(ValueError, match="secret|credential|api key"):
+        configuration_id_for({"mode": "live", "api_key": "do-not-hash"})
 
 
 def test_runner_persists_identity_before_execution_in_trace_and_export(tmp_path: Path):

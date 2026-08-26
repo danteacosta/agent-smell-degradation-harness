@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from types import SimpleNamespace
 
@@ -55,10 +56,20 @@ def test_generate_with_meta_returns_expected_keys():
     artifact, meta = agent.generate_with_meta(pair, variant="clean", task_family="codegen")
 
     assert artifact == oracle
-    assert set(meta.keys()) == {"latency_ms", "parse_retries", "model", "provider"}
+    assert set(meta.keys()) == {
+        "latency_ms",
+        "parse_retries",
+        "model",
+        "provider",
+        "prompt_sha256",
+        "prompt_template_version",
+    }
     assert meta["parse_retries"] == 0
     assert meta["model"] == "gpt-4o-mini"
     assert meta["provider"] == "openai"
+    assert re.fullmatch(r"[0-9a-f]{64}", meta["prompt_sha256"])
+    assert meta["prompt_template_version"] == "discovery-generation/v1"
+    assert "prompt" not in meta
 
 
 def test_generation_prompt_does_not_disclose_variant_or_oracle_values():

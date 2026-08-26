@@ -305,6 +305,9 @@ def _run_episode(
             "checkpoint": checkpoint_meta,
         },
     }
+    for metadata_key in ("prompt_sha256", "prompt_template_version"):
+        if metadata_key in provider_meta:
+            episode["provider_meta"][metadata_key] = str(provider_meta[metadata_key])
     if task_evaluation.mutation_score is not None:
         episode["mutation_score"] = task_evaluation.mutation_score
     if task_evaluation.behavior_status is not None:
@@ -468,7 +471,23 @@ def run_eval_with_agent(
             episode_count=len(episodes),
             total_latency_ms=sum(float(ep["provider_meta"]["latency_ms"]) for ep in episodes),
             total_cost_usd=sum(float(ep["provider_meta"]["cost_usd"]) for ep in episodes),
-            extra={"cost_status": "reported_per_episode" if cost_reported else "not_reported"},
+            extra={
+                "cost_status": "reported_per_episode" if cost_reported else "not_reported",
+                "prompt_template_versions": sorted(
+                    {
+                        str(ep["provider_meta"]["prompt_template_version"])
+                        for ep in episodes
+                        if ep["provider_meta"].get("prompt_template_version")
+                    }
+                ),
+                "prompt_sha256s": sorted(
+                    {
+                        str(ep["provider_meta"]["prompt_sha256"])
+                        for ep in episodes
+                        if ep["provider_meta"].get("prompt_sha256")
+                    }
+                ),
+            },
         )
     ]
     metrics["provider_run"] = summarize_provider_runs(provider_runs)

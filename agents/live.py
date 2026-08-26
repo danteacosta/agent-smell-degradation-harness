@@ -17,6 +17,9 @@ from agents.providers import (
 )
 
 
+PROMPT_TEMPLATE_VERSION = "discovery-generation/v1"
+
+
 class NotConfiguredError(Exception):
     """Raised when live LLM adapter dependencies or credentials are missing."""
 
@@ -200,6 +203,8 @@ class LiveAgent:
                     "parse_retries": parse_retries,
                     "model": self.model,
                     "provider": self.provider,
+                    "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+                    "prompt_template_version": PROMPT_TEMPLATE_VERSION,
                 }
                 return artifact, meta
             except (json.JSONDecodeError, ValueError) as exc:
