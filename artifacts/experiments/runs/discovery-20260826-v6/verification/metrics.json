@@ -25,7 +25,7 @@
   "leakage_rejections": 0,
   "mean_lead_time_ms": 0.08190909090909092,
   "mean_provider_latency_ms": 0.0,
-  "mean_verifier_runtime_ms": 0.2402777099632658,
+  "mean_verifier_runtime_ms": 0.1657724593921254,
   "negative_count": 12,
   "non_behavior_decision_count": 24,
   "paired_discrimination": {
