@@ -1,0 +1,42 @@
+{
+  "behavior_report": {
+    "cases": [
+      {
+        "index": 0,
+        "status": "passed"
+      },
+      {
+        "actual": "speak",
+        "expected": "listen",
+        "index": 1,
+        "status": "failed"
+      }
+    ],
+    "duration_ms": 0.046,
+    "errors": 0,
+    "execution_mode": "trusted_fixture",
+    "failed": 1,
+    "passed": 1,
+    "safety_controls": {
+      "subprocess_isolation": false,
+      "trusted_reference_match": true
+    },
+    "safety_errors": [
+      {
+        "code": "trusted_fixture_only",
+        "control": "subprocess_isolation"
+      }
+    ],
+    "status": "failed",
+    "timed_out": false,
+    "validation_errors": []
+  },
+  "behavior_status": "failed_target_condition",
+  "intent_id": "ARTA-FUN-001",
+  "removed_condition": "The permission rule restricting speech to the initiator is removed.",
+  "requirement_text": "In a group voice call, users shall be able to communicate by voice.",
+  "source_sha256": "81b45ef36257aaf8950cc85420a45964eb50f4f01b35c5218c5457d1ecf1b577",
+  "target_condition_failures": 1,
+  "unrelated_condition_failures": 0,
+  "variant": "smelly"
+}

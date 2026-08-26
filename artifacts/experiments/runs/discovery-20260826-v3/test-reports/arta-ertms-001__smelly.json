@@ -1,0 +1,46 @@
+{
+  "behavior_report": {
+    "cases": [
+      {
+        "index": 0,
+        "status": "passed"
+      },
+      {
+        "index": 1,
+        "status": "passed"
+      },
+      {
+        "actual": "block",
+        "expected": "allow",
+        "index": 2,
+        "status": "failed"
+      }
+    ],
+    "duration_ms": 0.055,
+    "errors": 0,
+    "execution_mode": "trusted_fixture",
+    "failed": 1,
+    "passed": 2,
+    "safety_controls": {
+      "subprocess_isolation": false,
+      "trusted_reference_match": true
+    },
+    "safety_errors": [
+      {
+        "code": "trusted_fixture_only",
+        "control": "subprocess_isolation"
+      }
+    ],
+    "status": "failed",
+    "timed_out": false,
+    "validation_errors": []
+  },
+  "behavior_status": "failed_target_condition",
+  "intent_id": "ARTA-ERTMS-001",
+  "removed_condition": "The scope condition requiring active RBC supervision is removed.",
+  "requirement_text": "The system shall block a traction-unit movement whenever the movement is not authorized.",
+  "source_sha256": "08df894c97da9b0d6f0f329888d1f55e68b8916570bab0ab177a03e6c10fc18f",
+  "target_condition_failures": 1,
+  "unrelated_condition_failures": 0,
+  "variant": "smelly"
+}

@@ -22,6 +22,9 @@ Each promoted run contains:
 
 The default offline run is deterministic and uses the smell-blind stub. It
 demonstrates the pipeline; it is not a live-provider or confirmatory result.
+On macOS hosts that cannot expose the required address-space limit, the
+offline adapter may use a hash-exact trusted reference fixture; reports mark
+that execution mode and it must not be presented as isolated execution.
 The live mode requires `AGENT_EXPERIMENT=1` and provider credentials and must be
 reported separately with its cost and qualification metadata.
 

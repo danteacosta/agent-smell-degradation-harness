@@ -1,0 +1,46 @@
+{
+  "behavior_report": {
+    "cases": [
+      {
+        "actual": true,
+        "expected": false,
+        "index": 0,
+        "status": "failed"
+      },
+      {
+        "index": 1,
+        "status": "passed"
+      },
+      {
+        "index": 2,
+        "status": "passed"
+      }
+    ],
+    "duration_ms": 0.081,
+    "errors": 0,
+    "execution_mode": "trusted_fixture",
+    "failed": 1,
+    "passed": 2,
+    "safety_controls": {
+      "subprocess_isolation": false,
+      "trusted_reference_match": true
+    },
+    "safety_errors": [
+      {
+        "code": "trusted_fixture_only",
+        "control": "subprocess_isolation"
+      }
+    ],
+    "status": "failed",
+    "timed_out": false,
+    "validation_errors": []
+  },
+  "behavior_status": "failed_target_condition",
+  "intent_id": "ARTA-NFR-001",
+  "removed_condition": "The exact 60-second refresh interval is no longer specified.",
+  "requirement_text": "The system shall refresh the display regularly.",
+  "source_sha256": "7a0afc3bacd3bad655c1c83871686d2737210af3eee4b43d9a0b98f377413392",
+  "target_condition_failures": 1,
+  "unrelated_condition_failures": 0,
+  "variant": "smelly"
+}

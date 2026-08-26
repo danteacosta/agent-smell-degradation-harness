@@ -1,0 +1,42 @@
+{
+  "behavior_report": {
+    "cases": [
+      {
+        "actual": "allow",
+        "expected": "reject",
+        "index": 0,
+        "status": "failed"
+      },
+      {
+        "index": 1,
+        "status": "passed"
+      }
+    ],
+    "duration_ms": 0.047,
+    "errors": 0,
+    "execution_mode": "trusted_fixture",
+    "failed": 1,
+    "passed": 1,
+    "safety_controls": {
+      "subprocess_isolation": false,
+      "trusted_reference_match": true
+    },
+    "safety_errors": [
+      {
+        "code": "trusted_fixture_only",
+        "control": "subprocess_isolation"
+      }
+    ],
+    "status": "failed",
+    "timed_out": false,
+    "validation_errors": []
+  },
+  "behavior_status": "failed_target_condition",
+  "intent_id": "ARTA-PEERING-001",
+  "removed_condition": "The rejection response is removed; detection can occur without preventing the request.",
+  "requirement_text": "The system shall detect malicious requests.",
+  "source_sha256": "a0adaee1ead3251bbba3c39337451f6a6dd3f6b209b7d85055f3ebe12ab2b59a",
+  "target_condition_failures": 1,
+  "unrelated_condition_failures": 0,
+  "variant": "smelly"
+}
