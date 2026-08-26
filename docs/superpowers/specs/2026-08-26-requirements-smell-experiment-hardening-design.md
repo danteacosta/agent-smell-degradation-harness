@@ -99,11 +99,13 @@ verifier owns decision metrics and their uncertainty; the materializer owns
 portable evidence files and diffs.
 
 For the v7 offline run, all five repetitions use the same deterministic stub.
-The aggregate efficacy view is therefore deduplicated by intent, variant, and
-task family. A separate stability section reports whether all repeated
-decisions and outcomes agree. The run may demonstrate pipeline repeatability,
-but its intervals remain descriptive and are not evidence of independent
-model-sample uncertainty.
+The aggregate efficacy view is therefore deduplicated by the exact key
+`(intent_id, variant, task_family)`. Every key must have one value in each
+repetition. The deduplicated value is the first repetition's row, and a
+separate stability section verifies that risk score, decision, and terminal
+label are identical in every later repetition. The run may demonstrate
+pipeline repeatability, but its intervals remain descriptive and are not
+evidence of independent model-sample uncertainty.
 
 The 48-row shape at one repetition remains understandable: 24 `test_gen`
 decisions are observability-only and 24 `behavior_codegen` decisions are
@@ -111,11 +113,38 @@ eligible for the binary efficacy matrix. With five repetitions, those counts
 scale to 240 total decisions, 120 non-behavior decisions, and 120 raw eligible
 rows, while the unique efficacy denominator remains 24.
 
+## Measurement definitions
+
+The binary efficacy matrix is built only from `behavior_codegen` rows whose
+terminal behavior label is available. `smelly` is the positive class
+(`label=1`, target condition failed); `clean` is the negative class
+(`label=0`, target condition passed). An alert is any verifier decision other
+than `approve` (`warn` or `block`). The primary unique-case unit is one
+`(intent_id, variant, task_family)` row after the repetition key above is
+deduplicated. The paired unit is one complete
+`(intent_id, task_family)` pair containing both variants.
+
+| Metric | Formula | Denominator / unit |
+| --- | --- | --- |
+| Recall / warning coverage | `TP / (TP + FN)` | unique smelly behavior rows |
+| Precision | `TP / (TP + FP)` | unique alerted behavior rows |
+| Specificity | `TN / (TN + FP)` | unique clean behavior rows |
+| False-alert rate | `FP / (FP + TN)` | unique clean behavior rows |
+| Paired discrimination | smelly risk score `>` clean risk score | complete unique intent×task pairs; ties are not wins |
+
+Wilson intervals are two-sided 95% intervals for recall, precision,
+specificity, false-alert rate, and paired discrimination. The interval unit is
+the unique row or unique pair stated in the table; repeated deterministic
+rows are never included as additional independent observations. If a
+denominator is zero, both interval bounds are `null` and the metric is
+inconclusive.
+
 ## Contracts and failure handling
 
 - A detector regression must fail before the regex fix and pass after it.
-- A generated source string is materialized with exactly one final newline
-  convention; existing internal content is otherwise preserved.
+- A generated source string is materialized as UTF-8 text with LF line endings
+  and exactly one final `\n`; existing internal content is otherwise preserved
+  after CRLF/CR normalization and removal of trailing blank lines.
 - A comparison file must contain a parseable fenced unified diff whose lines do
   not accidentally concatenate at a source boundary.
 - Wilson intervals must be emitted only for non-empty denominators. Empty
@@ -124,6 +153,11 @@ rows, while the unique efficacy denominator remains 24.
 - Repeated deterministic rows must not be silently treated as independent
   samples. Run metadata and the metric section must make the limitation
   machine-readable and human-readable.
+- Configuration identity is a SHA-256 hash of canonical JSON with sorted keys,
+  compact separators, and no credentials, prompts, generated artifacts, or
+  terminal labels. The exported field is `configuration_id` and its value is
+  the hash; prompt identity is a separate SHA-256 hash of the exact prompt
+  bytes when a live provider records it.
 - Live mode must continue to fail closed when credentials/dependencies are
   absent and must never serialize API keys, prompts, or terminal artifacts into
   provider manifests.
@@ -180,6 +214,12 @@ artifact verification, and existing provider metadata contracts remain green.
    behavior.
 7. Record the remaining scientific limitations and the exact inputs needed for
    the later live-model run.
+
+On macOS, `trusted_fixture` means the generated reference function is checked
+against the hidden tests in the parent Python process with a restricted
+builtins mapping; it is not a subprocess boundary and cannot claim containment
+against hostile code. The subprocess evaluator may be used only when its
+platform controls are available and must report its own execution mode.
 
 ## Expected result
 
