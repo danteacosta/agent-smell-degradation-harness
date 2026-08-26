@@ -1,0 +1,44 @@
+{
+  "behavior_report": {
+    "cases": [
+      {
+        "index": 0,
+        "status": "passed"
+      },
+      {
+        "index": 1,
+        "status": "passed"
+      },
+      {
+        "index": 2,
+        "status": "passed"
+      }
+    ],
+    "duration_ms": 0.051,
+    "errors": 0,
+    "execution_mode": "trusted_fixture",
+    "failed": 0,
+    "passed": 3,
+    "safety_controls": {
+      "subprocess_isolation": false,
+      "trusted_reference_match": true
+    },
+    "safety_errors": [
+      {
+        "code": "trusted_fixture_only",
+        "control": "subprocess_isolation"
+      }
+    ],
+    "status": "passed",
+    "timed_out": false,
+    "validation_errors": []
+  },
+  "behavior_status": "passed",
+  "intent_id": "ARTA-ERTMS-002",
+  "removed_condition": "The requirement that the driver fail to acknowledge is removed, so the brake can be applied even after a valid acknowledgement.",
+  "requirement_text": "If a transition requires acknowledgement and the driver does not acknowledge it, ETCS shall initiate a brake application.",
+  "source_sha256": "3238564ecf1642052cf8f283de5f9878465071ccb330d4c2587f159f110788b9",
+  "target_condition_failures": 0,
+  "unrelated_condition_failures": 0,
+  "variant": "clean"
+}

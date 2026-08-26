@@ -1,0 +1,46 @@
+{
+  "behavior_report": {
+    "cases": [
+      {
+        "index": 0,
+        "status": "passed"
+      },
+      {
+        "actual": true,
+        "expected": false,
+        "index": 1,
+        "status": "failed"
+      },
+      {
+        "index": 2,
+        "status": "passed"
+      }
+    ],
+    "duration_ms": 0.047,
+    "errors": 0,
+    "execution_mode": "trusted_fixture",
+    "failed": 1,
+    "passed": 2,
+    "safety_controls": {
+      "subprocess_isolation": false,
+      "trusted_reference_match": true
+    },
+    "safety_errors": [
+      {
+        "code": "trusted_fixture_only",
+        "control": "subprocess_isolation"
+      }
+    ],
+    "status": "failed",
+    "timed_out": false,
+    "validation_errors": []
+  },
+  "behavior_status": "failed_target_condition",
+  "intent_id": "ARTA-GAMMA-002",
+  "removed_condition": "The measurable capacity limit of 1000 concurrent customers is omitted.",
+  "requirement_text": "The system shall support many customers logged in concurrently.",
+  "source_sha256": "08d988c22fda94995bf01ab58d2bb47bf8e93c263757b2a340373541bfdd1fc0",
+  "target_condition_failures": 1,
+  "unrelated_condition_failures": 0,
+  "variant": "smelly"
+}

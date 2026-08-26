@@ -1,0 +1,42 @@
+{
+  "behavior_report": {
+    "cases": [
+      {
+        "index": 0,
+        "status": "passed"
+      },
+      {
+        "actual": "allow",
+        "expected": "deny",
+        "index": 1,
+        "status": "failed"
+      }
+    ],
+    "duration_ms": 0.045,
+    "errors": 0,
+    "execution_mode": "trusted_fixture",
+    "failed": 1,
+    "passed": 1,
+    "safety_controls": {
+      "subprocess_isolation": false,
+      "trusted_reference_match": true
+    },
+    "safety_errors": [
+      {
+        "code": "trusted_fixture_only",
+        "control": "subprocess_isolation"
+      }
+    ],
+    "status": "failed",
+    "timed_out": false,
+    "validation_errors": []
+  },
+  "behavior_status": "failed_target_condition",
+  "intent_id": "ARTA-NFR-002",
+  "removed_condition": "The enforcement outcome that denies unauthorized users is omitted; classification alone is not access control.",
+  "requirement_text": "The product shall distinguish between authorized and unauthorized users in every access attempt.",
+  "source_sha256": "d659572e6a3b00ba159e690a08d4f1bf452e04d5ad1b9e93b1cf839b5248eff2",
+  "target_condition_failures": 1,
+  "unrelated_condition_failures": 0,
+  "variant": "smelly"
+}

@@ -1,0 +1,46 @@
+{
+  "behavior_report": {
+    "cases": [
+      {
+        "index": 0,
+        "status": "passed"
+      },
+      {
+        "actual": true,
+        "expected": false,
+        "index": 1,
+        "status": "failed"
+      },
+      {
+        "index": 2,
+        "status": "passed"
+      }
+    ],
+    "duration_ms": 0.055,
+    "errors": 0,
+    "execution_mode": "trusted_fixture",
+    "failed": 1,
+    "passed": 2,
+    "safety_controls": {
+      "subprocess_isolation": false,
+      "trusted_reference_match": true
+    },
+    "safety_errors": [
+      {
+        "code": "trusted_fixture_only",
+        "control": "subprocess_isolation"
+      }
+    ],
+    "status": "failed",
+    "timed_out": false,
+    "validation_errors": []
+  },
+  "behavior_status": "failed_target_condition",
+  "intent_id": "ARTA-FUN-002",
+  "removed_condition": "The maximum of six parties is omitted.",
+  "requirement_text": "The system shall support multi-party voice communication for different parties.",
+  "source_sha256": "50993838d03859826ca2e4d48be8df973c08e89d126763fbaef5cd08537f91bc",
+  "target_condition_failures": 1,
+  "unrelated_condition_failures": 0,
+  "variant": "smelly"
+}

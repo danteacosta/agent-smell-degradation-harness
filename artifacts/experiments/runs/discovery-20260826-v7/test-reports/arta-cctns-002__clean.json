@@ -1,0 +1,44 @@
+{
+  "behavior_report": {
+    "cases": [
+      {
+        "index": 0,
+        "status": "passed"
+      },
+      {
+        "index": 1,
+        "status": "passed"
+      },
+      {
+        "index": 2,
+        "status": "passed"
+      }
+    ],
+    "duration_ms": 0.071,
+    "errors": 0,
+    "execution_mode": "trusted_fixture",
+    "failed": 0,
+    "passed": 3,
+    "safety_controls": {
+      "subprocess_isolation": false,
+      "trusted_reference_match": true
+    },
+    "safety_errors": [
+      {
+        "code": "trusted_fixture_only",
+        "control": "subprocess_isolation"
+      }
+    ],
+    "status": "passed",
+    "timed_out": false,
+    "validation_errors": []
+  },
+  "behavior_status": "passed",
+  "intent_id": "ARTA-CCTNS-002",
+  "removed_condition": "The immutability obligation is removed, so a later operation may alter or delete the audit record.",
+  "requirement_text": "For a critical-entity action, the system shall retain an immutable audit record containing the actor, timestamp, action and administrative parameters.",
+  "source_sha256": "5f5665055d7cdce301585c29c910bb27c4bfdc8002ba98b44bc4d03e4e114268",
+  "target_condition_failures": 0,
+  "unrelated_condition_failures": 0,
+  "variant": "clean"
+}

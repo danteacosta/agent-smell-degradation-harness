@@ -1,0 +1,153 @@
+{
+  "case_count": 12,
+  "dataset": "ARTA",
+  "dataset_revision": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+  "records": [
+    {
+      "intent_id": "ARTA-CCTNS-001",
+      "licensing_notes": "The ARTA repository is MIT-licensed, but CCTNS source documents may be government procurement material with separate reproduction rules. Verify the original document terms before publishing excerpts beyond this research repository.",
+      "natural_variant": false,
+      "pair_sha256": "5733bf43c292ba136b33f3af3e72da3c0e4d27e4f6a48c830fa605a55ebadb85",
+      "project_id": "cctns",
+      "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_cctns.json#L25-L30",
+      "removed_condition": "The user's explicit opt-in condition is removed.",
+      "smell_type": "incomplete_condition",
+      "source_intent_id": "cctns-4",
+      "source_sha256": "a9c4461214accb4509f5825f04d793ed92a4290b46f56fb5f0358b5b7cb050f8"
+    },
+    {
+      "intent_id": "ARTA-CCTNS-002",
+      "licensing_notes": "The ARTA repository is MIT-licensed, but CCTNS source documents may be government procurement material with separate reproduction rules. Verify the original document terms before publishing excerpts beyond this research repository.",
+      "natural_variant": false,
+      "pair_sha256": "d7e22324a1ffcc3eaddb5b37452dc9b4e2ce1704584b643db1fd340795ef6c3f",
+      "project_id": "cctns",
+      "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_cctns.json#L53-L58",
+      "removed_condition": "The immutability obligation is removed, so a later operation may alter or delete the audit record.",
+      "smell_type": "incomplete_response",
+      "source_intent_id": "cctns-8",
+      "source_sha256": "a9c4461214accb4509f5825f04d793ed92a4290b46f56fb5f0358b5b7cb050f8"
+    },
+    {
+      "intent_id": "ARTA-ERTMS-001",
+      "licensing_notes": "The ARTA repository is MIT-licensed, but ERTMS source standards and specifications may be controlled or copyrighted by their issuing bodies. Keep this excerpt for research traceability and verify redistribution rights before external publication.",
+      "natural_variant": false,
+      "pair_sha256": "c16c8f72dbce2b8b84ba5fba0d73ff095947b138915b9f758ae76ff100280573",
+      "project_id": "ertms",
+      "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_ertms.json#L18-L23",
+      "removed_condition": "The scope condition requiring active RBC supervision is removed.",
+      "smell_type": "incomplete_condition",
+      "source_intent_id": "ertms-3",
+      "source_sha256": "edb4ce124de307f7e639378b6211e96e21856466da4dfb4cbf5cb75eef7774e8"
+    },
+    {
+      "intent_id": "ARTA-ERTMS-002",
+      "licensing_notes": "The ARTA repository is MIT-licensed, but ERTMS source standards and specifications may be controlled or copyrighted by their issuing bodies. Keep this excerpt for research traceability and verify redistribution rights before external publication.",
+      "natural_variant": false,
+      "pair_sha256": "a03ef54be88ec59c5586de30613c29b0ebdcefe265dd6b8382129c14240317c0",
+      "project_id": "ertms",
+      "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_ertms.json#L109-L114",
+      "removed_condition": "The requirement that the driver fail to acknowledge is removed, so the brake can be applied even after a valid acknowledgement.",
+      "smell_type": "incomplete_condition",
+      "source_intent_id": "ertms-16",
+      "source_sha256": "edb4ce124de307f7e639378b6211e96e21856466da4dfb4cbf5cb75eef7774e8"
+    },
+    {
+      "intent_id": "ARTA-FUN-001",
+      "licensing_notes": "The ARTA repository is MIT-licensed, but EIRENE/UIC source specifications may have separate copyright and standards-distribution terms. Verify the original document terms before publishing excerpts beyond this research repository.",
+      "natural_variant": false,
+      "pair_sha256": "af6d2811f9ed202cee0fb1ab0c92aca86f8d579faaa5bb8fb85f2d63e982fa0e",
+      "project_id": "fun",
+      "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_fun.json#L81-L86",
+      "removed_condition": "The permission rule restricting speech to the initiator is removed.",
+      "smell_type": "loophole",
+      "source_intent_id": "fun-12",
+      "source_sha256": "4bc90d8a6ff5763bd963188ed312258e66d1a4cc1774c96ebf33af32e39d7c61"
+    },
+    {
+      "intent_id": "ARTA-FUN-002",
+      "licensing_notes": "The ARTA repository is MIT-licensed, but EIRENE/UIC source specifications may have separate copyright and standards-distribution terms. Verify the original document terms before publishing excerpts beyond this research repository.",
+      "natural_variant": false,
+      "pair_sha256": "3669383dcc5e01d6ff485a68aa808b0f2f72b339fbcda6b1e8b02361c08813db",
+      "project_id": "fun",
+      "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_fun.json#L123-L128",
+      "removed_condition": "The maximum of six parties is omitted.",
+      "smell_type": "cardinality_ambiguity",
+      "source_intent_id": "fun-18",
+      "source_sha256": "4bc90d8a6ff5763bd963188ed312258e66d1a4cc1774c96ebf33af32e39d7c61"
+    },
+    {
+      "intent_id": "ARTA-GAMMA-001",
+      "licensing_notes": "The ARTA repository is MIT-licensed, but the original GAMMA-J Web Store specification may have separate copyright terms. Verify the original document terms before publishing excerpts beyond this research repository.",
+      "natural_variant": false,
+      "pair_sha256": "2d9dbe8a6eb6966375eaf0891f4e36a71e450a317ed6d0dfbf05fa8e6fcf8c3a",
+      "project_id": "gamma",
+      "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_gamma.json#L74-L79",
+      "removed_condition": "The measurable deployment deadline of less than 60 seconds is removed.",
+      "smell_type": "vague_threshold",
+      "source_intent_id": "gamma-11",
+      "source_sha256": "bb7ed7ef71c5f4e6683f6befcdeae5a9913000f2b3eb644e07974f50199b35d6"
+    },
+    {
+      "intent_id": "ARTA-GAMMA-002",
+      "licensing_notes": "The ARTA repository is MIT-licensed, but the original GAMMA-J Web Store specification may have separate copyright terms. Verify the original document terms before publishing excerpts beyond this research repository.",
+      "natural_variant": false,
+      "pair_sha256": "6e5a6210fabec872f36ed02b77c97f71a9672ffba490875778d8506140821527",
+      "project_id": "gamma",
+      "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_gamma.json#L81-L86",
+      "removed_condition": "The measurable capacity limit of 1000 concurrent customers is omitted.",
+      "smell_type": "cardinality_ambiguity",
+      "source_intent_id": "gamma-12",
+      "source_sha256": "bb7ed7ef71c5f4e6683f6befcdeae5a9913000f2b3eb644e07974f50199b35d6"
+    },
+    {
+      "intent_id": "ARTA-NFR-001",
+      "licensing_notes": "The ARTA repository is MIT-licensed, but the original NFR document and its individual requirement texts may have separate terms. This record stores the excerpt for research provenance; redistribution and publication of the full source corpus require a separate license check.",
+      "natural_variant": false,
+      "pair_sha256": "5a730575baff189c5614b78132bcf6b2a49b5547a13a0ef5d1f1f3afe3d2c746",
+      "project_id": "nfr",
+      "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/text_requirements.json#L4-L10",
+      "removed_condition": "The exact 60-second refresh interval is no longer specified.",
+      "smell_type": "vague_threshold",
+      "source_intent_id": "nfr-1",
+      "source_sha256": "3b25b3e1660629a6e72340e32b17e1861cf12e20eedeeb5d0ea06f95ea747aa9"
+    },
+    {
+      "intent_id": "ARTA-NFR-002",
+      "licensing_notes": "The ARTA repository is MIT-licensed, but the original NFR document and its individual requirement texts may have separate terms. This record stores the excerpt for research provenance; redistribution and publication of the full source corpus require a separate license check.",
+      "natural_variant": false,
+      "pair_sha256": "11b7591cda491012f8399c4af3a5148218355753f0b25af23c5ab2e9d0f4827c",
+      "project_id": "nfr",
+      "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/text_requirements.json#L39-L44",
+      "removed_condition": "The enforcement outcome that denies unauthorized users is omitted; classification alone is not access control.",
+      "smell_type": "vague_authorization",
+      "source_intent_id": "nfr-6",
+      "source_sha256": "3b25b3e1660629a6e72340e32b17e1861cf12e20eedeeb5d0ea06f95ea747aa9"
+    },
+    {
+      "intent_id": "ARTA-PEERING-001",
+      "licensing_notes": "The ARTA repository is MIT-licensed, but the original Peering project specification may have separate copyright terms. Verify the original document terms before publishing excerpts beyond this research repository.",
+      "natural_variant": false,
+      "pair_sha256": "98cf6caa80ecd4df6fa233b1ebdeeff6ab22311fdc6a19e09e5e8f98923f6916",
+      "project_id": "peering",
+      "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_peering.json#L46-L51",
+      "removed_condition": "The rejection response is removed; detection can occur without preventing the request.",
+      "smell_type": "incomplete_system_response",
+      "source_intent_id": "peering-7",
+      "source_sha256": "674717b9d2f5a23b56a77ba8e094040f71b4456bc3bb6b3b8cb6edbbc9f8bf5c"
+    },
+    {
+      "intent_id": "ARTA-PEERING-002",
+      "licensing_notes": "The ARTA repository is MIT-licensed, but the original Peering project specification may have separate copyright terms. Verify the original document terms before publishing excerpts beyond this research repository.",
+      "natural_variant": false,
+      "pair_sha256": "cc6b31c98c7a50c052a4fcbd15831839d12f37797fd6d7ee83d287fa56aa16f8",
+      "project_id": "peering",
+      "provenance_url": "https://github.com/m-zakeri/ARTA/blob/493297655cd653f8ebc797ef5c3c7ee2f736ab4c/database/xml_peering.json#L60-L65",
+      "removed_condition": "Coverage of unanticipated requests is removed.",
+      "smell_type": "vague_completeness",
+      "source_intent_id": "peering-9",
+      "source_sha256": "674717b9d2f5a23b56a77ba8e094040f71b4456bc3bb6b3b8cb6edbbc9f8bf5c"
+    }
+  ],
+  "schema_version": "requirements-smell-discovery-corpus/v1",
+  "status": "discovery_only"
+}

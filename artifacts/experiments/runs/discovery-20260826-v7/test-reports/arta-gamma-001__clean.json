@@ -1,0 +1,44 @@
+{
+  "behavior_report": {
+    "cases": [
+      {
+        "index": 0,
+        "status": "passed"
+      },
+      {
+        "index": 1,
+        "status": "passed"
+      },
+      {
+        "index": 2,
+        "status": "passed"
+      }
+    ],
+    "duration_ms": 0.057,
+    "errors": 0,
+    "execution_mode": "trusted_fixture",
+    "failed": 0,
+    "passed": 3,
+    "safety_controls": {
+      "subprocess_isolation": false,
+      "trusted_reference_match": true
+    },
+    "safety_errors": [
+      {
+        "code": "trusted_fixture_only",
+        "control": "subprocess_isolation"
+      }
+    ],
+    "status": "passed",
+    "timed_out": false,
+    "validation_errors": []
+  },
+  "behavior_status": "passed",
+  "intent_id": "ARTA-GAMMA-001",
+  "removed_condition": "The measurable deployment deadline of less than 60 seconds is removed.",
+  "requirement_text": "After a USB is plugged in, the system shall be deployed and operational in less than 60 seconds.",
+  "source_sha256": "6bc661230986836bd7958f6f58791c50d50027c2955174e6dab815bebe38e937",
+  "target_condition_failures": 0,
+  "unrelated_condition_failures": 0,
+  "variant": "clean"
+}

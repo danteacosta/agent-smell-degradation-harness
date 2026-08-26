@@ -1,0 +1,40 @@
+{
+  "behavior_report": {
+    "cases": [
+      {
+        "index": 0,
+        "status": "passed"
+      },
+      {
+        "index": 1,
+        "status": "passed"
+      }
+    ],
+    "duration_ms": 0.051,
+    "errors": 0,
+    "execution_mode": "trusted_fixture",
+    "failed": 0,
+    "passed": 2,
+    "safety_controls": {
+      "subprocess_isolation": false,
+      "trusted_reference_match": true
+    },
+    "safety_errors": [
+      {
+        "code": "trusted_fixture_only",
+        "control": "subprocess_isolation"
+      }
+    ],
+    "status": "passed",
+    "timed_out": false,
+    "validation_errors": []
+  },
+  "behavior_status": "passed",
+  "intent_id": "ARTA-NFR-002",
+  "removed_condition": "The enforcement outcome that denies unauthorized users is omitted; classification alone is not access control.",
+  "requirement_text": "The product shall grant access only when the user is authorized; unauthorized users shall be denied.",
+  "source_sha256": "eb80f411e6647b4916b328b847c80192e2b9e9df71e53963816a1c0f5e201d14",
+  "target_condition_failures": 0,
+  "unrelated_condition_failures": 0,
+  "variant": "clean"
+}
