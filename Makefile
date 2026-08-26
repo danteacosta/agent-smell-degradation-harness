@@ -1,4 +1,4 @@
-.PHONY: test eval simulate gate analysis experiment all dry-run thesis-analysis wedge-check prepilot prepilot-readiness freeze-candidate extension-clarification extension-dissertation discovery discovery-verify
+.PHONY: test eval simulate gate analysis experiment all dry-run thesis-analysis wedge-check prepilot prepilot-readiness freeze-candidate extension-clarification extension-dissertation discovery discovery-verify discovery-efficacy
 
 PYTHON ?= $(shell if [ -x .venv/bin/python ]; then echo .venv/bin/python; else echo python3; fi)
 
@@ -20,6 +20,8 @@ discovery:
 	$(PYTHON) -m eval.discovery --mode offline --replications 1
 discovery-verify:
 	$(PYTHON) -m eval.discovery --verify-artifacts
+discovery-efficacy:
+	$(PYTHON) -m eval.discovery_verifier
 thesis-analysis:
 	$(PYTHON) -m eval.thesis_analysis --episodes eval/last_run_episodes.jsonl
 prepilot:

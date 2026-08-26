@@ -25,6 +25,10 @@ def test_offline_discovery_materializes_both_variants_and_behavior_results(tmp_p
 
     assert result["episode_count"] == 48
     assert verify_artifacts(bundle)["episode_count"] == 48
+    assert result["verification"]["schema_version"] == "requirements-smell-verification/v1"
+    assert (bundle / "verification" / "decisions.jsonl").is_file()
+    assert (bundle / "verification" / "metrics.json").is_file()
+    assert (bundle / "verification" / "README.md").is_file()
     episodes = [
         json.loads(line)
         for line in (bundle / "episodes.jsonl").read_text(encoding="utf-8").splitlines()
@@ -35,3 +39,5 @@ def test_offline_discovery_materializes_both_variants_and_behavior_results(tmp_p
     assert sum(episode["behavior_status"] == "failed_target_condition" for episode in behavior if episode["variant"] == "smelly") == 12
     assert len(list((bundle / "generated-code").glob("*.py"))) == 24
     assert len(list((bundle / "comparisons").glob("*.md"))) == 12
+    assert len(list((bundle / "observable-traces").glob("*.jsonl"))) == 48
+    assert result["verification"]["eligible_count"] == 24

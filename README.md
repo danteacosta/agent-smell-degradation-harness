@@ -147,6 +147,7 @@ the removed condition. The offline run needs no provider credential:
 ```bash
 make discovery
 make discovery-verify
+make discovery-efficacy
 ```
 
 The compact, reviewable bundle is stored under
@@ -154,6 +155,15 @@ The compact, reviewable bundle is stored under
 code, hidden-test reports, source diffs, metrics, episode records and corpus
 provenance. This is discovery evidence only; live-provider, licensing,
 blinded-label and preregistration gates remain separate.
+
+The second phase evaluates the verifier itself. It reads only the portable
+`observable-traces/` prefix (T0--T3) and produces `verification/decisions.jsonl`
+before joining the post-artifact behavior labels. Its report measures recall,
+precision/F1, clean false-alert rate, clean-versus-smelly paired
+discrimination, first-signal checkpoint/lead time, runtime/provider cost and
+project/smell strata. A `promising` status means the frozen discovery rule pack
+met the local pilot criteria (recall >= 0.80, false-alert rate <= 0.20 and
+paired discrimination >= 0.80); it is not a universal efficiency claim.
 
 The current collection blocker and acceptance checklist are documented in [confirmatory data acquisition](docs/research/confirmatory-data-acquisition.md). The checked-in seven-source seed is development-only. `RuntimeCheckpointAgent.from_provider()` supplies a staged OpenAI/Anthropic-compatible producer whose bounded T1/T2/T3 events precede terminal generation; empirical qualification on two real configurations is still required. `LiveAgent.observe_checkpoints()` remains a nonconfirmatory prompted snapshot, and offline replay remains schema validation rather than thesis evidence.
 

@@ -195,3 +195,78 @@ Observed result:
 The second implementation can be syntactically valid and can pass visible
 happy-path tests. The defect is semantic incompleteness: a test-relevant
 condition disappeared.
+
+## Second phase: measuring verifier effectiveness
+
+The first phase answers “can a requirement smell be connected to a visible
+behavioral difference?” It does not answer “can the reliability agent catch the
+problem before the artifact is delivered?” The second phase makes that a
+separate evaluation:
+
+```text
+T0--T3 observable prefix
+  -> verifier risk score and approve/warn/block decision
+  -> artifact + independent hidden behavior tests
+  -> post-decision label joined for evaluation only
+```
+
+The verifier is evaluated as a binary alerting system: `warn` or `block` is an
+alert, and `approve` is no alert. A smelly episode that fails the target hidden
+condition is a positive label; a clean episode that passes is a negative label.
+Unsafe or unknown execution states are ineligible, not silently treated as
+passes. This keeps the causal order visible: the decision exists before the
+oracle result.
+
+The tracked implementation is a transparent discovery rule pack, not a trained
+classifier. Its text signals operationalize the literature's recurring
+dimensions: vague/non-verifiable language, missing condition branches,
+unbounded thresholds/cardinality, missing system responses, permission loss,
+and incomplete completeness scope. Its provenance signals reuse the deployable
+T1/T2/T3 feature boundary for contradictions, unresolved references and
+pre-final execution errors. The rule pack is intentionally inspectable so that
+the advisor can see why each warning happened; a later study can replace it
+with a learned or LLM-based verifier after train/calibration/test splits are
+frozen.
+
+The efficacy report records more than “how many it got right”:
+
+| Question | Metric |
+| --- | --- |
+| Did it catch degraded behavior? | recall / warning coverage |
+| Did it avoid annoying clean cases? | clean false-alert rate and specificity |
+| Are alerts trustworthy? | precision and F1 |
+| Does the smell move the score in the expected direction? | clean-versus-smelly paired discrimination and mean score delta |
+| Did it warn early enough to be useful? | first-signal checkpoint and lead time before artifact completion |
+| Can it run economically? | verifier runtime, provider latency/cost and alerts per detected failure |
+| Does it work across contexts? | project, smell-family, task-family and checkpoint strata |
+| Can another researcher audit it? | portable trace coverage, leakage rejections and stable decision hashes |
+
+For this discovery pilot, `promising` is a development status only: no leakage,
+all eligible labels, recall at least 0.80, clean false-alert rate at most 0.20,
+and paired discrimination at least 0.80. Failure of a criterion produces an
+`inconclusive` or `fail` report and identifies the next gap; it does not become
+a claim about the population of requirements.
+
+The current v6 offline bundle reports 24 eligible behavior episodes: 10 true
+positives, 2 misses, 12 true negatives and 0 false positives (recall 0.833,
+precision 1.000, F1 0.909, clean false-alert rate 0.000, paired
+discrimination 0.833). The two misses are `incomplete_condition` in ERTMS and
+`vague_completeness` in Peering, which is useful discovery evidence: a lexical
+and rule-based verifier does not recover every omitted condition. The result is
+therefore “promising for this controlled pilot,” while the live-provider and
+grouped holdout study remains necessary for an efficiency claim.
+
+The corresponding artifacts are tracked under
+`artifacts/experiments/runs/discovery-20260826-v6/`: portable
+`observable-traces/`, generated code, hidden-test reports, source comparisons,
+`verification/decisions.jsonl`, `verification/labels.jsonl`,
+`verification/metrics.json` and a short README. Decisions contain opaque
+episode references and no variant/smell/oracle fields. Labels are written only
+after the decisions and are used for evaluation metrics, not for scoring.
+
+This phase also clarifies the role of the auxiliary repositories. The primary
+harness owns the detector, corpus, behavior oracle and metrics. The
+[`agent-reliability-protocol`](https://github.com/danteacosta/agent-reliability-protocol)
+repository supplies lifecycle identity, checkpoint ordering, timestamps and
+the evidence boundary. The protocol is not changed to carry the experiment's
+terminal labels; it remains a reusable interchange contract.

@@ -25,6 +25,54 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DISCOVERY_PAIRS_DIR = REPO_ROOT / "data" / "pairs" / "discovery"
 DEFAULT_ARTIFACT_ROOT = REPO_ROOT / "artifacts" / "experiments"
 DISCOVERY_TASK_FAMILIES = ("test_gen", "behavior_codegen")
+_OBSERVABLE_CHECKPOINTS = {
+    "input.received",
+    "interpretation.completed",
+    "plan.completed",
+    "execution.started",
+    "tool.completed",
+    "retrieval.completed",
+}
+_TERMINAL_EVENT_NAMES = {
+    "artifact.completed",
+    "evaluation.completed",
+    "oracle_verdict",
+    "terminal.validation",
+    "label.created",
+    "label.assigned",
+}
+_TERMINAL_KEYS = {
+    "artifact",
+    "artifacts",
+    "oracle",
+    "oracle_spec",
+    "oracle_passed",
+    "terminal",
+    "terminal_validation",
+    "label",
+    "labels",
+    "semantic_label",
+    "mutation_score",
+    "final_artifact",
+    "variant",
+    "variant_id",
+    "generation_variant",
+    "smell",
+    "defect_family",
+    "defect_type",
+    "mutation",
+    "outcome",
+    "ground_truth",
+}
+_OBSERVABLE_ATTRIBUTE_EXCLUSIONS = {
+    "episode_id",
+    "run_id",
+    "variant",
+    "variant_id",
+    "smell",
+    "defect_family",
+    "defect_type",
+}
 
 
 def _json_write(path: Path, value: Any) -> None:
@@ -34,6 +82,65 @@ def _json_write(path: Path, value: Any) -> None:
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _contains_terminal_key(value: Any) -> bool:
+    if isinstance(value, dict):
+        return any(
+            str(key).casefold() in _TERMINAL_KEYS or _contains_terminal_key(child)
+            for key, child in value.items()
+        )
+    if isinstance(value, list):
+        return any(_contains_terminal_key(child) for child in value)
+    return False
+
+
+def _portable_observable_events(trace_path: Path) -> list[dict[str, Any]]:
+    """Project a local trace to the pre-final fields safe to track in Git."""
+
+    if not trace_path.is_file():
+        return []
+    events: list[dict[str, Any]] = []
+    for line in trace_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        raw = json.loads(line)
+        if not isinstance(raw, dict):
+            continue
+        checkpoint = str(raw.get("checkpoint", raw.get("event_type", raw.get("name", ""))))
+        attributes = raw.get("attributes")
+        if (
+            raw.get("tier") == "B"
+            or checkpoint not in _OBSERVABLE_CHECKPOINTS
+            or str(raw.get("name", "")) in _TERMINAL_EVENT_NAMES
+            or not isinstance(attributes, dict)
+            or _contains_terminal_key(attributes)
+        ):
+            continue
+        safe_attributes = {
+            key: value
+            for key, value in attributes.items()
+            if str(key) not in _OBSERVABLE_ATTRIBUTE_EXCLUSIONS
+        }
+        safe = {
+            key: raw[key]
+            for key in (
+                "event_id",
+                "schema_version",
+                "sequence_number",
+                "checkpoint",
+                "event_type",
+                "started_at",
+                "ended_at",
+                "parent_event_id",
+                "kind",
+                "name",
+            )
+            if key in raw
+        }
+        safe["attributes"] = safe_attributes
+        events.append(safe)
+    return events
 
 
 def _git_revision(repo_root: Path) -> str:
@@ -118,12 +225,27 @@ def _materialize_artifacts(
 ) -> None:
     generated_dir = bundle_dir / "generated-code"
     report_dir = bundle_dir / "test-reports"
+    observable_dir = bundle_dir / "observable-traces"
     generated_dir.mkdir(parents=True, exist_ok=True)
     report_dir.mkdir(parents=True, exist_ok=True)
+    observable_dir.mkdir(parents=True, exist_ok=True)
 
     pair_map = {pair["intent_id"]: pair for pair in pairs}
     grouped_code: dict[str, dict[str, str]] = {}
     for episode in episodes:
+        source_trace = Path(str(episode.get("provenance_path", "")))
+        episode_digest = hashlib.sha256(
+            str(episode.get("episode_id", "")).encode("utf-8")
+        ).hexdigest()[:24]
+        observable_name = f"observation-{episode_digest}.jsonl"
+        observable_events = _portable_observable_events(source_trace)
+        observable_path = observable_dir / observable_name
+        observable_path.write_text(
+            "\n".join(json.dumps(event, sort_keys=True) for event in observable_events)
+            + ("\n" if observable_events else ""),
+            encoding="utf-8",
+        )
+        episode["observable_trace_path"] = str(Path("observable-traces") / observable_name)
         if episode.get("task_family") != "behavior_codegen":
             continue
         intent_id = str(episode["intent_id"])
@@ -252,7 +374,16 @@ def run_discovery(
         run_config=run_config,
         pairs_dir=repo_root / "data" / "pairs" / "discovery",
     )
-    return {"run_id": run_id, "bundle_dir": str(bundle_dir), "metrics": aggregate, **run_config}
+    from eval.discovery_verifier import verify_bundle
+
+    verification = verify_bundle(bundle_dir)
+    return {
+        "run_id": run_id,
+        "bundle_dir": str(bundle_dir),
+        "metrics": aggregate,
+        "verification": verification["metrics"],
+        **run_config,
+    }
 
 
 def verify_artifacts(bundle_dir: Path) -> dict[str, Any]:
@@ -269,7 +400,21 @@ def verify_artifacts(bundle_dir: Path) -> dict[str, Any]:
     expected = int(run["expected_episode_count"])
     if len(episodes) != expected:
         raise ValueError(f"expected {expected} episodes, found {len(episodes)}")
-    return {"status": "ok", "bundle_dir": str(bundle_dir), "episode_count": len(episodes)}
+    observable_count = 0
+    for episode in episodes:
+        path_value = episode.get("observable_trace_path")
+        if not isinstance(path_value, str):
+            raise ValueError(f"episode {episode.get('episode_id')} is missing its observable trace")
+        candidate = (bundle_dir / path_value).resolve()
+        if bundle_dir.resolve() not in candidate.parents or not candidate.is_file():
+            raise ValueError(f"episode {episode.get('episode_id')} is missing its observable trace")
+        observable_count += 1
+    return {
+        "status": "ok",
+        "bundle_dir": str(bundle_dir),
+        "episode_count": len(episodes),
+        "observable_trace_count": observable_count,
+    }
 
 
 def main(argv: list[str] | None = None) -> None:

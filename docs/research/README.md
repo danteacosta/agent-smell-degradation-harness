@@ -6,6 +6,9 @@
   dataset and human-label acceptance gate.
 - [2026-08-10 moat stress test](2026-08-10-moat-stress-test.md): scientific,
   data, protocol, workflow, distribution, and commercial moat audit.
+- [2026-08-25 requirements-smell discovery catalog](2026-08-25-requirements-smell-discovery-catalog.md):
+  literature-to-corpus mapping, clean/smelly behavioral discovery and the
+  oracle-separated verifier-efficacy phase.
 - The merged replay foundation is documented in
   [the thesis/product boundary](../thesis-product-boundary.md) and exercised
   by `python -m replay --fixture clean`; its fixtures remain
