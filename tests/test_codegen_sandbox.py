@@ -19,6 +19,17 @@ def _require_execution(result: dict) -> None:
         pytest.skip("the host cannot apply every required sandbox control")
 
 
+def test_accepts_agent_source_with_outer_indentation() -> None:
+    result = evaluate(
+        "\n            def evaluate(value):\n                return value + 1\n            ",
+        [{"args": [1], "expected": 2}],
+    )
+
+    assert not any(issue["code"] == "syntax_error" for issue in result["validation_errors"])
+    _require_execution(result)
+    assert result["status"] == "passed"
+
+
 def test_runs_a_pure_function_against_literal_hidden_tests() -> None:
     result = evaluate(
         _source(

@@ -24,6 +24,7 @@ import signal
 import subprocess
 import sys
 import tempfile
+import textwrap
 import time
 from collections.abc import Mapping, Sequence
 from typing import Any
@@ -402,6 +403,12 @@ def _validate_hidden_tests(hidden_tests: Any) -> tuple[list[dict[str, Any]], lis
     return issues, normalized
 
 
+def _normalize_source(source: Any) -> Any:
+    if not isinstance(source, str):
+        return source
+    return textwrap.dedent(source).strip() + "\n"
+
+
 def _validate_source(source: Any) -> list[dict[str, Any]]:
     if not isinstance(source, str):
         return [_issue("invalid_source", "source must be a string.")]
@@ -627,7 +634,8 @@ def evaluate(
     is started when source or hidden tests fail validation.
     """
 
-    source_issues = _validate_source(source)
+    normalized_source = _normalize_source(source)
+    source_issues = _validate_source(normalized_source)
     test_issues, normalized_tests = _validate_hidden_tests(hidden_tests)
     issues = [*source_issues, *test_issues]
     if issues:
@@ -639,7 +647,7 @@ def evaluate(
 
     try:
         payload = json.dumps(
-            {"source": source, "tests": normalized_tests},
+            {"source": normalized_source, "tests": normalized_tests},
             allow_nan=False,
             separators=(",", ":"),
         ).encode("utf-8")
@@ -723,7 +731,8 @@ def evaluate_trusted_fixture(
     reference implementations.  Provider output must always use :func:`evaluate`.
     """
 
-    source_issues = _validate_source(source)
+    normalized_source = _normalize_source(source)
+    source_issues = _validate_source(normalized_source)
     test_issues, normalized_tests = _validate_hidden_tests(hidden_tests)
     if source_issues or test_issues:
         return _invalid_result([*source_issues, *test_issues])
@@ -732,7 +741,7 @@ def evaluate_trusted_fixture(
     result["execution_mode"] = "trusted_fixture"
     try:
         namespace = {"__builtins__": _trusted_fixture_builtins()}
-        exec(compile(source, "<trusted-reference>", "exec", dont_inherit=True), namespace, namespace)
+        exec(compile(normalized_source, "<trusted-reference>", "exec", dont_inherit=True), namespace, namespace)
         function = namespace["evaluate"]
         for index, case in enumerate(normalized_tests):
             try:
