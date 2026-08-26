@@ -6,7 +6,7 @@ The verifier reads only `decisions.jsonl` inputs derived from pre-final observat
 Only `behavior_codegen` decisions with a terminal behavior label enter the binary efficacy matrix;
 `test_gen` decisions are observability-only and are not efficacy cases.
 
-- Status: `promising`
+- Status: `descriptive_only`
 - Raw eligible behavior rows: `120`
 - Unique eligible behavior cases: `24`
 - Recall/warning coverage: `0.9166666666666666`
@@ -23,5 +23,7 @@ not independent model samples; their duplicate rows are deduplicated for primary
 On macOS, `trusted_fixture` executes checked-in reference functions in the parent process
 with restricted builtins. It is not production subprocess isolation against hostile code.
 
-The thresholds are frozen in the run output. `promising` means only that this
-versioned pilot met the development criteria; it is not a population-level claim.
+The thresholds are frozen in the run output. `descriptive_only` means that this
+versioned offline pilot produced a complete, auditable controlled result. Its
+point estimates are development diagnostics; they are not a population-level
+claim or evidence that the detector generalizes to new requirements.

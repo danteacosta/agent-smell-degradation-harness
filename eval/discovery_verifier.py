@@ -595,7 +595,7 @@ def compute_efficacy_metrics(
     elif leakage_rejections:
         status = "fail"
     elif all(criteria.values()):
-        status = "promising"
+        status = "descriptive_only"
     else:
         status = "inconclusive"
     provider_costs = [
@@ -738,8 +738,9 @@ def _verification_readme(metrics: Mapping[str, Any]) -> str:
             "On macOS, `trusted_fixture` executes checked-in reference functions in the parent process",
             "with restricted builtins. It is not production subprocess isolation against hostile code.",
             "",
-            "The thresholds are frozen in the run output. `promising` means only that this",
-            "versioned pilot met the development criteria; it is not a population-level claim.",
+            "The thresholds are frozen in the run output. `descriptive_only` means that this",
+            "versioned pilot is reported as a controlled descriptive result; it is not a",
+            "population-level claim or evidence of agent effectiveness on new requirements.",
             "",
         ]
     )

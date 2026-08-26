@@ -241,20 +241,20 @@ The efficacy report records more than “how many it got right”:
 | Does it work across contexts? | project, smell-family, task-family and checkpoint strata |
 | Can another researcher audit it? | portable trace coverage, leakage rejections and stable decision hashes |
 
-For this discovery pilot, `promising` is a development status only: no leakage,
-all eligible labels, recall at least 0.80, clean false-alert rate at most 0.20,
-and paired discrimination at least 0.80. Failure of a criterion produces an
-`inconclusive` or `fail` report and identifies the next gap; it does not become
-a claim about the population of requirements.
+For this discovery pilot, `descriptive_only` is the status for a complete,
+auditable offline result: no leakage and labels for all eligible cases. Recall,
+clean false-alert rate, and paired discrimination remain visible as development
+diagnostics, with uncertainty intervals. Failure of an operational criterion
+produces an `inconclusive` or `fail` report and identifies the next gap; even a
+complete `descriptive_only` result is not a claim about the population of
+requirements.
 
-The current v6 offline bundle reports 24 eligible behavior episodes: 10 true
-positives, 2 misses, 12 true negatives and 0 false positives (recall 0.833,
-precision 1.000, F1 0.909, clean false-alert rate 0.000, paired
-discrimination 0.833). The two misses are `incomplete_condition` in ERTMS and
-`vague_completeness` in Peering, which is useful discovery evidence: a lexical
-and rule-based verifier does not recover every omitted condition. The result is
-therefore “promising for this controlled pilot,” while the live-provider and
-grouped holdout study remains necessary for an efficiency claim.
+The historical v6 offline bundle reported 24 eligible behavior episodes: 10
+true positives, 2 misses, 12 true negatives and 0 false positives. It remains
+useful discovery evidence, but its old `promising` label must not be read as a
+general efficacy claim. The current v7 bundle is the descriptive result used
+for the companion report; the live-provider and grouped holdout study remains
+necessary for an efficiency claim.
 
 The corresponding artifacts are tracked under
 `artifacts/experiments/runs/discovery-20260826-v6/`: portable

@@ -142,7 +142,7 @@ def test_efficacy_metrics_report_confusion_pairing_and_strata():
     assert metrics["false_alert_rate"] == 0.0
     assert metrics["paired_discrimination"]["rate"] == 1.0
     assert metrics["strata"]["project_id"]["P-1"]["recall"] == 1.0
-    assert metrics["status"] == "promising"
+    assert metrics["status"] == "descriptive_only"
     intervals = metrics["confidence_intervals"]
     assert intervals["recall"]["successes"] == 2
     assert intervals["recall"]["trials"] == 2

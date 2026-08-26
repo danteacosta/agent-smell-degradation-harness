@@ -22,9 +22,10 @@ The experiment has two planes:
    used after the verifier decision to produce a binary label: target semantic
    degradation or no target degradation. This plane is never a verifier input.
 
-The current corpus is discovery evidence. A positive result means “promising on
-this versioned set of source-traceable cases”; it is not a universal claim
-about all requirements, agents, models, or domains.
+The current corpus is discovery evidence. A `descriptive_only` result means
+that this versioned set of source-traceable cases was processed and reported
+without leakage; it is not a universal claim about all requirements, agents,
+models, or domains.
 
 ## Components and data flow
 
@@ -81,12 +82,14 @@ For eligible behavior episodes, the report includes:
 - coverage of portable observable traces and count of rejected leakage cases;
 - stratified results by project, smell family, task family, and checkpoint.
 
-The report marks the pilot `promising` only when the frozen rule pack has no
-leakage, all eligible cases have labels, recall is at least 0.80, clean
-false-alert rate is at most 0.20, and paired discrimination is at least 0.80.
-Otherwise it reports `inconclusive` or `fail` with the failed criteria. These
-are development gates for deciding what to investigate next, not population
-confidence intervals.
+The report marks a clean, auditable pilot `descriptive_only` when the frozen
+rule pack has no leakage and all eligible cases have labels. It still reports
+recall, clean false-alert rate, paired discrimination, and their uncertainty;
+the local thresholds (recall at least 0.80, false-alert rate at most 0.20, and
+paired discrimination at least 0.80) are development diagnostics, not a claim
+of general effectiveness. Otherwise it reports `inconclusive` or `fail` with
+the failed criteria. These are development gates for deciding what to
+investigate next, not population confidence intervals.
 
 ## Failure handling and negative controls
 

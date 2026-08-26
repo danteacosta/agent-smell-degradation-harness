@@ -161,9 +161,10 @@ The second phase evaluates the verifier itself. It reads only the portable
 before joining the post-artifact behavior labels. Its report measures recall,
 precision/F1, clean false-alert rate, clean-versus-smelly paired
 discrimination, first-signal checkpoint/lead time, runtime/provider cost and
-project/smell strata. A `promising` status means the frozen discovery rule pack
-met the local pilot criteria (recall >= 0.80, false-alert rate <= 0.20 and
-paired discrimination >= 0.80); it is not a universal efficiency claim.
+project/smell strata. A `descriptive_only` status means that the frozen
+discovery rule pack produced an auditable controlled result; its point
+estimates are development diagnostics, not evidence of effectiveness on new
+requirements or a universal efficiency claim.
 
 The hardened v7 rerun uses five repetitions of the deterministic offline stub.
 This produces 240 total decisions: 120 `test_gen` decisions that are

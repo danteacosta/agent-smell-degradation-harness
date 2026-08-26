@@ -120,7 +120,7 @@
   "rule_pack": "transparent-discovery-rules/v1",
   "schema_version": "requirements-smell-verification/v1",
   "specificity": 1.0,
-  "status": "promising",
+  "status": "descriptive_only",
   "strata": {
     "first_signal_checkpoint": {
       "T0": {
