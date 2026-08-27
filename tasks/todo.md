@@ -15,6 +15,8 @@
 - [x] Run and verify `discovery-20260826-v7`.
 - [x] Store terminal timing in a portable evaluation-plane sidecar instead of an absolute provenance path.
 - [x] Run and verify `discovery-20260827-v10-portable-timestamps` without overwriting v7.
+- [x] Create the append-only version ledger with results, deltas, rationale and publication status.
+- [x] Define the local/remote synchronization check for every future publication.
 
 ## v7 verification checkpoint
 
