@@ -13,8 +13,7 @@
     "metrics.csv",
     "baseline-metrics.svg",
     "contextual-metrics.csv",
-    "contextual-metrics.svg",
-    "report.md"
+    "contextual-metrics.svg"
   ],
   "baseline_version": "natural-lexicon/v1",
   "case_count": 144,

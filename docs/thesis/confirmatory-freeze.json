@@ -3,26 +3,24 @@
   "status": "candidate",
   "hash_algorithm": "sha256",
   "files": {
-    "agents/checkpoints.py": "b0da0f2dc2c4e3df7e317682ba35ba5c2628dc006e4c44e0d9110094128ee5ea",
-    "agents/live.py": "48403dd110264c2fa38783eb64ccc4a5739be1518e532fd0b652a4e45485f511",
+    "agents/checkpoints.py": "a911563c2220974de4f3fa3f83d80de7772c2796be0ebd155ff8357e6e201740",
+    "agents/live.py": "9dcece33eac5c7fd52be8130faa89b07df4b9708eb17cb642be75bb557fd25b2",
     "agents/runtime.py": "d8f8e28097c4f25736cf6aafc2a0e21c548f248d6b7a3fd74326bef4dc1a8586",
-    "agents/staged_runtime.py": "f250dae70bd6d85b8486b34498756e36ca18f18b07622ab668e29eb3fe91fe13",
+    "agents/staged_runtime.py": "b4ba48e6144718926bd4a33792f2460db74eef7bbbd3f57a9cd439f2ef9af53d",
     "baselines/features.py": "541f3e2caf6822ecf1136346e00af44429ee81002d1577b36e246bb13d066a62",
     "data/confirmatory/precision-plan.candidate.json": "c7ceb71289a7fa8ee8857e05eec85a0e917a37df927ad4bd97908dd9495be6ec",
     "data/confirmatory/precision-sensitivity.candidate.json": "e926f185b69ac05f6dec049b0ada386d643caef1340c581a86e262ac30db82be",
     "docs/thesis-product-boundary.md": "2c062cb7b70701d274ea26e553651076e8fa2601dab68b4ff2b4a80eaaba6f05",
-    "docs/thesis/power_analysis.md": "f481082f1568e9f56873a7581b2e75a0954567fc69b340e11da704dddfcd155d",
-    "docs/thesis/preregistration.md": "8f7fadb4e94c69f5fdcd6dd7af77370e6003342f5a76cf2a39f3ea01e5821d77",
     "eval/confirmatory_report.py": "56290af25eb3f886316fbf8a5a28bff2610cabeda79d5655fd227493ace3ff0d",
     "eval/experiment.py": "7f08be7666b9621f7771d6837c66cf740ec587eb7d684fe34d4fe8432182b01a",
     "eval/feature_manifest.py": "84a26e9b21889e4e7c3653ee580fa4c4db8ea8c1ced7ac533a775b4585a052cb",
     "eval/h2_detection.py": "8ff94343811bb00a1b944217d30580a3f92f32fe747648b75eb790fd752510fc",
-    "eval/runner.py": "5a07cbc5dbcb0d292803debd899b9eb7c65a8ecf3041c005afc082264b052ae0",
+    "eval/runner.py": "114950486de6f973f5b1c37fb8566ff31aa3c6e2e3e0ebf57dc2afe0b2d41f4d",
     "eval/sample_gate.py": "d3443b75d73d762485964aaaa74b04f03e80c94f49ce9fa8a8b7f3bc937917b6",
     "eval/splits.py": "31468ed7c10b56fdce55ebbed60c436835eb540ec29a2e61e1c37e37860490e0",
     "feature_plane/deployable.py": "0e6e3e392a71620af3c1a1324d261c17ae611cde8326d296b939a330ed7f6895",
     "label_plane/human_annotation/__init__.py": "3bea840960c89be5449d2574a9d37ff65125904dd49bfc5652915b1adf92c306",
     "protocol/power.py": "cdf468135f4a627485fe0cf1d77c4febbcc0850da775520733652158882f02f1",
-    "tasks/annotation_rubric.json": "7447bfb65d9c196f58874c30d31edf50b9a739f38885a700537b48e6f7603780"
+    "tasks/annotation_rubric.json": "53dc8a1208324c1daa3a22b36cf1e66d2ca49074beb7e1932965a571cdc6863d"
   }
 }

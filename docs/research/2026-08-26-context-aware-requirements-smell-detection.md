@@ -179,5 +179,5 @@ it is frozen and re-evaluated.
 - Implementation: [`baselines/contextual_smell.py`](../../baselines/contextual_smell.py)
 - Redacted error audit: [`error-analysis.json`](../../artifacts/experiments/runs/discovery-20260826-v8-screening/error-analysis.json)
 - Contextual metrics: [`contextual-results.json`](../../artifacts/experiments/runs/discovery-20260826-v8-screening/contextual-results.json)
-- Companion experiment report: [`report.md`](../../artifacts/experiments/runs/discovery-20260826-v8-screening/report.md)
+- Companion experiment report: [Google Docs companion report](https://docs.google.com/document/d/1wSv-khPmRusFKwk4PO02qmbY6eg1MTjJ0QGHTlZuzuI/edit)
 - Proposal/experiment separation: [`2026-08-25 requirements-smell discovery catalog`](2026-08-25-requirements-smell-discovery-catalog.md)

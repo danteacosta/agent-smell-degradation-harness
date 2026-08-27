@@ -96,8 +96,6 @@ def build_dissertation_bundle(repo_root: Path, work_dir: Path) -> dict[str, Any]
                 "tasks/annotation_rubric.json",
                 "eval/analysis_report.json",
                 "eval/thresholds.yaml",
-                "docs/thesis/preregistration.md",
-                "docs/thesis/power_analysis.md",
                 "protocol/power.py",
             ],
             "network_required": False,

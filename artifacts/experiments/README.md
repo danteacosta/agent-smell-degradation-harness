@@ -39,7 +39,9 @@ private local ARTA workbook input. It contains 144 selected natural records,
 six supported families, 12 positive and 12 no-marker controls per family, a
 project-held-out split, a frozen text-only baseline, a paraphrase probe, and a
 simulation-only comparison of the v7 agent conditions. The bundle includes
-`report.md`, `metrics.csv` and `baseline-metrics.svg` for quick inspection.
+`metrics.csv` and `baseline-metrics.svg` for quick inspection. Narrative
+interpretation is maintained in the [Google Docs companion
+report](https://docs.google.com/document/d/1wSv-khPmRusFKwk4PO02qmbY6eg1MTjJ0QGHTlZuzuI/edit).
 
 Its estimand is `agreement_with_arta_source_labels`; it is not expert-validated
 detector efficacy. The source text is redacted from the tracked bundle because

@@ -1,26 +1,33 @@
+import json
 from pathlib import Path
 
 
 ROOT = Path(__file__).parents[1]
 
 
-def test_masters_scope_freezes_conditional_claim_and_boundaries() -> None:
-    scope = (ROOT / "docs" / "thesis" / "masters-scope.md").read_text(encoding="utf-8")
-    for phrase in (
-        "Acceptance-criteria generation",
-        "planned conditional claims",
-        "ΔPR-AUC >= 0.05",
-        "unconditional floor is 60 independent",
-        "12 projects",
-        "6 test projects",
-        "24 intents/6 projects is a pilot floor only",
-        "two real provider/model configurations",
-        "blinded primary human labels",
-        "shadow pilot",
-        "The product gate is a\ndemonstrator",
-        "protocol-ready,\nempirically blocked",
-    ):
-        assert phrase in scope
+def test_machine_readable_protocol_freezes_claim_and_boundaries() -> None:
+    precision = json.loads(
+        (ROOT / "data" / "confirmatory" / "precision-plan.candidate.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    rubric = json.loads(
+        (ROOT / "tasks" / "annotation_rubric.json").read_text(encoding="utf-8")
+    )
+    boundary = (ROOT / "docs" / "thesis-product-boundary.md").read_text(
+        encoding="utf-8"
+    )
+
+    assert precision["status"] == "candidate"
+    assert precision["design"]["intents"] >= 60
+    assert precision["design"]["projects"] >= 12
+    assert precision["design"]["minimum_test_projects"] >= 6
+    assert precision["design"]["minimum_test_intents"] >= 24
+    assert precision["assumptions"]["practical_margin"] == 0.05
+    assert rubric["duplicate_subset_fraction"] == 0.2
+    assert rubric["secondary_llm_judges"] == "exploratory_only"
+    assert "conditional claim" in boundary
+    assert "non-confirmatory" in boundary
 
 
 def test_boundary_links_external_gate_and_non_confirmatory_status() -> None:

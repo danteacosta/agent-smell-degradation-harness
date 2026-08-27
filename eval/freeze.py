@@ -18,8 +18,6 @@ DEFAULT_FREEZE_FILES = (
     "data/confirmatory/precision-plan.candidate.json",
     "data/confirmatory/precision-sensitivity.candidate.json",
     "docs/thesis-product-boundary.md",
-    "docs/thesis/power_analysis.md",
-    "docs/thesis/preregistration.md",
     "eval/confirmatory_report.py",
     "eval/experiment.py",
     "eval/feature_manifest.py",

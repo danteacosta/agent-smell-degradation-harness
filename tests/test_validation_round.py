@@ -178,7 +178,7 @@ def test_offline_round_writes_explicit_screening_artifacts(tmp_path) -> None:
     assert (tmp_path / "artifacts" / "test-round" / "baseline_results.json").exists()
     assert (tmp_path / "artifacts" / "test-round" / "contextual-results.json").exists()
     assert (tmp_path / "artifacts" / "test-round" / "error-analysis.json").exists()
-    assert (tmp_path / "artifacts" / "test-round" / "report.md").exists()
+    assert not (tmp_path / "artifacts" / "test-round" / "report.md").exists()
     assert (tmp_path / "artifacts" / "test-round" / "baseline-metrics.svg").exists()
     assert (tmp_path / "artifacts" / "test-round" / "contextual-metrics.csv").exists()
     assert (tmp_path / "artifacts" / "test-round" / "contextual-metrics.svg").exists()
