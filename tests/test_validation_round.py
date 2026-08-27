@@ -10,6 +10,7 @@ from eval.validation_round import (
     load_validation_cases,
     readiness_report,
     run_validation_round,
+    summarize_v7_agent_conditions,
     validate_case_set,
 )
 
@@ -35,7 +36,9 @@ def _case(case_id: str, project: str, label: str = "smelly") -> dict[str, object
         "target_family": family,
         "source_label": label,
         "source_label_type": "arta_dataset_marker",
-        "source_smell_markers": [family] if label == "smelly" else [],
+        "source_smell_markers": [
+            {"column": "Subjective_lang.", "value": "easy"}
+        ] if label == "smelly" else [],
         "expert_annotation_status": "pending",
         "paraphrase_status": "not_generated",
     }
@@ -77,6 +80,24 @@ def test_validation_requires_positive_and_clean_quota() -> None:
         validate_case_set(cases, supported_families=("subjective_language",), minimum_per_family=2, minimum_clean_per_family=1)
 
 
+def test_validation_rejects_marker_from_another_family() -> None:
+    cases = [_case("c1", "p1", "smelly"), _case("c2", "p2", "clean")]
+    cases[0]["source_smell_markers"] = [{"column": "Polysemy", "value": "support"}]
+
+    with pytest.raises(ValueError, match="marker does not match target family"):
+        validate_case_set(cases, supported_families=("subjective_language",), minimum_per_family=1, minimum_clean_per_family=1)
+
+
+def test_loader_rejects_unknown_fields(tmp_path) -> None:
+    path = tmp_path / "cases.jsonl"
+    row = _case("c1", "p1")
+    row["private_source_excerpt"] = "must not be copied"
+    path.write_text(json.dumps(row), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="unknown field"):
+        load_validation_cases(path)
+
+
 def test_validation_rejects_marker_leak_into_clean_controls() -> None:
     cases = [_case("c1", "p1", "smelly"), _case("c2", "p2", "clean")]
     cases[1]["source_smell_markers"] = [{"column": "Polysemy", "value": "support"}]
@@ -103,6 +124,8 @@ def test_paraphrase_probe_is_not_primary_evidence() -> None:
 
     assert probe[0]["primary_metric_eligible"] is False
     assert probe[0]["paraphrase_status"] == "controlled_probe_unvalidated"
+    assert "original_text" not in probe[0]
+    assert "paraphrase_text" not in probe[0]
 
 
 def test_readiness_blocks_without_experts_and_real_models() -> None:
@@ -111,6 +134,7 @@ def test_readiness_blocks_without_experts_and_real_models() -> None:
     assert report["confirmatory_ready"] is False
     assert "expert_annotation" in report["blocking_reasons"]
     assert "real_models" in report["blocking_reasons"]
+    assert report["annotation_rubric"]["rubric_version"] == "natural-rubric-v1"
 
 
 def test_offline_round_writes_explicit_screening_artifacts(tmp_path) -> None:
@@ -134,3 +158,26 @@ def test_offline_round_writes_explicit_screening_artifacts(tmp_path) -> None:
     assert (tmp_path / "artifacts" / "test-round" / "baseline_results.json").exists()
     assert (tmp_path / "artifacts" / "test-round" / "report.md").exists()
     assert (tmp_path / "artifacts" / "test-round" / "baseline-metrics.svg").exists()
+    cases_artifact = (tmp_path / "artifacts" / "test-round" / "cases.jsonl").read_text(encoding="utf-8")
+    assert '"requirement_text"' not in cases_artifact
+    assert '"_split"' in cases_artifact
+    probe_artifact = json.loads(
+        (tmp_path / "artifacts" / "test-round" / "paraphrase_probe.json").read_text(encoding="utf-8")
+    )
+    assert all("original_text" not in probe for probe in probe_artifact["probes"])
+    assert all("paraphrase_text" not in probe for probe in probe_artifact["probes"])
+
+
+def test_v7_summary_rejects_conflicting_repetitions(tmp_path) -> None:
+    bundle = tmp_path / "v7"
+    (bundle / "verification").mkdir(parents=True)
+    episodes = [
+        {"task_family": "behavior_codegen", "workload_id": "w1", "variant": "clean", "oracle_passed": True},
+        {"task_family": "behavior_codegen", "workload_id": "w1", "variant": "clean", "oracle_passed": False},
+    ]
+    labels = [{"task_family": "behavior_codegen", "workload_id": "w1", "variant": "clean", "decision": "approve"}]
+    (bundle / "episodes.jsonl").write_text("\n".join(json.dumps(row) for row in episodes), encoding="utf-8")
+    (bundle / "verification" / "labels.jsonl").write_text(json.dumps(labels[0]), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="conflicting v7 episode"):
+        summarize_v7_agent_conditions(bundle)

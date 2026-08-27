@@ -46,6 +46,46 @@ _REQUIRED_FIELDS = (
     "expert_annotation_status",
     "paraphrase_status",
 )
+_ALLOWED_FIELDS = set(_REQUIRED_FIELDS) | {
+    "source_file_id",
+    "requirement_text_sha256",
+    "clean_control",
+    "clean_control_definition",
+}
+_ARTIFACT_CASE_FIELDS = (
+    "case_id",
+    "source_dataset",
+    "source_dataset_commit",
+    "source_file",
+    "source_row",
+    "source_file_sha256",
+    "source_file_ref",
+    "source_intent_id",
+    "source_file_id",
+    "project_id",
+    "target_family",
+    "source_label",
+    "source_label_type",
+    "source_smell_markers",
+    "clean_control",
+    "clean_control_definition",
+    "expert_annotation_status",
+    "paraphrase_status",
+    "license_status",
+    "redistribution_allowed",
+    "derivative_use_allowed",
+    "permission_record",
+    "requirement_text_sha256",
+)
+_SOURCE_COLUMNS_BY_FAMILY = {
+    "subjective_language": "Subjective_lang.",
+    "ambiguous_adjective_adverb": "Ambiguous_adv._adj.",
+    "nonverifiable_term": "Nonverifiable_term",
+    "vague_pronoun": "Vague_pron.",
+    "uncertain_verb": "Uncertain_verb",
+    "polysemy": "Polysemy",
+}
+_SOURCE_LABEL_TYPE = "arta_dataset_marker"
 _PARAPHRASE_REPLACEMENTS = (
     ("quickly", "in a short amount of time"),
     ("easily", "without specialist training"),
@@ -83,6 +123,9 @@ def load_validation_cases(
             raise ValueError(f"invalid JSON at corpus line {line_number}") from exc
         if not isinstance(value, dict):
             raise ValueError(f"corpus line {line_number} must be an object")
+        unknown = sorted(set(value) - _ALLOWED_FIELDS)
+        if unknown:
+            raise ValueError(f"corpus line {line_number} has unknown field(s): {', '.join(unknown)}")
         missing = [field for field in _REQUIRED_FIELDS if field not in value]
         if missing:
             raise ValueError(f"corpus line {line_number} missing required field(s): {', '.join(missing)}")
@@ -100,8 +143,8 @@ def load_validation_cases(
             raise ValueError(f"case {case_id} has invalid source_label")
         if not isinstance(value["source_smell_markers"], list):
             raise ValueError(f"case {case_id} source_smell_markers must be a list")
-        if not str(value["source_label_type"]).strip():
-            raise ValueError(f"case {case_id} has empty source_label_type")
+        if value["source_label_type"] != _SOURCE_LABEL_TYPE:
+            raise ValueError(f"case {case_id} must use source_label_type={_SOURCE_LABEL_TYPE}")
         license_status = str(value["license_status"]).strip()
         can_redistribute = value["redistribution_allowed"] is True
         can_transform = value["derivative_use_allowed"] is True
@@ -117,6 +160,9 @@ def load_validation_cases(
         cases.append(dict(value))
     if not cases:
         raise ValueError("validation corpus is empty")
+    invalid_labels = sorted({str(case.get("source_label")) for case in cases} - {"clean", "smelly"})
+    if invalid_labels:
+        raise ValueError(f"invalid source labels: {invalid_labels}")
     return cases
 
 
@@ -132,8 +178,22 @@ def validate_case_set(
     if minimum_per_family < 1 or minimum_clean_per_family < 1:
         raise ValueError("minimum family quotas must be positive")
     families = tuple(supported_families)
+    unknown_families = set(families) - set(SUPPORTED_FAMILIES)
+    if unknown_families:
+        raise ValueError(f"unsupported natural-smell families: {sorted(unknown_families)}")
     if not cases:
         raise ValueError("validation corpus is empty")
+    provenance_fields = (
+        "source_dataset",
+        "source_dataset_commit",
+        "source_file",
+        "source_file_sha256",
+        "source_label_type",
+    )
+    for field in provenance_fields:
+        values = {str(case.get(field, "")) for case in cases}
+        if len(values) != 1 or not next(iter(values)):
+            raise ValueError(f"corpus provenance is inconsistent for {field}")
     counts: dict[str, dict[str, Any]] = {}
     for family in families:
         selected = [case for case in cases if case.get("target_family") == family]
@@ -148,11 +208,22 @@ def validate_case_set(
             "projects": projects,
         }
         for case in selected:
-            marker_count = len(case.get("source_smell_markers", []))
+            markers = case.get("source_smell_markers", [])
+            if any(
+                not isinstance(marker, dict)
+                or set(marker) != {"column", "value"}
+                or not str(marker["column"]).strip()
+                or not str(marker["value"]).strip()
+                for marker in markers
+            ):
+                raise ValueError(f"{case['case_id']} has malformed source marker metadata")
+            marker_count = len(markers)
             if case.get("source_label") == "clean" and marker_count:
                 raise ValueError(f"{case['case_id']} is not a clean control: source markers are present")
             if case.get("source_label") == "smelly" and marker_count != 1:
                 raise ValueError(f"{case['case_id']} is not a single-marker positive")
+            if case.get("source_label") == "smelly" and markers[0]["column"] != _SOURCE_COLUMNS_BY_FAMILY[family]:
+                raise ValueError(f"{case['case_id']} marker does not match target family {family}")
         if positives < minimum_per_family:
             raise ValueError(
                 f"{family} positive quota is {positives}; requires at least {minimum_per_family} positive quota cases"
@@ -238,17 +309,19 @@ def generate_paraphrase_probe(cases: Sequence[Mapping[str, Any]], *, max_cases: 
                 break
         if paraphrase == original:
             paraphrase = re.sub(r"\bsystem\b", "service", original, count=1, flags=re.IGNORECASE)
+        changed = paraphrase != original
         probes.append(
             {
                 "probe_id": f"paraphrase-{case['case_id']}",
                 "case_id": case["case_id"],
                 "target_family": case["target_family"],
-                "original_text": original,
-                "paraphrase_text": paraphrase,
+                "original_text_sha256": hashlib.sha256(original.encode("utf-8")).hexdigest(),
+                "paraphrase_text_sha256": hashlib.sha256(paraphrase.encode("utf-8")).hexdigest(),
                 "replacement": replacement_used,
-                "paraphrase_status": "controlled_probe_unvalidated",
+                "paraphrase_changed": changed,
+                "paraphrase_status": "controlled_probe_unvalidated" if changed else "no_op_excluded",
                 "primary_metric_eligible": False,
-                "exclusion_reason": "no independent label for rewritten text",
+                "exclusion_reason": "no independent label for rewritten text" if changed else "rewrite produced no change",
             }
         )
     return probes
@@ -258,6 +331,15 @@ def _load_jsonl(path: Path) -> list[dict[str, Any]]:
     if not path.is_file():
         return []
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def _v7_key(row: Mapping[str, Any]) -> tuple[str, str, str]:
+    workload = row.get("workload_id") or row.get("intent_id")
+    task_family = row.get("task_family")
+    variant = row.get("variant")
+    if not all(str(value).strip() for value in (workload, variant, task_family)):
+        raise ValueError("v7 simulation rows require workload, variant, and task_family")
+    return str(workload), str(variant), str(task_family)
 
 
 def summarize_v7_agent_conditions(v7_bundle: str | Path | None = None) -> dict[str, Any]:
@@ -276,23 +358,35 @@ def summarize_v7_agent_conditions(v7_bundle: str | Path | None = None) -> dict[s
     label_by_key: dict[tuple[str, str, str], dict[str, Any]] = {}
     for row in episodes:
         if row.get("task_family") == "behavior_codegen":
-            key = (str(row.get("workload_id")), str(row.get("variant")), str(row.get("task_family")))
-            episode_by_key.setdefault(key, row)
+            key = _v7_key(row)
+            if not isinstance(row.get("oracle_passed"), bool):
+                raise ValueError(f"v7 episode {key} has non-boolean oracle_passed")
+            existing = episode_by_key.get(key)
+            if existing is not None and existing["oracle_passed"] != row["oracle_passed"]:
+                raise ValueError(f"conflicting v7 episode repetitions for {key}")
+            episode_by_key[key] = row
     for row in labels:
         if row.get("task_family") == "behavior_codegen":
-            workload = row.get("workload_id", row.get("intent_id"))
-            key = (str(workload), str(row.get("variant")), str(row.get("task_family")))
-            label_by_key.setdefault(key, row)
+            key = _v7_key(row)
+            decision = row.get("decision")
+            if decision not in {"approve", "warn", "block"}:
+                raise ValueError(f"v7 label {key} has invalid decision")
+            existing = label_by_key.get(key)
+            if existing is not None and existing["decision"] != decision:
+                raise ValueError(f"conflicting v7 verification repetitions for {key}")
+            label_by_key[key] = row
+    if set(episode_by_key) != set(label_by_key):
+        raise ValueError("v7 simulation episodes and verification labels do not have one-to-one coverage")
     rows = []
     for key, episode in sorted(episode_by_key.items()):
-        label = label_by_key.get(key, {})
+        label = label_by_key[key]
         rows.append(
             {
                 "workload_id": key[0],
                 "variant": key[1],
-                "observed_oracle_passed": bool(episode.get("oracle_passed")),
-                "verifier_decision": label.get("decision"),
-                "alert": label.get("decision") not in {None, "approve"},
+                "observed_oracle_passed": episode["oracle_passed"],
+                "verifier_decision": label["decision"],
+                "alert": label["decision"] != "approve",
             }
         )
     if not rows:
@@ -339,6 +433,14 @@ def summarize_v7_agent_conditions(v7_bundle: str | Path | None = None) -> dict[s
 def readiness_report(model_runs: Sequence[Mapping[str, Any]] | None = None) -> dict[str, Any]:
     """Report whether external prerequisites for confirmatory evidence exist."""
 
+    rubric_path = REPO_ROOT / "tasks" / "natural_requirement_annotation_rubric.json"
+    try:
+        rubric = json.loads(rubric_path.read_text(encoding="utf-8"))
+        required_annotators = int(rubric["required_annotators"])
+        duplicate_subset_fraction = float(rubric["duplicate_subset_fraction"])
+    except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        raise ValueError(f"invalid natural annotation rubric: {rubric_path}") from exc
+
     runs = list(model_runs or [])
     model_slots = [
         {"model_id": "openai-primary", "provider": "openai", "status": "not_run"},
@@ -354,8 +456,12 @@ def readiness_report(model_runs: Sequence[Mapping[str, Any]] | None = None) -> d
         "confirmatory_ready": not blocking_reasons,
         "status": "blocked_until_external_validation" if blocking_reasons else "confirmatory_ready",
         "expert_annotation_status": "pending",
-        "required_annotators": 2,
-        "duplicate_subset_fraction": 0.20,
+        "annotation_rubric": {
+            "schema_version": rubric["schema_version"],
+            "rubric_version": rubric["rubric_version"],
+        },
+        "required_annotators": required_annotators,
+        "duplicate_subset_fraction": duplicate_subset_fraction,
         "real_model_runs": sum(slot.get("status") == "completed" for slot in model_slots),
         "model_slots": model_slots,
         "blocking_reasons": blocking_reasons,
@@ -370,9 +476,13 @@ def _write_jsonl(path: Path, rows: Sequence[Mapping[str, Any]]) -> None:
     path.write_text("".join(json.dumps(dict(row), sort_keys=True) + "\n" for row in rows), encoding="utf-8")
 
 
-def _write_metrics_csv(path: Path, screening: Mapping[str, Mapping[str, Any]]) -> None:
+def _write_metrics_csv(
+    path: Path,
+    screening: Mapping[str, Mapping[str, Any]],
+    families: Sequence[str],
+) -> None:
     lines = ["family,split,n,tp,fp,tn,fn,precision,recall,specificity,f1,evaluable\n"]
-    for family in SUPPORTED_FAMILIES:
+    for family in families:
         result = screening[family]
         confusion = result["confusion"]
         metrics = result["metrics"]
@@ -395,10 +505,14 @@ def _write_metrics_csv(path: Path, screening: Mapping[str, Mapping[str, Any]]) -
     path.write_text("".join(lines), encoding="utf-8")
 
 
-def _write_baseline_svg(path: Path, screening: Mapping[str, Mapping[str, Any]]) -> None:
+def _write_baseline_svg(
+    path: Path,
+    screening: Mapping[str, Mapping[str, Any]],
+    families: Sequence[str],
+) -> None:
     width, height = 900, 390
     left, top, chart_width, chart_height = 180, 45, 660, 260
-    bar_width = chart_width / len(SUPPORTED_FAMILIES) / 2.8
+    bar_width = chart_width / len(families) / 2.8
     elements = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
         '<rect width="100%" height="100%" fill="white"/>',
@@ -409,9 +523,9 @@ def _write_baseline_svg(path: Path, screening: Mapping[str, Mapping[str, Any]]) 
         value = tick / 5
         elements.append(f'<line x1="{left}" y1="{y:.1f}" x2="{left + chart_width}" y2="{y:.1f}" stroke="#dddddd"/>')
         elements.append(f'<text x="{left - 12}" y="{y + 4:.1f}" text-anchor="end" font-family="sans-serif" font-size="11">{value:.1f}</text>')
-    for index, family in enumerate(SUPPORTED_FAMILIES):
+    for index, family in enumerate(families):
         result = screening[family]
-        x = left + (index + 0.5) * chart_width / len(SUPPORTED_FAMILIES)
+        x = left + (index + 0.5) * chart_width / len(families)
         precision = result["metrics"]["precision"] or 0.0
         recall = result["metrics"]["recall"] or 0.0
         for offset, value, color in ((-bar_width / 2, precision, "#4472c4"), (bar_width / 2, recall, "#ed7d31")):
@@ -461,7 +575,7 @@ def _write_report(
         "| Família | TP | FP | TN | FN | Precisão | Recall | Avaliável |",
         "|---|---:|---:|---:|---:|---:|---:|:---:|",
     ]
-    for family in SUPPORTED_FAMILIES:
+    for family in run["supported_families"]:
         result = screening[family]
         confusion = result["confusion"]
         metrics = result["metrics"]
@@ -510,7 +624,11 @@ def run_validation_round(
     )
     split_manifest = build_validation_split(cases, seed=seed)
     split_cases = _split_cases(cases, split_manifest)
-    screening = evaluate_source_label_screening(split_cases, split="test")
+    screening = evaluate_source_label_screening(
+        split_cases,
+        split="test",
+        families=supported_families,
+    )
     for family, result in screening.items():
         test_cases = [
             case
@@ -533,7 +651,12 @@ def run_validation_round(
     bundle.mkdir(parents=True, exist_ok=True)
     redacted_cases = []
     for case in split_cases:
-        redacted = {key: value for key, value in case.items() if key != "requirement_text"}
+        redacted = {
+            key: case[key]
+            for key in _ARTIFACT_CASE_FIELDS
+            if key in case
+        }
+        redacted["_split"] = case["_split"]
         redacted["requirement_text_sha256"] = hashlib.sha256(
             str(case["requirement_text"]).encode("utf-8")
         ).hexdigest()
@@ -581,7 +704,7 @@ def run_validation_round(
         "evidence_level": "screening_only",
         "case_count": len(cases),
         "project_count": corpus_summary["project_count"],
-        "supported_families": list(SUPPORTED_FAMILIES),
+        "supported_families": list(supported_families),
         "source_label_screening": True,
         "expert_annotation_status": "pending",
         "real_model_runs": 0,
@@ -602,8 +725,8 @@ def run_validation_round(
             "report.md",
         ],
     }
-    _write_metrics_csv(bundle / "metrics.csv", screening)
-    _write_baseline_svg(bundle / "baseline-metrics.svg", screening)
+    _write_metrics_csv(bundle / "metrics.csv", screening, supported_families)
+    _write_baseline_svg(bundle / "baseline-metrics.svg", screening, supported_families)
     _write_report(
         bundle / "report.md",
         run=run,

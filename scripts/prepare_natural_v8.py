@@ -117,6 +117,8 @@ def select_rows(rows: list[dict[str, str]], *, count: int) -> list[dict[str, str
         for row in grouped[project][:3]:
             selected.append(row)
             used.add(int(row["_source_row"]))
+    if len(selected) >= count:
+        return selected[:count]
     while len(selected) < count:
         progressed = False
         for project in PROJECT_ORDER:

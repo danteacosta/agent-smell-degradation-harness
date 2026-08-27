@@ -75,7 +75,7 @@ selected natural JSONL corpus -- strict schema --> project-disjoint splits
 
 ### Annotation handoff
 
-The runner records `expert_annotation_status=pending` and the planned duplicate fraction/annotator count from `tasks/annotation_rubric.json`. A future annotation import can replace source labels for primary metrics without changing the split or baseline code.
+The runner records `expert_annotation_status=pending` and the planned duplicate fraction/annotator count from `tasks/natural_requirement_annotation_rubric.json`. A future annotation import can replace source labels for primary metrics without changing the split or baseline code.
 
 ## Splitting policy
 

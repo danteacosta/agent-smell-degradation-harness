@@ -1,4 +1,8 @@
 {
+  "annotation_rubric": {
+    "rubric_version": "natural-rubric-v1",
+    "schema_version": "natural-requirement-annotation/v1"
+  },
   "blocking_reasons": [
     "real_models",
     "expert_annotation"

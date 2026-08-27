@@ -127,7 +127,10 @@ def _metric_bundle(tp: int, fp: int, tn: int, fn: int) -> dict[str, Any]:
 
 
 def evaluate_source_label_screening(
-    cases: Sequence[Mapping[str, Any]], *, split: str = "test"
+    cases: Sequence[Mapping[str, Any]],
+    *,
+    split: str = "test",
+    families: Sequence[str] = SUPPORTED_FAMILIES,
 ) -> dict[str, dict[str, Any]]:
     """Evaluate the baseline against source labels for descriptive screening.
 
@@ -135,8 +138,12 @@ def evaluate_source_label_screening(
     are expected to carry the runner's private ``_split`` field.
     """
 
+    requested_families = tuple(families)
+    unknown_families = set(requested_families) - set(SUPPORTED_FAMILIES)
+    if unknown_families:
+        raise ValueError(f"unsupported natural-smell families: {sorted(unknown_families)}")
     results: dict[str, dict[str, Any]] = {}
-    for family in SUPPORTED_FAMILIES:
+    for family in requested_families:
         selected = [
             case
             for case in cases

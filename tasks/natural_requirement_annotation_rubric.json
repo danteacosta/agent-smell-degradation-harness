@@ -1,0 +1,49 @@
+{
+  "schema_version": "natural-requirement-annotation/v1",
+  "rubric_version": "natural-rubric-v1",
+  "unit": "one natural requirement for one target smell family",
+  "families": [
+    "subjective_language",
+    "ambiguous_adjective_adverb",
+    "nonverifiable_term",
+    "vague_pronoun",
+    "uncertain_verb",
+    "polysemy"
+  ],
+  "labels": [
+    "clean",
+    "smelly",
+    "uncertain",
+    "not_visible"
+  ],
+  "blind_fields": [
+    "source_label",
+    "source_smell_markers",
+    "detector_prediction",
+    "project_split",
+    "model_provider",
+    "oracle_result"
+  ],
+  "required_annotators": 2,
+  "duplicate_subset_fraction": 0.2,
+  "missing_label_policy": {
+    "allowed": [
+      "uncertain",
+      "not_visible",
+      "insufficient_context"
+    ],
+    "excluded_from_primary_irr": true,
+    "never_impute": true
+  },
+  "primary_irr": {
+    "statistic": "krippendorff_alpha_nominal_per_family",
+    "target": 0.7,
+    "adjudication_threshold": 0.6
+  },
+  "annotation_fields": [
+    "label",
+    "family",
+    "evidence_span",
+    "rationale"
+  ]
+}
