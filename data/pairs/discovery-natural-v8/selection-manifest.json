@@ -330,111 +330,111 @@
       "target_family": "ambiguous_adjective_adverb"
     },
     {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0219",
-      "project_id": "cctns",
-      "requirement_text_sha256": "8cd6613b1543a32e92307679a65e0315c83488ed79889b26c58a47b8ae97fa46",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 219,
-      "target_family": "ambiguous_adjective_adverb"
-    },
-    {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0282",
-      "project_id": "cctns",
-      "requirement_text_sha256": "9b3ab3dbe083f2e778809ea3fbccef7916dcb6a0a086a487961b5085cdb69424",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 282,
-      "target_family": "ambiguous_adjective_adverb"
-    },
-    {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0284",
-      "project_id": "cctns",
-      "requirement_text_sha256": "8b658fab08ee269a07896510f60d8ae7b99e577c9e27874612f9d1ddd89c2a3b",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 284,
-      "target_family": "ambiguous_adjective_adverb"
-    },
-    {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0912",
-      "project_id": "gamma",
-      "requirement_text_sha256": "a7ae684561fd6abf4b53383533d168a177a76db999466a3e3779bf6387da1419",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 912,
-      "target_family": "ambiguous_adjective_adverb"
-    },
-    {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0913",
-      "project_id": "gamma",
-      "requirement_text_sha256": "cee660b51429ba42d603eac705a762073bcaccfec51b4b90449da36be27adc5b",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 913,
-      "target_family": "ambiguous_adjective_adverb"
-    },
-    {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0915",
-      "project_id": "gamma",
-      "requirement_text_sha256": "61a99745ffcb1145ecf8adcc84d5eb6cab6f35bed88a59321b790886730b5b12",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 915,
-      "target_family": "ambiguous_adjective_adverb"
-    },
-    {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0285",
-      "project_id": "cctns",
-      "requirement_text_sha256": "1c020bb610e5c672055f1da5ddbb5c4b0725a7807b59fb7acae060edfcecb00f",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 285,
-      "target_family": "ambiguous_adjective_adverb"
-    },
-    {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0003",
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0005",
       "project_id": "ertms",
-      "requirement_text_sha256": "5a08eafcd8d573db805e3cb1eff5cad91010d2b2afcbbe9f6fe0bc4d1d3cbdf9",
+      "requirement_text_sha256": "28e878a24b04a6b21eb82455680874057698ba487006b8ab3f72895e80f59045",
       "source_file_id": "2007-ertms.xml",
       "source_label": "clean",
-      "source_row": 3,
+      "source_row": 5,
       "target_family": "ambiguous_adjective_adverb"
     },
     {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0333",
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0340",
       "project_id": "fun",
-      "requirement_text_sha256": "aff0b9192d76df4cd7eff6263fc795d62e8e3b8c3db8a0941cae6e0c46721e57",
+      "requirement_text_sha256": "26861b9cf0fce9b1f601ec238d92db8b4bddf4ac9abfc07d01e493a6f8dceddb",
       "source_file_id": "2007-eirene_fun_7-2.xml",
       "source_label": "clean",
-      "source_row": 333,
+      "source_row": 340,
       "target_family": "ambiguous_adjective_adverb"
     },
     {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0919",
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0920",
       "project_id": "gamma",
-      "requirement_text_sha256": "d89ed154b81654f5ae7c894af94cd2d9f6e363594cbcf79a7527c7b7be8f4f74",
+      "requirement_text_sha256": "118c5af3f031eac04ad3f6e72418a43a24c3f6b83eede9b67eb729be4fd999ca",
       "source_file_id": "0000 - gamma j.xml",
       "source_label": "clean",
-      "source_row": 919,
+      "source_row": 920,
       "target_family": "ambiguous_adjective_adverb"
     },
     {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0880",
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0881",
       "project_id": "keepass",
-      "requirement_text_sha256": "2660b5004dff4d8c74df6f5f47e667489dbb38830d2cc21dc45290fd29fb3de9",
+      "requirement_text_sha256": "ada52e74be807ae9069910ef50e5ed7a1a9b54bf1c1bd969480c249a6bc662f8",
       "source_file_id": "2008 - keepass.xml",
       "source_label": "clean",
-      "source_row": 880,
+      "source_row": 881,
       "target_family": "ambiguous_adjective_adverb"
     },
     {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0963",
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0964",
       "project_id": "peering",
       "requirement_text_sha256": "777b2fff40b226df467bd994eb1e9e27f723522cf9adb8e93857a7f870d32d23",
       "source_file_id": "NEW - 2008 - peering.xml",
       "source_label": "clean",
-      "source_row": 963,
+      "source_row": 964,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0013",
+      "project_id": "ertms",
+      "requirement_text_sha256": "5202afe348ecc210a6bf83c510a449cb2c57b86aa32cf212c0cd72c5e220e38e",
+      "source_file_id": "2007-ertms.xml",
+      "source_label": "clean",
+      "source_row": 13,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0341",
+      "project_id": "fun",
+      "requirement_text_sha256": "131bda20afe94f345f69bea3433b40c06324f94b0fcdf8dd4caf1f7b82cc9ae4",
+      "source_file_id": "2007-eirene_fun_7-2.xml",
+      "source_label": "clean",
+      "source_row": 341,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0921",
+      "project_id": "gamma",
+      "requirement_text_sha256": "d1f420ceb5b16b4a0e934a82abaf1307b64735e87f078594ad2fa84bf63d5fe0",
+      "source_file_id": "0000 - gamma j.xml",
+      "source_label": "clean",
+      "source_row": 921,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0886",
+      "project_id": "keepass",
+      "requirement_text_sha256": "49954cd67eb640d3589d3f226e239b7e3a33ef5f3b65e8620e5fa18ddd911ba8",
+      "source_file_id": "2008 - keepass.xml",
+      "source_label": "clean",
+      "source_row": 886,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0965",
+      "project_id": "peering",
+      "requirement_text_sha256": "acab273187dfc87adaa65fc85a4948eab1a8f5e6223f594cbd75cf29d2edd0e0",
+      "source_file_id": "NEW - 2008 - peering.xml",
+      "source_label": "clean",
+      "source_row": 965,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0014",
+      "project_id": "ertms",
+      "requirement_text_sha256": "a1ab2583a6e1d7d98511dae724174e2fe772d63b701b40385827365334d304ca",
+      "source_file_id": "2007-ertms.xml",
+      "source_label": "clean",
+      "source_row": 14,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0368",
+      "project_id": "fun",
+      "requirement_text_sha256": "91fd1370145385034bca581cf1a22427756a434b09081c68846164cdf2cc07bf",
+      "source_file_id": "2007-eirene_fun_7-2.xml",
+      "source_label": "clean",
+      "source_row": 368,
       "target_family": "ambiguous_adjective_adverb"
     },
     {
@@ -546,111 +546,111 @@
       "target_family": "nonverifiable_term"
     },
     {
-      "case_id": "arta-v8-clean-nonverifiable_term-0219",
-      "project_id": "cctns",
-      "requirement_text_sha256": "8cd6613b1543a32e92307679a65e0315c83488ed79889b26c58a47b8ae97fa46",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 219,
-      "target_family": "nonverifiable_term"
-    },
-    {
-      "case_id": "arta-v8-clean-nonverifiable_term-0282",
-      "project_id": "cctns",
-      "requirement_text_sha256": "9b3ab3dbe083f2e778809ea3fbccef7916dcb6a0a086a487961b5085cdb69424",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 282,
-      "target_family": "nonverifiable_term"
-    },
-    {
-      "case_id": "arta-v8-clean-nonverifiable_term-0284",
-      "project_id": "cctns",
-      "requirement_text_sha256": "8b658fab08ee269a07896510f60d8ae7b99e577c9e27874612f9d1ddd89c2a3b",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 284,
-      "target_family": "nonverifiable_term"
-    },
-    {
-      "case_id": "arta-v8-clean-nonverifiable_term-0912",
-      "project_id": "gamma",
-      "requirement_text_sha256": "a7ae684561fd6abf4b53383533d168a177a76db999466a3e3779bf6387da1419",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 912,
-      "target_family": "nonverifiable_term"
-    },
-    {
-      "case_id": "arta-v8-clean-nonverifiable_term-0913",
-      "project_id": "gamma",
-      "requirement_text_sha256": "cee660b51429ba42d603eac705a762073bcaccfec51b4b90449da36be27adc5b",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 913,
-      "target_family": "nonverifiable_term"
-    },
-    {
-      "case_id": "arta-v8-clean-nonverifiable_term-0915",
-      "project_id": "gamma",
-      "requirement_text_sha256": "61a99745ffcb1145ecf8adcc84d5eb6cab6f35bed88a59321b790886730b5b12",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 915,
-      "target_family": "nonverifiable_term"
-    },
-    {
-      "case_id": "arta-v8-clean-nonverifiable_term-0285",
-      "project_id": "cctns",
-      "requirement_text_sha256": "1c020bb610e5c672055f1da5ddbb5c4b0725a7807b59fb7acae060edfcecb00f",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 285,
-      "target_family": "nonverifiable_term"
-    },
-    {
-      "case_id": "arta-v8-clean-nonverifiable_term-0003",
+      "case_id": "arta-v8-clean-nonverifiable_term-0016",
       "project_id": "ertms",
-      "requirement_text_sha256": "5a08eafcd8d573db805e3cb1eff5cad91010d2b2afcbbe9f6fe0bc4d1d3cbdf9",
+      "requirement_text_sha256": "dd3f6ef7ef7ac3ada781dccc60b0e141404c2ce27413568ff44eaf4bc06eecc7",
       "source_file_id": "2007-ertms.xml",
       "source_label": "clean",
-      "source_row": 3,
+      "source_row": 16,
       "target_family": "nonverifiable_term"
     },
     {
-      "case_id": "arta-v8-clean-nonverifiable_term-0333",
+      "case_id": "arta-v8-clean-nonverifiable_term-0397",
       "project_id": "fun",
-      "requirement_text_sha256": "aff0b9192d76df4cd7eff6263fc795d62e8e3b8c3db8a0941cae6e0c46721e57",
+      "requirement_text_sha256": "a6c23557f1192395db0c77273e45d0d0749c5c8ad5ab9c9dbded82a881a16caf",
       "source_file_id": "2007-eirene_fun_7-2.xml",
       "source_label": "clean",
-      "source_row": 333,
+      "source_row": 397,
       "target_family": "nonverifiable_term"
     },
     {
-      "case_id": "arta-v8-clean-nonverifiable_term-0919",
+      "case_id": "arta-v8-clean-nonverifiable_term-0922",
       "project_id": "gamma",
-      "requirement_text_sha256": "d89ed154b81654f5ae7c894af94cd2d9f6e363594cbcf79a7527c7b7be8f4f74",
+      "requirement_text_sha256": "62c0b3cb91961e074280c251a307e49cea51f1db34300f4e048e191f0249968d",
       "source_file_id": "0000 - gamma j.xml",
       "source_label": "clean",
-      "source_row": 919,
+      "source_row": 922,
       "target_family": "nonverifiable_term"
     },
     {
-      "case_id": "arta-v8-clean-nonverifiable_term-0880",
+      "case_id": "arta-v8-clean-nonverifiable_term-0888",
       "project_id": "keepass",
-      "requirement_text_sha256": "2660b5004dff4d8c74df6f5f47e667489dbb38830d2cc21dc45290fd29fb3de9",
+      "requirement_text_sha256": "95e0ee8351a49cea758f4ab7bec8b30a9d4453c3be2200f1f16c8aade154b37c",
       "source_file_id": "2008 - keepass.xml",
       "source_label": "clean",
-      "source_row": 880,
+      "source_row": 888,
       "target_family": "nonverifiable_term"
     },
     {
-      "case_id": "arta-v8-clean-nonverifiable_term-0963",
+      "case_id": "arta-v8-clean-nonverifiable_term-0966",
       "project_id": "peering",
-      "requirement_text_sha256": "777b2fff40b226df467bd994eb1e9e27f723522cf9adb8e93857a7f870d32d23",
+      "requirement_text_sha256": "86f561a16d47f834875693fd97a4c4583277737c260c50794c7b8bac0e26e930",
       "source_file_id": "NEW - 2008 - peering.xml",
       "source_label": "clean",
-      "source_row": 963,
+      "source_row": 966,
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "case_id": "arta-v8-clean-nonverifiable_term-0029",
+      "project_id": "ertms",
+      "requirement_text_sha256": "f10f1722751e30e2b7d043037ef815b9e316d7b52b5f15bc8b9eda30e6ff0dba",
+      "source_file_id": "2007-ertms.xml",
+      "source_label": "clean",
+      "source_row": 29,
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "case_id": "arta-v8-clean-nonverifiable_term-0399",
+      "project_id": "fun",
+      "requirement_text_sha256": "8fd77002c3e2fd9673d86f75c622dd7a683aeee53ebbf635dd185518f64b12ba",
+      "source_file_id": "2007-eirene_fun_7-2.xml",
+      "source_label": "clean",
+      "source_row": 399,
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "case_id": "arta-v8-clean-nonverifiable_term-0923",
+      "project_id": "gamma",
+      "requirement_text_sha256": "f28a1f48b8a7d8d22c79df891eff7132aa2b35f30ef12677d7efefbd3d60dff9",
+      "source_file_id": "0000 - gamma j.xml",
+      "source_label": "clean",
+      "source_row": 923,
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "case_id": "arta-v8-clean-nonverifiable_term-0890",
+      "project_id": "keepass",
+      "requirement_text_sha256": "2ba93e0f7a3b2905bd252a1ba715a2cd159243e6c8270d6be2460770d9e61324",
+      "source_file_id": "2008 - keepass.xml",
+      "source_label": "clean",
+      "source_row": 890,
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "case_id": "arta-v8-clean-nonverifiable_term-0967",
+      "project_id": "peering",
+      "requirement_text_sha256": "409db5321b49a89793abd987164484d7ed7563b6fd72d5cc9c2ac58a4956c85b",
+      "source_file_id": "NEW - 2008 - peering.xml",
+      "source_label": "clean",
+      "source_row": 967,
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "case_id": "arta-v8-clean-nonverifiable_term-0030",
+      "project_id": "ertms",
+      "requirement_text_sha256": "f25149c83d135c6609868f93b9c299f6de2a48c9cd24d4260cdfe5e6e8ee5b6d",
+      "source_file_id": "2007-ertms.xml",
+      "source_label": "clean",
+      "source_row": 30,
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "case_id": "arta-v8-clean-nonverifiable_term-0400",
+      "project_id": "fun",
+      "requirement_text_sha256": "a9c505f074eefee6279ce77c3e5920c30bee347da7b59673593cd6ff2e37a61f",
+      "source_file_id": "2007-eirene_fun_7-2.xml",
+      "source_label": "clean",
+      "source_row": 400,
       "target_family": "nonverifiable_term"
     },
     {
@@ -762,111 +762,111 @@
       "target_family": "vague_pronoun"
     },
     {
-      "case_id": "arta-v8-clean-vague_pronoun-0219",
-      "project_id": "cctns",
-      "requirement_text_sha256": "8cd6613b1543a32e92307679a65e0315c83488ed79889b26c58a47b8ae97fa46",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 219,
-      "target_family": "vague_pronoun"
-    },
-    {
-      "case_id": "arta-v8-clean-vague_pronoun-0282",
-      "project_id": "cctns",
-      "requirement_text_sha256": "9b3ab3dbe083f2e778809ea3fbccef7916dcb6a0a086a487961b5085cdb69424",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 282,
-      "target_family": "vague_pronoun"
-    },
-    {
-      "case_id": "arta-v8-clean-vague_pronoun-0284",
-      "project_id": "cctns",
-      "requirement_text_sha256": "8b658fab08ee269a07896510f60d8ae7b99e577c9e27874612f9d1ddd89c2a3b",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 284,
-      "target_family": "vague_pronoun"
-    },
-    {
-      "case_id": "arta-v8-clean-vague_pronoun-0912",
-      "project_id": "gamma",
-      "requirement_text_sha256": "a7ae684561fd6abf4b53383533d168a177a76db999466a3e3779bf6387da1419",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 912,
-      "target_family": "vague_pronoun"
-    },
-    {
-      "case_id": "arta-v8-clean-vague_pronoun-0913",
-      "project_id": "gamma",
-      "requirement_text_sha256": "cee660b51429ba42d603eac705a762073bcaccfec51b4b90449da36be27adc5b",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 913,
-      "target_family": "vague_pronoun"
-    },
-    {
-      "case_id": "arta-v8-clean-vague_pronoun-0915",
-      "project_id": "gamma",
-      "requirement_text_sha256": "61a99745ffcb1145ecf8adcc84d5eb6cab6f35bed88a59321b790886730b5b12",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 915,
-      "target_family": "vague_pronoun"
-    },
-    {
-      "case_id": "arta-v8-clean-vague_pronoun-0285",
-      "project_id": "cctns",
-      "requirement_text_sha256": "1c020bb610e5c672055f1da5ddbb5c4b0725a7807b59fb7acae060edfcecb00f",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 285,
-      "target_family": "vague_pronoun"
-    },
-    {
-      "case_id": "arta-v8-clean-vague_pronoun-0003",
+      "case_id": "arta-v8-clean-vague_pronoun-0031",
       "project_id": "ertms",
-      "requirement_text_sha256": "5a08eafcd8d573db805e3cb1eff5cad91010d2b2afcbbe9f6fe0bc4d1d3cbdf9",
+      "requirement_text_sha256": "a458173f3678117d69b65b9470d0b454e6346bf913653b31efa93de162de0d97",
       "source_file_id": "2007-ertms.xml",
       "source_label": "clean",
-      "source_row": 3,
+      "source_row": 31,
       "target_family": "vague_pronoun"
     },
     {
-      "case_id": "arta-v8-clean-vague_pronoun-0333",
+      "case_id": "arta-v8-clean-vague_pronoun-0407",
       "project_id": "fun",
-      "requirement_text_sha256": "aff0b9192d76df4cd7eff6263fc795d62e8e3b8c3db8a0941cae6e0c46721e57",
+      "requirement_text_sha256": "231ae1551ab0801fab9224975bdf7319fe5a443cfcfe35fd140b69ba5611f4dc",
       "source_file_id": "2007-eirene_fun_7-2.xml",
       "source_label": "clean",
-      "source_row": 333,
+      "source_row": 407,
       "target_family": "vague_pronoun"
     },
     {
-      "case_id": "arta-v8-clean-vague_pronoun-0919",
+      "case_id": "arta-v8-clean-vague_pronoun-0924",
       "project_id": "gamma",
-      "requirement_text_sha256": "d89ed154b81654f5ae7c894af94cd2d9f6e363594cbcf79a7527c7b7be8f4f74",
+      "requirement_text_sha256": "40eba14b35d6bfec076631bf93041de867c422654c2660842546ff0b02bde1a8",
       "source_file_id": "0000 - gamma j.xml",
       "source_label": "clean",
-      "source_row": 919,
+      "source_row": 924,
       "target_family": "vague_pronoun"
     },
     {
-      "case_id": "arta-v8-clean-vague_pronoun-0880",
+      "case_id": "arta-v8-clean-vague_pronoun-0891",
       "project_id": "keepass",
-      "requirement_text_sha256": "2660b5004dff4d8c74df6f5f47e667489dbb38830d2cc21dc45290fd29fb3de9",
+      "requirement_text_sha256": "bef3417aa608e5646a1a18773d7f73376c144564af6496ff373ce016c39a4283",
       "source_file_id": "2008 - keepass.xml",
       "source_label": "clean",
-      "source_row": 880,
+      "source_row": 891,
       "target_family": "vague_pronoun"
     },
     {
-      "case_id": "arta-v8-clean-vague_pronoun-0963",
+      "case_id": "arta-v8-clean-vague_pronoun-0968",
       "project_id": "peering",
-      "requirement_text_sha256": "777b2fff40b226df467bd994eb1e9e27f723522cf9adb8e93857a7f870d32d23",
+      "requirement_text_sha256": "acab273187dfc87adaa65fc85a4948eab1a8f5e6223f594cbd75cf29d2edd0e0",
       "source_file_id": "NEW - 2008 - peering.xml",
       "source_label": "clean",
-      "source_row": 963,
+      "source_row": 968,
+      "target_family": "vague_pronoun"
+    },
+    {
+      "case_id": "arta-v8-clean-vague_pronoun-0032",
+      "project_id": "ertms",
+      "requirement_text_sha256": "a1821bb9130eb6e1373b35aed31fea002ce4dfa3677fbb80fc76412ea3f01ffe",
+      "source_file_id": "2007-ertms.xml",
+      "source_label": "clean",
+      "source_row": 32,
+      "target_family": "vague_pronoun"
+    },
+    {
+      "case_id": "arta-v8-clean-vague_pronoun-0415",
+      "project_id": "fun",
+      "requirement_text_sha256": "665a93addf322b26d326bbf3a97017a8416c4001d3998716cacc124adf473f2d",
+      "source_file_id": "2007-eirene_fun_7-2.xml",
+      "source_label": "clean",
+      "source_row": 415,
+      "target_family": "vague_pronoun"
+    },
+    {
+      "case_id": "arta-v8-clean-vague_pronoun-0925",
+      "project_id": "gamma",
+      "requirement_text_sha256": "2cf96c8abd3f765ef46c67208b8e3c3f461cc13dcf052d89119e3e280155cf1e",
+      "source_file_id": "0000 - gamma j.xml",
+      "source_label": "clean",
+      "source_row": 925,
+      "target_family": "vague_pronoun"
+    },
+    {
+      "case_id": "arta-v8-clean-vague_pronoun-0892",
+      "project_id": "keepass",
+      "requirement_text_sha256": "5bd04dfd005ea5dead550b1ed5f9bde43c56341c61ec2c8c1fe436a58e9466a3",
+      "source_file_id": "2008 - keepass.xml",
+      "source_label": "clean",
+      "source_row": 892,
+      "target_family": "vague_pronoun"
+    },
+    {
+      "case_id": "arta-v8-clean-vague_pronoun-0971",
+      "project_id": "peering",
+      "requirement_text_sha256": "e46dad1a24c238b3d2545e961b163e14b603502a27544389dd642687f729f5c7",
+      "source_file_id": "NEW - 2008 - peering.xml",
+      "source_label": "clean",
+      "source_row": 971,
+      "target_family": "vague_pronoun"
+    },
+    {
+      "case_id": "arta-v8-clean-vague_pronoun-0034",
+      "project_id": "ertms",
+      "requirement_text_sha256": "0fa6e53a8aca61adc4ce858a0a9f1adb5268c818be6600ab417c225f0e3b9370",
+      "source_file_id": "2007-ertms.xml",
+      "source_label": "clean",
+      "source_row": 34,
+      "target_family": "vague_pronoun"
+    },
+    {
+      "case_id": "arta-v8-clean-vague_pronoun-0416",
+      "project_id": "fun",
+      "requirement_text_sha256": "ce8f2d4f4c7296976cd036e75eb3b4c68ba2677b5c2085e5103ae23056a53f3f",
+      "source_file_id": "2007-eirene_fun_7-2.xml",
+      "source_label": "clean",
+      "source_row": 416,
       "target_family": "vague_pronoun"
     },
     {
@@ -978,111 +978,111 @@
       "target_family": "uncertain_verb"
     },
     {
-      "case_id": "arta-v8-clean-uncertain_verb-0219",
-      "project_id": "cctns",
-      "requirement_text_sha256": "8cd6613b1543a32e92307679a65e0315c83488ed79889b26c58a47b8ae97fa46",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 219,
-      "target_family": "uncertain_verb"
-    },
-    {
-      "case_id": "arta-v8-clean-uncertain_verb-0282",
-      "project_id": "cctns",
-      "requirement_text_sha256": "9b3ab3dbe083f2e778809ea3fbccef7916dcb6a0a086a487961b5085cdb69424",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 282,
-      "target_family": "uncertain_verb"
-    },
-    {
-      "case_id": "arta-v8-clean-uncertain_verb-0284",
-      "project_id": "cctns",
-      "requirement_text_sha256": "8b658fab08ee269a07896510f60d8ae7b99e577c9e27874612f9d1ddd89c2a3b",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 284,
-      "target_family": "uncertain_verb"
-    },
-    {
-      "case_id": "arta-v8-clean-uncertain_verb-0912",
-      "project_id": "gamma",
-      "requirement_text_sha256": "a7ae684561fd6abf4b53383533d168a177a76db999466a3e3779bf6387da1419",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 912,
-      "target_family": "uncertain_verb"
-    },
-    {
-      "case_id": "arta-v8-clean-uncertain_verb-0913",
-      "project_id": "gamma",
-      "requirement_text_sha256": "cee660b51429ba42d603eac705a762073bcaccfec51b4b90449da36be27adc5b",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 913,
-      "target_family": "uncertain_verb"
-    },
-    {
-      "case_id": "arta-v8-clean-uncertain_verb-0915",
-      "project_id": "gamma",
-      "requirement_text_sha256": "61a99745ffcb1145ecf8adcc84d5eb6cab6f35bed88a59321b790886730b5b12",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 915,
-      "target_family": "uncertain_verb"
-    },
-    {
-      "case_id": "arta-v8-clean-uncertain_verb-0285",
-      "project_id": "cctns",
-      "requirement_text_sha256": "1c020bb610e5c672055f1da5ddbb5c4b0725a7807b59fb7acae060edfcecb00f",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 285,
-      "target_family": "uncertain_verb"
-    },
-    {
-      "case_id": "arta-v8-clean-uncertain_verb-0003",
+      "case_id": "arta-v8-clean-uncertain_verb-0036",
       "project_id": "ertms",
-      "requirement_text_sha256": "5a08eafcd8d573db805e3cb1eff5cad91010d2b2afcbbe9f6fe0bc4d1d3cbdf9",
+      "requirement_text_sha256": "e137eb397d7be6fbe4e503afeeece1a045cda81c53bf04b1a963c159bee2db9a",
       "source_file_id": "2007-ertms.xml",
       "source_label": "clean",
-      "source_row": 3,
+      "source_row": 36,
       "target_family": "uncertain_verb"
     },
     {
-      "case_id": "arta-v8-clean-uncertain_verb-0333",
+      "case_id": "arta-v8-clean-uncertain_verb-0420",
       "project_id": "fun",
-      "requirement_text_sha256": "aff0b9192d76df4cd7eff6263fc795d62e8e3b8c3db8a0941cae6e0c46721e57",
+      "requirement_text_sha256": "d21579a4611e8800aca761f2d03a15b1599edad88752cfddf1351f34c6ff39b1",
       "source_file_id": "2007-eirene_fun_7-2.xml",
       "source_label": "clean",
-      "source_row": 333,
+      "source_row": 420,
       "target_family": "uncertain_verb"
     },
     {
-      "case_id": "arta-v8-clean-uncertain_verb-0919",
+      "case_id": "arta-v8-clean-uncertain_verb-0926",
       "project_id": "gamma",
-      "requirement_text_sha256": "d89ed154b81654f5ae7c894af94cd2d9f6e363594cbcf79a7527c7b7be8f4f74",
+      "requirement_text_sha256": "b88ecd7bfc893158069b645a48c3c0869fe85936d02e1f20cab33a2ed9606d2f",
       "source_file_id": "0000 - gamma j.xml",
       "source_label": "clean",
-      "source_row": 919,
+      "source_row": 926,
       "target_family": "uncertain_verb"
     },
     {
-      "case_id": "arta-v8-clean-uncertain_verb-0880",
+      "case_id": "arta-v8-clean-uncertain_verb-0893",
       "project_id": "keepass",
-      "requirement_text_sha256": "2660b5004dff4d8c74df6f5f47e667489dbb38830d2cc21dc45290fd29fb3de9",
+      "requirement_text_sha256": "267dcc89c0a1d207afb3d3e5a099df782a89e3a6088aa33f9ab7ad3f886c0aaa",
       "source_file_id": "2008 - keepass.xml",
       "source_label": "clean",
-      "source_row": 880,
+      "source_row": 893,
       "target_family": "uncertain_verb"
     },
     {
-      "case_id": "arta-v8-clean-uncertain_verb-0963",
+      "case_id": "arta-v8-clean-uncertain_verb-0973",
       "project_id": "peering",
-      "requirement_text_sha256": "777b2fff40b226df467bd994eb1e9e27f723522cf9adb8e93857a7f870d32d23",
+      "requirement_text_sha256": "3ca17b740d0cc7c2f2c34faddb2573e3e577f1cfa253014931ab1bfd048bf7d8",
       "source_file_id": "NEW - 2008 - peering.xml",
       "source_label": "clean",
-      "source_row": 963,
+      "source_row": 973,
+      "target_family": "uncertain_verb"
+    },
+    {
+      "case_id": "arta-v8-clean-uncertain_verb-0039",
+      "project_id": "ertms",
+      "requirement_text_sha256": "9bd68dfa7de1d9e6724b8dfb8b208d77d1b21e436a40edb355151cadea2c187f",
+      "source_file_id": "2007-ertms.xml",
+      "source_label": "clean",
+      "source_row": 39,
+      "target_family": "uncertain_verb"
+    },
+    {
+      "case_id": "arta-v8-clean-uncertain_verb-0439",
+      "project_id": "fun",
+      "requirement_text_sha256": "fe3435778572266af79b1dc93246fcf79141662e48f80aca57d716b6d034aa14",
+      "source_file_id": "2007-eirene_fun_7-2.xml",
+      "source_label": "clean",
+      "source_row": 439,
+      "target_family": "uncertain_verb"
+    },
+    {
+      "case_id": "arta-v8-clean-uncertain_verb-0927",
+      "project_id": "gamma",
+      "requirement_text_sha256": "d3f85745e321089e90ca50bee36e3cea6119652c530f6f6825e0d0f3cc310264",
+      "source_file_id": "0000 - gamma j.xml",
+      "source_label": "clean",
+      "source_row": 927,
+      "target_family": "uncertain_verb"
+    },
+    {
+      "case_id": "arta-v8-clean-uncertain_verb-0894",
+      "project_id": "keepass",
+      "requirement_text_sha256": "888b600df646c4cc894f2d879916546a78c7f20949fcbf99dfd87ec0dcbdb538",
+      "source_file_id": "2008 - keepass.xml",
+      "source_label": "clean",
+      "source_row": 894,
+      "target_family": "uncertain_verb"
+    },
+    {
+      "case_id": "arta-v8-clean-uncertain_verb-0974",
+      "project_id": "peering",
+      "requirement_text_sha256": "6fa62f3ff4b2f5ccb46ca1124ddb10a76ef6405b6bf02ba25d162f28405d5ad3",
+      "source_file_id": "NEW - 2008 - peering.xml",
+      "source_label": "clean",
+      "source_row": 974,
+      "target_family": "uncertain_verb"
+    },
+    {
+      "case_id": "arta-v8-clean-uncertain_verb-0044",
+      "project_id": "ertms",
+      "requirement_text_sha256": "99f2b088a8978869e8a73a348c1ac83ae032936c68765070357d4a07b31fa516",
+      "source_file_id": "2007-ertms.xml",
+      "source_label": "clean",
+      "source_row": 44,
+      "target_family": "uncertain_verb"
+    },
+    {
+      "case_id": "arta-v8-clean-uncertain_verb-0473",
+      "project_id": "fun",
+      "requirement_text_sha256": "30f5b16d4468559636fb13c12c5b05ebb6d11ccd182e6ab27ecc62fb5cb9c319",
+      "source_file_id": "2007-eirene_fun_7-2.xml",
+      "source_label": "clean",
+      "source_row": 473,
       "target_family": "uncertain_verb"
     },
     {
@@ -1194,111 +1194,111 @@
       "target_family": "polysemy"
     },
     {
-      "case_id": "arta-v8-clean-polysemy-0219",
-      "project_id": "cctns",
-      "requirement_text_sha256": "8cd6613b1543a32e92307679a65e0315c83488ed79889b26c58a47b8ae97fa46",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 219,
-      "target_family": "polysemy"
-    },
-    {
-      "case_id": "arta-v8-clean-polysemy-0282",
-      "project_id": "cctns",
-      "requirement_text_sha256": "9b3ab3dbe083f2e778809ea3fbccef7916dcb6a0a086a487961b5085cdb69424",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 282,
-      "target_family": "polysemy"
-    },
-    {
-      "case_id": "arta-v8-clean-polysemy-0284",
-      "project_id": "cctns",
-      "requirement_text_sha256": "8b658fab08ee269a07896510f60d8ae7b99e577c9e27874612f9d1ddd89c2a3b",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 284,
-      "target_family": "polysemy"
-    },
-    {
-      "case_id": "arta-v8-clean-polysemy-0912",
-      "project_id": "gamma",
-      "requirement_text_sha256": "a7ae684561fd6abf4b53383533d168a177a76db999466a3e3779bf6387da1419",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 912,
-      "target_family": "polysemy"
-    },
-    {
-      "case_id": "arta-v8-clean-polysemy-0913",
-      "project_id": "gamma",
-      "requirement_text_sha256": "cee660b51429ba42d603eac705a762073bcaccfec51b4b90449da36be27adc5b",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 913,
-      "target_family": "polysemy"
-    },
-    {
-      "case_id": "arta-v8-clean-polysemy-0915",
-      "project_id": "gamma",
-      "requirement_text_sha256": "61a99745ffcb1145ecf8adcc84d5eb6cab6f35bed88a59321b790886730b5b12",
-      "source_file_id": "0000 - gamma j.xml",
-      "source_label": "clean",
-      "source_row": 915,
-      "target_family": "polysemy"
-    },
-    {
-      "case_id": "arta-v8-clean-polysemy-0285",
-      "project_id": "cctns",
-      "requirement_text_sha256": "1c020bb610e5c672055f1da5ddbb5c4b0725a7807b59fb7acae060edfcecb00f",
-      "source_file_id": "0000 - cctns.xml",
-      "source_label": "clean",
-      "source_row": 285,
-      "target_family": "polysemy"
-    },
-    {
-      "case_id": "arta-v8-clean-polysemy-0003",
+      "case_id": "arta-v8-clean-polysemy-0045",
       "project_id": "ertms",
-      "requirement_text_sha256": "5a08eafcd8d573db805e3cb1eff5cad91010d2b2afcbbe9f6fe0bc4d1d3cbdf9",
+      "requirement_text_sha256": "41e9ababa63fb1c832b42146c2942a76d9f944a952429d5f5d8774bb84523e76",
       "source_file_id": "2007-ertms.xml",
       "source_label": "clean",
-      "source_row": 3,
+      "source_row": 45,
       "target_family": "polysemy"
     },
     {
-      "case_id": "arta-v8-clean-polysemy-0333",
+      "case_id": "arta-v8-clean-polysemy-0476",
       "project_id": "fun",
-      "requirement_text_sha256": "aff0b9192d76df4cd7eff6263fc795d62e8e3b8c3db8a0941cae6e0c46721e57",
+      "requirement_text_sha256": "171833545492833889a079c48e6a118359c8a870b624adcd36ae53e4e1cee6e9",
       "source_file_id": "2007-eirene_fun_7-2.xml",
       "source_label": "clean",
-      "source_row": 333,
+      "source_row": 476,
       "target_family": "polysemy"
     },
     {
-      "case_id": "arta-v8-clean-polysemy-0919",
+      "case_id": "arta-v8-clean-polysemy-0928",
       "project_id": "gamma",
-      "requirement_text_sha256": "d89ed154b81654f5ae7c894af94cd2d9f6e363594cbcf79a7527c7b7be8f4f74",
+      "requirement_text_sha256": "80ae6546584382090fc3558f97f02aaebd82d6732ca617956fc5194219909585",
       "source_file_id": "0000 - gamma j.xml",
       "source_label": "clean",
-      "source_row": 919,
+      "source_row": 928,
       "target_family": "polysemy"
     },
     {
-      "case_id": "arta-v8-clean-polysemy-0880",
+      "case_id": "arta-v8-clean-polysemy-0895",
       "project_id": "keepass",
-      "requirement_text_sha256": "2660b5004dff4d8c74df6f5f47e667489dbb38830d2cc21dc45290fd29fb3de9",
+      "requirement_text_sha256": "0977fbc607aacb1afe6b2fdc9175e50d3454b2939d23084a28805c21efcfcf90",
       "source_file_id": "2008 - keepass.xml",
       "source_label": "clean",
-      "source_row": 880,
+      "source_row": 895,
       "target_family": "polysemy"
     },
     {
-      "case_id": "arta-v8-clean-polysemy-0963",
+      "case_id": "arta-v8-clean-polysemy-0976",
       "project_id": "peering",
-      "requirement_text_sha256": "777b2fff40b226df467bd994eb1e9e27f723522cf9adb8e93857a7f870d32d23",
+      "requirement_text_sha256": "a6614eb35659df0317cf74e5b7f5e652d488c9588b695438160d16ecbe8acf70",
       "source_file_id": "NEW - 2008 - peering.xml",
       "source_label": "clean",
-      "source_row": 963,
+      "source_row": 976,
+      "target_family": "polysemy"
+    },
+    {
+      "case_id": "arta-v8-clean-polysemy-0046",
+      "project_id": "ertms",
+      "requirement_text_sha256": "5ff5d95bc0ffa3efe72ce8add8afc353808651f302374ad4bc6907ca521dd012",
+      "source_file_id": "2007-ertms.xml",
+      "source_label": "clean",
+      "source_row": 46,
+      "target_family": "polysemy"
+    },
+    {
+      "case_id": "arta-v8-clean-polysemy-0483",
+      "project_id": "fun",
+      "requirement_text_sha256": "856fde8c0185f2c44a8a7b02e916d0b884df048b20a59b9e7d5cef66bc23ab8a",
+      "source_file_id": "2007-eirene_fun_7-2.xml",
+      "source_label": "clean",
+      "source_row": 483,
+      "target_family": "polysemy"
+    },
+    {
+      "case_id": "arta-v8-clean-polysemy-0929",
+      "project_id": "gamma",
+      "requirement_text_sha256": "178a87410293bd3abf0e849aa682d57212ed221a0ba4dd374bdc3fec954c1a90",
+      "source_file_id": "0000 - gamma j.xml",
+      "source_label": "clean",
+      "source_row": 929,
+      "target_family": "polysemy"
+    },
+    {
+      "case_id": "arta-v8-clean-polysemy-0898",
+      "project_id": "keepass",
+      "requirement_text_sha256": "bf8157e2e18d095fbfb16ee8374ecf58e49abb0c511347f27aec3fe67b85f1cd",
+      "source_file_id": "2008 - keepass.xml",
+      "source_label": "clean",
+      "source_row": 898,
+      "target_family": "polysemy"
+    },
+    {
+      "case_id": "arta-v8-clean-polysemy-0980",
+      "project_id": "peering",
+      "requirement_text_sha256": "7cf392230a567371847dea3836ea71d901d9c729455c340b8237a895558f732c",
+      "source_file_id": "NEW - 2008 - peering.xml",
+      "source_label": "clean",
+      "source_row": 980,
+      "target_family": "polysemy"
+    },
+    {
+      "case_id": "arta-v8-clean-polysemy-0047",
+      "project_id": "ertms",
+      "requirement_text_sha256": "aab08b95270138c4e5abeb3f746f2a4193f319150afd3526ff781bfd29d41a19",
+      "source_file_id": "2007-ertms.xml",
+      "source_label": "clean",
+      "source_row": 47,
+      "target_family": "polysemy"
+    },
+    {
+      "case_id": "arta-v8-clean-polysemy-0485",
+      "project_id": "fun",
+      "requirement_text_sha256": "d2d7eb677c7b2cefdf75691b335a8e4c1127a6de27f69438812d00b2646db086",
+      "source_file_id": "2007-eirene_fun_7-2.xml",
+      "source_label": "clean",
+      "source_row": 485,
       "target_family": "polysemy"
     }
   ],

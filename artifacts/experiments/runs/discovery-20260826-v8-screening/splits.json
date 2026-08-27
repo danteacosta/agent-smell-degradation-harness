@@ -3,167 +3,242 @@
     {
       "project_id": "ertms",
       "source_intent_id": "arta-sheet1-row-0002",
-      "split": "calibration"
+      "split": "train"
     },
     {
       "project_id": "ertms",
       "source_intent_id": "arta-sheet1-row-0003",
-      "split": "calibration"
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0005",
+      "split": "train"
     },
     {
       "project_id": "ertms",
       "source_intent_id": "arta-sheet1-row-0006",
-      "split": "calibration"
+      "split": "train"
     },
     {
       "project_id": "ertms",
       "source_intent_id": "arta-sheet1-row-0010",
-      "split": "calibration"
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0013",
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0014",
+      "split": "train"
     },
     {
       "project_id": "ertms",
       "source_intent_id": "arta-sheet1-row-0015",
-      "split": "calibration"
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0016",
+      "split": "train"
     },
     {
       "project_id": "ertms",
       "source_intent_id": "arta-sheet1-row-0023",
-      "split": "calibration"
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0029",
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0030",
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0031",
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0032",
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0034",
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0036",
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0039",
+      "split": "train"
     },
     {
       "project_id": "ertms",
       "source_intent_id": "arta-sheet1-row-0043",
-      "split": "calibration"
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0044",
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0045",
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0046",
+      "split": "train"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0047",
+      "split": "train"
     },
     {
       "project_id": "ertms",
       "source_intent_id": "arta-sheet1-row-0077",
-      "split": "calibration"
+      "split": "train"
     },
     {
       "project_id": "ertms",
       "source_intent_id": "arta-sheet1-row-0093",
-      "split": "calibration"
+      "split": "train"
     },
     {
       "project_id": "ertms",
       "source_intent_id": "arta-sheet1-row-0120",
-      "split": "calibration"
+      "split": "train"
     },
     {
       "project_id": "ertms",
       "source_intent_id": "arta-sheet1-row-0192",
-      "split": "calibration"
+      "split": "train"
     },
     {
       "project_id": "ertms",
       "source_intent_id": "arta-sheet1-row-0194",
-      "split": "calibration"
+      "split": "train"
     },
     {
       "project_id": "ertms",
       "source_intent_id": "arta-sheet1-row-0196",
-      "split": "calibration"
+      "split": "train"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0205",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0206",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0208",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0209",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0214",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0216",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0217",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0219",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0222",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0224",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0228",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0229",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0231",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0236",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0282",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0283",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0284",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0285",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0292",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "cctns",
       "source_intent_id": "arta-sheet1-row-0296",
-      "split": "test"
+      "split": "calibration"
     },
     {
       "project_id": "fun",
@@ -192,12 +267,27 @@
     },
     {
       "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0340",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0341",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
       "source_intent_id": "arta-sheet1-row-0342",
       "split": "test"
     },
     {
       "project_id": "fun",
       "source_intent_id": "arta-sheet1-row-0366",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0368",
       "split": "test"
     },
     {
@@ -222,6 +312,21 @@
     },
     {
       "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0397",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0399",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0400",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
       "source_intent_id": "arta-sheet1-row-0403",
       "split": "test"
     },
@@ -232,7 +337,32 @@
     },
     {
       "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0407",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0415",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0416",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0420",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
       "source_intent_id": "arta-sheet1-row-0428",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0439",
       "split": "test"
     },
     {
@@ -247,7 +377,27 @@
     },
     {
       "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0473",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0476",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0483",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
       "source_intent_id": "arta-sheet1-row-0484",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0485",
       "split": "test"
     },
     {
@@ -277,6 +427,11 @@
     },
     {
       "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0881",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
       "source_intent_id": "arta-sheet1-row-0882",
       "split": "train"
     },
@@ -292,12 +447,57 @@
     },
     {
       "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0886",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0888",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
       "source_intent_id": "arta-sheet1-row-0889",
       "split": "train"
     },
     {
       "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0890",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0891",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0892",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0893",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0894",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0895",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
       "source_intent_id": "arta-sheet1-row-0897",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0898",
       "split": "train"
     },
     {
@@ -308,91 +508,166 @@
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0912",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0913",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0914",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0915",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0918",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0919",
-      "split": "train"
+      "split": "test"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0920",
+      "split": "test"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0921",
+      "split": "test"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0922",
+      "split": "test"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0923",
+      "split": "test"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0924",
+      "split": "test"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0925",
+      "split": "test"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0926",
+      "split": "test"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0927",
+      "split": "test"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0928",
+      "split": "test"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0929",
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0931",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0932",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0933",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0941",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0944",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0945",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0948",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0949",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0950",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0952",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "gamma",
       "source_intent_id": "arta-sheet1-row-0954",
-      "split": "train"
+      "split": "test"
     },
     {
       "project_id": "peering",
       "source_intent_id": "arta-sheet1-row-0963",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0964",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0965",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0966",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0967",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0968",
       "split": "test"
     },
     {
@@ -407,12 +682,37 @@
     },
     {
       "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0971",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0973",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0974",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0976",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
       "source_intent_id": "arta-sheet1-row-0977",
       "split": "test"
     },
     {
       "project_id": "peering",
       "source_intent_id": "arta-sheet1-row-0978",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0980",
       "split": "test"
     },
     {
@@ -432,21 +732,21 @@
   ],
   "project_assignments": {
     "calibration": [
-      "ertms"
+      "cctns"
     ],
     "test": [
-      "cctns",
       "fun",
+      "gamma",
       "peering"
     ],
     "train": [
-      "gamma",
+      "ertms",
       "keepass"
     ]
   },
   "provenance": {
     "algorithm": "stable-bipartite-component-quota-greedy-v2",
-    "assignment_hash": "b9716a02cae6646c27ab3a03ab3aee21b0d66b3536c9b7aedc8b5f93b5ff18cc",
+    "assignment_hash": "02eae12b7b54920561aa9af37d1aba1d70b166aa05bf6df0d9f417d978321515",
     "group_count": 6,
     "group_quotas": {
       "calibration": 1,
@@ -455,9 +755,9 @@
     },
     "record_count": 144,
     "record_counts": {
-      "calibration": 18,
-      "test": 77,
-      "train": 49
+      "calibration": 20,
+      "test": 79,
+      "train": 45
     },
     "seed": 20260826
   },

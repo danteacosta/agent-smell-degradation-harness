@@ -6,15 +6,15 @@
   "results": {
     "ambiguous_adjective_adverb": {
       "baseline_version": "natural-lexicon/v1",
-      "case_count": 14,
+      "case_count": 16,
       "confusion": {
-        "fn": 8,
+        "fn": 9,
         "fp": 0,
-        "tn": 6,
+        "tn": 7,
         "tp": 0
       },
       "metrics": {
-        "accuracy": 0.42857142857142855,
+        "accuracy": 0.4375,
         "f1": null,
         "precision": null,
         "recall": 0.0,
@@ -37,8 +37,179 @@
             "method": "wilson",
             "status": "ok",
             "successes": 0,
+            "trials": 9,
+            "upper": 0.2991450484195439
+          },
+          "specificity": {
+            "confidence": 0.95,
+            "estimate": 1.0,
+            "lower": 0.6456695649333127,
+            "method": "wilson",
+            "status": "ok",
+            "successes": 7,
+            "trials": 7,
+            "upper": 1.0
+          }
+        }
+      },
+      "normalization_version": "unicode-casefold/v1",
+      "split": "test",
+      "test_stratum": {
+        "clean_control": 7,
+        "evaluable": true,
+        "minimum_per_class_for_evaluation": 2,
+        "positive": 9
+      }
+    },
+    "nonverifiable_term": {
+      "baseline_version": "natural-lexicon/v1",
+      "case_count": 14,
+      "confusion": {
+        "fn": 7,
+        "fp": 0,
+        "tn": 7,
+        "tp": 0
+      },
+      "metrics": {
+        "accuracy": 0.5,
+        "f1": null,
+        "precision": null,
+        "recall": 0.0,
+        "specificity": 1.0,
+        "wilson_interval": {
+          "precision": {
+            "confidence": 0.95,
+            "estimate": null,
+            "lower": null,
+            "method": "wilson",
+            "status": "inconclusive",
+            "successes": 0,
+            "trials": 0,
+            "upper": null
+          },
+          "recall": {
+            "confidence": 0.95,
+            "estimate": 0.0,
+            "lower": 0.0,
+            "method": "wilson",
+            "status": "ok",
+            "successes": 0,
+            "trials": 7,
+            "upper": 0.3543304350666873
+          },
+          "specificity": {
+            "confidence": 0.95,
+            "estimate": 1.0,
+            "lower": 0.6456695649333127,
+            "method": "wilson",
+            "status": "ok",
+            "successes": 7,
+            "trials": 7,
+            "upper": 1.0
+          }
+        }
+      },
+      "normalization_version": "unicode-casefold/v1",
+      "split": "test",
+      "test_stratum": {
+        "clean_control": 7,
+        "evaluable": true,
+        "minimum_per_class_for_evaluation": 2,
+        "positive": 7
+      }
+    },
+    "polysemy": {
+      "baseline_version": "natural-lexicon/v1",
+      "case_count": 12,
+      "confusion": {
+        "fn": 5,
+        "fp": 1,
+        "tn": 6,
+        "tp": 0
+      },
+      "metrics": {
+        "accuracy": 0.5,
+        "f1": null,
+        "precision": 0.0,
+        "recall": 0.0,
+        "specificity": 0.8571428571428571,
+        "wilson_interval": {
+          "precision": {
+            "confidence": 0.95,
+            "estimate": 0.0,
+            "lower": 0.0,
+            "method": "wilson",
+            "status": "ok",
+            "successes": 0,
+            "trials": 1,
+            "upper": 0.7934506856227624
+          },
+          "recall": {
+            "confidence": 0.95,
+            "estimate": 0.0,
+            "lower": 0.0,
+            "method": "wilson",
+            "status": "ok",
+            "successes": 0,
+            "trials": 5,
+            "upper": 0.43448246478317465
+          },
+          "specificity": {
+            "confidence": 0.95,
+            "estimate": 0.8571428571428571,
+            "lower": 0.48687217072568134,
+            "method": "wilson",
+            "status": "ok",
+            "successes": 6,
+            "trials": 7,
+            "upper": 0.9743203756552565
+          }
+        }
+      },
+      "normalization_version": "unicode-casefold/v1",
+      "split": "test",
+      "test_stratum": {
+        "clean_control": 7,
+        "evaluable": true,
+        "minimum_per_class_for_evaluation": 2,
+        "positive": 5
+      }
+    },
+    "subjective_language": {
+      "baseline_version": "natural-lexicon/v1",
+      "case_count": 14,
+      "confusion": {
+        "fn": 5,
+        "fp": 0,
+        "tn": 6,
+        "tp": 3
+      },
+      "metrics": {
+        "accuracy": 0.6428571428571429,
+        "f1": 0.5454545454545454,
+        "precision": 1.0,
+        "recall": 0.375,
+        "specificity": 1.0,
+        "wilson_interval": {
+          "precision": {
+            "confidence": 0.95,
+            "estimate": 1.0,
+            "lower": 0.4385029682449546,
+            "method": "wilson",
+            "status": "ok",
+            "successes": 3,
+            "trials": 3,
+            "upper": 1.0
+          },
+          "recall": {
+            "confidence": 0.95,
+            "estimate": 0.375,
+            "lower": 0.13684428582359737,
+            "method": "wilson",
+            "status": "ok",
+            "successes": 3,
             "trials": 8,
-            "upper": 0.3244075648838801
+            "upper": 0.6942576053973726
           },
           "specificity": {
             "confidence": 0.95,
@@ -61,185 +232,14 @@
         "positive": 8
       }
     },
-    "nonverifiable_term": {
-      "baseline_version": "natural-lexicon/v1",
-      "case_count": 12,
-      "confusion": {
-        "fn": 5,
-        "fp": 0,
-        "tn": 6,
-        "tp": 1
-      },
-      "metrics": {
-        "accuracy": 0.5833333333333334,
-        "f1": 0.2857142857142857,
-        "precision": 1.0,
-        "recall": 0.16666666666666666,
-        "specificity": 1.0,
-        "wilson_interval": {
-          "precision": {
-            "confidence": 0.95,
-            "estimate": 1.0,
-            "lower": 0.2065493143772375,
-            "method": "wilson",
-            "status": "ok",
-            "successes": 1,
-            "trials": 1,
-            "upper": 1.0
-          },
-          "recall": {
-            "confidence": 0.95,
-            "estimate": 0.16666666666666666,
-            "lower": 0.030053369748306635,
-            "method": "wilson",
-            "status": "ok",
-            "successes": 1,
-            "trials": 6,
-            "upper": 0.5635028221864701
-          },
-          "specificity": {
-            "confidence": 0.95,
-            "estimate": 1.0,
-            "lower": 0.6096657120978348,
-            "method": "wilson",
-            "status": "ok",
-            "successes": 6,
-            "trials": 6,
-            "upper": 1.0
-          }
-        }
-      },
-      "normalization_version": "unicode-casefold/v1",
-      "split": "test",
-      "test_stratum": {
-        "clean_control": 6,
-        "evaluable": true,
-        "minimum_per_class_for_evaluation": 2,
-        "positive": 6
-      }
-    },
-    "polysemy": {
-      "baseline_version": "natural-lexicon/v1",
-      "case_count": 13,
-      "confusion": {
-        "fn": 5,
-        "fp": 1,
-        "tn": 5,
-        "tp": 2
-      },
-      "metrics": {
-        "accuracy": 0.5384615384615384,
-        "f1": 0.4,
-        "precision": 0.6666666666666666,
-        "recall": 0.2857142857142857,
-        "specificity": 0.8333333333333334,
-        "wilson_interval": {
-          "precision": {
-            "confidence": 0.95,
-            "estimate": 0.6666666666666666,
-            "lower": 0.20765960080204776,
-            "method": "wilson",
-            "status": "ok",
-            "successes": 2,
-            "trials": 3,
-            "upper": 0.9385080552796037
-          },
-          "recall": {
-            "confidence": 0.95,
-            "estimate": 0.2857142857142857,
-            "lower": 0.08221892400405684,
-            "method": "wilson",
-            "status": "ok",
-            "successes": 2,
-            "trials": 7,
-            "upper": 0.6410655481673807
-          },
-          "specificity": {
-            "confidence": 0.95,
-            "estimate": 0.8333333333333334,
-            "lower": 0.4364971778135298,
-            "method": "wilson",
-            "status": "ok",
-            "successes": 5,
-            "trials": 6,
-            "upper": 0.9699466302516933
-          }
-        }
-      },
-      "normalization_version": "unicode-casefold/v1",
-      "split": "test",
-      "test_stratum": {
-        "clean_control": 6,
-        "evaluable": true,
-        "minimum_per_class_for_evaluation": 2,
-        "positive": 7
-      }
-    },
-    "subjective_language": {
-      "baseline_version": "natural-lexicon/v1",
-      "case_count": 10,
-      "confusion": {
-        "fn": 3,
-        "fp": 0,
-        "tn": 6,
-        "tp": 1
-      },
-      "metrics": {
-        "accuracy": 0.7,
-        "f1": 0.4,
-        "precision": 1.0,
-        "recall": 0.25,
-        "specificity": 1.0,
-        "wilson_interval": {
-          "precision": {
-            "confidence": 0.95,
-            "estimate": 1.0,
-            "lower": 0.2065493143772375,
-            "method": "wilson",
-            "status": "ok",
-            "successes": 1,
-            "trials": 1,
-            "upper": 1.0
-          },
-          "recall": {
-            "confidence": 0.95,
-            "estimate": 0.25,
-            "lower": 0.04558726080970055,
-            "method": "wilson",
-            "status": "ok",
-            "successes": 1,
-            "trials": 4,
-            "upper": 0.699358157417598
-          },
-          "specificity": {
-            "confidence": 0.95,
-            "estimate": 1.0,
-            "lower": 0.6096657120978348,
-            "method": "wilson",
-            "status": "ok",
-            "successes": 6,
-            "trials": 6,
-            "upper": 1.0
-          }
-        }
-      },
-      "normalization_version": "unicode-casefold/v1",
-      "split": "test",
-      "test_stratum": {
-        "clean_control": 6,
-        "evaluable": true,
-        "minimum_per_class_for_evaluation": 2,
-        "positive": 4
-      }
-    },
     "uncertain_verb": {
       "baseline_version": "natural-lexicon/v1",
-      "case_count": 14,
+      "case_count": 9,
       "confusion": {
         "fn": 0,
         "fp": 0,
-        "tn": 6,
-        "tp": 8
+        "tn": 7,
+        "tp": 2
       },
       "metrics": {
         "accuracy": 1.0,
@@ -251,31 +251,31 @@
           "precision": {
             "confidence": 0.95,
             "estimate": 1.0,
-            "lower": 0.67559243511612,
+            "lower": 0.3423802275066532,
             "method": "wilson",
             "status": "ok",
-            "successes": 8,
-            "trials": 8,
+            "successes": 2,
+            "trials": 2,
             "upper": 1.0
           },
           "recall": {
             "confidence": 0.95,
             "estimate": 1.0,
-            "lower": 0.67559243511612,
+            "lower": 0.3423802275066532,
             "method": "wilson",
             "status": "ok",
-            "successes": 8,
-            "trials": 8,
+            "successes": 2,
+            "trials": 2,
             "upper": 1.0
           },
           "specificity": {
             "confidence": 0.95,
             "estimate": 1.0,
-            "lower": 0.6096657120978348,
+            "lower": 0.6456695649333127,
             "method": "wilson",
             "status": "ok",
-            "successes": 6,
-            "trials": 6,
+            "successes": 7,
+            "trials": 7,
             "upper": 1.0
           }
         }
@@ -283,10 +283,10 @@
       "normalization_version": "unicode-casefold/v1",
       "split": "test",
       "test_stratum": {
-        "clean_control": 6,
+        "clean_control": 7,
         "evaluable": true,
         "minimum_per_class_for_evaluation": 2,
-        "positive": 8
+        "positive": 2
       }
     },
     "vague_pronoun": {
@@ -294,56 +294,56 @@
       "case_count": 14,
       "confusion": {
         "fn": 2,
-        "fp": 0,
+        "fp": 1,
         "tn": 6,
-        "tp": 6
+        "tp": 5
       },
       "metrics": {
-        "accuracy": 0.8571428571428571,
-        "f1": 0.8571428571428571,
-        "precision": 1.0,
-        "recall": 0.75,
-        "specificity": 1.0,
+        "accuracy": 0.7857142857142857,
+        "f1": 0.7692307692307692,
+        "precision": 0.8333333333333334,
+        "recall": 0.7142857142857143,
+        "specificity": 0.8571428571428571,
         "wilson_interval": {
           "precision": {
             "confidence": 0.95,
-            "estimate": 1.0,
-            "lower": 0.6096657120978348,
+            "estimate": 0.8333333333333334,
+            "lower": 0.4364971778135298,
             "method": "wilson",
             "status": "ok",
-            "successes": 6,
+            "successes": 5,
             "trials": 6,
-            "upper": 1.0
+            "upper": 0.9699466302516933
           },
           "recall": {
             "confidence": 0.95,
-            "estimate": 0.75,
-            "lower": 0.40927543031016905,
+            "estimate": 0.7142857142857143,
+            "lower": 0.3589344518326194,
             "method": "wilson",
             "status": "ok",
-            "successes": 6,
-            "trials": 8,
-            "upper": 0.9285207872478909
+            "successes": 5,
+            "trials": 7,
+            "upper": 0.9177810759959433
           },
           "specificity": {
             "confidence": 0.95,
-            "estimate": 1.0,
-            "lower": 0.6096657120978348,
+            "estimate": 0.8571428571428571,
+            "lower": 0.48687217072568134,
             "method": "wilson",
             "status": "ok",
             "successes": 6,
-            "trials": 6,
-            "upper": 1.0
+            "trials": 7,
+            "upper": 0.9743203756552565
           }
         }
       },
       "normalization_version": "unicode-casefold/v1",
       "split": "test",
       "test_stratum": {
-        "clean_control": 6,
+        "clean_control": 7,
         "evaluable": true,
         "minimum_per_class_for_evaluation": 2,
-        "positive": 8
+        "positive": 7
       }
     }
   },

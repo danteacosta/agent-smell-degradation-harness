@@ -107,18 +107,26 @@ def _by_project(rows: list[dict[str, str]]) -> dict[str, list[dict[str, str]]]:
     return grouped
 
 
-def select_rows(rows: list[dict[str, str]], *, count: int) -> list[dict[str, str]]:
+def select_rows(
+    rows: list[dict[str, str]],
+    *,
+    count: int,
+    exclude_source_rows: set[int] | None = None,
+) -> list[dict[str, str]]:
     grouped = _by_project(rows)
     selected: list[dict[str, str]] = []
-    used: set[int] = set()
+    used: set[int] = set(exclude_source_rows or set())
     # The deterministic priority gives both test projects at least two rows
     # whenever the source contains them, then rotates across all projects.
     for project in ("cctns", "gamma"):
         for row in grouped[project][:3]:
+            source_row = int(row["_source_row"])
+            if source_row in used:
+                continue
             selected.append(row)
-            used.add(int(row["_source_row"]))
-    if len(selected) >= count:
-        return selected[:count]
+            used.add(source_row)
+            if len(selected) >= count:
+                return selected
     while len(selected) < count:
         progressed = False
         for project in PROJECT_ORDER:
@@ -202,6 +210,7 @@ def prepare(
             rows.append(row)
     output_cases: list[dict[str, object]] = []
     selection_records: list[dict[str, object]] = []
+    used_clean_source_rows: set[int] = set()
     for family, marker_column in MARKER_COLUMNS.items():
         positives = select_rows(
             [row for row in rows if _marked_columns(row) == [marker_column]],
@@ -210,7 +219,9 @@ def prepare(
         clean = select_rows(
             [row for row in rows if not _marked_columns(row)],
             count=clean_controls_per_family,
+            exclude_source_rows=used_clean_source_rows,
         )
+        used_clean_source_rows.update(int(row["_source_row"]) for row in clean)
         for source_label, selected in (("smelly", positives), ("clean", clean)):
             for row in selected:
                 case = _case(

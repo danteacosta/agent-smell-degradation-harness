@@ -1,0 +1,15 @@
+from __future__ import annotations
+
+from scripts.prepare_natural_v8 import select_rows
+
+
+def _row(source_row: int, project: str) -> dict[str, str]:
+    return {"_source_row": str(source_row), "File": project}
+
+
+def test_select_rows_excludes_previous_clean_controls() -> None:
+    rows = [_row(index, "2007-eirene_fun_7-2.xml") for index in range(1, 7)]
+
+    selected = select_rows(rows, count=2, exclude_source_rows={1, 2})
+
+    assert [row["_source_row"] for row in selected] == ["3", "4"]

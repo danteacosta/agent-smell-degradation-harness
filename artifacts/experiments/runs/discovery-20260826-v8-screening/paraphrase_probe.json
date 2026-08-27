@@ -450,50 +450,53 @@
       "target_family": "ambiguous_adjective_adverb"
     },
     {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0219",
-      "exclusion_reason": "no independent label for rewritten text",
-      "original_text_sha256": "8cd6613b1543a32e92307679a65e0315c83488ed79889b26c58a47b8ae97fa46",
-      "paraphrase_changed": true,
-      "paraphrase_status": "controlled_probe_unvalidated",
-      "paraphrase_text_sha256": "52e3d9cf600515a4501757634b19026ab78270b329fbbf2b175a451369b227c5",
-      "primary_metric_eligible": false,
-      "probe_id": "paraphrase-arta-v8-clean-ambiguous_adjective_adverb-0219",
-      "replacement": null,
-      "target_family": "ambiguous_adjective_adverb"
-    },
-    {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0282",
-      "exclusion_reason": "no independent label for rewritten text",
-      "original_text_sha256": "9b3ab3dbe083f2e778809ea3fbccef7916dcb6a0a086a487961b5085cdb69424",
-      "paraphrase_changed": true,
-      "paraphrase_status": "controlled_probe_unvalidated",
-      "paraphrase_text_sha256": "195831e2e06d9cfb0bd0b4d9299c7426b004803dfa4b331bbe8d329e485f0e6e",
-      "primary_metric_eligible": false,
-      "probe_id": "paraphrase-arta-v8-clean-ambiguous_adjective_adverb-0282",
-      "replacement": null,
-      "target_family": "ambiguous_adjective_adverb"
-    },
-    {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0284",
-      "exclusion_reason": "no independent label for rewritten text",
-      "original_text_sha256": "8b658fab08ee269a07896510f60d8ae7b99e577c9e27874612f9d1ddd89c2a3b",
-      "paraphrase_changed": true,
-      "paraphrase_status": "controlled_probe_unvalidated",
-      "paraphrase_text_sha256": "fa85570f250384229adee1df72a65cb0bc7a750e220d402c5a7580bf4add8b6f",
-      "primary_metric_eligible": false,
-      "probe_id": "paraphrase-arta-v8-clean-ambiguous_adjective_adverb-0284",
-      "replacement": null,
-      "target_family": "ambiguous_adjective_adverb"
-    },
-    {
-      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0912",
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0005",
       "exclusion_reason": "rewrite produced no change",
-      "original_text_sha256": "a7ae684561fd6abf4b53383533d168a177a76db999466a3e3779bf6387da1419",
+      "original_text_sha256": "28e878a24b04a6b21eb82455680874057698ba487006b8ab3f72895e80f59045",
       "paraphrase_changed": false,
       "paraphrase_status": "no_op_excluded",
-      "paraphrase_text_sha256": "a7ae684561fd6abf4b53383533d168a177a76db999466a3e3779bf6387da1419",
+      "paraphrase_text_sha256": "28e878a24b04a6b21eb82455680874057698ba487006b8ab3f72895e80f59045",
       "primary_metric_eligible": false,
-      "probe_id": "paraphrase-arta-v8-clean-ambiguous_adjective_adverb-0912",
+      "probe_id": "paraphrase-arta-v8-clean-ambiguous_adjective_adverb-0005",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0340",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text_sha256": "26861b9cf0fce9b1f601ec238d92db8b4bddf4ac9abfc07d01e493a6f8dceddb",
+      "paraphrase_changed": true,
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text_sha256": "8ac8fa8bcb18d44121dd4d297d63e61f17e58859bfff1c405f96cba6c248056d",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-ambiguous_adjective_adverb-0340",
+      "replacement": {
+        "from": "support",
+        "to": "provide the stated capability for"
+      },
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0920",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text_sha256": "118c5af3f031eac04ad3f6e72418a43a24c3f6b83eede9b67eb729be4fd999ca",
+      "paraphrase_changed": true,
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text_sha256": "d737ea7ccf03e21e2fbcfbf8996cba640a5c474e734ba1a5023e1b9cf905e9eb",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-ambiguous_adjective_adverb-0920",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0881",
+      "exclusion_reason": "rewrite produced no change",
+      "original_text_sha256": "ada52e74be807ae9069910ef50e5ed7a1a9b54bf1c1bd969480c249a6bc662f8",
+      "paraphrase_changed": false,
+      "paraphrase_status": "no_op_excluded",
+      "paraphrase_text_sha256": "ada52e74be807ae9069910ef50e5ed7a1a9b54bf1c1bd969480c249a6bc662f8",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-ambiguous_adjective_adverb-0881",
       "replacement": null,
       "target_family": "ambiguous_adjective_adverb"
     }

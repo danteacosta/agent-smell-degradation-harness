@@ -10,8 +10,8 @@ Ele não prova que o detector entende o requisito, porque os rótulos usados nes
 
 - Casos processados: **144**, em **6 projetos**.
 - Famílias: subjective_language, ambiguous_adjective_adverb, nonverifiable_term, vague_pronoun, uncertain_verb, polysemy.
-- Cada família tem 12 positivos de fonte e 12 controles sem marcador; controles podem ser reutilizados entre famílias.
-- Split por projeto: treino=gamma, keepass; calibração=ertms; teste=cctns, fun, peering.
+- Cada família tem 12 positivos de fonte e 12 controles sem marcador; nesta configuração, os 144 registros de origem são distintos.
+- Split por projeto: treino=ertms, keepass; calibração=cctns; teste=fun, gamma, peering.
 - Texto original: executado a partir de um arquivo privado local e redigido dos artefatos versionados.
 
 ## Resultado do baseline no teste
@@ -20,12 +20,12 @@ A tabela CSV e o gráfico SVG mostram a concordância com os marcadores da fonte
 
 | Família | TP | FP | TN | FN | Precisão | Recall | Avaliável |
 |---|---:|---:|---:|---:|---:|---:|:---:|
-| subjective_language | 1 | 0 | 6 | 3 | 1.0 | 0.25 | True |
-| ambiguous_adjective_adverb | 0 | 0 | 6 | 8 | None | 0.0 | True |
-| nonverifiable_term | 1 | 0 | 6 | 5 | 1.0 | 0.16666666666666666 | True |
-| vague_pronoun | 6 | 0 | 6 | 2 | 1.0 | 0.75 | True |
-| uncertain_verb | 8 | 0 | 6 | 0 | 1.0 | 1.0 | True |
-| polysemy | 2 | 1 | 5 | 5 | 0.6666666666666666 | 0.2857142857142857 | True |
+| subjective_language | 3 | 0 | 6 | 5 | 1.0 | 0.375 | True |
+| ambiguous_adjective_adverb | 0 | 0 | 7 | 9 | None | 0.0 | True |
+| nonverifiable_term | 0 | 0 | 7 | 7 | None | 0.0 | True |
+| vague_pronoun | 5 | 1 | 6 | 2 | 0.8333333333333334 | 0.7142857142857143 | True |
+| uncertain_verb | 2 | 0 | 7 | 0 | 1.0 | 1.0 | True |
+| polysemy | 0 | 1 | 6 | 5 | 0.0 | 0.0 | True |
 
 ## Condições do agente
 

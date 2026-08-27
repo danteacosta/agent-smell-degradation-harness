@@ -21,9 +21,8 @@
         "case_count": 24,
         "clean_control": 12,
         "positive": 12,
-        "project_count": 6,
+        "project_count": 5,
         "projects": [
-          "cctns",
           "ertms",
           "fun",
           "gamma",

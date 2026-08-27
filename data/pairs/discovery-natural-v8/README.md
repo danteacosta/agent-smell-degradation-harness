@@ -19,9 +19,11 @@ positive records and 12 clean controls for each of six supported families:
 - polysemy
 
 The positive records were single-marker rows in ARTA's `Sheet1`; clean controls
-had no marker in any ARTA smell column. The same natural clean source rows may
-serve as controls for more than one target family, so family-level counts are
-not 144 independent requirements.
+had no marker in any ARTA smell column. The acquisition script excludes a clean
+source row after it is selected for one target family, so this configuration
+produces 144 distinct source rows. They are still not independent expert labels:
+source documents may contain related requirements, and ARTA markers are source
+labels rather than thesis annotations.
 
 Comparative, negative, superlative, and loophole are not padded into this round;
 they remain underrepresented in this source selection and are listed as

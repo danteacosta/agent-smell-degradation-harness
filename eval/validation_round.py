@@ -564,7 +564,7 @@ def _write_report(
         "",
         f"- Casos processados: **{run['case_count']}**, em **{run['project_count']} projetos**.",
         f"- Famílias: {', '.join(run['supported_families'])}.",
-        "- Cada família tem 12 positivos de fonte e 12 controles sem marcador; controles podem ser reutilizados entre famílias.",
+        "- Cada família tem 12 positivos de fonte e 12 controles sem marcador; nesta configuração, os 144 registros de origem são distintos.",
         f"- Split por projeto: treino={', '.join(split_manifest['project_assignments']['train'])}; calibração={', '.join(split_manifest['project_assignments']['calibration'])}; teste={', '.join(split_manifest['project_assignments']['test'])}.",
         "- Texto original: executado a partir de um arquivo privado local e redigido dos artefatos versionados.",
         "",
