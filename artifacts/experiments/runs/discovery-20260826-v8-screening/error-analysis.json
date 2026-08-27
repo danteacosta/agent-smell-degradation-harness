@@ -1,0 +1,2392 @@
+{
+  "automatic_triage_counts": {
+    "contextual_hit": 27,
+    "contextual_nonhit": 39,
+    "contextual_overreach": 2,
+    "uncovered_or_contextual_miss": 11
+  },
+  "case_count": 79,
+  "lexical_outcome_counts_by_family": {
+    "ambiguous_adjective_adverb": {
+      "FN": 9,
+      "TN": 7
+    },
+    "nonverifiable_term": {
+      "FN": 7,
+      "TN": 7
+    },
+    "polysemy": {
+      "FN": 5,
+      "FP": 1,
+      "TN": 6
+    },
+    "subjective_language": {
+      "FN": 5,
+      "TN": 6,
+      "TP": 3
+    },
+    "uncertain_verb": {
+      "TN": 7,
+      "TP": 2
+    },
+    "vague_pronoun": {
+      "FN": 2,
+      "FP": 1,
+      "TN": 6,
+      "TP": 5
+    }
+  },
+  "outcome_counts_by_family": {
+    "ambiguous_adjective_adverb": {
+      "FN": 2,
+      "TN": 7,
+      "TP": 7
+    },
+    "nonverifiable_term": {
+      "FN": 1,
+      "FP": 1,
+      "TN": 6,
+      "TP": 6
+    },
+    "polysemy": {
+      "FN": 1,
+      "FP": 1,
+      "TN": 6,
+      "TP": 4
+    },
+    "subjective_language": {
+      "FN": 2,
+      "TN": 6,
+      "TP": 6
+    },
+    "uncertain_verb": {
+      "TN": 7,
+      "TP": 2
+    },
+    "vague_pronoun": {
+      "FN": 5,
+      "TN": 7,
+      "TP": 2
+    }
+  },
+  "raw_requirement_text_included": false,
+  "rows": [
+    {
+      "automatic_triage": "uncovered_or_contextual_miss",
+      "case_id": "arta-v8-smelly-subjective_language-0931",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "pending",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "FN",
+      "prediction": false,
+      "requirement_text_sha256": "348ee0ba2df4d7b87bd81afb838550f23ef8ee7c65dd9272476071365322a282",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-subjective_language-0933",
+      "contextual_evidence": [
+        "sensitive"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "sensitive"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "04cd313a5c1b355bc12fda3eae5797f4e0a30aa20b32e48f4e6affb21cd6b7e0",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-subjective_language-0944",
+      "contextual_evidence": [
+        "easy"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "easy"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [
+        "easy"
+      ],
+      "lexical_outcome": "TP",
+      "lexical_prediction": true,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "5dc7d6de37daa7e8c7c8e37c6a768c11632319af79acd25d277941204d5d3f47",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "uncovered_or_contextual_miss",
+      "case_id": "arta-v8-smelly-subjective_language-0317",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "pending",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "FN",
+      "prediction": false,
+      "requirement_text_sha256": "38c2378dcf59f580ad09d0ce3d63be12df6ea2815bfee530ab069d3e3b21e8f1",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-subjective_language-0945",
+      "contextual_evidence": [
+        "easy"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "easy"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [
+        "easy"
+      ],
+      "lexical_outcome": "TP",
+      "lexical_prediction": true,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "5ea032e3e4938a09b7e727520979f7b2464289667e4e5d888910b93fd201d4c8",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-subjective_language-0983",
+      "contextual_evidence": [
+        "effective"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "effective"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "428edfc880f4733c0c5882aad24516d4a34bbb43d689944731e9266e22c88ad5",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-subjective_language-0395",
+      "contextual_evidence": [
+        "normal"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "normal"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "7a504eec82af1f1406825bdf92a2ceb7bdd296dba75f569b0fe016cc696b848a",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-subjective_language-0948",
+      "contextual_evidence": [
+        "easy"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "easy"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [
+        "easy"
+      ],
+      "lexical_outcome": "TP",
+      "lexical_prediction": true,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "5cd2e63929861f90d73117ddeb344d3e065f387f4078d0a5983c2e4c24793b22",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-subjective_language-0912",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "a7ae684561fd6abf4b53383533d168a177a76db999466a3e3779bf6387da1419",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-subjective_language-0913",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "cee660b51429ba42d603eac705a762073bcaccfec51b4b90449da36be27adc5b",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-subjective_language-0915",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "61a99745ffcb1145ecf8adcc84d5eb6cab6f35bed88a59321b790886730b5b12",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-subjective_language-0333",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "aff0b9192d76df4cd7eff6263fc795d62e8e3b8c3db8a0941cae6e0c46721e57",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-subjective_language-0919",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "d89ed154b81654f5ae7c894af94cd2d9f6e363594cbcf79a7527c7b7be8f4f74",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-subjective_language-0963",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "777b2fff40b226df467bd994eb1e9e27f723522cf9adb8e93857a7f870d32d23",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "subjective_language"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0954",
+      "contextual_evidence": [
+        "extremely"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "extremely"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "cb7b98e93eef7e24af256b2b49164b8a441a64d7023027976fa6705c3c57a605",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "uncovered_or_contextual_miss",
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0342",
+      "contextual_evidence": [
+        "at least"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "at least"
+        ],
+        "has_actor": false,
+        "has_comparator": true,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": true,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "pending",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "FN",
+      "prediction": false,
+      "requirement_text_sha256": "b013a5e4ba1e79f04addefe13222a1c23151d64827db7355755b18008cc54fa2",
+      "score": 0.3,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0970",
+      "contextual_evidence": [
+        "already"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "already"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "d61f546866d9f497754f1857c16a3539e46b17752e5c0dfd56ffd26c6c96683f",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0366",
+      "contextual_evidence": [
+        "minimum"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "minimum"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "5ade7c01848ad215a7a0687ce4edb7acf739afd49e58e08ceef5e1765751fe8c",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0977",
+      "contextual_evidence": [
+        "upon"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "upon"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "44f98824a936b23c2913af5edd57528811c504d084a91fb019ac199c0f7cf7cb",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0369",
+      "contextual_evidence": [
+        "maximum",
+        "up to"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "maximum",
+          "up to"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": true,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "167a1d6335ebecab89867e9280ba1fa587d189216fd4b510db5f8a080fb1c8e8",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0370",
+      "contextual_evidence": [
+        "minimum"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "minimum"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "3a7a8cdd3417647c3f5eeae0dffca89af5fc00eaeca59b8884eaeea86014a5f1",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "uncovered_or_contextual_miss",
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0388",
+      "contextual_evidence": [
+        "correctly"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "correctly"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": true,
+        "has_explicit_response": false,
+        "has_measurement": true,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "pending",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "FN",
+      "prediction": false,
+      "requirement_text_sha256": "5dd1a99df62202a41a49b34c3c099e6a4cd5b78489472306dfcdb929ed5e3269",
+      "score": 0.3,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0540",
+      "contextual_evidence": [
+        "similar"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "similar"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": true,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "86eb8794d68f4bd736d58a37a33971a2f8114bb4c4bc29a69c2cbd490948634b",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0340",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "26861b9cf0fce9b1f601ec238d92db8b4bddf4ac9abfc07d01e493a6f8dceddb",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0920",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "118c5af3f031eac04ad3f6e72418a43a24c3f6b83eede9b67eb729be4fd999ca",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0964",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "777b2fff40b226df467bd994eb1e9e27f723522cf9adb8e93857a7f870d32d23",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0341",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "131bda20afe94f345f69bea3433b40c06324f94b0fcdf8dd4caf1f7b82cc9ae4",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0921",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": true,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "d1f420ceb5b16b4a0e934a82abaf1307b64735e87f078594ad2fa84bf63d5fe0",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0965",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "acab273187dfc87adaa65fc85a4948eab1a8f5e6223f594cbd75cf29d2edd0e0",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0368",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "91fd1370145385034bca581cf1a22427756a434b09081c68846164cdf2cc07bf",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-nonverifiable_term-0932",
+      "contextual_evidence": [
+        "validate"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "validate"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "f8d64bda65834f851b2b665b4f4ed35a2c684cfdacb7af909129449c18b34b66",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-nonverifiable_term-0941",
+      "contextual_evidence": [
+        "too large"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "too large"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "ce6a9de76ab17d52d50f4f86ad9f5d2eafe44d8d5b5bece510dd99286cb0b5bc",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-nonverifiable_term-0949",
+      "contextual_evidence": [
+        "consistent"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "consistent"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "da99b876f47d342b0bcc1394694332a8111b66d1fa1133d81d4b23b2923ee8a0",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-nonverifiable_term-0406",
+      "contextual_evidence": [
+        "minimum"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "minimum"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "42adef969e77179538ea07e6374a6fbad5ee70e67d4141cd61b141b119a63673",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-nonverifiable_term-0950",
+      "contextual_evidence": [
+        "interchangeable"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "interchangeable"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "0f34b6670dae937cd6661a96f6ddd6381c66a2186f515f1b69fd6f575b9f6a7c",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-nonverifiable_term-0978",
+      "contextual_evidence": [
+        "long-term"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "long-term"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "a7c1d90178e643a1758c4499037fd77b4c044f39c6fc6d203a77aa9224f286f3",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "uncovered_or_contextual_miss",
+      "case_id": "arta-v8-smelly-nonverifiable_term-0428",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": true,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "pending",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "FN",
+      "prediction": false,
+      "requirement_text_sha256": "b9aabf2973edab89cb937703c26a287bace8d7b5a7a55d53cf3bf86d85d98c4e",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "contextual_overreach",
+      "case_id": "arta-v8-clean-nonverifiable_term-0397",
+      "contextual_evidence": [
+        "defined"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "defined"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "pending",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "FP",
+      "prediction": true,
+      "requirement_text_sha256": "a6c23557f1192395db0c77273e45d0d0749c5c8ad5ab9c9dbded82a881a16caf",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-nonverifiable_term-0922",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": true,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": true,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "62c0b3cb91961e074280c251a307e49cea51f1db34300f4e048e191f0249968d",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-nonverifiable_term-0966",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "86f561a16d47f834875693fd97a4c4583277737c260c50794c7b8bac0e26e930",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-nonverifiable_term-0399",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "8fd77002c3e2fd9673d86f75c622dd7a683aeee53ebbf635dd185518f64b12ba",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-nonverifiable_term-0923",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "f28a1f48b8a7d8d22c79df891eff7132aa2b35f30ef12677d7efefbd3d60dff9",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-nonverifiable_term-0967",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "409db5321b49a89793abd987164484d7ed7563b6fd72d5cc9c2ac58a4956c85b",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-nonverifiable_term-0400",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "a9c505f074eefee6279ce77c3e5920c30bee347da7b59673593cd6ff2e37a61f",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "nonverifiable_term"
+    },
+    {
+      "automatic_triage": "uncovered_or_contextual_miss",
+      "case_id": "arta-v8-smelly-vague_pronoun-0403",
+      "contextual_evidence": [
+        "it",
+        "this"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "it",
+          "this"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": true,
+        "local_antecedent": true
+      },
+      "expert_review": "pending",
+      "lexical_evidence": [
+        "it",
+        "this"
+      ],
+      "lexical_outcome": "TP",
+      "lexical_prediction": true,
+      "outcome": "FN",
+      "prediction": false,
+      "requirement_text_sha256": "d9f6024b50a5302cc967671eb11b79bcabe0e6377c9938aafaf28a8ccddc2433",
+      "score": 0.2,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "uncovered_or_contextual_miss",
+      "case_id": "arta-v8-smelly-vague_pronoun-0448",
+      "contextual_evidence": [
+        "this"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "this"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": true
+      },
+      "expert_review": "pending",
+      "lexical_evidence": [
+        "this"
+      ],
+      "lexical_outcome": "TP",
+      "lexical_prediction": true,
+      "outcome": "FN",
+      "prediction": false,
+      "requirement_text_sha256": "656d5a9f0f478c3344a0b7068cd791c43586e29bd7f02fe32b8ff59350840f44",
+      "score": 0.2,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "uncovered_or_contextual_miss",
+      "case_id": "arta-v8-smelly-vague_pronoun-0449",
+      "contextual_evidence": [
+        "which"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "which"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": true
+      },
+      "expert_review": "pending",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "FN",
+      "prediction": false,
+      "requirement_text_sha256": "cbe10374ca6f7b07113a0524eb6c23608a0758f88dfc72bd17f5b5fafb2921d2",
+      "score": 0.2,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-vague_pronoun-0484",
+      "contextual_evidence": [
+        "another"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "another"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "021f3ef65336a26cee489ee8e1e884fdd4b47b70792cfab8b1e29342eb374770",
+      "score": 0.55,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "uncovered_or_contextual_miss",
+      "case_id": "arta-v8-smelly-vague_pronoun-0677",
+      "contextual_evidence": [
+        "this"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "this"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": true
+      },
+      "expert_review": "pending",
+      "lexical_evidence": [
+        "this"
+      ],
+      "lexical_outcome": "TP",
+      "lexical_prediction": true,
+      "outcome": "FN",
+      "prediction": false,
+      "requirement_text_sha256": "19ad78450d701171db37bf6c82ef9ee6240331ef29f73eae101c5297a31f4dbd",
+      "score": 0.2,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "uncovered_or_contextual_miss",
+      "case_id": "arta-v8-smelly-vague_pronoun-0737",
+      "contextual_evidence": [
+        "it"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "it"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": true
+      },
+      "expert_review": "pending",
+      "lexical_evidence": [
+        "it"
+      ],
+      "lexical_outcome": "TP",
+      "lexical_prediction": true,
+      "outcome": "FN",
+      "prediction": false,
+      "requirement_text_sha256": "39bfcecf6b7ba70c09128370c84bcaa7b75283ad1c7b5b58d3b76bfeca44c98a",
+      "score": 0.2,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-vague_pronoun-0766",
+      "contextual_evidence": [
+        "it"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "it"
+        ],
+        "has_actor": false,
+        "has_comparator": true,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": false
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [
+        "it"
+      ],
+      "lexical_outcome": "TP",
+      "lexical_prediction": true,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "daaf5d09110342c17427e03fac550adc4b5702a2f0657da6049458d28544fefa",
+      "score": 0.85,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-vague_pronoun-0407",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "231ae1551ab0801fab9224975bdf7319fe5a443cfcfe35fd140b69ba5611f4dc",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-vague_pronoun-0924",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "40eba14b35d6bfec076631bf93041de867c422654c2660842546ff0b02bde1a8",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-vague_pronoun-0968",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "acab273187dfc87adaa65fc85a4948eab1a8f5e6223f594cbd75cf29d2edd0e0",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-vague_pronoun-0415",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": true,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "665a93addf322b26d326bbf3a97017a8416c4001d3998716cacc124adf473f2d",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-vague_pronoun-0925",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": true,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": true,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "2cf96c8abd3f765ef46c67208b8e3c3f461cc13dcf052d89119e3e280155cf1e",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-vague_pronoun-0971",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "e46dad1a24c238b3d2545e961b163e14b603502a27544389dd642687f729f5c7",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-vague_pronoun-0416",
+      "contextual_evidence": [
+        "this"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "this"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": true,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": true
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [
+        "this"
+      ],
+      "lexical_outcome": "FP",
+      "lexical_prediction": true,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "ce8f2d4f4c7296976cd036e75eb3b4c68ba2677b5c2085e5103ae23056a53f3f",
+      "score": 0.2,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "vague_pronoun"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-uncertain_verb-0332",
+      "contextual_evidence": [
+        "may"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "may"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [
+        "may"
+      ],
+      "lexical_outcome": "TP",
+      "lexical_prediction": true,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "c581a4e71157d00a4ec0d0ef60036679979c7f7e1c38f6e010c8f3eeb5a289cd",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "uncertain_verb"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-uncertain_verb-0336",
+      "contextual_evidence": [
+        "should"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "should"
+        ],
+        "has_actor": false,
+        "has_comparator": true,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [
+        "should"
+      ],
+      "lexical_outcome": "TP",
+      "lexical_prediction": true,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "231831a71a9914f0238e087cdc5a8cfd72dd3b28b4564efae90452858d558ca5",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "uncertain_verb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-uncertain_verb-0420",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "d21579a4611e8800aca761f2d03a15b1599edad88752cfddf1351f34c6ff39b1",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "uncertain_verb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-uncertain_verb-0926",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": true,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": true,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "b88ecd7bfc893158069b645a48c3c0869fe85936d02e1f20cab33a2ed9606d2f",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "uncertain_verb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-uncertain_verb-0973",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "3ca17b740d0cc7c2f2c34faddb2573e3e577f1cfa253014931ab1bfd048bf7d8",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "uncertain_verb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-uncertain_verb-0439",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "fe3435778572266af79b1dc93246fcf79141662e48f80aca57d716b6d034aa14",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "uncertain_verb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-uncertain_verb-0927",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": true,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": true,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "d3f85745e321089e90ca50bee36e3cea6119652c530f6f6825e0d0f3cc310264",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "uncertain_verb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-uncertain_verb-0974",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "6fa62f3ff4b2f5ccb46ca1124ddb10a76ef6405b6bf02ba25d162f28405d5ad3",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "uncertain_verb"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-uncertain_verb-0473",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "30f5b16d4468559636fb13c12c5b05ebb6d11ccd182e6ab27ecc62fb5cb9c319",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "uncertain_verb"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-polysemy-0914",
+      "contextual_evidence": [
+        "information",
+        "store"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "information",
+          "store"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "405bc1669d10205576d7df16bcb2d455ae8ce04e2bd6c785b7c809e786263262",
+      "score": 0.55,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "polysemy"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-polysemy-0918",
+      "contextual_evidence": [
+        "interface"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "interface"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "fb5929e96766a8df6419b58949c3b95b4c4222c1ecf3d4845028b4a57bddf905",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "polysemy"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-polysemy-0952",
+      "contextual_evidence": [
+        "site"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "site"
+        ],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "2682a9e48f491270e79d846ccb3f68b8f03dc2ef1fd5b6169976eedfdc635304",
+      "score": 0.55,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "polysemy"
+    },
+    {
+      "automatic_triage": "contextual_hit",
+      "case_id": "arta-v8-smelly-polysemy-0318",
+      "contextual_evidence": [
+        "call"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "call"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "TP",
+      "prediction": true,
+      "requirement_text_sha256": "b0d9ede2c30c77a66dac33c91929669892d70b67dff70c34af7f35eb18672aca",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "polysemy"
+    },
+    {
+      "automatic_triage": "uncovered_or_contextual_miss",
+      "case_id": "arta-v8-smelly-polysemy-0969",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": true,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "pending",
+      "lexical_evidence": [],
+      "lexical_outcome": "FN",
+      "lexical_prediction": false,
+      "outcome": "FN",
+      "prediction": false,
+      "requirement_text_sha256": "a7c150c9404d60bbc82bc6a351b62c49b123a3cec0aff1c7c3738b437167e8b1",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "polysemy"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-polysemy-0476",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "171833545492833889a079c48e6a118359c8a870b624adcd36ae53e4e1cee6e9",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "polysemy"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-polysemy-0928",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": true,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": true,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "80ae6546584382090fc3558f97f02aaebd82d6732ca617956fc5194219909585",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "polysemy"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-polysemy-0976",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "a6614eb35659df0317cf74e5b7f5e652d488c9588b695438160d16ecbe8acf70",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "polysemy"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-polysemy-0483",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": false,
+        "has_condition": true,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "856fde8c0185f2c44a8a7b02e916d0b884df048b20a59b9e7d5cef66bc23ab8a",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "polysemy"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-polysemy-0929",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": true,
+        "has_comparator": true,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": true,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "178a87410293bd3abf0e849aa682d57212ed221a0ba4dd374bdc3fec954c1a90",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "polysemy"
+    },
+    {
+      "automatic_triage": "contextual_nonhit",
+      "case_id": "arta-v8-clean-polysemy-0980",
+      "contextual_evidence": [],
+      "contextual_features": {
+        "cue_hits": [],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": false,
+        "has_number": false,
+        "local_antecedent": null
+      },
+      "expert_review": "not_required_for_classification",
+      "lexical_evidence": [],
+      "lexical_outcome": "TN",
+      "lexical_prediction": false,
+      "outcome": "TN",
+      "prediction": false,
+      "requirement_text_sha256": "7cf392230a567371847dea3836ea71d901d9c729455c340b8237a895558f732c",
+      "score": 0.0,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "polysemy"
+    },
+    {
+      "automatic_triage": "contextual_overreach",
+      "case_id": "arta-v8-clean-polysemy-0485",
+      "contextual_evidence": [
+        "support"
+      ],
+      "contextual_features": {
+        "cue_hits": [
+          "support"
+        ],
+        "has_actor": false,
+        "has_comparator": false,
+        "has_condition": false,
+        "has_explicit_response": false,
+        "has_measurement": false,
+        "has_normative_modal": true,
+        "has_number": true,
+        "local_antecedent": null
+      },
+      "expert_review": "pending",
+      "lexical_evidence": [
+        "support"
+      ],
+      "lexical_outcome": "FP",
+      "lexical_prediction": true,
+      "outcome": "FP",
+      "prediction": true,
+      "requirement_text_sha256": "d2d7eb677c7b2cefdf75691b335a8e4c1127a6de27f69438812d00b2646db086",
+      "score": 0.65,
+      "semantic_error_category": null,
+      "split": "test",
+      "target_family": "polysemy"
+    }
+  ],
+  "semantic_categories_require_expert_review": true,
+  "source_label_use": "derived_diagnostic_only",
+  "split": "test",
+  "status": "automatic_triage_pending_expert_review",
+  "version": "natural-screening-error-audit/v1"
+}

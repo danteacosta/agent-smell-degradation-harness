@@ -19,7 +19,14 @@ from baselines.natural_smell import (
     BASELINE_VERSION,
     SUPPORTED_FAMILIES,
     evaluate_source_label_screening,
+    matched_terms,
 )
+from baselines.contextual_smell import (
+    BASELINE_VERSION as CONTEXTUAL_BASELINE_VERSION,
+    analyze_family,
+    evaluate_contextual_screening,
+)
+from eval.error_analysis import build_error_audit
 from eval.splits import build_grouped_split_manifest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -534,6 +541,9 @@ def _write_baseline_svg(
     path: Path,
     screening: Mapping[str, Mapping[str, Any]],
     families: Sequence[str],
+    *,
+    title: str = "ARTA source-label screening: precision and recall",
+    footer: str = "Descriptive agreement with ARTA source markers; not expert-validated detector efficacy.",
 ) -> None:
     width, height = 900, 390
     left, top, chart_width, chart_height = 180, 45, 660, 260
@@ -541,7 +551,7 @@ def _write_baseline_svg(
     elements = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
         '<rect width="100%" height="100%" fill="white"/>',
-        '<text x="20" y="25" font-family="sans-serif" font-size="18" font-weight="bold">ARTA source-label screening: precision and recall</text>',
+        f'<text x="20" y="25" font-family="sans-serif" font-size="18" font-weight="bold">{title}</text>',
     ]
     for tick in range(0, 6):
         y = top + chart_height - tick * chart_height / 5
@@ -561,7 +571,7 @@ def _write_baseline_svg(
     elements.extend([
         f'<rect x="{left + chart_width - 150}" y="{top - 25}" width="12" height="12" fill="#4472c4"/><text x="{left + chart_width - 132}" y="{top - 14}" font-family="sans-serif" font-size="11">precision</text>',
         f'<rect x="{left + chart_width - 70}" y="{top - 25}" width="12" height="12" fill="#ed7d31"/><text x="{left + chart_width - 52}" y="{top - 14}" font-family="sans-serif" font-size="11">recall</text>',
-        '<text x="20" y="375" font-family="sans-serif" font-size="11">Descriptive agreement with ARTA source markers; not expert-validated detector efficacy.</text>',
+        f'<text x="20" y="375" font-family="sans-serif" font-size="11">{footer}</text>',
         '</svg>',
     ])
     path.write_text("\n".join(elements) + "\n", encoding="utf-8")
@@ -574,6 +584,8 @@ def _write_report(
     corpus_summary: Mapping[str, Any],
     split_manifest: Mapping[str, Any],
     screening: Mapping[str, Mapping[str, Any]],
+    contextual_screening: Mapping[str, Mapping[str, Any]],
+    error_audit: Mapping[str, Any],
     readiness: Mapping[str, Any],
 ) -> None:
     rows = [
@@ -581,9 +593,9 @@ def _write_report(
         "",
         "## Em linguagem simples",
         "",
-        "Este experimento pega requisitos naturais do corpus ARTA e testa um baseline simples baseado em palavras/expressões. Ele serve para verificar se o pipeline consegue carregar dados, manter projetos separados, calcular métricas e deixar claro o que ainda não foi validado.",
+        "Este experimento pega requisitos naturais do corpus ARTA e compara dois níveis de triagem: um baseline lexical, baseado em palavras/expressões, e um comparador linguístico contextual, que combina um vocabulário mais amplo com sinais de estrutura, como métricas, condições, atores, respostas explícitas e possíveis antecedentes de pronomes.",
         "",
-        "Ele não prova que o detector entende o requisito, porque os rótulos usados nesta rodada são os marcadores do próprio ARTA e não uma anotação independente de especialistas.",
+        "A comparação ainda não prova entendimento semântico: os rótulos usados nesta rodada são os marcadores do próprio ARTA e não uma anotação independente de especialistas. O comparador contextual é uma etapa intermediária, não um modelo LLM.",
         "",
         "## O que foi executado",
         "",
@@ -594,7 +606,7 @@ def _write_report(
         "- Texto original: executado a partir de um arquivo privado local e redigido dos artefatos versionados.",
         "- Handoff de anotação: `annotation-manifest.jsonl` contém somente IDs, hashes e família; o texto precisa ser exportado localmente, sem rótulos ARTA.",
         "",
-        "## Resultado do baseline no teste",
+        "## Resultado do baseline lexical no teste",
         "",
         "A tabela CSV e o gráfico SVG mostram a concordância com os marcadores da fonte. Use os denominadores e os intervalos Wilson no JSON; eles são intervalos binomiais descritivos e não corrigem dependência entre requisitos do mesmo projeto.",
         "",
@@ -608,6 +620,30 @@ def _write_report(
         rows.append(
             f"| {family} | {confusion['tp']} | {confusion['fp']} | {confusion['tn']} | {confusion['fn']} | {metrics['precision']} | {metrics['recall']} | {result['test_stratum']['evaluable']} |"
         )
+    rows.extend([
+        "",
+        "## Comparador contextual (diagnóstico secundário)",
+        "",
+        "A literatura indica que listas e dicionários precisam ser combinados com análise linguística, padrões de linguagem controlada ou representação contextual. Este comparador implementa apenas a parte auditável e offline dessa ideia. Ele pode rejeitar um falso alerta aparente quando existe um limite mensurável, ou elevar um alerta quando um pronome não tem antecedente local. Isso não substitui anotação humana nem avaliação com modelos reais.",
+        "",
+        "| Família | TP | FP | TN | FN | Precisão | Recall |",
+        "|---|---:|---:|---:|---:|---:|---:|",
+    ])
+    for family in run["supported_families"]:
+        result = contextual_screening[family]
+        confusion = result["confusion"]
+        metrics = result["metrics"]
+        rows.append(
+            f"| {family} | {confusion['tp']} | {confusion['fp']} | {confusion['tn']} | {confusion['fn']} | {metrics['precision']} | {metrics['recall']} |"
+        )
+    rows.extend([
+        "",
+        "## Auditoria dos erros",
+        "",
+        f"A auditoria automática contém {error_audit['case_count']} linhas redigidas, identificadas por hash e `case_id`. Ela registra a evidência lexical/contextual e separa `contextual_overreach` de `uncovered_or_contextual_miss`, mas deixa `semantic_error_category` pendente. Uma FN pode ser um smell sem pista do vocabulário; uma FP pode ser um uso legítimo que exige contexto de domínio. Portanto, a classificação semântica precisa de dois anotadores e adjudicação.",
+        "",
+        "A leitura principal desta rodada é que ampliar o vocabulário ajuda a localizar candidatos, mas não resolve o problema: vários marcadores do corpus são relações de sentido, escopo ou estrutura que não aparecem como uma palavra fixa. O detector final deve produzir alerta, trecho/evidência, explicação, pergunta de esclarecimento e hipótese de correção; a geração de código deve ser avaliada apenas depois disso, com testes ocultos.",
+    ])
     rows.extend([
         "",
         "## Condições do agente",
@@ -675,6 +711,32 @@ def run_validation_round(
                 f"{family} test stratum is not evaluable: requires at least "
                 f"{minimum_test_per_class} positive and clean cases"
             )
+    contextual_screening = evaluate_contextual_screening(
+        split_cases,
+        split="test",
+        families=supported_families,
+    )
+    for family, result in contextual_screening.items():
+        test_cases = [
+            case
+            for case in split_cases
+            if case.get("target_family") == family and case.get("_split") == "test"
+        ]
+        test_positive = sum(case.get("source_label") == "smelly" for case in test_cases)
+        test_clean = sum(case.get("source_label") == "clean" for case in test_cases)
+        result["test_stratum"] = {
+            "positive": test_positive,
+            "clean_control": test_clean,
+            "evaluable": test_positive >= minimum_test_per_class and test_clean >= minimum_test_per_class,
+            "minimum_per_class_for_evaluation": minimum_test_per_class,
+        }
+    error_audit = build_error_audit(
+        split_cases,
+        split="test",
+        families=supported_families,
+        predictor=analyze_family,
+        lexical_matcher=matched_terms,
+    )
     paraphrase_probe = generate_paraphrase_probe(split_cases)
     agent_conditions = summarize_v7_agent_conditions(v7_bundle)
     readiness = readiness_report()
@@ -733,7 +795,23 @@ def run_validation_round(
         "results": screening,
         "estimand": "agreement_with_arta_source_labels",
         "primary_metric_exclusion": "source markers are not independent expert labels",
+        "secondary_contextual": {
+            "status": "diagnostic_source_label_screening",
+            "baseline_version": CONTEXTUAL_BASELINE_VERSION,
+            "results": contextual_screening,
+            "interpretation": "contextual comparator with explainable linguistic features; not a semantic model",
+        },
     })
+    _write_json(bundle / "contextual-results.json", {
+        "status": "diagnostic_source_label_screening",
+        "baseline_version": CONTEXTUAL_BASELINE_VERSION,
+        "primary_split": "test",
+        "results": contextual_screening,
+        "estimand": "agreement_with_arta_source_labels",
+        "primary_metric_exclusion": "source markers are not independent expert labels",
+        "feature_contract": "text-only cues plus structural context; no source markers or oracle fields",
+    })
+    _write_json(bundle / "error-analysis.json", error_audit)
     _write_json(bundle / "paraphrase_probe.json", {
         "status": "secondary_unvalidated_probe",
         "case_count": len(paraphrase_probe),
@@ -758,6 +836,8 @@ def run_validation_round(
         "private_source_execution": allow_private_source,
         "source_text_redacted_from_artifacts": True,
         "baseline_version": BASELINE_VERSION,
+        "contextual_baseline_version": CONTEXTUAL_BASELINE_VERSION,
+        "error_analysis_version": error_audit["version"],
         "split_manifest": "splits.json",
         "artifacts": [
             "cases.jsonl",
@@ -765,22 +845,36 @@ def run_validation_round(
             "corpus-manifest.json",
             "splits.json",
             "baseline_results.json",
+            "contextual-results.json",
+            "error-analysis.json",
             "paraphrase_probe.json",
             "agent_conditions.json",
             "readiness.json",
             "metrics.csv",
             "baseline-metrics.svg",
+            "contextual-metrics.csv",
+            "contextual-metrics.svg",
             "report.md",
         ],
     }
     _write_metrics_csv(bundle / "metrics.csv", screening, supported_families)
+    _write_metrics_csv(bundle / "contextual-metrics.csv", contextual_screening, supported_families)
     _write_baseline_svg(bundle / "baseline-metrics.svg", screening, supported_families)
+    _write_baseline_svg(
+        bundle / "contextual-metrics.svg",
+        contextual_screening,
+        supported_families,
+        title="Contextual linguistic screening: precision and recall",
+        footer="Secondary diagnostic against ARTA markers; contextual heuristic, not expert-validated model efficacy.",
+    )
     _write_report(
         bundle / "report.md",
         run=run,
         corpus_summary=corpus_summary,
         split_manifest=split_manifest,
         screening=screening,
+        contextual_screening=contextual_screening,
+        error_audit=error_audit,
         readiness=readiness,
     )
     _write_json(bundle / "run.json", run)

@@ -176,8 +176,12 @@ def test_offline_round_writes_explicit_screening_artifacts(tmp_path) -> None:
     assert result["status"] == "blocked_until_external_validation"
     assert (tmp_path / "artifacts" / "test-round" / "readiness.json").exists()
     assert (tmp_path / "artifacts" / "test-round" / "baseline_results.json").exists()
+    assert (tmp_path / "artifacts" / "test-round" / "contextual-results.json").exists()
+    assert (tmp_path / "artifacts" / "test-round" / "error-analysis.json").exists()
     assert (tmp_path / "artifacts" / "test-round" / "report.md").exists()
     assert (tmp_path / "artifacts" / "test-round" / "baseline-metrics.svg").exists()
+    assert (tmp_path / "artifacts" / "test-round" / "contextual-metrics.csv").exists()
+    assert (tmp_path / "artifacts" / "test-round" / "contextual-metrics.svg").exists()
     cases_artifact = (tmp_path / "artifacts" / "test-round" / "cases.jsonl").read_text(encoding="utf-8")
     assert '"requirement_text"' not in cases_artifact
     assert '"source_label"' not in cases_artifact

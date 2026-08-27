@@ -177,6 +177,31 @@ therefore useful for validating the detector and artifact pipeline, but it does
 not establish LLM generalization, production latency/cost, or population-level
 precision.
 
+The v8 screening also contains a deliberate detector comparison. The frozen
+`natural-lexicon/v1` baseline is a lower bound: it only asks whether a small
+fixed vocabulary occurs. The `contextual-linguistic/v1` comparator adds broader
+linguistic cues and explainable structure signals for quantities, conditions,
+actors, responses and possible pronoun antecedents. Its source-label results
+are diagnostic only, but the comparison demonstrates the intended design: the
+detector should produce evidence and a review question, not silently convert a
+word hit into a semantic verdict. The redacted per-case audit is stored in
+`error-analysis.json`; semantic error categories remain pending independent
+expert review.
+
+This is consistent with the literature: Smella treats smell detection as a
+lightweight supplement to reviews, Paska combines NLP with controlled-language
+patterns and recommendations, and recent work on embeddings/LLMs still warns
+about label quality, overfitting, domain shift and inconsistent evaluation.
+The next detector phase must therefore compare lexical triage, contextual
+linguistic features and provider-backed semantic adjudication on new,
+project-held-out requirements, then measure whether alerts improve hidden-test
+behavior through revision and code generation.
+
+The v8 contextual comparator was assembled retrospectively while investigating
+the lexical failures. Its metrics are diagnostic pipeline evidence, not a
+blind superiority comparison; the next run must freeze the detector using only
+training/calibration projects before evaluating held-out projects.
+
 One detector regression was fixed before v7: the completeness rule now uses
 word boundaries, so `all` inside `shall` cannot suppress the
 `incomplete_completeness_scope` signal. The ERTMS omission case can still be a

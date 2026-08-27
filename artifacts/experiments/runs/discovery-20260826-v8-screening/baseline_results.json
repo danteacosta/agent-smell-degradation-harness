@@ -347,5 +347,354 @@
       }
     }
   },
+  "secondary_contextual": {
+    "baseline_version": "contextual-linguistic/v1",
+    "interpretation": "contextual comparator with explainable linguistic features; not a semantic model",
+    "results": {
+      "ambiguous_adjective_adverb": {
+        "baseline_version": "contextual-linguistic/v1",
+        "case_count": 16,
+        "confusion": {
+          "fn": 2,
+          "fp": 0,
+          "tn": 7,
+          "tp": 7
+        },
+        "metrics": {
+          "accuracy": 0.875,
+          "f1": 0.8750000000000001,
+          "precision": 1.0,
+          "recall": 0.7777777777777778,
+          "specificity": 1.0,
+          "wilson_interval": {
+            "precision": {
+              "confidence": 0.95,
+              "estimate": 1.0,
+              "lower": 0.6456695649333127,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 7,
+              "trials": 7,
+              "upper": 1.0
+            },
+            "recall": {
+              "confidence": 0.95,
+              "estimate": 0.7777777777777778,
+              "lower": 0.452588969106989,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 7,
+              "trials": 9,
+              "upper": 0.9367748928821532
+            },
+            "specificity": {
+              "confidence": 0.95,
+              "estimate": 1.0,
+              "lower": 0.6456695649333127,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 7,
+              "trials": 7,
+              "upper": 1.0
+            }
+          }
+        },
+        "normalization_version": "unicode-casefold-whitespace/v1",
+        "split": "test",
+        "test_stratum": {
+          "clean_control": 7,
+          "evaluable": true,
+          "minimum_per_class_for_evaluation": 2,
+          "positive": 9
+        }
+      },
+      "nonverifiable_term": {
+        "baseline_version": "contextual-linguistic/v1",
+        "case_count": 14,
+        "confusion": {
+          "fn": 1,
+          "fp": 1,
+          "tn": 6,
+          "tp": 6
+        },
+        "metrics": {
+          "accuracy": 0.8571428571428571,
+          "f1": 0.8571428571428571,
+          "precision": 0.8571428571428571,
+          "recall": 0.8571428571428571,
+          "specificity": 0.8571428571428571,
+          "wilson_interval": {
+            "precision": {
+              "confidence": 0.95,
+              "estimate": 0.8571428571428571,
+              "lower": 0.48687217072568134,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 6,
+              "trials": 7,
+              "upper": 0.9743203756552565
+            },
+            "recall": {
+              "confidence": 0.95,
+              "estimate": 0.8571428571428571,
+              "lower": 0.48687217072568134,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 6,
+              "trials": 7,
+              "upper": 0.9743203756552565
+            },
+            "specificity": {
+              "confidence": 0.95,
+              "estimate": 0.8571428571428571,
+              "lower": 0.48687217072568134,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 6,
+              "trials": 7,
+              "upper": 0.9743203756552565
+            }
+          }
+        },
+        "normalization_version": "unicode-casefold-whitespace/v1",
+        "split": "test",
+        "test_stratum": {
+          "clean_control": 7,
+          "evaluable": true,
+          "minimum_per_class_for_evaluation": 2,
+          "positive": 7
+        }
+      },
+      "polysemy": {
+        "baseline_version": "contextual-linguistic/v1",
+        "case_count": 12,
+        "confusion": {
+          "fn": 1,
+          "fp": 1,
+          "tn": 6,
+          "tp": 4
+        },
+        "metrics": {
+          "accuracy": 0.8333333333333334,
+          "f1": 0.8000000000000002,
+          "precision": 0.8,
+          "recall": 0.8,
+          "specificity": 0.8571428571428571,
+          "wilson_interval": {
+            "precision": {
+              "confidence": 0.95,
+              "estimate": 0.8,
+              "lower": 0.3755346297625254,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 4,
+              "trials": 5,
+              "upper": 0.9637758913675697
+            },
+            "recall": {
+              "confidence": 0.95,
+              "estimate": 0.8,
+              "lower": 0.3755346297625254,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 4,
+              "trials": 5,
+              "upper": 0.9637758913675697
+            },
+            "specificity": {
+              "confidence": 0.95,
+              "estimate": 0.8571428571428571,
+              "lower": 0.48687217072568134,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 6,
+              "trials": 7,
+              "upper": 0.9743203756552565
+            }
+          }
+        },
+        "normalization_version": "unicode-casefold-whitespace/v1",
+        "split": "test",
+        "test_stratum": {
+          "clean_control": 7,
+          "evaluable": true,
+          "minimum_per_class_for_evaluation": 2,
+          "positive": 5
+        }
+      },
+      "subjective_language": {
+        "baseline_version": "contextual-linguistic/v1",
+        "case_count": 14,
+        "confusion": {
+          "fn": 2,
+          "fp": 0,
+          "tn": 6,
+          "tp": 6
+        },
+        "metrics": {
+          "accuracy": 0.8571428571428571,
+          "f1": 0.8571428571428571,
+          "precision": 1.0,
+          "recall": 0.75,
+          "specificity": 1.0,
+          "wilson_interval": {
+            "precision": {
+              "confidence": 0.95,
+              "estimate": 1.0,
+              "lower": 0.6096657120978348,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 6,
+              "trials": 6,
+              "upper": 1.0
+            },
+            "recall": {
+              "confidence": 0.95,
+              "estimate": 0.75,
+              "lower": 0.40927543031016905,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 6,
+              "trials": 8,
+              "upper": 0.9285207872478909
+            },
+            "specificity": {
+              "confidence": 0.95,
+              "estimate": 1.0,
+              "lower": 0.6096657120978348,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 6,
+              "trials": 6,
+              "upper": 1.0
+            }
+          }
+        },
+        "normalization_version": "unicode-casefold-whitespace/v1",
+        "split": "test",
+        "test_stratum": {
+          "clean_control": 6,
+          "evaluable": true,
+          "minimum_per_class_for_evaluation": 2,
+          "positive": 8
+        }
+      },
+      "uncertain_verb": {
+        "baseline_version": "contextual-linguistic/v1",
+        "case_count": 9,
+        "confusion": {
+          "fn": 0,
+          "fp": 0,
+          "tn": 7,
+          "tp": 2
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "f1": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "specificity": 1.0,
+          "wilson_interval": {
+            "precision": {
+              "confidence": 0.95,
+              "estimate": 1.0,
+              "lower": 0.3423802275066532,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 2,
+              "trials": 2,
+              "upper": 1.0
+            },
+            "recall": {
+              "confidence": 0.95,
+              "estimate": 1.0,
+              "lower": 0.3423802275066532,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 2,
+              "trials": 2,
+              "upper": 1.0
+            },
+            "specificity": {
+              "confidence": 0.95,
+              "estimate": 1.0,
+              "lower": 0.6456695649333127,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 7,
+              "trials": 7,
+              "upper": 1.0
+            }
+          }
+        },
+        "normalization_version": "unicode-casefold-whitespace/v1",
+        "split": "test",
+        "test_stratum": {
+          "clean_control": 7,
+          "evaluable": true,
+          "minimum_per_class_for_evaluation": 2,
+          "positive": 2
+        }
+      },
+      "vague_pronoun": {
+        "baseline_version": "contextual-linguistic/v1",
+        "case_count": 14,
+        "confusion": {
+          "fn": 5,
+          "fp": 0,
+          "tn": 7,
+          "tp": 2
+        },
+        "metrics": {
+          "accuracy": 0.6428571428571429,
+          "f1": 0.4444444444444445,
+          "precision": 1.0,
+          "recall": 0.2857142857142857,
+          "specificity": 1.0,
+          "wilson_interval": {
+            "precision": {
+              "confidence": 0.95,
+              "estimate": 1.0,
+              "lower": 0.3423802275066532,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 2,
+              "trials": 2,
+              "upper": 1.0
+            },
+            "recall": {
+              "confidence": 0.95,
+              "estimate": 0.2857142857142857,
+              "lower": 0.08221892400405684,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 2,
+              "trials": 7,
+              "upper": 0.6410655481673807
+            },
+            "specificity": {
+              "confidence": 0.95,
+              "estimate": 1.0,
+              "lower": 0.6456695649333127,
+              "method": "wilson",
+              "status": "ok",
+              "successes": 7,
+              "trials": 7,
+              "upper": 1.0
+            }
+          }
+        },
+        "normalization_version": "unicode-casefold-whitespace/v1",
+        "split": "test",
+        "test_stratum": {
+          "clean_control": 7,
+          "evaluable": true,
+          "minimum_per_class_for_evaluation": 2,
+          "positive": 7
+        }
+      }
+    },
+    "status": "diagnostic_source_label_screening"
+  },
   "status": "descriptive_source_label_screening"
 }

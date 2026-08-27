@@ -65,6 +65,10 @@ suite check.
 - [x] Generate a controlled paraphrase probe excluded from primary metrics.
 - [x] Record v7 no-alert/alert/revision-ceiling conditions as simulation-only.
 - [x] Redact source requirement text from tracked v8 artifacts.
+- [x] Add a contextual linguistic comparator alongside the fixed lexical lower bound.
+- [x] Generate a redacted, per-case error audit with explicit expert-review status.
+- [x] Catalog literature on linguistic patterns, embeddings, controlled language,
+      context-sensitive ambiguity and hybrid AI/traditional QA.
 
 Bundle: `artifacts/experiments/runs/discovery-20260826-v8-screening/`
 
@@ -77,3 +81,10 @@ Bundle: `artifacts/experiments/runs/discovery-20260826-v8-screening/`
 The v8 run is executable only with a local private source because ARTA text
 redistribution/derivative-use permission is not established. GitHub tracks the
 selection hashes, code, split, metrics and redacted cases, not source excerpts.
+
+The contextual comparator is still a diagnostic heuristic. It is not a
+provider-backed semantic adjudicator and its agreement with ARTA markers is not
+expert-validated evidence. See
+`docs/research/2026-08-26-context-aware-requirements-smell-detection.md` and
+the bundle's `error-analysis.json` for the proposed escalation from lexical
+triage to contextual review and hidden behavioral validation.
