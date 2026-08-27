@@ -1,0 +1,123 @@
+{
+  "corpus_path": "/private/tmp/arta-v8-cases.jsonl",
+  "expert_annotation_status": "pending",
+  "license_statuses": [
+    "private_use_only"
+  ],
+  "private_source_execution": true,
+  "schema_version": "requirements-smell-natural-screening/v1",
+  "source_dataset": "ARTA",
+  "source_dataset_commit": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+  "source_file": "dataset/zenodo_r1/DS1_Evaluation/001_dataset1kv1.xlsx",
+  "source_file_sha256": "351d0e7234d27e3efa2ed9bc2ee930e98d9826aca162332a768c7f2fb27464b3",
+  "source_label_type": "arta_dataset_marker",
+  "source_text_redacted": true,
+  "split_policy": "complete project held out",
+  "status": "source_label_screening_not_expert_validated",
+  "summary": {
+    "case_count": 144,
+    "family_counts": {
+      "ambiguous_adjective_adverb": {
+        "case_count": 24,
+        "clean_control": 12,
+        "positive": 12,
+        "project_count": 6,
+        "projects": [
+          "cctns",
+          "ertms",
+          "fun",
+          "gamma",
+          "keepass",
+          "peering"
+        ]
+      },
+      "nonverifiable_term": {
+        "case_count": 24,
+        "clean_control": 12,
+        "positive": 12,
+        "project_count": 6,
+        "projects": [
+          "cctns",
+          "ertms",
+          "fun",
+          "gamma",
+          "keepass",
+          "peering"
+        ]
+      },
+      "polysemy": {
+        "case_count": 24,
+        "clean_control": 12,
+        "positive": 12,
+        "project_count": 6,
+        "projects": [
+          "cctns",
+          "ertms",
+          "fun",
+          "gamma",
+          "keepass",
+          "peering"
+        ]
+      },
+      "subjective_language": {
+        "case_count": 24,
+        "clean_control": 12,
+        "positive": 12,
+        "project_count": 6,
+        "projects": [
+          "cctns",
+          "ertms",
+          "fun",
+          "gamma",
+          "keepass",
+          "peering"
+        ]
+      },
+      "uncertain_verb": {
+        "case_count": 24,
+        "clean_control": 12,
+        "positive": 12,
+        "project_count": 6,
+        "projects": [
+          "cctns",
+          "ertms",
+          "fun",
+          "gamma",
+          "keepass",
+          "peering"
+        ]
+      },
+      "vague_pronoun": {
+        "case_count": 24,
+        "clean_control": 12,
+        "positive": 12,
+        "project_count": 6,
+        "projects": [
+          "cctns",
+          "ertms",
+          "fun",
+          "gamma",
+          "keepass",
+          "peering"
+        ]
+      }
+    },
+    "minimum_clean_per_family": 10,
+    "minimum_positive_per_family": 10,
+    "project_count": 6,
+    "supported_families": [
+      "subjective_language",
+      "ambiguous_adjective_adverb",
+      "nonverifiable_term",
+      "vague_pronoun",
+      "uncertain_verb",
+      "polysemy"
+    ],
+    "underrepresented_families": [
+      "comparative",
+      "negative",
+      "superlative",
+      "loophole"
+    ]
+  }
+}

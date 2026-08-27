@@ -1,0 +1,466 @@
+{
+  "assignments": [
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0002",
+      "split": "calibration"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0003",
+      "split": "calibration"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0006",
+      "split": "calibration"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0010",
+      "split": "calibration"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0015",
+      "split": "calibration"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0023",
+      "split": "calibration"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0043",
+      "split": "calibration"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0077",
+      "split": "calibration"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0093",
+      "split": "calibration"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0120",
+      "split": "calibration"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0192",
+      "split": "calibration"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0194",
+      "split": "calibration"
+    },
+    {
+      "project_id": "ertms",
+      "source_intent_id": "arta-sheet1-row-0196",
+      "split": "calibration"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0205",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0206",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0208",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0209",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0214",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0216",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0217",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0219",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0222",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0224",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0228",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0229",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0231",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0236",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0282",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0283",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0284",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0285",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0292",
+      "split": "test"
+    },
+    {
+      "project_id": "cctns",
+      "source_intent_id": "arta-sheet1-row-0296",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0317",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0318",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0332",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0333",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0336",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0342",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0366",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0369",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0370",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0388",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0395",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0403",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0406",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0428",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0448",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0449",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0484",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0540",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0677",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0737",
+      "split": "test"
+    },
+    {
+      "project_id": "fun",
+      "source_intent_id": "arta-sheet1-row-0766",
+      "split": "test"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0880",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0882",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0883",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0884",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0889",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0897",
+      "split": "train"
+    },
+    {
+      "project_id": "keepass",
+      "source_intent_id": "arta-sheet1-row-0911",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0912",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0913",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0914",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0915",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0918",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0919",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0931",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0932",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0933",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0941",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0944",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0945",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0948",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0949",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0950",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0952",
+      "split": "train"
+    },
+    {
+      "project_id": "gamma",
+      "source_intent_id": "arta-sheet1-row-0954",
+      "split": "train"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0963",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0969",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0970",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0977",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0978",
+      "split": "test"
+    },
+    {
+      "project_id": "peering",
+      "source_intent_id": "arta-sheet1-row-0983",
+      "split": "test"
+    }
+  ],
+  "fractions": {
+    "calibration": 0.2,
+    "test": 0.5,
+    "train": 0.3
+  },
+  "group_by": [
+    "source_intent_id",
+    "project_id"
+  ],
+  "project_assignments": {
+    "calibration": [
+      "ertms"
+    ],
+    "test": [
+      "cctns",
+      "fun",
+      "peering"
+    ],
+    "train": [
+      "gamma",
+      "keepass"
+    ]
+  },
+  "provenance": {
+    "algorithm": "stable-bipartite-component-quota-greedy-v2",
+    "assignment_hash": "b9716a02cae6646c27ab3a03ab3aee21b0d66b3536c9b7aedc8b5f93b5ff18cc",
+    "group_count": 6,
+    "group_quotas": {
+      "calibration": 1,
+      "test": 3,
+      "train": 2
+    },
+    "record_count": 144,
+    "record_counts": {
+      "calibration": 18,
+      "test": 77,
+      "train": 49
+    },
+    "seed": 20260826
+  },
+  "schema_version": "h2-split-1",
+  "seed": 20260826
+}

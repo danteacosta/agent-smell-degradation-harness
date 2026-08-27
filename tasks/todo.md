@@ -56,3 +56,24 @@ suite check.
 - [ ] Expand the corpus with reviewed natural variants, difficult clean cases, more projects/domains, and project-held-out splits.
 - [ ] Run the intervention comparison: agent without verifier, with alert, and with alert plus revision opportunity.
 - [ ] Define hidden-test pass rate, introduced defects, false alerts, review time, cost/tokens, clarification count, and post-alert correction rate.
+
+## v8 natural source-label screening checkpoint
+
+- [x] Add a strict private-corpus acquisition step for the ARTA workbook with source row/hash provenance.
+- [x] Select 12 single-marker positives and 12 no-marker clean controls for each of six supported families.
+- [x] Run the text-only frozen baseline on a project-disjoint split and record per-family test denominators and naive Wilson intervals.
+- [x] Generate a controlled paraphrase probe excluded from primary metrics.
+- [x] Record v7 no-alert/alert/revision-ceiling conditions as simulation-only.
+- [x] Redact source requirement text from tracked v8 artifacts.
+
+Bundle: `artifacts/experiments/runs/discovery-20260826-v8-screening/`
+
+- Status: `blocked_until_external_validation`
+- Estimand: `agreement_with_arta_source_labels` (descriptive screening only)
+- Cases: 144 across 6 projects; 12 positive and 12 clean controls per supported family
+- Real models: 0/2; both slots remain `not_run`
+- Expert annotation: pending; ARTA markers are not independent labels
+
+The v8 run is executable only with a local private source because ARTA text
+redistribution/derivative-use permission is not established. GitHub tracks the
+selection hashes, code, split, metrics and redacted cases, not source excerpts.

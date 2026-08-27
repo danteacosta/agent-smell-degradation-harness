@@ -1,0 +1,37 @@
+{
+  "artifacts": [
+    "cases.jsonl",
+    "corpus-manifest.json",
+    "splits.json",
+    "baseline_results.json",
+    "paraphrase_probe.json",
+    "agent_conditions.json",
+    "readiness.json",
+    "metrics.csv",
+    "baseline-metrics.svg",
+    "report.md"
+  ],
+  "baseline_version": "natural-lexicon/v1",
+  "case_count": 144,
+  "created_at": "2026-08-27T00:37:19.405560+00:00",
+  "evidence_level": "screening_only",
+  "expert_annotation_status": "pending",
+  "mode": "offline_screening",
+  "private_source_execution": true,
+  "project_count": 6,
+  "real_model_runs": 0,
+  "run_id": "discovery-20260826-v8-screening",
+  "schema_version": "requirements-smell-natural-screening/v1",
+  "source_label_screening": true,
+  "source_text_redacted_from_artifacts": true,
+  "split_manifest": "splits.json",
+  "status": "blocked_until_external_validation",
+  "supported_families": [
+    "subjective_language",
+    "ambiguous_adjective_adverb",
+    "nonverifiable_term",
+    "vague_pronoun",
+    "uncertain_verb",
+    "polysemy"
+  ]
+}

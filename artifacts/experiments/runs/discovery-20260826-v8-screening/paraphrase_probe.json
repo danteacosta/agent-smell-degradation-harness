@@ -1,0 +1,462 @@
+{
+  "case_count": 40,
+  "primary_metric_eligible_count": 0,
+  "probes": [
+    {
+      "case_id": "arta-v8-smelly-subjective_language-0231",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The System must provide End User and Administrator functions which are easy to use and intuitive throughout.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The System must make available End User and Administrator functions which are easy to use and intuitive throughout.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-subjective_language-0231",
+      "replacement": {
+        "from": "provide",
+        "to": "make available"
+      },
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-smelly-subjective_language-0931",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The system will do periodic backups through a live internet connection.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The service will do periodic backups through a live internet connection.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-subjective_language-0931",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-smelly-subjective_language-0933",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The system shall encrypt all sensitive information via https.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The service shall encrypt all sensitive information via https.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-subjective_language-0933",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-smelly-subjective_language-0944",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The system shall be easy to use",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The service shall be easy to use",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-subjective_language-0944",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-smelly-subjective_language-0002",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "ETCS shall provide the driver with information to allow him to drive the train safely.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "ETCS shall make available the driver with information to allow him to drive the train safely.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-subjective_language-0002",
+      "replacement": {
+        "from": "provide",
+        "to": "make available"
+      },
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-smelly-subjective_language-0317",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "2.2.1     This section describes the generic voice telephony services which are to be supported \nby the EIRENE network: (M)",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "2.2.1     This section describes the generic voice telephony services which are to be supported \nby the EIRENE network: (M)",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-subjective_language-0317",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-smelly-subjective_language-0945",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The system shall be easy to learn",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The service shall be easy to learn",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-subjective_language-0945",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-smelly-subjective_language-0889",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "In order to find something in a group a word must be placed in the find field",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "In order to find something in a group a word must be placed in the find field",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-subjective_language-0889",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-smelly-subjective_language-0983",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "Effective content delivery is ensured through SLA satisfaction.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "Effective content delivery is ensured through SLA satisfaction.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-subjective_language-0983",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-smelly-subjective_language-0015",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "If, as a result of an automatic transition, except for transitions to and from National Operation (STM), the responsibility for the driver increases, the ETCS shall seek an acknowledgement from the driver, whether the train is stationary or not.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "If, as a result of an automatic transition, except for transitions to and from National Operation (STM), the responsibility for the driver increases, the ETCS shall seek an acknowledgement from the driver, whether the train is stationary or not.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-subjective_language-0015",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-smelly-subjective_language-0395",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "4.3.3     In normal operation of a mobile radio unit, it is expected that a combination of the \nabove environmental conditions will be experienced. (I)",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "4.3.3     In normal operation of a mobile radio unit, it is expected that a combination of the \nabove environmental conditions will be experienced. (I)",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-subjective_language-0395",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-smelly-subjective_language-0948",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The system shall prompt customer with friend easy to read error messages.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The service shall prompt customer with friend easy to read error messages.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-subjective_language-0948",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-clean-subjective_language-0219",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The System must allow only admin-users to set up user profiles and allocate users to groups.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The service must allow only admin-users to set up user profiles and allocate users to groups.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-subjective_language-0219",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-clean-subjective_language-0282",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The System must be available to users:",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The service must be available to users:",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-subjective_language-0282",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-clean-subjective_language-0284",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "Unplanned downtime for the System must not exceed <xx hours/minutes> per <rolling three month period>.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "Unplanned downtime for the service must not exceed <xx hours/minutes> per <rolling three month period>.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-subjective_language-0284",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-clean-subjective_language-0912",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "Web Store shall operate with the following internet browsers: Microsoft Internet Explorer version 6 and 7, Netscape Communicator Version 4 and 5.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "Web Store shall operate with the following internet browsers: Microsoft Internet Explorer version 6 and 7, Netscape Communicator Version 4 and 5.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-subjective_language-0912",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-clean-subjective_language-0913",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "Web Store shall operate on an Intel based system with Slackware Linux 2.6 and Apache Web Server. The operating system is designed by the Yoggie Corporation. Although maintenance documentation will be supplied and the operating system will be tested, the developers of this Web Store are not responsible for the functionality of the operating system.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "Web Store shall operate on an Intel based service with Slackware Linux 2.6 and Apache Web Server. The operating system is designed by the Yoggie Corporation. Although maintenance documentation will be supplied and the operating system will be tested, the developers of this Web Store are not responsible for the functionality of the operating system.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-subjective_language-0913",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-clean-subjective_language-0915",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "USB interface and divers are provided by Yoggie Corporation.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "USB interface and divers are provided by Yoggie Corporation.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-subjective_language-0915",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-clean-subjective_language-0285",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The number of incidents of unplanned downtime for the System must not exceed <x> per <rolling three month period>.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The number of incidents of unplanned downtime for the service must not exceed <x> per <rolling three month period>.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-subjective_language-0285",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-clean-subjective_language-0003",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "ETCS shall be able to supervise train and shunting movements.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "ETCS shall be able to supervise train and shunting movements.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-subjective_language-0003",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-clean-subjective_language-0333",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "2.2.17     The  system  shall  support  multi-party  voice  communications  between  up  to  six \ndifferent parties. (M)",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "2.2.17     The  system  shall  provide the stated capability for  multi-party  voice  communications  between  up  to  six \ndifferent parties. (M)",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-subjective_language-0333",
+      "replacement": {
+        "from": "support",
+        "to": "provide the stated capability for"
+      },
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-clean-subjective_language-0919",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "Shall deliver Operations and Maintenance manual, Users Guide book, and Installation Instructions for the Administrator.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "Shall deliver Operations and Maintenance manual, Users Guide book, and Installation Instructions for the Administrator.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-subjective_language-0919",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-clean-subjective_language-0880",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "KeePass must be downloaded and installed",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "KeePass must be downloaded and installed",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-subjective_language-0880",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-clean-subjective_language-0963",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The format for service information description is defined",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The format for service information description is defined",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-subjective_language-0963",
+      "replacement": null,
+      "target_family": "subjective_language"
+    },
+    {
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0954",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The system shall be extremely portable via the usb drive.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The service shall be extremely portable via the usb drive.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-ambiguous_adjective_adverb-0954",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0120",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "Within the braking curve area, a warning shall be given to the driver to enable him to react and avoid intervention from ETCS equipment at least 5 sec. before the intervention.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "Within the braking curve area, a warning shall be given to the driver to enable him to react and avoid intervention from ETCS equipment at least 5 sec. before the intervention.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-ambiguous_adjective_adverb-0120",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0342",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "2.3.8     The network shall support data rates of at least 2.4 kbit/s. (M)",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "2.3.8     The network shall provide the stated capability for data rates of at least 2.4 kbit/s. (M)",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-ambiguous_adjective_adverb-0342",
+      "replacement": {
+        "from": "support",
+        "to": "provide the stated capability for"
+      },
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0897",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The prefix \u201cAuto-Type:\u201d is required in front of each sequence",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The prefix \u201cAuto-Type:\u201d is required in front of each sequence",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-ambiguous_adjective_adverb-0897",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0970",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "Web servers have already replicated necessary content.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "Web servers have already replicated necessary content.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-ambiguous_adjective_adverb-0970",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0366",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "3.2.1     For network planning, the coverage level is defined in terms of time and area where \nthe minimum signal criteria are achieved. (I)",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "3.2.1     For network planning, the coverage level is defined in terms of time and area where \nthe minimum signal criteria are achieved. (I)",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-ambiguous_adjective_adverb-0366",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0911",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "When a TAN is used, it expires automatically and can never be used again.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "When a TAN is used, it expires automatically and can never be used again.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-ambiguous_adjective_adverb-0911",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0977",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "Malicious requests are identified and acted upon.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "Malicious requests are identified and acted upon.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-ambiguous_adjective_adverb-0977",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0369",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "3.2.4     The land-based part of the system shall provide communications for mobiles when \nstationary and when travelling at speeds up to the maximum allowable line speed or",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "3.2.4     The land-based part of the system shall make available communications for mobiles when \nstationary and when travelling at speeds up to the maximum allowable line speed or",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-ambiguous_adjective_adverb-0369",
+      "replacement": {
+        "from": "provide",
+        "to": "make available"
+      },
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0370",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "3.3.3     Network  interconnection  is  subject  to  a  bilateral  agreement  between  network \noperators.  The  interconnection  between  the  networks  must,  as  a  minimum,  be \ncompliant with applicable open specifications. (I)",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "3.3.3     Network  interconnection  is  subject  to  a  bilateral  agreement  between  network \noperators.  The  interconnection  between  the  networks  must,  as  a  minimum,  be \ncompliant with applicable open specifications. (I)",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-ambiguous_adjective_adverb-0370",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0388",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "4.1.4     Mobile equipment shall function correctly when travelling at speeds from 0 km/h to",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "4.1.4     Mobile equipment shall function correctly when travelling at speeds from 0 km/h to",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-ambiguous_adjective_adverb-0388",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-smelly-ambiguous_adjective_adverb-0540",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "5.2.3.46 The result of the tests shall be displayed in a similar format to the self-test when MMI    \nis powered on. (M)",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "5.2.3.46 The result of the tests shall be displayed in a similar format to the self-test when MMI    \nis powered on. (M)",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-smelly-ambiguous_adjective_adverb-0540",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0219",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The System must allow only admin-users to set up user profiles and allocate users to groups.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The service must allow only admin-users to set up user profiles and allocate users to groups.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-ambiguous_adjective_adverb-0219",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0282",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "The System must be available to users:",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "The service must be available to users:",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-ambiguous_adjective_adverb-0282",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0284",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "Unplanned downtime for the System must not exceed <xx hours/minutes> per <rolling three month period>.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "Unplanned downtime for the service must not exceed <xx hours/minutes> per <rolling three month period>.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-ambiguous_adjective_adverb-0284",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    },
+    {
+      "case_id": "arta-v8-clean-ambiguous_adjective_adverb-0912",
+      "exclusion_reason": "no independent label for rewritten text",
+      "original_text": "Web Store shall operate with the following internet browsers: Microsoft Internet Explorer version 6 and 7, Netscape Communicator Version 4 and 5.",
+      "paraphrase_status": "controlled_probe_unvalidated",
+      "paraphrase_text": "Web Store shall operate with the following internet browsers: Microsoft Internet Explorer version 6 and 7, Netscape Communicator Version 4 and 5.",
+      "primary_metric_eligible": false,
+      "probe_id": "paraphrase-arta-v8-clean-ambiguous_adjective_adverb-0912",
+      "replacement": null,
+      "target_family": "ambiguous_adjective_adverb"
+    }
+  ],
+  "status": "secondary_unvalidated_probe"
+}

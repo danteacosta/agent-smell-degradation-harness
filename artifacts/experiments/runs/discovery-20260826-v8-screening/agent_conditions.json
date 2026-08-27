@@ -1,0 +1,32 @@
+{
+  "conditions": {
+    "no_verifier": {
+      "alert_count": 0,
+      "observed_successes": 12,
+      "simulation_only": true,
+      "success_rate": 0.5,
+      "total_cases": 24
+    },
+    "verifier_alert": {
+      "alert_count": 11,
+      "interpretation": "alert was observed but was not connected to a revision action",
+      "observed_successes": 12,
+      "simulation_only": true,
+      "success_rate": 0.5,
+      "total_cases": 24
+    },
+    "verifier_alert_plus_revision": {
+      "alert_count": 11,
+      "hypothetical_repaired_failures": 11,
+      "interpretation": "upper-bound control assuming every flagged failed case is perfectly repaired",
+      "observed_successes": 23,
+      "simulation_only": true,
+      "success_rate": 0.9583333333333334,
+      "total_cases": 24
+    }
+  },
+  "simulation_only": true,
+  "source_run": "discovery-20260826-v7",
+  "status": "simulation_only",
+  "unique_behavior_cases": 24
+}

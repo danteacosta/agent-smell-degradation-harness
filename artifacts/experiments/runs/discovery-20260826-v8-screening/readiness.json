@@ -1,0 +1,24 @@
+{
+  "blocking_reasons": [
+    "real_models",
+    "expert_annotation"
+  ],
+  "confirmatory_ready": false,
+  "duplicate_subset_fraction": 0.2,
+  "expert_annotation_status": "pending",
+  "model_slots": [
+    {
+      "model_id": "openai-primary",
+      "provider": "openai",
+      "status": "not_run"
+    },
+    {
+      "model_id": "anthropic-primary",
+      "provider": "anthropic",
+      "status": "not_run"
+    }
+  ],
+  "real_model_runs": 0,
+  "required_annotators": 2,
+  "status": "blocked_until_external_validation"
+}

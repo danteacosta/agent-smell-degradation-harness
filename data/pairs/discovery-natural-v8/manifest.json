@@ -1,0 +1,55 @@
+{
+  "schema_version": "requirements-smell-natural-screening/v1",
+  "status": "private_use_only_source_label_screening",
+  "dataset": "ARTA",
+  "dataset_revision": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+  "source_file": "dataset/zenodo_r1/DS1_Evaluation/001_dataset1kv1.xlsx",
+  "source_file_sha256": "351d0e7234d27e3efa2ed9bc2ee930e98d9826aca162332a768c7f2fb27464b3",
+  "parser_version": "arta-xlsx-xml/v1",
+  "sheet": "Sheet1",
+  "selection": {
+    "positive_per_family": 12,
+    "clean_controls_per_family": 12,
+    "clean_control_definition": "no marker in any ARTA smell column",
+    "positive_definition": "exactly one ARTA marker column, assigned to its canonical family",
+    "supported_families": [
+      "subjective_language",
+      "ambiguous_adjective_adverb",
+      "nonverifiable_term",
+      "vague_pronoun",
+      "uncertain_verb",
+      "polysemy"
+    ],
+    "underrepresented_families": [
+      "comparative",
+      "negative",
+      "superlative",
+      "loophole"
+    ]
+  },
+  "licensing": {
+    "license_status": "private_use_only",
+    "redistribution_allowed": false,
+    "derivative_use_allowed": false,
+    "permission_record": null,
+    "publication_policy": "publish hashes and metadata only until written reuse and transformation permission is recorded"
+  },
+  "annotation": {
+    "source_label_type": "arta_dataset_marker",
+    "expert_annotation_status": "pending",
+    "required_annotators": 2,
+    "duplicate_subset_fraction": 0.2,
+    "primary_metric_allowed": false
+  },
+  "models": [
+    {"model_id": "openai-primary", "provider": "openai", "status": "not_run"},
+    {"model_id": "anthropic-primary", "provider": "anthropic", "status": "not_run"}
+  ],
+  "artifact_policy": {
+    "requirement_text_checked_in": false,
+    "requirement_text_in_generated_bundle": false,
+    "source_coordinates_checked_in": true,
+    "requirement_hashes_checked_in": true
+  },
+  "provenance_url": "https://github.com/m-zakeri/ARTA/tree/493297655cd653f8ebc797ef5c3c7ee2f736ab4c"
+}

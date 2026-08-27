@@ -1,0 +1,7 @@
+family,split,n,tp,fp,tn,fn,precision,recall,specificity,f1,evaluable
+subjective_language,test,10,1,0,6,3,1.0,0.25,1.0,0.4,True
+ambiguous_adjective_adverb,test,14,0,0,6,8,None,0.0,1.0,None,True
+nonverifiable_term,test,12,1,0,6,5,1.0,0.16666666666666666,1.0,0.2857142857142857,True
+vague_pronoun,test,14,6,0,6,2,1.0,0.75,1.0,0.8571428571428571,True
+uncertain_verb,test,14,8,0,6,0,1.0,1.0,1.0,1.0,True
+polysemy,test,13,2,1,5,5,0.6666666666666666,0.2857142857142857,0.8333333333333334,0.4,True
