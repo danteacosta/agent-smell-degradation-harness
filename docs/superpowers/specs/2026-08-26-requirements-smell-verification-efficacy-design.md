@@ -47,6 +47,11 @@ The bundle must contain `observable-traces/` with only pre-final records. The
 episode record may retain terminal results for audit, but the verifier receives
 an allowlisted projection. If an observable trace contains a terminal key, the
 verifier fails closed instead of silently continuing.
+Terminal timing needed for lead-time reporting is stored in a separate
+`evaluation-metadata.jsonl` sidecar and joined only after decisions are
+materialized. The sidecar is evaluation-plane data and is never passed to the
+observable scoring function; if it is absent or incomplete, lead time is
+reported as unavailable rather than reconstructed from an absolute local path.
 
 ## Verifier contract
 
@@ -115,6 +120,10 @@ fails closed and reports a leakage rejection.
 Given paired clean/smelly episodes with independent behavioral labels, when
 the efficacy evaluator runs, then it reports a confusion matrix, paired
 discrimination, timing/cost fields, and per-project/per-smell strata.
+
+Given a bundle created on another machine, when its verifier runs, then its
+lead-time calculation uses only the portable evaluation sidecar and does not
+depend on the original provenance path.
 
 Given the tracked discovery run, when the verification command runs, then it
 creates `verification/decisions.jsonl`, `verification/metrics.json`, and

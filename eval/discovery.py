@@ -143,6 +143,36 @@ def _portable_observable_events(trace_path: Path) -> list[dict[str, Any]]:
     return events
 
 
+def _artifact_completed_at(trace_path: Path) -> str | None:
+    """Extract terminal timing for the evaluation plane without its path."""
+
+    if not trace_path.is_file():
+        return None
+    for line in trace_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        event = json.loads(line)
+        if not isinstance(event, dict):
+            continue
+        attributes = event.get("attributes")
+        source_event_name = event.get("source_event_name")
+        if isinstance(attributes, dict):
+            source_event_name = attributes.get("source_event_name", source_event_name)
+        event_names = {
+            str(event.get("name", "")),
+            str(event.get("event_type", "")),
+            str(event.get("checkpoint", "")),
+            str(source_event_name or ""),
+        }
+        if "artifact.completed" not in event_names:
+            continue
+        for key in ("ended_at", "ts", "timestamp"):
+            value = event.get(key)
+            if isinstance(value, str) and value:
+                return value
+    return None
+
+
 def _git_revision(repo_root: Path) -> str:
     try:
         return subprocess.check_output(
@@ -232,6 +262,7 @@ def _materialize_artifacts(
 
     pair_map = {pair["intent_id"]: pair for pair in pairs}
     grouped_code: dict[str, dict[str, str]] = {}
+    evaluation_metadata: list[dict[str, Any]] = []
 
     def normalize_source(source: str) -> str:
         normalized = source.replace("\r\n", "\n").replace("\r", "\n")
@@ -251,6 +282,15 @@ def _materialize_artifacts(
             encoding="utf-8",
         )
         episode["observable_trace_path"] = str(Path("observable-traces") / observable_name)
+        # The raw trace is an execution-local source and is not part of the
+        # portable bundle. Keep only the relative observable projection.
+        episode["provenance_path"] = None
+        evaluation_metadata.append(
+            {
+                "artifact_completed_at": _artifact_completed_at(source_trace),
+                "episode_id": str(episode.get("episode_id", "")),
+            }
+        )
         if episode.get("task_family") != "behavior_codegen":
             continue
         intent_id = str(episode["intent_id"])
@@ -296,6 +336,10 @@ def _materialize_artifacts(
 
     _json_write(bundle_dir / "metrics.json", metrics)
     _json_write(bundle_dir / "run.json", run_config)
+    (bundle_dir / "evaluation-metadata.jsonl").write_text(
+        "\n".join(json.dumps(row, sort_keys=True) for row in evaluation_metadata) + "\n",
+        encoding="utf-8",
+    )
     (bundle_dir / "episodes.jsonl").write_text(
         "\n".join(json.dumps(episode, sort_keys=True) for episode in episodes) + "\n",
         encoding="utf-8",

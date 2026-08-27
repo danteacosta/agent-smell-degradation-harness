@@ -1,0 +1,16 @@
+{
+  "degradation_detected": true,
+  "episode_count": 240,
+  "oracle_pass_rate_clean": 1.0,
+  "oracle_pass_rate_smelly": 0.3333333333333333,
+  "paired_degradation_rate": 0.6666666666666666,
+  "semantic_provenance_coverage": 1.0,
+  "task_families_exercised": [
+    "behavior_codegen",
+    "test_gen"
+  ],
+  "taxonomy_modes": {
+    "none": 160,
+    "unverifiable_output": 80
+  }
+}

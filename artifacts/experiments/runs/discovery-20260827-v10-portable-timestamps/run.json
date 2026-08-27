@@ -1,0 +1,222 @@
+{
+  "case_count": 12,
+  "configuration_id": "cfg-44d22b53b5ab74d3cacebbbbe52a2ce614344b7aabf0ed59ae7247fb6d8776a5",
+  "created_at": "2026-08-27T13:23:56.737730+00:00",
+  "episode_count": 240,
+  "expected_episode_count": 240,
+  "independent_replication_claim": false,
+  "mode": "offline",
+  "model": "stub-smell-blind",
+  "replication_kind": "deterministic_pipeline_repeat",
+  "replication_metrics": [
+    {
+      "degradation_detected": true,
+      "episode_count": 48,
+      "oracle_pass_rate_clean": 1.0,
+      "oracle_pass_rate_smelly": 0.3333333333333333,
+      "paired_degradation_rate": 0.6666666666666666,
+      "provider_run": {
+        "metadata": [
+          {
+            "configuration_hash": "cfg-44d22b53b5ab74d3cacebbbbe52a2ce614344b7aabf0ed59ae7247fb6d8776a5",
+            "episode_count": 48,
+            "extra": {
+              "cost_status": "reported_per_episode",
+              "prompt_sha256s": [],
+              "prompt_template_versions": []
+            },
+            "mode": "stub",
+            "model": "stub-v1",
+            "model_version": "stub-v1",
+            "provider": "deterministic-stub",
+            "run_id": "discovery-20260827-v10-portable-timestamps",
+            "seed": null,
+            "total_cost_usd": 0.0,
+            "total_latency_ms": 0.0
+          }
+        ],
+        "runs": 1,
+        "total_cost_usd": 0.0,
+        "total_latency_ms": 0.0
+      },
+      "semantic_provenance_coverage": 1.0,
+      "task_families_exercised": [
+        "behavior_codegen",
+        "test_gen"
+      ],
+      "taxonomy_modes": {
+        "none": 32,
+        "unverifiable_output": 16
+      }
+    },
+    {
+      "degradation_detected": true,
+      "episode_count": 48,
+      "oracle_pass_rate_clean": 1.0,
+      "oracle_pass_rate_smelly": 0.3333333333333333,
+      "paired_degradation_rate": 0.6666666666666666,
+      "provider_run": {
+        "metadata": [
+          {
+            "configuration_hash": "cfg-44d22b53b5ab74d3cacebbbbe52a2ce614344b7aabf0ed59ae7247fb6d8776a5",
+            "episode_count": 48,
+            "extra": {
+              "cost_status": "reported_per_episode",
+              "prompt_sha256s": [],
+              "prompt_template_versions": []
+            },
+            "mode": "stub",
+            "model": "stub-v1",
+            "model_version": "stub-v1",
+            "provider": "deterministic-stub",
+            "run_id": "discovery-20260827-v10-portable-timestamps",
+            "seed": null,
+            "total_cost_usd": 0.0,
+            "total_latency_ms": 0.0
+          }
+        ],
+        "runs": 1,
+        "total_cost_usd": 0.0,
+        "total_latency_ms": 0.0
+      },
+      "semantic_provenance_coverage": 1.0,
+      "task_families_exercised": [
+        "behavior_codegen",
+        "test_gen"
+      ],
+      "taxonomy_modes": {
+        "none": 32,
+        "unverifiable_output": 16
+      }
+    },
+    {
+      "degradation_detected": true,
+      "episode_count": 48,
+      "oracle_pass_rate_clean": 1.0,
+      "oracle_pass_rate_smelly": 0.3333333333333333,
+      "paired_degradation_rate": 0.6666666666666666,
+      "provider_run": {
+        "metadata": [
+          {
+            "configuration_hash": "cfg-44d22b53b5ab74d3cacebbbbe52a2ce614344b7aabf0ed59ae7247fb6d8776a5",
+            "episode_count": 48,
+            "extra": {
+              "cost_status": "reported_per_episode",
+              "prompt_sha256s": [],
+              "prompt_template_versions": []
+            },
+            "mode": "stub",
+            "model": "stub-v1",
+            "model_version": "stub-v1",
+            "provider": "deterministic-stub",
+            "run_id": "discovery-20260827-v10-portable-timestamps",
+            "seed": null,
+            "total_cost_usd": 0.0,
+            "total_latency_ms": 0.0
+          }
+        ],
+        "runs": 1,
+        "total_cost_usd": 0.0,
+        "total_latency_ms": 0.0
+      },
+      "semantic_provenance_coverage": 1.0,
+      "task_families_exercised": [
+        "behavior_codegen",
+        "test_gen"
+      ],
+      "taxonomy_modes": {
+        "none": 32,
+        "unverifiable_output": 16
+      }
+    },
+    {
+      "degradation_detected": true,
+      "episode_count": 48,
+      "oracle_pass_rate_clean": 1.0,
+      "oracle_pass_rate_smelly": 0.3333333333333333,
+      "paired_degradation_rate": 0.6666666666666666,
+      "provider_run": {
+        "metadata": [
+          {
+            "configuration_hash": "cfg-44d22b53b5ab74d3cacebbbbe52a2ce614344b7aabf0ed59ae7247fb6d8776a5",
+            "episode_count": 48,
+            "extra": {
+              "cost_status": "reported_per_episode",
+              "prompt_sha256s": [],
+              "prompt_template_versions": []
+            },
+            "mode": "stub",
+            "model": "stub-v1",
+            "model_version": "stub-v1",
+            "provider": "deterministic-stub",
+            "run_id": "discovery-20260827-v10-portable-timestamps",
+            "seed": null,
+            "total_cost_usd": 0.0,
+            "total_latency_ms": 0.0
+          }
+        ],
+        "runs": 1,
+        "total_cost_usd": 0.0,
+        "total_latency_ms": 0.0
+      },
+      "semantic_provenance_coverage": 1.0,
+      "task_families_exercised": [
+        "behavior_codegen",
+        "test_gen"
+      ],
+      "taxonomy_modes": {
+        "none": 32,
+        "unverifiable_output": 16
+      }
+    },
+    {
+      "degradation_detected": true,
+      "episode_count": 48,
+      "oracle_pass_rate_clean": 1.0,
+      "oracle_pass_rate_smelly": 0.3333333333333333,
+      "paired_degradation_rate": 0.6666666666666666,
+      "provider_run": {
+        "metadata": [
+          {
+            "configuration_hash": "cfg-44d22b53b5ab74d3cacebbbbe52a2ce614344b7aabf0ed59ae7247fb6d8776a5",
+            "episode_count": 48,
+            "extra": {
+              "cost_status": "reported_per_episode",
+              "prompt_sha256s": [],
+              "prompt_template_versions": []
+            },
+            "mode": "stub",
+            "model": "stub-v1",
+            "model_version": "stub-v1",
+            "provider": "deterministic-stub",
+            "run_id": "discovery-20260827-v10-portable-timestamps",
+            "seed": null,
+            "total_cost_usd": 0.0,
+            "total_latency_ms": 0.0
+          }
+        ],
+        "runs": 1,
+        "total_cost_usd": 0.0,
+        "total_latency_ms": 0.0
+      },
+      "semantic_provenance_coverage": 1.0,
+      "task_families_exercised": [
+        "behavior_codegen",
+        "test_gen"
+      ],
+      "taxonomy_modes": {
+        "none": 32,
+        "unverifiable_output": 16
+      }
+    }
+  ],
+  "replications": 5,
+  "run_id": "discovery-20260827-v10-portable-timestamps",
+  "schema_version": "requirements-smell-discovery-run/v1",
+  "source_revision": "6e0c8ed36b07567c7005b37e4079e1f8bb241543",
+  "status": "discovery_only",
+  "task_families": [
+    "test_gen",
+    "behavior_codegen"
+  ]
+}

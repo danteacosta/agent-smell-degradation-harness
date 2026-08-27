@@ -558,7 +558,7 @@ def _mean(rows: Sequence[Mapping[str, Any]], field: str) -> float | None:
     return sum(values) / len(values) if values else None
 
 
-def _mean_lead_time_ms(rows: Sequence[Mapping[str, Any]]) -> float | None:
+def _lead_time_values(rows: Sequence[Mapping[str, Any]]) -> list[float]:
     values: list[float] = []
     for row in rows:
         first = row.get("first_signal_at")
@@ -571,6 +571,11 @@ def _mean_lead_time_ms(rows: Sequence[Mapping[str, Any]]) -> float | None:
         except ValueError:
             continue
         values.append((terminal_dt - first_dt).total_seconds() * 1000)
+    return values
+
+
+def _mean_lead_time_ms(rows: Sequence[Mapping[str, Any]]) -> float | None:
+    values = _lead_time_values(rows)
     return sum(values) / len(values) if values else None
 
 
@@ -638,6 +643,7 @@ def compute_efficacy_metrics(
         "criteria": criteria,
         "leakage_rejections": int(leakage_rejections),
         "mean_lead_time_ms": _mean_lead_time_ms(rows),
+        "lead_time_observation_count": len(_lead_time_values(rows)),
         "mean_verifier_runtime_ms": _mean(rows, "verifier_runtime_ms"),
         "mean_provider_latency_ms": _mean(rows, "provider_latency_ms"),
         "total_provider_cost_usd": sum(provider_costs) if provider_costs else 0.0,
@@ -681,20 +687,33 @@ def _resolve_observable_trace(bundle_dir: Path, episode: Mapping[str, Any]) -> P
     raise VerificationInputError("episode has no observable trace path")
 
 
-def _artifact_completed_at(episode: Mapping[str, Any]) -> str | None:
-    path_value = episode.get("provenance_path")
-    if not isinstance(path_value, str) or not path_value:
-        return None
-    path = Path(path_value)
+def _read_evaluation_metadata(bundle_dir: Path) -> dict[str, str | None]:
+    """Read terminal timing from the portable evaluation-plane sidecar."""
+
+    path = bundle_dir / "evaluation-metadata.jsonl"
     if not path.is_file():
-        return None
-    for event in _read_jsonl(path):
-        if str(event.get("name", "")) == "artifact.completed" or str(event.get("source_event_name", "")) == "artifact.completed":
-            return _event_time(event)
-        attributes = event.get("attributes")
-        if isinstance(attributes, Mapping) and attributes.get("source_event_name") == "artifact.completed":
-            return _event_time(event)
-    return None
+        return {}
+    metadata: dict[str, str | None] = {}
+    for row in _read_jsonl(path):
+        episode_id = row.get("episode_id")
+        if not isinstance(episode_id, str) or not episode_id:
+            raise VerificationInputError("evaluation metadata has no episode_id")
+        if episode_id in metadata:
+            raise VerificationInputError(f"duplicate evaluation metadata for {episode_id}")
+        artifact_completed_at = row.get("artifact_completed_at")
+        if artifact_completed_at is not None and not isinstance(artifact_completed_at, str):
+            raise VerificationInputError(
+                f"evaluation metadata for {episode_id} has an invalid artifact timestamp"
+            )
+        metadata[episode_id] = artifact_completed_at
+    return metadata
+
+
+def _artifact_completed_at(
+    episode: Mapping[str, Any], evaluation_metadata: Mapping[str, str | None]
+) -> str | None:
+    value = evaluation_metadata.get(str(episode.get("episode_id", "")))
+    return value if isinstance(value, str) and value else None
 
 
 def _behavior_label(episode: Mapping[str, Any]) -> int | None:
@@ -732,9 +751,12 @@ def _verification_readme(metrics: Mapping[str, Any]) -> str:
             f"- Interval support status: `{metrics.get('interval_status')}`",
             f"- Repeated observations agree: `{stability.get('all_repetitions_agree')}`",
             f"- Mean lead time before artifact completion (ms): `{metrics.get('mean_lead_time_ms')}`",
+            f"- Lead-time observations: `{metrics.get('lead_time_observation_count', 0)}`",
             "",
             "Five offline repetitions of the deterministic stub are pipeline-stability checks,",
             "not independent model samples; their duplicate rows are deduplicated for primary metrics.",
+            "Terminal timing is read from the portable `evaluation-metadata.jsonl` sidecar after",
+            "the verifier decision; missing metadata leaves lead time unavailable.",
             "On macOS, `trusted_fixture` executes checked-in reference functions in the parent process",
             "with restricted builtins. It is not production subprocess isolation against hostile code.",
             "",
@@ -764,6 +786,7 @@ def verify_bundle(
         run_value = json.loads(run_path.read_text(encoding="utf-8"))
         if isinstance(run_value, Mapping):
             run_config = dict(run_value)
+    evaluation_metadata = _read_evaluation_metadata(root)
     expected_episode_count = run_config.get("expected_episode_count")
     if expected_episode_count is not None and len(episodes) != int(expected_episode_count):
         raise VerificationInputError(
@@ -829,7 +852,7 @@ def verify_bundle(
             "decision": decision_row["decision"],
             "first_signal_checkpoint": decision_row["first_signal_checkpoint"],
             "first_signal_at": decision_row["first_signal_at"],
-            "artifact_completed_at": _artifact_completed_at(episode),
+            "artifact_completed_at": _artifact_completed_at(episode, evaluation_metadata),
             "verifier_runtime_ms": decision_row["verifier_runtime_ms"],
             "provider_latency_ms": provider_meta.get("latency_ms"),
             "provider_cost_usd": provider_meta.get("cost_usd"),

@@ -165,8 +165,13 @@ project/smell strata. A `descriptive_only` status means that the frozen
 discovery rule pack produced an auditable controlled result; its point
 estimates are development diagnostics, not evidence of effectiveness on new
 requirements or a universal efficiency claim.
+Terminal timestamps used for lead time are materialized separately in
+`evaluation-metadata.jsonl` and joined only after the verifier decision. This
+keeps timing portable without allowing terminal evaluation data into the
+oracle-free observable projection; bundles without the sidecar report lead
+time as unavailable.
 
-The hardened v7 rerun uses five repetitions of the deterministic offline stub.
+The original hardened v7 rerun uses five repetitions of the deterministic offline stub.
 This produces 240 total decisions: 120 `test_gen` decisions that are
 observability-only and 120 raw `behavior_codegen` rows. The primary efficacy
 matrix deduplicates those repetitions by `(intent_id, variant, task_family)`,
@@ -176,6 +181,18 @@ are a pipeline-stability check, not independent model evidence. The v7 run is
 therefore useful for validating the detector and artifact pipeline, but it does
 not establish LLM generalization, production latency/cost, or population-level
 precision.
+
+The v10 portability rerun keeps the same frozen corpus, rule pack and
+descriptive-only estimand. Its purpose was to remove the machine-specific
+provenance-path dependency from terminal timing, not to improve the detector.
+The verified bundle is
+`artifacts/experiments/runs/discovery-20260827-v10-portable-timestamps/`.
+It has five deterministic pipeline repetitions, 240 decisions, 24 unique
+behavior cases, and the same `TP=11, FN=1, FP=0, TN=12` matrix. The local
+lead-time observation is now portable (`12` observations; mean `0.078 ms`),
+but it measures the deterministic offline fixture and must not be presented as
+LLM or production latency. The earlier v9 bundle is an intermediate local
+diagnostic and is not a published result.
 
 The v8 screening also contains a deliberate detector comparison. The frozen
 `natural-lexicon/v1` baseline is a lower bound: it only asks whether a small

@@ -10,6 +10,7 @@ from eval.discovery_verifier import (
     deduplicate_repeated_rows,
     derive_observable_signals,
     score_observable_episode,
+    VerificationInputError,
     verify_bundle,
 )
 
@@ -258,3 +259,71 @@ def test_verify_bundle_writes_decisions_without_labels_and_metrics(tmp_path: Pat
     assert (bundle / "verification" / "metrics.json").is_file()
     assert (bundle / "verification" / "labels.jsonl").is_file()
     assert (bundle / "verification" / "README.md").is_file()
+    assert report["metrics"]["mean_lead_time_ms"] is None
+    assert report["metrics"]["lead_time_observation_count"] == 0
+
+
+def test_verify_bundle_uses_portable_terminal_metadata_for_lead_time(tmp_path: Path):
+    bundle = tmp_path / "bundle"
+    traces = bundle / "observable-traces"
+    traces.mkdir(parents=True)
+    _trace(traces / "clean.jsonl")
+    _trace(traces / "smelly.jsonl")
+    episodes = [
+        {
+            **_episode(
+                intent_id="I-1",
+                variant="clean",
+                requirement="The system shall detect malicious requests and reject them.",
+            ),
+            "behavior_status": "passed",
+            "oracle_passed": True,
+            "observable_trace_path": "observable-traces/clean.jsonl",
+            "provenance_path": "/path/from/another/machine/clean.jsonl",
+        },
+        {
+            **_episode(
+                intent_id="I-1",
+                variant="smelly",
+                requirement="The system shall detect malicious requests.",
+            ),
+            "observable_trace_path": "observable-traces/smelly.jsonl",
+            "provenance_path": "/path/from/another/machine/smelly.jsonl",
+        },
+    ]
+    (bundle / "episodes.jsonl").write_text(
+        "\n".join(json.dumps(episode) for episode in episodes) + "\n",
+        encoding="utf-8",
+    )
+    (bundle / "evaluation-metadata.jsonl").write_text(
+        "\n".join(
+            json.dumps(
+                {
+                    "episode_id": episode["episode_id"],
+                    "artifact_completed_at": "2026-08-26T12:00:03+00:00",
+                }
+            )
+            for episode in episodes
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    report = verify_bundle(bundle)
+
+    assert report["metrics"]["mean_lead_time_ms"] == 3000.0
+
+
+def test_verify_bundle_rejects_duplicate_evaluation_metadata(tmp_path: Path):
+    bundle = tmp_path / "bundle"
+    bundle.mkdir()
+    (bundle / "episodes.jsonl").write_text("\n", encoding="utf-8")
+    duplicate = json.dumps(
+        {"episode_id": "episode-1", "artifact_completed_at": None}
+    )
+    (bundle / "evaluation-metadata.jsonl").write_text(
+        duplicate + "\n" + duplicate + "\n", encoding="utf-8"
+    )
+
+    with pytest.raises(VerificationInputError, match="duplicate evaluation metadata"):
+        verify_bundle(bundle)

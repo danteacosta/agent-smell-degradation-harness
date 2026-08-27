@@ -29,11 +29,21 @@ def test_offline_discovery_materializes_both_variants_and_behavior_results(tmp_p
     assert (bundle / "verification" / "decisions.jsonl").is_file()
     assert (bundle / "verification" / "metrics.json").is_file()
     assert (bundle / "verification" / "README.md").is_file()
+    evaluation_metadata = [
+        json.loads(line)
+        for line in (bundle / "evaluation-metadata.jsonl").read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    assert len(evaluation_metadata) == 48
+    assert all(set(row) == {"artifact_completed_at", "episode_id"} for row in evaluation_metadata)
+    assert all(row["artifact_completed_at"] for row in evaluation_metadata)
     episodes = [
         json.loads(line)
         for line in (bundle / "episodes.jsonl").read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
+    assert all(episode.get("provenance_path") is None for episode in episodes)
+    assert all("/Users/" not in json.dumps(episode) for episode in episodes)
     behavior = [episode for episode in episodes if episode["task_family"] == "behavior_codegen"]
     assert sum(episode["behavior_status"] == "passed" for episode in behavior if episode["variant"] == "clean") == 12
     assert sum(episode["behavior_status"] == "failed_target_condition" for episode in behavior if episode["variant"] == "smelly") == 12
@@ -76,3 +86,4 @@ def test_offline_discovery_reports_deterministic_repeat_stability(tmp_path):
     assert run["replication_kind"] == "deterministic_pipeline_repeat"
     assert run["independent_replication_claim"] is False
     assert run["expected_episode_count"] == 240
+    assert (bundle / "evaluation-metadata.jsonl").is_file()
