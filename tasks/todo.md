@@ -13,10 +13,6 @@
 - [x] Record non-secret prompt and configuration identities.
 - [x] Isolate discovery temporary traces per artifact bundle so reruns do not reuse stale files.
 - [x] Run and verify `discovery-20260826-v7`.
-- [x] Store terminal timing in a portable evaluation-plane sidecar instead of an absolute provenance path.
-- [x] Run and verify `discovery-20260827-v10-portable-timestamps` without overwriting v7.
-- [x] Create the append-only version ledger with results, deltas, rationale and publication status.
-- [x] Define the local/remote synchronization check for every future publication.
 
 ## v7 verification checkpoint
 
@@ -38,41 +34,19 @@ Bundle: `artifacts/experiments/runs/discovery-20260826-v7/`
 - Repetition stability: all five repetitions agree
 - Interval support status: inconclusive because the unique-case sample is small
 
-## v10 portability checkpoint
-
-Bundle: `artifacts/experiments/runs/discovery-20260827-v10-portable-timestamps/`
-
-- Purpose: repair portable lead-time measurement; no detector or corpus change
-- Mode: offline deterministic stub (`stub-smell-blind`)
-- Repetitions: 5 deterministic pipeline repeats; no independent-model claim
-- Total decisions: 240
-- Unique eligible behavior cases: 24
-- Confusion matrix: `TP=11, FN=1, FP=0, TN=12`
-- Recall: 0.9167; Wilson 95% interval [0.6461, 0.9851]
-- Precision: 1.0000; Wilson 95% interval [0.7412, 1.0000]
-- Specificity: 1.0000; Wilson 95% interval [0.7575, 1.0000]
-- Paired discrimination: 0.9167; Wilson 95% interval [0.6461, 0.9851]
-- Lead-time observations: 12; mean 0.078 ms in the local deterministic fixture
-- Status: `descriptive_only`; interval support remains inconclusive
-
-The v10 sidecar contains one terminal timestamp per episode and is joined only
-after the oracle-free verifier decision. All tracked episode provenance paths
-are null/portable, and the bundle passed the artifact leakage checks. This
-round fixes reproducibility of the timing field; it does not create evidence
-of model effectiveness, production performance or generalization.
-
 ## Commands run
 
 ```text
 .venv/bin/python -m pytest -q tests/test_discovery_verifier.py tests/test_discovery.py tests/test_live_agent.py tests/test_episode_identity.py tests/test_provider_run_manifest.py
-.venv/bin/python -m eval.discovery --mode offline --replications 5 --run-id discovery-20260827-v10-portable-timestamps
-.venv/bin/python -m eval.discovery --verify-artifacts --bundle-dir artifacts/experiments/runs/discovery-20260827-v10-portable-timestamps
-.venv/bin/python -m eval.discovery_verifier --bundle-dir artifacts/experiments/runs/discovery-20260827-v10-portable-timestamps
+.venv/bin/python -m eval.discovery --mode offline --replications 5 --run-id discovery-20260826-v7
+.venv/bin/python -m eval.discovery --verify-artifacts --bundle-dir artifacts/experiments/runs/discovery-20260826-v7
 ```
 
-The focused discovery suite passed with 14 tests. The complete supported
-workstation suite passed with 440 tests and 7 expected skips, and `make all`
-finished with `Gate PASSED` using the project test environment.
+The focused suite passed with 35 tests. The complete workstation suite was
+also attempted; its remaining failures are environment-specific Python 3.14
+sandbox/ARP compatibility issues, not failures of the hardened discovery
+tests. The supported Python 3.11/3.12 CI gates remain the authoritative full
+suite check.
 
 ## Remaining work for the real-model phase
 
