@@ -8,6 +8,7 @@
     "expert_annotation"
   ],
   "confirmatory_ready": false,
+  "distinct_completed_model_configurations": 0,
   "duplicate_subset_fraction": 0.2,
   "expert_annotation_status": "pending",
   "model_slots": [

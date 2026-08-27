@@ -48,6 +48,9 @@ established. Recreate the private input with
 `scripts/prepare_natural_v8.py` and run the offline round with
 `--allow-private-source`. The readiness report remains blocked until two
 independent annotators and at least two configured real-model runs are present.
+`annotation-manifest.jsonl` is the label-free ID/hash handoff for a future
+private annotation export; `cases.jsonl` is an audit artifact and is not the
+annotator text payload.
 
 Run the verifier against the newest promoted bundle, or choose one explicitly:
 

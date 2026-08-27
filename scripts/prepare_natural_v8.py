@@ -50,6 +50,17 @@ PROJECT_BY_FILE = {
 PROJECT_ORDER = ("cctns", "ertms", "fun", "gamma", "keepass", "peering")
 
 
+def _ensure_private_output(path: Path) -> None:
+    repository_root = Path(__file__).resolve().parents[1]
+    try:
+        path.resolve().relative_to(repository_root)
+    except ValueError:
+        return
+    raise ValueError(
+        "private source output must be outside the repository; use /private/tmp or another private path"
+    )
+
+
 def _column_index(cell_ref: str) -> int:
     letters = "".join(character for character in cell_ref if character.isalpha())
     result = 0
@@ -195,6 +206,7 @@ def prepare(
     positives_per_family: int = 12,
     clean_controls_per_family: int = 12,
 ) -> None:
+    _ensure_private_output(output_path)
     source_hash = hashlib.sha256(workbook_path.read_bytes()).hexdigest()
     header, raw_rows = read_sheet(workbook_path)
     if header[: len(ALL_MARKER_COLUMNS) + 2] != [

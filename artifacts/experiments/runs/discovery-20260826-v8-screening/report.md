@@ -13,6 +13,7 @@ Ele não prova que o detector entende o requisito, porque os rótulos usados nes
 - Cada família tem 12 positivos de fonte e 12 controles sem marcador; nesta configuração, os 144 registros de origem são distintos.
 - Split por projeto: treino=ertms, keepass; calibração=cctns; teste=fun, gamma, peering.
 - Texto original: executado a partir de um arquivo privado local e redigido dos artefatos versionados.
+- Handoff de anotação: `annotation-manifest.jsonl` contém somente IDs, hashes e família; o texto precisa ser exportado localmente, sem rótulos ARTA.
 
 ## Resultado do baseline no teste
 

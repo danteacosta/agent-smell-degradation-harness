@@ -64,11 +64,7 @@ _ARTIFACT_CASE_FIELDS = (
     "source_file_id",
     "project_id",
     "target_family",
-    "source_label",
     "source_label_type",
-    "source_smell_markers",
-    "clean_control",
-    "clean_control_definition",
     "expert_annotation_status",
     "paraphrase_status",
     "license_status",
@@ -183,6 +179,10 @@ def validate_case_set(
         raise ValueError(f"unsupported natural-smell families: {sorted(unknown_families)}")
     if not cases:
         raise ValueError("validation corpus is empty")
+    observed_families = {str(case.get("target_family", "")) for case in cases}
+    unselected_families = observed_families - set(families)
+    if unselected_families:
+        raise ValueError(f"corpus contains unselected target families: {sorted(unselected_families)}")
     provenance_fields = (
         "source_dataset",
         "source_dataset_commit",
@@ -342,6 +342,14 @@ def _v7_key(row: Mapping[str, Any]) -> tuple[str, str, str]:
     return str(workload), str(variant), str(task_family)
 
 
+def _v7_repetition_key(row: Mapping[str, Any]) -> tuple[str, str, str, int]:
+    key = _v7_key(row)
+    replication_id = row.get("replication_id")
+    if isinstance(replication_id, bool) or not isinstance(replication_id, int) or replication_id < 0:
+        raise ValueError(f"v7 simulation row {key} requires a non-negative integer replication_id")
+    return (*key, replication_id)
+
+
 def summarize_v7_agent_conditions(v7_bundle: str | Path | None = None) -> dict[str, Any]:
     """Summarize observed v7 outcomes as a simulation-only condition control."""
 
@@ -356,9 +364,15 @@ def summarize_v7_agent_conditions(v7_bundle: str | Path | None = None) -> dict[s
         }
     episode_by_key: dict[tuple[str, str, str], dict[str, Any]] = {}
     label_by_key: dict[tuple[str, str, str], dict[str, Any]] = {}
+    episode_repetitions: set[tuple[str, str, str, int]] = set()
+    label_repetitions: set[tuple[str, str, str, int]] = set()
     for row in episodes:
         if row.get("task_family") == "behavior_codegen":
             key = _v7_key(row)
+            repetition_key = _v7_repetition_key(row)
+            if repetition_key in episode_repetitions:
+                raise ValueError(f"duplicate v7 episode repetition for {repetition_key}")
+            episode_repetitions.add(repetition_key)
             if not isinstance(row.get("oracle_passed"), bool):
                 raise ValueError(f"v7 episode {key} has non-boolean oracle_passed")
             existing = episode_by_key.get(key)
@@ -368,6 +382,10 @@ def summarize_v7_agent_conditions(v7_bundle: str | Path | None = None) -> dict[s
     for row in labels:
         if row.get("task_family") == "behavior_codegen":
             key = _v7_key(row)
+            repetition_key = _v7_repetition_key(row)
+            if repetition_key in label_repetitions:
+                raise ValueError(f"duplicate v7 verification repetition for {repetition_key}")
+            label_repetitions.add(repetition_key)
             decision = row.get("decision")
             if decision not in {"approve", "warn", "block"}:
                 raise ValueError(f"v7 label {key} has invalid decision")
@@ -449,7 +467,13 @@ def readiness_report(model_runs: Sequence[Mapping[str, Any]] | None = None) -> d
     if runs:
         model_slots = [dict(run) for run in runs]
     blocking_reasons: list[str] = []
-    if not all(slot.get("status") == "completed" for slot in model_slots):
+    completed_models = [slot for slot in model_slots if slot.get("status") == "completed"]
+    completed_configurations = {
+        (str(slot.get("provider", "")).strip(), str(slot.get("model_id", "")).strip())
+        for slot in completed_models
+        if str(slot.get("provider", "")).strip() and str(slot.get("model_id", "")).strip()
+    }
+    if len(completed_configurations) < 2:
         blocking_reasons.append("real_models")
     blocking_reasons.append("expert_annotation")
     return {
@@ -463,6 +487,7 @@ def readiness_report(model_runs: Sequence[Mapping[str, Any]] | None = None) -> d
         "required_annotators": required_annotators,
         "duplicate_subset_fraction": duplicate_subset_fraction,
         "real_model_runs": sum(slot.get("status") == "completed" for slot in model_slots),
+        "distinct_completed_model_configurations": len(completed_configurations),
         "model_slots": model_slots,
         "blocking_reasons": blocking_reasons,
     }
@@ -567,6 +592,7 @@ def _write_report(
         "- Cada família tem 12 positivos de fonte e 12 controles sem marcador; nesta configuração, os 144 registros de origem são distintos.",
         f"- Split por projeto: treino={', '.join(split_manifest['project_assignments']['train'])}; calibração={', '.join(split_manifest['project_assignments']['calibration'])}; teste={', '.join(split_manifest['project_assignments']['test'])}.",
         "- Texto original: executado a partir de um arquivo privado local e redigido dos artefatos versionados.",
+        "- Handoff de anotação: `annotation-manifest.jsonl` contém somente IDs, hashes e família; o texto precisa ser exportado localmente, sem rótulos ARTA.",
         "",
         "## Resultado do baseline no teste",
         "",
@@ -610,6 +636,7 @@ def run_validation_round(
     supported_families: Sequence[str] = SUPPORTED_FAMILIES,
     minimum_per_family: int = 10,
     minimum_clean_per_family: int = 10,
+    minimum_test_per_class: int = 2,
     v7_bundle: str | Path | None = None,
     allow_private_source: bool = False,
 ) -> dict[str, Any]:
@@ -640,9 +667,14 @@ def run_validation_round(
         result["test_stratum"] = {
             "positive": test_positive,
             "clean_control": test_clean,
-            "evaluable": test_positive >= 2 and test_clean >= 2,
-            "minimum_per_class_for_evaluation": 2,
+            "evaluable": test_positive >= minimum_test_per_class and test_clean >= minimum_test_per_class,
+            "minimum_per_class_for_evaluation": minimum_test_per_class,
         }
+        if not result["test_stratum"]["evaluable"]:
+            raise ValueError(
+                f"{family} test stratum is not evaluable: requires at least "
+                f"{minimum_test_per_class} positive and clean cases"
+            )
     paraphrase_probe = generate_paraphrase_probe(split_cases)
     agent_conditions = summarize_v7_agent_conditions(v7_bundle)
     readiness = readiness_report()
@@ -656,12 +688,27 @@ def run_validation_round(
             for key in _ARTIFACT_CASE_FIELDS
             if key in case
         }
-        redacted["_split"] = case["_split"]
         redacted["requirement_text_sha256"] = hashlib.sha256(
             str(case["requirement_text"]).encode("utf-8")
         ).hexdigest()
         redacted_cases.append(redacted)
     _write_jsonl(bundle / "cases.jsonl", redacted_cases)
+    _write_jsonl(
+        bundle / "annotation-manifest.jsonl",
+        [
+            {
+                "case_id": case["case_id"],
+                "target_family": case["target_family"],
+                "requirement_text_sha256": hashlib.sha256(
+                    str(case["requirement_text"]).encode("utf-8")
+                ).hexdigest(),
+                "annotation_status": "pending",
+                "blinded": True,
+                "source_text_available_only_in_private_input": True,
+            }
+            for case in split_cases
+        ],
+    )
     _write_json(bundle / "corpus-manifest.json", {
         "schema_version": SCHEMA_VERSION,
         "status": "source_label_screening_not_expert_validated",
@@ -714,6 +761,7 @@ def run_validation_round(
         "split_manifest": "splits.json",
         "artifacts": [
             "cases.jsonl",
+            "annotation-manifest.jsonl",
             "corpus-manifest.json",
             "splits.json",
             "baseline_results.json",

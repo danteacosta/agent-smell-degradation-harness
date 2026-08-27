@@ -54,6 +54,9 @@ approved for redistribution:
 
 The generated artifact bundle redacts requirement text and keeps only hashes,
 split assignments, metrics, provenance, and readiness status.
+The tracked `annotation-manifest.jsonl` is a blinded ID/hash handoff only; it
+does not contain requirement text or ARTA labels. Exporting text for annotation
+must happen locally from the private input.
 
 ## Interpretation boundary
 

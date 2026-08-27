@@ -88,6 +88,14 @@ def test_validation_rejects_marker_from_another_family() -> None:
         validate_case_set(cases, supported_families=("subjective_language",), minimum_per_family=1, minimum_clean_per_family=1)
 
 
+def test_validation_rejects_unselected_target_family() -> None:
+    cases = [_case("c1", "p1", "smelly"), _case("c2", "p2", "clean")]
+    cases[0]["target_family"] = "comparative"
+
+    with pytest.raises(ValueError, match="unselected target families"):
+        validate_case_set(cases, supported_families=("subjective_language",), minimum_per_family=1, minimum_clean_per_family=1)
+
+
 def test_loader_rejects_unknown_fields(tmp_path) -> None:
     path = tmp_path / "cases.jsonl"
     row = _case("c1", "p1")
@@ -137,6 +145,17 @@ def test_readiness_blocks_without_experts_and_real_models() -> None:
     assert report["annotation_rubric"]["rubric_version"] == "natural-rubric-v1"
 
 
+def test_readiness_requires_two_distinct_completed_model_configurations() -> None:
+    one_model = [{"model_id": "model-a", "provider": "provider-a", "status": "completed"}]
+    duplicate_models = [
+        {"model_id": "model-a", "provider": "provider-a", "status": "completed"},
+        {"model_id": "model-a", "provider": "provider-a", "status": "completed"},
+    ]
+
+    assert readiness_report(one_model)["confirmatory_ready"] is False
+    assert readiness_report(duplicate_models)["distinct_completed_model_configurations"] == 1
+
+
 def test_offline_round_writes_explicit_screening_artifacts(tmp_path) -> None:
     cases = []
     for index, project in enumerate(("p1", "p2", "p3"), start=1):
@@ -151,6 +170,7 @@ def test_offline_round_writes_explicit_screening_artifacts(tmp_path) -> None:
         supported_families=("subjective_language",),
         minimum_per_family=1,
         minimum_clean_per_family=1,
+        minimum_test_per_class=1,
     )
 
     assert result["status"] == "blocked_until_external_validation"
@@ -160,24 +180,64 @@ def test_offline_round_writes_explicit_screening_artifacts(tmp_path) -> None:
     assert (tmp_path / "artifacts" / "test-round" / "baseline-metrics.svg").exists()
     cases_artifact = (tmp_path / "artifacts" / "test-round" / "cases.jsonl").read_text(encoding="utf-8")
     assert '"requirement_text"' not in cases_artifact
-    assert '"_split"' in cases_artifact
+    assert '"source_label"' not in cases_artifact
+    assert '"source_smell_markers"' not in cases_artifact
+    assert (tmp_path / "artifacts" / "test-round" / "annotation-manifest.jsonl").exists()
     probe_artifact = json.loads(
         (tmp_path / "artifacts" / "test-round" / "paraphrase_probe.json").read_text(encoding="utf-8")
     )
     assert all("original_text" not in probe for probe in probe_artifact["probes"])
     assert all("paraphrase_text" not in probe for probe in probe_artifact["probes"])
+    forbidden_fields = {"requirement_text", "original_text", "paraphrase_text", "source_label", "source_smell_markers"}
+
+    def assert_no_forbidden_fields(value: object) -> None:
+        if isinstance(value, dict):
+            assert not forbidden_fields.intersection(value)
+            for child in value.values():
+                assert_no_forbidden_fields(child)
+        elif isinstance(value, list):
+            for child in value:
+                assert_no_forbidden_fields(child)
+
+    for artifact_path in (tmp_path / "artifacts" / "test-round").glob("*.json"):
+        assert_no_forbidden_fields(json.loads(artifact_path.read_text(encoding="utf-8")))
+    for line in (tmp_path / "artifacts" / "test-round" / "cases.jsonl").read_text(encoding="utf-8").splitlines():
+        assert_no_forbidden_fields(json.loads(line))
+
+    with pytest.raises(ValueError, match="not evaluable"):
+        run_validation_round(
+            corpus,
+            output_root=tmp_path / "ineligible-artifacts",
+            run_id="ineligible-round",
+            supported_families=("subjective_language",),
+            minimum_per_family=1,
+            minimum_clean_per_family=1,
+            minimum_test_per_class=2,
+        )
 
 
 def test_v7_summary_rejects_conflicting_repetitions(tmp_path) -> None:
     bundle = tmp_path / "v7"
     (bundle / "verification").mkdir(parents=True)
     episodes = [
-        {"task_family": "behavior_codegen", "workload_id": "w1", "variant": "clean", "oracle_passed": True},
-        {"task_family": "behavior_codegen", "workload_id": "w1", "variant": "clean", "oracle_passed": False},
+        {"task_family": "behavior_codegen", "workload_id": "w1", "variant": "clean", "replication_id": 0, "oracle_passed": True},
+        {"task_family": "behavior_codegen", "workload_id": "w1", "variant": "clean", "replication_id": 1, "oracle_passed": False},
     ]
-    labels = [{"task_family": "behavior_codegen", "workload_id": "w1", "variant": "clean", "decision": "approve"}]
+    labels = [{"task_family": "behavior_codegen", "workload_id": "w1", "variant": "clean", "replication_id": 0, "decision": "approve"}]
     (bundle / "episodes.jsonl").write_text("\n".join(json.dumps(row) for row in episodes), encoding="utf-8")
     (bundle / "verification" / "labels.jsonl").write_text(json.dumps(labels[0]), encoding="utf-8")
 
     with pytest.raises(ValueError, match="conflicting v7 episode"):
+        summarize_v7_agent_conditions(bundle)
+
+
+def test_v7_summary_rejects_duplicate_repetition_id(tmp_path) -> None:
+    bundle = tmp_path / "v7"
+    (bundle / "verification").mkdir(parents=True)
+    episode = {"task_family": "behavior_codegen", "workload_id": "w1", "variant": "clean", "replication_id": 0, "oracle_passed": True}
+    label = {"task_family": "behavior_codegen", "workload_id": "w1", "variant": "clean", "replication_id": 0, "decision": "approve"}
+    (bundle / "episodes.jsonl").write_text("\n".join(json.dumps(episode) for _ in range(2)), encoding="utf-8")
+    (bundle / "verification" / "labels.jsonl").write_text(json.dumps(label), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="duplicate v7 episode repetition"):
         summarize_v7_agent_conditions(bundle)
