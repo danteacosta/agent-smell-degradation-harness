@@ -1,0 +1,20 @@
+{
+  "candidate_count": 240,
+  "panel_version": "llm-panel/v1",
+  "private_task_file": "/private/tmp/unified-v1-panel-tasks.jsonl",
+  "providers": [
+    "claude",
+    "gpt",
+    "kimi"
+  ],
+  "raw_prompts_in_repository": false,
+  "schema_version": "requirements-smell-panel-task-manifest/v1",
+  "status": "panel_tasks_ready_pending_provider_responses",
+  "task_count": 720,
+  "task_file_sha256": "13fcf1f7e348c7d495ed514868851aaf359bcf63754ad9f7415b3d9e988e230d",
+  "tasks_per_provider": {
+    "claude": 240,
+    "gpt": 240,
+    "kimi": 240
+  }
+}

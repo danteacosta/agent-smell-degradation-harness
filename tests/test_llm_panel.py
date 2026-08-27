@@ -1,0 +1,94 @@
+from __future__ import annotations
+
+import pytest
+
+from label_plane.llm_panel import (
+    PANEL_PROVIDERS,
+    build_consensus,
+    build_panel_prompt,
+    build_panel_tasks,
+    select_human_audit_subset,
+    validate_panel_annotation,
+)
+
+
+def _annotation(provider: str, label: str, item_id: str = "item-1") -> dict[str, object]:
+    return {
+        "item_id": item_id,
+        "provider_id": provider,
+        "model_id": f"{provider}-model-1",
+        "target_family": "vague_pronoun",
+        "label": label,
+        "evidence_span": "it",
+        "rationale": "The referent is not uniquely identifiable.",
+        "confidence": 0.8,
+    }
+
+
+def test_panel_prompt_blinds_source_and_experiment_metadata() -> None:
+    prompt = build_panel_prompt(
+        item_id="opaque-1",
+        requirement_text="The system shall process it.",
+        target_family="vague_pronoun",
+    )
+
+    assert "opaque-1" in prompt
+    assert "vague_pronoun" in prompt
+    assert "source_label" in prompt
+    assert "project_id" in prompt
+    assert "oracle_result" in prompt
+
+
+def test_panel_task_identifier_does_not_reveal_sampling_kind() -> None:
+    tasks = build_panel_tasks([
+        {
+            "candidate_id": "unified-v1-item-opaque",
+            "requirement_text": "The system shall process the request.",
+            "target_family": "polysemy",
+            "candidate_kind": "hard_clean_candidate",
+        }
+    ])
+
+    assert len(tasks) == 3
+    assert all("candidate_kind" not in task for task in tasks)
+    assert all("hard_clean" not in task["item_id"] for task in tasks)
+
+
+def test_panel_annotation_rejects_leaked_fields() -> None:
+    with pytest.raises(ValueError, match="forbidden"):
+        validate_panel_annotation({**_annotation("gpt", "smelly"), "source_label": "smelly"})
+
+
+def test_two_of_three_is_consensus_and_conflict_is_uncertain() -> None:
+    annotations = [
+        _annotation("kimi", "smelly"),
+        _annotation("gpt", "smelly"),
+        _annotation("claude", "clean"),
+    ]
+    result = build_consensus(annotations)
+    assert result["label"] == "smelly"
+    assert result["status"] == "panel_consensus"
+    assert result["agreement"] == 2 / 3
+
+    conflict = build_consensus([
+        _annotation("kimi", "smelly"),
+        _annotation("gpt", "clean"),
+        _annotation("claude", "uncertain"),
+    ])
+    assert conflict["label"] == "uncertain"
+    assert conflict["status"] == "uncertain"
+    assert conflict["human_review_required"] is True
+
+
+def test_consensus_requires_exactly_one_annotation_per_panel_provider() -> None:
+    with pytest.raises(ValueError, match="providers"):
+        build_consensus([_annotation(provider, "clean") for provider in PANEL_PROVIDERS[:2]])
+
+
+def test_human_audit_subset_is_reproducible_and_nonempty() -> None:
+    item_ids = [f"item-{index}" for index in range(10)]
+    first = select_human_audit_subset(item_ids, fraction=0.2, seed=4)
+    second = select_human_audit_subset(item_ids, fraction=0.2, seed=4)
+
+    assert first == second
+    assert len(first) == 2

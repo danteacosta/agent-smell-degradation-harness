@@ -1,0 +1,50 @@
+{
+  "archive": {
+    "sha256": "d7114563fc4690010bd96a8521cefa09392b201e0a7bffff46600935da06697f",
+    "size_bytes": 7174935
+  },
+  "dataset": {
+    "dataset_id": "g4nh7vcfyb",
+    "doi": "10.17632/g4nh7vcfyb.1",
+    "download_url": "https://data.mendeley.com/public-api/zip/g4nh7vcfyb/download/1",
+    "landing_page": "https://data.mendeley.com/datasets/g4nh7vcfyb/1",
+    "version": 1
+  },
+  "license": {
+    "evidence_url": "https://data.mendeley.com/datasets/g4nh7vcfyb/1",
+    "rights_note": "The deposited dataset declares CC BY 4.0; third-party content remains subject to its own rights.",
+    "short_name": "CC BY 4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "observed_counts": {
+    "source_partitions": 5,
+    "unique_project_ids": 163,
+    "unique_project_names": 335,
+    "usable_rows_after_exact_text_deduplication": 8218
+  },
+  "processing": {
+    "candidate_text_storage": "private_external_path",
+    "conditional_sources_not_used": [
+      "ARTA",
+      "PURE",
+      "Paska"
+    ],
+    "exact_text_duplicates_removed": true,
+    "project_disjoint_split": true,
+    "source_class_column_used": false
+  },
+  "schema_version": "requirements-smell-source-manifest/v1",
+  "source_member": {
+    "path_in_archive": "A Unified Multi-Source Dataset of Software Require/Software Requirement Dataset (SR vs NSR) - After the Preprocessing.csv",
+    "sha256": "69f068cb2da867695a0109c9c3c6ce9c47a76ee090a2542ed00395c8d792eee9",
+    "size_bytes": 1423472
+  },
+  "source_partition_counts": {
+    "D1": 967,
+    "D2": 4837,
+    "D3": 1283,
+    "D4": 1102,
+    "D5": 29
+  },
+  "status": "source_acquired_candidate_generation_only"
+}

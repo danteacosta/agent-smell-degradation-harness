@@ -1,0 +1,35 @@
+{
+  "schema_version": "requirements-smell-llm-panel/v1",
+  "rubric_version": "natural-rubric-llm-panel-v1",
+  "annotators": ["kimi", "gpt", "claude"],
+  "independence_rule": "providers receive identical blinded tasks and never receive another provider's response",
+  "labels": ["clean", "smelly", "uncertain", "not_visible"],
+  "consensus_rule": "two_of_three",
+  "uncertain_policy": "exclude from confirmed-case count and primary metrics",
+  "human_review": {
+    "required_for": ["provider_disagreement", "uncertain_consensus"],
+    "random_audit_fraction": 0.2,
+    "random_audit_seed": 17,
+    "required_for_confirmed_cases": true
+  },
+  "blind_fields": [
+    "source_label",
+    "source_smell_markers",
+    "candidate_kind",
+    "project_id",
+    "project_name",
+    "project_split",
+    "oracle_result",
+    "model_provider"
+  ],
+  "required_output_fields": [
+    "item_id",
+    "provider_id",
+    "model_id",
+    "target_family",
+    "label",
+    "evidence_span",
+    "rationale",
+    "confidence"
+  ]
+}
