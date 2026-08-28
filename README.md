@@ -1,6 +1,6 @@
 # Agent Smell Degradation Harness
 
-**Product wedge:** a reliability layer / CI check for coding agents — given a spec and agent run, emit **approve / warn / block** before intent loss reaches production. The product surface is deliberately separate from the confirmatory thesis protocol.
+**Product wedge:** a requirement-integrity gate for coding agents — given a specification and live agent trace, map constraints to pre-final checks and emit **approve / warn / block** before intent loss reaches production. The product surface is deliberately separate from the confirmatory thesis protocol.
 
 **Research questions:** RQ1 measures degradation induced by defective requirements; RQ2 tests whether pre-final, oracle-free observability improves deployable warning. RQ3 evaluates clarification only when that optional extension is enabled.
 

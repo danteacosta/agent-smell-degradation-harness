@@ -37,6 +37,14 @@ legacy `python -m wedge` compatibility command, which retains its historical
 
 The project does not claim a new requirements-smell taxonomy or a first demonstration that smells affect LLM tasks. Its contribution is the reproducible, leakage-resistant measurement of when provider-produced pre-final provenance adds warning value for constraint-preservation failures, including negative boundaries where failures remain silent.
 
+## Publication and product wedge
+
+The primary paper is the causal/temporal study: controlled single-condition requirement defects, independently reviewed constraint outcomes, and the pre-registered B0--B3 observability boundary on unseen projects. The benchmark and ARP profile support reproducibility; panel, clarification, code-generation, RAG, and MergeWave remain extensions or infrastructure.
+
+The product is a requirement-integrity gate, not a generic AgentOps dashboard. It consumes a requirement and a live pre-final trace, maps each declared constraint to planned checks and bounded observations, and emits `approve`, `warn`, or `block` with evidence. It starts in shadow mode and measures false alerts, review time, lead time, cost, and escaped regressions. Synthetic replay is not customer evidence.
+
+The confirmatory outcome table is label-plane data. Each constraint receives a human/adjudicated `covered`, `omitted`, or `uncertain` status keyed by `constraint_id`. Lexical overlap is only a diagnostic baseline and never the semantic outcome.
+
 ## Non-claims
 
 The project does not claim that every requirement defect is detectable, that a product gate replaces tests or review, or that a local curated seed is representative of all software requirements. Results are valid only for the declared task, defect families, provider configuration, labels, and split protocol.

@@ -1,7 +1,7 @@
 # Dependency constraints captured from the reproducible ASD environment.
 # A genuinely network-free install still needs these wheels in a local cache
 # or wheelhouse; this file prevents silent resolver drift.
-agent-reliability-protocol @ git+https://github.com/danteacosta/agent-reliability-protocol.git@95c93db4fd77f0363f5e6dc48f43798afc8eb4be
+agent-reliability-protocol @ git+https://github.com/danteacosta/agent-reliability-protocol.git@a90e3d884830dd267ba61faf0f5ef4c4a58c0a92
 PyYAML==6.0.3
 pytest==9.1.1
 iniconfig==2.3.0
