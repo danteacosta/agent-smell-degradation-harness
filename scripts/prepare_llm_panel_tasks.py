@@ -48,7 +48,23 @@ def main() -> int:
     args.output.parent.mkdir(parents=True, exist_ok=True)
     rendered = "".join(json.dumps(task, ensure_ascii=False, sort_keys=True) + "\n" for task in tasks)
     args.output.write_text(rendered, encoding="utf-8")
-    summary = {"candidate_count": len(candidates), "task_count": len(tasks), "output": str(args.output)}
+    control_counts = Counter(
+        (
+            str(candidate.get("target_family", "")),
+            str(candidate.get("control_condition", "")),
+        )
+        for candidate in candidates
+        if candidate.get("control_condition") is not None
+    )
+    summary = {
+        "candidate_count": len(candidates),
+        "task_count": len(tasks),
+        "output": str(args.output),
+        "control_strata": {
+            f"{family}:{condition}": count
+            for (family, condition), count in sorted(control_counts.items())
+        },
+    }
     if args.manifest:
         digest = hashlib.sha256(rendered.encode("utf-8")).hexdigest()
         manifest = {
@@ -62,6 +78,10 @@ def main() -> int:
             "task_file_sha256": digest,
             "private_task_file": str(args.output),
             "raw_prompts_in_repository": False,
+            "control_strata": {
+                f"{family}:{condition}": count
+                for (family, condition), count in sorted(control_counts.items())
+            },
         }
         args.manifest.parent.mkdir(parents=True, exist_ok=True)
         args.manifest.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")

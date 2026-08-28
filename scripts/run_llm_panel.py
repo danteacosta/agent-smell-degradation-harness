@@ -1,8 +1,9 @@
 """Run private blinded panel tasks against configured model adapters.
 
 The default mode is a ten-task-per-judge smoke run.  A full run requires both
-``--full-run`` and ``--confirm-full-run`` so an accidental invocation cannot
-spend the whole panel budget.
+``--full-run`` and ``--confirm-full-run`` with a ``full_panel`` config so an
+accidental invocation cannot spend the whole panel budget. Use ``--resume``
+to continue an interrupted run without repeating successful calls.
 """
 
 from __future__ import annotations
@@ -47,6 +48,7 @@ def main() -> int:
     parser.add_argument("--limit-per-judge", type=int, default=10)
     parser.add_argument("--full-run", action="store_true")
     parser.add_argument("--confirm-full-run", action="store_true")
+    parser.add_argument("--resume", action="store_true", help="resume an existing run without repeating successful tasks")
     args = parser.parse_args()
 
     if args.full_run and not args.confirm_full_run:
@@ -60,6 +62,8 @@ def main() -> int:
     _assert_private_output(args.errors, repository_root)
     try:
         config = PanelRunConfig.from_json(args.config)
+        if args.full_run and config.stage != "full_panel":
+            parser.error("--full-run requires a config with stage=full_panel")
         manifest = PanelRunner(config).run(
             load_panel_tasks(args.tasks),
             run_id=args.run_id,
@@ -67,6 +71,7 @@ def main() -> int:
             responses_path=args.responses,
             errors_path=args.errors,
             manifest_path=args.manifest,
+            resume=args.resume,
         )
     except (PanelConfigurationError, PanelAdapterError, OSError, ValueError) as exc:
         parser.exit(1, f"error: {exc}\n")

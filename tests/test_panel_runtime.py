@@ -7,6 +7,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from label_plane.llm_panel import build_panel_tasks
+from label_plane.control_matrix import CONTROL_CONDITIONS
 from label_plane.panel_runtime import (
     AdapterResponse,
     AnthropicMessagesAdapter,
@@ -35,19 +36,36 @@ def _tasks(judges: tuple[str, ...] = ("judge-a", "judge-b", "judge-c")) -> list[
     )
 
 
-def _config(*, max_retries: int = 0) -> PanelRunConfig:
+def _config(
+    *, max_retries: int = 0, judge_ids: tuple[str, ...] = ("judge-a", "judge-b", "judge-c")
+) -> PanelRunConfig:
     return PanelRunConfig.from_mapping(
         {
             "schema_version": "requirements-smell-panel-runtime/v1",
             "judges": [
-                {"judge_id": "judge-a", "adapter": "fake", "model": "model-a"},
-                {"judge_id": "judge-b", "adapter": "fake", "model": "model-b"},
-                {"judge_id": "judge-c", "adapter": "fake", "model": "model-c"},
+                {"judge_id": judge_id, "adapter": "fake", "model": f"model-{judge_id}"}
+                for judge_id in judge_ids
             ],
-            "consensus_required": 2,
+            "consensus_required": min(2, len(judge_ids)),
             "max_retries": max_retries,
             "retry_backoff_seconds": 0,
         }
+    )
+
+
+def _uniform_tasks(
+    count: int, judges: tuple[str, ...] = ("judge-a", "judge-b")
+) -> list[dict[str, object]]:
+    return build_panel_tasks(
+        [
+            {
+                "candidate_id": f"uniform-{index}",
+                "requirement_text": f"The system shall process request {index}.",
+                "target_family": "polysemy",
+            }
+            for index in range(count)
+        ],
+        judge_ids=judges,
     )
 
 
@@ -137,8 +155,18 @@ class PanelRuntimeTests(unittest.TestCase):
             {
                 "schema_version": "requirements-smell-panel-runtime/v1",
                 "judges": [
-                    {"judge_id": "judge-a", "adapter": "fake", "model": "model-a"},
-                    {"judge_id": "judge-b", "adapter": "fake", "model": "model-b"},
+                    {
+                        "judge_id": "judge-a",
+                        "adapter": "fake",
+                        "model": "model-a",
+                        "model_snapshot": "model-a@2026-08-27",
+                    },
+                    {
+                        "judge_id": "judge-b",
+                        "adapter": "fake",
+                        "model": "model-b",
+                        "model_snapshot": "model-b@2026-08-27",
+                    },
                 ],
                 "consensus_required": 2,
                 "pricing": {"input_usd_per_1k": 1.0, "output_usd_per_1k": 2.0},
@@ -158,9 +186,291 @@ class PanelRuntimeTests(unittest.TestCase):
             self.assertEqual(manifest["cost"]["status"], "measured")
             self.assertEqual(manifest["cost"]["total_usd"], 0.052)
 
+    def test_full_panel_validates_expected_task_counts_before_network_calls(self) -> None:
+        adapter = FakeAdapter()
+        config = PanelRunConfig.from_mapping(
+            {
+                "schema_version": "requirements-smell-panel-runtime/v1",
+                "stage": "full_panel",
+                "expected_tasks_per_judge": 3,
+                "expected_total_tasks": 6,
+                "judges": [
+                    {
+                        "judge_id": "judge-a",
+                        "adapter": "fake",
+                        "model": "model-a",
+                        "model_snapshot": "model-a@2026-08-27",
+                    },
+                    {
+                        "judge_id": "judge-b",
+                        "adapter": "fake",
+                        "model": "model-b",
+                        "model_snapshot": "model-b@2026-08-27",
+                    },
+                ],
+            }
+        )
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            with self.assertRaisesRegex(ValueError, "expected 3 tasks per judge"):
+                PanelRunner(config, adapters={"fake": adapter}).run(
+                    _uniform_tasks(2),
+                    run_id="panel-counts-1",
+                    responses_path=root / "responses.jsonl",
+                    errors_path=root / "errors.jsonl",
+                    manifest_path=root / "manifest.json",
+                )
+        self.assertEqual(adapter.calls, [])
+
+    def test_full_panel_rejects_equal_counts_with_different_item_sets(self) -> None:
+        adapter = FakeAdapter()
+        config = PanelRunConfig.from_mapping(
+            {
+                "schema_version": "requirements-smell-panel-runtime/v1",
+                "stage": "full_panel",
+                "expected_tasks_per_judge": 2,
+                "expected_total_tasks": 4,
+                "judges": [
+                    {
+                        "judge_id": "judge-a",
+                        "adapter": "fake",
+                        "model": "model-a",
+                        "model_snapshot": "model-a@2026-08-27",
+                    },
+                    {
+                        "judge_id": "judge-b",
+                        "adapter": "fake",
+                        "model": "model-b",
+                        "model_snapshot": "model-b@2026-08-27",
+                    },
+                ],
+            }
+        )
+        tasks = build_panel_tasks(
+            [
+                {
+                    "candidate_id": "left-1",
+                    "requirement_text": "The system shall process request one.",
+                    "target_family": "polysemy",
+                },
+                {
+                    "candidate_id": "left-2",
+                    "requirement_text": "The system shall process request two.",
+                    "target_family": "polysemy",
+                },
+            ],
+            judge_ids=("judge-a",),
+        ) + build_panel_tasks(
+            [
+                {
+                    "candidate_id": "right-1",
+                    "requirement_text": "The system shall process request one.",
+                    "target_family": "polysemy",
+                },
+                {
+                    "candidate_id": "right-3",
+                    "requirement_text": "The system shall process request three.",
+                    "target_family": "polysemy",
+                },
+            ],
+            judge_ids=("judge-b",),
+        )
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            with self.assertRaisesRegex(ValueError, "same item set"):
+                PanelRunner(config, adapters={"fake": adapter}).run(
+                    tasks,
+                    run_id="panel-item-set-1",
+                    responses_path=root / "responses.jsonl",
+                    errors_path=root / "errors.jsonl",
+                    manifest_path=root / "manifest.json",
+                )
+        self.assertEqual(adapter.calls, [])
+
+    def test_cost_budget_stops_before_the_next_call(self) -> None:
+        adapter = FakeAdapter()
+        config = PanelRunConfig.from_mapping(
+            {
+                "schema_version": "requirements-smell-panel-runtime/v1",
+                "stage": "pilot",
+                "max_total_cost_usd": 0.052,
+                "judges": [
+                    {
+                        "judge_id": "judge-a",
+                        "adapter": "fake",
+                        "model": "model-a",
+                        "model_snapshot": "model-a@2026-08-27",
+                    },
+                    {
+                        "judge_id": "judge-b",
+                        "adapter": "fake",
+                        "model": "model-b",
+                        "model_snapshot": "model-b@2026-08-27",
+                    },
+                ],
+                "pricing": {"input_usd_per_1k": 1.0, "output_usd_per_1k": 2.0},
+            }
+        )
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = PanelRunner(config, adapters={"fake": adapter}).run(
+                _uniform_tasks(2),
+                run_id="panel-budget-1",
+                responses_path=root / "responses.jsonl",
+                errors_path=root / "errors.jsonl",
+                manifest_path=root / "manifest.json",
+            )
+
+        self.assertEqual(len(adapter.calls), 2)
+        self.assertEqual(manifest["status"], "stopped_cost_budget")
+        self.assertEqual(manifest["budget"]["status"], "exhausted")
+        self.assertEqual(manifest["completed_task_count"], 2)
+        self.assertEqual(manifest["remaining_task_count"], 2)
+
+    def test_required_control_matrix_is_checked_before_execution(self) -> None:
+        candidates = [
+            {
+                "candidate_id": f"control-{index}",
+                "requirement_text": f"The system shall process request {index}.",
+                "target_family": "polysemy",
+                "control_condition": condition,
+            }
+            for index, condition in enumerate(CONTROL_CONDITIONS)
+        ]
+        config = PanelRunConfig.from_mapping(
+            {
+                "schema_version": "requirements-smell-panel-runtime/v1",
+                "stage": "pilot",
+                "require_negative_controls": True,
+                "judges": [
+                    {
+                        "judge_id": "judge-a",
+                        "adapter": "fake",
+                        "model": "model-a",
+                        "model_snapshot": "model-a@2026-08-27",
+                    },
+                    {
+                        "judge_id": "judge-b",
+                        "adapter": "fake",
+                        "model": "model-b",
+                        "model_snapshot": "model-b@2026-08-27",
+                    },
+                ],
+            }
+        )
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = PanelRunner(config, adapters={"fake": FakeAdapter()}).run(
+                build_panel_tasks(candidates, judge_ids=("judge-a", "judge-b")),
+                run_id="panel-controls-1",
+                responses_path=root / "responses.jsonl",
+                errors_path=root / "errors.jsonl",
+                manifest_path=root / "manifest.json",
+            )
+        self.assertEqual(manifest["control_strata"], {f"polysemy:{condition}": 2 for condition in CONTROL_CONDITIONS})
+
+    def test_resume_is_idempotent_for_completed_tasks(self) -> None:
+        adapter = FakeAdapter()
+        config = _config()
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = {
+                "responses_path": root / "responses.jsonl",
+                "errors_path": root / "errors.jsonl",
+                "manifest_path": root / "manifest.json",
+            }
+            first = PanelRunner(config, adapters={"fake": adapter}).run(
+                _tasks(),
+                run_id="panel-resume-1",
+                limit_per_judge=1,
+                **paths,
+            )
+            calls_after_first = len(adapter.calls)
+            second = PanelRunner(config, adapters={"fake": adapter}).run(
+                _tasks(),
+                run_id="panel-resume-1",
+                limit_per_judge=1,
+                resume=True,
+                **paths,
+            )
+
+        self.assertEqual(calls_after_first, 3)
+        self.assertEqual(len(adapter.calls), calls_after_first)
+        self.assertEqual(first["ok_count"], second["ok_count"])
+        self.assertEqual(second["resumed"], True)
+
+    def test_existing_outputs_require_explicit_resume(self) -> None:
+        adapter = FakeAdapter()
+        config = _config()
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = {
+                "responses_path": root / "responses.jsonl",
+                "errors_path": root / "errors.jsonl",
+                "manifest_path": root / "manifest.json",
+            }
+            PanelRunner(config, adapters={"fake": adapter}).run(
+                _tasks(),
+                run_id="panel-resume-guard",
+                limit_per_judge=1,
+                **paths,
+            )
+            with self.assertRaisesRegex(ValueError, "resume"):
+                PanelRunner(config, adapters={"fake": adapter}).run(
+                    _tasks(),
+                    run_id="panel-resume-guard",
+                    limit_per_judge=1,
+                    **paths,
+                )
+
+    def test_stage_model_snapshot_and_public_configuration_are_recorded(self) -> None:
+        config = PanelRunConfig.from_mapping(
+            {
+                "schema_version": "requirements-smell-panel-runtime/v1",
+                "stage": "prepilot",
+                "judges": [
+                    {
+                        "judge_id": "main",
+                        "adapter": "fake",
+                        "model": "model-main",
+                        "model_snapshot": "model-main@2026-08-27",
+                    }
+                ],
+                "consensus_required": 1,
+            }
+        )
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = PanelRunner(config, adapters={"fake": FakeAdapter()}).run(
+                _tasks(("main",)),
+                run_id="panel-snapshot-1",
+                limit_per_judge=1,
+                responses_path=root / "responses.jsonl",
+                errors_path=root / "errors.jsonl",
+                manifest_path=root / "manifest.json",
+            )
+
+        self.assertEqual(manifest["stage"], "prepilot")
+        self.assertEqual(manifest["judges"][0]["model_snapshot"], "model-main@2026-08-27")
+        self.assertIn("configuration", manifest)
+        self.assertNotIn('"api_key":', json.dumps(manifest))
+
+    def test_runtime_config_rejects_unknown_fields_and_fractional_counts(self) -> None:
+        base = {
+            "schema_version": "requirements-smell-panel-runtime/v1",
+            "judges": [
+                {"judge_id": "judge-a", "adapter": "fake", "model": "model-a"},
+            ],
+            "consensus_required": 1,
+        }
+        with self.assertRaisesRegex(ValueError, "unsupported fields"):
+            PanelRunConfig.from_mapping({**base, "max_total_cost": 1.0})
+        with self.assertRaisesRegex(ValueError, "positive integer"):
+            PanelRunConfig.from_mapping({**base, "expected_total_tasks": 1.5})
+
     def test_retry_is_recorded_without_leaking_response_or_secret(self) -> None:
         adapter = RetryOnceAdapter()
-        config = _config(max_retries=1)
+        config = _config(max_retries=1, judge_ids=("judge-a",))
         with TemporaryDirectory() as directory:
             root = Path(directory)
             responses = root / "responses.jsonl"
