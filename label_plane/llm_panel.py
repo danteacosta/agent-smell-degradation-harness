@@ -196,7 +196,7 @@ def build_consensus(
         raise ValueError("panel consensus requires one item and one target family")
     if providers != set(expected) or len(validated) != len(expected):
         raise ValueError(
-            "panel consensus requires exactly one annotation from every configured judge/provider"
+            "panel consensus requires exactly one annotation from all configured providers/judges"
         )
     labels = Counter(str(annotation["label"]) for annotation in validated)
     label, votes = labels.most_common(1)[0]
