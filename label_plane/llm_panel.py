@@ -288,6 +288,26 @@ def build_consensus_batch(
     return results
 
 
+def calibrate_panel_against_human_review(
+    consensus_rows: Iterable[Mapping[str, Any]], human_labels: Mapping[str, str]
+) -> dict[str, Any]:
+    """Report judge/consensus agreement with independent human audit labels."""
+    rows = [dict(row) for row in consensus_rows if str(row.get("item_id", "")) in human_labels]
+    if not rows:
+        raise ValueError("panel calibration requires audited item labels")
+    by_judge: defaultdict[str, list[bool]] = defaultdict(list)
+    by_family: defaultdict[str, list[bool]] = defaultdict(list)
+    consensus: list[bool] = []
+    for row in rows:
+        expected = str(human_labels[str(row["item_id"])])
+        consensus.append(str(row.get("label")) == expected)
+        by_family[str(row.get("target_family", "unknown"))].append(consensus[-1])
+        for judge, label in dict(row.get("provider_labels", {})).items():
+            by_judge[str(judge)].append(str(label) == expected)
+    rate = lambda values: round(sum(values) / len(values), 4) if values else None
+    return {"status":"exploratory_calibration", "audited_items":len(rows), "consensus_agreement":rate(consensus), "judge_agreement":{k:rate(v) for k,v in sorted(by_judge.items())}, "family_agreement":{k:rate(v) for k,v in sorted(by_family.items())}}
+
+
 def load_jsonl(path: str | Path) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     with Path(path).open(encoding="utf-8") as handle:
@@ -312,6 +332,7 @@ __all__ = [
     "build_consensus_batch",
     "build_panel_prompt",
     "build_panel_tasks",
+    "calibrate_panel_against_human_review",
     "load_jsonl",
     "select_human_audit_subset",
     "select_stratified_human_audit_subset",
