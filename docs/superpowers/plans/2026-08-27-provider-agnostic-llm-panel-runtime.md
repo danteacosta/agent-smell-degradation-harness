@@ -24,7 +24,7 @@ reproducible operational evidence and the historical task contract.
   intent joins, and a separate human/model disagreement field.
 - [x] Add a private four-stratum control-matrix contract without expected or
   gold labels, while keeping the historical two-variant contracts unchanged.
-- [ ] Run the complete CI suite, review the diff, and publish the branch only
+- [x] Run the complete CI suite, review the diff, and publish the branch only
   after the generated artifacts and remote status are verified.
 
 ## Verification commands
@@ -38,3 +38,8 @@ git diff --check
 
 The complete CI suite is authoritative because this workstation does not have
 the repository's pytest dependency installed.
+
+The implementation branch was published at commit `548272f`. CI run
+`33170680479` passed the evaluation gate, `33170680441` passed the
+constraint-replay gate, and `33170680439` passed the wedge check. The branch
+is synchronized with its remote; the main worktree and branch were not changed.
