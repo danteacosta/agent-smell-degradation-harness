@@ -215,6 +215,8 @@ sandbox execution.
 
 The current collection blocker and acceptance checklist are documented in [confirmatory data acquisition](docs/research/confirmatory-data-acquisition.md). The checked-in seven-source seed is development-only. `RuntimeCheckpointAgent.from_provider()` supplies a staged OpenAI/Anthropic-compatible producer whose bounded T1/T2/T3 events precede terminal generation; empirical qualification on two real configurations is still required. `LiveAgent.observe_checkpoints()` remains a nonconfirmatory prompted snapshot, and offline replay remains schema validation rather than thesis evidence.
 
+The [panel validity and constraint-lineage update](docs/research/2026-08-28-panel-validity-and-provenance-update.md) documents the current operational safeguards: full panel runs require a configured conservative cost/attempt cap, panel consensus remains exploratory with mandatory plus stratified human review, and every T3 interpreted constraint has a hash-bound pre-final lineage to planned checks and validation observations. No T4 criterion, oracle, terminal label, or chain-of-thought is included in that lineage.
+
 The scientific and commercial moat audit is recorded in [2026-08-10 moat stress test](docs/research/2026-08-10-moat-stress-test.md). Its conclusion is intentionally conservative: the stack is protocol-ready with a promising wedge, but the moat is not demonstrated until external data, independent labels, provider diversity, adoption, and ROI evidence exist.
 
 The executable customer-validation sequence and metric schema are in the

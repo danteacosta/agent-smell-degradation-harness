@@ -1,7 +1,7 @@
 """Run private blinded panel tasks against configured model adapters.
 
 The default mode is a ten-task-per-judge smoke run.  A full run requires both
-``--full-run`` and ``--confirm-full-run`` so an accidental invocation cannot
+``--full-run`` and ``--confirm-cost`` so an accidental invocation cannot
 spend the whole panel budget.
 """
 
@@ -46,13 +46,13 @@ def main() -> int:
     parser.add_argument("--manifest", required=True, type=Path, help="hash/count-only manifest")
     parser.add_argument("--limit-per-judge", type=int, default=10)
     parser.add_argument("--full-run", action="store_true")
-    parser.add_argument("--confirm-full-run", action="store_true")
+    parser.add_argument("--confirm-cost", action="store_true")
     args = parser.parse_args()
 
-    if args.full_run and not args.confirm_full_run:
-        parser.error("--full-run requires --confirm-full-run")
-    if args.confirm_full_run and not args.full_run:
-        parser.error("--confirm-full-run is valid only with --full-run")
+    if args.full_run and not args.confirm_cost:
+        parser.error("--full-run requires --confirm-cost")
+    if args.confirm_cost and not args.full_run:
+        parser.error("--confirm-cost is valid only with --full-run")
     limit = None if args.full_run else args.limit_per_judge
     repository_root = REPOSITORY_ROOT
     _assert_private_output(args.tasks, repository_root)
@@ -67,6 +67,7 @@ def main() -> int:
             responses_path=args.responses,
             errors_path=args.errors,
             manifest_path=args.manifest,
+            require_budget_cap=args.full_run,
         )
     except (PanelConfigurationError, PanelAdapterError, OSError, ValueError) as exc:
         parser.exit(1, f"error: {exc}\n")

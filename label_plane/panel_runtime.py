@@ -161,6 +161,9 @@ class PanelRunConfig:
     temperature: float = 0.0
     input_usd_per_1k: float | None = None
     output_usd_per_1k: float | None = None
+    max_total_cost_usd: float | None = None
+    max_total_attempts: int | None = None
+    min_request_interval_seconds: float = 0.0
     schema_version: str = RUNTIME_SCHEMA_VERSION
 
     @classmethod
@@ -237,6 +240,15 @@ class PanelRunConfig:
         output_usd_per_1k = _optional_nonnegative_float(
             pricing.get("output_usd_per_1k"), "pricing.output_usd_per_1k"
         )
+        max_total_cost_usd = _optional_positive_float(
+            raw.get("max_total_cost_usd"), "max_total_cost_usd"
+        )
+        max_total_attempts = _optional_positive_int(
+            raw.get("max_total_attempts"), "max_total_attempts"
+        )
+        min_request_interval_seconds = _nonnegative_float(
+            raw.get("min_request_interval_seconds", 0), "min_request_interval_seconds"
+        )
         return cls(
             judges=tuple(judges),
             consensus_required=consensus_required,
@@ -247,6 +259,9 @@ class PanelRunConfig:
             temperature=temperature,
             input_usd_per_1k=input_usd_per_1k,
             output_usd_per_1k=output_usd_per_1k,
+            max_total_cost_usd=max_total_cost_usd,
+            max_total_attempts=max_total_attempts,
+            min_request_interval_seconds=min_request_interval_seconds,
         )
 
     @classmethod
@@ -394,6 +409,7 @@ class PanelRunner:
         errors_path: str | Path,
         manifest_path: str | Path,
         limit_per_judge: int | None = None,
+        require_budget_cap: bool = False,
     ) -> dict[str, Any]:
         if not run_id.strip():
             raise PanelConfigurationError("run_id must be non-empty")
@@ -405,10 +421,12 @@ class PanelRunner:
         if configuration_errors:
             details = "; ".join(configuration_errors)
             raise PanelConfigurationError(f"panel configuration incomplete: {details}")
+        budget = self._preflight_budget(selected, resolved, require_budget_cap=require_budget_cap)
         started = datetime.now(timezone.utc)
         started_perf = time.perf_counter()
         responses: list[dict[str, Any]] = []
         errors: list[dict[str, Any]] = []
+        last_request_at: dict[str, float] = {}
         for task in selected:
             judge = resolved[str(task["provider_id"])]
             adapter = self.adapters.get(judge.adapter)
@@ -416,7 +434,13 @@ class PanelRunner:
                 raise PanelConfigurationError(
                     f"no adapter registered for {judge.adapter}; add an adapter without changing the panel protocol"
                 )
+            previous = last_request_at.get(judge.judge_id)
+            if previous is not None and self.config.min_request_interval_seconds:
+                delay = self.config.min_request_interval_seconds - (time.monotonic() - previous)
+                if delay > 0:
+                    self._sleeper(delay)
             record, error = self._execute_task(task, judge, adapter, run_id=run_id)
+            last_request_at[judge.judge_id] = time.monotonic()
             if record is not None:
                 responses.append(record)
             if error is not None:
@@ -438,11 +462,54 @@ class PanelRunner:
             responses_path=Path(responses_path),
             errors_path=Path(errors_path),
             limited=limit_per_judge is not None,
+            budget=budget,
         )
         manifest_path = Path(manifest_path)
         manifest_path.parent.mkdir(parents=True, exist_ok=True)
         manifest_path.write_text(_canonical_json(manifest) + "\n", encoding="utf-8")
         return manifest
+
+    def _preflight_budget(
+        self,
+        selected: list[dict[str, Any]],
+        resolved: Mapping[str, ResolvedJudgeConfig],
+        *,
+        require_budget_cap: bool,
+    ) -> dict[str, Any]:
+        max_attempts = sum(resolved[str(task["provider_id"])].max_retries + 1 for task in selected)
+        if self.config.max_total_attempts is not None and max_attempts > self.config.max_total_attempts:
+            raise PanelConfigurationError(
+                f"selected panel tasks require up to {max_attempts} attempts, exceeding max_total_attempts={self.config.max_total_attempts}"
+            )
+        estimate: float | None = 0.0
+        for task in selected:
+            judge = resolved[str(task["provider_id"])]
+            item_cost = _worst_case_task_cost(str(task["prompt"]), judge)
+            if item_cost is None:
+                estimate = None
+                break
+            estimate += item_cost * (judge.max_retries + 1)
+        if estimate is not None:
+            estimate = round(estimate, 8)
+        if require_budget_cap:
+            if self.config.max_total_cost_usd is None:
+                raise PanelConfigurationError("full panel run requires max_total_cost_usd in the runtime config")
+            if estimate is None:
+                raise PanelConfigurationError(
+                    "full panel run requires input/output pricing for every judge so its cost cap can be enforced"
+                )
+        if self.config.max_total_cost_usd is not None and estimate is not None and estimate > self.config.max_total_cost_usd:
+            raise PanelConfigurationError(
+                f"conservative panel cost estimate ${estimate:.8f} exceeds max_total_cost_usd=${self.config.max_total_cost_usd:.8f}"
+            )
+        return {
+            "max_total_cost_usd": self.config.max_total_cost_usd,
+            "max_total_attempts": self.config.max_total_attempts,
+            "conservative_max_cost_usd": estimate,
+            "conservative_max_attempts": max_attempts,
+            "min_request_interval_seconds": self.config.min_request_interval_seconds,
+            "full_run_budget_gate": require_budget_cap,
+        }
 
     def _select_tasks(
         self,
@@ -616,6 +683,7 @@ class PanelRunner:
         responses_path: Path,
         errors_path: Path,
         limited: bool,
+        budget: Mapping[str, Any],
     ) -> dict[str, Any]:
         judges = [resolved[judge.judge_id] for judge in self.config.judges]
         return {
@@ -682,6 +750,7 @@ class PanelRunner:
             },
             "usage": _summarize_usage(responses),
             "cost": _summarize_cost(responses, judges),
+            "budget": dict(budget),
         }
 
 
@@ -779,6 +848,23 @@ def _estimate_cost(
         (float(input_tokens) / 1000 * input_usd_per_1k)
         + (float(output_tokens) / 1000 * output_usd_per_1k),
         8,
+    )
+
+
+def _worst_case_task_cost(prompt: str, judge: ResolvedJudgeConfig) -> float | None:
+    """Conservative preflight estimate used only to prevent accidental overspend.
+
+    Input tokens are conservatively bounded by UTF-8 bytes and output is bounded by
+    the configured provider maximum.  This is intentionally a ceiling rather
+    than a billing report; measured usage remains the cost record.
+    """
+
+    if judge.input_usd_per_1k is None or judge.output_usd_per_1k is None:
+        return None
+    input_tokens = max(1, len(prompt.encode("utf-8")))
+    return (
+        input_tokens / 1000 * judge.input_usd_per_1k
+        + judge.max_tokens / 1000 * judge.output_usd_per_1k
     )
 
 

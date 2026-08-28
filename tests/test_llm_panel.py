@@ -8,6 +8,7 @@ from label_plane.llm_panel import (
     build_panel_prompt,
     build_panel_tasks,
     select_human_audit_subset,
+    select_stratified_human_audit_subset,
     validate_panel_annotation,
 )
 
@@ -92,6 +93,20 @@ def test_human_audit_subset_is_reproducible_and_nonempty() -> None:
 
     assert first == second
     assert len(first) == 2
+
+
+def test_stratified_audit_keeps_mandatory_review_and_covers_outcomes() -> None:
+    rows = [
+        {"item_id": "a", "target_family": "polysemy", "status": "panel_consensus", "agreement": 1.0, "human_review_required": False},
+        {"item_id": "b", "target_family": "polysemy", "status": "panel_consensus", "agreement": 2 / 3, "human_review_required": True},
+        {"item_id": "c", "target_family": "vague_pronoun", "status": "uncertain", "agreement": 1 / 3, "human_review_required": True},
+        {"item_id": "d", "target_family": "vague_pronoun", "status": "panel_consensus", "agreement": 1.0, "human_review_required": False},
+    ]
+    audit = select_stratified_human_audit_subset(rows, fraction=0.25, seed=7)
+    selected = {row["item_id"]: row["audit_reason"] for row in audit}
+    assert selected["b"] == "mandatory_disagreement_or_uncertainty"
+    assert selected["c"] == "mandatory_disagreement_or_uncertainty"
+    assert audit == select_stratified_human_audit_subset(rows, fraction=0.25, seed=7)
 
 
 def test_panel_supports_arbitrary_judge_ids_without_provider_branding() -> None:

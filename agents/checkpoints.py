@@ -26,7 +26,7 @@ SECTION_FIELDS = {
         "conditional_semantics",
     ),
     "plan": ("validation_checks", "planned_tools", "coverage_targets"),
-    "execution": ("revisions", "validation_attempts", "errors", "retrieval_events"),
+    "execution": ("revisions", "validation_attempts", "errors", "retrieval_events", "constraint_lineage"),
 }
 CHECKPOINT_ORDER = (
     "interpretation.completed",
@@ -56,6 +56,7 @@ def validate_checkpoint_payload(
     payload: Mapping[str, Any],
     *,
     require_conditional_semantics: bool = False,
+    require_constraint_lineage: bool = False,
 ) -> dict[str, dict[str, Any]]:
     """Validate and normalize a provider checkpoint payload.
 
@@ -72,11 +73,15 @@ def validate_checkpoint_payload(
         if not isinstance(value, Mapping):
             raise ValueError(f"checkpoint section {section} must be an object")
         allowed = set(SECTION_FIELDS[section])
-        legacy_allowed = allowed - {"conditional_semantics"}
+        legacy_allowed = allowed - ({"conditional_semantics"} if section == "interpretation" else {"constraint_lineage"})
         if section == "interpretation" and set(value) == legacy_allowed:
             if require_conditional_semantics:
                 raise ValueError("interpretation.conditional_semantics is required")
             row = {**dict(value), "conditional_semantics": []}
+        elif section == "execution" and set(value) == legacy_allowed:
+            if require_constraint_lineage:
+                raise ValueError("execution.constraint_lineage is required")
+            row = {**dict(value), "constraint_lineage": []}
         elif set(value) == allowed:
             row = dict(value)
         else:
@@ -90,9 +95,50 @@ def validate_checkpoint_payload(
                     row[field] = validate_conditional_semantics(row[field])
                 except ValueError as error:
                     raise ValueError(str(error)) from error
+            elif section == "execution" and field == "constraint_lineage":
+                row[field] = _validate_constraint_lineage(row[field])
             elif not isinstance(row[field], list):
                 raise ValueError(f"checkpoint field {section}.{field} must be a list")
         normalized[section] = row
+    return normalized
+
+
+def _validate_constraint_lineage(value: Any) -> list[dict[str, Any]]:
+    """Validate a bounded pre-final lineage without accepting T4 evidence."""
+
+    if not isinstance(value, list):
+        raise ValueError("checkpoint field execution.constraint_lineage must be a list")
+    forbidden = {"artifact", "criterion", "label", "oracle", "outcome", "final"}
+    normalized: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for entry in value:
+        if not isinstance(entry, Mapping) or set(entry) != {
+            "constraint_id", "constraint_sha256", "planned_check_ids", "observation_id", "status", "available_at"
+        }:
+            raise ValueError("constraint lineage entries have an invalid field set")
+        if any(key in forbidden for key in entry):
+            raise ValueError("constraint lineage cannot contain terminal evidence")
+        constraint_id = str(entry["constraint_id"]).strip()
+        digest = str(entry["constraint_sha256"]).strip()
+        checks = entry["planned_check_ids"]
+        observation_id = str(entry["observation_id"]).strip()
+        status = str(entry["status"])
+        available_at = str(entry["available_at"])
+        if not constraint_id or constraint_id in seen or len(digest) != 64:
+            raise ValueError("constraint lineage requires unique IDs and SHA-256 hashes")
+        if not isinstance(checks, list) or any(not isinstance(item, str) or not item.strip() for item in checks):
+            raise ValueError("constraint lineage planned_check_ids must be a list of IDs")
+        if not observation_id or status not in {"covered", "uncovered"} or available_at != "T3":
+            raise ValueError("constraint lineage has invalid pre-final status metadata")
+        seen.add(constraint_id)
+        normalized.append({
+            "constraint_id": constraint_id,
+            "constraint_sha256": digest,
+            "planned_check_ids": list(checks),
+            "observation_id": observation_id,
+            "status": status,
+            "available_at": available_at,
+        })
     return normalized
 
 
@@ -101,6 +147,7 @@ def validate_agent_execution(
     *,
     not_before: str | None = None,
     require_conditional_semantics: bool = False,
+    require_constraint_lineage: bool = False,
 ) -> AgentExecution:
     if tuple(observation.checkpoint for observation in execution.checkpoints) != CHECKPOINT_ORDER:
         raise ValueError("runtime checkpoints must follow interpretation, plan, execution start, and tool completion")
@@ -140,6 +187,7 @@ def validate_agent_execution(
                     for key in REQUIRED_SECTIONS
                 },
                 require_conditional_semantics=require_conditional_semantics,
+                require_constraint_lineage=require_constraint_lineage,
             )[section]
         normalized.append(
             CheckpointObservation(

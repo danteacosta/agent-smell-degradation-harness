@@ -28,6 +28,9 @@
   "timeout_seconds": 60,
   "max_retries": 2,
   "retry_backoff_seconds": 1,
+  "min_request_interval_seconds": 0.25,
+  "max_total_cost_usd": 8.00,
+  "max_total_attempts": 900,
   "max_tokens": 512,
   "temperature": 0,
   "pricing": {

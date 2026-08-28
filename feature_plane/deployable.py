@@ -212,6 +212,7 @@ def extract_deployable_features(
     planned_tools = plan.get("planned_tools", [])
     coverage_targets = plan.get("coverage_targets", [])
     raw_count = interpretation.get("constraint_count", interpretation.get("count"))
+    lineage = execution.get("constraint_lineage", [])
     constraint_count = int(raw_count) if isinstance(raw_count, (int, float)) else len(constraints)
     comparator_text = " ".join(str(value) for value in constraints)
     return {
@@ -241,6 +242,10 @@ def extract_deployable_features(
             "validation_attempt_count": int(execution.get("validation_attempts", 0)),
             "error_count": len(execution.get("errors", [])) if isinstance(execution.get("errors", []), list) else 0,
             "retrieval_event_count": int(execution.get("retrieval_events", 0)),
+            "constraint_lineage_count": len(lineage) if isinstance(lineage, list) else 0,
+            "uncovered_lineage_count": sum(
+                1 for item in lineage if isinstance(item, Mapping) and item.get("status") == "uncovered"
+            ) if isinstance(lineage, list) else 0,
             "semantic_event_count": (
                 sum(1 for event in events if str(event.get("name", "")) == "constraint_extract")
                 if legacy
