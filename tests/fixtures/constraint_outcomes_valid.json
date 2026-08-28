@@ -1,0 +1,4 @@
+[
+  {"constraint_id": "c_expiry", "status": "covered", "plane": "label", "criterion_ids": ["ac-1"]},
+  {"constraint_id": "c_single_use", "status": "omitted", "plane": "label", "criterion_ids": [], "review_note": "No criterion tests reuse."}
+]

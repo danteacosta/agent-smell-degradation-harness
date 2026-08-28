@@ -7,5 +7,7 @@ def join_constraint_lineage_at_t4(lineage: Iterable[Mapping[str, Any]], final_cr
     joined=[]
     for row in lineage:
         cid=str(row["constraint_id"])
+        if str(row.get("plane", "feature")) != "feature":
+            raise ValueError("pre-final lineage must originate in the feature plane")
         joined.append({"constraint_id":cid,"pre_final_status":str(row["status"]),"final_criterion":final_criteria.get(cid),"reference_constraint":reference_constraints.get(cid),"plane":"label"})
     return joined
