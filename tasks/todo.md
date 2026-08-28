@@ -50,6 +50,7 @@ suite check.
 
 ## Remaining work for the real-model phase
 
+- [x] Provide a provider-agnostic panel runner with secret-free configuration and smoke/full-run guards.
 - [ ] Provide credentials through the approved secret mechanism.
 - [ ] Select at least two real provider/model configurations and record prompt/config versions.
 - [ ] Run independent repetitions with measured latency, cost, token/error rates, and Linux/CI sandboxing.

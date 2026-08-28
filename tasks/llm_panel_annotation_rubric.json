@@ -1,10 +1,11 @@
 {
   "schema_version": "requirements-smell-llm-panel/v1",
   "rubric_version": "natural-rubric-llm-panel-v1",
-  "annotators": ["kimi", "gpt", "claude"],
-  "independence_rule": "providers receive identical blinded tasks and never receive another provider's response",
+  "annotators": ["configured_judge_1", "configured_judge_2", "configured_judge_3"],
+  "annotator_identity_source": "private_panel_runtime_config",
+  "independence_rule": "configured judges receive identical blinded tasks and never receive another judge's response",
   "labels": ["clean", "smelly", "uncertain", "not_visible"],
-  "consensus_rule": "two_of_three",
+  "consensus_rule": "two_of_three_by_default",
   "uncertain_policy": "exclude from confirmed-case count and primary metrics",
   "human_review": {
     "required_for": ["provider_disagreement", "uncertain_consensus"],

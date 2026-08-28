@@ -1,8 +1,9 @@
-"""Blinded annotation contract for an independent LLM panel.
+"""Blinded annotation contract for an independent model panel.
 
-Kimi, GPT, and Claude are treated as independent operational judges, not as
-independent human experts.  The consensus output is therefore an exploratory
-``panel_consensus`` until a human audit/adjudication step is completed.
+The protocol deliberately does not depend on a vendor.  Historical v1
+artifacts used the identifiers ``kimi``, ``gpt`` and ``claude``; new runs may
+provide arbitrary judge identifiers through their private runtime config.
+Model-panel consensus is exploratory until human audit/adjudication is done.
 """
 
 from __future__ import annotations
@@ -59,7 +60,11 @@ def build_panel_prompt(*, item_id: str, requirement_text: str, target_family: st
     )
 
 
-def validate_panel_annotation(annotation: Mapping[str, Any]) -> dict[str, Any]:
+def validate_panel_annotation(
+    annotation: Mapping[str, Any],
+    *,
+    allowed_providers: Iterable[str] | None = None,
+) -> dict[str, Any]:
     """Validate one model response before it can enter consensus."""
 
     leaked = _FORBIDDEN_FIELDS.intersection(annotation)
@@ -69,9 +74,13 @@ def validate_panel_annotation(annotation: Mapping[str, Any]) -> dict[str, Any]:
     missing = required - set(annotation)
     if missing:
         raise ValueError(f"panel annotation is missing fields: {sorted(missing)}")
-    provider = str(annotation["provider_id"])
-    if provider not in PANEL_PROVIDERS:
-        raise ValueError(f"panel annotation provider must be one of {PANEL_PROVIDERS}")
+    provider = str(annotation["provider_id"]).strip()
+    allowed = tuple(PANEL_PROVIDERS if allowed_providers is None else allowed_providers)
+    allowed = tuple(str(value).strip() for value in allowed if str(value).strip())
+    if not allowed:
+        raise ValueError("panel annotation requires at least one configured judge")
+    if provider not in allowed:
+        raise ValueError(f"panel annotation provider must be one of {allowed}")
     label = str(annotation["label"])
     if label not in PANEL_LABELS:
         raise ValueError(f"panel annotation label must be one of {PANEL_LABELS}")
@@ -116,8 +125,22 @@ def select_human_audit_subset(
     return tuple(sorted(chooser.sample(unique, min(count, len(unique)))))
 
 
-def build_panel_tasks(candidates: Iterable[Mapping[str, Any]]) -> list[dict[str, Any]]:
-    """Expand candidates into one identical, provider-tagged task per judge."""
+def build_panel_tasks(
+    candidates: Iterable[Mapping[str, Any]],
+    *,
+    judge_ids: Iterable[str] | None = None,
+) -> list[dict[str, Any]]:
+    """Expand candidates into one identical, judge-tagged task per judge.
+
+    ``PANEL_PROVIDERS`` remains the default solely for compatibility with the
+    historical v1 task file.  A new execution should pass judge IDs from its
+    private panel configuration instead of using vendor names.
+    """
+
+    judges = tuple(PANEL_PROVIDERS if judge_ids is None else judge_ids)
+    judges = tuple(str(value).strip() for value in judges if str(value).strip())
+    if not judges or len(set(judges)) != len(judges):
+        raise ValueError("panel tasks require unique, non-empty judge IDs")
 
     tasks: list[dict[str, Any]] = []
     for candidate in candidates:
@@ -126,7 +149,7 @@ def build_panel_tasks(candidates: Iterable[Mapping[str, Any]]) -> list[dict[str,
         family = str(candidate["target_family"])
         prompt = build_panel_prompt(item_id=item_id, requirement_text=text, target_family=family)
         prompt_hash = sha256(prompt.encode("utf-8")).hexdigest()
-        for provider in PANEL_PROVIDERS:
+        for provider in judges:
             tasks.append(
                 {
                     "panel_version": PANEL_VERSION,
@@ -141,10 +164,29 @@ def build_panel_tasks(candidates: Iterable[Mapping[str, Any]]) -> list[dict[str,
     return tasks
 
 
-def build_consensus(annotations: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
-    """Apply the pre-registered 2-of-3 panel rule to one item."""
+def build_consensus(
+    annotations: Iterable[Mapping[str, Any]],
+    *,
+    expected_providers: Iterable[str] | None = None,
+    consensus_required: int = 2,
+) -> dict[str, Any]:
+    """Apply a configured majority rule to one item.
 
-    validated = [validate_panel_annotation(annotation) for annotation in annotations]
+    With no explicit configuration this preserves the historical v1 2-of-3
+    rule.  The runtime passes arbitrary judge IDs and the same rule explicitly
+    so the scientific protocol stays stable while providers remain swappable.
+    """
+
+    expected = tuple(PANEL_PROVIDERS if expected_providers is None else expected_providers)
+    expected = tuple(str(value).strip() for value in expected if str(value).strip())
+    if not expected or len(set(expected)) != len(expected):
+        raise ValueError("panel consensus requires unique, non-empty configured judges")
+    if not 1 <= consensus_required <= len(expected):
+        raise ValueError("consensus_required must be between 1 and the number of judges")
+    validated = [
+        validate_panel_annotation(annotation, allowed_providers=expected)
+        for annotation in annotations
+    ]
     if not validated:
         raise ValueError("panel consensus requires annotations")
     item_ids = {str(annotation["item_id"]) for annotation in validated}
@@ -152,11 +194,13 @@ def build_consensus(annotations: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
     providers = {str(annotation["provider_id"]) for annotation in validated}
     if len(item_ids) != 1 or len(families) != 1:
         raise ValueError("panel consensus requires one item and one target family")
-    if providers != set(PANEL_PROVIDERS) or len(validated) != len(PANEL_PROVIDERS):
-        raise ValueError("panel consensus requires exactly one annotation from all three providers")
+    if providers != set(expected) or len(validated) != len(expected):
+        raise ValueError(
+            "panel consensus requires exactly one annotation from every configured judge/provider"
+        )
     labels = Counter(str(annotation["label"]) for annotation in validated)
     label, votes = labels.most_common(1)[0]
-    has_majority = votes >= 2
+    has_majority = votes >= consensus_required
     final_label = label if has_majority else "uncertain"
     status = "panel_consensus" if has_majority and final_label in {"clean", "smelly"} else "uncertain"
     all_agree = len(labels) == 1
@@ -177,14 +221,26 @@ def build_consensus(annotations: Iterable[Mapping[str, Any]]) -> dict[str, Any]:
     }
 
 
-def build_consensus_batch(annotations: Iterable[Mapping[str, Any]]) -> list[dict[str, Any]]:
+def build_consensus_batch(
+    annotations: Iterable[Mapping[str, Any]],
+    *,
+    expected_providers: Iterable[str] | None = None,
+    consensus_required: int = 2,
+) -> list[dict[str, Any]]:
     grouped: defaultdict[str, list[Mapping[str, Any]]] = defaultdict(list)
     for annotation in annotations:
         item_id = str(annotation.get("item_id", ""))
         if not item_id:
             raise ValueError("panel batch annotation requires item_id")
         grouped[item_id].append(annotation)
-    results = [build_consensus(rows) for _, rows in sorted(grouped.items())]
+    results = [
+        build_consensus(
+            rows,
+            expected_providers=expected_providers,
+            consensus_required=consensus_required,
+        )
+        for _, rows in sorted(grouped.items())
+    ]
     results.sort(key=lambda row: str(row["item_id"]))
     return results
 

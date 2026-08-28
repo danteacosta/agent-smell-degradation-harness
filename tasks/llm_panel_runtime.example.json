@@ -1,0 +1,37 @@
+{
+  "schema_version": "requirements-smell-panel-runtime/v1",
+  "judges": [
+    {
+      "judge_id": "judge-a",
+      "adapter": "openai_compatible",
+      "endpoint_env": "PANEL_JUDGE_A_ENDPOINT",
+      "model_env": "PANEL_JUDGE_A_MODEL",
+      "api_key_env": "PANEL_JUDGE_A_API_KEY"
+    },
+    {
+      "judge_id": "judge-b",
+      "adapter": "openai_compatible",
+      "endpoint_env": "PANEL_JUDGE_B_ENDPOINT",
+      "model_env": "PANEL_JUDGE_B_MODEL",
+      "api_key_env": "PANEL_JUDGE_B_API_KEY"
+    },
+    {
+      "judge_id": "judge-c",
+      "adapter": "anthropic_messages",
+      "endpoint_env": "PANEL_JUDGE_C_ENDPOINT",
+      "model_env": "PANEL_JUDGE_C_MODEL",
+      "api_key_env": "PANEL_JUDGE_C_API_KEY",
+      "api_version": "2023-06-01"
+    }
+  ],
+  "consensus_required": 2,
+  "timeout_seconds": 60,
+  "max_retries": 2,
+  "retry_backoff_seconds": 1,
+  "max_tokens": 512,
+  "temperature": 0,
+  "pricing": {
+    "input_usd_per_1k": null,
+    "output_usd_per_1k": null
+  }
+}

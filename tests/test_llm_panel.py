@@ -92,3 +92,35 @@ def test_human_audit_subset_is_reproducible_and_nonempty() -> None:
 
     assert first == second
     assert len(first) == 2
+
+
+def test_panel_supports_arbitrary_judge_ids_without_provider_branding() -> None:
+    tasks = build_panel_tasks(
+        [
+            {
+                "candidate_id": "opaque-1",
+                "requirement_text": "The system shall process the request.",
+                "target_family": "polysemy",
+            }
+        ],
+        judge_ids=("judge-a", "judge-b", "judge-c"),
+    )
+
+    assert [task["provider_id"] for task in tasks] == ["judge-a", "judge-b", "judge-c"]
+
+
+def test_consensus_accepts_configured_judges() -> None:
+    annotations = [
+        _annotation("judge-a", "smelly"),
+        _annotation("judge-b", "smelly"),
+        _annotation("judge-c", "clean"),
+    ]
+
+    result = build_consensus(
+        annotations,
+        expected_providers=("judge-a", "judge-b", "judge-c"),
+        consensus_required=2,
+    )
+
+    assert result["label"] == "smelly"
+    assert result["status"] == "panel_consensus"
