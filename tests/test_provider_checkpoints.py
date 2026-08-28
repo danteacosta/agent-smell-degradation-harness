@@ -58,7 +58,17 @@ class _CheckpointAgent:
                 "validation_attempts": 1,
                 "errors": [],
                 "retrieval_events": 0,
-                }, moments[3], moments[3]),
+                "constraint_lineage": [
+                    {
+                        "constraint_id": "c-delay",
+                        "constraint_sha256": "a" * 64,
+                        "planned_check_ids": ["boundary-check"],
+                        "observation_id": "obs-1",
+                        "status": "covered",
+                        "available_at": "T3",
+                    }
+                ],
+            }, moments[3], moments[3]),
             ),
             artifact=pair["oracle_spec"][task_family],
             provider_meta={"provider": self.provider, "model": self.model, "latency_ms": 4.0},
