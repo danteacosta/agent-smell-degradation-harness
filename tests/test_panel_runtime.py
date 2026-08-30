@@ -105,6 +105,15 @@ class RetryOnceAdapter(FakeAdapter):
         return super().complete(prompt=prompt, judge=judge)
 
 
+class MeteredErrorAdapter(FakeAdapter):
+    def complete(self, *, prompt: str, judge: object) -> AdapterResponse:
+        self.calls.append((str(getattr(judge, "judge_id")), prompt))
+        raise PanelAdapterError(
+            "provider returned no final text",
+            usage={"input_tokens": 10, "output_tokens": 8, "total_tokens": 18},
+        )
+
+
 class _HttpResponse:
     def __init__(self, payload: dict[str, object]) -> None:
         self.payload = payload
@@ -355,6 +364,45 @@ class PanelRuntimeTests(unittest.TestCase):
         self.assertEqual(manifest["budget"]["status"], "exhausted")
         self.assertEqual(manifest["completed_task_count"], 2)
         self.assertEqual(manifest["remaining_task_count"], 2)
+
+    def test_metered_adapter_error_does_not_make_budget_unmeasurable(self) -> None:
+        adapter = MeteredErrorAdapter()
+        config = PanelRunConfig.from_mapping(
+            {
+                "schema_version": "requirements-smell-panel-runtime/v1",
+                "stage": "prepilot",
+                "max_total_cost_usd": 1.0,
+                "judges": [
+                    {
+                        "judge_id": "judge-a",
+                        "adapter": "fake",
+                        "model": "model-a",
+                        "model_snapshot": "model-a@2026-08-30",
+                    }
+                ],
+                "consensus_required": 1,
+                "pricing": {"input_usd_per_1k": 1.0, "output_usd_per_1k": 2.0},
+            }
+        )
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            errors = root / "errors.jsonl"
+            manifest = PanelRunner(config, adapters={"fake": adapter}).run(
+                _uniform_tasks(2, judges=("judge-a",)),
+                run_id="panel-metered-error-1",
+                responses_path=root / "responses.jsonl",
+                errors_path=errors,
+                manifest_path=root / "manifest.json",
+            )
+
+            error_rows = [json.loads(line) for line in errors.read_text().splitlines()]
+
+        self.assertEqual(len(adapter.calls), 2)
+        self.assertEqual(manifest["status"], "completed")
+        self.assertEqual(manifest["budget"], {"limit_usd": 1.0, "spent_usd": 0.052, "status": "measured"})
+        self.assertEqual(manifest["usage"]["total_tokens"], 36)
+        self.assertEqual(error_rows[0]["usage"]["total_tokens"], 18)
+        self.assertEqual(error_rows[0]["cost_usd"], 0.026)
 
     def test_required_control_matrix_is_checked_before_execution(self) -> None:
         candidates = [
@@ -663,6 +711,44 @@ class PanelRuntimeTests(unittest.TestCase):
         self.assertNotIn("temperature", body)
         self.assertNotIn("max_tokens", body)
         os.environ.pop("PANEL_REASONING_KEY", None)
+
+    def test_openai_compatible_empty_content_preserves_provider_usage(self) -> None:
+        def opener(request: object, *, timeout: float) -> _HttpResponse:
+            return _HttpResponse(
+                {
+                    "choices": [{"message": {"content": ""}}],
+                    "usage": {
+                        "prompt_tokens": 261,
+                        "completion_tokens": 1024,
+                        "completion_tokens_details": {"reasoning_tokens": 1024},
+                        "total_tokens": 1285,
+                    },
+                }
+            )
+
+        os.environ["PANEL_EMPTY_CONTENT_KEY"] = "secret-value-not-for-artifacts"
+        config = PanelRunConfig.from_mapping(
+            {
+                "schema_version": "requirements-smell-panel-runtime/v1",
+                "judges": [
+                    {
+                        "judge_id": "reasoning",
+                        "adapter": "openai_compatible",
+                        "endpoint": "https://example.invalid/v1/chat/completions",
+                        "model": "reasoning-model",
+                        "api_key_env": "PANEL_EMPTY_CONTENT_KEY",
+                    }
+                ],
+                "consensus_required": 1,
+            }
+        )
+        judge = config.judges[0].resolve(config)
+
+        with self.assertRaisesRegex(PanelAdapterError, "no text content") as caught:
+            OpenAICompatibleAdapter(opener=opener).complete(prompt="opaque prompt", judge=judge)
+
+        self.assertEqual(caught.exception.usage["completion_tokens"], 1024)
+        os.environ.pop("PANEL_EMPTY_CONTENT_KEY", None)
 
 
 if __name__ == "__main__":

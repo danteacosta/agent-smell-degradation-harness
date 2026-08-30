@@ -42,10 +42,18 @@ class PanelConfigurationError(ValueError):
 class PanelAdapterError(RuntimeError):
     """Raised by an adapter, with an explicit retry decision."""
 
-    def __init__(self, message: str, *, retryable: bool = False, status_code: int | None = None) -> None:
+    def __init__(
+        self,
+        message: str,
+        *,
+        retryable: bool = False,
+        status_code: int | None = None,
+        usage: Mapping[str, Any] | None = None,
+    ) -> None:
         super().__init__(message)
         self.retryable = retryable
         self.status_code = status_code
+        self.usage = dict(usage) if usage is not None else {}
 
 
 @dataclass(frozen=True)
@@ -478,9 +486,13 @@ class OpenAICompatibleAdapter(_HttpAdapter):
         if not isinstance(message, Mapping):
             raise PanelAdapterError("chat-completions response has no message", retryable=False)
         text = _content_to_text(message.get("content"))
-        if not text:
-            raise PanelAdapterError("chat-completions response has no text content", retryable=False)
         usage = payload.get("usage")
+        if not text:
+            raise PanelAdapterError(
+                "chat-completions response has no text content",
+                retryable=False,
+                usage=usage if isinstance(usage, Mapping) else None,
+            )
         return AdapterResponse(text=text, usage=dict(usage) if isinstance(usage, Mapping) else {})
 
 
@@ -918,6 +930,7 @@ class PanelRunner:
         latency_ms = round((time.perf_counter() - started) * 1000.0, 3)
         if response is None:
             assert last_error is not None
+            usage = _normalize_usage(last_error.usage) if isinstance(last_error, PanelAdapterError) else {}
             return None, {
                 "schema_version": RESPONSE_SCHEMA_VERSION,
                 "run_id": run_id,
@@ -932,8 +945,13 @@ class PanelRunner:
                 "error_message": _safe_error(last_error, judge.endpoint),
                 "attempts": attempts,
                 "latency_ms": latency_ms,
-                "usage": {},
-                "cost_usd": None,
+                "usage": usage,
+                "cost_usd": _estimate_cost(
+                    usage,
+                    input_usd_per_1k=judge.input_usd_per_1k,
+                    cached_input_usd_per_1k=judge.cached_input_usd_per_1k,
+                    output_usd_per_1k=judge.output_usd_per_1k,
+                ),
             }
         try:
             payload = _extract_json_object(response.text)
@@ -1083,7 +1101,7 @@ class PanelRunner:
                 "total_ms": round(sum(float(row["latency_ms"]) for row in responses + errors), 3),
                 "successful_response_count": len(responses),
             },
-            "usage": _summarize_usage(responses),
+            "usage": _summarize_usage(responses + errors),
             "cost": _summarize_cost(responses + errors, judges),
             "budget": {
                 "limit_usd": self.config.max_total_cost_usd,
