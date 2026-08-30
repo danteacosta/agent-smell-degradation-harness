@@ -1,11 +1,16 @@
 {
   "schema_version": "requirements-smell-panel-runtime/v1",
+  "stage": "full_panel",
+  "expected_tasks_per_judge": 240,
+  "expected_total_tasks": 720,
+  "require_negative_controls": true,
   "judges": [
     {
       "judge_id": "judge-a",
       "adapter": "openai_compatible",
       "endpoint_env": "PANEL_JUDGE_A_ENDPOINT",
       "model_env": "PANEL_JUDGE_A_MODEL",
+      "model_snapshot_env": "PANEL_JUDGE_A_MODEL_SNAPSHOT",
       "api_key_env": "PANEL_JUDGE_A_API_KEY"
     },
     {
@@ -13,6 +18,7 @@
       "adapter": "openai_compatible",
       "endpoint_env": "PANEL_JUDGE_B_ENDPOINT",
       "model_env": "PANEL_JUDGE_B_MODEL",
+      "model_snapshot_env": "PANEL_JUDGE_B_MODEL_SNAPSHOT",
       "api_key_env": "PANEL_JUDGE_B_API_KEY"
     },
     {
@@ -20,6 +26,7 @@
       "adapter": "anthropic_messages",
       "endpoint_env": "PANEL_JUDGE_C_ENDPOINT",
       "model_env": "PANEL_JUDGE_C_MODEL",
+      "model_snapshot_env": "PANEL_JUDGE_C_MODEL_SNAPSHOT",
       "api_key_env": "PANEL_JUDGE_C_API_KEY",
       "api_version": "2023-06-01"
     }
@@ -30,11 +37,13 @@
   "retry_backoff_seconds": 1,
   "min_request_interval_seconds": 0.25,
   "max_total_cost_usd": 8.00,
-  "max_total_attempts": 900,
+  "max_total_attempts": 2160,
   "max_tokens": 512,
   "temperature": 0,
+  "reasoning_effort": null,
   "pricing": {
     "input_usd_per_1k": null,
+    "cached_input_usd_per_1k": null,
     "output_usd_per_1k": null
   }
 }

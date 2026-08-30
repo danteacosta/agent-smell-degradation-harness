@@ -7,10 +7,13 @@ from label_plane.llm_panel import (
     build_consensus,
     build_panel_prompt,
     build_panel_tasks,
+    calibrate_panel_against_human_review,
     select_human_audit_subset,
     select_stratified_human_audit_subset,
+    summarize_panel_agreement,
     validate_panel_annotation,
 )
+from label_plane.control_matrix import CONTROL_CONDITIONS, validate_control_matrix
 
 
 def _annotation(provider: str, label: str, item_id: str = "item-1") -> dict[str, object]:
@@ -55,6 +58,23 @@ def test_panel_task_identifier_does_not_reveal_sampling_kind() -> None:
     assert all("hard_clean" not in task["item_id"] for task in tasks)
 
 
+def test_control_condition_is_private_task_metadata_and_not_in_prompt() -> None:
+    tasks = build_panel_tasks(
+        [
+            {
+                "candidate_id": "opaque-control",
+                "requirement_text": "The system shall process the request.",
+                "target_family": "polysemy",
+                "control_condition": "surface_only_control",
+            }
+        ],
+        judge_ids=("judge-a",),
+    )
+
+    assert tasks[0]["control_condition"] == "surface_only_control"
+    assert "surface_only_control" not in tasks[0]["prompt"]
+
+
 def test_panel_annotation_rejects_leaked_fields() -> None:
     with pytest.raises(ValueError, match="forbidden"):
         validate_panel_annotation({**_annotation("gpt", "smelly"), "source_label": "smelly"})
@@ -95,18 +115,71 @@ def test_human_audit_subset_is_reproducible_and_nonempty() -> None:
     assert len(first) == 2
 
 
-def test_stratified_audit_keeps_mandatory_review_and_covers_outcomes() -> None:
+def test_stratified_audit_keeps_mandatory_review_and_is_reproducible() -> None:
     rows = [
-        {"item_id": "a", "target_family": "polysemy", "status": "panel_consensus", "agreement": 1.0, "human_review_required": False},
-        {"item_id": "b", "target_family": "polysemy", "status": "panel_consensus", "agreement": 2 / 3, "human_review_required": True},
-        {"item_id": "c", "target_family": "vague_pronoun", "status": "uncertain", "agreement": 1 / 3, "human_review_required": True},
-        {"item_id": "d", "target_family": "vague_pronoun", "status": "panel_consensus", "agreement": 1.0, "human_review_required": False},
+        {
+            "item_id": "a",
+            "target_family": "polysemy",
+            "status": "panel_consensus",
+            "agreement": 1.0,
+            "human_review_required": False,
+        },
+        {
+            "item_id": "b",
+            "target_family": "polysemy",
+            "status": "panel_consensus",
+            "agreement": 2 / 3,
+            "human_review_required": True,
+        },
+        {
+            "item_id": "c",
+            "target_family": "vague_pronoun",
+            "status": "uncertain",
+            "agreement": 1 / 3,
+            "human_review_required": True,
+        },
+        {
+            "item_id": "d",
+            "target_family": "vague_pronoun",
+            "status": "panel_consensus",
+            "agreement": 1.0,
+            "human_review_required": False,
+        },
     ]
-    audit = select_stratified_human_audit_subset(rows, fraction=0.25, seed=7)
-    selected = {row["item_id"]: row["audit_reason"] for row in audit}
+
+    first = select_stratified_human_audit_subset(rows, fraction=0.25, seed=7)
+    selected = {row["item_id"]: row["audit_reason"] for row in first}
     assert selected["b"] == "mandatory_disagreement_or_uncertainty"
     assert selected["c"] == "mandatory_disagreement_or_uncertainty"
-    assert audit == select_stratified_human_audit_subset(rows, fraction=0.25, seed=7)
+    assert first == select_stratified_human_audit_subset(rows, fraction=0.25, seed=7)
+
+
+def test_panel_calibration_is_exploratory_and_grouped_by_judge_and_family() -> None:
+    annotations = [
+        _annotation("judge-a", "smelly"),
+        _annotation("judge-b", "smelly"),
+        _annotation("judge-c", "clean"),
+    ]
+    consensus = [
+        build_consensus(
+            annotations,
+            expected_providers=("judge-a", "judge-b", "judge-c"),
+        )
+    ]
+
+    calibration = calibrate_panel_against_human_review(
+        consensus, {"item-1": "clean"}
+    )
+
+    assert calibration["status"] == "exploratory_calibration"
+    assert calibration["audited_items"] == 1
+    assert calibration["consensus_agreement"] == 0.0
+    assert calibration["judge_agreement"] == {
+        "judge-a": 0.0,
+        "judge-b": 0.0,
+        "judge-c": 1.0,
+    }
+    assert calibration["family_agreement"] == {"vague_pronoun": 0.0}
 
 
 def test_panel_supports_arbitrary_judge_ids_without_provider_branding() -> None:
@@ -139,3 +212,97 @@ def test_consensus_accepts_configured_judges() -> None:
 
     assert result["label"] == "smelly"
     assert result["status"] == "panel_consensus"
+
+
+def test_control_matrix_requires_all_four_conditions_without_gold_labels() -> None:
+    records = [
+        {
+            "item_id": f"control-{index}",
+            "target_family": "polysemy",
+            "control_condition": condition,
+        }
+        for index, condition in enumerate(CONTROL_CONDITIONS)
+    ]
+
+    summary = validate_control_matrix(records)
+
+    assert summary["item_count"] == 4
+    assert summary["counts_by_family"]["polysemy"] == {
+        condition: 1 for condition in CONTROL_CONDITIONS
+    }
+
+
+def test_control_matrix_rejects_incomplete_oracle_leaking_conditions() -> None:
+    records = [
+        {
+            "item_id": f"control-{index}",
+            "target_family": "polysemy",
+            "control_condition": condition,
+        }
+        for index, condition in enumerate(CONTROL_CONDITIONS[:-1])
+    ]
+    records[0]["expected_label"] = "clean"
+
+    with pytest.raises(ValueError, match="label-like"):
+        validate_control_matrix(records)
+
+    records[0].pop("expected_label")
+    with pytest.raises(ValueError, match="incomplete"):
+        validate_control_matrix(records)
+
+
+def test_panel_agreement_is_reported_without_becoming_ground_truth() -> None:
+    annotations = [
+        _annotation("judge-a", "smelly"),
+        _annotation("judge-b", "smelly"),
+        _annotation("judge-c", "clean"),
+    ]
+    consensus = [
+        build_consensus(
+            annotations,
+            expected_providers=("judge-a", "judge-b", "judge-c"),
+        )
+    ]
+
+    summary = summarize_panel_agreement(
+        consensus,
+        annotations=annotations,
+        item_metadata={"item-1": {"project_id": "project-1", "intent_id": "intent-1"}},
+    )
+
+    assert summary["agreement_rate"] == 2 / 3
+    assert summary["model_disagreement"] == {
+        "count": 1,
+        "rate": 1.0,
+        "items": ["item-1"],
+    }
+    assert summary["human_model_disagreement"]["status"] == "not_available"
+    assert summary["interpretation"] == "triage_and_robustness_only"
+    assert summary["by_project"]["project-1"]["model_disagreement_count"] == 1
+    assert summary["by_intent"]["intent-1"]["item_count"] == 1
+
+
+def test_human_model_disagreement_is_separate_when_adjudication_exists() -> None:
+    annotations = [
+        _annotation("judge-a", "smelly"),
+        _annotation("judge-b", "smelly"),
+        _annotation("judge-c", "clean"),
+    ]
+    consensus = [
+        build_consensus(
+            annotations,
+            expected_providers=("judge-a", "judge-b", "judge-c"),
+        )
+    ]
+
+    summary = summarize_panel_agreement(
+        consensus,
+        annotations=annotations,
+        human_labels={"item-1": "clean"},
+    )
+
+    assert summary["human_model_disagreement"]["status"] == "available"
+    assert summary["human_model_disagreement"]["consensus_count"] == 1
+    assert summary["human_model_disagreement"]["consensus_rate"] == 1.0
+    assert summary["human_model_disagreement"]["judge_count"] == 2
+    assert summary["human_model_disagreement"]["judge_rate"] == 2 / 3

@@ -51,12 +51,25 @@ suite check.
 ## Remaining work for the real-model phase
 
 - [x] Provide a provider-agnostic panel runner with secret-free configuration and smoke/full-run guards.
+- [x] Add staged panel execution metadata (`prepilot`, `pilot`, `full_panel`), exact task-count gates, explicit model snapshots, strict unknown-field validation, and atomic idempotent resume.
+- [x] Add automatic measured-cost budget stopping with fail-closed behavior when usage cannot be measured.
+- [x] Preserve panel agreement, model disagreement, and separate human/model disagreement metrics without using panel consensus as ground truth.
+- [x] Add a private four-stratum control-matrix contract: clear clean, surface-only, real defect, and lexically discreet defect.
 - [ ] Provide credentials through the approved secret mechanism.
 - [ ] Select at least two real provider/model configurations and record prompt/config versions.
 - [ ] Run independent repetitions with measured latency, cost, token/error rates, and Linux/CI sandboxing.
 - [ ] Expand the corpus with reviewed natural variants, difficult clean cases, more projects/domains, and project-held-out splits.
 - [ ] Run the intervention comparison: agent without verifier, with alert, and with alert plus revision opportunity.
 - [ ] Define hidden-test pass rate, introduced defects, false alerts, review time, cost/tokens, clarification count, and post-alert correction rate.
+
+## 2026-08-27 staged panel hardening checkpoint
+
+- Runtime configuration is now strict: unknown fields and fractional task counts fail closed.
+- `prepilot` permits one judge and remains a 120-episode path-validation design; `pilot` and `full_panel` require explicit model snapshots.
+- `full_panel` requires expected per-judge and total task counts, and the CLI requires `--full-run --confirm-full-run`.
+- The example full-panel configuration intentionally leaves pricing and snapshot values to the private operator configuration; no provider or model is hardcoded.
+- The four condition names are metadata only. A full run with `require_negative_controls=true` requires a private, balanced matrix and refuses incomplete conditions before any adapter call.
+- Panel disagreement is descriptive triage/robustness evidence. Human adjudication remains a separate source of labels.
 
 ## v8 natural source-label screening checkpoint
 

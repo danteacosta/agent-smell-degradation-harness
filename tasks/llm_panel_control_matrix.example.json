@@ -1,0 +1,24 @@
+{
+  "schema_version": "requirements-smell-control-matrix/v1",
+  "status": "template_only",
+  "privacy": "requirement_text_and_source_rows_stay_outside_repository",
+  "conditions": [
+    "clear_clean_control",
+    "surface_only_control",
+    "real_defect_control",
+    "lexically_discreet_defect_control"
+  ],
+  "records": [
+    {
+      "item_id": "opaque-item-id",
+      "target_family": "one_supported_family",
+      "control_condition": "one_condition_from_conditions",
+      "pair_or_intent_group": "private-group-id"
+    }
+  ],
+  "notes": [
+    "Do not add expected_label, oracle_label, source_label, or ground_truth.",
+    "The real control matrix must contain at least one item per condition for each represented family.",
+    "The task builder copies control_condition as private metadata; the blinded prompt never includes it."
+  ]
+}

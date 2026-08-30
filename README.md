@@ -202,6 +202,12 @@ the lexical failures. Its metrics are diagnostic pipeline evidence, not a
 blind superiority comparison; the next run must freeze the detector using only
 training/calibration projects before evaluating held-out projects.
 
+The real two-judge panel smoke is analyzed in [the 2026-08-30 smoke
+report](docs/research/2026-08-30-llm-panel-smoke-analysis.md). It validates the
+private operational path and measured-cost handling, but remains separate from
+the master's runtime-native pre-pilot, human-label, and confirmatory data
+gates.
+
 One detector regression was fixed before v7: the completeness rule now uses
 word boundaries, so `all` inside `shall` cannot suppress the
 `incomplete_completeness_scope` signal. The ERTMS omission case can still be a

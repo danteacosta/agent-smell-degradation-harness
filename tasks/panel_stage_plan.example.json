@@ -1,0 +1,32 @@
+{
+  "schema_version": "requirements-smell-panel-stages/v1",
+  "status": "study_design_template",
+  "stages": {
+    "prepilot": {
+      "episode_count": 120,
+      "candidate_count": 24,
+      "variants_per_intent": 2,
+      "replications": 5,
+      "judge_slots": ["primary_judge"],
+      "objective": "verify_the_real_execution_path_and_hidden_tests"
+    },
+    "pilot": {
+      "episode_count": 480,
+      "candidate_count": 48,
+      "variants_per_intent": 2,
+      "replications": 5,
+      "judge_slots": ["primary_judge", "secondary_judge"],
+      "objective": "estimate_variance_cost_error_rate_and_annotation_quality"
+    },
+    "full_panel": {
+      "episode_count": null,
+      "candidate_count": 240,
+      "tasks_per_judge": 240,
+      "judge_slots": ["primary_judge", "secondary_judge", "robustness_judge"],
+      "maximum_tasks_per_judge": 240,
+      "objective": "exploratory_natural_corpus_panel_after_all_gates_pass"
+    }
+  },
+  "unit_warning": "episodes, candidates, tasks_per_judge, and provider calls are different units; do not substitute one for another",
+  "provider_policy": "slot_ids_are_agnostic_and_model_snapshots_are_declared_in_private_runtime_config"
+}

@@ -12,7 +12,11 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 if str(REPOSITORY_ROOT) not in sys.path:
     sys.path.insert(0, str(REPOSITORY_ROOT))
 
-from label_plane.llm_panel import build_consensus_batch, select_stratified_human_audit_subset
+from label_plane.llm_panel import (
+    build_consensus_batch,
+    select_stratified_human_audit_subset,
+    summarize_panel_agreement,
+)
 
 
 def _assert_private_input(path: Path) -> None:
@@ -38,6 +42,16 @@ def main() -> int:
         help="configured judge IDs; omit only for the historical kimi/gpt/claude contract",
     )
     parser.add_argument("--consensus-required", type=int, default=2)
+    parser.add_argument(
+        "--human-labels",
+        type=Path,
+        help="optional private JSONL of explicitly adjudicated item_id/label rows",
+    )
+    parser.add_argument(
+        "--metadata",
+        type=Path,
+        help="optional private JSONL joining item IDs to project/intent metadata",
+    )
     args = parser.parse_args()
     _assert_private_input(args.responses)
     responses = [
@@ -45,6 +59,8 @@ def main() -> int:
         for line in args.responses.read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
+    human_labels = _load_human_labels(args.human_labels) if args.human_labels else None
+    item_metadata = _load_item_metadata(args.metadata) if args.metadata else None
     consensus = build_consensus_batch(
         responses,
         expected_providers=args.judges,
@@ -58,6 +74,12 @@ def main() -> int:
         row["human_audit_sample"] = row["item_id"] in audit_reasons
         if row["human_audit_sample"]:
             row["human_audit_reason"] = audit_reasons[row["item_id"]]
+    agreement = summarize_panel_agreement(
+        consensus,
+        annotations=responses,
+        human_labels=human_labels,
+        item_metadata=item_metadata,
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.summary.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
@@ -76,10 +98,56 @@ def main() -> int:
         "human_audit_strategy": "mandatory_disagreement_plus_stratified_family_outcome_difficulty",
         "judges": args.judges,
         "consensus_required": args.consensus_required,
+        "agreement": agreement,
     }
     args.summary.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps(summary, sort_keys=True))
     return 0
+
+
+def _load_human_labels(path: Path) -> dict[str, str]:
+    _assert_private_input(path)
+    labels: dict[str, str] = {}
+    for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"invalid human label JSONL at line {line_number}") from exc
+        if not isinstance(row, dict):
+            raise ValueError(f"human label row {line_number} must be an object")
+        if row.get("adjudicated") is not True:
+            raise ValueError("human label rows must set adjudicated=true")
+        item_id = str(row.get("item_id", "")).strip()
+        label = str(row.get("label", "")).strip()
+        if not item_id or not label or item_id in labels:
+            raise ValueError(f"invalid or duplicate human label at line {line_number}")
+        labels[item_id] = label
+    if not labels:
+        raise ValueError("human labels cannot be empty")
+    return labels
+
+
+def _load_item_metadata(path: Path) -> dict[str, dict[str, object]]:
+    _assert_private_input(path)
+    metadata: dict[str, dict[str, object]] = {}
+    for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"invalid metadata JSONL at line {line_number}") from exc
+        if not isinstance(row, dict):
+            raise ValueError(f"metadata row {line_number} must be an object")
+        item_id = str(row.get("item_id") or row.get("candidate_id") or "").strip()
+        if not item_id or item_id in metadata:
+            raise ValueError(f"invalid or duplicate item metadata at line {line_number}")
+        metadata[item_id] = row
+    if not metadata:
+        raise ValueError("item metadata cannot be empty")
+    return metadata
 
 
 if __name__ == "__main__":
