@@ -15,6 +15,7 @@ from label_plane.panel_runtime import (
     PanelAdapterError,
     PanelRunConfig,
     PanelRunner,
+    _normalize_usage,
 )
 
 
@@ -118,6 +119,23 @@ class _HttpResponse:
 
 
 class PanelRuntimeTests(unittest.TestCase):
+    def test_normalizes_nested_provider_usage_for_input_cache_output_and_reasoning(self) -> None:
+        usage = _normalize_usage(
+            {
+                "prompt_tokens": 100,
+                "prompt_tokens_details": {"cached_tokens": 40},
+                "completion_tokens": 30,
+                "completion_tokens_details": {"reasoning_tokens": 12},
+                "total_tokens": 130,
+            }
+        )
+
+        self.assertEqual(usage["input_tokens"], 100)
+        self.assertEqual(usage["cached_tokens"], 40)
+        self.assertEqual(usage["output_tokens"], 30)
+        self.assertEqual(usage["reasoning_tokens"], 12)
+        self.assertEqual(usage["total_tokens"], 130)
+
     def test_smoke_limit_routes_arbitrary_judges_and_writes_auditable_records(self) -> None:
         adapter = FakeAdapter()
         config = _config()

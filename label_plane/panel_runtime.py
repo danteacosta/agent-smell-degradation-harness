@@ -1214,12 +1214,55 @@ def _normalize_usage(value: Mapping[str, Any]) -> dict[str, int | float]:
             continue
         if isinstance(item, (int, float)):
             result[str(key)] = item
+    input_tokens = result.get("input_tokens", result.get("prompt_tokens"))
+    output_tokens = result.get("output_tokens", result.get("completion_tokens"))
+    if isinstance(input_tokens, (int, float)):
+        result.setdefault("input_tokens", input_tokens)
+    if isinstance(output_tokens, (int, float)):
+        result.setdefault("output_tokens", output_tokens)
+    if "cached_tokens" not in result:
+        cached_tokens = _nested_usage_number(
+            value,
+            ("input_tokens_details", "cached_tokens"),
+            ("prompt_tokens_details", "cached_tokens"),
+            ("input_token_details", "cached_tokens"),
+        )
+        if cached_tokens is None:
+            for key in ("input_cached_tokens", "cache_read_input_tokens"):
+                candidate = value.get(key)
+                if isinstance(candidate, (int, float)) and not isinstance(candidate, bool):
+                    cached_tokens = candidate
+                    break
+        if cached_tokens is not None:
+            result["cached_tokens"] = cached_tokens
+    if "reasoning_tokens" not in result:
+        reasoning_tokens = _nested_usage_number(
+            value,
+            ("output_tokens_details", "reasoning_tokens"),
+            ("completion_tokens_details", "reasoning_tokens"),
+            ("output_token_details", "reasoning_tokens"),
+        )
+        if reasoning_tokens is not None:
+            result["reasoning_tokens"] = reasoning_tokens
     if "total_tokens" not in result:
-        input_tokens = result.get("input_tokens", result.get("prompt_tokens"))
-        output_tokens = result.get("output_tokens", result.get("completion_tokens"))
         if isinstance(input_tokens, (int, float)) and isinstance(output_tokens, (int, float)):
             result["total_tokens"] = input_tokens + output_tokens
     return result
+
+
+def _nested_usage_number(
+    value: Mapping[str, Any], paths: tuple[str, str], *more_paths: tuple[str, str]
+) -> int | float | None:
+    """Read a numeric usage detail from common provider response shapes."""
+
+    for container_key, field_key in (paths, *more_paths):
+        container = value.get(container_key)
+        if not isinstance(container, Mapping):
+            continue
+        candidate = container.get(field_key)
+        if isinstance(candidate, (int, float)) and not isinstance(candidate, bool):
+            return candidate
+    return None
 
 
 def _summarize_usage(records: Iterable[Mapping[str, Any]]) -> dict[str, int | float]:
