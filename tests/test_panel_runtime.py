@@ -15,6 +15,7 @@ from label_plane.panel_runtime import (
     PanelAdapterError,
     PanelRunConfig,
     PanelRunner,
+    _estimate_cost,
     _normalize_usage,
 )
 
@@ -135,6 +136,16 @@ class PanelRuntimeTests(unittest.TestCase):
         self.assertEqual(usage["output_tokens"], 30)
         self.assertEqual(usage["reasoning_tokens"], 12)
         self.assertEqual(usage["total_tokens"], 130)
+
+    def test_estimates_split_cache_cost_when_provider_rates_are_declared(self) -> None:
+        cost = _estimate_cost(
+            {"input_tokens": 100, "cached_tokens": 40, "output_tokens": 30},
+            input_usd_per_1k=1.0,
+            cached_input_usd_per_1k=0.1,
+            output_usd_per_1k=2.0,
+        )
+
+        self.assertEqual(cost, 0.124)
 
     def test_smoke_limit_routes_arbitrary_judges_and_writes_auditable_records(self) -> None:
         adapter = FakeAdapter()
@@ -610,6 +621,48 @@ class PanelRuntimeTests(unittest.TestCase):
         os.environ.pop("PANEL_RUNTIME_KEY", None)
         os.environ.pop("PANEL_RUNTIME_ENDPOINT", None)
         os.environ.pop("PANEL_RUNTIME_MODEL", None)
+
+    def test_reasoning_openai_compatible_request_uses_reasoning_safe_parameters(self) -> None:
+        captured: list[object] = []
+
+        def opener(request: object, *, timeout: float) -> _HttpResponse:
+            captured.append((request, timeout))
+            return _HttpResponse(
+                {
+                    "choices": [
+                        {"message": {"content": '{"label":"clean","target_family":"polysemy"}'}},
+                    ],
+                    "usage": {"prompt_tokens": 4, "completion_tokens": 3},
+                }
+            )
+
+        os.environ["PANEL_REASONING_KEY"] = "secret-value-not-for-artifacts"
+        config = PanelRunConfig.from_mapping(
+            {
+                "schema_version": "requirements-smell-panel-runtime/v1",
+                "judges": [
+                    {
+                        "judge_id": "reasoning",
+                        "adapter": "openai_compatible",
+                        "endpoint": "https://example.invalid/v1/chat/completions",
+                        "model": "gpt-5-mini-2025-08-07",
+                        "reasoning_effort": "low",
+                        "api_key_env": "PANEL_REASONING_KEY",
+                    }
+                ],
+                "consensus_required": 1,
+            }
+        )
+        judge = config.judges[0].resolve(config)
+        OpenAICompatibleAdapter(opener=opener).complete(prompt="opaque prompt", judge=judge)
+        request = captured[0][0]
+        body = json.loads(request.data.decode("utf-8"))
+
+        self.assertEqual(body["reasoning_effort"], "low")
+        self.assertEqual(body["max_completion_tokens"], 512)
+        self.assertNotIn("temperature", body)
+        self.assertNotIn("max_tokens", body)
+        os.environ.pop("PANEL_REASONING_KEY", None)
 
 
 if __name__ == "__main__":

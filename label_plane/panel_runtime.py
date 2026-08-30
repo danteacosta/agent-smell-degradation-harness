@@ -66,6 +66,7 @@ class JudgeConfig:
     model_env: str | None = None
     model_snapshot: str | None = None
     model_snapshot_env: str | None = None
+    reasoning_effort: str | None = None
     endpoint: str | None = None
     endpoint_env: str | None = None
     api_key_env: str | None = None
@@ -75,6 +76,7 @@ class JudgeConfig:
     timeout_seconds: float | None = None
     max_retries: int | None = None
     input_usd_per_1k: float | None = None
+    cached_input_usd_per_1k: float | None = None
     output_usd_per_1k: float | None = None
 
     def resolve(self, defaults: "PanelRunConfig") -> "ResolvedJudgeConfig":
@@ -123,6 +125,7 @@ class JudgeConfig:
             model=model,
             model_snapshot=snapshot or str(model),
             model_snapshot_declared=snapshot is not None,
+            reasoning_effort=self.reasoning_effort or defaults.reasoning_effort,
             endpoint=endpoint,
             api_key=api_key,
             api_version=self.api_version,
@@ -138,6 +141,11 @@ class JudgeConfig:
                 self.input_usd_per_1k
                 if self.input_usd_per_1k is not None
                 else defaults.input_usd_per_1k
+            ),
+            cached_input_usd_per_1k=(
+                self.cached_input_usd_per_1k
+                if self.cached_input_usd_per_1k is not None
+                else defaults.cached_input_usd_per_1k
             ),
             output_usd_per_1k=(
                 self.output_usd_per_1k
@@ -157,6 +165,7 @@ class ResolvedJudgeConfig:
     model_snapshot: str
     endpoint: str | None
     model_snapshot_declared: bool = False
+    reasoning_effort: str | None = None
     api_key: str | None = field(default=None, repr=False)
     api_version: str = "2023-06-01"
     max_tokens: int = 512
@@ -164,6 +173,7 @@ class ResolvedJudgeConfig:
     timeout_seconds: float = 60.0
     max_retries: int = 2
     input_usd_per_1k: float | None = None
+    cached_input_usd_per_1k: float | None = None
     output_usd_per_1k: float | None = None
 
 
@@ -183,7 +193,9 @@ class PanelRunConfig:
     retry_backoff_seconds: float = 1.0
     max_tokens: int = 512
     temperature: float = 0.0
+    reasoning_effort: str | None = None
     input_usd_per_1k: float | None = None
+    cached_input_usd_per_1k: float | None = None
     output_usd_per_1k: float | None = None
     schema_version: str = RUNTIME_SCHEMA_VERSION
 
@@ -205,6 +217,7 @@ class PanelRunConfig:
                 "retry_backoff_seconds",
                 "max_tokens",
                 "temperature",
+                "reasoning_effort",
                 "pricing",
             },
             "panel config",
@@ -235,6 +248,7 @@ class PanelRunConfig:
                     "model_env",
                     "model_snapshot",
                     "model_snapshot_env",
+                    "reasoning_effort",
                     "endpoint",
                     "endpoint_env",
                     "api_key_env",
@@ -276,6 +290,7 @@ class PanelRunConfig:
                     model_env=_optional_text(value.get("model_env")),
                     model_snapshot=_optional_text(value.get("model_snapshot")),
                     model_snapshot_env=_optional_text(value.get("model_snapshot_env")),
+                    reasoning_effort=_optional_text(value.get("reasoning_effort")),
                     endpoint=_optional_text(value.get("endpoint")),
                     endpoint_env=_optional_text(value.get("endpoint_env")),
                     api_key_env=_optional_text(value.get("api_key_env")),
@@ -286,6 +301,10 @@ class PanelRunConfig:
                     max_retries=_optional_nonnegative_int(value.get("max_retries"), f"{judge_id}.max_retries"),
                     input_usd_per_1k=_optional_nonnegative_float(
                         judge_pricing.get("input_usd_per_1k"), f"{judge_id}.pricing.input_usd_per_1k"
+                    ),
+                    cached_input_usd_per_1k=_optional_nonnegative_float(
+                        judge_pricing.get("cached_input_usd_per_1k"),
+                        f"{judge_id}.pricing.cached_input_usd_per_1k",
                     ),
                     output_usd_per_1k=_optional_nonnegative_float(
                         judge_pricing.get("output_usd_per_1k"), f"{judge_id}.pricing.output_usd_per_1k"
@@ -305,11 +324,15 @@ class PanelRunConfig:
         )
         max_tokens = _positive_int(raw.get("max_tokens", 512), "max_tokens")
         temperature = _bounded_float(raw.get("temperature", 0), "temperature", 0, 2)
+        reasoning_effort = _optional_text(raw.get("reasoning_effort"))
         pricing = raw.get("pricing", {})
         if not isinstance(pricing, Mapping):
             raise PanelConfigurationError("pricing must be an object")
         input_usd_per_1k = _optional_nonnegative_float(
             pricing.get("input_usd_per_1k"), "pricing.input_usd_per_1k"
+        )
+        cached_input_usd_per_1k = _optional_nonnegative_float(
+            pricing.get("cached_input_usd_per_1k"), "pricing.cached_input_usd_per_1k"
         )
         output_usd_per_1k = _optional_nonnegative_float(
             pricing.get("output_usd_per_1k"), "pricing.output_usd_per_1k"
@@ -364,7 +387,9 @@ class PanelRunConfig:
             retry_backoff_seconds=retry_backoff_seconds,
             max_tokens=max_tokens,
             temperature=temperature,
+            reasoning_effort=reasoning_effort,
             input_usd_per_1k=input_usd_per_1k,
+            cached_input_usd_per_1k=cached_input_usd_per_1k,
             output_usd_per_1k=output_usd_per_1k,
         )
 
@@ -428,18 +453,23 @@ class OpenAICompatibleAdapter(_HttpAdapter):
     name = "openai_compatible"
 
     def complete(self, *, prompt: str, judge: ResolvedJudgeConfig) -> AdapterResponse:
+        body: dict[str, Any] = {
+            "model": judge.model,
+            "messages": [{"role": "user", "content": prompt}],
+        }
+        if judge.reasoning_effort:
+            body["reasoning_effort"] = judge.reasoning_effort
+            body["max_completion_tokens"] = judge.max_tokens
+        else:
+            body["temperature"] = judge.temperature
+            body["max_tokens"] = judge.max_tokens
         payload = self._post(
             judge=judge,
             headers={
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {judge.api_key}",
             },
-            body={
-                "model": judge.model,
-                "messages": [{"role": "user", "content": prompt}],
-                "temperature": judge.temperature,
-                "max_tokens": judge.max_tokens,
-            },
+            body=body,
         )
         choices = payload.get("choices")
         if not isinstance(choices, list) or not choices or not isinstance(choices[0], Mapping):
@@ -802,7 +832,9 @@ class PanelRunner:
                 "retry_backoff_seconds": self.config.retry_backoff_seconds,
                 "max_tokens": self.config.max_tokens,
                 "temperature": self.config.temperature,
+                "reasoning_effort": self.config.reasoning_effort,
                 "input_usd_per_1k": self.config.input_usd_per_1k,
+                "cached_input_usd_per_1k": self.config.cached_input_usd_per_1k,
                 "output_usd_per_1k": self.config.output_usd_per_1k,
             },
             "judges": [
@@ -820,9 +852,11 @@ class PanelRunner:
                     "api_version": resolved[judge.judge_id].api_version,
                     "max_tokens": resolved[judge.judge_id].max_tokens,
                     "temperature": resolved[judge.judge_id].temperature,
+                    "reasoning_effort": resolved[judge.judge_id].reasoning_effort,
                     "timeout_seconds": resolved[judge.judge_id].timeout_seconds,
                     "max_retries": resolved[judge.judge_id].max_retries,
                     "input_usd_per_1k": resolved[judge.judge_id].input_usd_per_1k,
+                    "cached_input_usd_per_1k": resolved[judge.judge_id].cached_input_usd_per_1k,
                     "output_usd_per_1k": resolved[judge.judge_id].output_usd_per_1k,
                 }
                 for judge in self.config.judges
@@ -936,6 +970,7 @@ class PanelRunner:
                 "cost_usd": _estimate_cost(
                     response.usage,
                     input_usd_per_1k=judge.input_usd_per_1k,
+                    cached_input_usd_per_1k=judge.cached_input_usd_per_1k,
                     output_usd_per_1k=judge.output_usd_per_1k,
                 ),
             }
@@ -954,6 +989,7 @@ class PanelRunner:
             "cost_usd": _estimate_cost(
                 response.usage,
                 input_usd_per_1k=judge.input_usd_per_1k,
+                cached_input_usd_per_1k=judge.cached_input_usd_per_1k,
                 output_usd_per_1k=judge.output_usd_per_1k,
             ),
         }
@@ -1228,7 +1264,11 @@ def _normalize_usage(value: Mapping[str, Any]) -> dict[str, int | float]:
             ("input_token_details", "cached_tokens"),
         )
         if cached_tokens is None:
-            for key in ("input_cached_tokens", "cache_read_input_tokens"):
+            for key in (
+                "input_cached_tokens",
+                "cache_read_input_tokens",
+                "prompt_cache_hit_tokens",
+            ):
                 candidate = value.get(key)
                 if isinstance(candidate, (int, float)) and not isinstance(candidate, bool):
                     cached_tokens = candidate
@@ -1282,6 +1322,7 @@ def _estimate_cost(
     usage: Mapping[str, Any],
     *,
     input_usd_per_1k: float | None,
+    cached_input_usd_per_1k: float | None = None,
     output_usd_per_1k: float | None,
 ) -> float | None:
     if input_usd_per_1k is None or output_usd_per_1k is None:
@@ -1290,11 +1331,19 @@ def _estimate_cost(
     output_tokens = usage.get("output_tokens", usage.get("completion_tokens"))
     if not isinstance(input_tokens, (int, float)) or not isinstance(output_tokens, (int, float)):
         return None
-    return round(
-        (float(input_tokens) / 1000 * input_usd_per_1k)
-        + (float(output_tokens) / 1000 * output_usd_per_1k),
-        8,
-    )
+    cached_tokens = usage.get("cached_tokens", 0)
+    if not isinstance(cached_tokens, (int, float)) or isinstance(cached_tokens, bool):
+        cached_tokens = 0
+    cached_tokens = min(max(float(cached_tokens), 0.0), float(input_tokens))
+    uncached_tokens = float(input_tokens) - cached_tokens
+    if cached_input_usd_per_1k is None:
+        input_cost = float(input_tokens) / 1000 * input_usd_per_1k
+    else:
+        input_cost = (
+            uncached_tokens / 1000 * input_usd_per_1k
+            + cached_tokens / 1000 * cached_input_usd_per_1k
+        )
+    return round(input_cost + (float(output_tokens) / 1000 * output_usd_per_1k), 8)
 
 
 def _summarize_cost(
