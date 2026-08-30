@@ -24,6 +24,7 @@ from label_plane.panel_runtime import (
     PanelRunner,
     load_panel_tasks,
 )
+from label_plane.private_env import load_private_env
 
 
 def _assert_private_output(path: Path, repository_root: Path) -> None:
@@ -61,6 +62,7 @@ def main() -> int:
     _assert_private_output(args.responses, repository_root)
     _assert_private_output(args.errors, repository_root)
     try:
+        load_private_env(repository_root / ".env")
         config = PanelRunConfig.from_json(args.config)
         if args.full_run and config.stage != "full_panel":
             parser.error("--full-run requires a config with stage=full_panel")
