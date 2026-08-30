@@ -70,8 +70,8 @@ def load_primary_label_manifest(
 
     if manifest.get("schema_version") != "human-labels/v1":
         raise ValueError("primary label manifest schema_version must be human-labels/v1")
-    if float(manifest.get("duplicate_subset_fraction", 0.0)) < 0.20:
-        raise ValueError("primary label manifest requires a 20% duplicate subset")
+    if float(manifest.get("duplicate_subset_fraction", 0.0)) < 1.0:
+        raise ValueError("confirmatory primary labels require a 100% double-coded subset")
     rows = manifest.get("labels")
     if not isinstance(rows, list):
         raise ValueError("primary label manifest labels are required")
@@ -83,6 +83,8 @@ def load_primary_label_manifest(
         episode_id = str(row.get("episode_id", "")).strip()
         if not episode_id or episode_id in labels:
             raise ValueError("primary label rows require unique episode_id")
+        if int(row.get("independent_annotator_count", 0)) < 2:
+            raise ValueError(f"primary label for {episode_id} requires two independent annotators")
         if row.get("missing") or row.get("adjudicated") is not True:
             raise ValueError(f"primary label for {episode_id} is missing adjudication")
         label = row.get("label")

@@ -4,7 +4,6 @@
   "expected_tasks_per_judge": 240,
   "expected_total_tasks": 720,
   "require_negative_controls": true,
-  "max_total_cost_usd": null,
   "judges": [
     {
       "judge_id": "judge-a",
@@ -36,6 +35,9 @@
   "timeout_seconds": 60,
   "max_retries": 2,
   "retry_backoff_seconds": 1,
+  "min_request_interval_seconds": 0.25,
+  "max_total_cost_usd": 8.00,
+  "max_total_attempts": 2160,
   "max_tokens": 512,
   "temperature": 0,
   "reasoning_effort": null,

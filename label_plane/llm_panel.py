@@ -127,6 +127,61 @@ def select_human_audit_subset(
     return tuple(sorted(chooser.sample(unique, min(count, len(unique)))))
 
 
+def select_stratified_human_audit_subset(
+    consensus_rows: Iterable[Mapping[str, Any]], *, fraction: float = 0.20, seed: int = 0
+) -> tuple[dict[str, str], ...]:
+    """Select a reproducible audit covering panel failure modes.
+
+    This is an audit sample, not ground truth. Cases already requiring human
+    review remain mandatory; the additional sample is stratified by family,
+    consensus outcome, and apparent difficulty.
+    """
+
+    if not 0.0 < fraction <= 1.0:
+        raise ValueError("human audit fraction must be in (0, 1]")
+    rows = [dict(row) for row in consensus_rows]
+    by_id = {
+        str(row.get("item_id", "")): row
+        for row in rows
+        if str(row.get("item_id", "")).strip()
+    }
+    if len(by_id) != len(rows):
+        raise ValueError("consensus rows require unique, non-empty item_id values")
+    if not rows:
+        return ()
+    target = max(1, round(len(rows) * fraction))
+    selected: dict[str, str] = {
+        item_id: "mandatory_disagreement_or_uncertainty"
+        for item_id, row in by_id.items()
+        if bool(row.get("human_review_required"))
+    }
+    buckets: defaultdict[tuple[str, str, str], list[str]] = defaultdict(list)
+    for item_id, row in by_id.items():
+        agreement = float(row.get("agreement", 0))
+        difficulty = "low_agreement" if agreement < 1 else "unanimous"
+        bucket = (
+            str(row.get("target_family", "unknown")),
+            str(row.get("status", "unknown")),
+            difficulty,
+        )
+        buckets[bucket].append(item_id)
+    chooser = random.Random(seed)
+    for bucket in sorted(buckets):
+        candidates = [
+            item_id for item_id in sorted(buckets[bucket]) if item_id not in selected
+        ]
+        if candidates and len(selected) < target:
+            selected[chooser.choice(candidates)] = "stratified_family_outcome_difficulty"
+    remaining = [item_id for item_id in sorted(by_id) if item_id not in selected]
+    chooser.shuffle(remaining)
+    for item_id in remaining[: max(0, target - len(selected))]:
+        selected[item_id] = "seeded_random_fill"
+    return tuple(
+        {"item_id": item_id, "audit_reason": selected[item_id]}
+        for item_id in sorted(selected)
+    )
+
+
 def build_panel_tasks(
     candidates: Iterable[Mapping[str, Any]],
     *,
@@ -402,6 +457,45 @@ def summarize_panel_agreement(
     }
 
 
+def calibrate_panel_against_human_review(
+    consensus_rows: Iterable[Mapping[str, Any]], human_labels: Mapping[str, str]
+) -> dict[str, Any]:
+    """Report exploratory judge and consensus agreement with human labels."""
+
+    rows = [
+        dict(row)
+        for row in consensus_rows
+        if str(row.get("item_id", "")) in human_labels
+    ]
+    if not rows:
+        raise ValueError("panel calibration requires audited item labels")
+    by_judge: defaultdict[str, list[bool]] = defaultdict(list)
+    by_family: defaultdict[str, list[bool]] = defaultdict(list)
+    consensus: list[bool] = []
+    for row in rows:
+        expected = str(human_labels[str(row["item_id"])])
+        consensus_match = str(row.get("label")) == expected
+        consensus.append(consensus_match)
+        by_family[str(row.get("target_family", "unknown"))].append(consensus_match)
+        for judge, label in dict(row.get("provider_labels", {})).items():
+            by_judge[str(judge)].append(str(label) == expected)
+
+    def rate(values: list[bool]) -> float | None:
+        return round(sum(values) / len(values), 4) if values else None
+
+    return {
+        "status": "exploratory_calibration",
+        "audited_items": len(rows),
+        "consensus_agreement": rate(consensus),
+        "judge_agreement": {
+            judge: rate(values) for judge, values in sorted(by_judge.items())
+        },
+        "family_agreement": {
+            family: rate(values) for family, values in sorted(by_family.items())
+        },
+    }
+
+
 def load_jsonl(path: str | Path) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     with Path(path).open(encoding="utf-8") as handle:
@@ -426,9 +520,11 @@ __all__ = [
     "build_consensus_batch",
     "build_panel_prompt",
     "build_panel_tasks",
+    "calibrate_panel_against_human_review",
     "CONTROL_CONDITIONS",
     "load_jsonl",
     "select_human_audit_subset",
+    "select_stratified_human_audit_subset",
     "summarize_panel_agreement",
     "validate_panel_annotation",
 ]

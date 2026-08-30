@@ -14,7 +14,7 @@ if str(REPOSITORY_ROOT) not in sys.path:
 
 from label_plane.llm_panel import (
     build_consensus_batch,
-    select_human_audit_subset,
+    select_stratified_human_audit_subset,
     summarize_panel_agreement,
 )
 
@@ -66,11 +66,14 @@ def main() -> int:
         expected_providers=args.judges,
         consensus_required=args.consensus_required,
     )
-    audit_ids = select_human_audit_subset(
-        (row["item_id"] for row in consensus), fraction=args.audit_fraction, seed=args.seed
+    audit_selection = select_stratified_human_audit_subset(
+        consensus, fraction=args.audit_fraction, seed=args.seed
     )
+    audit_reasons = {row["item_id"]: row["audit_reason"] for row in audit_selection}
     for row in consensus:
-        row["human_audit_sample"] = row["item_id"] in audit_ids
+        row["human_audit_sample"] = row["item_id"] in audit_reasons
+        if row["human_audit_sample"]:
+            row["human_audit_reason"] = audit_reasons[row["item_id"]]
     agreement = summarize_panel_agreement(
         consensus,
         annotations=responses,
@@ -89,9 +92,10 @@ def main() -> int:
         "items": len(consensus),
         "status_counts": dict(sorted(Counter(row["status"] for row in consensus).items())),
         "human_review_count": sum(bool(row["human_review_required"]) for row in consensus),
-        "human_audit_count": len(audit_ids),
+        "human_audit_count": len(audit_selection),
         "human_audit_fraction": args.audit_fraction,
         "human_audit_seed": args.seed,
+        "human_audit_strategy": "mandatory_disagreement_plus_stratified_family_outcome_difficulty",
         "judges": args.judges,
         "consensus_required": args.consensus_required,
         "agreement": agreement,

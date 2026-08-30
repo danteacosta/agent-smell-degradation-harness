@@ -7,7 +7,9 @@ from label_plane.llm_panel import (
     build_consensus,
     build_panel_prompt,
     build_panel_tasks,
+    calibrate_panel_against_human_review,
     select_human_audit_subset,
+    select_stratified_human_audit_subset,
     summarize_panel_agreement,
     validate_panel_annotation,
 )
@@ -111,6 +113,73 @@ def test_human_audit_subset_is_reproducible_and_nonempty() -> None:
 
     assert first == second
     assert len(first) == 2
+
+
+def test_stratified_audit_keeps_mandatory_review_and_is_reproducible() -> None:
+    rows = [
+        {
+            "item_id": "a",
+            "target_family": "polysemy",
+            "status": "panel_consensus",
+            "agreement": 1.0,
+            "human_review_required": False,
+        },
+        {
+            "item_id": "b",
+            "target_family": "polysemy",
+            "status": "panel_consensus",
+            "agreement": 2 / 3,
+            "human_review_required": True,
+        },
+        {
+            "item_id": "c",
+            "target_family": "vague_pronoun",
+            "status": "uncertain",
+            "agreement": 1 / 3,
+            "human_review_required": True,
+        },
+        {
+            "item_id": "d",
+            "target_family": "vague_pronoun",
+            "status": "panel_consensus",
+            "agreement": 1.0,
+            "human_review_required": False,
+        },
+    ]
+
+    first = select_stratified_human_audit_subset(rows, fraction=0.25, seed=7)
+    selected = {row["item_id"]: row["audit_reason"] for row in first}
+    assert selected["b"] == "mandatory_disagreement_or_uncertainty"
+    assert selected["c"] == "mandatory_disagreement_or_uncertainty"
+    assert first == select_stratified_human_audit_subset(rows, fraction=0.25, seed=7)
+
+
+def test_panel_calibration_is_exploratory_and_grouped_by_judge_and_family() -> None:
+    annotations = [
+        _annotation("judge-a", "smelly"),
+        _annotation("judge-b", "smelly"),
+        _annotation("judge-c", "clean"),
+    ]
+    consensus = [
+        build_consensus(
+            annotations,
+            expected_providers=("judge-a", "judge-b", "judge-c"),
+        )
+    ]
+
+    calibration = calibrate_panel_against_human_review(
+        consensus, {"item-1": "clean"}
+    )
+
+    assert calibration["status"] == "exploratory_calibration"
+    assert calibration["audited_items"] == 1
+    assert calibration["consensus_agreement"] == 0.0
+    assert calibration["judge_agreement"] == {
+        "judge-a": 0.0,
+        "judge-b": 0.0,
+        "judge-c": 1.0,
+    }
+    assert calibration["family_agreement"] == {"vague_pronoun": 0.0}
 
 
 def test_panel_supports_arbitrary_judge_ids_without_provider_branding() -> None:

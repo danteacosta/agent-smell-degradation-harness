@@ -140,6 +140,7 @@ def _validate_provider_stage(
         "validation_attempts": 0,
         "errors": [],
         "retrieval_events": 0,
+        "constraint_lineage": [],
     }
     sections: dict[str, Mapping[str, Any]] = {
         "interpretation": empty_interpretation,
@@ -151,6 +152,38 @@ def _validate_provider_stage(
         sections,
         require_conditional_semantics=True,
     )[stage]
+
+
+def _constraint_lineage(
+    constraints: list[Any], coverage_evidence: list[Any]
+) -> list[dict[str, Any]]:
+    """Create opaque, T3-available links from interpreted constraints to checks.
+
+    The trace carries stable IDs and hashes, not hidden reasoning, terminal
+    criteria, labels, or oracle outcomes.  T4 may later join its independent
+    reference constraints by ID outside the feature plane.
+    """
+
+    result: list[dict[str, Any]] = []
+    for index, value in enumerate(constraints, start=1):
+        text = str(value).strip()
+        digest = hashlib.sha256(text.encode("utf-8")).hexdigest()
+        matched = [
+            hashlib.sha256(str(candidate).strip().encode("utf-8")).hexdigest()[:16]
+            for candidate in coverage_evidence
+            if _covered(value, [candidate])
+        ]
+        result.append(
+            {
+                "constraint_id": f"c{index:03d}-{digest[:12]}",
+                "constraint_sha256": digest,
+                "planned_check_ids": matched,
+                "observation_id": "semantic-plan-contract-validator/v3",
+                "status": "covered" if matched else "uncovered",
+                "available_at": "T3",
+            }
+        )
+    return result
 
 
 def _tokens(value: Any) -> set[str]:
@@ -208,7 +241,7 @@ def _semantic_plan_diagnostics(
             "or contradictions unacknowledged"
         )
     return {
-        "validator": "semantic-plan-contract-validator/v2",
+        "validator": "semantic-plan-contract-validator/v3",
         "errors": errors,
         "constraint_count": len(interpreted["constraints"]),
         "quantity_count": len(interpreted["quantities"]),
@@ -225,6 +258,7 @@ def _semantic_plan_diagnostics(
         "coverage_target_count": len(planned["coverage_targets"]),
         "uncovered_constraint_count": len(uncovered_constraints),
         "unacknowledged_uncertainty_count": len(unacknowledged_uncertainty),
+        "constraint_lineage": _constraint_lineage(interpreted["constraints"], coverage_evidence),
     }
 
 
@@ -318,10 +352,9 @@ class StagedProviderRuntime:
             "validation_attempts": 1,
             "errors": diagnostics["errors"],
             "retrieval_events": 0,
+            "constraint_lineage": diagnostics["constraint_lineage"],
         }
-        t3_metadata = {
-            key: value for key, value in diagnostics.items() if key != "errors"
-        }
+        t3_metadata = {key: value for key, value in diagnostics.items() if key not in {"errors", "constraint_lineage"}}
 
         output_keys = pair["generation_contract"][task_family]["output_keys"]
         artifact, final = self._complete(
@@ -358,6 +391,7 @@ class StagedProviderRuntime:
                 },
             ),
             require_conditional_semantics=True,
+            require_constraint_lineage=True,
         )
 
 

@@ -61,11 +61,15 @@ def test_staged_provider_materializes_checkpoints_before_artifact() -> None:
     assert result.artifact == {"criterion": "reject after 5 minutes"}
     t3 = result.checkpoints[-1].payload
     assert t3["errors"] == []
-    assert result.provider_meta["stages"][2]["validator"] == "semantic-plan-contract-validator/v2"
+    assert result.provider_meta["stages"][2]["validator"] == "semantic-plan-contract-validator/v3"
     assert result.provider_meta["stages"][2]["uncovered_constraint_count"] == 0
     assert result.provider_meta["stages"][2]["conditional_clause_count"] == 1
     assert result.checkpoints[0].payload["conditional_semantics"][0]["necessity_status"] == "sufficient_only"
     assert result.provider_meta["runtime"] == "staged-provider/v1"
+    lineage = t3["constraint_lineage"]
+    assert lineage[0]["available_at"] == "T3"
+    assert lineage[0]["status"] == "covered"
+    assert "criterion" not in lineage[0]
     assert all("sha256" in key for key in ("request_sha256", "response_sha256"))
 
 
@@ -168,6 +172,7 @@ def test_t3_materializes_cross_stage_coverage_failures_before_artifact() -> None
     t3_metadata = result.provider_meta["stages"][2]
     assert t3_metadata["uncovered_constraint_count"] == 1
     assert t3_metadata["unacknowledged_uncertainty_count"] == 1
+    assert t3["constraint_lineage"][0]["status"] == "uncovered"
 
 
 def test_malformed_plan_stops_before_t3_and_terminal_artifact() -> None:

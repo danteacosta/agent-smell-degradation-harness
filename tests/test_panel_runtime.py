@@ -13,6 +13,7 @@ from label_plane.panel_runtime import (
     AnthropicMessagesAdapter,
     OpenAICompatibleAdapter,
     PanelAdapterError,
+    PanelConfigurationError,
     PanelRunConfig,
     PanelRunner,
     _estimate_cost,
@@ -224,6 +225,49 @@ class PanelRuntimeTests(unittest.TestCase):
             self.assertEqual(manifest["cost"]["status"], "measured")
             self.assertEqual(manifest["cost"]["total_usd"], 0.052)
 
+    def test_full_run_budget_gate_requires_declared_cap(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            with self.assertRaisesRegex(PanelConfigurationError, "max_total_cost_usd"):
+                PanelRunner(_config(), adapters={"fake": FakeAdapter()}).run(
+                    _tasks(),
+                    run_id="panel-full-missing-cap",
+                    responses_path=root / "responses.jsonl",
+                    errors_path=root / "errors.jsonl",
+                    manifest_path=root / "manifest.json",
+                    require_budget_cap=True,
+                )
+
+    def test_full_run_budget_manifest_records_conservative_ceiling(self) -> None:
+        config = PanelRunConfig.from_mapping(
+            {
+                "schema_version": "requirements-smell-panel-runtime/v1",
+                "judges": [
+                    {"judge_id": "judge-a", "adapter": "fake", "model": "model-a"},
+                    {"judge_id": "judge-b", "adapter": "fake", "model": "model-b"},
+                ],
+                "consensus_required": 2,
+                "max_retries": 0,
+                "max_total_cost_usd": 10.0,
+                "max_total_attempts": 4,
+                "pricing": {"input_usd_per_1k": 1.0, "output_usd_per_1k": 2.0},
+            }
+        )
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = PanelRunner(config, adapters={"fake": FakeAdapter()}).run(
+                _tasks(("judge-a", "judge-b")),
+                run_id="panel-full-budget",
+                responses_path=root / "responses.jsonl",
+                errors_path=root / "errors.jsonl",
+                manifest_path=root / "manifest.json",
+                require_budget_cap=True,
+            )
+
+        self.assertTrue(manifest["budget"]["full_run_budget_gate"])
+        self.assertEqual(manifest["budget"]["conservative_max_attempts"], 4)
+        self.assertLess(manifest["budget"]["conservative_max_cost_usd"], 10.0)
+
     def test_full_panel_validates_expected_task_counts_before_network_calls(self) -> None:
         adapter = FakeAdapter()
         config = PanelRunConfig.from_mapping(
@@ -399,7 +443,9 @@ class PanelRuntimeTests(unittest.TestCase):
 
         self.assertEqual(len(adapter.calls), 2)
         self.assertEqual(manifest["status"], "completed")
-        self.assertEqual(manifest["budget"], {"limit_usd": 1.0, "spent_usd": 0.052, "status": "measured"})
+        self.assertEqual(manifest["budget"]["limit_usd"], 1.0)
+        self.assertEqual(manifest["budget"]["spent_usd"], 0.052)
+        self.assertEqual(manifest["budget"]["status"], "measured")
         self.assertEqual(manifest["usage"]["total_tokens"], 36)
         self.assertEqual(error_rows[0]["usage"]["total_tokens"], 18)
         self.assertEqual(error_rows[0]["cost_usd"], 0.026)

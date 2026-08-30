@@ -140,7 +140,9 @@ def _run_episode(
         )
         if not isinstance(execution, AgentExecution):
             raise ValueError("native checkpoint execution must return AgentExecution")
-        execution = validate_agent_execution(execution, not_before=rec.last_ended_at)
+        execution = validate_agent_execution(
+            execution, not_before=rec.last_ended_at, require_constraint_lineage=True
+        )
         for observation in execution.checkpoints:
             writer = rec.semantic if observation.checkpoint in {"interpretation.completed", "plan.completed"} else rec.operational
             writer(

@@ -1,9 +1,11 @@
 """Run private blinded panel tasks against configured model adapters.
 
-The default mode is a ten-task-per-judge smoke run.  A full run requires both
-``--full-run`` and ``--confirm-full-run`` with a ``full_panel`` config so an
-accidental invocation cannot spend the whole panel budget. Use ``--resume``
-to continue an interrupted run without repeating successful calls.
+The default mode is a ten-task-per-judge smoke run. A full run requires both
+``--full-run`` and ``--confirm-cost`` with a ``full_panel`` config so an
+accidental invocation cannot spend the whole panel budget. The historical
+``--confirm-full-run`` spelling remains accepted as a compatibility alias.
+Use ``--resume`` to continue an interrupted run without repeating successful
+calls.
 """
 
 from __future__ import annotations
@@ -48,14 +50,16 @@ def main() -> int:
     parser.add_argument("--manifest", required=True, type=Path, help="hash/count-only manifest")
     parser.add_argument("--limit-per-judge", type=int, default=10)
     parser.add_argument("--full-run", action="store_true")
+    parser.add_argument("--confirm-cost", action="store_true")
     parser.add_argument("--confirm-full-run", action="store_true")
     parser.add_argument("--resume", action="store_true", help="resume an existing run without repeating successful tasks")
     args = parser.parse_args()
 
-    if args.full_run and not args.confirm_full_run:
-        parser.error("--full-run requires --confirm-full-run")
-    if args.confirm_full_run and not args.full_run:
-        parser.error("--confirm-full-run is valid only with --full-run")
+    confirmed_cost = args.confirm_cost or args.confirm_full_run
+    if args.full_run and not confirmed_cost:
+        parser.error("--full-run requires --confirm-cost")
+    if confirmed_cost and not args.full_run:
+        parser.error("--confirm-cost/--confirm-full-run is valid only with --full-run")
     limit = None if args.full_run else args.limit_per_judge
     repository_root = REPOSITORY_ROOT
     _assert_private_output(args.tasks, repository_root)
@@ -74,6 +78,7 @@ def main() -> int:
             errors_path=args.errors,
             manifest_path=args.manifest,
             resume=args.resume,
+            require_budget_cap=args.full_run,
         )
     except (PanelConfigurationError, PanelAdapterError, OSError, ValueError) as exc:
         parser.exit(1, f"error: {exc}\n")
