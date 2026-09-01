@@ -68,6 +68,16 @@ UTF-8 context sizes, checkpoint identity and a context hash; raw prompts,
 artifacts, labels and private reasoning are excluded. See the
 [context-management control note](docs/research/2026-09-01-context-management-control.md).
 
+The secondary mechanism proxy `typed_compaction_stress_test` keeps
+requirement/constraint blocks in an article-inspired hard lane and compacts
+other context under the same fixed budget. T1 also records bounded
+`atomic_obligations`, and T3 binds them to constraint hashes without storing
+obligation text. The post-collection report
+`python -m eval.context_interaction --episodes PATH --output REPORT`
+computes the clean/smelly by context difference-in-differences. These
+mechanism observations are descriptive and do not modify H1, H2 or the smell
+taxonomy.
+
 ## Flow
 
 ```mermaid
