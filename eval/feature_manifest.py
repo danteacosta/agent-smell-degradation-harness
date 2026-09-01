@@ -73,8 +73,8 @@ def _feature_families(
 def build_feature_manifest(
     episodes: Sequence[Mapping[str, Any]],
     *,
-    feature_version: str = "pre-final/v3",
-    analysis_version: str = "h2-confirmatory-v2",
+    feature_version: str = "pre-final/v4",
+    analysis_version: str = "h2-confirmatory-v3",
 ) -> dict[str, Any]:
     """Derive an auditable H2 v3 manifest from frozen native traces."""
 

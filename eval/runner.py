@@ -141,7 +141,10 @@ def _run_episode(
         if not isinstance(execution, AgentExecution):
             raise ValueError("native checkpoint execution must return AgentExecution")
         execution = validate_agent_execution(
-            execution, not_before=rec.last_ended_at, require_constraint_lineage=True
+            execution,
+            not_before=rec.last_ended_at,
+            require_constraint_lineage=True,
+            require_atomic_obligations=True,
         )
         for observation in execution.checkpoints:
             writer = rec.semantic if observation.checkpoint in {"interpretation.completed", "plan.completed"} else rec.operational
@@ -310,6 +313,23 @@ def _run_episode(
     for metadata_key in ("prompt_sha256", "prompt_template_version"):
         if metadata_key in provider_meta:
             episode["provider_meta"][metadata_key] = str(provider_meta[metadata_key])
+    context_summary = provider_meta.get("context_management")
+    pre_final_context_summary = provider_meta.get("pre_final_context_management")
+    if isinstance(context_summary, Mapping):
+        episode["provider_meta"]["context_management"] = dict(context_summary)
+    else:
+        episode["provider_meta"]["context_management"] = {
+            "schema_version": "context-management/v1",
+            "condition": "not_instrumented",
+            "event_count": 0,
+            "compaction_count": 0,
+            "operation_counts": {},
+            "context_size_unit": "utf8_bytes",
+            "context_size_before": 0,
+            "context_size_after": 0,
+        }
+    if isinstance(pre_final_context_summary, Mapping):
+        episode["provider_meta"]["pre_final_context_management"] = dict(pre_final_context_summary)
     if task_evaluation.mutation_score is not None:
         episode["mutation_score"] = task_evaluation.mutation_score
     if task_evaluation.behavior_status is not None:

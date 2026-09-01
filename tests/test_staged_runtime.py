@@ -24,6 +24,10 @@ def test_staged_provider_materializes_checkpoints_before_artifact() -> None:
                 "temporal_relation": "next_state",
                 "negative_case": {"status": "specified", "description": "the request is at or below five minutes"},
             }],
+            "atomic_obligations": [
+                {"constraint_index": 1, "atom_type": "condition", "status": "present"},
+                {"constraint_index": 1, "atom_type": "threshold", "status": "present"},
+            ],
         }),
         json.dumps({
             "validation_checks": ["check boundary"],
@@ -64,8 +68,10 @@ def test_staged_provider_materializes_checkpoints_before_artifact() -> None:
     assert result.provider_meta["stages"][2]["validator"] == "semantic-plan-contract-validator/v3"
     assert result.provider_meta["stages"][2]["uncovered_constraint_count"] == 0
     assert result.provider_meta["stages"][2]["conditional_clause_count"] == 1
+    assert len(result.checkpoints[0].payload["atomic_obligations"]) == 2
+    assert len(result.checkpoints[-1].payload["atomic_obligation_observations"]) == 2
     assert result.checkpoints[0].payload["conditional_semantics"][0]["necessity_status"] == "sufficient_only"
-    assert result.provider_meta["runtime"] == "staged-provider/v1"
+    assert result.provider_meta["runtime"] == "staged-provider/v2"
     lineage = t3["constraint_lineage"]
     assert lineage[0]["available_at"] == "T3"
     assert lineage[0]["status"] == "covered"
@@ -82,7 +88,7 @@ def test_staged_prompts_do_not_disclose_variant_or_oracle() -> None:
 
         def __init__(self) -> None:
             self.responses = iter([
-                {"constraints": [], "quantities": [], "unresolved_references": [], "assumptions": [], "contradictions": [], "conditional_semantics": []},
+                {"constraints": [], "quantities": [], "unresolved_references": [], "assumptions": [], "contradictions": [], "conditional_semantics": [], "atomic_obligations": []},
                 {"validation_checks": [], "planned_tools": [], "coverage_targets": []},
                 {"criterion": "bounded"},
             ])
@@ -148,6 +154,7 @@ def test_t3_materializes_cross_stage_coverage_failures_before_artifact() -> None
             "assumptions": [],
             "contradictions": [],
             "conditional_semantics": [],
+            "atomic_obligations": [],
         }),
         json.dumps({
             "validation_checks": ["check the response schema"],
@@ -184,6 +191,7 @@ def test_malformed_plan_stops_before_t3_and_terminal_artifact() -> None:
             "assumptions": [],
             "contradictions": [],
             "conditional_semantics": [],
+            "atomic_obligations": [],
         }),
         "not-json",
         json.dumps({"criterion": "must never be requested"}),
@@ -225,6 +233,7 @@ def test_provider_failure_stops_before_terminal_artifact() -> None:
                 "assumptions": [],
                 "contradictions": [],
                 "conditional_semantics": [],
+                "atomic_obligations": [],
             })
 
     provider = FailingProvider()

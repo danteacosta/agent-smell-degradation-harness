@@ -22,7 +22,18 @@ from .checkpoints import (
     validate_checkpoint_payload,
 )
 from .providers import Provider, ProviderRequest, provider_visible_pair
+from protocol.atomic_obligations import (
+    materialize_atomic_obligation_observations,
+    summarize_atomic_obligations,
+    validate_atomic_obligations,
+)
 from protocol.conditional_semantics import validate_conditional_semantics
+from protocol.context_management import (
+    ContextManager,
+    NoCompactionManager,
+    build_context_event,
+    summarize_context_events,
+)
 
 
 Clock = Callable[[], datetime]
@@ -80,6 +91,7 @@ _STAGE_FIELDS = {
         "assumptions",
         "contradictions",
         "conditional_semantics",
+        "atomic_obligations",
     ),
     "plan": ("validation_checks", "planned_tools", "coverage_targets"),
 }
@@ -111,6 +123,15 @@ def _stage_lists(
             except ValueError as error:
                 errors.append(str(error))
             continue
+        if field == "atomic_obligations":
+            try:
+                values[field] = validate_atomic_obligations(
+                    value,
+                    values["constraints"],
+                )
+            except ValueError as error:
+                errors.append(str(error))
+            continue
         if any(not isinstance(item, str) or not item.strip() for item in value):
             errors.append(f"{stage}.{field} contains a non-text or empty item")
     return values, errors
@@ -129,6 +150,7 @@ def _validate_provider_stage(
         "assumptions": [],
         "contradictions": [],
         "conditional_semantics": [],
+        "atomic_obligations": [],
     }
     empty_plan = {
         "validation_checks": [],
@@ -141,6 +163,8 @@ def _validate_provider_stage(
         "errors": [],
         "retrieval_events": 0,
         "constraint_lineage": [],
+        "context_management": [],
+        "atomic_obligation_observations": [],
     }
     sections: dict[str, Mapping[str, Any]] = {
         "interpretation": empty_interpretation,
@@ -151,6 +175,7 @@ def _validate_provider_stage(
     return validate_checkpoint_payload(
         sections,
         require_conditional_semantics=True,
+        require_atomic_obligations=True,
     )[stage]
 
 
@@ -227,6 +252,15 @@ def _semantic_plan_diagnostics(
     unacknowledged_uncertainty = [
         value for value in unresolved if not _covered(value, coverage_evidence)
     ]
+    lineage = _constraint_lineage(interpreted["constraints"], coverage_evidence)
+    atomic_obligation_observations = materialize_atomic_obligation_observations(
+        interpreted["constraints"],
+        interpreted["atomic_obligations"],
+        lineage,
+    )
+    atomic_obligation_summary = summarize_atomic_obligations(
+        atomic_obligation_observations
+    )
     errors = _contract_errors(pair, task_family) + interpretation_errors + plan_errors
     if interpreted["constraints"] and not coverage_evidence:
         errors.append("plan has no validation checks or coverage targets")
@@ -258,7 +292,9 @@ def _semantic_plan_diagnostics(
         "coverage_target_count": len(planned["coverage_targets"]),
         "uncovered_constraint_count": len(uncovered_constraints),
         "unacknowledged_uncertainty_count": len(unacknowledged_uncertainty),
-        "constraint_lineage": _constraint_lineage(interpreted["constraints"], coverage_evidence),
+        "constraint_lineage": lineage,
+        "atomic_obligation_observations": atomic_obligation_observations,
+        "atomic_obligation_summary": atomic_obligation_summary,
     }
 
 
@@ -269,9 +305,16 @@ class StagedProviderRuntime:
     same episode, not access to provider chain-of-thought or hidden state.
     """
 
-    def __init__(self, provider: Provider, *, clock: Clock | None = None) -> None:
+    def __init__(
+        self,
+        provider: Provider,
+        *,
+        clock: Clock | None = None,
+        context_manager: ContextManager | None = None,
+    ) -> None:
         self._provider = provider
         self._clock = clock or (lambda: datetime.now(timezone.utc))
+        self._context_manager = context_manager or NoCompactionManager()
 
     def _complete(
         self,
@@ -280,12 +323,25 @@ class StagedProviderRuntime:
         variant: str,
         task_family: str,
         stage: str,
+        *,
+        context_index: int,
     ) -> tuple[dict[str, Any], dict[str, Any]]:
+        context_started = _now_iso(self._clock)
+        transformation = self._context_manager.prepare(prompt, stage=stage)
+        context_ended = _now_iso(self._clock)
+        context_event = build_context_event(
+            transformation,
+            event_id=f"context-{context_index:03d}",
+            stage=stage,
+            checkpoint_id=f"{stage}-context-{context_index:03d}",
+            started_at=context_started,
+            ended_at=context_ended,
+        )
         started = _now_iso(self._clock)
         start_perf = time.perf_counter()
         response = self._provider.complete(
             ProviderRequest(
-                prompt=prompt,
+                prompt=transformation.prompt,
                 pair=provider_visible_pair(pair, variant=variant, task_family=task_family),
                 variant="opaque",
                 task_family=task_family,
@@ -298,8 +354,11 @@ class StagedProviderRuntime:
             "started_at": started,
             "ended_at": ended,
             "latency_ms": round(latency_ms, 3),
-            "request_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+            "request_sha256": hashlib.sha256(
+                transformation.prompt.encode("utf-8")
+            ).hexdigest(),
             "response_sha256": hashlib.sha256(response.encode("utf-8")).hexdigest(),
+            "context_management_event": context_event,
         }
 
     def execute(
@@ -308,24 +367,31 @@ class StagedProviderRuntime:
         variant: str,
         task_family: str,
     ) -> AgentExecution:
+        context_events: list[dict[str, Any]] = []
         requirement = _requirement(pair, variant)
         base = f"Task family: {task_family}\nRequirement:\n{requirement}\n\n"
         interpretation, t1 = self._complete(
             base
             + "Return JSON with exactly: constraints, quantities, unresolved_references, "
-            "assumptions, contradictions, conditional_semantics. Every value must be a list. "
+            "assumptions, contradictions, conditional_semantics, atomic_obligations. "
+            "Every top-level value must be a list. "
             "conditional_semantics items must contain antecedent, consequent, necessity_status "
             "(sufficient_only|also_necessary|undetermined), temporal_relation "
             "(during|next_state|eventually|irrelevant|undetermined), and negative_case "
             "({status: specified|not_specified|not_applicable, description: string|null}). "
-            "Use an empty conditional_semantics list when the requirement has no conditional clause. "
+            "atomic_obligations items must contain only constraint_index (1-based), "
+            "atom_type (actor|action|object|condition|threshold|scope|temporal|exception|modality), "
+            "and status (present|absent|uncertain); do not include raw obligation text. "
+            "Use an empty list when no atomic observation is available. "
             "This is an observable "
             "task summary; do not reveal hidden reasoning, labels, variants, or an artifact.",
             pair,
             variant,
             task_family,
             "T1",
+            context_index=1,
         )
+        context_events.append(t1["context_management_event"])
         interpretation = _validate_provider_stage(interpretation, "interpretation")
         plan, t2 = self._complete(
             base
@@ -338,7 +404,9 @@ class StagedProviderRuntime:
             variant,
             task_family,
             "T2",
+            context_index=2,
         )
+        context_events.append(t2["context_management_event"])
         plan = _validate_provider_stage(plan, "plan")
 
         execution_started = _now_iso(self._clock)
@@ -353,6 +421,8 @@ class StagedProviderRuntime:
             "errors": diagnostics["errors"],
             "retrieval_events": 0,
             "constraint_lineage": diagnostics["constraint_lineage"],
+            "context_management": context_events,
+            "atomic_obligation_observations": diagnostics["atomic_obligation_observations"],
         }
         t3_metadata = {key: value for key, value in diagnostics.items() if key not in {"errors", "constraint_lineage"}}
 
@@ -369,7 +439,9 @@ class StagedProviderRuntime:
             variant,
             task_family,
             "artifact",
+            context_index=3,
         )
+        all_context_events = [*context_events, final["context_management_event"]]
         observations = (
             CheckpointObservation("interpretation.completed", interpretation, t1["started_at"], t1["ended_at"]),
             CheckpointObservation("plan.completed", plan, t2["started_at"], t2["ended_at"]),
@@ -384,14 +456,24 @@ class StagedProviderRuntime:
                 {
                     "provider": self._provider.name,
                     "checkpoint_schema": "pre-final/v1",
-                    "runtime": "staged-provider/v1",
+                    "runtime": "staged-provider/v2",
                     "runtime_semantics": "externally-materialized-bounded-summaries",
                     "latency_ms": round(total_latency, 3),
+                    "context_management": summarize_context_events(
+                        all_context_events,
+                        condition=self._context_manager.condition,
+                    ),
+                    "pre_final_context_management": summarize_context_events(
+                        context_events,
+                        condition=self._context_manager.condition,
+                    ),
+                    "atomic_obligations": diagnostics["atomic_obligation_summary"],
                     "stages": [t1, t2, {"stage": "T3", **t3_metadata}, final],
                 },
             ),
             require_conditional_semantics=True,
             require_constraint_lineage=True,
+            require_atomic_obligations=True,
         )
 
 

@@ -79,6 +79,74 @@ def evaluate_launch_plan(plan: Mapping[str, Any]) -> dict[str, Any]:
     if design.get("episode_count") != 120:
         blockers.append("pre-pilot episode count must be 120")
 
+    context_management = _require_mapping(
+        plan.get("context_management"), "context_management"
+    )
+    context_checks = {
+        "context-management schema is missing": context_management.get("schema_version")
+        == "context-management/v1",
+        "primary pre-pilot condition must disable compaction": (
+            context_management.get("primary_condition") == "no_compaction"
+            and context_management.get("primary_compaction_enabled") is False
+        ),
+        "secondary context condition must be compaction_stress_test": (
+            context_management.get("secondary_condition") == "compaction_stress_test"
+        ),
+        "secondary matrix must preserve clean/smelly variants": (
+            context_management.get("secondary_variant_factor") == ["clean", "smelly"]
+        ),
+        "secondary context protocol test is missing": (
+            context_management.get("secondary_protocol_tested") is True
+        ),
+        "context-management event field list is incomplete": (
+            context_management.get("event_fields")
+            == [
+                "schema_version",
+                "event_id",
+                "stage",
+                "operation",
+                "trigger",
+                "started_at",
+                "ended_at",
+                "context_size_before",
+                "context_size_after",
+                "context_size_unit",
+                "checkpoint_id",
+                "checkpoint_sha256",
+            ]
+        ),
+        "atomic-obligation schema is missing": (
+            context_management.get("atomic_obligation_schema")
+            == "atomic-obligations/v1"
+        ),
+        "atomic-obligation observation fields are incomplete": (
+            context_management.get("atomic_obligation_observation_fields")
+            == [
+                "schema_version",
+                "obligation_id",
+                "constraint_id",
+                "constraint_sha256",
+                "constraint_index",
+                "atom_type",
+                "status",
+                "source_checkpoint",
+                "observation_id",
+                "preservation_class",
+                "available_at",
+            ]
+        ),
+        "article-inspired secondary mechanism is missing": (
+            context_management.get("mechanism_secondary")
+            == "typed_compaction_stress_test"
+            and context_management.get("mechanism_secondary_confirmatory") is False
+        ),
+        "2x2 context interaction estimand is missing": (
+            context_management.get("interaction_analysis")
+            == "difference_in_differences"
+        ),
+    }
+    blockers.extend(message for message, passed in context_checks.items() if not passed)
+
     corpus = _require_mapping(plan.get("corpus"), "corpus")
     corpus_checks = {
         "corpus manifest path is missing": bool(str(corpus.get("manifest_path", "")).strip()),

@@ -7,6 +7,7 @@ import math
 from collections.abc import Mapping
 from typing import Any
 
+from protocol.atomic_obligations import validate_atomic_obligations
 from protocol.conditional_semantics import validate_conditional_semantics
 
 REPLAY_VERSION = "constraint-replay/v1"
@@ -88,11 +89,13 @@ def _attributes_for(name: str, value: Any) -> dict[str, Any]:
     normalized = dict(value)
     if name == "interpretation.completed":
         required = {"constraints", "quantities", "unresolved_references", "assumptions", "contradictions"}
-        extended = required | {"conditional_semantics"}
-        if set(normalized) == required:
-            normalized["conditional_semantics"] = []
-        elif set(normalized) != extended:
+        optional = {"conditional_semantics", "atomic_obligations"}
+        extended = required | optional
+        present = set(normalized)
+        if present - extended or not required.issubset(present):
             raise ContractError("T1 attributes do not match pre-final/v1")
+        normalized.setdefault("conditional_semantics", [])
+        normalized.setdefault("atomic_obligations", [])
         for field in ("constraints", "unresolved_references", "assumptions", "contradictions"):
             _strings(normalized[field], f"T1.{field}")
         quantities = normalized["quantities"]
@@ -105,6 +108,10 @@ def _attributes_for(name: str, value: Any) -> dict[str, Any]:
                 raise ContractError("T1.quantity value/unit types are invalid")
         try:
             normalized["conditional_semantics"] = validate_conditional_semantics(normalized["conditional_semantics"])
+            normalized["atomic_obligations"] = validate_atomic_obligations(
+                normalized["atomic_obligations"],
+                normalized["constraints"],
+            )
         except ValueError as error:
             raise ContractError(str(error)) from error
     elif name == "plan.completed":

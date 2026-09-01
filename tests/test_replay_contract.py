@@ -98,6 +98,17 @@ def test_extended_conditional_semantics_survives_replay_validation() -> None:
     assert validated["events"][0]["attributes"]["conditional_semantics"][0]["temporal_relation"] == "next_state"
 
 
+def test_atomic_obligations_are_accepted_without_raw_text() -> None:
+    bundle = valid_bundle()
+    bundle["events"][0]["attributes"]["atomic_obligations"] = [
+        {"constraint_index": 1, "atom_type": "condition", "status": "present"},
+    ]
+
+    validated = validate_bundle_mapping(bundle)
+
+    assert validated["events"][0]["attributes"]["atomic_obligations"][0]["constraint_index"] == 1
+
+
 def test_malformed_conditional_semantics_fail_closed() -> None:
     bundle = valid_bundle()
     bundle["events"][0]["attributes"]["conditional_semantics"] = [{

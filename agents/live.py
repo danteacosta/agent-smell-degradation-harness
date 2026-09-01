@@ -91,9 +91,13 @@ def _build_checkpoint_prompt(pair: dict[str, Any], variant: str, task_family: st
         f"Task family: {task_family}\nRequirement:\n{requirement}\n\n"
         "Return one JSON object with exactly these sections and fields: "
         "interpretation={constraints:list, quantities:list, unresolved_references:list, "
-        "assumptions:list, contradictions:list, conditional_semantics:list}; "
+        "assumptions:list, contradictions:list, conditional_semantics:list, "
+        "atomic_obligations:list}; "
         "each conditional_semantics item must contain antecedent, consequent, "
         "necessity_status, temporal_relation, and negative_case={status, description}; "
+        "each atomic_obligations item must contain only constraint_index, atom_type "
+        "(actor|action|object|condition|threshold|scope|temporal|exception|modality), "
+        "and status (present|absent|uncertain), with no raw obligation text; "
         "plan={validation_checks:list, planned_tools:list, coverage_targets:list}; "
         "execution={revisions:integer, validation_attempts:integer, errors:list, retrieval_events:integer}."
     )
@@ -251,8 +255,13 @@ class LiveAgent:
         artifact, _meta = self.generate_with_meta(pair, variant, task_family)
         return artifact
 
-    def as_runtime_checkpoint_agent(self):
-        """Promote a real live provider to the staged confirmatory runtime."""
+    def as_runtime_checkpoint_agent(self, *, context_manager=None):
+        """Promote a real live provider to the staged confirmatory runtime.
+
+        The default context manager is the primary no_compaction condition.
+        A deterministic manager may be supplied only for the separate
+        protocol/stress matrix.
+        """
 
         if self.run_mode != "live":
             raise ValueError("runtime checkpoint promotion requires a real live provider")
@@ -262,4 +271,5 @@ class LiveAgent:
             self._provider,
             model=self.model,
             model_version=self.model_version,
+            context_manager=context_manager,
         )

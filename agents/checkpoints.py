@@ -12,6 +12,10 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
+from protocol.atomic_obligations import (
+    validate_atomic_obligation_observations,
+    validate_atomic_obligations,
+)
 from protocol.conditional_semantics import validate_conditional_semantics
 
 CHECKPOINT_SCHEMA_VERSION = "pre-final/v1"
@@ -24,9 +28,18 @@ SECTION_FIELDS = {
         "assumptions",
         "contradictions",
         "conditional_semantics",
+        "atomic_obligations",
     ),
     "plan": ("validation_checks", "planned_tools", "coverage_targets"),
-    "execution": ("revisions", "validation_attempts", "errors", "retrieval_events", "constraint_lineage"),
+    "execution": (
+        "revisions",
+        "validation_attempts",
+        "errors",
+        "retrieval_events",
+        "constraint_lineage",
+        "context_management",
+        "atomic_obligation_observations",
+    ),
 }
 CHECKPOINT_ORDER = (
     "interpretation.completed",
@@ -57,46 +70,93 @@ def validate_checkpoint_payload(
     *,
     require_conditional_semantics: bool = False,
     require_constraint_lineage: bool = False,
+    require_atomic_obligations: bool = False,
 ) -> dict[str, dict[str, Any]]:
     """Validate and normalize a provider checkpoint payload.
 
     Only the versioned allowlist is admitted to the feature plane. Unknown
     fields are rejected so provider responses cannot smuggle experiment or
-    terminal metadata into confirmatory traces.
+    terminal metadata into confirmatory traces. The atomic-obligation fields
+    are additive and can be normalized for legacy development traces.
     """
 
     if set(payload) != set(REQUIRED_SECTIONS):
         raise ValueError("provider checkpoints must contain interpretation, plan, and execution")
+    optional_fields = {
+        "interpretation": {"conditional_semantics", "atomic_obligations"},
+        "execution": {
+            "constraint_lineage",
+            "context_management",
+            "atomic_obligation_observations",
+        },
+    }
     normalized: dict[str, dict[str, Any]] = {}
     for section in REQUIRED_SECTIONS:
         value = payload[section]
         if not isinstance(value, Mapping):
             raise ValueError(f"checkpoint section {section} must be an object")
         allowed = set(SECTION_FIELDS[section])
-        legacy_allowed = allowed - ({"conditional_semantics"} if section == "interpretation" else {"constraint_lineage"})
-        if section == "interpretation" and set(value) == legacy_allowed:
-            if require_conditional_semantics:
-                raise ValueError("interpretation.conditional_semantics is required")
-            row = {**dict(value), "conditional_semantics": []}
-        elif section == "execution" and set(value) == legacy_allowed:
-            if require_constraint_lineage:
-                raise ValueError("execution.constraint_lineage is required")
-            row = {**dict(value), "constraint_lineage": []}
-        elif set(value) == allowed:
-            row = dict(value)
-        else:
+        required = allowed - optional_fields.get(section, set())
+        present = set(value)
+        if present - allowed or not required.issubset(present):
             raise ValueError(f"checkpoint section {section} has an invalid field set")
+        if (
+            require_conditional_semantics
+            and section == "interpretation"
+            and "conditional_semantics" not in present
+        ):
+            raise ValueError("interpretation.conditional_semantics is required")
+        if (
+            require_constraint_lineage
+            and section == "execution"
+            and "constraint_lineage" not in present
+        ):
+            raise ValueError("execution.constraint_lineage is required")
+        if (
+            require_atomic_obligations
+            and section == "interpretation"
+            and "atomic_obligations" not in present
+        ):
+            raise ValueError("interpretation.atomic_obligations is required")
+        if (
+            require_atomic_obligations
+            and section == "execution"
+            and "atomic_obligation_observations" not in present
+        ):
+            raise ValueError("execution.atomic_obligation_observations is required")
+        row = dict(value)
+        for field in optional_fields.get(section, set()):
+            row.setdefault(field, [])
         for field in SECTION_FIELDS[section]:
             if field in {"revisions", "validation_attempts", "retrieval_events"}:
                 if not isinstance(row[field], int) or row[field] < 0:
-                    raise ValueError(f"checkpoint field {section}.{field} must be a non-negative integer")
+                    raise ValueError(
+                        f"checkpoint field {section}.{field} must be a non-negative integer"
+                    )
             elif section == "interpretation" and field == "conditional_semantics":
                 try:
                     row[field] = validate_conditional_semantics(row[field])
                 except ValueError as error:
                     raise ValueError(str(error)) from error
+            elif section == "interpretation" and field == "atomic_obligations":
+                try:
+                    row[field] = validate_atomic_obligations(
+                        row[field], row["constraints"]
+                    )
+                except ValueError as error:
+                    raise ValueError(str(error)) from error
             elif section == "execution" and field == "constraint_lineage":
                 row[field] = _validate_constraint_lineage(row[field])
+            elif section == "execution" and field == "context_management":
+                row[field] = _validate_context_management(row[field])
+            elif section == "execution" and field == "atomic_obligation_observations":
+                try:
+                    row[field] = validate_atomic_obligation_observations(
+                        row[field],
+                        constraint_lineage=row.get("constraint_lineage"),
+                    )
+                except ValueError as error:
+                    raise ValueError(str(error)) from error
             elif not isinstance(row[field], list):
                 raise ValueError(f"checkpoint field {section}.{field} must be a list")
         normalized[section] = row
@@ -142,12 +202,97 @@ def _validate_constraint_lineage(value: Any) -> list[dict[str, Any]]:
     return normalized
 
 
+_CONTEXT_EVENT_FIELDS = {
+    "schema_version",
+    "event_id",
+    "stage",
+    "operation",
+    "trigger",
+    "started_at",
+    "ended_at",
+    "context_size_before",
+    "context_size_after",
+    "context_size_unit",
+    "checkpoint_id",
+    "checkpoint_sha256",
+}
+_CONTEXT_OPERATIONS = {"none", "compact", "decompose", "retrieve", "evict", "truncate"}
+
+
+def _validate_context_management(value: Any) -> list[dict[str, Any]]:
+    """Validate prompt-free context-management events at the T3 boundary."""
+
+    if not isinstance(value, list):
+        raise ValueError("checkpoint field execution.context_management must be a list")
+    normalized: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for entry in value:
+        if not isinstance(entry, Mapping) or set(entry) != _CONTEXT_EVENT_FIELDS:
+            raise ValueError("context-management entries have an invalid field set")
+        if entry["schema_version"] != "context-management/v1":
+            raise ValueError("context-management event has an unsupported schema version")
+        event_id = str(entry["event_id"]).strip()
+        stage = str(entry["stage"]).strip()
+        operation = str(entry["operation"]).strip()
+        trigger = str(entry["trigger"]).strip()
+        checkpoint_id = str(entry["checkpoint_id"]).strip()
+        digest = str(entry["checkpoint_sha256"]).strip()
+        if not event_id or event_id in seen or not stage or not trigger or not checkpoint_id:
+            raise ValueError("context-management events require unique IDs and non-empty metadata")
+        if operation not in _CONTEXT_OPERATIONS:
+            raise ValueError("context-management event has an unsupported operation")
+        if len(digest) != 64 or any(char not in "0123456789abcdef" for char in digest):
+            raise ValueError("context-management event requires a SHA-256 checkpoint hash")
+        try:
+            started_at = datetime.fromisoformat(str(entry["started_at"]))
+            ended_at = datetime.fromisoformat(str(entry["ended_at"]))
+        except ValueError as error:
+            raise ValueError("context-management timestamps must be ISO-8601") from error
+        if (
+            started_at.tzinfo is None
+            or ended_at.tzinfo is None
+            or ended_at < started_at
+        ):
+            raise ValueError("context-management timestamps must be timezone-aware and monotonic")
+        before = entry["context_size_before"]
+        after = entry["context_size_after"]
+        if (
+            isinstance(before, bool)
+            or not isinstance(before, int)
+            or before < 0
+            or isinstance(after, bool)
+            or not isinstance(after, int)
+            or after < 0
+            or after > before
+        ):
+            raise ValueError("context-management sizes must be non-negative and non-expanding")
+        if entry["context_size_unit"] != "utf8_bytes":
+            raise ValueError("context-management currently requires context_size_unit=utf8_bytes")
+        seen.add(event_id)
+        normalized.append({
+            "schema_version": "context-management/v1",
+            "event_id": event_id,
+            "stage": stage,
+            "operation": operation,
+            "trigger": trigger,
+            "started_at": str(entry["started_at"]),
+            "ended_at": str(entry["ended_at"]),
+            "context_size_before": before,
+            "context_size_after": after,
+            "context_size_unit": "utf8_bytes",
+            "checkpoint_id": checkpoint_id,
+            "checkpoint_sha256": digest,
+        })
+    return normalized
+
+
 def validate_agent_execution(
     execution: AgentExecution,
     *,
     not_before: str | None = None,
     require_conditional_semantics: bool = False,
     require_constraint_lineage: bool = False,
+    require_atomic_obligations: bool = False,
 ) -> AgentExecution:
     if tuple(observation.checkpoint for observation in execution.checkpoints) != CHECKPOINT_ORDER:
         raise ValueError("runtime checkpoints must follow interpretation, plan, execution start, and tool completion")
@@ -188,6 +333,7 @@ def validate_agent_execution(
                 },
                 require_conditional_semantics=require_conditional_semantics,
                 require_constraint_lineage=require_constraint_lineage,
+                require_atomic_obligations=require_atomic_obligations,
             )[section]
         normalized.append(
             CheckpointObservation(

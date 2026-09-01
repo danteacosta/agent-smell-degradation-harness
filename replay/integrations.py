@@ -13,6 +13,7 @@ import json
 from collections.abc import Mapping
 from typing import Any
 
+from protocol.atomic_obligations import validate_atomic_obligations
 from protocol.conditional_semantics import validate_conditional_semantics
 
 from .schema import (
@@ -64,11 +65,13 @@ def _typed_attributes(name: str, attributes: Mapping[str, Any]) -> dict[str, Any
     result = copy.deepcopy(dict(attributes))
     if name == "interpretation.completed":
         required = {"constraints", "quantities", "unresolved_references", "assumptions", "contradictions"}
-        extended = required | {"conditional_semantics"}
-        if set(result) == required:
-            result["conditional_semantics"] = []
-        elif set(result) != extended:
+        optional = {"conditional_semantics", "atomic_obligations"}
+        extended = required | optional
+        present = set(result)
+        if present - extended or not required.issubset(present):
             raise ContractError("T1 attributes do not match pre-final/v1")
+        result.setdefault("conditional_semantics", [])
+        result.setdefault("atomic_obligations", [])
         for field in ("constraints", "unresolved_references", "assumptions", "contradictions"):
             values = result[field]
             if not isinstance(values, list) or not all(isinstance(item, str) for item in values):
@@ -80,6 +83,10 @@ def _typed_attributes(name: str, attributes: Mapping[str, Any]) -> dict[str, Any
                 raise ContractError("T1.quantity value/unit types are invalid")
         try:
             result["conditional_semantics"] = validate_conditional_semantics(result["conditional_semantics"])
+            result["atomic_obligations"] = validate_atomic_obligations(
+                result["atomic_obligations"],
+                result["constraints"],
+            )
         except ValueError as error:
             raise ContractError(str(error)) from error
     elif name == "plan.completed":

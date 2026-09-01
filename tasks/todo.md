@@ -55,8 +55,15 @@ suite check.
 - [x] Add automatic measured-cost budget stopping with fail-closed behavior when usage cannot be measured.
 - [x] Preserve panel agreement, model disagreement, and separate human/model disagreement metrics without using panel consensus as ground truth.
 - [x] Add a private four-stratum control-matrix contract: clear clean, surface-only, real defect, and lexically discreet defect.
+- [x] Add the versioned context-management contract, no-compaction primary condition, secondary stress matrix, and leakage-safe metrics.
+- [x] Add the article-informed typed hard-lane proxy as a non-confirmatory secondary mechanism.
+- [x] Add hash-bound atomic-obligation observations without raw obligation text or terminal evidence.
+- [x] Add the complete clean/smelly × no-compaction/compaction interaction estimator.
 - [ ] Provide credentials through the approved secret mechanism.
 - [ ] Select at least two real provider/model configurations and record prompt/config versions.
+- [ ] Qualify the real runtime context-management hook and verify pre-final event emission on both provider configurations.
+- [ ] Run the separate clean/smelly × no-compaction/compaction-stress interaction check; keep it outside the 120-episode primary count.
+- [ ] Qualify the typed hard-lane proxy against the same budget and provider configuration as the uniform stress cell; report it as a mechanism ablation.
 - [ ] Run independent repetitions with measured latency, cost, token/error rates, and Linux/CI sandboxing.
 - [ ] Expand the corpus with reviewed natural variants, difficult clean cases, more projects/domains, and project-held-out splits.
 - [ ] Run the intervention comparison: agent without verifier, with alert, and with alert plus revision opportunity.
