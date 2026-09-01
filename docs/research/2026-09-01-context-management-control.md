@@ -119,7 +119,7 @@ terminal artifact evaluation and independent labels remain necessary.
 
 ## Pre-pilot unblock sequence
 
-1. Run the offline context matrix and strict checkpoint/feature tests.
+1. Run the offline context matrix, typed-compaction proxy, atomic-obligation contract and strict checkpoint/feature tests.
 2. Qualify the hook on two real runtime-native provider configurations.
 3. Verify T1/T2/T3 ordering, context event hashes, measured sizes, token usage,
    failure behavior, and cost export before artifact generation.
@@ -137,6 +137,69 @@ terminal artifact evaluation and independent labels remain necessary.
 | [Bai et al., ACL 2024 — LongBench](https://aclanthology.org/2024.acl-long.172/) | Long-context evaluation across tasks, including code completion | Peer-reviewed conference | 8/10 |
 | [Zerhoudi, Mitrović and Granitzer, arXiv 2026 — The Compaction Cliff](https://arxiv.org/abs/2608.22752) | Emerging agent-memory mechanism and stress-test motivation | Preprint; final peer-review status not independently verified | 6/10 |
 | [Tech Leads Club practitioner note](https://www.techleads.club/c/blog/o-custo-de-compactar-contexto) | Practitioner signal that prompted this control review | Secondary blog | 2/10 |
+| [Vogelsang et al., ICSE-NIER 2025 — Requirements smells in prompts](https://doi.org/10.1109/ICSE-NIER66352.2025.00016) | Shows that smell effects are task-dependent, supporting a separate mechanism analysis | Peer-reviewed short paper | 8/10 |
+
+## Article-informed secondary mechanism
+
+The paper is incorporated as a secondary mechanism check, not as a replacement
+for the requirement-mutation treatment. Its typed-memory idea maps to a
+deterministic proxy named typed_compaction_stress_test: requirement and
+constraint/check blocks are treated as a hard lane and the remaining context is
+compacted with a fixed prefix/suffix transform. If the hard lane cannot fit the
+budget, the proxy fails closed and requests a larger budget or decomposition.
+This mirrors the paper's budget-feasibility condition without claiming to
+reproduce its learned classifier.
+
+The paper's TypeDecompose and TypeRetrieve ideas remain future extensions. They
+would require an explicit partition key and retrieval policy in the active
+runtime; they are not silently inferred from the current traces. The proxy is
+also not a token-matched replication of the paper's behavioral benchmark.
+Therefore the present secondary claim is limited to mechanism instrumentation
+and feasibility, not a causal claim that typed compaction improves model
+quality.
+
+## Atomic-obligation instrumentation
+
+T1 now requests a bounded atomic_obligations list for each interpreted
+constraint. Each item contains only a one-based constraint index, an atom type
+(actor, action, object, condition, threshold, scope, temporal, exception or
+modality), and a status (present, absent or uncertain). No obligation text,
+oracle, label, smell identity or final artifact is accepted.
+
+At T3 the runtime materializes hash-bound atomic_obligation_observations. Each
+observation carries the T1 source checkpoint, the constraint hash, the
+constraint-lineage identifier, the article-inspired preservation_class
+constraint_hard_lane, the normalizer identifier and available_at=T3. Numeric
+summaries are available for mechanism analysis; the additive observation is
+explicitly excluded from the frozen H2 constraint-field count. A missing or
+uncertain atom is observable evidence, not a terminal verdict.
+
+## Secondary interaction analysis
+
+The interaction test requires four cells for each intent, task family and
+replication:
+
+1. clean × no_compaction;
+2. smelly × no_compaction;
+3. clean × compaction_stress_test;
+4. smelly × compaction_stress_test.
+
+For ordinal severity Y, the secondary difference-in-differences estimand is:
+
+interaction = (Y(clean, compaction_stress_test) - Y(smelly, compaction_stress_test)) - (Y(clean, no_compaction) - Y(smelly, no_compaction)).
+
+The report clusters uncertainty by intent/task family and is generated only
+after terminal outcomes exist. It is descriptive protocol/mechanism evidence,
+outside the 120 primary episodes, and does not alter H1, H2, the primary
+estimand, or the smell taxonomy. Incomplete four-cell cases are listed and
+cannot silently contribute to the interaction estimate.
+
+## Scope preservation
+
+The primary hypothesis remains that the controlled defective requirement has a
+worse ordinal outcome than its clean pair. The existing smell taxonomy remains
+unchanged. Context condition, typed hard-lane policy and atomic-obligation
+status are secondary mechanism variables; none is a new defect family.
 
 ## Product implication
 
