@@ -203,7 +203,9 @@ def load_private_records(path: str | Path) -> list[dict[str, Any]]:
             raise CorpusIntakeError("corpus input must be a JSON array or JSONL")
     if not records:
         raise CorpusIntakeError("corpus input has no records")
-    return [_validate_record(record) if isinstance(record, Mapping) else {} for record in records]
+    if not all(isinstance(record, Mapping) for record in records):
+        raise CorpusIntakeError("each corpus record must be an object")
+    return [dict(record) for record in records]
 
 
 def build_redacted_manifest(
