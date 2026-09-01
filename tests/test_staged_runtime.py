@@ -65,7 +65,7 @@ def test_staged_provider_materializes_checkpoints_before_artifact() -> None:
     assert result.provider_meta["stages"][2]["uncovered_constraint_count"] == 0
     assert result.provider_meta["stages"][2]["conditional_clause_count"] == 1
     assert result.checkpoints[0].payload["conditional_semantics"][0]["necessity_status"] == "sufficient_only"
-    assert result.provider_meta["runtime"] == "staged-provider/v1"
+    assert result.provider_meta["runtime"] == "staged-provider/v2"
     lineage = t3["constraint_lineage"]
     assert lineage[0]["available_at"] == "T3"
     assert lineage[0]["status"] == "covered"
