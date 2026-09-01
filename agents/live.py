@@ -251,8 +251,13 @@ class LiveAgent:
         artifact, _meta = self.generate_with_meta(pair, variant, task_family)
         return artifact
 
-    def as_runtime_checkpoint_agent(self):
-        """Promote a real live provider to the staged confirmatory runtime."""
+    def as_runtime_checkpoint_agent(self, *, context_manager=None):
+        """Promote a real live provider to the staged confirmatory runtime.
+
+        The default context manager is the primary no_compaction condition.
+        A deterministic manager may be supplied only for the separate
+        protocol/stress matrix.
+        """
 
         if self.run_mode != "live":
             raise ValueError("runtime checkpoint promotion requires a real live provider")
@@ -262,4 +267,5 @@ class LiveAgent:
             self._provider,
             model=self.model,
             model_version=self.model_version,
+            context_manager=context_manager,
         )
