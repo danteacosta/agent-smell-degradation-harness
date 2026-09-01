@@ -87,6 +87,59 @@ class DeterministicCompactionManager:
         )
 
 
+class UnsafeCompactionError(RuntimeError):
+    """Raised when the typed hard lane cannot fit the configured budget."""
+
+
+@dataclass(frozen=True, slots=True)
+class TypedCompactionManager:
+    """Article-inspired hard-lane proxy for a secondary mechanism check.
+
+    Lines belonging to a requirement or typed pre-final summary are retained
+    verbatim when they fit the budget. Other context is compacted with the
+    deterministic prefix/suffix transform. This is a protocol proxy, not a
+    reimplementation of the paper's learned classifier.
+    """
+
+    max_context_bytes: int = 512
+    condition: str = "typed_compaction_stress_test"
+    hard_lane_markers: tuple[str, ...] = (
+        "requirement:",
+        "constraints",
+        "conditional_semantics",
+        "validation_checks",
+        "coverage_targets",
+    )
+
+    def __post_init__(self) -> None:
+        if self.max_context_bytes < 64:
+            raise ValueError("max_context_bytes must be at least 64 bytes")
+        if not self.hard_lane_markers:
+            raise ValueError("hard_lane_markers must not be empty")
+
+    def prepare(self, prompt: str, *, stage: str) -> ContextTransformation:
+        before = _utf8_size(prompt)
+        if before <= self.max_context_bytes:
+            return ContextTransformation(
+                prompt=prompt,
+                operation="none",
+                trigger="below_test_budget",
+                context_size_before=before,
+                context_size_after=before,
+            )
+        compacted = _typed_compact_text(
+            prompt,
+            self.max_context_bytes,
+            self.hard_lane_markers,
+        )
+        return ContextTransformation(
+            prompt=compacted,
+            operation="compact",
+            trigger="typed_hard_lane_v1",
+            context_size_before=before,
+            context_size_after=_utf8_size(compacted),
+        )
+
 def build_context_event(
     transformation: ContextTransformation,
     *,
@@ -146,6 +199,47 @@ def summarize_context_events(
     }
 
 
+def _typed_compact_text(
+    value: str,
+    max_bytes: int,
+    hard_lane_markers: tuple[str, ...],
+) -> str:
+    """Keep marked hard-lane blocks and compact the remaining context."""
+
+    lines = value.splitlines(keepends=True)
+    markers = tuple(marker.lower() for marker in hard_lane_markers)
+    hard_lines: list[str] = []
+    soft_lines: list[str] = []
+    in_hard_block = False
+    for line in lines:
+        lowered = line.lower()
+        if any(marker in lowered for marker in markers):
+            in_hard_block = True
+        if in_hard_block:
+            hard_lines.append(line)
+        else:
+            soft_lines.append(line)
+        if in_hard_block and not line.strip():
+            in_hard_block = False
+
+    hard_text = "".join(hard_lines)
+    hard_bytes = _utf8_size(hard_text)
+    if hard_bytes > max_bytes:
+        raise UnsafeCompactionError(
+            "typed hard-lane content exceeds the context budget; "
+            "expand the budget or decompose the context"
+        )
+    soft_text = "".join(soft_lines)
+    if not soft_text:
+        return hard_text
+    separator = "\n[soft context compacted for typed hard lane]\n"
+    separator_bytes = _utf8_size(separator)
+    soft_budget = max_bytes - hard_bytes - separator_bytes
+    if soft_budget <= 0:
+        return hard_text
+    return hard_text + separator + _compact_text(soft_text, soft_budget)
+
+
 def _utf8_size(value: str) -> int:
     return len(value.encode("utf-8"))
 
@@ -174,6 +268,8 @@ __all__ = (
     "ContextOperation",
     "ContextTransformation",
     "DeterministicCompactionManager",
+    "TypedCompactionManager",
+    "UnsafeCompactionError",
     "NoCompactionManager",
     "build_context_event",
     "summarize_context_events",
