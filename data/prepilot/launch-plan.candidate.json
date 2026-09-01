@@ -98,6 +98,23 @@
       "context_size_unit",
       "checkpoint_id",
       "checkpoint_sha256"
-    ]
+    ],
+    "atomic_obligation_schema": "atomic-obligations/v1",
+    "atomic_obligation_observation_fields": [
+      "schema_version",
+      "obligation_id",
+      "constraint_id",
+      "constraint_sha256",
+      "constraint_index",
+      "atom_type",
+      "status",
+      "source_checkpoint",
+      "observation_id",
+      "preservation_class",
+      "available_at"
+    ],
+    "mechanism_secondary": "typed_compaction_stress_test",
+    "mechanism_secondary_confirmatory": false,
+    "interaction_analysis": "difference_in_differences"
   }
 }
