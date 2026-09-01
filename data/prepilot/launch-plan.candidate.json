@@ -59,10 +59,10 @@
     "adjudication_owner": ""
   },
   "budget": {
-    "estimated_provider_cost_usd": 0.0,
+    "estimated_provider_cost_usd": 0,
     "contingency_fraction": 0.25,
-    "approved_cap_usd": 0.0,
-    "estimated_annotation_hours": 0.0,
+    "approved_cap_usd": 0,
+    "estimated_annotation_hours": 0,
     "cost_basis": "TBD after provider qualification smoke tests"
   },
   "go_no_go": {
@@ -74,5 +74,30 @@
     "budget_gate": false,
     "reproducibility_gate": false
   },
-  "confirmatory_precision_plan_status": "candidate"
+  "confirmatory_precision_plan_status": "candidate",
+  "context_management": {
+    "schema_version": "context-management/v1",
+    "primary_condition": "no_compaction",
+    "primary_compaction_enabled": false,
+    "secondary_condition": "compaction_stress_test",
+    "secondary_variant_factor": [
+      "clean",
+      "smelly"
+    ],
+    "secondary_protocol_tested": true,
+    "event_fields": [
+      "schema_version",
+      "event_id",
+      "stage",
+      "operation",
+      "trigger",
+      "started_at",
+      "ended_at",
+      "context_size_before",
+      "context_size_after",
+      "context_size_unit",
+      "checkpoint_id",
+      "checkpoint_sha256"
+    ]
+  }
 }
