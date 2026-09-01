@@ -12,6 +12,10 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
+from protocol.atomic_obligations import (
+    validate_atomic_obligation_observations,
+    validate_atomic_obligations,
+)
 from protocol.conditional_semantics import validate_conditional_semantics
 
 CHECKPOINT_SCHEMA_VERSION = "pre-final/v1"
@@ -24,6 +28,7 @@ SECTION_FIELDS = {
         "assumptions",
         "contradictions",
         "conditional_semantics",
+        "atomic_obligations",
     ),
     "plan": ("validation_checks", "planned_tools", "coverage_targets"),
     "execution": (
@@ -33,6 +38,7 @@ SECTION_FIELDS = {
         "retrieval_events",
         "constraint_lineage",
         "context_management",
+        "atomic_obligation_observations",
     ),
 }
 CHECKPOINT_ORDER = (
@@ -64,61 +70,93 @@ def validate_checkpoint_payload(
     *,
     require_conditional_semantics: bool = False,
     require_constraint_lineage: bool = False,
+    require_atomic_obligations: bool = False,
 ) -> dict[str, dict[str, Any]]:
     """Validate and normalize a provider checkpoint payload.
 
     Only the versioned allowlist is admitted to the feature plane. Unknown
     fields are rejected so provider responses cannot smuggle experiment or
-    terminal metadata into confirmatory traces.
+    terminal metadata into confirmatory traces. The atomic-obligation fields
+    are additive and can be normalized for legacy development traces.
     """
 
     if set(payload) != set(REQUIRED_SECTIONS):
         raise ValueError("provider checkpoints must contain interpretation, plan, and execution")
+    optional_fields = {
+        "interpretation": {"conditional_semantics", "atomic_obligations"},
+        "execution": {
+            "constraint_lineage",
+            "context_management",
+            "atomic_obligation_observations",
+        },
+    }
     normalized: dict[str, dict[str, Any]] = {}
     for section in REQUIRED_SECTIONS:
         value = payload[section]
         if not isinstance(value, Mapping):
             raise ValueError(f"checkpoint section {section} must be an object")
         allowed = set(SECTION_FIELDS[section])
-        legacy_allowed = allowed - (
-            {"conditional_semantics"}
-            if section == "interpretation"
-            else {"constraint_lineage", "context_management"}
-        )
-        if section == "interpretation" and set(value) == legacy_allowed:
-            if require_conditional_semantics:
-                raise ValueError("interpretation.conditional_semantics is required")
-            row = {**dict(value), "conditional_semantics": []}
-        elif (
-            section == "execution"
-            and set(value) == allowed - {"context_management"}
-        ):
-            row = {**dict(value), "context_management": []}
-        elif section == "execution" and set(value) == legacy_allowed:
-            if require_constraint_lineage:
-                raise ValueError("execution.constraint_lineage is required")
-            row = {
-                **dict(value),
-                "constraint_lineage": [],
-                "context_management": [],
-            }
-        elif set(value) == allowed:
-            row = dict(value)
-        else:
+        required = allowed - optional_fields.get(section, set())
+        present = set(value)
+        if present - allowed or not required.issubset(present):
             raise ValueError(f"checkpoint section {section} has an invalid field set")
+        if (
+            require_conditional_semantics
+            and section == "interpretation"
+            and "conditional_semantics" not in present
+        ):
+            raise ValueError("interpretation.conditional_semantics is required")
+        if (
+            require_constraint_lineage
+            and section == "execution"
+            and "constraint_lineage" not in present
+        ):
+            raise ValueError("execution.constraint_lineage is required")
+        if (
+            require_atomic_obligations
+            and section == "interpretation"
+            and "atomic_obligations" not in present
+        ):
+            raise ValueError("interpretation.atomic_obligations is required")
+        if (
+            require_atomic_obligations
+            and section == "execution"
+            and "atomic_obligation_observations" not in present
+        ):
+            raise ValueError("execution.atomic_obligation_observations is required")
+        row = dict(value)
+        for field in optional_fields.get(section, set()):
+            row.setdefault(field, [])
         for field in SECTION_FIELDS[section]:
             if field in {"revisions", "validation_attempts", "retrieval_events"}:
                 if not isinstance(row[field], int) or row[field] < 0:
-                    raise ValueError(f"checkpoint field {section}.{field} must be a non-negative integer")
+                    raise ValueError(
+                        f"checkpoint field {section}.{field} must be a non-negative integer"
+                    )
             elif section == "interpretation" and field == "conditional_semantics":
                 try:
                     row[field] = validate_conditional_semantics(row[field])
+                except ValueError as error:
+                    raise ValueError(str(error)) from error
+            elif section == "interpretation" and field == "atomic_obligations":
+                try:
+                    row[field] = validate_atomic_obligations(
+                        row[field], row["constraints"]
+                    )
                 except ValueError as error:
                     raise ValueError(str(error)) from error
             elif section == "execution" and field == "constraint_lineage":
                 row[field] = _validate_constraint_lineage(row[field])
             elif section == "execution" and field == "context_management":
                 row[field] = _validate_context_management(row[field])
+            elif section == "execution" and field == "atomic_obligation_observations":
+                try:
+                    row[field] = validate_atomic_obligation_observations(
+                        row[field],
+                        constraint_lineage=row.get("constraint_lineage"),
+                    )
+                except ValueError as error:
+                    raise ValueError(str(error)) from error
             elif not isinstance(row[field], list):
                 raise ValueError(f"checkpoint field {section}.{field} must be a list")
         normalized[section] = row
@@ -254,6 +292,7 @@ def validate_agent_execution(
     not_before: str | None = None,
     require_conditional_semantics: bool = False,
     require_constraint_lineage: bool = False,
+    require_atomic_obligations: bool = False,
 ) -> AgentExecution:
     if tuple(observation.checkpoint for observation in execution.checkpoints) != CHECKPOINT_ORDER:
         raise ValueError("runtime checkpoints must follow interpretation, plan, execution start, and tool completion")
@@ -294,6 +333,7 @@ def validate_agent_execution(
                 },
                 require_conditional_semantics=require_conditional_semantics,
                 require_constraint_lineage=require_constraint_lineage,
+                require_atomic_obligations=require_atomic_obligations,
             )[section]
         normalized.append(
             CheckpointObservation(
