@@ -191,7 +191,14 @@ def validate_atomic_obligation_observations(
             raise ValueError("atomic obligation observations require unique IDs and hashes")
         if isinstance(index, bool) or not isinstance(index, int) or index < 1:
             raise ValueError("atomic obligation observation index must be positive")
-        if constraints is not None and index > len(constraints):
+        index_limit = (
+            len(constraints)
+            if constraints is not None
+            else len(constraint_lineage)
+            if constraint_lineage is not None
+            else None
+        )
+        if index_limit is not None and index > index_limit:
             raise ValueError("atomic obligation observation index exceeds constraint count")
         if atom_type not in ATOMIC_OBLIGATION_TYPES:
             raise ValueError(f"unsupported atomic obligation type: {atom_type}")
@@ -205,7 +212,7 @@ def validate_atomic_obligation_observations(
         ):
             raise ValueError("atomic obligation observation has invalid provenance metadata")
         if constraint_lineage is not None:
-            if len(constraint_lineage) != len(constraints or ()):
+            if constraints is not None and len(constraint_lineage) != len(constraints):
                 raise ValueError("atomic obligation lineage length is inconsistent")
             lineage = constraint_lineage[index - 1]
             if (
