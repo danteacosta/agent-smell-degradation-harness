@@ -1,19 +1,45 @@
 {
   "schema_version": "human-annotation/v1",
   "rubric_version": "rubric-v2",
-  "labels": ["clean", "minor", "moderate", "severe", "not_visible"],
+  "labels": [
+    "clean",
+    "minor",
+    "moderate",
+    "severe",
+    "not_visible"
+  ],
   "missing_label_policy": {
-    "allowed": ["not_visible", "technical_failure", "insufficient_context"],
+    "allowed": [
+      "not_visible",
+      "technical_failure",
+      "insufficient_context"
+    ],
     "excluded_from_primary_irr": true,
     "never_impute": true
   },
-  "blind_fields": ["variant", "defect_family", "oracle_label", "model_id", "artifact"],
+  "blind_fields": [
+    "variant",
+    "defect_family",
+    "oracle_label",
+    "provider",
+    "model_id",
+    "context_condition",
+    "checkpoint_trace",
+    "detector_prediction"
+  ],
   "duplicate_subset_fraction": 0.2,
   "duplicate_subset_seed": 0,
   "primary_irr": {
     "statistic": "krippendorff_alpha",
-    "nominal_for": ["clean"],
-    "ordinal_order": ["clean", "minor", "moderate", "severe"],
+    "nominal_for": [
+      "clean"
+    ],
+    "ordinal_order": [
+      "clean",
+      "minor",
+      "moderate",
+      "severe"
+    ],
     "bootstrap_replicates": 2000,
     "bootstrap_seed": 0,
     "target": 0.7,
@@ -22,8 +48,15 @@
   "secondary_output_smell_analysis": {
     "status": "preregistered_secondary",
     "unit": "generated_acceptance_criteria",
-    "labels": ["absent", "present", "uncertain", "not_visible"],
-    "visible_fields": ["generated_acceptance_criteria"],
+    "labels": [
+      "absent",
+      "present",
+      "uncertain",
+      "not_visible"
+    ],
+    "visible_fields": [
+      "generated_acceptance_criteria"
+    ],
     "blind_fields": [
       "requirement_variant",
       "defect_family",
@@ -43,5 +76,13 @@
     "excluded_from_h1_h2": true,
     "no_automatic_inference_from_requirement_smell": true
   },
-  "secondary_llm_judges": "exploratory_only"
+  "secondary_llm_judges": "exploratory_only",
+  "unit": "one generated acceptance-criteria artifact judged against independent reference constraints",
+  "visible_fields": [
+    "generated_acceptance_criteria",
+    "reference_constraints"
+  ],
+  "required_annotators": 2,
+  "adjudication_owner_required": true,
+  "duplicate_selection": "frozen from item IDs before any label is collected"
 }
