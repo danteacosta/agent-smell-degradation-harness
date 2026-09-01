@@ -9,6 +9,7 @@ from typing import Any, Protocol
 
 from agents.providers import (
     AnthropicProvider,
+    DeepSeekProvider,
     MockProvider,
     OpenAIProvider,
     Provider,
@@ -31,6 +32,8 @@ class Transport(Protocol):
 def _resolve_api_key(provider: str = "openai") -> str | None:
     if provider == "anthropic":
         return os.environ.get("AGENT_LIVE_API_KEY") or os.environ.get("ANTHROPIC_API_KEY")
+    if provider == "deepseek":
+        return os.environ.get("AGENT_LIVE_API_KEY") or os.environ.get("DEEPSEEK_API_KEY")
     return os.environ.get("AGENT_LIVE_API_KEY") or os.environ.get("OPENAI_API_KEY")
 
 
@@ -116,10 +119,10 @@ class LiveAgent:
         require_creds: bool = True,
     ) -> None:
         self.model = model
-        if isinstance(provider, str) and provider not in {"openai", "anthropic"}:
+        if isinstance(provider, str) and provider not in {"openai", "anthropic", "deepseek"}:
             raise ValueError(
-                "Provider instances are required for non-OpenAI providers; "
-                "pass ReplayProvider, MockProvider, or StubProvider instead"
+                "Provider instances are required for unsupported named providers; "
+                "pass a configured Provider instance instead"
             )
 
         provider_label = provider if isinstance(provider, str) else None
@@ -147,17 +150,26 @@ class LiveAgent:
                 api_key = _resolve_api_key(provider_label)
                 if not api_key:
                     raise NotConfiguredError(
-                        "Missing API key; set ANTHROPIC_API_KEY/OPENAI_API_KEY or AGENT_LIVE_API_KEY"
+                        "Missing API key; set the provider-specific key or AGENT_LIVE_API_KEY"
                     )
             else:
                 api_key = _resolve_api_key(provider_label)
                 if not api_key:
                     raise NotConfiguredError(f"{provider_label.title()}Provider requires an API key")
-            selected_provider = (
-                OpenAIProvider(api_key=api_key, model=model)
-                if provider_label == "openai"
-                else AnthropicProvider(api_key=api_key, model=model)
-            )
+            if provider_label == "openai":
+                selected_provider = OpenAIProvider(
+                    api_key=api_key,
+                    model=model,
+                    base_url=os.environ.get("OPENAI_BASE_URL"),
+                )
+            elif provider_label == "deepseek":
+                selected_provider = DeepSeekProvider(
+                    api_key=api_key,
+                    model=model,
+                    base_url=os.environ.get("DEEPSEEK_BASE_URL"),
+                )
+            else:
+                selected_provider = AnthropicProvider(api_key=api_key, model=model)
 
         self._provider = selected_provider
         self.provider = provider_label or selected_provider.name
