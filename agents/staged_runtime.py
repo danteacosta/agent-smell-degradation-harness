@@ -147,6 +147,7 @@ def _validate_provider_stage(
         "errors": [],
         "retrieval_events": 0,
         "constraint_lineage": [],
+        "context_management": [],
     }
     sections: dict[str, Mapping[str, Any]] = {
         "interpretation": empty_interpretation,
