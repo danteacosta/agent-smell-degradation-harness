@@ -254,8 +254,15 @@ def extract_deployable_features(
         "provenance": {
             "constraint_event_present": int(bool(interpretation or legacy)),
             "constraint_count": constraint_count,
+            # Atomic obligations are a secondary mechanism observation.
+            # Exclude their additive field from the frozen H2 feature count so
+            # the primary feature contract does not change implicitly.
             "constraint_field_count": len(
-                [key for key in interpretation if key != "source_event_name"]
+                [
+                    key
+                    for key in interpretation
+                    if key not in {"source_event_name", "atomic_obligations"}
+                ]
             ),
             "constraint_has_comparator": int(any(token in comparator_text for token in ("<", ">", "="))),
             "quantity_count": len(quantities) if isinstance(quantities, list) else 0,
