@@ -8,6 +8,7 @@ manifest, not in the annotator-visible JSON.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from hashlib import sha256
 import json
 import random
 from pathlib import Path
@@ -145,6 +146,50 @@ def validate_duplicate_subset(annotations: Iterable[Any], duplicate_item_ids: It
         raise ValueError(f"duplicate subset items must be double-coded: {missing}")
 
 
+
+def freeze_blinded_tasks(
+    records: Iterable[Mapping[str, Any]],
+    *,
+    fraction: float = 0.20,
+    seed: int = 0,
+    rubric_version: str = "rubric-v2",
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Create annotator packets and freeze duplicates before any labels exist."""
+
+    rows = [dict(record) for record in records]
+    if not rows:
+        raise ValueError("annotation packet preparation requires records")
+    item_ids = [str(row.get("episode_id") or row.get("item_id") or "").strip() for row in rows]
+    if any(not item_id for item_id in item_ids) or len(set(item_ids)) != len(item_ids):
+        raise ValueError("annotation records require unique, non-empty item IDs")
+    duplicate_ids = set(select_duplicate_subset(item_ids, fraction=fraction, seed=seed))
+    tasks = [
+        BlindedAnnotationTask.from_record(
+            row,
+            duplicate_subset=item_id in duplicate_ids,
+            rubric_version=rubric_version,
+        ).to_annotation_payload()
+        for row, item_id in zip(rows, item_ids)
+    ]
+    for task in tasks:
+        validate_blinded_payload(task)
+    tasks.sort(key=lambda task: str(task["item_id"]))
+    selection = {
+        "schema_version": "annotation-selection/v1",
+        "selection_method": "seeded_item_id_sampling_before_labels",
+        "item_count": len(tasks),
+        "duplicate_subset_fraction": fraction,
+        "duplicate_subset_seed": seed,
+        "duplicate_item_count": len(duplicate_ids),
+        "duplicate_item_ids": sorted(duplicate_ids),
+        "rubric_version": rubric_version,
+    }
+    selection["selection_sha256"] = sha256(
+        json.dumps(selection, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    return tasks, selection
+
+
 def load_annotation_rubric(path: Path | str | None = None) -> dict[str, Any]:
     """Load the frozen human-label policy used by collection tooling."""
 
@@ -158,6 +203,7 @@ def load_annotation_rubric(path: Path | str | None = None) -> dict[str, Any]:
 
 
 __all__ = [
-    "BlindedAnnotationTask", "BlindedOutputSmellTask", "load_annotation_rubric",
-    "select_duplicate_subset", "validate_blinded_payload", "validate_duplicate_subset",
+    "BlindedAnnotationTask", "BlindedOutputSmellTask", "freeze_blinded_tasks",
+    "load_annotation_rubric", "select_duplicate_subset", "validate_blinded_payload",
+    "validate_duplicate_subset",
 ]
