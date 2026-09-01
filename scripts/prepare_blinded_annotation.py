@@ -12,6 +12,7 @@ if str(REPOSITORY_ROOT) not in sys.path:
     sys.path.insert(0, str(REPOSITORY_ROOT))
 
 from label_plane.annotation_protocol import (  # noqa: E402
+    freeze_blinded_outcome_tasks,
     freeze_blinded_tasks,
     load_annotation_rubric,
 )
@@ -46,6 +47,12 @@ def main() -> int:
     parser.add_argument("--tasks", required=True, type=Path, help="private annotator task JSONL")
     parser.add_argument("--manifest", required=True, type=Path, help="private selection manifest")
     parser.add_argument("--rubric", type=Path)
+    parser.add_argument(
+        "--kind",
+        choices=("primary_outcome", "requirement"),
+        default="primary_outcome",
+        help="primary outcome packets show artifact plus reference constraints",
+    )
     parser.add_argument("--fraction", type=float, default=0.20)
     parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
@@ -53,7 +60,12 @@ def main() -> int:
         _assert_private(path)
     try:
         rubric = load_annotation_rubric(args.rubric)
-        tasks, selection = freeze_blinded_tasks(
+        freezer = (
+            freeze_blinded_outcome_tasks
+            if args.kind == "primary_outcome"
+            else freeze_blinded_tasks
+        )
+        tasks, selection = freezer(
             _load_records(args.input),
             fraction=args.fraction,
             seed=args.seed,
