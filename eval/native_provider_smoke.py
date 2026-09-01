@@ -138,11 +138,17 @@ def load_smoke_config(path: str | Path) -> dict[str, Any]:
                 normalized_spec[field] = _env_name(normalized_spec[field], field)
         seen.add(provider_id)
         normalized.append(normalized_spec)
+    try:
+        replications = int(payload.get("replications", 1))
+    except (TypeError, ValueError) as error:
+        raise NativeSmokeConfigurationError("replications must be an integer") from error
+    if replications <= 0 or replications > 5:
+        raise NativeSmokeConfigurationError("replications must be between 1 and 5")
     return {
         "schema_version": SCHEMA_VERSION,
         "task_family": task_family,
         "context_condition": condition,
-        "replications": int(payload.get("replications", 1)),
+        "replications": replications,
         "providers": normalized,
     }
 
@@ -306,6 +312,8 @@ def summarize_execution(
         for key in pair["generation_contract"][task_family]["output_keys"]
     )
     artifact_keys = sorted(str(key) for key in execution.artifact)
+    if artifact_keys != expected_keys:
+        raise ValueError("terminal artifact keys do not match the generation contract")
     usage = provider_meta.get("usage")
     usage_observed = isinstance(usage, Mapping) and bool(usage)
     return {
@@ -392,7 +400,8 @@ def run_native_provider_smoke(
                 for pair in pairs
             ]
         ),
-        "config_sha256": _sha256_json(config),
+        "config_template_sha256": _sha256_json(config),
+        "configuration_sha256": None,
         "providers": [],
     }
     failures = 0
@@ -484,6 +493,33 @@ def run_native_provider_smoke(
         report["finished_at"] = datetime.now(UTC).isoformat()
     report["status"] = "pass" if failures == 0 else "fail"
     report["provider_count"] = len(report["providers"])
+    report["budget_ready"] = bool(
+        report["providers"]
+        and all(item.get("cost_status") == "measured" for item in report["providers"])
+    )
+    public_configs = [
+        {
+            key: provider.get(key)
+            for key in (
+                "id",
+                "kind",
+                "model",
+                "model_version",
+                "base_url",
+                "max_tokens",
+                "temperature",
+                "reasoning_effort",
+                "pricing_envs",
+            )
+        }
+        for provider in report["providers"]
+    ]
+    report["configuration_sha256"] = _sha256_json(
+        {
+            "config_template_sha256": report["config_template_sha256"],
+            "resolved_provider_configs": public_configs,
+        }
+    )
     destination = Path(output_path)
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(
