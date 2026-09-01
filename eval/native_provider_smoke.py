@@ -14,6 +14,7 @@ import json
 import os
 import platform
 import re
+import subprocess
 import sys
 import time
 from datetime import UTC, datetime
@@ -45,6 +46,21 @@ def _sha256_json(value: Any) -> str:
 
 def _sha256_text(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def _git_revision(repository_root: Path) -> str | None:
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=repository_root,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    revision = result.stdout.strip()
+    return revision or None
 
 
 def _env_name(value: Any, field: str) -> str:
@@ -384,6 +400,7 @@ def run_native_provider_smoke(
         "qualification_status": "smoke_only",
         "python": sys.version.split()[0],
         "platform": platform.platform(),
+        "source_revision": _git_revision(root),
         "task_family": config["task_family"],
         "context_condition": config["context_condition"],
         "replications": config["replications"],
