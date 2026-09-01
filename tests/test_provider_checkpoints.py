@@ -46,6 +46,10 @@ class _CheckpointAgent:
                 "unresolved_references": [],
                 "assumptions": [],
                 "contradictions": [],
+                "conditional_semantics": [],
+                "atomic_obligations": [
+                    {"constraint_index": 1, "atom_type": "condition", "status": "present"},
+                ],
                 }, moments[0], moments[0]),
                 CheckpointObservation("plan.completed", {
                 "validation_checks": ["boundary at 5 minutes"],
@@ -65,6 +69,21 @@ class _CheckpointAgent:
                         "planned_check_ids": ["boundary-check"],
                         "observation_id": "obs-1",
                         "status": "covered",
+                        "available_at": "T3",
+                    }
+                ],
+                "atomic_obligation_observations": [
+                    {
+                        "schema_version": "atomic-obligations/v1",
+                        "obligation_id": "o001-delay-condition",
+                        "constraint_id": "c-delay",
+                        "constraint_sha256": "a" * 64,
+                        "constraint_index": 1,
+                        "atom_type": "condition",
+                        "status": "present",
+                        "source_checkpoint": "T1",
+                        "observation_id": "atomic-obligation-normalizer/v1",
+                        "preservation_class": "constraint_hard_lane",
                         "available_at": "T3",
                     }
                 ],
