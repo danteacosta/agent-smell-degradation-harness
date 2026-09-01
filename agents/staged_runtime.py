@@ -230,6 +230,45 @@ def _covered(item: Any, evidence: list[Any]) -> bool:
     return False
 
 
+
+def _bounded_provider_call_metadata(provider: Provider) -> dict[str, Any]:
+    """Copy only numeric usage and non-secret response identity metadata."""
+
+    raw = getattr(provider, "last_call_metadata", {})
+    if not isinstance(raw, Mapping):
+        return {}
+    result: dict[str, Any] = {}
+    usage = raw.get("usage")
+    if isinstance(usage, Mapping):
+        bounded_usage = {
+            str(key): value
+            for key, value in usage.items()
+            if isinstance(value, (int, float)) and not isinstance(value, bool)
+        }
+        if bounded_usage:
+            result["usage"] = dict(sorted(bounded_usage.items()))
+    cost = raw.get("cost_usd")
+    if isinstance(cost, (int, float)) and not isinstance(cost, bool) and cost >= 0:
+        result["cost_usd"] = round(float(cost), 8)
+    for key in ("response_model", "response_id"):
+        value = raw.get(key)
+        if value is not None and str(value).strip():
+            result[key] = str(value).strip()
+    return result
+
+
+def _sum_provider_usage(stages: list[Mapping[str, Any]]) -> dict[str, int | float]:
+    totals: dict[str, int | float] = {}
+    for stage in stages:
+        usage = stage.get("usage")
+        if not isinstance(usage, Mapping):
+            continue
+        for key, value in usage.items():
+            if isinstance(value, (int, float)) and not isinstance(value, bool):
+                totals[str(key)] = totals.get(str(key), 0) + value
+    return dict(sorted(totals.items()))
+
+
 def _semantic_plan_diagnostics(
     pair: Mapping[str, Any],
     task_family: str,
@@ -349,7 +388,7 @@ class StagedProviderRuntime:
         )
         latency_ms = (time.perf_counter() - start_perf) * 1000.0
         ended = _now_iso(self._clock)
-        return _json_object(response), {
+        metadata = {
             "stage": stage,
             "started_at": started,
             "ended_at": ended,
@@ -360,6 +399,8 @@ class StagedProviderRuntime:
             "response_sha256": hashlib.sha256(response.encode("utf-8")).hexdigest(),
             "context_management_event": context_event,
         }
+        metadata.update(_bounded_provider_call_metadata(self._provider))
+        return _json_object(response), metadata
 
     def execute(
         self,
@@ -448,28 +489,48 @@ class StagedProviderRuntime:
             CheckpointObservation("execution.started", {}, execution_started, execution_started),
             CheckpointObservation("tool.completed", execution, tool_started, tool_ended),
         )
-        total_latency = sum(float(stage["latency_ms"]) for stage in (t1, t2, final))
+        stages = [t1, t2, {"stage": "T3", **t3_metadata}, final]
+        provider_stages = [t1, t2, final]
+        total_latency = sum(float(stage["latency_ms"]) for stage in provider_stages)
+        total_usage = _sum_provider_usage(provider_stages)
+        measured_costs = [
+            float(stage["cost_usd"])
+            for stage in provider_stages
+            if isinstance(stage.get("cost_usd"), (int, float))
+            and not isinstance(stage.get("cost_usd"), bool)
+        ]
+        provider_metadata: dict[str, Any] = {
+            "provider": self._provider.name,
+            "checkpoint_schema": "pre-final/v1",
+            "runtime": "staged-provider/v2",
+            "runtime_semantics": "externally-materialized-bounded-summaries",
+            "latency_ms": round(total_latency, 3),
+            "context_management": summarize_context_events(
+                all_context_events,
+                condition=self._context_manager.condition,
+            ),
+            "pre_final_context_management": summarize_context_events(
+                context_events,
+                condition=self._context_manager.condition,
+            ),
+            "atomic_obligations": diagnostics["atomic_obligation_summary"],
+            "stages": stages,
+        }
+        if total_usage:
+            provider_metadata["usage"] = total_usage
+        if measured_costs:
+            provider_metadata["cost_usd"] = round(sum(measured_costs), 8)
+            provider_metadata["cost_reported"] = len(measured_costs) == len(provider_stages)
+            provider_metadata["cost_status"] = (
+                "measured"
+                if len(measured_costs) == len(provider_stages)
+                else "partial"
+            )
         return validate_agent_execution(
             AgentExecution(
                 observations,
                 artifact,
-                {
-                    "provider": self._provider.name,
-                    "checkpoint_schema": "pre-final/v1",
-                    "runtime": "staged-provider/v2",
-                    "runtime_semantics": "externally-materialized-bounded-summaries",
-                    "latency_ms": round(total_latency, 3),
-                    "context_management": summarize_context_events(
-                        all_context_events,
-                        condition=self._context_manager.condition,
-                    ),
-                    "pre_final_context_management": summarize_context_events(
-                        context_events,
-                        condition=self._context_manager.condition,
-                    ),
-                    "atomic_obligations": diagnostics["atomic_obligation_summary"],
-                    "stages": [t1, t2, {"stage": "T3", **t3_metadata}, final],
-                },
+                provider_metadata,
             ),
             require_conditional_semantics=True,
             require_constraint_lineage=True,
