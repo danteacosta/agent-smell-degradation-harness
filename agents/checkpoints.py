@@ -89,6 +89,11 @@ def validate_checkpoint_payload(
             if require_conditional_semantics:
                 raise ValueError("interpretation.conditional_semantics is required")
             row = {**dict(value), "conditional_semantics": []}
+        elif (
+            section == "execution"
+            and set(value) == allowed - {"context_management"}
+        ):
+            row = {**dict(value), "context_management": []}
         elif section == "execution" and set(value) == legacy_allowed:
             if require_constraint_lineage:
                 raise ValueError("execution.constraint_lineage is required")
