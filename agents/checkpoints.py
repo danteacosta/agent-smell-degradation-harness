@@ -26,7 +26,14 @@ SECTION_FIELDS = {
         "conditional_semantics",
     ),
     "plan": ("validation_checks", "planned_tools", "coverage_targets"),
-    "execution": ("revisions", "validation_attempts", "errors", "retrieval_events", "constraint_lineage"),
+    "execution": (
+        "revisions",
+        "validation_attempts",
+        "errors",
+        "retrieval_events",
+        "constraint_lineage",
+        "context_management",
+    ),
 }
 CHECKPOINT_ORDER = (
     "interpretation.completed",
@@ -73,7 +80,11 @@ def validate_checkpoint_payload(
         if not isinstance(value, Mapping):
             raise ValueError(f"checkpoint section {section} must be an object")
         allowed = set(SECTION_FIELDS[section])
-        legacy_allowed = allowed - ({"conditional_semantics"} if section == "interpretation" else {"constraint_lineage"})
+        legacy_allowed = allowed - (
+            {"conditional_semantics"}
+            if section == "interpretation"
+            else {"constraint_lineage", "context_management"}
+        )
         if section == "interpretation" and set(value) == legacy_allowed:
             if require_conditional_semantics:
                 raise ValueError("interpretation.conditional_semantics is required")
@@ -81,7 +92,11 @@ def validate_checkpoint_payload(
         elif section == "execution" and set(value) == legacy_allowed:
             if require_constraint_lineage:
                 raise ValueError("execution.constraint_lineage is required")
-            row = {**dict(value), "constraint_lineage": []}
+            row = {
+                **dict(value),
+                "constraint_lineage": [],
+                "context_management": [],
+            }
         elif set(value) == allowed:
             row = dict(value)
         else:
@@ -97,6 +112,8 @@ def validate_checkpoint_payload(
                     raise ValueError(str(error)) from error
             elif section == "execution" and field == "constraint_lineage":
                 row[field] = _validate_constraint_lineage(row[field])
+            elif section == "execution" and field == "context_management":
+                row[field] = _validate_context_management(row[field])
             elif not isinstance(row[field], list):
                 raise ValueError(f"checkpoint field {section}.{field} must be a list")
         normalized[section] = row
@@ -138,6 +155,90 @@ def _validate_constraint_lineage(value: Any) -> list[dict[str, Any]]:
             "observation_id": observation_id,
             "status": status,
             "available_at": available_at,
+        })
+    return normalized
+
+
+_CONTEXT_EVENT_FIELDS = {
+    "schema_version",
+    "event_id",
+    "stage",
+    "operation",
+    "trigger",
+    "started_at",
+    "ended_at",
+    "context_size_before",
+    "context_size_after",
+    "context_size_unit",
+    "checkpoint_id",
+    "checkpoint_sha256",
+}
+_CONTEXT_OPERATIONS = {"none", "compact", "decompose", "retrieve", "evict", "truncate"}
+
+
+def _validate_context_management(value: Any) -> list[dict[str, Any]]:
+    """Validate prompt-free context-management events at the T3 boundary."""
+
+    if not isinstance(value, list):
+        raise ValueError("checkpoint field execution.context_management must be a list")
+    normalized: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for entry in value:
+        if not isinstance(entry, Mapping) or set(entry) != _CONTEXT_EVENT_FIELDS:
+            raise ValueError("context-management entries have an invalid field set")
+        if entry["schema_version"] != "context-management/v1":
+            raise ValueError("context-management event has an unsupported schema version")
+        event_id = str(entry["event_id"]).strip()
+        stage = str(entry["stage"]).strip()
+        operation = str(entry["operation"]).strip()
+        trigger = str(entry["trigger"]).strip()
+        checkpoint_id = str(entry["checkpoint_id"]).strip()
+        digest = str(entry["checkpoint_sha256"]).strip()
+        if not event_id or event_id in seen or not stage or not trigger or not checkpoint_id:
+            raise ValueError("context-management events require unique IDs and non-empty metadata")
+        if operation not in _CONTEXT_OPERATIONS:
+            raise ValueError("context-management event has an unsupported operation")
+        if len(digest) != 64 or any(char not in "0123456789abcdef" for char in digest):
+            raise ValueError("context-management event requires a SHA-256 checkpoint hash")
+        try:
+            started_at = datetime.fromisoformat(str(entry["started_at"]))
+            ended_at = datetime.fromisoformat(str(entry["ended_at"]))
+        except ValueError as error:
+            raise ValueError("context-management timestamps must be ISO-8601") from error
+        if (
+            started_at.tzinfo is None
+            or ended_at.tzinfo is None
+            or ended_at < started_at
+        ):
+            raise ValueError("context-management timestamps must be timezone-aware and monotonic")
+        before = entry["context_size_before"]
+        after = entry["context_size_after"]
+        if (
+            isinstance(before, bool)
+            or not isinstance(before, int)
+            or before < 0
+            or isinstance(after, bool)
+            or not isinstance(after, int)
+            or after < 0
+            or after > before
+        ):
+            raise ValueError("context-management sizes must be non-negative and non-expanding")
+        if entry["context_size_unit"] != "utf8_bytes":
+            raise ValueError("context-management currently requires context_size_unit=utf8_bytes")
+        seen.add(event_id)
+        normalized.append({
+            "schema_version": "context-management/v1",
+            "event_id": event_id,
+            "stage": stage,
+            "operation": operation,
+            "trigger": trigger,
+            "started_at": str(entry["started_at"]),
+            "ended_at": str(entry["ended_at"]),
+            "context_size_before": before,
+            "context_size_after": after,
+            "context_size_unit": "utf8_bytes",
+            "checkpoint_id": checkpoint_id,
+            "checkpoint_sha256": digest,
         })
     return normalized
 
