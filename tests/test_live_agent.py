@@ -10,6 +10,7 @@ import pytest
 from agents.live import LiveAgent, NotConfiguredError, _build_prompt
 from agents.mock_transport import MockTransport
 from agents.providers import AnthropicProvider, MockProvider, ReplayProvider
+from protocol.context_management import DeterministicCompactionManager
 from pairs.loader import load_all_pairs
 
 
@@ -152,6 +153,10 @@ def test_real_provider_can_be_promoted_to_confirmatory_runtime():
     assert runtime.run_mode == "runtime"
     assert runtime.checkpoint_provenance == "runtime_native"
     assert runtime.model == "provider-model"
+    stress_runtime = agent.as_runtime_checkpoint_agent(
+        context_manager=DeterministicCompactionManager(max_context_bytes=128)
+    )
+    assert stress_runtime.run_mode == "runtime"
 
 
 def test_replay_provider_cannot_be_promoted_to_confirmatory_runtime():
