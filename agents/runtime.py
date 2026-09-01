@@ -8,6 +8,7 @@ from typing import Any
 from .checkpoints import AgentExecution, validate_agent_execution
 from .providers import Provider
 from .staged_runtime import Clock, StagedProviderRuntime
+from protocol.context_management import ContextManager
 
 
 NativeExecutor = Callable[[dict[str, Any], str, str], AgentExecution]
@@ -48,10 +49,15 @@ class RuntimeCheckpointAgent:
         model: str,
         model_version: str,
         clock: Clock | None = None,
+        context_manager: ContextManager | None = None,
     ) -> "RuntimeCheckpointAgent":
         """Build the qualified staged runtime using an existing provider adapter."""
 
-        runtime = StagedProviderRuntime(provider_adapter, clock=clock)
+        runtime = StagedProviderRuntime(
+            provider_adapter,
+            clock=clock,
+            context_manager=context_manager,
+        )
         return cls(
             runtime.execute,
             provider=provider_adapter.name,
