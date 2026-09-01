@@ -7,6 +7,7 @@ from agents.runtime import RuntimeCheckpointAgent
 from protocol.context_management import (
     DeterministicCompactionManager,
     NoCompactionManager,
+    TypedCompactionManager,
 )
 
 
@@ -30,6 +31,10 @@ def _responses() -> list[str]:
                             "description": "the request is at or below five minutes",
                         },
                     }
+                ],
+                "atomic_obligations": [
+                    {"constraint_index": 1, "atom_type": "condition", "status": "present"},
+                    {"constraint_index": 1, "atom_type": "threshold", "status": "present"},
                 ],
             }
         ),
@@ -147,6 +152,10 @@ def test_context_matrix_records_clean_and_smelly_cells_without_terminal_leakage(
             for event in events
             for forbidden in ("prompt", "requirement", "artifact", "oracle", "label", "variant")
         )
+        atomic = result.checkpoints[-1].payload["atomic_obligation_observations"]
+        assert len(atomic) == 2
+        assert all(item["available_at"] == "T3" for item in atomic)
+        assert result.provider_meta["atomic_obligations"]["present_count"] == 2
 
         if condition == "no_compaction":
             assert all(event["operation"] == "none" for event in events)
@@ -169,3 +178,19 @@ def test_no_compaction_is_identity_and_stress_condition_is_explicit() -> None:
     assert identity_provider.prompts != stress_provider.prompts
     assert all(event["operation"] == "none" for event in identity_result.checkpoints[-1].payload["context_management"])
     assert all(event["operation"] == "compact" for event in stress_result.checkpoints[-1].payload["context_management"])
+
+
+def test_typed_compaction_preserves_hard_requirement_block() -> None:
+    manager = TypedCompactionManager(max_context_bytes=128)
+    prompt = (
+        "Requirement:\nReject after five minutes.\n\n"
+        + "Background: this sentence is soft context. " * 20
+    )
+
+    transformation = manager.prepare(prompt, stage="T1")
+
+    assert transformation.operation == "compact"
+    assert transformation.trigger == "typed_hard_lane_v1"
+    assert "Requirement:\nReject after five minutes.\n" in transformation.prompt
+    assert "soft context compacted for typed hard lane" in transformation.prompt
+    assert transformation.context_size_after <= transformation.context_size_before
