@@ -50,8 +50,7 @@ def main() -> int:
     parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
     for path in (args.input, args.tasks, args.manifest):
-        if path != args.input:
-            _assert_private(path)
+        _assert_private(path)
     try:
         rubric = load_annotation_rubric(args.rubric)
         tasks, selection = freeze_blinded_tasks(
