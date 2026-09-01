@@ -108,13 +108,16 @@ Prepare private blinded tasks only after the episode/artifact packet is frozen:
 python scripts/prepare_blinded_annotation.py \\
   --input /private/data/annotation-input.jsonl \\
   --tasks /private/data/annotator-tasks.jsonl \\
-  --manifest /private/data/annotation-selection.json
+  --manifest /private/data/annotation-selection.json \\
+  --kind primary_outcome
 \`\`\`
 
 The selection is deterministic, made from item IDs before labels exist, and
-records the 20% duplicate subset plus its hash. The packets exclude variant,
-defect family, oracle result, model identity, and terminal artifact fields from
-the coordinator's source record. Two annotators, a training set outside the
+records the 20% duplicate subset plus its hash. The primary-outcome packet
+includes only the generated artifact and independent reference constraints. It
+excludes variant, defect family, oracle result, provider/model identity,
+checkpoint evidence, and detector predictions from the coordinator's source
+record. Two annotators, a training set outside the
 pre-pilot, a named adjudicator, and the alpha/bootstrapping calculation remain
 human responsibilities.
 
