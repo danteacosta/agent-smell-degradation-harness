@@ -36,6 +36,18 @@ usage remains a separate measured field. A qualified provider run must verify
 that context events are present before T4, that the primary condition emits no
 compaction events, and that the stress condition is reproducible.
 
+The article-informed `typed_compaction_stress_test` is a separate
+mechanism proxy. It protects bounded requirement/constraint/check blocks in a
+typed hard lane and compacts remaining context under a fixed budget; it is not
+a replication of the paper's learned classifier or token-matched benchmark.
+
+T1 also requires bounded `atomic_obligations` observations, and T3 records
+their hash-bound `constraint_hard_lane` materialization. The four-cell
+post-collection interaction report uses the difference-in-differences
+estimand. Missing cells are reported and excluded; the result is descriptive
+mechanism evidence and never changes the primary H1/H2 estimands or the smell
+taxonomy.
+
 The pre-pilot estimates feasibility, provider/checkpoint failure rates,
 annotation time and reliability, failure prevalence, intraproject dependence,
 latency, and cost. It cannot support H1 or H2.
@@ -49,7 +61,7 @@ latency, and cost. It cannot support H1 or H2.
 | Providers | Two runtime-native configurations pass temporal, schema, failure, and hash qualification | Blocked |
 | Annotation | Frozen rubric, two trained annotators, outcome-blind 20% duplicate subset, adjudicator | Blocked |
 | Leakage | T1–T3 cannot load artifact, oracle, mutation, provider identity, or outcome label | Implemented; rerun on qualified configurations |
-| Context management | Primary `no_compaction`; secondary matrix and prompt-free event contract are tested | Implemented; qualify on real runtime |
+| Context management | Primary `no_compaction`; secondary matrix, typed proxy, atomic contract and prompt-free event contract are tested | Implemented; qualify on real runtime |
 | Budget | Provider estimate plus 25% contingency and annotation-hour estimate approved | Blocked |
 | Reproducibility | Versioned prompts, configuration hashes, execution window and immutable run manifest | Blocked |
 
@@ -73,10 +85,12 @@ episode and verify:
 4. all T1–T3 timestamps precede the artifact request;
 5. context-management events are present with monotonic timestamps, measured
    UTF-8 sizes, operation/trigger metadata and a hash-bound checkpoint identity;
+6. T1 atomic obligations use the bounded schema and T3 observations bind to the
+   corresponding constraint lineage without raw obligation text;
 6. request, response and configuration hashes are present;
-7. malformed T2 and a simulated timeout fail before artifact generation;
-8. no prompted snapshot or replay trace is promoted to runtime-native;
-9. latency, token usage and cost are exported without prompts, artifacts or secrets.
+8. malformed T2 and a simulated timeout fail before artifact generation;
+9. no prompted snapshot or replay trace is promoted to runtime-native;
+10. latency, token usage and cost are exported without prompts, artifacts or secrets.
 
 The qualification report path and configuration hash are recorded in
 `data/prepilot/launch-plan.candidate.json`. Credentials never enter that file.
