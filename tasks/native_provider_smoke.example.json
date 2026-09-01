@@ -1,0 +1,32 @@
+{
+  "schema_version": "native-provider-smoke/v1",
+  "task_family": "test_gen",
+  "context_condition": "no_compaction",
+  "replications": 1,
+  "providers": [
+    {
+      "id": "openai-primary",
+      "kind": "openai",
+      "api_key_env": "OPENAI_API_KEY",
+      "model_env": "NATIVE_OPENAI_MODEL",
+      "model_version_env": "NATIVE_OPENAI_MODEL_VERSION",
+      "input_usd_per_1k_env": "NATIVE_OPENAI_INPUT_USD_PER_1K",
+      "cached_input_usd_per_1k_env": "NATIVE_OPENAI_CACHED_INPUT_USD_PER_1K",
+      "output_usd_per_1k_env": "NATIVE_OPENAI_OUTPUT_USD_PER_1K",
+      "max_tokens": 4096,
+      "temperature": 0.0
+    },
+    {
+      "id": "deepseek-secondary",
+      "kind": "deepseek",
+      "api_key_env": "DEEPSEEK_API_KEY",
+      "model_env": "NATIVE_DEEPSEEK_MODEL",
+      "model_version_env": "NATIVE_DEEPSEEK_MODEL_VERSION",
+      "input_usd_per_1k_env": "NATIVE_DEEPSEEK_INPUT_USD_PER_1K",
+      "cached_input_usd_per_1k_env": "NATIVE_DEEPSEEK_CACHED_INPUT_USD_PER_1K",
+      "output_usd_per_1k_env": "NATIVE_DEEPSEEK_OUTPUT_USD_PER_1K",
+      "max_tokens": 4096,
+      "temperature": 0.0
+    }
+  ]
+}
