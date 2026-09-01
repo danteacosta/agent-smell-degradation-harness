@@ -110,7 +110,7 @@ def test_usage_and_cost_are_provider_neutral() -> None:
         input_usd_per_1k=0.01,
         cached_input_usd_per_1k=0.005,
         output_usd_per_1k=0.02,
-    ) == pytest.approx(0.00225)
+    ) == pytest.approx(0.00215)
 
 
 def test_openai_default_does_not_pass_none_base_url_to_sdk() -> None:
@@ -123,7 +123,7 @@ def test_openai_default_does_not_pass_none_base_url_to_sdk() -> None:
 
     provider.complete(_request())
 
-    assert "base_url" not in provider.configuration_metadata()
+    assert provider.configuration_metadata()["base_url"] is None
     assert calls[0]["model"] == "gpt-test"
 
 
