@@ -115,6 +115,35 @@ def evaluate_launch_plan(plan: Mapping[str, Any]) -> dict[str, Any]:
                 "checkpoint_sha256",
             ]
         ),
+        "atomic-obligation schema is missing": (
+            context_management.get("atomic_obligation_schema")
+            == "atomic-obligations/v1"
+        ),
+        "atomic-obligation observation fields are incomplete": (
+            context_management.get("atomic_obligation_observation_fields")
+            == [
+                "schema_version",
+                "obligation_id",
+                "constraint_id",
+                "constraint_sha256",
+                "constraint_index",
+                "atom_type",
+                "status",
+                "source_checkpoint",
+                "observation_id",
+                "preservation_class",
+                "available_at",
+            ]
+        ),
+        "article-inspired secondary mechanism is missing": (
+            context_management.get("mechanism_secondary")
+            == "typed_compaction_stress_test"
+            and context_management.get("mechanism_secondary_confirmatory") is False
+        ),
+        "2x2 context interaction estimand is missing": (
+            context_management.get("interaction_analysis")
+            == "difference_in_differences"
+        ),
     }
     blockers.extend(message for message, passed in context_checks.items() if not passed)
 
