@@ -139,10 +139,14 @@ class LiveAgent:
             if require_creds:
                 available = (
                     _openai_available()
-                    if provider_label == "openai"
+                    if provider_label in {"openai", "deepseek"}
                     else _anthropic_available()
                 )
-                package_name = "openai" if provider_label == "openai" else "anthropic"
+                package_name = (
+                    "openai-compatible"
+                    if provider_label in {"openai", "deepseek"}
+                    else "anthropic"
+                )
                 if not available:
                     raise NotConfiguredError(
                         f"{package_name} package not installed; install the live provider extra"
