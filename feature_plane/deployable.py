@@ -158,6 +158,32 @@ def _load_deployable_events(
     return events
 
 
+def _context_metrics(execution: Mapping[str, Any]) -> dict[str, int]:
+    """Derive redacted context-management metrics from the T3 payload."""
+
+    raw_events = execution.get("context_management", [])
+    events = [event for event in raw_events if isinstance(event, Mapping)] if isinstance(raw_events, list) else []
+    before = sum(
+        int(event["context_size_before"])
+        for event in events
+        if isinstance(event.get("context_size_before"), int)
+        and not isinstance(event.get("context_size_before"), bool)
+    )
+    after = sum(
+        int(event["context_size_after"])
+        for event in events
+        if isinstance(event.get("context_size_after"), int)
+        and not isinstance(event.get("context_size_after"), bool)
+    )
+    return {
+        "context_management_event_count": len(events),
+        "compaction_count": sum(1 for event in events if event.get("operation") == "compact"),
+        "context_size_before_bytes": before,
+        "context_size_after_bytes": after,
+        "context_size_reduction_bytes": max(before - after, 0),
+    }
+
+
 def extract_deployable_features(
     feature_input: DeployableFeatureInput,
     provenance_path: str | Path,
@@ -223,6 +249,7 @@ def extract_deployable_features(
         "operational": {
             "event_count": len(events),
             "latency_ms": latency_ms,
+            **_context_metrics(execution),
         },
         "provenance": {
             "constraint_event_present": int(bool(interpretation or legacy)),
