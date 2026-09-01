@@ -109,3 +109,26 @@ expert-validated evidence. See
 `docs/research/2026-08-26-context-aware-requirements-smell-detection.md` and
 the bundle's `error-analysis.json` for the proposed escalation from lexical
 triage to contextual review and hidden behavioral validation.
+
+
+## 2026-09-01 pre-pilot unlock checkpoint
+
+- [x] Merge the context-management/atomic-obligation implementation into \`main\`.
+- [x] Add measured OpenAI-compatible adapters for OpenAI and DeepSeek.
+- [x] Propagate per-stage usage, cost status, response identity, and configuration
+      identity without exporting credentials or raw prompts.
+- [x] Add the two-slot native-provider smoke and fail-closed primary
+      \`no_compaction\` checks.
+- [x] Add private corpus intake that emits a hash-only, rights-aware manifest.
+- [x] Add outcome-blinded annotation packets with deterministic pre-label 20%
+      duplicate selection.
+- [x] Add an advisor approval memo with explicit budget, ethics, corpus, and
+      adjudication decisions.
+- [ ] Run the real-provider smoke in the private environment with both keys,
+      immutable model versions, and frozen prices.
+- [ ] Resolve at least 12 licensed, independently auditable intents across at
+      least 6 projects; the current checked-in count is 7/12.
+- [ ] Name two annotators and an independent adjudicator; complete rehearsal,
+      missing-label export, alpha, and bootstrap interval.
+- [ ] Obtain advisor/institution approval and record the provider and
+      annotation-hour caps.
