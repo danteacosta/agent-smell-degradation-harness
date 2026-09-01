@@ -59,6 +59,15 @@ mocks, and replay remain non-confirmatory. T4 artifact/evaluation data is
 stored only in the label-plane profile extension and is excluded by the
 deployable feature loader.
 
+Context management is an explicit operational factor. The primary pre-pilot
+condition is `no_compaction`; the clean/smelly ×
+`no_compaction`/`compaction_stress_test` matrix is a separate protocol and
+interaction check, not an addition to the 120 primary episodes or to the H1/H2
+estimands. Redacted events record operation, trigger, timestamps, measured
+UTF-8 context sizes, checkpoint identity and a context hash; raw prompts,
+artifacts, labels and private reasoning are excluded. See the
+[context-management control note](docs/research/2026-09-01-context-management-control.md).
+
 ## Flow
 
 ```mermaid
@@ -127,7 +136,7 @@ Before spending provider or annotation budget, run `python -m eval.prepilot_read
 
 The license-first [pre-pilot corpus screening](docs/research/prepilot-corpus-screening.md) records admitted, conditional, secondary, and rejected source families. In particular, public availability is not treated as redistribution or derivative-use permission, and project diversity cannot be manufactured from documents, modules, or paraphrases.
 
-The acceptance boundary, estimands, leakage rules, split invariants, and product policy are documented in [Thesis and Product Boundary](docs/thesis-product-boundary.md). Confirmatory H2 uses an `h2-features/v3` raw-feature manifest, recomputes its contents from hash-bound T1/T2/T3 traces, fits fixed nested B0–B3 models with one estimator, calibrates only on calibration, and evaluates B3−B0 once on test. No family is selected by training PR-AUC. A pre-pilot manifest must contain 12 independent source intents; 24 intents/6 projects is a pilot floor, while confirmation requires a frozen split-aware precision plan, at least 60 intents/12 projects as an unconditional floor, and at least 6 projects/24 intents in the untouched test partition. The current conservative design candidate is 220 intents/36 projects and remains explicitly unfrozen.
+The acceptance boundary, estimands, leakage rules, split invariants, and product policy are documented in [Thesis and Product Boundary](docs/thesis-product-boundary.md). Confirmatory H2 uses an `h2-features/v3` structural manifest with raw-feature version `pre-final/v4`, recomputes its contents from hash-bound T1/T2/T3 traces, fits fixed nested B0–B3 models with one estimator, calibrates only on calibration, and evaluates B3−B0 once on test. No family is selected by training PR-AUC. A pre-pilot manifest must contain 12 independent source intents; 24 intents/6 projects is a pilot floor, while confirmation requires a frozen split-aware precision plan, at least 60 intents/12 projects as an unconditional floor, and at least 6 projects/24 intents in the untouched test partition. The current conservative design candidate is 220 intents/36 projects and remains explicitly unfrozen.
 
 The current orientation and related-work review is versioned in [2026-08-10 orientation review](docs/research/2026-08-10-orientation-review.md). It records the novelty boundary, EASY alignment, direct comparison with prefix monitors, and the evidence still required before a confirmatory claim.
 
