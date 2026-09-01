@@ -40,7 +40,12 @@ class BlindedAnnotationTask:
         rubric_version: str = "rubric-v2",
     ) -> "BlindedAnnotationTask":
         item_id = str(record.get("episode_id") or record.get("item_id") or "")
-        text = str(record.get("requirement_text") or record.get("prompt") or "")
+        text = str(
+            record.get("presented_text")
+            or record.get("requirement_text")
+            or record.get("prompt")
+            or ""
+        )
         return cls(item_id=item_id, presented_text=text, rubric_version=rubric_version,
                    duplicate_subset=duplicate_subset)
 
