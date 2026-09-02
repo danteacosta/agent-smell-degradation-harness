@@ -12,6 +12,15 @@ from pathlib import Path
 from random import Random
 from typing import Any, Iterable, Mapping
 
+from label_plane.exploratory_judge import JUDGE_SCHEMA_VERSION, validate_judge_request
+
+
+_FROZEN_DUPLICATE_SEED = 0
+_FROZEN_DUPLICATE_FRACTION = 0.2
+_REFERENCE_CONSTRAINT_FIELDS = frozenset({"source_intent_id", "constraint_id", "text"})
+_REFERENCE_CONSTRAINT_SCHEMA_VERSION = "prepilot-reference-constraints/v1"
+_PRIVATE_TARGET_TOKEN = "incompleteness_missing_condition"
+
 
 @dataclass(frozen=True)
 class ReferenceConstraint:
@@ -19,6 +28,7 @@ class ReferenceConstraint:
     text: str
 
     def to_public_dict(self) -> dict[str, str]:
+        _validate_public_constraint_values(self.constraint_id, self.text)
         return {"constraint_id": self.constraint_id, "text": self.text}
 
 
@@ -114,6 +124,8 @@ class ExploratoryCallPlan:
                 for item in self.occurrences
             ],
             "reference_constraints": [item.to_public_dict() for item in self.reference_constraints],
+            "duplicate_seed": _FROZEN_DUPLICATE_SEED,
+            "duplicate_fraction": _FROZEN_DUPLICATE_FRACTION,
             "max_attempts_per_api_call": self.max_attempts_per_api_call,
         }
 
@@ -135,63 +147,129 @@ def _occurrence_id(nonce: bytes, base_task_id: str, index: int) -> str:
     return base64.b32encode(digest).decode("ascii").rstrip("=").lower()
 
 
+def _validate_public_constraint_values(constraint_id: Any, text: Any) -> None:
+    try:
+        validate_judge_request(
+            {
+                "schema_version": JUDGE_SCHEMA_VERSION,
+                "occurrence_id": "opaque-occurrence",
+                "generated_acceptance_criteria": "visible criteria",
+                "reference_constraints": [{"constraint_id": constraint_id, "text": text}],
+            }
+        )
+    except ValueError:
+        raise ValueError("reference constraints must satisfy the dedicated judge boundary") from None
+
+
+def _parse_reference_constraint_record(record: Any) -> _PrivateReferenceConstraint:
+    if not isinstance(record, Mapping) or set(record) != _REFERENCE_CONSTRAINT_FIELDS:
+        raise ValueError(
+            "reference constraints require exactly source_intent_id, constraint_id, and text fields"
+        )
+    source_intent_id = record["source_intent_id"]
+    constraint_id = record["constraint_id"]
+    text = record["text"]
+    if not isinstance(source_intent_id, str) or not source_intent_id.strip():
+        raise ValueError("reference constraints require a non-empty string source intent")
+    if _PRIVATE_TARGET_TOKEN in source_intent_id.casefold():
+        raise ValueError("reference constraints contain forbidden metadata")
+    if not isinstance(constraint_id, str) or not isinstance(text, str):
+        raise ValueError("reference constraints require string opaque IDs and text")
+    _validate_public_constraint_values(constraint_id, text)
+    return _PrivateReferenceConstraint(constraint_id, text, source_intent_id.strip())
+
+
+def _validate_reference_constraint_uniqueness(
+    constraints: Iterable[_PrivateReferenceConstraint],
+) -> tuple[_PrivateReferenceConstraint, ...]:
+    result = tuple(constraints)
+    seen_intents: set[str] = set()
+    seen_ids: set[str] = set()
+    for item in result:
+        if item.source_intent_id in seen_intents or item.constraint_id in seen_ids:
+            raise ValueError("reference constraints require unique source intents and constraint IDs")
+        seen_intents.add(item.source_intent_id)
+        seen_ids.add(item.constraint_id)
+    return result
+
+
 def load_reference_constraints(path: str | Path) -> tuple[_PrivateReferenceConstraint, ...]:
     """Load the private, independently authored reference-constraint file."""
     payload = json.loads(Path(path).read_text(encoding="utf-8"))
-    if payload.get("schema_version") != "prepilot-reference-constraints/v1":
-        raise ValueError("reference constraints require schema prepilot-reference-constraints/v1")
-    records = payload.get("records")
+    if not isinstance(payload, Mapping) or set(payload) != {"schema_version", "records"}:
+        raise ValueError("reference constraints require exactly schema_version and records fields")
+    if payload["schema_version"] != _REFERENCE_CONSTRAINT_SCHEMA_VERSION:
+        raise ValueError(
+            "reference constraints require schema prepilot-reference-constraints/v1"
+        )
+    records = payload["records"]
     if not isinstance(records, list):
         raise ValueError("reference constraints require records")
-    result = []
-    seen_intents: set[str] = set()
-    seen_ids: set[str] = set()
-    for record in records:
-        try:
-            intent = str(record["source_intent_id"]).strip()
-            constraint_id = str(record["constraint_id"]).strip()
-            text = str(record["text"]).strip()
-        except (KeyError, TypeError):
-            raise ValueError("reference constraints require source intent, opaque ID, and text") from None
-        if not intent or not constraint_id or not text or intent in seen_intents or constraint_id in seen_ids:
-            raise ValueError("reference constraints require unique source intents and constraint IDs")
-        seen_intents.add(intent)
-        seen_ids.add(constraint_id)
-        result.append(_PrivateReferenceConstraint(constraint_id, text, intent))
-    return tuple(result)
+    return _validate_reference_constraint_uniqueness(
+        _parse_reference_constraint_record(record) for record in records
+    )
+
+
+def _normalize_direct_reference_constraints(
+    values: Iterable[Mapping[str, Any] | _PrivateReferenceConstraint],
+) -> tuple[_PrivateReferenceConstraint, ...]:
+    parsed: list[_PrivateReferenceConstraint] = []
+    for value in values:
+        if isinstance(value, _PrivateReferenceConstraint):
+            value = {
+                "source_intent_id": value.source_intent_id,
+                "constraint_id": value.constraint_id,
+                "text": value.text,
+            }
+        parsed.append(_parse_reference_constraint_record(value))
+    return _validate_reference_constraint_uniqueness(parsed)
+
+
+def _provider_slot_configuration(slot: Any) -> tuple[str, str, str, str]:
+    if not isinstance(slot, Mapping):
+        raise ValueError("provider slots require mapping configurations")
+    required = ("slot_id", "provider", "model", "model_version")
+    if any(not isinstance(slot.get(field), str) or not slot[field].strip() for field in required):
+        raise ValueError("provider slots require non-empty string slot/provider/model/model_version")
+    return (
+        slot["slot_id"],
+        slot["provider"],
+        slot["model"],
+        slot["model_version"],
+    )
 
 
 def build_exploratory_call_plan(
     normalized_records: Iterable[Mapping[str, Any]],
     provider_slots: Iterable[Mapping[str, Any]],
-    reference_constraints: Iterable[ReferenceConstraint | _PrivateReferenceConstraint] | str | Path,
+    reference_constraints: Iterable[Mapping[str, Any] | _PrivateReferenceConstraint] | str | Path,
     *,
     run_nonce: bytes | None = None,
-    duplicate_seed: int = 0,
-    duplicate_fraction: float = 0.2,
 ) -> ExploratoryCallPlan:
     records = sorted(normalized_records, key=lambda item: str(item["source_intent_id"]))
     slots = tuple(provider_slots)
     constraints = (
         load_reference_constraints(reference_constraints)
         if isinstance(reference_constraints, (str, Path))
-        else tuple(reference_constraints)
+        else _normalize_direct_reference_constraints(reference_constraints)
     )
     intents = tuple(str(item["source_intent_id"]) for item in records)
     if len(records) != 12 or len(set(intents)) != 12:
         raise ValueError("call plan requires exactly 12 unique normalized source intents")
-    slot_ids = tuple(str(item["slot_id"]) for item in slots)
+    slot_configurations = tuple(_provider_slot_configuration(slot) for slot in slots)
+    slot_ids = tuple(item[0] for item in slot_configurations)
     if len(slots) != 2 or len(set(slot_ids)) != 2:
         raise ValueError("call plan requires exactly two unique provider slots")
-    constraint_intents = {getattr(item, "source_intent_id", None) for item in constraints}
+    provider_configurations = {item[1:] for item in slot_configurations}
+    if len(provider_configurations) != 2:
+        raise ValueError("provider/model/model_version configurations must be distinct")
+    constraint_intents = {item.source_intent_id for item in constraints}
     if constraint_intents != set(intents) or len(constraints) != 12:
         raise ValueError("reference constraints require exactly one record per source intent")
     if run_nonce is None:
         run_nonce = secrets.token_bytes(32)
     if len(run_nonce) != 32:
         raise ValueError("run_nonce must be a 256-bit private value")
-    if not 0 <= duplicate_fraction <= 1:
-        raise ValueError("duplicate fraction must be between zero and one")
 
     episodes: list[PublicEpisode] = []
     artifacts: list[PublicArtifact] = []
@@ -213,8 +291,8 @@ def build_exploratory_call_plan(
                     artifact_ordinal += 1
                     task_ordinal += 1
 
-    duplicate_count = round(len(tasks) * duplicate_fraction)
-    selected = set(Random(duplicate_seed).sample(range(len(tasks)), duplicate_count))
+    duplicate_count = round(len(tasks) * _FROZEN_DUPLICATE_FRACTION)
+    selected = set(Random(_FROZEN_DUPLICATE_SEED).sample(range(len(tasks)), duplicate_count))
     occurrences = []
     for index, task in enumerate(tasks):
         occurrences.append(PublicOccurrence(_occurrence_id(run_nonce, task.base_task_id, 0), task.base_task_id, False))
