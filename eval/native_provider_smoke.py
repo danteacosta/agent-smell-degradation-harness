@@ -365,6 +365,29 @@ def _safe_error(error: Exception, secret_values: Sequence[str]) -> str:
     return message[:240] or type(error).__name__
 
 
+def _failed_call_metadata(provider: Any) -> dict[str, Any]:
+    """Preserve bounded usage/cost when a provider response fails validation."""
+
+    raw = getattr(provider, "last_call_metadata", {})
+    if not isinstance(raw, Mapping):
+        return {}
+    result: dict[str, Any] = {}
+    usage = raw.get("usage")
+    if isinstance(usage, Mapping):
+        bounded_usage = {
+            str(key): value
+            for key, value in usage.items()
+            if isinstance(value, (int, float)) and not isinstance(value, bool)
+        }
+        if bounded_usage:
+            result["usage"] = dict(sorted(bounded_usage.items()))
+    cost = raw.get("cost_usd")
+    if isinstance(cost, (int, float)) and not isinstance(cost, bool) and cost >= 0:
+        result["cost_usd"] = round(float(cost), 8)
+        result["cost_status"] = "measured"
+    return result
+
+
 def _sum_usage(rows: Sequence[Mapping[str, Any]]) -> dict[str, int | float]:
     totals: dict[str, int | float] = {}
     for row in rows:
@@ -431,6 +454,7 @@ def run_native_provider_smoke(
                 "episodes": [],
             }
             secret_values: list[str] = []
+            provider = None
             for field in ("api_key_env", "model_env", "model_version_env"):
                 value = env.get(str(spec[field]))
                 if value:
@@ -463,15 +487,15 @@ def run_native_provider_smoke(
                                 public_spec["episodes"].append(row)
                             except Exception as error:
                                 failures += 1
-                                public_spec["episodes"].append(
-                                    {
-                                        "intent_id": str(pair["intent_id"]),
-                                        "variant": variant,
-                                        "replication": replication,
-                                        "status": "fail",
-                                        "error": _safe_error(error, secret_values),
-                                    }
-                                )
+                                failure = {
+                                    "intent_id": str(pair["intent_id"]),
+                                    "variant": variant,
+                                    "replication": replication,
+                                    "status": "fail",
+                                    "error": _safe_error(error, secret_values),
+                                }
+                                failure.update(_failed_call_metadata(provider))
+                                public_spec["episodes"].append(failure)
                 if not any(
                     row.get("status") == "fail"
                     for row in public_spec["episodes"]
@@ -487,15 +511,16 @@ def run_native_provider_smoke(
             ]
             public_spec["episode_count"] = len(public_spec["episodes"])
             public_spec["successful_episode_count"] = len(episodes)
+            all_rows = public_spec["episodes"]
             public_spec["total_latency_ms"] = round(
-                sum(float(row.get("latency_ms", 0.0)) for row in episodes), 3
+                sum(float(row.get("latency_ms", 0.0)) for row in all_rows), 3
             )
-            public_spec["total_usage"] = _sum_usage(episodes)
-            costs = [row["cost_usd"] for row in episodes if row.get("cost_usd") is not None]
+            public_spec["total_usage"] = _sum_usage(all_rows)
+            costs = [row["cost_usd"] for row in all_rows if row.get("cost_usd") is not None]
             public_spec["total_cost_usd"] = round(sum(costs), 8) if costs else None
             public_spec["cost_status"] = (
                 "measured"
-                if len(costs) == len(episodes) and episodes
+                if len(costs) == len(all_rows) and all_rows
                 else "not_configured"
                 if not costs
                 else "partial"

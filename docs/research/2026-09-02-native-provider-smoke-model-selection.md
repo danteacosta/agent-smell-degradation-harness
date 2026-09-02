@@ -52,11 +52,12 @@ object output for both providers.
 The corrected OpenAI slot passed both clean and smelly RF-04 episodes. DeepSeek
 V4 Flash remained unqualified after two complete smoke attempts: it produced an
 unsupported `atom_type=pattern`, and separately malformed/truncated JSON. The
-V4 Pro candidate also remains unqualified in the latest complete two-episode
-smoke: one episode passed and one returned malformed JSON. A later single
-diagnostic execution of V4 Pro passed, so the evidence indicates response
-instability rather than an authentication or endpoint failure; it is not
-enough to mark the provider gate as passed.
+V4 Pro candidate also remains unqualified. Before JSON mode, one complete
+two-episode smoke had one pass and one malformed-JSON failure; after JSON mode,
+the latest complete two-episode smoke had two malformed-JSON failures. A later
+single diagnostic execution of V4 Pro passed, so the evidence indicates
+response instability rather than an authentication or endpoint failure; it is
+not enough to mark the provider gate as passed.
 
 The project therefore keeps the gate fail-closed: a successful individual
 episode is not converted into a provider qualification when another episode in
@@ -66,6 +67,7 @@ the same smoke fails. The reports are redacted and private:
 - `/private/tmp/native-provider-smoke-20260902-gpt54mini-dsv4flash-retry.json`
 - `/private/tmp/native-provider-smoke-20260902-gpt54mini-dsv4pro.json`
 - `/private/tmp/native-provider-smoke-20260902-gpt54mini-dsv4pro-jsonmode.json`
+- `/private/tmp/native-provider-smoke-20260902-gpt54mini-dsv4pro-final.json`
 
 ## Downstream uses
 

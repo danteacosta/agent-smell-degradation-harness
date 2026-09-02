@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from datetime import datetime, timedelta, timezone
+from types import SimpleNamespace
 
 import pytest
 
@@ -13,6 +14,7 @@ from eval.native_provider_smoke import (
     run_native_provider_smoke,
     summarize_execution,
 )
+import eval.native_provider_smoke as native_smoke
 
 
 def _pair() -> dict:
@@ -168,3 +170,94 @@ def test_missing_private_keys_are_reported_without_writing_them(tmp_path) -> Non
     assert "api key" not in serialized.lower()
     assert "OPENAI_API_KEY" in serialized
     assert "DEEPSEEK_API_KEY" in serialized
+
+
+def test_failed_provider_episode_preserves_observed_usage_and_cost(tmp_path, monkeypatch) -> None:
+    config = tmp_path / "smoke.json"
+    output = tmp_path / "report.json"
+    config.write_text(
+        json.dumps(
+            {
+                "schema_version": "native-provider-smoke/v1",
+                "task_family": "test_gen",
+                "context_condition": "no_compaction",
+                "providers": [
+                    {
+                        "id": "openai",
+                        "kind": "openai",
+                        "api_key_env": "OPENAI_API_KEY",
+                        "model_env": "OPENAI_MODEL",
+                        "model_version_env": "OPENAI_VERSION",
+                    },
+                    {
+                        "id": "deepseek",
+                        "kind": "deepseek",
+                        "api_key_env": "DEEPSEEK_API_KEY",
+                        "model_env": "DEEPSEEK_MODEL",
+                        "model_version_env": "DEEPSEEK_VERSION",
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    monkeypatch.setattr(native_smoke, "_selected_pairs", lambda **_: [_pair()])
+
+    def fake_provider_from_spec(spec, *, environ):
+        provider = SimpleNamespace(
+            name=str(spec["kind"]),
+            last_call_metadata={
+                "usage": {"input_tokens": 7, "output_tokens": 3, "total_tokens": 10},
+                "cost_usd": 0.0042,
+            },
+        )
+
+        def complete(_request):
+            raise ValueError("simulated provider response failure")
+
+        provider.complete = complete
+        return provider, {
+            "id": str(spec["id"]),
+            "kind": str(spec["kind"]),
+            "model": "test-model",
+            "model_version": "test-version",
+            "base_url": None,
+            "max_tokens": 4096,
+            "temperature": 0.0,
+            "reasoning_effort": None,
+            "api_key_env": str(spec["api_key_env"]),
+            "model_env": str(spec["model_env"]),
+            "model_version_env": str(spec["model_version_env"]),
+            "pricing_envs": {},
+        }
+
+    monkeypatch.setattr(native_smoke, "_provider_from_spec", fake_provider_from_spec)
+    report = run_native_provider_smoke(
+        config,
+        output,
+        environ={
+            "OPENAI_API_KEY": "private-openai",
+            "OPENAI_MODEL": "test-model",
+            "OPENAI_VERSION": "test-version",
+            "DEEPSEEK_API_KEY": "private-deepseek",
+            "DEEPSEEK_MODEL": "test-model",
+            "DEEPSEEK_VERSION": "test-version",
+        },
+    )
+
+    assert report["status"] == "fail"
+    for provider in report["providers"]:
+        assert provider["total_usage"] == {
+            "input_tokens": 14,
+            "output_tokens": 6,
+            "total_tokens": 20,
+        }
+        assert provider["total_cost_usd"] == pytest.approx(0.0084)
+        assert provider["cost_status"] == "measured"
+        assert provider["episodes"][0]["usage"] == {
+            "input_tokens": 7,
+            "output_tokens": 3,
+            "total_tokens": 10,
+        }
+        assert provider["episodes"][0]["cost_usd"] == pytest.approx(0.0042)
