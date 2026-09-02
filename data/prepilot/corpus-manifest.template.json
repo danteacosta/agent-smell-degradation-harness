@@ -1,5 +1,5 @@
 {
-  "schema_version": "prepilot-corpus/v1",
+  "schema_version": "prepilot-corpus/v3",
   "status": "template",
   "records": [
     {
@@ -7,6 +7,16 @@
       "project_id": "TBD",
       "source_url": "TBD",
       "license": "TBD",
+      "license_url": "TBD",
+      "reuse_permission_status": "TBD",
+      "rights_review": {
+        "redistribution_allowed": false,
+        "derivative_use_allowed": false,
+        "external_provider_processing_allowed": false,
+        "attribution_recorded": false,
+        "reviewer_id": "TBD",
+        "reviewed_at": "TBD"
+      },
       "retrieved_at": "TBD",
       "canonical_text_sha256": "TBD",
       "clean_requirement_sha256": "TBD",
