@@ -1311,6 +1311,54 @@ def test_given_unreconciled_reservation_when_ledger_is_reopened_then_it_stops_as
         )
 
 
+def test_given_truncated_unverified_reconciliation_when_reopened_then_it_recovers_terminally(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "truncated-reconciliation.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, None)
+
+    lines = path.read_bytes().splitlines()
+    assert json.loads(lines[-1])["event_type"] == "stopped_cost_unverified"
+    expected_recovered_bytes = b"\n".join(lines) + b"\n"
+    path.write_bytes(b"\n".join(lines[:-1]) + b"\n")
+
+    recovered = CostLedger(path, configuration)
+    report = recovered.report()
+    assert path.read_bytes() == expected_recovered_bytes
+    assert recovered.status == "stopped_cost_unverified"
+    assert report["stop_reason"] == "missing_usage"
+    assert report["spent_microusd"] == 0
+    assert report["active_reserved_microusd"] == reservation.reserved_microusd
+    assert report["pending_attempt_count"] == 0
+    assert [event["event_type"] for event in recovered.events] == [
+        "preflight",
+        "reservation",
+        "reconciliation",
+        "stopped_cost_unverified",
+    ]
+    reopened = CostLedger(path, configuration)
+    assert reopened.report() == report
+    assert reopened.ledger_head_hash == recovered.ledger_head_hash
+    with pytest.raises(CostUnverifiedError):
+        recovered.reserve_attempt(
+            call_id="call-2",
+            provider="openai",
+            model="openai-model",
+            model_version="openai-snapshot",
+            phase="judge",
+        )
+
+
 def test_given_unsafe_reconciliation_outcome_when_reconciled_then_it_stops_without_logging_it(
     tmp_path: Path,
 ) -> None:

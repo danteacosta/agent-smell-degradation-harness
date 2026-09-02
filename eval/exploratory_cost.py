@@ -1100,7 +1100,12 @@ class CostLedger:
         if self._events[0].get("configuration_sha256") != self.configuration.configuration_sha256:
             raise CostUnverifiedError("ledger configuration mismatch")
         if terminal_event_pending:
-            raise CostUnverifiedError("ledger validation failed")
+            self._stop(
+                STOPPED_COST_UNVERIFIED,
+                terminal_binding_reason or "ambiguous_in_flight",
+            )
+            terminal_event_pending = False
+            terminal_binding_reason = None
         if terminal_seen and self._pending:
             raise CostUnverifiedError("ledger validation failed")
 
