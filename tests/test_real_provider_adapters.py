@@ -146,6 +146,23 @@ def test_openai_provider_uses_completion_token_parameter_for_current_models() ->
     assert calls[0]["response_format"] == {"type": "json_object"}
 
 
+def test_openai_gpt56_luna_uses_default_temperature() -> None:
+    response = SimpleNamespace(
+        choices=[SimpleNamespace(message=SimpleNamespace(content="{}"))],
+        usage={"input_tokens": 1, "output_tokens": 1},
+    )
+    client, calls = _client(response)
+    provider = OpenAIProvider(
+        api_key="private",
+        model="gpt-5.6-luna",
+        client=client,
+    )
+
+    provider.complete(_request())
+
+    assert "temperature" not in calls[0]
+
+
 def test_deepseek_v4_defaults_to_explicitly_disabled_thinking() -> None:
     response = SimpleNamespace(
         choices=[SimpleNamespace(message=SimpleNamespace(content="{}"))],

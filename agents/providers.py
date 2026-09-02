@@ -223,6 +223,11 @@ class OpenAICompatibleProvider:
             client = OpenAI(**client_kwargs)
         self._client = client
 
+    def _uses_provider_default_temperature(self) -> bool:
+        """GPT-5.6 models currently reject explicit temperature values."""
+
+        return self.name == "openai" and self.model.startswith("gpt-5.6")
+
     def _response_metadata(self, response: Any) -> dict[str, Any]:
         usage = normalize_provider_usage(getattr(response, "usage", None))
         if not usage and isinstance(response, Mapping):
@@ -267,9 +272,10 @@ class OpenAICompatibleProvider:
         request_kwargs: dict[str, Any] = {
             "model": self.model,
             "messages": [{"role": "user", "content": request.prompt}],
-            "temperature": self.temperature,
             "response_format": {"type": "json_object"},
         }
+        if not self._uses_provider_default_temperature():
+            request_kwargs["temperature"] = self.temperature
         if self.name == "openai":
             request_kwargs["max_completion_tokens"] = self.max_tokens
         else:
@@ -297,7 +303,11 @@ class OpenAICompatibleProvider:
             "provider": self.name,
             "model": self.model,
             "base_url": self.base_url,
-            "temperature": self.temperature,
+            "temperature": (
+                None
+                if self._uses_provider_default_temperature()
+                else self.temperature
+            ),
             "max_tokens": self.max_tokens,
             "reasoning_effort": self.reasoning_effort,
             "input_pricing_configured": self._input_usd_per_1k is not None,

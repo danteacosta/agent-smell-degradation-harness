@@ -12,7 +12,8 @@ bounded JSON responses without exposing hidden reasoning?
 
 | Source | Contribution |
 |---|---|
-| [OpenAI GPT-5.4 Mini model page](https://developers.openai.com/api/docs/models/gpt-5.4-mini) | Lists the dated snapshot `gpt-5.4-mini-2026-03-17`, Chat Completions support, and prices of $0.75/M input, $0.075/M cached input, and $4.50/M output. |
+| [OpenAI GPT-5.6 Luna model page](https://developers.openai.com/api/docs/models/gpt-5.6-luna) | Lists `gpt-5.6-luna`, Chat Completions support, supported reasoning efforts, and prices of $0.20/M input, $0.02/M cached input, and $1.20/M output. The page does not currently list a dated snapshot. |
+| [OpenAI latest-model guidance](https://developers.openai.com/api/docs/guides/latest-model) | Recommends GPT-5.6 Luna for efficient, high-volume workloads and documents its supported reasoning effort levels. |
 | [DeepSeek models and pricing](https://api-docs.deepseek.com/quick_start/pricing/) | Lists `deepseek-v4-pro`, the published version `DeepSeek-V4-Pro-0813`, the official OpenAI-compatible base URL, and peak/off-peak V4 prices. |
 | [DeepSeek thinking mode](https://api-docs.deepseek.com/guides/thinking_mode/) | States that thinking is enabled by default, is toggled with `thinking.type`, and returns hidden reasoning in `reasoning_content`; `disabled` selects non-thinking mode. |
 | [DeepSeek Chat Completions API](https://api-docs.deepseek.com/api/create-chat-completion/) | Confirms `max_tokens`, JSON output, and the V4 model identifiers for the OpenAI-compatible endpoint. |
@@ -27,8 +28,13 @@ understate the cap.
 
 | Slot | Model | Published version | Input / cached input / output per 1K USD |
 |---|---|---|---:|
-| OpenAI | `gpt-5.4-mini-2026-03-17` | `gpt-5.4-mini-2026-03-17` | `0.00075 / 0.000075 / 0.0045` |
+| OpenAI | `gpt-5.6-luna` | `gpt-5.6-luna` | `0.0002 / 0.00002 / 0.0012` |
 | DeepSeek | `deepseek-v4-pro` | `DeepSeek-V4-Pro-0813` | `0.00132 / 0.000044 / 0.00396` |
+
+The OpenAI model ID is the current documented identifier and is recorded as
+the resolved version for this smoke. Because the model page does not expose a
+date-stamped snapshot, strict bit-level reproducibility remains a separate
+gate item for advisor/committee approval.
 
 The process-only environment mapping used for the private `.env` was:
 
@@ -49,16 +55,24 @@ and DeepSeek V4's default thinking mode sometimes returned no visible
 disables DeepSeek thinking unless reasoning is requested, and requests JSON
 object output for both providers.
 
-The corrected OpenAI slot passed both clean and smelly RF-04 episodes. DeepSeek
+A first GPT-5.6 Luna attempt then showed that this model rejects an explicit
+`temperature=0.0`. The adapter now uses the provider default for GPT-5.6 and
+records that effective setting in the redacted configuration metadata.
+
+The earlier corrected OpenAI slot passed both clean and smelly RF-04 episodes. DeepSeek
 V4 Flash remained unqualified after two complete smoke attempts: it produced an
 unsupported `atom_type=pattern`, and separately malformed/truncated JSON. The
 V4 Pro candidate was initially unstable: before JSON mode, one complete
 two-episode smoke had one pass and one malformed-JSON failure; after JSON mode,
 one complete attempt had two malformed-JSON failures. A final complete smoke on
 commit `df90b97f3a2338be5be7eaa557521d3370bb9b65` passed both RF-04 variants for
-both providers. This qualifies the selected V4 Pro slot for this minimal smoke
-protocol, while the earlier failures remain useful robustness evidence and do
-not get erased from the private audit trail.
+both providers. The subsequent complete smoke with GPT-5.6 Luna and V4 Pro on
+commit `2258b21bb05c765a225f0a1d7d98e70e68750405` passed both RF-04 variants for
+both providers, measured US$0.00579582, and produced configuration hash
+`47b4752bfba36c95e610c67916d9553646d6f503ef7d080e4146c85fa8074db1`.
+This qualifies both selected slots for this minimal smoke protocol, while the
+earlier failures remain useful robustness evidence and do not get erased from
+the private audit trail.
 
 The project therefore keeps the gate fail-closed: a successful individual
 episode is not converted into a provider qualification when another episode in
@@ -70,17 +84,20 @@ the same smoke fails. The reports are redacted and private:
 - `/private/tmp/native-provider-smoke-20260902-gpt54mini-dsv4pro-jsonmode.json`
 - `/private/tmp/native-provider-smoke-20260902-gpt54mini-dsv4pro-final.json`
 - `/private/tmp/native-provider-smoke-20260902-gpt54mini-dsv4pro-accounted.json`
+- `/private/tmp/native-provider-smoke-20260902-gpt56luna-dsv4pro.json`
+- `/private/tmp/native-provider-smoke-20260902-gpt56luna-dsv4pro-retry.json`
 
 ## Downstream uses
 
 - Use the table above to populate the private native-smoke environment, never
   the tracked example with credentials.
-- Treat the OpenAI slot as smoke-qualified for the tested RF-04 pair only.
-- Keep the provider gate scoped to the selected DeepSeek V4 Pro configuration
-  and archive the current report as the qualification evidence; it contains
-  both variants, runtime-native T1–T3 provenance, usage, measured cost, and the
-  configuration hash. The latest report measured US$0.00827196 for the two
-  providers and remains a smoke qualification, not pre-pilot execution.
+- Treat the GPT-5.6 Luna and DeepSeek V4 Pro slots as smoke-qualified for the
+  tested RF-04 pair only. The latest report contains both variants,
+  runtime-native T1–T3 provenance, usage, measured cost, and the configuration
+  hash; it remains a smoke qualification, not pre-pilot execution.
+- Keep the strict reproducibility gate open until the missing date-stamped
+  OpenAI snapshot issue is resolved or explicitly approved by the advisor or
+  committee.
 - Do not replace the DeepSeek semantic contract with coercion or post-hoc
   repair; that would change the observed provider behavior and weaken the
   leakage-resistant measurement.

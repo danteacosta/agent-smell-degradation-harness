@@ -207,6 +207,7 @@ def _provider_from_spec(
         if kind == "openai"
         else DeepSeekProvider(**kwargs)
     )
+    provider_metadata = provider.configuration_metadata()
     public = {
         "id": str(spec["id"]),
         "kind": kind,
@@ -214,7 +215,7 @@ def _provider_from_spec(
         "model_version": model_version,
         "base_url": provider.base_url,
         "max_tokens": kwargs["max_tokens"],
-        "temperature": kwargs["temperature"],
+        "temperature": provider_metadata["temperature"],
         "reasoning_effort": reasoning_effort,
         "api_key_env": api_key_env,
         "model_env": model_env,
