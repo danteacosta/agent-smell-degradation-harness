@@ -268,10 +268,20 @@ class OpenAICompatibleProvider:
             "model": self.model,
             "messages": [{"role": "user", "content": request.prompt}],
             "temperature": self.temperature,
-            "max_tokens": self.max_tokens,
+            "response_format": {"type": "json_object"},
         }
+        if self.name == "openai":
+            request_kwargs["max_completion_tokens"] = self.max_tokens
+        else:
+            request_kwargs["max_tokens"] = self.max_tokens
         if self.reasoning_effort is not None:
             request_kwargs["reasoning_effort"] = self.reasoning_effort
+        if self.name == "deepseek":
+            request_kwargs["extra_body"] = {
+                "thinking": {
+                    "type": "enabled" if self.reasoning_effort else "disabled"
+                }
+            }
         response = self._client.chat.completions.create(**request_kwargs)
         self.last_call_metadata = self._response_metadata(response)
         content = self._content(response)
