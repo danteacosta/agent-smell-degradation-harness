@@ -10,6 +10,11 @@ import pytest
 
 from eval.exploratory_call_plan import (
     ExploratoryCallPlan,
+    PublicArtifact,
+    PublicBaseTask,
+    PublicEpisode,
+    PublicOccurrence,
+    ReferenceConstraint,
     _PrivateJoin,
     _PrivateProviderConfiguration,
     _opaque_id,
@@ -306,14 +311,20 @@ def test_direct_reference_constraints_reject_duplicate_ids():
         build_exploratory_call_plan(records(), slots(), direct, run_nonce=b"a" * 32)
 
 
-def _direct_plan(*, nonce: object = b"a" * 32, private_join: object = (), private_configurations: object = ()):  # type: ignore[no-untyped-def]
+def _direct_plan(
+    *, nonce: object = b"a" * 32, private_join: object = (), private_configurations: object = (), **public_fields: object
+):  # type: ignore[no-untyped-def]
+    fields: dict[str, object] = {
+        "episodes": (),
+        "artifacts": (),
+        "base_tasks": (),
+        "occurrences": (),
+        "duplicate_occurrences": (),
+        "reference_constraints": (),
+    }
+    fields.update(public_fields)
     return ExploratoryCallPlan(
-        episodes=(),
-        artifacts=(),
-        base_tasks=(),
-        occurrences=(),
-        duplicate_occurrences=(),
-        reference_constraints=(),
+        **fields,  # type: ignore[arg-type]
         _run_nonce=nonce,  # type: ignore[arg-type]
         _private_join=private_join,  # type: ignore[arg-type]
         _private_configurations=private_configurations,  # type: ignore[arg-type]
@@ -351,6 +362,54 @@ def test_direct_plan_construction_rejects_mutable_or_untyped_private_inputs(priv
     field, value = private_input
     with pytest.raises(ValueError, match="private"):
         _direct_plan(**{f"private_{field}": value})
+
+
+@pytest.mark.parametrize(
+    ("field", "record", "expected"),
+    [
+        ("episodes", {"episode_id": "episode"}, (PublicEpisode("episode"),)),
+        ("artifacts", {"artifact_id": "artifact"}, (PublicArtifact("artifact"),)),
+        (
+            "base_tasks",
+            {"base_task_id": "task", "artifact_id": "artifact"},
+            (PublicBaseTask("task", "artifact"),),
+        ),
+        (
+            "occurrences",
+            {"occurrence_id": "occurrence", "base_task_id": "task", "duplicate": False},
+            (PublicOccurrence("occurrence", "task", False),),
+        ),
+        (
+            "duplicate_occurrences",
+            {"occurrence_id": "duplicate", "base_task_id": "task", "duplicate": True},
+            (PublicOccurrence("duplicate", "task", True),),
+        ),
+        (
+            "reference_constraints",
+            {"constraint_id": "constraint", "text": "constraint text"},
+            (ReferenceConstraint("constraint", "constraint text"),),
+        ),
+    ],
+)
+def test_direct_plan_canonicalizes_mutable_public_field_inputs(
+    field: str, record: dict[str, object], expected: tuple[object, ...]
+):
+    records = [record]
+    plan = _direct_plan(**{field: records})
+    record.clear()
+    records.clear()
+
+    assert getattr(plan, field) == expected
+    assert isinstance(getattr(plan, field), tuple)
+
+
+@pytest.mark.parametrize(
+    "field",
+    ["episodes", "artifacts", "base_tasks", "occurrences", "duplicate_occurrences", "reference_constraints"],
+)
+def test_direct_plan_rejects_mapping_instead_of_retaining_mutable_public_field(field: str):
+    with pytest.raises(ValueError, match="public"):
+        _direct_plan(**{field: {"mutable": []}})
 
 
 def test_provider_identity_must_differ_even_when_models_differ(tmp_path: Path):

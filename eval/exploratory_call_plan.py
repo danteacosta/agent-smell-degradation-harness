@@ -81,6 +81,16 @@ class _PrivateProviderConfiguration:
     model_version: str
 
 
+_PUBLIC_FIELD_SPECS = (
+    ("episodes", PublicEpisode, ("episode_id",)),
+    ("artifacts", PublicArtifact, ("artifact_id",)),
+    ("base_tasks", PublicBaseTask, ("base_task_id", "artifact_id")),
+    ("occurrences", PublicOccurrence, ("occurrence_id", "base_task_id", "duplicate")),
+    ("duplicate_occurrences", PublicOccurrence, ("occurrence_id", "base_task_id", "duplicate")),
+    ("reference_constraints", ReferenceConstraint, ("constraint_id", "text")),
+)
+
+
 @dataclass(frozen=True)
 class ExploratoryCallPlan:
     episodes: tuple[PublicEpisode, ...]
@@ -100,6 +110,14 @@ class ExploratoryCallPlan:
         _run_nonce: bytes | None,
         _private_configurations: tuple[_PrivateProviderConfiguration, ...],
     ) -> None:
+        for field_name, record_type, fields in _PUBLIC_FIELD_SPECS:
+            object.__setattr__(
+                self,
+                field_name,
+                _canonicalize_public_records(
+                    getattr(self, field_name), record_type, fields, field_name
+                ),
+            )
         object.__setattr__(self, "_private_join", _freeze_private_records(_private_join, _PrivateJoin, "private join"))
         object.__setattr__(self, "_run_nonce", _validate_run_nonce(_run_nonce))
         object.__setattr__(
@@ -205,6 +223,50 @@ def _freeze_private_records(value: Any, expected_type: type[Any], name: str) -> 
     ):
         raise ValueError(f"{name} must contain only immutable private records")
     return frozen
+
+
+def _canonicalize_public_records(
+    value: Any, expected_type: type[Any], fields: tuple[str, ...], name: str
+) -> tuple[Any, ...]:
+    if isinstance(value, Mapping):
+        raise ValueError(f"public {name} must be an iterable of public records, not a mapping")
+    try:
+        values = tuple(value)
+    except TypeError:
+        raise ValueError(f"public {name} must be an iterable of public records") from None
+
+    canonical: list[Any] = []
+    for item in values:
+        if isinstance(item, Mapping):
+            if set(item) != set(fields):
+                raise ValueError(f"public {name} record fields are invalid")
+            item = expected_type(**{field: item[field] for field in fields})
+        if type(item) is not expected_type:
+            raise ValueError(f"public {name} must contain only immutable public records")
+        _validate_public_record(item, expected_type)
+        canonical.append(item)
+    return tuple(canonical)
+
+
+def _validate_public_record(item: Any, expected_type: type[Any]) -> None:
+    if expected_type is PublicEpisode and type(item.episode_id) is not str:
+        raise ValueError("public episodes must contain only immutable public records")
+    if expected_type is PublicArtifact and type(item.artifact_id) is not str:
+        raise ValueError("public artifacts must contain only immutable public records")
+    if expected_type is PublicBaseTask and any(
+        type(value) is not str for value in (item.base_task_id, item.artifact_id)
+    ):
+        raise ValueError("public base_tasks must contain only immutable public records")
+    if expected_type is PublicOccurrence and (
+        type(item.occurrence_id) is not str
+        or type(item.base_task_id) is not str
+        or type(item.duplicate) is not bool
+    ):
+        raise ValueError("public occurrences must contain only immutable public records")
+    if expected_type is ReferenceConstraint:
+        if type(item.constraint_id) is not str or type(item.text) is not str:
+            raise ValueError("public reference_constraints must contain only immutable public records")
+        _validate_public_constraint_values(item.constraint_id, item.text)
 
 
 def _validate_public_constraint_values(constraint_id: Any, text: Any) -> None:
