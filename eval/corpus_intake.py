@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Iterable, Mapping
@@ -74,6 +75,12 @@ _FROZEN_FIELDS = _CANDIDATE_FIELDS | {
     "freeze_reviewer_id",
     "manifest_sha256",
 }
+_RIGHTS_REVIEW_FIELDS = set(REQUIRED_RIGHTS_ASSERTIONS) | {
+    "reviewer_id",
+    "reviewed_at",
+}
+_MANIPULATION_REVIEW_FIELDS = set(REQUIRED_MANIPULATION_CHECKS) | {"reviewer_id"}
+_SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
 
 class CorpusIntakeError(ValueError):
@@ -327,13 +334,59 @@ def _validate_redacted_record(record: Mapping[str, Any]) -> dict[str, Any]:
     missing = _REDACTED_RECORD_FIELDS - set(record)
     if missing:
         raise CorpusIntakeError("frozen manifest record is not a complete redacted record")
-    if "record_sha256" not in record:
-        raise CorpusIntakeError("frozen manifest record_sha256 is required")
+    _reject_raw_text_injection(record)
+    _required_id(record, "source_intent_id")
+    _required_id(record, "project_id")
+    _required_url(record, "source_url")
+    _required_id(record, "license")
+    _required_url(record, "license_evidence_url")
+    if record["reuse_permission_status"] not in {
+        "license_confirmed",
+        "written_permission",
+    }:
+        raise CorpusIntakeError(
+            "frozen record reuse_permission_status is not confirmed"
+        )
+    _required_id(record, "defect_family")
+    if record["defect_family"] != PRIMARY_DEFECT_FAMILY:
+        raise CorpusIntakeError("frozen record has an unsupported defect family")
+    _required_id(record, "removed_constraint_id")
+    _required_id(record, "near_clone_group")
+    if record["near_clone_reviewed"] is not True:
+        raise CorpusIntakeError("frozen record near_clone_reviewed must be true")
+    _required_timestamp(record, "retrieved_at")
+    rights_review = record.get("rights_review")
+    if not isinstance(rights_review, Mapping) or set(rights_review) != _RIGHTS_REVIEW_FIELDS:
+        raise CorpusIntakeError("frozen record rights_review is incomplete or has unexpected fields")
+    _rights_review(record)
+    manipulation_check = record.get("manipulation_check")
+    if not isinstance(manipulation_check, Mapping) or set(manipulation_check) != _MANIPULATION_REVIEW_FIELDS:
+        raise CorpusIntakeError("frozen record manipulation_check is incomplete or has unexpected fields")
+    _review_checks(record)
+    for field in (*_HASH_FIELDS, "record_sha256"):
+        value = record.get(field)
+        if not isinstance(value, str) or _SHA256_RE.fullmatch(value) is None:
+            raise CorpusIntakeError(f"frozen record {field} must be a lowercase SHA-256 hex digest")
     redacted = dict(record)
     expected = _sha256_json({key: value for key, value in redacted.items() if key != "record_sha256"})
-    if str(redacted["record_sha256"]).lower() != expected:
+    if redacted["record_sha256"] != expected:
         raise CorpusIntakeError("record_sha256 does not match the redacted record")
     return redacted
+
+
+def _reject_raw_text_injection(value: Any) -> None:
+    """Reject raw-text-shaped keys at every nesting level without echoing values."""
+    if isinstance(value, Mapping):
+        for key, nested in value.items():
+            normalized_key = str(key).lower().replace("-", "_")
+            if normalized_key in _RAW_TEXT_FIELDS or (
+                "raw" in normalized_key and "text" in normalized_key
+            ):
+                raise CorpusIntakeError("raw-text-like fields are not allowed in frozen manifests")
+            _reject_raw_text_injection(nested)
+    elif isinstance(value, (list, tuple)):
+        for nested in value:
+            _reject_raw_text_injection(nested)
 
 
 def _validate_freeze_metadata(frozen_at: str, freeze_reviewer_id: str) -> None:

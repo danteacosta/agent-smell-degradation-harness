@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import subprocess
 import sys
@@ -59,6 +60,12 @@ def _record(index: int, *, project: int | None = None) -> dict:
 def _candidate() -> tuple[list[dict], dict]:
     records = [_record(index) for index in range(12)]
     return records, build_redacted_manifest(records)
+
+
+def _rehash_record(record: dict) -> None:
+    unsigned = {key: value for key, value in record.items() if key != "record_sha256"}
+    serialized = json.dumps(unsigned, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    record["record_sha256"] = hashlib.sha256(serialized.encode("utf-8")).hexdigest()
 
 
 def test_validated_candidate_freezes_to_canonical_hash_only_manifest() -> None:
@@ -158,6 +165,79 @@ def test_freeze_rejects_tampered_record_hash_and_duplicate_intent() -> None:
         freeze_validated_manifest(
             duplicate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
         )
+
+
+def test_freeze_rejects_nested_raw_text_injection_without_leaking_value() -> None:
+    _, candidate = _candidate()
+    injected = copy.deepcopy(candidate)
+    secret = "NESTED PRIVATE SOURCE SECRET"
+    injected["records"][0]["rights_review"]["audit"] = {"raw_text": secret}
+    _rehash_record(injected["records"][0])
+
+    with pytest.raises(CorpusIntakeError, match="raw|redacted") as error:
+        freeze_validated_manifest(
+            injected, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+        )
+    assert secret not in str(error.value)
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        lambda row: row["rights_review"].update(
+            {"redistribution_allowed": False}
+        ),
+        lambda row: row["rights_review"].pop("reviewer_id"),
+        lambda row: row["manipulation_check"].update({"defect_present": False}),
+        lambda row: row["manipulation_check"].pop("reviewer_id"),
+    ],
+)
+def test_freeze_rejects_false_or_incomplete_nested_reviews(mutation) -> None:
+    _, candidate = _candidate()
+    invalid = copy.deepcopy(candidate)
+    mutation(invalid["records"][0])
+    _rehash_record(invalid["records"][0])
+
+    with pytest.raises(CorpusIntakeError):
+        freeze_validated_manifest(
+            invalid, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+        )
+
+
+@pytest.mark.parametrize(
+    "field", ["canonical_text_sha256", "clean_requirement_sha256", "defective_requirement_sha256"]
+)
+def test_freeze_rejects_malformed_source_hashes(field: str) -> None:
+    _, candidate = _candidate()
+    invalid = copy.deepcopy(candidate)
+    invalid["records"][0][field] = "not-a-sha256"
+    _rehash_record(invalid["records"][0])
+
+    with pytest.raises(CorpusIntakeError, match="SHA-256|hash"):
+        freeze_validated_manifest(
+            invalid, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+        )
+
+
+@pytest.mark.parametrize(
+    "nested_field",
+    [
+        ("rights_review", "extra_nested_field"),
+        ("manipulation_check", "extra_nested_field"),
+    ],
+)
+def test_freeze_rejects_extra_nested_review_fields(nested_field: tuple[str, str]) -> None:
+    _, candidate = _candidate()
+    invalid = copy.deepcopy(candidate)
+    review_name, field = nested_field
+    invalid["records"][0][review_name][field] = "must not be exported"
+    _rehash_record(invalid["records"][0])
+
+    with pytest.raises(CorpusIntakeError, match="unexpected|allowlist|redacted") as error:
+        freeze_validated_manifest(
+            invalid, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+        )
+    assert "must not be exported" not in str(error.value)
 
 
 def test_private_records_join_against_frozen_manifest_without_raw_text() -> None:
