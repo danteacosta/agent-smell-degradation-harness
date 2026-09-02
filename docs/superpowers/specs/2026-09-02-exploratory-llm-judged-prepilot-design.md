@@ -76,11 +76,13 @@ counts for one complete exploratory run are:
 | --- | ---: | --- |
 | Base episodes | 120 | Frozen study cells before provider assignment |
 | Generation artifacts | 240 | 120 episodes for each of the two provider configurations |
+| Generation API calls | 720 | 240 runtime-native episodes × T1, T2, and artifact calls; T3 is deterministic |
 | Base tasks selected for duplication | 48 | Exactly 20% of the 240 base tasks, selected before judging |
 | Judging occurrences per judge | 288 | 240 originals + 48 duplicate occurrences |
 | Logical judging calls | 576 | 288 occurrences × 2 judges |
-| Logical provider calls | 816 | 240 generation + 576 judging |
-| Maximum attempts per logical call | 2 | Initial attempt plus at most one bounded retry |
+| Logical operations | 816 | 240 composite generation episodes + 576 judging calls |
+| Provider API calls | 1,296 | 720 generation calls + 576 judging calls |
+| Maximum attempts per provider API call | 2 | Initial attempt plus at most one bounded retry |
 
 The private join uses independent identifiers: `episode_id` identifies a study
 cell; `artifact_id` identifies one provider output; `base_task_id` identifies
@@ -179,6 +181,10 @@ prompt.
 The existing runtime-native generation path remains the source of provider
 evidence. The canonical configurations are OpenAI `gpt-5.6-luna` and
 DeepSeek `deepseek-v4-pro` with their recorded immutable version identifiers.
+Each runtime-native generation episode has three provider calls — T1
+interpretation, T2 plan, and terminal artifact — plus deterministic T3
+validation. A failure in any stage after its single retry makes that episode's
+artifact unavailable and transitions the run to `incomplete_generation`.
 The judge matrix is cross-provider: each eligible generated artifact is sent
 to both judge configurations, with provider/model metadata removed from the
 judge payload. Raw responses stay in private evidence storage; the public
@@ -218,8 +224,8 @@ The private cost ledger is the single authority for generation, judging,
 duplicates, retries, and contingency. Before each attempt it reserves a
 conservative upper bound computed from the configured input-token bound,
 maximum output tokens, immutable prices, and the remaining attempt count. A
-preflight calculation must show that all 816 logical calls at two attempts
-each fit below the US$1.00 cap. After each response the actual usage and cost
+preflight calculation must show that all 1,296 provider API calls at two
+attempts each fit below the US$1.00 cap. After each response the actual usage and cost
 are reconciled; reservations are not allowed to release money back into a
 later call if that would violate the worst-case guarantee. The cap is total,
 not per provider or per item.
@@ -258,7 +264,7 @@ The state machine is explicit:
 `generating` → generation attempts in progress;
 `judging` → all 240 artifacts and the 48-item duplicate selection are frozen;
 
-`completed` → all 816 logical calls were attempted or resolved and every
+`completed` → all 1,296 provider API calls were attempted or resolved and every
 charge reconciled;
 `completed_with_uncertainty` → the plan completed but one or more item-level
 failures produced `uncertain`;
@@ -334,7 +340,8 @@ The block has this minimum shape and no authority over `go_no_go`:
   "corpus_manifest_sha256": "",
   "configuration_sha256": null,
   "judge_rubric_sha256": "",
-  "expected_logical_provider_calls": 816,
+  "expected_logical_operations": 816,
+  "expected_provider_api_calls": 1296,
   "max_total_cost_usd": 1.0,
   "disagreement_policy": "uncertain_no_forced_adjudication",
   "human_annotation_substitute": false,
@@ -361,7 +368,8 @@ populate them with exact SHA-256 values or be classified as blocked.
 3. **Call-plan completeness:** Given an admitted 12-intent corpus, when the
    run is preflighted, then it declares 240 generation artifacts, 48 selected
    base tasks, 288 occurrences per judge, 576 judging calls, 816 logical
-   provider calls, and a two-attempt upper bound before network activity.
+   operations, 1,296 provider API calls, and a two-attempt upper bound before
+   network activity.
 4. **Cross-judging:** Given an eligible artifact, when both providers judge
    it, then the report records both independent outcomes and their metadata,
    without exposing the provider identity to either judge.
