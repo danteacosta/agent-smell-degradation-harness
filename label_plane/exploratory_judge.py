@@ -101,14 +101,28 @@ class ConsolidatedJudgment:
 def _reject_private_metadata(value: Any) -> None:
     if isinstance(value, Mapping):
         for key, nested in value.items():
-            if str(key).strip().lower() in _FORBIDDEN_KEYS:
+            key_text = str(key).strip().lower()
+            if key_text in _FORBIDDEN_KEYS or any(
+                forbidden.casefold() in key_text.casefold() for forbidden in _FORBIDDEN_VALUES
+            ):
                 raise ValueError("judge payload contains forbidden metadata")
             _reject_private_metadata(nested)
     elif isinstance(value, (list, tuple)):
         for nested in value:
             _reject_private_metadata(nested)
-    elif isinstance(value, str) and value in _FORBIDDEN_VALUES:
-        raise ValueError("judge payload contains forbidden metadata")
+    elif isinstance(value, str):
+        normalized = value.casefold()
+        if any(forbidden.casefold() in normalized for forbidden in _FORBIDDEN_VALUES):
+            raise ValueError("judge payload contains forbidden metadata")
+
+
+def _reject_duplicate_json_object_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    payload: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in payload:
+            raise ValueError("judge response contains duplicate object keys")
+        payload[key] = value
+    return payload
 
 
 def _bounded_text(value: Any, *, maximum: int, required: bool = True) -> str:
@@ -198,11 +212,12 @@ def parse_judge_response(raw: str | bytes, request: JudgeRequest) -> JudgeRespon
 
     validated_request = validate_judge_request(request)
     try:
-        payload = json.loads(raw)
+        payload = json.loads(raw, object_pairs_hook=_reject_duplicate_json_object_keys)
     except (TypeError, ValueError, json.JSONDecodeError) as exc:
         raise ValueError("judge response is not valid JSON") from exc
     if not isinstance(payload, Mapping) or set(payload) != _RESPONSE_FIELDS:
         raise ValueError("judge response has an invalid field set")
+    _reject_private_metadata(payload)
     if (
         payload["schema_version"] != JUDGE_SCHEMA_VERSION
         or payload["occurrence_id"] != validated_request.occurrence_id
@@ -245,7 +260,7 @@ def parse_judge_response(raw: str | bytes, request: JudgeRequest) -> JudgeRespon
         raise ValueError("judge response contains invalid confidence")
     rationale = _bounded_text(payload["rationale"], maximum=_MAX_RATIONALE)
     evidence = _bounded_text(payload["evidence"], maximum=_MAX_EVIDENCE, required=False)
-    return JudgeResponse(
+    parsed_response = JudgeResponse(
         validated_request.occurrence_id,
         payload["label"],
         tuple(parsed),
@@ -253,20 +268,75 @@ def parse_judge_response(raw: str | bytes, request: JudgeRequest) -> JudgeRespon
         rationale,
         evidence,
     )
+    _validate_judge_response(parsed_response)
+    return parsed_response
+
+
+def _validate_judge_response(response: JudgeResponse) -> JudgeResponse:
+    if not isinstance(response, JudgeResponse):
+        raise ValueError("consolidation requires two validated judge responses")
+    if response.schema_version != JUDGE_SCHEMA_VERSION:
+        raise ValueError("judge response has an unsupported schema")
+    occurrence_id = _opaque_id(response.occurrence_id, occurrence=True)
+    if not isinstance(response.label, str) or response.label not in _LABELS:
+        raise ValueError("judge response contains an invalid label")
+    assessments = response.constraint_assessments
+    if not isinstance(assessments, tuple) or not assessments:
+        raise ValueError("judge response has an invalid constraint cardinality")
+    assessment_ids: set[str] = set()
+    for assessment in assessments:
+        if not isinstance(assessment, ConstraintAssessment):
+            raise ValueError("judge response contains an invalid assessment")
+        identifier = _opaque_id(assessment.constraint_id)
+        if identifier in assessment_ids:
+            raise ValueError("judge response contains invalid or duplicate constraint IDs")
+        assessment_ids.add(identifier)
+        if not isinstance(assessment.status, str) or assessment.status not in _STATUSES:
+            raise ValueError("judge response contains an invalid constraint status")
+        _bounded_text(assessment.evidence, maximum=_MAX_EVIDENCE, required=False)
+    confidence = response.confidence
+    if (
+        isinstance(confidence, bool)
+        or not isinstance(confidence, (int, float))
+        or not math.isfinite(confidence)
+        or not 0 <= confidence <= 1
+    ):
+        raise ValueError("judge response contains invalid confidence")
+    rationale = _bounded_text(response.rationale, maximum=_MAX_RATIONALE)
+    evidence = _bounded_text(response.evidence, maximum=_MAX_EVIDENCE, required=False)
+    _reject_private_metadata(
+        {
+            "schema_version": response.schema_version,
+            "occurrence_id": occurrence_id,
+            "label": response.label,
+            "constraint_assessments": [
+                {
+                    "constraint_id": assessment.constraint_id,
+                    "status": assessment.status,
+                    "evidence": assessment.evidence,
+                }
+                for assessment in assessments
+            ],
+            "confidence": confidence,
+            "rationale": rationale,
+            "evidence": evidence,
+        }
+    )
+    return response
 
 
 def consolidate_two_judges(first: JudgeResponse, second: JudgeResponse) -> ConsolidatedJudgment:
-    if not isinstance(first, JudgeResponse) or not isinstance(second, JudgeResponse):
-        raise ValueError("consolidation requires two validated judge responses")
+    first = _validate_judge_response(first)
+    second = _validate_judge_response(second)
     if (
         first.schema_version != JUDGE_SCHEMA_VERSION
         or second.schema_version != JUDGE_SCHEMA_VERSION
         or first.occurrence_id != second.occurrence_id
     ):
         raise ValueError("judge responses do not match")
-    if tuple(item.constraint_id for item in first.constraint_assessments) != tuple(
-        item.constraint_id for item in second.constraint_assessments
-    ):
+    first_ids = {item.constraint_id for item in first.constraint_assessments}
+    second_ids = {item.constraint_id for item in second.constraint_assessments}
+    if first_ids != second_ids:
         raise ValueError("judge responses do not match")
     agrees = first.label == second.label
     return ConsolidatedJudgment(first.occurrence_id, first.label if agrees else "uncertain", agrees)

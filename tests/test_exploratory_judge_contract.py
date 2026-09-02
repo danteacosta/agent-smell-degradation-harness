@@ -4,7 +4,9 @@ from dataclasses import FrozenInstanceError
 import pytest
 
 from label_plane.exploratory_judge import (
+    ConstraintAssessment,
     JUDGE_SCHEMA_VERSION,
+    JudgeResponse,
     JudgeRequest,
     ReferenceConstraint,
     build_judge_prompt,
@@ -106,6 +108,95 @@ def test_parser_rejects_invalid_json_and_does_not_echo_private_values():
     with pytest.raises(ValueError) as error:
         parse_judge_response("not-json incompleteness_missing_condition", request())
     assert "incompleteness_missing_condition" not in str(error.value)
+
+
+def test_private_target_token_is_rejected_when_embedded_case_insensitively():
+    payload = serialize_judge_request(request())
+    payload["generated_acceptance_criteria"] = (
+        "The visible criteria contain InCompleteness_Missing_Condition as an embedded token."
+    )
+    with pytest.raises(ValueError) as error:
+        validate_judge_request(payload)
+    assert "incompleteness_missing_condition" not in str(error.value).casefold()
+
+
+def test_parser_rejects_duplicate_json_object_keys():
+    raw = json.dumps(response()).replace(
+        '"label": "moderate",', '"label": "moderate", "label": "moderate",', 1
+    )
+    with pytest.raises(ValueError):
+        parse_judge_response(raw, request())
+
+
+def test_consolidation_treats_assessment_order_as_irrelevant():
+    first = parse_judge_response(json.dumps(response()), request())
+    reordered = parse_judge_response(
+        json.dumps(response(constraint_ids=["c-opaque-b", "c-opaque-a"])), request()
+    )
+
+    result = consolidate_two_judges(first, reordered)
+
+    assert result.label == "moderate"
+    assert result.consensus is True
+
+
+def direct_response(*assessments, **overrides):
+    values = {
+        "occurrence_id": "occ-opaque-17",
+        "label": "moderate",
+        "constraint_assessments": assessments
+        or (
+            ConstraintAssessment("c-opaque-a", "covered", "status is shown"),
+            ConstraintAssessment("c-opaque-b", "covered", "delay is determined"),
+        ),
+        "confidence": 0.75,
+        "rationale": "The criteria operationalize the supplied constraints.",
+        "evidence": "The output states the observable status behavior.",
+    }
+    values.update(overrides)
+    return JudgeResponse(**values)
+
+
+@pytest.mark.parametrize(
+    "candidate",
+    [
+        direct_response(schema_version="wrong/v1"),
+        direct_response(occurrence_id=""),
+        direct_response(label="smelly"),
+        direct_response(label=[]),
+        direct_response(confidence=float("nan")),
+        direct_response(confidence=float("inf")),
+        direct_response(confidence=-0.1),
+        direct_response(confidence=1.1),
+        direct_response(rationale="x" * 10001),
+        direct_response(evidence="x" * 2001),
+        direct_response(constraint_assessments=()),
+        direct_response(
+            ConstraintAssessment("c-opaque-a", "covered", "status is shown"),
+            ConstraintAssessment("c-opaque-a", "covered", "status is shown twice"),
+        ),
+        direct_response(ConstraintAssessment("", "covered", "status is shown")),
+        direct_response(ConstraintAssessment("not valid", "covered", "status is shown")),
+        direct_response(ConstraintAssessment("c-opaque-a", "unknown", "status is shown")),
+        direct_response(ConstraintAssessment("c-opaque-a", [], "status is shown")),
+        direct_response(ConstraintAssessment("c-opaque-a", "covered", None)),
+    ],
+)
+def test_consolidation_validates_directly_constructed_responses(candidate):
+    valid = direct_response()
+
+    with pytest.raises(ValueError):
+        consolidate_two_judges(candidate, valid)
+
+
+def test_consolidation_rejects_assessment_id_sets_that_do_not_match():
+    first = direct_response()
+    missing = direct_response(
+        ConstraintAssessment("c-opaque-a", "covered", "status is shown")
+    )
+
+    with pytest.raises(ValueError):
+        consolidate_two_judges(first, missing)
 
 
 def test_exact_agreement_is_consensus_and_disagreement_is_uncertain():
