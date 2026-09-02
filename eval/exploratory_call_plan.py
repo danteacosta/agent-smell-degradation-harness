@@ -7,7 +7,7 @@ import hashlib
 import hmac
 import json
 import secrets
-from dataclasses import dataclass
+from dataclasses import InitVar, dataclass
 from pathlib import Path
 from random import Random
 from typing import Any, Iterable, Mapping
@@ -82,8 +82,16 @@ class ExploratoryCallPlan:
     duplicate_occurrences: tuple[PublicOccurrence, ...]
     reference_constraints: tuple[ReferenceConstraint, ...]
     max_attempts_per_api_call: int = 2
-    _private_join: tuple[_PrivateJoin, ...] = ()
-    _run_nonce: bytes = b""
+    _private_join: InitVar[tuple[_PrivateJoin, ...]] = ()
+    _run_nonce: InitVar[bytes] = b""
+
+    def __post_init__(
+        self,
+        _private_join: tuple[_PrivateJoin, ...],
+        _run_nonce: bytes,
+    ) -> None:
+        object.__setattr__(self, "_private_join", _private_join)
+        object.__setattr__(self, "_run_nonce", _run_nonce)
 
     @property
     def duplicate_base_task_count(self) -> int:

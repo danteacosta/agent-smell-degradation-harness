@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from dataclasses import asdict, astuple
 from pathlib import Path
 
 import pytest
@@ -53,6 +54,25 @@ def write_constraints(path: Path, count: int = 12) -> None:
         ),
         encoding="utf-8",
     )
+
+
+def _representation_exposes_private_metadata(value: object, run_nonce: bytes) -> bool:
+    rendered = repr(value)
+    private_markers = (
+        "_private_join",
+        "_run_nonce",
+        "source_intent_id",
+        "provider_slot_id",
+        "variant_index",
+        "replication_index",
+        "intent-",
+        "provider-a",
+        "provider-b",
+        "slot-a",
+        "slot-b",
+        run_nonce.decode("ascii"),
+    )
+    return any(marker in rendered for marker in private_markers)
 
 
 def test_plan_has_exact_episode_artifact_task_and_operation_counts(tmp_path: Path):
@@ -130,6 +150,29 @@ def test_public_serialization_has_no_hidden_metadata_and_nonce_is_fresh(tmp_path
     assert public["duplicate_seed"] == 0
     assert all(token not in serialized for token in ("intent-", "slot-a", "slot-b", "variant", "provider", "replication"))
     assert all(set(item) == {"constraint_id", "text"} for item in public["reference_constraints"])
+
+
+def test_generic_plan_representations_do_not_expose_private_metadata(tmp_path: Path):
+    path = tmp_path / "constraints.json"
+    write_constraints(path)
+    run_nonce = b"0123456789abcdef0123456789abcdef"
+    plan = build_exploratory_call_plan(records(), slots(), load_reference_constraints(path), run_nonce=run_nonce)
+
+    assert not _representation_exposes_private_metadata(plan, run_nonce), (
+        "plan representation exposed private exploratory metadata"
+    )
+    assert not _representation_exposes_private_metadata(asdict(plan), run_nonce), (
+        "plan asdict exposed private exploratory metadata"
+    )
+    assert not _representation_exposes_private_metadata(astuple(plan), run_nonce), (
+        "plan astuple exposed private exploratory metadata"
+    )
+    assert not _representation_exposes_private_metadata(plan.to_public_dict(), run_nonce), (
+        "plan public dict exposed private exploratory metadata"
+    )
+
+    assert plan._private_join
+    assert plan._run_nonce == run_nonce
 
 
 def test_reference_constraints_require_exact_unique_intent_coverage(tmp_path: Path):
