@@ -8,7 +8,7 @@ confirmatory evidence.
 
 | Gate | Evidence already in the repository | Count/status now | Next owner |
 |---|---|---:|---|
-| Main synchronization | Context-management PR content is in merge commit \`9d0b5bc\`; the three required checks passed | 1 synchronized main state at `e2b5f17` | engineering |
+| Main synchronization | Real-provider pre-pilot gates are in merge commit \`e2b5f17\`; \`eval-gate\`, \`constraint-replay-gate\`, and \`wedge-check\` passed on the reviewed PR head | 1 synchronized main state at `e2b5f17` | engineering |
 | Corpus | Seven checked-in seed records; private redacted-intake validator added | 7/12 unique intents; 0 admitted confirmatory records | researcher + advisor |
 | Providers | OpenAI-compatible adapter, DeepSeek adapter, usage/cost propagation, and native smoke CLI | 0/2 runtime-native configurations qualified | operator |
 | Annotation | Frozen \`tasks/annotation_rubric.json\`; duplicate selection and blinded packet CLI | 0/2 trained annotators; 0 adjudicated items | advisor + annotators |
