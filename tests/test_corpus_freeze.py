@@ -183,6 +183,18 @@ def test_freeze_rejects_self_consistent_whitespace_variant() -> None:
         )
 
 
+def test_private_join_rejects_noncanonical_row_with_recomputed_manifest_hash() -> None:
+    records, candidate = _candidate()
+    frozen = freeze_validated_manifest(
+        candidate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+    )
+    frozen["records"][0]["source_intent_id"] = " source-00 "
+    _rehash_manifest(frozen)
+
+    with pytest.raises(CorpusIntakeError, match="canonical|normalized"):
+        validate_private_records_against_frozen_manifest(records, frozen)
+
+
 @pytest.mark.parametrize("review_name", ["rights_review", "manipulation_check"])
 @pytest.mark.parametrize("reviewer_id", [None, 123])
 def test_candidate_rejects_non_string_nested_reviewer_ids(

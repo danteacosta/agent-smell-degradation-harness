@@ -546,10 +546,6 @@ def validate_private_records_against_frozen_manifest(
         frozen_manifest.get("frozen_at", ""),
         frozen_manifest.get("freeze_reviewer_id", ""),
     )
-    expected_hash = frozen_manifest.get("manifest_sha256")
-    unsigned = {key: value for key, value in frozen_manifest.items() if key != "manifest_sha256"}
-    if not isinstance(expected_hash, str) or expected_hash != _sha256_json(unsigned):
-        raise CorpusIntakeError("manifest_sha256 does not match the frozen manifest")
     if type(frozen_manifest.get("expected_intents")) is not int or frozen_manifest.get("expected_intents") != 12:
         raise CorpusIntakeError("frozen manifest expected_intents must be 12")
     if (
@@ -580,6 +576,31 @@ def validate_private_records_against_frozen_manifest(
         raise CorpusIntakeError("frozen manifest unique_intent_count is inconsistent")
     if frozen_manifest.get("project_count") != len(frozen_project_ids):
         raise CorpusIntakeError("frozen manifest project_count is inconsistent")
+    canonical_unsigned = {
+        "schema_version": frozen_manifest["schema_version"],
+        "status": frozen_manifest["status"],
+        "record_count": frozen_manifest["record_count"],
+        "unique_intent_count": frozen_manifest["unique_intent_count"],
+        "project_count": frozen_manifest["project_count"],
+        "minimum_projects": frozen_manifest["minimum_projects"],
+        "expected_intents": frozen_manifest["expected_intents"],
+        "raw_text_exported": frozen_manifest["raw_text_exported"],
+        "frozen_at": frozen_manifest["frozen_at"],
+        "freeze_reviewer_id": frozen_manifest["freeze_reviewer_id"],
+        "records": sorted(
+            frozen_rows, key=lambda row: str(row["source_intent_id"])
+        ),
+    }
+    unsigned = {
+        key: value
+        for key, value in frozen_manifest.items()
+        if key != "manifest_sha256"
+    }
+    if unsigned != canonical_unsigned:
+        raise CorpusIntakeError("frozen manifest is not in canonical normalized form")
+    expected_hash = frozen_manifest.get("manifest_sha256")
+    if not isinstance(expected_hash, str) or expected_hash != _sha256_json(canonical_unsigned):
+        raise CorpusIntakeError("manifest_sha256 does not match the canonical frozen manifest")
     normalized = build_redacted_manifest(
         records,
         expected_intents=int(frozen_manifest["expected_intents"]),
