@@ -15,7 +15,7 @@
 Create or modify only the following scoped files:
 
 - `eval/corpus_intake.py` — add the explicit validated-candidate → frozen-manifest transition and private-record/hash verification; preserve the existing candidate validator.
-- `scripts/freeze_corpus_manifest.py` — secret-free CLI for freezing a validated redacted candidate manifest.
+- `scripts/freeze_corpus_manifest.py` — secret-free CLI for freezing a validated redacted candidate manifest into the one canonical repository path.
 - `tests/test_corpus_freeze.py` — corpus freeze, rights, hash, and raw-text non-disclosure behavior.
 - `tasks/acceptance_criteria_llm_judge_rubric.json` — frozen exploratory judge labels, fields, bounds, and constraint-assessment statuses.
 - `label_plane/exploratory_judge.py` — request/response schema, blinded prompt, strict parser, and two-judge conservative consolidation.
@@ -62,7 +62,7 @@ Add `validate_private_records_against_frozen_manifest(records, frozen_manifest)`
 
 - [ ] **Step 3: Add the secret-free freeze CLI.**
 
-Implement `scripts/freeze_corpus_manifest.py` with `--candidate`, `--output`, `--frozen-at`, and `--freeze-reviewer-id`. Reject output inside the repository if the command would contain raw input; write only the redacted frozen manifest and print counts, status, and hash.
+Implement `scripts/freeze_corpus_manifest.py` with `--candidate`, `--frozen-at`, and `--freeze-reviewer-id`. The output is always exactly `repository_root/data/prepilot/corpus-manifest.json`; do not accept an alternate frozen-manifest destination. The candidate may be private or outside the repository, but the output contains only the redacted frozen manifest and prints counts, status, and hash.
 
 - [ ] **Step 4: Run the focused tests.**
 
@@ -182,11 +182,11 @@ Expected: FAIL because the ledger does not exist.
 
 - [ ] **Step 2: Implement pricing and reservation primitives.**
 
-Use the checked-in provider-selection evidence as the price source, but copy exact rates into the private run configuration. Do not perform a live price lookup. Compute ceilings from declared input/output token bounds and frozen prices; use an append-only JSONL ledger with a monotonic sequence and atomic line append.
+Use the checked-in provider-selection evidence as the price source, but copy exact rates into the private run configuration. Do not perform a live price lookup. Compute ceilings from declared input/output token bounds and frozen prices; use an append-only JSONL ledger with a monotonic sequence and atomic line append. The report must expose `direct_expected_cost_usd`, `retry_inclusive_worst_case_usd`, `contingency_reserve_usd`, `approved_cap_usd`, `unused_headroom_usd`, and `budget_status`. `contingency_reserve_usd` is inside the US$1.00 cap, and a reservation that would exceed the cap maps to `stopped_budget_exhausted` before the provider call.
 
 - [ ] **Step 3: Implement the budgeted provider wrapper.**
 
-Wrap the existing `Provider` protocol. Before delegating, reserve the attempt. After delegating, read only bounded usage/cost metadata, reconcile the reservation, and re-raise the provider error after recording its safe class. Keep provider-specific generation behavior in the existing adapters.
+Wrap the existing `Provider` protocol. Before delegating, reserve the attempt. After delegating, read only bounded usage/cost metadata, reconcile the reservation, and re-raise the provider error after recording its safe class. Keep provider-specific generation behavior in the existing adapters. The ledger uses integer micro-US-dollars and a hash chain: each canonical event is hashed with the previous event hash, and the current `ledger_head_hash` is written into every atomic checkpoint and the final report.
 
 - [ ] **Step 4: Run tests and commit.**
 
@@ -219,7 +219,7 @@ Support explicit non-secret model/version/pricing values and environment-resolve
 
 - [ ] **Step 3: Add the secret-free exploratory example.**
 
-Declare stage `exploratory_llm_judged_pre_pilot`, task family `test_gen`, primary condition `no_compaction`, two provider slots, `max_total_cost_usd: 1.0`, `max_attempts_per_api_call: 2`, duplicate fraction `0.2`, duplicate seed `0`, and conservative token bounds. Include `pricing_source_ref` and a dated price snapshot, but no key values.
+Declare stage `exploratory_llm_judged_pre_pilot`, task family `test_gen`, primary condition `no_compaction`, two provider slots, `max_total_cost_usd: 1.0`, `max_attempts_per_api_call: 2`, duplicate fraction `0.2`, duplicate seed `0`, and conservative token bounds. Include `pricing_source_ref` and a dated price snapshot, but no key values. Freeze `generation_prompt_template_sha256`, `judge_prompt_template_sha256`, `generation_output_schema_sha256`, `judge_response_schema_sha256`, `rubric_sha256`, `temperature` (explicitly `0.0` or `null` where the provider default is part of the frozen config), `reasoning_effort`, model snapshots, and source revision. Per-call prompt hashes are recorded in private evidence and the template hashes are part of the configuration hash.
 
 - [ ] **Step 4: Run tests and commit.**
 
@@ -260,7 +260,7 @@ Expected: FAIL because the runner does not exist.
 
 - [ ] **Step 2: Implement preflight and private-input normalization.**
 
-Require `--private-corpus`, `--frozen-manifest`, and `--reference-constraints`. Load private records, verify them against the frozen redacted manifest, require per-record `generation_contract.test_gen.output_keys`, and construct a private normalized pair without exporting source text.
+Require `--private-corpus` and `--reference-constraints`; resolve the frozen manifest only from the exact canonical path `repository_root/data/prepilot/corpus-manifest.json` and reject any override or substitute. Load private records, verify them against the frozen redacted manifest, require per-record `generation_contract.test_gen.output_keys`, and construct a private normalized pair without exporting source text.
 
 - [ ] **Step 3: Implement the generation phase.**
 
@@ -272,7 +272,7 @@ After all 240 artifacts exist, select the 48 base tasks with the frozen seed, cr
 
 - [ ] **Step 5: Implement report/state output and the safe CLI.**
 
-Add `--config`, `--env-file`, `--output`, `--private-corpus`, `--frozen-manifest`, `--reference-constraints`, `--dry-run`, and an explicit live-run confirmation flag. Enforce output outside the repository. Load the env file with the existing secret-safe parser; do not print or upload its contents. Return exit 0 for a completed exploratory report, a nonzero code for blocked/partial terminal states, and never alter official readiness automatically.
+Add `--config`, `--env-file`, `--output`, `--private-corpus`, `--reference-constraints`, `--dry-run`, and an explicit live-run confirmation flag. Do not expose a frozen-manifest override. Before any call capture `git rev-parse HEAD` as the immutable `source_revision`; include it in the run manifest and hash it into the resume identity. Enforce output outside the repository. Load the env file with the existing secret-safe parser; do not print or upload its contents. Return exit 0 for a completed exploratory report, a nonzero code for blocked/partial terminal states, and never alter official readiness automatically.
 
 - [ ] **Step 6: Run focused tests and commit.**
 
@@ -333,7 +333,13 @@ Use the explicit two-provider config and the existing private env file with `PAN
 
 - [ ] **Step 4: Update Google Drive before live execution.**
 
-Using the connected Google Drive/Docs workflow, update the three identified documents with: advisor authorization reported for this exploratory mode; LLM judges are not human annotators; no forced adjudication; the $1.00 total cap; the still-pending corpus/rights/ethics distinctions; and the fact that official readiness remains `no_go`. Re-read each document and verify the new revision/paragraphs.
+Using the connected Google Drive/Docs workflow, update these exact documents with: advisor authorization reported for this exploratory mode; LLM judges are not human annotators; no forced adjudication; the $1.00 total cap; the still-pending corpus/rights/ethics distinctions; and the fact that official readiness remains `no_go`.
+
+1. `Requirements-smell Discovery Experiments: v8 Natural Screening` — document ID `1CYXDFRotj-01qyTpJrY00LnUE2sb06255l1V6W9e9vs` — owner: research-method status and corpus gate.
+2. `Requirements-smell Discovery Experiments: Description, Evidence, Results, and Verifier Evaluation` — document ID `1wSv-khPmRusFKwk4PO02qmbY6eg1MTjJ0QGHTlZuzuI` — owner: evidence interpretation and claim boundary.
+3. `Proposta de Mestrado` — document ID `1sio6UiAciypbKGu7mbs8nlQJv2xvc3t888SvaShmB2w` — owner: thesis-method summary and advisor authorization record.
+
+The assistant may write only redacted methodological/status facts. The researcher must supply or confirm any advisor identity, date, ethics determination, or data-rights fact; none may be invented. Re-read each document and verify the new revision/paragraphs.
 
 - [ ] **Step 5: Execute the live run only when preflight passes.**
 
@@ -345,7 +351,7 @@ Verify the private raw bundle, redacted report, call counts, configuration/rubri
 
 - [ ] **Step 7: Update the launch plan and Google Drive with actual evidence.**
 
-Write only redacted status, hashes, counts, cost, and report references into the exploratory block and documents. Preserve the official confirmatory fields. Re-read the documents and run the isolation test again.
+Write only redacted status, hashes, counts, cost, and report references into the exploratory block and the three named documents. Preserve the official confirmatory fields. Re-read the documents and run the isolation test again.
 
 - [ ] **Step 8: Run the final verification commands.**
 
