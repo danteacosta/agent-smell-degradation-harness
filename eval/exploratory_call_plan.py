@@ -91,18 +91,26 @@ class ExploratoryCallPlan:
     reference_constraints: tuple[ReferenceConstraint, ...]
     max_attempts_per_api_call: int = 2
     _private_join: InitVar[tuple[_PrivateJoin, ...]] = ()
-    _run_nonce: InitVar[bytes] = b""
+    _run_nonce: InitVar[bytes | None] = None
     _private_configurations: InitVar[tuple[_PrivateProviderConfiguration, ...]] = ()
 
     def __post_init__(
         self,
         _private_join: tuple[_PrivateJoin, ...],
-        _run_nonce: bytes,
+        _run_nonce: bytes | None,
         _private_configurations: tuple[_PrivateProviderConfiguration, ...],
     ) -> None:
-        object.__setattr__(self, "_private_join", _private_join)
-        object.__setattr__(self, "_run_nonce", _run_nonce)
-        object.__setattr__(self, "_private_configurations", _private_configurations)
+        object.__setattr__(self, "_private_join", _freeze_private_records(_private_join, _PrivateJoin, "private join"))
+        object.__setattr__(self, "_run_nonce", _validate_run_nonce(_run_nonce))
+        object.__setattr__(
+            self,
+            "_private_configurations",
+            _freeze_private_records(
+                _private_configurations,
+                _PrivateProviderConfiguration,
+                "private provider configurations",
+            ),
+        )
 
     @property
     def duplicate_base_task_count(self) -> int:
@@ -164,6 +172,39 @@ def _occurrence_id(nonce: bytes, base_task_id: str, index: int) -> str:
     message = _canonical_field("occurrence") + _canonical_field(base_task_id) + _canonical_field(str(index))
     digest = hmac.new(nonce, message, hashlib.sha256).digest()[:16]
     return base64.b32encode(digest).decode("ascii").rstrip("=").lower()
+
+
+def _validate_run_nonce(nonce: Any) -> bytes:
+    if type(nonce) is not bytes or len(nonce) != 32:
+        raise ValueError("run_nonce must be bytes with exactly 32 bytes")
+    return nonce
+
+
+def _freeze_private_records(value: Any, expected_type: type[Any], name: str) -> tuple[Any, ...]:
+    try:
+        frozen = tuple(value)
+    except TypeError:
+        raise ValueError(f"{name} must be an iterable of immutable private records") from None
+    if any(type(item) is not expected_type for item in frozen):
+        raise ValueError(f"{name} must contain only immutable private records")
+    if expected_type is _PrivateJoin and any(
+        type(item.episode_id) is not str
+        or type(item.artifact_id) is not str
+        or type(item.base_task_id) is not str
+        or type(item.source_intent_id) is not str
+        or type(item.variant_index) is not int
+        or type(item.replication_index) is not int
+        or type(item.provider_slot_id) is not str
+        for item in frozen
+    ):
+        raise ValueError(f"{name} must contain only immutable private records")
+    if expected_type is _PrivateProviderConfiguration and any(
+        type(value) is not str
+        for item in frozen
+        for value in (item.slot_id, item.provider, item.model, item.model_version)
+    ):
+        raise ValueError(f"{name} must contain only immutable private records")
+    return frozen
 
 
 def _validate_public_constraint_values(constraint_id: Any, text: Any) -> None:
@@ -284,13 +325,14 @@ def build_exploratory_call_plan(
     }
     if len(provider_configurations) != 2:
         raise ValueError("provider/model/model_version configurations must be distinct")
+    if len({item.provider for item in slot_configurations}) != 2:
+        raise ValueError("provider identity configurations must be distinct")
     constraint_intents = {item.source_intent_id for item in constraints}
     if constraint_intents != set(intents) or len(constraints) != 12:
         raise ValueError("reference constraints require exactly one record per source intent")
     if run_nonce is None:
         run_nonce = secrets.token_bytes(32)
-    if not isinstance(run_nonce, bytes) or len(run_nonce) != 32:
-        raise ValueError("run_nonce must be bytes with exactly 32 bytes")
+    run_nonce = _validate_run_nonce(run_nonce)
 
     episodes: list[PublicEpisode] = []
     artifacts: list[PublicArtifact] = []

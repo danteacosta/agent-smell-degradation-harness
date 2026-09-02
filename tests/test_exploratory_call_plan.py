@@ -9,6 +9,9 @@ from pathlib import Path
 import pytest
 
 from eval.exploratory_call_plan import (
+    ExploratoryCallPlan,
+    _PrivateJoin,
+    _PrivateProviderConfiguration,
     _opaque_id,
     build_exploratory_call_plan,
     load_reference_constraints,
@@ -301,6 +304,67 @@ def test_direct_reference_constraints_reject_duplicate_ids():
 
     with pytest.raises(ValueError, match="unique.*constraint IDs"):
         build_exploratory_call_plan(records(), slots(), direct, run_nonce=b"a" * 32)
+
+
+def _direct_plan(*, nonce: object = b"a" * 32, private_join: object = (), private_configurations: object = ()):  # type: ignore[no-untyped-def]
+    return ExploratoryCallPlan(
+        episodes=(),
+        artifacts=(),
+        base_tasks=(),
+        occurrences=(),
+        duplicate_occurrences=(),
+        reference_constraints=(),
+        _run_nonce=nonce,  # type: ignore[arg-type]
+        _private_join=private_join,  # type: ignore[arg-type]
+        _private_configurations=private_configurations,  # type: ignore[arg-type]
+    )
+
+
+@pytest.mark.parametrize("nonce", ["a" * 32, bytearray(b"a" * 32), b"a" * 31, b"a" * 33])
+def test_direct_plan_construction_rejects_invalid_nonce(nonce: object):
+    with pytest.raises(ValueError, match="run_nonce must be bytes"):
+        _direct_plan(nonce=nonce)
+
+
+def test_direct_plan_construction_freezes_mutable_private_inputs():
+    private_join = [_PrivateJoin("episode", "artifact", "task", "intent", 0, 0, "slot")]
+    private_configurations = [_PrivateProviderConfiguration("slot", "provider", "model", "version")]
+
+    plan = _direct_plan(private_join=private_join, private_configurations=private_configurations)
+    private_join.clear()
+    private_configurations.clear()
+
+    assert isinstance(plan._private_join, tuple)
+    assert isinstance(plan._private_configurations, tuple)
+    assert len(plan._private_join) == len(plan._private_configurations) == 1
+
+
+@pytest.mark.parametrize(
+    "private_input",
+    [
+        ("join", (_PrivateJoin([], "artifact", "task", "intent", 0, 0, "slot"),)),
+        ("configuration", (_PrivateProviderConfiguration("slot", [], "model", "version"),)),
+        ("join", [{}]),
+    ],
+)
+def test_direct_plan_construction_rejects_mutable_or_untyped_private_inputs(private_input: tuple[str, object]):
+    field, value = private_input
+    with pytest.raises(ValueError, match="private"):
+        _direct_plan(**{f"private_{field}": value})
+
+
+def test_provider_identity_must_differ_even_when_models_differ(tmp_path: Path):
+    path = tmp_path / "constraints.json"
+    write_constraints(path)
+    same_provider_slots = [
+        {"slot_id": "slot-a", "provider": "provider", "model": "model-a", "model_version": "version-a"},
+        {"slot_id": "slot-b", "provider": "provider", "model": "model-b", "model_version": "version-b"},
+    ]
+
+    with pytest.raises(ValueError, match="provider identity"):
+        build_exploratory_call_plan(
+            records(), same_provider_slots, load_reference_constraints(path), run_nonce=b"a" * 32
+        )
 
 
 @pytest.mark.parametrize("nonce", ["a" * 32, bytearray(b"a" * 32), b"a" * 31, b"a" * 33])
