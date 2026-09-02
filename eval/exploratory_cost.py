@@ -15,7 +15,8 @@ import threading
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
 from datetime import date
-from decimal import Decimal, InvalidOperation, ROUND_CEILING
+from decimal import Decimal, InvalidOperation
+from fractions import Fraction
 from pathlib import Path
 from types import MappingProxyType
 from typing import Any
@@ -28,6 +29,7 @@ FIXED_TASK3_MAX_ATTEMPTS = 2
 DEFAULT_APPROVED_CAP_USD = Decimal("1.00")
 DEFAULT_CONTINGENCY_RATE = Decimal("0.25")
 ZERO_HASH = "0" * 64
+_DURABILITY_FAILURE_REASON = "ledger_event_append_failed"
 
 STOPPED_COST_UNVERIFIED = "stopped_cost_unverified"
 STOPPED_BUDGET_EXHAUSTED = "stopped_budget_exhausted"
@@ -94,6 +96,18 @@ _EVENT_TYPES = frozenset(
 _CALL_ID_PREFIX = "call_"
 _MAX_LEDGER_EVENTS = (
     1 + FIXED_TASK3_PROVIDER_API_CALLS * FIXED_TASK3_MAX_ATTEMPTS * 2 + 1
+)
+_NON_LF_LINE_SEPARATORS = (
+    b"\r",
+    b"\v",
+    b"\f",
+    b"\x1c",
+    b"\x1d",
+    b"\x1e",
+    b"\x85",
+    b"\xc2\x85",
+    b"\xe2\x80\xa8",
+    b"\xe2\x80\xa9",
 )
 _COMMON_EVENT_FIELDS = frozenset(
     {"schema_version", "sequence", "event_type", "prev_event_hash", "event_hash"}
@@ -266,6 +280,17 @@ def _contains_float(value: Any) -> bool:
     return False
 
 
+def _strict_lf_records(data: bytes) -> list[bytes]:
+    if any(separator in data for separator in _NON_LF_LINE_SEPARATORS):
+        raise CostUnverifiedError("ledger validation failed")
+    records = data.split(b"\n")
+    if records and records[-1] == b"":
+        records.pop()
+    if not records or any(record == b"" for record in records):
+        raise CostUnverifiedError("ledger validation failed")
+    return records
+
+
 def _validate_nested_token_metadata(value: Any, *, seen: set[int] | None = None) -> None:
     """Validate token-count values anywhere in provider metadata without coercion."""
 
@@ -395,16 +420,24 @@ def _decimal(value: Any, field_name: str, *, allow_none: bool = False) -> Decima
 
 
 def _micro_usd(value: Decimal, field_name: str) -> int:
-    scaled = value * MICRO_USD_PER_USD
-    if scaled != scaled.to_integral_value():
+    scaled = Fraction(value) * MICRO_USD_PER_USD
+    if scaled.denominator != 1:
         raise ValueError(f"{field_name} must have no more than six decimal places")
-    return int(scaled)
+    return scaled.numerator
+
+
+def _ceil_fraction(value: Fraction) -> int:
+    if value < 0:
+        raise ValueError("micro-USD value must be non-negative")
+    return (value.numerator + value.denominator - 1) // value.denominator
 
 
 def _usd_text(microusd: int | None) -> str | None:
     if microusd is None:
         return None
-    return format(Decimal(microusd) / MICRO_USD_PER_USD, "f")
+    sign = "-" if microusd < 0 else ""
+    dollars, micros = divmod(abs(microusd), MICRO_USD_PER_USD)
+    return f"{sign}{dollars}.{micros:06d}"
 
 
 def _canonical_phase(value: Any) -> str:
@@ -423,6 +456,28 @@ def _safe_error_class(value: Any) -> str | None:
         or not value.isidentifier()
     ):
         raise _UsageProblem("invalid_reconciliation_outcome")
+    return value
+
+
+def _deep_freeze(value: Any) -> Any:
+    if isinstance(value, Mapping):
+        if any(type(key) is not str for key in value):
+            raise TypeError("preflight breakdown keys must be strings")
+        return MappingProxyType(
+            {key: _deep_freeze(value[key]) for key in sorted(value)}
+        )
+    if isinstance(value, (list, tuple)):
+        return tuple(_deep_freeze(item) for item in value)
+    if value is None or type(value) in {bool, int, str}:
+        return value
+    raise TypeError("preflight breakdown contains an unsupported mutable value")
+
+
+def _deep_thaw(value: Any) -> Any:
+    if isinstance(value, Mapping):
+        return {key: _deep_thaw(item) for key, item in value.items()}
+    if isinstance(value, tuple):
+        return [_deep_thaw(item) for item in value]
     return value
 
 
@@ -502,14 +557,12 @@ class ProviderPricing:
         assert self.cached_input_usd_per_1k is not None
         assert self.output_usd_per_1k is not None
         uncached_input = input_tokens - cached_tokens
-        dollars = (
-            Decimal(uncached_input) * self.input_usd_per_1k / 1000
-            + Decimal(cached_tokens) * self.cached_input_usd_per_1k / 1000
-            + Decimal(output_tokens) * self.output_usd_per_1k / 1000
+        micro_usd = (
+            Fraction(uncached_input) * Fraction(self.input_usd_per_1k) * 1000
+            + Fraction(cached_tokens) * Fraction(self.cached_input_usd_per_1k) * 1000
+            + Fraction(output_tokens) * Fraction(self.output_usd_per_1k) * 1000
         )
-        return int(
-            (dollars * MICRO_USD_PER_USD).to_integral_value(rounding=ROUND_CEILING)
-        )
+        return _ceil_fraction(micro_usd)
 
     def reservation_microusd(self, bounds: TokenBounds) -> int:
         """Calculate the conservative reservation for every valid cache split."""
@@ -520,13 +573,11 @@ class ProviderPricing:
         assert self.cached_input_usd_per_1k is not None
         assert self.output_usd_per_1k is not None
         input_rate = max(self.input_usd_per_1k, self.cached_input_usd_per_1k)
-        dollars = (
-            Decimal(bounds.input_tokens) * input_rate / 1000
-            + Decimal(bounds.output_tokens) * self.output_usd_per_1k / 1000
+        micro_usd = (
+            Fraction(bounds.input_tokens) * Fraction(input_rate) * 1000
+            + Fraction(bounds.output_tokens) * Fraction(self.output_usd_per_1k) * 1000
         )
-        return int(
-            (dollars * MICRO_USD_PER_USD).to_integral_value(rounding=ROUND_CEILING)
-        )
+        return _ceil_fraction(micro_usd)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -710,8 +761,18 @@ class PreflightReport:
     unused_headroom_microusd: int | None
     budget_status: str
     stop_reason: str | None
-    breakdown: tuple[dict[str, Any], ...] = ()
+    breakdown: tuple[Mapping[str, Any], ...] = ()
     configuration_sha256: str = ""
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.breakdown, (tuple, list)):
+            raise TypeError("preflight breakdown must be a sequence")
+        frozen_breakdown = []
+        for item in self.breakdown:
+            if not isinstance(item, Mapping):
+                raise TypeError("preflight breakdown entries must be mappings")
+            frozen_breakdown.append(_deep_freeze(item))
+        object.__setattr__(self, "breakdown", tuple(frozen_breakdown))
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -737,7 +798,7 @@ class PreflightReport:
             "unused_headroom_usd": _usd_text(self.unused_headroom_microusd),
             "budget_status": self.budget_status,
             "stop_reason": self.stop_reason,
-            "breakdown": [dict(item) for item in self.breakdown],
+            "breakdown": [_deep_thaw(item) for item in self.breakdown],
             "configuration_sha256": self.configuration_sha256,
         }
 
@@ -829,9 +890,7 @@ def preflight_cost(configuration: CostConfiguration) -> PreflightReport:
             }
         )
     retry = direct * configuration.max_attempts_per_api_call
-    contingency = int(
-        (Decimal(direct) * configuration.contingency_rate).to_integral_value(rounding=ROUND_CEILING)
-    )
+    contingency = _ceil_fraction(Fraction(direct) * Fraction(configuration.contingency_rate))
     envelope = retry + contingency
     headroom = configuration.approved_cap_microusd - envelope
     if envelope > configuration.approved_cap_microusd:
@@ -939,7 +998,7 @@ class CostLedger:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         if self.path.exists() and self.path.stat().st_size:
             try:
-                lines = self.path.read_bytes().splitlines()
+                lines = _strict_lf_records(self.path.read_bytes())
                 self._replay(lines)
                 if self._pending:
                     self._stop(STOPPED_COST_UNVERIFIED, "ambiguous_in_flight")
@@ -969,6 +1028,11 @@ class CostLedger:
     def _hash_event(event_without_hash: Mapping[str, Any]) -> str:
         return hashlib.sha256(_canonical_json(event_without_hash).encode("utf-8")).hexdigest()
 
+    def _mark_durability_failure(self) -> None:
+        self._pending.clear()
+        self._state = STOPPED_COST_UNVERIFIED
+        self._stop_reason = _DURABILITY_FAILURE_REASON
+
     def _append_event(self, event_type: str, **fields: Any) -> dict[str, Any]:
         event: dict[str, Any] = {
             "schema_version": SCHEMA_VERSION,
@@ -977,9 +1041,9 @@ class CostLedger:
             "prev_event_hash": self.ledger_head_hash,
             **fields,
         }
-        event["event_hash"] = self._hash_event(event)
-        encoded = (_canonical_json(event) + "\n").encode("utf-8")
         try:
+            event["event_hash"] = self._hash_event(event)
+            encoded = (_canonical_json(event) + "\n").encode("utf-8")
             descriptor = os.open(
                 str(self.path), os.O_RDWR | os.O_CREAT | os.O_APPEND, 0o600
             )
@@ -996,9 +1060,10 @@ class CostLedger:
                 os.fsync(descriptor)
             finally:
                 os.close(descriptor)
-        except OSError as error:
+            self._events.append(event)
+        except Exception as error:
+            self._mark_durability_failure()
             raise CostUnverifiedError("ledger event append failed") from error
-        self._events.append(event)
         return event
 
     def _replay(self, lines: list[bytes]) -> None:
@@ -1054,16 +1119,21 @@ class CostLedger:
                 if event_type == "reconciliation":
                     if event.get("status") not in _RECONCILIATION_REASONS_BY_STATUS:
                         raise CostUnverifiedError("ledger validation failed")
+                    reconciliation_reason = _event_reconciliation_reason(event)
+                    if terminal_binding_reason is None:
+                        if reconciliation_reason != "ambiguous_in_flight":
+                            raise CostUnverifiedError("ledger validation failed")
+                    elif reconciliation_reason not in {
+                        "ambiguous_in_flight",
+                        terminal_binding_reason,
+                    }:
+                        raise CostUnverifiedError("ledger validation failed")
                 else:
                     stop_reason = _event_stop_reason(event, expected_status=event_type)
-                    if terminal_binding_reason is not None and (
+                    expected_stop_reason = terminal_binding_reason or "ambiguous_in_flight"
+                    if (
                         event_type != STOPPED_COST_UNVERIFIED
-                        or stop_reason != terminal_binding_reason
-                    ):
-                        raise CostUnverifiedError("ledger validation failed")
-                    if terminal_binding_reason is None and (
-                        event_type == STOPPED_COST_UNVERIFIED
-                        and stop_reason != "ambiguous_in_flight"
+                        or stop_reason != expected_stop_reason
                     ):
                         raise CostUnverifiedError("ledger validation failed")
             supplied_hash = event.get("event_hash")
@@ -1085,8 +1155,8 @@ class CostLedger:
                     terminal_binding_reason = (
                         None if reason == "ambiguous_in_flight" else reason
                     )
-                elif terminal_binding_reason is None and reason != "ambiguous_in_flight":
-                    terminal_binding_reason = reason
+                elif reason != "ambiguous_in_flight" and reason != terminal_binding_reason:
+                    raise CostUnverifiedError("ledger validation failed")
                 terminal_event_pending = True
             elif event_type in {STOPPED_COST_UNVERIFIED, STOPPED_BUDGET_EXHAUSTED}:
                 terminal_event_pending = False
@@ -1332,10 +1402,14 @@ class CostLedger:
             pending = tuple(
                 sorted(self._pending.values(), key=lambda item: (item.call_id, item.attempt))
             )
+            effective_status = status
             effective_reason = reason
-            if (
-                status == STOPPED_COST_UNVERIFIED
-                and pending
+            if pending and status == STOPPED_BUDGET_EXHAUSTED:
+                effective_status = STOPPED_COST_UNVERIFIED
+                effective_reason = "ambiguous_in_flight"
+            elif (
+                pending
+                and status == STOPPED_COST_UNVERIFIED
                 and (
                     not self._events
                     or self._events[-1].get("event_type") != "reconciliation"
@@ -1356,11 +1430,11 @@ class CostLedger:
                 )
             self._pending.clear()
             self._append_event(
-                status,
-                budget_status=status,
+                effective_status,
+                budget_status=effective_status,
                 stop_reason=effective_reason,
             )
-            self._state = status
+            self._state = effective_status
             self._stop_reason = effective_reason
 
     def _stop_cost_unverified(self, reason: str) -> None:
@@ -1566,6 +1640,8 @@ class CostLedger:
                 reasoning_detail_values[0] if reasoning_detail_values else 0,
             )
             if reasoning_detail_values and reasoning_value != reasoning_detail_values[0]:
+                raise _UsageProblem("malformed_usage")
+            if reasoning_value > output_value:
                 raise _UsageProblem("malformed_usage")
             return {
                 "input_tokens": input_value,
