@@ -254,8 +254,8 @@ def parse_judge_response(raw: str | bytes, request: JudgeRequest) -> JudgeRespon
     if (
         isinstance(confidence, bool)
         or not isinstance(confidence, (int, float))
-        or not math.isfinite(confidence)
         or not 0 <= confidence <= 1
+        or not math.isfinite(confidence)
     ):
         raise ValueError("judge response contains invalid confidence")
     rationale = _bounded_text(payload["rationale"], maximum=_MAX_RATIONALE)
@@ -298,8 +298,8 @@ def _validate_judge_response(response: JudgeResponse) -> JudgeResponse:
     if (
         isinstance(confidence, bool)
         or not isinstance(confidence, (int, float))
-        or not math.isfinite(confidence)
         or not 0 <= confidence <= 1
+        or not math.isfinite(confidence)
     ):
         raise ValueError("judge response contains invalid confidence")
     rationale = _bounded_text(response.rationale, maximum=_MAX_RATIONALE)

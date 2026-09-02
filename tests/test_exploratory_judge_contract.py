@@ -128,6 +128,12 @@ def test_parser_rejects_duplicate_json_object_keys():
         parse_judge_response(raw, request())
 
 
+@pytest.mark.parametrize("confidence", [10**10_000, -(10**10_000)])
+def test_parser_rejects_arbitrarily_oversized_integer_confidence_as_value_error(confidence):
+    with pytest.raises(ValueError):
+        parse_judge_response(json.dumps(response(confidence=confidence)), request())
+
+
 def test_consolidation_treats_assessment_order_as_irrelevant():
     first = parse_judge_response(json.dumps(response()), request())
     reordered = parse_judge_response(
@@ -166,6 +172,8 @@ def direct_response(*assessments, **overrides):
         direct_response(label=[]),
         direct_response(confidence=float("nan")),
         direct_response(confidence=float("inf")),
+        direct_response(confidence=10**10_000),
+        direct_response(confidence=-(10**10_000)),
         direct_response(confidence=-0.1),
         direct_response(confidence=1.1),
         direct_response(rationale="x" * 10001),
