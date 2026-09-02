@@ -358,10 +358,14 @@ def _validate_redacted_record(record: Mapping[str, Any]) -> dict[str, Any]:
     rights_review = record.get("rights_review")
     if not isinstance(rights_review, Mapping) or set(rights_review) != _RIGHTS_REVIEW_FIELDS:
         raise CorpusIntakeError("frozen record rights_review is incomplete or has unexpected fields")
+    if not isinstance(rights_review.get("reviewer_id"), str):
+        raise CorpusIntakeError("frozen record rights_review.reviewer_id must be text")
     _rights_review(record)
     manipulation_check = record.get("manipulation_check")
     if not isinstance(manipulation_check, Mapping) or set(manipulation_check) != _MANIPULATION_REVIEW_FIELDS:
         raise CorpusIntakeError("frozen record manipulation_check is incomplete or has unexpected fields")
+    if not isinstance(manipulation_check.get("reviewer_id"), str):
+        raise CorpusIntakeError("frozen record manipulation_check.reviewer_id must be text")
     _review_checks(record)
     for field in (*_HASH_FIELDS, "record_sha256"):
         value = record.get(field)
@@ -479,12 +483,30 @@ def validate_private_records_against_frozen_manifest(
     unsigned = {key: value for key, value in frozen_manifest.items() if key != "manifest_sha256"}
     if not isinstance(expected_hash, str) or expected_hash != _sha256_json(unsigned):
         raise CorpusIntakeError("manifest_sha256 does not match the frozen manifest")
+    if frozen_manifest.get("expected_intents") != 12:
+        raise CorpusIntakeError("frozen manifest expected_intents must be 12")
+    if frozen_manifest.get("minimum_projects") != 6:
+        raise CorpusIntakeError("frozen manifest minimum_projects must be 6")
+    frozen_rows = [_validate_redacted_record(row) for row in frozen_manifest.get("records", [])]
+    frozen_intent_ids = [str(row["source_intent_id"]) for row in frozen_rows]
+    frozen_project_ids = {str(row["project_id"]) for row in frozen_rows}
+    if len(frozen_rows) != 12:
+        raise CorpusIntakeError("frozen manifest must contain exactly 12 records")
+    if len(set(frozen_intent_ids)) != len(frozen_intent_ids):
+        raise CorpusIntakeError("frozen manifest source-intent IDs must be unique")
+    if len(frozen_project_ids) < 6:
+        raise CorpusIntakeError("frozen manifest must contain at least 6 projects")
+    if frozen_manifest.get("record_count") != len(frozen_rows):
+        raise CorpusIntakeError("frozen manifest record_count is inconsistent")
+    if frozen_manifest.get("unique_intent_count") != len(frozen_intent_ids):
+        raise CorpusIntakeError("frozen manifest unique_intent_count is inconsistent")
+    if frozen_manifest.get("project_count") != len(frozen_project_ids):
+        raise CorpusIntakeError("frozen manifest project_count is inconsistent")
     normalized = build_redacted_manifest(
         records,
         expected_intents=int(frozen_manifest["expected_intents"]),
         minimum_projects=int(frozen_manifest["minimum_projects"]),
     )
-    frozen_rows = [_validate_redacted_record(row) for row in frozen_manifest.get("records", [])]
     frozen_records = {str(row["source_intent_id"]): row for row in frozen_rows}
     normalized_records = {
         str(row["source_intent_id"]): row for row in normalized["records"]

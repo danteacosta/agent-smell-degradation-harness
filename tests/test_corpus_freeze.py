@@ -68,6 +68,12 @@ def _rehash_record(record: dict) -> None:
     record["record_sha256"] = hashlib.sha256(serialized.encode("utf-8")).hexdigest()
 
 
+def _rehash_manifest(manifest: dict) -> None:
+    unsigned = {key: value for key, value in manifest.items() if key != "manifest_sha256"}
+    serialized = json.dumps(unsigned, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    manifest["manifest_sha256"] = hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+
+
 def test_validated_candidate_freezes_to_canonical_hash_only_manifest() -> None:
     records, candidate = _candidate()
     before = copy.deepcopy(candidate)
@@ -94,6 +100,18 @@ def test_validated_candidate_freezes_to_canonical_hash_only_manifest() -> None:
     assert "PRIVATE SOURCE SECRET" not in serialized
     assert "private request" not in serialized
     assert records[0]["canonical_text"].startswith("PRIVATE SOURCE")
+
+
+def test_freeze_preserves_valid_corpus_with_more_than_six_projects() -> None:
+    records = [_record(index, project=index % 7) for index in range(12)]
+    candidate = build_redacted_manifest(records)
+
+    frozen = freeze_validated_manifest(
+        candidate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+    )
+
+    assert frozen["record_count"] == 12
+    assert frozen["project_count"] == 7
 
 
 @pytest.mark.parametrize(
@@ -238,6 +256,45 @@ def test_freeze_rejects_extra_nested_review_fields(nested_field: tuple[str, str]
             invalid, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
         )
     assert "must not be exported" not in str(error.value)
+
+
+def test_private_join_rejects_self_consistent_frozen_manifest_with_eleven_records() -> None:
+    records, candidate = _candidate()
+    frozen = freeze_validated_manifest(
+        candidate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+    )
+    frozen["records"] = frozen["records"][:-1]
+    frozen["record_count"] = 11
+    frozen["unique_intent_count"] = 11
+    _rehash_manifest(frozen)
+
+    with pytest.raises(CorpusIntakeError, match="count|12|records"):
+        validate_private_records_against_frozen_manifest(records, frozen)
+
+
+def test_private_join_rejects_self_consistent_inconsistent_frozen_metadata() -> None:
+    records, candidate = _candidate()
+    frozen = freeze_validated_manifest(
+        candidate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+    )
+    frozen["record_count"] = 11
+    _rehash_manifest(frozen)
+
+    with pytest.raises(CorpusIntakeError, match="count|metadata|inconsistent"):
+        validate_private_records_against_frozen_manifest(records, frozen)
+
+
+@pytest.mark.parametrize("review_name", ["rights_review", "manipulation_check"])
+def test_freeze_rejects_non_string_nested_reviewer_ids(review_name: str) -> None:
+    _, candidate = _candidate()
+    invalid = copy.deepcopy(candidate)
+    invalid["records"][0][review_name]["reviewer_id"] = None
+    _rehash_record(invalid["records"][0])
+
+    with pytest.raises(CorpusIntakeError, match="reviewer_id"):
+        freeze_validated_manifest(
+            invalid, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+        )
 
 
 def test_private_records_join_against_frozen_manifest_without_raw_text() -> None:
