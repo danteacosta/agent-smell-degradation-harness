@@ -31,6 +31,7 @@ Create or modify only the following scoped files:
 - `agents/staged_runtime.py` — expose canonical generation prompt/schema templates and a stage-scoped retry seam used by the exploratory runner; preserve the existing one-shot execution behavior for other callers.
 - `agents/runtime.py` — pass the stage-retry/call-accounting seam through `RuntimeCheckpointAgent.from_provider` without changing its public execution result.
 - `eval/protocol_hashes.py` — canonicalize and hash the actual generation/judge prompts, output/response schemas, rubric, and runtime protocol inputs.
+- `scripts/run_native_provider_smoke.py` — accept the same private env-file path for the prerequisite smoke while preserving its redacted report contract.
 - `tests/test_provider_runtime_config.py` — provider config identity and secret non-disclosure regression coverage.
 - `tasks/exploratory_llm_judged_prepilot.example.json` — secret-free runtime configuration for the two explicit model snapshots, pricing, limits, and key environment names.
 - `eval/exploratory_prepilot.py` — orchestration, preflight, native generation, cross-judging, private evidence, redacted report, and explicit state transitions.
@@ -151,7 +152,7 @@ Expected: FAIL because the call-plan module does not exist.
 
 - [ ] **Step 2: Implement the frozen call-plan data model.**
 
-Generate a fresh 256-bit cryptographic `run_nonce` once per run and keep it only in the private run bundle. For each ID namespace, compute `HMAC-SHA256(run_nonce, namespace || ordinal)` over a canonical ASCII ordinal, truncate to 16 bytes, and encode as lowercase base32 without a semantic prefix. The ordinal is assigned from a private sorted sequence only; it must never contain source intent, label, defect family, provider, model, variant, or replication text. Produce `episode_id`, `artifact_id`, `base_task_id`, and `occurrence_id` joins as separate private fields. Use the existing seeded sampling semantics (`round(240 * 0.2) == 48`) and freeze the duplicate set before constructing any judge response. Test that regenerating from the same private nonce and plan is stable while changing any visible metadata does not change or reveal an ID.
+Generate a fresh 256-bit cryptographic `run_nonce` once per run and keep it only in the private run bundle. For each ID namespace, compute `HMAC-SHA256(run_nonce, namespace || canonical_ordinal)` over a canonical ASCII ordinal, truncate to 16 bytes, and encode as lowercase base32 without a semantic prefix. Assign the private base-task ordinal from the sorted private task sequence; derive `base_task_id` from that ordinal, then derive every `occurrence_id` as `HMAC-SHA256(run_nonce, "occurrence" || base_task_id || canonical_occurrence_index)` so the approved run-nonce/base-task/index binding is explicit. Derive `episode_id` and `artifact_id` the same way from private ordinals. No HMAC input may contain source intent, label, defect family, provider, model, variant, or replication text. Produce all joins as separate private fields. Use the existing seeded sampling semantics (`round(240 * 0.2) == 48`) and freeze the duplicate set before constructing any judge response. Test that regenerating from the same private nonce and plan is stable while changing any visible metadata does not change or reveal an ID.
 
 - [ ] **Step 3: Implement reference-constraint loading.**
 
@@ -212,12 +213,14 @@ git commit -m "Add append-only exploratory cost ledger"
 **Files:**
 - Create: `eval/provider_runtime_config.py`
 - Modify: `eval/native_provider_smoke.py`
+- Modify: `scripts/run_native_provider_smoke.py`
+- Create: `eval/protocol_hashes.py`
 - Create: `tests/test_provider_runtime_config.py`
 - Create: `tasks/exploratory_llm_judged_prepilot.example.json`
 
 - [ ] **Step 1: Write provider-construction regression tests.**
 
-Test explicit model/version values for `gpt-5.6-luna`/`gpt-5.6-luna` and `deepseek-v4-pro`/`DeepSeek-V4-Pro-0813`, API-key environment names `PANEL_OPENAI_API_KEY` and `PANEL_DEEPSEEK_API_KEY`, price fields, and safe public metadata. Assert that missing keys fail before client construction and secrets never appear in metadata/errors.
+Test explicit model/version values for `gpt-5.6-luna`/`gpt-5.6-luna` and `deepseek-v4-pro`/`DeepSeek-V4-Pro-0813`, API-key environment names `PANEL_OPENAI_API_KEY` and `PANEL_DEEPSEEK_API_KEY`, price fields, and safe public metadata. Assert that missing keys fail before client construction and secrets never appear in metadata/errors. Add protocol-hash fixtures covering newline normalization, canonical JSON serialization, every prompt/schema/rubric input, and pre-network rejection on any drift. Add provider-specific token-fit fixtures proving each configured prompt and response schema either fits the exact phase bound or blocks preflight.
 
 Run: `pytest tests/test_provider_runtime_config.py -q`
 Expected: FAIL until the shared seam exists.
@@ -228,7 +231,7 @@ Support explicit non-secret model/version/pricing values and environment-resolve
 
 - [ ] **Step 3: Add the secret-free exploratory example.**
 
-Declare stage `exploratory_llm_judged_pre_pilot`, task family `test_gen`, primary condition `no_compaction`, two provider slots, `max_total_cost_usd: 1.0`, `max_attempts_per_api_call: 2`, duplicate fraction `0.2`, duplicate seed `0`, and this exact initial token-bound table (tokens per API attempt; zero cached-token credit for the reservation): `generation.T1={input:192,output:128}`, `generation.T2={input:192,output:64}`, `generation.artifact={input:192,output:48}`, and `judge={input:128,output:64}`. The implementation must use the same bounds as provider request limits and reject the run if the actual compact prompt/schema cannot fit; it may not silently increase them. Compute each reservation as `ceil(1_000_000 * (input_bound/1000 * input_rate + output_bound/1000 * output_rate))` integer micro-US-dollars, multiply by two attempts, sum all 1,296 planned API calls by provider/phase, and reserve a 15% contingency on the direct estimate inside the same US$1.00 cap. Keep the exact resulting table and formula in the example config and test fixture so a preflight can prove (or fail closed on) the cap mathematically. Include `pricing_source_ref` and a dated price snapshot, but no key values. Freeze `generation_prompt_template_sha256`, `judge_prompt_template_sha256`, `generation_output_schema_sha256`, `judge_response_schema_sha256`, `rubric_sha256`, `temperature` (explicitly `0.0` or `null` where the provider default is part of the frozen config), `reasoning_effort`, model snapshots, and source revision. Each hash is derived from canonical UTF-8 bytes after newline normalization and JSON serialization with `sort_keys=true`, compact separators, and `ensure_ascii=false`; preflight recomputes every hash from the runtime constants and rejects drift. Per-call prompt hashes are recorded in private evidence and the template hashes are part of the configuration hash.
+Declare stage `exploratory_llm_judged_pre_pilot`, task family `test_gen`, primary condition `no_compaction`, two provider slots, `max_total_cost_usd: 1.0`, `max_attempts_per_api_call: 2`, duplicate fraction `0.2`, duplicate seed `0`, and this exact initial token-bound table (tokens per API attempt; zero cached-token credit for the reservation): `generation.T1={input:192,output:128}`, `generation.T2={input:192,output:64}`, `generation.artifact={input:192,output:48}`, and `judge={input:128,output:64}`. The implementation must use the same bounds as provider request limits and reject the run if the actual compact prompt/schema cannot fit; it may not silently increase them. Compute each reservation as `ceil(1_000_000 * (input_bound/1000 * input_rate + output_bound/1000 * output_rate))` integer micro-US-dollars, multiply by two attempts, sum all 1,296 planned API calls by provider/phase, and reserve a 25% contingency on the direct estimate inside the same US$1.00 cap; if this exact envelope does not fit, classify preflight as blocked rather than changing the bounds or cap. Keep the exact resulting table and formula in the example config and test fixture so a preflight can prove (or fail closed on) the cap mathematically. Include `pricing_source_ref` and a dated price snapshot, but no key values. Freeze `generation_prompt_template_sha256`, `judge_prompt_template_sha256`, `generation_output_schema_sha256`, `judge_response_schema_sha256`, `rubric_sha256`, `temperature` (explicitly `0.0` or `null` where the provider default is part of the frozen config), `reasoning_effort`, model snapshots, and source revision. Each hash is derived from canonical UTF-8 bytes after newline normalization and JSON serialization with `sort_keys=true`, compact separators, and `ensure_ascii=false`; preflight recomputes every hash from the runtime constants and rejects drift. Per-call prompt hashes are recorded in private evidence and the template hashes are part of the configuration hash.
 
 - [ ] **Step 4: Run tests and commit.**
 
@@ -236,7 +239,7 @@ Run: `pytest tests/test_provider_runtime_config.py -q`
 Expected: PASS.
 
 ```bash
-git add eval/provider_runtime_config.py eval/native_provider_smoke.py tests/test_provider_runtime_config.py tasks/exploratory_llm_judged_prepilot.example.json
+git add eval/provider_runtime_config.py eval/native_provider_smoke.py scripts/run_native_provider_smoke.py eval/protocol_hashes.py tests/test_provider_runtime_config.py tasks/exploratory_llm_judged_prepilot.example.json
 git commit -m "Share secret-safe provider runtime configuration"
 ```
 
@@ -246,6 +249,9 @@ git commit -m "Share secret-safe provider runtime configuration"
 - Create: `eval/exploratory_prepilot.py`
 - Create: `scripts/run_exploratory_llm_judged_prepilot.py`
 - Test: `tests/test_exploratory_prepilot.py`
+- Modify: `agents/providers.py`
+- Modify: `agents/staged_runtime.py`
+- Modify: `agents/runtime.py`
 
 - [ ] **Step 1: Write failing orchestration tests with replay providers.**
 
@@ -283,7 +289,7 @@ After all 240 artifacts exist, select the 48 base tasks with the frozen seed, cr
 
 - [ ] **Step 5: Implement report/state output and the safe CLI.**
 
-Add `--config`, `--env-file`, `--output`, `--private-corpus`, `--reference-constraints`, `--dry-run`, `--resume-run`, and an explicit live-run confirmation flag. Do not expose a frozen-manifest override. The default private run directory is sibling `<output>.run/` outside the repository and contains `run-manifest.json`, `checkpoint.json`, `cost-ledger.jsonl`, and raw evidence; checkpoint writes use temp-file + fsync + atomic rename, while ledger writes are single-writer append-only. Before any call capture `git rev-parse HEAD` as the immutable `source_revision`; include it in the run manifest and hash it into the resume identity. `--resume-run` accepts only that private run directory, validates run/corpus/rubric/config/source/ledger-head hashes before reopening states `generating`, `judging`, or item-error partial, and rejects terminal budget/cost/protocol states or mismatches with a new-run-required error. Enforce output outside the repository. Load the env file with the existing secret-safe parser; do not print or upload its contents. Return exit 0 for a completed exploratory report, a nonzero code for blocked/partial terminal states, and never alter official readiness automatically.
+Add `--config`, `--env-file`, `--output`, `--private-corpus`, `--reference-constraints`, `--dry-run`, `--resume-run`, and an explicit live-run confirmation flag. Do not expose a frozen-manifest override. The default private run directory is sibling `<output>.run/` outside the repository and contains `run-manifest.json`, `checkpoint.json`, `cost-ledger.jsonl`, and raw evidence; checkpoint writes use temp-file + fsync + atomic rename, while ledger writes are single-writer append-only. Before any call capture `git rev-parse HEAD` as the immutable `source_revision`; include it in the run manifest and hash it into the resume identity. `--resume-run` accepts only that private run directory, validates run/corpus/rubric/config/source/ledger-head hashes before reopening states `generating`, `judging`, or item-error partial, and rejects terminal budget/cost/protocol states or mismatches with a new-run-required error. Recovery is ledger-authoritative: reconcile every `reserved` event that has a matching private response/usage record before checkpoint reconstruction; if a reservation has no unambiguous response, mark the run `stopped_cost_unverified` and never repeat that call; if the ledger is reconciled but the checkpoint lags, replay finalized ledger events idempotently before continuing. A successful stage is never reissued merely because checkpoint commit followed the provider response. Enforce output outside the repository. Load the env file with the existing secret-safe parser; do not print or upload its contents. Return exit 0 for a completed exploratory report, a nonzero code for blocked/partial terminal states, and never alter official readiness automatically.
 
 - [ ] **Step 6: Run focused tests and commit.**
 
@@ -291,7 +297,7 @@ Run: `pytest tests/test_exploratory_prepilot.py -q`
 Expected: PASS with replay providers and zero network calls, including all terminal-state and resume-path assertions.
 
 ```bash
-git add eval/exploratory_prepilot.py scripts/run_exploratory_llm_judged_prepilot.py tests/test_exploratory_prepilot.py
+git add eval/exploratory_prepilot.py scripts/run_exploratory_llm_judged_prepilot.py agents/providers.py agents/staged_runtime.py agents/runtime.py tests/test_exploratory_prepilot.py
 git commit -m "Implement exploratory cross-judged pre-pilot runner"
 ```
 
@@ -310,7 +316,7 @@ Expected: FAIL until the exploratory block and test exist.
 
 - [ ] **Step 2: Add the separate exploratory block.**
 
-Record the complete `exploratory-llm-judged-prepilot/v1` block: `scope_authorized: true` based on the researcher-reported advisor permission, `claim_level: non_confirmatory_exploratory`, `status: planned`, `corpus_manifest_sha256: null`, `configuration_sha256: null`, `judge_rubric_sha256: null`, `expected_logical_operations: 816`, `expected_provider_api_calls: 1296`, `max_total_cost_usd: 1.0`, `disagreement_policy: uncertain_no_forced_adjudication`, `human_annotation_substitute: false`, and `report_reference: null`. The three hash/reference fields may be null only in `planned`; when the block reaches `ready` or any terminal execution state, require exact SHA-256 values and a redacted report reference. Leave official `status: blocked`, `confirmatory_authorized: false`, human annotation count, ethics gate, and all existing `go_no_go` values untouched.
+Record the complete `exploratory-llm-judged-prepilot/v1` block: `scope_authorized: true` based on the researcher-reported advisor permission, `claim_level: non_confirmatory_exploratory`, `status: planned`, `corpus_manifest_sha256: null`, `configuration_sha256: null`, `judge_rubric_sha256: null`, `expected_logical_operations: 816`, `expected_provider_api_calls: 1296`, `observed_logical_operations: 0`, `observed_provider_api_calls: 0`, `observed_artifact_count: 0`, `observed_judge_occurrence_count: 0`, `observed_cost_usd: null`, `provider_configurations: [{provider: openai, model: gpt-5.6-luna, model_version: gpt-5.6-luna, role: generator_and_judge, qualification_status: smoke_qualified}, {provider: deepseek, model: deepseek-v4-pro, model_version: DeepSeek-V4-Pro-0813, role: generator_and_judge, qualification_status: smoke_qualified}]`, `judge_mode: llm_only_exploratory`, `adjudication: none_forced`, `max_total_cost_usd: 1.0`, `disagreement_policy: uncertain_no_forced_adjudication`, `human_annotation_substitute: false`, and `report_reference: null`. The three hash/reference fields may be null only in `planned`; when the block reaches `ready` or any terminal execution state, require exact SHA-256 values and a redacted report reference. Update observed counts/cost and report references only from the private run's reconciled report, never by estimation. Leave official `status: blocked`, `confirmatory_authorized: false`, human annotation count, ethics gate, and all existing `go_no_go` values untouched.
 
 - [ ] **Step 3: Run the isolation test and commit.**
 
@@ -340,7 +346,7 @@ Use only the private candidate path explicitly supplied by the researcher or alr
 
 - [ ] **Step 3: Run a no-network exploratory preflight.**
 
-Use the explicit two-provider config and the existing private env file with `PANEL_OPENAI_API_KEY` and `PANEL_DEEPSEEK_API_KEY`. Run the CLI with `--dry-run`. Verify it reports 240 artifacts, 48 duplicate base tasks, 576 judge calls, 1,296 provider API calls, the frozen hashes, and a worst-case reservation below US$1.00 without making a provider request.
+Use the explicit two-provider config and the existing private env file with `PANEL_OPENAI_API_KEY` and `PANEL_DEEPSEEK_API_KEY`. First rerun the existing native-provider smoke through `scripts/run_native_provider_smoke.py` with the same two model/version slots, current source revision, and a private output path; require `status: pass`, both providers qualified, `no_compaction`, runtime-native T1–T3/artifact evidence, usage/cost metadata, and a configuration hash matching the exploratory provider config. If smoke fails or configuration drifts, stop before exploratory calls. Then run the exploratory CLI with `--dry-run`. Verify it reports 240 artifacts, 48 duplicate base tasks, 576 judge calls, 1,296 provider API calls, the frozen hashes, and a worst-case reservation plus 25% contingency below US$1.00 without making a provider request.
 
 - [ ] **Step 4: Update Google Drive before live execution.**
 
