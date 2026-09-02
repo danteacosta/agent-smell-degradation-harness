@@ -720,6 +720,60 @@ def test_given_signed_replay_with_unknown_event_type_when_opened_then_it_fails_c
         CostLedger(path, configuration)
 
 
+@pytest.mark.parametrize(
+    ("extra_field", "extra_value"),
+    [
+        ("unexpected", 1),
+        ("private_prompt", "secret prompt evidence"),
+        ("raw_response", "secret raw response evidence"),
+        ("prompt_tokens", -1),
+        ("completion_tokens", "1"),
+    ],
+)
+def test_given_replay_with_extra_private_or_alias_field_when_opened_then_it_fails_closed(
+    tmp_path: Path, extra_field: str, extra_value: object
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "unsupported-event-field.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+    _rewrite_last_event(path, **{extra_field: extra_value})
+    tampered = path.read_bytes()
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+    assert path.read_bytes() == tampered
+
+
+def test_given_replay_with_arbitrary_stop_reason_when_opened_then_it_fails_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "unsupported-stop-reason.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, None)
+    _rewrite_last_event(path, stop_reason="caller-controlled private evidence")
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+
 def test_given_ambiguous_in_flight_response_when_wrapped_then_no_retry_is_possible(tmp_path: Path) -> None:
     configuration = config(
         contingency="0",
@@ -746,6 +800,7 @@ def test_given_ambiguous_in_flight_response_when_wrapped_then_no_retry_is_possib
     assert provider.calls == 1
     assert ledger.report()["budget_status"] == "stopped_cost_unverified"
     assert ledger.report()["stop_reason"] == "ambiguous_in_flight"
+    assert ledger.report()["pending_attempt_count"] == 0
     text = (tmp_path / "ambiguous.jsonl").read_text()
     assert "secret response" not in text
     assert "private prompt" not in text
@@ -781,6 +836,129 @@ def test_given_stale_provider_metadata_when_provider_raises_then_it_is_not_recon
 
     assert provider.calls == 1
     assert "stale secret" not in path.read_text()
+    assert wrapped._ledger.report()["pending_attempt_count"] == 0
+
+
+def test_given_provider_metadata_reset_failure_when_wrapped_then_invocation_is_forbidden(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+
+    class ResetFailureProvider:
+        name = "openai"
+
+        def __init__(self) -> None:
+            self.calls = 0
+
+        @property
+        def last_call_metadata(self) -> dict[str, object]:
+            return {"usage": {"input_tokens": 1, "output_tokens": 1}}
+
+        @last_call_metadata.setter
+        def last_call_metadata(self, value: object) -> None:
+            raise RuntimeError("metadata reset failed")
+
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            return "should not be called"
+
+    path = tmp_path / "reset-failure.jsonl"
+    provider = ResetFailureProvider()
+    ledger = CostLedger(path, configuration)
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    assert provider.calls == 0
+    assert ledger.status == "stopped_cost_unverified"
+    assert ledger.report()["pending_attempt_count"] == 0
+    assert [event["event_type"] for event in ledger.events] == [
+        "preflight",
+        "stopped_cost_unverified",
+    ]
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+    assert provider.calls == 0
+
+
+def test_given_provider_metadata_access_failure_after_invocation_then_it_stops_without_charge(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+
+    class AccessFailureProvider:
+        name = "openai"
+
+        def __init__(self) -> None:
+            self._metadata: dict[str, object] = {
+                "usage": {"input_tokens": 1, "output_tokens": 1}
+            }
+            self.fail_access = False
+            self.calls = 0
+
+        @property
+        def last_call_metadata(self) -> dict[str, object]:
+            if self.fail_access:
+                raise RuntimeError("metadata access failed")
+            return self._metadata
+
+        @last_call_metadata.setter
+        def last_call_metadata(self, value: object) -> None:
+            self._metadata = value  # type: ignore[assignment]
+
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            self.fail_access = True
+            return "provider response"
+
+    path = tmp_path / "access-failure.jsonl"
+    provider = AccessFailureProvider()
+    ledger = CostLedger(path, configuration)
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    report = ledger.report()
+    assert provider.calls == 1
+    assert ledger.status == "stopped_cost_unverified"
+    assert report["stop_reason"] == "metadata_access_failed"
+    assert report["spent_microusd"] == 0
+    assert report["pending_attempt_count"] == 0
+    assert report["active_reserved_microusd"] > 0
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+    assert provider.calls == 1
+
+
+def test_given_malformed_provider_metadata_after_invocation_then_it_stops_without_pending_attempt(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+
+    class MalformedMetadataProvider(RecordingProvider):
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            self.last_call_metadata = {"usage": {"input_tokens": "1", "output_tokens": 1}}
+            return "provider response"
+
+    path = tmp_path / "malformed-metadata.jsonl"
+    provider = MalformedMetadataProvider()
+    ledger = CostLedger(path, configuration)
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    report = ledger.report()
+    assert provider.calls == 1
+    assert report["stop_reason"] == "malformed_usage"
+    assert report["spent_microusd"] == 0
+    assert report["pending_attempt_count"] == 0
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+    assert provider.calls == 1
 
 
 def test_given_a_reconciled_ledger_when_reopened_then_state_and_report_are_identical(

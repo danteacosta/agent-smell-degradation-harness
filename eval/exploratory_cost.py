@@ -72,6 +72,80 @@ _CALL_ID_PREFIX = "call_"
 _MAX_LEDGER_EVENTS = (
     1 + FIXED_TASK3_PROVIDER_API_CALLS * FIXED_TASK3_MAX_ATTEMPTS * 2 + 1
 )
+_COMMON_EVENT_FIELDS = frozenset(
+    {"schema_version", "sequence", "event_type", "prev_event_hash", "event_hash"}
+)
+_PREFLIGHT_EVENT_FIELDS = _COMMON_EVENT_FIELDS | {
+    "configuration_sha256",
+    "preflight_status",
+    "budget_status",
+    "stop_reason",
+    "planned_provider_api_calls",
+    "max_attempts_per_api_call",
+    "direct_expected_cost_microusd",
+    "retry_inclusive_worst_case_microusd",
+    "contingency_reserve_microusd",
+    "worst_case_reserved_microusd",
+    "approved_cap_microusd",
+    "unused_headroom_microusd",
+}
+_RESERVATION_EVENT_FIELDS = _COMMON_EVENT_FIELDS | {
+    "call_id",
+    "provider",
+    "model",
+    "model_version",
+    "phase",
+    "attempt",
+    "input_token_bound",
+    "output_token_bound",
+    "input_usd_per_1k",
+    "cached_input_usd_per_1k",
+    "output_usd_per_1k",
+    "pricing_snapshot_date",
+    "pricing_source_ref",
+    "reserved_microusd",
+}
+_RECONCILIATION_BASE_FIELDS = _COMMON_EVENT_FIELDS | {
+    "status",
+    "call_id",
+    "phase",
+    "attempt",
+    "reserved_microusd",
+    "released_microusd",
+}
+_UNVERIFIED_RECONCILIATION_EVENT_FIELDS = _RECONCILIATION_BASE_FIELDS | {"stop_reason"}
+_RECONCILED_EVENT_FIELDS = _RECONCILIATION_BASE_FIELDS | {
+    "input_tokens",
+    "output_tokens",
+    "cached_tokens",
+    "total_tokens",
+    "actual_cost_microusd",
+    "outcome",
+}
+_STOP_EVENT_FIELDS = _COMMON_EVENT_FIELDS | {"budget_status", "stop_reason"}
+_STOP_REASONS = frozenset(
+    {
+        "ambiguous_in_flight",
+        "attempt_policy_exceeded",
+        "attempt_reservation_exceeds_remaining_cap",
+        "call_identity_mismatch",
+        "fixed_plan_exhausted",
+        "fixed_task3_plan_mismatch",
+        "invalid_call_identity",
+        "invalid_reconciliation_outcome",
+        "ledger_mismatch",
+        "malformed_usage",
+        "metadata_access_failed",
+        "metadata_reset_failed",
+        "missing_price",
+        "missing_token_bound",
+        "missing_usage",
+        "provider_model_pricing_mismatch",
+        "reservation_already_in_flight",
+        "token_bounds_exceeded",
+        "worst_case_reserved_cost_exceeds_approved_cap",
+    }
+)
 
 
 class CostLedgerError(ValueError):
@@ -93,6 +167,10 @@ class AmbiguousInFlightError(CostUnverifiedError):
 class _UsageProblem(Exception):
     def __init__(self, reason: str) -> None:
         self.reason = reason
+
+
+class _MetadataProblem(Exception):
+    """Raised when provider metadata cannot be safely read or copied."""
 
 
 def _canonical_json(value: Mapping[str, Any]) -> str:
@@ -162,6 +240,43 @@ def _event_optional_text(event: Mapping[str, Any], field_name: str) -> str | Non
     if type(value) is not str or not value:
         raise CostUnverifiedError("ledger validation failed")
     return value
+
+
+def _validate_event_schema(event: Mapping[str, Any]) -> None:
+    event_type = event.get("event_type")
+    if event_type == "preflight":
+        allowed = _PREFLIGHT_EVENT_FIELDS
+    elif event_type == "reservation":
+        allowed = _RESERVATION_EVENT_FIELDS
+    elif event_type == "reconciliation":
+        status = event.get("status")
+        if status in {"cost_unverified", "ambiguous_in_flight"}:
+            allowed = _UNVERIFIED_RECONCILIATION_EVENT_FIELDS
+        elif status == "reconciled":
+            allowed_sets = {
+                _RECONCILED_EVENT_FIELDS,
+                _RECONCILED_EVENT_FIELDS | {"reasoning_tokens"},
+                _RECONCILED_EVENT_FIELDS | {"error_class"},
+                _RECONCILED_EVENT_FIELDS | {"reasoning_tokens", "error_class"},
+            }
+            if set(event) not in allowed_sets:
+                raise CostUnverifiedError("ledger validation failed")
+            return
+        else:
+            raise CostUnverifiedError("ledger validation failed")
+    elif event_type in {STOPPED_COST_UNVERIFIED, STOPPED_BUDGET_EXHAUSTED}:
+        allowed = _STOP_EVENT_FIELDS
+    else:
+        raise CostUnverifiedError("ledger validation failed")
+    if set(event) != allowed:
+        raise CostUnverifiedError("ledger validation failed")
+
+
+def _event_stop_reason(event: Mapping[str, Any]) -> str:
+    reason = _event_text(event, "stop_reason")
+    if reason not in _STOP_REASONS:
+        raise CostUnverifiedError("ledger validation failed")
+    return reason
 
 
 def _decimal(value: Any, field_name: str, *, allow_none: bool = False) -> Decimal | None:
@@ -807,6 +922,7 @@ class CostLedger:
                 raise CostUnverifiedError("ledger validation failed")
             if expected_sequence != 1 and event_type == "preflight":
                 raise CostUnverifiedError("ledger validation failed")
+            _validate_event_schema(event)
             previous = event.get("prev_event_hash")
             if (
                 type(previous) is not str
@@ -835,8 +951,8 @@ class CostLedger:
             unsigned.pop("event_hash", None)
             if self._hash_event(unsigned) != supplied_hash:
                 raise CostUnverifiedError("ledger validation failed")
-            self._events.append(event)
             self._replay_event(event)
+            self._events.append(event)
             if event_type == "reconciliation" and event.get("status") != "reconciled":
                 terminal_event_pending = True
             elif event_type in {STOPPED_COST_UNVERIFIED, STOPPED_BUDGET_EXHAUSTED}:
@@ -983,7 +1099,7 @@ class CostLedger:
                 raise CostUnverifiedError("ledger validation failed")
             released = _event_int(event, "released_microusd")
             if status != "reconciled":
-                if released != 0 or _event_text(event, "stop_reason") not in {
+                if released != 0 or _event_stop_reason(event) not in {
                     "missing_usage",
                     "malformed_usage",
                     "token_bounds_exceeded",
@@ -991,6 +1107,7 @@ class CostLedger:
                     "ledger_mismatch",
                     "invalid_reconciliation_outcome",
                     "ambiguous_in_flight",
+                    "metadata_access_failed",
                 }:
                     raise CostUnverifiedError("ledger validation failed")
                 if any(
@@ -1005,6 +1122,7 @@ class CostLedger:
                     )
                 ):
                     raise CostUnverifiedError("ledger validation failed")
+                self._pending.pop(key)
                 return
             usage: dict[str, Any] = {}
             for field_name in (
@@ -1016,7 +1134,10 @@ class CostLedger:
             ):
                 if field_name in event:
                     usage[field_name] = event[field_name]
-            normalized = self._normalized_usage(usage)
+            try:
+                normalized = self._normalized_usage(usage)
+            except _UsageProblem as error:
+                raise CostUnverifiedError("ledger validation failed") from error
             if (
                 normalized["input_tokens"] > reservation.input_token_bound
                 or normalized["output_tokens"] > reservation.output_token_bound
@@ -1027,11 +1148,14 @@ class CostLedger:
             pricing = self.configuration.pricing_for(reservation.provider)
             if pricing is None:
                 raise CostUnverifiedError("ledger configuration mismatch")
-            actual = pricing._cost_microusd(
-                normalized["input_tokens"],
-                normalized["output_tokens"],
-                normalized["cached_tokens"],
-            )
+            try:
+                actual = pricing._cost_microusd(
+                    normalized["input_tokens"],
+                    normalized["output_tokens"],
+                    normalized["cached_tokens"],
+                )
+            except _UsageProblem as error:
+                raise CostUnverifiedError("ledger validation failed") from error
             if _event_int(event, "actual_cost_microusd") != actual or released != reservation.reserved_microusd - actual:
                 raise CostUnverifiedError("ledger validation failed")
             outcome = event.get("outcome")
@@ -1050,7 +1174,7 @@ class CostLedger:
             if event.get("budget_status") != event_type:
                 raise CostUnverifiedError("ledger validation failed")
             self._state = event_type
-            self._stop_reason = _event_text(event, "stop_reason")
+            self._stop_reason = _event_stop_reason(event)
             return
         raise CostUnverifiedError("ledger validation failed")
 
@@ -1074,6 +1198,27 @@ class CostLedger:
     def _stop_cost_unverified(self, reason: str) -> None:
         self._stop(STOPPED_COST_UNVERIFIED, reason)
         raise CostUnverifiedError("exploratory cost is unverified")
+
+    def _stop_attempt_cost_unverified(self, reservation: Reservation, reason: str) -> None:
+        with self._lock:
+            self._raise_for_state()
+            current = self._pending.get((reservation.call_id, reservation.attempt))
+            if current is None or current != reservation:
+                self._stop_cost_unverified("ledger_mismatch")
+            assert current is not None
+            self._append_event(
+                "reconciliation",
+                status="cost_unverified",
+                call_id=current.call_id,
+                phase=current.phase,
+                attempt=current.attempt,
+                reserved_microusd=current.reserved_microusd,
+                released_microusd=0,
+                stop_reason=reason,
+            )
+            self._pending.pop((current.call_id, current.attempt))
+            self._stop(STOPPED_COST_UNVERIFIED, reason)
+            raise CostUnverifiedError("exploratory cost is unverified")
 
     def _stop_budget(self, reason: str) -> None:
         self._stop(STOPPED_BUDGET_EXHAUSTED, reason)
@@ -1192,49 +1337,48 @@ class CostLedger:
     def _normalized_usage(usage: Any) -> dict[str, int]:
         if not isinstance(usage, Mapping):
             raise _UsageProblem("missing_usage" if usage is None else "malformed_usage")
-        if any(key not in _USAGE_FIELDS for key in usage):
-            raise _UsageProblem("malformed_usage")
-        for field_name in (
-            "input_tokens",
-            "output_tokens",
-            "prompt_tokens",
-            "completion_tokens",
-            "cached_tokens",
-            "total_tokens",
-            "reasoning_tokens",
-        ):
-            if field_name in usage and (
-                type(usage[field_name]) is not int or usage[field_name] < 0
-            ):
+        try:
+            if any(key not in _USAGE_FIELDS for key in usage):
                 raise _UsageProblem("malformed_usage")
-        input_value = usage.get("input_tokens", usage.get("prompt_tokens"))
-        output_value = usage.get("output_tokens", usage.get("completion_tokens"))
-        if "input_tokens" in usage and "prompt_tokens" in usage and usage["input_tokens"] != usage["prompt_tokens"]:
-            raise _UsageProblem("malformed_usage")
-        if "output_tokens" in usage and "completion_tokens" in usage and usage["output_tokens"] != usage["completion_tokens"]:
-            raise _UsageProblem("malformed_usage")
-        if input_value is None or output_value is None:
-            raise _UsageProblem("missing_usage")
-        if type(input_value) is not int or type(output_value) is not int:
-            raise _UsageProblem("malformed_usage")
-        if input_value < 0 or output_value < 0:
-            raise _UsageProblem("malformed_usage")
-        cached_value = usage.get("cached_tokens", 0)
-        if type(cached_value) is not int or cached_value < 0 or cached_value > input_value:
-            raise _UsageProblem("malformed_usage")
-        total_value = usage.get("total_tokens", input_value + output_value)
-        if type(total_value) is not int or total_value != input_value + output_value:
-            raise _UsageProblem("malformed_usage")
-        reasoning_value = usage.get("reasoning_tokens", 0)
-        if type(reasoning_value) is not int or reasoning_value < 0:
-            raise _UsageProblem("malformed_usage")
-        return {
-            "input_tokens": input_value,
-            "output_tokens": output_value,
-            "cached_tokens": cached_value,
-            "total_tokens": total_value,
-            "reasoning_tokens": reasoning_value,
-        }
+            for field_name in (
+                "input_tokens",
+                "output_tokens",
+                "prompt_tokens",
+                "completion_tokens",
+                "cached_tokens",
+                "total_tokens",
+                "reasoning_tokens",
+            ):
+                if field_name in usage and (
+                    type(usage[field_name]) is not int or usage[field_name] < 0
+                ):
+                    raise _UsageProblem("malformed_usage")
+            input_value = usage.get("input_tokens", usage.get("prompt_tokens"))
+            output_value = usage.get("output_tokens", usage.get("completion_tokens"))
+            if "input_tokens" in usage and "prompt_tokens" in usage and usage["input_tokens"] != usage["prompt_tokens"]:
+                raise _UsageProblem("malformed_usage")
+            if "output_tokens" in usage and "completion_tokens" in usage and usage["output_tokens"] != usage["completion_tokens"]:
+                raise _UsageProblem("malformed_usage")
+            if input_value is None or output_value is None:
+                raise _UsageProblem("missing_usage")
+            cached_value = usage.get("cached_tokens", 0)
+            if cached_value > input_value:
+                raise _UsageProblem("malformed_usage")
+            total_value = usage.get("total_tokens", input_value + output_value)
+            if total_value != input_value + output_value:
+                raise _UsageProblem("malformed_usage")
+            reasoning_value = usage.get("reasoning_tokens", 0)
+            return {
+                "input_tokens": input_value,
+                "output_tokens": output_value,
+                "cached_tokens": cached_value,
+                "total_tokens": total_value,
+                "reasoning_tokens": reasoning_value,
+            }
+        except _UsageProblem:
+            raise
+        except Exception as error:
+            raise _UsageProblem("malformed_usage") from error
 
     @staticmethod
     def _check_identity(
@@ -1336,6 +1480,7 @@ class CostLedger:
                     released_microusd=0,
                     stop_reason=problem.reason,
                 )
+                self._pending.pop(key)
                 self._stop(STOPPED_COST_UNVERIFIED, problem.reason)
                 raise CostUnverifiedError("exploratory cost is unverified")
             released = current.reserved_microusd - actual
@@ -1391,6 +1536,7 @@ class CostLedger:
                 released_microusd=0,
                 stop_reason="ambiguous_in_flight",
             )
+            self._pending.pop((current.call_id, current.attempt))
             self._stop(STOPPED_COST_UNVERIFIED, "ambiguous_in_flight")
 
     def report(self) -> dict[str, Any]:
@@ -1428,16 +1574,24 @@ class CostLedger:
 
 
 def _provider_metadata(provider: Any) -> Mapping[str, Any]:
-    metadata = getattr(provider, "last_call_metadata", {})
-    return metadata if isinstance(metadata, Mapping) else {}
+    try:
+        metadata = getattr(provider, "last_call_metadata")
+        if not isinstance(metadata, Mapping):
+            raise _MetadataProblem("metadata is not a mapping")
+        return dict(metadata)
+    except _MetadataProblem:
+        raise
+    except Exception as error:
+        raise _MetadataProblem("metadata access failed") from error
 
 
 def _clear_provider_metadata(provider: Any) -> bool:
     try:
         setattr(provider, "last_call_metadata", {})
+        cleared = getattr(provider, "last_call_metadata")
+        return isinstance(cleared, Mapping) and not dict(cleared)
     except Exception:
         return False
-    return True
 
 
 class BudgetedProvider:
@@ -1480,8 +1634,11 @@ class BudgetedProvider:
         try:
             response = self._provider.complete(request)
         except Exception as error:
-            metadata = _provider_metadata(self._provider)
-            usage = metadata.get("usage")
+            try:
+                metadata = _provider_metadata(self._provider)
+                usage = metadata.get("usage")
+            except _MetadataProblem:
+                self._ledger._stop_attempt_cost_unverified(reservation, "metadata_access_failed")
             if usage is None:
                 try:
                     self._ledger.mark_ambiguous_in_flight(reservation)
@@ -1498,8 +1655,12 @@ class BudgetedProvider:
                 error_class=type(error).__name__,
             )
             raise
-        metadata = _provider_metadata(self._provider)
-        self._ledger.reconcile_response(reservation, metadata.get("usage"), metadata=metadata)
+        try:
+            metadata = _provider_metadata(self._provider)
+            usage = metadata.get("usage")
+        except _MetadataProblem:
+            self._ledger._stop_attempt_cost_unverified(reservation, "metadata_access_failed")
+        self._ledger.reconcile_response(reservation, usage, metadata=metadata)
         return response
 
 
