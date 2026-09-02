@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Mapping
 from dataclasses import replace
 from decimal import Decimal
 from pathlib import Path
@@ -774,6 +775,30 @@ def test_given_replay_with_arbitrary_stop_reason_when_opened_then_it_fails_close
         CostLedger(path, configuration)
 
 
+def test_given_replay_with_incompatible_stop_state_reason_when_opened_then_it_fails_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "incompatible-stop-reason.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, None)
+    _rewrite_last_event(path, stop_reason="fixed_plan_exhausted")
+    tampered = path.read_bytes()
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+    assert path.read_bytes() == tampered
+
+
 def test_given_ambiguous_in_flight_response_when_wrapped_then_no_retry_is_possible(tmp_path: Path) -> None:
     configuration = config(
         contingency="0",
@@ -837,6 +862,79 @@ def test_given_stale_provider_metadata_when_provider_raises_then_it_is_not_recon
     assert provider.calls == 1
     assert "stale secret" not in path.read_text()
     assert wrapped._ledger.report()["pending_attempt_count"] == 0
+
+
+@pytest.mark.parametrize("hostile_metadata_kind", ["access", "iteration", "usage"])
+def test_given_hostile_metadata_mapping_when_reconciled_then_it_stops_without_charge(
+    tmp_path: Path, hostile_metadata_kind: str
+) -> None:
+    class AccessFailureMapping(Mapping[str, object]):
+        def __getitem__(self, key: str) -> object:
+            raise RuntimeError("metadata item access failed")
+
+        def __iter__(self):
+            return iter(("usage",))
+
+        def __len__(self) -> int:
+            return 1
+
+    class IterationFailureMapping(Mapping[str, object]):
+        def __getitem__(self, key: str) -> object:
+            return {"input_tokens": 1, "output_tokens": 1}
+
+        def __iter__(self):
+            raise RuntimeError("metadata iteration failed")
+
+        def __len__(self) -> int:
+            return 1
+
+    class UsageConversionFailureMapping(Mapping[str, object]):
+        def __getitem__(self, key: str) -> object:
+            if key == "input_tokens":
+                raise TypeError("usage type conversion failed")
+            return 1
+
+        def __iter__(self):
+            return iter(("input_tokens", "output_tokens"))
+
+        def __len__(self) -> int:
+            return 2
+
+    metadata: Mapping[str, object]
+    if hostile_metadata_kind == "access":
+        metadata = AccessFailureMapping()
+    elif hostile_metadata_kind == "iteration":
+        metadata = IterationFailureMapping()
+    else:
+        metadata = {"usage": UsageConversionFailureMapping()}
+
+    configuration = config(contingency="0")
+    path = tmp_path / f"hostile-{hostile_metadata_kind}.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, None, metadata=metadata)
+
+    report = ledger.report()
+    assert ledger.status == "stopped_cost_unverified"
+    assert report["stop_reason"] == "malformed_usage"
+    assert report["spent_microusd"] == 0
+    assert report["pending_attempt_count"] == 0
+    assert [event["event_type"] for event in ledger.events] == [
+        "preflight",
+        "reservation",
+        "reconciliation",
+        "stopped_cost_unverified",
+    ]
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
 
 
 def test_given_provider_metadata_reset_failure_when_wrapped_then_invocation_is_forbidden(

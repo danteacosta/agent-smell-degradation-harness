@@ -123,13 +123,11 @@ _RECONCILED_EVENT_FIELDS = _RECONCILIATION_BASE_FIELDS | {
     "outcome",
 }
 _STOP_EVENT_FIELDS = _COMMON_EVENT_FIELDS | {"budget_status", "stop_reason"}
-_STOP_REASONS = frozenset(
+_COST_UNVERIFIED_STOP_REASONS = frozenset(
     {
         "ambiguous_in_flight",
         "attempt_policy_exceeded",
-        "attempt_reservation_exceeds_remaining_cap",
         "call_identity_mismatch",
-        "fixed_plan_exhausted",
         "fixed_task3_plan_mismatch",
         "invalid_call_identity",
         "invalid_reconciliation_outcome",
@@ -143,7 +141,30 @@ _STOP_REASONS = frozenset(
         "provider_model_pricing_mismatch",
         "reservation_already_in_flight",
         "token_bounds_exceeded",
+    }
+)
+_BUDGET_EXHAUSTED_STOP_REASONS = frozenset(
+    {
+        "attempt_reservation_exceeds_remaining_cap",
+        "fixed_plan_exhausted",
         "worst_case_reserved_cost_exceeds_approved_cap",
+    }
+)
+_STOP_REASONS_BY_STATUS = {
+    STOPPED_COST_UNVERIFIED: _COST_UNVERIFIED_STOP_REASONS,
+    STOPPED_BUDGET_EXHAUSTED: _BUDGET_EXHAUSTED_STOP_REASONS,
+}
+_STOP_REASONS = frozenset().union(*_STOP_REASONS_BY_STATUS.values())
+_UNVERIFIED_RECONCILIATION_STOP_REASONS = frozenset(
+    {
+        "ambiguous_in_flight",
+        "invalid_reconciliation_outcome",
+        "ledger_mismatch",
+        "malformed_usage",
+        "metadata_access_failed",
+        "missing_usage",
+        "provider_model_pricing_mismatch",
+        "token_bounds_exceeded",
     }
 )
 
@@ -246,12 +267,22 @@ def _validate_event_schema(event: Mapping[str, Any]) -> None:
     event_type = event.get("event_type")
     if event_type == "preflight":
         allowed = _PREFLIGHT_EVENT_FIELDS
+        budget_status = event.get("budget_status")
+        if budget_status == "ready":
+            if event.get("stop_reason") is not None:
+                raise CostUnverifiedError("ledger validation failed")
+        elif budget_status in _STOP_REASONS_BY_STATUS:
+            _event_stop_reason(event, expected_status=budget_status)
+        else:
+            raise CostUnverifiedError("ledger validation failed")
     elif event_type == "reservation":
         allowed = _RESERVATION_EVENT_FIELDS
     elif event_type == "reconciliation":
         status = event.get("status")
         if status in {"cost_unverified", "ambiguous_in_flight"}:
             allowed = _UNVERIFIED_RECONCILIATION_EVENT_FIELDS
+            if _event_stop_reason(event) not in _UNVERIFIED_RECONCILIATION_STOP_REASONS:
+                raise CostUnverifiedError("ledger validation failed")
         elif status == "reconciled":
             allowed_sets = {
                 _RECONCILED_EVENT_FIELDS,
@@ -266,15 +297,19 @@ def _validate_event_schema(event: Mapping[str, Any]) -> None:
             raise CostUnverifiedError("ledger validation failed")
     elif event_type in {STOPPED_COST_UNVERIFIED, STOPPED_BUDGET_EXHAUSTED}:
         allowed = _STOP_EVENT_FIELDS
+        _event_stop_reason(event, expected_status=event_type)
     else:
         raise CostUnverifiedError("ledger validation failed")
     if set(event) != allowed:
         raise CostUnverifiedError("ledger validation failed")
 
 
-def _event_stop_reason(event: Mapping[str, Any]) -> str:
+def _event_stop_reason(
+    event: Mapping[str, Any], *, expected_status: str | None = None
+) -> str:
     reason = _event_text(event, "stop_reason")
-    if reason not in _STOP_REASONS:
+    allowed = _STOP_REASONS if expected_status is None else _STOP_REASONS_BY_STATUS.get(expected_status)
+    if allowed is None or reason not in allowed:
         raise CostUnverifiedError("ledger validation failed")
     return reason
 
@@ -1438,9 +1473,18 @@ class CostLedger:
             assert current is not None
             if isinstance(reservation, Reservation) and reservation != current:
                 self._stop_cost_unverified("ledger_mismatch")
-            if usage is None and isinstance(metadata, Mapping):
-                usage = metadata.get("usage")  # type: ignore[assignment]
+            safe_metadata: dict[str, Any] | None = None
+            problem: _UsageProblem | None = None
             try:
+                if metadata is not None:
+                    if not isinstance(metadata, Mapping):
+                        raise _UsageProblem("malformed_usage")
+                    try:
+                        safe_metadata = dict(metadata)
+                    except Exception as error:
+                        raise _UsageProblem("malformed_usage") from error
+                    if usage is None:
+                        usage = safe_metadata.get("usage")
                 if type(outcome) is not str or outcome not in _SAFE_OUTCOMES:
                     raise _UsageProblem("invalid_reconciliation_outcome")
                 safe_error_class = _safe_error_class(error_class)
@@ -1449,7 +1493,7 @@ class CostLedger:
                     provider=provider,
                     model=model,
                     model_version=model_version,
-                    metadata=metadata,
+                    metadata=safe_metadata,
                 )
                 normalized = self._normalized_usage(usage)
                 if (
@@ -1469,7 +1513,11 @@ class CostLedger:
                 )
                 if actual > current.reserved_microusd:
                     raise _UsageProblem("ledger_mismatch")
-            except _UsageProblem as problem:
+            except _UsageProblem as error:
+                problem = error
+            except Exception as error:
+                problem = _UsageProblem("malformed_usage")
+            if problem is not None:
                 self._append_event(
                     "reconciliation",
                     status="cost_unverified",
