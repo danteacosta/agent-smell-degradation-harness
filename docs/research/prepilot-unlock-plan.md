@@ -79,7 +79,9 @@ pre-pilot and does not enter H1 or H2.
 Raw source material must be assembled outside the repository as JSONL. Each row
 needs the source text, clean and defective variants, source URL, license
 evidence, project ID, retrieval timestamp, declared removed constraint,
-near-clone review, and the five manipulation checks. The validator rejects
+near-clone review, the five manipulation checks, and a timestamped human rights
+review confirming redistribution, derivative transformation, attribution, and
+transmission to the configured external providers. The validator rejects
 placeholders, missing rights evidence, duplicate hashes, missing projects, and
 any defect family other than the fixed
 \`incompleteness_missing_condition\`.
@@ -94,8 +96,11 @@ python scripts/validate_corpus_intake.py \\
   --minimum-projects 6
 \`\`\`
 
-The output is a redacted candidate manifest. It contains no requirement text and
-does not itself establish that a license is legally sufficient. The exact
+The output is a redacted candidate manifest. It contains no requirement text.
+A license name or URL alone is insufficient: schema `prepilot-corpus/v3`
+fails closed unless all four rights assertions and the reviewer/timestamp are
+present. The validator records that review; it does not establish that the
+legal interpretation is correct. The exact
 redistribution and transformation right must be confirmed by the researcher or
 advisor. Current source-screening decisions remain in
 \`docs/research/prepilot-corpus-screening.md\`.
