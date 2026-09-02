@@ -35,6 +35,45 @@ _HASH_FIELDS = (
     "clean_requirement_sha256",
     "defective_requirement_sha256",
 )
+_REDACTED_RECORD_FIELDS = {
+    "source_intent_id",
+    "project_id",
+    "source_url",
+    "license",
+    "license_evidence_url",
+    "reuse_permission_status",
+    "rights_review",
+    "retrieved_at",
+    *_HASH_FIELDS,
+    "defect_family",
+    "removed_constraint_id",
+    "near_clone_group",
+    "near_clone_reviewed",
+    "manipulation_check",
+    "record_sha256",
+}
+_RAW_TEXT_FIELDS = {
+    "canonical_text",
+    "source_text",
+    "clean_requirement",
+    "defective_requirement",
+}
+_CANDIDATE_FIELDS = {
+    "schema_version",
+    "status",
+    "record_count",
+    "unique_intent_count",
+    "project_count",
+    "minimum_projects",
+    "expected_intents",
+    "raw_text_exported",
+    "records",
+}
+_FROZEN_FIELDS = _CANDIDATE_FIELDS | {
+    "frozen_at",
+    "freeze_reviewer_id",
+    "manifest_sha256",
+}
 
 
 class CorpusIntakeError(ValueError):
@@ -277,10 +316,145 @@ def build_redacted_manifest(
     }
 
 
+def _validate_redacted_record(record: Mapping[str, Any]) -> dict[str, Any]:
+    if not isinstance(record, Mapping):
+        raise CorpusIntakeError("frozen manifest records must be objects")
+    unexpected = set(record) - _REDACTED_RECORD_FIELDS
+    if unexpected:
+        if unexpected & _RAW_TEXT_FIELDS:
+            raise CorpusIntakeError("frozen manifest records must remain redacted")
+        raise CorpusIntakeError("frozen manifest record has unexpected fields")
+    missing = _REDACTED_RECORD_FIELDS - set(record)
+    if missing:
+        raise CorpusIntakeError("frozen manifest record is not a complete redacted record")
+    if "record_sha256" not in record:
+        raise CorpusIntakeError("frozen manifest record_sha256 is required")
+    redacted = dict(record)
+    expected = _sha256_json({key: value for key, value in redacted.items() if key != "record_sha256"})
+    if str(redacted["record_sha256"]).lower() != expected:
+        raise CorpusIntakeError("record_sha256 does not match the redacted record")
+    return redacted
+
+
+def _validate_freeze_metadata(frozen_at: str, freeze_reviewer_id: str) -> None:
+    if not isinstance(frozen_at, str) or not frozen_at.strip() or frozen_at.strip().lower() in {
+        "tbd",
+        "unknown",
+    }:
+        raise CorpusIntakeError("frozen_at must be a non-placeholder ISO-8601 timestamp")
+    _required_timestamp({"frozen_at": frozen_at}, "frozen_at")
+    if not isinstance(freeze_reviewer_id, str) or not freeze_reviewer_id.strip() or freeze_reviewer_id.strip().lower() in {
+        "tbd",
+        "unknown",
+        "none",
+        "null",
+    }:
+        raise CorpusIntakeError("freeze_reviewer_id must be a non-placeholder reviewer id")
+
+
+def freeze_validated_manifest(
+    candidate: Mapping[str, Any], *, frozen_at: str, freeze_reviewer_id: str
+) -> dict[str, Any]:
+    """Freeze an already-built, redacted candidate without retaining source text."""
+    if not isinstance(candidate, Mapping):
+        raise CorpusIntakeError("candidate manifest must be an object")
+    unexpected = set(candidate) - _CANDIDATE_FIELDS
+    if unexpected:
+        if unexpected & _RAW_TEXT_FIELDS:
+            raise CorpusIntakeError("candidate manifest must remain redacted")
+        raise CorpusIntakeError("candidate manifest has unexpected fields")
+    _validate_freeze_metadata(frozen_at, freeze_reviewer_id)
+    if candidate.get("schema_version") != SCHEMA_VERSION:
+        raise CorpusIntakeError("candidate manifest has an unsupported schema_version")
+    if candidate.get("status") != "validated_candidate":
+        raise CorpusIntakeError("candidate manifest must have validated_candidate status")
+    if candidate.get("raw_text_exported") is not False:
+        raise CorpusIntakeError("candidate manifest raw_text_exported must be false")
+    if candidate.get("expected_intents") != 12 or candidate.get("minimum_projects") != 6:
+        raise CorpusIntakeError("candidate manifest must use the prepilot corpus count gates")
+    records = [_validate_redacted_record(record) for record in candidate.get("records", [])]
+    if len(records) != 12 or len(records) != candidate.get("record_count") or len(records) != candidate.get("unique_intent_count"):
+        raise CorpusIntakeError("candidate manifest record counts are inconsistent")
+    intent_ids = [str(record["source_intent_id"]) for record in records]
+    if len(set(intent_ids)) != len(intent_ids):
+        raise CorpusIntakeError("source_intent_id values must be unique")
+    project_ids = {str(record["project_id"]) for record in records}
+    if len(project_ids) < 6 or len(project_ids) != candidate.get("project_count"):
+        raise CorpusIntakeError("candidate manifest project count is inconsistent")
+    hash_values = [str(record[field]) for record in records for field in _HASH_FIELDS]
+    if len(set(hash_values)) != len(hash_values):
+        raise CorpusIntakeError("source hashes must be globally unique")
+    frozen = {
+        "schema_version": SCHEMA_VERSION,
+        "status": "frozen",
+        "record_count": len(records),
+        "unique_intent_count": len(intent_ids),
+        "project_count": len(project_ids),
+        "minimum_projects": candidate.get("minimum_projects"),
+        "expected_intents": candidate.get("expected_intents"),
+        "raw_text_exported": False,
+        "frozen_at": frozen_at,
+        "freeze_reviewer_id": freeze_reviewer_id.strip(),
+        "records": sorted(records, key=lambda row: str(row["source_intent_id"])),
+    }
+    if frozen["minimum_projects"] is None or frozen["expected_intents"] is None:
+        raise CorpusIntakeError("candidate manifest count gates are required")
+    frozen["manifest_sha256"] = _sha256_json(frozen)
+    return frozen
+
+
+def validate_private_records_against_frozen_manifest(
+    records: Iterable[Mapping[str, Any]], frozen_manifest: Mapping[str, Any]
+) -> list[dict[str, Any]]:
+    """Verify private records and return their redacted, frozen-bound metadata join."""
+    if not isinstance(frozen_manifest, Mapping) or frozen_manifest.get("status") != "frozen":
+        raise CorpusIntakeError("frozen manifest must have frozen status")
+    unexpected = set(frozen_manifest) - _FROZEN_FIELDS
+    if unexpected:
+        if unexpected & _RAW_TEXT_FIELDS:
+            raise CorpusIntakeError("frozen manifest must remain redacted")
+        raise CorpusIntakeError("frozen manifest has unexpected fields")
+    if frozen_manifest.get("schema_version") != SCHEMA_VERSION:
+        raise CorpusIntakeError("frozen manifest has an unsupported schema_version")
+    if frozen_manifest.get("raw_text_exported") is not False:
+        raise CorpusIntakeError("frozen manifest raw_text_exported must be false")
+    _validate_freeze_metadata(
+        frozen_manifest.get("frozen_at", ""),
+        frozen_manifest.get("freeze_reviewer_id", ""),
+    )
+    expected_hash = frozen_manifest.get("manifest_sha256")
+    unsigned = {key: value for key, value in frozen_manifest.items() if key != "manifest_sha256"}
+    if not isinstance(expected_hash, str) or expected_hash != _sha256_json(unsigned):
+        raise CorpusIntakeError("manifest_sha256 does not match the frozen manifest")
+    normalized = build_redacted_manifest(
+        records,
+        expected_intents=int(frozen_manifest["expected_intents"]),
+        minimum_projects=int(frozen_manifest["minimum_projects"]),
+    )
+    frozen_rows = [_validate_redacted_record(row) for row in frozen_manifest.get("records", [])]
+    frozen_records = {str(row["source_intent_id"]): row for row in frozen_rows}
+    normalized_records = {
+        str(row["source_intent_id"]): row for row in normalized["records"]
+    }
+    if set(normalized_records) != set(frozen_records):
+        raise CorpusIntakeError("private records source-intent IDs do not match frozen manifest")
+    join: list[dict[str, Any]] = []
+    for intent_id in sorted(frozen_records):
+        expected = frozen_records[intent_id]
+        actual = normalized_records[intent_id]
+        for field in ("project_id", *_HASH_FIELDS, "rights_review", "record_sha256"):
+            if actual.get(field) != expected.get(field):
+                raise CorpusIntakeError(f"private record {field} does not match frozen manifest")
+        join.append(dict(actual))
+    return join
+
+
 __all__ = [
     "CorpusIntakeError",
     "SCHEMA_VERSION",
     "REQUIRED_RIGHTS_ASSERTIONS",
     "build_redacted_manifest",
+    "freeze_validated_manifest",
     "load_private_records",
+    "validate_private_records_against_frozen_manifest",
 ]

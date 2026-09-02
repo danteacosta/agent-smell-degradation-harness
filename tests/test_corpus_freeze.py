@@ -1,0 +1,219 @@
+from __future__ import annotations
+
+import copy
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+import pytest
+
+from eval.corpus_intake import (
+    CorpusIntakeError,
+    build_redacted_manifest,
+    validate_private_records_against_frozen_manifest,
+    freeze_validated_manifest,
+)
+
+
+REPO_ROOT = Path(__file__).parents[1]
+FROZEN_AT = "2026-09-02T14:00:00+00:00"
+
+
+def _record(index: int, *, project: int | None = None) -> dict:
+    project_id = project if project is not None else index % 6
+    return {
+        "source_intent_id": f"source-{index:02d}",
+        "project_id": f"project-{project_id}",
+        "source_url": f"https://private.example/requirements/{index}",
+        "license": "CC-BY-4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0/",
+        "reuse_permission_status": "license_confirmed",
+        "rights_review": {
+            "redistribution_allowed": True,
+            "derivative_use_allowed": True,
+            "external_provider_processing_allowed": True,
+            "attribution_recorded": True,
+            "reviewer_id": "rights-reviewer-a",
+            "reviewed_at": "2026-09-02T10:00:00+00:00",
+        },
+        "retrieved_at": "2026-09-01T12:00:00+00:00",
+        "canonical_text": f"PRIVATE SOURCE SECRET {index}.",
+        "clean_requirement": f"The service shall process private request {index} within 5 minutes.",
+        "defective_requirement": f"The service shall process private request {index} quickly.",
+        "defect_family": "incompleteness_missing_condition",
+        "removed_constraint_id": f"constraint-{index}",
+        "near_clone_group": f"project-{project_id}-group-{index}",
+        "near_clone_reviewed": True,
+        "manipulation_check": {
+            "defect_present": True,
+            "no_secondary_defect": True,
+            "intent_preserved": True,
+            "clean_variant_realistic": True,
+            "constraint_independently_auditable": True,
+            "reviewer_id": "manipulation-reviewer-a",
+        },
+    }
+
+
+def _candidate() -> tuple[list[dict], dict]:
+    records = [_record(index) for index in range(12)]
+    return records, build_redacted_manifest(records)
+
+
+def test_validated_candidate_freezes_to_canonical_hash_only_manifest() -> None:
+    records, candidate = _candidate()
+    before = copy.deepcopy(candidate)
+
+    frozen = freeze_validated_manifest(
+        candidate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+    )
+    serialized = json.dumps(frozen, ensure_ascii=False)
+
+    assert frozen["schema_version"] == "prepilot-corpus/v3"
+    assert frozen["status"] == "frozen"
+    assert frozen["frozen_at"] == FROZEN_AT
+    assert frozen["freeze_reviewer_id"] == "freeze-reviewer-a"
+    assert frozen["record_count"] == 12
+    assert frozen["project_count"] == 6
+    assert frozen["raw_text_exported"] is False
+    assert len(frozen["manifest_sha256"]) == 64
+    assert candidate == before
+    assert all(
+        not {"canonical_text", "source_text", "clean_requirement", "defective_requirement"}
+        & set(row)
+        for row in frozen["records"]
+    )
+    assert "PRIVATE SOURCE SECRET" not in serialized
+    assert "private request" not in serialized
+    assert records[0]["canonical_text"].startswith("PRIVATE SOURCE")
+
+
+@pytest.mark.parametrize(
+    ("frozen_at", "reviewer"),
+    [("TBD", "freeze-reviewer-a"), (FROZEN_AT, "TBD"), ("", "")],
+)
+def test_freeze_rejects_placeholder_metadata(frozen_at: str, reviewer: str) -> None:
+    _, candidate = _candidate()
+
+    with pytest.raises(CorpusIntakeError, match="frozen_at|freeze_reviewer_id"):
+        freeze_validated_manifest(
+            candidate, frozen_at=frozen_at, freeze_reviewer_id=reviewer
+        )
+
+
+def test_freeze_rejects_non_candidate_shapes_and_raw_fields() -> None:
+    _, candidate = _candidate()
+
+    for invalid in (
+        {**candidate, "status": "frozen"},
+        {**candidate, "raw_text_exported": True},
+        {**candidate, "records": [*candidate["records"], {"source_text": "secret"}]},
+    ):
+        with pytest.raises(CorpusIntakeError):
+            freeze_validated_manifest(
+                invalid, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+            )
+
+    raw_candidate = copy.deepcopy(candidate)
+    raw_candidate["records"][0]["clean_requirement"] = "PRIVATE RAW SECRET"
+    with pytest.raises(CorpusIntakeError, match="raw|redacted"):
+        freeze_validated_manifest(
+            raw_candidate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+        )
+
+
+def test_candidate_validator_rejects_count_project_rights_and_duplicate_hashes() -> None:
+    with pytest.raises(CorpusIntakeError, match="exactly 12"):
+        build_redacted_manifest([_record(index) for index in range(11)])
+
+    with pytest.raises(CorpusIntakeError, match="at least 6"):
+        build_redacted_manifest([_record(index, project=0) for index in range(12)])
+
+    records = [_record(index) for index in range(12)]
+    records[0]["rights_review"]["external_provider_processing_allowed"] = False
+    with pytest.raises(CorpusIntakeError, match="external_provider_processing_allowed"):
+        build_redacted_manifest(records)
+
+    records = [_record(index) for index in range(12)]
+    records[1]["canonical_text"] = records[0]["canonical_text"]
+    with pytest.raises(CorpusIntakeError, match="hashes"):
+        build_redacted_manifest(records)
+
+
+def test_freeze_rejects_tampered_record_hash_and_duplicate_intent() -> None:
+    _, candidate = _candidate()
+    tampered = copy.deepcopy(candidate)
+    tampered["records"][0]["record_sha256"] = "0" * 64
+    with pytest.raises(CorpusIntakeError, match="record_sha256"):
+        freeze_validated_manifest(
+            tampered, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+        )
+
+    duplicate = copy.deepcopy(candidate)
+    duplicate["records"][1]["source_intent_id"] = duplicate["records"][0][
+        "source_intent_id"
+    ]
+    with pytest.raises(CorpusIntakeError, match="unique"):
+        freeze_validated_manifest(
+            duplicate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+        )
+
+
+def test_private_records_join_against_frozen_manifest_without_raw_text() -> None:
+    records, candidate = _candidate()
+    frozen = freeze_validated_manifest(
+        candidate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+    )
+
+    joined = validate_private_records_against_frozen_manifest(records, frozen)
+    serialized = json.dumps(joined, ensure_ascii=False)
+
+    assert len(joined) == 12
+    assert joined[0]["source_intent_id"] == "source-00"
+    assert joined[0]["project_id"] == "project-0"
+    assert "PRIVATE SOURCE SECRET" not in serialized
+    assert "private request" not in serialized
+    assert all("canonical_text" not in row for row in joined)
+    assert all("clean_requirement" not in row for row in joined)
+
+    tampered = copy.deepcopy(records)
+    tampered[0]["clean_requirement"] = "PRIVATE TAMPERED SECRET"
+    with pytest.raises(CorpusIntakeError, match="clean_requirement_sha256") as error:
+        validate_private_records_against_frozen_manifest(tampered, frozen)
+    assert "PRIVATE TAMPERED SECRET" not in str(error.value)
+
+
+def test_freeze_cli_writes_only_fixed_redacted_repository_artifact(tmp_path: Path) -> None:
+    records, candidate = _candidate()
+    candidate_path = tmp_path / "private-candidate.json"
+    candidate_path.write_text(json.dumps(candidate), encoding="utf-8")
+    output_path = REPO_ROOT / "data/prepilot/corpus-manifest.json"
+    if output_path.exists():
+        output_path.unlink()
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/freeze_corpus_manifest.py",
+            "--candidate",
+            str(candidate_path),
+            "--frozen-at",
+            FROZEN_AT,
+            "--freeze-reviewer-id",
+            "freeze-reviewer-a",
+        ],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert output_path.exists()
+    emitted = json.loads(output_path.read_text(encoding="utf-8"))
+    assert emitted["status"] == "frozen"
+    assert emitted["raw_text_exported"] is False
+    assert "PRIVATE SOURCE SECRET" not in result.stdout + result.stderr
+    assert "private request" not in output_path.read_text(encoding="utf-8")
+    output_path.unlink()
