@@ -19,6 +19,14 @@ def _record(index: int) -> dict:
         "license": "CC-BY-4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0/",
         "reuse_permission_status": "license_confirmed",
+        "rights_review": {
+            "redistribution_allowed": True,
+            "derivative_use_allowed": True,
+            "external_provider_processing_allowed": True,
+            "attribution_recorded": True,
+            "reviewer_id": "rights-reviewer-a",
+            "reviewed_at": "2026-09-02T10:00:00+00:00",
+        },
         "retrieved_at": "2026-09-01T12:00:00+00:00",
         "canonical_text": f"Canonical source statement {index}.",
         "clean_requirement": f"The service shall process request {index} within 5 minutes.",
@@ -62,6 +70,25 @@ def test_intake_rejects_missing_rights_review_and_duplicate_intents() -> None:
     records = [_record(index) for index in range(12)]
     records[1]["source_intent_id"] = records[0]["source_intent_id"]
     with pytest.raises(CorpusIntakeError, match="unique"):
+        build_redacted_manifest(records)
+
+
+def test_intake_rejects_unconfirmed_external_provider_processing_rights() -> None:
+    records = [_record(index) for index in range(12)]
+    records[0]["rights_review"]["external_provider_processing_allowed"] = False
+
+    with pytest.raises(
+        CorpusIntakeError,
+        match="external_provider_processing_allowed",
+    ):
+        build_redacted_manifest(records)
+
+
+def test_intake_requires_timestamped_rights_review() -> None:
+    records = [_record(index) for index in range(12)]
+    records[0]["rights_review"].pop("reviewed_at")
+
+    with pytest.raises(CorpusIntakeError, match="reviewed_at"):
         build_redacted_manifest(records)
 
 
