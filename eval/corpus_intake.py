@@ -294,8 +294,10 @@ def build_redacted_manifest(
     expected_intents: int = 12,
     minimum_projects: int = 6,
 ) -> dict[str, Any]:
-    if expected_intents <= 0 or minimum_projects <= 0:
-        raise CorpusIntakeError("corpus count gates must be positive")
+    if type(expected_intents) is not int or expected_intents != 12:
+        raise CorpusIntakeError("expected_intents must be exactly 12")
+    if type(minimum_projects) is not int or minimum_projects < 6:
+        raise CorpusIntakeError("minimum_projects must be an integer >= 6")
     redacted = [_validate_record(record) for record in records]
     intent_ids = [str(record["source_intent_id"]) for record in redacted]
     if len(set(intent_ids)) != len(intent_ids):
@@ -433,8 +435,15 @@ def freeze_validated_manifest(
         raise CorpusIntakeError("candidate manifest must have validated_candidate status")
     if candidate.get("raw_text_exported") is not False:
         raise CorpusIntakeError("candidate manifest raw_text_exported must be false")
-    if candidate.get("expected_intents") != 12 or candidate.get("minimum_projects") != 6:
-        raise CorpusIntakeError("candidate manifest must use the prepilot corpus count gates")
+    if type(candidate.get("expected_intents")) is not int or candidate.get("expected_intents") != 12:
+        raise CorpusIntakeError("candidate manifest expected_intents must be exactly 12")
+    if (
+        type(candidate.get("minimum_projects")) is not int
+        or candidate.get("minimum_projects") < 6
+    ):
+        raise CorpusIntakeError(
+            "candidate manifest minimum_projects must be an integer >= 6"
+        )
     records = [_validate_redacted_record(record) for record in candidate.get("records", [])]
     if len(records) != 12 or len(records) != candidate.get("record_count") or len(records) != candidate.get("unique_intent_count"):
         raise CorpusIntakeError("candidate manifest record counts are inconsistent")
@@ -489,10 +498,15 @@ def validate_private_records_against_frozen_manifest(
     unsigned = {key: value for key, value in frozen_manifest.items() if key != "manifest_sha256"}
     if not isinstance(expected_hash, str) or expected_hash != _sha256_json(unsigned):
         raise CorpusIntakeError("manifest_sha256 does not match the frozen manifest")
-    if frozen_manifest.get("expected_intents") != 12:
+    if type(frozen_manifest.get("expected_intents")) is not int or frozen_manifest.get("expected_intents") != 12:
         raise CorpusIntakeError("frozen manifest expected_intents must be 12")
-    if frozen_manifest.get("minimum_projects") != 6:
-        raise CorpusIntakeError("frozen manifest minimum_projects must be 6")
+    if (
+        type(frozen_manifest.get("minimum_projects")) is not int
+        or frozen_manifest.get("minimum_projects") < 6
+    ):
+        raise CorpusIntakeError(
+            "frozen manifest minimum_projects must be an integer >= 6"
+        )
     frozen_rows = [_validate_redacted_record(row) for row in frozen_manifest.get("records", [])]
     frozen_intent_ids = [str(row["source_intent_id"]) for row in frozen_rows]
     frozen_project_ids = {str(row["project_id"]) for row in frozen_rows}

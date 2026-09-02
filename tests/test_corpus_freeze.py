@@ -114,6 +114,28 @@ def test_freeze_preserves_valid_corpus_with_more_than_six_projects() -> None:
     assert frozen["project_count"] == 7
 
 
+def test_candidate_rejects_weakened_count_gate_overrides() -> None:
+    records = [_record(index) for index in range(12)]
+
+    with pytest.raises(CorpusIntakeError, match="expected_intents.*12"):
+        build_redacted_manifest(records, expected_intents=11)
+    with pytest.raises(CorpusIntakeError, match="minimum_projects.*6"):
+        build_redacted_manifest(records, minimum_projects=5)
+
+
+def test_seven_project_corpus_with_minimum_projects_override_freezes_and_joins() -> None:
+    records = [_record(index, project=index % 7) for index in range(12)]
+    candidate = build_redacted_manifest(records, minimum_projects=7)
+
+    frozen = freeze_validated_manifest(
+        candidate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+    )
+
+    assert frozen["project_count"] == 7
+    assert frozen["minimum_projects"] == 7
+    assert len(validate_private_records_against_frozen_manifest(records, frozen)) == 12
+
+
 @pytest.mark.parametrize("review_name", ["rights_review", "manipulation_check"])
 @pytest.mark.parametrize("reviewer_id", [None, 123])
 def test_candidate_rejects_non_string_nested_reviewer_ids(
