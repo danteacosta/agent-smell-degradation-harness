@@ -310,7 +310,7 @@ def test_given_a_secret_like_call_id_when_reserved_then_only_a_stable_digest_is_
     configuration = config(contingency="0")
     path = tmp_path / "redacted-call-id.jsonl"
     ledger = CostLedger(path, configuration)
-    raw_call_id = "private prompt: customer email and API secret"
+    raw_call_id = "call_" + ("a" * 64)
 
     reservation = ledger.reserve_attempt(
         call_id=raw_call_id,
@@ -365,6 +365,12 @@ def test_given_under_bound_usage_when_reconciled_then_release_is_recorded(tmp_pa
         ({"input_tokens": 1, "output_tokens": 1, "reasoning_tokens": -1}, "malformed_usage"),
         ({"input_tokens": 1, "output_tokens": 1, "reasoning_tokens": True}, "malformed_usage"),
         ({"input_tokens": 1, "output_tokens": 1, "reasoning_tokens": 11}, "token_bounds_exceeded"),
+        ({"input_tokens": 1, "prompt_tokens": True, "output_tokens": 1}, "malformed_usage"),
+        ({"input_tokens": 1, "prompt_tokens": 1.0, "output_tokens": 1}, "malformed_usage"),
+        ({"input_tokens": 1, "prompt_tokens": "1", "output_tokens": 1}, "malformed_usage"),
+        ({"input_tokens": 1, "output_tokens": 1, "completion_tokens": True}, "malformed_usage"),
+        ({"input_tokens": 1, "output_tokens": 1, "completion_tokens": 1.0}, "malformed_usage"),
+        ({"input_tokens": 1, "output_tokens": 1, "completion_tokens": "1"}, "malformed_usage"),
     ],
 )
 def test_given_unverifiable_usage_when_reconciled_then_the_ledger_stops_cost_unverified(
@@ -775,6 +781,28 @@ def test_given_stale_provider_metadata_when_provider_raises_then_it_is_not_recon
 
     assert provider.calls == 1
     assert "stale secret" not in path.read_text()
+
+
+def test_given_a_reconciled_ledger_when_reopened_then_state_and_report_are_identical(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "replay-state.jsonl"
+    live = CostLedger(path, configuration)
+    reservation = live.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    live.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+    live_report = live.report()
+
+    reopened = CostLedger(path, configuration)
+
+    assert reopened.status == live.status == "running"
+    assert reopened.report() == live_report
 
 
 def test_given_unreconciled_reservation_when_ledger_is_reopened_then_it_stops_as_ambiguous(

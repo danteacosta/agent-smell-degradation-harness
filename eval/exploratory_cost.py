@@ -118,12 +118,6 @@ def _redacted_call_id(value: Any) -> str:
     """Return a stable ledger identifier without persisting caller text."""
 
     safe = _safe_text(value, "call_id")
-    if (
-        len(safe) == len(_CALL_ID_PREFIX) + 64
-        and safe.startswith(_CALL_ID_PREFIX)
-        and all(character in "0123456789abcdef" for character in safe[len(_CALL_ID_PREFIX) :])
-    ):
-        return safe
     digest = hashlib.sha256(("exploratory-cost-call/v1\0" + safe).encode("utf-8")).hexdigest()
     return _CALL_ID_PREFIX + digest
 
@@ -965,6 +959,7 @@ class CostLedger:
                 reservation.call_id, (reservation.provider, reservation.phase)
             )
             self._active_reserved_microusd += reservation.reserved_microusd
+            self._state = "running"
             return
         if event_type == "reconciliation":
             status = event.get("status")
@@ -1199,6 +1194,19 @@ class CostLedger:
             raise _UsageProblem("missing_usage" if usage is None else "malformed_usage")
         if any(key not in _USAGE_FIELDS for key in usage):
             raise _UsageProblem("malformed_usage")
+        for field_name in (
+            "input_tokens",
+            "output_tokens",
+            "prompt_tokens",
+            "completion_tokens",
+            "cached_tokens",
+            "total_tokens",
+            "reasoning_tokens",
+        ):
+            if field_name in usage and (
+                type(usage[field_name]) is not int or usage[field_name] < 0
+            ):
+                raise _UsageProblem("malformed_usage")
         input_value = usage.get("input_tokens", usage.get("prompt_tokens"))
         output_value = usage.get("output_tokens", usage.get("completion_tokens"))
         if "input_tokens" in usage and "prompt_tokens" in usage and usage["input_tokens"] != usage["prompt_tokens"]:
