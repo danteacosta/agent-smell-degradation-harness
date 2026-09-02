@@ -426,6 +426,28 @@ def _reject_raw_text_injection(value: Any) -> None:
             _reject_raw_text_injection(nested)
 
 
+def _canonical_unsigned_frozen_manifest(
+    frozen_manifest: Mapping[str, Any], frozen_rows: Iterable[Mapping[str, Any]]
+) -> dict[str, Any]:
+    """Build the unsigned frozen shape from already-normalized rows."""
+    return {
+        "schema_version": frozen_manifest["schema_version"],
+        "status": frozen_manifest["status"],
+        "record_count": frozen_manifest["record_count"],
+        "unique_intent_count": frozen_manifest["unique_intent_count"],
+        "project_count": frozen_manifest["project_count"],
+        "minimum_projects": frozen_manifest["minimum_projects"],
+        "expected_intents": frozen_manifest["expected_intents"],
+        "raw_text_exported": frozen_manifest["raw_text_exported"],
+        "frozen_at": frozen_manifest["frozen_at"],
+        "freeze_reviewer_id": frozen_manifest["freeze_reviewer_id"],
+        "records": sorted(
+            (dict(row) for row in frozen_rows),
+            key=lambda row: str(row["source_intent_id"]),
+        ),
+    }
+
+
 def _validate_freeze_metadata(frozen_at: str, freeze_reviewer_id: str) -> None:
     if not isinstance(frozen_at, str) or not frozen_at.strip() or frozen_at.strip().lower() in {
         "tbd",
@@ -556,6 +578,19 @@ def validate_private_records_against_frozen_manifest(
             "frozen manifest minimum_projects must be an integer >= 6"
         )
     frozen_rows = [_validate_redacted_record(row) for row in frozen_manifest.get("records", [])]
+    canonical_unsigned = _canonical_unsigned_frozen_manifest(
+        frozen_manifest, frozen_rows
+    )
+    unsigned = {
+        key: value
+        for key, value in frozen_manifest.items()
+        if key != "manifest_sha256"
+    }
+    if unsigned != canonical_unsigned:
+        raise CorpusIntakeError("frozen manifest is not in canonical normalized form")
+    expected_hash = frozen_manifest.get("manifest_sha256")
+    if not isinstance(expected_hash, str) or expected_hash != _sha256_json(canonical_unsigned):
+        raise CorpusIntakeError("manifest_sha256 does not match the canonical frozen manifest")
     frozen_intent_ids = [str(row["source_intent_id"]) for row in frozen_rows]
     frozen_project_ids = {str(row["project_id"]) for row in frozen_rows}
     if len(frozen_rows) != 12:
@@ -576,31 +611,6 @@ def validate_private_records_against_frozen_manifest(
         raise CorpusIntakeError("frozen manifest unique_intent_count is inconsistent")
     if frozen_manifest.get("project_count") != len(frozen_project_ids):
         raise CorpusIntakeError("frozen manifest project_count is inconsistent")
-    canonical_unsigned = {
-        "schema_version": frozen_manifest["schema_version"],
-        "status": frozen_manifest["status"],
-        "record_count": frozen_manifest["record_count"],
-        "unique_intent_count": frozen_manifest["unique_intent_count"],
-        "project_count": frozen_manifest["project_count"],
-        "minimum_projects": frozen_manifest["minimum_projects"],
-        "expected_intents": frozen_manifest["expected_intents"],
-        "raw_text_exported": frozen_manifest["raw_text_exported"],
-        "frozen_at": frozen_manifest["frozen_at"],
-        "freeze_reviewer_id": frozen_manifest["freeze_reviewer_id"],
-        "records": sorted(
-            frozen_rows, key=lambda row: str(row["source_intent_id"])
-        ),
-    }
-    unsigned = {
-        key: value
-        for key, value in frozen_manifest.items()
-        if key != "manifest_sha256"
-    }
-    if unsigned != canonical_unsigned:
-        raise CorpusIntakeError("frozen manifest is not in canonical normalized form")
-    expected_hash = frozen_manifest.get("manifest_sha256")
-    if not isinstance(expected_hash, str) or expected_hash != _sha256_json(canonical_unsigned):
-        raise CorpusIntakeError("manifest_sha256 does not match the canonical frozen manifest")
     normalized = build_redacted_manifest(
         records,
         expected_intents=int(frozen_manifest["expected_intents"]),
