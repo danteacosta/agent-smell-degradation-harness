@@ -52,12 +52,13 @@ object output for both providers.
 The corrected OpenAI slot passed both clean and smelly RF-04 episodes. DeepSeek
 V4 Flash remained unqualified after two complete smoke attempts: it produced an
 unsupported `atom_type=pattern`, and separately malformed/truncated JSON. The
-V4 Pro candidate also remains unqualified. Before JSON mode, one complete
+V4 Pro candidate was initially unstable: before JSON mode, one complete
 two-episode smoke had one pass and one malformed-JSON failure; after JSON mode,
-the latest complete two-episode smoke had two malformed-JSON failures. A later
-single diagnostic execution of V4 Pro passed, so the evidence indicates
-response instability rather than an authentication or endpoint failure; it is
-not enough to mark the provider gate as passed.
+one complete attempt had two malformed-JSON failures. A final complete smoke on
+commit `df90b97f3a2338be5be7eaa557521d3370bb9b65` passed both RF-04 variants for
+both providers. This qualifies the selected V4 Pro slot for this minimal smoke
+protocol, while the earlier failures remain useful robustness evidence and do
+not get erased from the private audit trail.
 
 The project therefore keeps the gate fail-closed: a successful individual
 episode is not converted into a provider qualification when another episode in
@@ -68,16 +69,18 @@ the same smoke fails. The reports are redacted and private:
 - `/private/tmp/native-provider-smoke-20260902-gpt54mini-dsv4pro.json`
 - `/private/tmp/native-provider-smoke-20260902-gpt54mini-dsv4pro-jsonmode.json`
 - `/private/tmp/native-provider-smoke-20260902-gpt54mini-dsv4pro-final.json`
+- `/private/tmp/native-provider-smoke-20260902-gpt54mini-dsv4pro-accounted.json`
 
 ## Downstream uses
 
 - Use the table above to populate the private native-smoke environment, never
   the tracked example with credentials.
 - Treat the OpenAI slot as smoke-qualified for the tested RF-04 pair only.
-- Keep the DeepSeek provider gate blocked until one pre-specified complete
-  smoke passes for the chosen model/version, including both variants,
-  runtime-native T1–T3 provenance, usage, measured cost, and the configuration
-  hash.
+- Keep the provider gate scoped to the selected DeepSeek V4 Pro configuration
+  and archive the current report as the qualification evidence; it contains
+  both variants, runtime-native T1–T3 provenance, usage, measured cost, and the
+  configuration hash. The latest report measured US$0.00827196 for the two
+  providers and remains a smoke qualification, not pre-pilot execution.
 - Do not replace the DeepSeek semantic contract with coercion or post-hoc
   repair; that would change the observed provider behavior and weaken the
   leakage-resistant measurement.
