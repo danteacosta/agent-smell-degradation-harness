@@ -70,9 +70,11 @@ both providers. The subsequent complete smoke with GPT-5.6 Luna and V4 Pro on
 commit `2258b21bb05c765a225f0a1d7d98e70e68750405` passed both RF-04 variants for
 both providers, measured US$0.00579582, and produced configuration hash
 `47b4752bfba36c95e610c67916d9553646d6f503ef7d080e4146c85fa8074db1`.
-This qualifies both selected slots for this minimal smoke protocol, while the
-earlier failures remain useful robustness evidence and do not get erased from
-the private audit trail.
+The canonical rerun after commit `a6f52c29c44a5f65ff2a182255c4e4f66b72477f`
+also passed both variants for both providers, measured US$0.00734218, and
+retained the same configuration hash. This qualifies both selected slots for
+this minimal smoke protocol, while the earlier failures remain useful
+robustness evidence and do not get erased from the private audit trail.
 
 The project therefore keeps the gate fail-closed: a successful individual
 episode is not converted into a provider qualification when another episode in
@@ -86,6 +88,8 @@ the same smoke fails. The reports are redacted and private:
 - `/private/tmp/native-provider-smoke-20260902-gpt54mini-dsv4pro-accounted.json`
 - `/private/tmp/native-provider-smoke-20260902-gpt56luna-dsv4pro.json`
 - `/private/tmp/native-provider-smoke-20260902-gpt56luna-dsv4pro-retry.json`
+- `/private/tmp/native-provider-smoke-20260902-gpt56luna-dsv4pro-final.json`
+- `/private/tmp/native-provider-smoke-20260902-gpt56luna-dsv4pro-final-retry.json`
 
 ## Downstream uses
 
