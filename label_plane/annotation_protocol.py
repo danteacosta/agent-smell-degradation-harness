@@ -8,6 +8,7 @@ manifest, not in the annotator-visible JSON.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from hashlib import sha256
 import json
 import random
 from pathlib import Path
@@ -39,7 +40,12 @@ class BlindedAnnotationTask:
         rubric_version: str = "rubric-v2",
     ) -> "BlindedAnnotationTask":
         item_id = str(record.get("episode_id") or record.get("item_id") or "")
-        text = str(record.get("requirement_text") or record.get("prompt") or "")
+        text = str(
+            record.get("presented_text")
+            or record.get("requirement_text")
+            or record.get("prompt")
+            or ""
+        )
         return cls(item_id=item_id, presented_text=text, rubric_version=rubric_version,
                    duplicate_subset=duplicate_subset)
 
@@ -52,6 +58,94 @@ class BlindedAnnotationTask:
         }
         assert not _FORBIDDEN_FIELDS.intersection(payload)
         return payload
+
+
+
+@dataclass(frozen=True, slots=True)
+class BlindedOutcomeTask:
+    """Primary H2 packet: final artifact plus independent reference constraints."""
+
+    item_id: str
+    generated_acceptance_criteria: str
+    reference_constraints: tuple[str, ...]
+    rubric_version: str = "rubric-v2"
+    duplicate_subset: bool = False
+
+    def __post_init__(self) -> None:
+        if not self.item_id or not self.generated_acceptance_criteria.strip():
+            raise ValueError("outcome task requires item_id and generated artifact")
+        if not self.reference_constraints or any(
+            not str(value).strip() for value in self.reference_constraints
+        ):
+            raise ValueError("outcome task requires non-empty reference constraints")
+        if not self.rubric_version:
+            raise ValueError("outcome task requires rubric_version")
+
+    @classmethod
+    def from_record(
+        cls,
+        record: Mapping[str, Any],
+        *,
+        duplicate_subset: bool = False,
+        rubric_version: str = "rubric-v2",
+    ) -> "BlindedOutcomeTask":
+        item_id = str(record.get("episode_id") or record.get("item_id") or "")
+        artifact = record.get("generated_acceptance_criteria")
+        if artifact is None:
+            artifact = record.get("artifact")
+        if isinstance(artifact, Mapping) or isinstance(artifact, (list, tuple)):
+            artifact = json.dumps(artifact, ensure_ascii=False, indent=2, sort_keys=True)
+        references = record.get("reference_constraints")
+        if references is None:
+            references = record.get("independent_reference_constraints")
+        if isinstance(references, str):
+            references = [references]
+        if not isinstance(references, (list, tuple)):
+            references = []
+        return cls(
+            item_id=item_id,
+            generated_acceptance_criteria=str(artifact or ""),
+            reference_constraints=tuple(str(value) for value in references),
+            rubric_version=rubric_version,
+            duplicate_subset=duplicate_subset,
+        )
+
+    def to_annotation_payload(self) -> dict[str, Any]:
+        payload = {
+            "item_id": self.item_id,
+            "generated_acceptance_criteria": self.generated_acceptance_criteria,
+            "reference_constraints": list(self.reference_constraints),
+            "rubric_version": self.rubric_version,
+            "duplicate_subset": self.duplicate_subset,
+        }
+        assert not _FORBIDDEN_FIELDS.intersection(payload)
+        return payload
+
+
+def validate_blinded_outcome_payload(payload: Mapping[str, Any]) -> None:
+    """Reject primary outcome packets that leak terminal metadata."""
+
+    leaked = _FORBIDDEN_FIELDS.intersection(payload)
+    if leaked:
+        raise ValueError(f"blinded outcome payload leaks experimental fields: {sorted(leaked)}")
+    required = {
+        "item_id",
+        "generated_acceptance_criteria",
+        "reference_constraints",
+        "rubric_version",
+        "duplicate_subset",
+    }
+    if set(payload) != required:
+        raise ValueError("blinded outcome payload has an invalid field set")
+    if not str(payload["item_id"]).strip() or not str(
+        payload["generated_acceptance_criteria"]
+    ).strip():
+        raise ValueError("blinded outcome payload requires visible item and artifact")
+    references = payload["reference_constraints"]
+    if not isinstance(references, list) or not references or any(
+        not str(value).strip() for value in references
+    ):
+        raise ValueError("blinded outcome payload requires reference constraints")
 
 
 @dataclass(frozen=True, slots=True)
@@ -145,6 +239,114 @@ def validate_duplicate_subset(annotations: Iterable[Any], duplicate_item_ids: It
         raise ValueError(f"duplicate subset items must be double-coded: {missing}")
 
 
+
+
+def _selection_manifest(
+    *,
+    item_count: int,
+    duplicate_ids: set[str],
+    fraction: float,
+    seed: int,
+    rubric_version: str,
+    task_kind: str,
+) -> dict[str, Any]:
+    selection = {
+        "schema_version": "annotation-selection/v1",
+        "selection_method": "seeded_item_id_sampling_before_labels",
+        "task_kind": task_kind,
+        "item_count": item_count,
+        "duplicate_subset_fraction": fraction,
+        "duplicate_subset_seed": seed,
+        "duplicate_item_count": len(duplicate_ids),
+        "duplicate_item_ids": sorted(duplicate_ids),
+        "rubric_version": rubric_version,
+    }
+    selection["selection_sha256"] = sha256(
+        json.dumps(
+            selection,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+    return selection
+
+
+def freeze_blinded_tasks(
+    records: Iterable[Mapping[str, Any]],
+    *,
+    fraction: float = 0.20,
+    seed: int = 0,
+    rubric_version: str = "rubric-v2",
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Create annotator packets and freeze duplicates before any labels exist."""
+
+    rows = [dict(record) for record in records]
+    if not rows:
+        raise ValueError("annotation packet preparation requires records")
+    item_ids = [str(row.get("episode_id") or row.get("item_id") or "").strip() for row in rows]
+    if any(not item_id for item_id in item_ids) or len(set(item_ids)) != len(item_ids):
+        raise ValueError("annotation records require unique, non-empty item IDs")
+    duplicate_ids = set(select_duplicate_subset(item_ids, fraction=fraction, seed=seed))
+    tasks = [
+        BlindedAnnotationTask.from_record(
+            row,
+            duplicate_subset=item_id in duplicate_ids,
+            rubric_version=rubric_version,
+        ).to_annotation_payload()
+        for row, item_id in zip(rows, item_ids)
+    ]
+    for task in tasks:
+        validate_blinded_payload(task)
+    tasks.sort(key=lambda task: str(task["item_id"]))
+    return tasks, _selection_manifest(
+        item_count=len(tasks),
+        duplicate_ids=duplicate_ids,
+        fraction=fraction,
+        seed=seed,
+        rubric_version=rubric_version,
+        task_kind="requirement",
+    )
+
+
+def freeze_blinded_outcome_tasks(
+    records: Iterable[Mapping[str, Any]],
+    *,
+    fraction: float = 0.20,
+    seed: int = 0,
+    rubric_version: str = "rubric-v2",
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Freeze primary outcome packets and duplicate assignment before labels."""
+
+    rows = [dict(record) for record in records]
+    if not rows:
+        raise ValueError("outcome annotation preparation requires records")
+    item_ids = [str(row.get("episode_id") or row.get("item_id") or "").strip() for row in rows]
+    if any(not item_id for item_id in item_ids) or len(set(item_ids)) != len(item_ids):
+        raise ValueError("outcome records require unique, non-empty item IDs")
+    duplicate_ids = set(select_duplicate_subset(item_ids, fraction=fraction, seed=seed))
+    tasks = [
+        BlindedOutcomeTask.from_record(
+            row,
+            duplicate_subset=item_id in duplicate_ids,
+            rubric_version=rubric_version,
+        ).to_annotation_payload()
+        for row, item_id in zip(rows, item_ids)
+    ]
+    for task in tasks:
+        validate_blinded_outcome_payload(task)
+    tasks.sort(key=lambda task: str(task["item_id"]))
+    return tasks, _selection_manifest(
+        item_count=len(tasks),
+        duplicate_ids=duplicate_ids,
+        fraction=fraction,
+        seed=seed,
+        rubric_version=rubric_version,
+        task_kind="primary_outcome",
+    )
+
+
+
 def load_annotation_rubric(path: Path | str | None = None) -> dict[str, Any]:
     """Load the frozen human-label policy used by collection tooling."""
 
@@ -158,6 +360,8 @@ def load_annotation_rubric(path: Path | str | None = None) -> dict[str, Any]:
 
 
 __all__ = [
-    "BlindedAnnotationTask", "BlindedOutputSmellTask", "load_annotation_rubric",
-    "select_duplicate_subset", "validate_blinded_payload", "validate_duplicate_subset",
+    "BlindedAnnotationTask", "BlindedOutcomeTask", "BlindedOutputSmellTask",
+    "freeze_blinded_outcome_tasks", "freeze_blinded_tasks", "load_annotation_rubric",
+    "select_duplicate_subset", "validate_blinded_outcome_payload",
+    "validate_blinded_payload", "validate_duplicate_subset",
 ]

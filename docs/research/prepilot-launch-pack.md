@@ -1,5 +1,10 @@
 # Pre-pilot launch pack
 
+The executable unlock procedures and approval checklist are in
+[pre-pilot unlock plan](prepilot-unlock-plan.md) and
+[advisor approval memo](prepilot-approval-memo.md).
+
+
 ## Decision requested from the advisor
 
 Authorize preparation and execution of the non-confirmatory 120-episode
@@ -87,7 +92,7 @@ episode and verify:
    UTF-8 sizes, operation/trigger metadata and a hash-bound checkpoint identity;
 6. T1 atomic obligations use the bounded schema and T3 observations bind to the
    corresponding constraint lineage without raw obligation text;
-6. request, response and configuration hashes are present;
+7. request, response and configuration hashes are present;
 8. malformed T2 and a simulated timeout fail before artifact generation;
 9. no prompted snapshot or replay trace is promoted to runtime-native;
 10. latency, token usage and cost are exported without prompts, artifacts or secrets.

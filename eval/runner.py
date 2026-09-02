@@ -32,6 +32,19 @@ from eval.task_adapters import (
 VARIANTS = ("clean", "smelly")
 
 
+
+def _aggregate_numeric_usage(episodes: Sequence[Mapping[str, Any]]) -> dict[str, int | float]:
+    totals: dict[str, int | float] = {}
+    for episode in episodes:
+        usage = episode.get("provider_meta", {}).get("usage")
+        if not isinstance(usage, Mapping):
+            continue
+        for key, value in usage.items():
+            if isinstance(value, (int, float)) and not isinstance(value, bool):
+                totals[str(key)] = totals.get(str(key), 0) + value
+    return dict(sorted(totals.items()))
+
+
 def _interpret_requirement(
     requirement_text: str,
     task_family: str,
@@ -306,13 +319,28 @@ def _run_episode(
             "model": str(provider_meta.get("model", "unknown")),
             "latency_ms": float(provider_meta.get("latency_ms", 0.0)),
             "cost_usd": float(provider_meta.get("cost_usd", 0.0)),
-            "cost_reported": "cost_usd" in provider_meta,
+            "cost_reported": bool(
+                provider_meta.get("cost_reported", "cost_usd" in provider_meta)
+            ),
             "checkpoint": checkpoint_meta,
         },
     }
-    for metadata_key in ("prompt_sha256", "prompt_template_version"):
+    for metadata_key in (
+        "prompt_sha256",
+        "prompt_template_version",
+        "response_model",
+        "response_id",
+        "cost_status",
+    ):
         if metadata_key in provider_meta:
             episode["provider_meta"][metadata_key] = str(provider_meta[metadata_key])
+    usage = provider_meta.get("usage")
+    if isinstance(usage, Mapping):
+        episode["provider_meta"]["usage"] = {
+            str(key): value
+            for key, value in usage.items()
+            if isinstance(value, (int, float)) and not isinstance(value, bool)
+        }
     context_summary = provider_meta.get("context_management")
     pre_final_context_summary = provider_meta.get("pre_final_context_management")
     if isinstance(context_summary, Mapping):
@@ -507,6 +535,14 @@ def run_eval_with_agent(
                         str(ep["provider_meta"]["prompt_sha256"])
                         for ep in episodes
                         if ep["provider_meta"].get("prompt_sha256")
+                    }
+                ),
+                "usage_totals": _aggregate_numeric_usage(episodes),
+                "cost_statuses": sorted(
+                    {
+                        str(ep["provider_meta"]["cost_status"])
+                        for ep in episodes
+                        if ep["provider_meta"].get("cost_status")
                     }
                 ),
             },

@@ -46,5 +46,17 @@ Before changing the manifest to confirmed:
    and in-sample family selection are ineligible. The primary H2 interval
    resamples test projects, and leave-one-project-out stability is reported.
 
+## Process-supervision circularity boundary
+
+Process supervision is relevant related work, but process labels derived by
+testing whether a continuation reaches the T4 ground-truth answer are label-plane
+data. They are ineligible as T1–T3 features, detector targets, calibration
+signals, or model-selection inputs for H2. AgentPro
+([Deng et al., EMNLP 2025](https://doi.org/10.18653/v1/2025.emnlp-main.506))
+shows that such outcome-derived step labels can improve agent training; it does
+not establish independent early observability. Any future process-reward model
+is therefore a post-core remediation experiment and must not alter the frozen
+pre-pilot producer.
+
 No record may be padded by renaming, paraphrasing without a declared
 exception, or duplicating a project/intention.

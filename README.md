@@ -146,9 +146,20 @@ Before spending provider or annotation budget, run `python -m eval.prepilot_read
 
 The license-first [pre-pilot corpus screening](docs/research/prepilot-corpus-screening.md) records admitted, conditional, secondary, and rejected source families. In particular, public availability is not treated as redistribution or derivative-use permission, and project diversity cannot be manufactured from documents, modules, or paraphrases.
 
+The [pre-pilot unlock plan](docs/research/prepilot-unlock-plan.md) now provides
+the native OpenAI/DeepSeek smoke, private corpus-intake validator, blinded
+primary-outcome packet preparation, usage/cost export, reproducibility bundle,
+and [advisor approval memo](docs/research/prepilot-approval-memo.md). These
+tools prepare evidence; they do not promote an incomplete corpus or an
+unapproved budget to a green readiness gate.
+
 The acceptance boundary, estimands, leakage rules, split invariants, and product policy are documented in [Thesis and Product Boundary](docs/thesis-product-boundary.md). Confirmatory H2 uses an `h2-features/v3` structural manifest with raw-feature version `pre-final/v4`, recomputes its contents from hash-bound T1/T2/T3 traces, fits fixed nested B0–B3 models with one estimator, calibrates only on calibration, and evaluates B3−B0 once on test. No family is selected by training PR-AUC. A pre-pilot manifest must contain 12 independent source intents; 24 intents/6 projects is a pilot floor, while confirmation requires a frozen split-aware precision plan, at least 60 intents/12 projects as an unconditional floor, and at least 6 projects/24 intents in the untouched test partition. The current conservative design candidate is 220 intents/36 projects and remains explicitly unfrozen.
 
 The current orientation and related-work review is versioned in [2026-08-10 orientation review](docs/research/2026-08-10-orientation-review.md). It records the novelty boundary, EASY alignment, direct comparison with prefix monitors, and the evidence still required before a confirmatory claim.
+
+The deduplicated [literature matrix](docs/research/literature-matrix.md) records
+evidence status, methods, limitations, credibility, and the concrete
+incorporation decision for each reviewed source.
 
 The master's scope, academic contribution, non-claims, and chapter boundary are
 maintained in the [Master's Thesis Proposal in Google Docs](https://docs.google.com/document/d/1sio6UiAciypbKGu7mbs8nlQJv2xvc3t888SvaShmB2w/edit). H1/H2 remain
