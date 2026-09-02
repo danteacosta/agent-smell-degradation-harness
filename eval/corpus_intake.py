@@ -154,7 +154,7 @@ def _review_checks(record: Mapping[str, Any]) -> tuple[dict[str, bool], str]:
     if not isinstance(reviewer_value, str):
         raise CorpusIntakeError("manipulation_check.reviewer_id must be text")
     reviewer = reviewer_value.strip()
-    if not reviewer or reviewer.lower() in {"tbd", "unknown"}:
+    if not reviewer or reviewer.lower() in {"tbd", "unknown", "none", "null"}:
         raise CorpusIntakeError("manipulation_check.reviewer_id is required")
     return checks, reviewer
 
@@ -172,7 +172,12 @@ def _rights_review(record: Mapping[str, Any]) -> dict[str, Any]:
     if not isinstance(reviewer_value, str):
         raise CorpusIntakeError("rights_review.reviewer_id must be text")
     reviewer_id = reviewer_value.strip()
-    if not reviewer_id or reviewer_id.lower() in {"tbd", "unknown"}:
+    if not reviewer_id or reviewer_id.lower() in {
+        "tbd",
+        "unknown",
+        "none",
+        "null",
+    }:
         raise CorpusIntakeError("rights_review.reviewer_id is required")
     reviewed_at = _required_timestamp(raw, "reviewed_at")
     return {
@@ -451,7 +456,10 @@ def freeze_validated_manifest(
     if len(set(intent_ids)) != len(intent_ids):
         raise CorpusIntakeError("source_intent_id values must be unique")
     project_ids = {str(record["project_id"]) for record in records}
-    if len(project_ids) < 6 or len(project_ids) != candidate.get("project_count"):
+    if (
+        len(project_ids) < candidate["minimum_projects"]
+        or len(project_ids) != candidate.get("project_count")
+    ):
         raise CorpusIntakeError("candidate manifest project count is inconsistent")
     hash_values = [str(record[field]) for record in records for field in _HASH_FIELDS]
     if len(set(hash_values)) != len(hash_values):
@@ -514,8 +522,10 @@ def validate_private_records_against_frozen_manifest(
         raise CorpusIntakeError("frozen manifest must contain exactly 12 records")
     if len(set(frozen_intent_ids)) != len(frozen_intent_ids):
         raise CorpusIntakeError("frozen manifest source-intent IDs must be unique")
-    if len(frozen_project_ids) < 6:
-        raise CorpusIntakeError("frozen manifest must contain at least 6 projects")
+    if len(frozen_project_ids) < frozen_manifest["minimum_projects"]:
+        raise CorpusIntakeError(
+            "frozen manifest has fewer projects than its declared minimum"
+        )
     if frozen_manifest.get("record_count") != len(frozen_rows):
         raise CorpusIntakeError("frozen manifest record_count is inconsistent")
     if frozen_manifest.get("unique_intent_count") != len(frozen_intent_ids):

@@ -136,6 +136,27 @@ def test_seven_project_corpus_with_minimum_projects_override_freezes_and_joins()
     assert len(validate_private_records_against_frozen_manifest(records, frozen)) == 12
 
 
+def test_freeze_rejects_declared_minimum_above_actual_project_count() -> None:
+    _, candidate = _candidate()
+    candidate["minimum_projects"] = 7
+
+    with pytest.raises(CorpusIntakeError, match="projects|minimum"):
+        freeze_validated_manifest(
+            candidate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+        )
+
+    _, valid_candidate = _candidate()
+    frozen = freeze_validated_manifest(
+        valid_candidate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+    )
+    frozen["minimum_projects"] = 7
+    _rehash_manifest(frozen)
+    with pytest.raises(CorpusIntakeError, match="projects|minimum"):
+        validate_private_records_against_frozen_manifest(
+            [_record(index) for index in range(12)], frozen
+        )
+
+
 @pytest.mark.parametrize("review_name", ["rights_review", "manipulation_check"])
 @pytest.mark.parametrize("reviewer_id", [None, 123])
 def test_candidate_rejects_non_string_nested_reviewer_ids(
@@ -143,6 +164,18 @@ def test_candidate_rejects_non_string_nested_reviewer_ids(
 ) -> None:
     records = [_record(index) for index in range(12)]
     records[0][review_name]["reviewer_id"] = reviewer_id
+
+    with pytest.raises(CorpusIntakeError, match="reviewer_id"):
+        build_redacted_manifest(records)
+
+
+@pytest.mark.parametrize("review_name", ["rights_review", "manipulation_check"])
+@pytest.mark.parametrize("reviewer_id", ["tbd", "unknown", "none", "null"])
+def test_candidate_rejects_all_reviewer_placeholders(
+    review_name: str, reviewer_id: str
+) -> None:
+    records = [_record(index) for index in range(12)]
+    records[0][review_name]["reviewer_id"] = reviewer_id.upper()
 
     with pytest.raises(CorpusIntakeError, match="reviewer_id"):
         build_redacted_manifest(records)
@@ -388,3 +421,31 @@ def test_freeze_cli_writes_only_fixed_redacted_repository_artifact(tmp_path: Pat
     assert "PRIVATE SOURCE SECRET" not in result.stdout + result.stderr
     assert "private request" not in output_path.read_text(encoding="utf-8")
     output_path.unlink()
+
+
+def test_validate_intake_script_runs_by_repository_path(tmp_path: Path) -> None:
+    records = [_record(index) for index in range(12)]
+    input_path = tmp_path / "private-records.json"
+    output_path = tmp_path / "candidate.json"
+    input_path.write_text(json.dumps(records), encoding="utf-8")
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/validate_corpus_intake.py",
+            "--input",
+            str(input_path),
+            "--output",
+            str(output_path),
+        ],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert json.loads(output_path.read_text(encoding="utf-8"))["status"] == (
+        "validated_candidate"
+    )
+    assert "PRIVATE SOURCE SECRET" not in output_path.read_text(encoding="utf-8")
