@@ -157,6 +157,10 @@ The acceptance boundary, estimands, leakage rules, split invariants, and product
 
 The current orientation and related-work review is versioned in [2026-08-10 orientation review](docs/research/2026-08-10-orientation-review.md). It records the novelty boundary, EASY alignment, direct comparison with prefix monitors, and the evidence still required before a confirmatory claim.
 
+The deduplicated [literature matrix](docs/research/literature-matrix.md) records
+evidence status, methods, limitations, credibility, and the concrete
+incorporation decision for each reviewed source.
+
 The master's scope, academic contribution, non-claims, and chapter boundary are
 maintained in the [Master's Thesis Proposal in Google Docs](https://docs.google.com/document/d/1sio6UiAciypbKGu7mbs8nlQJv2xvc3t888SvaShmB2w/edit). H1/H2 remain
 planned conditional claims until the external data, provider, annotation,
