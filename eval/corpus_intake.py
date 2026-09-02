@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping
 from urllib.parse import urlparse
 
-SCHEMA_VERSION = "prepilot-corpus/v2"
+SCHEMA_VERSION = "prepilot-corpus/v3"
 PRIMARY_DEFECT_FAMILY = "incompleteness_missing_condition"
 REQUIRED_MANIPULATION_CHECKS = (
     "defect_present",
@@ -23,6 +23,12 @@ REQUIRED_MANIPULATION_CHECKS = (
     "intent_preserved",
     "clean_variant_realistic",
     "constraint_independently_auditable",
+)
+REQUIRED_RIGHTS_ASSERTIONS = (
+    "redistribution_allowed",
+    "derivative_use_allowed",
+    "external_provider_processing_allowed",
+    "attribution_recorded",
 )
 _HASH_FIELDS = (
     "canonical_text_sha256",
@@ -104,6 +110,26 @@ def _review_checks(record: Mapping[str, Any]) -> tuple[dict[str, bool], str]:
     return checks, reviewer
 
 
+def _rights_review(record: Mapping[str, Any]) -> dict[str, Any]:
+    raw = record.get("rights_review")
+    if not isinstance(raw, Mapping):
+        raise CorpusIntakeError("rights_review is required")
+    assertions: dict[str, bool] = {}
+    for field in REQUIRED_RIGHTS_ASSERTIONS:
+        if raw.get(field) is not True:
+            raise CorpusIntakeError(f"rights review is not confirmed: {field}")
+        assertions[field] = True
+    reviewer_id = str(raw.get("reviewer_id", "")).strip()
+    if not reviewer_id or reviewer_id.lower() in {"tbd", "unknown"}:
+        raise CorpusIntakeError("rights_review.reviewer_id is required")
+    reviewed_at = _required_timestamp(raw, "reviewed_at")
+    return {
+        **assertions,
+        "reviewer_id": reviewer_id,
+        "reviewed_at": reviewed_at,
+    }
+
+
 def _license_record(record: Mapping[str, Any]) -> tuple[str, str, str]:
     license_name = _required_id(record, "license")
     evidence_key = "license_url" if record.get("license_url") else "permission_record_url"
@@ -124,6 +150,7 @@ def _validate_record(record: Mapping[str, Any]) -> dict[str, Any]:
     source_url = _required_url(record, "source_url")
     retrieved_at = _required_timestamp(record, "retrieved_at")
     license_name, license_evidence_url, permission = _license_record(record)
+    rights_review = _rights_review(record)
     clean = _required_text(record, "clean_requirement")
     defective = _required_text(record, "defective_requirement")
     canonical = _required_text(
@@ -161,6 +188,7 @@ def _validate_record(record: Mapping[str, Any]) -> dict[str, Any]:
         "license": license_name,
         "license_evidence_url": license_evidence_url,
         "reuse_permission_status": permission,
+        "rights_review": rights_review,
         "retrieved_at": retrieved_at,
         "canonical_text_sha256": canonical_hash,
         "clean_requirement_sha256": clean_hash,
@@ -252,6 +280,7 @@ def build_redacted_manifest(
 __all__ = [
     "CorpusIntakeError",
     "SCHEMA_VERSION",
+    "REQUIRED_RIGHTS_ASSERTIONS",
     "build_redacted_manifest",
     "load_private_records",
 ]
