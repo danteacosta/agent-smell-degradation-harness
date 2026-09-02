@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+import hmac
 import json
 from dataclasses import asdict, astuple
 from pathlib import Path
@@ -7,6 +9,7 @@ from pathlib import Path
 import pytest
 
 from eval.exploratory_call_plan import (
+    _opaque_id,
     build_exploratory_call_plan,
     load_reference_constraints,
 )
@@ -298,3 +301,63 @@ def test_direct_reference_constraints_reject_duplicate_ids():
 
     with pytest.raises(ValueError, match="unique.*constraint IDs"):
         build_exploratory_call_plan(records(), slots(), direct, run_nonce=b"a" * 32)
+
+
+@pytest.mark.parametrize("nonce", ["a" * 32, bytearray(b"a" * 32)])
+def test_plan_rejects_non_bytes_nonce_before_hmac(tmp_path: Path, nonce: object):
+    path = tmp_path / "constraints.json"
+    write_constraints(path)
+
+    with pytest.raises(ValueError, match="run_nonce must be bytes"):
+        build_exploratory_call_plan(records(), slots(), load_reference_constraints(path), run_nonce=nonce)  # type: ignore[arg-type]
+
+
+def test_provider_configuration_is_trimmed_before_distinctness_and_preserved(tmp_path: Path):
+    path = tmp_path / "constraints.json"
+    write_constraints(path)
+    configured_slots = [
+        {
+            "slot_id": " slot-a ",
+            "provider": " provider ",
+            "model": " model ",
+            "model_version": " version ",
+        },
+        {
+            "slot_id": " slot-b ",
+            "provider": "provider-2",
+            "model": "model-2",
+            "model_version": "version-2",
+        },
+    ]
+
+    plan = build_exploratory_call_plan(
+        records(), configured_slots, load_reference_constraints(path), run_nonce=b"a" * 32
+    )
+
+    assert [(item.slot_id, item.provider, item.model, item.model_version) for item in plan._private_configurations] == [
+        ("slot-a", "provider", "model", "version"),
+        ("slot-b", "provider-2", "model-2", "version-2"),
+    ]
+
+
+def test_provider_configuration_distinctness_uses_trimmed_values(tmp_path: Path):
+    path = tmp_path / "constraints.json"
+    write_constraints(path)
+    equivalent_slots = [
+        {"slot_id": "slot-a", "provider": " provider ", "model": " model ", "model_version": " version "},
+        {"slot_id": "slot-b", "provider": "provider", "model": "model", "model_version": "version"},
+    ]
+
+    with pytest.raises(ValueError, match="provider/model/model_version"):
+        build_exploratory_call_plan(
+            records(), equivalent_slots, load_reference_constraints(path), run_nonce=b"a" * 32
+        )
+
+
+def test_opaque_id_matches_independent_length_prefixed_hmac_vector():
+    nonce = bytes(range(32))
+    message = b"\x00\x00\x00\x07episode\x00\x00\x00\x010"
+    expected_digest = hmac.new(nonce, message, hashlib.sha256).digest()[:16]
+
+    assert expected_digest.hex() == "8ad15c43e313a1f6a54aa6fae0b14769"
+    assert _opaque_id(nonce, "episode", 0) == "rlivyq7dcoq7njkku35obmkhne"

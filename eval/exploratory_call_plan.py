@@ -74,6 +74,14 @@ class _PrivateReferenceConstraint:
 
 
 @dataclass(frozen=True)
+class _PrivateProviderConfiguration:
+    slot_id: str
+    provider: str
+    model: str
+    model_version: str
+
+
+@dataclass(frozen=True)
 class ExploratoryCallPlan:
     episodes: tuple[PublicEpisode, ...]
     artifacts: tuple[PublicArtifact, ...]
@@ -84,14 +92,17 @@ class ExploratoryCallPlan:
     max_attempts_per_api_call: int = 2
     _private_join: InitVar[tuple[_PrivateJoin, ...]] = ()
     _run_nonce: InitVar[bytes] = b""
+    _private_configurations: InitVar[tuple[_PrivateProviderConfiguration, ...]] = ()
 
     def __post_init__(
         self,
         _private_join: tuple[_PrivateJoin, ...],
         _run_nonce: bytes,
+        _private_configurations: tuple[_PrivateProviderConfiguration, ...],
     ) -> None:
         object.__setattr__(self, "_private_join", _private_join)
         object.__setattr__(self, "_run_nonce", _run_nonce)
+        object.__setattr__(self, "_private_configurations", _private_configurations)
 
     @property
     def duplicate_base_task_count(self) -> int:
@@ -233,17 +244,17 @@ def _normalize_direct_reference_constraints(
     return _validate_reference_constraint_uniqueness(parsed)
 
 
-def _provider_slot_configuration(slot: Any) -> tuple[str, str, str, str]:
+def _provider_slot_configuration(slot: Any) -> _PrivateProviderConfiguration:
     if not isinstance(slot, Mapping):
         raise ValueError("provider slots require mapping configurations")
     required = ("slot_id", "provider", "model", "model_version")
     if any(not isinstance(slot.get(field), str) or not slot[field].strip() for field in required):
         raise ValueError("provider slots require non-empty string slot/provider/model/model_version")
-    return (
-        slot["slot_id"],
-        slot["provider"],
-        slot["model"],
-        slot["model_version"],
+    return _PrivateProviderConfiguration(
+        slot_id=slot["slot_id"].strip(),
+        provider=slot["provider"].strip(),
+        model=slot["model"].strip(),
+        model_version=slot["model_version"].strip(),
     )
 
 
@@ -265,10 +276,12 @@ def build_exploratory_call_plan(
     if len(records) != 12 or len(set(intents)) != 12:
         raise ValueError("call plan requires exactly 12 unique normalized source intents")
     slot_configurations = tuple(_provider_slot_configuration(slot) for slot in slots)
-    slot_ids = tuple(item[0] for item in slot_configurations)
+    slot_ids = tuple(item.slot_id for item in slot_configurations)
     if len(slots) != 2 or len(set(slot_ids)) != 2:
         raise ValueError("call plan requires exactly two unique provider slots")
-    provider_configurations = {item[1:] for item in slot_configurations}
+    provider_configurations = {
+        (item.provider, item.model, item.model_version) for item in slot_configurations
+    }
     if len(provider_configurations) != 2:
         raise ValueError("provider/model/model_version configurations must be distinct")
     constraint_intents = {item.source_intent_id for item in constraints}
@@ -276,8 +289,8 @@ def build_exploratory_call_plan(
         raise ValueError("reference constraints require exactly one record per source intent")
     if run_nonce is None:
         run_nonce = secrets.token_bytes(32)
-    if len(run_nonce) != 32:
-        raise ValueError("run_nonce must be a 256-bit private value")
+    if not isinstance(run_nonce, bytes) or len(run_nonce) != 32:
+        raise ValueError("run_nonce must be bytes with exactly 32 bytes")
 
     episodes: list[PublicEpisode] = []
     artifacts: list[PublicArtifact] = []
@@ -308,4 +321,14 @@ def build_exploratory_call_plan(
             occurrences.append(PublicOccurrence(_occurrence_id(run_nonce, task.base_task_id, 1), task.base_task_id, True))
     duplicates = tuple(item for item in occurrences if item.duplicate)
     public_constraints = tuple(ReferenceConstraint(item.constraint_id, item.text) for item in constraints)
-    return ExploratoryCallPlan(tuple(episodes), tuple(artifacts), tuple(tasks), tuple(occurrences), duplicates, public_constraints, _private_join=tuple(joins), _run_nonce=run_nonce)
+    return ExploratoryCallPlan(
+        tuple(episodes),
+        tuple(artifacts),
+        tuple(tasks),
+        tuple(occurrences),
+        duplicates,
+        public_constraints,
+        _private_join=tuple(joins),
+        _run_nonce=run_nonce,
+        _private_configurations=slot_configurations,
+    )
