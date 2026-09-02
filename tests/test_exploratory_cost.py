@@ -372,6 +372,46 @@ def test_given_under_bound_usage_when_reconciled_then_release_is_recorded(tmp_pa
         ({"input_tokens": 1, "output_tokens": 1, "completion_tokens": True}, "malformed_usage"),
         ({"input_tokens": 1, "output_tokens": 1, "completion_tokens": 1.0}, "malformed_usage"),
         ({"input_tokens": 1, "output_tokens": 1, "completion_tokens": "1"}, "malformed_usage"),
+        (
+            {
+                "input_tokens": 1,
+                "output_tokens": 1,
+                "completion_tokens_details": {"reasoning_tokens": True},
+            },
+            "malformed_usage",
+        ),
+        (
+            {
+                "input_tokens": 1,
+                "output_tokens": 1,
+                "completion_tokens_details": {"reasoning_tokens": 1.0},
+            },
+            "malformed_usage",
+        ),
+        (
+            {
+                "input_tokens": 1,
+                "output_tokens": 1,
+                "completion_tokens_details": {"reasoning_tokens": "1"},
+            },
+            "malformed_usage",
+        ),
+        (
+            {
+                "input_tokens": 1,
+                "output_tokens": 1,
+                "completion_tokens_details": {"reasoning_tokens": -1},
+            },
+            "malformed_usage",
+        ),
+        (
+            {
+                "input_tokens": 1,
+                "output_tokens": 1,
+                "completion_tokens_details": {"reasoning_tokens": Decimal("1")},
+            },
+            "malformed_usage",
+        ),
     ],
 )
 def test_given_unverifiable_usage_when_reconciled_then_the_ledger_stops_cost_unverified(
@@ -969,6 +1009,122 @@ def test_given_hostile_metadata_mapping_when_reconciled_then_it_stops_without_ch
         ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
 
 
+@pytest.mark.parametrize("bad_nested_value", [True, 1.0, "1", -1, Decimal("1")])
+def test_given_nested_provider_token_metadata_when_malformed_then_it_stops_before_charge(
+    tmp_path: Path, bad_nested_value: object
+) -> None:
+    class NestedMetadataProvider(RecordingProvider):
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            self.last_call_metadata = {
+                "usage": {
+                    "input_tokens": 1,
+                    "output_tokens": 1,
+                    "completion_tokens_details": {
+                        "reasoning_tokens": bad_nested_value,
+                    },
+                }
+            }
+            return "provider response"
+
+    path = tmp_path / "nested-malformed.jsonl"
+    provider = NestedMetadataProvider()
+    ledger = CostLedger(path, config(contingency="0"))
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    report = ledger.report()
+    assert provider.calls == 1
+    assert report["budget_status"] == "stopped_cost_unverified"
+    assert report["stop_reason"] == "metadata_access_failed"
+    assert report["spent_microusd"] == 0
+    assert report["pending_attempt_count"] == 0
+    assert CostLedger(path, config(contingency="0")).report() == report
+
+
+def test_given_valid_nested_provider_usage_when_completed_then_live_event_replays_identically(
+    tmp_path: Path,
+) -> None:
+    class NestedMetadataProvider(RecordingProvider):
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            self.last_call_metadata = {
+                "usage": {
+                    "prompt_tokens": 1,
+                    "completion_tokens": 1,
+                    "completion_tokens_details": {"reasoning_tokens": 1},
+                },
+                "response_model": "openai-model",
+            }
+            return "provider response"
+
+    path = tmp_path / "nested-valid.jsonl"
+    provider = NestedMetadataProvider()
+    configuration = config(contingency="0")
+    ledger = CostLedger(path, configuration)
+
+    assert budgeted_provider(provider, ledger).complete(
+        request(), call_id="call-1", phase="judge"
+    ) == "provider response"
+
+    live_report = ledger.report()
+    events = [json.loads(line) for line in path.read_text().splitlines()]
+    assert events[-1]["reasoning_tokens"] == 1
+    assert "completion_tokens_details" not in path.read_text()
+    assert CostLedger(path, configuration).report() == live_report
+
+
+def test_given_multiple_pending_reservations_when_terminal_stop_occurs_then_all_are_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "multiple-pending-stop.jsonl"
+    ledger = CostLedger(path, configuration)
+    first = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    second = ledger.reserve_attempt(
+        call_id="call-2",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(first, None)
+
+    report = ledger.report()
+    assert report["budget_status"] == "stopped_cost_unverified"
+    assert report["pending_attempt_count"] == 0
+    assert report["active_reserved_microusd"] == (
+        first.reserved_microusd + second.reserved_microusd
+    )
+    assert [event["event_type"] for event in ledger.events] == [
+        "preflight",
+        "reservation",
+        "reservation",
+        "reconciliation",
+        "reconciliation",
+        "stopped_cost_unverified",
+    ]
+    assert CostLedger(path, configuration).report() == report
+    with pytest.raises(CostUnverifiedError):
+        ledger.reserve_attempt(
+            call_id="call-3",
+            provider="openai",
+            model="openai-model",
+            model_version="openai-snapshot",
+            phase="judge",
+        )
+
+
 def test_given_provider_metadata_reset_failure_when_wrapped_then_invocation_is_forbidden(
     tmp_path: Path,
 ) -> None:
@@ -1083,7 +1239,7 @@ def test_given_malformed_provider_metadata_after_invocation_then_it_stops_withou
 
     report = ledger.report()
     assert provider.calls == 1
-    assert report["stop_reason"] == "malformed_usage"
+    assert report["stop_reason"] == "metadata_access_failed"
     assert report["spent_microusd"] == 0
     assert report["pending_attempt_count"] == 0
     with pytest.raises(CostUnverifiedError):
@@ -1139,6 +1295,7 @@ def test_given_unreconciled_reservation_when_ledger_is_reopened_then_it_stops_as
     assert [event["event_type"] for event in resumed.events] == [
         "preflight",
         "reservation",
+        "reconciliation",
         "stopped_cost_unverified",
     ]
     reopened = CostLedger(path, configuration)

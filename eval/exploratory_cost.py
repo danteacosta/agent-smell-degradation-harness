@@ -58,6 +58,29 @@ _USAGE_FIELDS = frozenset(
         "reasoning_tokens",
     }
 )
+_NESTED_TOKEN_DETAIL_FIELDS = frozenset(
+    {
+        "prompt_tokens_details",
+        "input_tokens_details",
+        "prompt_token_details",
+        "completion_tokens_details",
+        "output_tokens_details",
+        "completion_token_details",
+        "output_token_details",
+    }
+)
+_USAGE_FIELDS_WITH_DETAILS = _USAGE_FIELDS | _NESTED_TOKEN_DETAIL_FIELDS
+_CACHED_TOKEN_DETAIL_FIELDS = frozenset(
+    {"prompt_tokens_details", "input_tokens_details", "prompt_token_details"}
+)
+_REASONING_TOKEN_DETAIL_FIELDS = frozenset(
+    {
+        "completion_tokens_details",
+        "output_tokens_details",
+        "completion_token_details",
+        "output_token_details",
+    }
+)
 _SAFE_OUTCOMES = frozenset({"success", "provider_error"})
 _EVENT_TYPES = frozenset(
     {
@@ -241,6 +264,36 @@ def _contains_float(value: Any) -> bool:
     if isinstance(value, list):
         return any(_contains_float(item) for item in value)
     return False
+
+
+def _validate_nested_token_metadata(value: Any, *, seen: set[int] | None = None) -> None:
+    """Validate token-count values anywhere in provider metadata without coercion."""
+
+    visited = seen if seen is not None else set()
+    try:
+        if isinstance(value, Mapping):
+            identity = id(value)
+            if identity in visited:
+                return
+            visited.add(identity)
+            for key in value:
+                nested = value[key]
+                if key in _USAGE_FIELDS and (
+                    type(nested) is not int or nested < 0
+                ):
+                    raise _MetadataProblem("nested token metadata is malformed")
+                _validate_nested_token_metadata(nested, seen=visited)
+        elif isinstance(value, (list, tuple)):
+            identity = id(value)
+            if identity in visited:
+                return
+            visited.add(identity)
+            for nested in value:
+                _validate_nested_token_metadata(nested, seen=visited)
+    except _MetadataProblem:
+        raise
+    except Exception as error:
+        raise _MetadataProblem("nested token metadata access failed") from error
 
 
 def _event_int(event: Mapping[str, Any], field_name: str, *, maximum: int | None = None) -> int:
@@ -945,6 +998,7 @@ class CostLedger:
         expected_previous = ZERO_HASH
         terminal_seen = False
         terminal_event_pending = False
+        terminal_binding_reason: str | None = None
         for raw_line in lines:
             if not raw_line:
                 raise CostUnverifiedError("ledger validation failed")
@@ -978,12 +1032,32 @@ class CostLedger:
                 sequence != expected_sequence
                 or previous != expected_previous
                 or terminal_seen
-                or (terminal_event_pending and event_type not in {
-                    STOPPED_COST_UNVERIFIED,
-                    STOPPED_BUDGET_EXHAUSTED,
-                })
+                or (
+                    terminal_event_pending
+                    and event_type not in {
+                        "reconciliation",
+                        STOPPED_COST_UNVERIFIED,
+                        STOPPED_BUDGET_EXHAUSTED,
+                    }
+                )
             ):
                 raise CostUnverifiedError("ledger validation failed")
+            if terminal_event_pending:
+                if event_type == "reconciliation":
+                    if event.get("status") not in _RECONCILIATION_REASONS_BY_STATUS:
+                        raise CostUnverifiedError("ledger validation failed")
+                else:
+                    stop_reason = _event_stop_reason(event, expected_status=event_type)
+                    if terminal_binding_reason is not None and (
+                        event_type != STOPPED_COST_UNVERIFIED
+                        or stop_reason != terminal_binding_reason
+                    ):
+                        raise CostUnverifiedError("ledger validation failed")
+                    if terminal_binding_reason is None and (
+                        event_type == STOPPED_COST_UNVERIFIED
+                        and stop_reason != "ambiguous_in_flight"
+                    ):
+                        raise CostUnverifiedError("ledger validation failed")
             supplied_hash = event.get("event_hash")
             if (
                 type(supplied_hash) is not str
@@ -998,9 +1072,17 @@ class CostLedger:
             self._replay_event(event)
             self._events.append(event)
             if event_type == "reconciliation" and event.get("status") != "reconciled":
+                reason = event["stop_reason"]
+                if not terminal_event_pending:
+                    terminal_binding_reason = (
+                        None if reason == "ambiguous_in_flight" else reason
+                    )
+                elif terminal_binding_reason is None and reason != "ambiguous_in_flight":
+                    terminal_binding_reason = reason
                 terminal_event_pending = True
             elif event_type in {STOPPED_COST_UNVERIFIED, STOPPED_BUDGET_EXHAUSTED}:
                 terminal_event_pending = False
+                terminal_binding_reason = None
             terminal_seen = event_type in {
                 STOPPED_COST_UNVERIFIED,
                 STOPPED_BUDGET_EXHAUSTED,
@@ -1231,11 +1313,42 @@ class CostLedger:
             raise CostUnverifiedError("exploratory preflight is blocked")
 
     def _stop(self, status: str, reason: str) -> None:
-        if self._state in {STOPPED_COST_UNVERIFIED, STOPPED_BUDGET_EXHAUSTED}:
-            return
-        self._append_event(status, budget_status=status, stop_reason=reason)
-        self._state = status
-        self._stop_reason = reason
+        with self._lock:
+            if self._state in {STOPPED_COST_UNVERIFIED, STOPPED_BUDGET_EXHAUSTED}:
+                return
+            pending = tuple(
+                sorted(self._pending.values(), key=lambda item: (item.call_id, item.attempt))
+            )
+            effective_reason = reason
+            if (
+                status == STOPPED_COST_UNVERIFIED
+                and pending
+                and (
+                    not self._events
+                    or self._events[-1].get("event_type") != "reconciliation"
+                    or self._events[-1].get("status") == "reconciled"
+                )
+            ):
+                effective_reason = "ambiguous_in_flight"
+            for reservation in pending:
+                self._append_event(
+                    "reconciliation",
+                    status="ambiguous_in_flight",
+                    call_id=reservation.call_id,
+                    phase=reservation.phase,
+                    attempt=reservation.attempt,
+                    reserved_microusd=reservation.reserved_microusd,
+                    released_microusd=0,
+                    stop_reason="ambiguous_in_flight",
+                )
+            self._pending.clear()
+            self._append_event(
+                status,
+                budget_status=status,
+                stop_reason=effective_reason,
+            )
+            self._state = status
+            self._stop_reason = effective_reason
 
     def _stop_cost_unverified(self, reason: str) -> None:
         self._stop(STOPPED_COST_UNVERIFIED, reason)
@@ -1380,7 +1493,8 @@ class CostLedger:
         if not isinstance(usage, Mapping):
             raise _UsageProblem("missing_usage" if usage is None else "malformed_usage")
         try:
-            if any(key not in _USAGE_FIELDS for key in usage):
+            _validate_nested_token_metadata(usage)
+            if any(key not in _USAGE_FIELDS_WITH_DETAILS for key in usage):
                 raise _UsageProblem("malformed_usage")
             for field_name in (
                 "input_tokens",
@@ -1403,13 +1517,43 @@ class CostLedger:
                 raise _UsageProblem("malformed_usage")
             if input_value is None or output_value is None:
                 raise _UsageProblem("missing_usage")
-            cached_value = usage.get("cached_tokens", 0)
+            cached_detail_values: list[int] = []
+            for detail_field in _CACHED_TOKEN_DETAIL_FIELDS:
+                if detail_field in usage:
+                    details = usage[detail_field]
+                    if not isinstance(details, Mapping):
+                        raise _UsageProblem("malformed_usage")
+                    if "cached_tokens" in details:
+                        cached_detail_values.append(details["cached_tokens"])
+            if len(set(cached_detail_values)) > 1:
+                raise _UsageProblem("malformed_usage")
+            cached_value = usage.get(
+                "cached_tokens",
+                cached_detail_values[0] if cached_detail_values else 0,
+            )
+            if cached_detail_values and cached_value != cached_detail_values[0]:
+                raise _UsageProblem("malformed_usage")
             if cached_value > input_value:
                 raise _UsageProblem("malformed_usage")
             total_value = usage.get("total_tokens", input_value + output_value)
             if total_value != input_value + output_value:
                 raise _UsageProblem("malformed_usage")
-            reasoning_value = usage.get("reasoning_tokens", 0)
+            reasoning_detail_values: list[int] = []
+            for detail_field in _REASONING_TOKEN_DETAIL_FIELDS:
+                if detail_field in usage:
+                    details = usage[detail_field]
+                    if not isinstance(details, Mapping):
+                        raise _UsageProblem("malformed_usage")
+                    if "reasoning_tokens" in details:
+                        reasoning_detail_values.append(details["reasoning_tokens"])
+            if len(set(reasoning_detail_values)) > 1:
+                raise _UsageProblem("malformed_usage")
+            reasoning_value = usage.get(
+                "reasoning_tokens",
+                reasoning_detail_values[0] if reasoning_detail_values else 0,
+            )
+            if reasoning_detail_values and reasoning_value != reasoning_detail_values[0]:
+                raise _UsageProblem("malformed_usage")
             return {
                 "input_tokens": input_value,
                 "output_tokens": output_value,
@@ -1490,6 +1634,7 @@ class CostLedger:
                         safe_metadata = dict(metadata)
                     except Exception as error:
                         raise _UsageProblem("malformed_usage") from error
+                    _validate_nested_token_metadata(safe_metadata)
                     if usage is None:
                         usage = safe_metadata.get("usage")
                 if type(outcome) is not str or outcome not in _SAFE_OUTCOMES:
@@ -1633,7 +1778,9 @@ def _provider_metadata(provider: Any) -> Mapping[str, Any]:
         metadata = getattr(provider, "last_call_metadata")
         if not isinstance(metadata, Mapping):
             raise _MetadataProblem("metadata is not a mapping")
-        return dict(metadata)
+        snapshot = dict(metadata)
+        _validate_nested_token_metadata(snapshot)
+        return snapshot
     except _MetadataProblem:
         raise
     except Exception as error:
