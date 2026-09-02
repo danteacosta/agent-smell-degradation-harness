@@ -155,18 +155,21 @@ _STOP_REASONS_BY_STATUS = {
     STOPPED_BUDGET_EXHAUSTED: _BUDGET_EXHAUSTED_STOP_REASONS,
 }
 _STOP_REASONS = frozenset().union(*_STOP_REASONS_BY_STATUS.values())
-_UNVERIFIED_RECONCILIATION_STOP_REASONS = frozenset(
-    {
-        "ambiguous_in_flight",
-        "invalid_reconciliation_outcome",
-        "ledger_mismatch",
-        "malformed_usage",
-        "metadata_access_failed",
-        "missing_usage",
-        "provider_model_pricing_mismatch",
-        "token_bounds_exceeded",
-    }
-)
+_RECONCILIATION_REASONS_BY_STATUS = {
+    "cost_unverified": frozenset(
+        {
+            "invalid_reconciliation_outcome",
+            "ledger_mismatch",
+            "malformed_usage",
+            "metadata_access_failed",
+            "missing_usage",
+            "provider_model_pricing_mismatch",
+            "token_bounds_exceeded",
+        }
+    ),
+    "ambiguous_in_flight": frozenset({"ambiguous_in_flight"}),
+}
+_RECONCILIATION_REASONS = frozenset().union(*_RECONCILIATION_REASONS_BY_STATUS.values())
 
 
 class CostLedgerError(ValueError):
@@ -279,10 +282,9 @@ def _validate_event_schema(event: Mapping[str, Any]) -> None:
         allowed = _RESERVATION_EVENT_FIELDS
     elif event_type == "reconciliation":
         status = event.get("status")
-        if status in {"cost_unverified", "ambiguous_in_flight"}:
+        if status in _RECONCILIATION_REASONS_BY_STATUS:
             allowed = _UNVERIFIED_RECONCILIATION_EVENT_FIELDS
-            if _event_stop_reason(event) not in _UNVERIFIED_RECONCILIATION_STOP_REASONS:
-                raise CostUnverifiedError("ledger validation failed")
+            _event_reconciliation_reason(event)
         elif status == "reconciled":
             allowed_sets = {
                 _RECONCILED_EVENT_FIELDS,
@@ -309,6 +311,15 @@ def _event_stop_reason(
 ) -> str:
     reason = _event_text(event, "stop_reason")
     allowed = _STOP_REASONS if expected_status is None else _STOP_REASONS_BY_STATUS.get(expected_status)
+    if allowed is None or reason not in allowed:
+        raise CostUnverifiedError("ledger validation failed")
+    return reason
+
+
+def _event_reconciliation_reason(event: Mapping[str, Any]) -> str:
+    status = event.get("status")
+    reason = _event_stop_reason(event)
+    allowed = _RECONCILIATION_REASONS_BY_STATUS.get(status)
     if allowed is None or reason not in allowed:
         raise CostUnverifiedError("ledger validation failed")
     return reason
@@ -877,11 +888,9 @@ class CostLedger:
             try:
                 lines = self.path.read_bytes().splitlines()
                 self._replay(lines)
-                if self._pending and self._state not in {
-                    STOPPED_COST_UNVERIFIED,
-                    STOPPED_BUDGET_EXHAUSTED,
-                }:
+                if self._pending:
                     self._stop(STOPPED_COST_UNVERIFIED, "ambiguous_in_flight")
+                    self._pending.clear()
             except CostUnverifiedError:
                 raise
             except (OSError, UnicodeDecodeError, json.JSONDecodeError, KeyError, TypeError, ValueError) as error:
@@ -1010,6 +1019,8 @@ class CostLedger:
             raise CostUnverifiedError("ledger configuration mismatch")
         if terminal_event_pending:
             raise CostUnverifiedError("ledger validation failed")
+        if terminal_seen and self._pending:
+            raise CostUnverifiedError("ledger validation failed")
 
     def _replay_event(self, event: Mapping[str, Any]) -> None:
         event_type = event["event_type"]
@@ -1134,16 +1145,7 @@ class CostLedger:
                 raise CostUnverifiedError("ledger validation failed")
             released = _event_int(event, "released_microusd")
             if status != "reconciled":
-                if released != 0 or _event_stop_reason(event) not in {
-                    "missing_usage",
-                    "malformed_usage",
-                    "token_bounds_exceeded",
-                    "provider_model_pricing_mismatch",
-                    "ledger_mismatch",
-                    "invalid_reconciliation_outcome",
-                    "ambiguous_in_flight",
-                    "metadata_access_failed",
-                }:
+                if released != 0 or _event_reconciliation_reason(event) not in _RECONCILIATION_REASONS:
                     raise CostUnverifiedError("ledger validation failed")
                 if any(
                     field_name in event
@@ -1208,8 +1210,13 @@ class CostLedger:
         if event_type in {STOPPED_COST_UNVERIFIED, STOPPED_BUDGET_EXHAUSTED}:
             if event.get("budget_status") != event_type:
                 raise CostUnverifiedError("ledger validation failed")
+            reason = _event_stop_reason(event, expected_status=event_type)
+            if self._pending:
+                if event_type != STOPPED_COST_UNVERIFIED or reason != "ambiguous_in_flight":
+                    raise CostUnverifiedError("ledger validation failed")
+                self._pending.clear()
             self._state = event_type
-            self._stop_reason = _event_stop_reason(event)
+            self._stop_reason = reason
             return
         raise CostUnverifiedError("ledger validation failed")
 

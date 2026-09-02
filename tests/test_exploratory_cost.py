@@ -665,12 +665,16 @@ def test_ledger_hash_mismatch_is_rejected_without_echoing_ledger_contents(tmp_pa
     assert "private requirement" not in text
 
 
-def _rewrite_last_event(path: Path, **changes: object) -> None:
+def _rewrite_event(path: Path, event_index: int, **changes: object) -> None:
     events = [json.loads(line) for line in path.read_text().splitlines()]
-    events[-1].update(changes)
-    unsigned = dict(events[-1])
-    unsigned.pop("event_hash")
-    events[-1]["event_hash"] = CostLedger._hash_event(unsigned)
+    events[event_index].update(changes)
+    for index in range(event_index, len(events)):
+        events[index]["prev_event_hash"] = (
+            "0" * 64 if index == 0 else events[index - 1]["event_hash"]
+        )
+        unsigned = dict(events[index])
+        unsigned.pop("event_hash")
+        events[index]["event_hash"] = CostLedger._hash_event(unsigned)
     path.write_text(
         "\n".join(
             json.dumps(event, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
@@ -678,6 +682,10 @@ def _rewrite_last_event(path: Path, **changes: object) -> None:
         )
         + "\n"
     )
+
+
+def _rewrite_last_event(path: Path, **changes: object) -> None:
+    _rewrite_event(path, -1, **changes)
 
 
 @pytest.mark.parametrize("bad_amount", [1.5, True, "1", "1.0", -1])
@@ -791,6 +799,30 @@ def test_given_replay_with_incompatible_stop_state_reason_when_opened_then_it_fa
     with pytest.raises(CostUnverifiedError):
         ledger.reconcile_response(reservation, None)
     _rewrite_last_event(path, stop_reason="fixed_plan_exhausted")
+    tampered = path.read_bytes()
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+    assert path.read_bytes() == tampered
+
+
+def test_given_replay_with_incompatible_reconciliation_status_reason_when_opened_then_it_fails_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "incompatible-reconciliation-reason.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, None)
+    _rewrite_event(path, -2, status="ambiguous_in_flight", stop_reason="missing_usage")
     tampered = path.read_bytes()
 
     with pytest.raises(CostUnverifiedError):
@@ -1090,7 +1122,7 @@ def test_given_unreconciled_reservation_when_ledger_is_reopened_then_it_stops_as
     )
     path = tmp_path / "interrupted.jsonl"
     ledger = CostLedger(path, configuration)
-    ledger.reserve_attempt(
+    reservation = ledger.reserve_attempt(
         call_id="call-1",
         provider="openai",
         model="openai-model",
@@ -1102,6 +1134,16 @@ def test_given_unreconciled_reservation_when_ledger_is_reopened_then_it_stops_as
 
     assert resumed.status == "stopped_cost_unverified"
     assert resumed.report()["stop_reason"] == "ambiguous_in_flight"
+    assert resumed.report()["pending_attempt_count"] == 0
+    assert resumed.report()["active_reserved_microusd"] == reservation.reserved_microusd
+    assert [event["event_type"] for event in resumed.events] == [
+        "preflight",
+        "reservation",
+        "stopped_cost_unverified",
+    ]
+    reopened = CostLedger(path, configuration)
+    assert reopened.status == resumed.status
+    assert reopened.report() == resumed.report()
     with pytest.raises(CostUnverifiedError):
         resumed.reserve_attempt(
             call_id="call-2",
