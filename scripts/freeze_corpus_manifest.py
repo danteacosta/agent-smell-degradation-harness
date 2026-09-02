@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
@@ -32,7 +34,29 @@ def main() -> int:
 
     output = REPOSITORY_ROOT / "data/prepilot/corpus-manifest.json"
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(frozen, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    serialized = json.dumps(frozen, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    temporary_path: str | None = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            dir=output.parent,
+            prefix=f".{output.name}.",
+            suffix=".tmp",
+            delete=False,
+        ) as temporary:
+            temporary_path = temporary.name
+            temporary.write(serialized)
+            temporary.flush()
+            os.fsync(temporary.fileno())
+        os.replace(temporary_path, output)
+        temporary_path = None
+    finally:
+        if temporary_path is not None:
+            try:
+                os.unlink(temporary_path)
+            except FileNotFoundError:
+                pass
     print(json.dumps({
         "status": frozen["status"],
         "record_count": frozen["record_count"],

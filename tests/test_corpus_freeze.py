@@ -157,6 +157,32 @@ def test_freeze_rejects_declared_minimum_above_actual_project_count() -> None:
         )
 
 
+@pytest.mark.parametrize(
+    "field", ["record_count", "unique_intent_count", "project_count", "expected_intents", "minimum_projects"]
+)
+def test_freeze_rejects_float_count_metadata(field: str) -> None:
+    _, candidate = _candidate()
+    invalid = copy.deepcopy(candidate)
+    invalid[field] = float(invalid[field])
+
+    with pytest.raises(CorpusIntakeError, match="count|integer|metadata"):
+        freeze_validated_manifest(
+            invalid, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+        )
+
+
+def test_freeze_rejects_self_consistent_whitespace_variant() -> None:
+    _, candidate = _candidate()
+    invalid = copy.deepcopy(candidate)
+    invalid["records"][0]["source_intent_id"] = " source-00 "
+    _rehash_record(invalid["records"][0])
+
+    with pytest.raises(CorpusIntakeError, match="record_sha256"):
+        freeze_validated_manifest(
+            invalid, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+        )
+
+
 @pytest.mark.parametrize("review_name", ["rights_review", "manipulation_check"])
 @pytest.mark.parametrize("reviewer_id", [None, 123])
 def test_candidate_rejects_non_string_nested_reviewer_ids(
@@ -393,34 +419,38 @@ def test_freeze_cli_writes_only_fixed_redacted_repository_artifact(tmp_path: Pat
     candidate_path = tmp_path / "private-candidate.json"
     candidate_path.write_text(json.dumps(candidate), encoding="utf-8")
     output_path = REPO_ROOT / "data/prepilot/corpus-manifest.json"
-    if output_path.exists():
-        output_path.unlink()
+    existed = output_path.exists()
+    previous_bytes = output_path.read_bytes() if existed else None
+    try:
+        result = subprocess.run(
+            [
+                sys.executable,
+                "scripts/freeze_corpus_manifest.py",
+                "--candidate",
+                str(candidate_path),
+                "--frozen-at",
+                FROZEN_AT,
+                "--freeze-reviewer-id",
+                "freeze-reviewer-a",
+            ],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
 
-    result = subprocess.run(
-        [
-            sys.executable,
-            "scripts/freeze_corpus_manifest.py",
-            "--candidate",
-            str(candidate_path),
-            "--frozen-at",
-            FROZEN_AT,
-            "--freeze-reviewer-id",
-            "freeze-reviewer-a",
-        ],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-
-    assert result.returncode == 0, result.stderr
-    assert output_path.exists()
-    emitted = json.loads(output_path.read_text(encoding="utf-8"))
-    assert emitted["status"] == "frozen"
-    assert emitted["raw_text_exported"] is False
-    assert "PRIVATE SOURCE SECRET" not in result.stdout + result.stderr
-    assert "private request" not in output_path.read_text(encoding="utf-8")
-    output_path.unlink()
+        assert result.returncode == 0, result.stderr
+        assert output_path.exists()
+        emitted = json.loads(output_path.read_text(encoding="utf-8"))
+        assert emitted["status"] == "frozen"
+        assert emitted["raw_text_exported"] is False
+        assert "PRIVATE SOURCE SECRET" not in result.stdout + result.stderr
+        assert "private request" not in output_path.read_text(encoding="utf-8")
+    finally:
+        if existed:
+            output_path.write_bytes(previous_bytes)
+        elif output_path.exists():
+            output_path.unlink()
 
 
 def test_validate_intake_script_runs_by_repository_path(tmp_path: Path) -> None:

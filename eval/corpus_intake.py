@@ -348,43 +348,63 @@ def _validate_redacted_record(record: Mapping[str, Any]) -> dict[str, Any]:
     if missing:
         raise CorpusIntakeError("frozen manifest record is not a complete redacted record")
     _reject_raw_text_injection(record)
-    _required_id(record, "source_intent_id")
-    _required_id(record, "project_id")
-    _required_url(record, "source_url")
-    _required_id(record, "license")
-    _required_url(record, "license_evidence_url")
-    if record["reuse_permission_status"] not in {
+    source_intent_id = _required_id(record, "source_intent_id")
+    project_id = _required_id(record, "project_id")
+    source_url = _required_url(record, "source_url")
+    license_name = _required_id(record, "license")
+    license_evidence_url = _required_url(record, "license_evidence_url")
+    permission = str(record["reuse_permission_status"]).strip().lower()
+    if permission not in {
         "license_confirmed",
         "written_permission",
     }:
         raise CorpusIntakeError(
             "frozen record reuse_permission_status is not confirmed"
         )
-    _required_id(record, "defect_family")
-    if record["defect_family"] != PRIMARY_DEFECT_FAMILY:
+    defect_family = _required_id(record, "defect_family")
+    if defect_family != PRIMARY_DEFECT_FAMILY:
         raise CorpusIntakeError("frozen record has an unsupported defect family")
-    _required_id(record, "removed_constraint_id")
-    _required_id(record, "near_clone_group")
+    removed_constraint_id = _required_id(record, "removed_constraint_id")
+    near_clone_group = _required_id(record, "near_clone_group")
     if record["near_clone_reviewed"] is not True:
         raise CorpusIntakeError("frozen record near_clone_reviewed must be true")
-    _required_timestamp(record, "retrieved_at")
+    retrieved_at = _required_timestamp(record, "retrieved_at")
     rights_review = record.get("rights_review")
     if not isinstance(rights_review, Mapping) or set(rights_review) != _RIGHTS_REVIEW_FIELDS:
         raise CorpusIntakeError("frozen record rights_review is incomplete or has unexpected fields")
     if not isinstance(rights_review.get("reviewer_id"), str):
         raise CorpusIntakeError("frozen record rights_review.reviewer_id must be text")
-    _rights_review(record)
+    normalized_rights_review = _rights_review(record)
     manipulation_check = record.get("manipulation_check")
     if not isinstance(manipulation_check, Mapping) or set(manipulation_check) != _MANIPULATION_REVIEW_FIELDS:
         raise CorpusIntakeError("frozen record manipulation_check is incomplete or has unexpected fields")
     if not isinstance(manipulation_check.get("reviewer_id"), str):
         raise CorpusIntakeError("frozen record manipulation_check.reviewer_id must be text")
-    _review_checks(record)
+    normalized_manipulation_checks, manipulation_reviewer_id = _review_checks(record)
     for field in (*_HASH_FIELDS, "record_sha256"):
         value = record.get(field)
         if not isinstance(value, str) or _SHA256_RE.fullmatch(value) is None:
             raise CorpusIntakeError(f"frozen record {field} must be a lowercase SHA-256 hex digest")
-    redacted = dict(record)
+    redacted = {
+        "source_intent_id": source_intent_id,
+        "project_id": project_id,
+        "source_url": source_url,
+        "license": license_name,
+        "license_evidence_url": license_evidence_url,
+        "reuse_permission_status": permission,
+        "rights_review": normalized_rights_review,
+        "retrieved_at": retrieved_at,
+        **{field: record[field] for field in _HASH_FIELDS},
+        "defect_family": defect_family,
+        "removed_constraint_id": removed_constraint_id,
+        "near_clone_group": near_clone_group,
+        "near_clone_reviewed": True,
+        "manipulation_check": {
+            **normalized_manipulation_checks,
+            "reviewer_id": manipulation_reviewer_id,
+        },
+        "record_sha256": record["record_sha256"],
+    }
     expected = _sha256_json({key: value for key, value in redacted.items() if key != "record_sha256"})
     if redacted["record_sha256"] != expected:
         raise CorpusIntakeError("record_sha256 does not match the redacted record")
@@ -440,6 +460,15 @@ def freeze_validated_manifest(
         raise CorpusIntakeError("candidate manifest must have validated_candidate status")
     if candidate.get("raw_text_exported") is not False:
         raise CorpusIntakeError("candidate manifest raw_text_exported must be false")
+    for field in (
+        "record_count",
+        "unique_intent_count",
+        "project_count",
+        "expected_intents",
+        "minimum_projects",
+    ):
+        if type(candidate.get(field)) is not int:
+            raise CorpusIntakeError(f"candidate manifest {field} must be an integer")
     if type(candidate.get("expected_intents")) is not int or candidate.get("expected_intents") != 12:
         raise CorpusIntakeError("candidate manifest expected_intents must be exactly 12")
     if (
@@ -450,7 +479,13 @@ def freeze_validated_manifest(
             "candidate manifest minimum_projects must be an integer >= 6"
         )
     records = [_validate_redacted_record(record) for record in candidate.get("records", [])]
-    if len(records) != 12 or len(records) != candidate.get("record_count") or len(records) != candidate.get("unique_intent_count"):
+    if (
+        len(records) != 12
+        or candidate["record_count"] != 12
+        or candidate["unique_intent_count"] != 12
+        or len(records) != candidate["record_count"]
+        or len(records) != candidate["unique_intent_count"]
+    ):
         raise CorpusIntakeError("candidate manifest record counts are inconsistent")
     intent_ids = [str(record["source_intent_id"]) for record in records]
     if len(set(intent_ids)) != len(intent_ids):
@@ -498,6 +533,15 @@ def validate_private_records_against_frozen_manifest(
         raise CorpusIntakeError("frozen manifest has an unsupported schema_version")
     if frozen_manifest.get("raw_text_exported") is not False:
         raise CorpusIntakeError("frozen manifest raw_text_exported must be false")
+    for field in (
+        "record_count",
+        "unique_intent_count",
+        "project_count",
+        "expected_intents",
+        "minimum_projects",
+    ):
+        if type(frozen_manifest.get(field)) is not int:
+            raise CorpusIntakeError(f"frozen manifest {field} must be an integer")
     _validate_freeze_metadata(
         frozen_manifest.get("frozen_at", ""),
         frozen_manifest.get("freeze_reviewer_id", ""),
@@ -526,6 +570,10 @@ def validate_private_records_against_frozen_manifest(
         raise CorpusIntakeError(
             "frozen manifest has fewer projects than its declared minimum"
         )
+    if frozen_manifest.get("record_count") != 12:
+        raise CorpusIntakeError("frozen manifest record_count must be exactly 12")
+    if frozen_manifest.get("unique_intent_count") != 12:
+        raise CorpusIntakeError("frozen manifest unique_intent_count must be exactly 12")
     if frozen_manifest.get("record_count") != len(frozen_rows):
         raise CorpusIntakeError("frozen manifest record_count is inconsistent")
     if frozen_manifest.get("unique_intent_count") != len(frozen_intent_ids):
