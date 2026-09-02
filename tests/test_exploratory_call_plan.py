@@ -412,6 +412,22 @@ def test_direct_plan_rejects_mapping_instead_of_retaining_mutable_public_field(f
         _direct_plan(**{field: {"mutable": []}})
 
 
+@pytest.mark.parametrize("attempts", [None, True, 0, 3, 2.0, "2", [2], {"attempts": 2}])
+def test_direct_plan_rejects_invalid_max_attempts_values(attempts: object):
+    with pytest.raises(ValueError, match="max_attempts_per_api_call"):
+        _direct_plan(max_attempts_per_api_call=attempts)
+
+
+@pytest.mark.parametrize("attempts", [1, 2])
+def test_direct_plan_canonicalizes_max_attempts_and_public_serialization(attempts: int):
+    plan = _direct_plan(max_attempts_per_api_call=attempts)
+
+    assert type(plan.max_attempts_per_api_call) is int
+    assert plan.max_attempts_per_api_call == attempts
+    assert type(plan.to_public_dict()["max_attempts_per_api_call"]) is int
+    assert plan.to_public_dict()["max_attempts_per_api_call"] == attempts
+
+
 def test_provider_identity_must_differ_even_when_models_differ(tmp_path: Path):
     path = tmp_path / "constraints.json"
     write_constraints(path)

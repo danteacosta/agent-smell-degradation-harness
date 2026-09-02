@@ -17,6 +17,8 @@ from label_plane.exploratory_judge import JUDGE_SCHEMA_VERSION, validate_judge_r
 
 _FROZEN_DUPLICATE_SEED = 0
 _FROZEN_DUPLICATE_FRACTION = 0.2
+_MIN_ATTEMPTS_PER_API_CALL = 1
+_MAX_ATTEMPTS_PER_API_CALL = 2
 _REFERENCE_CONSTRAINT_FIELDS = frozenset({"source_intent_id", "constraint_id", "text"})
 _REFERENCE_CONSTRAINT_SCHEMA_VERSION = "prepilot-reference-constraints/v1"
 _PRIVATE_TARGET_TOKEN = "incompleteness_missing_condition"
@@ -129,6 +131,11 @@ class ExploratoryCallPlan:
                 "private provider configurations",
             ),
         )
+        object.__setattr__(
+            self,
+            "max_attempts_per_api_call",
+            _canonicalize_max_attempts_per_api_call(self.max_attempts_per_api_call),
+        )
 
     @property
     def duplicate_base_task_count(self) -> int:
@@ -196,6 +203,18 @@ def _validate_run_nonce(nonce: Any) -> bytes:
     if type(nonce) is not bytes or len(nonce) != 32:
         raise ValueError("run_nonce must be bytes with exactly 32 bytes")
     return nonce
+
+
+def _canonicalize_max_attempts_per_api_call(value: Any) -> int:
+    if (
+        type(value) is not int
+        or not _MIN_ATTEMPTS_PER_API_CALL <= value <= _MAX_ATTEMPTS_PER_API_CALL
+    ):
+        raise ValueError(
+            "max_attempts_per_api_call must be a plain int between "
+            f"{_MIN_ATTEMPTS_PER_API_CALL} and {_MAX_ATTEMPTS_PER_API_CALL}"
+        )
+    return int(value)
 
 
 def _freeze_private_records(value: Any, expected_type: type[Any], name: str) -> tuple[Any, ...]:
