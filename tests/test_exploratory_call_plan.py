@@ -303,7 +303,7 @@ def test_direct_reference_constraints_reject_duplicate_ids():
         build_exploratory_call_plan(records(), slots(), direct, run_nonce=b"a" * 32)
 
 
-@pytest.mark.parametrize("nonce", ["a" * 32, bytearray(b"a" * 32)])
+@pytest.mark.parametrize("nonce", ["a" * 32, bytearray(b"a" * 32), b"a" * 31, b"a" * 33])
 def test_plan_rejects_non_bytes_nonce_before_hmac(tmp_path: Path, nonce: object):
     path = tmp_path / "constraints.json"
     write_constraints(path)
