@@ -150,7 +150,10 @@ def _review_checks(record: Mapping[str, Any]) -> tuple[dict[str, bool], str]:
         if raw.get(field) is not True:
             raise CorpusIntakeError(f"manipulation check is not confirmed: {field}")
         checks[field] = True
-    reviewer = str(raw.get("reviewer_id", "")).strip()
+    reviewer_value = raw.get("reviewer_id")
+    if not isinstance(reviewer_value, str):
+        raise CorpusIntakeError("manipulation_check.reviewer_id must be text")
+    reviewer = reviewer_value.strip()
     if not reviewer or reviewer.lower() in {"tbd", "unknown"}:
         raise CorpusIntakeError("manipulation_check.reviewer_id is required")
     return checks, reviewer
@@ -165,7 +168,10 @@ def _rights_review(record: Mapping[str, Any]) -> dict[str, Any]:
         if raw.get(field) is not True:
             raise CorpusIntakeError(f"rights review is not confirmed: {field}")
         assertions[field] = True
-    reviewer_id = str(raw.get("reviewer_id", "")).strip()
+    reviewer_value = raw.get("reviewer_id")
+    if not isinstance(reviewer_value, str):
+        raise CorpusIntakeError("rights_review.reviewer_id must be text")
+    reviewer_id = reviewer_value.strip()
     if not reviewer_id or reviewer_id.lower() in {"tbd", "unknown"}:
         raise CorpusIntakeError("rights_review.reviewer_id is required")
     reviewed_at = _required_timestamp(raw, "reviewed_at")
