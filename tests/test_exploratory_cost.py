@@ -1330,7 +1330,7 @@ def test_given_truncated_unverified_reconciliation_when_reopened_then_it_recover
     lines = path.read_bytes().splitlines()
     assert json.loads(lines[-1])["event_type"] == "stopped_cost_unverified"
     expected_recovered_bytes = b"\n".join(lines) + b"\n"
-    path.write_bytes(b"\n".join(lines[:-1]) + b"\n")
+    path.write_bytes(b"\n".join(lines[:-1]))
 
     recovered = CostLedger(path, configuration)
     report = recovered.report()

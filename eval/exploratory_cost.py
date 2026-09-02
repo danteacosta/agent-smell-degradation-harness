@@ -980,8 +980,16 @@ class CostLedger:
         event["event_hash"] = self._hash_event(event)
         encoded = (_canonical_json(event) + "\n").encode("utf-8")
         try:
-            descriptor = os.open(str(self.path), os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
+            descriptor = os.open(
+                str(self.path), os.O_RDWR | os.O_CREAT | os.O_APPEND, 0o600
+            )
             try:
+                if os.fstat(descriptor).st_size:
+                    os.lseek(descriptor, -1, os.SEEK_END)
+                    if os.read(descriptor, 1) != b"\n":
+                        os.lseek(descriptor, 0, os.SEEK_END)
+                        if os.write(descriptor, b"\n") != 1:
+                            raise OSError("ledger delimiter append was incomplete")
                 written = os.write(descriptor, encoded)
                 if written != len(encoded):
                     raise OSError("ledger event append was incomplete")
