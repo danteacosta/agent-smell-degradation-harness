@@ -1,6 +1,6 @@
 # Pre-pilot unlock plan
 
-Status: 2026-09-01. This document turns the launch blockers into executable
+Status: 2026-09-02. This document turns the launch blockers into executable
 steps without promoting a smoke test, a model panel, or a local seed to
 confirmatory evidence.
 
@@ -8,7 +8,7 @@ confirmatory evidence.
 
 | Gate | Evidence already in the repository | Count/status now | Next owner |
 |---|---|---:|---|
-| Main synchronization | Context-management PR content is in merge commit \`9d0b5bc\`; the three required checks passed | 1 synchronized main state | engineering |
+| Main synchronization | Context-management PR content is in merge commit \`9d0b5bc\`; the three required checks passed | 1 synchronized main state at `e2b5f17` | engineering |
 | Corpus | Seven checked-in seed records; private redacted-intake validator added | 7/12 unique intents; 0 admitted confirmatory records | researcher + advisor |
 | Providers | OpenAI-compatible adapter, DeepSeek adapter, usage/cost propagation, and native smoke CLI | 0/2 runtime-native configurations qualified | operator |
 | Annotation | Frozen \`tasks/annotation_rubric.json\`; duplicate selection and blinded packet CLI | 0/2 trained annotators; 0 adjudicated items | advisor + annotators |
