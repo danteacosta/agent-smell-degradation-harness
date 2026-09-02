@@ -195,6 +195,19 @@ def test_private_join_rejects_noncanonical_row_with_recomputed_manifest_hash() -
         validate_private_records_against_frozen_manifest(records, frozen)
 
 
+def test_private_join_rejects_rehashed_whitespace_row_and_manifest() -> None:
+    records, candidate = _candidate()
+    frozen = freeze_validated_manifest(
+        candidate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
+    )
+    frozen["records"][0]["source_intent_id"] = " source-00 "
+    _rehash_record(frozen["records"][0])
+    _rehash_manifest(frozen)
+
+    with pytest.raises(CorpusIntakeError, match="record_sha256|canonical|normalized"):
+        validate_private_records_against_frozen_manifest(records, frozen)
+
+
 @pytest.mark.parametrize("review_name", ["rights_review", "manipulation_check"])
 @pytest.mark.parametrize("reviewer_id", [None, 123])
 def test_candidate_rejects_non_string_nested_reviewer_ids(
@@ -284,6 +297,7 @@ def test_freeze_rejects_tampered_record_hash_and_duplicate_intent() -> None:
     duplicate["records"][1]["source_intent_id"] = duplicate["records"][0][
         "source_intent_id"
     ]
+    _rehash_record(duplicate["records"][1])
     with pytest.raises(CorpusIntakeError, match="unique"):
         freeze_validated_manifest(
             duplicate, frozen_at=FROZEN_AT, freeze_reviewer_id="freeze-reviewer-a"
