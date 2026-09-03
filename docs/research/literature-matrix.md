@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-09-02  
+Last updated: 2026-09-03  
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -12,6 +12,7 @@ have been read. Product-only sources must not support scientific claims.
 | [Deng et al., *AgentPro: Enhancing LLM Agents with Automated Process Supervision*](https://doi.org/10.18653/v1/2025.emnlp-main.506) | 2025, EMNLP, peer-reviewed | Whether automated step-level supervision improves agents; FEVER, HotpotQA, ALFWorld, and WebShop | MCTS labels intermediate steps by whether a continuation reaches the ground-truth answer; a process reward model guides rejection-sampling training; three seeds | Reported gains include 6.32 percentage points on HotpotQA and improvements on all four benchmarks | Requires expensive full-parameter training and extra inference; domains are not SE; step labels depend on terminal ground truth | Strong comparator for process-level evidence, but not proof that pre-final signals are independently predictive | Treat any outcome-derived process label as label-plane data; never use it as a T1–T3 feature in H2 | Process scoring may become a future remediation component after independent validation | Add an explicit process-supervision circularity boundary; do not add PRM training before the pilot | 8/10 |
 | [Rondon et al., *Evaluating Agent-Based Program Repair at Google*](https://doi.org/10.1109/ICSE-SEIP66354.2025.00038) | 2025, ICSE-SEIP, peer-reviewed | Whether an agent can repair enterprise bugs; published program reports 182 bugs, including 82 human- and 100 machine-reported bugs | Passerine agent, 20 trajectory samples per bug, test-based plausibility plus manual semantic-equivalence review | Plausible and semantically equivalent rates differ sharply by bug source; multiple trajectories expose stochastic opportunity | Industrial internal environment limits replication; program-repair outcomes differ from acceptance criteria | Supports external-validity caution and stochastic agent evaluation | Preserve replication IDs, repeated runs, and semantic review beyond terminal pass/fail | Supports cost-aware best-of-N only as a product experiment, not thesis evidence | Keep five repetitions in the pre-pilot and report provider cost per episode | 8/10 |
 | [Zerhoudi et al., *The Compaction Cliff in Long-Running AI Agent Memory*](https://arxiv.org/abs/2608.22752) | 2026, arXiv preprint | Whether repeated context compaction preserves constraints in long-running agents | Cross-model compaction experiments and typed-memory mechanisms | Reports steep rule-survival loss under repeated compaction and proposes typed preservation | Not independently peer-reviewed; recent; mechanism and reported magnitudes need replication | Motivates a secondary mechanism, not a replacement hypothesis | Atomic obligations, compaction telemetry, and the separate interaction test | Typed hard lanes may improve a future integrity gate | Retain as secondary stress-test motivation only | 6/10 |
+| [Motger et al., *Characterizing Datasets for LLM-based Requirements Engineering*](https://arxiv.org/abs/2510.18787) | 2026, systematic mapping preprint | How public LLM4RE datasets differ in provenance, accessibility, reuse, and RE descriptors; 62 datasets from 45 primary studies | Systematic mapping with a public catalogue and extraction scheme | Licensing, availability, granularity, labels, and domain are necessary selection descriptors; accessibility changes over time | Preprint; scope is public LLM4RE datasets rather than controlled agent episodes; dataset documentation can be incomplete | Supports transparent corpus provenance without changing the causal claim | Require an immutable source revision reference in addition to source URL, rights review, hashes, and project ID | A reusable integrity gate can expose source lineage and reuse constraints | Upgrade corpus intake to require `source_revision_url` and `source_revision_id` | 6/10 |
 
 ## 2026-09-02 incorporation decision
 
@@ -22,3 +23,11 @@ ineligible as deployable early-warning evidence in this thesis. H2 therefore
 continues to use only runtime-native, pre-final T1–T3 observations; outcome-
 derived process labels remain in the label plane. This strengthens the leakage
 boundary without changing H1, H2, the smell taxonomy, or the pre-pilot design.
+
+## 2026-09-03 incorporation decision
+
+Motger et al. treat provenance, accessibility, licensing, granularity, and reuse
+as first-class descriptors and warn that availability is time-dependent. The
+pre-pilot intake therefore now requires an immutable source revision URL and
+revision ID. This is an admission/reproducibility control only: it does not
+admit any candidate, change H1/H2, or establish legal rights.

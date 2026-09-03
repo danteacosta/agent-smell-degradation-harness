@@ -1,6 +1,6 @@
 # Pre-pilot unlock plan
 
-Status: 2026-09-02. This document turns the launch blockers into executable
+Status: 2026-09-03. This document turns the launch blockers into executable
 steps without promoting a smoke test, a model panel, or a local seed to
 confirmatory evidence.
 
@@ -77,8 +77,9 @@ pre-pilot and does not enter H1 or H2.
 ## Corpus intake
 
 Raw source material must be assembled outside the repository as JSONL. Each row
-needs the source text, clean and defective variants, source URL, license
-evidence, project ID, retrieval timestamp, declared removed constraint,
+needs the source text, clean and defective variants, a source URL, an immutable
+source revision URL and revision ID, license evidence, project ID, retrieval
+timestamp, declared removed constraint,
 near-clone review, the five manipulation checks, and a timestamped human rights
 review confirming redistribution, derivative transformation, attribution, and
 transmission to the configured external providers. The validator rejects
@@ -97,7 +98,7 @@ python scripts/validate_corpus_intake.py \\
 \`\`\`
 
 The output is a redacted candidate manifest. It contains no requirement text.
-A license name or URL alone is insufficient: schema `prepilot-corpus/v3`
+A license name or URL alone is insufficient: schema `prepilot-corpus/v4`
 fails closed unless all four rights assertions and the reviewer/timestamp are
 present. The validator records that review; it does not establish that the
 legal interpretation is correct. The exact
