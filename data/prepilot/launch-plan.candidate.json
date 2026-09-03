@@ -65,6 +65,48 @@
     "estimated_annotation_hours": 0,
     "cost_basis": "TBD after provider qualification smoke tests"
   },
+  "exploratory_llm_judged_prepilot": {
+    "schema_version": "exploratory-llm-judged-prepilot/v1",
+    "scope_authorized": true,
+    "claim_level": "non_confirmatory_exploratory",
+    "status": "planned",
+    "corpus_manifest_sha256": null,
+    "configuration_sha256": null,
+    "judge_rubric_sha256": null,
+    "expected_logical_operations": 816,
+    "expected_provider_api_calls": 1296,
+    "observed_logical_operations": 0,
+    "observed_provider_api_calls": 0,
+    "observed_artifact_count": 0,
+    "observed_judge_occurrence_count": 0,
+    "observed_cost_usd": null,
+    "provider_configurations": [
+      {
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_version": "gpt-5.6-luna",
+        "role": "generator_and_judge",
+        "qualification_status": "smoke_qualified",
+        "qualification_report_reference": null
+      },
+      {
+        "provider": "deepseek",
+        "model": "deepseek-v4-pro",
+        "model_version": "DeepSeek-V4-Pro-0813",
+        "role": "generator_and_judge",
+        "qualification_status": "smoke_qualified",
+        "qualification_report_reference": null
+      }
+    ],
+    "judge_mode": "llm_only_exploratory",
+    "annotation_status": "machine_generated",
+    "adjudication": "none_forced",
+    "human_adjudication_status": "not_performed",
+    "max_total_cost_usd": 1.0,
+    "disagreement_policy": "uncertain_no_forced_adjudication",
+    "human_annotation_substitute": false,
+    "report_reference": null
+  },
   "go_no_go": {
     "advisor_authorized_pre_pilot": false,
     "corpus_gate": false,

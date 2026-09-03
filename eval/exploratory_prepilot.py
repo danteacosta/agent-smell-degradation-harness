@@ -107,6 +107,25 @@ def _git_revision(repository_root: Path) -> str | None:
     return value if value else None
 
 
+def _source_revision_is_compatible(
+    repository_root: Path, configured_revision: str, current_revision: str | None
+) -> bool:
+    """Allow the config-bearing commit to descend from the frozen code commit."""
+
+    if current_revision is None or current_revision == configured_revision:
+        return current_revision == configured_revision
+    try:
+        result = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", configured_revision, current_revision],
+            cwd=repository_root,
+            capture_output=True,
+            check=False,
+        )
+    except OSError:
+        return False
+    return result.returncode == 0
+
+
 def _safe_error(error: Exception) -> str:
     return type(error).__name__
 
@@ -407,8 +426,12 @@ def run_exploratory_prepilot(
     ledger: CostLedger | None = None
 
     try:
-        if source_revision is None or source_revision != configuration.source_revision:
-            raise ExploratoryPrepilotError("source revision does not match frozen runtime configuration")
+        if not _source_revision_is_compatible(
+            root, configuration.source_revision, source_revision
+        ):
+            raise ExploratoryPrepilotError(
+                "source revision does not match frozen runtime configuration"
+            )
         verify_protocol_hashes(configuration.protocol_hashes, repository_root=root)
         frozen_manifest = _load_frozen_manifest(root)
         private_records = load_private_records(private_corpus_path)
