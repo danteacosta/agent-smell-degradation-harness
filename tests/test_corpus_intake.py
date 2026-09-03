@@ -16,6 +16,8 @@ def _record(index: int) -> dict:
         "source_intent_id": f"source-{index:02d}",
         "project_id": f"project-{index % 6}",
         "source_url": f"https://example.org/requirements/{index}",
+        "source_revision_url": f"https://example.org/requirements/{index}?revision=rev-{index}",
+        "source_revision_id": f"rev-{index}",
         "license": "CC-BY-4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0/",
         "reuse_permission_status": "license_confirmed",
@@ -70,6 +72,14 @@ def test_intake_rejects_missing_rights_review_and_duplicate_intents() -> None:
     records = [_record(index) for index in range(12)]
     records[1]["source_intent_id"] = records[0]["source_intent_id"]
     with pytest.raises(CorpusIntakeError, match="unique"):
+        build_redacted_manifest(records)
+
+
+def test_intake_requires_an_immutable_source_reference() -> None:
+    records = [_record(index) for index in range(12)]
+    records[0].pop("source_revision_id")
+
+    with pytest.raises(CorpusIntakeError, match="source_revision_id"):
         build_redacted_manifest(records)
 
 
