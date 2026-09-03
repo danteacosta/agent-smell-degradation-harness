@@ -235,11 +235,25 @@ def test_given_preflight_fsync_failure_when_reopened_then_ledger_stays_fail_clos
     def fail_event_fsync(descriptor: int) -> None:
         nonlocal fsync_calls
         fsync_calls += 1
-        if fsync_calls == 2:
+        if fsync_calls == 3:
             raise OSError("injected fsync")
         real_fsync(descriptor)
 
     with patch.object(exploratory_cost.os, "fsync", side_effect=fail_event_fsync):
+        with pytest.raises(CostUnverifiedError):
+            CostLedger(path, configuration)
+
+    with pytest.raises(CostUnverifiedError, match="fail-closed"):
+        CostLedger(path, configuration)
+
+
+def test_given_marker_replace_failure_when_reopened_then_ledger_stays_fail_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "marker-replace-failure.jsonl"
+
+    with patch.object(exploratory_cost.os, "replace", side_effect=OSError("injected replace")):
         with pytest.raises(CostUnverifiedError):
             CostLedger(path, configuration)
 
@@ -860,7 +874,7 @@ def test_given_reconciliation_fsync_failure_when_reopened_then_ledger_stays_fail
     def fail_event_fsync(descriptor: int) -> None:
         nonlocal fsync_calls
         fsync_calls += 1
-        if fsync_calls == 2:
+        if fsync_calls == 3:
             raise OSError("injected fsync")
         real_fsync(descriptor)
 
@@ -951,6 +965,29 @@ def test_given_incomplete_jsonl_record_when_replayed_then_it_fails_closed(tmp_pa
     )
     ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
     path.write_bytes(path.read_bytes()[:-2])
+    tampered = path.read_bytes()
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+    assert path.read_bytes() == tampered
+
+
+def test_given_clean_final_record_without_lf_when_replayed_then_it_fails_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "clean-no-final-lf.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+    path.write_bytes(path.read_bytes().rstrip(b"\n"))
     tampered = path.read_bytes()
 
     with pytest.raises(CostUnverifiedError):

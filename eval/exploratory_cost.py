@@ -974,6 +974,7 @@ class CostLedger:
             raise CostLedgerError("preflight does not match immutable configuration")
         self.path = Path(path)
         self._durability_marker = Path(f"{self.path}.fail-closed")
+        self._durability_marker_tmp = Path(f"{self.path}.fail-closed.tmp")
         self.configuration = configuration
         self.preflight = computed_preflight
         self._lock = threading.RLock()
@@ -1005,15 +1006,19 @@ class CostLedger:
 
     def _load_or_initialize(self) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        if self._durability_marker.exists():
+        if self._durability_evidence_exists():
             raise CostUnverifiedError("ledger is permanently fail-closed")
         if self.path.exists() and self.path.stat().st_size:
             try:
-                lines = _strict_lf_records(self.path.read_bytes())
+                ledger_bytes = self.path.read_bytes()
+                unterminated_final_line = not ledger_bytes.endswith(b"\n")
+                lines = _strict_lf_records(ledger_bytes)
                 self._replay(lines)
                 if self._pending:
                     self._stop(STOPPED_COST_UNVERIFIED, "ambiguous_in_flight")
                     self._pending.clear()
+                if unterminated_final_line and not self.path.read_bytes().endswith(b"\n"):
+                    raise CostUnverifiedError("ledger validation failed")
             except CostUnverifiedError:
                 raise
             except (OSError, UnicodeDecodeError, json.JSONDecodeError, KeyError, TypeError, ValueError) as error:
@@ -1043,23 +1048,43 @@ class CostLedger:
         self._pending.clear()
         self._state = STOPPED_COST_UNVERIFIED
         self._stop_reason = _DURABILITY_FAILURE_REASON
+        if self._durability_evidence_exists():
+            return
         try:
-            descriptor = os.open(
-                str(self._durability_marker),
-                os.O_WRONLY | os.O_CREAT | os.O_TRUNC,
-                0o600,
-            )
-            try:
-                os.write(descriptor, _DURABILITY_MARKER_BYTES)
-            finally:
-                os.close(descriptor)
+            self._create_durability_marker()
         except Exception:
-            pass
+            if self._durability_evidence_exists():
+                return
+            try:
+                descriptor = os.open(
+                    str(self._durability_marker),
+                    os.O_WRONLY | os.O_CREAT | os.O_EXCL,
+                    0o600,
+                )
+                try:
+                    os.write(descriptor, _DURABILITY_MARKER_BYTES)
+                finally:
+                    os.close(descriptor)
+            except Exception:
+                pass
+
+    def _durability_evidence_exists(self) -> bool:
+        try:
+            return self._durability_marker.exists() or self._durability_marker_tmp.exists()
+        except Exception as error:
+            raise CostUnverifiedError("ledger fail-closed marker status is unavailable") from error
+
+    def _fsync_parent_directory(self) -> None:
+        descriptor = os.open(str(self.path.parent), os.O_RDONLY)
+        try:
+            os.fsync(descriptor)
+        finally:
+            os.close(descriptor)
 
     def _create_durability_marker(self) -> None:
         descriptor = os.open(
-            str(self._durability_marker),
-            os.O_WRONLY | os.O_CREAT | os.O_TRUNC,
+            str(self._durability_marker_tmp),
+            os.O_WRONLY | os.O_CREAT | os.O_EXCL,
             0o600,
         )
         try:
@@ -1069,9 +1094,12 @@ class CostLedger:
             os.fsync(descriptor)
         finally:
             os.close(descriptor)
+        os.replace(self._durability_marker_tmp, self._durability_marker)
+        self._fsync_parent_directory()
 
     def _clear_durability_marker(self) -> None:
         os.unlink(self._durability_marker)
+        self._fsync_parent_directory()
 
     def _append_event(self, event_type: str, **fields: Any) -> dict[str, Any]:
         event: dict[str, Any] = {
