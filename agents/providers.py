@@ -23,6 +23,13 @@ class ProviderRequest:
     pair: dict[str, Any]
     variant: str
     task_family: str
+    max_output_tokens: int | None = None
+
+    def __post_init__(self) -> None:
+        if self.max_output_tokens is not None and (
+            type(self.max_output_tokens) is not int or self.max_output_tokens <= 0
+        ):
+            raise ValueError("max_output_tokens must be a positive integer or None")
 
 
 def provider_visible_pair(
@@ -269,6 +276,7 @@ class OpenAICompatibleProvider:
         return str(content) if content is not None else None
 
     def complete(self, request: ProviderRequest) -> str:
+        output_limit = request.max_output_tokens or self.max_tokens
         request_kwargs: dict[str, Any] = {
             "model": self.model,
             "messages": [{"role": "user", "content": request.prompt}],
@@ -277,9 +285,9 @@ class OpenAICompatibleProvider:
         if not self._uses_provider_default_temperature():
             request_kwargs["temperature"] = self.temperature
         if self.name == "openai":
-            request_kwargs["max_completion_tokens"] = self.max_tokens
+            request_kwargs["max_completion_tokens"] = output_limit
         else:
-            request_kwargs["max_tokens"] = self.max_tokens
+            request_kwargs["max_tokens"] = output_limit
         if self.reasoning_effort is not None:
             request_kwargs["reasoning_effort"] = self.reasoning_effort
         if self.name == "deepseek":

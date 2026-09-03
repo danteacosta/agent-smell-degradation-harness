@@ -11,7 +11,9 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal, InvalidOperation
+import json
 import math
+from pathlib import Path
 import re
 from types import MappingProxyType
 from typing import Any
@@ -522,10 +524,7 @@ class ExploratoryRuntimeConfig:
         }
 
 
-def load_exploratory_runtime_config(path: str | Any) -> ExploratoryRuntimeConfig:
-    import json
-    from pathlib import Path
-
+def load_exploratory_runtime_config(path: str | Path) -> ExploratoryRuntimeConfig:
     try:
         payload = json.loads(Path(path).read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as error:

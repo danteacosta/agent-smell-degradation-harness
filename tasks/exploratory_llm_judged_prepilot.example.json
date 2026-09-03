@@ -87,7 +87,7 @@
     "unused_headroom_microusd": 87832
   },
   "protocol_hashes": {
-    "generation_prompt_template_sha256": "44ab6b2b4d0150d1c09dbe6fa69946c0a41cf3048557357617c620eec0d304a1",
+    "generation_prompt_template_sha256": "6de3b8017f4c882e52c5c6d779b26e7b49b06d4f8168955c0564c5b15ea7fade",
     "judge_prompt_template_sha256": "3f17fe77d96f6454ab48897d69a44c510f9412f7b443894d491b8be3bc718846",
     "generation_output_schema_sha256": "ec8e16b98ed4610f090c5187f87cc6dae169841f7ff240446c576a56b5908960",
     "judge_response_schema_sha256": "669a58f75e8f15b0c33b6a5a8793bb5520829a99d7dd9e7c9822d10e7881d9c6",

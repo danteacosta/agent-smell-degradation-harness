@@ -66,8 +66,9 @@ def test_explicit_model_versions_and_pricing_are_secret_free() -> None:
     assert deepseek.model_version == "DeepSeek-V4-Pro-0813"
     assert openai.public_metadata()["api_key_env"] == "PANEL_OPENAI_API_KEY"
     assert deepseek.public_metadata()["api_key_env"] == "PANEL_DEEPSEEK_API_KEY"
-    assert "api_key" not in json.dumps(openai.public_metadata()).lower()
-    assert "PANEL_OPENAI_API_KEY" in json.dumps(openai.public_metadata())
+    metadata = openai.public_metadata()
+    assert "api_key" not in metadata
+    assert metadata["api_key_env"] == "PANEL_OPENAI_API_KEY"
 
 
 def test_missing_key_is_rejected_before_provider_constructor(monkeypatch) -> None:

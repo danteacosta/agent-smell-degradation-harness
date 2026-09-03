@@ -76,6 +76,23 @@ retained the same configuration hash. This qualifies both selected slots for
 this minimal smoke protocol, while the earlier failures remain useful
 robustness evidence and do not get erased from the private audit trail.
 
+The next smoke on 3 September 2026, at the exploratory branch's then-current
+commit, reproduced a DeepSeek V4 Pro failure on the clean RF-04 artifact: the
+response reached the configured 4,096-token limit and JSON parsing failed. The
+OpenAI slot passed both variants, so the run was correctly classified as a
+failure rather than promoted. Root-cause tracing showed that the generic
+terminal prompt allowed an unnecessarily verbose artifact response. The
+terminal prompt now requires a minimal, concise JSON object, and the
+exploratory runner forwards the frozen output bound separately to T1, T2,
+artifact, and judge calls so the provider request limits match the cost ledger.
+
+A single post-fix smoke rerun passed both RF-04 variants for both providers,
+with `no_compaction`, runtime-native T1–T3/artifact evidence, measured usage,
+and measured cost of US$0.00498518. The report used for the final audit must be
+rerun after these changes are committed so its source revision is the exact
+code revision under test; the uncommitted working-tree run is retained only as
+diagnostic evidence.
+
 The project therefore keeps the gate fail-closed: a successful individual
 episode is not converted into a provider qualification when another episode in
 the same smoke fails. The reports are redacted and private:

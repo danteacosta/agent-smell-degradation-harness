@@ -333,6 +333,7 @@ def _invoke_judge(
     occurrence_id: str,
     request: JudgeRequest,
     evidence_path: Path,
+    max_output_tokens: int,
 ) -> tuple[Any | None, str | None]:
     serialized_request = serialize_judge_request(request)
     prompt = build_judge_prompt(request)
@@ -341,6 +342,7 @@ def _invoke_judge(
         pair={"task_family": "judge", "output_keys": []},
         variant="opaque",
         task_family="judge",
+        max_output_tokens=max_output_tokens,
     )
     last_error: Exception | None = None
     for attempt in range(1, 3):
@@ -580,6 +582,11 @@ def run_exploratory_prepilot(
                         context_manager=NoCompactionManager(),
                         stage_completion=stage_completion,
                         max_stage_attempts=2,
+                        stage_output_tokens={
+                            "T1": configuration.token_bounds["generation.T1"].output_tokens,
+                            "T2": configuration.token_bounds["generation.T2"].output_tokens,
+                            "artifact": configuration.token_bounds["generation.artifact"].output_tokens,
+                        },
                     )
                     try:
                         execution = agent.execute_with_checkpoints(
@@ -657,6 +664,7 @@ def run_exploratory_prepilot(
                             occurrence_id=occurrence.occurrence_id,
                             request=request,
                             evidence_path=evidence_path,
+                            max_output_tokens=configuration.token_bounds["judge"].output_tokens,
                         )
                         if parsed is None:
                             uncertain_count += 1

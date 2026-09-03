@@ -91,6 +91,27 @@ def test_openai_compatible_metadata_normalizes_usage_and_cost() -> None:
     assert provider.base_url == "https://api.deepseek.com"
 
 
+def test_openai_compatible_forwards_stage_specific_output_limit() -> None:
+    response = SimpleNamespace(
+        choices=[SimpleNamespace(message=SimpleNamespace(content="{}"))],
+        usage={"input_tokens": 1, "output_tokens": 1},
+    )
+    client, calls = _client(response)
+    provider = DeepSeekProvider(api_key="private", model="configured-model", client=client)
+
+    provider.complete(
+        ProviderRequest(
+            prompt="return json",
+            pair={"requirement": "bounded", "task_family": "test_gen", "output_keys": []},
+            variant="opaque",
+            task_family="test_gen",
+            max_output_tokens=48,
+        )
+    )
+
+    assert calls[0]["max_tokens"] == 48
+
+
 def test_usage_and_cost_are_provider_neutral() -> None:
     usage = normalize_provider_usage(
         {

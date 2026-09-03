@@ -9,14 +9,31 @@ confirmatory evidence.
 | Gate | Evidence already in the repository | Count/status now | Next owner |
 |---|---|---:|---|
 | Main synchronization | PR #35 is merged as `80775416714f1ac94a7e22f2d1665082977e3959`; `eval-gate`, `constraint-replay-gate`, and `wedge-check` passed | 1 synchronized main state at `8077541` | engineering |
-| Corpus | Seven checked-in seed records; private redacted-intake validator added | 7/12 unique intents; 0 admitted confirmatory records | researcher + advisor |
-| Providers | OpenAI-compatible adapter, DeepSeek adapter, usage/cost propagation, and native smoke CLI | 0/2 runtime-native configurations qualified | operator |
+| Corpus | Sixteen private candidate pairs; v4 private redacted-intake validator with immutable source references | 0/12 admitted confirmatory records; admission still requires six projects and all v4 gates | researcher + advisor |
+| Providers | OpenAI-compatible adapter, DeepSeek adapter, usage/cost propagation, native smoke CLI, and frozen exploratory configuration | Minimal smoke evidence exists; the exploratory run report is still missing and official launch-plan qualification remains pending | operator |
 | Annotation | Frozen \`tasks/annotation_rubric.json\`; duplicate selection and blinded packet CLI | 0/2 trained annotators; 0 adjudicated items | advisor + annotators |
-| Budget | Per-stage token usage and cost fields now flow into episode/provider manifests | USD 0 measured for this phase; approval cap is still unset | operator + advisor |
+| Budget | Per-stage token usage and cost fields now flow into episode/provider manifests | Exploratory provider ceiling approved at US$1.00; annotation hours and final launch-plan budget fields remain pending | operator + advisor |
 | Reproducibility | Explicit model version, resolved configuration hash, pair hash, request/response hashes, timestamps, and redacted smoke report | technical path implemented; real report missing | operator |
-| Approval | A decision memo is checked in below | 0/1 advisor authorization | advisor/institution |
+| Approval | A decision memo is checked in below | Exploratory non-confirmatory authorization recorded; confirmatory and institutional/ethics decisions remain pending | advisor/institution |
 
 The numbers above are a status inventory, not an efficacy result.
+
+## Latest reconciliation
+
+PR #35 was squash-merged into `main` at `80775416714f1ac94a7e22f2d1665082977e3959`.
+The current authoritative corpus-intake contract is `prepilot-corpus/v4` and
+requires `source_revision_url` and `source_revision_id` in addition to license,
+external-processing rights, provenance hashes, and human review evidence. Older
+v3 references are historical and must not be used for new admissions.
+
+The exploratory implementation is intentionally isolated from the official
+confirmatory launch fields. It uses two distinct configurations, OpenAI
+`gpt-5.6-luna` and DeepSeek V4 Pro, with a US$1.00 total provider ceiling.
+LLM judges are exploratory machine observations; they are not human annotators,
+do not replace a confirmatory adjudicator, and do not force a consensus. The
+advisor authorization recorded for this mode does not close the separate
+ethics/privacy or confirmatory gates. Official readiness therefore remains
+`no_go` until the corpus and governance evidence are complete.
 
 ## Real-provider smoke
 

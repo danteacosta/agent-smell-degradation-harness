@@ -128,8 +128,10 @@ GENERATION_PROMPT_TEMPLATES = {
         "Task family: {task_family}\nRequirement:\n{requirement}\n\n"
         "Observable interpretation:\n{interpretation_json}\n"
         "Observable plan:\n{plan_json}\n"
-        "Return one JSON object containing exactly these keys: {output_keys}. "
-        "Do not include markdown or commentary."
+        "Return one minimal JSON object containing exactly these keys: {output_keys}. "
+        "Keep every value concise: use at most three short list items and one short sentence "
+        "for scalar text. Do not emit explanations, reasoning, test inventories, markdown, "
+        "or commentary."
     ),
 }
 
@@ -440,6 +442,7 @@ class StagedProviderRuntime:
         context_manager: ContextManager | None = None,
         stage_completion: StageCompletion | None = None,
         max_stage_attempts: int = 1,
+        stage_output_tokens: Mapping[str, int] | None = None,
     ) -> None:
         if (
             type(max_stage_attempts) is not int
@@ -452,6 +455,12 @@ class StagedProviderRuntime:
         self._context_manager = context_manager or NoCompactionManager()
         self._stage_completion = stage_completion
         self._max_stage_attempts = max_stage_attempts
+        stage_limits = dict(stage_output_tokens or {})
+        if set(stage_limits) - {"T1", "T2", "artifact"}:
+            raise ValueError("stage_output_tokens contains an unknown stage")
+        if any(type(value) is not int or value <= 0 for value in stage_limits.values()):
+            raise ValueError("stage_output_tokens must contain positive integers")
+        self._stage_output_tokens = stage_limits
 
     def _complete(
         self,
@@ -480,6 +489,7 @@ class StagedProviderRuntime:
             pair=provider_visible_pair(pair, variant=variant, task_family=task_family),
             variant="opaque",
             task_family=task_family,
+            max_output_tokens=self._stage_output_tokens.get(stage),
         )
         last_error: Exception | None = None
         for attempt in range(1, self._max_stage_attempts + 1):

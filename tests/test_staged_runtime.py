@@ -79,6 +79,54 @@ def test_staged_provider_materializes_checkpoints_before_artifact() -> None:
     assert all("sha256" in key for key in ("request_sha256", "response_sha256"))
 
 
+def test_staged_runtime_forwards_phase_output_limits() -> None:
+    responses = [
+        json.dumps({
+            "constraints": [],
+            "quantities": [],
+            "unresolved_references": [],
+            "assumptions": [],
+            "contradictions": [],
+            "conditional_semantics": [],
+            "atomic_obligations": [],
+        }),
+        json.dumps({
+            "validation_checks": [],
+            "planned_tools": [],
+            "coverage_targets": [],
+        }),
+        json.dumps({"criterion": "bounded"}),
+    ]
+
+    class CapturingProvider:
+        name = "capture"
+
+        def __init__(self) -> None:
+            self.requests = []
+
+        def complete(self, request):
+            self.requests.append(request)
+            return responses.pop(0)
+
+    provider = CapturingProvider()
+    pair = {
+        "clean_requirement": "Bounded requirement.",
+        "smelly_requirement": "Incomplete requirement.",
+        "generation_contract": {"acceptance_criteria": {"output_keys": ["criterion"]}},
+    }
+
+    RuntimeCheckpointAgent.from_provider(
+        provider,
+        model="m",
+        model_version="v",
+        stage_output_tokens={"T1": 128, "T2": 64, "artifact": 48},
+    ).execute_with_checkpoints(
+        pair, variant="clean", task_family="acceptance_criteria"
+    )
+
+    assert [request.max_output_tokens for request in provider.requests] == [128, 64, 48]
+
+
 def test_staged_prompts_do_not_disclose_variant_or_oracle() -> None:
     captured: list[str] = []
     captured_requests: list[tuple[dict, str]] = []
@@ -113,6 +161,7 @@ def test_staged_prompts_do_not_disclose_variant_or_oracle() -> None:
     assert "missing-condition" not in joined
     assert "secret" not in joined
     assert "variant:" not in joined
+    assert "concise" in captured[-1].lower()
     assert result.provider_meta["provider"] == "capture"
     assert captured_requests[0][0] == {
         "requirement": "Incomplete requirement.",
