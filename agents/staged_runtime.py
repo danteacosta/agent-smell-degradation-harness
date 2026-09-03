@@ -37,6 +37,7 @@ from protocol.context_management import (
 
 
 Clock = Callable[[], datetime]
+StageCompletion = Callable[[ProviderRequest, str, int], str]
 
 
 def _now_iso(clock: Clock) -> str:
@@ -257,6 +258,15 @@ def _validate_provider_stage(
     )[stage]
 
 
+def _validate_artifact_shape(
+    payload: dict[str, Any], output_keys: list[Any]
+) -> dict[str, Any]:
+    expected = {str(key) for key in output_keys}
+    if set(payload) != expected:
+        raise ValueError("terminal artifact keys do not match the generation contract")
+    return dict(payload)
+
+
 def _constraint_lineage(
     constraints: list[Any], coverage_evidence: list[Any]
 ) -> list[dict[str, Any]]:
@@ -428,10 +438,20 @@ class StagedProviderRuntime:
         *,
         clock: Clock | None = None,
         context_manager: ContextManager | None = None,
+        stage_completion: StageCompletion | None = None,
+        max_stage_attempts: int = 1,
     ) -> None:
+        if (
+            type(max_stage_attempts) is not int
+            or max_stage_attempts < 1
+            or max_stage_attempts > 2
+        ):
+            raise ValueError("max_stage_attempts must be one or two")
         self._provider = provider
         self._clock = clock or (lambda: datetime.now(timezone.utc))
         self._context_manager = context_manager or NoCompactionManager()
+        self._stage_completion = stage_completion
+        self._max_stage_attempts = max_stage_attempts
 
     def _complete(
         self,
@@ -442,6 +462,7 @@ class StagedProviderRuntime:
         stage: str,
         *,
         context_index: int,
+        response_validator: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
     ) -> tuple[dict[str, Any], dict[str, Any]]:
         context_started = _now_iso(self._clock)
         transformation = self._context_manager.prepare(prompt, stage=stage)
@@ -454,20 +475,39 @@ class StagedProviderRuntime:
             started_at=context_started,
             ended_at=context_ended,
         )
-        started = _now_iso(self._clock)
-        start_perf = time.perf_counter()
-        response = self._provider.complete(
-            ProviderRequest(
-                prompt=transformation.prompt,
-                pair=provider_visible_pair(pair, variant=variant, task_family=task_family),
-                variant="opaque",
-                task_family=task_family,
-            )
+        request = ProviderRequest(
+            prompt=transformation.prompt,
+            pair=provider_visible_pair(pair, variant=variant, task_family=task_family),
+            variant="opaque",
+            task_family=task_family,
         )
-        latency_ms = (time.perf_counter() - start_perf) * 1000.0
-        ended = _now_iso(self._clock)
+        last_error: Exception | None = None
+        for attempt in range(1, self._max_stage_attempts + 1):
+            started = _now_iso(self._clock)
+            start_perf = time.perf_counter()
+            try:
+                response = (
+                    self._stage_completion(request, stage, attempt)
+                    if self._stage_completion is not None
+                    else self._provider.complete(request)
+                )
+                parsed = _json_object(response)
+                if response_validator is not None:
+                    parsed = response_validator(parsed)
+            except Exception as error:
+                last_error = error
+                if attempt >= self._max_stage_attempts:
+                    raise
+                continue
+            latency_ms = (time.perf_counter() - start_perf) * 1000.0
+            ended = _now_iso(self._clock)
+            break
+        else:
+            assert last_error is not None
+            raise last_error
         metadata = {
             "stage": stage,
+            "attempt": attempt,
             "started_at": started,
             "ended_at": ended,
             "latency_ms": round(latency_ms, 3),
@@ -478,7 +518,7 @@ class StagedProviderRuntime:
             "context_management_event": context_event,
         }
         metadata.update(_bounded_provider_call_metadata(self._provider))
-        return _json_object(response), metadata
+        return parsed, metadata
 
     def execute(
         self,
@@ -499,6 +539,9 @@ class StagedProviderRuntime:
             task_family,
             "T1",
             context_index=1,
+            response_validator=lambda value: _validate_provider_stage(
+                value, "interpretation"
+            ),
         )
         context_events.append(t1["context_management_event"])
         interpretation = _validate_provider_stage(interpretation, "interpretation")
@@ -514,6 +557,7 @@ class StagedProviderRuntime:
             task_family,
             "T2",
             context_index=2,
+            response_validator=lambda value: _validate_provider_stage(value, "plan"),
         )
         context_events.append(t2["context_management_event"])
         plan = _validate_provider_stage(plan, "plan")
@@ -550,6 +594,7 @@ class StagedProviderRuntime:
             task_family,
             "artifact",
             context_index=3,
+            response_validator=lambda value: _validate_artifact_shape(value, output_keys),
         )
         all_context_events = [*context_events, final["context_management_event"]]
         observations = (
@@ -610,5 +655,6 @@ class StagedProviderRuntime:
 __all__ = [
     "GENERATION_OUTPUT_SCHEMA",
     "GENERATION_PROMPT_TEMPLATES",
+    "StageCompletion",
     "StagedProviderRuntime",
 ]
