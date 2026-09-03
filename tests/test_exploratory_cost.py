@@ -21,6 +21,7 @@ from eval.exploratory_cost import (
     PlannedCall,
     PreflightReport,
     ProviderPricing,
+    STOPPED_COST_UNVERIFIED,
     TokenBounds,
     budgeted_provider,
     fixed_task3_call_plan,
@@ -198,6 +199,52 @@ def test_given_expensive_fixed_prices_when_preflight_runs_then_budget_fails_clos
     assert report.budget_status == "stopped_budget_exhausted"
     assert report.stop_reason == "worst_case_reserved_cost_exceeds_approved_cap"
     assert report.worst_case_reserved_microusd > report.approved_cap_microusd
+
+
+def test_given_over_cap_preflight_when_reopened_then_budget_block_is_reproduced(
+    tmp_path: Path,
+) -> None:
+    configuration = config(
+        providers=(
+            pricing("openai", input_rate="0.01", output_rate="0.01"),
+            pricing("deepseek", input_rate="0.01", output_rate="0.01"),
+        ),
+        cap="1.00",
+        contingency="0",
+    )
+    path = tmp_path / "over-cap-replay.jsonl"
+
+    ledger = CostLedger(path, configuration)
+    live_report = ledger.report()
+    reopened = CostLedger(path, configuration)
+
+    assert live_report["state"] == "stopped_budget_exhausted"
+    assert ledger.preflight.unused_headroom_microusd < 0
+    assert reopened.status == ledger.status
+    assert reopened.report() == live_report
+
+
+def test_given_preflight_fsync_failure_when_reopened_then_ledger_stays_fail_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "preflight-fsync-failure.jsonl"
+    fsync_calls = 0
+    real_fsync = exploratory_cost.os.fsync
+
+    def fail_event_fsync(descriptor: int) -> None:
+        nonlocal fsync_calls
+        fsync_calls += 1
+        if fsync_calls == 2:
+            raise OSError("injected fsync")
+        real_fsync(descriptor)
+
+    with patch.object(exploratory_cost.os, "fsync", side_effect=fail_event_fsync):
+        with pytest.raises(CostUnverifiedError):
+            CostLedger(path, configuration)
+
+    with pytest.raises(CostUnverifiedError, match="fail-closed"):
+        CostLedger(path, configuration)
 
 
 def test_given_fractional_micro_cost_when_reserved_then_every_ceiling_is_upward() -> None:
@@ -792,6 +839,39 @@ def test_given_partial_event_write_when_appending_then_ledger_becomes_terminal_u
             model_version="openai-snapshot",
             phase="judge",
         )
+
+
+def test_given_reconciliation_fsync_failure_when_reopened_then_ledger_stays_fail_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "reconciliation-fsync-failure.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    fsync_calls = 0
+    real_fsync = exploratory_cost.os.fsync
+
+    def fail_event_fsync(descriptor: int) -> None:
+        nonlocal fsync_calls
+        fsync_calls += 1
+        if fsync_calls == 2:
+            raise OSError("injected fsync")
+        real_fsync(descriptor)
+
+    with patch.object(exploratory_cost.os, "fsync", side_effect=fail_event_fsync):
+        with pytest.raises(CostUnverifiedError):
+            ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+
+    assert ledger.status == STOPPED_COST_UNVERIFIED
+    assert ledger.report()["pending_attempt_count"] == 0
+    with pytest.raises(CostUnverifiedError, match="fail-closed"):
+        CostLedger(path, configuration)
 
 
 def test_ledger_hash_mismatch_is_rejected_without_echoing_ledger_contents(tmp_path: Path) -> None:

@@ -30,6 +30,7 @@ DEFAULT_APPROVED_CAP_USD = Decimal("1.00")
 DEFAULT_CONTINGENCY_RATE = Decimal("0.25")
 ZERO_HASH = "0" * 64
 _DURABILITY_FAILURE_REASON = "ledger_event_append_failed"
+_DURABILITY_MARKER_BYTES = b"exploratory-cost-ledger/fail-closed/v1\n"
 
 STOPPED_COST_UNVERIFIED = "stopped_cost_unverified"
 STOPPED_BUDGET_EXHAUSTED = "stopped_budget_exhausted"
@@ -324,6 +325,13 @@ def _validate_nested_token_metadata(value: Any, *, seen: set[int] | None = None)
 def _event_int(event: Mapping[str, Any], field_name: str, *, maximum: int | None = None) -> int:
     value = event.get(field_name)
     if type(value) is not int or value < 0 or (maximum is not None and value > maximum):
+        raise CostUnverifiedError("ledger validation failed")
+    return value
+
+
+def _event_signed_int(event: Mapping[str, Any], field_name: str) -> int:
+    value = event.get(field_name)
+    if type(value) is not int:
         raise CostUnverifiedError("ledger validation failed")
     return value
 
@@ -965,6 +973,7 @@ class CostLedger:
         ):
             raise CostLedgerError("preflight does not match immutable configuration")
         self.path = Path(path)
+        self._durability_marker = Path(f"{self.path}.fail-closed")
         self.configuration = configuration
         self.preflight = computed_preflight
         self._lock = threading.RLock()
@@ -996,6 +1005,8 @@ class CostLedger:
 
     def _load_or_initialize(self) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
+        if self._durability_marker.exists():
+            raise CostUnverifiedError("ledger is permanently fail-closed")
         if self.path.exists() and self.path.stat().st_size:
             try:
                 lines = _strict_lf_records(self.path.read_bytes())
@@ -1032,6 +1043,35 @@ class CostLedger:
         self._pending.clear()
         self._state = STOPPED_COST_UNVERIFIED
         self._stop_reason = _DURABILITY_FAILURE_REASON
+        try:
+            descriptor = os.open(
+                str(self._durability_marker),
+                os.O_WRONLY | os.O_CREAT | os.O_TRUNC,
+                0o600,
+            )
+            try:
+                os.write(descriptor, _DURABILITY_MARKER_BYTES)
+            finally:
+                os.close(descriptor)
+        except Exception:
+            pass
+
+    def _create_durability_marker(self) -> None:
+        descriptor = os.open(
+            str(self._durability_marker),
+            os.O_WRONLY | os.O_CREAT | os.O_TRUNC,
+            0o600,
+        )
+        try:
+            written = os.write(descriptor, _DURABILITY_MARKER_BYTES)
+            if written != len(_DURABILITY_MARKER_BYTES):
+                raise OSError("durability marker append was incomplete")
+            os.fsync(descriptor)
+        finally:
+            os.close(descriptor)
+
+    def _clear_durability_marker(self) -> None:
+        os.unlink(self._durability_marker)
 
     def _append_event(self, event_type: str, **fields: Any) -> dict[str, Any]:
         event: dict[str, Any] = {
@@ -1042,6 +1082,7 @@ class CostLedger:
             **fields,
         }
         try:
+            self._create_durability_marker()
             event["event_hash"] = self._hash_event(event)
             encoded = (_canonical_json(event) + "\n").encode("utf-8")
             descriptor = os.open(
@@ -1061,6 +1102,7 @@ class CostLedger:
             finally:
                 os.close(descriptor)
             self._events.append(event)
+            self._clear_durability_marker()
         except Exception as error:
             self._mark_durability_failure()
             raise CostUnverifiedError("ledger event append failed") from error
@@ -1217,7 +1259,11 @@ class CostLedger:
                 if expected_value is None:
                     if value is not None:
                         raise CostUnverifiedError("ledger validation failed")
-                elif _event_int(event, field_name) != expected_value:
+                elif (
+                    _event_signed_int(event, field_name)
+                    if field_name == "unused_headroom_microusd"
+                    else _event_int(event, field_name)
+                ) != expected_value:
                     raise CostUnverifiedError("ledger validation failed")
             if not expected.passed:
                 self._state = expected.budget_status
