@@ -53,7 +53,7 @@ The existing `label_plane/llm_panel.py` and `tasks/llm_panel_annotation_rubric.j
 
 - [ ] **Step 1: Write failing tests for the freeze transition.**
 
-Test that a `prepilot-corpus/v3` manifest with `status: validated_candidate`, exactly 12 unique records, at least 6 projects, all required rights and manipulation checks, valid record hashes, `raw_text_exported: false`, an ISO-8601 `frozen_at`, and a non-placeholder `freeze_reviewer_id` becomes a canonical `status: frozen` manifest without raw text.
+Test that a `prepilot-corpus/v4` manifest with `status: validated_candidate`, exactly 12 unique records, at least 6 projects, immutable `source_revision_url` and `source_revision_id` provenance for every record, all required rights and manipulation checks, valid record hashes, `raw_text_exported: false`, an ISO-8601 `frozen_at`, and a non-placeholder `freeze_reviewer_id` becomes a canonical `status: frozen` manifest without raw text.
 
 Also test rejection of fewer than 12 records, fewer than 6 projects, missing external-provider rights, placeholder reviewer/timestamp, tampered record hash, duplicate intent/hash, and any raw text field in the emitted manifest.
 

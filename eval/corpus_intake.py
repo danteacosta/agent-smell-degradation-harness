@@ -40,6 +40,8 @@ _REDACTED_RECORD_FIELDS = {
     "source_intent_id",
     "project_id",
     "source_url",
+    "source_revision_url",
+    "source_revision_id",
     "license",
     "license_evidence_url",
     "reuse_permission_status",
@@ -355,6 +357,8 @@ def _validate_redacted_record(record: Mapping[str, Any]) -> dict[str, Any]:
     source_intent_id = _required_id(record, "source_intent_id")
     project_id = _required_id(record, "project_id")
     source_url = _required_url(record, "source_url")
+    source_revision_url = _required_url(record, "source_revision_url")
+    source_revision_id = _required_id(record, "source_revision_id")
     license_name = _required_id(record, "license")
     license_evidence_url = _required_url(record, "license_evidence_url")
     permission = str(record["reuse_permission_status"]).strip().lower()
@@ -393,6 +397,8 @@ def _validate_redacted_record(record: Mapping[str, Any]) -> dict[str, Any]:
         "source_intent_id": source_intent_id,
         "project_id": project_id,
         "source_url": source_url,
+        "source_revision_url": source_revision_url,
+        "source_revision_id": source_revision_id,
         "license": license_name,
         "license_evidence_url": license_evidence_url,
         "reuse_permission_status": permission,
@@ -630,7 +636,14 @@ def validate_private_records_against_frozen_manifest(
     for intent_id in sorted(frozen_records):
         expected = frozen_records[intent_id]
         actual = normalized_records[intent_id]
-        for field in ("project_id", *_HASH_FIELDS, "rights_review", "record_sha256"):
+        for field in (
+            "project_id",
+            "source_revision_url",
+            "source_revision_id",
+            *_HASH_FIELDS,
+            "rights_review",
+            "record_sha256",
+        ):
             if actual.get(field) != expected.get(field):
                 raise CorpusIntakeError(f"private record {field} does not match frozen manifest")
         join.append(dict(actual))

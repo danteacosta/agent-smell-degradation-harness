@@ -27,6 +27,10 @@ def _record(index: int, *, project: int | None = None) -> dict:
         "source_intent_id": f"source-{index:02d}",
         "project_id": f"project-{project_id}",
         "source_url": f"https://private.example/requirements/{index}",
+        "source_revision_url": (
+            f"https://private.example/requirements/{index}?revision=rev-{index}"
+        ),
+        "source_revision_id": f"rev-{index}",
         "license": "CC-BY-4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0/",
         "reuse_permission_status": "license_confirmed",
@@ -83,7 +87,7 @@ def test_validated_candidate_freezes_to_canonical_hash_only_manifest() -> None:
     )
     serialized = json.dumps(frozen, ensure_ascii=False)
 
-    assert frozen["schema_version"] == "prepilot-corpus/v3"
+    assert frozen["schema_version"] == "prepilot-corpus/v4"
     assert frozen["status"] == "frozen"
     assert frozen["frozen_at"] == FROZEN_AT
     assert frozen["freeze_reviewer_id"] == "freeze-reviewer-a"
@@ -100,6 +104,31 @@ def test_validated_candidate_freezes_to_canonical_hash_only_manifest() -> None:
     assert "PRIVATE SOURCE SECRET" not in serialized
     assert "private request" not in serialized
     assert records[0]["canonical_text"].startswith("PRIVATE SOURCE")
+
+
+def test_freeze_requires_immutable_source_reference_fields() -> None:
+    _, candidate = _candidate()
+    candidate["records"][0].pop("source_revision_url")
+
+    with pytest.raises(CorpusIntakeError, match="complete redacted record"):
+        freeze_validated_manifest(
+            candidate,
+            frozen_at=FROZEN_AT,
+            freeze_reviewer_id="freeze-reviewer-a",
+        )
+
+
+def test_private_join_requires_immutable_source_revision_match() -> None:
+    records, candidate = _candidate()
+    frozen = freeze_validated_manifest(
+        candidate,
+        frozen_at=FROZEN_AT,
+        freeze_reviewer_id="freeze-reviewer-a",
+    )
+    records[0]["source_revision_id"] = "different-revision"
+
+    with pytest.raises(CorpusIntakeError, match="source_revision_id"):
+        validate_private_records_against_frozen_manifest(records, frozen)
 
 
 def test_freeze_preserves_valid_corpus_with_more_than_six_projects() -> None:

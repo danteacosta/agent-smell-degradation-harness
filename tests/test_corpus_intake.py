@@ -55,12 +55,18 @@ def test_intake_emits_hash_only_manifest_for_twelve_intents() -> None:
     serialized = json.dumps(manifest, ensure_ascii=False)
 
     assert manifest["status"] == "validated_candidate"
+    assert manifest["schema_version"] == "prepilot-corpus/v4"
     assert manifest["record_count"] == 12
     assert manifest["project_count"] == 6
     assert manifest["raw_text_exported"] is False
     assert "The service shall process request" not in serialized
     assert all("clean_requirement" not in row for row in manifest["records"])
     assert all(len(row["clean_requirement_sha256"]) == 64 for row in manifest["records"])
+    assert all(
+        row["source_revision_url"].startswith("https://example.org/requirements/")
+        and row["source_revision_id"].startswith("rev-")
+        for row in manifest["records"]
+    )
 
 
 def test_intake_rejects_missing_rights_review_and_duplicate_intents() -> None:
