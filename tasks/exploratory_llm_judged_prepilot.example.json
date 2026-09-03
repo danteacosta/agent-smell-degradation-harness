@@ -3,7 +3,7 @@
   "stage": "exploratory_llm_judged_pre_pilot",
   "task_family": "test_gen",
   "context_condition": "no_compaction",
-  "source_revision": "SET_TO_VERIFIED_CODE_COMMIT_BEFORE_LIVE_RUN",
+  "source_revision": "5e1d546cc7e1a9c6515aa5fa55a1a6599aa88259",
   "providers": [
     {
       "id": "openai-primary",
@@ -87,10 +87,10 @@
     "unused_headroom_microusd": 87832
   },
   "protocol_hashes": {
-    "generation_prompt_template_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-    "judge_prompt_template_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-    "generation_output_schema_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-    "judge_response_schema_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-    "rubric_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    "generation_prompt_template_sha256": "44ab6b2b4d0150d1c09dbe6fa69946c0a41cf3048557357617c620eec0d304a1",
+    "judge_prompt_template_sha256": "3f17fe77d96f6454ab48897d69a44c510f9412f7b443894d491b8be3bc718846",
+    "generation_output_schema_sha256": "ec8e16b98ed4610f090c5187f87cc6dae169841f7ff240446c576a56b5908960",
+    "judge_response_schema_sha256": "669a58f75e8f15b0c33b6a5a8793bb5520829a99d7dd9e7c9822d10e7881d9c6",
+    "rubric_sha256": "1dc8b1bb0c86d763ae71fee9e48d91bf4f2648f6ba66c28b5f27f32416c57969"
   }
 }
