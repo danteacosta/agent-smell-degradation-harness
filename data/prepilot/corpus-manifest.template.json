@@ -1,11 +1,13 @@
 {
-  "schema_version": "prepilot-corpus/v3",
+  "schema_version": "prepilot-corpus/v4",
   "status": "template",
   "records": [
     {
       "source_intent_id": "TBD",
       "project_id": "TBD",
       "source_url": "TBD",
+      "source_revision_url": "TBD",
+      "source_revision_id": "TBD",
       "license": "TBD",
       "license_url": "TBD",
       "reuse_permission_status": "TBD",
