@@ -262,6 +262,38 @@ def test_given_marker_replace_failure_when_reopened_then_ledger_stays_fail_close
         CostLedger(path, configuration)
 
 
+def test_given_valid_fail_closed_marker_when_reopened_then_error_is_explicitly_durable(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "valid-marker.jsonl"
+    Path(f"{path}.fail-closed").write_bytes(exploratory_cost._DURABILITY_MARKER_BYTES)
+
+    with pytest.raises(DurabilityError, match="durability"):
+        CostLedger(path, configuration)
+
+
+def test_given_ready_marker_creation_failure_when_reopened_then_it_cannot_resume(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "ready-marker-failure.jsonl"
+
+    with patch.object(
+        CostLedger,
+        "_create_ready_marker",
+        side_effect=OSError("injected ready marker failure"),
+    ):
+        with pytest.raises(DurabilityError, match="durability"):
+            CostLedger(path, configuration)
+
+    assert path.exists()
+    assert not Path(f"{path}.ready").exists()
+    assert Path(f"{path}.fail-closed").read_bytes() == exploratory_cost._DURABILITY_MARKER_BYTES
+    with pytest.raises(DurabilityError, match="durability"):
+        CostLedger(path, configuration)
+
+
 def test_given_malformed_durability_marker_when_reopened_then_it_is_unrecoverable(
     tmp_path: Path,
 ) -> None:
@@ -1643,6 +1675,36 @@ def test_given_provider_metadata_reset_failure_when_wrapped_then_invocation_is_f
     with pytest.raises(CostUnverifiedError):
         wrapped.complete(request(), call_id="call-1", phase="judge")
     assert provider.calls == 0
+
+
+def test_given_provider_durability_error_when_wrapped_then_it_is_propagated_unchanged(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    expected = DurabilityError("provider durability failure")
+
+    class DurabilityFailureProvider:
+        name = "openai"
+
+        def __init__(self) -> None:
+            self.calls = 0
+            self.last_call_metadata: dict[str, object] = {}
+
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            raise expected
+
+    path = tmp_path / "provider-durability-error.jsonl"
+    provider = DurabilityFailureProvider()
+    ledger = CostLedger(path, configuration)
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(DurabilityError) as raised:
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    assert raised.value is expected
+    assert provider.calls == 1
+    assert ledger.report()["pending_attempt_count"] == 1
 
 
 def test_given_provider_metadata_access_failure_after_invocation_then_it_stops_without_charge(

@@ -31,6 +31,7 @@ DEFAULT_CONTINGENCY_RATE = Decimal("0.25")
 ZERO_HASH = "0" * 64
 _DURABILITY_FAILURE_REASON = "ledger_event_append_failed"
 _DURABILITY_MARKER_BYTES = b"exploratory-cost-ledger/fail-closed/v1\n"
+_READY_MARKER_BYTES = b"exploratory-cost-ledger/ready/v1\n"
 
 STOPPED_COST_UNVERIFIED = "stopped_cost_unverified"
 STOPPED_BUDGET_EXHAUSTED = "stopped_budget_exhausted"
@@ -979,6 +980,8 @@ class CostLedger:
         self.path = Path(path)
         self._durability_marker = Path(f"{self.path}.fail-closed")
         self._durability_marker_tmp = Path(f"{self.path}.fail-closed.tmp")
+        self._ready_marker = Path(f"{self.path}.ready")
+        self._ready_marker_tmp = Path(f"{self.path}.ready.tmp")
         self.configuration = configuration
         self.preflight = computed_preflight
         self._lock = threading.RLock()
@@ -1011,13 +1014,24 @@ class CostLedger:
     def _load_or_initialize(self) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         if self._durability_evidence_exists():
-            raise DurabilityError("ledger is permanently fail-closed")
+            raise DurabilityError(
+                "durability marker indicates ledger is permanently fail-closed"
+            )
         if self.path.exists() and self.path.stat().st_size:
             try:
                 ledger_bytes = self.path.read_bytes()
                 unterminated_final_line = not ledger_bytes.endswith(b"\n")
                 lines = _strict_lf_records(ledger_bytes)
                 self._replay(lines)
+                if self.preflight.passed:
+                    if not self._ready_marker_evidence_exists():
+                        raise DurabilityError(
+                            "durability ready marker is missing; ledger cannot resume"
+                        )
+                elif self._ready_marker_evidence_exists():
+                    raise DurabilityError(
+                        "durability ready marker is invalid for a blocked ledger"
+                    )
                 if self._pending:
                     self._stop(STOPPED_COST_UNVERIFIED, "ambiguous_in_flight")
                     self._pending.clear()
@@ -1028,6 +1042,8 @@ class CostLedger:
             except (OSError, UnicodeDecodeError, json.JSONDecodeError, KeyError, TypeError, ValueError) as error:
                 raise CostUnverifiedError("ledger validation failed") from error
             return
+        if self._ready_marker_evidence_exists():
+            raise DurabilityError("durability ready marker is orphaned")
         self._append_event(
             "preflight",
             configuration_sha256=self.configuration.configuration_sha256,
@@ -1043,6 +1059,17 @@ class CostLedger:
             approved_cap_microusd=self.preflight.approved_cap_microusd,
             unused_headroom_microusd=self.preflight.unused_headroom_microusd,
         )
+        if self.preflight.passed:
+            try:
+                self._create_ready_marker()
+            except Exception as error:
+                try:
+                    self._mark_durability_failure()
+                except DurabilityError as durability_error:
+                    raise durability_error from error
+                raise DurabilityError(
+                    "durability ready marker creation failed"
+                ) from error
 
     @staticmethod
     def _hash_event(event_without_hash: Mapping[str, Any]) -> str:
@@ -1064,12 +1091,42 @@ class CostLedger:
         )
 
     def _durability_evidence_exists(self) -> bool:
-        marker_exists = self._marker_entry_exists(self._durability_marker)
-        temp_exists = self._marker_entry_exists(self._durability_marker_tmp)
+        return self._marker_evidence_exists(
+            self._durability_marker,
+            self._durability_marker_tmp,
+            _DURABILITY_MARKER_BYTES,
+            "durability marker",
+        )
+
+    def _ready_marker_evidence_exists(self) -> bool:
+        marker_exists = self._marker_entry_exists(self._ready_marker)
+        temp_exists = self._marker_entry_exists(self._ready_marker_tmp)
         if marker_exists:
-            self._verify_durability_marker(self._durability_marker)
+            self._verify_marker(
+                self._ready_marker, _READY_MARKER_BYTES, "durability ready marker"
+            )
         if temp_exists:
-            self._verify_durability_marker(self._durability_marker_tmp)
+            self._verify_marker(
+                self._ready_marker_tmp, _READY_MARKER_BYTES, "durability ready marker"
+            )
+            raise DurabilityError(
+                "durability ready marker has an incomplete temporary record"
+            )
+        return marker_exists
+
+    def _marker_evidence_exists(
+        self,
+        marker: Path,
+        temporary: Path,
+        expected: bytes,
+        label: str,
+    ) -> bool:
+        marker_exists = self._marker_entry_exists(marker)
+        temp_exists = self._marker_entry_exists(temporary)
+        if marker_exists:
+            self._verify_marker(marker, expected, label)
+        if temp_exists:
+            self._verify_marker(temporary, expected, label)
         return marker_exists or temp_exists
 
     @staticmethod
@@ -1113,9 +1170,13 @@ class CostLedger:
         return b"".join(chunks)
 
     @classmethod
+    def _verify_marker(cls, path: Path, expected: bytes, label: str) -> None:
+        if cls._read_exact_marker(path) != expected:
+            raise DurabilityError(f"{label} content/framing is invalid")
+
+    @classmethod
     def _verify_durability_marker(cls, path: Path) -> None:
-        if cls._read_exact_marker(path) != _DURABILITY_MARKER_BYTES:
-            raise DurabilityError("durability marker content/framing is invalid")
+        cls._verify_marker(path, _DURABILITY_MARKER_BYTES, "durability marker")
 
     def _fsync_parent_directory(self) -> None:
         descriptor = os.open(str(self.path.parent), os.O_RDONLY)
@@ -1134,10 +1195,32 @@ class CostLedger:
             offset += written
 
     def _create_durability_marker(self) -> None:
-        if self._durability_evidence_exists():
-            raise DurabilityError("durability marker already exists")
+        self._create_marker(
+            self._durability_marker,
+            self._durability_marker_tmp,
+            _DURABILITY_MARKER_BYTES,
+            "durability marker",
+        )
+
+    def _create_ready_marker(self) -> None:
+        self._create_marker(
+            self._ready_marker,
+            self._ready_marker_tmp,
+            _READY_MARKER_BYTES,
+            "durability ready marker",
+        )
+
+    def _create_marker(
+        self,
+        marker: Path,
+        temporary: Path,
+        marker_bytes: bytes,
+        label: str,
+    ) -> None:
+        if self._marker_evidence_exists(marker, temporary, marker_bytes, label):
+            raise DurabilityError(f"{label} already exists")
         descriptor = os.open(
-            str(self._durability_marker_tmp),
+            str(temporary),
             os.O_WRONLY | os.O_CREAT | os.O_EXCL,
             0o600,
         )
@@ -1147,7 +1230,7 @@ class CostLedger:
             # Keep the descriptor unowned by the stream so both close paths are
             # independently checked before the marker can be renamed.
             stream = os.fdopen(descriptor, "wb", buffering=0, closefd=False)
-            self._write_all(descriptor, _DURABILITY_MARKER_BYTES)
+            self._write_all(descriptor, marker_bytes)
             stream.flush()
             os.fsync(descriptor)
         except Exception as error:
@@ -1164,12 +1247,12 @@ class CostLedger:
                 failure = error
         if failure is not None:
             raise failure
-        self._verify_durability_marker(self._durability_marker_tmp)
-        os.replace(self._durability_marker_tmp, self._durability_marker)
+        self._verify_marker(temporary, marker_bytes, label)
+        os.replace(temporary, marker)
         self._fsync_parent_directory()
-        self._verify_durability_marker(self._durability_marker)
-        if self._marker_entry_exists(self._durability_marker_tmp):
-            raise DurabilityError("durability marker rename left a temporary record")
+        self._verify_marker(marker, marker_bytes, label)
+        if self._marker_entry_exists(temporary):
+            raise DurabilityError(f"{label} rename left a temporary record")
 
     def _clear_durability_marker(self) -> None:
         if not self._marker_entry_exists(self._durability_marker):
@@ -1193,6 +1276,10 @@ class CostLedger:
             **fields,
         }
         try:
+            if self._events and self.preflight.passed and not self._ready_marker_evidence_exists():
+                raise DurabilityError(
+                    "durability ready marker is missing; ledger cannot append"
+                )
             self._create_durability_marker()
             event["event_hash"] = self._hash_event(event)
             encoded = (_canonical_json(event) + "\n").encode("utf-8")
@@ -2032,6 +2119,8 @@ def _provider_metadata(provider: Any) -> Mapping[str, Any]:
         return snapshot
     except _MetadataProblem:
         raise
+    except DurabilityError:
+        raise
     except Exception as error:
         raise _MetadataProblem("metadata access failed") from error
 
@@ -2041,6 +2130,8 @@ def _clear_provider_metadata(provider: Any) -> bool:
         setattr(provider, "last_call_metadata", {})
         cleared = getattr(provider, "last_call_metadata")
         return isinstance(cleared, Mapping) and not dict(cleared)
+    except DurabilityError:
+        raise
     except Exception:
         return False
 
@@ -2084,6 +2175,8 @@ class BudgetedProvider:
         )
         try:
             response = self._provider.complete(request)
+        except DurabilityError:
+            raise
         except Exception as error:
             try:
                 metadata = _provider_metadata(self._provider)
