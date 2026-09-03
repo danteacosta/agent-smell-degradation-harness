@@ -10,10 +10,10 @@ confirmatory evidence.
 |---|---|---:|---|
 | Main synchronization | PR #35 is merged as `80775416714f1ac94a7e22f2d1665082977e3959`; `eval-gate`, `constraint-replay-gate`, and `wedge-check` passed | 1 synchronized main state at `8077541` | engineering |
 | Corpus | Sixteen private candidate pairs; v4 private redacted-intake validator with immutable source references | 0/12 admitted confirmatory records; admission still requires six projects and all v4 gates | researcher + advisor |
-| Providers | OpenAI-compatible adapter, DeepSeek adapter, usage/cost propagation, native smoke CLI, and frozen exploratory configuration | Minimal smoke evidence exists; the exploratory run report is still missing and official launch-plan qualification remains pending | operator |
+| Providers | OpenAI-compatible adapter, DeepSeek adapter, usage/cost propagation, native smoke CLI, and frozen exploratory configuration | Committed minimal smoke report passes both slots; exploratory run report is still missing and official launch-plan qualification remains pending | operator |
 | Annotation | Frozen \`tasks/annotation_rubric.json\`; duplicate selection and blinded packet CLI | 0/2 trained annotators; 0 adjudicated items | advisor + annotators |
 | Budget | Per-stage token usage and cost fields now flow into episode/provider manifests | Exploratory provider ceiling approved at US$1.00; annotation hours and final launch-plan budget fields remain pending | operator + advisor |
-| Reproducibility | Explicit model version, resolved configuration hash, pair hash, request/response hashes, timestamps, and redacted smoke report | technical path implemented; real report missing | operator |
+| Reproducibility | Explicit model version, resolved configuration hash, pair hash, request/response hashes, timestamps, and redacted smoke report | committed RF-04 smoke report exists; exploratory pre-pilot report missing | operator |
 | Approval | A decision memo is checked in below | Exploratory non-confirmatory authorization recorded; confirmatory and institutional/ethics decisions remain pending | advisor/institution |
 
 The numbers above are a status inventory, not an efficacy result.

@@ -88,10 +88,11 @@ artifact, and judge calls so the provider request limits match the cost ledger.
 
 A single post-fix smoke rerun passed both RF-04 variants for both providers,
 with `no_compaction`, runtime-native T1–T3/artifact evidence, measured usage,
-and measured cost of US$0.00498518. The report used for the final audit must be
-rerun after these changes are committed so its source revision is the exact
-code revision under test; the uncommitted working-tree run is retained only as
-diagnostic evidence.
+and measured cost of US$0.00498518. The final committed smoke on `f40243c72bb2ae0c6afbde0b273796fc1b8609f7`
+also passed both variants for both providers, retained configuration hash
+`305a557d5e546392039871677c2b763e9ea2ab76732e4b3b016f39c0af8cbcc3`, and
+measured US$0.00593990. Its redacted report is private at
+`/private/tmp/native-provider-smoke-rf04-20260903-final.json`.
 
 The project therefore keeps the gate fail-closed: a successful individual
 episode is not converted into a provider qualification when another episode in
