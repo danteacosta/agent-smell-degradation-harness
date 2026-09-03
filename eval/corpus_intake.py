@@ -527,7 +527,9 @@ def freeze_validated_manifest(
         len(project_ids) < candidate["minimum_projects"]
         or len(project_ids) != candidate.get("project_count")
     ):
-        raise CorpusIntakeError("candidate manifest project count is inconsistent")
+        raise CorpusIntakeError(
+            "candidate manifest project count is inconsistent with minimum_projects"
+        )
     hash_values = [str(record[field]) for record in records for field in _HASH_FIELDS]
     if len(set(hash_values)) != len(hash_values):
         raise CorpusIntakeError("source hashes must be globally unique")

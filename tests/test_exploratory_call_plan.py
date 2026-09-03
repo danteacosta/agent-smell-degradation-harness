@@ -360,8 +360,9 @@ def test_direct_plan_construction_freezes_mutable_private_inputs():
 )
 def test_direct_plan_construction_rejects_mutable_or_untyped_private_inputs(private_input: tuple[str, object]):
     field, value = private_input
+    argument = "private_configurations" if field == "configuration" else f"private_{field}"
     with pytest.raises(ValueError, match="private"):
-        _direct_plan(**{f"private_{field}": value})
+        _direct_plan(**{argument: value})
 
 
 @pytest.mark.parametrize(
