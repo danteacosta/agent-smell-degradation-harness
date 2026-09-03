@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping
 from urllib.parse import urlparse
 
-SCHEMA_VERSION = "prepilot-corpus/v3"
+SCHEMA_VERSION = "prepilot-corpus/v4"
 PRIMARY_DEFECT_FAMILY = "incompleteness_missing_condition"
 REQUIRED_MANIPULATION_CHECKS = (
     "defect_present",
@@ -205,6 +205,8 @@ def _validate_record(record: Mapping[str, Any]) -> dict[str, Any]:
     source_intent_id = _required_id(record, "source_intent_id")
     project_id = _required_id(record, "project_id")
     source_url = _required_url(record, "source_url")
+    source_revision_url = _required_url(record, "source_revision_url")
+    source_revision_id = _required_id(record, "source_revision_id")
     retrieved_at = _required_timestamp(record, "retrieved_at")
     license_name, license_evidence_url, permission = _license_record(record)
     rights_review = _rights_review(record)
@@ -242,6 +244,8 @@ def _validate_record(record: Mapping[str, Any]) -> dict[str, Any]:
         "source_intent_id": source_intent_id,
         "project_id": project_id,
         "source_url": source_url,
+        "source_revision_url": source_revision_url,
+        "source_revision_id": source_revision_id,
         "license": license_name,
         "license_evidence_url": license_evidence_url,
         "reuse_permission_status": permission,
