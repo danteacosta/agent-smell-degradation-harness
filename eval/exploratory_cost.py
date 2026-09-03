@@ -218,6 +218,10 @@ class CostUnverifiedError(RuntimeError):
     """Raised when a charge cannot be reconciled safely."""
 
 
+class DurabilityError(CostUnverifiedError):
+    """Raised when ledger durability cannot be established or verified."""
+
+
 class BudgetExhaustedError(RuntimeError):
     """Raised before an attempt that cannot fit in the approved cap."""
 
@@ -1007,7 +1011,7 @@ class CostLedger:
     def _load_or_initialize(self) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         if self._durability_evidence_exists():
-            raise CostUnverifiedError("ledger is permanently fail-closed")
+            raise DurabilityError("ledger is permanently fail-closed")
         if self.path.exists() and self.path.stat().st_size:
             try:
                 ledger_bytes = self.path.read_bytes()
@@ -1048,31 +1052,70 @@ class CostLedger:
         self._pending.clear()
         self._state = STOPPED_COST_UNVERIFIED
         self._stop_reason = _DURABILITY_FAILURE_REASON
-        if self._durability_evidence_exists():
-            return
         try:
-            self._create_durability_marker()
-        except Exception:
-            if self._durability_evidence_exists():
-                return
-            try:
-                descriptor = os.open(
-                    str(self._durability_marker),
-                    os.O_WRONLY | os.O_CREAT | os.O_EXCL,
-                    0o600,
-                )
-                try:
-                    os.write(descriptor, _DURABILITY_MARKER_BYTES)
-                finally:
-                    os.close(descriptor)
-            except Exception:
-                pass
+            if not self._durability_evidence_exists():
+                self._create_durability_marker()
+        except Exception as error:
+            raise DurabilityError(
+                "ledger durability is unrecoverable; fail-closed marker could not be verified"
+            ) from error
+        raise DurabilityError(
+            "ledger durability failure; ledger is permanently fail-closed"
+        )
 
     def _durability_evidence_exists(self) -> bool:
+        marker_exists = self._marker_entry_exists(self._durability_marker)
+        temp_exists = self._marker_entry_exists(self._durability_marker_tmp)
+        if marker_exists:
+            self._verify_durability_marker(self._durability_marker)
+        if temp_exists:
+            self._verify_durability_marker(self._durability_marker_tmp)
+        return marker_exists or temp_exists
+
+    @staticmethod
+    def _marker_entry_exists(path: Path) -> bool:
         try:
-            return self._durability_marker.exists() or self._durability_marker_tmp.exists()
+            os.lstat(str(path))
+        except FileNotFoundError:
+            return False
         except Exception as error:
-            raise CostUnverifiedError("ledger fail-closed marker status is unavailable") from error
+            raise DurabilityError("durability marker status is unavailable") from error
+        return True
+
+    @staticmethod
+    def _read_exact_marker(path: Path) -> bytes:
+        descriptor = -1
+        chunks: list[bytes] = []
+        failure: Exception | None = None
+        try:
+            descriptor = os.open(
+                str(path), os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+            )
+            while True:
+                chunk = os.read(descriptor, len(_DURABILITY_MARKER_BYTES) + 1)
+                if type(chunk) is not bytes:
+                    raise OSError("durability marker read returned non-bytes")
+                if not chunk:
+                    break
+                chunks.append(chunk)
+                if sum(len(part) for part in chunks) > len(_DURABILITY_MARKER_BYTES):
+                    break
+        except Exception as error:
+            failure = error
+        finally:
+            if descriptor >= 0:
+                try:
+                    os.close(descriptor)
+                except Exception as error:
+                    failure = error
+        if failure is not None:
+            raise DurabilityError("durability marker could not be verified") from failure
+        return b"".join(chunks)
+
+    @classmethod
+    def _verify_durability_marker(cls, path: Path) -> None:
+        if cls._read_exact_marker(path) != _DURABILITY_MARKER_BYTES:
+            raise DurabilityError("durability marker content/framing is invalid")
 
     def _fsync_parent_directory(self) -> None:
         descriptor = os.open(str(self.path.parent), os.O_RDONLY)
@@ -1081,25 +1124,65 @@ class CostLedger:
         finally:
             os.close(descriptor)
 
+    @staticmethod
+    def _write_all(descriptor: int, data: bytes) -> None:
+        offset = 0
+        while offset < len(data):
+            written = os.write(descriptor, data[offset:])
+            if type(written) is not int or written <= 0 or written > len(data) - offset:
+                raise OSError("durability marker write was incomplete")
+            offset += written
+
     def _create_durability_marker(self) -> None:
+        if self._durability_evidence_exists():
+            raise DurabilityError("durability marker already exists")
         descriptor = os.open(
             str(self._durability_marker_tmp),
             os.O_WRONLY | os.O_CREAT | os.O_EXCL,
             0o600,
         )
+        stream: Any | None = None
+        failure: Exception | None = None
         try:
-            written = os.write(descriptor, _DURABILITY_MARKER_BYTES)
-            if written != len(_DURABILITY_MARKER_BYTES):
-                raise OSError("durability marker append was incomplete")
+            # Keep the descriptor unowned by the stream so both close paths are
+            # independently checked before the marker can be renamed.
+            stream = os.fdopen(descriptor, "wb", buffering=0, closefd=False)
+            self._write_all(descriptor, _DURABILITY_MARKER_BYTES)
+            stream.flush()
             os.fsync(descriptor)
+        except Exception as error:
+            failure = error
         finally:
-            os.close(descriptor)
+            if stream is not None:
+                try:
+                    stream.close()
+                except Exception as error:
+                    failure = error
+            try:
+                os.close(descriptor)
+            except Exception as error:
+                failure = error
+        if failure is not None:
+            raise failure
+        self._verify_durability_marker(self._durability_marker_tmp)
         os.replace(self._durability_marker_tmp, self._durability_marker)
         self._fsync_parent_directory()
+        self._verify_durability_marker(self._durability_marker)
+        if self._marker_entry_exists(self._durability_marker_tmp):
+            raise DurabilityError("durability marker rename left a temporary record")
 
     def _clear_durability_marker(self) -> None:
+        if not self._marker_entry_exists(self._durability_marker):
+            raise DurabilityError("durability marker is missing")
+        if self._marker_entry_exists(self._durability_marker_tmp):
+            raise DurabilityError("durability marker has an unexpected temporary record")
+        self._verify_durability_marker(self._durability_marker)
         os.unlink(self._durability_marker)
         self._fsync_parent_directory()
+        if self._marker_entry_exists(self._durability_marker) or self._marker_entry_exists(
+            self._durability_marker_tmp
+        ):
+            raise DurabilityError("durability marker removal was not verified")
 
     def _append_event(self, event_type: str, **fields: Any) -> dict[str, Any]:
         event: dict[str, Any] = {
@@ -1132,7 +1215,10 @@ class CostLedger:
             self._events.append(event)
             self._clear_durability_marker()
         except Exception as error:
-            self._mark_durability_failure()
+            try:
+                self._mark_durability_failure()
+            except DurabilityError as durability_error:
+                raise durability_error from error
             raise CostUnverifiedError("ledger event append failed") from error
         return event
 
@@ -2041,6 +2127,7 @@ __all__ = [
     "CostConfiguration",
     "CostLedger",
     "CostLedgerError",
+    "DurabilityError",
     "CostUnverifiedError",
     "MICRO_USD_PER_USD",
     "PlannedCall",

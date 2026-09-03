@@ -17,6 +17,7 @@ from eval.exploratory_cost import (
     CostConfiguration,
     CostLedger,
     CostLedgerError,
+    DurabilityError,
     CostUnverifiedError,
     PlannedCall,
     PreflightReport,
@@ -259,6 +260,132 @@ def test_given_marker_replace_failure_when_reopened_then_ledger_stays_fail_close
 
     with pytest.raises(CostUnverifiedError, match="fail-closed"):
         CostLedger(path, configuration)
+
+
+def test_given_malformed_durability_marker_when_reopened_then_it_is_unrecoverable(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "malformed-marker.jsonl"
+    marker = Path(f"{path}.fail-closed")
+    marker.write_bytes(b"not-a-valid-marker\n")
+
+    with pytest.raises(DurabilityError, match="durability marker"):
+        CostLedger(path, configuration)
+
+
+@pytest.mark.parametrize("failure", ["write", "marker_fsync", "directory_fsync"])
+def test_given_marker_durability_phase_failure_when_reopened_then_it_is_unrecoverable(
+    tmp_path: Path, failure: str
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / f"marker-{failure}.jsonl"
+    real_write = exploratory_cost.os.write
+    real_fsync = exploratory_cost.os.fsync
+    fsync_calls = 0
+
+    def fail_marker_write(descriptor: int, data: bytes) -> int:
+        if data == exploratory_cost._DURABILITY_MARKER_BYTES:
+            real_write(descriptor, data[:1])
+            raise OSError("injected marker write")
+        return real_write(descriptor, data)
+
+    def fail_fsync(descriptor: int) -> None:
+        nonlocal fsync_calls
+        fsync_calls += 1
+        if (failure == "marker_fsync" and fsync_calls == 1) or (
+            failure == "directory_fsync" and fsync_calls == 2
+        ):
+            raise OSError("injected marker fsync")
+        real_fsync(descriptor)
+
+    filesystem_patch = (
+        patch.object(exploratory_cost.os, "write", side_effect=fail_marker_write)
+        if failure == "write"
+        else patch.object(exploratory_cost.os, "fsync", side_effect=fail_fsync)
+    )
+    with filesystem_patch:
+        with pytest.raises(DurabilityError, match="durability"):
+            CostLedger(path, configuration)
+
+    with pytest.raises(DurabilityError, match="durability"):
+        CostLedger(path, configuration)
+
+
+def test_given_marker_close_failure_when_reopened_then_it_is_unrecoverable(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "marker-close-failure.jsonl"
+    real_close = exploratory_cost.os.close
+    close_calls = 0
+
+    def fail_marker_close(descriptor: int) -> None:
+        nonlocal close_calls
+        close_calls += 1
+        if close_calls == 1:
+            raise OSError("injected marker close")
+        real_close(descriptor)
+
+    with patch.object(exploratory_cost.os, "close", side_effect=fail_marker_close):
+        with pytest.raises(DurabilityError, match="durability"):
+            CostLedger(path, configuration)
+
+    with pytest.raises(DurabilityError, match="durability"):
+        CostLedger(path, configuration)
+
+
+def test_given_marker_unlink_failure_when_reopened_then_it_is_unrecoverable(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "marker-unlink-failure.jsonl"
+    ledger = CostLedger(path, configuration)
+    real_unlink = exploratory_cost.os.unlink
+
+    def fail_marker_unlink(target: str | Path) -> None:
+        if Path(target) == ledger._durability_marker:
+            raise OSError("injected marker unlink")
+        real_unlink(target)
+
+    with patch.object(exploratory_cost.os, "unlink", side_effect=fail_marker_unlink):
+        with pytest.raises(DurabilityError, match="durability"):
+            ledger.reserve_attempt(
+                call_id="call-1",
+                provider="openai",
+                model="openai-model",
+                model_version="openai-snapshot",
+                phase="judge",
+            )
+
+    with pytest.raises(DurabilityError, match="durability"):
+        CostLedger(path, configuration)
+
+
+def test_given_strict_marker_persistence_failure_when_marking_then_unchecked_fallback_is_not_used(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "marker-no-fallback.jsonl"
+    ledger = CostLedger(path, configuration)
+
+    with patch.object(
+        ledger,
+        "_create_durability_marker",
+        side_effect=OSError("injected marker protocol failure"),
+    ):
+        with pytest.raises(DurabilityError, match="durability"):
+            ledger.reserve_attempt(
+                call_id="call-1",
+                provider="openai",
+                model="openai-model",
+                model_version="openai-snapshot",
+                phase="judge",
+            )
+
+    assert not Path(f"{path}.fail-closed").exists()
+    assert not Path(f"{path}.fail-closed.tmp").exists()
+    assert ledger.status == STOPPED_COST_UNVERIFIED
 
 
 def test_given_fractional_micro_cost_when_reserved_then_every_ceiling_is_upward() -> None:
