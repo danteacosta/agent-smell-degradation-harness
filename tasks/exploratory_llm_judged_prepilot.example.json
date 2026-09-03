@@ -1,0 +1,96 @@
+{
+  "schema_version": "exploratory-llm-judged-prepilot/v1",
+  "stage": "exploratory_llm_judged_pre_pilot",
+  "task_family": "test_gen",
+  "context_condition": "no_compaction",
+  "source_revision": "SET_TO_VERIFIED_CODE_COMMIT_BEFORE_LIVE_RUN",
+  "providers": [
+    {
+      "id": "openai-primary",
+      "kind": "openai",
+      "api_key_env": "PANEL_OPENAI_API_KEY",
+      "model": "gpt-5.6-luna",
+      "model_version": "gpt-5.6-luna",
+      "base_url": null,
+      "reasoning_effort": null,
+      "temperature": null,
+      "max_tokens": 128,
+      "pricing_snapshot_date": "2026-09-02",
+      "pricing_source_ref": "docs/research/2026-09-02-native-provider-smoke-model-selection.md",
+      "pricing": {
+        "input_usd_per_1k": "0.0002",
+        "cached_input_usd_per_1k": "0.00002",
+        "output_usd_per_1k": "0.0012"
+      }
+    },
+    {
+      "id": "deepseek-secondary",
+      "kind": "deepseek",
+      "api_key_env": "PANEL_DEEPSEEK_API_KEY",
+      "model": "deepseek-v4-pro",
+      "model_version": "DeepSeek-V4-Pro-0813",
+      "base_url": "https://api.deepseek.com",
+      "reasoning_effort": null,
+      "temperature": 0.0,
+      "max_tokens": 128,
+      "pricing_snapshot_date": "2026-09-02",
+      "pricing_source_ref": "docs/research/2026-09-02-native-provider-smoke-model-selection.md",
+      "pricing": {
+        "input_usd_per_1k": "0.00132",
+        "cached_input_usd_per_1k": "0.000044",
+        "output_usd_per_1k": "0.00396"
+      }
+    }
+  ],
+  "token_bounds": {
+    "generation.T1": {"input_tokens": 192, "output_tokens": 128},
+    "generation.T2": {"input_tokens": 192, "output_tokens": 64},
+    "generation.artifact": {"input_tokens": 192, "output_tokens": 48},
+    "judge": {"input_tokens": 128, "output_tokens": 64}
+  },
+  "token_fit_policy": "measure compact provider prompt and response schema before network I/O; fail closed on any bound exceedance",
+  "approved_cap_usd": "1.00",
+  "max_attempts_per_api_call": 2,
+  "duplicate_fraction": "0.2",
+  "duplicate_seed": 0,
+  "contingency_rate": "0.25",
+  "planned_counts": {
+    "base_episodes": 120,
+    "generated_artifacts": 240,
+    "base_judging_tasks": 240,
+    "duplicate_base_tasks": 48,
+    "judging_occurrences_per_judge": 288,
+    "logical_judging_calls": 576,
+    "logical_operations": 816,
+    "provider_api_calls": 1296
+  },
+  "cost_formula": "ceil(1000000 * (input_bound/1000 * input_rate + output_bound/1000 * output_rate))",
+  "cost_breakdown_microusd": {
+    "openai-primary": {
+      "generation.T1": {"count": 120, "per_attempt": 192, "direct": 23040},
+      "generation.T2": {"count": 120, "per_attempt": 116, "direct": 13920},
+      "generation.artifact": {"count": 120, "per_attempt": 96, "direct": 11520},
+      "judge": {"count": 288, "per_attempt": 103, "direct": 29664},
+      "direct_total": 78144
+    },
+    "deepseek-secondary": {
+      "generation.T1": {"count": 120, "per_attempt": 761, "direct": 91320},
+      "generation.T2": {"count": 120, "per_attempt": 507, "direct": 60840},
+      "generation.artifact": {"count": 120, "per_attempt": 444, "direct": 53280},
+      "judge": {"count": 288, "per_attempt": 423, "direct": 121824},
+      "direct_total": 327264
+    },
+    "direct_expected_microusd": 405408,
+    "retry_inclusive_worst_case_microusd": 810816,
+    "contingency_reserve_microusd": 101352,
+    "worst_case_reserved_microusd": 912168,
+    "unused_headroom_microusd": 87832
+  },
+  "protocol_hashes": {
+    "generation_prompt_template_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "judge_prompt_template_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "generation_output_schema_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "judge_response_schema_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "rubric_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  }
+}

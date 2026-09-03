@@ -95,6 +95,84 @@ _STAGE_FIELDS = {
     ),
     "plan": ("validation_checks", "planned_tools", "coverage_targets"),
 }
+
+# These are the exact prompt templates used by the runtime.  Keeping them as
+# named protocol inputs makes the pre-pilot hash the behavior that is sent to
+# a provider, rather than a copy of an implementation detail in a report.
+GENERATION_PROMPT_TEMPLATES = {
+    "T1": (
+        "Task family: {task_family}\nRequirement:\n{requirement}\n\n"
+        "Return JSON with exactly: constraints, quantities, unresolved_references, "
+        "assumptions, contradictions, conditional_semantics, atomic_obligations. "
+        "Every top-level value must be a list. "
+        "conditional_semantics items must contain antecedent, consequent, necessity_status "
+        "(sufficient_only|also_necessary|undetermined), temporal_relation "
+        "(during|next_state|eventually|irrelevant|undetermined), and negative_case "
+        "({status: specified|not_specified|not_applicable, description: string|null}). "
+        "atomic_obligations items must contain only constraint_index (1-based), "
+        "atom_type (actor|action|object|condition|threshold|scope|temporal|exception|modality), "
+        "and status (present|absent|uncertain); do not include raw obligation text. "
+        "Use an empty list when no atomic observation is available. "
+        "This is an observable task summary; do not reveal hidden reasoning, labels, "
+        "variants, or an artifact."
+    ),
+    "T2": (
+        "Task family: {task_family}\nRequirement:\n{requirement}\n\n"
+        "Observable interpretation:\n{interpretation_json}\n"
+        "Return JSON with exactly: validation_checks, planned_tools, coverage_targets. "
+        "Every value must be a list. Do not reveal hidden reasoning, labels, variants, "
+        "or a terminal artifact."
+    ),
+    "artifact": (
+        "Task family: {task_family}\nRequirement:\n{requirement}\n\n"
+        "Observable interpretation:\n{interpretation_json}\n"
+        "Observable plan:\n{plan_json}\n"
+        "Return one JSON object containing exactly these keys: {output_keys}. "
+        "Do not include markdown or commentary."
+    ),
+}
+
+GENERATION_OUTPUT_SCHEMA = {
+    "schema_version": "staged-generation/v2",
+    "stages": {
+        "T1": {
+            "type": "object",
+            "fields": list(_STAGE_FIELDS["interpretation"]),
+            "all_values": "array",
+            "conditional_semantics": {
+                "fields": [
+                    "antecedent",
+                    "consequent",
+                    "necessity_status",
+                    "temporal_relation",
+                    "negative_case",
+                ]
+            },
+            "atomic_obligations": {
+                "fields": ["constraint_index", "atom_type", "status"]
+            },
+        },
+        "T2": {
+            "type": "object",
+            "fields": list(_STAGE_FIELDS["plan"]),
+            "all_values": "array",
+        },
+        "artifact": {
+            "type": "object",
+            "fields": "task_generation_contract.output_keys",
+            "exact_fields": True,
+        },
+    },
+}
+
+
+def _render_generation_prompt(template: str, **values: Any) -> str:
+    rendered = template
+    for key, value in values.items():
+        rendered = rendered.replace("{" + key + "}", str(value))
+    return rendered
+
+
 _COVERAGE_STOPWORDS = {
     "a", "an", "and", "as", "at", "be", "by", "for", "from", "in", "is",
     "of", "on", "or", "the", "to", "with",
@@ -410,22 +488,12 @@ class StagedProviderRuntime:
     ) -> AgentExecution:
         context_events: list[dict[str, Any]] = []
         requirement = _requirement(pair, variant)
-        base = f"Task family: {task_family}\nRequirement:\n{requirement}\n\n"
         interpretation, t1 = self._complete(
-            base
-            + "Return JSON with exactly: constraints, quantities, unresolved_references, "
-            "assumptions, contradictions, conditional_semantics, atomic_obligations. "
-            "Every top-level value must be a list. "
-            "conditional_semantics items must contain antecedent, consequent, necessity_status "
-            "(sufficient_only|also_necessary|undetermined), temporal_relation "
-            "(during|next_state|eventually|irrelevant|undetermined), and negative_case "
-            "({status: specified|not_specified|not_applicable, description: string|null}). "
-            "atomic_obligations items must contain only constraint_index (1-based), "
-            "atom_type (actor|action|object|condition|threshold|scope|temporal|exception|modality), "
-            "and status (present|absent|uncertain); do not include raw obligation text. "
-            "Use an empty list when no atomic observation is available. "
-            "This is an observable "
-            "task summary; do not reveal hidden reasoning, labels, variants, or an artifact.",
+            _render_generation_prompt(
+                GENERATION_PROMPT_TEMPLATES["T1"],
+                task_family=task_family,
+                requirement=requirement,
+            ),
             pair,
             variant,
             task_family,
@@ -435,12 +503,12 @@ class StagedProviderRuntime:
         context_events.append(t1["context_management_event"])
         interpretation = _validate_provider_stage(interpretation, "interpretation")
         plan, t2 = self._complete(
-            base
-            + "Observable interpretation:\n"
-            + json.dumps(interpretation, sort_keys=True)
-            + "\nReturn JSON with exactly: validation_checks, planned_tools, coverage_targets. "
-            "Every value must be a list. Do not reveal hidden reasoning, labels, variants, "
-            "or a terminal artifact.",
+            _render_generation_prompt(
+                GENERATION_PROMPT_TEMPLATES["T2"],
+                task_family=task_family,
+                requirement=requirement,
+                interpretation_json=json.dumps(interpretation, sort_keys=True),
+            ),
             pair,
             variant,
             task_family,
@@ -469,13 +537,14 @@ class StagedProviderRuntime:
 
         output_keys = pair["generation_contract"][task_family]["output_keys"]
         artifact, final = self._complete(
-            base
-            + "Observable interpretation:\n"
-            + json.dumps(interpretation, sort_keys=True)
-            + "\nObservable plan:\n"
-            + json.dumps(plan, sort_keys=True)
-            + f"\nReturn one JSON object containing exactly these keys: {list(output_keys)}. "
-            "Do not include markdown or commentary.",
+            _render_generation_prompt(
+                GENERATION_PROMPT_TEMPLATES["artifact"],
+                task_family=task_family,
+                requirement=requirement,
+                interpretation_json=json.dumps(interpretation, sort_keys=True),
+                plan_json=json.dumps(plan, sort_keys=True),
+                output_keys=list(output_keys),
+            ),
             pair,
             variant,
             task_family,
@@ -538,4 +607,8 @@ class StagedProviderRuntime:
         )
 
 
-__all__ = ["StagedProviderRuntime"]
+__all__ = [
+    "GENERATION_OUTPUT_SCHEMA",
+    "GENERATION_PROMPT_TEMPLATES",
+    "StagedProviderRuntime",
+]

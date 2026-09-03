@@ -8,7 +8,7 @@ confirmatory evidence.
 
 | Gate | Evidence already in the repository | Count/status now | Next owner |
 |---|---|---:|---|
-| Main synchronization | Real-provider pre-pilot gates are in merge commit \`e2b5f17\`; \`eval-gate\`, \`constraint-replay-gate\`, and \`wedge-check\` passed on the reviewed PR head | 1 synchronized main state at `e2b5f17` | engineering |
+| Main synchronization | PR #35 is merged as `80775416714f1ac94a7e22f2d1665082977e3959`; `eval-gate`, `constraint-replay-gate`, and `wedge-check` passed | 1 synchronized main state at `8077541` | engineering |
 | Corpus | Seven checked-in seed records; private redacted-intake validator added | 7/12 unique intents; 0 admitted confirmatory records | researcher + advisor |
 | Providers | OpenAI-compatible adapter, DeepSeek adapter, usage/cost propagation, and native smoke CLI | 0/2 runtime-native configurations qualified | operator |
 | Annotation | Frozen \`tasks/annotation_rubric.json\`; duplicate selection and blinded packet CLI | 0/2 trained annotators; 0 adjudicated items | advisor + annotators |
@@ -35,30 +35,19 @@ python scripts/run_native_provider_smoke.py \\
   --output /private/tmp/native-provider-smoke.json
 \`\`\`
 
-The private environment must define the model and immutable version values as
-well as the credentials:
+The checked-in configuration freezes the model snapshots, endpoints, and
+prices. The private environment supplies only the two credentials:
 
 \`\`\`text
-OPENAI_API_KEY=...
-NATIVE_OPENAI_MODEL=<model selected for the run>
-NATIVE_OPENAI_MODEL_VERSION=<provider snapshot or dated version>
-NATIVE_OPENAI_INPUT_USD_PER_1K=<frozen price>
-NATIVE_OPENAI_CACHED_INPUT_USD_PER_1K=<frozen price>
-NATIVE_OPENAI_OUTPUT_USD_PER_1K=<frozen price>
+PANEL_OPENAI_API_KEY=...
 
-DEEPSEEK_API_KEY=...
-NATIVE_DEEPSEEK_MODEL=<model selected for the run>
-NATIVE_DEEPSEEK_MODEL_VERSION=<provider snapshot or dated version>
-NATIVE_DEEPSEEK_INPUT_USD_PER_1K=<frozen price>
-NATIVE_DEEPSEEK_CACHED_INPUT_USD_PER_1K=<frozen price>
-NATIVE_DEEPSEEK_OUTPUT_USD_PER_1K=<frozen price>
+PANEL_DEEPSEEK_API_KEY=...
 \`\`\`
 
 Do not paste credentials into chat, JSON, GitHub, or a tracked \`.env\` file.
-The DeepSeek adapter defaults to \`https://api.deepseek.com\`, its documented
-OpenAI-compatible endpoint. Model aliases and prices are intentionally not
-hardcoded: the operator must record the values returned by the provider
-documentation at collection time.
+The DeepSeek adapter uses its documented OpenAI-compatible endpoint. The
+selected identifiers and dated peak-price snapshot are recorded in the
+secret-free example configuration and the accompanying research note.
 
 A smoke report is operationally acceptable only when both provider slots
 complete clean and defective episodes through the same runtime and the report

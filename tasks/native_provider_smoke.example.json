@@ -7,24 +7,34 @@
     {
       "id": "openai-primary",
       "kind": "openai",
-      "api_key_env": "OPENAI_API_KEY",
-      "model_env": "NATIVE_OPENAI_MODEL",
-      "model_version_env": "NATIVE_OPENAI_MODEL_VERSION",
-      "input_usd_per_1k_env": "NATIVE_OPENAI_INPUT_USD_PER_1K",
-      "cached_input_usd_per_1k_env": "NATIVE_OPENAI_CACHED_INPUT_USD_PER_1K",
-      "output_usd_per_1k_env": "NATIVE_OPENAI_OUTPUT_USD_PER_1K",
+      "api_key_env": "PANEL_OPENAI_API_KEY",
+      "model": "gpt-5.6-luna",
+      "model_version": "gpt-5.6-luna",
+      "pricing_snapshot_date": "2026-09-02",
+      "pricing_source_ref": "docs/research/2026-09-02-native-provider-smoke-model-selection.md",
+      "pricing": {
+        "input_usd_per_1k": "0.0002",
+        "cached_input_usd_per_1k": "0.00002",
+        "output_usd_per_1k": "0.0012"
+      },
       "max_tokens": 4096,
       "temperature": 0.0
     },
     {
       "id": "deepseek-secondary",
       "kind": "deepseek",
-      "api_key_env": "DEEPSEEK_API_KEY",
-      "model_env": "NATIVE_DEEPSEEK_MODEL",
-      "model_version_env": "NATIVE_DEEPSEEK_MODEL_VERSION",
-      "input_usd_per_1k_env": "NATIVE_DEEPSEEK_INPUT_USD_PER_1K",
-      "cached_input_usd_per_1k_env": "NATIVE_DEEPSEEK_CACHED_INPUT_USD_PER_1K",
-      "output_usd_per_1k_env": "NATIVE_DEEPSEEK_OUTPUT_USD_PER_1K",
+      "api_key_env": "PANEL_DEEPSEEK_API_KEY",
+      "model": "deepseek-v4-pro",
+      "model_version": "DeepSeek-V4-Pro-0813",
+      "base_url": "https://api.deepseek.com",
+      "reasoning_effort": null,
+      "pricing_snapshot_date": "2026-09-02",
+      "pricing_source_ref": "docs/research/2026-09-02-native-provider-smoke-model-selection.md",
+      "pricing": {
+        "input_usd_per_1k": "0.00132",
+        "cached_input_usd_per_1k": "0.000044",
+        "output_usd_per_1k": "0.00396"
+      },
       "max_tokens": 4096,
       "temperature": 0.0
     }

@@ -10,6 +10,17 @@ from typing import Any, Mapping
 
 
 JUDGE_SCHEMA_VERSION = "acceptance-criteria-llm-judge/v1"
+JUDGE_PROMPT_TEMPLATE = (
+    "You are an independent judge of generated acceptance criteria.\n"
+    "Use only the visible occurrence ID, generated criteria, and supplied reference constraints. "
+    "For each constraint, assess whether the criteria cover it, omit it, or leave it uncertain. "
+    "Coverage means the criteria operationalize the constraint with an observable behavior or testable condition. "
+    "Do not infer any hidden defect family or private metadata.\n\n"
+    "Occurrence ID: {occurrence_id}\n"
+    "Generated acceptance criteria:\n{generated_acceptance_criteria}\n\n"
+    "Reference constraints:\n{reference_constraints}\n\n"
+    "Return exactly the JSON fields specified by the rubric."
+)
 _REQUEST_FIELDS = frozenset(
     {"schema_version", "occurrence_id", "generated_acceptance_criteria", "reference_constraints"}
 )
@@ -56,6 +67,26 @@ _MAX_CRITERIA = 20_000
 _MAX_CONSTRAINT_TEXT = 4_000
 _MAX_EVIDENCE = 2_000
 _MAX_RATIONALE = 10_000
+
+# Stable, serialized contract description used by protocol fingerprinting.
+# It intentionally contains no provider, model, source, or outcome identity.
+JUDGE_RESPONSE_SCHEMA = {
+    "schema_version": JUDGE_SCHEMA_VERSION,
+    "request_fields": sorted(_REQUEST_FIELDS),
+    "reference_constraint_fields": ["constraint_id", "text"],
+    "response_fields": sorted(_RESPONSE_FIELDS),
+    "assessment_fields": sorted(_ASSESSMENT_FIELDS),
+    "labels": sorted(_LABELS),
+    "constraint_statuses": sorted(_STATUSES),
+    "limits": {
+        "occurrence_id_characters": _MAX_OCCURRENCE_ID,
+        "criteria_characters": _MAX_CRITERIA,
+        "constraint_characters": _MAX_CONSTRAINT_TEXT,
+        "evidence_characters": _MAX_EVIDENCE,
+        "rationale_characters": _MAX_RATIONALE,
+        "confidence": [0, 1],
+    },
+}
 
 
 @dataclass(frozen=True, slots=True)
@@ -194,16 +225,10 @@ def build_judge_prompt(request: JudgeRequest) -> str:
     constraints = "\n".join(
         f"- {item.constraint_id}: {item.text}" for item in validated.reference_constraints
     )
-    return (
-        "You are an independent judge of generated acceptance criteria.\n"
-        "Use only the visible occurrence ID, generated criteria, and supplied reference constraints. "
-        "For each constraint, assess whether the criteria cover it, omit it, or leave it uncertain. "
-        "Coverage means the criteria operationalize the constraint with an observable behavior or testable condition. "
-        "Do not infer any hidden defect family or private metadata.\n\n"
-        f"Occurrence ID: {validated.occurrence_id}\n"
-        f"Generated acceptance criteria:\n{validated.generated_acceptance_criteria}\n\n"
-        f"Reference constraints:\n{constraints}\n\n"
-        "Return exactly the JSON fields specified by the rubric."
+    return JUDGE_PROMPT_TEMPLATE.format(
+        occurrence_id=validated.occurrence_id,
+        generated_acceptance_criteria=validated.generated_acceptance_criteria,
+        reference_constraints=constraints,
     )
 
 
