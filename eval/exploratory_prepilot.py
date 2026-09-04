@@ -61,7 +61,7 @@ from label_plane.exploratory_judge import (
 from protocol.context_management import NoCompactionManager
 
 
-SCHEMA_VERSION = "exploratory-llm-judged-prepilot/v1"
+SCHEMA_VERSION = "exploratory-llm-judged-prepilot/v2"
 CANONICAL_FROZEN_MANIFEST = Path("data/prepilot/corpus-manifest.json")
 TERMINAL_STATES = frozenset(
     {
@@ -262,6 +262,12 @@ def _plan_join_by_artifact(plan: ExploratoryCallPlan) -> dict[str, Any]:
     return {str(item.artifact_id): item for item in plan._private_join}
 
 
+def _judge_relation(*, judge_slot_id: str, generator_slot_id: str) -> str:
+    """Classify evaluator/generator dependence without exposing provider identity."""
+
+    return "self" if judge_slot_id == generator_slot_id else "cross"
+
+
 def _configuration_public_hash(configuration: ExploratoryRuntimeConfig) -> str:
     return _sha256_text(_canonical_json(configuration.public_metadata()))
 
@@ -292,6 +298,10 @@ def _build_report_base(
         "generation_stage_count": 0,
         "judge_result_count": 0,
         "uncertain_judge_count": 0,
+        "planned_judge_relation_counts": {"self": 0, "cross": 0},
+        "completed_judge_relation_counts": {"self": 0, "cross": 0},
+        "judge_relation_label_counts": {"self": {}, "cross": {}},
+        "judge_relation_failure_counts": {"self": 0, "cross": 0},
         "label_counts": {},
         "error_class": None,
         "cost": None,
@@ -340,6 +350,7 @@ def _invoke_judge(
     *,
     budgeted: Any,
     provider_slot_id: str,
+    generator_slot_id: str,
     occurrence_id: str,
     request: JudgeRequest,
     evidence_path: Path,
@@ -347,6 +358,10 @@ def _invoke_judge(
 ) -> tuple[Any | None, str | None]:
     serialized_request = serialize_judge_request(request)
     prompt = build_judge_prompt(request)
+    judge_relation = _judge_relation(
+        judge_slot_id=provider_slot_id,
+        generator_slot_id=generator_slot_id,
+    )
     provider_request = ProviderRequest(
         prompt=prompt,
         pair={"task_family": "judge", "output_keys": []},
@@ -368,6 +383,8 @@ def _invoke_judge(
                 {
                     "kind": "judge_call",
                     "provider_slot_id": provider_slot_id,
+                    "generator_slot_id": generator_slot_id,
+                    "judge_relation": judge_relation,
                     "occurrence_id": occurrence_id,
                     "attempt": attempt,
                     "request": serialized_request,
@@ -486,6 +503,10 @@ def run_exploratory_prepilot(
                 "logical_operations": plan.logical_operations,
                 "provider_api_calls": plan.provider_api_calls,
                 "duplicate_base_task_count": plan.duplicate_base_task_count,
+                "planned_judge_relation_counts": {
+                    "self": len(plan.occurrences),
+                    "cross": len(plan.occurrences),
+                },
                 "preflight": preflight.to_dict(),
             }
         )
@@ -681,6 +702,12 @@ def run_exploratory_prepilot(
                 }
                 parsed_by_occurrence: dict[str, dict[str, Any]] = {}
                 label_counts: Counter[str] = Counter()
+                relation_counts: Counter[str] = Counter()
+                relation_label_counts: dict[str, Counter[str]] = {
+                    "self": Counter(),
+                    "cross": Counter(),
+                }
+                relation_failure_counts: Counter[str] = Counter()
                 uncertain_count = 0
                 for occurrence in plan.occurrences:
                     artifact_row = artifacts.get(occurrence.base_task_id)
@@ -699,18 +726,26 @@ def run_exploratory_prepilot(
                     )
                     responses: list[Any] = []
                     for slot in configuration.providers:
+                        relation = _judge_relation(
+                            judge_slot_id=slot.id,
+                            generator_slot_id=join.provider_slot_id,
+                        )
                         parsed, error_class = _invoke_judge(
                             budgeted=judge_adapters[slot.id],
                             provider_slot_id=slot.id,
+                            generator_slot_id=join.provider_slot_id,
                             occurrence_id=occurrence.occurrence_id,
                             request=request,
                             evidence_path=evidence_path,
                             max_output_tokens=configuration.token_bounds["judge"].output_tokens,
                         )
                         if parsed is None:
+                            relation_failure_counts[relation] += 1
                             uncertain_count += 1
                             responses = []
                             break
+                        relation_counts[relation] += 1
+                        relation_label_counts[relation][parsed.label] += 1
                         responses.append(parsed)
                     if len(responses) == 2:
                         consolidated = consolidate_two_judges(responses[0], responses[1])
@@ -740,6 +775,18 @@ def run_exploratory_prepilot(
                     )
                 report["judge_result_count"] = len(parsed_by_occurrence)
                 report["uncertain_judge_count"] = uncertain_count
+                report["completed_judge_relation_counts"] = {
+                    relation: relation_counts[relation]
+                    for relation in ("self", "cross")
+                }
+                report["judge_relation_label_counts"] = {
+                    relation: dict(sorted(relation_label_counts[relation].items()))
+                    for relation in ("self", "cross")
+                }
+                report["judge_relation_failure_counts"] = {
+                    relation: relation_failure_counts[relation]
+                    for relation in ("self", "cross")
+                }
                 report["label_counts"] = dict(sorted(label_counts.items()))
                 report["state"] = (
                     "completed_with_uncertainty" if uncertain_count else "completed"

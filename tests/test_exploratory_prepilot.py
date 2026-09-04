@@ -9,7 +9,7 @@ import pytest
 import eval.exploratory_prepilot as runner
 from eval.corpus_intake import build_redacted_manifest, freeze_validated_manifest
 from eval.protocol_hashes import build_protocol_hashes
-from eval.exploratory_prepilot import run_exploratory_prepilot
+from eval.exploratory_prepilot import _judge_relation, run_exploratory_prepilot
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -156,11 +156,19 @@ def test_dry_run_reports_frozen_counts_and_budget_without_network(tmp_path, monk
     assert report["artifact_count"] == 240
     assert report["duplicate_base_task_count"] == 48
     assert report["logical_judging_calls"] == 576
+    assert report["planned_judge_relation_counts"] == {"self": 288, "cross": 288}
+    assert report["completed_judge_relation_counts"] == {"self": 0, "cross": 0}
     assert report["provider_api_calls"] == 1296
     assert report["preflight"]["worst_case_reserved_microusd"] == 988200
     serialized = output.read_text(encoding="utf-8")
     assert "The system shall reject" not in serialized
     assert "private-intent" not in serialized
+
+
+
+def test_judge_relation_distinguishes_self_from_cross_without_provider_names():
+    assert _judge_relation(judge_slot_id="slot-a", generator_slot_id="slot-a") == "self"
+    assert _judge_relation(judge_slot_id="slot-b", generator_slot_id="slot-a") == "cross"
 
 
 def test_live_confirmation_is_required_after_a_ready_preflight(tmp_path, monkeypatch):
