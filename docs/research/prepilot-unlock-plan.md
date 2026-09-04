@@ -142,8 +142,9 @@ attribution, and transmission to the selected external providers.
 The v4 validator emits a redacted manifest and fails closed on placeholders,
 missing rights evidence, duplicate hashes, missing projects, missing immutable
 references, or an unsupported defect family. The validator records the review;
-it does not make a legal determination. That determination belongs to the
-researcher and advisor.
+it does not make a legal determination. A license name or URL alone is
+insufficient: all four rights assertions and the reviewer/timestamp must be
+present. That determination belongs to the researcher and advisor.
 
 ## Annotation and adjudication
 
