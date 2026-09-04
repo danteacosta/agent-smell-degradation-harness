@@ -46,7 +46,7 @@ def test_t1_prompt_fits_the_frozen_provider_input_budget_for_long_requirements()
     assert len(prompt.encode("utf-8")) <= 700
 
 
-def test_visible_requirement_is_sent_to_every_generation_stage() -> None:
+def test_t2_uses_the_interpretation_without_repeating_the_requirement() -> None:
     requirement = "The system rejects requests after five minutes."
     t1 = _render_generation_prompt(
         GENERATION_PROMPT_TEMPLATES["T1"],
@@ -61,7 +61,41 @@ def test_visible_requirement_is_sent_to_every_generation_stage() -> None:
     )
 
     assert requirement in t1
-    assert requirement in t2
+    assert requirement not in t2
+    assert "at most four words" in t2
+
+
+def test_t2_prompt_sends_only_interpretation_fields_used_by_the_plan() -> None:
+    responses = [
+        json.dumps(_minimum_interpretation()),
+        json.dumps(_minimum_plan()),
+        json.dumps({"criterion": "bounded"}),
+    ]
+
+    class CapturingProvider:
+        name = "capture"
+
+        def __init__(self) -> None:
+            self.requests = []
+
+        def complete(self, request):
+            self.requests.append(request)
+            return responses.pop(0)
+
+    provider = CapturingProvider()
+    pair = {
+        "clean_requirement": "Bounded requirement.",
+        "generation_contract": {"acceptance_criteria": {"output_keys": ["criterion"]}},
+    }
+
+    RuntimeCheckpointAgent.from_provider(provider, model="m", model_version="v").execute_with_checkpoints(
+        pair, variant="clean", task_family="acceptance_criteria"
+    )
+
+    t2_prompt = provider.requests[1].prompt
+    assert '"constraints"' in t2_prompt
+    assert '"atomic_obligations"' in t2_prompt
+    assert '"quantities"' not in t2_prompt
 
 
 def test_substantive_completeness_rejects_vacuous_t1_before_artifact() -> None:

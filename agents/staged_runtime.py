@@ -122,10 +122,11 @@ GENERATION_PROMPT_TEMPLATES = {
         "Other arrays: []. No prose/extra keys."
     ),
     "T2": (
-        "T2 R:{requirement}\nI:{interpretation_json}\nJSON only. Exactly these keys: "
+        "T2 I:{interpretation_json}\nJSON only. Exactly these keys: "
         "validation_checks, planned_tools, coverage_targets. All values are arrays of "
-        "strings. Put exactly one concise "
-        "plain-text item in validation_checks and exactly one in coverage_targets. Set "
+        "strings. Put exactly one plain-text item of at most four words in "
+        "validation_checks and exactly one of at most four words in coverage_targets; "
+        "use terms from the interpreted constraint. Set "
         "planned_tools to []. No prose or extra keys."
     ),
     "artifact": (
@@ -573,12 +574,20 @@ class StagedProviderRuntime:
         )
         context_events.append(t1["context_management_event"])
         interpretation = _validate_provider_stage(interpretation, "interpretation")
+        plan_context = {
+            field: interpretation[field]
+            for field in ("constraints", "atomic_obligations")
+        }
         plan, t2 = self._complete(
             _render_generation_prompt(
                 GENERATION_PROMPT_TEMPLATES["T2"],
                 task_family=task_family,
-                requirement=requirement,
-                interpretation_json=json.dumps(interpretation, sort_keys=True),
+                interpretation_json=json.dumps(
+                    plan_context,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ),
             ),
             pair,
             variant,
@@ -613,8 +622,18 @@ class StagedProviderRuntime:
                 GENERATION_PROMPT_TEMPLATES["artifact"],
                 task_family=task_family,
                 requirement=requirement,
-                interpretation_json=json.dumps(interpretation, sort_keys=True),
-                plan_json=json.dumps(plan, sort_keys=True),
+                interpretation_json=json.dumps(
+                    interpretation,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ),
+                plan_json=json.dumps(
+                    plan,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ),
                 output_keys=list(output_keys),
             ),
             pair,
