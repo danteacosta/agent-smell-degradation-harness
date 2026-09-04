@@ -14,7 +14,7 @@ confirmatory evidence.
 | Substantive evidence | T1/T2 non-empty-field gate and retry contract | Implemented and covered by tests; full-run coverage is still pending | Engineering and operator |
 | Annotation | Frozen rubric and blinded-packet tooling | Advisor authorized LLM judges for this exploratory phase; no human labels or adjudication exist | Advisor and operator |
 | Budget | Per-stage cost ledger and frozen prices | Current corrected exploratory configuration reserves US$0.988200 in the US$1.00 cap; annotation effort is not included | Operator and advisor |
-| Reproducibility | Prompt, schema, model, price, source, pair, request, response, and run hashes | Token-fit corrected configuration resolves to `fecd185cd77c0ac12b6372a3ae301fd531e112e1497cf417ec5a86ca12eeafb0`; a full-run report is still missing | Operator |
+| Reproducibility | Prompt, schema, model, price, source, pair, request, response, and run hashes | Token-fit corrected configuration is frozen for the follow-up run; a full-run report is still missing | Operator |
 | Readiness | Fail-closed `prepilot_readiness` report | `no_go` for any claim beyond an exploratory pre-pilot; no H1/H2 claim is authorized | Researcher and advisor |
 
 These are process statuses, not efficacy results.
@@ -89,10 +89,11 @@ requires a fresh explicit authorization for that single run. Until it is
 completed, the corrected configuration hash is a planned run identity, not a
 claim about results.
 
-The token-fit correction keeps the frozen stage bounds unchanged. T2 now sends
-only the constraint summary and atomic-obligation fields needed for planning,
-uses compact JSON, and limits each planned evidence phrase to four words. This
-addresses the observed DeepSeek T2 usage without increasing the US$1.00 cap.
+The token-fit correction keeps the frozen stage bounds unchanged. T1 limits its
+constraint summary to six words; T2 sends only the constraint summary and
+atomic-obligation fields needed for planning, uses compact JSON, and limits
+each planned evidence phrase to four words. This addresses the observed
+provider usage without increasing the US$1.00 cap.
 
 ## Real-provider smoke
 

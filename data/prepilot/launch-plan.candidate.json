@@ -118,8 +118,8 @@
     },
     "corrected_protocol": {
       "status": "smoke_verified_full_run_pending",
-      "generation_prompt_template_sha256": "85859c0a8ff5f7ab784bab4e4188aa1de7ec4bd84f3e0547927e266c569e2326",
-      "configuration_sha256": "fecd185cd77c0ac12b6372a3ae301fd531e112e1497cf417ec5a86ca12eeafb0",
+      "generation_prompt_template_sha256": "83b936236c31220d42508b6b42a4da3c6b2e5da8f1d09ffe4aec86f9b20a816e",
+      "configuration_sha256": "993eff92c5466b2bc7fdcc741a7582dd8a8f2c14f18ca6a70435f2de9896727a",
       "reserved_cost_usd": 0.9882,
       "full_run_report_reference": null
     }
