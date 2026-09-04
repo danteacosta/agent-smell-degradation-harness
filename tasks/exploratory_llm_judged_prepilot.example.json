@@ -3,7 +3,7 @@
   "stage": "exploratory_llm_judged_pre_pilot",
   "task_family": "test_gen",
   "context_condition": "no_compaction",
-  "source_revision": "a5b3e083bd5f4fe97b7b660ad25d229273b1a261",
+  "source_revision": "ac00094f44de1f0d24746a95543c8cdbb6da0675",
   "providers": [
     {
       "id": "openai-primary",
