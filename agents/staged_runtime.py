@@ -115,7 +115,7 @@ GENERATION_PROMPT_TEMPLATES = {
         "T1 R:{requirement}\nJSON. Keys: constraints, quantities, "
         "unresolved_references, assumptions, contradictions, conditional_semantics, "
         "atomic_obligations. All values are arrays; atomic_obligations contains objects. "
-        "Put one short summary in constraints and one "
+        "Put one summary of at most six words in constraints and one "
         "atomic item in atomic_obligations. That object has keys constraint_index, "
         "atom_type, and status; constraint_index=1; atom_type=condition; status: "
         "present/absent/uncertain. "

@@ -46,6 +46,16 @@ def test_t1_prompt_fits_the_frozen_provider_input_budget_for_long_requirements()
     assert len(prompt.encode("utf-8")) <= 700
 
 
+def test_t1_prompt_requires_a_bounded_constraint_summary() -> None:
+    prompt = _render_generation_prompt(
+        GENERATION_PROMPT_TEMPLATES["T1"],
+        task_family="test_gen",
+        requirement="A bounded requirement.",
+    )
+
+    assert "at most six words" in prompt.lower()
+
+
 def test_t2_uses_the_interpretation_without_repeating_the_requirement() -> None:
     requirement = "The system rejects requests after five minutes."
     t1 = _render_generation_prompt(
