@@ -175,6 +175,53 @@ def _append_private_evidence(path: Path, value: Mapping[str, Any]) -> None:
         os.fsync(handle.fileno())
 
 
+def _runtime_context_evidence(
+    *, artifact_id: str, provider_slot_id: str, execution: Any
+) -> dict[str, Any]:
+    """Extract prompt-free context events emitted by the runtime execution."""
+
+    tool_checkpoints = [
+        checkpoint
+        for checkpoint in execution.checkpoints
+        if checkpoint.checkpoint == "tool.completed"
+    ]
+    if len(tool_checkpoints) != 1:
+        raise ExploratoryPrepilotError(
+            "runtime execution must contain exactly one tool.completed checkpoint"
+        )
+    events = tool_checkpoints[0].payload.get("context_management")
+    summary = execution.provider_meta.get("context_management")
+    if not isinstance(events, list) or not isinstance(summary, Mapping):
+        raise ExploratoryPrepilotError(
+            "runtime execution is missing context-management evidence"
+        )
+    return {
+        "kind": "runtime_context",
+        "artifact_id": artifact_id,
+        "provider_slot_id": provider_slot_id,
+        "condition": str(summary.get("condition", "")),
+        "summary": dict(summary),
+        "events": [dict(event) for event in events],
+    }
+
+
+def _accumulate_context_summary(
+    target: dict[str, Any], summary: Mapping[str, Any]
+) -> None:
+    """Accumulate redacted context telemetry without retaining provider text."""
+
+    if summary.get("condition") != target["condition"]:
+        raise ExploratoryPrepilotError("context-management condition drifted during the run")
+    target["event_count"] += int(summary.get("event_count", 0))
+    target["compaction_count"] += int(summary.get("compaction_count", 0))
+    for operation, count in dict(summary.get("operation_counts", {})).items():
+        target["operation_counts"][str(operation)] = (
+            target["operation_counts"].get(str(operation), 0) + int(count)
+        )
+    target["context_size_before"] += int(summary.get("context_size_before", 0))
+    target["context_size_after"] += int(summary.get("context_size_after", 0))
+
+
 def _load_frozen_manifest(repository_root: Path) -> dict[str, Any]:
     path = repository_root / CANONICAL_FROZEN_MANIFEST
     try:
@@ -303,6 +350,18 @@ def _build_report_base(
         "judge_relation_label_counts": {"self": {}, "cross": {}},
         "judge_relation_failure_counts": {"self": 0, "cross": 0},
         "label_counts": {},
+        "context_management": {
+            "schema_version": "context-management/v1",
+            "condition": "no_compaction",
+            "event_count": 0,
+            "compaction_count": 0,
+            "operation_counts": {},
+            "context_size_unit": "utf8_bytes",
+            "context_size_before": 0,
+            "context_size_after": 0,
+        },
+        "incomplete_episode_count": 0,
+        "incomplete_artifact_count": 0,
         "error_class": None,
         "cost": None,
         "substantive_completeness": {
@@ -453,6 +512,10 @@ def run_exploratory_prepilot(
     )
     report["started_at"] = datetime.now(UTC).isoformat()
     ledger: CostLedger | None = None
+    incomplete_episode_ids: set[str] = set()
+    incomplete_artifact_ids: set[str] = set()
+    completed_artifact_count = 0
+    completed_judge_count = 0
 
     try:
         if not _source_revision_is_compatible(
@@ -521,6 +584,11 @@ def run_exploratory_prepilot(
                 "rubric_sha256": configuration.protocol_hashes["rubric_sha256"],
                 "reference_constraints_sha256": report["reference_constraints_sha256"],
                 "provider_slots": [slot.public_metadata() for slot in configuration.providers],
+                "context_management": {
+                    "schema_version": "context-management/v1",
+                    "condition": "no_compaction",
+                    "compaction_enabled": False,
+                },
                 "plan_counts": {
                     "episodes": len(plan.episodes),
                     "artifacts": len(plan.artifacts),
@@ -628,6 +696,20 @@ def run_exploratory_prepilot(
                     except (BudgetExhaustedError, CostUnverifiedError, DurabilityError):
                         raise
                     except SubstantiveCompletenessError as error:
+                        incomplete_episode_ids.add(str(join.episode_id))
+                        incomplete_artifact_ids.add(str(artifact_id))
+                        _append_private_evidence(
+                            evidence_path,
+                            {
+                                "kind": "incomplete_episode",
+                                "episode_id": str(join.episode_id),
+                                "artifact_id": str(artifact_id),
+                                "phase": "generation",
+                                "error_class": type(error).__name__,
+                            },
+                        )
+                        report["incomplete_episode_count"] = len(incomplete_episode_ids)
+                        report["incomplete_artifact_count"] = len(incomplete_artifact_ids)
                         report["state"] = "incomplete_substantive_evidence"
                         report["error_class"] = type(error).__name__
                         report["substantive_completeness"]["failed_stage_count"] += 1
@@ -648,6 +730,20 @@ def run_exploratory_prepilot(
                         )
                         break
                     except Exception:
+                        incomplete_episode_ids.add(str(join.episode_id))
+                        incomplete_artifact_ids.add(str(artifact_id))
+                        _append_private_evidence(
+                            evidence_path,
+                            {
+                                "kind": "incomplete_episode",
+                                "episode_id": str(join.episode_id),
+                                "artifact_id": str(artifact_id),
+                                "phase": "generation",
+                                "error_class": "GenerationStageError",
+                            },
+                        )
+                        report["incomplete_episode_count"] = len(incomplete_episode_ids)
+                        report["incomplete_artifact_count"] = len(incomplete_artifact_ids)
                         report["state"] = "incomplete_generation"
                         report["error_class"] = "GenerationStageError"
                         report["generation_stage_count"] = generation_stage_count
@@ -671,6 +767,17 @@ def run_exploratory_prepilot(
                         "execution": execution,
                         "join": join,
                     }
+                    context_evidence = _runtime_context_evidence(
+                        artifact_id=str(artifact_id),
+                        provider_slot_id=str(slot.id),
+                        execution=execution,
+                    )
+                    _append_private_evidence(evidence_path, context_evidence)
+                    _accumulate_context_summary(
+                        report["context_management"],
+                        context_evidence["summary"],
+                    )
+                    completed_artifact_count = len(artifacts)
                     report["substantive_completeness"]["passed_stage_count"] += 2
                     generation_stage_count += 3
                     _checkpoint(
@@ -773,6 +880,7 @@ def run_exploratory_prepilot(
                         completed_artifact_count=len(artifacts),
                         completed_judge_count=len(parsed_by_occurrence),
                     )
+                    completed_judge_count = len(parsed_by_occurrence)
                 report["judge_result_count"] = len(parsed_by_occurrence)
                 report["uncertain_judge_count"] = uncertain_count
                 report["completed_judge_relation_counts"] = {
@@ -802,6 +910,19 @@ def run_exploratory_prepilot(
         report["state"] = "stopped_protocol_violation"
         report["error_class"] = _safe_error(error)
     finally:
+        if ledger is not None:
+            _checkpoint(
+                run_directory,
+                run_id=run_id,
+                state=report["state"],
+                source_revision=source_revision,
+                corpus_manifest_sha256=report.get("corpus_manifest_sha256"),
+                configuration_sha256=report["configuration_sha256"],
+                rubric_sha256=configuration.protocol_hashes["rubric_sha256"],
+                ledger_head_hash=ledger.ledger_head_hash,
+                completed_artifact_count=completed_artifact_count,
+                completed_judge_count=completed_judge_count,
+            )
         if ledger is not None and report["cost"] is None:
             report["cost"] = ledger.report()
         report["finished_at"] = datetime.now(UTC).isoformat()

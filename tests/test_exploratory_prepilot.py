@@ -6,6 +6,7 @@ import shutil
 
 import pytest
 
+from agents.checkpoints import AgentExecution, CheckpointObservation
 import eval.exploratory_prepilot as runner
 from eval.corpus_intake import build_redacted_manifest, freeze_validated_manifest
 from eval.protocol_hashes import build_protocol_hashes
@@ -169,6 +170,57 @@ def test_dry_run_reports_frozen_counts_and_budget_without_network(tmp_path, monk
 def test_judge_relation_distinguishes_self_from_cross_without_provider_names():
     assert _judge_relation(judge_slot_id="slot-a", generator_slot_id="slot-a") == "self"
     assert _judge_relation(judge_slot_id="slot-b", generator_slot_id="slot-a") == "cross"
+
+
+def test_runtime_context_evidence_preserves_prompt_free_no_compaction_events():
+    event = {
+        "schema_version": "context-management/v1",
+        "event_id": "context-003",
+        "stage": "artifact",
+        "operation": "none",
+        "trigger": "policy_disabled",
+        "started_at": "2026-09-04T12:00:00+00:00",
+        "ended_at": "2026-09-04T12:00:00.001000+00:00",
+        "context_size_before": 42,
+        "context_size_after": 42,
+        "context_size_unit": "utf8_bytes",
+        "checkpoint_id": "artifact-context-003",
+        "checkpoint_sha256": "a" * 64,
+    }
+    execution = AgentExecution(
+        checkpoints=(
+            CheckpointObservation(
+                "tool.completed",
+                {"context_management": [event]},
+                event["started_at"],
+                event["ended_at"],
+            ),
+        ),
+        artifact={"criterion": "bounded"},
+        provider_meta={
+            "context_management": {
+                "schema_version": "context-management/v1",
+                "condition": "no_compaction",
+                "event_count": 1,
+                "compaction_count": 0,
+                "operation_counts": {"none": 1},
+                "context_size_unit": "utf8_bytes",
+                "context_size_before": 42,
+                "context_size_after": 42,
+            }
+        },
+    )
+
+    evidence = runner._runtime_context_evidence(
+        artifact_id="artifact-1",
+        provider_slot_id="slot-1",
+        execution=execution,
+    )
+
+    assert evidence["kind"] == "runtime_context"
+    assert evidence["condition"] == "no_compaction"
+    assert evidence["events"] == [event]
+    assert "prompt" not in json.dumps(evidence)
 
 
 def test_live_confirmation_is_required_after_a_ready_preflight(tmp_path, monkeypatch):
