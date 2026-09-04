@@ -189,9 +189,13 @@ def _runtime_context_evidence(
         raise ExploratoryPrepilotError(
             "runtime execution must contain exactly one tool.completed checkpoint"
         )
-    events = tool_checkpoints[0].payload.get("context_management")
+    staged_events = [
+        stage["context_management_event"]
+        for stage in execution.provider_meta.get("stages", [])
+        if isinstance(stage, Mapping) and "context_management_event" in stage
+    ]
     summary = execution.provider_meta.get("context_management")
-    if not isinstance(events, list) or not isinstance(summary, Mapping):
+    if not staged_events or not isinstance(summary, Mapping):
         raise ExploratoryPrepilotError(
             "runtime execution is missing context-management evidence"
         )
@@ -201,7 +205,7 @@ def _runtime_context_evidence(
         "provider_slot_id": provider_slot_id,
         "condition": str(summary.get("condition", "")),
         "summary": dict(summary),
-        "events": [dict(event) for event in events],
+        "events": [dict(event) for event in staged_events],
     }
 
 

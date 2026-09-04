@@ -175,8 +175,8 @@ def test_judge_relation_distinguishes_self_from_cross_without_provider_names():
 def test_runtime_context_evidence_preserves_prompt_free_no_compaction_events():
     event = {
         "schema_version": "context-management/v1",
-        "event_id": "context-003",
-        "stage": "artifact",
+        "event_id": "context-001",
+        "stage": "T1",
         "operation": "none",
         "trigger": "policy_disabled",
         "started_at": "2026-09-04T12:00:00+00:00",
@@ -184,14 +184,19 @@ def test_runtime_context_evidence_preserves_prompt_free_no_compaction_events():
         "context_size_before": 42,
         "context_size_after": 42,
         "context_size_unit": "utf8_bytes",
-        "checkpoint_id": "artifact-context-003",
+        "checkpoint_id": "T1-context-001",
         "checkpoint_sha256": "a" * 64,
     }
+    events = [
+        event,
+        {**event, "event_id": "context-002", "stage": "T2", "checkpoint_id": "T2-context-002"},
+        {**event, "event_id": "context-003", "stage": "artifact", "checkpoint_id": "artifact-context-003"},
+    ]
     execution = AgentExecution(
         checkpoints=(
             CheckpointObservation(
                 "tool.completed",
-                {"context_management": [event]},
+                {"context_management": events[:2]},
                 event["started_at"],
                 event["ended_at"],
             ),
@@ -201,13 +206,17 @@ def test_runtime_context_evidence_preserves_prompt_free_no_compaction_events():
             "context_management": {
                 "schema_version": "context-management/v1",
                 "condition": "no_compaction",
-                "event_count": 1,
+                "event_count": 3,
                 "compaction_count": 0,
-                "operation_counts": {"none": 1},
+                "operation_counts": {"none": 3},
                 "context_size_unit": "utf8_bytes",
-                "context_size_before": 42,
-                "context_size_after": 42,
-            }
+                "context_size_before": 126,
+                "context_size_after": 126,
+            },
+            "stages": [
+                {"context_management_event": item}
+                for item in events
+            ],
         },
     )
 
@@ -219,7 +228,7 @@ def test_runtime_context_evidence_preserves_prompt_free_no_compaction_events():
 
     assert evidence["kind"] == "runtime_context"
     assert evidence["condition"] == "no_compaction"
-    assert evidence["events"] == [event]
+    assert evidence["events"] == events
     assert "prompt" not in json.dumps(evidence)
 
 
