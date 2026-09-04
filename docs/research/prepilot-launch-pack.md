@@ -6,10 +6,10 @@ The executable procedures and the approval record are in the
 
 ## Decision boundary
 
-The pre-pilot is a non-confirmatory feasibility study. It may estimate failure
-prevalence, provider reliability, annotation effort, cost, latency,
-intraproject dependence, and the availability of pre-final evidence. It cannot
-establish H1 or H2.
+The pre-pilot is a non-confirmatory 120-episode feasibility study. It may
+estimate failure prevalence, provider reliability, annotation effort, cost,
+latency, intraproject dependence, and the availability of pre-final evidence.
+It cannot support H1 or H2.
 
 The previous `284 clean` count is diagnostic only. It records LLM judge
 agreement under an older protocol and does not establish correctness,
@@ -82,6 +82,9 @@ Run the readiness command with:
 python -m eval.prepilot_readiness
 ```
 
+Credentials never enter that file. They remain in the private runtime
+environment and are excluded from tracked configuration and reports.
+
 It remains fail-closed while any required evidence is missing. A passing
 smoke does not change that state.
 
@@ -127,6 +130,10 @@ ledger, source and constraint hashes, configuration and protocol hashes,
 execution window, platform information, and the private input locations. Raw
 requirements, provider responses, generated artifacts, and credentials stay in
 approved private storage.
+
+The current 220/36 candidate may increase or decrease after the pre-pilot's
+feasibility estimates. The confirmatory precision plan must be frozen only
+after that review and before confirmatory collection.
 
 Before interpreting any pattern, review the corrected report for complete
 artifact and judgment counts, substantive completeness, native context events,
