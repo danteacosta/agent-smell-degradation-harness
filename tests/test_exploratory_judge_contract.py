@@ -68,7 +68,7 @@ def test_prompt_names_visible_inputs_and_explains_constraint_coverage_without_hi
     prompt = build_judge_prompt(request())
     assert "occ-opaque-17" in prompt
     assert "c-opaque-a" in prompt
-    assert "operationalize" in prompt.lower()
+    assert '"label"' in prompt.lower()
     assert "target_family" not in prompt
     assert "incompleteness_missing_condition" not in prompt
 
@@ -80,6 +80,34 @@ def test_request_and_response_representations_are_immutable():
     parsed = parse_judge_response(json.dumps(response()), request())
     with pytest.raises(FrozenInstanceError):
         parsed.label = "clean"
+
+
+def test_compact_provider_response_is_bound_to_the_validated_request():
+    single = JudgeRequest(
+        occurrence_id="occ-opaque-17",
+        generated_acceptance_criteria="The system shows the status.",
+        reference_constraints=(ReferenceConstraint("c-opaque-a", "The status is shown."),),
+    )
+    parsed = parse_judge_response('{"label":"clean","status":"covered"}', single)
+
+    assert parsed.occurrence_id == "occ-opaque-17"
+    assert parsed.constraint_assessments[0].constraint_id == "c-opaque-a"
+    assert parsed.constraint_assessments[0].status == "covered"
+    assert parsed.confidence == 0.5
+    assert parsed.evidence == ""
+
+
+def test_single_constraint_judge_binds_placeholder_assessment_id_to_request():
+    single = JudgeRequest(
+        occurrence_id="occ-opaque-17",
+        generated_acceptance_criteria="The system shows the status.",
+        reference_constraints=(ReferenceConstraint("c-opaque-a", "The status is shown."),),
+    )
+    payload = response(constraint_ids=["CID"])
+    payload["constraint_assessments"] = payload["constraint_assessments"][:1]
+    parsed = parse_judge_response(json.dumps(payload), single)
+
+    assert parsed.constraint_assessments[0].constraint_id == "c-opaque-a"
 
 
 @pytest.mark.parametrize(
@@ -221,3 +249,19 @@ def test_exact_agreement_is_consensus_and_disagreement_is_uncertain():
     disagreed = consolidate_two_judges(first, different)
     assert disagreed.label == "uncertain"
     assert disagreed.consensus is False
+
+
+def test_same_label_with_different_constraint_status_is_uncertain():
+    first = direct_response(
+        ConstraintAssessment("c-opaque-a", "covered", "status is shown"),
+        ConstraintAssessment("c-opaque-b", "covered", "delay is determined"),
+    )
+    second = direct_response(
+        ConstraintAssessment("c-opaque-a", "omitted", "status is not shown"),
+        ConstraintAssessment("c-opaque-b", "covered", "delay is determined"),
+    )
+
+    result = consolidate_two_judges(first, second)
+
+    assert result.label == "uncertain"
+    assert result.consensus is False

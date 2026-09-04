@@ -40,6 +40,16 @@ Clock = Callable[[], datetime]
 StageCompletion = Callable[[ProviderRequest, str, int], str]
 
 
+class SubstantiveCompletenessError(ValueError):
+    """Raised when a validly shaped stage contains no usable evidence."""
+
+    def __init__(self, stage: str, fields: tuple[str, ...]) -> None:
+        self.stage = stage
+        self.fields = fields
+        names = ", ".join(f"{stage}.{field}" for field in fields)
+        super().__init__(f"{stage} substantive completeness requires non-empty fields: {names}")
+
+
 def _now_iso(clock: Clock) -> str:
     value = clock()
     if value.tzinfo is None:
@@ -102,37 +112,28 @@ _STAGE_FIELDS = {
 # a provider, rather than a copy of an implementation detail in a report.
 GENERATION_PROMPT_TEMPLATES = {
     "T1": (
-        "Task family: {task_family}\nRequirement:\n{requirement}\n\n"
-        "Return JSON with exactly: constraints, quantities, unresolved_references, "
-        "assumptions, contradictions, conditional_semantics, atomic_obligations. "
-        "Every top-level value must be a list. "
-        "conditional_semantics items must contain antecedent, consequent, necessity_status "
-        "(sufficient_only|also_necessary|undetermined), temporal_relation "
-        "(during|next_state|eventually|irrelevant|undetermined), and negative_case "
-        "({status: specified|not_specified|not_applicable, description: string|null}). "
-        "atomic_obligations items must contain only constraint_index (1-based), "
-        "atom_type (actor|action|object|condition|threshold|scope|temporal|exception|modality), "
-        "and status (present|absent|uncertain); do not include raw obligation text. "
-        "Use an empty list when no atomic observation is available. "
-        "This is an observable task summary; do not reveal hidden reasoning, labels, "
-        "variants, or an artifact."
+        "T1 R:{requirement}\nJSON. Keys: constraints, quantities, "
+        "unresolved_references, assumptions, contradictions, conditional_semantics, "
+        "atomic_obligations. All values are arrays; atomic_obligations contains objects. "
+        "Put one short summary in constraints and one "
+        "atomic item in atomic_obligations. That object has keys constraint_index, "
+        "atom_type, and status; constraint_index=1; atom_type=condition; status: "
+        "present/absent/uncertain. "
+        "Other arrays: []. No prose/extra keys."
     ),
     "T2": (
-        "Task family: {task_family}\nRequirement:\n{requirement}\n\n"
-        "Observable interpretation:\n{interpretation_json}\n"
-        "Return JSON with exactly: validation_checks, planned_tools, coverage_targets. "
-        "Every value must be a list. Do not reveal hidden reasoning, labels, variants, "
-        "or a terminal artifact."
+        "T2 R:{requirement}\nI:{interpretation_json}\nJSON only. Exactly these keys: "
+        "validation_checks, planned_tools, coverage_targets. All values are arrays of "
+        "strings. Put exactly one concise "
+        "plain-text item in validation_checks and exactly one in coverage_targets. Set "
+        "planned_tools to []. No prose or extra keys."
     ),
     "artifact": (
-        "Task family: {task_family}\nRequirement:\n{requirement}\n\n"
-        "Observable interpretation:\n{interpretation_json}\n"
-        "Observable plan:\n{plan_json}\n"
-        "Return one minimal JSON object containing exactly these keys: {output_keys}. "
-        "Keep every value concise: use at most three short list items and one short sentence "
-        "for scalar text. Do not emit explanations, reasoning, test inventories, markdown, "
-        "or commentary."
+        "Artifact\nR:{requirement}\nP:{plan_json}\n"
+        "JSON only, exactly these keys: {output_keys}. Keep each value to 2-4 words. "
+        "No explanation, reasoning, markdown, or commentary."
     ),
+    "retry": "\nRetry: return one complete JSON object only; required evidence arrays must not be empty; no prose.",
 }
 
 GENERATION_OUTPUT_SCHEMA = {
@@ -253,11 +254,19 @@ def _validate_provider_stage(
         "execution": empty_execution,
     }
     sections[stage] = payload
-    return validate_checkpoint_payload(
+    normalized = validate_checkpoint_payload(
         sections,
         require_conditional_semantics=True,
         require_atomic_obligations=True,
     )[stage]
+    required_fields = {
+        "interpretation": ("constraints", "atomic_obligations"),
+        "plan": ("validation_checks", "coverage_targets"),
+    }[stage]
+    missing = tuple(field for field in required_fields if not normalized[field])
+    if missing:
+        raise SubstantiveCompletenessError(stage, missing)
+    return normalized
 
 
 def _validate_artifact_shape(
@@ -493,13 +502,22 @@ class StagedProviderRuntime:
         )
         last_error: Exception | None = None
         for attempt in range(1, self._max_stage_attempts + 1):
+            attempt_request = request
+            if attempt > 1:
+                attempt_request = ProviderRequest(
+                    prompt=request.prompt + GENERATION_PROMPT_TEMPLATES["retry"],
+                    pair=request.pair,
+                    variant=request.variant,
+                    task_family=request.task_family,
+                    max_output_tokens=request.max_output_tokens,
+                )
             started = _now_iso(self._clock)
             start_perf = time.perf_counter()
             try:
                 response = (
-                    self._stage_completion(request, stage, attempt)
+                    self._stage_completion(attempt_request, stage, attempt)
                     if self._stage_completion is not None
-                    else self._provider.complete(request)
+                    else self._provider.complete(attempt_request)
                 )
                 parsed = _json_object(response)
                 if response_validator is not None:
@@ -522,7 +540,7 @@ class StagedProviderRuntime:
             "ended_at": ended,
             "latency_ms": round(latency_ms, 3),
             "request_sha256": hashlib.sha256(
-                transformation.prompt.encode("utf-8")
+                attempt_request.prompt.encode("utf-8")
             ).hexdigest(),
             "response_sha256": hashlib.sha256(response.encode("utf-8")).hexdigest(),
             "context_management_event": context_event,
@@ -666,5 +684,6 @@ __all__ = [
     "GENERATION_OUTPUT_SCHEMA",
     "GENERATION_PROMPT_TEMPLATES",
     "StageCompletion",
+    "SubstantiveCompletenessError",
     "StagedProviderRuntime",
 ]

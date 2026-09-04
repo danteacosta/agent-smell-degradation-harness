@@ -157,7 +157,7 @@ def test_dry_run_reports_frozen_counts_and_budget_without_network(tmp_path, monk
     assert report["duplicate_base_task_count"] == 48
     assert report["logical_judging_calls"] == 576
     assert report["provider_api_calls"] == 1296
-    assert report["preflight"]["worst_case_reserved_microusd"] == 912168
+    assert report["preflight"]["worst_case_reserved_microusd"] == 988200
     serialized = output.read_text(encoding="utf-8")
     assert "The system shall reject" not in serialized
     assert "private-intent" not in serialized
@@ -180,3 +180,57 @@ def test_live_confirmation_is_required_after_a_ready_preflight(tmp_path, monkeyp
 
     assert report["state"] == "stopped_protocol_violation"
     assert report["error_class"] == "LiveConfirmationRequired"
+
+
+def test_live_run_stops_on_substantive_completeness_before_artifact(tmp_path, monkeypatch):
+    root, private, reference = _private_inputs(tmp_path)
+    source_revision = "d" * 40
+    config = _config(tmp_path, source_revision)
+    monkeypatch.setattr(runner, "_git_revision", lambda _root: source_revision)
+
+    class VacuousProvider:
+        def __init__(self, name: str, model: str, model_version: str) -> None:
+            self.name = name
+            self.model = model
+            self.model_version = model_version
+            self.calls = 0
+            self.last_call_metadata: dict[str, object] = {}
+
+        def complete(self, request):
+            self.calls += 1
+            self.last_call_metadata = {
+                "usage": {"input_tokens": 10, "output_tokens": 2},
+                "cost_usd": 0.0001,
+            }
+            return json.dumps({
+                "constraints": [],
+                "quantities": [],
+                "unresolved_references": [],
+                "assumptions": [],
+                "contradictions": [],
+                "conditional_semantics": [],
+                "atomic_obligations": [],
+            })
+
+    report = run_exploratory_prepilot(
+        config,
+        tmp_path / "substantive-report.json",
+        private_corpus_path=private,
+        reference_constraints_path=reference,
+        repository_root=root,
+        provider_adapters={
+            "openai-primary": VacuousProvider(
+                "openai", "gpt-5.6-luna", "gpt-5.6-luna"
+            ),
+            "deepseek-secondary": VacuousProvider(
+                "deepseek", "deepseek-v4-pro", "DeepSeek-V4-Pro-0813"
+            ),
+        },
+        confirm_live=True,
+    )
+
+    assert report["state"] == "incomplete_substantive_evidence"
+    assert report["error_class"] == "SubstantiveCompletenessError"
+    assert report["artifact_count"] == 0
+    assert report["judge_result_count"] == 0
+    assert report["substantive_completeness"]["failed_stage"] == "interpretation"

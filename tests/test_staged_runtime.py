@@ -7,6 +7,90 @@ import pytest
 
 from agents.providers import ReplayProvider
 from agents.runtime import RuntimeCheckpointAgent
+from agents.staged_runtime import (
+    GENERATION_PROMPT_TEMPLATES,
+    SubstantiveCompletenessError,
+    _render_generation_prompt,
+)
+
+
+def _minimum_interpretation() -> dict[str, object]:
+    return {
+        "constraints": ["the request is bounded"],
+        "quantities": [],
+        "unresolved_references": [],
+        "assumptions": [],
+        "contradictions": [],
+        "conditional_semantics": [],
+        "atomic_obligations": [
+            {"constraint_index": 1, "atom_type": "condition", "status": "present"}
+        ],
+    }
+
+
+def _minimum_plan() -> dict[str, object]:
+    return {
+        "validation_checks": ["check the bounded condition"],
+        "planned_tools": [],
+        "coverage_targets": ["the request is bounded"],
+    }
+
+
+def test_t1_prompt_fits_the_frozen_provider_input_budget_for_long_requirements() -> None:
+    prompt = _render_generation_prompt(
+        GENERATION_PROMPT_TEMPLATES["T1"],
+        task_family="test_gen",
+        requirement="A" * 180,
+    )
+
+    assert len(prompt.encode("utf-8")) <= 700
+
+
+def test_visible_requirement_is_sent_to_every_generation_stage() -> None:
+    requirement = "The system rejects requests after five minutes."
+    t1 = _render_generation_prompt(
+        GENERATION_PROMPT_TEMPLATES["T1"],
+        task_family="test_gen",
+        requirement=requirement,
+    )
+    t2 = _render_generation_prompt(
+        GENERATION_PROMPT_TEMPLATES["T2"],
+        task_family="test_gen",
+        requirement=requirement,
+        interpretation_json="{}",
+    )
+
+    assert requirement in t1
+    assert requirement in t2
+
+
+def test_substantive_completeness_rejects_vacuous_t1_before_artifact() -> None:
+    provider = ReplayProvider([
+        json.dumps({
+            "constraints": [],
+            "quantities": [],
+            "unresolved_references": [],
+            "assumptions": [],
+            "contradictions": [],
+            "conditional_semantics": [],
+            "atomic_obligations": [],
+        }),
+        json.dumps({"criterion": "must not be requested"}),
+    ])
+    pair = {
+        "clean_requirement": "Return one criterion.",
+        "smelly_requirement": "Return something.",
+        "generation_contract": {"acceptance_criteria": {"output_keys": ["criterion"]}},
+    }
+
+    with pytest.raises(SubstantiveCompletenessError, match="interpretation.*constraints"):
+        RuntimeCheckpointAgent.from_provider(
+            provider, model="replay-model", model_version="fixture-v1"
+        ).execute_with_checkpoints(
+            pair, variant="clean", task_family="acceptance_criteria"
+        )
+
+    assert provider.calls_made == 1
 
 
 def test_staged_provider_materializes_checkpoints_before_artifact() -> None:
@@ -79,22 +163,49 @@ def test_staged_provider_materializes_checkpoints_before_artifact() -> None:
     assert all("sha256" in key for key in ("request_sha256", "response_sha256"))
 
 
+def test_failed_stage_retry_adds_a_complete_json_instruction_and_hashes_it() -> None:
+    responses = ["not-json", json.dumps({
+        "constraints": ["the request is bounded"],
+        "quantities": [],
+        "unresolved_references": [],
+        "assumptions": [],
+        "contradictions": [],
+        "conditional_semantics": [],
+        "atomic_obligations": [{"constraint_index": 1, "atom_type": "condition", "status": "present"}],
+    }), json.dumps({
+        "validation_checks": ["check the bounded condition"],
+        "planned_tools": [],
+        "coverage_targets": ["the request is bounded"],
+    }), json.dumps({"criterion": "bounded"})]
+
+    class CapturingProvider:
+        name = "capture"
+
+        def __init__(self) -> None:
+            self.requests = []
+
+        def complete(self, request):
+            self.requests.append(request)
+            return responses.pop(0)
+
+    pair = {
+        "clean_requirement": "Bounded requirement.",
+        "generation_contract": {"acceptance_criteria": {"output_keys": ["criterion"]}},
+    }
+    provider = CapturingProvider()
+    execution = RuntimeCheckpointAgent.from_provider(
+        provider, model="m", model_version="v", max_stage_attempts=2
+    ).execute_with_checkpoints(pair, variant="clean", task_family="acceptance_criteria")
+
+    assert execution.artifact == {"criterion": "bounded"}
+    assert len(provider.requests) == 4
+    assert "Retry: return one complete JSON object only" in provider.requests[1].prompt
+
+
 def test_staged_runtime_forwards_phase_output_limits() -> None:
     responses = [
-        json.dumps({
-            "constraints": [],
-            "quantities": [],
-            "unresolved_references": [],
-            "assumptions": [],
-            "contradictions": [],
-            "conditional_semantics": [],
-            "atomic_obligations": [],
-        }),
-        json.dumps({
-            "validation_checks": [],
-            "planned_tools": [],
-            "coverage_targets": [],
-        }),
+        json.dumps(_minimum_interpretation()),
+        json.dumps(_minimum_plan()),
         json.dumps({"criterion": "bounded"}),
     ]
 
@@ -136,8 +247,8 @@ def test_staged_prompts_do_not_disclose_variant_or_oracle() -> None:
 
         def __init__(self) -> None:
             self.responses = iter([
-                {"constraints": [], "quantities": [], "unresolved_references": [], "assumptions": [], "contradictions": [], "conditional_semantics": [], "atomic_obligations": []},
-                {"validation_checks": [], "planned_tools": [], "coverage_targets": []},
+                _minimum_interpretation(),
+                _minimum_plan(),
                 {"criterion": "bounded"},
             ])
 
@@ -161,7 +272,7 @@ def test_staged_prompts_do_not_disclose_variant_or_oracle() -> None:
     assert "missing-condition" not in joined
     assert "secret" not in joined
     assert "variant:" not in joined
-    assert "concise" in captured[-1].lower()
+    assert "2-4 words" in captured[-1].lower()
     assert result.provider_meta["provider"] == "capture"
     assert captured_requests[0][0] == {
         "requirement": "Incomplete requirement.",
@@ -203,12 +314,12 @@ def test_t3_materializes_cross_stage_coverage_failures_before_artifact() -> None
             "assumptions": [],
             "contradictions": [],
             "conditional_semantics": [],
-            "atomic_obligations": [],
+            "atomic_obligations": [{"constraint_index": 1, "atom_type": "condition", "status": "present"}],
         }),
         json.dumps({
             "validation_checks": ["check the response schema"],
             "planned_tools": ["contract validator"],
-            "coverage_targets": [],
+            "coverage_targets": ["check the response schema"],
         }),
         json.dumps({"criterion": "reject late requests"}),
     ]
@@ -234,13 +345,13 @@ def test_t3_materializes_cross_stage_coverage_failures_before_artifact() -> None
 def test_malformed_plan_stops_before_t3_and_terminal_artifact() -> None:
     provider = ReplayProvider([
         json.dumps({
-            "constraints": [],
+            "constraints": ["the request is bounded"],
             "quantities": [],
             "unresolved_references": [],
             "assumptions": [],
             "contradictions": [],
             "conditional_semantics": [],
-            "atomic_obligations": [],
+            "atomic_obligations": [{"constraint_index": 1, "atom_type": "condition", "status": "present"}],
         }),
         "not-json",
         json.dumps({"criterion": "must never be requested"}),
@@ -276,13 +387,13 @@ def test_provider_failure_stops_before_terminal_artifact() -> None:
             if self.calls == 2:
                 raise TimeoutError("provider timeout")
             return json.dumps({
-                "constraints": [],
+                "constraints": ["the request is bounded"],
                 "quantities": [],
                 "unresolved_references": [],
                 "assumptions": [],
                 "contradictions": [],
                 "conditional_semantics": [],
-                "atomic_obligations": [],
+                "atomic_obligations": [{"constraint_index": 1, "atom_type": "condition", "status": "present"}],
             })
 
     provider = FailingProvider()

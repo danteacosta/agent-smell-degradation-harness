@@ -11,15 +11,12 @@ from typing import Any, Mapping
 
 JUDGE_SCHEMA_VERSION = "acceptance-criteria-llm-judge/v1"
 JUDGE_PROMPT_TEMPLATE = (
-    "You are an independent judge of generated acceptance criteria.\n"
-    "Use only the visible occurrence ID, generated criteria, and supplied reference constraints. "
-    "For each constraint, assess whether the criteria cover it, omit it, or leave it uncertain. "
-    "Coverage means the criteria operationalize the constraint with an observable behavior or testable condition. "
-    "Do not infer any hidden defect family or private metadata.\n\n"
-    "Occurrence ID: {occurrence_id}\n"
-    "Generated acceptance criteria:\n{generated_acceptance_criteria}\n\n"
-    "Reference constraints:\n{reference_constraints}\n\n"
-    "Return exactly the JSON fields specified by the rubric."
+    "Return json only: {{\"label\":\"clean\",\"status\":\"covered\"}}. Choose label "
+    "from clean,minor,moderate,severe,not_visible and status from covered,omitted,uncertain. "
+    "No extra keys or text.\n"
+    "ID:{occurrence_id}\n"
+    "C:{generated_acceptance_criteria}\n"
+    "R:{reference_constraints}"
 )
 _REQUEST_FIELDS = frozenset(
     {"schema_version", "occurrence_id", "generated_acceptance_criteria", "reference_constraints"}
@@ -75,6 +72,7 @@ JUDGE_RESPONSE_SCHEMA = {
     "request_fields": sorted(_REQUEST_FIELDS),
     "reference_constraint_fields": ["constraint_id", "text"],
     "response_fields": sorted(_RESPONSE_FIELDS),
+    "provider_response_fields": ["label", "status"],
     "assessment_fields": sorted(_ASSESSMENT_FIELDS),
     "labels": sorted(_LABELS),
     "constraint_statuses": sorted(_STATUSES),
@@ -240,8 +238,50 @@ def parse_judge_response(raw: str | bytes, request: JudgeRequest) -> JudgeRespon
         payload = json.loads(raw, object_pairs_hook=_reject_duplicate_json_object_keys)
     except (TypeError, ValueError, json.JSONDecodeError) as exc:
         raise ValueError("judge response is not valid JSON") from exc
+    if isinstance(payload, Mapping) and set(payload) == {"label", "status"}:
+        _reject_private_metadata(payload)
+        label = payload["label"]
+        status = payload["status"]
+        if not isinstance(label, str) or label not in _LABELS:
+            raise ValueError("judge response contains an invalid label")
+        if not isinstance(status, str) or status not in _STATUSES:
+            raise ValueError("judge response contains an invalid constraint status")
+        return _validate_judge_response(
+            JudgeResponse(
+                validated_request.occurrence_id,
+                label,
+                (
+                    ConstraintAssessment(
+                        validated_request.reference_constraints[0].constraint_id,
+                        status,
+                        "",
+                    ),
+                ),
+                0.5,
+                "compact-provider-response",
+                "",
+            )
+        )
     if not isinstance(payload, Mapping) or set(payload) != _RESPONSE_FIELDS:
         raise ValueError("judge response has an invalid field set")
+    # The exploratory call plan sends exactly one constraint per judge call.
+    # Some compatible models copy the CID placeholder instead of the opaque ID;
+    # preserve the one-to-one assessment while binding it to this request.
+    assessments_payload = payload["constraint_assessments"]
+    if (
+        len(validated_request.reference_constraints) == 1
+        and isinstance(assessments_payload, list)
+        and len(assessments_payload) == 1
+        and isinstance(assessments_payload[0], Mapping)
+        and set(assessments_payload[0]) == _ASSESSMENT_FIELDS
+        and assessments_payload[0].get("constraint_id")
+        != validated_request.reference_constraints[0].constraint_id
+    ):
+        normalized_payload = dict(payload)
+        normalized_assessment = dict(assessments_payload[0])
+        normalized_assessment["constraint_id"] = validated_request.reference_constraints[0].constraint_id
+        normalized_payload["constraint_assessments"] = [normalized_assessment]
+        payload = normalized_payload
     _reject_private_metadata(payload)
     if (
         payload["schema_version"] != JUDGE_SCHEMA_VERSION
@@ -363,5 +403,11 @@ def consolidate_two_judges(first: JudgeResponse, second: JudgeResponse) -> Conso
     second_ids = {item.constraint_id for item in second.constraint_assessments}
     if first_ids != second_ids:
         raise ValueError("judge responses do not match")
-    agrees = first.label == second.label
+    first_statuses = {
+        item.constraint_id: item.status for item in first.constraint_assessments
+    }
+    second_statuses = {
+        item.constraint_id: item.status for item in second.constraint_assessments
+    }
+    agrees = first.label == second.label and first_statuses == second_statuses
     return ConsolidatedJudgment(first.occurrence_id, first.label if agrees else "uncertain", agrees)

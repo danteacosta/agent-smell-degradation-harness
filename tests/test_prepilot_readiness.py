@@ -64,8 +64,11 @@ def test_checked_in_candidate_is_honestly_blocked() -> None:
 
     assert report["decision"] == "no_go"
     assert report["confirmatory_authorized"] is False
-    assert "development seed has not been replaced" in report["blockers"]
+    assert "development seed has not been replaced" not in report["blockers"]
+    assert "corpus manifest is not frozen" not in report["blockers"]
+    assert "corpus does not contain 12 unique intents" not in report["blockers"]
     assert any("provider configuration" in item for item in report["blockers"])
+    assert "annotation rubric is not frozen" in report["blockers"]
     assert any("advisor_authorized_pre_pilot" in item for item in report["blockers"])
 
 

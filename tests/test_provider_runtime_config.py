@@ -119,11 +119,11 @@ def test_example_config_has_frozen_budget_and_two_distinct_snapshots(tmp_path) -
 
     assert {slot.kind for slot in configuration.providers} == {"openai", "deepseek"}
     assert preflight.passed is True
-    assert preflight.direct_expected_cost_microusd == 405408
-    assert preflight.retry_inclusive_worst_case_microusd == 810816
-    assert preflight.contingency_reserve_microusd == 101352
-    assert preflight.worst_case_reserved_microusd == 912168
-    assert preflight.unused_headroom_microusd == 87832
+    assert preflight.direct_expected_cost_microusd == 439200
+    assert preflight.retry_inclusive_worst_case_microusd == 878400
+    assert preflight.contingency_reserve_microusd == 109800
+    assert preflight.worst_case_reserved_microusd == 988200
+    assert preflight.unused_headroom_microusd == 11800
 
 
 def test_protocol_hashes_normalize_newlines_and_reject_drift(tmp_path) -> None:

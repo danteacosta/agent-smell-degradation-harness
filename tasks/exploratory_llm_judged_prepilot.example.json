@@ -12,7 +12,7 @@
       "model": "gpt-5.6-luna",
       "model_version": "gpt-5.6-luna",
       "base_url": null,
-      "reasoning_effort": null,
+      "reasoning_effort": "none",
       "temperature": null,
       "max_tokens": 128,
       "pricing_snapshot_date": "2026-09-02",
@@ -43,10 +43,10 @@
     }
   ],
   "token_bounds": {
-    "generation.T1": {"input_tokens": 192, "output_tokens": 128},
+    "generation.T1": {"input_tokens": 192, "output_tokens": 96},
     "generation.T2": {"input_tokens": 192, "output_tokens": 64},
-    "generation.artifact": {"input_tokens": 192, "output_tokens": 48},
-    "judge": {"input_tokens": 128, "output_tokens": 64}
+    "generation.artifact": {"input_tokens": 192, "output_tokens": 128},
+    "judge": {"input_tokens": 192, "output_tokens": 48}
   },
   "token_fit_policy": "measure compact provider prompt and response schema before network I/O; fail closed on any bound exceedance",
   "approved_cap_usd": "1.00",
@@ -67,30 +67,30 @@
   "cost_formula": "ceil(1000000 * (input_bound/1000 * input_rate + output_bound/1000 * output_rate))",
   "cost_breakdown_microusd": {
     "openai-primary": {
-      "generation.T1": {"count": 120, "per_attempt": 192, "direct": 23040},
+      "generation.T1": {"count": 120, "per_attempt": 154, "direct": 18480},
       "generation.T2": {"count": 120, "per_attempt": 116, "direct": 13920},
-      "generation.artifact": {"count": 120, "per_attempt": 96, "direct": 11520},
-      "judge": {"count": 288, "per_attempt": 103, "direct": 29664},
-      "direct_total": 78144
+      "generation.artifact": {"count": 120, "per_attempt": 192, "direct": 23040},
+      "judge": {"count": 288, "per_attempt": 96, "direct": 27648},
+      "direct_total": 83088
     },
     "deepseek-secondary": {
-      "generation.T1": {"count": 120, "per_attempt": 761, "direct": 91320},
+      "generation.T1": {"count": 120, "per_attempt": 634, "direct": 76080},
       "generation.T2": {"count": 120, "per_attempt": 507, "direct": 60840},
-      "generation.artifact": {"count": 120, "per_attempt": 444, "direct": 53280},
-      "judge": {"count": 288, "per_attempt": 423, "direct": 121824},
-      "direct_total": 327264
+      "generation.artifact": {"count": 120, "per_attempt": 761, "direct": 91320},
+      "judge": {"count": 288, "per_attempt": 444, "direct": 127872},
+      "direct_total": 356112
     },
-    "direct_expected_microusd": 405408,
-    "retry_inclusive_worst_case_microusd": 810816,
-    "contingency_reserve_microusd": 101352,
-    "worst_case_reserved_microusd": 912168,
-    "unused_headroom_microusd": 87832
+    "direct_expected_microusd": 439200,
+    "retry_inclusive_worst_case_microusd": 878400,
+    "contingency_reserve_microusd": 109800,
+    "worst_case_reserved_microusd": 988200,
+    "unused_headroom_microusd": 11800
   },
   "protocol_hashes": {
-    "generation_prompt_template_sha256": "6de3b8017f4c882e52c5c6d779b26e7b49b06d4f8168955c0564c5b15ea7fade",
-    "judge_prompt_template_sha256": "3f17fe77d96f6454ab48897d69a44c510f9412f7b443894d491b8be3bc718846",
+    "generation_prompt_template_sha256": "60077136a90e5be355bda5f1049ab39b3152381b27344f8f8833a3a5ef6f3330",
+    "judge_prompt_template_sha256": "8fda706071fe18750d029ebab55638be3ad9eef1ba636bcce6d784f2c420aecb",
     "generation_output_schema_sha256": "ec8e16b98ed4610f090c5187f87cc6dae169841f7ff240446c576a56b5908960",
-    "judge_response_schema_sha256": "669a58f75e8f15b0c33b6a5a8793bb5520829a99d7dd9e7c9822d10e7881d9c6",
+    "judge_response_schema_sha256": "f8fd7564fb44e53f9fdac6f5e38634d724382d051d10c2ac88fbbc1e36a7db19",
     "rubric_sha256": "1dc8b1bb0c86d763ae71fee9e48d91bf4f2648f6ba66c28b5f27f32416c57969"
   }
 }

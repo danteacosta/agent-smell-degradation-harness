@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Any
 
 from agents.providers import Provider, ProviderRequest
+from agents.staged_runtime import SubstantiveCompletenessError
 from agents.runtime import RuntimeCheckpointAgent
 from eval.corpus_intake import (
     CorpusIntakeError,
@@ -67,6 +68,7 @@ TERMINAL_STATES = frozenset(
         "completed",
         "completed_with_uncertainty",
         "incomplete_generation",
+        "incomplete_substantive_evidence",
         "stopped_budget_exhausted",
         "stopped_cost_unverified",
         "stopped_protocol_violation",
@@ -293,6 +295,14 @@ def _build_report_base(
         "label_counts": {},
         "error_class": None,
         "cost": None,
+        "substantive_completeness": {
+            "required_fields": {
+                "T1": ["constraints", "atomic_obligations"],
+                "T2": ["validation_checks", "coverage_targets"],
+            },
+            "passed_stage_count": 0,
+            "failed_stage_count": 0,
+        },
     }
 
 
@@ -596,6 +606,26 @@ def run_exploratory_prepilot(
                         )
                     except (BudgetExhaustedError, CostUnverifiedError, DurabilityError):
                         raise
+                    except SubstantiveCompletenessError as error:
+                        report["state"] = "incomplete_substantive_evidence"
+                        report["error_class"] = type(error).__name__
+                        report["substantive_completeness"]["failed_stage_count"] += 1
+                        report["substantive_completeness"]["failed_stage"] = error.stage
+                        report["generation_stage_count"] = generation_stage_count
+                        report["cost"] = ledger.report()
+                        _checkpoint(
+                            run_directory,
+                            run_id=run_id,
+                            state=report["state"],
+                            source_revision=source_revision,
+                            corpus_manifest_sha256=report["corpus_manifest_sha256"],
+                            configuration_sha256=report["configuration_sha256"],
+                            rubric_sha256=configuration.protocol_hashes["rubric_sha256"],
+                            ledger_head_hash=ledger.ledger_head_hash,
+                            completed_artifact_count=len(artifacts),
+                            completed_judge_count=0,
+                        )
+                        break
                     except Exception:
                         report["state"] = "incomplete_generation"
                         report["error_class"] = "GenerationStageError"
@@ -620,6 +650,7 @@ def run_exploratory_prepilot(
                         "execution": execution,
                         "join": join,
                     }
+                    report["substantive_completeness"]["passed_stage_count"] += 2
                     generation_stage_count += 3
                     _checkpoint(
                         run_directory,
@@ -633,11 +664,17 @@ def run_exploratory_prepilot(
                         completed_artifact_count=len(artifacts),
                         completed_judge_count=0,
                     )
-                if report["state"] == "incomplete_generation":
+                if report["state"] in {
+                    "incomplete_generation",
+                    "incomplete_substantive_evidence",
+                }:
                     break
             report["generation_stage_count"] = generation_stage_count
             report["artifact_count"] = len(artifacts)
-            if report["state"] != "incomplete_generation":
+            if report["state"] not in {
+                "incomplete_generation",
+                "incomplete_substantive_evidence",
+            }:
                 judge_adapters = {
                     slot.id: budgeted_provider(adapters[slot.id], ledger)
                     for slot in configuration.providers
@@ -653,7 +690,11 @@ def run_exploratory_prepilot(
                     reference = constraints_by_intent[join.source_intent_id]
                     request = JudgeRequest(
                         occurrence_id=occurrence.occurrence_id,
-                        generated_acceptance_criteria=_canonical_json(artifact_row["artifact"]),
+                        # The criterion is the judge target; accept/reject states remain
+                        # in the generated artifact and are not needed to assess coverage.
+                        generated_acceptance_criteria=_canonical_json(
+                            {"criterion": artifact_row["artifact"].get("criterion", "")}
+                        ),
                         reference_constraints=reference,
                     )
                     responses: list[Any] = []
