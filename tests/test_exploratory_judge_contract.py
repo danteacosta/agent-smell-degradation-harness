@@ -156,10 +156,15 @@ def test_parser_rejects_duplicate_json_object_keys():
         parse_judge_response(raw, request())
 
 
-@pytest.mark.parametrize("confidence", [10**10_000, -(10**10_000)])
-def test_parser_rejects_arbitrarily_oversized_integer_confidence_as_value_error(confidence):
+@pytest.mark.parametrize("sign", [1, -1], ids=["positive-oversized", "negative-oversized"])
+def test_parser_rejects_arbitrarily_oversized_integer_confidence_as_value_error(sign):
+    oversized_digits = "1" + ("0" * 10_000)
+    raw = json.dumps(response(confidence=0)).replace(
+        '"confidence": 0',
+        f'"confidence": {"" if sign > 0 else "-"}{oversized_digits}',
+    )
     with pytest.raises(ValueError):
-        parse_judge_response(json.dumps(response(confidence=confidence)), request())
+        parse_judge_response(raw, request())
 
 
 def test_consolidation_treats_assessment_order_as_irrelevant():
