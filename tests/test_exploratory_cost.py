@@ -1,0 +1,1926 @@
+from __future__ import annotations
+
+import json
+from collections.abc import Mapping
+from dataclasses import replace
+from decimal import Decimal, localcontext
+from pathlib import Path
+from unittest.mock import patch
+
+import pytest
+
+import eval.exploratory_cost as exploratory_cost
+from agents.providers import ProviderRequest
+from eval.exploratory_cost import (
+    AmbiguousInFlightError,
+    BudgetExhaustedError,
+    CostConfiguration,
+    CostLedger,
+    CostLedgerError,
+    DurabilityError,
+    CostUnverifiedError,
+    PlannedCall,
+    PreflightReport,
+    ProviderPricing,
+    STOPPED_COST_UNVERIFIED,
+    TokenBounds,
+    budgeted_provider,
+    fixed_task3_call_plan,
+)
+
+
+PHASE_BOUNDS = {
+    "generation.T1": TokenBounds(input_tokens=192, output_tokens=128),
+    "generation.T2": TokenBounds(input_tokens=192, output_tokens=64),
+    "generation.artifact": TokenBounds(input_tokens=192, output_tokens=48),
+    "judge": TokenBounds(input_tokens=128, output_tokens=64),
+}
+
+
+def pricing(
+    provider: str = "openai",
+    *,
+    model: str | None = None,
+    input_rate: str = "0.000001",
+    cached_rate: str = "0.0000001",
+    output_rate: str = "0.000001",
+) -> ProviderPricing:
+    return ProviderPricing(
+        provider=provider,
+        model=model or f"{provider}-model",
+        model_version=f"{provider}-snapshot",
+        pricing_snapshot_date="2026-09-02",
+        pricing_source_ref="docs/research/2026-09-02-native-provider-smoke-model-selection.md",
+        input_usd_per_1k=Decimal(input_rate),
+        cached_input_usd_per_1k=Decimal(cached_rate),
+        output_usd_per_1k=Decimal(output_rate),
+    )
+
+
+def config(
+    *,
+    providers: tuple[ProviderPricing, ...] = (pricing(), pricing("deepseek")),
+    plan: tuple[PlannedCall, ...] | None = None,
+    bounds: dict[str, TokenBounds] | None = None,
+    cap: str = "1.00",
+    contingency: str = "0.25",
+    max_attempts: int = 2,
+) -> CostConfiguration:
+    provider_snapshot = tuple(providers)
+    if len(provider_snapshot) == 1:
+        provider_snapshot = provider_snapshot + (pricing("deepseek"),)
+    canonical_plan = fixed_task3_call_plan(item.provider for item in provider_snapshot)
+    if plan is not None:
+        assert tuple(plan) == canonical_plan
+    merged_bounds = dict(PHASE_BOUNDS)
+    if bounds is not None:
+        merged_bounds.update(bounds)
+    return CostConfiguration(
+        provider_pricing=provider_snapshot,
+        token_bounds=merged_bounds,
+        planned_calls=canonical_plan,
+        approved_cap_usd=Decimal(cap),
+        contingency_rate=Decimal(contingency),
+        max_attempts_per_api_call=max_attempts,
+    )
+
+
+class RecordingProvider:
+    name = "openai"
+
+    def __init__(self, metadata: dict[str, object] | None = None) -> None:
+        self.calls = 0
+        self.last_call_metadata = (
+            metadata
+            if metadata is not None
+            else {
+                "usage": {"input_tokens": 1, "output_tokens": 1},
+                "response_model": "openai-model",
+            }
+        )
+
+    def complete(self, request: ProviderRequest) -> str:
+        self.calls += 1
+        return '{"ok":true}'
+
+
+def request() -> ProviderRequest:
+    return ProviderRequest(
+        prompt="private prompt must not enter the ledger",
+        pair={"requirement": "private requirement", "task_family": "test_gen"},
+        variant="opaque",
+        task_family="test_gen",
+    )
+
+
+def test_given_fixed_task3_plan_when_preflight_runs_then_it_reports_the_full_integer_envelope() -> None:
+    providers = (pricing("openai"), pricing("deepseek"))
+    configuration = CostConfiguration(
+        provider_pricing=providers,
+        token_bounds=PHASE_BOUNDS,
+        planned_calls=fixed_task3_call_plan((item.provider for item in providers)),
+        approved_cap_usd=Decimal("1.00"),
+        contingency_rate=Decimal("0.25"),
+        max_attempts_per_api_call=2,
+    )
+
+    report = configuration.preflight()
+
+    assert report.passed is True
+    assert report.planned_provider_api_calls == 1296
+    assert report.max_attempts_per_api_call == 2
+    assert report.direct_expected_cost_microusd == 1296
+    assert report.retry_inclusive_worst_case_microusd == 2592
+    assert report.contingency_reserve_microusd == 324
+    assert report.worst_case_reserved_microusd == 2916
+    assert report.approved_cap_microusd == 1_000_000
+    assert report.unused_headroom_microusd == 997_084
+    assert report["direct_expected_cost_usd"] == "0.001296"
+    assert report["retry_inclusive_worst_case_usd"] == "0.002592"
+    assert report["contingency_reserve_usd"] == "0.000324"
+    assert report["unused_headroom_usd"] == "0.997084"
+    assert all("float" not in type(value).__name__ for value in report.to_dict().values())
+
+
+def test_given_noncanonical_plan_or_attempt_policy_when_configured_then_it_is_rejected() -> None:
+    providers = (pricing("openai"), pricing("deepseek"))
+
+    with pytest.raises(ValueError, match="planned_calls"):
+        CostConfiguration(
+            provider_pricing=providers,
+            token_bounds=PHASE_BOUNDS,
+            planned_calls=(PlannedCall("openai", "judge", 1),),
+        )
+    with pytest.raises(ValueError, match="max_attempts"):
+        CostConfiguration(
+            provider_pricing=providers,
+            token_bounds=PHASE_BOUNDS,
+            planned_calls=fixed_task3_call_plan(item.provider for item in providers),
+            max_attempts_per_api_call=1,
+        )
+    with pytest.raises(ValueError, match="hard USD 1.00 cap"):
+        CostConfiguration(
+            provider_pricing=providers,
+            token_bounds=PHASE_BOUNDS,
+            planned_calls=fixed_task3_call_plan(item.provider for item in providers),
+            approved_cap_usd=Decimal("1.01"),
+        )
+
+
+def test_given_forged_preflight_when_ledger_is_created_then_configuration_is_recomputed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    forged = replace(
+        configuration.preflight(),
+        approved_cap_microusd=configuration.approved_cap_microusd + 1,
+    )
+
+    with pytest.raises(CostLedgerError, match="preflight"):
+        CostLedger(tmp_path / "forged.jsonl", configuration, preflight=forged)
+
+    assert not (tmp_path / "forged.jsonl").exists()
+
+
+def test_given_expensive_fixed_prices_when_preflight_runs_then_budget_fails_closed() -> None:
+    providers = (
+        pricing("openai", input_rate="0.01", output_rate="0.01"),
+        pricing("deepseek", input_rate="0.01", output_rate="0.01"),
+    )
+    configuration = CostConfiguration(
+        provider_pricing=providers,
+        token_bounds=PHASE_BOUNDS,
+        planned_calls=fixed_task3_call_plan((item.provider for item in providers)),
+        approved_cap_usd=Decimal("1.00"),
+    )
+
+    report = configuration.preflight()
+
+    assert report.passed is False
+    assert report.budget_status == "stopped_budget_exhausted"
+    assert report.stop_reason == "worst_case_reserved_cost_exceeds_approved_cap"
+    assert report.worst_case_reserved_microusd > report.approved_cap_microusd
+
+
+def test_given_over_cap_preflight_when_reopened_then_budget_block_is_reproduced(
+    tmp_path: Path,
+) -> None:
+    configuration = config(
+        providers=(
+            pricing("openai", input_rate="0.01", output_rate="0.01"),
+            pricing("deepseek", input_rate="0.01", output_rate="0.01"),
+        ),
+        cap="1.00",
+        contingency="0",
+    )
+    path = tmp_path / "over-cap-replay.jsonl"
+
+    ledger = CostLedger(path, configuration)
+    live_report = ledger.report()
+    reopened = CostLedger(path, configuration)
+
+    assert live_report["state"] == "stopped_budget_exhausted"
+    assert ledger.preflight.unused_headroom_microusd < 0
+    assert reopened.status == ledger.status
+    assert reopened.report() == live_report
+
+
+def test_given_preflight_fsync_failure_when_reopened_then_ledger_stays_fail_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "preflight-fsync-failure.jsonl"
+    fsync_calls = 0
+    real_fsync = exploratory_cost.os.fsync
+
+    def fail_event_fsync(descriptor: int) -> None:
+        nonlocal fsync_calls
+        fsync_calls += 1
+        if fsync_calls == 3:
+            raise OSError("injected fsync")
+        real_fsync(descriptor)
+
+    with patch.object(exploratory_cost.os, "fsync", side_effect=fail_event_fsync):
+        with pytest.raises(CostUnverifiedError):
+            CostLedger(path, configuration)
+
+    with pytest.raises(CostUnverifiedError, match="fail-closed"):
+        CostLedger(path, configuration)
+
+
+def test_given_marker_replace_failure_when_reopened_then_ledger_stays_fail_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "marker-replace-failure.jsonl"
+
+    with patch.object(exploratory_cost.os, "replace", side_effect=OSError("injected replace")):
+        with pytest.raises(CostUnverifiedError):
+            CostLedger(path, configuration)
+
+    with pytest.raises(CostUnverifiedError, match="fail-closed"):
+        CostLedger(path, configuration)
+
+
+def test_given_valid_fail_closed_marker_when_reopened_then_error_is_explicitly_durable(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "valid-marker.jsonl"
+    Path(f"{path}.fail-closed").write_bytes(exploratory_cost._DURABILITY_MARKER_BYTES)
+
+    with pytest.raises(DurabilityError, match="durability"):
+        CostLedger(path, configuration)
+
+
+def test_given_ready_marker_creation_failure_when_reopened_then_it_cannot_resume(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "ready-marker-failure.jsonl"
+
+    with patch.object(
+        CostLedger,
+        "_create_ready_marker",
+        side_effect=OSError("injected ready marker failure"),
+    ):
+        with pytest.raises(DurabilityError, match="durability"):
+            CostLedger(path, configuration)
+
+    assert path.exists()
+    assert not Path(f"{path}.ready").exists()
+    assert Path(f"{path}.fail-closed").read_bytes() == exploratory_cost._DURABILITY_MARKER_BYTES
+    with pytest.raises(DurabilityError, match="durability"):
+        CostLedger(path, configuration)
+
+
+def test_given_malformed_durability_marker_when_reopened_then_it_is_unrecoverable(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "malformed-marker.jsonl"
+    marker = Path(f"{path}.fail-closed")
+    marker.write_bytes(b"not-a-valid-marker\n")
+
+    with pytest.raises(DurabilityError, match="durability marker"):
+        CostLedger(path, configuration)
+
+
+@pytest.mark.parametrize("failure", ["write", "marker_fsync", "directory_fsync"])
+def test_given_marker_durability_phase_failure_when_reopened_then_it_is_unrecoverable(
+    tmp_path: Path, failure: str
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / f"marker-{failure}.jsonl"
+    real_write = exploratory_cost.os.write
+    real_fsync = exploratory_cost.os.fsync
+    fsync_calls = 0
+
+    def fail_marker_write(descriptor: int, data: bytes) -> int:
+        if data == exploratory_cost._DURABILITY_MARKER_BYTES:
+            real_write(descriptor, data[:1])
+            raise OSError("injected marker write")
+        return real_write(descriptor, data)
+
+    def fail_fsync(descriptor: int) -> None:
+        nonlocal fsync_calls
+        fsync_calls += 1
+        if (failure == "marker_fsync" and fsync_calls == 1) or (
+            failure == "directory_fsync" and fsync_calls == 2
+        ):
+            raise OSError("injected marker fsync")
+        real_fsync(descriptor)
+
+    filesystem_patch = (
+        patch.object(exploratory_cost.os, "write", side_effect=fail_marker_write)
+        if failure == "write"
+        else patch.object(exploratory_cost.os, "fsync", side_effect=fail_fsync)
+    )
+    with filesystem_patch:
+        with pytest.raises(DurabilityError, match="durability"):
+            CostLedger(path, configuration)
+
+    with pytest.raises(DurabilityError, match="durability"):
+        CostLedger(path, configuration)
+
+
+def test_given_marker_close_failure_when_reopened_then_it_is_unrecoverable(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "marker-close-failure.jsonl"
+    real_close = exploratory_cost.os.close
+    close_calls = 0
+
+    def fail_marker_close(descriptor: int) -> None:
+        nonlocal close_calls
+        close_calls += 1
+        if close_calls == 1:
+            raise OSError("injected marker close")
+        real_close(descriptor)
+
+    with patch.object(exploratory_cost.os, "close", side_effect=fail_marker_close):
+        with pytest.raises(DurabilityError, match="durability"):
+            CostLedger(path, configuration)
+
+    with pytest.raises(DurabilityError, match="durability"):
+        CostLedger(path, configuration)
+
+
+def test_given_marker_unlink_failure_when_reopened_then_it_is_unrecoverable(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "marker-unlink-failure.jsonl"
+    ledger = CostLedger(path, configuration)
+    real_unlink = exploratory_cost.os.unlink
+
+    def fail_marker_unlink(target: str | Path) -> None:
+        if Path(target) == ledger._durability_marker:
+            raise OSError("injected marker unlink")
+        real_unlink(target)
+
+    with patch.object(exploratory_cost.os, "unlink", side_effect=fail_marker_unlink):
+        with pytest.raises(DurabilityError, match="durability"):
+            ledger.reserve_attempt(
+                call_id="call-1",
+                provider="openai",
+                model="openai-model",
+                model_version="openai-snapshot",
+                phase="judge",
+            )
+
+    with pytest.raises(DurabilityError, match="durability"):
+        CostLedger(path, configuration)
+
+
+def test_given_strict_marker_persistence_failure_when_marking_then_unchecked_fallback_is_not_used(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "marker-no-fallback.jsonl"
+    ledger = CostLedger(path, configuration)
+
+    with patch.object(
+        ledger,
+        "_create_durability_marker",
+        side_effect=OSError("injected marker protocol failure"),
+    ):
+        with pytest.raises(DurabilityError, match="durability"):
+            ledger.reserve_attempt(
+                call_id="call-1",
+                provider="openai",
+                model="openai-model",
+                model_version="openai-snapshot",
+                phase="judge",
+            )
+
+    assert not Path(f"{path}.fail-closed").exists()
+    assert not Path(f"{path}.fail-closed.tmp").exists()
+    assert ledger.status == STOPPED_COST_UNVERIFIED
+
+
+def test_given_fractional_micro_cost_when_reserved_then_every_ceiling_is_upward() -> None:
+    one_call = CostConfiguration(
+        provider_pricing=(pricing(input_rate="0.0000001", output_rate="0.0000001"), pricing("deepseek", input_rate="0.0000001", output_rate="0.0000001")),
+        token_bounds={phase: TokenBounds(input_tokens=1, output_tokens=1) for phase in PHASE_BOUNDS},
+        planned_calls=fixed_task3_call_plan(("openai", "deepseek")),
+        approved_cap_usd=Decimal("1.00"),
+        contingency_rate=Decimal("0"),
+        max_attempts_per_api_call=2,
+    )
+
+    report = one_call.preflight()
+
+    assert report.direct_expected_cost_microusd == 1_296
+    assert report.breakdown[0]["reservation_per_attempt_microusd"] == 1
+    assert report.retry_inclusive_worst_case_microusd == 2_592
+
+
+def test_given_a_higher_cached_input_price_when_preflighting_then_the_bound_is_conservative() -> None:
+    configuration = CostConfiguration(
+        provider_pricing=(
+            pricing(input_rate="0.000001", cached_rate="0.002", output_rate="0"),
+            pricing("deepseek", input_rate="0.000001", cached_rate="0.002", output_rate="0"),
+        ),
+        token_bounds={phase: TokenBounds(input_tokens=1, output_tokens=0) for phase in PHASE_BOUNDS},
+        planned_calls=fixed_task3_call_plan(("openai", "deepseek")),
+        approved_cap_usd=Decimal("1.00"),
+        contingency_rate=Decimal("0"),
+        max_attempts_per_api_call=2,
+    )
+
+    report = configuration.preflight()
+
+    assert report.direct_expected_cost_microusd == 2_592
+    assert report.breakdown[0]["reservation_per_attempt_microusd"] == 2
+
+
+def test_given_decimal_boundary_rates_when_preflighting_then_micro_usd_is_exact_integer_arithmetic() -> None:
+    rate = Decimal("0.001000001")
+    configuration = CostConfiguration(
+        provider_pricing=(
+            pricing(input_rate=str(rate), cached_rate="0", output_rate=str(rate)),
+            pricing("deepseek", input_rate=str(rate), cached_rate="0", output_rate=str(rate)),
+        ),
+        token_bounds={phase: TokenBounds(input_tokens=1, output_tokens=0) for phase in PHASE_BOUNDS},
+        planned_calls=fixed_task3_call_plan(("openai", "deepseek")),
+        approved_cap_usd=Decimal("1.00"),
+        contingency_rate=Decimal("0.25"),
+        max_attempts_per_api_call=2,
+    )
+
+    report = configuration.preflight()
+
+    assert report.direct_expected_cost_microusd == 2_592
+    assert report.retry_inclusive_worst_case_microusd == 5_184
+    assert report.contingency_reserve_microusd == 648
+    assert type(report.worst_case_reserved_microusd) is int
+
+
+def test_given_low_decimal_precision_when_pricing_then_micro_usd_results_are_unchanged() -> None:
+    configuration = CostConfiguration(
+        provider_pricing=(
+            pricing(input_rate="0.001000001", cached_rate="0", output_rate="0"),
+            pricing("deepseek", input_rate="0.001000001", cached_rate="0", output_rate="0"),
+        ),
+        token_bounds={
+            phase: TokenBounds(input_tokens=1, output_tokens=0)
+            for phase in PHASE_BOUNDS
+        },
+        planned_calls=fixed_task3_call_plan(("openai", "deepseek")),
+        approved_cap_usd=Decimal("1.00"),
+        contingency_rate=Decimal("0.25"),
+        max_attempts_per_api_call=2,
+    )
+
+    with localcontext() as context:
+        context.prec = 2
+        report = configuration.preflight()
+        direct_cost = configuration.provider_pricing[0]._cost_microusd(1, 0, 0)
+
+    assert direct_cost == 2
+    assert report.direct_expected_cost_microusd == 2_592
+    assert report.retry_inclusive_worst_case_microusd == 5_184
+    assert report.contingency_reserve_microusd == 648
+    assert report.worst_case_reserved_microusd == 5_832
+
+
+def test_given_frozen_configuration_when_mutation_is_attempted_then_it_is_rejected() -> None:
+    configuration = config()
+
+    with pytest.raises((AttributeError, TypeError, ValueError)):
+        configuration.approved_cap_usd = Decimal("2.00")  # type: ignore[misc]
+    with pytest.raises(TypeError):
+        configuration.token_bounds["judge"] = TokenBounds(1, 1)  # type: ignore[index]
+    with pytest.raises(TypeError):
+        ProviderPricing(
+            provider="openai",
+            model="openai-model",
+            model_version="openai-snapshot",
+            pricing_snapshot_date="2026-09-02",
+            pricing_source_ref="source",
+            input_usd_per_1k=0.1,  # type: ignore[arg-type]
+            cached_input_usd_per_1k=Decimal("0.1"),
+            output_usd_per_1k=Decimal("0.1"),
+        )
+
+
+def test_given_preflight_report_when_breakdown_is_mutated_then_snapshot_stays_immutable() -> None:
+    configuration = config(contingency="0")
+    report = configuration.preflight()
+    original = report.to_dict()
+
+    with pytest.raises(TypeError):
+        report.breakdown[0]["count"] = 0  # type: ignore[index]
+    exported = report.to_dict()
+    exported["breakdown"][0]["count"] = 0
+
+    assert report.to_dict() == original
+    assert configuration.configuration_sha256 == report.configuration_sha256
+
+
+def test_given_nested_preflight_breakdown_when_mutated_then_the_snapshot_is_deeply_frozen() -> None:
+    report = PreflightReport(
+        passed=True,
+        planned_provider_api_calls=1,
+        max_attempts_per_api_call=2,
+        direct_expected_cost_microusd=1,
+        retry_inclusive_worst_case_microusd=2,
+        contingency_reserve_microusd=0,
+        worst_case_reserved_microusd=2,
+        approved_cap_microusd=1_000_000,
+        unused_headroom_microusd=999_998,
+        budget_status="ready",
+        stop_reason=None,
+        breakdown=({"nested": {"value": 1}},),
+    )
+
+    with pytest.raises(TypeError):
+        report.breakdown[0]["nested"]["value"] = 2  # type: ignore[index]
+    exported = report.to_dict()
+    exported["breakdown"][0]["nested"]["value"] = 2
+
+    assert report.breakdown[0]["nested"]["value"] == 1
+
+
+def test_given_a_response_when_reserved_and_reconciled_then_unused_reservation_is_explicitly_released(
+    tmp_path: Path,
+) -> None:
+    configuration = config(
+        max_attempts=2,
+        contingency="0",
+    )
+    ledger = CostLedger(tmp_path / "cost-ledger.jsonl", configuration)
+
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="T1",
+    )
+    reconciliation = ledger.reconcile_response(
+        reservation,
+        {"input_tokens": 1, "output_tokens": 1, "total_tokens": 2},
+    )
+
+    assert reservation.reserved_microusd == 1
+    assert reconciliation.actual_cost_microusd == 1
+    assert reconciliation.released_microusd == 0
+    events = [json.loads(line) for line in (tmp_path / "cost-ledger.jsonl").read_text().splitlines()]
+    assert [event["event_type"] for event in events] == ["preflight", "reservation", "reconciliation"]
+    assert events[-1]["released_microusd"] == 0
+    assert ledger.ledger_head_hash == events[-1]["event_hash"]
+
+
+def test_given_a_secret_like_call_id_when_reserved_then_only_a_stable_digest_is_logged(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "redacted-call-id.jsonl"
+    ledger = CostLedger(path, configuration)
+    raw_call_id = "call_" + ("a" * 64)
+
+    reservation = ledger.reserve_attempt(
+        call_id=raw_call_id,
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+
+    assert reservation.call_id.startswith("call_")
+    assert reservation.call_id != raw_call_id
+    assert raw_call_id not in path.read_text()
+
+
+
+
+def test_given_under_bound_usage_when_reconciled_then_release_is_recorded(tmp_path: Path) -> None:
+    configuration = config(
+        providers=(pricing(input_rate="0.001", output_rate="0.001"),),
+        bounds={"judge": TokenBounds(input_tokens=10, output_tokens=10)},
+        contingency="0",
+        max_attempts=2,
+    )
+    ledger = CostLedger(tmp_path / "ledger.jsonl", configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+
+    result = ledger.reconcile_response(
+        reservation,
+        {"input_tokens": 1, "output_tokens": 1},
+    )
+
+    assert result.released_microusd == reservation.reserved_microusd - result.actual_cost_microusd
+    assert result.released_microusd > 0
+    assert ledger.report()["released_microusd"] == result.released_microusd
+
+
+@pytest.mark.parametrize(
+    ("usage", "reason"),
+    [
+        (None, "missing_usage"),
+        ({"input_tokens": "10", "output_tokens": 1}, "malformed_usage"),
+        ({"input_tokens": -1, "output_tokens": 1}, "malformed_usage"),
+        ({"input_tokens": 11, "output_tokens": 1}, "token_bounds_exceeded"),
+        ({"input_tokens": 1, "output_tokens": 1, "total_tokens": 99}, "malformed_usage"),
+        ({"input_tokens": 1, "output_tokens": 1, "reasoning_tokens": 1.0}, "malformed_usage"),
+        ({"input_tokens": 1, "output_tokens": 1, "reasoning_tokens": -1}, "malformed_usage"),
+        ({"input_tokens": 1, "output_tokens": 1, "reasoning_tokens": True}, "malformed_usage"),
+        ({"input_tokens": 1, "output_tokens": 1, "reasoning_tokens": 2}, "malformed_usage"),
+        ({"input_tokens": 1, "output_tokens": 1, "reasoning_tokens": 11}, "malformed_usage"),
+        ({"input_tokens": 1, "prompt_tokens": True, "output_tokens": 1}, "malformed_usage"),
+        ({"input_tokens": 1, "prompt_tokens": 1.0, "output_tokens": 1}, "malformed_usage"),
+        ({"input_tokens": 1, "prompt_tokens": "1", "output_tokens": 1}, "malformed_usage"),
+        ({"input_tokens": 1, "output_tokens": 1, "completion_tokens": True}, "malformed_usage"),
+        ({"input_tokens": 1, "output_tokens": 1, "completion_tokens": 1.0}, "malformed_usage"),
+        ({"input_tokens": 1, "output_tokens": 1, "completion_tokens": "1"}, "malformed_usage"),
+        (
+            {
+                "input_tokens": 1,
+                "output_tokens": 1,
+                "completion_tokens_details": {"reasoning_tokens": True},
+            },
+            "malformed_usage",
+        ),
+        (
+            {
+                "input_tokens": 1,
+                "output_tokens": 1,
+                "completion_tokens_details": {"reasoning_tokens": 1.0},
+            },
+            "malformed_usage",
+        ),
+        (
+            {
+                "input_tokens": 1,
+                "output_tokens": 1,
+                "completion_tokens_details": {"reasoning_tokens": "1"},
+            },
+            "malformed_usage",
+        ),
+        (
+            {
+                "input_tokens": 1,
+                "output_tokens": 1,
+                "completion_tokens_details": {"reasoning_tokens": -1},
+            },
+            "malformed_usage",
+        ),
+        (
+            {
+                "input_tokens": 1,
+                "output_tokens": 1,
+                "completion_tokens_details": {"reasoning_tokens": Decimal("1")},
+            },
+            "malformed_usage",
+        ),
+        (
+            {
+                "input_tokens": 1,
+                "output_tokens": 1,
+                "completion_tokens_details": {"reasoning_tokens": 2},
+            },
+            "malformed_usage",
+        ),
+    ],
+)
+def test_given_unverifiable_usage_when_reconciled_then_the_ledger_stops_cost_unverified(
+    tmp_path: Path, usage: object, reason: str
+) -> None:
+    configuration = config(
+        bounds={"judge": TokenBounds(input_tokens=10, output_tokens=10)},
+        contingency="0",
+        max_attempts=2,
+    )
+    ledger = CostLedger(tmp_path / "ledger.jsonl", configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, usage)  # type: ignore[arg-type]
+
+    assert ledger.report()["budget_status"] == "stopped_cost_unverified"
+    assert ledger.report()["stop_reason"] == reason
+    with pytest.raises(CostUnverifiedError):
+        ledger.reserve_attempt(
+            call_id="call-2",
+            provider="openai",
+            model="openai-model",
+            model_version="openai-snapshot",
+            phase="judge",
+        )
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+
+
+def test_given_missing_price_or_identity_mismatch_when_reserving_then_no_provider_call_is_allowed(
+    tmp_path: Path,
+) -> None:
+    missing_price = config(
+        providers=(
+            ProviderPricing(
+                provider="openai",
+                model="openai-model",
+                model_version="openai-snapshot",
+                pricing_snapshot_date="2026-09-02",
+                pricing_source_ref="source",
+                input_usd_per_1k=None,
+                cached_input_usd_per_1k=Decimal("0.1"),
+                output_usd_per_1k=Decimal("0.1"),
+            ),
+        ),
+        contingency="0",
+    )
+    missing_ledger = CostLedger(tmp_path / "missing.jsonl", missing_price)
+    with pytest.raises(CostUnverifiedError):
+        missing_ledger.reserve_attempt(
+            call_id="call-1",
+            provider="openai",
+            model="openai-model",
+            model_version="openai-snapshot",
+            phase="judge",
+        )
+    assert missing_ledger.report()["stop_reason"] == "missing_price"
+
+    mismatch_ledger = CostLedger(tmp_path / "mismatch.jsonl", config())
+    with pytest.raises(CostUnverifiedError):
+        mismatch_ledger.reserve_attempt(
+            call_id="call-1",
+            provider="openai",
+            model="wrong-model",
+            model_version="openai-snapshot",
+            phase="judge",
+        )
+    assert mismatch_ledger.report()["stop_reason"] == "provider_model_pricing_mismatch"
+
+
+def test_given_provider_object_model_mismatch_when_wrapped_then_no_provider_call_is_allowed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(
+        contingency="0",
+        max_attempts=2,
+    )
+
+    class MisconfiguredProvider(RecordingProvider):
+        model = "wrong-model"
+
+    provider = MisconfiguredProvider()
+    ledger = CostLedger(tmp_path / "provider-mismatch.jsonl", configuration)
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    assert provider.calls == 0
+    assert ledger.report()["stop_reason"] == "provider_model_pricing_mismatch"
+
+
+def test_given_provider_error_with_usage_when_wrapped_then_it_reconciles_and_records_safe_class(
+    tmp_path: Path,
+) -> None:
+    configuration = config(
+        contingency="0",
+        max_attempts=2,
+    )
+
+    class FailsOnceProvider(RecordingProvider):
+        def __init__(self) -> None:
+            super().__init__()
+            self.calls = 0
+
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            self.last_call_metadata = {
+                "usage": {"input_tokens": 1, "output_tokens": 1},
+                "response_model": "openai-model",
+            }
+            if self.calls == 1:
+                raise RuntimeError("private provider error")
+            return '{"ok":true}'
+
+    path = tmp_path / "provider-retry.jsonl"
+    provider = FailsOnceProvider()
+    ledger = CostLedger(path, configuration)
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(RuntimeError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+    assert wrapped.complete(request(), call_id="call-1", phase="judge") == '{"ok":true}'
+
+    events = [json.loads(line) for line in path.read_text().splitlines()]
+    assert events[2]["outcome"] == "provider_error"
+    assert events[2]["error_class"] == "RuntimeError"
+    assert "private provider error" not in path.read_text()
+
+
+def test_given_one_reconciled_attempt_when_retrying_then_only_the_single_retry_is_allowed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(
+        contingency="0",
+        max_attempts=2,
+    )
+    ledger = CostLedger(tmp_path / "retry.jsonl", configuration)
+    first = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    ledger.reconcile_response(first, {"input_tokens": 1, "output_tokens": 1})
+    second = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    ledger.reconcile_response(second, {"input_tokens": 1, "output_tokens": 1})
+
+    with pytest.raises(CostUnverifiedError):
+        ledger.reserve_attempt(
+            call_id="call-1",
+            provider="openai",
+            model="openai-model",
+            model_version="openai-snapshot",
+            phase="judge",
+        )
+    assert ledger.report()["stop_reason"] == "attempt_policy_exceeded"
+
+
+def test_given_an_over_cap_fixed_plan_when_ledger_is_created_then_budget_hard_stops_before_provider_call(
+    tmp_path: Path,
+) -> None:
+    configuration = config(
+        providers=(
+            pricing(input_rate="0.001", output_rate="0.001"),
+            pricing("deepseek", input_rate="0.001", output_rate="0.001"),
+        ),
+        cap="0.000001",
+        contingency="0",
+        max_attempts=2,
+    )
+    provider = RecordingProvider()
+    ledger = CostLedger(tmp_path / "budget.jsonl", configuration)
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(BudgetExhaustedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    assert provider.calls == 0
+    assert ledger.report()["budget_status"] == "stopped_budget_exhausted"
+    with pytest.raises(BudgetExhaustedError):
+        ledger.reconcile_response("call-1", {"input_tokens": 1, "output_tokens": 1})
+
+
+def test_given_same_events_when_written_twice_then_hash_chain_and_serialization_are_deterministic(
+    tmp_path: Path,
+) -> None:
+    configuration = config(
+        contingency="0",
+        max_attempts=2,
+    )
+    first = CostLedger(tmp_path / "first.jsonl", configuration)
+    first_reservation = first.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    first.reconcile_response(first_reservation, {"input_tokens": 1, "output_tokens": 1})
+
+    second = CostLedger(tmp_path / "second.jsonl", configuration)
+    second_reservation = second.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    second.reconcile_response(second_reservation, {"input_tokens": 1, "output_tokens": 1})
+
+    assert first.ledger_head_hash == second.ledger_head_hash
+    assert (tmp_path / "first.jsonl").read_bytes() == (tmp_path / "second.jsonl").read_bytes()
+    events = [json.loads(line) for line in (tmp_path / "first.jsonl").read_text().splitlines()]
+    assert [event["sequence"] for event in events] == [1, 2, 3]
+    assert events[0]["prev_event_hash"] == "0" * 64
+    assert all(len(event["event_hash"]) == 64 for event in events)
+
+
+def test_given_existing_ledger_when_new_events_are_appended_then_original_lines_are_preserved(
+    tmp_path: Path,
+) -> None:
+    path = tmp_path / "append-only.jsonl"
+    configuration = config(
+        contingency="0",
+        max_attempts=2,
+    )
+    first = CostLedger(path, configuration)
+    reservation = first.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    first.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+    original_lines = path.read_bytes().splitlines()
+
+    resumed = CostLedger(path, configuration)
+    reservation = resumed.reserve_attempt(
+        call_id="call-2",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    resumed.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+
+    lines = path.read_bytes().splitlines()
+    assert lines[: len(original_lines)] == original_lines
+    assert len(lines) == 5
+    assert [json.loads(line)["sequence"] for line in lines] == [1, 2, 3, 4, 5]
+
+
+def test_given_partial_event_write_when_appending_then_ledger_becomes_terminal_unusable(
+    tmp_path: Path,
+) -> None:
+    path = tmp_path / "partial-write.jsonl"
+    ledger = CostLedger(path, config(contingency="0"))
+    real_write = exploratory_cost.os.write
+
+    def partial_write(descriptor: int, data: bytes) -> int:
+        if b'"event_type":"reservation"' in data:
+            real_write(descriptor, data[:1])
+            return 1
+        return real_write(descriptor, data)
+
+    with patch.object(exploratory_cost.os, "write", side_effect=partial_write):
+        with pytest.raises(CostUnverifiedError):
+            ledger.reserve_attempt(
+                call_id="call-1",
+                provider="openai",
+                model="openai-model",
+                model_version="openai-snapshot",
+                phase="judge",
+            )
+
+    assert ledger.status == "stopped_cost_unverified"
+    assert ledger.report()["stop_reason"] == "ledger_event_append_failed"
+    assert ledger.report()["pending_attempt_count"] == 0
+    with pytest.raises(CostUnverifiedError):
+        ledger.reserve_attempt(
+            call_id="call-2",
+            provider="openai",
+            model="openai-model",
+            model_version="openai-snapshot",
+            phase="judge",
+        )
+
+
+def test_given_reconciliation_fsync_failure_when_reopened_then_ledger_stays_fail_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "reconciliation-fsync-failure.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    fsync_calls = 0
+    real_fsync = exploratory_cost.os.fsync
+
+    def fail_event_fsync(descriptor: int) -> None:
+        nonlocal fsync_calls
+        fsync_calls += 1
+        if fsync_calls == 3:
+            raise OSError("injected fsync")
+        real_fsync(descriptor)
+
+    with patch.object(exploratory_cost.os, "fsync", side_effect=fail_event_fsync):
+        with pytest.raises(CostUnverifiedError):
+            ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+
+    assert ledger.status == STOPPED_COST_UNVERIFIED
+    assert ledger.report()["pending_attempt_count"] == 0
+    with pytest.raises(CostUnverifiedError, match="fail-closed"):
+        CostLedger(path, configuration)
+
+
+def test_ledger_hash_mismatch_is_rejected_without_echoing_ledger_contents(tmp_path: Path) -> None:
+    path = tmp_path / "tampered.jsonl"
+    configuration = config(
+        contingency="0",
+        max_attempts=2,
+    )
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+    path.write_text(path.read_text().replace('"actual_cost_microusd":1', '"actual_cost_microusd":2'))
+
+    with pytest.raises(CostUnverifiedError, match="ledger"):
+        CostLedger(path, configuration)
+
+    text = path.read_text()
+    assert "private prompt" not in text
+    assert "private requirement" not in text
+
+
+@pytest.mark.parametrize(
+    "separator",
+    [
+        b"\r",
+        b"\r\n",
+        b"\v",
+        b"\f",
+        b"\x1c",
+        b"\x1d",
+        b"\x1e",
+        b"\x85",
+        b"\xc2\x85",
+        b"\xe2\x80\xa8",
+        b"\xe2\x80\xa9",
+    ],
+)
+def test_given_non_lf_jsonl_separator_when_replayed_then_it_fails_closed(
+    tmp_path: Path, separator: bytes
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "non-lf-framing.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+    path.write_bytes(path.read_bytes().replace(b"\n", separator))
+    tampered = path.read_bytes()
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+    assert path.read_bytes() == tampered
+
+
+def test_given_incomplete_jsonl_record_when_replayed_then_it_fails_closed(tmp_path: Path) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "incomplete-framing.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+    path.write_bytes(path.read_bytes()[:-2])
+    tampered = path.read_bytes()
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+    assert path.read_bytes() == tampered
+
+
+def test_given_clean_final_record_without_lf_when_replayed_then_it_fails_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "clean-no-final-lf.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+    path.write_bytes(path.read_bytes().rstrip(b"\n"))
+    tampered = path.read_bytes()
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+    assert path.read_bytes() == tampered
+
+
+def _rewrite_event(path: Path, event_index: int, **changes: object) -> None:
+    events = [json.loads(line) for line in path.read_text().splitlines()]
+    events[event_index].update(changes)
+    for index in range(event_index, len(events)):
+        events[index]["prev_event_hash"] = (
+            "0" * 64 if index == 0 else events[index - 1]["event_hash"]
+        )
+        unsigned = dict(events[index])
+        unsigned.pop("event_hash")
+        events[index]["event_hash"] = CostLedger._hash_event(unsigned)
+    path.write_text(
+        "\n".join(
+            json.dumps(event, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+            for event in events
+        )
+        + "\n"
+    )
+
+
+def _rewrite_last_event(path: Path, **changes: object) -> None:
+    _rewrite_event(path, -1, **changes)
+
+
+@pytest.mark.parametrize("bad_amount", [1.5, True, "1", "1.0", -1])
+def test_given_signed_replay_with_non_integer_amount_when_opened_then_it_fails_closed(
+    tmp_path: Path, bad_amount: object
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "bad-amount.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+    _rewrite_last_event(path, actual_cost_microusd=bad_amount)
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+
+def test_given_signed_replay_with_unknown_event_type_when_opened_then_it_fails_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "unknown-event.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+    _rewrite_last_event(path, event_type="unknown_event")
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+
+@pytest.mark.parametrize(
+    ("extra_field", "extra_value"),
+    [
+        ("unexpected", 1),
+        ("private_prompt", "secret prompt evidence"),
+        ("raw_response", "secret raw response evidence"),
+        ("prompt_tokens", -1),
+        ("completion_tokens", "1"),
+    ],
+)
+def test_given_replay_with_extra_private_or_alias_field_when_opened_then_it_fails_closed(
+    tmp_path: Path, extra_field: str, extra_value: object
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "unsupported-event-field.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+    _rewrite_last_event(path, **{extra_field: extra_value})
+    tampered = path.read_bytes()
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+    assert path.read_bytes() == tampered
+
+
+def test_given_replay_with_arbitrary_stop_reason_when_opened_then_it_fails_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "unsupported-stop-reason.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, None)
+    _rewrite_last_event(path, stop_reason="caller-controlled private evidence")
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+
+def test_given_replay_with_incompatible_stop_state_reason_when_opened_then_it_fails_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "incompatible-stop-reason.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, None)
+    _rewrite_last_event(path, stop_reason="fixed_plan_exhausted")
+    tampered = path.read_bytes()
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+    assert path.read_bytes() == tampered
+
+
+def test_given_replay_with_incompatible_reconciliation_status_reason_when_opened_then_it_fails_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "incompatible-reconciliation-reason.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, None)
+    _rewrite_event(path, -2, status="ambiguous_in_flight", stop_reason="missing_usage")
+    tampered = path.read_bytes()
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+    assert path.read_bytes() == tampered
+
+
+def test_given_ambiguous_reconciliation_followed_by_budget_stop_when_replayed_then_it_fails_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "ambiguous-budget-stop.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    ledger.mark_ambiguous_in_flight(reservation)
+    _rewrite_last_event(
+        path,
+        event_type="stopped_budget_exhausted",
+        budget_status="stopped_budget_exhausted",
+        stop_reason="fixed_plan_exhausted",
+    )
+    tampered = path.read_bytes()
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+    assert path.read_bytes() == tampered
+
+
+def test_given_conflicting_unverified_reconciliation_reasons_when_replayed_then_it_fails_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "conflicting-reconciliation-reasons.jsonl"
+    ledger = CostLedger(path, configuration)
+    first = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    ledger.reserve_attempt(
+        call_id="call-2",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(first, None)
+    _rewrite_event(path, -2, status="cost_unverified", stop_reason="token_bounds_exceeded")
+    tampered = path.read_bytes()
+
+    with pytest.raises(CostUnverifiedError):
+        CostLedger(path, configuration)
+
+    assert path.read_bytes() == tampered
+
+
+def test_given_ambiguous_in_flight_response_when_wrapped_then_no_retry_is_possible(tmp_path: Path) -> None:
+    configuration = config(
+        contingency="0",
+        max_attempts=2,
+    )
+
+    class AmbiguousProvider(RecordingProvider):
+        def __init__(self) -> None:
+            super().__init__({})
+
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            raise TimeoutError("secret response and prompt must not be copied")
+
+    provider = AmbiguousProvider()
+    ledger = CostLedger(tmp_path / "ambiguous.jsonl", configuration)
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(AmbiguousInFlightError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    assert provider.calls == 1
+    assert ledger.report()["budget_status"] == "stopped_cost_unverified"
+    assert ledger.report()["stop_reason"] == "ambiguous_in_flight"
+    assert ledger.report()["pending_attempt_count"] == 0
+    text = (tmp_path / "ambiguous.jsonl").read_text()
+    assert "secret response" not in text
+    assert "private prompt" not in text
+
+
+def test_given_stale_provider_metadata_when_provider_raises_then_it_is_not_reconciled(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+
+    class StaleMetadataProvider(RecordingProvider):
+        def __init__(self) -> None:
+            super().__init__(
+                {
+                    "usage": {"input_tokens": 1, "output_tokens": 1},
+                    "response_model": "openai-model",
+                    "private": "stale secret",
+                }
+            )
+
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            raise TimeoutError("provider timeout")
+
+    path = tmp_path / "stale-metadata.jsonl"
+    provider = StaleMetadataProvider()
+    wrapped = budgeted_provider(provider, CostLedger(path, configuration))
+
+    with pytest.raises(AmbiguousInFlightError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    assert provider.calls == 1
+    assert "stale secret" not in path.read_text()
+    assert wrapped._ledger.report()["pending_attempt_count"] == 0
+
+
+@pytest.mark.parametrize("hostile_metadata_kind", ["access", "iteration", "usage"])
+def test_given_hostile_metadata_mapping_when_reconciled_then_it_stops_without_charge(
+    tmp_path: Path, hostile_metadata_kind: str
+) -> None:
+    class AccessFailureMapping(Mapping[str, object]):
+        def __getitem__(self, key: str) -> object:
+            raise RuntimeError("metadata item access failed")
+
+        def __iter__(self):
+            return iter(("usage",))
+
+        def __len__(self) -> int:
+            return 1
+
+    class IterationFailureMapping(Mapping[str, object]):
+        def __getitem__(self, key: str) -> object:
+            return {"input_tokens": 1, "output_tokens": 1}
+
+        def __iter__(self):
+            raise RuntimeError("metadata iteration failed")
+
+        def __len__(self) -> int:
+            return 1
+
+    class UsageConversionFailureMapping(Mapping[str, object]):
+        def __getitem__(self, key: str) -> object:
+            if key == "input_tokens":
+                raise TypeError("usage type conversion failed")
+            return 1
+
+        def __iter__(self):
+            return iter(("input_tokens", "output_tokens"))
+
+        def __len__(self) -> int:
+            return 2
+
+    metadata: Mapping[str, object]
+    if hostile_metadata_kind == "access":
+        metadata = AccessFailureMapping()
+    elif hostile_metadata_kind == "iteration":
+        metadata = IterationFailureMapping()
+    else:
+        metadata = {"usage": UsageConversionFailureMapping()}
+
+    configuration = config(contingency="0")
+    path = tmp_path / f"hostile-{hostile_metadata_kind}.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, None, metadata=metadata)
+
+    report = ledger.report()
+    assert ledger.status == "stopped_cost_unverified"
+    assert report["stop_reason"] == "malformed_usage"
+    assert report["spent_microusd"] == 0
+    assert report["pending_attempt_count"] == 0
+    assert [event["event_type"] for event in ledger.events] == [
+        "preflight",
+        "reservation",
+        "reconciliation",
+        "stopped_cost_unverified",
+    ]
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+
+
+@pytest.mark.parametrize("bad_nested_value", [True, 1.0, "1", -1, Decimal("1")])
+def test_given_nested_provider_token_metadata_when_malformed_then_it_stops_before_charge(
+    tmp_path: Path, bad_nested_value: object
+) -> None:
+    class NestedMetadataProvider(RecordingProvider):
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            self.last_call_metadata = {
+                "usage": {
+                    "input_tokens": 1,
+                    "output_tokens": 1,
+                    "completion_tokens_details": {
+                        "reasoning_tokens": bad_nested_value,
+                    },
+                }
+            }
+            return "provider response"
+
+    path = tmp_path / "nested-malformed.jsonl"
+    provider = NestedMetadataProvider()
+    ledger = CostLedger(path, config(contingency="0"))
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    report = ledger.report()
+    assert provider.calls == 1
+    assert report["budget_status"] == "stopped_cost_unverified"
+    assert report["stop_reason"] == "metadata_access_failed"
+    assert report["spent_microusd"] == 0
+    assert report["pending_attempt_count"] == 0
+    assert CostLedger(path, config(contingency="0")).report() == report
+
+
+def test_given_valid_nested_provider_usage_when_completed_then_live_event_replays_identically(
+    tmp_path: Path,
+) -> None:
+    class NestedMetadataProvider(RecordingProvider):
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            self.last_call_metadata = {
+                "usage": {
+                    "prompt_tokens": 1,
+                    "completion_tokens": 1,
+                    "completion_tokens_details": {"reasoning_tokens": 1},
+                },
+                "response_model": "openai-model",
+            }
+            return "provider response"
+
+    path = tmp_path / "nested-valid.jsonl"
+    provider = NestedMetadataProvider()
+    configuration = config(contingency="0")
+    ledger = CostLedger(path, configuration)
+
+    assert budgeted_provider(provider, ledger).complete(
+        request(), call_id="call-1", phase="judge"
+    ) == "provider response"
+
+    live_report = ledger.report()
+    events = [json.loads(line) for line in path.read_text().splitlines()]
+    assert events[-1]["reasoning_tokens"] == 1
+    assert "completion_tokens_details" not in path.read_text()
+    assert CostLedger(path, configuration).report() == live_report
+
+
+def test_given_multiple_pending_reservations_when_terminal_stop_occurs_then_all_are_closed(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "multiple-pending-stop.jsonl"
+    ledger = CostLedger(path, configuration)
+    first = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    second = ledger.reserve_attempt(
+        call_id="call-2",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(first, None)
+
+    report = ledger.report()
+    assert report["budget_status"] == "stopped_cost_unverified"
+    assert report["pending_attempt_count"] == 0
+    assert report["active_reserved_microusd"] == (
+        first.reserved_microusd + second.reserved_microusd
+    )
+    assert [event["event_type"] for event in ledger.events] == [
+        "preflight",
+        "reservation",
+        "reservation",
+        "reconciliation",
+        "reconciliation",
+        "stopped_cost_unverified",
+    ]
+    assert CostLedger(path, configuration).report() == report
+    with pytest.raises(CostUnverifiedError):
+        ledger.reserve_attempt(
+            call_id="call-3",
+            provider="openai",
+            model="openai-model",
+            model_version="openai-snapshot",
+            phase="judge",
+        )
+
+
+def test_given_provider_metadata_reset_failure_when_wrapped_then_invocation_is_forbidden(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+
+    class ResetFailureProvider:
+        name = "openai"
+
+        def __init__(self) -> None:
+            self.calls = 0
+
+        @property
+        def last_call_metadata(self) -> dict[str, object]:
+            return {"usage": {"input_tokens": 1, "output_tokens": 1}}
+
+        @last_call_metadata.setter
+        def last_call_metadata(self, value: object) -> None:
+            raise RuntimeError("metadata reset failed")
+
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            return "should not be called"
+
+    path = tmp_path / "reset-failure.jsonl"
+    provider = ResetFailureProvider()
+    ledger = CostLedger(path, configuration)
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    assert provider.calls == 0
+    assert ledger.status == "stopped_cost_unverified"
+    assert ledger.report()["pending_attempt_count"] == 0
+    assert [event["event_type"] for event in ledger.events] == [
+        "preflight",
+        "stopped_cost_unverified",
+    ]
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+    assert provider.calls == 0
+
+
+def test_given_provider_durability_error_when_wrapped_then_it_is_propagated_unchanged(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    expected = DurabilityError("provider durability failure")
+
+    class DurabilityFailureProvider:
+        name = "openai"
+
+        def __init__(self) -> None:
+            self.calls = 0
+            self.last_call_metadata: dict[str, object] = {}
+
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            raise expected
+
+    path = tmp_path / "provider-durability-error.jsonl"
+    provider = DurabilityFailureProvider()
+    ledger = CostLedger(path, configuration)
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(DurabilityError) as raised:
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    assert raised.value is expected
+    assert provider.calls == 1
+    assert ledger.report()["pending_attempt_count"] == 1
+
+
+def test_given_provider_metadata_access_failure_after_invocation_then_it_stops_without_charge(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+
+    class AccessFailureProvider:
+        name = "openai"
+
+        def __init__(self) -> None:
+            self._metadata: dict[str, object] = {
+                "usage": {"input_tokens": 1, "output_tokens": 1}
+            }
+            self.fail_access = False
+            self.calls = 0
+
+        @property
+        def last_call_metadata(self) -> dict[str, object]:
+            if self.fail_access:
+                raise RuntimeError("metadata access failed")
+            return self._metadata
+
+        @last_call_metadata.setter
+        def last_call_metadata(self, value: object) -> None:
+            self._metadata = value  # type: ignore[assignment]
+
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            self.fail_access = True
+            return "provider response"
+
+    path = tmp_path / "access-failure.jsonl"
+    provider = AccessFailureProvider()
+    ledger = CostLedger(path, configuration)
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    report = ledger.report()
+    assert provider.calls == 1
+    assert ledger.status == "stopped_cost_unverified"
+    assert report["stop_reason"] == "metadata_access_failed"
+    assert report["spent_microusd"] == 0
+    assert report["pending_attempt_count"] == 0
+    assert report["active_reserved_microusd"] > 0
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+    assert provider.calls == 1
+
+
+def test_given_malformed_provider_metadata_after_invocation_then_it_stops_without_pending_attempt(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+
+    class MalformedMetadataProvider(RecordingProvider):
+        def complete(self, request: ProviderRequest) -> str:
+            self.calls += 1
+            self.last_call_metadata = {"usage": {"input_tokens": "1", "output_tokens": 1}}
+            return "provider response"
+
+    path = tmp_path / "malformed-metadata.jsonl"
+    provider = MalformedMetadataProvider()
+    ledger = CostLedger(path, configuration)
+    wrapped = budgeted_provider(provider, ledger)
+
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+
+    report = ledger.report()
+    assert provider.calls == 1
+    assert report["stop_reason"] == "metadata_access_failed"
+    assert report["spent_microusd"] == 0
+    assert report["pending_attempt_count"] == 0
+    with pytest.raises(CostUnverifiedError):
+        wrapped.complete(request(), call_id="call-1", phase="judge")
+    assert provider.calls == 1
+
+
+def test_given_a_reconciled_ledger_when_reopened_then_state_and_report_are_identical(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "replay-state.jsonl"
+    live = CostLedger(path, configuration)
+    reservation = live.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    live.reconcile_response(reservation, {"input_tokens": 1, "output_tokens": 1})
+    live_report = live.report()
+
+    reopened = CostLedger(path, configuration)
+
+    assert reopened.status == live.status == "running"
+    assert reopened.report() == live_report
+
+
+def test_given_unreconciled_reservation_when_ledger_is_reopened_then_it_stops_as_ambiguous(
+    tmp_path: Path,
+) -> None:
+    configuration = config(
+        contingency="0",
+        max_attempts=2,
+    )
+    path = tmp_path / "interrupted.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+
+    resumed = CostLedger(path, configuration)
+
+    assert resumed.status == "stopped_cost_unverified"
+    assert resumed.report()["stop_reason"] == "ambiguous_in_flight"
+    assert resumed.report()["pending_attempt_count"] == 0
+    assert resumed.report()["active_reserved_microusd"] == reservation.reserved_microusd
+    assert [event["event_type"] for event in resumed.events] == [
+        "preflight",
+        "reservation",
+        "reconciliation",
+        "stopped_cost_unverified",
+    ]
+    reopened = CostLedger(path, configuration)
+    assert reopened.status == resumed.status
+    assert reopened.report() == resumed.report()
+    with pytest.raises(CostUnverifiedError):
+        resumed.reserve_attempt(
+            call_id="call-2",
+            provider="openai",
+            model="openai-model",
+            model_version="openai-snapshot",
+            phase="judge",
+        )
+
+
+def test_given_truncated_unverified_reconciliation_when_reopened_then_it_recovers_terminally(
+    tmp_path: Path,
+) -> None:
+    configuration = config(contingency="0")
+    path = tmp_path / "truncated-reconciliation.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(reservation, None)
+
+    lines = path.read_bytes().splitlines()
+    assert json.loads(lines[-1])["event_type"] == "stopped_cost_unverified"
+    expected_recovered_bytes = b"\n".join(lines) + b"\n"
+    path.write_bytes(b"\n".join(lines[:-1]))
+
+    recovered = CostLedger(path, configuration)
+    report = recovered.report()
+    assert path.read_bytes() == expected_recovered_bytes
+    assert recovered.status == "stopped_cost_unverified"
+    assert report["stop_reason"] == "missing_usage"
+    assert report["spent_microusd"] == 0
+    assert report["active_reserved_microusd"] == reservation.reserved_microusd
+    assert report["pending_attempt_count"] == 0
+    assert [event["event_type"] for event in recovered.events] == [
+        "preflight",
+        "reservation",
+        "reconciliation",
+        "stopped_cost_unverified",
+    ]
+    reopened = CostLedger(path, configuration)
+    assert reopened.report() == report
+    assert reopened.ledger_head_hash == recovered.ledger_head_hash
+    with pytest.raises(CostUnverifiedError):
+        recovered.reserve_attempt(
+            call_id="call-2",
+            provider="openai",
+            model="openai-model",
+            model_version="openai-snapshot",
+            phase="judge",
+        )
+
+
+def test_given_unsafe_reconciliation_outcome_when_reconciled_then_it_stops_without_logging_it(
+    tmp_path: Path,
+) -> None:
+    configuration = config(
+        contingency="0",
+        max_attempts=2,
+    )
+    path = tmp_path / "unsafe-outcome.jsonl"
+    ledger = CostLedger(path, configuration)
+    reservation = ledger.reserve_attempt(
+        call_id="call-1",
+        provider="openai",
+        model="openai-model",
+        model_version="openai-snapshot",
+        phase="judge",
+    )
+
+    with pytest.raises(CostUnverifiedError):
+        ledger.reconcile_response(
+            reservation,
+            {"input_tokens": 1, "output_tokens": 1},
+            outcome="private provider error and prompt",
+        )
+
+    assert ledger.report()["stop_reason"] == "invalid_reconciliation_outcome"
+    assert "private provider error and prompt" not in path.read_text()

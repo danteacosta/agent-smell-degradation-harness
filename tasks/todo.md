@@ -1,5 +1,35 @@
 # Requirements-smell experiment hardening
 
+## 2026-09-03 private pre-pilot gate execution
+
+Plan:
+
+- [x] Search the workspace and connected Google Drive for the 16 private candidates and reference-constraint input.
+- [x] Audit the existing 12-pair/6-project material against `prepilot-corpus/v4` without promoting it.
+- [x] Verify the immutable ARTA provenance and distinguish repository-code licensing from third-party dataset rights.
+- [x] Receive or place the private candidate JSON/JSONL and reference-constraint files under an approved private path.
+- [x] Run the v4 intake validator and retain only a redacted candidate manifest with 12 intents across 6 projects.
+- [x] Freeze the validated manifest and run the private preflight; execute the exploratory pre-pilot only if it returns ready.
+
+Verification checkpoint:
+
+- Private intake produced 16 `prepilot-corpus/v4` candidate records and a frozen 12-record subset spanning 6 projects; raw source text remains outside the repository.
+- The exact private input and the 12-record `prepilot-reference-constraints/v1` file are retained under `/private/tmp/prepilot-corpus-20260903/`.
+- The v4 validator accepted the selected records against the redacted canonical manifest, including immutable source references, rights review, near-clone screening, manipulation checks, and hashes.
+- The earlier exploratory run completed with 1,296 reconciled provider calls, 288 judged occurrences, and 4 uncertainty outcomes at a confirmed cost of US$0.187950, but its T1/T2 evidence was substantively vacuous; it is diagnostic only and does not support H1/H2.
+
+## 2026-09-03 substantive-evidence correction
+
+- [x] Add a fail-closed substantive-completeness gate for T1 and T2 before T4.
+- [x] Require judge consensus on both the outcome label and per-constraint status.
+- [x] Shorten T1/T2/artifact prompts and require explicit valid evidence types.
+- [x] Recalculate the corrected exploratory budget envelope: US$0.988200 reserved under the US$1.00 cap.
+- [x] Run the low-cost native smoke: 4/4 RF-04 episodes passed across OpenAI and DeepSeek.
+- [x] Record the corrected prompt hash `60077136a90e5be355bda5f1049ab39b3152381b27344f8f8833a3a5ef6f3330`.
+- [x] Record the corrected exploratory configuration hash `160423c8ef1beb6c343bc5f51ab5550f9e40f7aeda0aec7049c5cabc27b2e150`.
+- [ ] Run and review one corrected 120-episode exploratory report after fresh authorization for the external run.
+- [ ] Promote no `clean`/`uncertain` count to H1/H2 until substantive completeness and independent label conditions are verified.
+
 ## Progress
 
 - [x] Write and review the hardening specification.

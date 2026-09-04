@@ -91,6 +91,27 @@ def test_openai_compatible_metadata_normalizes_usage_and_cost() -> None:
     assert provider.base_url == "https://api.deepseek.com"
 
 
+def test_openai_compatible_forwards_stage_specific_output_limit() -> None:
+    response = SimpleNamespace(
+        choices=[SimpleNamespace(message=SimpleNamespace(content="{}"))],
+        usage={"input_tokens": 1, "output_tokens": 1},
+    )
+    client, calls = _client(response)
+    provider = DeepSeekProvider(api_key="private", model="configured-model", client=client)
+
+    provider.complete(
+        ProviderRequest(
+            prompt="return json",
+            pair={"requirement": "bounded", "task_family": "test_gen", "output_keys": []},
+            variant="opaque",
+            task_family="test_gen",
+            max_output_tokens=48,
+        )
+    )
+
+    assert calls[0]["max_tokens"] == 48
+
+
 def test_usage_and_cost_are_provider_neutral() -> None:
     usage = normalize_provider_usage(
         {
@@ -125,6 +146,60 @@ def test_openai_default_does_not_pass_none_base_url_to_sdk() -> None:
 
     assert provider.configuration_metadata()["base_url"] is None
     assert calls[0]["model"] == "gpt-test"
+
+
+def test_openai_provider_uses_completion_token_parameter_for_current_models() -> None:
+    response = SimpleNamespace(
+        choices=[SimpleNamespace(message=SimpleNamespace(content="{}"))],
+        usage={"input_tokens": 1, "output_tokens": 1},
+    )
+    client, calls = _client(response)
+    provider = OpenAIProvider(
+        api_key="private",
+        model="gpt-5.4-mini-2026-03-17",
+        client=client,
+    )
+
+    provider.complete(_request())
+
+    assert calls[0]["max_completion_tokens"] == 4096
+    assert "max_tokens" not in calls[0]
+    assert calls[0]["response_format"] == {"type": "json_object"}
+
+
+def test_openai_gpt56_luna_uses_default_temperature() -> None:
+    response = SimpleNamespace(
+        choices=[SimpleNamespace(message=SimpleNamespace(content="{}"))],
+        usage={"input_tokens": 1, "output_tokens": 1},
+    )
+    client, calls = _client(response)
+    provider = OpenAIProvider(
+        api_key="private",
+        model="gpt-5.6-luna",
+        client=client,
+    )
+
+    provider.complete(_request())
+
+    assert "temperature" not in calls[0]
+
+
+def test_deepseek_v4_defaults_to_explicitly_disabled_thinking() -> None:
+    response = SimpleNamespace(
+        choices=[SimpleNamespace(message=SimpleNamespace(content="{}"))],
+        usage={"input_tokens": 1, "output_tokens": 1},
+    )
+    client, calls = _client(response)
+    provider = DeepSeekProvider(
+        api_key="private",
+        model="deepseek-v4-flash",
+        client=client,
+    )
+
+    provider.complete(_request())
+
+    assert calls[0]["extra_body"] == {"thinking": {"type": "disabled"}}
+    assert calls[0]["response_format"] == {"type": "json_object"}
 
 
 def test_empty_compatible_response_fails_closed_but_keeps_usage() -> None:

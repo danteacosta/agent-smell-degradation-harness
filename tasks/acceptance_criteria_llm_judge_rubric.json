@@ -1,0 +1,58 @@
+{
+  "schema_version": "acceptance-criteria-llm-judge/v1",
+  "visible_request_fields": [
+    "schema_version",
+    "occurrence_id",
+    "generated_acceptance_criteria",
+    "reference_constraints"
+  ],
+  "reference_constraint_fields": ["constraint_id", "text"],
+  "forbidden_metadata": [
+    "target_family",
+    "variant",
+    "provider",
+    "provider_id",
+    "model",
+    "model_id",
+    "oracle",
+    "oracle_result",
+    "detector",
+    "detector_output",
+    "checkpoint",
+    "checkpoint_id",
+    "T4",
+    "source_label",
+    "source_labels",
+    "credentials",
+    "api_key",
+    "secret",
+    "incompleteness_missing_condition"
+  ],
+  "labels": ["clean", "minor", "moderate", "severe", "not_visible"],
+  "constraint_statuses": ["covered", "omitted", "uncertain"],
+  "response_fields": [
+    "schema_version",
+    "occurrence_id",
+    "label",
+    "constraint_assessments",
+    "confidence",
+    "rationale",
+    "evidence"
+  ],
+  "assessment_fields": ["constraint_id", "status", "evidence"],
+  "limits": {
+    "confidence": [0, 1],
+    "rationale_characters": 10000,
+    "evidence_characters": 2000,
+    "exactly_one_assessment_per_constraint": true
+  },
+  "severity_anchors": {
+    "clean": "All supplied constraints are covered with observable, testable behavior.",
+    "minor": "A small ambiguity or omission remains, but the intended behavior is mostly operationalized.",
+    "moderate": "At least one meaningful constraint is incompletely operationalized or materially ambiguous.",
+    "severe": "A central supplied constraint is omitted or the criteria are not usable as an observable acceptance contract.",
+    "not_visible": "The visible criteria and supplied constraints do not provide enough evidence for a severity judgment."
+  },
+  "consensus_rule": "exactly two judges; identical labels yield consensus, any disagreement yields uncertain",
+  "identity_policy": "provider and model identity are private caller metadata and are not part of this contract"
+}

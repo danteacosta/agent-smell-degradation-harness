@@ -21,8 +21,11 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from agents.providers import DeepSeekProvider, OpenAIProvider
 from agents.runtime import RuntimeCheckpointAgent
+from eval.provider_runtime_config import (
+    ProviderRuntimeConfigError,
+    resolve_provider_spec,
+)
 from pairs.loader import load_all_pairs
 from protocol.context_management import NoCompactionManager
 
@@ -147,8 +150,23 @@ def load_smoke_config(path: str | Path) -> dict[str, Any]:
         normalized_spec = dict(raw)
         normalized_spec["id"] = provider_id
         normalized_spec["kind"] = kind
-        for field in ("api_key_env", "model_env", "model_version_env"):
-            normalized_spec[field] = _env_name(normalized_spec.get(field), field)
+        normalized_spec["api_key_env"] = _env_name(
+            normalized_spec.get("api_key_env"), "api_key_env"
+        )
+        for value_field, env_field in (
+            ("model", "model_env"),
+            ("model_version", "model_version_env"),
+        ):
+            if normalized_spec.get(value_field) is None:
+                normalized_spec[env_field] = _env_name(
+                    normalized_spec.get(env_field), env_field
+                )
+            elif not isinstance(normalized_spec[value_field], str) or not normalized_spec[
+                value_field
+            ].strip():
+                raise NativeSmokeConfigurationError(
+                    f"providers[{index}].{value_field} must be a non-empty string"
+                )
         for field in ("base_url_env", "reasoning_effort_env"):
             if normalized_spec.get(field) is not None:
                 normalized_spec[field] = _env_name(normalized_spec[field], field)
@@ -174,62 +192,10 @@ def _provider_from_spec(
     *,
     environ: Mapping[str, str],
 ) -> tuple[Any, dict[str, Any]]:
-    api_key_env = str(spec["api_key_env"])
-    model_env = str(spec["model_env"])
-    model_version_env = str(spec["model_version_env"])
-    api_key = _required_env(api_key_env, environ)
-    model = _required_env(model_env, environ)
-    model_version = _required_env(model_version_env, environ)
-    base_url = None
-    base_url_env = spec.get("base_url_env")
-    if base_url_env:
-        base_url = _required_env(str(base_url_env), environ)
-    reasoning_effort = None
-    reasoning_effort_env = spec.get("reasoning_effort_env")
-    if reasoning_effort_env:
-        reasoning_effort = _required_env(str(reasoning_effort_env), environ)
-    kwargs = {
-        "api_key": api_key,
-        "model": model,
-        "base_url": base_url,
-        "max_tokens": int(spec.get("max_tokens", 4096)),
-        "temperature": float(spec.get("temperature", 0.0)),
-        "reasoning_effort": reasoning_effort,
-        "input_usd_per_1k": _optional_float(spec, "input_usd_per_1k_env", environ),
-        "cached_input_usd_per_1k": _optional_float(
-            spec, "cached_input_usd_per_1k_env", environ
-        ),
-        "output_usd_per_1k": _optional_float(spec, "output_usd_per_1k_env", environ),
-    }
-    kind = str(spec["kind"])
-    provider = (
-        OpenAIProvider(**kwargs)
-        if kind == "openai"
-        else DeepSeekProvider(**kwargs)
-    )
-    public = {
-        "id": str(spec["id"]),
-        "kind": kind,
-        "model": model,
-        "model_version": model_version,
-        "base_url": provider.base_url,
-        "max_tokens": kwargs["max_tokens"],
-        "temperature": kwargs["temperature"],
-        "reasoning_effort": reasoning_effort,
-        "api_key_env": api_key_env,
-        "model_env": model_env,
-        "model_version_env": model_version_env,
-        "pricing_envs": {
-            field: spec.get(field)
-            for field in (
-                "input_usd_per_1k_env",
-                "cached_input_usd_per_1k_env",
-                "output_usd_per_1k_env",
-            )
-            if spec.get(field)
-        },
-    }
-    return provider, public
+    try:
+        return resolve_provider_spec(spec, environ=environ)
+    except ProviderRuntimeConfigError as error:
+        raise NativeSmokeConfigurationError(str(error)) from error
 
 
 def _selected_pairs(
@@ -365,6 +331,29 @@ def _safe_error(error: Exception, secret_values: Sequence[str]) -> str:
     return message[:240] or type(error).__name__
 
 
+def _failed_call_metadata(provider: Any) -> dict[str, Any]:
+    """Preserve bounded usage/cost when a provider response fails validation."""
+
+    raw = getattr(provider, "last_call_metadata", {})
+    if not isinstance(raw, Mapping):
+        return {}
+    result: dict[str, Any] = {}
+    usage = raw.get("usage")
+    if isinstance(usage, Mapping):
+        bounded_usage = {
+            str(key): value
+            for key, value in usage.items()
+            if isinstance(value, (int, float)) and not isinstance(value, bool)
+        }
+        if bounded_usage:
+            result["usage"] = dict(sorted(bounded_usage.items()))
+    cost = raw.get("cost_usd")
+    if isinstance(cost, (int, float)) and not isinstance(cost, bool) and cost >= 0:
+        result["cost_usd"] = round(float(cost), 8)
+        result["cost_status"] = "measured"
+    return result
+
+
 def _sum_usage(rows: Sequence[Mapping[str, Any]]) -> dict[str, int | float]:
     totals: dict[str, int | float] = {}
     for row in rows:
@@ -431,8 +420,12 @@ def run_native_provider_smoke(
                 "episodes": [],
             }
             secret_values: list[str] = []
+            provider = None
             for field in ("api_key_env", "model_env", "model_version_env"):
-                value = env.get(str(spec[field]))
+                env_name = spec.get(field)
+                if not env_name:
+                    continue
+                value = env.get(str(env_name))
                 if value:
                     secret_values.append(value)
             try:
@@ -463,15 +456,15 @@ def run_native_provider_smoke(
                                 public_spec["episodes"].append(row)
                             except Exception as error:
                                 failures += 1
-                                public_spec["episodes"].append(
-                                    {
-                                        "intent_id": str(pair["intent_id"]),
-                                        "variant": variant,
-                                        "replication": replication,
-                                        "status": "fail",
-                                        "error": _safe_error(error, secret_values),
-                                    }
-                                )
+                                failure = {
+                                    "intent_id": str(pair["intent_id"]),
+                                    "variant": variant,
+                                    "replication": replication,
+                                    "status": "fail",
+                                    "error": _safe_error(error, secret_values),
+                                }
+                                failure.update(_failed_call_metadata(provider))
+                                public_spec["episodes"].append(failure)
                 if not any(
                     row.get("status") == "fail"
                     for row in public_spec["episodes"]
@@ -487,15 +480,16 @@ def run_native_provider_smoke(
             ]
             public_spec["episode_count"] = len(public_spec["episodes"])
             public_spec["successful_episode_count"] = len(episodes)
+            all_rows = public_spec["episodes"]
             public_spec["total_latency_ms"] = round(
-                sum(float(row.get("latency_ms", 0.0)) for row in episodes), 3
+                sum(float(row.get("latency_ms", 0.0)) for row in all_rows), 3
             )
-            public_spec["total_usage"] = _sum_usage(episodes)
-            costs = [row["cost_usd"] for row in episodes if row.get("cost_usd") is not None]
+            public_spec["total_usage"] = _sum_usage(all_rows)
+            costs = [row["cost_usd"] for row in all_rows if row.get("cost_usd") is not None]
             public_spec["total_cost_usd"] = round(sum(costs), 8) if costs else None
             public_spec["cost_status"] = (
                 "measured"
-                if len(costs) == len(episodes) and episodes
+                if len(costs) == len(all_rows) and all_rows
                 else "not_configured"
                 if not costs
                 else "partial"
@@ -526,6 +520,7 @@ def run_native_provider_smoke(
                 "max_tokens",
                 "temperature",
                 "reasoning_effort",
+                "pricing",
                 "pricing_envs",
             )
         }

@@ -1,131 +1,141 @@
 # Pre-pilot launch pack
 
-The executable unlock procedures and approval checklist are in
-[pre-pilot unlock plan](prepilot-unlock-plan.md) and
+The executable procedures and the approval record are in the
+[pre-pilot unlock plan](prepilot-unlock-plan.md) and the
 [advisor approval memo](prepilot-approval-memo.md).
 
+## Decision boundary
 
-## Decision requested from the advisor
+The pre-pilot is a non-confirmatory 120-episode feasibility study. It may
+estimate failure prevalence, provider reliability, annotation effort, cost,
+latency, intraproject dependence, and the availability of pre-final evidence.
+It cannot support H1 or H2.
 
-Authorize preparation and execution of the non-confirmatory 120-episode
-pre-pilot only after the executable readiness report returns `go`. This is not
-authorization for confirmatory collection and does not freeze the current
-220-intent/36-project design candidate.
+The previous `284 clean` count is diagnostic only. It records LLM judge
+agreement under an older protocol and does not establish correctness,
+degradation, or causal effect.
 
 ## Fixed pre-pilot design
 
 - 12 independent software intents;
-- one clean and one controlled missing-condition variant per intent;
+- one clean and one controlled `incompleteness_missing_condition` variant per
+  intent;
 - five replications per variant;
-- acceptance-criteria generation as the only primary task;
-- 120 episodes in total;
-- two distinct real provider/model configurations qualified before collection;
-- runtime-native T1–T3 evidence emitted before T4;
-- final artifacts labeled independently under the blinded rubric.
+- acceptance-criteria generation as the primary task;
+- 120 primary episodes;
+- primary context condition `no_compaction`;
+- a separate clean/smelly × `no_compaction`/`compaction_stress_test`
+  interaction check;
+- two distinct real provider/model configurations;
+- runtime-native T1-T3 evidence emitted before T4; and
+- independently generated outcome labels under a blinded rubric.
+
+## Substantive pre-final evidence
+
+T1 and T2 are not complete merely because their JSON shape is valid. Before T4,
+the runtime now requires:
+
+| Stage | Required substantive fields |
+|---|---|
+| T1 | `constraints` and `atomic_obligations` must be non-empty and valid |
+| T2 | `validation_checks` and `coverage_targets` must be non-empty |
+| T3 | deterministic validation must bind T1 evidence to the T2 plan |
+
+The gate stops the episode with `incomplete_substantive_evidence` before the
+terminal artifact if these conditions fail. The redacted report records the
+failed stage and the number of stages that passed. It does not treat presence
+as correctness.
 
 ## Context-management control
 
 The primary 120-episode condition disables context compaction:
-`context_management.primary_condition = no_compaction`. This isolates the
-requirement mutation from an unmeasured context transformation. The secondary
-protocol crosses clean/smelly variants with
-`no_compaction`/`compaction_stress_test`; it is a separate stress and
-interaction check, not additional primary episodes and not confirmatory H1/H2
-evidence.
+`context_management.primary_condition = no_compaction`. The secondary protocol
+crosses clean/smelly variants with `no_compaction` and
+`compaction_stress_test`. This is a separate interaction check, not additional
+primary episodes or confirmatory H1/H2 evidence.
 
-The runtime records prompt-free, pre-final event metadata:
-`operation`, `trigger`, `started_at`, `ended_at`, measured `utf8_bytes` before
-and after, `checkpoint_id`, and `checkpoint_sha256`. The hash binds the event
-to the provider-visible context without storing that context. Provider token
-usage remains a separate measured field. A qualified provider run must verify
-that context events are present before T4, that the primary condition emits no
-compaction events, and that the stress condition is reproducible.
+The runtime records prompt-free context metadata: operation, trigger, start and
+end times, measured UTF-8 sizes, checkpoint ID, and checkpoint hash. A qualified
+run must show that context events occur before T4, that the primary condition
+has zero compactions, and that the stress condition is reproducible.
 
-The article-informed `typed_compaction_stress_test` is a separate
-mechanism proxy. It protects bounded requirement/constraint/check blocks in a
-typed hard lane and compacts remaining context under a fixed budget; it is not
-a replication of the paper's learned classifier or token-matched benchmark.
+The typed compaction stress test is a mechanism proxy. It is not a replication
+of a learned classifier or a token-matched benchmark. T1 atomic obligations
+and T3 hash-bound observations are measured as runtime evidence, not as
+outcome labels.
 
-T1 also requires bounded `atomic_obligations` observations, and T3 records
-their hash-bound `constraint_hard_lane` materialization. The four-cell
-post-collection interaction report uses the difference-in-differences
-estimand. Missing cells are reported and excluded; the result is descriptive
-mechanism evidence and never changes the primary H1/H2 estimands or the smell
-taxonomy.
-
-The pre-pilot estimates feasibility, provider/checkpoint failure rates,
-annotation time and reliability, failure prevalence, intraproject dependence,
-latency, and cost. It cannot support H1 or H2.
-
-## Gates before the first episode
+## Gates before the first full episode
 
 | Gate | Required evidence | Current state |
-| --- | --- | --- |
-| Advisor | Explicit authorization for the pre-pilot scope | Blocked |
-| Corpus | 12 unique licensed intents, project IDs, hashes, near-clone review, manipulation checks | Blocked |
-| Providers | Two runtime-native configurations pass temporal, schema, failure, and hash qualification | Blocked |
-| Annotation | Frozen rubric, two trained annotators, outcome-blind 20% duplicate subset, adjudicator | Blocked |
-| Leakage | T1–T3 cannot load artifact, oracle, mutation, provider identity, or outcome label | Implemented; rerun on qualified configurations |
-| Context management | Primary `no_compaction`; secondary matrix, typed proxy, atomic contract and prompt-free event contract are tested | Implemented; qualify on real runtime |
-| Budget | Provider estimate plus 25% contingency and annotation-hour estimate approved | Blocked |
-| Reproducibility | Versioned prompts, configuration hashes, execution window and immutable run manifest | Blocked |
+|---|---|---|
+| Advisor | Explicit authorization for the non-confirmatory scope and LLM-judge role | Authorized for exploratory use |
+| Corpus | 12 unique, rights-reviewed intents across 6 projects, immutable references, hashes, clone review, and manipulation checks | Validated in private v4 manifest |
+| Providers | Both real configurations pass native temporal, schema, completeness, failure, usage, and hash checks | Minimal smoke passed; full-run verification pending |
+| Annotation | Frozen rubric, outcome-blind duplicate selection, and explicit label policy | LLM judge path authorized; human confirmatory path not established |
+| Leakage | T1-T3 cannot read artifact, oracle, mutation, provider identity, or outcome label | Implemented; verify in the corrected run |
+| Budget | Measured provider estimate, retries, 25% contingency, and approved cap | US$0.988200 reserved under US$1.00 |
+| Reproducibility | Frozen prompts, configuration hash, model/version, price, source revision, and immutable run manifest | Corrected config is frozen; full-run report pending |
 
-Run the gate with:
+Run the readiness command with:
 
 ```bash
 python -m eval.prepilot_readiness
 ```
 
-It exits non-zero while blocked. `make prepilot-readiness` writes the current
-report for review without treating a blocked candidate as a CI failure.
+Credentials never enter that file. They remain in the private runtime
+environment and are excluded from tracked configuration and reports.
+
+It remains fail-closed while any required evidence is missing. A passing
+smoke does not change that state.
 
 ## Provider qualification protocol
 
-For each configuration, execute at least one clean and one defective smoke
-episode and verify:
+For each configuration, verify at least one clean and one defective episode:
 
-1. the adapter reports the intended provider, model and immutable model version;
-2. T1 and T2 are bounded provider responses;
+1. the adapter reports the intended provider, model, and version;
+2. T1 and T2 satisfy both schema and substantive completeness;
 3. deterministic T3 validates T1-to-T2 semantic coverage without reading T4;
-4. all T1–T3 timestamps precede the artifact request;
-5. context-management events are present with monotonic timestamps, measured
-   UTF-8 sizes, operation/trigger metadata and a hash-bound checkpoint identity;
-6. T1 atomic obligations use the bounded schema and T3 observations bind to the
-   corresponding constraint lineage without raw obligation text;
-7. request, response and configuration hashes are present;
-8. malformed T2 and a simulated timeout fail before artifact generation;
-9. no prompted snapshot or replay trace is promoted to runtime-native;
-10. latency, token usage and cost are exported without prompts, artifacts or secrets.
+4. all T1-T3 timestamps precede the artifact request;
+5. context events include monotonic times, measured UTF-8 sizes, operation,
+   trigger, and hash-bound checkpoint identity;
+6. atomic-obligation fields are present in T1 and bind to T3 observations;
+7. request, response, protocol, and configuration hashes are present;
+8. malformed T2 and a simulated timeout fail before artifact generation; and
+9. latency, token usage, and cost are exported without prompts, artifacts, or
+   secrets.
 
-The qualification report path and configuration hash are recorded in
-`data/prepilot/launch-plan.candidate.json`. Credentials never enter that file.
+The latest low-cost native smoke passed both RF-04 variants for OpenAI
+`gpt-5.6-luna` and DeepSeek `deepseek-v4-pro`. It is still classified as
+`smoke_only`.
 
-## Annotation rehearsal
+## Labeling boundary
 
-Before collection, two annotators independently label a small training set that
-is not part of the 12-intent pre-pilot. They receive only the final artifact and
-the independent reference constraints. Variant, defect family, provider/model,
-checkpoint evidence, oracle outcome and detector predictions remain hidden.
+The advisor authorized the two LLMs as independent exploratory judges. Their
+agreement is a machine-observation metric. It is not human ground truth and
+must not be presented as an accuracy or degradation rate.
 
-The 20% duplicate subset is selected before annotation. The pre-pilot reports
-ordinal Krippendorff alpha with its bootstrap interval. Alpha at least 0.70
-supports continuing; below 0.60 after adjudication requires rubric revision or
-claim narrowing. No label is imputed.
+For confirmatory H1/H2 work, freeze the outcome packet first. Select the 20%
+duplicate subset without labels, hide variant/provider/checkpoint/oracle data,
+use at least two trained annotators, and name an adjudicator. Report missing
+labels instead of imputing them.
 
-## Cost worksheet
+## Cost and handoff
 
-Provider cost is estimated from qualified smoke runs, not advertised token
-prices alone:
+The current conservative worksheet reserves US$0.988200 for the corrected
+120-episode exploratory configuration, including retries and the 25%
+contingency. Annotation time is a separate approval item.
 
-`estimated pre-pilot cost = mean observed episode cost × 120 × 1.25`
+The private handoff package must include the redacted report, append-only cost
+ledger, source and constraint hashes, configuration and protocol hashes,
+execution window, platform information, and the private input locations. Raw
+requirements, provider responses, generated artifacts, and credentials stay in
+approved private storage.
 
-Annotation effort includes first coding, duplicate coding, adjudication and
-quality control. The launch plan records both provider dollars and human hours;
-neither may remain zero when the gate is promoted to `pilot_ready`.
+The current 220/36 candidate may increase or decrease after the pre-pilot's
+feasibility estimates. The confirmatory precision plan must be frozen only
+after that review and before confirmatory collection.
 
-## After the pre-pilot
-
-Use only outcome-blind aggregate estimates of prevalence, variance,
-intraproject dependence, checkpoint availability and cost to update the H2
-precision grid. The current 220/36 candidate may increase or decrease. Freeze
-the final precision plan and preregistration before confirmatory collection.
+Before interpreting any pattern, review the corrected report for complete
+artifact and judgment counts, substantive completeness, native context events,
+cost, errors, and hash identity. If the run stops early, it is a feasibility
+failure report, not evidence for H1 or H2.

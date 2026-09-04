@@ -34,6 +34,12 @@ def main() -> int:
     parser.add_argument("--config", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument(
+        "--env-file",
+        type=Path,
+        default=REPOSITORY_ROOT / ".env",
+        help="private dotenv-style file; values are never printed or persisted",
+    )
+    parser.add_argument(
         "--intents",
         nargs="+",
         help="specific checked-in intent IDs; otherwise use --limit",
@@ -42,7 +48,7 @@ def main() -> int:
     args = parser.parse_args()
     _assert_private_output(args.output)
     try:
-        load_private_env(REPOSITORY_ROOT / ".env")
+        load_private_env(args.env_file)
         report = run_native_provider_smoke(
             args.config,
             args.output,

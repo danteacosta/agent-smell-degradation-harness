@@ -13,18 +13,18 @@ class _MeasuredProvider:
         self.responses = iter(
             [
                 {
-                    "constraints": [],
+                    "constraints": ["the request is bounded"],
                     "quantities": [],
                     "unresolved_references": [],
                     "assumptions": [],
                     "contradictions": [],
                     "conditional_semantics": [],
-                    "atomic_obligations": [],
+                    "atomic_obligations": [{"constraint_index": 1, "atom_type": "condition", "status": "present"}],
                 },
                 {
-                    "validation_checks": [],
+                    "validation_checks": ["check the bounded condition"],
                     "planned_tools": [],
-                    "coverage_targets": [],
+                    "coverage_targets": ["the request is bounded"],
                 },
                 {"criterion": "bounded"},
             ]

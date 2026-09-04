@@ -13,13 +13,13 @@
   },
   "corpus": {
     "manifest_path": "data/prepilot/corpus-manifest.json",
-    "manifest_frozen": false,
-    "unique_intents": 7,
-    "all_sources_licensed": false,
-    "all_project_ids_present": false,
-    "near_clone_screening_complete": false,
-    "manipulation_checks_complete": false,
-    "development_seed_replaced": false
+    "manifest_frozen": true,
+    "unique_intents": 12,
+    "all_sources_licensed": true,
+    "all_project_ids_present": true,
+    "near_clone_screening_complete": true,
+    "manipulation_checks_complete": true,
+    "development_seed_replaced": true
   },
   "provider_configurations": [
     {
@@ -64,6 +64,65 @@
     "approved_cap_usd": 0,
     "estimated_annotation_hours": 0,
     "cost_basis": "TBD after provider qualification smoke tests"
+  },
+  "exploratory_llm_judged_prepilot": {
+    "schema_version": "exploratory-llm-judged-prepilot/v1",
+    "scope_authorized": true,
+    "claim_level": "non_confirmatory_exploratory",
+    "status": "diagnostic_only_incomplete_substantive_evidence",
+    "status_note": "The historical run completed operationally, but T1/T2 evidence was substantively vacuous under the old prompt and cannot support H1/H2.",
+    "corpus_manifest_sha256": "baec5fef734b96be75ca38f126d2a000a3ddab661816b158da684e26d8c490ae",
+    "configuration_sha256": "8b66e871d99065e1f3f3d8f819a26b4ecdab036e103ad62aca759d149bdd5d94",
+    "judge_rubric_sha256": "1dc8b1bb0c86d763ae71fee9e48d91bf4f2648f6ba66c28b5f27f32416c57969",
+    "expected_logical_operations": 816,
+    "expected_provider_api_calls": 1296,
+    "observed_logical_operations": 816,
+    "observed_provider_api_calls": 1296,
+    "observed_artifact_count": 240,
+    "observed_judge_occurrence_count": 288,
+    "observed_cost_usd": 0.18795,
+    "provider_configurations": [
+      {
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_version": "gpt-5.6-luna",
+        "role": "generator_and_judge",
+        "qualification_status": "smoke_qualified",
+        "qualification_report_reference": null
+      },
+      {
+        "provider": "deepseek",
+        "model": "deepseek-v4-pro",
+        "model_version": "DeepSeek-V4-Pro-0813",
+        "role": "generator_and_judge",
+        "qualification_status": "smoke_qualified",
+        "qualification_report_reference": null
+      }
+    ],
+    "judge_mode": "llm_only_exploratory",
+    "annotation_status": "machine_generated",
+    "adjudication": "none_forced",
+    "human_adjudication_status": "not_performed",
+    "max_total_cost_usd": 1.0,
+    "disagreement_policy": "uncertain_no_forced_adjudication",
+    "human_annotation_substitute": false,
+    "report_reference": "private/prepilot-live-requirement-visible.json",
+    "substantive_completeness": {
+      "required_fields": {
+        "T1": ["constraints", "atomic_obligations"],
+        "T2": ["validation_checks", "coverage_targets"]
+      },
+      "gate_status": "implemented_and_smoke_verified",
+      "historical_run_status": "not_valid_for_h1_h2",
+      "failure_state": "incomplete_substantive_evidence"
+    },
+    "corrected_protocol": {
+      "status": "smoke_verified_full_run_pending",
+      "generation_prompt_template_sha256": "60077136a90e5be355bda5f1049ab39b3152381b27344f8f8833a3a5ef6f3330",
+      "configuration_sha256": "160423c8ef1beb6c343bc5f51ab5550f9e40f7aeda0aec7049c5cabc27b2e150",
+      "reserved_cost_usd": 0.9882,
+      "full_run_report_reference": null
+    }
   },
   "go_no_go": {
     "advisor_authorized_pre_pilot": false,

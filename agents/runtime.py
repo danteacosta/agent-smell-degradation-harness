@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from typing import Any
 
 from .checkpoints import AgentExecution, validate_agent_execution
 from .providers import Provider
-from .staged_runtime import Clock, StagedProviderRuntime
+from .staged_runtime import Clock, StageCompletion, StagedProviderRuntime
 from protocol.context_management import ContextManager
 
 
@@ -50,6 +50,9 @@ class RuntimeCheckpointAgent:
         model_version: str,
         clock: Clock | None = None,
         context_manager: ContextManager | None = None,
+        stage_completion: StageCompletion | None = None,
+        max_stage_attempts: int = 1,
+        stage_output_tokens: Mapping[str, int] | None = None,
     ) -> "RuntimeCheckpointAgent":
         """Build the qualified staged runtime using an existing provider adapter."""
 
@@ -57,6 +60,9 @@ class RuntimeCheckpointAgent:
             provider_adapter,
             clock=clock,
             context_manager=context_manager,
+            stage_completion=stage_completion,
+            max_stage_attempts=max_stage_attempts,
+            stage_output_tokens=stage_output_tokens,
         )
         return cls(
             runtime.execute,

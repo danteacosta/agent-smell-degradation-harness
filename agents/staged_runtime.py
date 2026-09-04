@@ -37,6 +37,17 @@ from protocol.context_management import (
 
 
 Clock = Callable[[], datetime]
+StageCompletion = Callable[[ProviderRequest, str, int], str]
+
+
+class SubstantiveCompletenessError(ValueError):
+    """Raised when a validly shaped stage contains no usable evidence."""
+
+    def __init__(self, stage: str, fields: tuple[str, ...]) -> None:
+        self.stage = stage
+        self.fields = fields
+        names = ", ".join(f"{stage}.{field}" for field in fields)
+        super().__init__(f"{stage} substantive completeness requires non-empty fields: {names}")
 
 
 def _now_iso(clock: Clock) -> str:
@@ -95,6 +106,77 @@ _STAGE_FIELDS = {
     ),
     "plan": ("validation_checks", "planned_tools", "coverage_targets"),
 }
+
+# These are the exact prompt templates used by the runtime.  Keeping them as
+# named protocol inputs makes the pre-pilot hash the behavior that is sent to
+# a provider, rather than a copy of an implementation detail in a report.
+GENERATION_PROMPT_TEMPLATES = {
+    "T1": (
+        "T1 R:{requirement}\nJSON. Keys: constraints, quantities, "
+        "unresolved_references, assumptions, contradictions, conditional_semantics, "
+        "atomic_obligations. All values are arrays; atomic_obligations contains objects. "
+        "Put one short summary in constraints and one "
+        "atomic item in atomic_obligations. That object has keys constraint_index, "
+        "atom_type, and status; constraint_index=1; atom_type=condition; status: "
+        "present/absent/uncertain. "
+        "Other arrays: []. No prose/extra keys."
+    ),
+    "T2": (
+        "T2 R:{requirement}\nI:{interpretation_json}\nJSON only. Exactly these keys: "
+        "validation_checks, planned_tools, coverage_targets. All values are arrays of "
+        "strings. Put exactly one concise "
+        "plain-text item in validation_checks and exactly one in coverage_targets. Set "
+        "planned_tools to []. No prose or extra keys."
+    ),
+    "artifact": (
+        "Artifact\nR:{requirement}\nP:{plan_json}\n"
+        "JSON only, exactly these keys: {output_keys}. Keep each value to 2-4 words. "
+        "No explanation, reasoning, markdown, or commentary."
+    ),
+    "retry": "\nRetry: return one complete JSON object only; required evidence arrays must not be empty; no prose.",
+}
+
+GENERATION_OUTPUT_SCHEMA = {
+    "schema_version": "staged-generation/v2",
+    "stages": {
+        "T1": {
+            "type": "object",
+            "fields": list(_STAGE_FIELDS["interpretation"]),
+            "all_values": "array",
+            "conditional_semantics": {
+                "fields": [
+                    "antecedent",
+                    "consequent",
+                    "necessity_status",
+                    "temporal_relation",
+                    "negative_case",
+                ]
+            },
+            "atomic_obligations": {
+                "fields": ["constraint_index", "atom_type", "status"]
+            },
+        },
+        "T2": {
+            "type": "object",
+            "fields": list(_STAGE_FIELDS["plan"]),
+            "all_values": "array",
+        },
+        "artifact": {
+            "type": "object",
+            "fields": "task_generation_contract.output_keys",
+            "exact_fields": True,
+        },
+    },
+}
+
+
+def _render_generation_prompt(template: str, **values: Any) -> str:
+    rendered = template
+    for key, value in values.items():
+        rendered = rendered.replace("{" + key + "}", str(value))
+    return rendered
+
+
 _COVERAGE_STOPWORDS = {
     "a", "an", "and", "as", "at", "be", "by", "for", "from", "in", "is",
     "of", "on", "or", "the", "to", "with",
@@ -172,11 +254,28 @@ def _validate_provider_stage(
         "execution": empty_execution,
     }
     sections[stage] = payload
-    return validate_checkpoint_payload(
+    normalized = validate_checkpoint_payload(
         sections,
         require_conditional_semantics=True,
         require_atomic_obligations=True,
     )[stage]
+    required_fields = {
+        "interpretation": ("constraints", "atomic_obligations"),
+        "plan": ("validation_checks", "coverage_targets"),
+    }[stage]
+    missing = tuple(field for field in required_fields if not normalized[field])
+    if missing:
+        raise SubstantiveCompletenessError(stage, missing)
+    return normalized
+
+
+def _validate_artifact_shape(
+    payload: dict[str, Any], output_keys: list[Any]
+) -> dict[str, Any]:
+    expected = {str(key) for key in output_keys}
+    if set(payload) != expected:
+        raise ValueError("terminal artifact keys do not match the generation contract")
+    return dict(payload)
 
 
 def _constraint_lineage(
@@ -350,10 +449,27 @@ class StagedProviderRuntime:
         *,
         clock: Clock | None = None,
         context_manager: ContextManager | None = None,
+        stage_completion: StageCompletion | None = None,
+        max_stage_attempts: int = 1,
+        stage_output_tokens: Mapping[str, int] | None = None,
     ) -> None:
+        if (
+            type(max_stage_attempts) is not int
+            or max_stage_attempts < 1
+            or max_stage_attempts > 2
+        ):
+            raise ValueError("max_stage_attempts must be one or two")
         self._provider = provider
         self._clock = clock or (lambda: datetime.now(timezone.utc))
         self._context_manager = context_manager or NoCompactionManager()
+        self._stage_completion = stage_completion
+        self._max_stage_attempts = max_stage_attempts
+        stage_limits = dict(stage_output_tokens or {})
+        if set(stage_limits) - {"T1", "T2", "artifact"}:
+            raise ValueError("stage_output_tokens contains an unknown stage")
+        if any(type(value) is not int or value <= 0 for value in stage_limits.values()):
+            raise ValueError("stage_output_tokens must contain positive integers")
+        self._stage_output_tokens = stage_limits
 
     def _complete(
         self,
@@ -364,6 +480,7 @@ class StagedProviderRuntime:
         stage: str,
         *,
         context_index: int,
+        response_validator: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
     ) -> tuple[dict[str, Any], dict[str, Any]]:
         context_started = _now_iso(self._clock)
         transformation = self._context_manager.prepare(prompt, stage=stage)
@@ -376,31 +493,60 @@ class StagedProviderRuntime:
             started_at=context_started,
             ended_at=context_ended,
         )
-        started = _now_iso(self._clock)
-        start_perf = time.perf_counter()
-        response = self._provider.complete(
-            ProviderRequest(
-                prompt=transformation.prompt,
-                pair=provider_visible_pair(pair, variant=variant, task_family=task_family),
-                variant="opaque",
-                task_family=task_family,
-            )
+        request = ProviderRequest(
+            prompt=transformation.prompt,
+            pair=provider_visible_pair(pair, variant=variant, task_family=task_family),
+            variant="opaque",
+            task_family=task_family,
+            max_output_tokens=self._stage_output_tokens.get(stage),
         )
-        latency_ms = (time.perf_counter() - start_perf) * 1000.0
-        ended = _now_iso(self._clock)
+        last_error: Exception | None = None
+        for attempt in range(1, self._max_stage_attempts + 1):
+            attempt_request = request
+            if attempt > 1:
+                attempt_request = ProviderRequest(
+                    prompt=request.prompt + GENERATION_PROMPT_TEMPLATES["retry"],
+                    pair=request.pair,
+                    variant=request.variant,
+                    task_family=request.task_family,
+                    max_output_tokens=request.max_output_tokens,
+                )
+            started = _now_iso(self._clock)
+            start_perf = time.perf_counter()
+            try:
+                response = (
+                    self._stage_completion(attempt_request, stage, attempt)
+                    if self._stage_completion is not None
+                    else self._provider.complete(attempt_request)
+                )
+                parsed = _json_object(response)
+                if response_validator is not None:
+                    parsed = response_validator(parsed)
+            except Exception as error:
+                last_error = error
+                if attempt >= self._max_stage_attempts:
+                    raise
+                continue
+            latency_ms = (time.perf_counter() - start_perf) * 1000.0
+            ended = _now_iso(self._clock)
+            break
+        else:
+            assert last_error is not None
+            raise last_error
         metadata = {
             "stage": stage,
+            "attempt": attempt,
             "started_at": started,
             "ended_at": ended,
             "latency_ms": round(latency_ms, 3),
             "request_sha256": hashlib.sha256(
-                transformation.prompt.encode("utf-8")
+                attempt_request.prompt.encode("utf-8")
             ).hexdigest(),
             "response_sha256": hashlib.sha256(response.encode("utf-8")).hexdigest(),
             "context_management_event": context_event,
         }
         metadata.update(_bounded_provider_call_metadata(self._provider))
-        return _json_object(response), metadata
+        return parsed, metadata
 
     def execute(
         self,
@@ -410,42 +556,36 @@ class StagedProviderRuntime:
     ) -> AgentExecution:
         context_events: list[dict[str, Any]] = []
         requirement = _requirement(pair, variant)
-        base = f"Task family: {task_family}\nRequirement:\n{requirement}\n\n"
         interpretation, t1 = self._complete(
-            base
-            + "Return JSON with exactly: constraints, quantities, unresolved_references, "
-            "assumptions, contradictions, conditional_semantics, atomic_obligations. "
-            "Every top-level value must be a list. "
-            "conditional_semantics items must contain antecedent, consequent, necessity_status "
-            "(sufficient_only|also_necessary|undetermined), temporal_relation "
-            "(during|next_state|eventually|irrelevant|undetermined), and negative_case "
-            "({status: specified|not_specified|not_applicable, description: string|null}). "
-            "atomic_obligations items must contain only constraint_index (1-based), "
-            "atom_type (actor|action|object|condition|threshold|scope|temporal|exception|modality), "
-            "and status (present|absent|uncertain); do not include raw obligation text. "
-            "Use an empty list when no atomic observation is available. "
-            "This is an observable "
-            "task summary; do not reveal hidden reasoning, labels, variants, or an artifact.",
+            _render_generation_prompt(
+                GENERATION_PROMPT_TEMPLATES["T1"],
+                task_family=task_family,
+                requirement=requirement,
+            ),
             pair,
             variant,
             task_family,
             "T1",
             context_index=1,
+            response_validator=lambda value: _validate_provider_stage(
+                value, "interpretation"
+            ),
         )
         context_events.append(t1["context_management_event"])
         interpretation = _validate_provider_stage(interpretation, "interpretation")
         plan, t2 = self._complete(
-            base
-            + "Observable interpretation:\n"
-            + json.dumps(interpretation, sort_keys=True)
-            + "\nReturn JSON with exactly: validation_checks, planned_tools, coverage_targets. "
-            "Every value must be a list. Do not reveal hidden reasoning, labels, variants, "
-            "or a terminal artifact.",
+            _render_generation_prompt(
+                GENERATION_PROMPT_TEMPLATES["T2"],
+                task_family=task_family,
+                requirement=requirement,
+                interpretation_json=json.dumps(interpretation, sort_keys=True),
+            ),
             pair,
             variant,
             task_family,
             "T2",
             context_index=2,
+            response_validator=lambda value: _validate_provider_stage(value, "plan"),
         )
         context_events.append(t2["context_management_event"])
         plan = _validate_provider_stage(plan, "plan")
@@ -469,18 +609,20 @@ class StagedProviderRuntime:
 
         output_keys = pair["generation_contract"][task_family]["output_keys"]
         artifact, final = self._complete(
-            base
-            + "Observable interpretation:\n"
-            + json.dumps(interpretation, sort_keys=True)
-            + "\nObservable plan:\n"
-            + json.dumps(plan, sort_keys=True)
-            + f"\nReturn one JSON object containing exactly these keys: {list(output_keys)}. "
-            "Do not include markdown or commentary.",
+            _render_generation_prompt(
+                GENERATION_PROMPT_TEMPLATES["artifact"],
+                task_family=task_family,
+                requirement=requirement,
+                interpretation_json=json.dumps(interpretation, sort_keys=True),
+                plan_json=json.dumps(plan, sort_keys=True),
+                output_keys=list(output_keys),
+            ),
             pair,
             variant,
             task_family,
             "artifact",
             context_index=3,
+            response_validator=lambda value: _validate_artifact_shape(value, output_keys),
         )
         all_context_events = [*context_events, final["context_management_event"]]
         observations = (
@@ -538,4 +680,10 @@ class StagedProviderRuntime:
         )
 
 
-__all__ = ["StagedProviderRuntime"]
+__all__ = [
+    "GENERATION_OUTPUT_SCHEMA",
+    "GENERATION_PROMPT_TEMPLATES",
+    "StageCompletion",
+    "SubstantiveCompletenessError",
+    "StagedProviderRuntime",
+]
