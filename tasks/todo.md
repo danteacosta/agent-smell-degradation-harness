@@ -27,8 +27,16 @@ Verification checkpoint:
 - [x] Run the low-cost native smoke: 4/4 RF-04 episodes passed across OpenAI and DeepSeek.
 - [x] Record the corrected prompt hash `60077136a90e5be355bda5f1049ab39b3152381b27344f8f8833a3a5ef6f3330`.
 - [x] Record the corrected exploratory configuration hash `160423c8ef1beb6c343bc5f51ab5550f9e40f7aeda0aec7049c5cabc27b2e150`.
-- [ ] Run and review one corrected 120-episode exploratory report after fresh authorization for the external run.
+- [x] Compact the T2 planning context after observed provider usage exceeded the frozen input/output bound; record prompt hash `85859c0a8ff5f7ab784bab4e4188aa1de7ec4bd84f3e0547927e266c569e2326` and configuration hash `fecd185cd77c0ac12b6372a3ae301fd531e112e1497cf417ec5a86ca12eeafb0`.
+- [x] Bound T1 constraint summaries after the first DeepSeek generation response truncated at the frozen output limit; record prompt hash `83b936236c31220d42508b6b42a4da3c6b2e5da8f1d09ffe4aec86f9b20a816e` and configuration hash `993eff92c5466b2bc7fdcc741a7582dd8a8f2c14f18ca6a70435f2de9896727a`.
+- [x] Run and review one corrected 120-episode exploratory report after fresh authorization for the external run.
 - [ ] Promote no `clean`/`uncertain` count to H1/H2 until substantive completeness and independent label conditions are verified.
+
+Corrected run result: 120/120 episodes, 240/240 artifacts, 288/288 judging
+occurrences per relation, 480/480 substantive T1/T2 checks, 720
+`no_compaction` events, zero incomplete episodes, and US$0.194731 observed
+provider cost. Consolidated exploratory labels were 279 `clean` and 9
+`uncertain`; they remain machine observations rather than human ground truth.
 
 ## Progress
 
@@ -89,12 +97,12 @@ suite check.
 - [x] Add the article-informed typed hard-lane proxy as a non-confirmatory secondary mechanism.
 - [x] Add hash-bound atomic-obligation observations without raw obligation text or terminal evidence.
 - [x] Add the complete clean/smelly × no-compaction/compaction interaction estimator.
-- [ ] Provide credentials through the approved secret mechanism.
-- [ ] Select at least two real provider/model configurations and record prompt/config versions.
-- [ ] Qualify the real runtime context-management hook and verify pre-final event emission on both provider configurations.
+- [x] Provide credentials through the approved secret mechanism for the private exploratory run; credentials remain untracked.
+- [x] Select at least two real provider/model configurations and record prompt/config versions for the exploratory run: OpenAI GPT-5.6 Luna and DeepSeek V4 Pro.
+- [x] Qualify the real runtime context-management hook and verify pre-final event emission on both provider configurations for the exploratory `no_compaction` path.
 - [ ] Run the separate clean/smelly × no-compaction/compaction-stress interaction check; keep it outside the 120-episode primary count.
 - [ ] Qualify the typed hard-lane proxy against the same budget and provider configuration as the uniform stress cell; report it as a mechanism ablation.
-- [ ] Run independent repetitions with measured latency, cost, token/error rates, and Linux/CI sandboxing.
+- [ ] Run additional independent repetitions with measured latency, cost, token/error rates, and Linux/CI sandboxing; the corrected exploratory run is not a substitute for this robustness study.
 - [ ] Expand the corpus with reviewed natural variants, difficult clean cases, more projects/domains, and project-held-out splits.
 - [ ] Run the intervention comparison: agent without verifier, with alert, and with alert plus revision opportunity.
 - [ ] Define hidden-test pass rate, introduced defects, false alerts, review time, cost/tokens, clarification count, and post-alert correction rate.
@@ -154,11 +162,15 @@ triage to contextual review and hidden behavioral validation.
       duplicate selection.
 - [x] Add an advisor approval memo with explicit budget, ethics, corpus, and
       adjudication decisions.
-- [ ] Run the real-provider smoke in the private environment with both keys,
-      immutable model versions, and frozen prices.
-- [ ] Resolve at least 12 licensed, independently auditable intents across at
-      least 6 projects; the current checked-in count is 7/12.
+- [x] Run the real-provider smoke and corrected 120-episode exploratory run in
+      the private environment with both keys, immutable model versions, and
+      frozen prices; the final cost was US$0.194731.
+- [x] Resolve 12 licensed, independently auditable exploratory intents across
+      6 projects in the private v4 manifest; confirmatory reuse remains subject
+      to governance approval.
 - [ ] Name two annotators and an independent adjudicator; complete rehearsal,
       missing-label export, alpha, and bootstrap interval.
-- [ ] Obtain advisor/institution approval and record the provider and
-      annotation-hour caps.
+- [x] Record advisor authorization for the non-confirmatory exploratory scope
+      and the US$1.00 provider cap.
+- [ ] Obtain institutional/ethics approval and record confirmatory provider
+      and annotation-hour caps before any confirmatory collection.

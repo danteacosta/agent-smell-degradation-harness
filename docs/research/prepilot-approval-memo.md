@@ -1,12 +1,15 @@
 # Advisor approval memo: non-confirmatory pre-pilot
 
-Date prepared: 2026-09-01  
-Decision status: **pending approval**
+Date prepared: 2026-09-05
+Decision status: **exploratory run complete; confirmatory governance pending**
 
-## Decision requested
+## Decision recorded
 
-Approve preparation and execution of the structured, non-confirmatory
-pre-pilot only after the technical and governance gates below return `go`.
+The advisor authorized preparation and execution of the structured,
+non-confirmatory exploratory pre-pilot with two LLM judges and a US$1.00
+provider cap. The run has now completed. This authorization does not cover
+confirmatory collection or any change to H1, H2, the smell taxonomy, the
+precision plan, or the 120-episode design.
 
 The requested scope is exactly:
 
@@ -23,22 +26,19 @@ The requested scope is exactly:
 - runtime-native T1–T3 evidence before T4;
 - blinded human/adjudicated outcome labels.
 
-This approval is not approval for confirmatory collection or for changing H1,
-H2, the smell taxonomy, the precision plan, or the 120-episode design.
-
-## Evidence required before launch
+## Evidence required before confirmatory use
 
 | Decision item | Required evidence | Status |
 |---|---|---|
-| Corpus and rights | 12 unique intents, at least 6 projects, exact source/license evidence, hashes, near-clone review, manipulation checks, and a timestamped review of redistribution, derivative-use, attribution, and external-provider processing rights | pending; candidate pool is not admitted |
-| Provider qualification | One clean and one defective smoke per provider, native T1–T3, substantive completeness, temporal ordering, atomic obligations, context events, usage, latency, hashes, and cost | minimal smoke passed; full corrected run pending |
+| Corpus and rights | 12 unique intents, at least 6 projects, exact source/license evidence, hashes, near-clone review, manipulation checks, and a timestamped review of redistribution, derivative-use, attribution, and external-provider processing rights | exploratory corpus admitted in approved private storage; confirmatory reuse remains a governance decision |
+| Provider qualification | One clean and one defective smoke per provider, native T1–T3, substantive completeness, temporal ordering, atomic obligations, context events, usage, latency, hashes, and cost | smoke and corrected 120-episode exploratory run completed; not confirmatory qualification |
 | Annotation | Frozen rubric, label policy, and outcome-blind 20% duplicate subset | LLM judges authorized for exploratory use; human confirmatory path pending |
 | Budget | Measured provider estimate × 120 × 1.25 plus annotation hours and approved cap | US$0.988200 reserved under the US$1.00 exploratory cap; annotation hours pending |
-| Reproducibility | Immutable source/config/model versions, resolved configuration hash, private raw inputs, redacted report, and clean-environment command | corrected configuration is hashed; full-run report pending |
+| Reproducibility | Immutable source/config/model versions, resolved configuration hash, private raw inputs, redacted report, and clean-environment command | completed report and audit package preserved in approved private storage |
 | Ethics/data governance | Advisor/institution determines whether human annotation or external-provider transmission needs ethics, privacy, or data-processing approval | pending |
 | Context mechanism | Primary no-compaction isolation and separately reported typed-hard-lane interaction/mechanism ablation | implemented in protocol; real qualification pending |
 
-## Human decisions requested
+## Human decisions still required for confirmatory use
 
 Please record one answer for each:
 

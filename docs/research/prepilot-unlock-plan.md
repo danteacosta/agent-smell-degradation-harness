@@ -1,6 +1,6 @@
 # Pre-pilot unlock plan
 
-Status: 2026-09-03. This plan separates operational readiness from evidence
+Status: 2026-09-05. This plan separates operational readiness from evidence
 that could support H1 or H2. A smoke test, an LLM judge, or a local seed is not
 confirmatory evidence.
 
@@ -8,13 +8,13 @@ confirmatory evidence.
 
 | Gate | Evidence available | Current status | Owner |
 |---|---|---|---|
-| Main synchronization | PR #35 is squash-merged as `e2b5f17bbdda0c072a89c6f3f4500f367613c929`; `eval-gate`, `constraint-replay-gate`, and `wedge-check` passed | Reconciled on `main`; launch fields remain fail-closed | Engineering |
+| Main synchronization | PR #37 is merged on `main` at `be3c60b`; PR #38 carries the corrected-run audit and documentation reconciliation | Remote state reconciled; launch fields remain fail-closed for confirmatory use | Engineering |
 | Corpus | v4 intake, immutable source references, rights review, hashes, and a frozen redacted manifest | 12 exploratory records across 6 projects validated; confirmatory admission remains a governance decision | Researcher and advisor |
-| Providers | Runtime-native OpenAI and DeepSeek adapters, usage/cost propagation, and native smoke CLI | Latest minimal smoke passed both clean and defective RF-04 episodes for both providers; full corrected exploratory run is not complete | Operator |
-| Substantive evidence | T1/T2 non-empty-field gate and retry contract | Implemented and covered by tests; full-run coverage is still pending | Engineering and operator |
+| Providers | Runtime-native OpenAI and DeepSeek adapters, usage/cost propagation, and native smoke CLI | Corrected 120-episode exploratory run completed with both provider configurations; the result remains non-confirmatory | Operator |
+| Substantive evidence | T1/T2 non-empty-field gate and retry contract | 480/480 required T1/T2 stage checks passed; no incomplete episode or artifact was recorded | Engineering and operator |
 | Annotation | Frozen rubric and blinded-packet tooling | Advisor authorized LLM judges for this exploratory phase; no human labels or adjudication exist | Advisor and operator |
 | Budget | Per-stage cost ledger and frozen prices | Current corrected exploratory configuration reserves US$0.988200 in the US$1.00 cap; annotation effort is not included | Operator and advisor |
-| Reproducibility | Prompt, schema, model, price, source, pair, request, response, and run hashes | Corrected exploratory configuration resolves to `160423c8ef1beb6c343bc5f51ab5550f9e40f7aeda0aec7049c5cabc27b2e150`; a full-run report is still missing | Operator |
+| Reproducibility | Prompt, schema, model, price, source, pair, request, response, and run hashes | Corrected run report, append-only ledger, hashes, usage, and context audit are preserved in approved private storage | Operator |
 | Readiness | Fail-closed `prepilot_readiness` report | `no_go` for any claim beyond an exploratory pre-pilot; no H1/H2 claim is authorized | Researcher and advisor |
 
 These are process statuses, not efficacy results.
@@ -83,11 +83,25 @@ per provider: 4/4 episodes passed with `no_compaction`, runtime-native T1-T3
 and artifact stages, usage, and measured cost. The smoke report remains
 `smoke_only`.
 
-The 120-episode corrected rerun has not yet been verified. The execution layer
-blocked another full external rerun after the earlier failed attempts; it
-requires a fresh explicit authorization for that single run. Until it is
-completed, the corrected configuration hash is a planned run identity, not a
-claim about results.
+The 120-episode corrected rerun was executed after fresh authorization and
+verified from the private redacted report. It completed 120/120 episodes,
+240/240 artifacts, and 288/288 judging occurrences for each judge relation.
+All 480 required T1/T2 substantive checks passed; there were no incomplete
+episodes, incomplete artifacts, or relation failures. The run recorded 720
+`no_compaction` events and zero compactions. Its consolidated exploratory
+labels were 279 `clean` and 9 `uncertain`, at an observed provider cost of
+US$0.194731 within the US$1.00 cap.
+
+These are operational and exploratory findings. They do not establish human
+label validity, artifact correctness, a degradation rate, H1, or H2.
+
+The token-fit correction keeps the frozen stage bounds unchanged. T1 limits its
+constraint summary to six words; T2 sends only the constraint summary and
+atomic-obligation fields needed for planning, uses compact JSON, and limits
+each planned evidence phrase to four words. This addresses the observed
+provider usage without increasing the US$1.00 cap. The corrected protocol was
+then exercised in the completed run described above; its prompt and
+configuration identities are retained privately with the report.
 
 ## Real-provider smoke
 
@@ -163,8 +177,8 @@ reported, not imputed.
 
 The corrected exploratory configuration uses the conservative peak-price
 worksheet and reserves US$0.988200 in the US$1.00 cap, including worst-case
-retries and the 25% contingency. A missing usage value or price is never
-treated as zero.
+retries and the 25% contingency. The completed run spent US$0.194731. A
+missing usage value or price is never treated as zero.
 
 The private run package must preserve the redacted report, append-only cost
 ledger, frozen corpus and constraint hashes, source revision, configuration
@@ -175,15 +189,18 @@ responses, artifacts, and credentials stay outside tracked artifacts.
 ## Approval sequence
 
 1. Confirm the 120-episode non-confirmatory scope and `no_compaction` primary
-   condition.
+   condition. **Complete for the exploratory run.**
 2. Confirm the 12-record corpus and six-project minimum under v4 rights review.
-3. Verify the current two-provider smoke report.
+   **Complete for the exploratory run; raw source evidence remains private.**
+3. Verify the current two-provider smoke report. **Complete.**
 4. Confirm the advisor's authorization for LLM judges and the US$1.00 provider
-   cap.
-5. Authorize one corrected 120-episode external run.
+   cap. **Complete for the exploratory run.**
+5. Authorize one corrected 120-episode external run. **Complete.**
 6. Review the redacted report for completeness, failures, cost, and hashes.
-7. Keep H1/H2 and confirmatory readiness blocked until independent labels and
-   the registered analysis gates are complete.
+   **Complete in approved private storage.**
+7. Keep H1/H2 and confirmatory readiness blocked until human-model calibration,
+   independent labels, and the registered governance and analysis gates are
+   complete. **Still required.**
 
 ## Sources
 

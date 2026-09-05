@@ -3,7 +3,7 @@
   "stage": "exploratory_llm_judged_pre_pilot",
   "task_family": "test_gen",
   "context_condition": "no_compaction",
-  "source_revision": "2aa95c8db9999b8a2cce303690f12d1d69894984",
+  "source_revision": "f87f0b9bb6cbb9ac66fc25b369fb9a68471a7dc8",
   "providers": [
     {
       "id": "openai-primary",
@@ -87,7 +87,7 @@
     "unused_headroom_microusd": 11800
   },
   "protocol_hashes": {
-    "generation_prompt_template_sha256": "60077136a90e5be355bda5f1049ab39b3152381b27344f8f8833a3a5ef6f3330",
+    "generation_prompt_template_sha256": "83b936236c31220d42508b6b42a4da3c6b2e5da8f1d09ffe4aec86f9b20a816e",
     "judge_prompt_template_sha256": "8fda706071fe18750d029ebab55638be3ad9eef1ba636bcce6d784f2c420aecb",
     "generation_output_schema_sha256": "ec8e16b98ed4610f090c5187f87cc6dae169841f7ff240446c576a56b5908960",
     "judge_response_schema_sha256": "f8fd7564fb44e53f9fdac6f5e38634d724382d051d10c2ac88fbbc1e36a7db19",
