@@ -98,12 +98,20 @@ pre-final evidence. A T1 response must contain non-empty `constraints` and
 `incomplete_substantive_evidence` if the response has the right shape but no
 usable content.
 
-The corrected exploratory prompt protocol resolves to generation prompt hash
-`60077136a90e5be355bda5f1049ab39b3152381b27344f8f8833a3a5ef6f3330`.
-The corrected exploratory configuration resolves to
-`160423c8ef1beb6c343bc5f51ab5550f9e40f7aeda0aec7049c5cabc27b2e150`.
+The token-fit-corrected exploratory prompt protocol resolves to generation
+prompt hash
+`83b936236c31220d42508b6b42a4da3c6b2e5da8f1d09ffe4aec86f9b20a816e`.
+The corresponding exploratory configuration resolves to
+`993eff92c5466b2bc7fdcc741a7582dd8a8f2c14f18ca6a70435f2de9896727a` after the
+T1 summary bound was added.
 These hashes identify the next run; they do not imply that the full run has
 already passed.
+
+The correction limits the T1 constraint summary to six words, removes the
+repeated raw requirement from T2, passes only the constraint summary and
+atomic-obligation fields, serializes that context compactly, and limits each
+planned evidence phrase to four words. The stage token bounds and US$1.00 cap
+remain unchanged.
 
 ## Downstream use
 
