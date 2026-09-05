@@ -103,25 +103,58 @@
     "annotation_status": "machine_generated",
     "adjudication": "none_forced",
     "human_adjudication_status": "not_performed",
-    "max_total_cost_usd": 1.0,
+    "max_total_cost_usd": 1,
     "disagreement_policy": "uncertain_no_forced_adjudication",
     "human_annotation_substitute": false,
     "report_reference": "private/prepilot-live-requirement-visible.json",
     "substantive_completeness": {
       "required_fields": {
-        "T1": ["constraints", "atomic_obligations"],
-        "T2": ["validation_checks", "coverage_targets"]
+        "T1": [
+          "constraints",
+          "atomic_obligations"
+        ],
+        "T2": [
+          "validation_checks",
+          "coverage_targets"
+        ]
       },
-      "gate_status": "implemented_and_smoke_verified",
+      "gate_status": "implemented_and_full_run_verified",
       "historical_run_status": "not_valid_for_h1_h2",
       "failure_state": "incomplete_substantive_evidence"
     },
     "corrected_protocol": {
-      "status": "smoke_verified_full_run_pending",
+      "status": "completed_with_uncertainty_private_report_review_pending",
       "generation_prompt_template_sha256": "83b936236c31220d42508b6b42a4da3c6b2e5da8f1d09ffe4aec86f9b20a816e",
-      "configuration_sha256": "993eff92c5466b2bc7fdcc741a7582dd8a8f2c14f18ca6a70435f2de9896727a",
+      "configuration_sha256": "afba23372866615bd8ac4c22dc6440f742b3612f5b67f59f7c0fde1ba781d2b0",
       "reserved_cost_usd": 0.9882,
-      "full_run_report_reference": null
+      "full_run_report_reference": null,
+      "source_revision": "0015e38529ae12e4a2d1881ad942a8c429499615",
+      "observed_cost_usd": 0.194731,
+      "observed_provider_api_calls": 1296,
+      "observed_artifact_count": 240,
+      "observed_judge_occurrence_count": 288,
+      "observed_judge_relation_counts": {
+        "self": 288,
+        "cross": 288
+      },
+      "observed_consolidated_label_counts": {
+        "clean": 279,
+        "uncertain": 9
+      },
+      "observed_model_model_agreement_rate": 0.96875,
+      "substantive_stage_checks": {
+        "passed": 480,
+        "failed": 0
+      },
+      "context_events": {
+        "no_compaction": 720,
+        "compaction": 0
+      },
+      "relation_failures": {
+        "self": 0,
+        "cross": 0
+      },
+      "full_run_report_storage": "approved_private_storage_not_tracked"
     }
   },
   "go_no_go": {
