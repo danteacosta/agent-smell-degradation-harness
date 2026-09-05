@@ -97,12 +97,12 @@ suite check.
 - [x] Add the article-informed typed hard-lane proxy as a non-confirmatory secondary mechanism.
 - [x] Add hash-bound atomic-obligation observations without raw obligation text or terminal evidence.
 - [x] Add the complete clean/smelly × no-compaction/compaction interaction estimator.
-- [ ] Provide credentials through the approved secret mechanism.
-- [ ] Select at least two real provider/model configurations and record prompt/config versions.
-- [ ] Qualify the real runtime context-management hook and verify pre-final event emission on both provider configurations.
+- [x] Provide credentials through the approved secret mechanism for the private exploratory run; credentials remain untracked.
+- [x] Select at least two real provider/model configurations and record prompt/config versions for the exploratory run: OpenAI GPT-5.6 Luna and DeepSeek V4 Pro.
+- [x] Qualify the real runtime context-management hook and verify pre-final event emission on both provider configurations for the exploratory `no_compaction` path.
 - [ ] Run the separate clean/smelly × no-compaction/compaction-stress interaction check; keep it outside the 120-episode primary count.
 - [ ] Qualify the typed hard-lane proxy against the same budget and provider configuration as the uniform stress cell; report it as a mechanism ablation.
-- [ ] Run independent repetitions with measured latency, cost, token/error rates, and Linux/CI sandboxing.
+- [ ] Run additional independent repetitions with measured latency, cost, token/error rates, and Linux/CI sandboxing; the corrected exploratory run is not a substitute for this robustness study.
 - [ ] Expand the corpus with reviewed natural variants, difficult clean cases, more projects/domains, and project-held-out splits.
 - [ ] Run the intervention comparison: agent without verifier, with alert, and with alert plus revision opportunity.
 - [ ] Define hidden-test pass rate, introduced defects, false alerts, review time, cost/tokens, clarification count, and post-alert correction rate.
@@ -162,11 +162,15 @@ triage to contextual review and hidden behavioral validation.
       duplicate selection.
 - [x] Add an advisor approval memo with explicit budget, ethics, corpus, and
       adjudication decisions.
-- [ ] Run the real-provider smoke in the private environment with both keys,
-      immutable model versions, and frozen prices.
-- [ ] Resolve at least 12 licensed, independently auditable intents across at
-      least 6 projects; the current checked-in count is 7/12.
+- [x] Run the real-provider smoke and corrected 120-episode exploratory run in
+      the private environment with both keys, immutable model versions, and
+      frozen prices; the final cost was US$0.194731.
+- [x] Resolve 12 licensed, independently auditable exploratory intents across
+      6 projects in the private v4 manifest; confirmatory reuse remains subject
+      to governance approval.
 - [ ] Name two annotators and an independent adjudicator; complete rehearsal,
       missing-label export, alpha, and bootstrap interval.
-- [ ] Obtain advisor/institution approval and record the provider and
-      annotation-hour caps.
+- [x] Record advisor authorization for the non-confirmatory exploratory scope
+      and the US$1.00 provider cap.
+- [ ] Obtain institutional/ethics approval and record confirmatory provider
+      and annotation-hour caps before any confirmatory collection.
