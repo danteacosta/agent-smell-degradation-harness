@@ -64,17 +64,17 @@ of a learned classifier or a token-matched benchmark. T1 atomic obligations
 and T3 hash-bound observations are measured as runtime evidence, not as
 outcome labels.
 
-## Gates before the first full episode
+## Gates and readiness boundary
 
 | Gate | Required evidence | Current state |
 |---|---|---|
 | Advisor | Explicit authorization for the non-confirmatory scope and LLM-judge role | Authorized for exploratory use |
 | Corpus | 12 unique, rights-reviewed intents across 6 projects, immutable references, hashes, clone review, and manipulation checks | Validated in private v4 manifest |
-| Providers | Both real configurations pass native temporal, schema, completeness, failure, usage, and hash checks | Minimal smoke passed; full-run verification pending |
+| Providers | Both real configurations pass native temporal, schema, completeness, failure, usage, and hash checks | Smoke and corrected 120-episode exploratory run completed; confirmatory qualification remains closed |
 | Annotation | Frozen rubric, outcome-blind duplicate selection, and explicit label policy | LLM judge path authorized; human confirmatory path not established |
-| Leakage | T1-T3 cannot read artifact, oracle, mutation, provider identity, or outcome label | Implemented; verify in the corrected run |
+| Leakage | T1-T3 cannot read artifact, oracle, mutation, provider identity, or outcome label | Implemented and preserved in the corrected exploratory run |
 | Budget | Measured provider estimate, retries, 25% contingency, and approved cap | US$0.988200 reserved under US$1.00 |
-| Reproducibility | Frozen prompts, configuration hash, model/version, price, source revision, and immutable run manifest | Corrected config is frozen; full-run report pending |
+| Reproducibility | Frozen prompts, configuration hash, model/version, price, source revision, and immutable run manifest | Corrected report and audit package reviewed in approved private storage |
 
 Run the readiness command with:
 
@@ -85,8 +85,22 @@ python -m eval.prepilot_readiness
 Credentials never enter that file. They remain in the private runtime
 environment and are excluded from tracked configuration and reports.
 
-It remains fail-closed while any required evidence is missing. A passing
-smoke does not change that state.
+It remains fail-closed for confirmatory readiness while any required evidence
+is missing. A passing smoke or completed exploratory run does not change that
+boundary.
+
+## Corrected exploratory-run checkpoint
+
+The corrected 120-episode run completed 120/120 episodes and 240/240
+artifacts. It reconciled 1,296 provider calls and 288 judging occurrences per
+judge relation, with 288 `self` and 288 `cross` judgments. All 480 required
+T1/T2 substantive checks passed; there were no incomplete episodes, incomplete
+artifacts, relation failures, or compactions across 720 `no_compaction` events.
+The consolidated machine labels were 279 `clean` and 9 `uncertain`, at an
+observed provider cost of US$0.194731.
+
+This checkpoint supports operational feasibility only. It does not establish
+human label validity, artifact correctness, a degradation rate, H1, or H2.
 
 ## Provider qualification protocol
 

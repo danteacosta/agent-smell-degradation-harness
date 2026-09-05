@@ -29,8 +29,14 @@ Verification checkpoint:
 - [x] Record the corrected exploratory configuration hash `160423c8ef1beb6c343bc5f51ab5550f9e40f7aeda0aec7049c5cabc27b2e150`.
 - [x] Compact the T2 planning context after observed provider usage exceeded the frozen input/output bound; record prompt hash `85859c0a8ff5f7ab784bab4e4188aa1de7ec4bd84f3e0547927e266c569e2326` and configuration hash `fecd185cd77c0ac12b6372a3ae301fd531e112e1497cf417ec5a86ca12eeafb0`.
 - [x] Bound T1 constraint summaries after the first DeepSeek generation response truncated at the frozen output limit; record prompt hash `83b936236c31220d42508b6b42a4da3c6b2e5da8f1d09ffe4aec86f9b20a816e` and configuration hash `993eff92c5466b2bc7fdcc741a7582dd8a8f2c14f18ca6a70435f2de9896727a`.
-- [ ] Run and review one corrected 120-episode exploratory report after fresh authorization for the external run.
+- [x] Run and review one corrected 120-episode exploratory report after fresh authorization for the external run.
 - [ ] Promote no `clean`/`uncertain` count to H1/H2 until substantive completeness and independent label conditions are verified.
+
+Corrected run result: 120/120 episodes, 240/240 artifacts, 288/288 judging
+occurrences per relation, 480/480 substantive T1/T2 checks, 720
+`no_compaction` events, zero incomplete episodes, and US$0.194731 observed
+provider cost. Consolidated exploratory labels were 279 `clean` and 9
+`uncertain`; they remain machine observations rather than human ground truth.
 
 ## Progress
 

@@ -98,27 +98,34 @@ pre-final evidence. A T1 response must contain non-empty `constraints` and
 `incomplete_substantive_evidence` if the response has the right shape but no
 usable content.
 
-The token-fit-corrected exploratory prompt protocol resolves to generation
+The token-fit-corrected exploratory prompt protocol resolved to generation
 prompt hash
 `83b936236c31220d42508b6b42a4da3c6b2e5da8f1d09ffe4aec86f9b20a816e`.
-The corresponding exploratory configuration resolves to
-`993eff92c5466b2bc7fdcc741a7582dd8a8f2c14f18ca6a70435f2de9896727a` after the
-T1 summary bound was added.
-These hashes identify the next run; they do not imply that the full run has
-already passed.
+The intermediate exploratory configuration after the T1 summary bound had hash
+`993eff92c5466b2bc7fdcc741a7582dd8a8f2c14f18ca6a70435f2de9896727a`.
+The completed run additionally bound the full runtime context audit and used
+configuration hash
+`afba23372866615bd8ac4c22dc6440f742b3612f5b67f59f7c0fde1ba781d2b0` at source
+revision `0015e38529ae12e4a2d1881ad942a8c429499615`. These identities identify
+the corrected protocol used by the completed exploratory run; they do not
+authorize a confirmatory claim.
 
 The correction limits the T1 constraint summary to six words, removes the
 repeated raw requirement from T2, passes only the constraint summary and
 atomic-obligation fields, serializes that context compactly, and limits each
 planned evidence phrase to four words. The stage token bounds and US$1.00 cap
-remain unchanged.
+remain unchanged. The completed run passed all 480 required T1/T2 substantive
+checks, recorded 720 `no_compaction` events, and produced 279 `clean` versus 9
+`uncertain` consolidated exploratory labels. It spent US$0.194731.
 
 ## Downstream use
 
 - Use the frozen identifiers and peak prices in the private environment only.
-- Treat the latest report as smoke evidence for the tested RF-04 pair.
-- Keep the provider and reproducibility gates fail-closed until the corrected
-  exploratory run is complete and reviewed.
+- Treat the latest report as a completed exploratory feasibility result, not as
+  smoke evidence or confirmatory efficacy evidence.
+- Keep the provider and reproducibility gates fail-closed for confirmatory use
+  until independent human calibration and the registered governance gates are
+  complete.
 - Do not use LLM judge agreement as ground truth or as a degradation rate.
 - Do not replace the DeepSeek semantic contract with coercion or post-hoc
   repair.

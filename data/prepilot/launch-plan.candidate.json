@@ -123,11 +123,12 @@
       "failure_state": "incomplete_substantive_evidence"
     },
     "corrected_protocol": {
-      "status": "completed_with_uncertainty_private_report_review_pending",
+      "status": "completed_with_uncertainty_private_report_reviewed",
       "generation_prompt_template_sha256": "83b936236c31220d42508b6b42a4da3c6b2e5da8f1d09ffe4aec86f9b20a816e",
       "configuration_sha256": "afba23372866615bd8ac4c22dc6440f742b3612f5b67f59f7c0fde1ba781d2b0",
       "reserved_cost_usd": 0.9882,
       "full_run_report_reference": null,
+      "report_review_status": "redacted_private_report_reviewed",
       "source_revision": "0015e38529ae12e4a2d1881ad942a8c429499615",
       "observed_cost_usd": 0.194731,
       "observed_provider_api_calls": 1296,
