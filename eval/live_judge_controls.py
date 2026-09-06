@@ -46,6 +46,24 @@ def _provider(slot, env):
     return build_provider_from_slot(slot, environ=env, client=client)[0]
 
 
+def prepare_private_output(output_dir):
+    """Create a new private run directory outside every Git checkout."""
+    output = Path(output_dir).resolve()
+    if output == ROOT or ROOT in output.parents:
+        raise ValueError('live outputs must be outside the repository')
+    existing_parent = output
+    while not existing_parent.exists():
+        existing_parent = existing_parent.parent
+    checkout = subprocess.run(
+        ['git', '-C', str(existing_parent), 'rev-parse', '--is-inside-work-tree'],
+        capture_output=True, text=True, check=False)
+    if checkout.returncode == 0 and checkout.stdout.strip() == 'true':
+        raise ValueError('live outputs must be outside all Git checkouts')
+    output.mkdir(parents=True, exist_ok=False)
+    output.chmod(0o700)
+    return output
+
+
 def run_controls(config_path, output_dir, *, live=False, environ=None, provider_factory=None):
     config = load_exploratory_runtime_config(config_path)
     pack = build_controls()
@@ -74,19 +92,7 @@ def run_controls(config_path, output_dir, *, live=False, environ=None, provider_
         return report
     if not live:
         return report
-    output = Path(output_dir).resolve()
-    if output == ROOT or ROOT in output.parents:
-        raise ValueError('live outputs must be outside the repository')
-    existing_parent = output
-    while not existing_parent.exists():
-        existing_parent = existing_parent.parent
-    checkout = subprocess.run(
-        ['git', '-C', str(existing_parent), 'rev-parse', '--is-inside-work-tree'],
-        capture_output=True, text=True, check=False)
-    if checkout.returncode == 0 and checkout.stdout.strip() == 'true':
-        raise ValueError('live outputs must be outside all Git checkouts')
-    output.mkdir(parents=True, exist_ok=False)
-    output.chmod(0o700)
+    output = prepare_private_output(output_dir)
     _write(output/'manifest.json', report)
     ledger = CostLedger(output/'cost-ledger.jsonl', budget)
     rows = []
