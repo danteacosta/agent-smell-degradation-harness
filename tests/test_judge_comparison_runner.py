@@ -67,3 +67,10 @@ def test_unknown_usage_stops_after_one_attempt_and_never_retries(tmp_path):
 def test_output_cannot_be_inside_checkout():
     with pytest.raises(ValueError, match='outside'):
         run_comparison(CONFIG, Path.cwd()/'private-comparison-test', live=True)
+
+
+def test_schema_smoke_is_a_separate_16_call_plan(tmp_path):
+    report = run_comparison(CONFIG, tmp_path/'smoke', study='schema_smoke_v2')
+    assert report['planned_calls'] == 16
+    assert {r['arm'] for r in report['configurations'].values()} == {'evidence_v2'}
+    assert report['direct_experiment_envelope_microusd'] < 1_000_000

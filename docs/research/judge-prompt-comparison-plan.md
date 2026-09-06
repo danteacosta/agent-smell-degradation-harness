@@ -82,3 +82,22 @@ usage and ledgers private. Publish aggregate results only.
       edits or repeated search for a favorable result. Preserve all failures.
 - [ ] Publish aggregate results and limitations in research docs and a follow-up
       PR. Update the task list. H1/H2 and human calibration remain unchanged.
+
+## Post-collection schema-repair checkpoint
+
+The first comparison stopped after 274 attempts because one OpenAI call had
+unverified in-flight usage. It is not resumed or rewritten. Of the 138 evidence
+responses, 67 swapped coverage and severity fields; ten others used invalid
+labels. The first evidence prompt did not explicitly map the enumerations to
+the two JSON keys. Preserve that prompt and its report as v1.
+
+Before further spending, freeze an evidence-v2 prompt that names the allowed
+values for label and status separately and forbids interchanging the keys.
+Do not relax parsing or normalize the invalid v1 outputs into accepted results.
+Run only a separate 16-call format smoke: two new original templates, literal
+and deleted cases, two providers, two repetitions. These IDs/cases differ from
+the interrupted call; this is not a retry or completion of the original study.
+Keep the same 96 output-token and 512 ledger-input bounds and US$1 cap. The
+existing unresolved reservation remains recorded in the original ledger.
+The smoke tests the repaired contract only; a full new comparison remains
+necessary before claiming generalizable prompt improvement.

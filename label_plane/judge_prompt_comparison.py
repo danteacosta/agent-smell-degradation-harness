@@ -21,6 +21,12 @@ Return json with exactly label, status, evidence. Evidence is a verbatim excerpt
 INPUT_JSON:
 {data}'''
 ARMS = ('historical', 'evidence')
+EVIDENCE_PROMPT_V2 = EVIDENCE_PROMPT.replace(
+    'Return json with exactly label, status, evidence.',
+    'Return json with exactly label, status, evidence. '
+    'label must be one of: clean, minor, moderate, severe, not_visible. '
+    'status must be one of: covered, omitted, uncertain. '
+    'label is severity; status is coverage. Never interchange these fields.')
 
 
 def comparison_prompt(request, arm):
@@ -29,11 +35,12 @@ def comparison_prompt(request, arm):
         raise ValueError('comparison requires one reference per call')
     if arm == 'historical':
         return build_judge_prompt(request)
-    if arm != 'evidence':
+    if arm not in {'evidence', 'evidence_v2'}:
         raise ValueError('unknown comparison arm')
     data = {'CRITERIA': request.generated_acceptance_criteria,
             'REFERENCE': request.reference_constraints[0].text}
-    return EVIDENCE_PROMPT.format(data=json.dumps(data, ensure_ascii=True))
+    template = EVIDENCE_PROMPT if arm == 'evidence' else EVIDENCE_PROMPT_V2
+    return template.format(data=json.dumps(data, ensure_ascii=True))
 
 
 def build_comparison_pack():
@@ -85,6 +92,23 @@ def _unique_keys(pairs):
     return result
 
 
+def build_schema_smoke_pack():
+    seeds = (
+        ('Only the report owner can download the report.', 'Users can download the report.'),
+        ('An alarm sounds only after three consecutive sensor failures.',
+         'An alarm sounds after sensor failures.'),
+    )
+    cases = []
+    for seed, (reference, deleted) in enumerate(seeds):
+        for operation, criteria, covered in (('literal', reference, True), ('deleted', deleted, False)):
+            identifier = fingerprint(['schema-smoke-v2', seed, operation])[:24]
+            request = JudgeRequest(identifier, criteria, (ReferenceConstraint('c1', reference),))
+            cases.append({'request': serialize_judge_request(request), 'oracle': {
+                'stratum': 'schema_smoke', 'seed_id': seed, 'operation': operation, 'covered': covered}})
+    body = {'schema_version': 'judge-schema-smoke/v2', 'cases': cases}
+    return {**body, 'pack_sha256': fingerprint(body)}
+
+
 def parse_evidence_response(raw, request):
     request = validate_judge_request(request)
     try:
@@ -110,15 +134,17 @@ def _counts():
                    evidence_invalid=0, correct_with_valid_evidence=0)
 
 
-def score_comparison(rows, configurations, repetitions=2):
+def score_comparison(rows, configurations, repetitions=2, *, study='comparison_v1'):
     if type(repetitions) is not int or not 1 <= repetitions <= 100:
         raise ValueError('invalid repetitions')
     if not configurations or any(
         not isinstance(k, str) or len(k) != 64 or any(c not in '0123456789abcdef' for c in k)
-        or v.get('arm') not in ARMS for k, v in configurations.items()
+        or v.get('arm') not in (*ARMS, 'evidence_v2') for k, v in configurations.items()
     ):
         raise ValueError('invalid frozen configurations')
-    pack = build_comparison_pack()
+    if study not in {'comparison_v1', 'schema_smoke_v2'}:
+        raise ValueError('unknown study')
+    pack = build_comparison_pack() if study == 'comparison_v1' else build_schema_smoke_pack()
     cases = {c['request']['occurrence_id']: c for c in pack['cases']}
     indexed = {}
     for row in rows:

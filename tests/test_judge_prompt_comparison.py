@@ -6,6 +6,7 @@ from label_plane.judge_controls import build_controls
 from label_plane.exploratory_judge import build_judge_prompt, validate_judge_request
 from label_plane.judge_prompt_comparison import (
     build_comparison_pack, comparison_prompt, parse_evidence_response, score_comparison,
+    build_schema_smoke_pack,
 )
 
 
@@ -81,3 +82,16 @@ def test_plan_denominators_and_duplicates_are_not_silently_dropped():
     rows = rows_with_answer(lambda c, k: {'label': 'clean', 'status': 'covered'})
     with pytest.raises(ValueError):
         score_comparison(rows + rows[:1], configurations())
+
+
+def test_schema_repair_explicitly_maps_fields_without_reusing_comparison_cases():
+    pack = build_schema_smoke_pack()
+    assert len(pack['cases']) == 4
+    old_ids = {c['request']['occurrence_id'] for c in build_comparison_pack()['cases']}
+    assert not old_ids & {c['request']['occurrence_id'] for c in pack['cases']}
+    prompt = comparison_prompt(pack['cases'][0]['request'], 'evidence_v2')
+    assert 'label must be one of: clean, minor, moderate, severe, not_visible' in prompt
+    assert 'status must be one of: covered, omitted, uncertain' in prompt
+    with pytest.raises(ValueError):
+        parse_evidence_response('{"label":"covered","status":"clean","evidence":""}',
+                                pack['cases'][0]['request'])
