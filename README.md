@@ -2,6 +2,13 @@
 
 **Product wedge:** a requirement-integrity gate for coding agents — given a specification and live agent trace, map constraints to pre-final checks and emit **approve / warn / block** before intent loss reaches production. The product surface is deliberately separate from the confirmatory thesis protocol.
 
+**Current evidence boundary:** without human calibration, semantic judgments are
+advisory diagnostics, not validated approval or blocking decisions. Deterministic
+contract failures remain distinct. The [annotation-free evaluation track](docs/research/annotation-free-evaluation.md)
+provides 12 synthetic evaluator controls and an offline scorer while H1/H2 remain
+gated by independent human labels. Run the new regressions without dependencies:
+`python -m unittest discover -s tests -p test_judge_controls.py -v`.
+
 **Research questions:** RQ1 measures degradation induced by defective requirements; RQ2 tests whether pre-final, oracle-free observability improves deployable warning. RQ3 evaluates clarification only when that optional extension is enabled.
 
 Design for this wedge: [wedge-first reliability check spec](docs/superpowers/specs/2026-07-22-wedge-first-reliability-check-design.md)
