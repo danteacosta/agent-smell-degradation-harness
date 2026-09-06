@@ -9,6 +9,12 @@ provides 12 synthetic evaluator controls and an offline scorer while H1/H2 remai
 gated by independent human labels. Run the new regressions without dependencies:
 `python -m unittest discover -s tests -p test_judge_controls.py -v`.
 
+The [real control run](docs/research/evaluator-control-results.md) exposed zero
+deletion sensitivity in both evaluated judge configurations (72 calls,
+US$0.008785). Four executable contracts provide auxiliary implementation checks;
+the [temporal analyzer and prospective protocol](docs/research/temporal-warning-protocol.md)
+prepare early-warning measurements without claiming an empirical benefit.
+
 **Research questions:** RQ1 measures degradation induced by defective requirements; RQ2 tests whether pre-final, oracle-free observability improves deployable warning. RQ3 evaluates clarification only when that optional extension is enabled.
 
 Design for this wedge: [wedge-first reliability check spec](docs/superpowers/specs/2026-07-22-wedge-first-reliability-check-design.md)
