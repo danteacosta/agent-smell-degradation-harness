@@ -75,7 +75,7 @@ def _slots(specs):
     return {s.id:s for s in slots}
 
 
-def create_run(package, specs, authorization, output):
+def create_run(package, specs, authorization, output, *, _carryover=None):
     _authorization(authorization)
     package = Path(package).resolve()
     verify_preparation(package)
@@ -100,7 +100,8 @@ def create_run(package, specs, authorization, output):
 
     for row in reviews:
         for slot in slots:
-            add('screen:'+row['review_id']+':'+slot,slot,'screening',len(row['prompt'].encode())+64,192,row['prompt'])
+            limit=384 if _carryover and row['kind']=='source_faithfulness' else 192
+            add('screen:'+row['review_id']+':'+slot,slot,'screening',len(row['prompt'].encode())+64,limit,row['prompt'])
     for row in diagnostic:
         prompt=render_request(row['request'])
         for slot in slots:
@@ -130,6 +131,16 @@ def create_run(package, specs, authorization, output):
             occurrences.append(dict(id=occurrence,trajectory_id=trajectory['id'],duplicate=bool(copy)))
             for slot in slots: add('judge:'+occurrence+':'+slot,slot,'judging',bound,96)
     occurrences.sort(key=lambda o:digest(['judge-order/v1',o['id']]))
+    if _carryover:
+        prior_calls={c['id']:c for c in _carryover['calls']}
+        current_calls={c['id']:c for c in calls}
+        reused=0
+        for identifier in _carryover['completed']:
+            if identifier in current_calls:
+                if current_calls[identifier]!=prior_calls[identifier]: raise ValueError('changed call cannot reuse predecessor evidence')
+                reused+=1
+            else: calls.append({**prior_calls[identifier],'phase':'screening_history'})
+        if reused!=48 or len(calls)!=2760: raise ValueError('revision must retain 48 pair reviews and replace only 12 oracle reviews')
     budget=envelope(calls,{s.id:s.pricing for s in slots.values()})
     if not budget['within_cap']: raise ValueError(f'full pilot envelope exceeds US$7: {budget["reserved_microusd"]} microUSD')
     body={'schema_version':'pilot-run/v1','package':str(package),'package_sha256':package_hash,
@@ -142,11 +153,48 @@ def create_run(package, specs, authorization, output):
           'identity_limitation':'requested and returned model identifiers; no independent immutable-weights verification',
           'counts':dict(intents=24,projects=audit['project_count'],base_episodes=240,trajectories=480,duplicates=96,
                         screening_calls=60,diagnostic_calls=96,generation_calls=1440,judging_calls=1152,total_calls=2748)}
+    if _carryover:
+        body['supersedes']=_carryover['origin']
+        body['counts'].update(screening_calls=72,total_calls=2760,reused_screening_calls=48)
     output=prepare_private_output(output)
     _write(output/'launch.json',body)
     _write(output/'launch-integrity.json',{'sha256':digest(body)})
-    with PilotLedger(output/'ledger.jsonl',calls,{s.id:s.pricing for s in slots.values()},approval=True): pass
+    with PilotLedger(output/'ledger.jsonl',calls,{s.id:s.pricing for s in slots.values()},approval=True) as ledger:
+        if _carryover:
+            for identifier,row in _carryover['completed'].items(): ledger.adopt_completed(identifier,row,_carryover['origin']['ledger_head_before'])
     return body
+
+
+def revise_screening(previous, package, output):
+    """One narrow pre-diagnostic revision, preserving all costs and raw evidence.
+
+    This intentionally validates predecessor data, not its old executable code:
+    current code is frozen anew. A successor is inactive until its predecessor
+    has durably stopped with a link to the successor's exact launch hash.
+    """
+    previous=Path(previous).resolve(); package=Path(package).resolve()
+    old=read(previous/'launch.json')
+    if old.get('schema_version')!='pilot-run/v1' or old.get('supersedes'):
+        raise ValueError('only the initial screening revision is supported')
+    if digest(old)!=read(previous/'launch-integrity.json')['sha256']: raise ValueError('predecessor launch integrity mismatch')
+    _authorization(old['authorization']); slots=_slots(old['providers'])
+    verify_preparation(old['package']); verify_preparation(package)
+    if file_hash(Path(old['package'])/'manifest.json')!=old['package_sha256']: raise ValueError('predecessor package changed')
+    for name in ('corpus-candidates.json','reference-constraints.json','natural-sample-with-history.json','prices.json'):
+        if read(Path(old['package'])/name)!=read(package/name): raise ValueError('revision changes corpus, reference, sampling or prices')
+    if not (previous/'ledger.jsonl').is_file(): raise ValueError('predecessor ledger missing')
+    with PilotLedger(previous/'ledger.jsonl',old['calls'],{s.id:s.pricing for s in slots.values()},approval=True) as ledger:
+        expected={c['id'] for c in old['calls'] if c['phase']=='screening'}
+        if set(ledger.completed)!=expected or len(expected)!=60: raise ValueError('requires exactly the initial 60 screening calls; no diagnostic outcomes')
+        carry={'calls':old['calls'],'completed':ledger.completed,
+               'origin':{'directory':str(previous),'launch_sha256':file_hash(previous/'launch.json'),'ledger_head_before':ledger.head}}
+        body=create_run(package,old['providers'],old['authorization'],output,_carryover=carry)
+        try: ledger.stop('superseded_by:'+digest(body))
+        except PilotStop:
+            # Only an acknowledged durable stop activates the successor.
+            if ledger.pending: raise
+        _load(output)
+        return body
 
 
 def _load(directory):
@@ -162,6 +210,17 @@ def _load(directory):
         raise ValueError('runtime environment changed after freeze')
     if not (directory/'ledger.jsonl').is_file():
         raise ValueError('frozen run ledger missing; cannot create a new budget')
+    if run.get('supersedes'):
+        from eval.pilot_ledger import inspect_ledger
+        prior=Path(run['supersedes']['directory']); old=read(prior/'launch.json')
+        if file_hash(prior/'launch.json')!=run['supersedes']['launch_sha256']: raise ValueError('predecessor launch changed')
+        old_slots=_slots(old['providers'])
+        report,_=inspect_ledger(prior/'ledger.jsonl',old['calls'],{s.id:s.pricing for s in old_slots.values()})
+        last=json.loads((prior/'ledger.jsonl').read_text().splitlines()[-1])
+        if (report['state']!='stopped' or report['pending_count'] or last['event']!='stop'
+            or last['prev']!=run['supersedes']['ledger_head_before']
+            or last['data']['reason']!='superseded_by:'+digest(run)):
+            raise ValueError('successor inactive until predecessor is durably stopped')
     return run,_slots(run['providers'])
 
 
@@ -217,7 +276,7 @@ def _collect_screening(directory,run,ledger,providers):
         fields={'version_a_issues','version_b_issues','uncertainty'} if row['kind']=='manipulation' else {'source_mismatch','context_leakage','ambiguity_issues'}
         for slot,provider in providers.items():
             identifier='screen:'+row['review_id']+':'+slot
-            raw=ledger.complete(identifier,provider,request(row['prompt'],192))
+            raw=ledger.complete(identifier,provider,request(row['prompt'],ledger.plan[identifier]['output_bound']))
             try:
                 parsed=json.loads(raw,object_pairs_hook=_unique_keys)
                 if set(parsed)!=fields or any(not isinstance(v,list) or any(not isinstance(x,str) for x in v) for v in parsed.values()): raise ValueError('screening schema')
@@ -368,15 +427,20 @@ def run_phase(directory,phase,*,provider_factory=None,environ=None):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('phase',choices=['create','preflight','screening','diagnostics','generation','judging'])
+    parser.add_argument('phase',choices=['create','revise-screening','preflight','screening','diagnostics','generation','judging'])
     parser.add_argument('--run',type=Path,required=True)
     parser.add_argument('--package',type=Path); parser.add_argument('--config',type=Path); parser.add_argument('--authorization',type=Path)
     parser.add_argument('--env-file',type=Path)
+    parser.add_argument('--previous-run',type=Path)
     args=parser.parse_args()
     if args.phase=='create':
         if not all((args.package,args.config,args.authorization)): parser.error('create requires package, config and authorization')
         value=create_run(args.package,read(args.config)['providers'],read(args.authorization),args.run)
         report={'counts':value['counts'],'budget':value['budget'],'state':'frozen; not admitted'}
+    elif args.phase=='revise-screening':
+        if not args.package or not args.previous_run: parser.error('revision requires package and previous-run')
+        value=revise_screening(args.previous_run,args.package,args.run)
+        report={'counts':value['counts'],'budget':value['budget'],'state':'revised; prior charges retained; admission pending'}
     elif args.phase=='preflight': report=preflight(args.run)
     else:
         env=dict(os.environ)

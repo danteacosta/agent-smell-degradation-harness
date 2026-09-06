@@ -53,3 +53,18 @@ checkpoint ordering. Run a full 480-trajectory offline rehearsal with determinis
 provider doubles. Run all repository tests/gates, compile, privacy and diff checks.
 Freeze implementation/configuration before live screening and report its true
 outcome, including unresolved corpus or funding blockers.
+
+## Pre-collection revision after screening
+
+The first 60 live screening calls cost US$0.023043 with no pending charges.
+All 48 pair reviews are complete. Source-control review identified lost source
+qualifiers and two truncated responses. Preserve that attempt as development
+evidence; no diagnostic or prospective outcome has been collected.
+
+Revise only the six control seeds, restoring source subjects, modality and
+qualifiers, and allow 384 tokens for their review. Retain the 48 unchanged pair
+reviews without new calls. A successor run must carry every prior charge and
+response, include the 12 superseded review calls in the budget, and durably stop
+its predecessor before any new dispatch. No pending/ambiguous charge, changed
+authorization, changed corpus/natural sample or post-diagnostic revision is
+eligible for this narrowly scoped migration. Test those boundaries first.

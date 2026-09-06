@@ -216,6 +216,26 @@ class PilotLedger:
                 'pending_count':len(self.pending), 'active_reserved_microusd':sum(x['reserved_microusd'] for x in self.pending.values()),
                 'state':'stopped' if self.stopped else 'ready','ledger_head':self.head}
 
+    def adopt_completed(self, identifier, row, origin_head):
+        """Carry a verified predecessor receipt, never dispatch or re-time it.
+
+        The revision coordinator must hold and validate the predecessor journal.
+        Recording the receipt through the ordinary reservation/reconciliation
+        path keeps price/bounds validation identical to a new completion.
+        """
+        call=self.plan[identifier]
+        if self.pending or self.stopped or identifier in self.completed:
+            raise PilotStop('cannot import into pending, stopped or completed call')
+        if (row['prompt_sha256']!=call.get('prompt_sha256')
+            or row['response_model'] not in {self.pricing[call['slot']].model,self.pricing[call['slot']].model_version}
+            or not isinstance(row['response'],str) or len(origin_head)!=64):
+            raise PilotStop('invalid predecessor receipt')
+        reserved=self.pricing[call['slot']].reservation_microusd(TokenBounds(call['input_bound'],call['output_bound']))
+        self._append('reserve',{'id':identifier,'reserved_microusd':reserved,'prompt_sha256':row['prompt_sha256']})
+        self._append('observation',{'id':identifier,**{k:row[k] for k in ('response','usage','response_model','response_id')}})
+        self._append('reconcile',{'id':identifier,**{k:row[k] for k in ('response','usage','response_model','response_id','actual_cost_microusd','latency_ms')},
+                     'imported_from_ledger_head':origin_head})
+
     def close(self):
         if self._file is not None: self._file.close(); self._file=None
         if self._lock is not None: self._lock.close(); self._lock=None
