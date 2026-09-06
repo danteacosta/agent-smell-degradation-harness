@@ -26,10 +26,14 @@ The [pilot protocol](source-based-pilot-protocol.md) and
 iterations as the next workstream. Offline preparation produced 24 candidates
 across six project IDs, 30 source-derived cases and an 18-cluster natural sample.
 The user subsequently authorized five repetitions and US$7 total, with expanded
-LLM-only exploratory scope. The separate runtime has a 2,748-call plan and a
-US$6.482882 conservative envelope including contingency; its offline rehearsal
-is not empirical pilot evidence. Screening, documented corpus/oracle admission
-and the initial diagnostic gate still control prospective dispatch. The
+LLM-only exploratory scope. After source-screening corrections, the separate
+runtime has a 2,760-call plan and a US$6.545597 conservative envelope including
+all historical screening and contingency. Seventy-two screening calls cost
+US$0.031817; 24 intents now have explicit AI-assisted exploratory admission.
+One revised control review remains malformed and is not counted as an approval;
+its operator source audit and limitation are retained. See the
+[screening report](pilot-screening-results.md). The initial 96-call diagnostic
+gate and provider funding still control prospective dispatch. The
 historical 12-intent manifest and confirmatory launch gates are unchanged.
 
 ## Work that can proceed with zero human annotators

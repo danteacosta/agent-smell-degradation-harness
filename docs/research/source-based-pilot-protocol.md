@@ -2,8 +2,9 @@
 
 Preparation date: 6 September 2026. Target execution window: 7–13 September.
 Status: expanded exploratory scope and a **US$7 total cap** authorized by the
-user on 6 September; screening/admission and the diagnostic gate still control
-prospective dispatch. Five repetitions are selected. This records the user's
+user on 6 September; 24 intents admitted by the AI-assisted research operator
+for exploratory use only. The initial diagnostic gate and account funding still
+control prospective dispatch. Five repetitions are selected. This records the user's
 attestation, not an advisor signature, ethics exemption or confirmatory approval.
 
 This pilot asks whether the corrected evaluator transfers from short constructed
@@ -16,7 +17,8 @@ controls until a perfect score is obtained.
 The private package contains 24 candidates: the 12 previously selected exploratory
 intents and 12 additional, distinct source locators. Distribution: CASS 7,
 StrictDoc 7, RISC-V BRS 3, RISC-V Nexus Trace 2, SHARCS LevelCrossing 2 and
-SHARCS Tokeneer 3. They are candidates, not 24 newly admitted intents.
+SHARCS Tokeneer 3. All 24 now have private operator admission dispositions;
+none is confirmatorily admitted or independently human-validated.
 
 New candidates retain the pinned source, license/provenance, exact source text,
 single deletion and offset, clean/defective hashes, reference and explicit
@@ -42,7 +44,16 @@ and source-faithfulness/manipulation screening. Preparation never manufactures
 those decisions. The old 12-intent manifest remains unchanged. Pilot candidates
 and references use separate `pilot-candidates/v1` and
 `pilot-reference-constraints/v1` preparation schemas, not the pre-pilot's fixed
-12-record contracts. Final admission/freeze is a separate gate.
+12-record contracts. Admission and its hash are preserved separately from the
+immutable preparation inputs. See the [screening results](pilot-screening-results.md).
+
+The treatment is one contiguous source-span deletion, not necessarily one
+atomic predicate. Three cases remove compound guards, verification clauses or
+exceptions. Some sources already contain unspecified parameters. These are
+recorded limitations, not newly repaired domain requirements. Separate scope
+broadening, lost obligations and lost parameterization in analysis. A deleted
+antecedent can strengthen an unconditional requirement; do not call every
+deletion a weakening or interpret an if condition as an if-and-only-if condition.
 
 ## Blocks and counting units
 
@@ -80,7 +91,8 @@ variants are not independent source intents.
 Each seed has a complete expanded-context version, a version deleting one target
 clause, a concise complete version, a complete version with clauses distributed
 through the context, and a genuinely partial-artifact excerpt. Expanded versions
-are roughly 1,300–1,700 characters; the omission changes length by under 10%.
+are 1,399–1,838 characters after the source-faithfulness revision; the omission
+changes length by under 10%.
 This tests longer context than the original short recuts, not full-document or
 extreme long-context performance. Context is taken from the pinned sources,
 not repeated generic filler. References contain multiple obligations.
@@ -88,7 +100,11 @@ not repeated generic filler. References contain multiple obligations.
 Expected statuses are covered / omitted / covered / covered / uncertain.
 The partial excerpt is an auxiliary visibility diagnostic; it is never a primary
 missing-condition treatment. Source-faithfulness and ambiguity oracles are
-operator-constructed and remain pending independent screening. A hidden target
+operator-constructed. Source screening prompted a pre-diagnostic revision that
+restores source subjects, modality and qualifiers. Eleven of twelve revised
+control reviews are schema-valid; one remains truncated and is retained as
+invalid. An explicit operator source mapping supports that control's exploratory
+admission, not a fabricated second approval. A hidden target
 restatement or a disputed expected response blocks that seed before collection.
 Do not call these labels human ground truth.
 
@@ -163,16 +179,20 @@ stronger claim; this runner does not implement a learned B0/B3 comparison.
 
 All blocks share one US$7 pilot budget. Screening is included; splitting the
 plan into commands does not create new allowances. The current envelope is
-US$6.482882, including 25% contingency, no cache discount and one attempt per
+US$6.545597, including 25% contingency, no cache discount and one attempt per
 call. It is a reservation, not measured spend or evidence of account funding.
 Output limits are 384/256/256 tokens for T1/T2/artifact, 96 for judging and 192
-for screening. Known prompt inputs use UTF-8 bytes plus 64 framing tokens;
+for the original screening; revised control reviews allow 384 tokens. Known
+prompt inputs use UTF-8 bytes plus 64 framing tokens;
 dynamic interpretation/plan contexts are bounded at 1,500/1,024 UTF-8 bytes.
 The artifact's escaped JSON value in the judge prompt is bounded at 768 bytes.
 This is a conservative planning proxy, not a vendor-certified tokenizer bound.
 Oversized contexts or incomplete responses stop the run; they are not truncated.
 Pilot templates request full clauses/all explicit obligations and remove the
 historical 2–4-word artifact restriction. Historical templates remain unchanged.
+The prospective artifact uses one `criterion` JSON field containing full
+acceptance-criteria sentences: a new generation configuration, not an unchanged
+repeat of the historical run.
 
 The following earlier preparation estimates are retained as history, not the
 current authorization or runtime envelope:
@@ -194,6 +214,14 @@ prices and prompts. Every paid response is preserved before usage validation;
 an interrupted or unverified call retains its reservation and blocks retries.
 Changed bounds or additional calls require an explicit revision that carries
 forward prior spend; creating another directory is not a new authorization.
+
+The single pre-diagnostic source-screening revision carries all 60 original
+receipts, reuses 48 unchanged pair reviews and adds 12 revised control reviews.
+There are now 2,760 planned calls for the same experiment, including superseded
+reviews. Its predecessor is durably stopped before successor dispatch. A
+pending charge or any diagnostic outcome prevents this revision path.
+Current measured screening spend is US$0.031817. Account funding is checked
+privately and is distinct from the approved spending cap.
 
 ## Evidence basis and roadmap
 

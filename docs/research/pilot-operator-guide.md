@@ -35,7 +35,8 @@ self-consistency is not cryptographic proof against rewriting the entire bundle.
 
 1. Preserve the user's 6 September authorization: five repetitions, US$7 total,
    expanded LLM-only exploratory scope. The current complete reservation is
-   US$6.482882 including contingency. Do not purchase credits or increase a cap.
+   US$6.545597 after the source-screening revision, including contingency and
+   historical charges. Do not purchase credits or increase a cap.
 2. Keep an authorization addendum naming an exploratory, LLM-judged pilot,
    24 intents / at least six project IDs, chosen repetitions, two providers,
    all screening/transfer/control calls, cap, privacy/retention policy, operator
@@ -102,6 +103,20 @@ recomputed from paid raw responses; editing a report's decision cannot unlock
 generation. Calls have no hidden SDK or application retries. Missing journals,
 changed code/configuration, ambiguous charges and partial trajectories require
 reconciliation; never reset the directory or replay a trajectory with new times.
+
+The current private run is the source-faithfulness revision, not its stopped
+predecessor. The private handoff identifies its exact location. Screening and
+operator admission are recorded; one control review remains malformed and is
+explicitly not a second approval. The next step is the diagnostic block, after
+checking provider funding. Its collection has not been scheduled automatically.
+
+For an initial source-screening-only revision, `revise-screening` accepts
+`--previous-run`, `--package` and the new `--run`. It requires exactly the first
+60 reconciled screening calls and unchanged corpus, references, sample and
+prices. It carries their charges, reuses 48 identical packets and includes the
+12 superseded reviews in the total. It does not permit a second such revision,
+discard a pending charge or revise after diagnostic outcomes. Do not invoke it
+again on the current successor or reconstruct the successor manually.
 
 ## Outputs to preserve and publish
 
