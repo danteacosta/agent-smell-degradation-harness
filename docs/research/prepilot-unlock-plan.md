@@ -19,6 +19,18 @@ confirmatory evidence.
 
 These are process statuses, not efficacy results.
 
+## Next milestone: source-based pilot preparation
+
+The [pilot protocol](source-based-pilot-protocol.md) and
+[operator guide](pilot-operator-guide.md) replace further isolated toy-control
+iterations as the next workstream. Offline preparation produced 24 candidates
+across six project IDs, 30 source-derived cases and an 18-cluster natural sample.
+No new provider calls were made. Candidates are not admitted pilot records.
+The pilot remains `no_go`: the final budget/repetition decision, expanded scope
+authorization, source/oracle screening, admission/freeze and a validated
+24-intent runtime are still required. The historical 12-intent manifest and
+confirmatory launch gates are unchanged.
+
 ## Work that can proceed with zero human annotators
 
 The current bottlenecks are evaluator sensitivity and independent outcome
