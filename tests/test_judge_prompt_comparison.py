@@ -95,3 +95,40 @@ def test_schema_repair_explicitly_maps_fields_without_reusing_comparison_cases()
     with pytest.raises(ValueError):
         parse_evidence_response('{"label":"covered","status":"clean","evidence":""}',
                                 pack['cases'][0]['request'])
+
+
+def test_expanded_study_has_balanced_new_templates_and_no_oracle_leakage():
+    import label_plane.judge_prompt_comparison as comparison
+    assert hasattr(comparison, 'study_pack')
+    pack = comparison.study_pack('expanded_v2')
+    assert len(pack['cases']) == 48
+    previous = build_comparison_pack()['cases'] + build_schema_smoke_pack()['cases']
+    assert not ({c['request']['occurrence_id'] for c in previous} &
+                {c['request']['occurrence_id'] for c in pack['cases']})
+    assert not ({c['request']['reference_constraints'][0]['text'] for c in previous} &
+                {c['request']['reference_constraints'][0]['text'] for c in pack['cases']})
+    assert len({c['oracle']['seed_id'] for c in pack['cases']}) == 12
+    for seed in range(12):
+        cases = [c for c in pack['cases'] if c['oracle']['seed_id'] == seed]
+        assert {c['oracle']['operation'] for c in cases} == {'literal', 'paraphrased', 'deleted', 'contradicted'}
+        assert sum(c['oracle']['covered'] for c in cases) == 2
+    for case in pack['cases']:
+        prompt = comparison_prompt(case['request'], 'evidence_v2')
+        assert 'oracle' not in prompt and 'expanded_v2' not in prompt
+        assert comparison_prompt(case['request'], 'historical') == build_judge_prompt(case['request'])
+
+
+def test_expanded_scorer_preserves_denominators_and_false_alarm_diagnostic():
+    import label_plane.judge_prompt_comparison as comparison
+    assert hasattr(comparison, 'study_pack')
+    pack = comparison.study_pack('expanded_v2')
+    configs = {'a'*64: {'arm': 'evidence_v2', 'provider': 'p1'}}
+    missing = score_comparison([], configs, study='expanded_v2')['configurations']['a'*64]
+    assert missing['overall']['missing'] == 96
+    rows = [dict(pack_sha256=pack['pack_sha256'], configuration_sha256='a'*64,
+                 replication_id=rep, occurrence_id=c['request']['occurrence_id'],
+                 raw_response='{"label":"severe","status":"omitted","evidence":""}')
+            for rep in range(2) for c in pack['cases']]
+    scored = score_comparison(rows, configs, study='expanded_v2')['configurations']['a'*64]
+    assert scored['overall']['false_alarm'] == 48
+    assert scored['strata']['expanded_new']['by_operation']['deleted']['correct'] == 24

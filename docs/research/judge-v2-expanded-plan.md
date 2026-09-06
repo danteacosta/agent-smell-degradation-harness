@@ -36,16 +36,16 @@ No human calibration, natural-artifact validity or H1/H2 claim follows.
 
 ## ATDD / BDD and verification
 
-- [ ] Given the new study, preflight produces 384 calls without network I/O,
+- [x] Given the new study, preflight produces 384 calls without network I/O,
       uses only historical/evidence-v2 arms, and freezes budgets below US$1.
-- [ ] Given the new pack, all 48 identifiers and reference texts are disjoint
+- [x] Given the new pack, all 48 identifiers and reference texts are disjoint
       from previous packs; each template has two positive and two negative cases.
-- [ ] Given constant clean predictions, omissions fail; given constant omitted
+- [x] Given constant clean predictions, omissions fail; given constant omitted
       predictions, complete cases produce false alarms. Missing denominators
       remain 96 per arm/provider and 24 per operation.
-- [ ] Given an injected provider, all 384 occurrences persist privately; given
+- [x] Given an injected provider, all 384 occurrences persist privately; given
       missing usage, stop without retry and preserve the remaining denominator.
-- [ ] Run new tests red, implement named-study selection, run targeted and full
+- [x] Run new tests red, implement named-study selection, run targeted and full
       offline verification, review privacy/cost/SOLID and commit before live use.
 - [ ] Execute one live run; preserve all failures and report planned denominators.
 - [ ] Publish aggregate results in PR #41; keep account balances and raw data private.
@@ -64,3 +64,19 @@ DeepSeek's official balance endpoint can report available account credit.
 The OpenAI costs endpoint reports expenditure rather than prepaid credit.
 Account balances stay private and are not a study outcome. Sources and limits
 are recorded in [the account-check note](2026-09-06-provider-account-checks.md).
+
+## Pre-collection verification
+
+Four new behavioral tests failed before implementation. After implementation,
+23 focused tests and the full local suite passed: 872 passed, seven skipped,
+nine subtests passed. Eval, gates, compile and diff checks passed. Offline
+rescoring still exactly reproduces both prior reports. The direct envelope is
+US$0.466610; the conservative ledger envelope is US$0.832032. Neither amount
+is an observed charge. Private records retain any unresolved earlier liability.
+
+Review: the change adds constructed data and explicit study selection only.
+Provider, cost, secret-loading and historical prompt contracts are unchanged.
+No new framework, duplicate cost policy or external side effect is introduced
+outside the existing live path. Constant-answer and missing-usage regressions
+cover the key diagnostic and stopping boundaries. Remaining limitations are
+authored construction oracles, known constraint families and no human calibration.

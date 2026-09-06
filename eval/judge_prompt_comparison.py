@@ -18,8 +18,8 @@ from eval.provider_runtime_config import load_exploratory_runtime_config
 from label_plane.exploratory_judge import JUDGE_PROMPT_TEMPLATE
 from label_plane.judge_controls import fingerprint
 from label_plane.judge_prompt_comparison import (
-    ARMS, EVIDENCE_PROMPT, EVIDENCE_PROMPT_V2, build_comparison_pack,
-    build_schema_smoke_pack, comparison_prompt, score_comparison,
+    ARMS, STUDIES, EVIDENCE_PROMPT, EVIDENCE_PROMPT_V2, study_pack,
+    comparison_prompt, score_comparison,
 )
 from label_plane.private_env import load_private_env
 
@@ -30,7 +30,7 @@ OUTPUT_TOKENS = 96
 
 def run_comparison(config_path, output_dir, *, live=False, environ=None,
                    provider_factory=None, progress=None, study='comparison_v1'):
-    if study not in {'comparison_v1', 'schema_smoke_v2'}:
+    if study not in STUDIES:
         raise ValueError('unknown study')
     original = load_exploratory_runtime_config(config_path)
     # This config is auxiliary and cannot generate any episodes. The fixed ledger
@@ -40,14 +40,16 @@ def run_comparison(config_path, output_dir, *, live=False, environ=None,
     config = replace(original, token_bounds=bounds)
     budget = config.cost_configuration()
     preflight = budget.preflight()
-    pack = build_comparison_pack() if study == 'comparison_v1' else build_schema_smoke_pack()
-    arms = ARMS if study == 'comparison_v1' else ('evidence_v2',)
+    pack = study_pack(study)
+    arms = {'comparison_v1': ARMS, 'schema_smoke_v2': ('evidence_v2',),
+            'expanded_v2': ('historical', 'evidence_v2')}[study]
     templates = {'historical': JUDGE_PROMPT_TEMPLATE, 'evidence': EVIDENCE_PROMPT,
                  'evidence_v2': EVIDENCE_PROMPT_V2}
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     files = ['eval/judge_prompt_comparison.py', 'eval/live_judge_controls.py',
              'eval/exploratory_cost.py', 'eval/provider_runtime_config.py', 'agents/providers.py',
-             'label_plane/judge_prompt_comparison.py', 'label_plane/judge_controls.py',
+             'label_plane/judge_prompt_comparison.py', 'label_plane/judge_expanded_controls.py',
+             'label_plane/judge_controls.py',
              'label_plane/exploratory_judge.py', 'tasks/acceptance_criteria_llm_judge_rubric.json']
     source_hashes = {p: hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in files}
     configurations, metadata, prompts, order = {}, {}, {}, []
@@ -139,7 +141,7 @@ def main():
     parser.add_argument('--output-dir', type=Path, required=True)
     parser.add_argument('--env-file', type=Path)
     parser.add_argument('--live', action='store_true')
-    parser.add_argument('--study', choices=('comparison_v1', 'schema_smoke_v2'), default='comparison_v1')
+    parser.add_argument('--study', choices=STUDIES, default='comparison_v1')
     args = parser.parse_args()
     if args.env_file:
         load_private_env(args.env_file)

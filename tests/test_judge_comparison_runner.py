@@ -56,12 +56,13 @@ def test_live_path_retains_denominators_evidence_failures_and_refuses_overwrite(
         run_comparison(CONFIG, tmp_path/'run', live=True)
 
 
-def test_unknown_usage_stops_after_one_attempt_and_never_retries(tmp_path):
+@pytest.mark.parametrize('study,planned', [('comparison_v1', 288), ('expanded_v2', 384)])
+def test_unknown_usage_stops_after_one_attempt_and_never_retries(tmp_path, study, planned):
     report = run_comparison(CONFIG, tmp_path/'run', live=True,
-                            provider_factory=lambda slot, env: Fake(slot, missing_usage=True))
+                            provider_factory=lambda slot, env: Fake(slot, missing_usage=True), study=study)
     assert report['state'] == 'stopped_cost_unverified'
     assert report['actual_calls'] == 1
-    assert sum(v['overall']['missing'] for v in report['scores']['configurations'].values()) == 287
+    assert sum(v['overall']['missing'] for v in report['scores']['configurations'].values()) == planned-1
 
 
 def test_output_cannot_be_inside_checkout():
@@ -74,3 +75,22 @@ def test_schema_smoke_is_a_separate_16_call_plan(tmp_path):
     assert report['planned_calls'] == 16
     assert {r['arm'] for r in report['configurations'].values()} == {'evidence_v2'}
     assert report['direct_experiment_envelope_microusd'] < 1_000_000
+
+
+def test_expanded_study_freezes_384_calls_and_persists_every_occurrence(tmp_path):
+    def forbidden(slot, env):
+        pytest.fail('offline preflight must not create providers')
+    preflight = run_comparison(CONFIG, tmp_path/'run', study='expanded_v2', provider_factory=forbidden)
+    assert preflight['planned_calls'] == 384
+    assert preflight['state'] == 'preflight_ready'
+    assert {r['arm'] for r in preflight['configurations'].values()} == {'historical', 'evidence_v2'}
+    assert preflight['direct_experiment_envelope_microusd'] < 1_000_000
+    result = run_comparison(CONFIG, tmp_path/'run', study='expanded_v2', live=True,
+                            provider_factory=lambda slot, env: Fake(slot))
+    assert result['state'] == 'completed'
+    assert result['actual_calls'] == 384
+    assert len((tmp_path/'run'/'responses.jsonl').read_text().splitlines()) == 384
+    for config in result['scores']['configurations'].values():
+        assert config['overall']['planned'] == 96
+        assert config['overall']['correct'] == 48
+        assert config['strata']['expanded_new']['by_operation']['deleted']['correct'] == 0
