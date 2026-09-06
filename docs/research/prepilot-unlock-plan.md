@@ -8,7 +8,7 @@ confirmatory evidence.
 
 | Gate | Evidence available | Current status | Owner |
 |---|---|---|---|
-| Main synchronization | PR #38 is merged on `main` at `7ba1ebb`, including corrected-run audit and documentation reconciliation | Remote state reconciled; launch fields remain fail-closed for confirmatory use | Engineering |
+| Main synchronization | PR #39 is merged on `main` at `17b4184`, adding annotation-free diagnostic controls after PR #38 | Remote state reconciled; launch fields remain fail-closed for confirmatory use | Engineering |
 | Corpus | v4 intake, immutable source references, rights review, hashes, and a frozen redacted manifest | 12 exploratory records across 6 projects validated; confirmatory admission remains a governance decision | Researcher and advisor |
 | Providers | Runtime-native OpenAI and DeepSeek adapters, usage/cost propagation, and native smoke CLI | Corrected 120-episode exploratory run completed with both provider configurations; the result remains non-confirmatory | Operator |
 | Substantive evidence | T1/T2 non-empty-field gate and retry contract | 480/480 required T1/T2 stage checks passed; no incomplete episode or artifact was recorded | Engineering and operator |
@@ -21,7 +21,8 @@ These are process statuses, not efficacy results.
 
 ## Work that can proceed with zero human annotators
 
-The current bottleneck is human annotation, not provider availability. Continue
+The current bottlenecks are evaluator sensitivity and independent outcome
+validity, not provider availability. Continue
 instrument qualification and exploratory diagnostics using the
 [annotation-free evaluation protocol](annotation-free-evaluation.md).
 The offline synthetic judge-control suite generates 12 original toy cases and
@@ -30,11 +31,20 @@ It tests literal coverage, order invariance, deletion and contradiction; missing
 calls, invalid responses and abstentions remain visible. Its results cannot
 admit a corpus, calibrate a judge against humans, or unlock H1/H2.
 
-The control suite and its automated tests are implemented. Real-provider control
-results are **not yet collected**. Do not label a provider qualified by these
-controls until its response bundle has been scored. The existing exploratory
-prompt and historical run are preserved; any prompt improvement must be tested
-as a separately fingerprinted configuration.
+Real-provider controls are complete: 72 valid responses cost US$0.008785.
+OpenAI matched 18/36 construction oracles and DeepSeek 25/36; both missed all
+9 deletion occurrences. These are three templates repeated three times, not
+nine independent requirements. The [aggregate report](evaluator-control-results.md)
+preserves operation-level denominators and limitations. Neither configuration
+is qualified for semantic omission decisions. The historical prompt/run remain
+preserved; improvements need a separately fingerprinted configuration and
+fresh control templates, not silent reinterpretation of the old labels.
+
+Four auxiliary executable contracts pass 16 specified vector executions and
+detect four deliberate mutants. They do not validate natural-language mapping.
+The [temporal protocol and analyzer](temporal-warning-protocol.md) are ready for
+prospective observations, but early-warning benefit has not been measured.
+Future human calibration and product utility remain roadmap studies.
 
 ## What the previous `284 clean` result means
 

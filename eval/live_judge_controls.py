@@ -14,7 +14,7 @@ import subprocess
 import time
 
 from agents.providers import ProviderRequest
-from eval.exploratory_cost import CostLedger, CostLedgerError, budgeted_provider
+from eval.exploratory_cost import CostLedger, budgeted_provider
 from eval.provider_runtime_config import load_exploratory_runtime_config, build_provider_from_slot
 from label_plane.exploratory_judge import build_judge_prompt, JUDGE_PROMPT_TEMPLATE
 from label_plane.judge_controls import build_controls, fingerprint, score_controls
@@ -77,6 +77,14 @@ def run_controls(config_path, output_dir, *, live=False, environ=None, provider_
     output = Path(output_dir).resolve()
     if output == ROOT or ROOT in output.parents:
         raise ValueError('live outputs must be outside the repository')
+    existing_parent = output
+    while not existing_parent.exists():
+        existing_parent = existing_parent.parent
+    checkout = subprocess.run(
+        ['git', '-C', str(existing_parent), 'rev-parse', '--is-inside-work-tree'],
+        capture_output=True, text=True, check=False)
+    if checkout.returncode == 0 and checkout.stdout.strip() == 'true':
+        raise ValueError('live outputs must be outside all Git checkouts')
     output.mkdir(parents=True, exist_ok=False)
     output.chmod(0o700)
     _write(output/'manifest.json', report)
@@ -96,7 +104,6 @@ def run_controls(config_path, output_dir, *, live=False, environ=None, provider_
                     raw = None
                     error = None
                     started = time.monotonic()
-                    report['actual_calls'] += 1
                     try:
                         raw = adapters[slot.id].complete(
                             ProviderRequest(prompt, {'task_family': 'judge', 'output_keys': []},
@@ -119,9 +126,12 @@ def run_controls(config_path, output_dir, *, live=False, environ=None, provider_
                                 'latency_ms': round((time.monotonic()-started)*1000, 3), 'error_class': error})
         report['state'] = 'completed'
     except Exception as exc:
-        report['state'] = ledger.status if ledger.status != 'ready' else 'stopped_provider_error'
+        report['state'] = ledger.status if ledger.status.startswith('stopped_') else 'stopped_provider_error'
         report['error_class'] = type(exc).__name__
     report['budget'] = ledger.report()
+    # Count dispatched/reserved attempts, not requests rejected before reservation.
+    # An ambiguous in-flight attempt is retained even if no response arrives.
+    report['actual_calls'] = report['budget']['observed_attempt_count']
     report['scores'] = score_controls(rows, [c['sha256'] for c in configurations.values()], 3)
     _write(output/'report.json', report)
     return report

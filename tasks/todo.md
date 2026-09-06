@@ -1,5 +1,20 @@
 # Requirements-smell experiment hardening
 
+## Evidence priorities after PR #39
+
+- [x] Merge PR #39 as 17b4184 and verify its controls and judge regressions.
+- [x] Run 72 real control judgments under the US$1 cap; preserve private evidence.
+      Observed cost US$0.008785; both configurations missed all deletion controls.
+- [x] Execute four formal contracts: 16 vector executions passed; four mutants killed.
+- [x] Specify and test temporal windows T1 / T1+T2 / T1–T3 before new confirmatory outcomes.
+- [x] Synchronize the current Drive proposal and nine-slide deck in English;
+      verify text, native slide structure and all nine rendered thumbnails.
+- [ ] Collect prospective temporal observations and valid terminal outcomes;
+      no empirical early-warning benefit is claimed from software tests.
+- [ ] Compare a separately frozen improved judge prompt on fresh control templates.
+- [ ] Roadmap: random human audit plus separate enriched troubleshooting queue.
+- [ ] Roadmap: product diagnostic utility and investigation-time study.
+
 ## 2026-09-03 private pre-pilot gate execution
 
 Plan:

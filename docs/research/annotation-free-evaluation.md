@@ -1,7 +1,10 @@
 # Evaluation while human annotation is unavailable
 
-Status: 2026-09-06. Engineering diagnostics are executable; provider-backed
-control evaluation and human calibration remain pending. H1, H2, the primary
+Status: 2026-09-06. Provider-backed controls completed: OpenAI 18/36 and
+DeepSeek 25/36 construction-oracle matches; both missed all deletion controls.
+See [results](evaluator-control-results.md) and the
+[temporal protocol](temporal-warning-protocol.md). Human calibration remains
+pending. H1, H2, the primary
 missing-condition family and the no-compaction primary condition are unchanged.
 
 ## Thesis: distinguish three evidence levels
@@ -45,8 +48,14 @@ python scripts/judge_controls.py score --responses /approved/private/control-res
 `requests` emits only validated judge inputs. `manifest` includes the expected
 answers and must NEVER be given to the judge. The caller uses the existing
 `build_judge_prompt` and authorized provider adapter for each request. This CLI
-does not make network calls or spend money. Provider execution integration is
-not automatic: preserve the existing cost, credential and governance gates.
+does not make network calls or spend money. The separate
+`python -m eval.live_judge_controls --output-dir /approved/private/new-run`
+command performs a no-network preflight. Add `--live --env-file PRIVATE_ENV`
+only for an authorized run. It reuses the existing cost and provider gates,
+disables hidden SDK retries, and refuses repository output or an existing run
+directory. Its 72-call subset conservatively reserves the full US$0.988200
+pre-pilot envelope. Private configuration, usage and response records stay
+outside version control; no supplied hash proves vendor-weight immutability.
 
 Before collecting responses, freeze a configuration record containing exact
 provider/model version, prompt, rubric, decoding settings and source revision;
@@ -82,10 +91,10 @@ order switches and misses every negative control. Results stay separated by
 configuration and operation; no pseudoreplicated confidence intervals are given
 for these three templates.
 
-## What to improve next, without pretending annotation exists
+## Next steps while human annotation is unavailable
 
-- Run the fixed controls against the current judge before modifying its prompt.
-  Its hard-coded `clean/covered` example is an anchoring risk to test, not a
+- The fixed controls have now exposed zero deletion sensitivity in both judges.
+  The hard-coded `clean/covered` example is an anchoring risk to test, not a
   demonstrated explanation of the historical label distribution.
 - Test a separately fingerprinted rubric-explicit prompt with balanced examples
   and verifiable evidence spans. Quote presence verifies grounding only, not

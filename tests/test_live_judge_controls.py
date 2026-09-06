@@ -1,5 +1,5 @@
-import json
 from pathlib import Path
+import subprocess
 
 import pytest
 
@@ -57,3 +57,37 @@ def test_unknown_usage_stops_after_one_call_retaining_missing_denominators(tmp_p
     assert result['actual_calls'] == 1
     assert sum(r['missing'] for r in result['scores']['configurations'].values()) == 71
     assert result['scores']['confirmatory_eligible'] is False
+
+
+def test_reconciled_provider_error_stops_without_claiming_run_is_running(tmp_path):
+    class ReconciledError(Fake):
+        def complete(self, request):
+            super().complete(request)
+            raise RuntimeError('provider failed after reporting usage')
+
+    result = run_controls(CONFIG, tmp_path/'run', live=True,
+                          provider_factory=lambda slot, env: ReconciledError(slot))
+    assert result['state'] == 'stopped_provider_error'
+    assert result['actual_calls'] == 1
+    assert result['budget']['observed_attempt_count'] == 1
+
+
+def test_provider_identity_rejection_does_not_count_a_network_call(tmp_path):
+    def wrong_identity(slot, env):
+        provider = Fake(slot)
+        provider.model = 'unapproved-model'
+        return provider
+
+    result = run_controls(CONFIG, tmp_path/'run', live=True, provider_factory=wrong_identity)
+    assert result['state'] == 'stopped_cost_unverified'
+    assert result['actual_calls'] == 0
+
+
+def test_private_output_cannot_be_written_inside_a_different_checkout(tmp_path):
+    repo = tmp_path/'another-checkout'
+    repo.mkdir()
+    subprocess.run(['git', 'init', '--quiet', str(repo)], check=True)
+    with pytest.raises(ValueError, match='outside'):
+        run_controls(CONFIG, repo/'private-run', live=True,
+                     provider_factory=lambda slot, env: Fake(slot))
+    assert not (repo/'private-run').exists()
