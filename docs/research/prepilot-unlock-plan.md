@@ -25,11 +25,12 @@ The [pilot protocol](source-based-pilot-protocol.md) and
 [operator guide](pilot-operator-guide.md) replace further isolated toy-control
 iterations as the next workstream. Offline preparation produced 24 candidates
 across six project IDs, 30 source-derived cases and an 18-cluster natural sample.
-No new provider calls were made. Candidates are not admitted pilot records.
-The pilot remains `no_go`: the final budget/repetition decision, expanded scope
-authorization, source/oracle screening, admission/freeze and a validated
-24-intent runtime are still required. The historical 12-intent manifest and
-confirmatory launch gates are unchanged.
+The user subsequently authorized five repetitions and US$7 total, with expanded
+LLM-only exploratory scope. The separate runtime has a 2,748-call plan and a
+US$6.482882 conservative envelope including contingency; its offline rehearsal
+is not empirical pilot evidence. Screening, documented corpus/oracle admission
+and the initial diagnostic gate still control prospective dispatch. The
+historical 12-intent manifest and confirmatory launch gates are unchanged.
 
 ## Work that can proceed with zero human annotators
 

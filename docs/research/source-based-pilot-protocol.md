@@ -1,8 +1,10 @@
 # Source-based exploratory pilot
 
 Preparation date: 6 September 2026. Target execution window: 7–13 September.
-Status: private preparation package produced; **launch is not authorized**.
-The user approved preparation of this design, not an increase above US$1.
+Status: expanded exploratory scope and a **US$7 total cap** authorized by the
+user on 6 September; screening/admission and the diagnostic gate still control
+prospective dispatch. Five repetitions are selected. This records the user's
+attestation, not an advisor signature, ethics exemption or confirmatory approval.
 
 This pilot asks whether the corrected evaluator transfers from short constructed
 examples to source-derived requirements and preserved natural artifacts. It does
@@ -107,7 +109,8 @@ cutoffs or statistical power guarantees.
   5/6 omission cases; each has at most 1/18 false omission verdicts on the three
   complete variants per seed. Continue only if the corpus and budget gates pass.
 - **Adjust:** one judge misses these criteria, or the partial-excerpt diagnostic
-  shows unreliable abstention. Preserve all outcomes, pause prospective
+  yields fewer than 5/6 abstentions on either judge. This additional operational
+  threshold is fixed before these responses are collected. Preserve all outcomes, pause prospective
   generation and document a restricted interpretation or a versioned redesign.
   Do not optimize on these six seeds and then call them a fresh test set.
 - **Stop:** any ambiguous charge, unverified usage, budget reservation failure,
@@ -147,15 +150,32 @@ false-alert/detection rates. Machine-labeled diagnostic rates, if reported,
 must be separate and explicitly machine-referenced. Executable contracts verify
 only their formal specifications, not the natural-language mapping.
 
+The initial pilot alert policy is deliberately limited: T1 flags explicit
+uncertainty; T2 checks lexical coverage of the already interpreted constraints;
+T3 rechecks the same plan with local lineage diagnostics. It never sees the
+reference or terminal judgment. T3 does not add an independent observation of
+implementation behavior. Consequently these alerts can describe availability,
+lead time and cost, but cannot by themselves establish a provenance advantage.
+The same-content/no-lineage comparison remains required before making that
+stronger claim; this runner does not implement a learned B0/B3 comparison.
+
 ## Budget and launch boundary
 
-All blocks share one pilot budget. Screening is included; splitting the plan
-into separate commands does not create additional US$1 allowances. The planning
-envelope uses no cache discount, one attempt, frozen existing prices and 25%
-contingency. It assumes up to 2,048 input tokens per prospective call, output
-bounds 128/96/192 for T1/T2/artifact and 96 for outcome judging. Screening allows
-192 output tokens. Known auxiliary inputs use UTF-8 bytes plus 64 framing tokens
-as a conservative planning proxy, not a vendor-certified tokenizer bound.
+All blocks share one US$7 pilot budget. Screening is included; splitting the
+plan into commands does not create new allowances. The current envelope is
+US$6.482882, including 25% contingency, no cache discount and one attempt per
+call. It is a reservation, not measured spend or evidence of account funding.
+Output limits are 384/256/256 tokens for T1/T2/artifact, 96 for judging and 192
+for screening. Known prompt inputs use UTF-8 bytes plus 64 framing tokens;
+dynamic interpretation/plan contexts are bounded at 1,500/1,024 UTF-8 bytes.
+The artifact's escaped JSON value in the judge prompt is bounded at 768 bytes.
+This is a conservative planning proxy, not a vendor-certified tokenizer bound.
+Oversized contexts or incomplete responses stop the run; they are not truncated.
+Pilot templates request full clauses/all explicit obligations and remove the
+historical 2–4-word artifact restriction. Historical templates remain unchanged.
+
+The following earlier preparation estimates are retained as history, not the
+current authorization or runtime envelope:
 
 | Repetitions | Base episodes | Trajectories | All planned calls | Planning envelope |
 | --- | ---: | ---: | ---: | ---: |
@@ -163,20 +183,17 @@ as a conservative planning proxy, not a vendor-certified tokenizer bound.
 | 2 | 96 | 192 | 1,194 | US$2.747412 |
 | 5 | 240 | 480 | 2,748 | US$6.371633 |
 
-These are conservative reservations, not observed costs or final launch quotes.
-The complete runtime must measure token fit and enforce per-call reservations;
-changed bounds or additional screening must regenerate the budget and hash.
-Even one repetition currently fails the approved US$1 envelope. Do not lower
-bounds merely to make the gate green. A smaller envelope requires measured fit
-and a frozen revised plan, or the user must explicitly approve a higher cap.
-
-The preparer intentionally emits `no_go`. The existing executor/ledger still
-encode the 12-intent pre-pilot; the expanded runtime is not implemented or
-validated by this preparation change. The user must choose the repetition/cap
-tradeoff and confirm that advisor/governance authorization covers the expanded
-LLM-only exploratory pilot. No institutional exemption or human approval is
-inferred. Then admission/freeze and a 24-intent offline end-to-end runtime
-verification must pass before a paid launch.
+The preparer intentionally still emits its historical US$1 `no_go`. The separate
+`eval.pilot_runtime` and `eval.pilot_ledger` implement the expanded authorization
+without weakening the 12-intent pre-pilot contracts. A 480-trajectory offline
+rehearsal exercises all 2,748 planned calls, duplicate selection, blinding,
+native stage ordering and shared accounting. Simulation validates machinery,
+not provider behavior, corpus admission or semantic validity.
+The runtime freezes source/package hashes, SDK/Python identity, model endpoints,
+prices and prompts. Every paid response is preserved before usage validation;
+an interrupted or unverified call retains its reservation and blocks retries.
+Changed bounds or additional calls require an explicit revision that carries
+forward prior spend; creating another directory is not a new authorization.
 
 ## Evidence basis and roadmap
 

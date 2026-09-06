@@ -1,8 +1,9 @@
 # Prepare and launch the source-based pilot
 
 Read the [frozen-design candidate protocol](source-based-pilot-protocol.md) first.
-The current command prepares private data offline. It **cannot launch** the pilot
-and must not be described as an already validated 24-intent runner.
+The preparer creates inputs offline. The separate `eval.pilot_runtime` now
+provides gated screening, diagnostics, generation and judging under the user's
+US$7 total authorization. Prospective collection is intended for 7–13 September.
 
 ## What is prepared
 
@@ -32,11 +33,10 @@ self-consistency is not cryptographic proof against rewriting the entire bundle.
 
 ## Actions needed before the target week
 
-1. Choose the repetition/budget option. The current US$1 authorization remains
-   in force. Five repetitions reserve roughly US$6.38 before final token-fit
-   validation; one reserves roughly US$1.54. Do not purchase credits or increase
-   a cap without the user's explicit decision.
-2. Record an authorization addendum naming an exploratory, LLM-judged pilot,
+1. Preserve the user's 6 September authorization: five repetitions, US$7 total,
+   expanded LLM-only exploratory scope. The current complete reservation is
+   US$6.482882 including contingency. Do not purchase credits or increase a cap.
+2. Keep an authorization addendum naming an exploratory, LLM-judged pilot,
    24 intents / at least six project IDs, chosen repetitions, two providers,
    all screening/transfer/control calls, cap, privacy/retention policy, operator
    and applicable advisor/institutional decision. This is not a request for
@@ -48,8 +48,8 @@ self-consistency is not cryptographic proof against rewriting the entire bundle.
    If fewer than 24 survive, admit replacements and issue a new pre-collection
    manifest. Keep CASS's AI-assisted source authorship and source-family
    dependencies visible.
-4. Implement/validate the selected 24-intent runtime without weakening the old
-   12-intent gates. Required acceptance evidence: exact call-plan counts,
+4. Re-run the 24-intent offline runtime tests after implementation changes,
+   without weakening the old 12-intent gates. Acceptance evidence: exact counts,
    shared cost ledger, no retries with ambiguous cost, checkpoint completeness,
    correct private joins, v2 parsing, duplicate selection before labels,
    self/cross accounting, no-compaction and stage timestamps before T4.
@@ -60,9 +60,48 @@ self-consistency is not cryptographic proof against rewriting the entire bundle.
    continue/adjust/stop rule, and only then continue prospective generation.
    Preserve costs from stopped blocks in the single pilot total.
 
-No paid launch command is provided yet because the expanded runtime and final
-budget choice are unresolved. Do not substitute `eval.exploratory_prepilot`
-with a 24-record file or pass the new schema to the old intake.
+Do not substitute `eval.exploratory_prepilot` with a 24-record file or pass the
+new schema to the old intake. Use the same run directory for every phase:
+
+```sh
+python -m eval.pilot_runtime create --run /approved-private/pilot-run \
+  --package /approved-private/pilot-preparation \
+  --config tasks/exploratory_llm_judged_prepilot.example.json \
+  --authorization /approved-private/pilot-authorization.json
+python -m eval.pilot_runtime preflight --run /approved-private/pilot-run
+python -m eval.pilot_runtime screening --run /approved-private/pilot-run \
+  --env-file /approved-private/provider.env
+# Resolve and preserve admission.json before proceeding.
+python -m eval.pilot_runtime diagnostics --run /approved-private/pilot-run \
+  --env-file /approved-private/provider.env
+# Only a passed diagnostic gate permits the following prospective phases.
+python -m eval.pilot_runtime generation --run /approved-private/pilot-run \
+  --env-file /approved-private/provider.env
+python -m eval.pilot_runtime judging --run /approved-private/pilot-run \
+  --env-file /approved-private/provider.env
+```
+
+Authorization schema: `pilot-authorization/v1`, integer
+`approved_cap_microusd: 7000000`, integer `repetitions: 5`, boolean
+`exploratory_llm_scope_confirmed: true`, and a nonempty `source` attestation.
+It does not contain secrets. The provider example supplies only its `providers`
+array; its historical US$1 pre-pilot fields do not override the new authorization.
+
+Admission schema: `pilot-admission/v1`, the exact `package_sha256`, `review_scope`
+equal to `AI-assisted exploratory; not independent human validation`, and exactly
+24 `records`. Each needs `intent_id`, `decision: admit_exploratory`, and specific
+`rights_evidence`, `source_revision_evidence`, `independence_disposition`,
+`manipulation_disposition`, `review_evidence`. Preserve
+`control_oracle_dispositions` for the six seeds too. These fields document an
+operator's evidence review; strings alone cannot prove rights or correctness.
+Do not fill them with generic approval assertions or promote model consensus
+to human validation. Unresolved material objections prevent admission.
+
+Preflight is read-only, including journal verification. The diagnostic gate is
+recomputed from paid raw responses; editing a report's decision cannot unlock
+generation. Calls have no hidden SDK or application retries. Missing journals,
+changed code/configuration, ambiguous charges and partial trajectories require
+reconciliation; never reset the directory or replay a trajectory with new times.
 
 ## Outputs to preserve and publish
 
@@ -73,6 +112,6 @@ approved private storage. Preserve incomplete trajectories and zero-cost local
 T3 events explicitly. Publish only reviewed aggregate counts, limitations and
 protocol status; no source excerpts, private identities or private run hashes.
 
-Drive synchronization and a final paid execution are not performed by this
-preparation command. Update research artifacts only with the actual state:
-candidate package prepared; corpus admission and pilot launch pending.
+The CLI does not synchronize Drive. Update research artifacts only with actual
+collected results and outstanding gates, keeping simulation separate from live
+provider evidence. The public protocol is not a private evidence repository.
