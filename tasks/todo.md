@@ -11,7 +11,13 @@
       verify text, native slide structure and all nine rendered thumbnails.
 - [ ] Collect prospective temporal observations and valid terminal outcomes;
       no empirical early-warning benefit is claimed from software tests.
-- [ ] Compare a separately frozen improved judge prompt on fresh control templates.
+- [x] Merge PR #40 as 3383f1f and execute the separately frozen prompt comparison.
+      Preserve its incomplete status: 274 attempts, 273 responses, one ambiguous
+      call and 14 unattempted calls; do not retry or normalize invalid labels.
+- [x] Repair the explicit label/status binding and run a separate 16-call smoke:
+      16/16 valid correct responses, 4/4 deletions per provider, US$0.002708.
+- [ ] Reconcile the original ambiguous call and freeze a larger evidence-v2
+      comparison on additional new templates; no automatic prompt promotion.
 - [ ] Roadmap: random human audit plus separate enriched troubleshooting queue.
 - [ ] Roadmap: product diagnostic utility and investigation-time study.
 

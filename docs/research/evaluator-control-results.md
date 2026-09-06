@@ -55,11 +55,11 @@ establish correspondence between a formal contract and a natural requirement.
 
 ## Immediate interpretation and next experiment
 
-Keep the historical prompt frozen. A future comparison should specify rubric
-instructions and balanced examples before collection, hash that new prompt,
-retain this baseline, and evaluate fresh held-out control templates as well as
-these public diagnostics. A better score on reused examples is development
-evidence, not generalization or H1/H2 confirmation.
+The historical prompt remains frozen. The subsequent
+[comparison and schema-repair smoke](judge-prompt-comparison-results.md) tested
+rubric instructions and quoted evidence on new templates, without evaluation
+examples in the prompt. The comparison was incomplete; the corrected-schema
+smoke passed 16/16 checks. Neither result establishes generalization or H1/H2.
 
 Temporal analysis is specified in `temporal-warning-protocol.md`. Human audit
 and product utility studies are roadmap items in `evidence-priorities-plan.md`.

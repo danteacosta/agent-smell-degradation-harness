@@ -3,6 +3,8 @@
 This auxiliary experiment follows the failure of both original configurations
 to detect deletion in the PR #39 controls. The plan is recorded in
 [judge-prompt-comparison-plan.md](judge-prompt-comparison-plan.md).
+The [results](judge-prompt-comparison-results.md) retain the interrupted v1
+comparison and the separate successful 16-call schema-repair smoke.
 
 The historical arm uses the original prompt verbatim. The evidence arm defines
 coverage, omission, ambiguity and severity, asks the judge to assess every
@@ -61,6 +63,11 @@ Raw responses, per-call latency, usage, manifest and append-only cost ledger
 remain in the private run directory. The CLI prints progress and budget status;
 only aggregate findings belong in public research documents. Configured and
 returned model IDs are recorded but do not prove immutable vendor weights.
+
+The separate repaired-contract smoke uses `--study schema_smoke_v2` with a new
+directory. It has 16 calls over two new templates, rather than the 288-call
+comparison. Its direct byte-based envelope is US$0.027280; the reused ledger
+still reserves US$0.832032. Historical and evidence-v1 prompts remain available.
 
 ## Interpretation boundary
 
