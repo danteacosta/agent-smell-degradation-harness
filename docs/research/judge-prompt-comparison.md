@@ -69,6 +69,13 @@ directory. It has 16 calls over two new templates, rather than the 288-call
 comparison. Its direct byte-based envelope is US$0.027280; the reused ledger
 still reserves US$0.832032. Historical and evidence-v1 prompts remain available.
 
+The [expanded v2 plan](judge-v2-expanded-plan.md) uses `--study expanded_v2`:
+48 new controls over 12 templates, two prompts (historical and evidence-v2),
+two providers and two repetitions, for 384 calls. It does not reuse either
+previous pack. Its direct envelope with contingency is US$0.466610, with the
+same US$0.832032 conservative ledger envelope and no retries. Use a fresh
+private directory; the interrupted v1 study remains a separate record.
+
 ## Interpretation boundary
 
 Passing these controls supports further instrument development, not human

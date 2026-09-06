@@ -16,8 +16,12 @@
       call and 14 unattempted calls; do not retry or normalize invalid labels.
 - [x] Repair the explicit label/status binding and run a separate 16-call smoke:
       16/16 valid correct responses, 4/4 deletions per provider, US$0.002708.
-- [ ] Reconcile the original ambiguous call and freeze a larger evidence-v2
-      comparison on additional new templates; no automatic prompt promotion.
+- [x] Freeze and execute the expanded evidence-v2 comparison: 384/384 calls,
+      US$0.052009, 24/24 constructed omissions detected per provider; no
+      automatic prompt promotion or natural-artifact relabeling.
+- [ ] Obtain external evidence to reconcile the original ambiguous call:
+      no persisted request/response ID or usage; costs API returned 403 and
+      browser requires login. Keep US$0.000218 reserved; no retry performed.
 - [ ] Roadmap: random human audit plus separate enriched troubleshooting queue.
 - [ ] Roadmap: product diagnostic utility and investigation-time study.
 

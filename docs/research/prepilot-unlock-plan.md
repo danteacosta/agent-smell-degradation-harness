@@ -52,8 +52,14 @@ v1 arm exposed a JSON field/value ambiguity. A separately frozen evidence-v2
 smoke then produced 16/16 valid, construction-correct responses across both
 providers, including 4/4 deletions per provider and no observed false alarms.
 That two-template smoke does not qualify the judge on natural artifacts. The
-ambiguous attempt still requires cost reconciliation; the larger v2 comparison
-and human calibration remain open.
+ambiguous attempt still requires external cost evidence; human calibration
+remains open.
+
+The subsequent [expanded v2 comparison](judge-v2-expanded-results.md) completed
+384/384 calls at US$0.052009. Both providers detected 24/24 constructed omission
+occurrences with v2 and produced no false alarms on 48 complete/paraphrased
+occurrences per provider. The old prompt detected 2/24 (OpenAI) and 0/24
+(DeepSeek). No primary prompt promotion or natural-artifact relabeling occurred.
 
 ## What the previous `284 clean` result means
 

@@ -16,7 +16,9 @@ the [temporal analyzer and prospective protocol](docs/research/temporal-warning-
 prepare early-warning measurements without claiming an empirical benefit.
 The [prompt-repair study](docs/research/judge-prompt-comparison-results.md)
 preserves an incomplete comparison and a separate 16/16 successful schema
-smoke. A larger v2 evaluation and natural-artifact validation remain pending.
+smoke. The [expanded v2 comparison](docs/research/judge-v2-expanded-results.md)
+completed 384 calls and detected all constructed omissions with both providers;
+natural-artifact validation remains pending.
 
 **Research questions:** RQ1 measures degradation induced by defective requirements; RQ2 tests whether pre-final, oracle-free observability improves deployable warning. RQ3 evaluates clarification only when that optional extension is enabled.
 

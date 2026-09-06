@@ -47,8 +47,8 @@ No human calibration, natural-artifact validity or H1/H2 claim follows.
       missing usage, stop without retry and preserve the remaining denominator.
 - [x] Run new tests red, implement named-study selection, run targeted and full
       offline verification, review privacy/cost/SOLID and commit before live use.
-- [ ] Execute one live run; preserve all failures and report planned denominators.
-- [ ] Publish aggregate results in PR #41; keep account balances and raw data private.
+- [x] Execute one live run; preserve all failures and report planned denominators.
+- [x] Prepare aggregate results for PR #41; keep account balances and raw data private.
 
 ## Earlier-call reconciliation and account checks
 
@@ -80,3 +80,9 @@ No new framework, duplicate cost policy or external side effect is introduced
 outside the existing live path. Constant-answer and missing-usage regressions
 cover the key diagnostic and stopping boundaries. Remaining limitations are
 authored construction oracles, known constraint families and no human calibration.
+
+## Collection checkpoint
+
+The [expanded result](judge-v2-expanded-results.md) records 384/384 completed
+calls at US$0.052009, with no invalid/missing response or unresolved cost in
+this run. The earlier ambiguous attempt remains an external-evidence dependency.

@@ -1,7 +1,7 @@
 # Judge prompt comparison: incomplete collection and schema diagnosis
 
 The revised evaluator detected all deletion controls in a separate 16-call
-schema-repair smoke, but the larger comparison remains incomplete. The small
+schema-repair smoke, but the original v1 comparison remains incomplete. The small
 smoke does not validate the earlier natural-artifact labels or establish H1/H2.
 
 PR #40 was merged as `3383f1fd1efa7430741b444455887ea1dfca47d9`.
@@ -95,7 +95,8 @@ Total reconciled cost across the comparison and smoke is US$0.047679. The
 original US$0.000218 unresolved reservation is still separate; it was not
 released, silently retried or declared reconciled by the second experiment.
 
-Next: reconcile that ambiguous attempt and freeze a larger evidence-v2
-comparison with additional new templates before collecting more outcomes.
-The first comparison's cases are development material now. Do not promote the
-prompt automatically or overwrite natural-artifact labels after this smoke.
+Subsequently, the [expanded evidence-v2 comparison](judge-v2-expanded-results.md)
+completed 384/384 calls on 12 additional templates. It is a separate study,
+not a completion or replacement of this interrupted comparison. The earlier
+ambiguous attempt still requires external reconciliation evidence. These
+cases are development material now; no natural-artifact label was overwritten.
