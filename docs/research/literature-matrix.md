@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-09-05  
+Last updated: 2026-09-06
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -15,6 +15,16 @@ have been read. Product-only sources must not support scientific claims.
 | [Motger et al., *Characterizing Datasets for LLM-based Requirements Engineering*](https://arxiv.org/abs/2510.18787) | 2026, systematic mapping preprint | How public LLM4RE datasets differ in provenance, accessibility, reuse, and RE descriptors; 62 datasets from 45 primary studies | Systematic mapping with a public catalogue and extraction scheme | Licensing, availability, granularity, labels, and domain are necessary selection descriptors; accessibility changes over time | Preprint; scope is public LLM4RE datasets rather than controlled agent episodes; dataset documentation can be incomplete | Supports transparent corpus provenance without changing the causal claim | Require an immutable source revision reference in addition to source URL, rights review, hashes, and project ID | A reusable integrity gate can expose source lineage and reuse constraints | Upgrade corpus intake to require `source_revision_url` and `source_revision_id` | 6/10 |
 | [Koo et al., *Benchmarking Cognitive Biases in Large Language Models as Evaluators*](https://doi.org/10.18653/v1/2024.findings-acl.29) | 2024, Findings of ACL, peer-reviewed | Whether LLM evaluators exhibit cognitive biases; preference rankings from 16 LLMs across four size ranges | CoBBLer probes six biases, including egocentric preference for a model's own output, and compares machine with human rankings | Bias indicators appeared in about 40% of model comparisons; average human-machine rank-biased overlap was 44% | Text-quality ranking is not acceptance-criterion coverage; findings do not estimate bias for OpenAI or DeepSeek configurations used here; pairwise ranking differs from the single-artifact rubric | Supports the existing rule that LLM judgments are exploratory label-plane evidence only | Record and stratify every exploratory judgment as self or cross; never pool the two relations silently | Enables bias-aware diagnostics before human review, but cannot replace human annotation | Add fail-visible self/cross relation telemetry to private evidence and redacted reports | 8/10 |
 | [Ahmed et al., *Can LLMs Replace Manual Annotation of Software Engineering Artifacts?*](https://doi.org/10.1109/MSR66628.2025.00086) | 2025, MSR, peer-reviewed Distinguished Paper | When LLM ratings can safely replace some human annotation; six LLMs, ten tasks, and five prior SE datasets | Compares human-human, human-model, and model-model agreement; evaluates confidence-based selective delegation | Model-model agreement predicts human-model agreement at task level, but no confidence threshold allowed complete human replacement across the studied tasks | Discrete labels, no free-form annotation, possible repository contamination, and no analysis of model bias or demographics | Supports keeping machine judgments outside confirmatory ground truth | Treat model-model agreement as a feasibility diagnostic; require blinded human calibration before any mixed human-LLM delegation | May reduce future annotation cost only after task-specific calibration | Preserve full human annotation for H1/H2; add a no-delegation boundary until human-model calibration exists | 9/10 |
+
+| [Lee et al., *Are LLM-Judges Robust to Expressions of Uncertainty?*](https://doi.org/10.18653/v1/2025.naacl-long.452) | 2025, NAACL long paper, peer-reviewed | Evaluator robustness; EMBER has 2,000 QA and 823 instruction-following instances | Five judges; marker perturbations, human filtering, accuracy and verdict switches | Judgments change under epistemic markers | English text; QA/instruction following, not requirement semantics | Separate evaluator artifacts from degradation | Add synthetic correctness and invariance controls; do not assume hedges preserve requirements | Uncalibrated judgments need review | Implement isolated judge controls; preserve H1/H2 | 8/10: peer-reviewed, public benchmark and explicit methods; task transfer limited |
+
+## 2026-09-06 incorporation decision
+
+With zero available human annotators, implement the bounded diagnostic track in
+[annotation-free evaluation](annotation-free-evaluation.md). Constructed controls
+can falsify simplistic evaluator behavior without certifying natural-language
+labels. The primary hypotheses, human-label gate and feature/label separation
+remain unchanged. Source search and method/results/limitations review: 2026-09-06.
 
 ## 2026-09-02 incorporation decision
 

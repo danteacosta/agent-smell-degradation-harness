@@ -239,6 +239,8 @@ def parse_judge_response(raw: str | bytes, request: JudgeRequest) -> JudgeRespon
     except (TypeError, ValueError, json.JSONDecodeError) as exc:
         raise ValueError("judge response is not valid JSON") from exc
     if isinstance(payload, Mapping) and set(payload) == {"label", "status"}:
+        if len(validated_request.reference_constraints) != 1:
+            raise ValueError("compact judge response requires exactly one reference constraint")
         _reject_private_metadata(payload)
         label = payload["label"]
         status = payload["status"]

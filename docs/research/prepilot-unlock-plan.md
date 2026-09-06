@@ -1,6 +1,6 @@
 # Pre-pilot unlock plan
 
-Status: 2026-09-05. This plan separates operational readiness from evidence
+Status: 2026-09-06. This plan separates operational readiness from evidence
 that could support H1 or H2. A smoke test, an LLM judge, or a local seed is not
 confirmatory evidence.
 
@@ -8,7 +8,7 @@ confirmatory evidence.
 
 | Gate | Evidence available | Current status | Owner |
 |---|---|---|---|
-| Main synchronization | PR #37 is merged on `main` at `be3c60b`; PR #38 carries the corrected-run audit and documentation reconciliation | Remote state reconciled; launch fields remain fail-closed for confirmatory use | Engineering |
+| Main synchronization | PR #38 is merged on `main` at `7ba1ebb`, including corrected-run audit and documentation reconciliation | Remote state reconciled; launch fields remain fail-closed for confirmatory use | Engineering |
 | Corpus | v4 intake, immutable source references, rights review, hashes, and a frozen redacted manifest | 12 exploratory records across 6 projects validated; confirmatory admission remains a governance decision | Researcher and advisor |
 | Providers | Runtime-native OpenAI and DeepSeek adapters, usage/cost propagation, and native smoke CLI | Corrected 120-episode exploratory run completed with both provider configurations; the result remains non-confirmatory | Operator |
 | Substantive evidence | T1/T2 non-empty-field gate and retry contract | 480/480 required T1/T2 stage checks passed; no incomplete episode or artifact was recorded | Engineering and operator |
@@ -18,6 +18,23 @@ confirmatory evidence.
 | Readiness | Fail-closed `prepilot_readiness` report | `no_go` for any claim beyond an exploratory pre-pilot; no H1/H2 claim is authorized | Researcher and advisor |
 
 These are process statuses, not efficacy results.
+
+## Work that can proceed with zero human annotators
+
+The current bottleneck is human annotation, not provider availability. Continue
+instrument qualification and exploratory diagnostics using the
+[annotation-free evaluation protocol](annotation-free-evaluation.md).
+The offline synthetic judge-control suite generates 12 original toy cases and
+scores raw responses separately for each frozen configuration and repetition.
+It tests literal coverage, order invariance, deletion and contradiction; missing
+calls, invalid responses and abstentions remain visible. Its results cannot
+admit a corpus, calibrate a judge against humans, or unlock H1/H2.
+
+The control suite and its automated tests are implemented. Real-provider control
+results are **not yet collected**. Do not label a provider qualified by these
+controls until its response bundle has been scored. The existing exploratory
+prompt and historical run are preserved; any prompt improvement must be tested
+as a separately fingerprinted configuration.
 
 ## What the previous `284 clean` result means
 
