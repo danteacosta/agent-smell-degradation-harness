@@ -11,7 +11,17 @@
       verify text, native slide structure and all nine rendered thumbnails.
 - [ ] Collect prospective temporal observations and valid terminal outcomes;
       no empirical early-warning benefit is claimed from software tests.
-- [ ] Compare a separately frozen improved judge prompt on fresh control templates.
+- [x] Merge PR #40 as 3383f1f and execute the separately frozen prompt comparison.
+      Preserve its incomplete status: 274 attempts, 273 responses, one ambiguous
+      call and 14 unattempted calls; do not retry or normalize invalid labels.
+- [x] Repair the explicit label/status binding and run a separate 16-call smoke:
+      16/16 valid correct responses, 4/4 deletions per provider, US$0.002708.
+- [x] Freeze and execute the expanded evidence-v2 comparison: 384/384 calls,
+      US$0.052009, 24/24 constructed omissions detected per provider; no
+      automatic prompt promotion or natural-artifact relabeling.
+- [ ] Obtain external evidence to reconcile the original ambiguous call:
+      no persisted request/response ID or usage; costs API returned 403 and
+      browser requires login. Keep US$0.000218 reserved; no retry performed.
 - [ ] Roadmap: random human audit plus separate enriched troubleshooting queue.
 - [ ] Roadmap: product diagnostic utility and investigation-time study.
 

@@ -7,6 +7,19 @@ See [results](evaluator-control-results.md) and the
 pending. H1, H2, the primary
 missing-condition family and the no-compaction primary condition are unchanged.
 
+A subsequent [prompt comparison and schema smoke](judge-prompt-comparison-results.md)
+found a field/value ambiguity in the first evidence prompt. Evidence v2 passed
+16/16 small-smoke checks, with four deletions detected by each provider. The
+original v1 comparison was interrupted by unverified call usage and is not complete;
+neither configuration has human calibration or natural-artifact qualification.
+
+The later [expanded v2 comparison](judge-v2-expanded-results.md) completed all
+384 calls. Each provider matched 96/96 construction oracles with v2, including
+24/24 deletions and no false alarms on 48 complete/paraphrased occurrences.
+The historical prompt detected only 2/24 and 0/24 deletions, respectively.
+This completed study does not reconcile the earlier ambiguous call or establish
+natural-artifact validity.
+
 ## Thesis: distinguish three evidence levels
 
 1. **Instrument correctness:** executable contracts, lineage, isolation and
@@ -93,13 +106,14 @@ for these three templates.
 
 ## Next steps while human annotation is unavailable
 
-- The fixed controls have now exposed zero deletion sensitivity in both judges.
+- The original fixed controls exposed zero deletion sensitivity in both historical judge configurations.
   The hard-coded `clean/covered` example is an anchoring risk to test, not a
   demonstrated explanation of the historical label distribution.
-- Test a separately fingerprinted rubric-explicit prompt with balanced examples
-  and verifiable evidence spans. Quote presence verifies grounding only, not
-  entailment. Do not tune on the confirmatory holdout or silently overwrite the
-  historical configuration. The current suite does not implement this prompt.
+- A separately fingerprinted rubric/evidence prompt has now been tested,
+  without evaluation examples in the prompt. The corrected v2 contract passed
+  a small smoke and the separately frozen 384-call comparison. Quote presence
+  verifies grounding only, not entailment. Do not tune on the confirmatory
+  holdout or silently overwrite the historical configuration.
 - Treat uncertain, inconsistent or failed judgments as review-needed; never
   impute them as clean or drop them from denominators. Repeat sensitivity
   analyses with both pessimistic and optimistic assignments before interpreting

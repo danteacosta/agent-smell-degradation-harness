@@ -8,7 +8,7 @@ confirmatory evidence.
 
 | Gate | Evidence available | Current status | Owner |
 |---|---|---|---|
-| Main synchronization | PR #39 is merged on `main` at `17b4184`, adding annotation-free diagnostic controls after PR #38 | Remote state reconciled; launch fields remain fail-closed for confirmatory use | Engineering |
+| Main synchronization | PR #40 is merged on `main` at `3383f1f`, preserving control results, executable contracts and the temporal protocol | Remote state reconciled; launch fields remain fail-closed for confirmatory use | Engineering |
 | Corpus | v4 intake, immutable source references, rights review, hashes, and a frozen redacted manifest | 12 exploratory records across 6 projects validated; confirmatory admission remains a governance decision | Researcher and advisor |
 | Providers | Runtime-native OpenAI and DeepSeek adapters, usage/cost propagation, and native smoke CLI | Corrected 120-episode exploratory run completed with both provider configurations; the result remains non-confirmatory | Operator |
 | Substantive evidence | T1/T2 non-empty-field gate and retry contract | 480/480 required T1/T2 stage checks passed; no incomplete episode or artifact was recorded | Engineering and operator |
@@ -45,6 +45,21 @@ detect four deliberate mutants. They do not validate natural-language mapping.
 The [temporal protocol and analyzer](temporal-warning-protocol.md) are ready for
 prospective observations, but early-warning benefit has not been measured.
 Future human calibration and product utility remain roadmap studies.
+
+The [prompt comparison](judge-prompt-comparison-results.md) collected 273
+responses before one ambiguous attempt stopped its 288-call plan. The evidence
+v1 arm exposed a JSON field/value ambiguity. A separately frozen evidence-v2
+smoke then produced 16/16 valid, construction-correct responses across both
+providers, including 4/4 deletions per provider and no observed false alarms.
+That two-template smoke does not qualify the judge on natural artifacts. The
+ambiguous attempt still requires external cost evidence; human calibration
+remains open.
+
+The subsequent [expanded v2 comparison](judge-v2-expanded-results.md) completed
+384/384 calls at US$0.052009. Both providers detected 24/24 constructed omission
+occurrences with v2 and produced no false alarms on 48 complete/paraphrased
+occurrences per provider. The old prompt detected 2/24 (OpenAI) and 0/24
+(DeepSeek). No primary prompt promotion or natural-artifact relabeling occurred.
 
 ## What the previous `284 clean` result means
 
