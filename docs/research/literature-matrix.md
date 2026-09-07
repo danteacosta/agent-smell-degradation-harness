@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-09-06
+Last updated: 2026-09-07
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -17,6 +17,21 @@ have been read. Product-only sources must not support scientific claims.
 | [Ahmed et al., *Can LLMs Replace Manual Annotation of Software Engineering Artifacts?*](https://doi.org/10.1109/MSR66628.2025.00086) | 2025, MSR, peer-reviewed Distinguished Paper | When LLM ratings can safely replace some human annotation; six LLMs, ten tasks, and five prior SE datasets | Compares human-human, human-model, and model-model agreement; evaluates confidence-based selective delegation | Model-model agreement predicts human-model agreement at task level, but no confidence threshold allowed complete human replacement across the studied tasks | Discrete labels, no free-form annotation, possible repository contamination, and no analysis of model bias or demographics | Supports keeping machine judgments outside confirmatory ground truth | Treat model-model agreement as a feasibility diagnostic; require blinded human calibration before any mixed human-LLM delegation | May reduce future annotation cost only after task-specific calibration | Preserve full human annotation for H1/H2; add a no-delegation boundary until human-model calibration exists | 9/10 |
 
 | [Lee et al., *Are LLM-Judges Robust to Expressions of Uncertainty?*](https://doi.org/10.18653/v1/2025.naacl-long.452) | 2025, NAACL long paper, peer-reviewed | Evaluator robustness; EMBER has 2,000 QA and 823 instruction-following instances | Five judges; marker perturbations, human filtering, accuracy and verdict switches | Judgments change under epistemic markers | English text; QA/instruction following, not requirement semantics | Separate evaluator artifacts from degradation | Add synthetic correctness and invariance controls; do not assume hedges preserve requirements | Uncalibrated judgments need review | Implement isolated judge controls; preserve H1/H2 | 8/10: peer-reviewed, public benchmark and explicit methods; task transfer limited |
+
+## 2026-09-07 incorporation decision: uncertainty without invented calibration
+
+| Source | Year / venue / status | Question and data | Method | Main result | Limitations and threats | Thesis relevance | Experiment relevance | Product relevance | Concrete action | Credibility |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [Sheng et al., *Analyzing Uncertainty of LLM-as-a-Judge: Interval Evaluations with Conformal Prediction*](https://doi.org/10.18653/v1/2025.emnlp-main.569) | 2025, EMNLP, peer-reviewed | Rating uncertainty; SummEval (1,600), DialSumm (1,400), four ROSCOE tasks (~200 each) | Three primary judges; token-logit conformal methods; ordinal adjustment; 50/50 calibration/test splits over 30 seeds | Adjustment generally improves coverage | Requires reference labels and exchangeability; task/domain transfer is limited | No annotation-free calibration claim | Keep missing-data bounds distinct from statistical intervals | Defer calibrated delegation | Document the calibration dependency; implement separate missing-stage accounting, not their algorithm | 8/10: peer-reviewed, explicit methods and appendices; no requirements evaluation |
+
+Search and reading: 2026-09-07; abstract, Sections 3–4, limitations/ethics and
+Appendix A.6 reviewed. DOI/title checked against main and the open pilot branch.
+The source changes the uncertainty-claim boundary, not H1/H2 or the taxonomy.
+Our independent engineering action in [temporal-warning protocol](temporal-warning-protocol.md)
+retains partial-observation costs and computes deterministic completion bounds
+conditional on supplied labels. It does not create human annotations or correct
+systematic errors in machine labels. Existing frozen runs are not re-scored or
+re-authorized automatically.
 
 ## 2026-09-06 incorporation decision
 

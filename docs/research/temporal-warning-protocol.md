@@ -55,7 +55,45 @@ Report latency and instrumentation overhead separately from total generation
 cost; extra delay caused by instrumentation needs an uninstrumented matched
 comparison. Unlabeled episodes cannot supply false-alert or detection rates.
 
-Current empirical limitation: the 72-call control run found poor deletion
+## Missing-stage sensitivity, not calibrated uncertainty
+
+`temporal-diagnostics/v2` preserves the original complete-stage `false_alert_rate`
+and labels its scope explicitly. In addition, `missing_stage_bounds` keeps every
+supplied terminal-labeled episode, including those with missing checkpoints.
+For each outcome group, let N be the supplied-label count, A the episodes with
+an observed alert in the window, and U the incomplete episodes with no observed
+alert. The possible alert-rate range is [A/N, (A+U)/N]. An observed alert makes
+the OR policy true even if another checkpoint is missing. With N=0 the bounds
+are null. Unknown terminal labels are counted separately and never imputed.
+
+For nondefective labels this is a missing-stage false-alert range; for defective
+labels it is a detection range. These are deterministic completion bounds, NOT
+confidence intervals, conformal prediction intervals, population estimates or
+proof that machine labels are correct. They cover only supplied rows: missing
+entire episodes must still be reconciled against the frozen execution manifest.
+Changing the alert policy requires a new derivation. No project-level inference
+is performed here, and no new model training or H2 feature is introduced.
+
+Example: one completely observed, nondefective no-alert episode and one
+nondefective episode missing T2/T3 produce a complete-case false-alert rate of
+0, but a possible rate from 0 to 0.5. Showing only the former conceals a real
+observability limitation. This is an arithmetic fixture, not an empirical result.
+
+The known-cost subtotal now retains every measured stage cost, even in partially
+observed episodes or beside an unknown cost. The total remains null whenever a
+required stage or cost is unknown. `missing_cost_episodes` counts episodes with
+an observed stage whose cost is null; absent stages are counted separately.
+`first_alert_prefix_complete` distinguishes a fully observed prefix from an
+alert whose earlier checkpoints are missing; null means no observed alert.
+V1 reports remain historical and must not be silently rewritten as v2.
+
+[Sheng et al., EMNLP 2025](https://doi.org/10.18653/v1/2025.emnlp-main.569)
+study calibrated judge intervals, which require reference labels and
+exchangeability. We therefore defer conformal claims until an appropriate
+independent calibration set exists. Our completion bounds are separate local
+bookkeeping, not an implementation or replication of their method.
+
+Historical empirical limitation: the original 72-call control run found poor deletion
 sensitivity. Historical machine-clean labels cannot supply a trustworthy
 false-alert denominator. Collection of new temporal/lineage observations and
 valid terminal outcomes remains necessary before claiming early-warning value.
