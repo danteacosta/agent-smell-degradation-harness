@@ -20,6 +20,12 @@ def _time(value):
     return value
 
 
+def _bound_counts():
+    return {'labeled_episodes': 0, 'observed_alerts': 0,
+            'unresolved_alert_episodes': 0,
+            'alert_rate_lower': None, 'alert_rate_upper': None}
+
+
 def analyze(rows):
     episodes = []
     seen = set()
@@ -30,7 +36,12 @@ def analyze(rows):
             'missing_stage_episodes': 0, 'outcome_labeled_episodes': 0,
             'nondefective_labeled_episodes': 0, 'alerts': 0, 'false_alerts': 0,
             'cost_microusd': 0, 'known_cost_microusd': 0,
-            'missing_cost_episodes': 0, 'false_alert_rate': None}
+            'missing_cost_episodes': 0, 'false_alert_rate': None,
+            'rate_scope': 'complete_stage_labeled_episodes',
+            'missing_stage_bounds': {'scope': 'supplied_labels_only',
+                                    'unlabeled_episodes': 0,
+                                    'nondefective': _bound_counts(),
+                                    'defective': _bound_counts()}}
     for row in rows:
         identifier = row['episode_id']
         if not isinstance(identifier, str) or not identifier or identifier in seen:
@@ -62,29 +73,49 @@ def analyze(rows):
         episodes.append({'episode_id': identifier, 'intent_id': row['intent_id'],
                          'first_alert_stage': first['stage'] if first else None,
                          'lead_time_ms': terminal-first['available_ms'] if first else None,
+                         'first_alert_prefix_complete': (
+                             all(s in stages for s in STAGES[:STAGES.index(first['stage'])+1])
+                             if first else None),
                          'observation_complete': len(stages) == 3})
         for horizon, result in horizons.items():
             required = horizon.split('+')
-            if any(s not in stages for s in required):
+            available = [stages[s] for s in required if s in stages]
+            incomplete = len(available) != len(required)
+            alert = any(s['alert'] for s in available)
+            # Retain measured expenditure even if a different cost/stage is unknown.
+            costs = [s['cost_microusd'] for s in available]
+            result['known_cost_microusd'] += sum(c for c in costs if c is not None)
+            result['missing_cost_episodes'] += any(c is None for c in costs)
+            bounds = result['missing_stage_bounds']
+            if defect is None:
+                bounds['unlabeled_episodes'] += 1
+            else:
+                group = bounds['defective' if defect else 'nondefective']
+                group['labeled_episodes'] += 1
+                group['observed_alerts'] += alert
+                # Under an OR policy, an observed alert is already conclusive.
+                group['unresolved_alert_episodes'] += incomplete and not alert
+            if incomplete:
                 result['missing_stage_episodes'] += 1
                 continue
             result['complete_stage_episodes'] += 1
-            alert = any(stages[s]['alert'] for s in required)
             result['alerts'] += alert
             result['outcome_labeled_episodes'] += defect is not None
             result['nondefective_labeled_episodes'] += defect is False
             result['false_alerts'] += alert and defect is False
-            costs = [stages[s]['cost_microusd'] for s in required]
-            if any(c is None for c in costs):
-                result['missing_cost_episodes'] += 1
-            else:
-                result['known_cost_microusd'] += sum(costs)
     for result in horizons.values():
         n = result['nondefective_labeled_episodes']
         result['false_alert_rate'] = result['false_alerts']/n if n else None
         result['cost_microusd'] = (None if result['missing_cost_episodes'] or result['missing_stage_episodes']
                                    else result['known_cost_microusd'])
-    return {'schema_version': 'temporal-diagnostics/v1', 'confirmatory_eligible': False,
+        for name in ('defective', 'nondefective'):
+            group = result['missing_stage_bounds'][name]
+            n = group['labeled_episodes']
+            if n:
+                group['alert_rate_lower'] = group['observed_alerts']/n
+                group['alert_rate_upper'] = (
+                    group['observed_alerts']+group['unresolved_alert_episodes'])/n
+    return {'schema_version': 'temporal-diagnostics/v2', 'confirmatory_eligible': False,
             'policy': 'any_predeclared_alert_in_available_prefix',
             'distinct_intents': len({r['intent_id'] for r in rows}),
             'horizons': horizons, 'episodes': episodes}
