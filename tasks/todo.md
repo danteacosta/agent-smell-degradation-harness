@@ -7,7 +7,7 @@
 - [x] Inspect custody, ledger, provider adapter and offline audit boundaries.
 - [x] Compare execution approaches and write the bounded live-coordinator design.
 - [x] Review the design inline for locking, budget retention and scientific limits.
-- [ ] Obtain review of the [written live specification](../docs/superpowers/specs/2026-09-07-addressed-comparison-live-design.md).
+- [x] Obtain review of the [written live specification](../docs/superpowers/specs/2026-09-07-addressed-comparison-live-design.md).
 - [ ] Plan and implement the coordinator test-first without changing frozen studies.
 - [ ] Verify the implementation, freeze its runtime and perform private preflight.
 - [ ] Execute 48 development calls; execute 96 evaluation calls only after a pass.

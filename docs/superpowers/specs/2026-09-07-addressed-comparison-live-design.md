@@ -3,7 +3,8 @@
 The investigator has authorized merging PR #46 and running its comparison.
 PR #46 is now on `main` at `207f545`. It supplies an offline plan and response
 audit; a separate coordinator must own real dispatch and the shared budget.
-This specification defines that coordinator. Written-spec review is pending.
+This specification defines that coordinator. The user approved the written
+specification in the research task before implementation.
 
 The comparison retains the [approved study design](2026-09-07-addressed-comparison-design.md):
 48 development calls, followed by 96 evaluation calls only if development
