@@ -1,5 +1,26 @@
 # Requirements-smell experiment hardening
 
+## Offline artifact-addressed evidence — 2026-09-07
+
+- [x] Inspect current code and failed v3 evidence; preserve frozen studies.
+- [x] Compare alternatives, approve the design and review the written spec.
+- [x] Catalog primary attribution sources and reconcile stale research prose.
+- [x] Test and implement exact artifact-span resolution.
+- [x] Test and implement the separately versioned addressed-judge contract.
+- [x] Test and implement a bounded, redacted offline audit and toy demo.
+- [x] Verify regressions, full gates, privacy, scientific boundaries and diff.
+- [x] Synchronize the research report with native text/style readback.
+- [ ] Publish a reviewable increment; no automatic merge or paid collection.
+
+The [plan](../docs/superpowers/plans/2026-09-07-evidence-addressing.md) is
+executed inline without subagents or paid calls. This work does not release
+the locked evaluation cases or main pilot.
+
+Local checkpoint: 95 focused tests; 1,053 full-suite tests passed, 7 skipped,
+9 subtests passed. Eval/gates, compile, wedge and replay passed; the wheel built
+offline in an auxiliary toolchain. The scientific environment was not changed.
+The Drive report records offline development separately from empirical results.
+
 ## Advisor meeting preparation — 2026-09-07
 
 - [x] Review PRs #41–#43, test the combined tree, and merge only verified changes.

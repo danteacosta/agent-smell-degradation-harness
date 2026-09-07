@@ -28,6 +28,13 @@ were absent from the artifact. Its 96 evaluation calls were not dispatched.
 Main-cohort generation remains paused. These are completed diagnostic findings,
 not estimates of semantic preservation or H1/H2 results.
 
+The experimental [artifact-addressed evidence audit](docs/research/artifact-addressed-evidence.md)
+resolves citations to exact artifact segments and rejects invented or stale IDs.
+Try `python -m eval.evidence_addressing --demo` without provider credentials.
+Its toy demonstration includes an irrelevant but resolvable citation: locator
+integrity does not establish semantic support. No provider run or pilot release
+is part of this command.
+
 **Research questions:** RQ1 measures degradation induced by defective requirements; RQ2 tests whether pre-final, oracle-free observability improves deployable warning. RQ3 evaluates clarification only when that optional extension is enabled.
 
 Design for this wedge: [wedge-first reliability check spec](docs/superpowers/specs/2026-07-22-wedge-first-reliability-check-design.md)

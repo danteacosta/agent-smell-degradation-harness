@@ -18,6 +18,22 @@ have been read. Product-only sources must not support scientific claims.
 
 | [Lee et al., *Are LLM-Judges Robust to Expressions of Uncertainty?*](https://doi.org/10.18653/v1/2025.naacl-long.452) | 2025, NAACL long paper, peer-reviewed | Evaluator robustness; EMBER has 2,000 QA and 823 instruction-following instances | Five judges; marker perturbations, human filtering, accuracy and verdict switches | Judgments change under epistemic markers | English text; QA/instruction following, not requirement semantics | Separate evaluator artifacts from degradation | Add synthetic correctness and invariance controls; do not assume hedges preserve requirements | Uncalibrated judgments need review | Implement isolated judge controls; preserve H1/H2 | 8/10: peer-reviewed, public benchmark and explicit methods; task transfer limited |
 
+## 2026-09-07 incorporation decision: artifact-addressed evidence
+
+The [attribution research note](2026-09-07-evidence-attribution.md) records full
+metadata, reading scope, limitations, and downstream design. DOI/title checks
+found no earlier ALCE or AIS entry in this matrix.
+
+| Source | Contribution | Limit on transfer | Decision | Credibility |
+| --- | --- | --- | --- | --- |
+| [Gao et al., ALCE, EMNLP 2023](https://doi.org/10.18653/v1/2023.emnlp-main.398) | Separates citation support/relevance from answer correctness | NLI metrics have partial-support limits; requirements are untested | Keep locator integrity separate from semantic validity; do not add an uncalibrated NLI judge | 8/10 |
+| [Rashkin et al., AIS, Computational Linguistics 2023](https://doi.org/10.1162/coli_a_00486) | Human attribution framework with explicit interpretation and source-support steps | Ambiguity and imperfect reference data remain; not a requirements calibration | Report unresolved semantics separately; preserve independent-label requirements | 9/10 |
+| [W3C Web Annotation Data Model, 2017](https://www.w3.org/TR/annotation-model/#selectors) | Version-sensitive span selection | A locator is not a support judgment | Bind exact UTF-8 ranges to artifact identity; no W3C-conformance claim | Normative standard, not empirical validation |
+
+The [offline design](../superpowers/specs/2026-09-07-evidence-addressing-design.md)
+responds to observed quote failures. It does not change old scoring rules,
+release the locked evaluation cases, or authorize provider spending.
+
 ## 2026-09-07 incorporation decision: uncertainty without invented calibration
 
 | Source | Year / venue / status | Question and data | Method | Main result | Limitations and threats | Thesis relevance | Experiment relevance | Product relevance | Concrete action | Credibility |

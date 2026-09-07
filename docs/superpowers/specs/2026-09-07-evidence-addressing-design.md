@@ -1,8 +1,8 @@
 # Artifact-addressed evidence: offline design
 
 Date: 2026-09-07. Scope: a separately versioned, offline diagnostic contract.
-The user approved this direction in the research task. Written-spec review is
-the remaining design checkpoint before implementation.
+The user approved both the direction and this written specification in the
+research task before implementation. Review is inline, not independent.
 
 ## Problem and intended result
 
