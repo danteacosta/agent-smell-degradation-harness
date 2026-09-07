@@ -5,6 +5,12 @@ The preparer creates inputs offline. The separate `eval.pilot_runtime` now
 provides gated screening, diagnostics, generation and judging under the user's
 US$7 total authorization. Prospective collection is intended for 7–13 September.
 
+Current state: the first 96-call diagnostic completed and failed. The following
+commands document the phased workflow, not permission to restart that study.
+Preserve its exact archived source and private launch; do not regenerate a launch
+to evade a failed gate. New runs freeze the temporal analyzer too and reject
+severity/coverage contradictions. See [results](source-diagnostic-results.md).
+
 ## What is prepared
 
 The private package has 24 source-pinned candidates and references, six control
