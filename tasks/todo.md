@@ -10,8 +10,9 @@
 - [x] Test and implement a bounded, redacted offline audit and toy demo.
 - [x] Verify regressions, full gates, privacy, scientific boundaries and diff.
 - [x] Synchronize the research report with native text/style readback.
-- [x] Publish [PR #45](https://github.com/danteacosta/agent-smell-degradation-harness/pull/45)
-      for review; no automatic merge or paid collection.
+- [x] Publish and, after the user's explicit approval, squash-merge
+      [PR #45](https://github.com/danteacosta/agent-smell-degradation-harness/pull/45)
+      as `4168548`; all three main-branch gates passed. No paid collection.
 
 The [plan](../docs/superpowers/plans/2026-09-07-evidence-addressing.md) is
 executed inline without subagents or paid calls. This work does not release
@@ -249,3 +250,15 @@ triage to contextual review and hidden behavioral validation.
       and the US$1.00 provider cap.
 - [ ] Obtain institutional/ethics approval and record confirmatory provider
       and annotation-hour caps before any confirmatory collection.
+## 2026-09-07 addressed comparison preparation
+
+- [x] Review and squash-merge PR #45; verify main CI and 1,053 local tests.
+- [x] Inspect frozen predecessor custody, code and budget without provider calls.
+- [x] Present alternatives and obtain approval for the offline comparison design.
+- [x] Write the design and review it inline under the memory constraint.
+- [ ] Obtain written-spec approval before implementation planning.
+- [ ] Implement offline preparation and auditing with behavior-first tests.
+- [ ] Verify privacy, shared-budget arithmetic, regressions and documentation.
+
+No visual companion is needed for this contract. No subagent is launched.
+Offline approval does not close a private study or authorize a paid call.
