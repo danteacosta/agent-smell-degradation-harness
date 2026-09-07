@@ -9,10 +9,19 @@
       designing a separately versioned development study.
 - [x] Define acceptance tests, locked evaluation cases and bounded spending
       before any revised provider-backed collection; do not launch the main cohort.
-- [ ] Reconcile public results, proposal, operational report and current slide deck.
-- [ ] Verify native document readback, every delivered slide, fresh software tests,
+- [x] Reconcile public results, proposal, operational report and current slide deck.
+- [x] Verify native document readback, every delivered slide, fresh software tests,
       privacy/cost boundaries and the remote commit state.
-- [ ] Prepare an advisor-facing account of findings, limits and next decisions.
+- [x] Prepare an advisor-facing account of findings, limits and next decisions.
+
+Verification checkpoint: 958 tests passed, 7 skipped and 9 subtests passed;
+eval, gates, compile, wedge and replay fixtures passed. PR #44's result commit
+`422f63c` passed all three CI workflows. The 48-call development study completed
+at US$0.023175 and failed; all 96 evaluation calls remain unattempted. Raw
+evidence and source/environment freezes remain private and unchanged. The
+proposal, operational report and ten-slide deck retain the negative results,
+separate historical states and distinguish construction agreement from validity.
+See the [advisor brief](../docs/research/advisor-brief-2026-09-08.md).
 
 Scope: existing private source material and providers, sequential calls, no
 additional agents, monitored Codex/ChatGPT RSS below the requested 15 GB ceiling,

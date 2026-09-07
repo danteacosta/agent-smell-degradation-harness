@@ -31,6 +31,25 @@ construction oracle, but excluding invalid responses would hide half or more of
 the planned observations. The 512-token allowance did not by itself solve output
 reliability; no response exhausted it (the largest used 178 output tokens).
 
+The operation-level counts below retain both planned source cases in every cell.
+Each entry is **valid and construction-matching / planned**, not correctness
+conditional on receiving valid output.
+
+| Operation | OpenAI v2 | DeepSeek v2 | OpenAI v3 | DeepSeek v3 |
+| --- | ---: | ---: | ---: | ---: |
+| Concise complete | 1/2 | 0/2 | 1/2 | 1/2 |
+| Distributed complete | 1/2 | 1/2 | 1/2 | 1/2 |
+| Long omission | 0/2 | 1/2 | 1/2 | 0/2 |
+| Partial missing | 0/2 | 0/2 | 1/2 | 1/2 |
+| Partial complete | 1/2 | 1/2 | 1/2 | 1/2 |
+| Partial contradiction | 2/2 | 2/2 | 1/2 | 1/2 |
+
+All six OpenAI and five DeepSeek valid v3 responses came from the same second
+source locator. Their complete per-obligation status vectors also matched the
+construction answers. The other locator yielded no valid v3 response. Reporting
+only valid-output accuracy would therefore hide a source-specific exclusion,
+not merely reduce the sample size randomly.
+
 ## Two distinct evidence failures
 
 Twelve of the 24 v3 responses exceeded the 120-character quote limit. They all
