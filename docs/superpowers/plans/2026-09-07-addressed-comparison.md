@@ -89,7 +89,7 @@ pure parsers is narrower. Do not modify the frozen baseline, ledger or launch.
   replay fixtures. Run `git diff --check` and inspect the complete diff.
 - [x] Review security/privacy, custody races, SOLID and clean-code properties
   inline. Do not claim an independent review or empirical provider improvement.
-- [ ] Commit and publish the branch/PR with fresh evidence; leave merge and
+- [x] Commit and publish the branch/PR with fresh evidence; leave merge and
   real collection separate. Preserve all historical worktrees and manifests.
 
 The local `python` in commands above means
@@ -130,3 +130,9 @@ both candidate rules were unmet. Hash comparisons verified 19 historical
 files unchanged. A preliminary plan was rejected after a code change, then a
 new final plan was exported without overwriting that preliminary artifact.
 No closure, reservation release or provider call occurred.
+
+Delivery: [PR #46](https://github.com/danteacosta/agent-smell-degradation-harness/pull/46),
+implementation commit `fc21043`. An offline wheel build from the committed
+tree included all three new modules. The build used an auxiliary toolchain
+without modifying the scientific environment. The worktree and private final
+preparation package remain available; no automatic merge is part of delivery.
