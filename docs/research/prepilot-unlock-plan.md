@@ -1,6 +1,6 @@
 # Pre-pilot unlock plan
 
-Status: 2026-09-06. This plan separates operational readiness from evidence
+Status: 2026-09-07. This plan separates operational readiness from evidence
 that could support H1 or H2. A smoke test, an LLM judge, or a local seed is not
 confirmatory evidence.
 
@@ -8,7 +8,7 @@ confirmatory evidence.
 
 | Gate | Evidence available | Current status | Owner |
 |---|---|---|---|
-| Main synchronization | PR #40 is merged on `main` at `3383f1f`, preserving control results, executable contracts and the temporal protocol | Remote state reconciled; launch fields remain fail-closed for confirmatory use | Engineering |
+| Main synchronization | PR #41 merged as `414f9e0`; PR #43 as `1ac1f9f`, preserving comparison evidence and temporal missingness accounting | PR #42 review adds source-freeze and response-consistency safeguards; confirmatory fields remain fail-closed | Engineering |
 | Corpus | v4 intake, immutable source references, rights review, hashes, and a frozen redacted manifest | 12 exploratory records across 6 projects validated; confirmatory admission remains a governance decision | Researcher and advisor |
 | Providers | Runtime-native OpenAI and DeepSeek adapters, usage/cost propagation, and native smoke CLI | Corrected 120-episode exploratory run completed with both provider configurations; the result remains non-confirmatory | Operator |
 | Substantive evidence | T1/T2 non-empty-field gate and retry contract | 480/480 required T1/T2 stage checks passed; no incomplete episode or artifact was recorded | Engineering and operator |
@@ -33,7 +33,11 @@ US$0.031817; 24 intents now have explicit AI-assisted exploratory admission.
 One revised control review remains malformed and is not counted as an approval;
 its operator source audit and limitation are retained. See the
 [screening report](pilot-screening-results.md). The initial 96-call diagnostic
-gate and provider funding still control prospective dispatch. The
+completed at US$0.030728 and failed; cumulative pilot spending is US$0.062545.
+Both judges detected all six omissions but abstained on none of the six partial
+excerpts, and nineteen responses were invalid. See the
+[diagnostic report](source-diagnostic-results.md). Prospective dispatch remains
+blocked; a new development study must not override the old result. The
 historical 12-intent manifest and confirmatory launch gates are unchanged.
 
 ## Work that can proceed with zero human annotators

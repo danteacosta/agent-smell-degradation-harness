@@ -3,8 +3,9 @@
 Preparation date: 6 September 2026. Target execution window: 7–13 September.
 Status: expanded exploratory scope and a **US$7 total cap** authorized by the
 user on 6 September; 24 intents admitted by the AI-assisted research operator
-for exploratory use only. The initial diagnostic gate and account funding still
-control prospective dispatch. Five repetitions are selected. This records the user's
+for exploratory use only. The initial diagnostic completed and failed; see the
+[aggregate results](source-diagnostic-results.md). Prospective dispatch remains
+blocked. Five repetitions are selected. This records the user's
 attestation, not an advisor signature, ethics exemption or confirmatory approval.
 
 This pilot asks whether the corrected evaluator transfers from short constructed

@@ -1,8 +1,9 @@
 # Source-based pilot screening
 
-Screening completed on 6 September 2026. No source-based diagnostic outcome or
-prospective pilot trajectory has been collected. This is instrument preparation,
-not a result about semantic preservation or H1/H2.
+Screening completed on 6 September 2026. The subsequent
+[96-call diagnostic](source-diagnostic-results.md) also completed and failed its
+frozen gate. No prospective pilot trajectory has been collected. Screening is
+instrument preparation, not a result about semantic preservation or H1/H2.
 
 ## What was observed
 
@@ -49,12 +50,12 @@ visible in the private admission record and the public protocol.
 
 ## Next decision
 
-The executable next block is 96 calls: 30 source-control cases and 18 preserved
-natural clusters, each judged once by both providers. Its thresholds were fixed
-before any of those responses. The machine preflight still reports `no_go` for
-prospective generation because that diagnostic block is uncollected and has not
-passed. Provider account funding must also be verified before committing to the
-complete run; account balances are not public research artifacts.
+The 96-call block evaluated 30 source-control cases and 18 preserved natural
+clusters with both providers. Its thresholds were fixed before collection.
+Both judges detected six of six omissions, but neither abstained on the six
+partial excerpts; nineteen responses were invalid. The machine preflight remains
+`no_go` because the collected diagnostic failed. Do not repeat it unchanged or
+reset the launch directory. Provider funding is a separate operational check.
 
 The whole revised experiment reserves US$6.545597 within the user's US$7 cap.
 It includes all historical screening costs and 2,760 planned calls. No new

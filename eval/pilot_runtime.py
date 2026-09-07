@@ -35,6 +35,7 @@ TEMPLATES = {
     'artifact': 'Artifact\nRequirement:{requirement}\nPlan:{plan_json}\nReturn JSON only with exactly these keys: {output_keys}. Write actionable acceptance criteria preserving all explicit obligations, including conditions, exceptions and limits. Do not invent absent information. Full concise sentences, no markdown or hidden reasoning.',
     'retry':'No retries are authorized.'}
 SOURCE_FILES = ('eval/pilot_runtime.py','eval/pilot_ledger.py','eval/pilot_preparation.py',
+    'eval/temporal_diagnostics.py',
     'eval/exploratory_cost.py','eval/provider_runtime_config.py','eval/live_judge_controls.py',
     'agents/staged_runtime.py','agents/providers.py','agents/checkpoints.py',
     'protocol/context_management.py','protocol/atomic_obligations.py','protocol/conditional_semantics.py',
@@ -269,6 +270,17 @@ def _judge_request(row):
     return validate_judge_request(row)
 
 
+def _valid_judgment(raw, judge):
+    """Enforce the frozen pilot rubric without repairing the provider response."""
+    _, grounded = parse_evidence_response(raw, judge)
+    value = json.loads(raw)
+    labels = {'covered': {'clean'}, 'omitted': {'minor', 'moderate', 'severe'},
+              'uncertain': {'not_visible'}}
+    if not grounded or value['label'] not in labels[value['status']]:
+        raise ValueError('ungrounded or inconsistent pilot judgment')
+    return value
+
+
 def _collect_screening(directory,run,ledger,providers):
     rows=read(Path(run['package'])/'screening-requests.json')
     results=[]
@@ -308,9 +320,7 @@ def _diagnostic_report(run,completed):
         for slot in counts:
             raw=completed['diag:'+identifier+':'+slot]['response']
             try:
-                _,grounded=parse_evidence_response(raw,_judge_request(row['request']))
-                value=json.loads(raw)
-                if not grounded: raise ValueError('ungrounded quote')
+                value=_valid_judgment(raw,_judge_request(row['request']))
             except ValueError: value=None; counts[slot]['invalid']+=1
             oracle=oracles.get(identifier)
             if oracle and value:
@@ -399,9 +409,7 @@ def _collect_judging(directory,run,ledger,providers):
             relation='self' if slot==trajectory['slot'] else 'cross'
             raw=ledger.complete('judge:'+occurrence['id']+':'+slot,provider,request(render_request(serialize_judge_request(judge)),96))
             try:
-                _,grounded=parse_evidence_response(raw,judge)
-                if not grounded: raise ValueError('ungrounded quote')
-                value=json.loads(raw); counts[relation][value['label']]+=1
+                value=_valid_judgment(raw,judge); counts[relation][value['label']]+=1
             except ValueError: value=None; counts[relation]['invalid']+=1
             counts[relation]['completed']+=1
             results.append(dict(occurrence_id=occurrence['id'],slot=slot,relation=relation,duplicate=occurrence['duplicate'],response=value))

@@ -70,6 +70,36 @@ def test_modified_prepared_request_is_rejected(tmp_path):
     with pytest.raises(ValueError):api().create_run(package,specs,auth,tmp_path/'run')
 
 
+def test_temporal_analyzer_change_blocks_dispatch_after_freeze(tmp_path, monkeypatch):
+    package,specs,auth=inputs(tmp_path); p=api(); directory=tmp_path/'run'
+    p.create_run(package,specs,auth,directory)
+    original=p.file_hash
+    def changed(path):
+        return '0'*64 if str(path).endswith('eval/temporal_diagnostics.py') else original(path)
+    monkeypatch.setattr(p,'file_hash',changed)
+    with pytest.raises(ValueError,match='runtime source changed'):
+        p.run_phase(directory,'screening',provider_factory=lambda slot:pytest.fail('unfrozen analysis accepted'))
+
+
+@pytest.mark.parametrize('status,label', [('covered','moderate'),('omitted','clean'),('uncertain','clean')])
+def test_inconsistent_diagnostic_response_cannot_pass_gate(tmp_path,status,label):
+    package,specs,auth=inputs(tmp_path); p=api(); directory=tmp_path/'run'
+    run=p.create_run(package,specs,auth,directory); observed=[]
+    factory=fake_factory(package,observed)
+    p.run_phase(directory,'screening',provider_factory=factory); admit_fixture(directory,run)
+    class Inconsistent(factory):
+        def complete(self,req):
+            raw=super().complete(req); value=json.loads(raw)
+            if value.get('status')==status: value['label']=label
+            return json.dumps(value)
+    p.run_phase(directory,'diagnostics',provider_factory=Inconsistent)
+    report=p.read(directory/'diagnostics.json')
+    assert report['decision']=='pause'
+    assert all(c['invalid']>0 for c in report['counts'].values())
+    with pytest.raises(ValueError,match='gates not passed'):
+        p.run_phase(directory,'generation',provider_factory=lambda slot:pytest.fail('inconsistent judge unlocked generation'))
+
+
 def admit_fixture(directory,run):
     value={'schema_version':'pilot-admission/v1','package_sha256':run['package_sha256'],
            'review_scope':'AI-assisted exploratory; not independent human validation',
