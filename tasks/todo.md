@@ -14,7 +14,7 @@
 - [x] Preserve private receipts and write redacted findings and limitations.
 - [x] Synchronize the operational Drive report and verify seven replacements,
       paragraph styles, links and the existing date chip.
-- [ ] Publish the follow-on PR.
+- [x] Publish the follow-on [PR #47](https://github.com/danteacosta/agent-smell-degradation-harness/pull/47).
 
 Completed: 48/48 calls, US$0.028024, no pending usage/cost. V4 produced 24/24
 valid responses but failed one required long-omission decision (`uncertain`, not

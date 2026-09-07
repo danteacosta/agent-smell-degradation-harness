@@ -92,7 +92,8 @@ Extend the live module and add `tests/test_addressed_comparison_live_cli.py`.
   every outcome. If the prospective gate passes, run evaluation unchanged.
 - [x] Generate private and redacted reports; document observed outcomes and
   limitations separately from software verification. Preserve any failed gate.
-- [ ] Publish code and redacted findings in a PR, with fresh tests and CI evidence.
+- [x] Publish code and redacted findings in a PR with fresh local verification.
+  Check the remote CI result before handoff.
 
 No step promotes the constructed answers to human truth, claims semantic
 validity from resolvable citations, or releases the main cohort.
@@ -109,3 +110,9 @@ held. Main collection was not released.
 Verification before collection: 47 new tests; 1,160 full-suite tests passed,
 7 skipped and 9 subtests passed. Eval, replay, wedge, compile and an isolated
 wheel build passed. No frozen production module was changed after collection.
+
+Published as [PR #47](https://github.com/danteacosta/agent-smell-degradation-harness/pull/47).
+The operational Drive report was updated with seven verified replacements;
+all 235 paragraphs retained their structure and styles, and existing links and
+the date chip were preserved. The proposal and presentation were not edited
+in this increment.
