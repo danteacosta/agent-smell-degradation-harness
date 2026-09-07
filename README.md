@@ -1,6 +1,6 @@
 # Agent Smell Degradation Harness
 
-**Product wedge:** a requirement-integrity gate for coding agents — given a specification and live agent trace, map constraints to pre-final checks and emit **approve / warn / block** before intent loss reaches production. The product surface is deliberately separate from the confirmatory thesis protocol.
+**Product scope:** advisory constraint diagnostics for coding agents. Given a specification and a live trace, show which condition may have lost traceability, at which checkpoint, and with what evidence. Automatic semantic approval, defect prevention and product usefulness have not been validated. Deterministic policy checks remain separate from the confirmatory thesis protocol.
 
 **Current evidence boundary:** without human calibration, semantic judgments are
 advisory diagnostics, not validated approval or blocking decisions. Deterministic
@@ -19,6 +19,14 @@ preserves an incomplete comparison and a separate 16/16 successful schema
 smoke. The [expanded v2 comparison](docs/research/judge-v2-expanded-results.md)
 completed 384 calls and detected all constructed omissions with both providers;
 natural-artifact validation remains pending.
+
+That synthetic success did not transfer to the
+[96-call source diagnostic](docs/research/source-diagnostic-results.md).
+The subsequent [48-call v3 development study](docs/research/scoped-judge-results.md)
+also failed its frozen gate: evidence quotations exceeded the length contract or
+were absent from the artifact. Its 96 evaluation calls were not dispatched.
+Main-cohort generation remains paused. These are completed diagnostic findings,
+not estimates of semantic preservation or H1/H2 results.
 
 **Research questions:** RQ1 measures degradation induced by defective requirements; RQ2 tests whether pre-final, oracle-free observability improves deployable warning. RQ3 evaluates clarification only when that optional extension is enabled.
 

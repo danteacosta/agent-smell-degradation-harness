@@ -5,6 +5,10 @@ It does not revise that run, supply independent human labels or release the main
 pilot. The [frozen design](../plans/2026-09-07-scoped-judge-study.md) specifies the
 comparison and decision rules before collection.
 
+The [completed development result](scoped-judge-results.md) failed the frozen
+gate after 48 calls. Evaluation remains uncollected; the study is not a passing
+qualification of either provider.
+
 ## What changes
 
 The v2 comparator retains its prompt and receives explicit observation-scope

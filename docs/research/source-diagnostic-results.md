@@ -59,10 +59,15 @@ does not replace them with ground truth, estimate H1, or provide reliable termin
 labels for H2. It establishes that judge behavior depends materially on the
 evaluation contract and the supplied evidence.
 
-## Next experiment
+## Subsequent development study
 
-Separate complete-artifact coverage from partial-observation uncertainty, and
-assess individual reference obligations with bounded supporting evidence. Keep
+The separate [scope-aware v3 development study](scoped-judge-results.md) has now
+completed 48 calls. Its gate also failed, primarily because of evidence-quote
+contract failures. Its 96 evaluation calls were not dispatched. The original
+source diagnostic and all of its thresholds remain unchanged.
+
+The v3 study separated complete-artifact coverage from partial-observation
+uncertainty and requested evidence per reference obligation. Keep
 the failed v2 collection as development evidence. Any revised prompt, schema,
 output limit or observation-scope field needs a new frozen configuration, an
 explicit cost envelope and cases not used to tune it. A development improvement

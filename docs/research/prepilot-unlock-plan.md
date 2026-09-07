@@ -8,18 +8,18 @@ confirmatory evidence.
 
 | Gate | Evidence available | Current status | Owner |
 |---|---|---|---|
-| Main synchronization | PR #41 merged as `414f9e0`; PR #43 as `1ac1f9f`, preserving comparison evidence and temporal missingness accounting | PR #42 review adds source-freeze and response-consistency safeguards; confirmatory fields remain fail-closed | Engineering |
-| Corpus | v4 intake, immutable source references, rights review, hashes, and a frozen redacted manifest | 12 exploratory records across 6 projects validated; confirmatory admission remains a governance decision | Researcher and advisor |
+| Main synchronization | PR #41 merged as `414f9e0`, PR #43 as `1ac1f9f`, and PR #42 as `3e24735` | Source-freeze and response-consistency safeguards are integrated; PR #44 records the separate v3 study and its failed gate | Engineering |
+| Corpus | v4 intake, immutable source references, rights review, hashes, and a frozen redacted manifest | 12 pre-pilot records; the expanded pilot has 24 intent IDs across 6 project IDs with AI-assisted admission, not independently established source independence | Researcher and advisor |
 | Providers | Runtime-native OpenAI and DeepSeek adapters, usage/cost propagation, and native smoke CLI | Corrected 120-episode exploratory run completed with both provider configurations; the result remains non-confirmatory | Operator |
 | Substantive evidence | T1/T2 non-empty-field gate and retry contract | 480/480 required T1/T2 stage checks passed; no incomplete episode or artifact was recorded | Engineering and operator |
 | Annotation | Frozen rubric and blinded-packet tooling | Advisor authorized LLM judges for this exploratory phase; no human labels or adjudication exist | Advisor and operator |
-| Budget | Per-stage cost ledger and frozen prices | Current corrected exploratory configuration reserves US$0.988200 in the US$1.00 cap; annotation effort is not included | Operator and advisor |
+| Budget | Per-stage cost ledger and frozen prices | Historical corrected pre-pilot cost US$0.194731 within US$1. The later shared pilot accounts for US$0.085720 across 216 calls; auxiliary spending is inside the US$7 cap | Operator and advisor |
 | Reproducibility | Prompt, schema, model, price, source, pair, request, response, and run hashes | Corrected run report, append-only ledger, hashes, usage, and context audit are preserved in approved private storage | Operator |
 | Readiness | Fail-closed `prepilot_readiness` report | `no_go` for any claim beyond an exploratory pre-pilot; no H1/H2 claim is authorized | Researcher and advisor |
 
 These are process statuses, not efficacy results.
 
-## Next milestone: source-based pilot preparation
+## Source-based pilot: diagnostics collected, generation paused
 
 The [pilot protocol](source-based-pilot-protocol.md) and
 [operator guide](pilot-operator-guide.md) replace further isolated toy-control
@@ -36,14 +36,20 @@ its operator source audit and limitation are retained. See the
 completed at US$0.030728 and failed; cumulative pilot spending is US$0.062545.
 Both judges detected all six omissions but abstained on none of the six partial
 excerpts, and nineteen responses were invalid. See the
-[diagnostic report](source-diagnostic-results.md). Prospective dispatch remains
-blocked; a new development study must not override the old result. The
+[diagnostic report](source-diagnostic-results.md). The separately frozen
+[v3 development study](scoped-judge-results.md) subsequently completed 48 calls
+at US$0.023175, but also failed. Its 96 evaluation calls were not dispatched.
+Twelve v3 outputs exceeded the quote-length bound, and two cited reference text
+absent from the artifact, with one overlap. Combined parent/auxiliary accounting
+is now 216 calls and US$0.085720. Prospective dispatch remains blocked; a new
+evidence-interface design must not override either failed result. The
 historical 12-intent manifest and confirmatory launch gates are unchanged.
 
 ## Work that can proceed with zero human annotators
 
-The current bottlenecks are evaluator sensitivity and independent outcome
-validity, not provider availability. Continue
+The current bottlenecks are evaluator scope/grounding reliability and independent
+outcome validity. Provider funding must still be checked before any later main
+collection. Continue
 instrument qualification and exploratory diagnostics using the
 [annotation-free evaluation protocol](annotation-free-evaluation.md).
 The offline synthetic judge-control suite generates 12 original toy cases and
