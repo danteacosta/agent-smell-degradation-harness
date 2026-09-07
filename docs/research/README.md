@@ -16,3 +16,5 @@ experiment evidence.
   budget proposals and complete denominators without dispatch authority.
 - [Live v3/v4 comparison](addressed-comparison-live.md): exclusive budget succession,
   verified receipts, sequential collection and conditional evaluation.
+- [Completed v3/v4 development results](addressed-comparison-results.md): 48 calls,
+  usable v4 evidence throughout, and a failed omission gate with evaluation unattempted.

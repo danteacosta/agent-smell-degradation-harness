@@ -8,12 +8,12 @@ confirmatory evidence.
 
 | Gate | Evidence available | Current status | Owner |
 |---|---|---|---|
-| Main synchronization | PR #41 merged as `414f9e0`, PR #43 as `1ac1f9f`, and PR #42 as `3e24735` | Source-freeze and response-consistency safeguards are integrated; PR #44 records the separate v3 study and its failed gate | Engineering |
+| Main synchronization | PRs #41 through #46 are merged; PR #46 is `207f545` | Source-freeze, response-consistency and offline addressed-comparison safeguards are integrated; follow-on live execution and results are tracked separately | Engineering |
 | Corpus | v4 intake, immutable source references, rights review, hashes, and a frozen redacted manifest | 12 pre-pilot records; the expanded pilot has 24 intent IDs across 6 project IDs with AI-assisted admission, not independently established source independence | Researcher and advisor |
 | Providers | Runtime-native OpenAI and DeepSeek adapters, usage/cost propagation, and native smoke CLI | Corrected 120-episode exploratory run completed with both provider configurations; the result remains non-confirmatory | Operator |
 | Substantive evidence | T1/T2 non-empty-field gate and retry contract | 480/480 required T1/T2 stage checks passed; no incomplete episode or artifact was recorded | Engineering and operator |
 | Annotation | Frozen rubric and blinded-packet tooling | Advisor authorized LLM judges for this exploratory phase; no human labels or adjudication exist | Advisor and operator |
-| Budget | Per-stage cost ledger and frozen prices | Historical corrected pre-pilot cost US$0.194731 within US$1. The later shared pilot accounts for US$0.085720 across 216 calls; auxiliary spending is inside the US$7 cap | Operator and advisor |
+| Budget | Per-stage cost ledger and frozen prices | Historical corrected pre-pilot cost US$0.194731 within US$1. The later shared pilot and both auxiliary studies account for US$0.113744 across 264 calls; retained commitments stay inside the US$7 cap | Operator and advisor |
 | Reproducibility | Prompt, schema, model, price, source, pair, request, response, and run hashes | Corrected run report, append-only ledger, hashes, usage, and context audit are preserved in approved private storage | Operator |
 | Readiness | Fail-closed `prepilot_readiness` report | `no_go` for any claim beyond an exploratory pre-pilot; no H1/H2 claim is authorized | Researcher and advisor |
 
@@ -41,8 +41,13 @@ excerpts, and nineteen responses were invalid. See the
 at US$0.023175, but also failed. Its 96 evaluation calls were not dispatched.
 Twelve v3 outputs exceeded the quote-length bound, and two cited reference text
 absent from the artifact, with one overlap. Combined parent/auxiliary accounting
-is now 216 calls and US$0.085720. Prospective dispatch remains blocked; a new
-evidence-interface design must not override either failed result. The
+at that checkpoint was 216 calls and US$0.085720. The subsequent
+[v3/v4 development comparison](addressed-comparison-results.md) completed 48
+calls at US$0.028024 with no accounting pendency. V4 produced 24/24 valid
+responses and 23/24 exact construction matches, but abstained on one long
+omission. That failed the predeclared operation-level gate; its 96 evaluation
+calls remain unattempted. The shared subtotal is now 264 calls and US$0.113744.
+Prospective dispatch remains blocked and no historical result was rescored. The
 historical 12-intent manifest and confirmatory launch gates are unchanged.
 
 ## Work that can proceed with zero human annotators

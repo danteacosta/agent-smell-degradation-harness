@@ -8,13 +8,24 @@
 - [x] Compare execution approaches and write the bounded live-coordinator design.
 - [x] Review the design inline for locking, budget retention and scientific limits.
 - [x] Obtain review of the [written live specification](../docs/superpowers/specs/2026-09-07-addressed-comparison-live-design.md).
-- [ ] Plan and implement the coordinator test-first without changing frozen studies.
-- [ ] Verify the implementation, freeze its runtime and perform private preflight.
-- [ ] Execute 48 development calls; execute 96 evaluation calls only after a pass.
-- [ ] Preserve private receipts and publish redacted findings and limitations.
+- [x] Plan and implement the coordinator test-first without changing frozen studies.
+- [x] Verify the implementation, freeze its runtime and perform private preflight.
+- [x] Execute 48 development calls; preserve the failed gate and do not dispatch evaluation.
+- [x] Preserve private receipts and write redacted findings and limitations.
+- [x] Synchronize the operational Drive report and verify seven replacements,
+      paragraph styles, links and the existing date chip.
+- [ ] Publish the follow-on PR.
 
-The user authorized the comparison; no new provider calls or budget-closure
-mutation has occurred at this design checkpoint. Main collection remains blocked.
+Completed: 48/48 calls, US$0.028024, no pending usage/cost. V4 produced 24/24
+valid responses but failed one required long-omission decision (`uncertain`, not
+false `clean`). All 96 evaluation calls remain unattempted. Eighteen historical
+custody files are unchanged. The approved predecessor closure retains spending
+and the older unresolved amount; the new unused reservation remains held.
+Main collection remains blocked. See the [results](../docs/research/addressed-comparison-results.md).
+
+Fresh software verification: 1,160 tests passed, 7 skipped and 9 subtests passed;
+47 new regressions. Eval, constraint-replay and wedge gates, compile and an
+isolated wheel build passed. Frozen collection runtime: `10e2d8f`.
 
 ## Offline artifact-addressed evidence — 2026-09-07
 

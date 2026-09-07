@@ -5,6 +5,10 @@ the 96-call evaluation phase only after development passes. It preserves the
 failed predecessor, records its budget closure and owns one exclusive successor
 claim. It cannot release main-pilot collection.
 
+The [7 September development run](addressed-comparison-results.md) completed
+48 calls and failed its gate. Its 96 evaluation calls must remain unattempted;
+the commands below document the interface, not permission to override that result.
+
 Use the [offline interface](addressed-comparison.md) for read-only planning and
 supplied-response audits. Its output is not a spending authorization. The
 [live specification](../superpowers/specs/2026-09-07-addressed-comparison-live-design.md)
