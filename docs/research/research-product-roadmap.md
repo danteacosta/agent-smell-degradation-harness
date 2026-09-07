@@ -9,19 +9,25 @@ scope. H1/H2 remain unanswered.
 This roadmap separates an approved offline implementation from proposed future
 studies. It does not authorize spending or change any frozen launch gate.
 
-## Finish the offline evidence contract
+## Offline evidence contract: implemented
 
-Implement the [artifact-addressing design](../superpowers/specs/2026-09-07-evidence-addressing-design.md)
-and test exact resolution, stale references, malformed outputs, and redacted
-reporting. Include a deliberately irrelevant but resolvable citation: its
-locator should pass while semantic validity stays unmeasured. That distinction
-is part of the product contract, not a footnote.
+The [artifact-addressing implementation](artifact-addressed-evidence.md) has
+regressions for exact resolution, stale references, malformed outputs and
+redacted reporting. Its toy demonstration includes a deliberately irrelevant
+but resolvable citation: the locator passes while semantic validity stays
+unmeasured.
 
-Exit evidence: executable regressions, a reproducible toy demonstration, a
-versioned schema, and a description of remaining failure modes. This establishes
-software behavior only. Provider performance is still untested.
+The executable regressions, toy demonstration, versioned schema and documented
+failure modes establish software behavior only. V4 provider performance is
+still untested.
 
 ## One bounded transfer decision before main collection
+
+The [offline comparison interface](addressed-comparison.md) now prepares the
+48-call development and conditional 96-call evaluation plan from preserved
+inputs. It audits supplied responses and itemizes a proposed budget disposition.
+A live coordinator, an enforced succession receipt and collection authorization
+remain necessary. Preparing another directory does not release old reservations.
 
 Prepare one separately frozen comparison of quote-based and addressed evidence,
 using matched artifacts, obligations, scope metadata, decoding conditions, and

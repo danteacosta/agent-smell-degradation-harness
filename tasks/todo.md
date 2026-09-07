@@ -256,9 +256,13 @@ triage to contextual review and hidden behavioral validation.
 - [x] Inspect frozen predecessor custody, code and budget without provider calls.
 - [x] Present alternatives and obtain approval for the offline comparison design.
 - [x] Write the design and review it inline under the memory constraint.
-- [ ] Obtain written-spec approval before implementation planning.
-- [ ] Implement offline preparation and auditing with behavior-first tests.
-- [ ] Verify privacy, shared-budget arithmetic, regressions and documentation.
+- [x] Obtain written-spec approval before implementation planning.
+- [x] Implement offline preparation and auditing with behavior-first tests.
+- [x] Verify privacy, shared-budget arithmetic, regressions and documentation.
+
+Verification: 60 focused tests and 1,113 full-suite tests passed, with 7 skips
+and 9 passing subtests. Private preparation retained 19 historical files byte
+for byte; all 144 responses remain uncollected. No provider call or closure.
 
 No visual companion is needed for this contract. No subagent is launched.
 Offline approval does not close a private study or authorize a paid call.

@@ -6,8 +6,8 @@ increment prepares its comparison with the unchanged v3 interface and audits
 supplied responses. It does not dispatch providers or release main collection.
 
 Date: 2026-09-07. The user approved this offline direction in the research task.
-Written-spec review is pending. Review is inline, not independent; no subagents
-are used under the user's memory constraint.
+The user approved this written specification before implementation. Review is
+inline, not independent; no subagents are used under the user's memory constraint.
 
 ## Alternatives and decision
 
