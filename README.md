@@ -41,6 +41,10 @@ historical custody and itemizes a shared-budget proposal without releasing
 reservations. It has no provider-dispatch path; passing its offline response
 rules does not authorize an experiment.
 
+The separate [live coordinator](docs/research/addressed-comparison-live.md)
+enforces approved budget succession and receipt-derived development/evaluation
+gates. Even a passing auxiliary comparison cannot release the main cohort.
+
 **Research questions:** RQ1 measures degradation induced by defective requirements; RQ2 tests whether pre-final, oracle-free observability improves deployable warning. RQ3 evaluates clarification only when that optional extension is enabled.
 
 Design for this wedge: [wedge-first reliability check spec](docs/superpowers/specs/2026-07-22-wedge-first-reliability-check-design.md)

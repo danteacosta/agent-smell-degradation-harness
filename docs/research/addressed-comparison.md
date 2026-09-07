@@ -114,13 +114,13 @@ Exit 0 for an audit means both candidate response rules are met; exit 2 means
 they are not met or input validation failed. Neither exit code authorizes
 collection. Preparation uses exit 0 only for a valid offline proposal.
 
-## What remains before real collection
+## Execute an authorized comparison
 
-A live coordinator still needs to enforce an explicit predecessor closure and
-an exclusive successor claim under the shared locks, retain all actual costs
-and unresolved calls, and freeze the final runtime and requests. It must then
-use one-attempt dispatch, durable reservations, verified usage/cost and the
-prospective phase gate. This offline implementation does not supply that path.
+The separate [live coordinator](addressed-comparison-live.md) enforces predecessor
+closure and an exclusive successor claim under the shared locks. It retains
+spending and unresolved calls, verifies the final runtime and uses one-attempt
+dispatch with durable reservations and receipt-derived phase gates. This offline
+interface remains read-only and does not supply spending authority.
 
 Historical results remain unchanged. Source transformations and expected answers
 are AI assisted, and repeated variants are dependent. A resolvable but irrelevant

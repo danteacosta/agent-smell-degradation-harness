@@ -26,8 +26,9 @@ still untested.
 The [offline comparison interface](addressed-comparison.md) now prepares the
 48-call development and conditional 96-call evaluation plan from preserved
 inputs. It audits supplied responses and itemizes a proposed budget disposition.
-A live coordinator, an enforced succession receipt and collection authorization
-remain necessary. Preparing another directory does not release old reservations.
+The separate [live coordinator](addressed-comparison-live.md) enforces an exclusive
+successor, audited closure and receipt-derived phase gates. The user has authorized
+this bounded comparison. Preparing another directory does not create an allowance.
 
 Prepare one separately frozen comparison of quote-based and addressed evidence,
 using matched artifacts, obligations, scope metadata, decoding conditions, and
