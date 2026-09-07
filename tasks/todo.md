@@ -10,7 +10,8 @@
 - [x] Test and implement a bounded, redacted offline audit and toy demo.
 - [x] Verify regressions, full gates, privacy, scientific boundaries and diff.
 - [x] Synchronize the research report with native text/style readback.
-- [ ] Publish a reviewable increment; no automatic merge or paid collection.
+- [x] Publish [PR #45](https://github.com/danteacosta/agent-smell-degradation-harness/pull/45)
+      for review; no automatic merge or paid collection.
 
 The [plan](../docs/superpowers/plans/2026-09-07-evidence-addressing.md) is
 executed inline without subagents or paid calls. This work does not release

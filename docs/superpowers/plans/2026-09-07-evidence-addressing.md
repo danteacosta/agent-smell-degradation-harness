@@ -79,7 +79,7 @@ Files: create `eval/evidence_addressing.py` and
   review the full diff for ATDD, SOLID, clean code, privacy, and leakage.
 - [x] Update the research report in Drive through a revision-guarded native
   edit, preserving structure and verifying changed text/styles.
-- [ ] Commit verified changes and publish a reviewable PR. Do not merge this
+- [x] Commit verified changes and publish a reviewable PR. Do not merge this
   new experiment interface or run paid calls as an automatic side effect.
 
 Verification commands use the existing runtime interpreter. The acceptance
@@ -107,3 +107,7 @@ structure. Shared strict JSON parsing removed duplicated policy. Advisory limits
 real irrelevant citations can pass; no provider validity or study-completion
 claim follows from this audit; the evidence presentation needs a separate
 experimental freeze. No independent review or human calibration is claimed.
+
+Published for review in [PR #45](https://github.com/danteacosta/agent-smell-degradation-harness/pull/45).
+The implementation commit is `38192af`; this record does not authorize merge or
+provider collection. Current CI state belongs to the live PR checks.
