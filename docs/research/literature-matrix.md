@@ -35,6 +35,26 @@ re-authorized automatically.
 
 ## 2026-09-06 incorporation decision
 
+### Source-based pilot controls
+
+[Ribeiro et al., *Beyond Accuracy: Behavioral Testing of NLP Models with
+CheckList*](https://aclanthology.org/2020.acl-main.442/), ACL 2020,
+DOI 10.18653/v1/2020.acl-main.442. Read the abstract, test-type method and
+task/user-study results. Minimum-functionality, invariance and directional tests
+expose failures hidden by aggregate scores in sentiment, duplicate-question
+detection and machine comprehension. Those tasks are not requirements evaluation;
+the selected capabilities and perturbation validity remain task-dependent.
+Credibility: 9/10 for the peer-reviewed, explicit method and multi-task evidence;
+transfer to this thesis is a design inference, not demonstrated validity.
+
+Action: [source-based pilot protocol](source-based-pilot-protocol.md), including
+matched omission controls, concise/expanded and distributed-condition invariance,
+separate partial-visibility diagnostics, source-seed denominators and a frozen
+pre-collection decision rule. The paper supplies no numerical acceptance cutoff
+for our pilot. Private source text and oracles are not published in this matrix.
+
+### Annotation-free boundary
+
 With zero available human annotators, implement the bounded diagnostic track in
 [annotation-free evaluation](annotation-free-evaluation.md). Constructed controls
 can falsify simplistic evaluator behavior without certifying natural-language

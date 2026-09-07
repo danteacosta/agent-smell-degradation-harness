@@ -453,6 +453,8 @@ class StagedProviderRuntime:
         stage_completion: StageCompletion | None = None,
         max_stage_attempts: int = 1,
         stage_output_tokens: Mapping[str, int] | None = None,
+        prompt_templates: Mapping[str, str] | None = None,
+        checkpoint_sink: Callable[[str, Mapping[str, Any]], None] | None = None,
     ) -> None:
         if (
             type(max_stage_attempts) is not int
@@ -471,6 +473,13 @@ class StagedProviderRuntime:
         if any(type(value) is not int or value <= 0 for value in stage_limits.values()):
             raise ValueError("stage_output_tokens must contain positive integers")
         self._stage_output_tokens = stage_limits
+        templates = dict(GENERATION_PROMPT_TEMPLATES if prompt_templates is None else prompt_templates)
+        if set(templates) != set(GENERATION_PROMPT_TEMPLATES) or any(
+            not isinstance(value, str) or not value.strip() for value in templates.values()
+        ):
+            raise ValueError("prompt_templates must specify all runtime stages")
+        self._prompt_templates = templates
+        self._checkpoint_sink = checkpoint_sink
 
     def _complete(
         self,
@@ -506,7 +515,7 @@ class StagedProviderRuntime:
             attempt_request = request
             if attempt > 1:
                 attempt_request = ProviderRequest(
-                    prompt=request.prompt + GENERATION_PROMPT_TEMPLATES["retry"],
+                    prompt=request.prompt + self._prompt_templates["retry"],
                     pair=request.pair,
                     variant=request.variant,
                     task_family=request.task_family,
@@ -559,7 +568,7 @@ class StagedProviderRuntime:
         requirement = _requirement(pair, variant)
         interpretation, t1 = self._complete(
             _render_generation_prompt(
-                GENERATION_PROMPT_TEMPLATES["T1"],
+                self._prompt_templates["T1"],
                 task_family=task_family,
                 requirement=requirement,
             ),
@@ -574,13 +583,15 @@ class StagedProviderRuntime:
         )
         context_events.append(t1["context_management_event"])
         interpretation = _validate_provider_stage(interpretation, "interpretation")
+        if self._checkpoint_sink is not None:
+            self._checkpoint_sink("T1", json.loads(json.dumps(interpretation)))
         plan_context = {
             field: interpretation[field]
             for field in ("constraints", "atomic_obligations")
         }
         plan, t2 = self._complete(
             _render_generation_prompt(
-                GENERATION_PROMPT_TEMPLATES["T2"],
+                self._prompt_templates["T2"],
                 task_family=task_family,
                 interpretation_json=json.dumps(
                     plan_context,
@@ -598,6 +609,8 @@ class StagedProviderRuntime:
         )
         context_events.append(t2["context_management_event"])
         plan = _validate_provider_stage(plan, "plan")
+        if self._checkpoint_sink is not None:
+            self._checkpoint_sink("T2", json.loads(json.dumps(plan)))
 
         execution_started = _now_iso(self._clock)
         tool_started = _now_iso(self._clock)
@@ -615,11 +628,13 @@ class StagedProviderRuntime:
             "atomic_obligation_observations": diagnostics["atomic_obligation_observations"],
         }
         t3_metadata = {key: value for key, value in diagnostics.items() if key not in {"errors", "constraint_lineage"}}
+        if self._checkpoint_sink is not None:
+            self._checkpoint_sink("T3", json.loads(json.dumps(execution)))
 
         output_keys = pair["generation_contract"][task_family]["output_keys"]
         artifact, final = self._complete(
             _render_generation_prompt(
-                GENERATION_PROMPT_TEMPLATES["artifact"],
+                self._prompt_templates["artifact"],
                 task_family=task_family,
                 requirement=requirement,
                 interpretation_json=json.dumps(
