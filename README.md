@@ -35,6 +35,12 @@ Its toy demonstration includes an irrelevant but resolvable citation: locator
 integrity does not establish semantic support. No provider run or pilot release
 is part of this command.
 
+The [offline v3/v4 comparison interface](docs/research/addressed-comparison.md)
+prepares a matched 48+96-call plan and audits supplied responses. It preserves
+historical custody and itemizes a shared-budget proposal without releasing
+reservations. It has no provider-dispatch path; passing its offline response
+rules does not authorize an experiment.
+
 **Research questions:** RQ1 measures degradation induced by defective requirements; RQ2 tests whether pre-final, oracle-free observability improves deployable warning. RQ3 evaluates clarification only when that optional extension is enabled.
 
 Design for this wedge: [wedge-first reliability check spec](docs/superpowers/specs/2026-07-22-wedge-first-reliability-check-design.md)
