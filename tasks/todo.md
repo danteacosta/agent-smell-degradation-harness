@@ -1,5 +1,33 @@
 # Requirements-smell experiment hardening
 
+## Advisor meeting preparation — 2026-09-07
+
+- [x] Review PRs #41–#43, test the combined tree, and merge only verified changes.
+- [x] Reproduce the completed 96-call diagnostic report from private receipts;
+      preserve its failed gate and all prior costs without a retrospective override.
+- [x] Diagnose incomplete-context decisions and output-contract failures before
+      designing a separately versioned development study.
+- [x] Define acceptance tests, locked evaluation cases and bounded spending
+      before any revised provider-backed collection; do not launch the main cohort.
+- [x] Reconcile public results, proposal, operational report and current slide deck.
+- [x] Verify native document readback, every delivered slide, fresh software tests,
+      privacy/cost boundaries and the remote commit state.
+- [x] Prepare an advisor-facing account of findings, limits and next decisions.
+
+Verification checkpoint: 958 tests passed, 7 skipped and 9 subtests passed;
+eval, gates, compile, wedge and replay fixtures passed. PR #44's result commit
+`422f63c` passed all three CI workflows. The 48-call development study completed
+at US$0.023175 and failed; all 96 evaluation calls remain unattempted. Raw
+evidence and source/environment freezes remain private and unchanged. The
+proposal, operational report and ten-slide deck retain the negative results,
+separate historical states and distinguish construction agreement from validity.
+See the [advisor brief](../docs/research/advisor-brief-2026-09-08.md).
+
+Scope: existing private source material and providers, sequential calls, no
+additional agents, monitored Codex/ChatGPT RSS below the requested 15 GB ceiling,
+no credit purchase, no fabricated human review.
+The historical pilot remains frozen; new development must not overwrite it.
+
 ## Evidence priorities after PR #39
 
 - [x] Merge PR #39 as 17b4184 and verify its controls and judge regressions.

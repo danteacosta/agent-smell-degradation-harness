@@ -158,6 +158,53 @@
       "full_run_report_storage": "approved_private_storage_not_tracked"
     }
   },
+  "source_based_exploratory_pilot": {
+    "schema_version": "exploratory-pilot-status/v1",
+    "record_role": "informational_only_not_an_execution_authorization",
+    "status": "paused_after_evaluator_development_failure",
+    "scope_authorized": true,
+    "claim_level": "exploratory_llm_only",
+    "intent_ids": 24,
+    "project_ids": 6,
+    "source_independence": "not_established",
+    "admission_scope": "AI_assisted_exploratory",
+    "independent_human_labels": 0,
+    "main_trajectories_planned": 480,
+    "main_trajectories_completed": 0,
+    "screening": {
+      "completed_calls": 72,
+      "cost_microusd": 31817,
+      "report_reference": "docs/research/pilot-screening-results.md"
+    },
+    "source_diagnostic": {
+      "planned_calls": 96,
+      "completed_calls": 96,
+      "decision": "pause",
+      "cost_microusd": 30728,
+      "report_reference": "docs/research/source-diagnostic-results.md"
+    },
+    "scoped_development": {
+      "planned_calls": 48,
+      "completed_calls": 48,
+      "decision": "pause",
+      "cost_microusd": 23175,
+      "report_reference": "docs/research/scoped-judge-results.md"
+    },
+    "scoped_evaluation": {
+      "planned_calls": 96,
+      "completed_calls": 0,
+      "status": "locked_by_failed_development_gate"
+    },
+    "completed_calls": 216,
+    "cost_microusd": 85720,
+    "cost_basis": "reported_usage_and_frozen_rates_not_invoices",
+    "shared_cap_microusd": 7000000,
+    "auxiliary_cap_inside_shared_cap_microusd": 1000000,
+    "earlier_unresolved_reservation_retained_microusd": 218,
+    "private_evidence_storage": "approved_private_storage_not_tracked",
+    "main_pilot_released": false,
+    "confirmatory_authorized": false
+  },
   "go_no_go": {
     "advisor_authorized_pre_pilot": false,
     "corpus_gate": false,

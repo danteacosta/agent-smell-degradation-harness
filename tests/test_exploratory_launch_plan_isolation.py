@@ -38,3 +38,22 @@ def test_exploratory_fields_cannot_change_official_readiness() -> None:
     assert after["blockers"] == before["blockers"]
     assert after["claim_level"] == before["claim_level"]
     assert after["confirmatory_authorized"] is False
+
+
+def test_source_diagnostic_status_keeps_main_collection_and_confirmation_closed() -> None:
+    plan = load_launch_plan("data/prepilot/launch-plan.candidate.json")
+    status = plan["source_based_exploratory_pilot"]
+    assert status["main_trajectories_completed"] == 0
+    assert status["source_diagnostic"]["decision"] == "pause"
+    assert status["scoped_development"]["decision"] == "pause"
+    assert status["scoped_evaluation"]["completed_calls"] == 0
+    assert status["completed_calls"] == sum(
+        status[phase]["completed_calls"]
+        for phase in ("screening", "source_diagnostic", "scoped_development")
+    )
+    baseline = evaluate_launch_plan(plan)
+    changed = copy.deepcopy(plan)
+    changed["source_based_exploratory_pilot"]["status"] = "completed"
+    changed["source_based_exploratory_pilot"]["scoped_development"]["decision"] = "pass"
+    assert evaluate_launch_plan(changed) == baseline
+    assert baseline["decision"] == "no_go"
