@@ -1,11 +1,17 @@
 # Evaluation while human annotation is unavailable
 
-Status: 2026-09-06. Provider-backed controls completed: OpenAI 18/36 and
-DeepSeek 25/36 construction-oracle matches; both missed all deletion controls.
-See [results](evaluator-control-results.md) and the
-[temporal protocol](temporal-warning-protocol.md). Human calibration remains
-pending. H1, H2, the primary
-missing-condition family and the no-compaction primary condition are unchanged.
+Status: 2026-09-07. The 96-call source diagnostic and the separate 48-call v3
+development study completed and failed their frozen gates. The latter's 96
+evaluation calls were not dispatched; main-cohort collection remains paused.
+Human calibration is pending. H1, H2, the primary missing-condition family, and
+the no-compaction primary condition are unchanged.
+
+## What the completed studies establish
+
+The original provider-backed controls produced OpenAI 18/36 and DeepSeek 25/36
+construction-oracle matches; both missed all deletion controls. These are
+historical results, not the current qualification state. See
+[control results](evaluator-control-results.md).
 
 A subsequent [prompt comparison and schema smoke](judge-prompt-comparison-results.md)
 found a field/value ambiguity in the first evidence prompt. Evidence v2 passed
@@ -19,6 +25,20 @@ The later [expanded v2 comparison](judge-v2-expanded-results.md) completed all
 The historical prompt detected only 2/24 and 0/24 deletions, respectively.
 This completed study does not reconcile the earlier ambiguous call or establish
 natural-artifact validity.
+
+The [96-call source diagnostic](source-diagnostic-results.md) then exposed
+failure to abstain when support was unavailable in a partial observation and
+invalid evidence responses. The [v3 development study](scoped-judge-results.md)
+made observation scope explicit, but only 6/12 OpenAI and 5/12 DeepSeek v3
+responses met the full evidence contract. Valid-only accuracy would hide
+source-specific exclusions. All 48 development calls had verifiable usage and
+cost (US$0.023175); the gate stopped further dispatch as designed.
+
+This sequence shows why success on short constructed controls is insufficient
+for qualification on source-derived material. It does not show that the
+generated artifacts were correct or defective at any particular prevalence.
+The temporal analyzer is ready for observations, but
+[early-warning benefit](temporal-warning-protocol.md) remains unmeasured.
 
 ## Thesis: distinguish three evidence levels
 
@@ -109,11 +129,16 @@ for these three templates.
 - The original fixed controls exposed zero deletion sensitivity in both historical judge configurations.
   The hard-coded `clean/covered` example is an anchoring risk to test, not a
   demonstrated explanation of the historical label distribution.
-- A separately fingerprinted rubric/evidence prompt has now been tested,
-  without evaluation examples in the prompt. The corrected v2 contract passed
-  a small smoke and the separately frozen 384-call comparison. Quote presence
-  verifies grounding only, not entailment. Do not tune on the confirmatory
-  holdout or silently overwrite the historical configuration.
+- Verify the offline [artifact-addressed evidence contract](artifact-addressed-evidence.md), with the
+  [approved design](../superpowers/specs/2026-09-07-evidence-addressing-design.md)
+  and [attribution boundary](2026-09-07-evidence-attribution.md). A resolvable
+  segment verifies location only. It can still be irrelevant or contradict the
+  obligation. Preserve all failed versions and do not use locked evaluation
+  cases for development.
+- Before another provider comparison, freeze the representation, rubric,
+  matched inputs, budget disposition, and decision rule. Report operational
+  validity separately from construction agreement and natural-artifact labels.
+  Completing offline tests does not release the main pilot.
 - Treat uncertain, inconsistent or failed judgments as review-needed; never
   impute them as clean or drop them from denominators. Repeat sensitivity
   analyses with both pessimistic and optimistic assignments before interpreting
@@ -154,3 +179,6 @@ production on an uncalibrated semantic score. Candidate product metrics are
 reproducible incident rate, replay completeness, cost and time-to-diagnosis.
 Precision, avoided defects and time saved require independently reviewed cases
 or user studies. Customer willingness to pay and workflow fit remain unvalidated.
+
+The [research/product roadmap](research-product-roadmap.md) defines the next
+evidence milestones and the decisions required before further collection.

@@ -95,8 +95,10 @@ instead of asking models to copy and count characters. The harness could then
 resolve those references mechanically, keeping reference text outside the
 artifact-evidence namespace. That would remove a transcription failure mode,
 but would not prove that the selected segment entails the obligation. It needs
-a separately reviewed protocol and new version; it is not implemented as a
-silent repair or evaluated on the locked cases in this study.
+a separately reviewed protocol and new version. The subsequent
+[offline addressed-evidence interface](artifact-addressed-evidence.md) implements
+that location contract separately. It has no provider-backed evaluation and
+does not repair or rescore this study or use its locked evaluation cases.
 
 For the advisor meeting, the defensible finding is that the instrument now
 exposes where its judgments fail, and that apparently correct statuses can lack

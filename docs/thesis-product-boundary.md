@@ -26,6 +26,13 @@ The product layer is a CI reliability gate. It consumes ARP plus deployable/oper
 
 Policy precedence is `block > warn > approve`. Product metrics (latency, cost, coverage, false-alert rate) are operational diagnostics and are never written into H1–H3 artifacts. Product behavior must not alter thesis labels, estimands, or split manifests.
 
+These decisions report the configured deterministic policy. `approve` does not
+certify semantic preservation, and `block` does not establish a human-validated
+requirement defect. Uncalibrated LLM judgments remain advisory label-plane
+diagnostics and cannot silently become pre-final policy features. The
+[research/product roadmap](research/research-product-roadmap.md) separates
+instrument tests, temporal evidence, human calibration, and product utility.
+
 The strict pre-merge implementation is `python -m replay`: it accepts a
 fixture or an arbitrary bundle containing a requirement and ARP pre-final
 trace, then emits JSON/SARIF constraint evidence. This is distinct from the
