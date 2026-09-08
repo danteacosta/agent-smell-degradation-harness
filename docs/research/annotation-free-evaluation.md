@@ -1,8 +1,9 @@
 # Evaluation while human annotation is unavailable
 
-Status: 2026-09-07. The 96-call source diagnostic and the separate 48-call v3
-development study completed and failed their frozen gates. The latter's 96
-evaluation calls were not dispatched; main-cohort collection remains paused.
+Status: 2026-09-07. The source diagnostic, v2/v3 development study and latest
+v3/v4 development comparison completed and failed their respective frozen gates.
+The latest comparison completed 48 calls; its 96 evaluation calls were not
+dispatched. Main-cohort collection remains paused.
 Human calibration is pending. H1, H2, the primary missing-condition family, and
 the no-compaction primary condition are unchanged.
 
@@ -33,6 +34,16 @@ made observation scope explicit, but only 6/12 OpenAI and 5/12 DeepSeek v3
 responses met the full evidence contract. Valid-only accuracy would hide
 source-specific exclusions. All 48 development calls had verifiable usage and
 cost (US$0.023175); the gate stopped further dispatch as designed.
+
+The subsequent [v3/v4 comparison](addressed-comparison-results.md) completed
+another 48 calls at US$0.028024. V4 produced 24/24 valid evidence responses
+versus v3's 10/24. V4 matched 23/24 construction vectors, but abstained on one
+long omission instead of identifying it as omitted. This was not a false
+`clean` judgment, but it failed the predeclared operation-level requirement.
+Only ten pairs had valid outputs in both arms: nine matched in both, and one
+matched in v3 but not v4. The evidence supports improved interface compliance
+on these cases, not demonstrated improvement in jointly scorable semantic
+decisions. Evaluation stayed locked and no previous output was repaired.
 
 This sequence shows why success on short constructed controls is insufficient
 for qualification on source-derived material. It does not show that the
@@ -129,13 +140,14 @@ for these three templates.
 - The original fixed controls exposed zero deletion sensitivity in both historical judge configurations.
   The hard-coded `clean/covered` example is an anchoring risk to test, not a
   demonstrated explanation of the historical label distribution.
-- Verify the offline [artifact-addressed evidence contract](artifact-addressed-evidence.md), with the
+- Preserve the tested [artifact-addressed evidence contract](artifact-addressed-evidence.md), with the
   [approved design](../superpowers/specs/2026-09-07-evidence-addressing-design.md)
   and [attribution boundary](2026-09-07-evidence-attribution.md). A resolvable
   segment verifies location only. It can still be irrelevant or contradict the
   obligation. Preserve all failed versions and do not use locked evaluation
   cases for development.
-- Before another provider comparison, freeze the representation, rubric,
+- Preserve the [failed v3/v4 gate](addressed-comparison-results.md). Before any
+  separately authorized comparison, freeze the representation, rubric,
   matched inputs, budget disposition, and decision rule. Report operational
   validity separately from construction agreement and natural-artifact labels.
   Completing offline tests does not release the main pilot.

@@ -97,15 +97,16 @@ artifact-evidence namespace. That would remove a transcription failure mode,
 but would not prove that the selected segment entails the obligation. It needs
 a separately reviewed protocol and new version. The subsequent
 [offline addressed-evidence interface](artifact-addressed-evidence.md) implements
-that location contract separately. It has no provider-backed evaluation and
-does not repair or rescore this study or use its locked evaluation cases.
+that location contract separately. A later [v3/v4 development comparison](addressed-comparison-results.md)
+tested the interface with providers. It does not repair or rescore this study
+and did not dispatch calls on the locked evaluation cases.
 
 For the advisor meeting, the defensible finding is that the instrument now
 exposes where its judgments fail, and that apparently correct statuses can lack
 acceptable supporting evidence. Main-cohort collection should wait for a new
 documented diagnostic decision, not a retrospective relaxation of this gate.
 
-The shared pilot accounting now contains 216 completed calls across the parent
+At this study's completion, shared pilot accounting contained 216 completed calls across the parent
 and auxiliary ledgers, totaling US$0.085720 at the frozen rates. The earlier
 pre-pilot and other comparison studies are separate; this is not total research
 spending or an invoice. The historical US$0.000218 unresolved reservation remains

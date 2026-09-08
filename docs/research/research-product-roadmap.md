@@ -6,7 +6,7 @@ supply it. The [completed studies](annotation-free-evaluation.md) already show
 that evaluator behavior changes with the decision contract and observation
 scope. H1/H2 remain unanswered.
 
-This roadmap separates an approved offline implementation from proposed future
+This roadmap separates completed development evidence from proposed future
 studies. It does not authorize spending or change any frozen launch gate.
 
 ## Offline evidence contract: implemented
@@ -18,29 +18,37 @@ but resolvable citation: the locator passes while semantic validity stays
 unmeasured.
 
 The executable regressions, toy demonstration, versioned schema and documented
-failure modes establish software behavior only. V4 provider performance is
-still untested.
+failure modes establish software behavior only. The subsequent
+[provider-backed comparison](addressed-comparison-results.md) produced valid v4
+evidence in 24/24 development calls, but failed its omission gate. Citation
+integrity and semantic support remain separate questions.
 
-## One bounded transfer decision before main collection
+## Bounded comparison completed; evaluation remains locked
 
 The [offline comparison interface](addressed-comparison.md) now prepares the
 48-call development and conditional 96-call evaluation plan from preserved
 inputs. It audits supplied responses and itemizes a proposed budget disposition.
-A live coordinator, an enforced succession receipt and collection authorization
-remain necessary. Preparing another directory does not release old reservations.
+The separate [live coordinator](addressed-comparison-live.md) enforces an exclusive
+successor, audited closure and receipt-derived phase gates. The user has authorized
+this bounded comparison. Preparing another directory does not create an allowance.
 
-Prepare one separately frozen comparison of quote-based and addressed evidence,
-using matched artifacts, obligations, scope metadata, decoding conditions, and
-planned denominators. Record presentation differences as part of the treatment.
-An ID table can change context length and attention; attributing every change
+The frozen comparison completed 48 development calls at US$0.028024. V4 matched
+23/24 construction vectors, but one required long-omission decision was
+`uncertain` rather than `omitted`. The gate failed and none of the 96 evaluation
+calls was dispatched. This was not a false-clean response or an accounting stop.
+
+The result supports an interface-compliance gain on these cases: 24/24 valid v4
+responses versus 10/24 v3 responses. Among the ten pairs valid in both arms,
+nine matched in both and one matched only in v3. Better semantic decisions have
+therefore not been demonstrated by the jointly scorable comparison. An ID table
+also changes context length and presentation, so attributing every difference
 to transcription alone would be unsupported.
 
-Before collection, specify the cases, source grouping, provider configurations,
-response rules, token envelope, and criteria for continue/adjust/stop. The
-existing auxiliary claim and shared reserve require an explicit budget
-disposition; a fresh directory is not a fresh allowance. Do not tune on the
-four locked evaluation locators or label them contamination-free merely because
-this comparison has not queried them.
+The approved predecessor closure preserved its spending and old pending amount.
+The new comparison's unused reservation remains held. Preserve the current
+failure; any further study needs a separate methodological and budget decision.
+Do not tune on the four locked evaluation locators or label them contamination-free
+merely because this comparison has not queried them.
 
 Report operational validity against all planned calls. Separately report
 construction agreement, its label-availability denominator, failure reasons,
@@ -48,9 +56,8 @@ and disagreements by source and operation. Do not pool self/cross judgments or
 turn repeated variants into independent requirements. With two development
 locators, descriptive counts are more defensible than general accuracy claims.
 
-If the new version fails, preserve that result and close the comparison. Any
-further development is a new decision, not an unrecorded retry until success.
-If it passes, review what it qualifies: a bounded exploratory instrument on the
+Review the failed omission decision as post-hoc diagnosis, not a repaired score.
+A future passing study would qualify only a bounded exploratory instrument on
 specified cases, not natural-artifact ground truth or confirmatory authorization.
 
 ## Measure the value of an early warning
@@ -107,7 +114,7 @@ they cannot be inferred from API cost or regression-test counts.
 | --- | --- | --- |
 | Completed evaluator controls | Specific failure modes occur under frozen configurations | General sensitivity or semantic preservation prevalence |
 | Executable contracts and regression tests | Declared software invariants hold for tested cases | Natural-language reference correctness |
-| Artifact-addressing development | An offline, versioned interface for exact evidence location | Provider improvement before a new collection |
+| Artifact-addressing development | Exact evidence location; 24/24 valid v4 outputs on two development sources | General semantic superiority or a passed omission gate |
 | Temporal analyzer | A prospective analysis is implemented | Empirical lead-time or B3-over-B0 benefit |
 | Proposed shadow-mode workflow | A testable product hypothesis | User value, avoided defects, or safe automatic approval |
 

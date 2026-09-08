@@ -41,6 +41,15 @@ historical custody and itemizes a shared-budget proposal without releasing
 reservations. It has no provider-dispatch path; passing its offline response
 rules does not authorize an experiment.
 
+The separate [live coordinator](docs/research/addressed-comparison-live.md)
+enforces approved budget succession and receipt-derived development/evaluation
+gates. Even a passing auxiliary comparison cannot release the main cohort.
+The [completed v3/v4 development comparison](docs/research/addressed-comparison-results.md)
+produced valid evidence responses in 24/24 v4 calls versus 10/24 v3 calls.
+V4 matched 23/24 construction answers, but abstained on one long omission,
+failing its frozen gate. All 48 calls have verified usage (US$0.028024);
+the 96 evaluation calls remain unattempted.
+
 **Research questions:** RQ1 measures degradation induced by defective requirements; RQ2 tests whether pre-final, oracle-free observability improves deployable warning. RQ3 evaluates clarification only when that optional extension is enabled.
 
 Design for this wedge: [wedge-first reliability check spec](docs/superpowers/specs/2026-07-22-wedge-first-reliability-check-design.md)
