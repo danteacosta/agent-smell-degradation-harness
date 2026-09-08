@@ -107,13 +107,14 @@ def test_predecessor_change_during_external_report_is_detected(tmp_path,monkeypa
         api().prepare_plan(predecessor,scoped_judge_study.ROOT)
 
 
-@pytest.mark.parametrize('fault',['timeout','invalid_json','oversized','nonzero'])
+@pytest.mark.parametrize('fault',['timeout','invalid_json','oversized','nonzero','array','null'])
 def test_bad_frozen_report_is_rejected_without_exposing_output(tmp_path,monkeypatch,fault):
     from eval import qualification_lineage
     _,_,predecessor=failed_comparison(tmp_path)
     def broken(*args,**kwargs):
         if fault=='timeout': raise subprocess.TimeoutExpired('PRIVATE',20)
-        kwargs['stdout'].write(b'PRIVATE' if fault!='oversized' else b'x'*(qualification_lineage.MAX_REPORT_BYTES+1))
+        payload = {'array': b'[]', 'null': b'null'}.get(fault, b'PRIVATE')
+        kwargs['stdout'].write(payload if fault!='oversized' else b'x'*(qualification_lineage.MAX_REPORT_BYTES+1))
         return subprocess.CompletedProcess(args[0],3 if fault=='nonzero' else 0)
     monkeypatch.setattr(qualification_lineage.subprocess,'run',broken)
     with pytest.raises(ValueError) as error:
@@ -128,6 +129,7 @@ def test_report_subprocess_does_not_inherit_provider_keys(tmp_path,monkeypatch):
     original=subprocess.run
     def checked(*args,**kwargs):
         assert not any('KEY' in k or 'TOKEN' in k for k in kwargs['env'])
+        assert kwargs['env']['PYTHONPATH'] == str(scoped_judge_study.ROOT)
         assert kwargs['timeout']<=30 and not kwargs.get('shell')
         assert args[0][1:4]==['-m','eval.addressed_comparison_live','report']
         return original(*args,**kwargs)

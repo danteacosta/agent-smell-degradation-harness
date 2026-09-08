@@ -33,7 +33,10 @@ def verify_runtime(root, expected):
 
 
 def _report(directory, runtime):
-    env = {'PATH': os.defpath, 'PYTHONDONTWRITEBYTECODE': '1', 'PYTHONIOENCODING': 'utf-8'}
+    # Match module execution with the verified project on the import path,
+    # including editable-install metadata. Never inherit the caller's path.
+    env = {'PATH': os.defpath, 'PYTHONDONTWRITEBYTECODE': '1', 'PYTHONIOENCODING': 'utf-8',
+           'PYTHONPATH': str(runtime)}
     command = [sys.executable, '-m', 'eval.addressed_comparison_live', 'report', '--directory', str(directory)]
     try:
         with tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as errors:
@@ -43,7 +46,7 @@ def _report(directory, runtime):
         if result.returncode or len(raw) > MAX_REPORT_BYTES:
             raise ValueError
         report = load_json(raw.decode('utf-8'))
-        if report.get('schema_version') != 'addressed-comparison-live-report/v1':
+        if not isinstance(report, dict) or report.get('schema_version') != 'addressed-comparison-live-report/v1':
             raise ValueError
         return report
     except (OSError, ValueError, TypeError, RecursionError, subprocess.TimeoutExpired) as exc:
