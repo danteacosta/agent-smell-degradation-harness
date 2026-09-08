@@ -4,6 +4,7 @@ from __future__ import annotations
 import os
 from importlib.metadata import distributions
 from pathlib import Path
+import site
 import subprocess
 import sys
 import tempfile
@@ -21,7 +22,10 @@ def _isolated_pythonpath(runtime):
     """Expose the verified project and the caller's package metadata, not its secrets."""
     roots = {Path(distribution.locate_file('')).resolve() for distribution in distributions()}
     project = Path(runtime).resolve()
-    roots = sorted(str(root) for root in roots if root != project and root.is_dir())
+    default_roots = {Path(root).resolve() for root in site.getsitepackages()}
+    default_roots.add(Path(site.getusersitepackages()).resolve())
+    roots = sorted(str(root) for root in roots
+                   if root != project and root not in default_roots and root.is_dir())
     return os.pathsep.join((str(project), *roots))
 
 
