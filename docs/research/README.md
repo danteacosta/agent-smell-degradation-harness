@@ -12,6 +12,10 @@ experiment evidence.
 
 ## Research execution guides
 
+- [Whole-context v4/v5 comparison](qualified-evidence-comparison.md) and
+  [completed development results](qualified-evidence-results.md): 48 reconciled
+  calls, equal overall construction matches and a failed candidate scope gate.
+
 - [Offline v3/v4 comparison](addressed-comparison.md): private preparation,
   budget proposals and complete denominators without dispatch authority.
 - [Live v3/v4 comparison](addressed-comparison-live.md): exclusive budget succession,
