@@ -50,7 +50,7 @@ def _report(directory, runtime):
     # Match the frozen package inventory without inheriting the caller's
     # environment. The verified project remains first on the import path.
     env = {'PATH': os.defpath, 'PYTHONDONTWRITEBYTECODE': '1', 'PYTHONIOENCODING': 'utf-8',
-           'PYTHONPATH': _isolated_pythonpath(runtime)}
+           'PYTHONSAFEPATH': '1', 'PYTHONPATH': _isolated_pythonpath(runtime)}
     command = [sys.executable, '-m', 'eval.addressed_comparison_live', 'report', '--directory', str(directory)]
     try:
         with tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as errors:
