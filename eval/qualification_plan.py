@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 
 from eval import scoped_judge_study as historical
 from eval.addressed_comparison_plan import ComparisonError, PHASES
@@ -64,7 +65,7 @@ def prepare_plan(predecessor, runtime):
             'case_lineage': [{'case_id': new['id'], 'predecessor_case_id': old['id']}
                              for new, old in zip(cases, snapshot['old_cases'])],
             'calls': _calls(cases, snapshot['providers']), 'source_sha256': sources,
-            'environment': historical.environment()}
+            'environment': json.loads(json.dumps(historical.environment()))}
     report = snapshot['report']
     old_budget = report['budget']
     cancelled = old_budget['remaining_direct_microusd']
