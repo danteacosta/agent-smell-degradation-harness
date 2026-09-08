@@ -1,6 +1,7 @@
 """Planning reads a frozen runtime and retains every earlier commitment."""
 import copy
 import json
+import os
 import subprocess
 
 import pytest
@@ -129,7 +130,9 @@ def test_report_subprocess_does_not_inherit_provider_keys(tmp_path,monkeypatch):
     original=subprocess.run
     def checked(*args,**kwargs):
         assert not any('KEY' in k or 'TOKEN' in k for k in kwargs['env'])
-        assert kwargs['env']['PYTHONPATH'] == str(scoped_judge_study.ROOT)
+        paths = kwargs['env']['PYTHONPATH'].split(os.pathsep)
+        assert paths[0] == str(scoped_judge_study.ROOT)
+        assert all(path and os.path.isabs(path) for path in paths)
         assert kwargs['timeout']<=30 and not kwargs.get('shell')
         assert args[0][1:4]==['-m','eval.addressed_comparison_live','report']
         return original(*args,**kwargs)

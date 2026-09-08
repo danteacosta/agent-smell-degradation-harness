@@ -2,6 +2,9 @@
 from __future__ import annotations
 
 import os
+from importlib.metadata import distributions
+from pathlib import Path
+import site
 import subprocess
 import sys
 import tempfile
@@ -13,6 +16,17 @@ from eval.pilot_preparation import digest
 from label_plane.evidence_json import load_json
 
 MAX_REPORT_BYTES = 512_000
+
+
+def _isolated_pythonpath(runtime):
+    """Expose the verified project and the caller's package metadata, not its secrets."""
+    roots = {Path(distribution.locate_file('')).resolve() for distribution in distributions()}
+    project = Path(runtime).resolve()
+    default_roots = {Path(root).resolve() for root in site.getsitepackages()}
+    default_roots.add(Path(site.getusersitepackages()).resolve())
+    roots = sorted(str(root) for root in roots
+                   if root != project and root not in default_roots and root.is_dir())
+    return os.pathsep.join((str(project), *roots))
 
 
 def verify_files(files):
@@ -33,10 +47,10 @@ def verify_runtime(root, expected):
 
 
 def _report(directory, runtime):
-    # Match module execution with the verified project on the import path,
-    # including editable-install metadata. Never inherit the caller's path.
+    # Match the frozen package inventory without inheriting the caller's
+    # environment. The verified project remains first on the import path.
     env = {'PATH': os.defpath, 'PYTHONDONTWRITEBYTECODE': '1', 'PYTHONIOENCODING': 'utf-8',
-           'PYTHONPATH': str(runtime)}
+           'PYTHONSAFEPATH': '1', 'PYTHONPATH': _isolated_pythonpath(runtime)}
     command = [sys.executable, '-m', 'eval.addressed_comparison_live', 'report', '--directory', str(directory)]
     try:
         with tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as errors:
