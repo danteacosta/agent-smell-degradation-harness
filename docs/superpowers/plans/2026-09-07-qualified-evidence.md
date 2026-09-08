@@ -85,14 +85,14 @@ Files: `eval/qualification_live.py`, `tests/test_qualification_live.py`.
 
 ## Task 5: freeze, collect and report
 
-- [ ] Run full pytest, compile, eval, replay, wedge and an isolated wheel build.
+- [x] Run full pytest, compile, eval, replay, wedge and an isolated wheel build.
   Review security/cost/privacy, SOLID and clean-code boundaries. Verify all
   historical production files are unchanged and the old runtime still reports.
-- [ ] Commit the runtime, prepare the exact private plan and verify it fits
+- [x] Commit the runtime, prepare the exact private plan and verify it fits
   both caps. Preserve a before-custody snapshot and apply only the approved closure.
-- [ ] Run 48 development calls sequentially, preserving every receipt. Run 96
+- [x] Run 48 development calls sequentially, preserving every receipt. Run 96
   evaluation calls only if the frozen candidate rule passes for both providers.
-- [ ] Recheck custody, costs, incomplete outcomes and actual phase decisions.
+- [x] Recheck custody, costs, incomplete outcomes and actual phase decisions.
   Preserve any failure without further prompt revisions or selective reruns.
 - [ ] Publish redacted results and update the operational research documents;
   distinguish software invariants, construction agreement and unmeasured validity.
@@ -100,7 +100,17 @@ Files: `eval/qualification_live.py`, `tests/test_qualification_live.py`.
 
 ## Checkpoints
 
-Design approved by the user, including the written specification. Clean baseline:
+Collection reconciled on 2026-09-08 from the preserved `4e13d34` runtime:
+48/48 development calls, US$0.032449, no pending accounting, all 16 bound
+historical files unchanged. Both arms matched 23/24 vectors. V5 failed a required
+partial-scope control, so all 96 evaluation calls remain unattempted. See the
+[results](../../research/qualified-evidence-results.md). No prompt or criterion
+was changed after collection. Public repository status is reconciled; Drive
+synchronization remains separate. PR #49 fixes CI portability outside the frozen
+collection worktree.
+
+Historical pre-collection checkpoint: design approved by the user, including
+the written specification. Clean baseline:
 1,160 tests passed, 7 skipped and 9 subtests passed. CCE discovery returned mostly
 historical worktrees; exact files were read directly before planning. No new
 provider calls or closure writes have occurred at this checkpoint.

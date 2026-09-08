@@ -50,6 +50,11 @@ V4 matched 23/24 construction answers, but abstained on one long omission,
 failing its frozen gate. All 48 calls have verified usage (US$0.028024);
 the 96 evaluation calls remain unattempted.
 
+The subsequent [whole-context v4/v5 comparison](docs/research/qualified-evidence-results.md)
+completed 48 calls at US$0.032449. Both arms matched 23/24 construction vectors;
+v5 corrected one omission decision but failed a required partial-observation
+decision. Its evaluation and main collection remain blocked.
+
 **Research questions:** RQ1 measures degradation induced by defective requirements; RQ2 tests whether pre-final, oracle-free observability improves deployable warning. RQ3 evaluates clarification only when that optional extension is enabled.
 
 Design for this wedge: [wedge-first reliability check spec](docs/superpowers/specs/2026-07-22-wedge-first-reliability-check-design.md)

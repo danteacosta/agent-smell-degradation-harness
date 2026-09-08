@@ -1,19 +1,26 @@
 # Pre-pilot unlock plan
 
-Status: 2026-09-07. This plan separates operational readiness from evidence
+Status: 2026-09-08. This plan separates operational readiness from evidence
 that could support H1 or H2. A smoke test, an LLM judge, or a local seed is not
 confirmatory evidence.
 
 ## Current state
 
+The [v4/v5 development comparison](qualified-evidence-results.md) is complete,
+not in progress: 48 calls, US$0.032449, no pending accounting. Both arms matched
+23/24 construction vectors, but v5 failed one mandatory partial-scope control.
+Its 96 evaluation calls remain unattempted. Parent plus three auxiliaries now
+total 312 calls and US$0.146193, excluding earlier studies. The portability fix
+in PR #49 does not alter the frozen collection or its scientific decision.
+
 | Gate | Evidence available | Current status | Owner |
 |---|---|---|---|
-| Main synchronization | PRs #41 through #46 are merged; PR #46 is `207f545` | Source-freeze, response-consistency and offline addressed-comparison safeguards are integrated; follow-on live execution and results are tracked separately | Engineering |
+| Main synchronization | PR #47 established `b4d0dce`; PRs #48/#49 carry the reconciled comparison and portability fix | Integrated software and the preserved experimental runtime have separate source identities | Engineering |
 | Corpus | v4 intake, immutable source references, rights review, hashes, and a frozen redacted manifest | 12 pre-pilot records; the expanded pilot has 24 intent IDs across 6 project IDs with AI-assisted admission, not independently established source independence | Researcher and advisor |
 | Providers | Runtime-native OpenAI and DeepSeek adapters, usage/cost propagation, and native smoke CLI | Corrected 120-episode exploratory run completed with both provider configurations; the result remains non-confirmatory | Operator |
 | Substantive evidence | T1/T2 non-empty-field gate and retry contract | 480/480 required T1/T2 stage checks passed; no incomplete episode or artifact was recorded | Engineering and operator |
 | Annotation | Frozen rubric and blinded-packet tooling | Advisor authorized LLM judges for this exploratory phase; no human labels or adjudication exist | Advisor and operator |
-| Budget | Per-stage cost ledger and frozen prices | Historical corrected pre-pilot cost US$0.194731 within US$1. The later shared pilot and both auxiliary studies account for US$0.113744 across 264 calls; retained commitments stay inside the US$7 cap | Operator and advisor |
+| Budget | Per-stage cost ledger and frozen prices | Historical corrected pre-pilot cost US$0.194731 within US$1. The later shared pilot and three auxiliary studies account for US$0.146193 across 312 calls; shared commitments are US$6.849510, including retained reserves and contingency | Operator and advisor |
 | Reproducibility | Prompt, schema, model, price, source, pair, request, response, and run hashes | Corrected run report, append-only ledger, hashes, usage, and context audit are preserved in approved private storage | Operator |
 | Readiness | Fail-closed `prepilot_readiness` report | `no_go` for any claim beyond an exploratory pre-pilot; no H1/H2 claim is authorized | Researcher and advisor |
 
@@ -46,7 +53,7 @@ at that checkpoint was 216 calls and US$0.085720. The subsequent
 calls at US$0.028024 with no accounting pendency. V4 produced 24/24 valid
 responses and 23/24 exact construction matches, but abstained on one long
 omission. That failed the predeclared operation-level gate; its 96 evaluation
-calls remain unattempted. The shared subtotal is now 264 calls and US$0.113744.
+calls remain unattempted. The shared subtotal at that checkpoint was 264 calls and US$0.113744.
 Prospective dispatch remains blocked and no historical result was rescored. The
 historical 12-intent manifest and confirmatory launch gates are unchanged.
 
