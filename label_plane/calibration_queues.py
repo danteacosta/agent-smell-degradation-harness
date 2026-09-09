@@ -51,6 +51,16 @@ def _validated_tasks(tasks: Iterable[Mapping[str, Any]]) -> tuple[list[dict[str,
             kinds.add("primary_outcome")
         else:
             validate_blinded_payload(task)
+            expected = {
+                "item_id",
+                "presented_text",
+                "rubric_version",
+                "duplicate_subset",
+            }
+            if set(task) != expected:
+                raise ValueError("blinded requirement task has an invalid field set")
+            if not str(task["item_id"]).strip() or not str(task["presented_text"]).strip():
+                raise ValueError("blinded requirement task requires visible item and text")
             kinds.add("requirement")
     if len(kinds) != 1:
         raise ValueError("calibration queues cannot mix task kinds")
