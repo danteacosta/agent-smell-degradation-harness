@@ -1,7 +1,7 @@
 # Evaluation while human annotation is unavailable
 
-Status: 2026-09-07. The source diagnostic, v2/v3 development study and latest
-v3/v4 development comparison completed and failed their respective frozen gates.
+Status: 2026-09-09. The source diagnostic and the v2/v3, v3/v4, and whole-context
+v4/v5 development studies completed and failed their respective frozen gates.
 The latest comparison completed 48 calls; its 96 evaluation calls were not
 dispatched. Main-cohort collection remains paused.
 Human calibration is pending. H1, H2, the primary missing-condition family, and
@@ -158,6 +158,14 @@ for these three templates.
 - Prepare the existing blinded packets, but keep an eventual random audit sample
   separate from a disagreement-enriched troubleshooting queue. Enrichment cannot
   estimate prevalence or general judge accuracy without a sampling correction.
+- Freeze those two queues with `python scripts/prepare_calibration_queues.py`.
+  The calibration queue is selected first, independently of machine signals,
+  with at least one item per project-like stratum and recorded inclusion
+  probabilities. Only then may disagreement, abstention, invalid evidence,
+  metamorphic violations, or incomplete traces prioritize the disjoint triage
+  queue. Signal reasons remain private and are absent from annotator packets.
+  This preparation reduces setup cost when reviewers become available; it does
+  not create labels or replace confirmatory double annotation and adjudication.
 - When humans become available, freeze the calibration design before seeing
   their labels. A researcher-only review may help debug examples but is not two
   independent annotators. Advisor approval is needed for any alternate thesis
@@ -175,6 +183,14 @@ Additional threats are toy-template simplicity, public fixture contamination,
 shared generator/judge biases, prompt anchoring, and construct mismatch between
 syntactic checks and semantic condition preservation. Stable machine judgments
 and 100% toy performance cannot resolve these threats.
+
+[Van der Meer et al., EMNLP 2024](https://doi.org/10.18653/v1/2024.emnlp-main.1031)
+show that active sample and annotator selection can reduce annotation use on
+some subjective NLP tasks, while benefits depend on the task, disagreement and
+the size and diversity of the annotator pool. Their simulated setting does not
+justify active-learning estimates here, especially with zero annotators. We
+adapt only the separation between a random warm-up/probability sample and later
+targeted selection; the confirmatory human-label requirement is unchanged.
 
 ## Product track: review-needed diagnostics, not compliance certification
 
