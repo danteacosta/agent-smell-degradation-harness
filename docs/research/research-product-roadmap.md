@@ -88,6 +88,13 @@ promise that a small sample proves validity. Preserve the existing confirmatory
 human-label requirements. If independent annotation remains unavailable, an
 alternative primary thesis design needs an explicit advisor decision.
 
+The executable queue freezer now makes that boundary auditable. It selects a
+project-stratified probability sample before reading diagnostic signals, then
+creates a separate project-balanced troubleshooting queue. The probability
+sample may support only its prespecified sampling-based analysis; the enriched
+queue is for mechanism discovery and product workflow testing, never prevalence
+or general accuracy. Both still require real independent reviewers.
+
 ## Product validation in shadow mode
 
 The first useful workflow is an investigator inspecting an obligation, its
