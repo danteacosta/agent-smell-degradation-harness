@@ -92,3 +92,19 @@ def test_queue_freeze_fails_closed_on_invalid_scope() -> None:
             _tasks(), leaking, calibration_count=3, triage_count=1, seed=0,
             source_selection_sha256=SOURCE_HASH,
         )
+
+    requirement_tasks = [
+        {
+            "item_id": f"item-{index}",
+            "presented_text": f"Requirement {index}",
+            "rubric_version": "rubric-v2",
+            "duplicate_subset": False,
+            "machine_disagreement": True,
+        }
+        for index in range(12)
+    ]
+    with pytest.raises(ValueError, match="invalid field set"):
+        freeze_calibration_queues(
+            requirement_tasks, _signals(), calibration_count=3, triage_count=1,
+            seed=0, source_selection_sha256=SOURCE_HASH,
+        )
