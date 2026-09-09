@@ -1,8 +1,8 @@
 """Freeze a probability audit before creating an outcome-enriched review queue.
 
 The probability sample is selected from blinded tasks using project-like strata
-only.  Diagnostic signals are consulted afterwards and can never change that
-sample.  Both outputs remain annotator-blinded; signal reasons live only in the
+only. Diagnostic inputs are validated before sampling, but their boolean values
+cannot change sample membership. Both outputs remain annotator-blinded; reasons live in the
 private selection manifest.
 """
 
@@ -220,8 +220,14 @@ def freeze_calibration_queues(
     calibration_tasks = [by_id[item_id] for item_id in sorted(calibration_ids)]
     triage_tasks = [by_id[item_id] for item_id in sorted(triage_ids)]
     manifest: dict[str, Any] = {
-        "schema_version": "human-calibration-queues/v1",
+        "schema_version": "human-calibration-queues/v2",
         "source_selection_sha256": source_selection_sha256,
+        "source_selection_verification": "caller_supplied_reference_not_verified",
+        "hash_encoding": "sha256_utf8_sorted_keys_compact_json_ensure_ascii_false",
+        "population_sha256": _canonical_hash(rows),
+        "signals_sha256": _canonical_hash([signal_map[key] for key in sorted(signal_map)]),
+        "calibration_tasks_sha256": _canonical_hash(calibration_tasks),
+        "triage_tasks_sha256": _canonical_hash(triage_tasks),
         "task_kind": task_kind,
         "selection_order": "project_stratified_probability_sample_before_diagnostic_triage",
         "seed": seed,

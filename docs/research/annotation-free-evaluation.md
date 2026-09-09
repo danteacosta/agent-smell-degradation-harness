@@ -164,6 +164,17 @@ for these three templates.
   probabilities. Only then may disagreement, abstention, invalid evidence,
   metamorphic violations, or incomplete traces prioritize the disjoint triage
   queue. Signal reasons remain private and are absent from annotator packets.
+  Input signals are loaded and validated before sampling: the guarantee is
+  membership invariance to their boolean values, not a separately persisted
+  pre-signal freeze. The v2 manifest binds canonical population, normalized
+  signals and both output packet contents. The caller-supplied source-selection
+  hash is explicitly an unverified provenance reference, not proof that the
+  upstream selection produced these inputs. Source admission still needs review.
+  The CLI refuses existing or aliased outputs, creates files with mode 0600,
+  and writes the manifest last. Consumers must require a complete, valid manifest
+  and matching packet hashes; caught write failures remove only newly created
+  outputs. A killed process may leave orphan files, which must not be distributed
+  or overwritten automatically. Use an access-controlled private directory.
   This preparation reduces setup cost when reviewers become available; it does
   not create labels or replace confirmatory double annotation and adjudication.
 - When humans become available, freeze the calibration design before seeing

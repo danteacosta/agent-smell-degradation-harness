@@ -10,6 +10,21 @@ from label_plane.calibration_queues import freeze_calibration_queues
 SOURCE_HASH = "a" * 64
 
 
+def test_manifest_binds_population_and_selected_packet_contents() -> None:
+    tasks = _tasks()
+    kwargs = dict(calibration_count=6, triage_count=3, seed=17,
+                  source_selection_sha256=SOURCE_HASH)
+    first = freeze_calibration_queues(tasks, _signals(), **kwargs)
+    changed = deepcopy(tasks)
+    changed[0]["generated_acceptance_criteria"] = "Different obligation"
+    second = freeze_calibration_queues(changed, _signals(), **kwargs)
+    assert first[2]["selection_sha256"] != second[2]["selection_sha256"]
+    for field in ("population_sha256", "calibration_tasks_sha256", "triage_tasks_sha256"):
+        assert len(first[2][field]) == 64
+    reordered = freeze_calibration_queues(list(reversed(tasks)), _signals(), **kwargs)
+    assert first[2] == reordered[2]
+
+
 def _tasks() -> list[dict]:
     return [
         {

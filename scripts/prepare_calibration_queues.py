@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -34,12 +35,39 @@ def _assert_private(path: Path) -> None:
     raise ValueError("annotation queue inputs and outputs must stay outside the repository")
 
 
-def _write_jsonl(path: Path, rows: list[dict]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        "".join(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in rows),
-        encoding="utf-8",
-    )
+def _jsonl(rows: list[dict]) -> str:
+    return "".join(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in rows)
+
+
+def _validate_paths(inputs: list[Path], outputs: list[Path]) -> None:
+    resolved = [path.resolve() for path in inputs + outputs]
+    if len(resolved) != len(set(resolved)):
+        raise ValueError("input and output paths must be distinct")
+    for path in outputs:
+        if path.exists() or path.is_symlink():
+            raise ValueError("refusing to overwrite an existing output")
+
+
+def _publish(outputs: list[tuple[Path, str]]) -> None:
+    """Publish the manifest last; roll back only files created by this invocation.
+
+    Consumers must require the manifest. A process kill can leave orphan packets,
+    which a subsequent invocation refuses to overwrite rather than treating as frozen.
+    """
+    created: list[Path] = []
+    try:
+        for path, content in outputs:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+            created.append(path)
+            with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+                handle.write(content)
+                handle.flush()
+                os.fsync(handle.fileno())
+    except BaseException:
+        for path in reversed(created):
+            path.unlink(missing_ok=True)
+        raise
 
 
 def main() -> int:
@@ -63,6 +91,8 @@ def main() -> int:
     ):
         _assert_private(path)
     try:
+        _validate_paths([args.tasks, args.signals],
+                        [args.calibration_tasks, args.triage_tasks, args.manifest])
         calibration, triage, manifest = freeze_calibration_queues(
             _load_rows(args.tasks),
             _load_rows(args.signals),
@@ -71,15 +101,14 @@ def main() -> int:
             seed=args.seed,
             source_selection_sha256=args.source_selection_sha256,
         )
+        _publish([
+            (args.calibration_tasks, _jsonl(calibration)),
+            (args.triage_tasks, _jsonl(triage)),
+            (args.manifest, json.dumps(manifest, ensure_ascii=False, indent=2,
+                                       sort_keys=True) + "\n"),
+        ])
     except (OSError, ValueError, json.JSONDecodeError) as error:
         parser.exit(1, f"error: {error}\n")
-    _write_jsonl(args.calibration_tasks, calibration)
-    _write_jsonl(args.triage_tasks, triage)
-    args.manifest.parent.mkdir(parents=True, exist_ok=True)
-    args.manifest.write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
     print(
         json.dumps(
             {
