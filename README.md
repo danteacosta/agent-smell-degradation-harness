@@ -6,7 +6,10 @@
 advisory diagnostics, not validated approval or blocking decisions. Deterministic
 contract failures remain distinct. The [annotation-free evaluation track](docs/research/annotation-free-evaluation.md)
 provides 12 synthetic evaluator controls and an offline scorer while H1/H2 remain
-gated by independent human labels. Run the new regressions without dependencies:
+gated by independent human labels. The calibration-queue freezer selects a
+project-stratified probability audit before a disjoint signal-enriched triage
+queue; it prepares later review without creating labels or relaxing the gate.
+Run the new regressions without dependencies:
 `python -m unittest discover -s tests -p test_judge_controls.py -v`.
 
 The [real control run](docs/research/evaluator-control-results.md) exposed zero
