@@ -95,6 +95,15 @@ sample may support only its prespecified sampling-based analysis; the enriched
 queue is for mechanism discovery and product workflow testing, never prevalence
 or general accuracy. Both still require real independent reviewers.
 
+The candidate annotation-study charter now turns the remaining human dependency
+into an explicit, hash-bound hand-off. It cannot be marked ready until two
+distinct primary annotators and a separate adjudicator are named, each primary
+annotator completes rehearsal on excluded material, governance references are
+recorded, packet distribution is approved, and standard, edge-case and exception
+rules are complete. This reduces setup ambiguity and prevents an urgent future
+recruitment from silently weakening the protocol; it does not recruit anyone or
+estimate reliability before labels exist.
+
 ## Product validation in shadow mode
 
 The first useful workflow is an investigator inspecting an obligation, its

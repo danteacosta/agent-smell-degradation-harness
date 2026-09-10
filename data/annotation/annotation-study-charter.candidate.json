@@ -1,0 +1,66 @@
+{
+  "schema_version": "annotation-study-charter/v1",
+  "status": "blocked",
+  "claim_boundary": {
+    "purpose": "confirmatory_h1_h2",
+    "human_labels_required": true,
+    "model_judgments_secondary_only": true,
+    "machine_signals_hidden_from_annotators": true
+  },
+  "roles": {
+    "primary_annotator_ids": [],
+    "adjudicator_id": null,
+    "role_independence_confirmed": false
+  },
+  "artifacts": {
+    "rubric_sha256": "e869222deedeed39f444be36baeaa65e7cad93f81c99d0a40868cf9552826679",
+    "queue_manifest_sha256": null,
+    "queue_roles_separated": true
+  },
+  "process": {
+    "training_material_excludes_study_items": true,
+    "rehearsal_completed_by": [],
+    "feedback_channel_ref": null,
+    "guideline_owner": "Dante Costa",
+    "guideline_version": "candidate-v1"
+  },
+  "governance": {
+    "ethics_privacy_decision_ref": null,
+    "access_control_ref": null,
+    "participation_terms_ref": null,
+    "retention_and_deletion_ref": null,
+    "approved_for_distribution": false
+  },
+  "annotation_scenarios": [
+    {
+      "requirement_id": "ANN-STD-01",
+      "scenario_type": "standard",
+      "vertical_trace": "H1/H2 primary outcome rubric-v2",
+      "stimulus": "A complete blinded artifact and its frozen reference constraints are shown.",
+      "context": "The item is readable and contains enough information to apply the rubric.",
+      "annotator_response": "Assign exactly one severity label and record the required rationale.",
+      "rationale": "Primary labels must reflect constraint preservation rather than provider identity or treatment.",
+      "acceptance_criterion": "The saved record validates against human-annotation/v1 and contains no blinded field."
+    },
+    {
+      "requirement_id": "ANN-EDGE-01",
+      "scenario_type": "edge_case",
+      "vertical_trace": "rubric-v2 missing-label policy",
+      "stimulus": "The artifact is readable but the reference does not support a confident severity decision.",
+      "context": "No treatment, provider, machine judgment or detector output is visible.",
+      "annotator_response": "Submit no severity label and record insufficient_context or another allowed missing reason.",
+      "rationale": "Uncertainty must remain observable instead of being imputed as clean.",
+      "acceptance_criterion": "The saved record has a null label, contains an allowed missing reason, and is excluded from primary IRR as specified."
+    },
+    {
+      "requirement_id": "ANN-EXC-01",
+      "scenario_type": "exception",
+      "vertical_trace": "privacy, blinding and packet-integrity gates",
+      "stimulus": "A packet exposes forbidden metadata, fails its hash, or cannot be opened safely.",
+      "context": "Annotation has not been submitted for the affected item.",
+      "annotator_response": "Stop, do not infer a label, and report the packet through the approved feedback channel.",
+      "rationale": "Continuing would compromise blinding, custody or participant safety.",
+      "acceptance_criterion": "No primary label is emitted and the incident is recorded outside the annotator-visible packet."
+    }
+  ]
+}
