@@ -181,6 +181,13 @@ for these three templates.
   their labels. A researcher-only review may help debug examples but is not two
   independent annotators. Advisor approval is needed for any alternate thesis
   design if independent labels remain permanently unavailable.
+- Complete the fail-closed annotation-study charter before distributing either
+  queue. It binds the rubric and queue-manifest hashes, two distinct primary
+  annotators, a separate adjudicator, excluded rehearsal material, a feedback
+  channel, governance references, and standard/edge/exception handling rules.
+  The checked-in candidate intentionally remains blocked while people and
+  approvals are missing. A passing charter verifies declared process evidence;
+  it does not demonstrate annotator competence, agreement or semantic validity.
 
 ## Threats to validity and related work
 
@@ -202,6 +209,15 @@ the size and diversity of the annotator pool. Their simulated setting does not
 justify active-learning estimates here, especially with zero annotators. We
 adapt only the separation between a random warm-up/probability sample and later
 targeted selection; the confirmatory human-label requirement is unchanged.
+
+[Peng et al., DARS, arXiv 2025](https://doi.org/10.48550/arXiv.2512.13444)
+propose a negotiation card plus atomic standard, edge-case and exception
+annotation requirements with traceability and acceptance criteria. Their
+evaluation is a demonstration and researcher-authored mapping to 18 automotive
+annotation errors; it is not an observed reduction in errors and is not yet
+peer-reviewed. We adapt only the explicit hand-off structure and versioned
+scenario rules in the annotation charter. We do not inherit their efficacy
+claim or treat a completed form as annotation quality evidence.
 
 ## Product track: review-needed diagnostics, not compliance certification
 
