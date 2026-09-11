@@ -87,3 +87,27 @@ def test_offline_discovery_reports_deterministic_repeat_stability(tmp_path):
     assert run["independent_replication_claim"] is False
     assert run["expected_episode_count"] == 240
     assert (bundle / "evaluation-metadata.jsonl").is_file()
+
+
+def test_repeated_discovery_preserves_every_behavior_artifact(tmp_path):
+    import hashlib
+    result = run_discovery(mode="offline", replications=2,
+                           run_id="preserve-repetitions", artifact_root=tmp_path)
+    bundle = tmp_path / "runs" / result["run_id"]
+    episodes = [json.loads(line) for line in (bundle / "episodes.jsonl").read_text().splitlines()]
+    behavior = {e["episode_id"]: e for e in episodes if e["task_family"] == "behavior_codegen"}
+    reports = list((bundle / "test-reports").glob("*.json"))
+    assert len(reports) == len(behavior) == 48
+    assert len(list((bundle / "generated-code").glob("*.py"))) == 48
+    assert len(list((bundle / "comparisons").glob("*.md"))) == 24
+    seen = set()
+    for path in reports:
+        report = json.loads(path.read_text())
+        episode = behavior[report["episode_id"]]
+        seen.add(report["episode_id"])
+        assert report["run_id"] == result["run_id"]
+        assert report["replication_id"] == episode["replication_id"]
+        code = bundle / "generated-code" / (path.stem + ".py")
+        assert hashlib.sha256(code.read_bytes()).hexdigest() == report["source_sha256"]
+        assert code.read_text() == episode["artifact"]["source_code"].replace("\r\n", "\n").replace("\r", "\n").rstrip("\n") + "\n"
+    assert seen == set(behavior)
