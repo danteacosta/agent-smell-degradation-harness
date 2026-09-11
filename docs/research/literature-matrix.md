@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-09-09
+Last updated: 2026-09-11
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -155,3 +155,16 @@ artifact correctness, or annotator reliability. H1/H2 continue to require the
 frozen blinded human-annotation protocol; any future delegation to an LLM
 requires a separate human-model calibration study defined before labels are
 inspected.
+
+
+## 2026-09-11: executable behavioral evidence
+
+Problem: an incomplete requirement may cause generated code to violate a necessary condition of the intended behavior. This is a testable risk, not a claim that every smell causes a bug. The existing behavioral discovery adapter executes hidden tests and distinguishes target-condition failures, unrelated failures, crashes, timeouts and unexecuted artifacts.
+
+The behavioral extension remains secondary/discovery-only; acceptance criteria remain the registered primary task. Before real-provider collection, freeze the complete intended behavior and the same hidden oracle for both variants, including target and non-target cases. Review oracle adequacy and mutation validity independently. Never derive the oracle solely from the defective prompt or expose it to generation or T1–T3 features. Report failed execution separately from demonstrated behavioral violations; test passage establishes only tested behavior. Preserve every repetition's code, report, identity and hash. Compare paired target-violation frequencies with project-level inference after the analysis is registered. No real-provider result or causal effect is claimed by an offline stub run.
+
+Without annotators, executable fixtures can validate the measurement pipeline and expose concrete counterexamples to specified behavior. They do not establish that the specified oracle is correct, replace human review, or promote synthetic outcomes to H1/H2 evidence. Product use remains advisory: show the condition, failing input, expected/actual output and trace, with no automatic semantic approval.
+
+Source revisited: Mu et al., ClarifyGPT (FSE 2024), DOI https://doi.org/10.1145/3660810; accessible author manuscript https://arxiv.org/html/2310.10996v1 (2023 version). Read method, evaluation and limitations. Ten participants evaluated clarification on two MBPP benchmarks; automated experiments use two models and four benchmarks. The manuscript reports GPT-4 Pass@1 increasing from 70.96% to 80.80% on MBPP-sanitized. Its intervention is clarification, not our controlled missing-condition treatment. Simulated feedback explicitly receives ground-truth tests (Section 5.2); importing that design into oracle-free H2 would leak terminal knowledge. Benchmark simplicity, model dependence and simulated feedback limit transfer. Credibility: 8/10, peer-reviewed publication and transparent author method, but task and version boundaries matter. Thesis: motivate behavioral consequences. Experiment: keep hidden tests outside generation and feature planes. Product: clarification is a separate intervention requiring evaluation. Action: preserve replication-specific evidence before live qualification, without changing H1/H2.
+
+Attribution correction: the disjoint probability-audit and diagnostic queues above are this thesis's sampling decision, not a procedure evaluated by Van der Meer et al. Their study motivates attention to annotation scarcity but does not validate our queue design.
