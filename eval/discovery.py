@@ -364,6 +364,18 @@ def run_discovery(
 ) -> dict[str, Any]:
     if replications < 1:
         raise ValueError("replications must be >= 1")
+    if mode not in {"offline", "live"}:
+        raise ValueError("mode must be offline or live")
+    if mode == "live":
+        # Temporary quarantine of this combined discovery runner, not a provider
+        # outage. Both its test_gen and behavior_codegen oracles contain unresolved
+        # source-to-contract assumptions. Do not add an environment/CLI bypass.
+        # Reopening requires a reviewed corpus/oracle revision and qualification.
+        raise ValueError(
+            "live discovery is quarantined: blocked_semantic_review; "
+            "see docs/research/behavior-oracle-review-20260911.md. "
+            "Offline fixtures remain available but are not scientific evidence."
+        )
     pairs = load_discovery_pairs(repo_root / "data" / "pairs" / "discovery")
     run_id = run_id or f"{datetime.now(UTC).strftime('%Y%m%dT%H%M%SZ')}-{new_run_id()}"
     bundle_dir = artifact_root / "runs" / run_id
@@ -412,6 +424,8 @@ def run_discovery(
     run_config = {
         "schema_version": "requirements-smell-discovery-run/v1",
         "status": "discovery_only",
+        "oracle_semantic_status": "blocked_semantic_review",
+        "evidence_scope": "fixture_pipeline_check_only",
         "mode": mode,
         "model": run_model,
         "run_id": run_id,
