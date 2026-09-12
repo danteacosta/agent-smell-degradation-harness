@@ -168,3 +168,25 @@ Without annotators, executable fixtures can validate the measurement pipeline an
 Source revisited: Mu et al., ClarifyGPT (FSE 2024), DOI https://doi.org/10.1145/3660810; accessible author manuscript https://arxiv.org/html/2310.10996v1 (2023 version). Read method, evaluation and limitations. Ten participants evaluated clarification on two MBPP benchmarks; automated experiments use two models and four benchmarks. The manuscript reports GPT-4 Pass@1 increasing from 70.96% to 80.80% on MBPP-sanitized. Its intervention is clarification, not our controlled missing-condition treatment. Simulated feedback explicitly receives ground-truth tests (Section 5.2); importing that design into oracle-free H2 would leak terminal knowledge. Benchmark simplicity, model dependence and simulated feedback limit transfer. Credibility: 8/10, peer-reviewed publication and transparent author method, but task and version boundaries matter. Thesis: motivate behavioral consequences. Experiment: keep hidden tests outside generation and feature planes. Product: clarification is a separate intervention requiring evaluation. Action: preserve replication-specific evidence before live qualification, without changing H1/H2.
 
 Attribution correction: the disjoint probability-audit and diagnostic queues above are this thesis's sampling decision, not a procedure evaluated by Van der Meer et al. Their study motivates attention to annotation scarcity but does not validate our queue design.
+
+## 2026-09-12 — Oracle validity before execution
+
+Search/read date: 2026-09-12. New entry; deduplicated by title and DOI.
+
+| Source / evidence | Question, data and method | Finding and limitations | Thesis / experiment / product action | Credibility |
+| --- | --- | --- | --- | --- |
+| Barr, Harman, McMinn, Shahbaz and Yoo, *The Oracle Problem in Software Testing: A Survey*, TSE 41(5), 507–525 (2015), peer-reviewed; [DOI](https://doi.org/10.1109/TSE.2014.2372785), [author manuscript](https://philmcminn.com/publications/barr2015.pdf) | How can tests distinguish intended behavior? Survey repository of 694 publications from 1978–2012; search, classification and trend analysis. Read abstract, definitions, search method, specified-oracle challenges and conclusion. | Distinguishes partial oracles from ground truth; abstraction can omit relevant behavior or admit infeasible behavior. Traditional-testing survey, not an LLM experiment or an effect-size estimate; search coverage and age limit transfer. | Thesis: separate oracle disagreement from source-supported error. Experiment: quarantine unresolved source-contract assumptions. Product: expose oracle uncertainty before calling a behavior faulty. These are our bounded implementation decisions, not evaluated interventions in the survey. | 8/10: peer-reviewed synthesis with explicit method and formal definitions; no direct validation of this task. |
+
+Implementation decision: `eval.discovery --mode live` now fails before corpus loading,
+provider initialization or artifact creation. This temporary quarantine covers the
+combined ARTA discovery runner, including its acceptance-criteria oracles; it does
+not disable other qualified runners or rewrite the confirmatory protocol. There
+is no environment/CLI override. Reopening needs a reviewed corpus/oracle revision,
+not merely credentials or a passing synthetic control. Offline bundles explicitly
+record `blocked_semantic_review` and `fixture_pipeline_check_only`.
+
+The new GAMMA-002 regression reproduces the historical oracle's unsupported
+rejection of 1001 users. This is a counterexample to the oracle interpretation,
+not evidence that a real model generated a defect. All 12 original pairs and
+oracle hashes remain unchanged. Source-specific review decisions remain in
+[the existing audit](behavior-oracle-review-20260911.md); no approval is fabricated.
