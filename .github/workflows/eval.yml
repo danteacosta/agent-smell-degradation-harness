@@ -13,5 +13,7 @@ jobs:
           python-version: "3.12"
       - run: pip install -e ".[dev]"
       - run: pytest -q
+      - name: Behavioral executor smoke (original controls, no providers)
+        run: python -m eval.behavior_runtime_smoke
       - run: python -m eval
       - run: python -m gates
