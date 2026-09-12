@@ -1,0 +1,63 @@
+{
+  "confirmatory_eligible": false,
+  "controls": [
+    {
+      "control": "correct_increment",
+      "executed_cases": 0,
+      "expected_status": "passed",
+      "matched": false,
+      "observed_status": "unsafe_not_run",
+      "safety_controls": {
+        "address_space": true,
+        "cpu": true,
+        "nofile": true,
+        "non_root": false,
+        "nproc": true,
+        "output": true
+      },
+      "safety_error_codes": [
+        "root_user"
+      ],
+      "source_sha256": "ca607f7f48948033c20784c4dfa4f803e0ea54decd9e1cf21db0458285611563"
+    },
+    {
+      "control": "incorrect_increment",
+      "executed_cases": 0,
+      "expected_status": "failed",
+      "matched": false,
+      "observed_status": "unsafe_not_run",
+      "safety_controls": {
+        "address_space": true,
+        "cpu": true,
+        "nofile": true,
+        "non_root": false,
+        "nproc": true,
+        "output": true
+      },
+      "safety_error_codes": [
+        "root_user"
+      ],
+      "source_sha256": "e4e94292886a897335990d3a58daa107a8af9acf4ac278dbb6aeb067566d6fc9"
+    },
+    {
+      "control": "forbidden_import",
+      "executed_cases": 0,
+      "expected_status": "rejected",
+      "matched": true,
+      "observed_status": "rejected",
+      "safety_controls": {},
+      "safety_error_codes": [],
+      "source_sha256": "5c25e3bde2966f7afd42c83be67c9b5179944defce560725e9dfcc1993cf7d4a"
+    }
+  ],
+  "executor_sha256": "85cc49d68815ed5d52614fc59abebb26804f63a9ca892288e18037b928a43654",
+  "limitations": "No provider calls, latency benchmark, adversarial-isolation proof or source-derived outcome validation. Live discovery remains quarantined.",
+  "oracle_approved": false,
+  "platform": "Linux",
+  "provider_qualified": false,
+  "python_version": "3.12.14",
+  "same_test_sha256": "348cae8317232fa420c5ee28b5736f9cfa04b569d9eb337bfb5d10920feceb44",
+  "schema_version": "behavior-runtime-smoke/v1",
+  "scope": "original_control_subprocess_smoke_only",
+  "status": "smoke_blocked_or_failed"
+}

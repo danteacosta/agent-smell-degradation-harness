@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-09-09
+Last updated: 2026-09-11
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -155,3 +155,48 @@ artifact correctness, or annotator reliability. H1/H2 continue to require the
 frozen blinded human-annotation protocol; any future delegation to an LLM
 requires a separate human-model calibration study defined before labels are
 inspected.
+
+
+## 2026-09-11: executable behavioral evidence
+
+Problem: an incomplete requirement may cause generated code to violate a necessary condition of the intended behavior. This is a testable risk, not a claim that every smell causes a bug. The existing behavioral discovery adapter executes hidden tests and distinguishes target-condition failures, unrelated failures, crashes, timeouts and unexecuted artifacts.
+
+The behavioral extension remains secondary/discovery-only; acceptance criteria remain the registered primary task. Before real-provider collection, freeze the complete intended behavior and the same hidden oracle for both variants, including target and non-target cases. Review oracle adequacy and mutation validity independently. Never derive the oracle solely from the defective prompt or expose it to generation or T1–T3 features. Report failed execution separately from demonstrated behavioral violations; test passage establishes only tested behavior. Preserve every repetition's code, report, identity and hash. Compare paired target-violation frequencies with project-level inference after the analysis is registered. No real-provider result or causal effect is claimed by an offline stub run.
+
+Without annotators, executable fixtures can validate the measurement pipeline and expose concrete counterexamples to specified behavior. They do not establish that the specified oracle is correct, replace human review, or promote synthetic outcomes to H1/H2 evidence. Product use remains advisory: show the condition, failing input, expected/actual output and trace, with no automatic semantic approval.
+
+Source revisited: Mu et al., ClarifyGPT (FSE 2024), DOI https://doi.org/10.1145/3660810; accessible author manuscript https://arxiv.org/html/2310.10996v1 (2023 version). Read method, evaluation and limitations. Ten participants evaluated clarification on two MBPP benchmarks; automated experiments use two models and four benchmarks. The manuscript reports GPT-4 Pass@1 increasing from 70.96% to 80.80% on MBPP-sanitized. Its intervention is clarification, not our controlled missing-condition treatment. Simulated feedback explicitly receives ground-truth tests (Section 5.2); importing that design into oracle-free H2 would leak terminal knowledge. Benchmark simplicity, model dependence and simulated feedback limit transfer. Credibility: 8/10, peer-reviewed publication and transparent author method, but task and version boundaries matter. Thesis: motivate behavioral consequences. Experiment: keep hidden tests outside generation and feature planes. Product: clarification is a separate intervention requiring evaluation. Action: preserve replication-specific evidence before live qualification, without changing H1/H2.
+
+Attribution correction: the disjoint probability-audit and diagnostic queues above are this thesis's sampling decision, not a procedure evaluated by Van der Meer et al. Their study motivates attention to annotation scarcity but does not validate our queue design.
+
+## 2026-09-12 — Oracle validity before execution
+
+Search/read date: 2026-09-12. New entry; deduplicated by title and DOI.
+
+| Source / evidence | Question, data and method | Finding and limitations | Thesis / experiment / product action | Credibility |
+| --- | --- | --- | --- | --- |
+| Barr, Harman, McMinn, Shahbaz and Yoo, *The Oracle Problem in Software Testing: A Survey*, TSE 41(5), 507–525 (2015), peer-reviewed; [DOI](https://doi.org/10.1109/TSE.2014.2372785), [author manuscript](https://philmcminn.com/publications/barr2015.pdf) | How can tests distinguish intended behavior? Survey repository of 694 publications from 1978–2012; search, classification and trend analysis. Read abstract, definitions, search method, specified-oracle challenges and conclusion. | Distinguishes partial oracles from ground truth; abstraction can omit relevant behavior or admit infeasible behavior. Traditional-testing survey, not an LLM experiment or an effect-size estimate; search coverage and age limit transfer. | Thesis: separate oracle disagreement from source-supported error. Experiment: quarantine unresolved source-contract assumptions. Product: expose oracle uncertainty before calling a behavior faulty. These are our bounded implementation decisions, not evaluated interventions in the survey. | 8/10: peer-reviewed synthesis with explicit method and formal definitions; no direct validation of this task. |
+
+Implementation decision: `eval.discovery --mode live` now fails before corpus loading,
+provider initialization or artifact creation. This temporary quarantine covers the
+combined ARTA discovery runner, including its acceptance-criteria oracles; it does
+not disable other qualified runners or rewrite the confirmatory protocol. There
+is no environment/CLI override. Reopening needs a reviewed corpus/oracle revision,
+not merely credentials or a passing synthetic control. Offline bundles explicitly
+record `blocked_semantic_review` and `fixture_pipeline_check_only`.
+
+The new GAMMA-002 regression reproduces the historical oracle's unsupported
+rejection of 1001 users. This is a counterexample to the oracle interpretation,
+not evidence that a real model generated a defect. All 12 original pairs and
+oracle hashes remain unchanged. Source-specific review decisions remain in
+[the existing audit](behavior-oracle-review-20260911.md); no approval is fabricated.
+
+Follow-through: the [revision candidate packet](oracle-revision-candidate-v1.md)
+now covers all twelve source-contract decisions. Four executable partial-oracle
+candidates retain only selected obligations and mark other points unspecified.
+An eight-reference sensitivity comparison loses the historical contrast in
+GAMMA-002 and ERTMS-002 while retaining it in NFR-002 and PEERING-001. This is our
+constructed-reference result, not a result from Barr et al. or real LLMs. It shows
+why an oracle's unsupported negative expectations can determine the apparent
+effect. All interpretations remain pending independent review; unknown points
+are not correct negatives, and no source-derived performance claim is made.

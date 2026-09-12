@@ -1,0 +1,49 @@
+{
+  "schema_version": "partial-oracle-review/v1",
+  "review_status": "pending_independent_review",
+  "evidence_scope": "offline_reference_sensitivity_only",
+  "cases": [
+    {
+      "intent_id": "ARTA-GAMMA-002",
+      "pair_sha256": "6e5a6210fabec872f36ed02b77c97f71a9672ffba490875778d8506140821527",
+      "oracle_sha256": "98724d8318198ee1e21410794ce1d20a7c389776c637e5547c8d6a16ffd83b9c",
+      "decisions": {
+        "capacity_exactly_met": "retain",
+        "capacity_exceeded": "unspecified",
+        "no_users": "unspecified"
+      },
+      "rationale": "Capacity for 1000 users does not establish a maximum or the zero-user behavior. The retained point is a predicate-level obligation, not a measured load test."
+    },
+    {
+      "intent_id": "ARTA-ERTMS-002",
+      "pair_sha256": "a03ef54be88ec59c5586de30613c29b0ebdcefe265dd6b8382129c14240317c0",
+      "oracle_sha256": "bffb215e4569ba0c27769b433786c5cb0b544318fca805eaaf82e2ecc7d2bd1b",
+      "decisions": {
+        "required_ack_missing": "retain",
+        "required_ack_received": "unspecified",
+        "ack_not_required": "unspecified"
+      },
+      "rationale": "The antecedent requires braking when acknowledgement is required and missing; it does not define other braking policies outside that antecedent."
+    },
+    {
+      "intent_id": "ARTA-NFR-002",
+      "pair_sha256": "11b7591cda491012f8399c4af3a5148218355753f0b25af23c5ab2e9d0f4827c",
+      "oracle_sha256": "3876b673e1890fdc3267f02ccfc996533fe546dd5075c1ee89c94091f8e2713b",
+      "decisions": {
+        "authorized_user": "unspecified",
+        "unauthorized_user": "retain"
+      },
+      "rationale": "Authorization is necessary for access, not necessarily sufficient. This predicate does not test the separate obligation to distinguish user categories on every attempt."
+    },
+    {
+      "intent_id": "ARTA-PEERING-001",
+      "pair_sha256": "98cf6caa80ecd4df6fa233b1ebdeeff6ab22311fdc6a19e09e5e8f98923f6916",
+      "oracle_sha256": "4ce83b6c1c66d1812c38381fbfee63c31b2403623efc8f2ee0d53723a4cade24",
+      "decisions": {
+        "malicious_request": "retain",
+        "benign_request": "unspecified"
+      },
+      "rationale": "Malicious requests must be rejected; the source does not forbid rejecting a benign request for another reason. A supplied malicious flag does not validate detection quality."
+    }
+  ]
+}
