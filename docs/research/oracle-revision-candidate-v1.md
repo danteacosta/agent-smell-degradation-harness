@@ -82,6 +82,22 @@ scope decision justifies a change. Record every added assumption separately.
 This packet reduces preparation work for scarce reviewers; it cannot replace
 their independent decisions or the separate H1/H2 annotation protocol.
 
+## Execution readiness
+
+`python -m eval.behavior_runtime_smoke` exercises the actual subprocess executor
+with an original correct increment, an incorrect increment and a forbidden import.
+It exits nonzero if expected outcomes are not observed and explicitly denies
+provider/oracle/confirmatory qualification. The CI evaluation workflow runs it
+after pytest. A green smoke is a limited execution-path check, not a hostile-code
+isolation proof or a performance measurement.
+
+The [local root run](behavior-runtime-smoke-root-v1.json) correctly refused both
+executable controls with `unsafe_not_run` / `root_user`; static rejection worked.
+The [non-root setup attempt](behavior-runtime-smoke-nonroot-v1.json) was denied by
+the environment before any controls ran. No safety condition was bypassed.
+The CI smoke is the next available execution check; provider configuration and
+source/oracle review remain separate dependencies even if it passes.
+
 ## Product consequence
 
 A diagnostic should display an oracle disagreement together with the scope of
