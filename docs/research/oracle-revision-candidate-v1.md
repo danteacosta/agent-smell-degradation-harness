@@ -64,6 +64,39 @@ scope decision justifies a change. Record every added assumption separately.
 
 ## Finite next steps for independent review
 
+### Four-case source recheck and proposed dispositions
+
+Re-fetched all four ARTA source files at commit
+`493297655cd653f8ebc797ef5c3c7ee2f736ab4c` and inspected the selected records
+and their neighboring records. These recommendations are assistant-authored;
+they are not independent approval or a review of the complete original standards.
+Source links and record identifiers remain in each historical pair's `source`.
+
+| Case | Recommended disposition before a live behavioral pilot | Concrete decision for the reviewer |
+| --- | --- | --- |
+| GAMMA-002 | Defer the current Boolean abstraction. Capacity is not a maximum admission policy, and checking an input count does not measure concurrent service. | Specify workload, service success and observation interval before drafting a capacity experiment. Do not approve the historical `at most` rewrite. |
+| ERTMS-002 | Keep as an identifiability warning; defer a treatment-effect comparison under the current partial oracle. | Obtain a source-backed prohibition on unnecessary braking if that is the intended outcome. Otherwise preserve the outside-antecedent region as unspecified. |
+| NFR-002 | Revise the candidate pair before admission. The historical clean text drops classification while the defective text retains it, so this is not a single deletion contrast. | Keep classification identical in both prompts and delete only enforcement; review the abstract access-decision scope independently. |
+| PEERING-001 | Candidate for a narrowly scoped response-policy pilot, subject to review and rights. | Agree that maliciousness is an externally supplied classification and only the required rejection response is assessed. Do not claim detection quality or require benign admission. |
+
+Proposed NFR clean wording: `The product shall distinguish authorized from
+unauthorized users on every access attempt. The product shall deny access to
+unauthorized users.` Proposed defective wording: `The product shall distinguish
+authorized from unauthorized users on every access attempt.` The first sentence
+is identical; only the second is removed. This is a draft for a new version,
+not a change to the frozen historical pair. An access-decision-only abstraction
+must explicitly exclude evaluation of classification quality in both arms.
+
+For the NFR candidate, unauthorized access must yield denial; authorized access
+remains unspecified by the excerpt. For PEERING, malicious input must yield
+rejection; benign acceptance remains unspecified. Returned policy tokens are
+evidence about that decision function only, not proof that a deployed system
+prevented side effects. These scope limits must travel with any pilot result.
+
+These dispositions are based on specification/abstraction suitability, not
+selection for a desired observed effect. Retain all four records and decisions.
+No candidate is admitted by this document; no prior reference result is relabeled.
+
 1. Decide source meaning, permissible abstraction and the expected outputs **before**
    inspecting any newly generated provider output. Record retained obligations,
    unknown regions and assumptions separately. An uncertainty decision is valid.
