@@ -23,7 +23,7 @@ def test_real_runtime_smoke_never_qualifies_a_provider_or_oracle():
         assert all("root_user" in r["safety_error_codes"] for r in records[:2])
         assert all(r["observed_status"] == "unsafe_not_run" for r in records[3:])
     elif sys.platform == "linux":
-        assert report["status"] == "smoke_passed"
+        assert report["status"] == "smoke_passed", records
         assert all(r["matched"] for r in records)
         assert all(r["executed_cases"] == 1 for r in records[:2])
         assert records[3]["observed_status"] == "runtime_error"
