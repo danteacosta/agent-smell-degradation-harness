@@ -14,17 +14,21 @@ def test_real_runtime_smoke_never_qualifies_a_provider_or_oracle():
     assert report["oracle_approved"] is False
     assert report["confirmatory_eligible"] is False
     records = report["controls"]
-    assert len(records) == 3
+    assert len(records) == 5
     assert records[2]["observed_status"] == "rejected"
     assert records[2]["executed_cases"] == 0
     if hasattr(os, "geteuid") and os.geteuid() == 0:
         assert report["status"] == "smoke_blocked_or_failed"
         assert all(r["observed_status"] == "unsafe_not_run" for r in records[:2])
         assert all("root_user" in r["safety_error_codes"] for r in records[:2])
+        assert all(r["observed_status"] == "unsafe_not_run" for r in records[3:])
     elif sys.platform == "linux":
         assert report["status"] == "smoke_passed"
         assert all(r["matched"] for r in records)
         assert all(r["executed_cases"] == 1 for r in records[:2])
+        assert records[3]["observed_status"] == "runtime_error"
+        assert records[4]["observed_status"] == "timeout"
+        assert records[4]["executed_cases"] == 0
 
 
 def test_smoke_cli_exit_code_agrees_with_actual_report():
