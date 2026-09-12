@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 
+import pytest
+
 from data.pairs.discovery.loader import load_discovery_cases
 from eval.discovery import run_discovery, verify_artifacts
 
@@ -24,6 +26,11 @@ def test_offline_discovery_materializes_both_variants_and_behavior_results(tmp_p
     bundle = tmp_path / "runs" / "test-discovery"
 
     assert result["episode_count"] == 48
+    assert result["oracle_semantic_status"] == "blocked_semantic_review"
+    assert result["evidence_scope"] == "fixture_pipeline_check_only"
+    run = json.loads((bundle / "run.json").read_text())
+    assert run["oracle_semantic_status"] == result["oracle_semantic_status"]
+    assert run["evidence_scope"] == result["evidence_scope"]
     assert verify_artifacts(bundle)["episode_count"] == 48
     assert result["verification"]["schema_version"] == "requirements-smell-verification/v1"
     assert (bundle / "verification" / "decisions.jsonl").is_file()
@@ -111,3 +118,67 @@ def test_repeated_discovery_preserves_every_behavior_artifact(tmp_path):
         assert hashlib.sha256(code.read_bytes()).hexdigest() == report["source_sha256"]
         assert code.read_text() == episode["artifact"]["source_code"].replace("\r\n", "\n").replace("\r", "\n").rstrip("\n") + "\n"
     assert seen == set(behavior)
+
+
+@pytest.mark.parametrize("experiment_enabled", ["0", "1"])
+def test_live_discovery_quarantines_before_provider_or_artifact_creation(
+    tmp_path, monkeypatch, experiment_enabled
+):
+    import eval.discovery as discovery
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("quarantined discovery must not load pairs or initialize a provider")
+
+    monkeypatch.setenv("AGENT_EXPERIMENT", experiment_enabled)
+    monkeypatch.setattr(discovery, "LiveAgent", forbidden)
+    monkeypatch.setattr(discovery, "load_discovery_pairs", forbidden)
+    with pytest.raises(ValueError, match="blocked_semantic_review"):
+        run_discovery(mode="live", model="unused", artifact_root=tmp_path)
+    assert not list(tmp_path.iterdir())
+
+
+def test_live_discovery_cli_cannot_bypass_semantic_quarantine(monkeypatch):
+    from eval.discovery import main
+
+    monkeypatch.setenv("AGENT_EXPERIMENT", "1")
+    with pytest.raises(ValueError, match="blocked_semantic_review"):
+        main(["--mode", "live", "--replications", "2", "--model", "unused"])
+
+
+def test_invalid_discovery_mode_fails_before_loading_pairs(tmp_path, monkeypatch):
+    import eval.discovery as discovery
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("invalid mode must not load pairs")
+
+    monkeypatch.setattr(discovery, "load_discovery_pairs", forbidden)
+    with pytest.raises(ValueError, match="mode must be offline or live"):
+        run_discovery(mode="LIVE", artifact_root=tmp_path)
+
+
+def test_gamma_capacity_oracle_counterexample_remains_explicit():
+    """Reproduce the historical oracle defect, not a model-generated code defect.
+
+    The source's 1000-user capacity obligation does not entail rejecting 1001.
+    Keep this diagnostic until a reviewed, versioned replacement exists; never
+    silently change the historical oracle to make this test pass.
+    """
+    from eval.task_adapters import BehavioralCodeGenerationAdapter
+
+    case = next(c for c in load_discovery_cases() if c["intent_id"] == "ARTA-GAMMA-002")
+    assert "able to handle 1000 customers" in case["source_excerpt"]
+    execution = case["oracle_spec"]["behavior_codegen"]["_execution"]
+    tests = {t["id"]: t for t in execution["hidden_tests"]}
+    assert tests["capacity_exactly_met"]["expected_output"] is True
+    assert tests["capacity_exceeded"]["input"] == {"concurrent_users": 1001}
+    assert tests["capacity_exceeded"]["expected_output"] is False
+    # The existing trusted reference accepts 1000 and 1001. The latter is not
+    # forbidden by the quoted source, but the historical oracle calls it a fault.
+    result = BehavioralCodeGenerationAdapter(allow_trusted_fixture=True).evaluate(
+        intent_id=case["intent_id"],
+        artifact={"source_code": execution["reference_implementations"]["smelly_plausible"]},
+        oracle_spec=case["oracle_spec"],
+    )
+    assert result.behavior_status == "failed_target_condition"
+    assert result.target_condition_failures == 1
+    assert result.unrelated_condition_failures == 0
