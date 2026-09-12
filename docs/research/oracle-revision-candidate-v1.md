@@ -85,7 +85,10 @@ their independent decisions or the separate H1/H2 annotation protocol.
 ## Execution readiness
 
 `python -m eval.behavior_runtime_smoke` exercises the actual subprocess executor
-with an original correct increment, an incorrect increment and a forbidden import.
+with an original correct increment, an incorrect increment, a forbidden import,
+a division-by-zero exception and a bounded over-budget loop control (one-second
+executor timeout). Version 2 requires all five distinct statuses; execution
+failure must not be conflated with a semantic violation.
 It exits nonzero if expected outcomes are not observed and explicitly denies
 provider/oracle/confirmatory qualification. The CI evaluation workflow runs it
 after pytest. A green smoke is a limited execution-path check, not a hostile-code
@@ -95,8 +98,11 @@ The [local root run](behavior-runtime-smoke-root-v1.json) correctly refused both
 executable controls with `unsafe_not_run` / `root_user`; static rejection worked.
 The [non-root setup attempt](behavior-runtime-smoke-nonroot-v1.json) was denied by
 the environment before any controls ran. No safety condition was bypassed.
-The CI smoke is the next available execution check; provider configuration and
-source/oracle review remain separate dependencies even if it passes.
+The version-1 CI smoke passed its three controls at commit `401ebfacd340e1a81257dcf0587fe8ecd448e017`,
+alongside 1281 tests and nine subtests. Version 2 adds exception and timeout
+qualification. Provider configuration and source/oracle review remain separate
+dependencies even if it passes. The two local JSON records above remain historical
+version-1 evidence and are not rewritten as version-2 results.
 
 ## Product consequence
 
