@@ -234,6 +234,13 @@ Offline bundles remain reproducible and explicitly marked
 validation. Reopening requires a reviewed, versioned corpus and oracle plus runtime
 qualification. Other runners and the primary H1/H2 protocol are unchanged.
 
+The [revision candidate packet](docs/research/oracle-revision-candidate-v1.md)
+prepares source-contract decisions for all twelve cases. Run
+`python -m label_plane.oracle_review` for the offline, hash-pinned comparison of
+four partial-oracle candidates against eight historical references. Unknown
+points remain unscored; the report is a sensitivity check, not provider evidence
+or permission to reopen the quarantined runner.
+
 The discovery track makes the advisor's clean-versus-smelly comparison
 executable. It uses 12 source-traceable ARTA requirements from six projects,
 creates a controlled pair for each one, generates acceptance criteria and a
