@@ -224,6 +224,16 @@ preregistration, and shadow-pilot gates pass.
 
 ## Requirements-smell discovery
 
+**Oracle qualification warning:** the combined discovery runner's live mode is
+temporarily quarantined before any provider initialization. The
+[source-to-oracle audit](docs/research/behavior-oracle-review-20260911.md) found
+unresolved assumptions in the current ARTA fixtures, including an unsupported
+1000-user maximum. Both behavioral and acceptance-criteria outcomes are affected.
+Offline bundles remain reproducible and explicitly marked
+`blocked_semantic_review` / `fixture_pipeline_check_only`; they are not semantic
+validation. Reopening requires a reviewed, versioned corpus and oracle plus runtime
+qualification. Other runners and the primary H1/H2 protocol are unchanged.
+
 The discovery track makes the advisor's clean-versus-smelly comparison
 executable. It uses 12 source-traceable ARTA requirements from six projects,
 creates a controlled pair for each one, generates acceptance criteria and a
