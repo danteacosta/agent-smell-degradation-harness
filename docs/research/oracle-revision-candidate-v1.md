@@ -86,8 +86,8 @@ their independent decisions or the separate H1/H2 annotation protocol.
 
 `python -m eval.behavior_runtime_smoke` exercises the actual subprocess executor
 with an original correct increment, an incorrect increment, a forbidden import,
-a division-by-zero exception and a bounded over-budget loop control (one-second
-executor timeout). Version 2 requires all five distinct statuses; execution
+a division-by-zero exception and a bounded over-budget loop control (250-ms
+wall-clock timeout, preceding the fixed one-second CPU limit). Version 2 requires all five distinct statuses; execution
 failure must not be conflated with a semantic violation.
 It exits nonzero if expected outcomes are not observed and explicitly denies
 provider/oracle/confirmatory qualification. The CI evaluation workflow runs it
