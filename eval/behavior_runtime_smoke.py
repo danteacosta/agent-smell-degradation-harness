@@ -1,4 +1,4 @@
-"""Exercise the real code executor with three original, harmless controls.
+"""Exercise the real code executor with five original, bounded controls.
 
 This qualifies only a small local execution path, never a provider, source
 oracle, security boundary against arbitrary hostile code, or H1/H2 outcome.
@@ -19,6 +19,8 @@ def run_smoke() -> dict:
         ("correct_increment", "def evaluate(x):\n    return x + 1", "passed"),
         ("incorrect_increment", "def evaluate(x):\n    return x", "failed"),
         ("forbidden_import", "import os\ndef evaluate(x):\n    return x + 1", "rejected"),
+        ("runtime_exception", "def evaluate(x):\n    return x / 0", "runtime_error"),
+        ("over_budget_loop", "def evaluate(x):\n    for i in range(1000000000000):\n        x = x + 1\n    return x", "timeout"),
     ]
     records = []
     for name, source, expected in controls:
@@ -33,7 +35,7 @@ def run_smoke() -> dict:
             "safety_error_codes": [e.get("code") for e in result.get("safety_errors", [])],
         })
     return {
-        "schema_version": "behavior-runtime-smoke/v1",
+        "schema_version": "behavior-runtime-smoke/v2",
         "scope": "original_control_subprocess_smoke_only",
         "status": "smoke_passed" if all(r["matched"] for r in records) else "smoke_blocked_or_failed",
         "platform": platform.system(), "python_version": platform.python_version(),
