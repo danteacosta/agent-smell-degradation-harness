@@ -190,3 +190,13 @@ rejection of 1001 users. This is a counterexample to the oracle interpretation,
 not evidence that a real model generated a defect. All 12 original pairs and
 oracle hashes remain unchanged. Source-specific review decisions remain in
 [the existing audit](behavior-oracle-review-20260911.md); no approval is fabricated.
+
+Follow-through: the [revision candidate packet](oracle-revision-candidate-v1.md)
+now covers all twelve source-contract decisions. Four executable partial-oracle
+candidates retain only selected obligations and mark other points unspecified.
+An eight-reference sensitivity comparison loses the historical contrast in
+GAMMA-002 and ERTMS-002 while retaining it in NFR-002 and PEERING-001. This is our
+constructed-reference result, not a result from Barr et al. or real LLMs. It shows
+why an oracle's unsupported negative expectations can determine the apparent
+effect. All interpretations remain pending independent review; unknown points
+are not correct negatives, and no source-derived performance claim is made.
