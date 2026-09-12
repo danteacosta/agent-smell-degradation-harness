@@ -104,6 +104,40 @@ qualification. Provider configuration and source/oracle review remain separate
 dependencies even if it passes. The two local JSON records above remain historical
 version-1 evidence and are not rewritten as version-2 results.
 
+## Shortest path to a defensible first run
+
+This is an execution order, not another approval framework. Review all four
+partial candidates before selecting the first behavioral case; do not select
+only NFR-002/PEERING-001 because their constructed references retain a contrast.
+For each candidate, an independent reviewer can accept the stated abstraction,
+correct it with source support, or exclude it as unidentifiable. Preserve all
+four decisions, including null contrasts and exclusions. This small convenience
+subset remains exploratory and cannot estimate the corpus-wide effect.
+
+The reviewer needs only the pinned source/context, clean/defective wording,
+proposed obligation, test expectations and assumptions in the packet above.
+They should not receive newly generated outputs or expected treatment effects
+when making the decision. Reviewing an oracle is a separate task from producing
+the independent human outcome annotations required for primary H1/H2.
+
+After that decision, freeze the revised pair and common oracle in a new private
+manifest. Run the provider smoke on approved development material; do not use
+the unresolved historical ARTA fixtures as a shortcut around discovery quarantine.
+Use the existing `scripts/run_native_provider_smoke.py` only with a reviewed
+private config and permitted inputs. Its example model names and prices are
+historical values, not current account qualification or a budget authorization.
+Confirm endpoint/model availability and pricing, set a spending ceiling, and
+retain the redacted report outside the repository. This workspace currently has
+neither `PANEL_OPENAI_API_KEY` nor `PANEL_DEEPSEEK_API_KEY`, and no repository `.env`;
+these are observed local absences, not a claim about other machines or accounts.
+
+For the first paired run, hold provider configuration, decoding settings and
+oracle fixed; predeclare repetitions and execution order before inspecting
+outputs. Preserve run/replication identities, errors and all variants. Report
+constraint violations separately from runtime errors, timeouts and unexecuted
+code. Do not retry only the worse variant or revise expected answers afterward.
+Scale to additional projects only after this end-to-end pilot is reproducible.
+
 ## Product consequence
 
 A diagnostic should display an oracle disagreement together with the scope of
