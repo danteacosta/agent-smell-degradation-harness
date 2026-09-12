@@ -24,11 +24,16 @@ def run_smoke() -> dict:
     ]
     records = []
     for name, source, expected in controls:
-        result = codegen_sandbox.evaluate(source, tests)
+        # Exercise the parent's wall-clock timeout before the worker's fixed
+        # one-second CPU limit can terminate it with a different status.
+        timeout = 0.25 if name == "over_budget_loop" else 1.0
+        result = codegen_sandbox.evaluate(source, tests, timeout_seconds=timeout)
         records.append({
             "control": name, "expected_status": expected,
             "observed_status": result["status"],
             "matched": result["status"] == expected,
+            "timeout_seconds": timeout,
+            "worker_error": result.get("worker_error"),
             "source_sha256": hashlib.sha256(source.encode()).hexdigest(),
             "executed_cases": len(result.get("cases", [])),
             "safety_controls": result.get("safety_controls", {}),
