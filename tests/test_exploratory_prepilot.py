@@ -317,6 +317,7 @@ def test_preflight_resume_preserves_identity_and_rejects_changed_constraints(tmp
     directory = Path(str(output) + ".run")
     resumed = run_exploratory_prepilot(config, output, resume_run=directory, **args)
     assert resumed["run_id"] == first["run_id"]
+    assert resumed["started_at"] == first["started_at"]
     before = {p.name: p.read_bytes() for p in directory.iterdir()}
     constraints = json.loads(reference.read_text())
     constraints["records"][0]["text"] = "changed constraint"
@@ -390,6 +391,7 @@ def test_generation_resume_restores_complete_execution_without_duplicate_calls(
     run_directory = Path(f"{output}.run")
     receipt = next(run_directory.glob("execution-*.json"))
     receipt_before = receipt.read_bytes()
+    started_at = json.loads((run_directory / "run-manifest.json").read_text())["started_at"]
     assert sum(provider.calls for provider in providers.values()) == 3
     monkeypatch.setattr(runner.ExecutionReceipts, "load", original_load)
     result = run_exploratory_prepilot(
@@ -401,6 +403,7 @@ def test_generation_resume_restores_complete_execution_without_duplicate_calls(
         result["error_class"], result["recovery_block_reason"], result["cost"])
     assert result["artifact_count"] == 240
     assert result["judge_result_count"] == 288
+    assert result["started_at"] == started_at
     assert sum(provider.calls for provider in providers.values()) == 1296
     assert receipt.read_bytes() == receipt_before
     evidence = [json.loads(line) for line in

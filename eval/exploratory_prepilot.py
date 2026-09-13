@@ -648,11 +648,15 @@ def run_exploratory_prepilot(
                 expected = configuration.protocol_hashes["rubric_sha256"] if field == "rubric_sha256" else report[field]
                 if previous.get(field) != expected:
                     raise ExploratoryPrepilotError("resume manifest identity does not match")
+            if not isinstance(previous.get("started_at"), str):
+                raise ExploratoryPrepilotError("resume manifest has no original start timestamp")
+            report["started_at"] = previous["started_at"]
         _atomic_json_write(
             run_directory / "run-manifest.json",
             {
                 "schema_version": "exploratory-run-manifest/v1",
                 "run_id": run_id,
+                "started_at": report["started_at"],
                 "source_revision": source_revision,
                 "corpus_manifest_sha256": report["corpus_manifest_sha256"],
                 "configuration_sha256": report["configuration_sha256"],
