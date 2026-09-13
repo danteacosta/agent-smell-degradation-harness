@@ -252,12 +252,28 @@ fewer than two observed projects. Complete-case selection and very small project
 counts limit interpretation; the synthetic intervals are only calculation checks.
 No p-value, H1/H2 decision or change to the registered estimator is produced.
 
-Do not route this rehearsal through the legacy `eval.thesis_analysis` aggregator:
-its intent/task key collapses repetitions and its Boolean fallback cannot
-distinguish a missing arm. That historical path is not corrected or endorsed by
-this new, separate diagnostic. The new analyzer requires a planned inventory so
-missing observations remain visible. Source/oracle review and live qualification
-are still required before collecting real observations.
+The legacy `eval.thesis_analysis` and its shared binary-statistics consumers now
+use `protocol.paired_stats.group_binary_pairs`. Pair identity preserves available
+run, replication, project, workload, configuration, policy and provider/model
+dimensions. Old records may omit optional dimensions uniformly; mixed identity
+shapes, duplicate arms, missing arms and non-Boolean or incomplete outcomes are
+rejected instead of overwritten or interpreted as semantic failures. Empty thesis
+input produces no report. Historical H1/H2 field names remain for compatibility
+only: the output explicitly declares `legacy_binary_descriptive_only` and
+`confirmatory_eligible: false`. Its effect flags are descriptive heuristics,
+not hypothesis tests.
+
+The rehearsal continues to use the planned-inventory analyzer, now isolated in
+`label_plane.behavior_pairs` without file I/O, providers or source execution.
+This path can account for entirely absent planned observations; the legacy
+aggregator cannot infer an absent plan. Source/oracle review and live
+qualification remain required before collecting real observations.
+
+The verifier caches only the three shared review documents and six generation
+prompts after checking the complete inventory hashes. On the 36-episode fixture
+bundle, shared metadata content reads fall from 72 to 9; initial inventory
+hashing and all cross-artifact checks remain unchanged. A read-count regression
+checks this reduction; no wall-clock speedup is claimed.
 
 Verification: 35 focused tests passed for rehearsal, draft export and existing
 paired-statistics helpers. The CLI created and verified the full bundle. Tests

@@ -4,25 +4,24 @@ import json
 from pathlib import Path
 from typing import Any
 
+from protocol.paired_stats import group_binary_pairs
+
 
 def _load_episodes(path: Path) -> list[dict[str, Any]]:
     episodes: list[dict[str, Any]] = []
-    for line in path.read_text(encoding="utf-8").splitlines():
-        if line.strip():
-            episodes.append(json.loads(line))
+    with path.open(encoding="utf-8") as stream:
+        for line in stream:
+            if line.strip():
+                episodes.append(json.loads(line))
     return episodes
 
 
-def _paired_outcomes(episodes: list[dict[str, Any]]) -> dict[tuple[str, str], dict[str, bool]]:
-    outcomes: dict[tuple[str, str], dict[str, bool]] = {}
-    for episode in episodes:
-        key = (episode["intent_id"], episode["task_family"])
-        outcomes.setdefault(key, {})[episode["variant"]] = episode["oracle_passed"]
-    return outcomes
+def _paired_outcomes(episodes: list[dict[str, Any]]) -> dict[tuple, dict[str, bool]]:
+    return group_binary_pairs(episodes)
 
 
 def _compute_paired_degradation_rate(
-    outcomes: dict[tuple[str, str], dict[str, bool]],
+    outcomes: dict[tuple, dict[str, bool]],
 ) -> float:
     if not outcomes:
         return 0.0
@@ -71,6 +70,8 @@ def _per_intent_table(episodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 def analyze_episodes(episodes: list[dict[str, Any]]) -> dict[str, Any]:
+    if not episodes:
+        raise ValueError("empty episodes cannot establish a negative effect boundary")
     outcomes = _paired_outcomes(episodes)
     paired_rate = _compute_paired_degradation_rate(outcomes)
     per_intent = _per_intent_table(episodes)
@@ -83,6 +84,8 @@ def analyze_episodes(episodes: list[dict[str, Any]]) -> dict[str, Any]:
                 smell_types[smell_type] = smell_types.get(smell_type, 0) + 1
 
     return {
+        "analysis_scope": "legacy_binary_descriptive_only",
+        "confirmatory_eligible": False,
         "H1_paired_degradation": {
             "paired_degradation_rate": round(paired_rate, 4),
             "pair_count": len(outcomes),
@@ -109,7 +112,7 @@ def write_thesis_analysis(
 def main(argv: list[str] | None = None) -> None:
     import argparse
 
-    parser = argparse.ArgumentParser(description="Offline thesis hypothesis analysis")
+    parser = argparse.ArgumentParser(description="Legacy descriptive binary report; historical H1/H2 keys are not hypothesis tests")
     parser.add_argument("--episodes", required=True, help="Path to episodes JSONL")
     parser.add_argument(
         "--output",

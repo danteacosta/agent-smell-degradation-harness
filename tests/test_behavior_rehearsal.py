@@ -124,3 +124,31 @@ def test_consistent_hashes_cannot_hide_incomplete_or_contradictory_evidence(tmp_
     (path / "receipt.json").write_bytes(encode(receipt))
     with pytest.raises(ValueError):
         verify(path)
+
+
+def test_shared_metadata_is_read_once_after_inventory_hashing(tmp_path, monkeypatch):
+    from pathlib import Path
+    from collections import Counter
+    from label_plane.behavior_rehearsal import CONTROLS
+
+    output = tmp_path / "run"
+    rehearse(output)
+    text_reads, byte_reads = Counter(), Counter()
+    read_text, read_bytes = Path.read_text, Path.read_bytes
+
+    def text(path, *args, **kwargs):
+        text_reads[str(path)] += 1
+        return read_text(path, *args, **kwargs)
+
+    def raw(path, *args, **kwargs):
+        byte_reads[str(path)] += 1
+        return read_bytes(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "read_text", text)
+    monkeypatch.setattr(Path, "read_bytes", raw)
+    assert verify(output)["analysis_recomputed"] == 3
+    for intent in CONTROLS:
+        assert text_reads[str(output / "review" / (intent + ".json"))] == 1
+        for variant in ("clean", "defective"):
+            # One inventory hash read plus one reusable content read.
+            assert byte_reads[str(output / "generation" / intent / (variant + ".txt"))] == 2

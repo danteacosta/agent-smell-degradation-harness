@@ -138,15 +138,63 @@ def export_paired_stats(
     return report
 
 
+_PAIR_DIMENSIONS = (
+    "experiment_id", "run_id", "replication_id", "project_id", "workload_id",
+    "configuration_id", "policy",
+)
+
+
+def group_binary_pairs(episodes: Sequence[Mapping[str, Any]]) -> dict[tuple, dict[str, bool]]:
+    """Strict descriptive pairing for legacy binary reports, not H1/H2 inference.
+
+    Old records may omit identity dimensions uniformly. Duplicate identities or
+    missing arms cannot be recovered by guessing and are rejected. The planned
+    behavioral analyzer is the appropriate path for incomplete observations.
+    """
+    groups: dict[tuple, dict[str, bool]] = {}
+    identity_shape = None
+    for episode in episodes:
+        shape = tuple(field in episode for field in _PAIR_DIMENSIONS) + ("provider_meta" in episode,)
+        if identity_shape is not None and shape != identity_shape:
+            raise ValueError("mixed legacy/identified episode records")
+        identity_shape = shape
+        for field in ("intent_id", "task_family"):
+            if not isinstance(episode.get(field), str) or not episode[field]:
+                raise ValueError("intent_id and task_family must be nonempty strings")
+        dimensions = []
+        for field in _PAIR_DIMENSIONS:
+            value = episode.get(field)
+            if field in episode and (type(value) not in (str, int) or (not value and field != "project_id" and value != 0)):
+                raise ValueError("invalid episode identity dimension")
+            # Type tags prevent integer/string replication IDs from collapsing.
+            dimensions.append((type(value).__name__, value))
+        provider = episode.get("provider_meta", {})
+        if not isinstance(provider, Mapping):
+            raise ValueError("provider_meta must be an object")
+        provider_key = tuple(provider.get(f) for f in ("provider", "model"))
+        if any(v is not None and not isinstance(v, str) for v in provider_key):
+            raise ValueError("invalid provider/model identity")
+        variant, passed = episode.get("variant"), episode.get("oracle_passed")
+        if variant not in {"clean", "smelly"} or type(passed) is not bool:
+            raise ValueError("legacy pairing requires clean/smelly and Boolean outcomes")
+        if episode.get("behavior_status", "passed") not in {"passed", "failed"}:
+            raise ValueError("incomplete behavior requires the planned diagnostic analyzer")
+        key = (episode["intent_id"], episode["task_family"], *dimensions, *provider_key)
+        pair = groups.setdefault(key, {})
+        if variant in pair:
+            raise ValueError("duplicate episode identity; provide distinct replication IDs")
+        pair[variant] = passed
+    if any(set(pair) != {"clean", "smelly"} for pair in groups.values()):
+        raise ValueError("missing paired variant; use the planned diagnostic analyzer")
+    return groups
+
+
 def pair_degradation_outcomes(episodes: list[dict[str, Any]]) -> list[float]:
-    """Per intent×family pair: 1.0 if clean passes and smelly fails, else 0.0."""
-    pair_results: dict[tuple[str, str], dict[str, bool]] = {}
-    for ep in episodes:
-        key = (ep["intent_id"], ep["task_family"])
-        pair_results.setdefault(key, {})[ep["variant"]] = ep["oracle_passed"]
+    """Per complete identified pair: 1 when clean passes and smelly fails."""
+    pair_results = group_binary_pairs(episodes)
 
     outcomes: list[float] = []
     for results in pair_results.values():
-        degraded = bool(results.get("clean")) and not results.get("smelly")
+        degraded = results["clean"] and not results["smelly"]
         outcomes.append(1.0 if degraded else 0.0)
     return outcomes
