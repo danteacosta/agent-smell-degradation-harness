@@ -224,7 +224,7 @@ class OpenAICompatibleProvider:
         if client is None:
             from openai import OpenAI
 
-            client_kwargs: dict[str, Any] = {"api_key": api_key}
+            client_kwargs: dict[str, Any] = {"api_key": api_key, "max_retries": 0, "timeout": 60.0}
             if self.base_url is not None:
                 client_kwargs["base_url"] = self.base_url
             client = OpenAI(**client_kwargs)
@@ -408,7 +408,7 @@ class AnthropicProvider:
         from anthropic import Anthropic
 
         if client is None:
-            client = Anthropic(api_key=api_key)
+            client = Anthropic(api_key=api_key, max_retries=0, timeout=60.0)
         self._client = client
         self._model = model
         self._max_tokens = max_tokens

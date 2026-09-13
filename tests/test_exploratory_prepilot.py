@@ -303,3 +303,24 @@ def test_live_run_stops_on_substantive_completeness_before_artifact(tmp_path, mo
     assert report["artifact_count"] == 0
     assert report["judge_result_count"] == 0
     assert report["substantive_completeness"]["failed_stage"] == "interpretation"
+
+
+def test_preflight_resume_preserves_identity_and_rejects_changed_constraints(tmp_path, monkeypatch):
+    root, private, reference = _private_inputs(tmp_path)
+    revision = "b" * 40
+    config = _config(tmp_path, revision)
+    monkeypatch.setattr(runner, "_git_revision", lambda _: revision)
+    output = tmp_path / "report.json"
+    args = dict(private_corpus_path=private, reference_constraints_path=reference,
+                repository_root=root, dry_run=True)
+    first = run_exploratory_prepilot(config, output, **args)
+    directory = Path(str(output) + ".run")
+    resumed = run_exploratory_prepilot(config, output, resume_run=directory, **args)
+    assert resumed["run_id"] == first["run_id"]
+    before = {p.name: p.read_bytes() for p in directory.iterdir()}
+    constraints = json.loads(reference.read_text())
+    constraints["records"][0]["text"] = "changed constraint"
+    reference.write_text(json.dumps(constraints))
+    with pytest.raises(runner.ExploratoryPrepilotError, match="preserved"):
+        run_exploratory_prepilot(config, output, resume_run=directory, **args)
+    assert before == {p.name: p.read_bytes() for p in directory.iterdir()}

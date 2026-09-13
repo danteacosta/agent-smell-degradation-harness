@@ -20,6 +20,9 @@ from collections.abc import Mapping, Sequence
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from functools import wraps
+from inspect import signature
+from eval.run_ownership import own_run
 
 from agents.providers import Provider, ProviderRequest
 from agents.staged_runtime import SubstantiveCompletenessError
@@ -465,6 +468,28 @@ def _invoke_judge(
     return None, _safe_error(last_error) if last_error is not None else "ValueError"
 
 
+def _exclusive_run(function):
+    @wraps(function)
+    def guarded(*args, **kwargs):
+        bound = signature(function).bind(*args, **kwargs)
+        bound.apply_defaults()
+        options = bound.arguments
+        root = options["repository_root"] or Path(__file__).resolve().parents[1]
+        output = Path(options["output_path"])
+        _assert_private_output(output, root)
+        if output.is_symlink():
+            raise ExploratoryPrepilotError("output symlinks are not allowed")
+        resume = options["resume_run"]
+        directory = Path(resume) if resume is not None else Path(f"{output}.run")
+        _assert_private_output(directory, root)
+        if resume is None and output.exists():
+            raise ExploratoryPrepilotError("output already exists")
+        with own_run(directory, resume=resume is not None):
+            return function(*args, **kwargs)
+    return guarded
+
+
+@_exclusive_run
 def run_exploratory_prepilot(
     config_path: str | Path,
     output_path: str | Path,
@@ -499,6 +524,10 @@ def run_exploratory_prepilot(
             raise ExploratoryPrepilotError("resume configuration identity does not match")
 
     run_id = f"exploratory-prepilot-{datetime.now(UTC).strftime('%Y%m%dT%H%M%SZ')}"
+    if resume_run is not None:
+        if checkpoint.get("state") != "preflight_ready":
+            raise ExploratoryPrepilotError("only untouched preflight runs support automatic resume")
+        run_id = checkpoint["run_id"]
     run_directory = (
         Path(resume_run)
         if resume_run is not None
@@ -577,6 +606,13 @@ def run_exploratory_prepilot(
                 "preflight": preflight.to_dict(),
             }
         )
+        if resume_run is not None:
+            previous = json.loads((run_directory / "run-manifest.json").read_text())
+            for field in ("run_id", "source_revision", "corpus_manifest_sha256",
+                          "configuration_sha256", "rubric_sha256", "reference_constraints_sha256"):
+                expected = configuration.protocol_hashes["rubric_sha256"] if field == "rubric_sha256" else report[field]
+                if previous.get(field) != expected:
+                    raise ExploratoryPrepilotError("resume manifest identity does not match")
         _atomic_json_write(
             run_directory / "run-manifest.json",
             {
@@ -622,6 +658,10 @@ def run_exploratory_prepilot(
             report["state"] = "stopped_protocol_violation"
             report["error_class"] = "LiveConfirmationRequired"
         else:
+            _atomic_json_write(run_directory / "live-started.json", {
+                "run_id": run_id, "configuration_sha256": report["configuration_sha256"],
+                "recovery": "reconciliation_required_no_automatic_replay",
+            })
             ledger = CostLedger(
                 run_directory / "cost-ledger.jsonl",
                 configuration.cost_configuration(),
@@ -635,6 +675,7 @@ def run_exploratory_prepilot(
                     adapters[slot.id], _ = build_provider_from_slot(
                         slot, environ=dict(os.environ if environ is None else environ)
                     )
+            pairs_by_intent = {item["source_intent_id"]: item for item in pairs}
             joins = _plan_join_by_artifact(plan)
             artifacts: dict[str, dict[str, Any]] = {}
             generation_stage_count = 0
@@ -643,10 +684,7 @@ def run_exploratory_prepilot(
                 for artifact_id, join in joins.items():
                     if join.provider_slot_id != slot.id:
                         continue
-                    pair = next(
-                        item for item in pairs
-                        if item["source_intent_id"] == join.source_intent_id
-                    )
+                    pair = pairs_by_intent[join.source_intent_id]
                     variant = "clean" if join.variant_index == 0 else "smelly"
 
                     def stage_completion(
@@ -914,6 +952,8 @@ def run_exploratory_prepilot(
         report["state"] = "stopped_protocol_violation"
         report["error_class"] = _safe_error(error)
     finally:
+        if resume_run is not None and report["state"] == "stopped_protocol_violation" and ledger is None:
+            raise ExploratoryPrepilotError("resume rejected; original evidence preserved")
         if ledger is not None:
             _checkpoint(
                 run_directory,
