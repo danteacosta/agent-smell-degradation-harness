@@ -171,7 +171,9 @@ def test_default_live_agent_routes_completion_to_openai(monkeypatch):
     calls = []
 
     class FakeOpenAI:
-        def __init__(self, *, api_key):
+        def __init__(self, *, api_key, max_retries, timeout):
+            assert max_retries == 0
+            assert timeout == 60.0
             self.chat = SimpleNamespace(
                 completions=SimpleNamespace(create=self.create),
             )
@@ -204,7 +206,9 @@ def test_anthropic_provider_routes_completion_without_openai_fallback(monkeypatc
     calls = []
 
     class FakeAnthropic:
-        def __init__(self, *, api_key):
+        def __init__(self, *, api_key, max_retries, timeout):
+            assert max_retries == 0
+            assert timeout == 60.0
             self.messages = SimpleNamespace(create=self.create)
 
         def create(self, **kwargs):

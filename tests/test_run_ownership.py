@@ -6,6 +6,59 @@ import pytest
 from eval.run_ownership import own_run
 
 
+@pytest.mark.parametrize("nested", [False, True])
+def test_creation_flushes_path_before_entering_runner(tmp_path, monkeypatch, nested):
+    directory = tmp_path / "a" / "b" / "run" if nested else tmp_path / "run"
+    flushed = []
+    real_fsync = os.fsync
+
+    def record(fd):
+        flushed.append(os.fstat(fd).st_ino)
+        real_fsync(fd)
+
+    monkeypatch.setattr(os, "fsync", record)
+    with own_run(directory, resume=False):
+        expected = [directory, *directory.absolute().parents]
+        assert flushed == [path.stat().st_ino for path in expected]
+
+
+@pytest.mark.parametrize("fail_at", [1, 2, 3, 4])
+def test_creation_flush_error_blocks_runner_and_releases_lock(tmp_path, monkeypatch, fail_at):
+    directory = tmp_path / "a" / "b" / "run"
+    real_fsync = os.fsync
+    calls = 0
+
+    def fail(fd):
+        nonlocal calls
+        calls += 1
+        if calls == fail_at:
+            raise OSError("injected persistence failure")
+        real_fsync(fd)
+
+    monkeypatch.setattr(os, "fsync", fail)
+    with pytest.raises(OSError, match="persistence failure"):
+        with own_run(directory, resume=False):
+            pytest.fail("runner must not start after a persistence failure")
+    assert directory.is_dir()  # No cleanup that could destroy evidence.
+    monkeypatch.setattr(os, "fsync", real_fsync)
+    with own_run(directory, resume=True):
+        pass  # Failed entry released its descriptor and lock.
+
+
+def test_preflight_resume_must_retry_persistence_barrier(tmp_path, monkeypatch):
+    directory = tmp_path / "run"
+    with own_run(directory, resume=False):
+        pass
+
+    def fail(fd):
+        raise OSError("injected persistence failure")
+
+    monkeypatch.setattr(os, "fsync", fail)
+    with pytest.raises(OSError, match="persistence failure"):
+        with own_run(directory, resume=True):
+            pytest.fail("resume must not bypass persistence")
+
+
 def test_exclusive_claim_and_lock_released_after_process_death(tmp_path):
     directory = tmp_path / "run"
     with own_run(directory, resume=False):

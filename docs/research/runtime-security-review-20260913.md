@@ -50,9 +50,11 @@ qualification; no frozen experimental hash or historical evidence was rewritten.
 
 ## Dependencies and resource review
 
-The project pins ARP to a Git commit, but PyYAML, pytest, setuptools and optional
-provider SDK declarations use lower bounds rather than a complete transitive,
-hash-locked environment. CI installs editable development dependencies. Existing
+The project pins ARP to a Git commit and already provides `constraints.txt`,
+which pins PyYAML, pytest and several development dependencies. README installation
+commands consume it, but the evaluation CI's editable development install does not.
+Build tools and optional provider SDKs are not covered by that partial inventory;
+it is not a complete transitive, artifact-hash-locked environment. Existing
 qualification inventory checks help detect drift but do not substitute for a
 reviewed reproducible lock. No CVE database scan was completed; no claim that
 dependencies are vulnerability-free is made. Freeze the actual qualified
@@ -80,3 +82,22 @@ Peer-reviewed; provisional credibility 8/10 for foundational failure semantics.
 Bibliographic identity was located, but attempted full-text access failed; no
 paper-specific result is used to justify a scientific claim. The recovery
 counterexample and changes above are supported by inspected code and tests.
+
+## Follow-up: transport regressions and directory persistence
+
+The remote evaluation at `7873152` exposed two integration-test SDK doubles that
+did not accept the new retry and timeout arguments. Both now assert zero SDK
+retries and a 60-second transport timeout; production safeguards are unchanged.
+
+New runs and permitted preflight resumes flush the run directory and its ancestor
+chain before entering the runner. Existing paths are not durability receipts;
+resume must not bypass a previously failed barrier. Flush errors abort
+entry and release descriptors/locks without deleting evidence. This addresses
+a missing persistence barrier, not automatic recovery of remote operations.
+Ordering and injected-failure tests do not simulate power loss or qualify a
+particular filesystem, mount configuration, storage device or operating system.
+
+Implementation motivation: Pillai et al., *All File Systems Are Not Created
+Equal*, OSDI 2014 ([paper](https://www.usenix.org/system/files/conference/osdi14/osdi14-paper-pillai.pdf)).
+The study distinguishes application atomicity from persistence; our application
+of that distinction is an engineering inference, not evidence for H1/H2.
