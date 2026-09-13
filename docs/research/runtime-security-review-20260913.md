@@ -31,7 +31,7 @@ reconciliation is required. A crash before the first provider call may therefore
 produce a conservative false block. A crash after dispatch cannot be safely
 treated as proof that the provider did not execute.
 
-Post-call automatic resume is **not implemented**. No claim of exactly-once
+Full exploratory-workflow post-call automatic resume is **not implemented**. No claim of exactly-once
 provider execution is made. Existing raw evidence, ledger and checkpoint must
 be preserved. Do not remove markers to force a retry. Required next work:
 
@@ -101,3 +101,89 @@ Implementation motivation: Pillai et al., *All File Systems Are Not Created
 Equal*, OSDI 2014 ([paper](https://www.usenix.org/system/files/conference/osdi14/osdi14-paper-pillai.pdf)).
 The study distinguishes application atomicity from persistence; our application
 of that distinction is an engineering inference, not evidence for H1/H2.
+
+## Recoverable calls v1: response/cost boundary
+
+`eval.recoverable_calls.call_session` provides a separate private session for
+new, explicitly bound provider operations. It writes an immutable request intent,
+reserves cost, receives the response, durably records response/usage, and only then
+reconciles cost. On reopening, the existing ledger validates its hash chain and
+arithmetic. A durable response may finish a missing reconciliation locally.
+An already reconciled response is reused without a provider call or budget reset.
+
+Bindings include run, source, corpus, rubric, oracle, runtime configuration and
+pricing scope, plus provider/model, request digest, logical call ID and explicit
+attempt. Changed bindings, conflicting usage, partial receipts and unknown remote
+outcomes block reuse. Per-session thread serialization and directory-inode locks
+exclude competing writers. Same-UID tampering remains outside the threat model;
+checksums detect inconsistencies, not provenance authenticity.
+
+An ambiguous reservation without a durable response is never retried or erased.
+Reconcile provider response/billing evidence independently; absence of a bill
+alone does not prove that an operation was not executed. No manual override or
+deletion of an intent is supplied. Old evidence has no new receipts and is not
+silently migrated. The existing exploratory runner still refuses live resume:
+T1--T3 trace/checkpoint restoration must be integrated and qualified before that
+gate can change. Re-running a stage from cached text must not invent timestamps
+or turn offline trace reconstruction into online warning evidence.
+
+For an existing v1 session, this command reconciles durable response usage only;
+it constructs no provider and prints a bounded accounting report:
+
+```sh
+python -m eval.recoverable_calls --directory /private/run.calls \
+  --runtime-config /private/runtime.json --scope /private/frozen-scope.json
+```
+
+The scope must contain run_id, configuration_sha256, corpus_sha256,
+rubric_sha256, oracle_sha256, source_revision and pricing_sha256. API callers use
+`with call_session(path, cost_configuration, scope) as calls:` followed by
+`calls.complete(provider, request, call_id=stable_id, phase=phase, attempt=1)`.
+The caller remains responsible for source admission and provider authorization.
+
+## Global admission and resource supervision
+
+```sh
+python -m eval.collection_limits --root /private/shared-collection-slots \
+  --max-runs 1 --wall-seconds 3600 --memory-bytes 2147483648 \
+  --file-bytes 268435456 --open-files 128 -- COMMAND ARGUMENTS
+```
+
+All cooperating launchers must share the same root and fixed capacity. Separate
+processes acquire bounded slots; crashes release them. The supervisor enforces a
+wall deadline and kills the process group, including residual children after the
+leader exits. Child address space, CPU time, file size and descriptor counts are
+bounded before exec. Session receipts additionally cap call inventory, response
+bytes, evidence quota and further dispatch after the session deadline. These are
+not sandbox controls against a malicious child that escapes its process group.
+
+Address-space limits apply per process, not to the aggregate descendant tree.
+For aggregate memory, task count and CPU quota, supply `--cgroup` referencing a
+delegated cgroup v2 with the exact configured memory.max, memory.swap.max=0,
+pids.max and cpu.max. The launcher verifies policy and joins before exec; it
+never changes existing cgroup limits. Host delegation and real OOM/fork/CPU
+qualification remain required. Without a cgroup, no aggregate-RAM guarantee is
+claimed. This is a launcher for a single-threaded supervisor, not a server API.
+
+## Hashed dependency bundle and advisory gate
+
+`scripts/dependency_bundle.py` resolves the runtime, dev, live and build-tool
+closure in a clean Linux x86_64 CPython 3.12 environment. Registry wheels are
+pinned with SHA-256; ARP is built from its pinned Git revision without isolated
+unlocked build dependencies, then separately hash-bound. Once lock files exist,
+the workflow consumes them rather than resolving new versions. No historical
+qualification inventory is overwritten. Wheel artifacts must be archived beyond
+the CI retention window before experiment freeze.
+
+The dedicated dependency-audit workflow verifies offline hash-enforced install,
+pip check and the full test suite, then runs pip-audit against exact registry
+versions. The scanner has an isolated, recorded tool inventory. VCS-only ARP and
+the application are explicitly outside registry advisory coverage and require
+source review. A failed scanner/network call is not a clean result; findings
+fail the gate and are retained in audit.json. No automatic fix/ignore rule is
+used. OS/kernel, native system packages, action supply chain and undisclosed
+vulnerabilities are outside this package scan.
+
+Implementation references: [pip repeatable installs](https://pip.pypa.io/en/stable/topics/repeatable-installs/)
+and [PyPA pip-audit](https://github.com/pypa/pip-audit). These are implementation
+documentation, not scientific evidence for H1/H2.

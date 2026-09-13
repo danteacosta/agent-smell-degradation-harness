@@ -970,6 +970,7 @@ class CostLedger:
         configuration: CostConfiguration,
         *,
         preflight: PreflightReport | None = None,
+        recovery_records: Mapping[tuple[str, int], Mapping[str, Any]] | None = None,
     ) -> None:
         computed_preflight = configuration.preflight()
         if (
@@ -997,6 +998,7 @@ class CostLedger:
         ) if self.preflight.passed else 0
         self._state = self.preflight.budget_status if not self.preflight.passed else "ready"
         self._stop_reason = self.preflight.stop_reason if not self.preflight.passed else None
+        self._recovery_records = recovery_records or {}
         self._load_or_initialize()
 
     @property
@@ -1032,6 +1034,11 @@ class CostLedger:
                     raise DurabilityError(
                         "durability ready marker is invalid for a blocked ledger"
                     )
+                for key, reservation in tuple(self._pending.items()):
+                    record = self._recovery_records.get(key)
+                    if record is not None:
+                        self.reconcile_response(reservation, record["metadata"].get("usage"),
+                                                metadata=record["metadata"])
                 if self._pending:
                     self._stop(STOPPED_COST_UNVERIFIED, "ambiguous_in_flight")
                     self._pending.clear()
@@ -2139,10 +2146,11 @@ def _clear_provider_metadata(provider: Any) -> bool:
 class BudgetedProvider:
     """Provider adapter that enforces reserve-before-call and reconcile-after-call."""
 
-    def __init__(self, provider: Any, ledger: CostLedger) -> None:
+    def __init__(self, provider: Any, ledger: CostLedger, *, response_sink=None) -> None:
         self._provider = provider
         self._ledger = ledger
         self.name = str(getattr(provider, "name", ""))
+        self._response_sink = response_sink
 
     def complete(
         self,
@@ -2204,6 +2212,8 @@ class BudgetedProvider:
             usage = metadata.get("usage")
         except _MetadataProblem:
             self._ledger._stop_attempt_cost_unverified(reservation, "metadata_access_failed")
+        if self._response_sink is not None:
+            self._response_sink(response, metadata)
         self._ledger.reconcile_response(reservation, usage, metadata=metadata)
         return response
 
