@@ -23,6 +23,10 @@ from typing import Any
 from functools import wraps
 from inspect import signature
 from eval.run_ownership import own_run
+from eval.recoverable_calls import (
+    RecoveryBlocked, call_session, digest, durable_create, read_record,
+)
+from eval.execution_receipts import ExecutionReceipts
 
 from agents.providers import Provider, ProviderRequest
 from agents.staged_runtime import SubstantiveCompletenessError
@@ -371,6 +375,7 @@ def _build_report_base(
         "incomplete_artifact_count": 0,
         "error_class": None,
         "cost": None,
+        "recovery_block_reason": None,
         "substantive_completeness": {
             "required_fields": {
                 "T1": ["constraints", "atomic_obligations"],
@@ -525,8 +530,10 @@ def run_exploratory_prepilot(
 
     run_id = f"exploratory-prepilot-{datetime.now(UTC).strftime('%Y%m%dT%H%M%SZ')}"
     if resume_run is not None:
-        if checkpoint.get("state") != "preflight_ready":
-            raise ExploratoryPrepilotError("only untouched preflight runs support automatic resume")
+        if checkpoint.get("state") not in {"preflight_ready", "generating"}:
+            raise ExploratoryPrepilotError(
+                "automatic resume is limited to preflight or generation with durable receipts"
+            )
         run_id = checkpoint["run_id"]
     run_directory = (
         Path(resume_run)
@@ -545,10 +552,12 @@ def run_exploratory_prepilot(
     )
     report["started_at"] = datetime.now(UTC).isoformat()
     ledger: CostLedger | None = None
+    calls_context = None
     incomplete_episode_ids: set[str] = set()
     incomplete_artifact_ids: set[str] = set()
     completed_artifact_count = 0
     completed_judge_count = 0
+    active_phase = "preflight"
 
     try:
         if not _source_revision_is_compatible(
@@ -566,11 +575,37 @@ def run_exploratory_prepilot(
         pairs = _record_pairs(private_records, redacted_join)
         private_constraints = load_reference_constraints(reference_constraints_path)
         constraints_by_intent = _reference_map(private_constraints)
+        plan_nonce_path = run_directory / "plan-nonce.json"
+        plan_binding = {
+            "schema": "exploratory-plan-nonce/v1", "run_id": run_id,
+            "configuration_sha256": report["configuration_sha256"],
+            "corpus_sha256": _sha256_text(_canonical_json(frozen_manifest)),
+            "reference_constraints_sha256": _sha256_text(_canonical_json([
+                {"source_intent_id": item.source_intent_id,
+                 "constraint_id": item.constraint_id,
+                 "text_sha256": _sha256_text(item.text)}
+                for item in private_constraints
+            ])),
+        }
+        plan_nonce = None
+        if resume_run is not None:
+            nonce_record = read_record(plan_nonce_path, 4096)
+            if {key: nonce_record.get(key) for key in plan_binding} != plan_binding:
+                raise ExploratoryPrepilotError("resume call-plan identity does not match")
+            try:
+                plan_nonce = bytes.fromhex(nonce_record["run_nonce_hex"])
+            except (KeyError, TypeError, ValueError):
+                raise ExploratoryPrepilotError("resume call-plan nonce is invalid") from None
         plan = build_exploratory_call_plan(
             pairs,
             _provider_plan_slots(configuration),
             private_constraints,
+            run_nonce=plan_nonce,
         )
+        if resume_run is None:
+            durable_create(plan_nonce_path, {
+                **plan_binding, "run_nonce_hex": plan._run_nonce.hex(),
+            })
         if set(constraints_by_intent) != {
             str(pair["source_intent_id"]) for pair in pairs
         }:
@@ -637,18 +672,19 @@ def run_exploratory_prepilot(
                 },
             },
         )
-        _checkpoint(
-            run_directory,
-            run_id=run_id,
-            state="preflight_ready" if preflight.passed else "stopped_budget_exhausted",
-            source_revision=source_revision,
-            corpus_manifest_sha256=report["corpus_manifest_sha256"],
-            configuration_sha256=report["configuration_sha256"],
-            rubric_sha256=configuration.protocol_hashes["rubric_sha256"],
-            ledger_head_hash=None,
-            completed_artifact_count=0,
-            completed_judge_count=0,
-        )
+        if resume_run is None:
+            _checkpoint(
+                run_directory,
+                run_id=run_id,
+                state="preflight_ready" if preflight.passed else "stopped_budget_exhausted",
+                source_revision=source_revision,
+                corpus_manifest_sha256=report["corpus_manifest_sha256"],
+                configuration_sha256=report["configuration_sha256"],
+                rubric_sha256=configuration.protocol_hashes["rubric_sha256"],
+                ledger_head_hash=None,
+                completed_artifact_count=0,
+                completed_judge_count=0,
+            )
         if not preflight.passed:
             report["state"] = "stopped_budget_exhausted"
             report["error_class"] = "BudgetPreflightError"
@@ -660,13 +696,24 @@ def run_exploratory_prepilot(
         else:
             _atomic_json_write(run_directory / "live-started.json", {
                 "run_id": run_id, "configuration_sha256": report["configuration_sha256"],
-                "recovery": "reconciliation_required_no_automatic_replay",
+                "recovery": "recoverable_calls_and_execution_receipts_v1",
             })
-            ledger = CostLedger(
-                run_directory / "cost-ledger.jsonl",
-                configuration.cost_configuration(),
-                preflight=preflight,
+            recovery_scope = {
+                "run_id": run_id,
+                "configuration_sha256": report["configuration_sha256"],
+                "corpus_sha256": report["corpus_manifest_sha256"],
+                "rubric_sha256": configuration.protocol_hashes["rubric_sha256"],
+                "oracle_sha256": report["reference_constraints_sha256"],
+                "source_revision": str(source_revision),
+                "pricing_sha256": configuration.cost_configuration().configuration_sha256,
+            }
+            pending_calls_context = call_session(
+                run_directory / "calls", configuration.cost_configuration(), recovery_scope
             )
+            calls = pending_calls_context.__enter__()
+            calls_context = pending_calls_context
+            ledger = calls.ledger
+            execution_receipts = ExecutionReceipts(run_directory, recovery_scope, ledger)
             adapters: dict[str, Provider] = {}
             for slot in configuration.providers:
                 if provider_adapters is not None and slot.id in provider_adapters:
@@ -677,15 +724,33 @@ def run_exploratory_prepilot(
                     )
             pairs_by_intent = {item["source_intent_id"]: item for item in pairs}
             joins = _plan_join_by_artifact(plan)
+            execution_receipts.validate_inventory(joins)
             artifacts: dict[str, dict[str, Any]] = {}
             generation_stage_count = 0
+            active_phase = "generation"
+            _checkpoint(
+                run_directory, run_id=run_id, state="generating",
+                source_revision=source_revision,
+                corpus_manifest_sha256=report["corpus_manifest_sha256"],
+                configuration_sha256=report["configuration_sha256"],
+                rubric_sha256=configuration.protocol_hashes["rubric_sha256"],
+                ledger_head_hash=ledger.ledger_head_hash,
+                completed_artifact_count=0, completed_judge_count=0,
+            )
             for slot in configuration.providers:
-                budgeted = budgeted_provider(adapters[slot.id], ledger)
                 for artifact_id, join in joins.items():
                     if join.provider_slot_id != slot.id:
                         continue
                     pair = pairs_by_intent[join.source_intent_id]
                     variant = "clean" if join.variant_index == 0 else "smelly"
+                    execution_binding = execution_receipts.binding(
+                        artifact_id=str(artifact_id), episode_id=str(join.episode_id),
+                        base_task_id=str(join.base_task_id), provider_slot_id=str(slot.id),
+                        provider=str(adapters[slot.id].name), model=str(slot.model),
+                        model_version=str(slot.model_version),
+                        pair=pair, variant=variant, task_family=configuration.task_family,
+                    )
+                    restored_execution = execution_receipts.load(execution_binding)
 
                     def stage_completion(
                         request: ProviderRequest,
@@ -696,12 +761,16 @@ def run_exploratory_prepilot(
                         _slot_id: str = slot.id,
                     ) -> str:
                         phase = "generation.artifact" if stage == "artifact" else f"generation.{stage}"
-                        response = budgeted.complete(
-                            request,
+                        response = calls.complete(
+                            adapters[_slot_id], request,
                             call_id=f"{_artifact_id}:{phase}",
                             phase=phase,
                             attempt=attempt,
                         )
+                        if calls.last_replayed:
+                            raise RecoveryBlocked(
+                                "a stage response exists without a complete T1--T3 execution receipt"
+                            )
                         _append_private_evidence(
                             evidence_path,
                             {
@@ -716,26 +785,28 @@ def run_exploratory_prepilot(
                         )
                         return response
 
-                    agent = RuntimeCheckpointAgent.from_provider(
-                        budgeted,
-                        model=slot.model,
-                        model_version=slot.model_version,
-                        context_manager=NoCompactionManager(),
-                        stage_completion=stage_completion,
-                        max_stage_attempts=2,
-                        stage_output_tokens={
-                            "T1": configuration.token_bounds["generation.T1"].output_tokens,
-                            "T2": configuration.token_bounds["generation.T2"].output_tokens,
-                            "artifact": configuration.token_bounds["generation.artifact"].output_tokens,
-                        },
-                    )
                     try:
-                        execution = agent.execute_with_checkpoints(
-                            pair,
-                            variant=variant,
-                            task_family=configuration.task_family,
-                        )
-                    except (BudgetExhaustedError, CostUnverifiedError, DurabilityError):
+                        if restored_execution is not None:
+                            execution = restored_execution
+                        else:
+                            agent = RuntimeCheckpointAgent.from_provider(
+                                adapters[slot.id], model=slot.model,
+                                model_version=slot.model_version,
+                                context_manager=NoCompactionManager(),
+                                stage_completion=stage_completion,
+                                max_stage_attempts=2,
+                                stage_output_tokens={
+                                    "T1": configuration.token_bounds["generation.T1"].output_tokens,
+                                    "T2": configuration.token_bounds["generation.T2"].output_tokens,
+                                    "artifact": configuration.token_bounds["generation.artifact"].output_tokens,
+                                },
+                            )
+                            execution = agent.execute_with_checkpoints(
+                                pair, variant=variant,
+                                task_family=configuration.task_family,
+                            )
+                            execution_receipts.save(execution_binding, execution)
+                    except (BudgetExhaustedError, CostUnverifiedError, DurabilityError, RecoveryBlocked):
                         raise
                     except SubstantiveCompletenessError as error:
                         incomplete_episode_ids.add(str(join.episode_id))
@@ -814,7 +885,11 @@ def run_exploratory_prepilot(
                         provider_slot_id=str(slot.id),
                         execution=execution,
                     )
-                    _append_private_evidence(evidence_path, context_evidence)
+                    # A restored execution is itself the durable source of its
+                    # context events. Re-appending JSONL evidence would create
+                    # duplicates if the previous process died after this append.
+                    if restored_execution is None:
+                        _append_private_evidence(evidence_path, context_evidence)
                     _accumulate_context_summary(
                         report["context_management"],
                         context_evidence["summary"],
@@ -845,8 +920,28 @@ def run_exploratory_prepilot(
                 "incomplete_generation",
                 "incomplete_substantive_evidence",
             }:
+                _checkpoint(
+                    run_directory, run_id=run_id, state="generation_complete",
+                    source_revision=source_revision,
+                    corpus_manifest_sha256=report["corpus_manifest_sha256"],
+                    configuration_sha256=report["configuration_sha256"],
+                    rubric_sha256=configuration.protocol_hashes["rubric_sha256"],
+                    ledger_head_hash=ledger.ledger_head_hash,
+                    completed_artifact_count=len(artifacts), completed_judge_count=0,
+                )
+                active_phase = "judging"
+                class SessionBudgeted:
+                    def __init__(self, provider):
+                        self.provider = provider
+
+                    def complete(self, request, *, call_id, phase, attempt=None):
+                        return calls.complete(
+                            self.provider, request, call_id=call_id,
+                            phase=phase, attempt=attempt or 1,
+                        )
+
                 judge_adapters = {
-                    slot.id: budgeted_provider(adapters[slot.id], ledger)
+                    slot.id: SessionBudgeted(adapters[slot.id])
                     for slot in configuration.providers
                 }
                 parsed_by_occurrence: dict[str, dict[str, Any]] = {}
@@ -945,12 +1040,20 @@ def run_exploratory_prepilot(
     except (BudgetExhaustedError,):
         report["state"] = "stopped_budget_exhausted"
         report["error_class"] = "BudgetExhaustedError"
+    except RecoveryBlocked as error:
+        report["state"] = "stopped_cost_unverified"
+        report["error_class"] = "RecoveryBlocked"
+        report["recovery_block_reason"] = str(error)
     except (CostUnverifiedError, AmbiguousInFlightError, DurabilityError):
         report["state"] = "stopped_cost_unverified"
         report["error_class"] = "CostUnverifiedError"
     except (CorpusIntakeError, ProviderRuntimeConfigError, ProtocolHashError, ExploratoryPrepilotError, OSError, ValueError) as error:
         report["state"] = "stopped_protocol_violation"
         report["error_class"] = _safe_error(error)
+    except KeyboardInterrupt:
+        report["state"] = "generating" if active_phase == "generation" else "stopped_protocol_violation"
+        report["error_class"] = "KeyboardInterrupt"
+        raise
     finally:
         if resume_run is not None and report["state"] == "stopped_protocol_violation" and ledger is None:
             raise ExploratoryPrepilotError("resume rejected; original evidence preserved")
@@ -969,6 +1072,8 @@ def run_exploratory_prepilot(
             )
         if ledger is not None and report["cost"] is None:
             report["cost"] = ledger.report()
+        if calls_context is not None:
+            calls_context.__exit__(None, None, None)
         report["finished_at"] = datetime.now(UTC).isoformat()
         report["status"] = report["state"]
         _atomic_json_write(run_directory / "report.json", report)

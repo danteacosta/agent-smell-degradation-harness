@@ -25,25 +25,18 @@ rewritten. No controls were removed to execute as root.
 
 ## Honest recovery boundary
 
-Automatic recovery supports only a preflight with no live-start marker, ledger
-or raw evidence. Before live initialization, a durable marker records that
-reconciliation is required. A crash before the first provider call may therefore
-produce a conservative false block. A crash after dispatch cannot be safely
-treated as proof that the provider did not execute.
+Automatic recovery now covers preflight and generation. Before provider dispatch,
+the runner creates a durable call intent. After receipt, it persists response and
+usage before reconciling cost. A complete artifact then receives an immutable
+execution receipt containing the original T1--T3 trace. Resume validates all
+bindings and restores only those complete executions.
 
-Full exploratory-workflow post-call automatic resume is **not implemented**. No claim of exactly-once
-provider execution is made. Existing raw evidence, ledger and checkpoint must
-be preserved. Do not remove markers to force a retry. Required next work:
-
-1. Reconcile each ledger reservation with durable response and provider billing
-   evidence, retaining ambiguous outcomes as unresolved.
-2. Persist and hash validated stage outputs before advancing the scheduler;
-   replay completed stages locally and skip only fully verified operations.
-3. Bind the recovery inventory to provider/model, input/configuration hashes,
-   corpus, rubric, source revision and price snapshot.
-4. Qualify crashes before dispatch, after remote acceptance, after response
-   receipt, after evidence fsync and before checkpoint commit. Provider-side
-   idempotency must be verified for the actual API before claiming deduplication.
+No claim of provider-side exactly-once execution is made. A crash after remote
+acceptance but before durable response receipt remains ambiguous and blocks. A
+durable response without a complete execution receipt also blocks because its
+original runtime timestamps cannot be reconstructed. Existing raw evidence,
+ledger and checkpoint must be preserved; do not remove markers to force retry.
+Judge-phase recovery and real storage/power-loss qualification remain future work.
 
 Changing transport behavior requires a new reviewed runtime configuration and
 qualification; no frozen experimental hash or historical evidence was rewritten.
@@ -126,10 +119,21 @@ An ambiguous reservation without a durable response is never retried or erased.
 Reconcile provider response/billing evidence independently; absence of a bill
 alone does not prove that an operation was not executed. No manual override or
 deletion of an intent is supplied. Old evidence has no new receipts and is not
-silently migrated. The existing exploratory runner still refuses live resume:
-T1--T3 trace/checkpoint restoration must be integrated and qualified before that
-gate can change. Re-running a stage from cached text must not invent timestamps
-or turn offline trace reconstruction into online warning evidence.
+silently migrated. The exploratory runner now resumes the generation phase only
+when complete `execution-receipt/v1` records restore the original runtime-native
+T1--T3 payloads, timestamps, context events, artifact and provider metadata.
+Each receipt is bound to the run/configuration/corpus/rubric/oracle/pricing/source
+scope, pair, variant, episode, artifact, provider/model/version and an existing
+cost-ledger boundary. Completed artifacts are skipped without provider calls;
+unexpected receipts fail closed.
+
+A cached stage response without a complete execution receipt still blocks:
+re-running that stage would invent new timestamps and turn reconstruction into
+false online warning evidence. Resume is deliberately limited to preflight and
+generation. The runner writes a `generation_complete` barrier before judging;
+judge-phase recovery remains disabled until consolidated judge-result receipts
+are implemented. This preserves feature-plane T1--T3 evidence without claiming
+full label-plane workflow recovery or provider-side exactly-once execution.
 
 For an existing v1 session, this command reconciles durable response usage only;
 it constructs no provider and prints a bounded accounting report:

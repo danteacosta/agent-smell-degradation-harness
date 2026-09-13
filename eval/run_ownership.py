@@ -1,6 +1,7 @@
 """Single-host ownership and conservative recovery for private run directories."""
 from contextlib import contextmanager
 from pathlib import Path
+import json
 import os
 import stat
 
@@ -24,12 +25,25 @@ def own_run(directory: Path, *, resume: bool):
             fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
             raise ValueError("run directory is already in use") from None
-        if any(item.is_symlink() or not item.is_file() for item in directory.iterdir()):
+        entries = tuple(directory.iterdir())
+        if any(item.is_symlink() for item in entries):
+            raise ValueError("run directory contains a symlink or unexpected entry")
+        unexpected_directories = [item for item in entries if item.is_dir() and item.name != "calls"]
+        if unexpected_directories or any(not item.is_file() and item.name != "calls" for item in entries):
             raise ValueError("run directory contains a symlink or unexpected entry")
         if resume and any((directory / name).exists() for name in (
             "live-started.json", "cost-ledger.jsonl", "raw-evidence.jsonl"
         )):
-            raise ValueError("live recovery requires reconciliation; automatic replay is disabled")
+            marker = directory / "live-started.json"
+            try:
+                live = json.loads(marker.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                raise ValueError("live recovery reconciliation marker is missing or invalid") from None
+            if live.get("recovery") != "recoverable_calls_and_execution_receipts_v1":
+                raise ValueError("live recovery requires the current reconciliation protocol")
+            calls = directory / "calls"
+            if not calls.is_dir() or calls.is_symlink():
+                raise ValueError("live recovery call evidence is missing or invalid")
         # Persist the path before handing control to the runner. flock alone
         # only excludes writers; all flush failures must prevent entry.
         os.fsync(fd)
