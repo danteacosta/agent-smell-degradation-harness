@@ -54,3 +54,13 @@ def test_write_dissertation_bundle_writes_json_and_summary(tmp_path):
     assert output_path.exists()
     assert summary_path.exists()
     assert bundle["artifact_paths"]["mitigation_report"] == "eval/mitigation_report.json"
+
+
+def test_bundle_reuses_analysis_without_rereading_episode_jsonl(tmp_path, monkeypatch):
+    original = Path.read_text
+    def guarded_read(path, *args, **kwargs):
+        assert not (path.name == "episodes.jsonl" and path.parent.name == "smell_blind")
+        return original(path, *args, **kwargs)
+    monkeypatch.setattr(Path, "read_text", guarded_read)
+    bundle = build_dissertation_bundle(Path(__file__).resolve().parents[1], tmp_path / "work")
+    assert bundle["paired_stats"]["schema_version"] == "binary-descriptive/v2"

@@ -292,3 +292,43 @@ No automatic semantic approval or blocking follows from this reference audit.
 Conceptual basis: [Barr et al., TSE 2015](https://doi.org/10.1109/TSE.2014.2372785)
 distinguishes test oracles from ground truth. The partial candidates and workflow
 above are our design decisions, not an intervention validated by that survey.
+
+## Binary report v2 migration (2026-09-13)
+
+This supersedes the earlier compatibility-field note above. New
+`thesis-descriptive/v2` output replaces `H1_paired_degradation` with
+`paired_binary_summary`, `effect_detected` within that object with
+`observed_degradation`, and `H2_by_smell_type` with
+`smelly_failures_by_smell_type`. The `negative_boundary` heuristic is removed:
+a small observed degradation fraction is not evidence of equivalence or absence
+of an effect. Historical artifacts remain unchanged; external consumers must
+migrate by schema version. These names concern the legacy thesis table exporter,
+not every similarly named field in the synthetic diagnostic report.
+
+The old `proportion_diff_ci` field was incorrect: it bootstrapped one-directional
+degradation indicators while labeling them as uncertainty of clean minus smelly
+pass rates. In the reverse control, it reported a difference of -1 with [0, 0].
+It is removed, not silently reassigned. The compatibility helper retains scalar
+rates and optional degradation frequency but cannot infer cluster identity.
+
+The episode-aware summary reports degradation, improvement and signed pooled
+difference separately. Its additional `project_mean_difference` gives each
+observed project equal weight; `project_mean_difference_ci` resamples projects
+with 2,000 fixed-seed draws. This interval belongs to the project-weighted
+estimand, not the pooled difference. Missing project identity or fewer than two
+projects suppresses interval output. Few clusters, selection and unreviewed
+labels remain limitations; no nominal coverage guarantee or confirmatory
+authorization is implied. The planned-inventory analyzer remains required for
+entirely absent observations. The existing ordinal synthetic report is unchanged
+and does not become a project-level confirmatory analysis through this fix.
+
+Packaging now reuses the already computed binary summary, avoiding one full
+episode JSONL reread, reparsing, regrouping and repeated uncertainty calculation.
+A regression forbids that reread. No wall-clock performance claim is made.
+
+Tests assert signed positive/null/reverse outcomes, unequal project sizes,
+order invariance, missing/insufficient clusters and removal of misleading
+scientific field names. This targets missing behavioral assertions rather than
+coverage alone, consistent with the bounded testing motivation in Maton et al.,
+ESEM 2025, DOI 10.1109/ESEM64174.2025.00063 (already in the literature matrix).
+The paper does not validate these estimators or this implementation.

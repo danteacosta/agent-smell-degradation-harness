@@ -26,7 +26,8 @@ def test_build_analysis_report_shape(tmp_path):
 
     assert report["observability_gate_passed"] is True
     assert report["paired_stats"]["proportion_diff"] > 0.0
-    assert "proportion_diff_ci" in report["paired_stats"]
+    assert "proportion_diff_ci" not in report["paired_stats"]
+    assert report["paired_stats"]["confirmatory_eligible"] is False
 
 
 def test_write_analysis_report_creates_json(tmp_path):

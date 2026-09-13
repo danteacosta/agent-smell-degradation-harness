@@ -6,7 +6,6 @@ from typing import Any
 from eval.analysis_report import build_analysis_report
 from mitigation.tradeoff import build_mitigation_report
 from pairs.loader import list_intent_ids, load_all_pairs
-from protocol.paired_stats import export_paired_stats, pair_degradation_outcomes
 from protocol.reliability import synthetic_agreement_demo
 
 
@@ -56,14 +55,7 @@ def build_dissertation_bundle(repo_root: Path, work_dir: Path) -> dict[str, Any]
     analysis = build_analysis_report(work_dir / "analysis")
     mitigation = build_mitigation_report(work_dir / "mitigation")
 
-    pair_outcomes = pair_degradation_outcomes(
-        _load_smell_blind_episodes(work_dir / "analysis")
-    )
-    paired_stats = export_paired_stats(
-        analysis["smell_blind"]["oracle_pass_rate_clean"],
-        analysis["smell_blind"]["oracle_pass_rate_smelly"],
-        pair_outcomes=pair_outcomes,
-    )
+    paired_stats = analysis["paired_stats"]
 
     design_spec = (
         repo_root
@@ -101,19 +93,6 @@ def build_dissertation_bundle(repo_root: Path, work_dir: Path) -> dict[str, Any]
             "network_required": False,
         },
     }
-
-
-def _load_smell_blind_episodes(analysis_work_dir: Path) -> list[dict[str, Any]]:
-    import json
-
-    episodes_path = analysis_work_dir / "smell_blind" / "episodes.jsonl"
-    if not episodes_path.exists():
-        return []
-    return [
-        json.loads(line)
-        for line in episodes_path.read_text(encoding="utf-8").splitlines()
-        if line.strip()
-    ]
 
 
 def render_bundle_summary(bundle: dict[str, Any]) -> str:

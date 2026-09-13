@@ -125,16 +125,26 @@ def export_paired_stats(
     smelly_pass_rate: float,
     pair_outcomes: list[float] | None = None,
 ) -> dict[str, Any]:
-    """Build paired-stats dict for analysis reports."""
-    diff = paired_proportion_diff(clean_pass_rate, smelly_pass_rate)
+    """Compatibility helper: descriptive rates only; identities are unavailable.
+
+    Binary degradation indicators cannot reconstruct signed pair differences.
+    Use summarize_binary_pairs for project-aware diagnostic uncertainty.
+    """
     report: dict[str, Any] = {
+        "schema_version": "binary-descriptive/v2",
+        "analysis_scope": "descriptive_only",
+        "confirmatory_eligible": False,
         "clean_pass_rate": clean_pass_rate,
         "smelly_pass_rate": smelly_pass_rate,
-        "proportion_diff": diff,
+        "proportion_diff": paired_proportion_diff(clean_pass_rate, smelly_pass_rate),
+        "uncertainty_status": "unavailable_without_project_identity",
     }
     if pair_outcomes is not None:
-        low, high = bootstrap_ci(pair_outcomes)
-        report["proportion_diff_ci"] = {"low": low, "high": high}
+        if any(type(v) not in (int, float) or v not in (0, 1) for v in pair_outcomes):
+            raise ValueError("degradation indicators must be zero or one")
+        report["paired_degradation_rate"] = (
+            sum(pair_outcomes) / len(pair_outcomes) if pair_outcomes else None
+        )
     return report
 
 
@@ -198,3 +208,38 @@ def pair_degradation_outcomes(episodes: list[dict[str, Any]]) -> list[float]:
         degraded = results["clean"] and not results["smelly"]
         outcomes.append(1.0 if degraded else 0.0)
     return outcomes
+
+
+def summarize_binary_pairs(episodes: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+    """Signed paired contrasts, with separate equal-project diagnostic summary."""
+    pairs = group_binary_pairs(episodes)
+    if not pairs:
+        raise ValueError("no complete binary pairs")
+    n = len(pairs)
+    clean = sum(p["clean"] for p in pairs.values()) / n
+    smelly = sum(p["smelly"] for p in pairs.values()) / n
+    deltas = [int(p["clean"]) - int(p["smelly"]) for p in pairs.values()]
+    report = export_paired_stats(clean, smelly)
+    report.update(pair_count=n, paired_degradation_rate=sum(d > 0 for d in deltas) / n,
+                  paired_improvement_rate=sum(d < 0 for d in deltas) / n)
+    # group_binary_pairs type-tags optional identity dimensions.
+    project_index = 2 + _PAIR_DIMENSIONS.index("project_id")
+    clusters: dict[str, list[float]] = {}
+    for key, delta in zip(pairs, deltas):
+        kind, project = key[project_index]
+        if kind != "str" or not project.strip():
+            report["uncertainty_status"] = "unavailable_without_project_identity"
+            return report
+        clusters.setdefault(project, []).append(delta)
+    means = _cluster_means(clusters)
+    report["project_count"] = len(means)
+    report["project_mean_difference"] = sum(means) / len(means)
+    if len(means) < 2:
+        report["uncertainty_status"] = "unavailable_fewer_than_two_projects"
+    else:
+        low, high = clustered_bootstrap_ci(clusters)
+        report["project_mean_difference_ci"] = {"low": low, "high": high}
+        report["uncertainty_status"] = "diagnostic_project_bootstrap"
+        report["bootstrap"] = {"unit": "project_id", "draws": 2000, "seed": 0,
+                               "level": 0.95, "weighting": "equal_project"}
+    return report

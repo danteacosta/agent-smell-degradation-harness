@@ -86,14 +86,14 @@ def analyze_episodes(episodes: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "analysis_scope": "legacy_binary_descriptive_only",
         "confirmatory_eligible": False,
-        "H1_paired_degradation": {
+        "paired_binary_summary": {
             "paired_degradation_rate": round(paired_rate, 4),
             "pair_count": len(outcomes),
-            "effect_detected": paired_rate > 0,
+            "observed_degradation": paired_rate > 0,
         },
-        "H2_by_smell_type": smell_types,
+        "smelly_failures_by_smell_type": smell_types,
         "per_intent_table": per_intent,
-        "negative_boundary": abs(paired_rate) < 0.05,
+        "schema_version": "thesis-descriptive/v2",
     }
 
 
@@ -112,7 +112,7 @@ def write_thesis_analysis(
 def main(argv: list[str] | None = None) -> None:
     import argparse
 
-    parser = argparse.ArgumentParser(description="Legacy descriptive binary report; historical H1/H2 keys are not hypothesis tests")
+    parser = argparse.ArgumentParser(description="Descriptive binary report; no hypothesis tests")
     parser.add_argument("--episodes", required=True, help="Path to episodes JSONL")
     parser.add_argument(
         "--output",

@@ -66,8 +66,8 @@ def test_thesis_analysis_runs_on_eval_episodes(tmp_path):
         episodes_path=episodes_path,
     )
     report = write_thesis_analysis(episodes_path)
-    assert "H1_paired_degradation" in report
-    assert report["H1_paired_degradation"]["effect_detected"] is True
+    assert "paired_binary_summary" in report
+    assert report["paired_binary_summary"]["observed_degradation"] is True
 
 
 def test_template_rewrite_not_verbatim_clean_copy():
