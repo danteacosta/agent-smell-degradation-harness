@@ -163,6 +163,24 @@ Each mode is injectable for ATDD: pre-harness baseline catch rate 0.0 → post-h
 
 ## Quickstart
 
+For the reviewed Linux x86_64 / CPython 3.12 runtime candidate, use the hash-locked
+bundle instead of a fresh resolution:
+
+```bash
+python scripts/dependency_bundle.py
+dependency-bundle/runtime/bin/python -m pytest -q
+```
+
+`requirements-linux-py312.lock` covers runtime, live SDK, development and build
+dependencies. `requirements-arp.lock` binds the wheel built from the pinned ARP
+source. The script refuses a changed wheel hash, and the evaluation CI consumes
+these locks. Archive the generated wheels for subsequent offline installations.
+This new environment still requires provider qualification; it does not replace
+historical runtime snapshots. The dependency advisory report and recovery/resource
+commands are in [the runtime review](docs/research/runtime-security-review-20260913.md).
+
+For ordinary development using the older partial constraints:
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate

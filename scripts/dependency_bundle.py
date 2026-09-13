@@ -2,6 +2,7 @@
 import hashlib
 import json
 import os
+import platform
 from pathlib import Path
 import subprocess
 import sys
@@ -15,6 +16,8 @@ def run(*args):
 
 
 def main():
+    if sys.platform != "linux" or platform.machine() != "x86_64" or sys.version_info[:2] != (3, 12):
+        raise ValueError("qualified lock target is Linux x86_64 CPython 3.12 only")
     out = Path("dependency-bundle")
     out.mkdir(exist_ok=False)
     wheels = out / "wheels"
@@ -66,6 +69,20 @@ def main():
         "--require-hashes", "--no-deps", "-r", str(out / "requirements-arp.lock"))
     run(python, "-m", "pip", "install", "--no-deps", "--no-build-isolation", "-e", ".")
     run(python, "-m", "pip", "check")
+    # pip check alone does not validate the root's unselected optional extras.
+    run(python, "-c", "\n".join([
+        "import importlib.metadata as m, tomllib",
+        "from packaging.requirements import Requirement",
+        "from pathlib import Path",
+        "p=tomllib.loads(Path('pyproject.toml').read_text())",
+        "requirements=p['project']['dependencies']+p['build-system']['requires']",
+        "requirements+=p['project']['optional-dependencies']['dev']+p['project']['optional-dependencies']['live']",
+        "for text in requirements:",
+        " r=Requirement(text)",
+        " if r.url: continue",
+        " if r.marker and not r.marker.evaluate(): continue",
+        " assert m.version(r.name) in r.specifier, 'lock does not satisfy '+text",
+    ]))
     audit = []
     for wheel in sorted(wheels.glob("*.whl")):
         if wheel == arp[0]:

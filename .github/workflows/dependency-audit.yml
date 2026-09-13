@@ -18,12 +18,10 @@ jobs:
         with:
           python-version: '3.12'
       - run: python scripts/dependency_bundle.py
-      - name: Test in the hash-verified environment
-        run: dependency-bundle/runtime/bin/python -m pytest -q
       - name: Install isolated advisory scanner
         run: |
           python -m venv /tmp/asd-audit-tools
-          /tmp/asd-audit-tools/bin/pip install pip-audit
+          /tmp/asd-audit-tools/bin/pip install pip-audit==2.10.1
           /tmp/asd-audit-tools/bin/pip freeze > dependency-bundle/scanner-inventory.txt
       - name: Audit exact registry package versions
         run: /tmp/asd-audit-tools/bin/pip-audit -r dependency-bundle/audit-requirements.txt --no-deps --disable-pip --format json --output dependency-bundle/audit.json

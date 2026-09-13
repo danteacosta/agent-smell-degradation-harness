@@ -187,3 +187,18 @@ vulnerabilities are outside this package scan.
 Implementation references: [pip repeatable installs](https://pip.pypa.io/en/stable/topics/repeatable-installs/)
 and [PyPA pip-audit](https://github.com/pypa/pip-audit). These are implementation
 documentation, not scientific evidence for H1/H2.
+
+Executed dependency evidence: workflow run 34758454971 generated the two lock
+files, passed pip check and 1360 tests plus nine subtests in the isolated bundle,
+and scanned 25 registry packages with pip-audit 2.10.1 against PyPI advisories.
+No known vulnerabilities were returned on 2026-09-13. The exact inventory,
+exclusions and artifact SHA-256 are recorded in dependency-audit-20260913.json.
+The evaluation workflow now consumes the frozen locks; the audit workflow no
+longer duplicates its full-suite run. ARP's deterministic wheel hash must match
+on every rebuild. This is a new dependency candidate, not a silent replacement
+of previously qualified provider SDK/runtime snapshots.
+The lock targets direct HTTPS, not optional SOCKS proxy transport. Local
+constructor tests exposed an ambient SOCKS setting without socksio; no production
+proxy configuration was changed. Constructor-only tests prohibit socket connects
+and isolate ambient proxy settings. A SOCKS deployment needs its own reviewed
+extra dependency lock and transport qualification.
