@@ -151,18 +151,57 @@ def rehearse(output: Path) -> dict:
 def verify(output: Path) -> dict:
     output = Path(output).resolve()
     receipt = json.loads((output / "receipt.json").read_text())
+    if (receipt.get("schema_version") != "behavior-rehearsal/v1"
+            or receipt.get("evidence_scope") != "literal_fixture_pipeline_only"
+            or receipt.get("live_authorized") is not False
+            or receipt.get("confirmatory_eligible") is not False):
+        raise ValueError("unsupported rehearsal receipt or eligibility")
+    scenarios = ("positive", "null", "reverse")
+    variants = ("clean", "defective")
+    artifacts = ("prompt.txt", "response.json", "code.py", "oracle.json", "execution.json")
+    inventory = {"review/receipt.json"}
+    for intent in CONTROLS:
+        inventory.add(f"review/{intent}.json")
+        inventory.update(f"generation/{intent}/{v}.txt" for v in variants)
+        for scenario in scenarios:
+            for replication in ("r1", "r2"):
+                for variant in variants:
+                    inventory.update(f"episodes/{scenario}/{intent}/{replication}/{variant}/{n}" for n in artifacts)
+    inventory.update(f"analysis/{s}/{n}.json" for s in scenarios for n in ("plan", "outcomes", "analysis"))
+    if set(receipt.get("files", {})) != inventory:
+        raise ValueError("incomplete or unexpected artifact inventory")
     for name, digest in receipt["files"].items():
         path = (output / name).resolve()
         if not path.is_relative_to(output) or sha(path.read_bytes()) != digest:
             raise ValueError("artifact identity mismatch")
-    for scenario in ("positive", "null", "reverse"):
+    for scenario in scenarios:
         base = output / "analysis" / scenario
         plan = json.loads((base / "plan.json").read_text())
         rows = json.loads((base / "outcomes.json").read_text())
+        expected_pairs = {(f"synthetic-{scenario}", rep, f"synthetic-{intent}", intent)
+                          for intent in CONTROLS for rep in ("r1", "r2")}
+        if ({key(p)[:4] for p in plan} != expected_pairs or len(plan) != len(expected_pairs)
+                or len(rows) != 2 * len(plan)):
+            raise ValueError("incomplete planned rehearsal inventory")
         for row in rows:
+            prefix = f"episodes/{scenario}/{row['intent_id']}/{row['replication_id']}/{row['variant']}"
+            if set(row["artifact_hashes"]) != {f"{prefix}/{n}" for n in artifacts}:
+                raise ValueError("incomplete episode artifact binding")
             for name, digest in row["artifact_hashes"].items():
                 if receipt["files"].get(name) != digest:
                     raise ValueError("episode artifact binding mismatch")
+            location = output / prefix
+            code = (location / "code.py").read_text()
+            response = json.loads((location / "response.json").read_text())
+            execution = json.loads((location / "execution.json").read_text())
+            oracle = (location / "oracle.json").read_bytes()
+            review = json.loads((output / "review" / (row["intent_id"] + ".json")).read_text())
+            if (response != {"source_code": code} or execution.get("status") != row["status"]
+                    or sha(oracle) != row["oracle_sha256"]
+                    or json.loads(oracle) != review["executor_test_draft"]["hidden_tests"]
+                    or any(t.get("constraint_id") != row["constraint_id"] for t in json.loads(oracle))
+                    or (location / "prompt.txt").read_bytes() != (output / "generation" / row["intent_id"] / (row["variant"] + ".txt")).read_bytes()):
+                raise ValueError("episode content binding mismatch")
         if encode(analyze(plan, rows)) != (base / "analysis.json").read_bytes():
             raise ValueError("analysis is not reproducible")
     return {"verified_files": len(receipt["files"]), "analysis_recomputed": 3,

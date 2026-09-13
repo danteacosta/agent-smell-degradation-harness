@@ -233,6 +233,11 @@ It is not a repair of the ARTA source or confirmatory evidence. Each contract is
 used in positive, null and reverse synthetic scenarios, with two repetitions
 and both variants: 36 episodes, 200 files, 199 receipt-bound file hashes and
 three recomputed analyses. Expected project-mean deltas are +1, 0 and -1.
+The verifier requires the complete versioned inventory and episode bindings,
+then cross-checks response/code, prompt, oracle/constraint and execution status.
+Tests explicitly refresh checksums after introducing contradictions, so a set
+of individually valid hashes cannot hide missing or inconsistent evidence.
+This remains internal consistency checking, not independent authentication.
 The source is deliberately selected by scenario; this does not simulate model
 reasoning, estimate a treatment effect or qualify generated-code isolation.
 

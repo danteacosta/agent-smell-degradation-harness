@@ -3,7 +3,8 @@ import json
 
 import pytest
 
-from label_plane.behavior_rehearsal import analyze, rehearse, verify
+from label_plane.behavior_rehearsal import analyze, rehearse, verify, encode
+from label_plane.draft_packets import sha
 
 
 def pair(project="p1", replication="r1"):
@@ -85,3 +86,41 @@ def test_original_development_contract_checks_both_boolean_outcomes(tmp_path):
     assert evaluate_trusted_fixture("def evaluate(authorized):\n    return 'deny'", tests)["status"] == "failed"
     assert evaluate_trusted_fixture("def evaluate(authorized):\n    return 'allow'", tests)["status"] == "failed"
     assert review["confirmatory_eligible"] is False
+
+
+@pytest.mark.parametrize("fault", ["omitted_file", "empty_plan", "status", "response", "prompt", "eligibility"])
+def test_consistent_hashes_cannot_hide_incomplete_or_contradictory_evidence(tmp_path, fault):
+    path = tmp_path / "run"
+    rehearse(path)
+    receipt = json.loads((path / "receipt.json").read_text())
+    outcomes_path = path / "analysis/positive/outcomes.json"
+    rows = json.loads(outcomes_path.read_text())
+    row = rows[0]
+    if fault == "omitted_file":
+        name = next(n for n in row["artifact_hashes"] if n.endswith("prompt.txt"))
+        del row["artifact_hashes"][name]
+        del receipt["files"][name]
+    elif fault == "empty_plan":
+        (path / "analysis/positive/plan.json").write_bytes(encode([]))
+        rows = []
+        (path / "analysis/positive/analysis.json").write_bytes(encode(analyze([], [])))
+    elif fault == "status":
+        row["status"] = "failed"
+        plan = json.loads((path / "analysis/positive/plan.json").read_text())
+        (path / "analysis/positive/analysis.json").write_bytes(encode(analyze(plan, rows)))
+    elif fault == "eligibility":
+        receipt["live_authorized"] = True
+    else:
+        suffix = "response.json" if fault == "response" else "prompt.txt"
+        name = next(n for n in row["artifact_hashes"] if n.endswith(suffix))
+        payload = encode({"source_code": "def evaluate(x):\n    return 999"}) if fault == "response" else b"different prompt"
+        (path / name).write_bytes(payload)
+        row["artifact_hashes"][name] = sha(payload)
+    outcomes_path.write_bytes(encode(rows))
+    # Refresh every listed hash: these are structural/content inconsistencies,
+    # not the trivial stale-checksum case covered by the earlier test.
+    for name in receipt["files"]:
+        receipt["files"][name] = sha((path / name).read_bytes())
+    (path / "receipt.json").write_bytes(encode(receipt))
+    with pytest.raises(ValueError):
+        verify(path)
