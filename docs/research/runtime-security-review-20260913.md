@@ -48,7 +48,11 @@ be preserved. Do not remove markers to force a retry. Required next work:
 Changing transport behavior requires a new reviewed runtime configuration and
 qualification; no frozen experimental hash or historical evidence was rewritten.
 
-## Dependencies and resource review
+## Initial dependencies and resource findings (before the follow-up below)
+
+This paragraph records the initial inspection, not the current implementation.
+The hashed bundle, completed advisory scan and resource launcher below address
+these gaps; host qualification and the stated coverage exclusions remain open.
 
 The project pins ARP to a Git commit and already provides `constraints.txt`,
 which pins PyYAML, pytest and several development dependencies. README installation
@@ -141,6 +145,13 @@ rubric_sha256, oracle_sha256, source_revision and pricing_sha256. API callers us
 `calls.complete(provider, request, call_id=stable_id, phase=phase, attempt=1)`.
 The caller remains responsible for source admission and provider authorization.
 
+Recovery tests also terminate a spawned process with os._exit after fixture
+remote acceptance, after durable response but before cost reconciliation, and
+after cost reconciliation. A new process/session either refuses ambiguous
+evidence byte-for-byte or reuses the response, reconciles exactly one cost event
+and permits the next distinct operation. These are abrupt process-death tests,
+not real provider calls, power-loss simulation or storage qualification.
+
 ## Global admission and resource supervision
 
 ```sh
@@ -175,9 +186,10 @@ the workflow consumes them rather than resolving new versions. No historical
 qualification inventory is overwritten. Wheel artifacts must be archived beyond
 the CI retention window before experiment freeze.
 
-The dedicated dependency-audit workflow verifies offline hash-enforced install,
-pip check and the full test suite, then runs pip-audit against exact registry
-versions. The scanner has an isolated, recorded tool inventory. VCS-only ARP and
+The dedicated dependency-audit workflow verifies offline hash-enforced install
+and pip check, then runs pip-audit against exact registry versions. The evaluation
+workflow runs the full test suite using the same frozen locks. The scanner has an
+isolated, recorded tool inventory. VCS-only ARP and
 the application are explicitly outside registry advisory coverage and require
 source review. A failed scanner/network call is not a clean result; findings
 fail the gate and are retained in audit.json. No automatic fix/ignore rule is

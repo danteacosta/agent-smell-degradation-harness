@@ -1,4 +1,6 @@
 import json
+import multiprocessing
+import os
 from dataclasses import replace
 from concurrent.futures import ThreadPoolExecutor
 
@@ -163,3 +165,58 @@ def test_oversized_response_poisoned_session_cannot_dispatch_again(tmp_path):
         with call_session(path, config(), SCOPE, max_response_bytes=1):
             pass
     assert provider.calls == 1
+
+
+def abrupt_call_worker(path, boundary):
+    """Exit without finally/atexit handlers, after a fixture-only remote call."""
+    class AbruptProvider(Provider):
+        def complete(self, request):
+            response = super().complete(request)
+            if boundary == "remote_acceptance":
+                os._exit(91)
+            return response
+
+    with call_session(path, config(), SCOPE) as session:
+        reconcile = session.ledger.reconcile_response
+
+        def terminate(*args, **kwargs):
+            if boundary == "after_cost":
+                reconcile(*args, **kwargs)
+            os._exit(91)
+
+        session.ledger.reconcile_response = terminate
+        complete(session, AbruptProvider())
+
+
+@pytest.mark.parametrize("boundary", ["remote_acceptance", "before_cost", "after_cost"])
+def test_abrupt_process_exit_preserves_recovery_boundary(tmp_path, boundary):
+    path = tmp_path / "calls"
+    child = multiprocessing.get_context("spawn").Process(
+        target=abrupt_call_worker, args=(path, boundary))
+    child.start()
+    try:
+        child.join(10)
+        assert child.exitcode == 91
+    finally:
+        if child.is_alive():
+            child.kill()
+            child.join(5)
+    before = {p.name: p.read_bytes() for p in path.iterdir()}
+    if boundary == "remote_acceptance":
+        with pytest.raises(RecoveryBlocked, match="ambiguous"):
+            with call_session(path, config(), SCOPE):
+                pytest.fail("unknown remote outcome must not resume")
+        assert before == {p.name: p.read_bytes() for p in path.iterdir()}
+        return
+    provider = Provider()
+    with call_session(path, config(), SCOPE) as session:
+        assert complete(session, provider) == "private response"
+        assert session.last_replayed
+        assert provider.calls == 0
+        assert session.ledger.report()["pending_attempt_count"] == 0
+        assert session.ledger.report()["spent_microusd"] > 0
+        assert sum(e["event_type"] == "reconciliation" for e in session.ledger.events) == 1
+        if boundary == "after_cost":
+            assert before == {p.name: p.read_bytes() for p in path.iterdir()}
+        complete(session, provider, call_id="next:T1")
+        assert provider.calls == 1
