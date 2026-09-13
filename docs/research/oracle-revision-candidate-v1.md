@@ -217,6 +217,52 @@ Scale to additional projects only after this end-to-end pilot is reproducible.
 
 ## Product consequence
 
+### Offline integration rehearsal (2026-09-13)
+
+Run `python -m label_plane.behavior_rehearsal --output /private/new-run-directory`
+under an existing private parent. Recheck with the same command plus
+`--verify-only`. Existing directories are refused. The fixed rehearsal uses
+literal control responses, never providers or arbitrary supplied code. It
+exercises prompt projection, response JSON decoding, trusted-fixture execution,
+per-replication artifacts, hash verification and analysis recomputation.
+
+There are two unapproved source drafts and one separately named, original
+development contract. The latter explicitly requires both authorized admission
+and unauthorized denial; unconditional allow and unconditional deny both fail.
+It is not a repair of the ARTA source or confirmatory evidence. Each contract is
+used in positive, null and reverse synthetic scenarios, with two repetitions
+and both variants: 36 episodes, 200 files, 199 receipt-bound file hashes and
+three recomputed analyses. Expected project-mean deltas are +1, 0 and -1.
+The source is deliberately selected by scenario; this does not simulate model
+reasoning, estimate a treatment effect or qualify generated-code isolation.
+
+The separate diagnostic analyzer matches run, replication, project, intent and
+constraint IDs, and requires identical oracle/configuration hashes within each
+planned pair. Duplicate or unexpected episodes are rejected. Missing arms,
+crashes, timeouts, rejection and unexecuted code are counted separately and
+excluded from semantic contrasts. With no complete pair the estimate is null,
+not zero. Pair deltas are defective violation minus clean violation; projects
+receive equal weight. The bootstrap resamples project means and is omitted with
+fewer than two observed projects. Complete-case selection and very small project
+counts limit interpretation; the synthetic intervals are only calculation checks.
+No p-value, H1/H2 decision or change to the registered estimator is produced.
+
+Do not route this rehearsal through the legacy `eval.thesis_analysis` aggregator:
+its intent/task key collapses repetitions and its Boolean fallback cannot
+distinguish a missing arm. That historical path is not corrected or endorsed by
+this new, separate diagnostic. The new analyzer requires a planned inventory so
+missing observations remain visible. Source/oracle review and live qualification
+are still required before collecting real observations.
+
+Verification: 35 focused tests passed for rehearsal, draft export and existing
+paired-statistics helpers. The CLI created and verified the full bundle. Tests
+cover unequal project sizes, all execution-failure categories, absent arms,
+duplicate identities, mismatched hashes, changed artifacts and reverse effects.
+
+The oracle-adequacy boundary remains grounded in the bounded Maton et al. ESEM
+2025 entry in the canonical literature matrix. The rehearsal and estimator are
+our implementation choices, not procedures evaluated by that paper.
+
 A diagnostic should display an oracle disagreement together with the scope of
 the tested obligation, unscored regions and review status. A future interface
 should offer `review oracle assumption` alongside `inspect generated behavior`.
