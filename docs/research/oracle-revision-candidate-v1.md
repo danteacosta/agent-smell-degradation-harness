@@ -176,6 +176,13 @@ inputs, non-Boolean inputs, wrong arguments, illegal decisions and mismatched
 constraint IDs before creating output. These are offline finite-table checks,
 not generated-model observations or a semantic approval.
 
+Each review JSON also contains an `executor_test_draft`: the scored point is
+translated into the existing executor's `args`/`kwargs`/`expected` format with its
+constraint ID intact. Unspecified points remain outside `hidden_tests`. Literal
+allow/deny/reject controls verify format compatibility through the trusted-fixture
+test path. This is not qualification of generated code or a provider, and the
+draft tests are not registered with any live loader.
+
 This is an execution order, not another approval framework. Review all four
 partial candidates before selecting the first behavioral case; do not select
 only NFR-002/PEERING-001 because their constructed references retain a contrast.

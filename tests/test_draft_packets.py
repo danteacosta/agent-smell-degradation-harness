@@ -90,3 +90,26 @@ def test_malformed_partial_oracle_creates_no_output(tmp_path, fault):
     with pytest.raises(ValueError):
         export(out, [bad])
     assert not out.exists()
+
+
+@pytest.mark.parametrize("intent,good,bad", [
+    ("ARTA-NFR-002", "def evaluate(authorized):\n    return 'deny'", "def evaluate(authorized):\n    return 'allow'"),
+    ("ARTA-PEERING-001", "def evaluate(malicious):\n    return 'reject'", "def evaluate(malicious):\n    return 'allow'"),
+])
+def test_native_test_projection_distinguishes_original_control_outputs(intent, good, bad):
+    # These literal controls test format compatibility, not a model or source semantics.
+    from eval.codegen_sandbox import evaluate_trusted_fixture
+
+    files = prepare()
+    review = json.loads(files[f"review/{intent}.json"])
+    native = review["executor_test_draft"]
+    point = review["review_plane"]["common_oracle"]["scored_points"][0]
+    assert native["live_authorized"] is False
+    assert native["hidden_tests"] == [{"id": point["constraint_id"], "constraint_id": point["constraint_id"],
+                                       "args": [], "kwargs": point["input"], "expected": point["expected_decision"]}]
+    assert evaluate_trusted_fixture(good, native["hidden_tests"])["status"] == "passed"
+    assert evaluate_trusted_fixture(bad, native["hidden_tests"])["status"] == "failed"
+    assert len(native["unscored_points"]) == 1
+    for variant in ("clean", "defective"):
+        assert b"hidden_tests" not in files[f"generation/{intent}/{variant}.txt"]
+        assert b"constraint_id" not in files[f"generation/{intent}/{variant}.txt"]

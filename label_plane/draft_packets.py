@@ -102,7 +102,16 @@ def prepare(paths=DRAFTS, pairs_dir=PAIRS) -> dict[str, bytes]:
         diagnostic = oracle_diagnostic(oracle, intent, review["target_constraint_id"])
         for variant, field in (("clean", "clean_requirement"), ("defective", "defective_requirement")):
             files[f"generation/{intent}/{variant}.txt"] = prompt(plane[field], intent).encode()
-        files[f"review/{intent}.json"] = (json.dumps(draft, indent=2, sort_keys=True) + "\n").encode()
+        reviewer_copy = dict(draft)
+        reviewer_copy["executor_test_draft"] = {
+            "entrypoint": "evaluate", "live_authorized": False,
+            "scope": "unreviewed_scored_points_only",
+            "hidden_tests": [{"id": p["constraint_id"], "constraint_id": p["constraint_id"],
+                              "args": [], "kwargs": p["input"], "expected": p["expected_decision"]}
+                             for p in oracle["scored_points"]],
+            "unscored_points": oracle["unscored_points"],
+        }
+        files[f"review/{intent}.json"] = (json.dumps(reviewer_copy, indent=2, sort_keys=True) + "\n").encode()
         manifest.append({"intent_id": intent, "candidate_sha256": sha(raw),
                          "common_oracle_sha256": sha(json.dumps(oracle, sort_keys=True).encode()),
                          "oracle_scope_diagnostic": diagnostic})
