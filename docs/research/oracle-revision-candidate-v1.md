@@ -139,6 +139,33 @@ version-1 evidence and are not rewritten as version-2 results.
 
 ## Shortest path to a defensible first run
 
+The proposed NFR and PEERING single-deletion drafts are now machine-readable in
+`data/oracle_review/nfr-single-deletion-candidate-v1.json` and
+`data/oracle_review/peering-single-deletion-candidate-v1.json`. Both retain their
+shared detection/classification sentence and remove only the response sentence.
+They remain unapproved drafts outside the live corpus loader.
+
+Prepare separate text and review files using an existing private parent folder:
+
+```bash
+python -m label_plane.draft_packets --output /path/to/private/new-drafts
+```
+
+The command creates a new directory exclusively: four requirement text files
+under `generation/`, two full candidate files plus a hash receipt under `review/`.
+The latter directory contains oracle information and must never be sent to a
+generator. Each generation text includes the same interface scaffold within its
+pair: one externally supplied Boolean classification, a pure `evaluate` function,
+two decision tokens and a JSON `source_code` response. No expected input/output
+mapping, test input, source identifier or mutation description is included.
+The resulting prompts differ by exactly the removed requirement sentence. The
+shared scaffold and abstraction still require review; their presence does not
+establish that the prompts preserve the full source requirement.
+The export is reproducible preparation, not preregistration, semantic review,
+rights clearance or corpus admission. The receipt explicitly denies live and
+confirmatory eligibility. The names of the variants are visible in this reviewer
+packet; it is not a blinded outcome-annotation packet.
+
 This is an execution order, not another approval framework. Review all four
 partial candidates before selecting the first behavioral case; do not select
 only NFR-002/PEERING-001 because their constructed references retain a contrast.

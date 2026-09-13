@@ -1,0 +1,34 @@
+{
+  "schema_version": "source-pair-draft/v1",
+  "intent_id": "ARTA-PEERING-001",
+  "review_status": "pending_independent_review",
+  "live_authorized": false,
+  "confirmatory_eligible": false,
+  "legacy_pair_sha256": "98cf6caa80ecd4df6fa233b1ebdeeff6ab22311fdc6a19e09e5e8f98923f6916",
+  "source_revision": "493297655cd653f8ebc797ef5c3c7ee2f736ab4c",
+  "source_record_id": 7,
+  "generation_plane": {
+    "clean_requirement": "The system shall detect malicious requests. The system shall reject malicious requests.",
+    "defective_requirement": "The system shall detect malicious requests."
+  },
+  "review_plane": {
+    "removed_sentence": "The system shall reject malicious requests.",
+    "target_constraint_id": "PEERING-001-reject-malicious",
+    "scope": "Response-policy decision given an externally established maliciousness classification; detection quality and prevention of deployed side effects are outside scope.",
+    "common_oracle": {
+      "scored_points": [
+        {"constraint_id": "PEERING-001-reject-malicious", "input": {"malicious": true}, "expected_decision": "reject"}
+      ],
+      "unscored_points": [
+        {"input": {"malicious": false}, "reason": "Other policies may reject benign requests; this excerpt does not mandate admission."}
+      ]
+    },
+    "review_questions": [
+      "Does splitting detection and rejection into two sentences preserve the pinned source meaning?",
+      "Does deleting only the rejection sentence isolate the intended omission?",
+      "Is the response-policy abstraction acceptable for an explicitly exploratory pilot?",
+      "Are processing rights and the private evidence location established?"
+    ]
+  },
+  "handling": "Reviewer packet only. Never send this whole file to a provider: it includes an oracle and a mutation description. Neither prompt is independently approved. Not registered with a live loader."
+}
