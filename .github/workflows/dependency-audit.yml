@@ -1,0 +1,39 @@
+name: dependency-audit
+on:
+  push:
+    branches: [codex/behavior-evidence-20260911]
+    paths: [pyproject.toml, 'requirements*.lock', scripts/dependency_bundle.py, .github/workflows/dependency-audit.yml]
+  pull_request:
+    paths: [pyproject.toml, 'requirements*.lock', scripts/dependency_bundle.py, .github/workflows/dependency-audit.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  bundle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/dependency_bundle.py
+      - name: Test in the hash-verified environment
+        run: dependency-bundle/runtime/bin/python -m pytest -q
+      - name: Install isolated advisory scanner
+        run: |
+          python -m venv /tmp/asd-audit-tools
+          /tmp/asd-audit-tools/bin/pip install pip-audit
+          /tmp/asd-audit-tools/bin/pip freeze > dependency-bundle/scanner-inventory.txt
+      - name: Audit exact registry package versions
+        run: /tmp/asd-audit-tools/bin/pip-audit -r dependency-bundle/audit-requirements.txt --no-deps --disable-pip --format json --output dependency-bundle/audit.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dependency-bundle-linux-py312
+          path: |
+            dependency-bundle/*.json
+            dependency-bundle/*.txt
+            dependency-bundle/*.lock
+            dependency-bundle/wheels
+          retention-days: 30
