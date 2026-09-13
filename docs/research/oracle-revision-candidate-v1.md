@@ -166,6 +166,16 @@ rights clearance or corpus admission. The receipt explicitly denies live and
 confirmatory eligibility. The names of the variants are visible in this reviewer
 packet; it is not a blinded outcome-annotation packet.
 
+The receipt also enumerates all four possible decision tables over each Boolean
+interface. Both current partial oracles admit two tables, including an unconditional
+`deny` (NFR) or `reject` (PEERING) response. This is an explicit scope control:
+compatibility on the scored condition does not validate the full program or its
+behavior on the unspecified input. Do not add an unsupported admission expectation
+merely to make this control fail. The exporter rejects overlapping scored/unscored
+inputs, non-Boolean inputs, wrong arguments, illegal decisions and mismatched
+constraint IDs before creating output. These are offline finite-table checks,
+not generated-model observations or a semantic approval.
+
 This is an execution order, not another approval framework. Review all four
 partial candidates before selecting the first behavioral case; do not select
 only NFR-002/PEERING-001 because their constructed references retain a contrast.

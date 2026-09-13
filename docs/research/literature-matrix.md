@@ -200,3 +200,13 @@ constructed-reference result, not a result from Barr et al. or real LLMs. It sho
 why an oracle's unsupported negative expectations can determine the apparent
 effect. All interpretations remain pending independent review; unknown points
 are not correct negatives, and no source-derived performance claim is made.
+
+## 2026-09-13 — Executed statements can lack effective assertions
+
+Search/read date: 2026-09-13; deduplicated by DOI/title. Read abstract, method, results and threats.
+
+| Source / evidence | Question, data and method | Finding and limitations | Thesis / experiment / product action | Credibility |
+| --- | --- | --- | --- | --- |
+| Maton, Kapfhammer and McMinn, *Where Tests Fall Short: Empirically Analyzing Oracle Gaps in Covered Code*, ESEM 2025, peer-reviewed; [DOI](https://doi.org/10.1109/ESEM64174.2025.00063), [author manuscript](https://philmcminn.com/publications/maton2025.pdf) | Which executed statements lack effective oracle checks? Thirty Java classes from six projects; three oracle-gap approaches, manual classification and PIT mutation analysis. | Coverage can coexist with oracle gaps. Results depend on selected Java classes, implementations and mutants; mutation score is an imperfect proxy for test quality. | Thesis: execution does not establish behavioral correctness. Experiment: review explicit assertions against each scored constraint; keep unspecified points unscored. Product: display the checked obligation and observed mismatch. This is a bounded application, not evidence about LLMs or our mutation's validity. | 8/10: peer-reviewed comparative method and replication artifacts; restricted sample and construct validity limit transfer. |
+
+Action: retain the draft packet's separation of generation and review material, and require reviewers to inspect the actual input/expected-decision mapping. Passing infrastructure controls alone cannot admit these drafts. No additional coverage or mutation framework is needed for the present two Boolean decision abstractions.

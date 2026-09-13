@@ -41,6 +41,33 @@ def sha(raw: bytes) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
+def oracle_diagnostic(oracle: dict, intent: str, constraint: str) -> dict:
+    """Enumerate the finite decision tables; compatibility is not correctness."""
+    argument, first, second = INTERFACES[intent]
+    scored, unscored = oracle["scored_points"], oracle["unscored_points"]
+    if not isinstance(scored, list) or not isinstance(unscored, list) or not scored or not unscored:
+        raise ValueError("partial oracle needs scored and unspecified regions")
+    seen = set()
+    for point in scored + unscored:
+        value = point.get("input", {})
+        if set(value) != {argument} or type(value[argument]) is not bool or value[argument] in seen:
+            raise ValueError("oracle inputs must partition the Boolean domain")
+        seen.add(value[argument])
+    if seen != {False, True}:
+        raise ValueError("oracle inputs must partition the Boolean domain")
+    if any(p.get("expected_decision") not in (first, second) or p.get("constraint_id") != constraint for p in scored):
+        raise ValueError("scored point must bind a legal decision to the target constraint")
+    if any("expected_decision" in p for p in unscored):
+        raise ValueError("unspecified points cannot supply expected outcomes")
+    tables = [{False: left, True: right} for left in (first, second) for right in (first, second)]
+    compatible = [table for table in tables if all(table[p["input"][argument]] == p["expected_decision"] for p in scored)]
+    return {"scope": "finite_decision_table_check_not_a_model_experiment",
+            "possible_tables": len(tables), "compatible_tables": len(compatible),
+            "constant_responses_compatible": [table[False] for table in compatible if table[False] == table[True]],
+            "full_behavior_validated": False,
+            "interpretation": "Compatibility checks only the scored condition; unspecified behavior is not validated."}
+
+
 def prepare(paths=DRAFTS, pairs_dir=PAIRS) -> dict[str, bytes]:
     """Validate every draft before producing an in-memory output bundle."""
     files, seen, manifest = {}, set(), []
@@ -72,15 +99,13 @@ def prepare(paths=DRAFTS, pairs_dir=PAIRS) -> dict[str, bytes]:
         if not isinstance(removed, str) or not removed.strip() or plane["clean_requirement"] != plane["defective_requirement"] + " " + removed:
             raise ValueError("draft must be an exact single-sentence deletion")
         oracle = review["common_oracle"]
-        if not oracle["scored_points"] or not oracle["unscored_points"]:
-            raise ValueError("partial oracle needs scored and unspecified regions")
-        if any("expected_decision" in p for p in oracle["unscored_points"]):
-            raise ValueError("unspecified points cannot supply expected outcomes")
+        diagnostic = oracle_diagnostic(oracle, intent, review["target_constraint_id"])
         for variant, field in (("clean", "clean_requirement"), ("defective", "defective_requirement")):
             files[f"generation/{intent}/{variant}.txt"] = prompt(plane[field], intent).encode()
         files[f"review/{intent}.json"] = (json.dumps(draft, indent=2, sort_keys=True) + "\n").encode()
         manifest.append({"intent_id": intent, "candidate_sha256": sha(raw),
-                         "common_oracle_sha256": sha(json.dumps(oracle, sort_keys=True).encode())})
+                         "common_oracle_sha256": sha(json.dumps(oracle, sort_keys=True).encode()),
+                         "oracle_scope_diagnostic": diagnostic})
     if not seen:
         raise ValueError("no candidates")
     receipt = {"schema_version": "draft-packet-receipt/v1", "review_status": "pending_independent_review",
