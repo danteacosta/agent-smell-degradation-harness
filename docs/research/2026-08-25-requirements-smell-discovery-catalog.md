@@ -126,6 +126,13 @@ the effect of the smell is not confounded by an intervention.
 
 ## Normalized smell map
 
+**Correction (2026-09-14):** the rows below are local operational groupings,
+not equivalent literature labels or independently validated smell classes.
+In Paska, an incomplete condition lacks an actor or verb; deletion of an entire
+policy rule does not automatically instantiate that category. See the
+[updated ten-entry coverage matrix](2026-09-14-smell-coverage-and-construct-validity.md)
+before using this map to count evaluated smells.
+
 | Operational family used here | Literature aliases | Discovery treatment |
 | --- | --- | --- |
 | Missing/incomplete condition | incomplete condition, incomplete requirement, loophole | remove one permission, trigger or negative case |
@@ -169,7 +176,12 @@ confirmatory estimate. Confirmatory use still requires the project's existing
 provider qualification, double annotation, license review, split freeze and
 preregistration gates.
 
-## Slide-3-style example
+## Slide-3-style example (constructed illustration, not a measured result)
+
+The sequence below is illustrative. In the real original-policy Codex run,
+token variants both passed 3/3: the model retained the `used` guard. The
+[measured contrast](codex-original-demo-results-20260914.md) was discount-cap
+loss. Do not cite this schematic's final line as a live observation.
 
 ```text
 Clean requirement:
@@ -187,7 +199,7 @@ Smelly implementation:
 Hidden test:
   use the same link twice
 
-Observed result:
+Illustrated outcome for the constructed implementations:
   clean -> rejected on second use
   smelly -> accepted on second use
 ```
