@@ -9,10 +9,9 @@ from eval.runner import run_eval
 from feature_plane import DeployableFeatureInput, extract_deployable_features
 from protocol.paired_stats import (
     clustered_bootstrap_ci,
-    export_paired_stats,
+    summarize_binary_pairs,
     ordinal_paired_delta,
     paired_permutation_pvalue,
-    pair_degradation_outcomes,
 )
 
 
@@ -89,12 +88,7 @@ def build_analysis_report(work_dir: Path) -> dict[str, Any]:
     provenance_auroc = baselines["provenance_semantic"]["auroc"]
     operational_auroc = baselines["operational"]["auroc"]
 
-    pair_outcomes = pair_degradation_outcomes(smell_blind_episodes)
-    paired_stats = export_paired_stats(
-        smell_blind_metrics["oracle_pass_rate_clean"],
-        smell_blind_metrics["oracle_pass_rate_smelly"],
-        pair_outcomes=pair_outcomes,
-    )
+    paired_stats = summarize_binary_pairs(smell_blind_episodes)
     ordinal_deltas = _ordinal_deltas(smell_blind_episodes)
     cluster_means = [
         sum(values) / len(values) for values in ordinal_deltas.values() if values

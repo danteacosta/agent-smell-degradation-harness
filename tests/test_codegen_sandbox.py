@@ -358,3 +358,17 @@ def test_requires_exactly_one_function_named_evaluate() -> None:
 
     assert result["status"] == "rejected"
     assert any(issue["code"] == "module_shape" for issue in result["validation_errors"])
+
+
+@pytest.mark.parametrize("source", [
+    " " * 100001,
+    "é" * 50001,
+    "def evaluate(x):\n    return '\ud800'",
+])
+def test_hostile_raw_source_rejected_before_normalization_or_worker(source, monkeypatch):
+    def forbidden(*args, **kwargs):
+        pytest.fail("must reject before allocating normalized source or starting worker")
+    monkeypatch.setattr(sandbox, "_normalize_source", forbidden)
+    monkeypatch.setattr(sandbox.subprocess, "Popen", forbidden)
+    result = evaluate(source, [{"args": [1], "expected": 1}])
+    assert result["validation_errors"][0]["code"] == "invalid_source"

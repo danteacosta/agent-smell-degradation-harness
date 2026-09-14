@@ -168,6 +168,35 @@ Each mode is injectable for ATDD: pre-harness baseline catch rate 0.0 → post-h
 
 ## Quickstart
 
+For the reviewed Linux x86_64 / CPython 3.12 runtime candidate, use the hash-locked
+bundle instead of a fresh resolution:
+
+```bash
+python scripts/dependency_bundle.py
+dependency-bundle/runtime/bin/python -m pytest -q
+```
+
+`requirements-linux-py312.lock` covers runtime, live SDK, development and build
+dependencies. `requirements-arp.lock` binds the wheel built from the pinned ARP
+source. The script refuses a changed wheel hash, and the evaluation CI consumes
+these locks. Archive the generated wheels for subsequent offline installations.
+This new environment still requires provider qualification; it does not replace
+historical runtime snapshots. The dependency advisory report and recovery/resource
+commands are in [the runtime review](docs/research/runtime-security-review-20260913.md).
+
+Exploratory recovery restores complete, immutable T1--T3 execution receipts and
+validated per-judge plus consolidated result receipts bound to the frozen run
+and cost ledger. It never recreates checkpoint timestamps from cached text.
+Completed generation and judging work is skipped after restart without another
+provider call. Terminal status is committed only after both the private run
+report and redacted public report are durably written. An interruption during
+that final commit leaves a resumable `finalizing` checkpoint; resumption rebuilds
+the reports from receipts without another provider call. A request accepted
+remotely but not durably received remains ambiguous and blocks; this is not
+provider-side exactly-once execution or power-loss qualification.
+
+For ordinary development using the older partial constraints:
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate
@@ -228,6 +257,23 @@ planned conditional claims until the external data, provider, annotation,
 preregistration, and shadow-pilot gates pass.
 
 ## Requirements-smell discovery
+
+**Oracle qualification warning:** the combined discovery runner's live mode is
+temporarily quarantined before any provider initialization. The
+[source-to-oracle audit](docs/research/behavior-oracle-review-20260911.md) found
+unresolved assumptions in the current ARTA fixtures, including an unsupported
+1000-user maximum. Both behavioral and acceptance-criteria outcomes are affected.
+Offline bundles remain reproducible and explicitly marked
+`blocked_semantic_review` / `fixture_pipeline_check_only`; they are not semantic
+validation. Reopening requires a reviewed, versioned corpus and oracle plus runtime
+qualification. Other runners and the primary H1/H2 protocol are unchanged.
+
+The [revision candidate packet](docs/research/oracle-revision-candidate-v1.md)
+prepares source-contract decisions for all twelve cases. Run
+`python -m label_plane.oracle_review` for the offline, hash-pinned comparison of
+four partial-oracle candidates against eight historical references. Unknown
+points remain unscored; the report is a sensitivity check, not provider evidence
+or permission to reopen the quarantined runner.
 
 The discovery track makes the advisor's clean-versus-smelly comparison
 executable. It uses 12 source-traceable ARTA requirements from six projects,

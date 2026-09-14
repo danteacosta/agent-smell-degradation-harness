@@ -1,0 +1,58 @@
+"""Single-host ownership and conservative recovery for private run directories."""
+from contextlib import contextmanager
+from pathlib import Path
+import json
+import os
+import stat
+
+
+@contextmanager
+def own_run(directory: Path, *, resume: bool):
+    """Lock the directory inode; never unlink/recreate a lock while holders exist."""
+    import fcntl
+    # Include existing ancestors too: a preflight may be resumed after an
+    # earlier mkdir/flush failure, so existence is not a durability receipt.
+    parents_to_sync = list(directory.absolute().parents)
+    if not resume:
+        directory.parent.mkdir(parents=True, exist_ok=True)
+        directory.mkdir(mode=0o700)  # Atomic claim; existing evidence is never reused.
+    fd = os.open(directory, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        info = os.fstat(fd)
+        if info.st_uid != os.getuid() or stat.S_IMODE(info.st_mode) & 0o077:
+            raise ValueError("run directory must be owned by this user with mode 0700")
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            raise ValueError("run directory is already in use") from None
+        entries = tuple(directory.iterdir())
+        if any(item.is_symlink() for item in entries):
+            raise ValueError("run directory contains a symlink or unexpected entry")
+        unexpected_directories = [item for item in entries if item.is_dir() and item.name != "calls"]
+        if unexpected_directories or any(not item.is_file() and item.name != "calls" for item in entries):
+            raise ValueError("run directory contains a symlink or unexpected entry")
+        if resume and any((directory / name).exists() for name in (
+            "live-started.json", "cost-ledger.jsonl", "raw-evidence.jsonl"
+        )):
+            marker = directory / "live-started.json"
+            try:
+                live = json.loads(marker.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                raise ValueError("live recovery reconciliation marker is missing or invalid") from None
+            if live.get("recovery") != "recoverable_calls_and_execution_receipts_v1":
+                raise ValueError("live recovery requires the current reconciliation protocol")
+            calls = directory / "calls"
+            if not calls.is_dir() or calls.is_symlink():
+                raise ValueError("live recovery call evidence is missing or invalid")
+        # Persist the path before handing control to the runner. flock alone
+        # only excludes writers; all flush failures must prevent entry.
+        os.fsync(fd)
+        for parent in parents_to_sync:
+            parent_fd = os.open(parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+            try:
+                os.fsync(parent_fd)
+            finally:
+                os.close(parent_fd)
+        yield
+    finally:
+        os.close(fd)

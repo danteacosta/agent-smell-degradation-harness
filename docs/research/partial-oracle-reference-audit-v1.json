@@ -1,0 +1,165 @@
+{
+  "candidate_sha256": "cfbd9d6582bdfe2bf9740111342efbfca1e97a2d1f77b6ed1c0661f767982c09",
+  "case_count": 4,
+  "cases": [
+    {
+      "candidate_oracle_sha256": "d9ab81599ec8375494c4cb36e2db55ce3c9ab58bc9e7db153fe848714cb6132a",
+      "candidate_reference_contrast": false,
+      "intent_id": "ARTA-GAMMA-002",
+      "legacy_oracle_sha256": "98724d8318198ee1e21410794ce1d20a7c389776c637e5547c8d6a16ffd83b9c",
+      "legacy_reference_contrast": true,
+      "pair_sha256": "6e5a6210fabec872f36ed02b77c97f71a9672ffba490875778d8506140821527",
+      "project_id": "gamma",
+      "references": {
+        "clean": {
+          "candidate_oracle_sha256": "d9ab81599ec8375494c4cb36e2db55ce3c9ab58bc9e7db153fe848714cb6132a",
+          "candidate_status": "compatible_on_checked_points",
+          "checked_points": 1,
+          "execution_errors": 0,
+          "legacy_status": "passed",
+          "retained_points": 1,
+          "source_sha256": "508f6c5a1d204bb7f925fd78159d55746742de889e12ba36aeb70ecb821e9ccc",
+          "unscored_test_ids": [
+            "capacity_exceeded",
+            "no_users"
+          ],
+          "violations": 0
+        },
+        "smelly_plausible": {
+          "candidate_oracle_sha256": "d9ab81599ec8375494c4cb36e2db55ce3c9ab58bc9e7db153fe848714cb6132a",
+          "candidate_status": "compatible_on_checked_points",
+          "checked_points": 1,
+          "execution_errors": 0,
+          "legacy_status": "failed",
+          "retained_points": 1,
+          "source_sha256": "3256207412449857997fa33896851c6e0ac6c0822a4cab18e7fc0376b9ce2eb1",
+          "unscored_test_ids": [
+            "capacity_exceeded",
+            "no_users"
+          ],
+          "violations": 0
+        }
+      }
+    },
+    {
+      "candidate_oracle_sha256": "21d0efdf9a233e2d9388867e23429a518530a1d58d230b64a68ec094148ff7e8",
+      "candidate_reference_contrast": false,
+      "intent_id": "ARTA-ERTMS-002",
+      "legacy_oracle_sha256": "bffb215e4569ba0c27769b433786c5cb0b544318fca805eaaf82e2ecc7d2bd1b",
+      "legacy_reference_contrast": true,
+      "pair_sha256": "a03ef54be88ec59c5586de30613c29b0ebdcefe265dd6b8382129c14240317c0",
+      "project_id": "ertms",
+      "references": {
+        "clean": {
+          "candidate_oracle_sha256": "21d0efdf9a233e2d9388867e23429a518530a1d58d230b64a68ec094148ff7e8",
+          "candidate_status": "compatible_on_checked_points",
+          "checked_points": 1,
+          "execution_errors": 0,
+          "legacy_status": "passed",
+          "retained_points": 1,
+          "source_sha256": "92ebb819e35d132b0dc7f0f137af6b5d26ad2d031936093016a2184b83c410ea",
+          "unscored_test_ids": [
+            "required_ack_received",
+            "ack_not_required"
+          ],
+          "violations": 0
+        },
+        "smelly_plausible": {
+          "candidate_oracle_sha256": "21d0efdf9a233e2d9388867e23429a518530a1d58d230b64a68ec094148ff7e8",
+          "candidate_status": "compatible_on_checked_points",
+          "checked_points": 1,
+          "execution_errors": 0,
+          "legacy_status": "failed",
+          "retained_points": 1,
+          "source_sha256": "dbe42bc4740863e6fcf073e6d474470e8aa23c9fd3dbdcdade303e13c8376588",
+          "unscored_test_ids": [
+            "required_ack_received",
+            "ack_not_required"
+          ],
+          "violations": 0
+        }
+      }
+    },
+    {
+      "candidate_oracle_sha256": "29146893912fa1932ca722c85bb933119661911db51b95cc09c77e57fa8202f0",
+      "candidate_reference_contrast": true,
+      "intent_id": "ARTA-NFR-002",
+      "legacy_oracle_sha256": "3876b673e1890fdc3267f02ccfc996533fe546dd5075c1ee89c94091f8e2713b",
+      "legacy_reference_contrast": true,
+      "pair_sha256": "11b7591cda491012f8399c4af3a5148218355753f0b25af23c5ab2e9d0f4827c",
+      "project_id": "nfr",
+      "references": {
+        "clean": {
+          "candidate_oracle_sha256": "29146893912fa1932ca722c85bb933119661911db51b95cc09c77e57fa8202f0",
+          "candidate_status": "compatible_on_checked_points",
+          "checked_points": 1,
+          "execution_errors": 0,
+          "legacy_status": "passed",
+          "retained_points": 1,
+          "source_sha256": "cfa22cf044172ca59ea371702f0cfb8cb054c82f56228c5dd0eb7dae0f333e60",
+          "unscored_test_ids": [
+            "authorized_user"
+          ],
+          "violations": 0
+        },
+        "smelly_plausible": {
+          "candidate_oracle_sha256": "29146893912fa1932ca722c85bb933119661911db51b95cc09c77e57fa8202f0",
+          "candidate_status": "violated_candidate_condition",
+          "checked_points": 1,
+          "execution_errors": 0,
+          "legacy_status": "failed",
+          "retained_points": 1,
+          "source_sha256": "c790a686b318dad4647c321f6682aa1e8f9d6bb8caa62de79d1e2f4203cc9492",
+          "unscored_test_ids": [
+            "authorized_user"
+          ],
+          "violations": 1
+        }
+      }
+    },
+    {
+      "candidate_oracle_sha256": "ac6b71d164c04b5f3a1b262283811155c7c55945a8303a47863d50b53685f55e",
+      "candidate_reference_contrast": true,
+      "intent_id": "ARTA-PEERING-001",
+      "legacy_oracle_sha256": "4ce83b6c1c66d1812c38381fbfee63c31b2403623efc8f2ee0d53723a4cade24",
+      "legacy_reference_contrast": true,
+      "pair_sha256": "98cf6caa80ecd4df6fa233b1ebdeeff6ab22311fdc6a19e09e5e8f98923f6916",
+      "project_id": "peering",
+      "references": {
+        "clean": {
+          "candidate_oracle_sha256": "ac6b71d164c04b5f3a1b262283811155c7c55945a8303a47863d50b53685f55e",
+          "candidate_status": "compatible_on_checked_points",
+          "checked_points": 1,
+          "execution_errors": 0,
+          "legacy_status": "passed",
+          "retained_points": 1,
+          "source_sha256": "67499ec6697c5824b32fed823c33ed1decd6e994930c3e19f30ac8c91d79a803",
+          "unscored_test_ids": [
+            "benign_request"
+          ],
+          "violations": 0
+        },
+        "smelly_plausible": {
+          "candidate_oracle_sha256": "ac6b71d164c04b5f3a1b262283811155c7c55945a8303a47863d50b53685f55e",
+          "candidate_status": "violated_candidate_condition",
+          "checked_points": 1,
+          "execution_errors": 0,
+          "legacy_status": "failed",
+          "retained_points": 1,
+          "source_sha256": "a0adaee1ead3251bbba3c39337451f6a6dd3f6b209b7d85055f3ebe12ab2b59a",
+          "unscored_test_ids": [
+            "benign_request"
+          ],
+          "violations": 1
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false,
+  "evidence_scope": "offline_reference_sensitivity_only",
+  "interpretation": "Unspecified points are unscored, never correct negatives. No model effect, prevalence or semantic accuracy is estimated.",
+  "live_authorized": false,
+  "reference_count": 8,
+  "review_status": "pending_independent_review",
+  "schema_version": "partial-oracle-reference-audit/v1"
+}

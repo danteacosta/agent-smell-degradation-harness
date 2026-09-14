@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-09-10
+Last updated: 2026-09-14
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -173,3 +173,84 @@ artifact correctness, or annotator reliability. H1/H2 continue to require the
 frozen blinded human-annotation protocol; any future delegation to an LLM
 requires a separate human-model calibration study defined before labels are
 inspected.
+
+
+## 2026-09-11: executable behavioral evidence
+
+Problem: an incomplete requirement may cause generated code to violate a necessary condition of the intended behavior. This is a testable risk, not a claim that every smell causes a bug. The existing behavioral discovery adapter executes hidden tests and distinguishes target-condition failures, unrelated failures, crashes, timeouts and unexecuted artifacts.
+
+The behavioral extension remains secondary/discovery-only; acceptance criteria remain the registered primary task. Before real-provider collection, freeze the complete intended behavior and the same hidden oracle for both variants, including target and non-target cases. Review oracle adequacy and mutation validity independently. Never derive the oracle solely from the defective prompt or expose it to generation or T1–T3 features. Report failed execution separately from demonstrated behavioral violations; test passage establishes only tested behavior. Preserve every repetition's code, report, identity and hash. Compare paired target-violation frequencies with project-level inference after the analysis is registered. No real-provider result or causal effect is claimed by an offline stub run.
+
+Without annotators, executable fixtures can validate the measurement pipeline and expose concrete counterexamples to specified behavior. They do not establish that the specified oracle is correct, replace human review, or promote synthetic outcomes to H1/H2 evidence. Product use remains advisory: show the condition, failing input, expected/actual output and trace, with no automatic semantic approval.
+
+Source revisited: Mu et al., ClarifyGPT (FSE 2024), DOI https://doi.org/10.1145/3660810; accessible author manuscript https://arxiv.org/html/2310.10996v1 (2023 version). Read method, evaluation and limitations. Ten participants evaluated clarification on two MBPP benchmarks; automated experiments use two models and four benchmarks. The manuscript reports GPT-4 Pass@1 increasing from 70.96% to 80.80% on MBPP-sanitized. Its intervention is clarification, not our controlled missing-condition treatment. Simulated feedback explicitly receives ground-truth tests (Section 5.2); importing that design into oracle-free H2 would leak terminal knowledge. Benchmark simplicity, model dependence and simulated feedback limit transfer. Credibility: 8/10, peer-reviewed publication and transparent author method, but task and version boundaries matter. Thesis: motivate behavioral consequences. Experiment: keep hidden tests outside generation and feature planes. Product: clarification is a separate intervention requiring evaluation. Action: preserve replication-specific evidence before live qualification, without changing H1/H2.
+
+Attribution correction: the disjoint probability-audit and diagnostic queues above are this thesis's sampling decision, not a procedure evaluated by Van der Meer et al. Their study motivates attention to annotation scarcity but does not validate our queue design.
+
+## 2026-09-12 — Oracle validity before execution
+
+Search/read date: 2026-09-12. New entry; deduplicated by title and DOI.
+
+| Source / evidence | Question, data and method | Finding and limitations | Thesis / experiment / product action | Credibility |
+| --- | --- | --- | --- | --- |
+| Barr, Harman, McMinn, Shahbaz and Yoo, *The Oracle Problem in Software Testing: A Survey*, TSE 41(5), 507–525 (2015), peer-reviewed; [DOI](https://doi.org/10.1109/TSE.2014.2372785), [author manuscript](https://philmcminn.com/publications/barr2015.pdf) | How can tests distinguish intended behavior? Survey repository of 694 publications from 1978–2012; search, classification and trend analysis. Read abstract, definitions, search method, specified-oracle challenges and conclusion. | Distinguishes partial oracles from ground truth; abstraction can omit relevant behavior or admit infeasible behavior. Traditional-testing survey, not an LLM experiment or an effect-size estimate; search coverage and age limit transfer. | Thesis: separate oracle disagreement from source-supported error. Experiment: quarantine unresolved source-contract assumptions. Product: expose oracle uncertainty before calling a behavior faulty. These are our bounded implementation decisions, not evaluated interventions in the survey. | 8/10: peer-reviewed synthesis with explicit method and formal definitions; no direct validation of this task. |
+
+Implementation decision: `eval.discovery --mode live` now fails before corpus loading,
+provider initialization or artifact creation. This temporary quarantine covers the
+combined ARTA discovery runner, including its acceptance-criteria oracles; it does
+not disable other qualified runners or rewrite the confirmatory protocol. There
+is no environment/CLI override. Reopening needs a reviewed corpus/oracle revision,
+not merely credentials or a passing synthetic control. Offline bundles explicitly
+record `blocked_semantic_review` and `fixture_pipeline_check_only`.
+
+The new GAMMA-002 regression reproduces the historical oracle's unsupported
+rejection of 1001 users. This is a counterexample to the oracle interpretation,
+not evidence that a real model generated a defect. All 12 original pairs and
+oracle hashes remain unchanged. Source-specific review decisions remain in
+[the existing audit](behavior-oracle-review-20260911.md); no approval is fabricated.
+
+Follow-through: the [revision candidate packet](oracle-revision-candidate-v1.md)
+now covers all twelve source-contract decisions. Four executable partial-oracle
+candidates retain only selected obligations and mark other points unspecified.
+An eight-reference sensitivity comparison loses the historical contrast in
+GAMMA-002 and ERTMS-002 while retaining it in NFR-002 and PEERING-001. This is our
+constructed-reference result, not a result from Barr et al. or real LLMs. It shows
+why an oracle's unsupported negative expectations can determine the apparent
+effect. All interpretations remain pending independent review; unknown points
+are not correct negatives, and no source-derived performance claim is made.
+
+## 2026-09-13 — Executed statements can lack effective assertions
+
+Search/read date: 2026-09-13; deduplicated by DOI/title. Read abstract, method, results and threats.
+
+| Source / evidence | Question, data and method | Finding and limitations | Thesis / experiment / product action | Credibility |
+| --- | --- | --- | --- | --- |
+| Maton, Kapfhammer and McMinn, *Where Tests Fall Short: Empirically Analyzing Oracle Gaps in Covered Code*, ESEM 2025, peer-reviewed; [DOI](https://doi.org/10.1109/ESEM64174.2025.00063), [author manuscript](https://philmcminn.com/publications/maton2025.pdf) | Which executed statements lack effective oracle checks? Thirty Java classes from six projects; three oracle-gap approaches, manual classification and PIT mutation analysis. | Coverage can coexist with oracle gaps. Results depend on selected Java classes, implementations and mutants; mutation score is an imperfect proxy for test quality. | Thesis: execution does not establish behavioral correctness. Experiment: review explicit assertions against each scored constraint; keep unspecified points unscored. Product: display the checked obligation and observed mismatch. This is a bounded application, not evidence about LLMs or our mutation's validity. | 8/10: peer-reviewed comparative method and replication artifacts; restricted sample and construct validity limit transfer. |
+
+Action: retain the draft packet's separation of generation and review material, and require reviewers to inspect the actual input/expected-decision mapping. Passing infrastructure controls alone cannot admit these drafts. No additional coverage or mutation framework is needed for the present two Boolean decision abstractions.
+
+## 2026-09-13 — Crash persistence is distinct from process exclusion
+
+Search/read date: 2026-09-13; title deduplicated. Read abstract, method, results and limitations.
+
+| Reference / evidence | Question, sample and method | Result / limitations | Thesis / experiment / product relevance and action | Credibility |
+| --- | --- | --- | --- | --- |
+| Pillai et al., *All File Systems Are Not Created Equal: On the Complexity of Crafting Crash-Consistent Applications*, OSDI 2014, peer-reviewed; [original paper](https://www.usenix.org/system/files/conference/osdi14/osdi14-paper-pillai.pdf) | How do persistence assumptions affect crash consistency? BOB examines six Linux file systems; ALICE examines eleven applications using workloads, invariant checkers and abstract persistence models. | Sixty crash vulnerabilities; persistence varies with filesystem/configuration. Exploration is incomplete, workloads/checkers are supplied, threaded calls are serialized and file attributes are not handled. Older systems limit transfer. | Thesis: infrastructure evidence only, no H1/H2 support. Experiment: flush the run directory and ancestor chain before runner entry, including preflight recovery; inject flush failures. Product: distinguish writer exclusion from durable recovery. Tests do not qualify actual power-loss behavior; storage qualification remains required. | 8/10: peer-reviewed, explicit method and limitations; workload/model coverage and deployment age constrain applicability. |
+
+## 2026-09-14 — Durable completion is separate from retry
+
+Search/read date: 2026-09-14; title deduplicated. Read abstract, design,
+experimental setup, results, discussion and artifact limitations.
+
+| Reference / evidence | Question, sample and method | Result / limitations | Thesis / experiment / product relevance and action | Credibility |
+| --- | --- | --- | --- | --- |
+| Zhang, Cardoza, Chen, Angel and Liu, *Fault-tolerant and Transactional Stateful Serverless Workflows*, OSDI 2020, peer-reviewed; [paper](https://www.usenix.org/system/files/osdi20-zhang_haoran.pdf), [venue page](https://www.usenix.org/conference/osdi20/presentation/zhang-haoran) | How can stateful serverless workflows tolerate worker crashes and provide transactions? Beldi atomically logs operations and re-executes unfinished functions. The prototype comprises 1,823 lines of Go and evaluates three DeathStarBench-derived applications on AWS Lambda/DynamoDB, including up to 1,000 Lambdas. | Logging plus re-execution provides the evaluated workflow semantics; at saturation the paper reports 2.4--3.3x median and 1.2--1.8x p99 latency increases versus its baseline. Results assume strongly consistent fault-tolerant storage and Beldi's runtime; three applications, cloud-specific deployment and no qualification of our filesystem limit transfer. | Thesis: infrastructure only, no H1/H2 support. Experiment: represent semantic completion separately from provider-call completion; resume only from bound immutable receipts. Product: expose recovery state and unresolved remote ambiguity. Action: add per-judge and consolidated receipts, restore judging without duplicate fixture calls, and retain fail-closed ambiguous-call handling. This is an engineering inference, not adoption of Beldi's distributed guarantee. | 8/10: peer-reviewed top systems venue, explicit protocols, implementation, evaluation and artifact; assumptions and domain differ materially from this single-host harness. |
+
+## 2026-09-14 — Bounded crash testing of persistence points
+
+Search/read date: 2026-09-14; title deduplicated. Read abstract, design,
+bug-study construction, evaluation, discussion and limitations.
+
+| Reference / evidence | Question, sample and method | Result / limitations | Thesis / experiment / product relevance and action | Credibility |
+| --- | --- | --- | --- | --- |
+| Mohan, Martinez, Ponnapalli, Raju and Chidambaram, *Finding Crash-Consistency Bugs with Bounded Black-Box Crash Testing*, OSDI 2018, peer-reviewed; [paper](https://www.usenix.org/system/files/osdi18-mohan.pdf), [venue page](https://www.usenix.org/conference/osdi18/presentation/mohan) | Can bounded black-box testing expose filesystem crash-consistency defects? The authors study 26 reported bugs across three filesystems and seven kernel versions, then combine CrashMonkey record/replay with ACE-generated workloads and persistence-point crashes. | The evaluation reproduced 24 of 26 reported bugs and found ten new bugs. Most studied bugs were reachable with at most three filesystem operations. The bound is empirical rather than exhaustive; resource-exhaustion and long-sequence defects can be missed, and filesystem-level results do not qualify an application runtime or storage deployment. | Thesis: infrastructure evidence only, no H1/H2 support. Experiment: treat report publication as a separate persistence point after provider and judge completion. Product: expose `finalizing` instead of claiming completion before reports exist. Action: inject failure during the final report commit, resume from receipts, and verify zero duplicate fixture calls. This is a bounded engineering application, not a real power-loss test. | 9/10: peer-reviewed top systems venue, explicit bug corpus, method, implementation and evaluation; bounded coverage and domain transfer remain material. |

@@ -303,3 +303,212 @@ def test_live_run_stops_on_substantive_completeness_before_artifact(tmp_path, mo
     assert report["artifact_count"] == 0
     assert report["judge_result_count"] == 0
     assert report["substantive_completeness"]["failed_stage"] == "interpretation"
+
+
+def test_preflight_resume_preserves_identity_and_rejects_changed_constraints(tmp_path, monkeypatch):
+    root, private, reference = _private_inputs(tmp_path)
+    revision = "b" * 40
+    config = _config(tmp_path, revision)
+    monkeypatch.setattr(runner, "_git_revision", lambda _: revision)
+    output = tmp_path / "report.json"
+    args = dict(private_corpus_path=private, reference_constraints_path=reference,
+                repository_root=root, dry_run=True)
+    first = run_exploratory_prepilot(config, output, **args)
+    directory = Path(str(output) + ".run")
+    resumed = run_exploratory_prepilot(config, output, resume_run=directory, **args)
+    assert resumed["run_id"] == first["run_id"]
+    assert resumed["started_at"] == first["started_at"]
+    before = {p.name: p.read_bytes() for p in directory.iterdir()}
+    constraints = json.loads(reference.read_text())
+    constraints["records"][0]["text"] = "changed constraint"
+    reference.write_text(json.dumps(constraints))
+    with pytest.raises(runner.ExploratoryPrepilotError, match="preserved"):
+        run_exploratory_prepilot(config, output, resume_run=directory, **args)
+    assert before == {p.name: p.read_bytes() for p in directory.iterdir()}
+
+
+class _CompleteProvider:
+    def __init__(self, name, model, model_version):
+        self.name, self.model, self.model_version = name, model, model_version
+        self.calls = 0
+        self.last_call_metadata = {}
+
+    def complete(self, request):
+        self.calls += 1
+        self.last_call_metadata = {
+            "usage": {"input_tokens": 10, "output_tokens": 2},
+            "cost_usd": 0.0001,
+        }
+        if request.task_family == "judge":
+            return '{"label":"clean","status":"covered"}'
+        if request.prompt.startswith("T1 "):
+            return json.dumps({
+                "constraints": ["bounded request"], "quantities": [],
+                "unresolved_references": [], "assumptions": [], "contradictions": [],
+                "conditional_semantics": [],
+                "atomic_obligations": [{
+                    "constraint_index": 1, "atom_type": "condition", "status": "present"
+                }],
+            })
+        if request.prompt.startswith("T2 "):
+            return json.dumps({
+                "validation_checks": ["bounded request"], "planned_tools": [],
+                "coverage_targets": ["bounded request"],
+            })
+        return '{"criterion":"bounded request"}'
+
+
+def test_generation_resume_restores_complete_execution_without_duplicate_calls(
+    tmp_path, monkeypatch
+):
+    root, private, reference = _private_inputs(tmp_path)
+    revision = "f" * 40
+    config = _config(tmp_path, revision)
+    monkeypatch.setattr(runner, "_git_revision", lambda _: revision)
+    providers = {
+        "openai-primary": _CompleteProvider("openai", "gpt-5.6-luna", "gpt-5.6-luna"),
+        "deepseek-secondary": _CompleteProvider(
+            "deepseek", "deepseek-v4-pro", "DeepSeek-V4-Pro-0813"
+        ),
+    }
+    output = tmp_path / "resumable.json"
+    original_load = runner.ExecutionReceipts.load
+    load_count = 0
+
+    def interrupt_before_second_artifact(self, binding):
+        nonlocal load_count
+        load_count += 1
+        if load_count == 2:
+            raise KeyboardInterrupt()
+        return original_load(self, binding)
+
+    monkeypatch.setattr(runner.ExecutionReceipts, "load", interrupt_before_second_artifact)
+    with pytest.raises(KeyboardInterrupt):
+        run_exploratory_prepilot(
+            config, output, private_corpus_path=private,
+            reference_constraints_path=reference, repository_root=root,
+            provider_adapters=providers, confirm_live=True)
+    run_directory = Path(f"{output}.run")
+    receipt = next(run_directory.glob("execution-*.json"))
+    receipt_before = receipt.read_bytes()
+    started_at = json.loads((run_directory / "run-manifest.json").read_text())["started_at"]
+    assert sum(provider.calls for provider in providers.values()) == 3
+    monkeypatch.setattr(runner.ExecutionReceipts, "load", original_load)
+    result = run_exploratory_prepilot(
+        config, output, private_corpus_path=private,
+        reference_constraints_path=reference, repository_root=root,
+        provider_adapters=providers, confirm_live=True, resume_run=run_directory)
+
+    assert result["state"] == "completed", (
+        result["error_class"], result["recovery_block_reason"], result["cost"])
+    assert result["artifact_count"] == 240
+    assert result["judge_result_count"] == 288
+    assert result["started_at"] == started_at
+    assert sum(provider.calls for provider in providers.values()) == 1296
+    assert receipt.read_bytes() == receipt_before
+    evidence = [json.loads(line) for line in
+                (run_directory / "raw-evidence.jsonl").read_text().splitlines()]
+    assert sum(item["kind"] == "generation_call" for item in evidence) == 720
+
+
+def test_judging_resume_reuses_call_and_result_receipts_without_duplicate_calls(
+    tmp_path, monkeypatch
+):
+    root, private, reference = _private_inputs(tmp_path)
+    revision = "9" * 40
+    config = _config(tmp_path, revision)
+    monkeypatch.setattr(runner, "_git_revision", lambda _: revision)
+    providers = {
+        "openai-primary": _CompleteProvider("openai", "gpt-5.6-luna", "gpt-5.6-luna"),
+        "deepseek-secondary": _CompleteProvider(
+            "deepseek", "deepseek-v4-pro", "DeepSeek-V4-Pro-0813"
+        ),
+    }
+    output = tmp_path / "judge-resumable.json"
+    original_load_result = runner.JudgeReceipts.load_result
+    load_count = 0
+
+    def interrupt_before_second_result(self, binding, call_bindings):
+        nonlocal load_count
+        load_count += 1
+        if load_count == 2:
+            raise KeyboardInterrupt()
+        return original_load_result(self, binding, call_bindings)
+
+    monkeypatch.setattr(runner.JudgeReceipts, "load_result", interrupt_before_second_result)
+    with pytest.raises(KeyboardInterrupt):
+        run_exploratory_prepilot(
+            config, output, private_corpus_path=private,
+            reference_constraints_path=reference, repository_root=root,
+            provider_adapters=providers, confirm_live=True,
+        )
+    run_directory = Path(f"{output}.run")
+    assert json.loads((run_directory / "checkpoint.json").read_text())["state"] == "judging"
+    first_result = next(run_directory.glob("judge-result-*.json"))
+    first_result_before = first_result.read_bytes()
+    calls_before_resume = sum(provider.calls for provider in providers.values())
+    assert calls_before_resume == 724
+
+    monkeypatch.setattr(runner.JudgeReceipts, "load_result", original_load_result)
+    result = run_exploratory_prepilot(
+        config, output, private_corpus_path=private,
+        reference_constraints_path=reference, repository_root=root,
+        provider_adapters=providers, confirm_live=True, resume_run=run_directory,
+    )
+
+    assert result["state"] == "completed"
+    assert result["judge_result_count"] == 288
+    assert sum(provider.calls for provider in providers.values()) == 1296
+    assert first_result.read_bytes() == first_result_before
+    assert len(list(run_directory.glob("judge-call-*.json"))) == 576
+    assert len(list(run_directory.glob("judge-result-*.json"))) == 288
+
+
+def test_finalization_failure_resumes_without_duplicate_provider_calls(
+    tmp_path, monkeypatch
+):
+    root, private, reference = _private_inputs(tmp_path)
+    revision = "8" * 40
+    config = _config(tmp_path, revision)
+    monkeypatch.setattr(runner, "_git_revision", lambda _: revision)
+    providers = {
+        "openai-primary": _CompleteProvider("openai", "gpt-5.6-luna", "gpt-5.6-luna"),
+        "deepseek-secondary": _CompleteProvider(
+            "deepseek", "deepseek-v4-pro", "DeepSeek-V4-Pro-0813"
+        ),
+    }
+    output = tmp_path / "finalization-resumable.json"
+    original_write = runner._atomic_json_write
+    failed_once = False
+
+    def fail_first_public_report(path, value):
+        nonlocal failed_once
+        if Path(path) == output and not failed_once:
+            failed_once = True
+            raise OSError("injected final report failure")
+        return original_write(path, value)
+
+    monkeypatch.setattr(runner, "_atomic_json_write", fail_first_public_report)
+    with pytest.raises(OSError, match="injected final report failure"):
+        run_exploratory_prepilot(
+            config, output, private_corpus_path=private,
+            reference_constraints_path=reference, repository_root=root,
+            provider_adapters=providers, confirm_live=True,
+        )
+    run_directory = Path(f"{output}.run")
+    assert json.loads((run_directory / "checkpoint.json").read_text())["state"] == "finalizing"
+    calls_before_resume = sum(provider.calls for provider in providers.values())
+    assert calls_before_resume == 1296
+    assert not output.exists()
+
+    monkeypatch.setattr(runner, "_atomic_json_write", original_write)
+    result = run_exploratory_prepilot(
+        config, output, private_corpus_path=private,
+        reference_constraints_path=reference, repository_root=root,
+        provider_adapters=providers, confirm_live=True, resume_run=run_directory,
+    )
+
+    assert result["state"] == "completed"
+    assert sum(provider.calls for provider in providers.values()) == calls_before_resume
+    assert json.loads(output.read_text())["state"] == "completed"
+    assert json.loads((run_directory / "checkpoint.json").read_text())["state"] == "completed"

@@ -261,7 +261,7 @@ def _materialize_artifacts(
     observable_dir.mkdir(parents=True, exist_ok=True)
 
     pair_map = {pair["intent_id"]: pair for pair in pairs}
-    grouped_code: dict[str, dict[str, str]] = {}
+    grouped_code: dict[tuple[str, int], dict[str, str]] = {}
     evaluation_metadata: list[dict[str, Any]] = []
 
     def normalize_source(source: str) -> str:
@@ -300,15 +300,20 @@ def _materialize_artifacts(
         if not isinstance(source, str):
             continue
         source = normalize_source(source)
-        safe_id = intent_id.lower().replace("/", "-")
+        replication_id = int(episode["replication_id"])
+        suffix = f"__rep-{replication_id}" if run_config["replications"] > 1 else ""
+        safe_id = intent_id.lower().replace("/", "-") + suffix
         code_path = generated_dir / f"{safe_id}__{variant}.py"
         code_path.write_text(source, encoding="utf-8")
-        grouped_code.setdefault(intent_id, {})[variant] = source
+        grouped_code.setdefault((intent_id, replication_id), {})[variant] = source
         _json_write(
             report_dir / f"{safe_id}__{variant}.json",
             {
                 "intent_id": intent_id,
                 "variant": variant,
+                "run_id": episode["run_id"],
+                "replication_id": replication_id,
+                "episode_id": episode["episode_id"],
                 "requirement_text": episode.get("requirement_text"),
                 "removed_condition": pair_map[intent_id].get("removed_condition"),
                 "behavior_status": episode.get("behavior_status"),
@@ -320,14 +325,15 @@ def _materialize_artifacts(
         )
 
     comparison_dir = bundle_dir / "comparisons"
-    for intent_id, variants in grouped_code.items():
+    for (intent_id, replication_id), variants in grouped_code.items():
         clean = variants.get("clean", "").splitlines(keepends=True)
         smelly = variants.get("smelly", "").splitlines(keepends=True)
         diff = difflib.unified_diff(clean, smelly, fromfile="clean.py", tofile="smelly.py")
         pair = pair_map[intent_id]
         text = "".join(diff)
         comparison_dir.mkdir(parents=True, exist_ok=True)
-        (comparison_dir / f"{intent_id.lower()}.md").write_text(
+        suffix = f"__rep-{replication_id}" if run_config["replications"] > 1 else ""
+        (comparison_dir / f"{intent_id.lower()}{suffix}.md").write_text(
             "# " + intent_id + "\n\n"
             + "Removed condition: " + str(pair.get("removed_condition", "")) + "\n\n"
             + "```diff\n" + text + "```\n",
@@ -358,6 +364,18 @@ def run_discovery(
 ) -> dict[str, Any]:
     if replications < 1:
         raise ValueError("replications must be >= 1")
+    if mode not in {"offline", "live"}:
+        raise ValueError("mode must be offline or live")
+    if mode == "live":
+        # Temporary quarantine of this combined discovery runner, not a provider
+        # outage. Both its test_gen and behavior_codegen oracles contain unresolved
+        # source-to-contract assumptions. Do not add an environment/CLI bypass.
+        # Reopening requires a reviewed corpus/oracle revision and qualification.
+        raise ValueError(
+            "live discovery is quarantined: blocked_semantic_review; "
+            "see docs/research/behavior-oracle-review-20260911.md. "
+            "Offline fixtures remain available but are not scientific evidence."
+        )
     pairs = load_discovery_pairs(repo_root / "data" / "pairs" / "discovery")
     run_id = run_id or f"{datetime.now(UTC).strftime('%Y%m%dT%H%M%SZ')}-{new_run_id()}"
     bundle_dir = artifact_root / "runs" / run_id
@@ -406,6 +424,8 @@ def run_discovery(
     run_config = {
         "schema_version": "requirements-smell-discovery-run/v1",
         "status": "discovery_only",
+        "oracle_semantic_status": "blocked_semantic_review",
+        "evidence_scope": "fixture_pipeline_check_only",
         "mode": mode,
         "model": run_model,
         "run_id": run_id,

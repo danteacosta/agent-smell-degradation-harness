@@ -634,6 +634,16 @@ def evaluate(
     is started when source or hidden tests fail validation.
     """
 
+    # Reject oversized raw input before dedent/strip allocate additional copies.
+    if isinstance(source, str):
+        if len(source) > _MAX_SOURCE_BYTES:
+            return _invalid_result([_issue("invalid_source", "source is too large.")])
+        try:
+            raw_size = len(source.encode("utf-8"))
+        except UnicodeEncodeError:
+            return _invalid_result([_issue("invalid_source", "source is not valid UTF-8.")])
+        if raw_size > _MAX_SOURCE_BYTES:
+            return _invalid_result([_issue("invalid_source", "source is too large.")])
     normalized_source = _normalize_source(source)
     source_issues = _validate_source(normalized_source)
     test_issues, normalized_tests = _validate_hidden_tests(hidden_tests)

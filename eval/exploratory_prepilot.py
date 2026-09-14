@@ -20,6 +20,14 @@ from collections.abc import Mapping, Sequence
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from functools import wraps
+from inspect import signature
+from eval.run_ownership import own_run
+from eval.recoverable_calls import (
+    RecoveryBlocked, call_session, digest, durable_create, read_record,
+)
+from eval.execution_receipts import ExecutionReceipts
+from eval.judge_receipts import JudgeReceipts
 
 from agents.providers import Provider, ProviderRequest
 from agents.staged_runtime import SubstantiveCompletenessError
@@ -368,6 +376,7 @@ def _build_report_base(
         "incomplete_artifact_count": 0,
         "error_class": None,
         "cost": None,
+        "recovery_block_reason": None,
         "substantive_completeness": {
             "required_fields": {
                 "T1": ["constraints", "atomic_obligations"],
@@ -418,6 +427,10 @@ def _invoke_judge(
     request: JudgeRequest,
     evidence_path: Path,
     max_output_tokens: int,
+    receipts: JudgeReceipts,
+    provider: str,
+    model: str,
+    model_version: str,
 ) -> tuple[Any | None, str | None]:
     serialized_request = serialize_judge_request(request)
     prompt = build_judge_prompt(request)
@@ -432,6 +445,20 @@ def _invoke_judge(
         task_family="judge",
         max_output_tokens=max_output_tokens,
     )
+    binding = receipts.call_binding(
+        occurrence_id=occurrence_id,
+        provider_slot_id=provider_slot_id,
+        generator_slot_id=generator_slot_id,
+        judge_relation=judge_relation,
+        provider=provider,
+        model=model,
+        model_version=model_version,
+        request=request,
+        prompt=prompt,
+    )
+    restored = receipts.load_call(binding, request)
+    if restored is not None:
+        return restored, None
     last_error: Exception | None = None
     for attempt in range(1, 3):
         try:
@@ -441,6 +468,7 @@ def _invoke_judge(
                 phase="judge",
                 attempt=attempt,
             )
+            parsed = receipts.save_call(binding, request, response, attempt=attempt)
             _append_private_evidence(
                 evidence_path,
                 {
@@ -455,8 +483,9 @@ def _invoke_judge(
                     "response": response,
                 },
             )
-            return parse_judge_response(response, request), None
-        except (BudgetExhaustedError, CostUnverifiedError, DurabilityError):
+            return parsed, None
+        except (BudgetExhaustedError, CostUnverifiedError, DurabilityError, RecoveryBlocked, OSError):
+            # Persistence and recovery failures cannot be repaired by billing a retry.
             raise
         except Exception as error:
             last_error = error
@@ -465,6 +494,28 @@ def _invoke_judge(
     return None, _safe_error(last_error) if last_error is not None else "ValueError"
 
 
+def _exclusive_run(function):
+    @wraps(function)
+    def guarded(*args, **kwargs):
+        bound = signature(function).bind(*args, **kwargs)
+        bound.apply_defaults()
+        options = bound.arguments
+        root = options["repository_root"] or Path(__file__).resolve().parents[1]
+        output = Path(options["output_path"])
+        _assert_private_output(output, root)
+        if output.is_symlink():
+            raise ExploratoryPrepilotError("output symlinks are not allowed")
+        resume = options["resume_run"]
+        directory = Path(resume) if resume is not None else Path(f"{output}.run")
+        _assert_private_output(directory, root)
+        if resume is None and output.exists():
+            raise ExploratoryPrepilotError("output already exists")
+        with own_run(directory, resume=resume is not None):
+            return function(*args, **kwargs)
+    return guarded
+
+
+@_exclusive_run
 def run_exploratory_prepilot(
     config_path: str | Path,
     output_path: str | Path,
@@ -499,6 +550,15 @@ def run_exploratory_prepilot(
             raise ExploratoryPrepilotError("resume configuration identity does not match")
 
     run_id = f"exploratory-prepilot-{datetime.now(UTC).strftime('%Y%m%dT%H%M%SZ')}"
+    if resume_run is not None:
+        if checkpoint.get("state") not in {
+            "preflight_ready", "generating", "generation_complete", "judging",
+            "finalizing",
+        }:
+            raise ExploratoryPrepilotError(
+                "automatic resume requires durable generation and judge receipts"
+            )
+        run_id = checkpoint["run_id"]
     run_directory = (
         Path(resume_run)
         if resume_run is not None
@@ -516,10 +576,12 @@ def run_exploratory_prepilot(
     )
     report["started_at"] = datetime.now(UTC).isoformat()
     ledger: CostLedger | None = None
+    calls_context = None
     incomplete_episode_ids: set[str] = set()
     incomplete_artifact_ids: set[str] = set()
     completed_artifact_count = 0
     completed_judge_count = 0
+    active_phase = "preflight"
 
     try:
         if not _source_revision_is_compatible(
@@ -537,11 +599,37 @@ def run_exploratory_prepilot(
         pairs = _record_pairs(private_records, redacted_join)
         private_constraints = load_reference_constraints(reference_constraints_path)
         constraints_by_intent = _reference_map(private_constraints)
+        plan_nonce_path = run_directory / "plan-nonce.json"
+        plan_binding = {
+            "schema": "exploratory-plan-nonce/v1", "run_id": run_id,
+            "configuration_sha256": report["configuration_sha256"],
+            "corpus_sha256": _sha256_text(_canonical_json(frozen_manifest)),
+            "reference_constraints_sha256": _sha256_text(_canonical_json([
+                {"source_intent_id": item.source_intent_id,
+                 "constraint_id": item.constraint_id,
+                 "text_sha256": _sha256_text(item.text)}
+                for item in private_constraints
+            ])),
+        }
+        plan_nonce = None
+        if resume_run is not None:
+            nonce_record = read_record(plan_nonce_path, 4096)
+            if {key: nonce_record.get(key) for key in plan_binding} != plan_binding:
+                raise ExploratoryPrepilotError("resume call-plan identity does not match")
+            try:
+                plan_nonce = bytes.fromhex(nonce_record["run_nonce_hex"])
+            except (KeyError, TypeError, ValueError):
+                raise ExploratoryPrepilotError("resume call-plan nonce is invalid") from None
         plan = build_exploratory_call_plan(
             pairs,
             _provider_plan_slots(configuration),
             private_constraints,
+            run_nonce=plan_nonce,
         )
+        if resume_run is None:
+            durable_create(plan_nonce_path, {
+                **plan_binding, "run_nonce_hex": plan._run_nonce.hex(),
+            })
         if set(constraints_by_intent) != {
             str(pair["source_intent_id"]) for pair in pairs
         }:
@@ -577,11 +665,22 @@ def run_exploratory_prepilot(
                 "preflight": preflight.to_dict(),
             }
         )
+        if resume_run is not None:
+            previous = json.loads((run_directory / "run-manifest.json").read_text())
+            for field in ("run_id", "source_revision", "corpus_manifest_sha256",
+                          "configuration_sha256", "rubric_sha256", "reference_constraints_sha256"):
+                expected = configuration.protocol_hashes["rubric_sha256"] if field == "rubric_sha256" else report[field]
+                if previous.get(field) != expected:
+                    raise ExploratoryPrepilotError("resume manifest identity does not match")
+            if not isinstance(previous.get("started_at"), str):
+                raise ExploratoryPrepilotError("resume manifest has no original start timestamp")
+            report["started_at"] = previous["started_at"]
         _atomic_json_write(
             run_directory / "run-manifest.json",
             {
                 "schema_version": "exploratory-run-manifest/v1",
                 "run_id": run_id,
+                "started_at": report["started_at"],
                 "source_revision": source_revision,
                 "corpus_manifest_sha256": report["corpus_manifest_sha256"],
                 "configuration_sha256": report["configuration_sha256"],
@@ -601,18 +700,19 @@ def run_exploratory_prepilot(
                 },
             },
         )
-        _checkpoint(
-            run_directory,
-            run_id=run_id,
-            state="preflight_ready" if preflight.passed else "stopped_budget_exhausted",
-            source_revision=source_revision,
-            corpus_manifest_sha256=report["corpus_manifest_sha256"],
-            configuration_sha256=report["configuration_sha256"],
-            rubric_sha256=configuration.protocol_hashes["rubric_sha256"],
-            ledger_head_hash=None,
-            completed_artifact_count=0,
-            completed_judge_count=0,
-        )
+        if resume_run is None:
+            _checkpoint(
+                run_directory,
+                run_id=run_id,
+                state="preflight_ready" if preflight.passed else "stopped_budget_exhausted",
+                source_revision=source_revision,
+                corpus_manifest_sha256=report["corpus_manifest_sha256"],
+                configuration_sha256=report["configuration_sha256"],
+                rubric_sha256=configuration.protocol_hashes["rubric_sha256"],
+                ledger_head_hash=None,
+                completed_artifact_count=0,
+                completed_judge_count=0,
+            )
         if not preflight.passed:
             report["state"] = "stopped_budget_exhausted"
             report["error_class"] = "BudgetPreflightError"
@@ -622,11 +722,27 @@ def run_exploratory_prepilot(
             report["state"] = "stopped_protocol_violation"
             report["error_class"] = "LiveConfirmationRequired"
         else:
-            ledger = CostLedger(
-                run_directory / "cost-ledger.jsonl",
-                configuration.cost_configuration(),
-                preflight=preflight,
+            _atomic_json_write(run_directory / "live-started.json", {
+                "run_id": run_id, "configuration_sha256": report["configuration_sha256"],
+                "recovery": "recoverable_calls_and_execution_receipts_v1",
+            })
+            recovery_scope = {
+                "run_id": run_id,
+                "configuration_sha256": report["configuration_sha256"],
+                "corpus_sha256": report["corpus_manifest_sha256"],
+                "rubric_sha256": configuration.protocol_hashes["rubric_sha256"],
+                "oracle_sha256": report["reference_constraints_sha256"],
+                "source_revision": str(source_revision),
+                "pricing_sha256": configuration.cost_configuration().configuration_sha256,
+            }
+            pending_calls_context = call_session(
+                run_directory / "calls", configuration.cost_configuration(), recovery_scope
             )
+            calls = pending_calls_context.__enter__()
+            calls_context = pending_calls_context
+            ledger = calls.ledger
+            execution_receipts = ExecutionReceipts(run_directory, recovery_scope, ledger)
+            judge_receipts = JudgeReceipts(run_directory, recovery_scope, ledger)
             adapters: dict[str, Provider] = {}
             for slot in configuration.providers:
                 if provider_adapters is not None and slot.id in provider_adapters:
@@ -635,19 +751,39 @@ def run_exploratory_prepilot(
                     adapters[slot.id], _ = build_provider_from_slot(
                         slot, environ=dict(os.environ if environ is None else environ)
                     )
+            pairs_by_intent = {item["source_intent_id"]: item for item in pairs}
             joins = _plan_join_by_artifact(plan)
+            execution_receipts.validate_inventory(joins)
+            judge_receipts.validate_inventory(
+                [item.occurrence_id for item in plan.occurrences],
+                [slot.id for slot in configuration.providers],
+            )
             artifacts: dict[str, dict[str, Any]] = {}
             generation_stage_count = 0
+            active_phase = "generation"
+            _checkpoint(
+                run_directory, run_id=run_id, state="generating",
+                source_revision=source_revision,
+                corpus_manifest_sha256=report["corpus_manifest_sha256"],
+                configuration_sha256=report["configuration_sha256"],
+                rubric_sha256=configuration.protocol_hashes["rubric_sha256"],
+                ledger_head_hash=ledger.ledger_head_hash,
+                completed_artifact_count=0, completed_judge_count=0,
+            )
             for slot in configuration.providers:
-                budgeted = budgeted_provider(adapters[slot.id], ledger)
                 for artifact_id, join in joins.items():
                     if join.provider_slot_id != slot.id:
                         continue
-                    pair = next(
-                        item for item in pairs
-                        if item["source_intent_id"] == join.source_intent_id
-                    )
+                    pair = pairs_by_intent[join.source_intent_id]
                     variant = "clean" if join.variant_index == 0 else "smelly"
+                    execution_binding = execution_receipts.binding(
+                        artifact_id=str(artifact_id), episode_id=str(join.episode_id),
+                        base_task_id=str(join.base_task_id), provider_slot_id=str(slot.id),
+                        provider=str(adapters[slot.id].name), model=str(slot.model),
+                        model_version=str(slot.model_version),
+                        pair=pair, variant=variant, task_family=configuration.task_family,
+                    )
+                    restored_execution = execution_receipts.load(execution_binding)
 
                     def stage_completion(
                         request: ProviderRequest,
@@ -658,12 +794,16 @@ def run_exploratory_prepilot(
                         _slot_id: str = slot.id,
                     ) -> str:
                         phase = "generation.artifact" if stage == "artifact" else f"generation.{stage}"
-                        response = budgeted.complete(
-                            request,
+                        response = calls.complete(
+                            adapters[_slot_id], request,
                             call_id=f"{_artifact_id}:{phase}",
                             phase=phase,
                             attempt=attempt,
                         )
+                        if calls.last_replayed:
+                            raise RecoveryBlocked(
+                                "a stage response exists without a complete T1--T3 execution receipt"
+                            )
                         _append_private_evidence(
                             evidence_path,
                             {
@@ -678,26 +818,28 @@ def run_exploratory_prepilot(
                         )
                         return response
 
-                    agent = RuntimeCheckpointAgent.from_provider(
-                        budgeted,
-                        model=slot.model,
-                        model_version=slot.model_version,
-                        context_manager=NoCompactionManager(),
-                        stage_completion=stage_completion,
-                        max_stage_attempts=2,
-                        stage_output_tokens={
-                            "T1": configuration.token_bounds["generation.T1"].output_tokens,
-                            "T2": configuration.token_bounds["generation.T2"].output_tokens,
-                            "artifact": configuration.token_bounds["generation.artifact"].output_tokens,
-                        },
-                    )
                     try:
-                        execution = agent.execute_with_checkpoints(
-                            pair,
-                            variant=variant,
-                            task_family=configuration.task_family,
-                        )
-                    except (BudgetExhaustedError, CostUnverifiedError, DurabilityError):
+                        if restored_execution is not None:
+                            execution = restored_execution
+                        else:
+                            agent = RuntimeCheckpointAgent.from_provider(
+                                adapters[slot.id], model=slot.model,
+                                model_version=slot.model_version,
+                                context_manager=NoCompactionManager(),
+                                stage_completion=stage_completion,
+                                max_stage_attempts=2,
+                                stage_output_tokens={
+                                    "T1": configuration.token_bounds["generation.T1"].output_tokens,
+                                    "T2": configuration.token_bounds["generation.T2"].output_tokens,
+                                    "artifact": configuration.token_bounds["generation.artifact"].output_tokens,
+                                },
+                            )
+                            execution = agent.execute_with_checkpoints(
+                                pair, variant=variant,
+                                task_family=configuration.task_family,
+                            )
+                            execution_receipts.save(execution_binding, execution)
+                    except (BudgetExhaustedError, CostUnverifiedError, DurabilityError, RecoveryBlocked):
                         raise
                     except SubstantiveCompletenessError as error:
                         incomplete_episode_ids.add(str(join.episode_id))
@@ -776,7 +918,11 @@ def run_exploratory_prepilot(
                         provider_slot_id=str(slot.id),
                         execution=execution,
                     )
-                    _append_private_evidence(evidence_path, context_evidence)
+                    # A restored execution is itself the durable source of its
+                    # context events. Re-appending JSONL evidence would create
+                    # duplicates if the previous process died after this append.
+                    if restored_execution is None:
+                        _append_private_evidence(evidence_path, context_evidence)
                     _accumulate_context_summary(
                         report["context_management"],
                         context_evidence["summary"],
@@ -807,8 +953,28 @@ def run_exploratory_prepilot(
                 "incomplete_generation",
                 "incomplete_substantive_evidence",
             }:
+                _checkpoint(
+                    run_directory, run_id=run_id, state="generation_complete",
+                    source_revision=source_revision,
+                    corpus_manifest_sha256=report["corpus_manifest_sha256"],
+                    configuration_sha256=report["configuration_sha256"],
+                    rubric_sha256=configuration.protocol_hashes["rubric_sha256"],
+                    ledger_head_hash=ledger.ledger_head_hash,
+                    completed_artifact_count=len(artifacts), completed_judge_count=0,
+                )
+                active_phase = "judging"
+                class SessionBudgeted:
+                    def __init__(self, provider):
+                        self.provider = provider
+
+                    def complete(self, request, *, call_id, phase, attempt=None):
+                        return calls.complete(
+                            self.provider, request, call_id=call_id,
+                            phase=phase, attempt=attempt or 1,
+                        )
+
                 judge_adapters = {
-                    slot.id: budgeted_provider(adapters[slot.id], ledger)
+                    slot.id: SessionBudgeted(adapters[slot.id])
                     for slot in configuration.providers
                 }
                 parsed_by_occurrence: dict[str, dict[str, Any]] = {}
@@ -836,11 +1002,25 @@ def run_exploratory_prepilot(
                         reference_constraints=reference,
                     )
                     responses: list[Any] = []
+                    call_bindings: list[dict[str, Any]] = []
                     for slot in configuration.providers:
                         relation = _judge_relation(
                             judge_slot_id=slot.id,
                             generator_slot_id=join.provider_slot_id,
                         )
+                        prompt = build_judge_prompt(request)
+                        call_binding = judge_receipts.call_binding(
+                            occurrence_id=occurrence.occurrence_id,
+                            provider_slot_id=slot.id,
+                            generator_slot_id=join.provider_slot_id,
+                            judge_relation=relation,
+                            provider=str(adapters[slot.id].name),
+                            model=str(slot.model),
+                            model_version=str(slot.model_version),
+                            request=request,
+                            prompt=prompt,
+                        )
+                        call_bindings.append(call_binding)
                         parsed, error_class = _invoke_judge(
                             budgeted=judge_adapters[slot.id],
                             provider_slot_id=slot.id,
@@ -849,6 +1029,10 @@ def run_exploratory_prepilot(
                             request=request,
                             evidence_path=evidence_path,
                             max_output_tokens=configuration.token_bounds["judge"].output_tokens,
+                            receipts=judge_receipts,
+                            provider=str(adapters[slot.id].name),
+                            model=str(slot.model),
+                            model_version=str(slot.model_version),
                         )
                         if parsed is None:
                             relation_failure_counts[relation] += 1
@@ -860,6 +1044,47 @@ def run_exploratory_prepilot(
                         responses.append(parsed)
                     if len(responses) == 2:
                         consolidated = consolidate_two_judges(responses[0], responses[1])
+                        result_binding = judge_receipts.result_binding(
+                            occurrence_id=occurrence.occurrence_id,
+                            base_task_id=occurrence.base_task_id,
+                            artifact_id=str(artifact_row["artifact_id"]),
+                            generator_slot_id=join.provider_slot_id,
+                            request=request,
+                            provider_slot_ids=[slot.id for slot in configuration.providers],
+                        )
+                        result_value = {
+                            "label": consolidated.label,
+                            "consensus": consolidated.consensus,
+                            "judges": [
+                                {
+                                    "provider_slot_id": slot.id,
+                                    "judge_relation": _judge_relation(
+                                        judge_slot_id=slot.id,
+                                        generator_slot_id=join.provider_slot_id,
+                                    ),
+                                    "label": parsed.label,
+                                    "constraint_statuses": [
+                                        {
+                                            "constraint_id": assessment.constraint_id,
+                                            "status": assessment.status,
+                                        }
+                                        for assessment in parsed.constraint_assessments
+                                    ],
+                                }
+                                for slot, parsed in zip(
+                                    configuration.providers, responses, strict=True
+                                )
+                            ],
+                        }
+                        restored_result = judge_receipts.load_result(
+                            result_binding, call_bindings
+                        )
+                        if restored_result is None:
+                            judge_receipts.save_result(
+                                result_binding, call_bindings, result_value
+                            )
+                        elif restored_result != result_value:
+                            raise RecoveryBlocked("consolidated judge result changed")
                         label_counts[consolidated.label] += 1
                         parsed_by_occurrence[occurrence.occurrence_id] = {
                             "label": consolidated.label,
@@ -907,14 +1132,50 @@ def run_exploratory_prepilot(
     except (BudgetExhaustedError,):
         report["state"] = "stopped_budget_exhausted"
         report["error_class"] = "BudgetExhaustedError"
+    except RecoveryBlocked as error:
+        report["state"] = "stopped_cost_unverified"
+        report["error_class"] = "RecoveryBlocked"
+        report["recovery_block_reason"] = str(error)
     except (CostUnverifiedError, AmbiguousInFlightError, DurabilityError):
         report["state"] = "stopped_cost_unverified"
         report["error_class"] = "CostUnverifiedError"
     except (CorpusIntakeError, ProviderRuntimeConfigError, ProtocolHashError, ExploratoryPrepilotError, OSError, ValueError) as error:
         report["state"] = "stopped_protocol_violation"
         report["error_class"] = _safe_error(error)
+    except KeyboardInterrupt:
+        report["state"] = {
+            "generation": "generating",
+            "judging": "judging",
+        }.get(active_phase, "stopped_protocol_violation")
+        report["error_class"] = "KeyboardInterrupt"
+        raise
     finally:
+        if resume_run is not None and report["state"] == "stopped_protocol_violation" and ledger is None:
+            raise ExploratoryPrepilotError("resume rejected; original evidence preserved")
+        terminal_state = report["state"] in TERMINAL_STATES
         if ledger is not None:
+            _checkpoint(
+                run_directory,
+                run_id=run_id,
+                state="finalizing" if terminal_state else report["state"],
+                source_revision=source_revision,
+                corpus_manifest_sha256=report.get("corpus_manifest_sha256"),
+                configuration_sha256=report["configuration_sha256"],
+                rubric_sha256=configuration.protocol_hashes["rubric_sha256"],
+                ledger_head_hash=ledger.ledger_head_hash,
+                completed_artifact_count=completed_artifact_count,
+                completed_judge_count=completed_judge_count,
+            )
+        if ledger is not None and report["cost"] is None:
+            report["cost"] = ledger.report()
+        if calls_context is not None:
+            calls_context.__exit__(None, None, None)
+        report["finished_at"] = datetime.now(UTC).isoformat()
+        report["status"] = report["state"]
+        _atomic_json_write(run_directory / "report.json", report)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        _atomic_json_write(output, report)
+        if ledger is not None and terminal_state:
             _checkpoint(
                 run_directory,
                 run_id=run_id,
@@ -927,13 +1188,6 @@ def run_exploratory_prepilot(
                 completed_artifact_count=completed_artifact_count,
                 completed_judge_count=completed_judge_count,
             )
-        if ledger is not None and report["cost"] is None:
-            report["cost"] = ledger.report()
-        report["finished_at"] = datetime.now(UTC).isoformat()
-        report["status"] = report["state"]
-        _atomic_json_write(run_directory / "report.json", report)
-        output.parent.mkdir(parents=True, exist_ok=True)
-        _atomic_json_write(output, report)
     return report
 
 
