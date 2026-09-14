@@ -437,6 +437,19 @@ corpus or qualify H1/H2. See the
 The [completed 24-episode pilot](docs/research/codex-language-controls-results-20260914.md)
 records all interpretation contrasts, passing controls and evidence hashes.
 
+Prepare draft first-reading forms for independent candidate review, offline:
+
+```bash
+python -m eval.language_review --output /absolute/new/private/review-packet --seed 20260914
+```
+
+Each of six forms contains exactly one text from each of four clusters. Give
+each reader only one form; keep the other forms and `custodian/` separate.
+The command preserves the original texts, leaves human fields empty and writes
+a hash receipt last. It neither calls a model nor admits a corpus or distributes
+anything. Prior exposure must be recorded before claiming an unprimed reading.
+See the [candidate-admission checklist](docs/research/language-candidate-admission-checklist-20260914.md).
+
 Offline preflight before live LLM runs (secret-free; default CI unchanged):
 
 | Command | Purpose |

@@ -1,6 +1,42 @@
 # Revisão do mestrado — 14/09/2026
 
-## Diagnóstico
+## Estado atual após os PRs #53–55
+
+Este quadro atualiza o diagnóstico inicial preservado abaixo. O PR #53 foi
+mergeado em `509631b`, o #54 em `9fdf9a2` e o #55 em `e2b578d`. O último CI
+aprovou 1.436 testes e nove subtestes, além do smoke do executor, replay e wedge.
+A avaliação completa da `main` após o merge também passou. Esses checks
+qualificam a entrega de engenharia; não validam hipóteses do mestrado.
+
+| Frente | Executado e verificável | O que falta |
+|---|---|---|
+| Omissão controlada | 18 episódios originais; teto do desconto perdido em 3/3 reescritas. Acesso e token sem contraste. | Validade externa e revisão independente; não confundir omissão com categoria Paska validada. |
+| Robustez dos artefatos | 1.638 entradas verificadas nos mesmos 18 códigos, sem novas gerações. | A grade não acrescenta intenções ou amostras independentes. |
+| Ambiguidades e controles | 24 episódios separados; 12/12 textos claros passaram. Coordenação reescrita: 2/4 intenção, 2/4 alternativa. Pronome: 4/4 nenhuma das duas políticas. Controles: 8/8 entre ambos os braços. | Validar categorias, alternativas plausíveis e pistas da interface com revisores independentes. |
+| Cobertura de smells | Dez entradas bibliográficas; exemplos executáveis de omissão, coordenação e pronome. | Ampliar casos/projetos e validar rótulos; não declarar dez smells comprovados. |
+| Revisão humana | Formulários individuais preparados, sem resultados e com campos vazios; um texto por grupo. | Indicar revisores e adjudicador, revisar rubrica, registrar exposição e autorizar a distribuição. |
+| H1 | Instrumento de pares e testes disponível. | Admissão semântica, amostragem por projeto/intenção, protocolo congelado e desfechos independentes. |
+| H2 | Captura e análise de sinais T1–T3 disponíveis; gate histórico do avaliador falhou. | Qualificar rótulos/avaliador e medir detecção fora dos grupos usados no desenvolvimento, sem acesso a T4. |
+
+Os [resultados do piloto de linguagem](codex-language-controls-results-20260914.md)
+e o [roteiro de admissão](language-candidate-admission-checklist-20260914.md)
+detalham a evidência e a próxima revisão. O comando `python -m eval.language_review`
+reproduz o pacote de primeira leitura a partir do código versionado. Não
+distribuir a pasta completa: isso exporia outras versões e induziria respostas.
+O cadastro confirmatório continua bloqueado e não contém revisores ou labels
+inventados. A revisão de candidatos não substitui o julgamento dos artefatos.
+
+A proposta e o relatório do Drive foram atualizados, com conferência visual das
+novas seções e preservação do texto anterior. Os decks agora contêm 13 e 14
+slides, incluindo as injeções, os resultados e as limitações. PowerPoints e PDFs
+foram exportados e conferidos. As menções a seis/sete slides, datas antigas ou
+ausência de edição no diagnóstico inicial abaixo são fotografias anteriores.
+
+As chamadas dos dois pilotos originais usaram a assinatura via Codex CLI.
+Não misturar essa configuração com os experimentos históricos da API. O
+exportador de revisão funciona offline e não consome nenhuma dessas cotas.
+
+## Diagnóstico inicial, antes das atualizações desta sessão
 
 PR #51 mergeado em `53dfb73`; PR #52 mergeado em `10db184`. A revisão do #52
 encontrou e corrigiu um erro que repetia chamadas de juiz após falha de
