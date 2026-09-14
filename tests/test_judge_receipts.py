@@ -110,3 +110,42 @@ def test_unknown_receipt_inventory_is_rejected(tmp_path):
     )
     with pytest.raises(RecoveryBlocked, match="unexpected"):
         receipts.validate_inventory(["different"], ["slot-a"])
+
+
+@pytest.mark.parametrize("failed_boundary", ["receipt", "evidence"])
+def test_judge_persistence_failure_never_dispatches_another_paid_attempt(
+    tmp_path, failed_boundary
+):
+    from eval.exploratory_prepilot import _invoke_judge
+
+    class Provider:
+        calls = 0
+
+        def complete(self, request, **kwargs):
+            self.calls += 1
+            return '{"label":"clean","status":"covered"}'
+
+    provider = Provider()
+    receipt_directory = tmp_path if failed_boundary == "evidence" else tmp_path / "missing"
+    receipts = JudgeReceipts(receipt_directory, SCOPE, _ledger(tmp_path / "ledger.jsonl"))
+    # Opening a directory for append fails after the call receipt is durable.
+    evidence_path = tmp_path if failed_boundary == "evidence" else tmp_path / "evidence.jsonl"
+    with pytest.raises(OSError):
+        _invoke_judge(
+            budgeted=provider, provider_slot_id="slot-a", generator_slot_id="slot-a",
+            occurrence_id="occurrence", request=_request(), evidence_path=evidence_path,
+            max_output_tokens=100, receipts=receipts, provider="fixture",
+            model="fixture-model", model_version="fixture-version",
+        )
+    assert provider.calls == 1
+    if failed_boundary == "evidence":
+        restored, error = _invoke_judge(
+            budgeted=provider, provider_slot_id="slot-a", generator_slot_id="slot-a",
+            occurrence_id="occurrence", request=_request(),
+            evidence_path=tmp_path / "recovered-evidence.jsonl", max_output_tokens=100,
+            receipts=receipts, provider="fixture", model="fixture-model",
+            model_version="fixture-version",
+        )
+        assert restored.label == "clean"
+        assert error is None
+        assert provider.calls == 1
