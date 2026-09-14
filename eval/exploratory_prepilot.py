@@ -551,7 +551,8 @@ def run_exploratory_prepilot(
     run_id = f"exploratory-prepilot-{datetime.now(UTC).strftime('%Y%m%dT%H%M%SZ')}"
     if resume_run is not None:
         if checkpoint.get("state") not in {
-            "preflight_ready", "generating", "generation_complete", "judging"
+            "preflight_ready", "generating", "generation_complete", "judging",
+            "finalizing",
         }:
             raise ExploratoryPrepilotError(
                 "automatic resume requires durable generation and judge receipts"
@@ -1150,11 +1151,12 @@ def run_exploratory_prepilot(
     finally:
         if resume_run is not None and report["state"] == "stopped_protocol_violation" and ledger is None:
             raise ExploratoryPrepilotError("resume rejected; original evidence preserved")
+        terminal_state = report["state"] in TERMINAL_STATES
         if ledger is not None:
             _checkpoint(
                 run_directory,
                 run_id=run_id,
-                state=report["state"],
+                state="finalizing" if terminal_state else report["state"],
                 source_revision=source_revision,
                 corpus_manifest_sha256=report.get("corpus_manifest_sha256"),
                 configuration_sha256=report["configuration_sha256"],
@@ -1172,6 +1174,19 @@ def run_exploratory_prepilot(
         _atomic_json_write(run_directory / "report.json", report)
         output.parent.mkdir(parents=True, exist_ok=True)
         _atomic_json_write(output, report)
+        if ledger is not None and terminal_state:
+            _checkpoint(
+                run_directory,
+                run_id=run_id,
+                state=report["state"],
+                source_revision=source_revision,
+                corpus_manifest_sha256=report.get("corpus_manifest_sha256"),
+                configuration_sha256=report["configuration_sha256"],
+                rubric_sha256=configuration.protocol_hashes["rubric_sha256"],
+                ledger_head_hash=ledger.ledger_head_hash,
+                completed_artifact_count=completed_artifact_count,
+                completed_judge_count=completed_judge_count,
+            )
     return report
 
 

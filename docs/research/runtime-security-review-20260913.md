@@ -25,8 +25,9 @@ rewritten. No controls were removed to execute as root.
 
 ## Honest recovery boundary
 
-Automatic recovery now covers preflight, generation and validated judging. Before provider dispatch,
-the runner creates a durable call intent. After receipt, it persists response and
+Automatic recovery now covers preflight, generation, validated judging and the
+final report commit. Before provider dispatch, the runner creates a durable call
+intent. After receipt, it persists response and
 usage before reconciling cost. A complete artifact then receives an immutable
 execution receipt containing the original T1--T3 trace. Resume validates all
 bindings and restores only those complete executions.
@@ -40,7 +41,10 @@ Each successful judge response receives an immutable receipt bound to its reques
 provider/model identity, generator relation, ledger boundary and frozen scope.
 Two validated call receipts are then bound into one deterministic consolidated
 result receipt. Resume reconstructs counters from these receipts and does not
-dispatch completed judge calls again. Real storage/power-loss qualification remains future work.
+dispatch completed judge calls again. Terminal status is written only after the
+private and redacted public reports are durably committed. Failure between those
+writes leaves `finalizing`, which is resumable from the validated receipts. Real
+storage/power-loss qualification remains future work.
 
 Changing transport behavior requires a new reviewed runtime configuration and
 qualification; no frozen experimental hash or historical evidence was rewritten.
@@ -141,6 +145,13 @@ A synthetic interruption after two judged occurrences resumes the complete
 1,296-operation fixture plan with 1,296 provider-fixture calls in total, not
 1,300. This is full exploratory pipeline recovery for durable local receipts,
 not provider-side exactly-once execution or power-loss qualification.
+
+Finalization has its own resumable barrier. An injected failure on the first
+public-report write, after all 1,296 fixture operations completed, leaves the
+checkpoint in `finalizing`. A second process reconstructs and commits both
+reports, advances the checkpoint to `completed`, and observes no additional
+provider-fixture call. This tests process-level write interruption and ordering;
+it does not emulate loss of power, volatile device caches or filesystem damage.
 
 Implementation motivation is bounded by Zhang et al., *Fault-tolerant and
 Transactional Stateful Serverless Workflows*, OSDI 2020

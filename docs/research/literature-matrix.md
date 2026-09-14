@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-09-11
+Last updated: 2026-09-14
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -227,3 +227,12 @@ experimental setup, results, discussion and artifact limitations.
 | Reference / evidence | Question, sample and method | Result / limitations | Thesis / experiment / product relevance and action | Credibility |
 | --- | --- | --- | --- | --- |
 | Zhang, Cardoza, Chen, Angel and Liu, *Fault-tolerant and Transactional Stateful Serverless Workflows*, OSDI 2020, peer-reviewed; [paper](https://www.usenix.org/system/files/osdi20-zhang_haoran.pdf), [venue page](https://www.usenix.org/conference/osdi20/presentation/zhang-haoran) | How can stateful serverless workflows tolerate worker crashes and provide transactions? Beldi atomically logs operations and re-executes unfinished functions. The prototype comprises 1,823 lines of Go and evaluates three DeathStarBench-derived applications on AWS Lambda/DynamoDB, including up to 1,000 Lambdas. | Logging plus re-execution provides the evaluated workflow semantics; at saturation the paper reports 2.4--3.3x median and 1.2--1.8x p99 latency increases versus its baseline. Results assume strongly consistent fault-tolerant storage and Beldi's runtime; three applications, cloud-specific deployment and no qualification of our filesystem limit transfer. | Thesis: infrastructure only, no H1/H2 support. Experiment: represent semantic completion separately from provider-call completion; resume only from bound immutable receipts. Product: expose recovery state and unresolved remote ambiguity. Action: add per-judge and consolidated receipts, restore judging without duplicate fixture calls, and retain fail-closed ambiguous-call handling. This is an engineering inference, not adoption of Beldi's distributed guarantee. | 8/10: peer-reviewed top systems venue, explicit protocols, implementation, evaluation and artifact; assumptions and domain differ materially from this single-host harness. |
+
+## 2026-09-14 — Bounded crash testing of persistence points
+
+Search/read date: 2026-09-14; title deduplicated. Read abstract, design,
+bug-study construction, evaluation, discussion and limitations.
+
+| Reference / evidence | Question, sample and method | Result / limitations | Thesis / experiment / product relevance and action | Credibility |
+| --- | --- | --- | --- | --- |
+| Mohan, Martinez, Ponnapalli, Raju and Chidambaram, *Finding Crash-Consistency Bugs with Bounded Black-Box Crash Testing*, OSDI 2018, peer-reviewed; [paper](https://www.usenix.org/system/files/osdi18-mohan.pdf), [venue page](https://www.usenix.org/conference/osdi18/presentation/mohan) | Can bounded black-box testing expose filesystem crash-consistency defects? The authors study 26 reported bugs across three filesystems and seven kernel versions, then combine CrashMonkey record/replay with ACE-generated workloads and persistence-point crashes. | The evaluation reproduced 24 of 26 reported bugs and found ten new bugs. Most studied bugs were reachable with at most three filesystem operations. The bound is empirical rather than exhaustive; resource-exhaustion and long-sequence defects can be missed, and filesystem-level results do not qualify an application runtime or storage deployment. | Thesis: infrastructure evidence only, no H1/H2 support. Experiment: treat report publication as a separate persistence point after provider and judge completion. Product: expose `finalizing` instead of claiming completion before reports exist. Action: inject failure during the final report commit, resume from receipts, and verify zero duplicate fixture calls. This is a bounded engineering application, not a real power-loss test. | 9/10: peer-reviewed top systems venue, explicit bug corpus, method, implementation and evaluation; bounded coverage and domain transfer remain material. |

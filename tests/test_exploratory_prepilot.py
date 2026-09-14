@@ -462,3 +462,53 @@ def test_judging_resume_reuses_call_and_result_receipts_without_duplicate_calls(
     assert first_result.read_bytes() == first_result_before
     assert len(list(run_directory.glob("judge-call-*.json"))) == 576
     assert len(list(run_directory.glob("judge-result-*.json"))) == 288
+
+
+def test_finalization_failure_resumes_without_duplicate_provider_calls(
+    tmp_path, monkeypatch
+):
+    root, private, reference = _private_inputs(tmp_path)
+    revision = "8" * 40
+    config = _config(tmp_path, revision)
+    monkeypatch.setattr(runner, "_git_revision", lambda _: revision)
+    providers = {
+        "openai-primary": _CompleteProvider("openai", "gpt-5.6-luna", "gpt-5.6-luna"),
+        "deepseek-secondary": _CompleteProvider(
+            "deepseek", "deepseek-v4-pro", "DeepSeek-V4-Pro-0813"
+        ),
+    }
+    output = tmp_path / "finalization-resumable.json"
+    original_write = runner._atomic_json_write
+    failed_once = False
+
+    def fail_first_public_report(path, value):
+        nonlocal failed_once
+        if Path(path) == output and not failed_once:
+            failed_once = True
+            raise OSError("injected final report failure")
+        return original_write(path, value)
+
+    monkeypatch.setattr(runner, "_atomic_json_write", fail_first_public_report)
+    with pytest.raises(OSError, match="injected final report failure"):
+        run_exploratory_prepilot(
+            config, output, private_corpus_path=private,
+            reference_constraints_path=reference, repository_root=root,
+            provider_adapters=providers, confirm_live=True,
+        )
+    run_directory = Path(f"{output}.run")
+    assert json.loads((run_directory / "checkpoint.json").read_text())["state"] == "finalizing"
+    calls_before_resume = sum(provider.calls for provider in providers.values())
+    assert calls_before_resume == 1296
+    assert not output.exists()
+
+    monkeypatch.setattr(runner, "_atomic_json_write", original_write)
+    result = run_exploratory_prepilot(
+        config, output, private_corpus_path=private,
+        reference_constraints_path=reference, repository_root=root,
+        provider_adapters=providers, confirm_live=True, resume_run=run_directory,
+    )
+
+    assert result["state"] == "completed"
+    assert sum(provider.calls for provider in providers.values()) == calls_before_resume
+    assert json.loads(output.read_text())["state"] == "completed"
+    assert json.loads((run_directory / "checkpoint.json").read_text())["state"] == "completed"

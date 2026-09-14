@@ -183,8 +183,12 @@ Exploratory recovery restores complete, immutable T1--T3 execution receipts and
 validated per-judge plus consolidated result receipts bound to the frozen run
 and cost ledger. It never recreates checkpoint timestamps from cached text.
 Completed generation and judging work is skipped after restart without another
-provider call. A request accepted remotely but not durably received remains
-ambiguous and blocks; this is not provider-side exactly-once execution.
+provider call. Terminal status is committed only after both the private run
+report and redacted public report are durably written. An interruption during
+that final commit leaves a resumable `finalizing` checkpoint; resumption rebuilds
+the reports from receipts without another provider call. A request accepted
+remotely but not durably received remains ambiguous and blocks; this is not
+provider-side exactly-once execution or power-loss qualification.
 
 For ordinary development using the older partial constraints:
 
