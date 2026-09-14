@@ -9,6 +9,11 @@ provides 12 synthetic evaluator controls and an offline scorer while H1/H2 remai
 gated by independent human labels. The calibration-queue freezer selects a
 project-stratified probability audit before a disjoint signal-enriched triage
 queue; it prepares later review without creating labels or relaxing the gate.
+The fail-closed [annotation study charter](data/annotation/annotation-study-charter.candidate.json)
+makes staffing, rehearsal, packet custody, exception handling and governance
+explicit before distribution. Validate a private completed copy with
+`python scripts/validate_annotation_charter.py`; a valid charter is process
+readiness, not a semantic label or permission to bypass independent review.
 Run the new regressions without dependencies:
 `python -m unittest discover -s tests -p test_judge_controls.py -v`.
 
