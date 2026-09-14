@@ -2,6 +2,19 @@
 
 ## Diagnóstico
 
+PR #51 mergeado em `53dfb73`; PR #52 mergeado em `10db184`. A revisão do #52
+encontrou e corrigiu um erro que repetia chamadas de juiz após falha de
+persistência de evidência. Regressões passaram antes do merge. O CI de
+`73236be` executou **1.406 testes e nove subtests**, todos aprovados, mais
+os cinco controles do executor; auditoria de dependências, replay e wedge
+também passaram. A adaptação Codex tem 16 testes próprios aprovados, gate
+offline aprovado e o ensaio real documentado separadamente.
+
+As tentativas de suíte completa no Mac e em Linux x86 emulado não ficaram
+verdes: houve limites indisponíveis, identidade de snapshot e propriedade Git
+do contêiner. Elas não são usadas como prova de aprovação. A evidência completa
+dos PRs é o CI nativo acima. Nenhum controle foi afrouxado para esconder falhas.
+
 O instrumento avançou mais do que a evidência científica. Há geração real,
 captura temporal, rastreabilidade e recuperação de execução. Ainda não há
 conclusão validada de H1/H2. Testes de software, chamadas de modelo e
