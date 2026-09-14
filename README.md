@@ -391,6 +391,30 @@ The default runner, pre-pilot and CI use `direct`; clarification experiments opt
 
 ## Pre-experiment tooling
 
+### Local Codex subscription demonstration
+
+`agents.codex_cli.CodexCLIProvider` uses the official CLI with saved ChatGPT
+authentication, without forwarding API keys or falling back to Platform billing.
+It is a separate exploratory adapter, not a qualified replacement for the
+API-backed pre-pilot. It rejects strict API output-token caps and records
+subscription usage with USD cost unavailable. Use a current CLI supporting
+`exec --ignore-user-config --ephemeral --json`; check `codex login status`.
+
+```bash
+python -m eval.codex_demo --output /absolute/new/private/run-directory \
+  --codex-bin /absolute/path/to/current/codex --model YOUR_AVAILABLE_MODEL \
+  --replications 3
+```
+
+This runs 18 completions over three original illustrative policies, using a
+frozen common oracle for each pair. It requires Docker and the pinned Linux
+ARM64 Python image, qualifies the real executor before generation, preserves
+failed/null/reverse outcomes, and refuses an existing output directory. It
+does not resume ambiguous calls. Review all outcomes, not only the contrasts.
+The natural-source discovery quarantine and confirmatory gates remain active.
+See [the master's status review](docs/research/masters-state-review-20260914.md)
+and [the acceptance plan](docs/research/codex-subscription-plan-20260914.md).
+
 Offline preflight before live LLM runs (secret-free; default CI unchanged):
 
 | Command | Purpose |
