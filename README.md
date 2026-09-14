@@ -179,10 +179,12 @@ This new environment still requires provider qualification; it does not replace
 historical runtime snapshots. The dependency advisory report and recovery/resource
 commands are in [the runtime review](docs/research/runtime-security-review-20260913.md).
 
-Exploratory generation recovery restores only complete, immutable T1--T3
-execution receipts bound to the frozen run and cost ledger. It never recreates
-checkpoint timestamps from cached text. Resume after the generation-complete
-barrier is intentionally blocked until judge-result recovery is implemented.
+Exploratory recovery restores complete, immutable T1--T3 execution receipts and
+validated per-judge plus consolidated result receipts bound to the frozen run
+and cost ledger. It never recreates checkpoint timestamps from cached text.
+Completed generation and judging work is skipped after restart without another
+provider call. A request accepted remotely but not durably received remains
+ambiguous and blocks; this is not provider-side exactly-once execution.
 
 For ordinary development using the older partial constraints:
 

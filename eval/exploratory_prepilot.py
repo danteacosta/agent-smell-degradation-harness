@@ -27,6 +27,7 @@ from eval.recoverable_calls import (
     RecoveryBlocked, call_session, digest, durable_create, read_record,
 )
 from eval.execution_receipts import ExecutionReceipts
+from eval.judge_receipts import JudgeReceipts
 
 from agents.providers import Provider, ProviderRequest
 from agents.staged_runtime import SubstantiveCompletenessError
@@ -426,6 +427,10 @@ def _invoke_judge(
     request: JudgeRequest,
     evidence_path: Path,
     max_output_tokens: int,
+    receipts: JudgeReceipts,
+    provider: str,
+    model: str,
+    model_version: str,
 ) -> tuple[Any | None, str | None]:
     serialized_request = serialize_judge_request(request)
     prompt = build_judge_prompt(request)
@@ -440,6 +445,20 @@ def _invoke_judge(
         task_family="judge",
         max_output_tokens=max_output_tokens,
     )
+    binding = receipts.call_binding(
+        occurrence_id=occurrence_id,
+        provider_slot_id=provider_slot_id,
+        generator_slot_id=generator_slot_id,
+        judge_relation=judge_relation,
+        provider=provider,
+        model=model,
+        model_version=model_version,
+        request=request,
+        prompt=prompt,
+    )
+    restored = receipts.load_call(binding, request)
+    if restored is not None:
+        return restored, None
     last_error: Exception | None = None
     for attempt in range(1, 3):
         try:
@@ -449,6 +468,7 @@ def _invoke_judge(
                 phase="judge",
                 attempt=attempt,
             )
+            parsed = receipts.save_call(binding, request, response, attempt=attempt)
             _append_private_evidence(
                 evidence_path,
                 {
@@ -463,7 +483,7 @@ def _invoke_judge(
                     "response": response,
                 },
             )
-            return parse_judge_response(response, request), None
+            return parsed, None
         except (BudgetExhaustedError, CostUnverifiedError, DurabilityError):
             raise
         except Exception as error:
@@ -530,9 +550,11 @@ def run_exploratory_prepilot(
 
     run_id = f"exploratory-prepilot-{datetime.now(UTC).strftime('%Y%m%dT%H%M%SZ')}"
     if resume_run is not None:
-        if checkpoint.get("state") not in {"preflight_ready", "generating"}:
+        if checkpoint.get("state") not in {
+            "preflight_ready", "generating", "generation_complete", "judging"
+        }:
             raise ExploratoryPrepilotError(
-                "automatic resume is limited to preflight or generation with durable receipts"
+                "automatic resume requires durable generation and judge receipts"
             )
         run_id = checkpoint["run_id"]
     run_directory = (
@@ -718,6 +740,7 @@ def run_exploratory_prepilot(
             calls_context = pending_calls_context
             ledger = calls.ledger
             execution_receipts = ExecutionReceipts(run_directory, recovery_scope, ledger)
+            judge_receipts = JudgeReceipts(run_directory, recovery_scope, ledger)
             adapters: dict[str, Provider] = {}
             for slot in configuration.providers:
                 if provider_adapters is not None and slot.id in provider_adapters:
@@ -729,6 +752,10 @@ def run_exploratory_prepilot(
             pairs_by_intent = {item["source_intent_id"]: item for item in pairs}
             joins = _plan_join_by_artifact(plan)
             execution_receipts.validate_inventory(joins)
+            judge_receipts.validate_inventory(
+                [item.occurrence_id for item in plan.occurrences],
+                [slot.id for slot in configuration.providers],
+            )
             artifacts: dict[str, dict[str, Any]] = {}
             generation_stage_count = 0
             active_phase = "generation"
@@ -973,11 +1000,25 @@ def run_exploratory_prepilot(
                         reference_constraints=reference,
                     )
                     responses: list[Any] = []
+                    call_bindings: list[dict[str, Any]] = []
                     for slot in configuration.providers:
                         relation = _judge_relation(
                             judge_slot_id=slot.id,
                             generator_slot_id=join.provider_slot_id,
                         )
+                        prompt = build_judge_prompt(request)
+                        call_binding = judge_receipts.call_binding(
+                            occurrence_id=occurrence.occurrence_id,
+                            provider_slot_id=slot.id,
+                            generator_slot_id=join.provider_slot_id,
+                            judge_relation=relation,
+                            provider=str(adapters[slot.id].name),
+                            model=str(slot.model),
+                            model_version=str(slot.model_version),
+                            request=request,
+                            prompt=prompt,
+                        )
+                        call_bindings.append(call_binding)
                         parsed, error_class = _invoke_judge(
                             budgeted=judge_adapters[slot.id],
                             provider_slot_id=slot.id,
@@ -986,6 +1027,10 @@ def run_exploratory_prepilot(
                             request=request,
                             evidence_path=evidence_path,
                             max_output_tokens=configuration.token_bounds["judge"].output_tokens,
+                            receipts=judge_receipts,
+                            provider=str(adapters[slot.id].name),
+                            model=str(slot.model),
+                            model_version=str(slot.model_version),
                         )
                         if parsed is None:
                             relation_failure_counts[relation] += 1
@@ -997,6 +1042,47 @@ def run_exploratory_prepilot(
                         responses.append(parsed)
                     if len(responses) == 2:
                         consolidated = consolidate_two_judges(responses[0], responses[1])
+                        result_binding = judge_receipts.result_binding(
+                            occurrence_id=occurrence.occurrence_id,
+                            base_task_id=occurrence.base_task_id,
+                            artifact_id=str(artifact_row["artifact_id"]),
+                            generator_slot_id=join.provider_slot_id,
+                            request=request,
+                            provider_slot_ids=[slot.id for slot in configuration.providers],
+                        )
+                        result_value = {
+                            "label": consolidated.label,
+                            "consensus": consolidated.consensus,
+                            "judges": [
+                                {
+                                    "provider_slot_id": slot.id,
+                                    "judge_relation": _judge_relation(
+                                        judge_slot_id=slot.id,
+                                        generator_slot_id=join.provider_slot_id,
+                                    ),
+                                    "label": parsed.label,
+                                    "constraint_statuses": [
+                                        {
+                                            "constraint_id": assessment.constraint_id,
+                                            "status": assessment.status,
+                                        }
+                                        for assessment in parsed.constraint_assessments
+                                    ],
+                                }
+                                for slot, parsed in zip(
+                                    configuration.providers, responses, strict=True
+                                )
+                            ],
+                        }
+                        restored_result = judge_receipts.load_result(
+                            result_binding, call_bindings
+                        )
+                        if restored_result is None:
+                            judge_receipts.save_result(
+                                result_binding, call_bindings, result_value
+                            )
+                        elif restored_result != result_value:
+                            raise RecoveryBlocked("consolidated judge result changed")
                         label_counts[consolidated.label] += 1
                         parsed_by_occurrence[occurrence.occurrence_id] = {
                             "label": consolidated.label,
@@ -1055,7 +1141,10 @@ def run_exploratory_prepilot(
         report["state"] = "stopped_protocol_violation"
         report["error_class"] = _safe_error(error)
     except KeyboardInterrupt:
-        report["state"] = "generating" if active_phase == "generation" else "stopped_protocol_violation"
+        report["state"] = {
+            "generation": "generating",
+            "judging": "judging",
+        }.get(active_phase, "stopped_protocol_violation")
         report["error_class"] = "KeyboardInterrupt"
         raise
     finally:

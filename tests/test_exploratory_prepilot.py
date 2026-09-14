@@ -409,3 +409,56 @@ def test_generation_resume_restores_complete_execution_without_duplicate_calls(
     evidence = [json.loads(line) for line in
                 (run_directory / "raw-evidence.jsonl").read_text().splitlines()]
     assert sum(item["kind"] == "generation_call" for item in evidence) == 720
+
+
+def test_judging_resume_reuses_call_and_result_receipts_without_duplicate_calls(
+    tmp_path, monkeypatch
+):
+    root, private, reference = _private_inputs(tmp_path)
+    revision = "9" * 40
+    config = _config(tmp_path, revision)
+    monkeypatch.setattr(runner, "_git_revision", lambda _: revision)
+    providers = {
+        "openai-primary": _CompleteProvider("openai", "gpt-5.6-luna", "gpt-5.6-luna"),
+        "deepseek-secondary": _CompleteProvider(
+            "deepseek", "deepseek-v4-pro", "DeepSeek-V4-Pro-0813"
+        ),
+    }
+    output = tmp_path / "judge-resumable.json"
+    original_load_result = runner.JudgeReceipts.load_result
+    load_count = 0
+
+    def interrupt_before_second_result(self, binding, call_bindings):
+        nonlocal load_count
+        load_count += 1
+        if load_count == 2:
+            raise KeyboardInterrupt()
+        return original_load_result(self, binding, call_bindings)
+
+    monkeypatch.setattr(runner.JudgeReceipts, "load_result", interrupt_before_second_result)
+    with pytest.raises(KeyboardInterrupt):
+        run_exploratory_prepilot(
+            config, output, private_corpus_path=private,
+            reference_constraints_path=reference, repository_root=root,
+            provider_adapters=providers, confirm_live=True,
+        )
+    run_directory = Path(f"{output}.run")
+    assert json.loads((run_directory / "checkpoint.json").read_text())["state"] == "judging"
+    first_result = next(run_directory.glob("judge-result-*.json"))
+    first_result_before = first_result.read_bytes()
+    calls_before_resume = sum(provider.calls for provider in providers.values())
+    assert calls_before_resume == 724
+
+    monkeypatch.setattr(runner.JudgeReceipts, "load_result", original_load_result)
+    result = run_exploratory_prepilot(
+        config, output, private_corpus_path=private,
+        reference_constraints_path=reference, repository_root=root,
+        provider_adapters=providers, confirm_live=True, resume_run=run_directory,
+    )
+
+    assert result["state"] == "completed"
+    assert result["judge_result_count"] == 288
+    assert sum(provider.calls for provider in providers.values()) == 1296
+    assert first_result.read_bytes() == first_result_before
+    assert len(list(run_directory.glob("judge-call-*.json"))) == 576
+    assert len(list(run_directory.glob("judge-result-*.json"))) == 288

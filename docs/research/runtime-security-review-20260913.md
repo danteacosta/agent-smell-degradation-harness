@@ -25,7 +25,7 @@ rewritten. No controls were removed to execute as root.
 
 ## Honest recovery boundary
 
-Automatic recovery now covers preflight and generation. Before provider dispatch,
+Automatic recovery now covers preflight, generation and validated judging. Before provider dispatch,
 the runner creates a durable call intent. After receipt, it persists response and
 usage before reconciling cost. A complete artifact then receives an immutable
 execution receipt containing the original T1--T3 trace. Resume validates all
@@ -36,7 +36,11 @@ acceptance but before durable response receipt remains ambiguous and blocks. A
 durable response without a complete execution receipt also blocks because its
 original runtime timestamps cannot be reconstructed. Existing raw evidence,
 ledger and checkpoint must be preserved; do not remove markers to force retry.
-Judge-phase recovery and real storage/power-loss qualification remain future work.
+Each successful judge response receives an immutable receipt bound to its request,
+provider/model identity, generator relation, ledger boundary and frozen scope.
+Two validated call receipts are then bound into one deterministic consolidated
+result receipt. Resume reconstructs counters from these receipts and does not
+dispatch completed judge calls again. Real storage/power-loss qualification remains future work.
 
 Changing transport behavior requires a new reviewed runtime configuration and
 qualification; no frozen experimental hash or historical evidence was rewritten.
@@ -129,11 +133,22 @@ unexpected receipts fail closed.
 
 A cached stage response without a complete execution receipt still blocks:
 re-running that stage would invent new timestamps and turn reconstruction into
-false online warning evidence. Resume is deliberately limited to preflight and
-generation. The runner writes a `generation_complete` barrier before judging;
-judge-phase recovery remains disabled until consolidated judge-result receipts
-are implemented. This preserves feature-plane T1--T3 evidence without claiming
-full label-plane workflow recovery or provider-side exactly-once execution.
+false online warning evidence. The runner writes a `generation_complete` barrier
+before judging and can resume from that barrier or a `judging` checkpoint.
+Successful calls are restored only from validated `judge-call-receipt/v1`
+records; completed occurrences are checked against `judge-result-receipt/v1`.
+A synthetic interruption after two judged occurrences resumes the complete
+1,296-operation fixture plan with 1,296 provider-fixture calls in total, not
+1,300. This is full exploratory pipeline recovery for durable local receipts,
+not provider-side exactly-once execution or power-loss qualification.
+
+Implementation motivation is bounded by Zhang et al., *Fault-tolerant and
+Transactional Stateful Serverless Workflows*, OSDI 2020
+([paper](https://www.usenix.org/system/files/osdi20-zhang_haoran.pdf)). Beldi
+combines durable operation logs with re-execution; this single-process design
+borrows only that separation of durable completion from retry. It does not
+inherit Beldi's distributed guarantees, strongly consistent storage assumptions
+or AWS evaluation.
 
 For an existing v1 session, this command reconciles durable response usage only;
 it constructs no provider and prints a bounded accounting report:
