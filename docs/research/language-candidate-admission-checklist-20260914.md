@@ -4,6 +4,20 @@ Rascunho operacional após o [piloto construído](codex-language-controls-result
 Não contém rótulos humanos, não admite casos ao corpus e não substitui o
 charter de anotação confirmatória existente. Nenhum convite foi enviado.
 
+## Preparação reproduzível dos formulários
+
+Execute `python -m eval.language_review --output NOVO_DIRETORIO_PRIVADO --seed 20260914`.
+O diretório pai deve existir. O comando gera seis formulários de quatro itens,
+com um texto de cada grupo por formulário e dez textos únicos no conjunto.
+Entregue a cada leitor somente um formulário; nunca a pasta inteira ou o
+conteúdo de `custodian/`. Registre a atribuição e a exposição anterior antes de
+congelar respostas individuais. Somente depois faça a revisão comparativa.
+
+O recibo verifica os arquivos e mantém participantes e rótulos humanos em zero.
+As 24 posições nos formulários não são novas observações nem uma recomendação
+de tamanho amostral. Rubrica, independência, responsáveis e distribuição ainda
+precisam ser definidos; a preparação não valida nem admite os candidatos.
+
 ## O que a revisão independente deve decidir
 
 1. **Coordenação:** a frase sem parênteses admite os dois agrupamentos no

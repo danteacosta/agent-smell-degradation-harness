@@ -45,7 +45,10 @@ recomputation. A second assistant checked the raw evidence and interpretation.
 The [result report](../../research/codex-language-controls-results-20260914.md)
 preserves null controls and twin dependence. Proposal and operational report
 were updated in place, with prior text preserved; both native slide decks
-received two editable slides. Structural checks reported no errors and only
-two unchanged decorative-arrow warnings per deck. All four new slide renders
-were visually inspected. PDF export remains unavailable in the connector;
-thumbnail renders supplied the visual check. PR55 is the integration gate.
+received three editable slides each, including the pronoun comparison.
+Structural checks reported no errors and only two unchanged decorative-arrow
+warnings per deck. New slides were visually inspected. Native PDF export
+succeeded through the raw-file fetch path; the final visual and meeting decks
+contain 13 and 14 slides respectively, with matching PowerPoint exports.
+PR55 merged as `e2b578d05ff358a3f13a41c14906080b2a903f9a` after CI passed
+(1,436 tests plus nine subtests); the post-merge main evaluation also passed.
