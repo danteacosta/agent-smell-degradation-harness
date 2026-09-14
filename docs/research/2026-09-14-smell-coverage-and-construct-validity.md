@@ -11,6 +11,15 @@ explicit policy sentence, in three intents. The discount artifact violates the
 removed cap; the access and token artifacts retain the required behavior.
 No detector was evaluated in this collection.
 
+A later, separately frozen [24-episode language-control pilot](codex-language-controls-results-20260914.md)
+adds original coordination and pronoun probes plus two meaning-preserving
+controls. All 12 explicit-policy artifacts passed. Coordination rewrites chose
+one grouping in all four outputs (two intended, two alternative by twin label);
+pronoun rewrites required both actors in all four outputs (neither frozen
+antecedent policy). All eight control artifacts passed. These are four clusters with dependent twin cases,
+not six independently sampled projects, and remain assistant-reviewed
+candidates rather than human-admitted instances of the literature categories.
+
 ## Primary evidence and correction
 
 [Femmer, Méndez Fernández, Wagner and Eder, *Rapid Quality Assurance with
@@ -48,10 +57,10 @@ isolated and evaluated by the 18-episode Codex demonstration.
 | F4 Termo aberto ou não verificável | Femmer §3.2 | Make a previously enumerated output set open-ended. | Separate membership already specified from newly unspecified membership; record overlap with F2. | Candidate route; requires semantic review. |
 | F5 Superlativo | Femmer §3.2 | Replace a bounded optimization objective with an unbounded superlative. | Freeze feasible choices and ties; otherwise no unique correctness oracle exists. | Catalog only until an objective is justified. |
 | F6 Comparativo | Femmer §3.2 | Remove the reference value from a comparison. | Record the missing comparator as unavailable; measure ambiguity/clarification rather than invent its value. | Catalog only until interpretation is adjudicated. |
-| F7 Enunciado negativo | Femmer §3.2 | Express the same finite-domain rule affirmatively and negatively. | Preserve truth table and all behavior. Useful control: negative wording is not an injected defect by itself. | Semantics-preserving control candidate. |
-| F8 Pronome vago | Femmer §3.2 | Replace one of two named actors with a pronoun. | Enumerate possible antecedents, mask actor clues in interfaces and measure which interpretation is implemented. | Candidate route; requires semantic review. |
+| F7 Enunciado negativo | Femmer §3.2 | Express the same finite-domain rule affirmatively and negatively. | Preserve truth table and all behavior. Useful control: negative wording is not an injected defect by itself. | Two complementary-response controls executed; 8/8 artifacts passed. Not validated F7 positives. |
+| F8 Pronome vago | Femmer §3.2 | Replace one of two named actors with a pronoun. | Enumerate possible antecedents and record interface clues; a cue-removal ablation requires a separate manifest. | Original twin probe executed; 4/4 rewrites required both actors. Named argument cues retained; human category validation pending. |
 | F9 Referência incompleta | Femmer §3.2/Table 3 | Remove the locator of a referenced policy while preserving surrounding text. | Freeze available context; distinguish unresolved reference from an invented rule and from retrieval failure. | Catalog only; reference-enabled task required. |
-| P1 Ambiguidade de coordenação | Paska Table III | Remove grouping from a conjunction/disjunction rule. | Freeze intended grouping and complete Boolean truth table; retain alternative interpretations in reporting. | Candidate route; requires semantic review. |
+| P1 Ambiguidade de coordenação | Paska Table III | Remove grouping from a conjunction/disjunction rule. | Freeze intended grouping and complete Boolean truth table; retain alternative interpretations in reporting. | Original twin probe executed; all four rewrites chose a or (b and c). Human category validation pending. |
 
 The existing access pair still says Boolean authorization and allow/deny in its
 interface. The token pair still names a Boolean argument `used`. These are
