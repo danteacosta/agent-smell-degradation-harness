@@ -434,6 +434,8 @@ stay `not_executed`. A deadline stops new dispatch, not an already running call.
 This assistant-reviewed engineering pilot does not admit cases to the natural
 corpus or qualify H1/H2. See the
 [design](docs/superpowers/specs/2026-09-14-language-controls-pilot-design.md).
+The [completed 24-episode pilot](docs/research/codex-language-controls-results-20260914.md)
+records all interpretation contrasts, passing controls and evidence hashes.
 
 Offline preflight before live LLM runs (secret-free; default CI unchanged):
 
