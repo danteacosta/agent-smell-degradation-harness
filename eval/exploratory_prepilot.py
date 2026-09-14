@@ -484,7 +484,8 @@ def _invoke_judge(
                 },
             )
             return parsed, None
-        except (BudgetExhaustedError, CostUnverifiedError, DurabilityError):
+        except (BudgetExhaustedError, CostUnverifiedError, DurabilityError, RecoveryBlocked, OSError):
+            # Persistence and recovery failures cannot be repaired by billing a retry.
             raise
         except Exception as error:
             last_error = error
