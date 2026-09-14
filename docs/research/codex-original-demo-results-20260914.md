@@ -76,6 +76,13 @@ manifesto, plano, prompts, respostas, relatórios por episódio e análise.
 
 ## O que este resultado permite afirmar
 
+Uma [auditoria posterior da grade de entradas](codex-original-demo-posthoc-audit-20260914.md)
+reexecutou os mesmos 18 artefatos em 1.638 verificações, sem novas chamadas.
+Ela mantém os denominadores desta coleta intactos. A
+[revisão de cobertura](2026-09-14-smell-coverage-and-construct-validity.md)
+esclarece que são três intenções sob uma intervenção de omissão, não três
+classes de smell validadas.
+
 Existe um exemplo reproduzido nesta execução em que remover uma condição do
 requisito resulta em código que viola essa condição, embora rode normalmente.
 Também existem dois exemplos sem efeito observado. Isso demonstra a utilidade

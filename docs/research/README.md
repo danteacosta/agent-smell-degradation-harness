@@ -12,6 +12,10 @@ experiment evidence.
 
 ## Research execution guides
 
+- [Original Codex demonstration: post-hoc audit](codex-original-demo-posthoc-audit-20260914.md): 1,638 checks on the same 18 saved artifacts, with all original evidence preserved and no new inference calls.
+
+- [2026-09-14 smell coverage and construct validity](2026-09-14-smell-coverage-and-construct-validity.md): ten literature entries, untested versus observed coverage, and correction of the whole-rule deletion/Paska equivalence.
+
 - [Whole-context v4/v5 comparison](qualified-evidence-comparison.md) and
   [completed development results](qualified-evidence-results.md): 48 reconciled
   calls, equal overall construction matches and a failed candidate scope gate.
