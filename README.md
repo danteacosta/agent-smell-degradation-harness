@@ -415,6 +415,26 @@ The natural-source discovery quarantine and confirmatory gates remain active.
 See [the master's status review](docs/research/masters-state-review-20260914.md)
 and [the acceptance plan](docs/research/codex-subscription-plan-20260914.md).
 
+For the separately scoped original language-control pilot:
+
+```bash
+python -m eval.codex_demo --profile language_controls_v1 \
+  --output /absolute/new/private/language-run \
+  --codex-bin /absolute/path/to/current/codex --model YOUR_AVAILABLE_MODEL \
+  --replications 2 --stop-at YOUR_TIMEZONE_AWARE_ISO_DEADLINE
+```
+
+This schedules 24 episodes over two dependent ambiguity-twin clusters and two
+meaning-preserving negative-wording controls. It freezes both intended and
+alternative interpretation tests; the model receives neither oracle. Results
+are grouped by cluster and arm, without a pooled smell-effect estimate. The
+legacy `defective` arm means rewritten text here, including controls that are
+not defects. Provider failure stops further dispatch; remaining planned rows
+stay `not_executed`. A deadline stops new dispatch, not an already running call.
+This assistant-reviewed engineering pilot does not admit cases to the natural
+corpus or qualify H1/H2. See the
+[design](docs/superpowers/specs/2026-09-14-language-controls-pilot-design.md).
+
 Offline preflight before live LLM runs (secret-free; default CI unchanged):
 
 | Command | Purpose |

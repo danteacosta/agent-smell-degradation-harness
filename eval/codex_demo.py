@@ -60,12 +60,20 @@ def cases():
     ]
 
 
-def prepare(output: Path, *, model: str, replications: int):
+def prepare(output: Path, *, model: str, replications: int, profile: str = 'omission_v1',
+            stop_at: datetime | None = None):
     if type(replications) is not int or not 1 <= replications <= 5:
         raise ValueError('replications must be an integer in 1..5')
     if not model.strip():
         raise ValueError('explicit model required')
+    if profile not in {'omission_v1', 'language_controls_v1'}:
+        raise ValueError('unknown original experiment profile')
+    if stop_at is not None and stop_at.tzinfo is None:
+        raise ValueError('stop_at must include a timezone')
     inventory = cases()
+    if profile == 'language_controls_v1':
+        from eval.language_controls import cases as language_cases
+        inventory = language_cases()
     schedule = [{'case': c['id'], 'replication': str(r), 'variant': v}
                 for c in inventory for r in range(1, replications + 1) for v in ('clean', 'defective')]
     random.Random(20260914).shuffle(schedule)
@@ -82,6 +90,22 @@ def prepare(output: Path, *, model: str, replications: int):
                 'code_hashes': {str(p.relative_to(Path(__file__).resolve().parents[1])): sha(p.read_bytes())
                                for p in (Path(__file__).resolve(), Path(__file__).with_name('codegen_sandbox.py'),
                                          Path(__file__).resolve().parents[1] / 'agents/codex_cli.py')}}
+    if profile == 'language_controls_v1':
+        manifest.update({
+            'schema_version': 'constructed-language-controls/v1',
+            'scope': 'constructed_language_controls_pilot', 'profile': profile,
+            'variant_labels': {'clean': 'explicit intended policy',
+                               'defective': 'rewritten policy; equivalence controls are not defect labels'},
+            'limitations': manifest['limitations'] + [
+                'Assistant-reviewed candidates, not independently human-admitted cases.',
+                'Twin cases share rewritten prompts; not independent application domains.',
+                'Alternative interpretation matches do not imply disobedience to ambiguous text.',
+                'Meaning-preserving controls must not be pooled as injected defects.'],
+        })
+        path = Path(__file__).with_name('language_controls.py')
+        manifest['code_hashes']['eval/language_controls.py'] = sha(path.read_bytes())
+    if stop_at is not None:
+        manifest['dispatch_deadline'] = stop_at.isoformat()
     output.mkdir(parents=True, exist_ok=False, mode=0o700)
     write(output / 'manifest.json', manifest)
     return manifest
@@ -107,8 +131,9 @@ def execute(source, tests):
     return json.loads(result.stdout)
 
 
-def run(output: Path, *, model: str, executable: str, replications: int):
-    manifest = prepare(output, model=model, replications=replications)
+def run(output: Path, *, model: str, executable: str, replications: int,
+        profile: str = 'omission_v1', stop_at: datetime | None = None):
+    manifest = prepare(output, model=model, replications=replications, profile=profile, stop_at=stop_at)
     # Qualify BEFORE the first provider call; a failed smoke leaves a frozen
     # manifest and does not spend subscription quota on unexecutable artifacts.
     smoke = subprocess.run(container_command() + ['-m', 'eval.behavior_runtime_smoke'],
@@ -132,7 +157,8 @@ def run(output: Path, *, model: str, executable: str, replications: int):
              'oracle_sha256': sha(encoded(c['tests'])), 'configuration_sha256': configuration}
             for c in manifest['cases'] for r in range(1, replications + 1)]
     write(output / 'plan.json', plan)
-    outcomes = []
+    outcomes, interpretations = [], []
+    dispatch_stopped = False
     for index, item in enumerate(manifest['schedule']):
         case, variant = inventory[item['case']], item['variant']
         pair = next(p for p in plan if p['intent_id'] == case['id'] and p['replication_id'] == item['replication'])
@@ -141,8 +167,18 @@ def run(output: Path, *, model: str, executable: str, replications: int):
         prompt = case[variant] + case['scaffold']
         write(directory / 'request.json', {'prompt': prompt, 'sha256': sha(prompt.encode())})
         record = {**pair, 'variant': variant, 'status': 'not_executed', 'episode_path': directory.name}
+        interpretation = 'execution_unknown'
         try:
-            answer = provider.complete(ProviderRequest(prompt, {}, variant, 'behavior_codegen'))
+            if stop_at is not None and datetime.now(timezone.utc) >= stop_at:
+                dispatch_stopped = True
+            if dispatch_stopped:
+                raise RuntimeError('Dispatch stopped after provider failure or frozen deadline')
+            try:
+                answer = provider.complete(ProviderRequest(prompt, {}, variant, 'behavior_codegen'))
+            except (RuntimeError, ValueError, TimeoutError, subprocess.SubprocessError):
+                if profile == 'language_controls_v1':
+                    dispatch_stopped = True
+                raise
             write(directory / 'response.json', {'text': answer, 'metadata': provider.last_call_metadata})
             response = json.loads(answer)
             if not isinstance(response, dict) or set(response) != {'source_code'} or not isinstance(response['source_code'], str):
@@ -152,13 +188,32 @@ def run(output: Path, *, model: str, executable: str, replications: int):
             status = report['status']
             record['status'] = status if status in {'passed', 'failed', 'runtime_error', 'timeout', 'rejected', 'worker_error'} else 'not_executed'
             record['executor_status'] = status
+            if profile == 'language_controls_v1':
+                from eval.language_controls import classify_interpretation
+                alternative_reports = []
+                for alternative in case['alternatives']:
+                    alternative_reports.append({
+                        'id': alternative['id'],
+                        'report': execute(response['source_code'], alternative['tests']),
+                    })
+                if alternative_reports:
+                    write(directory / 'alternative-executions.json', alternative_reports)
+                interpretation = classify_interpretation(
+                    report, [a['report'] for a in alternative_reports])
         except (RuntimeError, ValueError, TimeoutError, subprocess.SubprocessError) as exc:
             # No opportunistic retry or repair. Errors stay in the denominator.
             write(directory / 'failure.json', {'type': type(exc).__name__, 'message': str(exc)[:500]})
+        if profile == 'language_controls_v1':
+            write(directory / 'interpretation.json', {'classification': interpretation,
+                  'role': case['role'], 'family': case['family'], 'cluster': case['cluster']})
+            interpretations.append(interpretation)
         write(directory / 'outcome.json', record)
         outcomes.append(record)
         print(f'{index + 1}/{len(manifest["schedule"])} {case["id"]} {variant}: {record["status"]}', flush=True)
     report = analyze(plan, outcomes)
+    if profile == 'language_controls_v1':
+        from eval.language_controls import summarize
+        report = summarize(manifest, plan, outcomes, interpretations, dispatch_stopped)
     write(output / 'outcomes.json', outcomes)
     write(output / 'analysis.json', report)
     write(output / 'receipt.json', {'scope': manifest['scope'], 'confirmatory_eligible': False,
@@ -173,6 +228,9 @@ if __name__ == '__main__':
     parser.add_argument('--model', required=True)
     parser.add_argument('--codex-bin', required=True)
     parser.add_argument('--replications', type=int, default=3)
+    parser.add_argument('--profile', choices=('omission_v1', 'language_controls_v1'), default='omission_v1')
+    parser.add_argument('--stop-at', type=datetime.fromisoformat,
+                        help='Timezone-aware ISO timestamp; no dispatch at or after this deadline')
     args = parser.parse_args()
     print(json.dumps(run(args.output, model=args.model, executable=args.codex_bin,
-                         replications=args.replications), indent=2))
+                         replications=args.replications, profile=args.profile, stop_at=args.stop_at), indent=2))
