@@ -37,13 +37,17 @@ def eligible_case() -> dict:
         },
         "target_constraint_id": "editing.escape_discards_changes",
         "clean_requirement_sha256": digest("e"),
+        "rewrite_control_requirement_sha256": digest("0"),
         "smelly_requirement_sha256": digest("f"),
         "changed_span_sha256": digest("1"),
+        "scaffold_sha256": digest("a"),
         "shared_oracle_sha256": digest("2"),
         "oracle_frozen_at": "2026-09-16T08:00:00-03:00",
         "variant_assignment_frozen_at": "2026-09-16T08:05:00-03:00",
         "test_generation_source": "canonical_complete_requirement_only",
         "same_oracle_for_all_variants": True,
+        "same_scaffold_for_all_variants": True,
+        "rewrite_control_preserves_intent": True,
         "gold_passed": True,
         "mutation_killed": True,
         "gold_run_receipt_sha256": digest("3"),
@@ -52,6 +56,10 @@ def eligible_case() -> dict:
             "mapping_review": {
                 "status": "approved", "reviewer_id": "mapping-reviewer-01",
                 "evidence_sha256": digest("5"),
+            },
+            "manipulation_review": {
+                "status": "approved", "reviewer_id": "manipulation-reviewer-01",
+                "evidence_sha256": digest("8"),
             },
             "oracle_review": {
                 "status": "approved", "reviewer_id": "oracle-reviewer-01",
@@ -83,12 +91,17 @@ def test_screening_case_reports_all_unresolved_controls():
         "status": "screening",
         "test_generation_source": "smelly_variant",
         "same_oracle_for_all_variants": False,
+        "same_scaffold_for_all_variants": False,
+        "rewrite_control_preserves_intent": False,
         "gold_passed": False,
         "mutation_killed": False,
         "gold_run_receipt_sha256": None,
         "mutant_run_receipt_sha256": None,
         "reviews": {
             "mapping_review": {
+                "status": "pending", "reviewer_id": None, "evidence_sha256": None,
+            },
+            "manipulation_review": {
                 "status": "pending", "reviewer_id": None, "evidence_sha256": None,
             },
             "oracle_review": {
@@ -105,8 +118,11 @@ def test_screening_case_reports_all_unresolved_controls():
     assert result["blockers"] == [
         "tests_not_generated_from_canonical_complete_requirement",
         "oracle_not_shared_across_variants",
+        "scaffold_not_shared_across_variants",
+        "rewrite_control_not_intent_preserving",
         "gold_implementation_not_verified",
         "oracle_did_not_kill_targeted_mutant",
+        "manipulation_review:pending",
         "mapping_review:pending",
         "oracle_review:rejected",
         "rights_review:pending",
@@ -121,6 +137,7 @@ def test_screening_case_reports_all_unresolved_controls():
      "source_revision_id"),
     ("base_commit", digest("d", 40), "must differ"),
     ("clean_requirement_sha256", digest("f"), "requirements must differ"),
+    ("rewrite_control_requirement_sha256", digest("e"), "requirements must differ"),
     ("variant_assignment_frozen_at", "2026-09-16T07:00:00-03:00",
      "must not precede"),
 ])
@@ -135,6 +152,7 @@ def test_identity_and_freeze_invariants_fail_closed(field, value, match):
     ("implementation_paths", ["../outside.py"], "normalized relative"),
     ("upstream_test_paths", ["tests/e2e.py", "tests/e2e.py"], "duplicates"),
     ("gold_passed", 1, "boolean"),
+    ("same_scaffold_for_all_variants", 1, "boolean"),
     ("observable_interface", "database", "unsupported"),
 ])
 def test_malformed_evidence_is_rejected(field, value, match):
@@ -164,6 +182,10 @@ def test_execution_and_review_claims_require_bound_evidence():
     case["reviews"]["mapping_review"] = {
         "status": "pending", "reviewer_id": "claimed", "evidence_sha256": digest("9")}
     with pytest.raises(ValueError, match="must not claim evidence"):
+        assess_repository_case(case)
+    case = eligible_case()
+    case["reviews"]["manipulation_review"]["evidence_sha256"] = None
+    with pytest.raises(ValueError, match="evidence_sha256"):
         assess_repository_case(case)
     case = eligible_case()
     case["notes"] = "not part of the frozen contract"
