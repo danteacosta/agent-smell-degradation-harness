@@ -22,14 +22,18 @@ CASE_KEYS = {
     "requirement_sha256", "base_commit", "gold_commit",
     "implementation_paths", "upstream_test_paths", "observable_interface",
     "interaction_contract", "target_constraint_id",
-    "clean_requirement_sha256", "smelly_requirement_sha256",
-    "changed_span_sha256", "shared_oracle_sha256", "oracle_frozen_at",
+    "clean_requirement_sha256", "rewrite_control_requirement_sha256",
+    "smelly_requirement_sha256", "changed_span_sha256", "scaffold_sha256",
+    "shared_oracle_sha256", "oracle_frozen_at",
     "variant_assignment_frozen_at", "test_generation_source",
-    "same_oracle_for_all_variants", "gold_passed", "mutation_killed",
+    "same_oracle_for_all_variants", "same_scaffold_for_all_variants",
+    "rewrite_control_preserves_intent", "gold_passed", "mutation_killed",
     "gold_run_receipt_sha256", "mutant_run_receipt_sha256", "reviews", "status",
 }
 INTERACTION_KEYS = {"initial_state", "action", "observable_outcome"}
-REVIEW_KEYS = {"mapping_review", "oracle_review", "rights_review"}
+REVIEW_KEYS = {
+    "mapping_review", "manipulation_review", "oracle_review", "rights_review",
+}
 REVIEW_RECORD_KEYS = {"status", "reviewer_id", "evidence_sha256"}
 REVIEW_STATES = {"pending", "approved", "rejected"}
 CASE_STATES = {"screening", "eligible", "rejected"}
@@ -150,13 +154,18 @@ def assess_repository_case(case: dict) -> dict:
         _text(interaction[key], f"interaction_contract.{key}")
     _text(case["target_constraint_id"], "target_constraint_id")
 
-    clean_hash = _hash(case["clean_requirement_sha256"], SHA256,
-                       "clean_requirement_sha256")
-    smelly_hash = _hash(case["smelly_requirement_sha256"], SHA256,
-                        "smelly_requirement_sha256")
-    if clean_hash == smelly_hash:
-        raise ValueError("clean and smelly requirements must differ")
+    requirement_hashes = {
+        label: _hash(case[label], SHA256, label)
+        for label in (
+            "clean_requirement_sha256",
+            "rewrite_control_requirement_sha256",
+            "smelly_requirement_sha256",
+        )
+    }
+    if len(set(requirement_hashes.values())) != len(requirement_hashes):
+        raise ValueError("clean, rewrite-control and smelly requirements must differ")
     _hash(case["changed_span_sha256"], SHA256, "changed_span_sha256")
+    _hash(case["scaffold_sha256"], SHA256, "scaffold_sha256")
     _hash(case["shared_oracle_sha256"], SHA256, "shared_oracle_sha256")
     oracle_frozen = _timestamp(case["oracle_frozen_at"], "oracle_frozen_at")
     assignment_frozen = _timestamp(
@@ -164,7 +173,9 @@ def assess_repository_case(case: dict) -> dict:
     if assignment_frozen < oracle_frozen:
         raise ValueError("variant assignment must not precede oracle freeze")
 
-    for key in ("same_oracle_for_all_variants", "gold_passed", "mutation_killed"):
+    for key in (
+            "same_oracle_for_all_variants", "same_scaffold_for_all_variants",
+            "rewrite_control_preserves_intent", "gold_passed", "mutation_killed"):
         if type(case[key]) is not bool:
             raise ValueError(f"{key} must be a boolean")
     for result_field, receipt_field in (
@@ -201,6 +212,10 @@ def assess_repository_case(case: dict) -> dict:
         blockers.append("tests_not_generated_from_canonical_complete_requirement")
     if not case["same_oracle_for_all_variants"]:
         blockers.append("oracle_not_shared_across_variants")
+    if not case["same_scaffold_for_all_variants"]:
+        blockers.append("scaffold_not_shared_across_variants")
+    if not case["rewrite_control_preserves_intent"]:
+        blockers.append("rewrite_control_not_intent_preserving")
     if not case["gold_passed"]:
         blockers.append("gold_implementation_not_verified")
     if not case["mutation_killed"]:
