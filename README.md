@@ -450,6 +450,24 @@ a hash receipt last. It neither calls a model nor admits a corpus or distributes
 anything. Prior exposure must be recorded before claiming an unprimed reading.
 See the [candidate-admission checklist](docs/research/language-candidate-admission-checklist-20260914.md).
 
+Repository-level browser/API cases use a separate fail-closed gate. A candidate
+must bind the requirement revision, pre-feature and known-good commits,
+implementation and test paths, user-observable interaction, and one shared
+oracle frozen before variant assignment. The known-good implementation must
+pass and the same oracle must kill a targeted mutant; both executions and all
+three reviews are hash-bound. Tests generated separately from clean and smelly
+requirements are ineligible.
+
+```bash
+python -m eval.repository_case_admission --manifest /absolute/private/case.json
+```
+
+The [four-project screening](docs/research/repository-e2e-candidate-screening-20260916.md)
+records TodoMVC, RealWorld, StrictDoc and CaSS as candidates, not admitted
+evidence. LLM-generated tests and LLM judges remain candidate-generation and
+diagnostic tools; executed, frozen E2E assertions are the behavioral label, and
+independent semantic review is still required.
+
 Offline preflight before live LLM runs (secret-free; default CI unchanged):
 
 | Command | Purpose |
