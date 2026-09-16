@@ -453,9 +453,12 @@ See the [candidate-admission checklist](docs/research/language-candidate-admissi
 Repository-level browser/API cases use a separate fail-closed gate. A candidate
 must bind the requirement revision, pre-feature and known-good commits,
 implementation and test paths, user-observable interaction, and one shared
-oracle frozen before variant assignment. The known-good implementation must
+scaffold and oracle frozen before variant assignment. It also requires a
+distinct meaning-preserving rewrite-control requirement and an independently
+bound manipulation review, so ordinary wording sensitivity is measured rather
+than silently attributed to the smell. The known-good implementation must
 pass and the same oracle must kill a targeted mutant; both executions and all
-three reviews are hash-bound. Tests generated separately from clean and smelly
+four reviews are hash-bound. Tests generated separately from clean and smelly
 requirements are ineligible.
 
 ```bash
