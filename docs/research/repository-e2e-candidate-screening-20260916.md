@@ -21,10 +21,13 @@ behavioral ground truth.
 
 Each admitted case needs a source revision, a pre-implementation base commit, a
 known-good implementation commit, exact implementation paths, an observable
-interaction, a shared oracle hash, and a targeted mutant that the oracle kills.
+interaction, a complete requirement, a distinct meaning-preserving rewrite
+control, a smelly treatment, one shared scaffold and oracle hash, and a targeted
+mutant that the oracle kills. The rewrite control estimates ordinary wording
+sensitivity; it cannot prove that all non-smell edits are harmless.
 The gold pass and mutant failure must each be bound to an execution-receipt
-hash. Independent reviews of the requirement-to-code mapping, oracle, and
-processing rights require reviewer identities and evidence hashes.
+hash. Independent reviews of the requirement-to-code mapping, manipulation,
+oracle, and processing rights require reviewer identities and evidence hashes.
 
 ## Four screened repositories
 
@@ -45,6 +48,12 @@ not a registered sample size or authorization to spend.
 The license files make controlled local modification technically plausible, but
 they do not complete the study's rights and governance review. The admission
 manifest therefore still requires an explicit `rights_review: approved` decision.
+
+The causal contrast is smelly versus complete. Rewrite-control versus complete
+is the wording-instability contrast, and smelly versus rewrite-control is a
+sensitivity analysis. All arms start from the same scaffold and use the same
+frozen oracle. A difference observed only against complete, but not against the
+rewrite control, is not sufficient evidence of a smell-specific effect.
 
 ## Admission command
 
