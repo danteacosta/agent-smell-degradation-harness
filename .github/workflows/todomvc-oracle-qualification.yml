@@ -20,6 +20,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: harness
+      - name: Install qualification runner
+        run: |
+          apt-get update
+          apt-get install --yes --no-install-recommends python3
       - name: Checkout frozen TodoMVC revision
         run: |
           git clone --filter=blob:none https://github.com/tastejs/todomvc.git todomvc
@@ -33,7 +37,7 @@ jobs:
           npm --prefix examples/vue run build
       - name: Qualify gold and mutant with the same browser oracle
         run: >-
-          python harness/eval/todomvc_escape_qualification.py
+          python3 harness/eval/todomvc_escape_qualification.py
           --checkout todomvc
           --output harness/todomvc-escape-qualification.json
           -- bash -lc
