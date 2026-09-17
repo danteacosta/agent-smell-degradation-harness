@@ -1,0 +1,14 @@
+diff --git a/cypress/e2e/spec.cy.js b/cypress/e2e/spec.cy.js
+index 478bcfb..13e39f6 100644
+--- a/cypress/e2e/spec.cy.js
++++ b/cypress/e2e/spec.cy.js
+@@ -870,6 +870,9 @@ Cypress._.times(N, () => {
+         .find('.edit')
+         .type('{selectall}{backspace}foo{esc}')
+ 
++        cy.get(selectors.todoItems).eq(1).should('not.have.class', 'editing')
++        cy.get(selectors.todoItems).eq(1).find('.edit').should('not.exist')
++
+         visibleTodos().eq(0).should('contain', TODO_ITEM_ONE)
+         visibleTodos().eq(1).should('contain', TODO_ITEM_TWO)
+         visibleTodos().eq(2).should('contain', TODO_ITEM_THREE)
