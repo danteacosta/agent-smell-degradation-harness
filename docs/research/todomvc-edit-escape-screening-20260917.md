@@ -80,11 +80,16 @@ press Escape.
 Outcome: edit mode closes and all three original titles remain visible; in
 particular, the second title remains `feed the cat`.
 
-The upstream Cypress test named `should cancel edits on escape` already performs
-that user-visible interaction and assertion. The selected Vue revision is
-intentionally listed as in-memory by the shared test infrastructure, and the
-commit reports one skipped persistence test. Reload is therefore outside this
-case's oracle. Adding reload would create a false failure unrelated to Escape.
+The upstream Cypress test named `should cancel edits on escape` performs the
+interaction and asserts that all three original titles remain. It does not
+directly assert that the second item loses its `editing` class or that the edit
+input disappears. It is therefore a partial oracle for the compound source
+sentence. Before freezing the case, the reviewed shared oracle must retain the
+title assertions and add direct assertions for edit-mode exit. The selected Vue
+revision is intentionally listed as in-memory by the shared test infrastructure,
+and the commit reports one skipped persistence test. Reload is therefore outside
+this case's oracle. Adding reload would create a false failure unrelated to
+Escape.
 
 ## Targeted mutant and execution recipe
 
@@ -102,6 +107,11 @@ Expected oracle behavior:
 2. The mutant fails because the second visible label becomes `foo`.
 3. Complete, rewrite-control and missing-condition code-generation arms start
    from the same scaffold and execute the identical frozen test.
+
+The frozen test must also assert that the second `<li>` no longer has class
+`editing` and that its `.edit` input no longer exists after Escape. These checks
+come from the canonical complete requirement and must be added before variant
+assignment, not after observing generated outputs.
 
 The mutation is a rehearsal of oracle sensitivity, not the generated treatment
 outcome. It must not be counted as an H1 result.
@@ -125,8 +135,8 @@ must be used for the mutant run.
 - Independent mapping review has not approved the requirement-to-Vue linkage.
 - Independent manipulation review has not approved the rewrite control, the
   missing-condition treatment or the one-line mutant.
-- Independent oracle review has not approved the Cypress assertion as sufficient
-  for the target constraint.
+- The upstream Cypress assertion covers title preservation but not edit-mode
+  exit; the strengthened shared oracle and its independent review are pending.
 - Rights/governance review remains pending despite the public MIT license.
 - No qualified-environment gold-pass or mutant-kill receipts exist yet.
 - No provider configuration or paid collection is authorized by this dossier.
