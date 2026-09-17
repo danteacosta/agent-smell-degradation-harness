@@ -475,6 +475,23 @@ binds the priority candidate to exact upstream revisions and corrects the
 observable contract to same-session UI behavior; Vue persistence is outside
 that candidate's oracle.
 
+After independently freezing the strengthened Cypress oracle, a qualified
+checkout can rehearse the unchanged gold/mutant command and emit a hash-bound
+receipt without calling a provider:
+
+```bash
+python -m eval.todomvc_escape_qualification \
+  --checkout /absolute/todomvc \
+  --output /absolute/private/todomvc-escape-receipt.json \
+  -- ./node_modules/.bin/start-server-and-test server http://localhost:8000 \
+     "node tests/cya.js -f vue"
+```
+
+The runner verifies the exact upstream revision and blobs, requires both
+edit-mode-exit assertions, changes only the reviewed Escape binding, restores
+the component even after interruption, and labels its output as oracle rehearsal
+rather than H1 evidence.
+
 Offline preflight before live LLM runs (secret-free; default CI unchanged):
 
 | Command | Purpose |
