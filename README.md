@@ -470,6 +470,10 @@ records TodoMVC, RealWorld, StrictDoc and CaSS as candidates, not admitted
 evidence. LLM-generated tests and LLM judges remain candidate-generation and
 diagnostic tools; executed, frozen E2E assertions are the behavioral label, and
 independent semantic review is still required.
+The [TodoMVC Escape dossier](docs/research/todomvc-edit-escape-screening-20260917.md)
+binds the priority candidate to exact upstream revisions and corrects the
+observable contract to same-session UI behavior; Vue persistence is outside
+that candidate's oracle.
 
 Offline preflight before live LLM runs (secret-free; default CI unchanged):
 
