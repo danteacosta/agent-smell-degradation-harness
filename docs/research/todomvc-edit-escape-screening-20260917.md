@@ -130,6 +130,25 @@ be added only if its exact test selection is captured in the receipt. The same
 environment, built scaffold, command, browser, configuration and oracle bytes
 must be used for the mutant run.
 
+## Qualification automation and first attempt
+
+`eval/todomvc_escape_qualification.py` now enforces the rehearsal boundary. It
+verifies the exact revision and upstream component/oracle blobs, requires the
+two edit-mode-exit assertions, binds both lockfiles and the strengthened oracle
+by SHA-256, and runs one unchanged command. It executes the mutant only after a
+successful gold run, restores the component atomically, and emits a receipt
+labelled `oracle_rehearsal_only`. A shared infrastructure failure therefore
+cannot be counted as a mutant kill.
+
+The 2026-09-17 preparation checkout built the selected Vue application under
+Node 24.19.0 and the two committed npm lockfiles. The strengthened oracle hash
+was `a91bd10963f434a9c7d981bb915fcf3dfef0475761363e6b63826bdf9c873c3a`.
+The browser qualification remained blocked before the gold run because the
+Cypress 15.14.2 executable download was corrupt twice in this environment and
+no browser binary was available locally. The fail-closed receipt recorded
+`gold_passed=false`, `mutant=null`, and `mutation_killed=false`; it is an
+environment diagnostic, not admission evidence. No provider was called.
+
 ## Admission blockers
 
 - Independent mapping review has not approved the requirement-to-Vue linkage.
