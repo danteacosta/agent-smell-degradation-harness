@@ -92,3 +92,17 @@ def test_cli_requires_a_command(tmp_path):
         capture_output=True, text=True)
     assert run.returncode == 2
     assert "oracle command is required" in run.stderr
+
+
+def test_ci_rebuilds_both_gold_and_mutant_before_browser_oracle():
+    workflow = (
+        Path(__file__).parents[1]
+        / ".github"
+        / "workflows"
+        / "todomvc-oracle-qualification.yml"
+    ).read_text(encoding="utf-8")
+    command = workflow.split(
+        "name: Qualify gold and mutant with the same build and browser oracle", 1
+    )[1]
+    assert "npm --prefix examples/vue run build &&" in command
+    assert command.index("run build &&") < command.index("start-server-and-test")
