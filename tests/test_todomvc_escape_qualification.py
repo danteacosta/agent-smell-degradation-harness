@@ -106,3 +106,4 @@ def test_ci_rebuilds_both_gold_and_mutant_before_browser_oracle():
     )[1]
     assert "npm --prefix examples/vue run build &&" in command
     assert command.index("run build &&") < command.index("start-server-and-test")
+    assert "persist-credentials: false" in workflow
