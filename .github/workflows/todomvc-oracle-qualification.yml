@@ -20,6 +20,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: harness
+          persist-credentials: false
       - name: Install qualification runner
         run: |
           apt-get update
