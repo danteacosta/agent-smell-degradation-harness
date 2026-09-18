@@ -29,19 +29,19 @@ jobs:
           git clone --filter=blob:none https://github.com/tastejs/todomvc.git todomvc
           git -C todomvc checkout --detach 1f2bd7f0a1fa8c602284451d282c3821d0d96aec
           git -C todomvc apply ../harness/eval/fixtures/todomvc-escape-oracle.patch
-      - name: Install exact dependencies and build Vue
+      - name: Install exact dependencies
         working-directory: todomvc
         run: |
           npm ci --ignore-scripts
           npm --prefix examples/vue ci --ignore-scripts
-          npm --prefix examples/vue run build
-      - name: Qualify gold and mutant with the same browser oracle
+      - name: Qualify gold and mutant with the same build and browser oracle
         run: >-
           python3 harness/eval/todomvc_escape_qualification.py
           --checkout todomvc
           --output harness/todomvc-escape-qualification.json
           -- bash -lc
-          "npx start-server-and-test server http://localhost:8000
+          "npm --prefix examples/vue run build &&
+          npx start-server-and-test server http://localhost:8000
           'cypress run --browser electron --env framework=vue --spec cypress/e2e/spec.cy.js'"
       - uses: actions/upload-artifact@v4
         if: always()
