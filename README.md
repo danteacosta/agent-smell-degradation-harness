@@ -483,12 +483,16 @@ receipt without calling a provider:
 python -m eval.todomvc_escape_qualification \
   --checkout /absolute/todomvc \
   --output /absolute/private/todomvc-escape-receipt.json \
-  -- ./node_modules/.bin/start-server-and-test server http://localhost:8000 \
-     "node tests/cya.js -f vue"
+  -- bash -lc \
+     "npm --prefix examples/vue run build && \
+      npx start-server-and-test server http://localhost:8000 \
+      'cypress run --browser electron --env framework=vue --spec cypress/e2e/spec.cy.js'"
 ```
 
-The runner verifies the exact upstream revision and blobs, requires both
-edit-mode-exit assertions, changes only the reviewed Escape binding, restores
+The build belongs inside the unchanged command so both the gold source and the
+mutated source produce the bundle exercised by Cypress. The runner verifies the
+exact upstream revision and blobs, requires both edit-mode-exit assertions,
+changes only the reviewed Escape binding, restores
 the component even after interruption, and labels its output as oracle rehearsal
 rather than H1 evidence.
 
