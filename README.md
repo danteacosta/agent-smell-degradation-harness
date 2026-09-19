@@ -458,8 +458,10 @@ distinct meaning-preserving rewrite-control requirement and an independently
 bound manipulation review, so ordinary wording sensitivity is measured rather
 than silently attributed to the smell. The known-good implementation must
 pass and the same oracle must kill a targeted mutant; both executions and all
-four reviews are hash-bound. Tests generated separately from clean and smelly
-requirements are ineligible.
+four reviews are hash-bound. Approved mapping, manipulation, oracle and rights
+reviews must use four distinct pseudonymous reviewer identities. This enforces
+role separation but does not itself prove reviewer expertise or independence.
+Tests generated separately from clean and smelly requirements are ineligible.
 
 ```bash
 python -m eval.repository_case_admission --manifest /absolute/private/case.json
