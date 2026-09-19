@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-09-18
+Last updated: 2026-09-19
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
