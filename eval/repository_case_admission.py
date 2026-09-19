@@ -220,6 +220,13 @@ def assess_repository_case(case: dict) -> dict:
         blockers.append("gold_implementation_not_verified")
     if not case["mutation_killed"]:
         blockers.append("oracle_did_not_kill_targeted_mutant")
+    approved_reviewer_ids = [
+        reviews[review]["reviewer_id"].strip()
+        for review in sorted(REVIEW_KEYS)
+        if reviews[review]["status"] == "approved"
+    ]
+    if len(approved_reviewer_ids) != len(set(approved_reviewer_ids)):
+        blockers.append("reviewer_independence_not_established")
     for review in sorted(REVIEW_KEYS):
         if reviews[review]["status"] != "approved":
             blockers.append(f"{review}:{reviews[review]['status']}")
