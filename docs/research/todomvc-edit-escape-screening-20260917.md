@@ -1,6 +1,6 @@
 # TodoMVC Escape-edit repository E2E screening dossier
 
-Checked: 2026-09-17. Status: screening only; not admitted to provider-backed or
+Checked: 2026-09-19. Status: screening only; not admitted to provider-backed or
 confirmatory execution.
 
 ## Narrow behavioral claim
@@ -130,36 +130,48 @@ be added only if its exact test selection is captured in the receipt. The same
 environment, built scaffold, command, browser, configuration and oracle bytes
 must be used for the mutant run.
 
-## Qualification automation and first attempt
+## Qualification automation and verified rehearsal
 
-`eval/todomvc_escape_qualification.py` now enforces the rehearsal boundary. It
+`eval/todomvc_escape_qualification.py` enforces the rehearsal boundary. It
 verifies the exact revision and upstream component/oracle blobs, requires the
 two edit-mode-exit assertions, binds both lockfiles and the strengthened oracle
 by SHA-256, and runs one unchanged command. It executes the mutant only after a
-successful gold run, restores the component atomically, and emits a receipt
-labelled `oracle_rehearsal_only`. A shared infrastructure failure therefore
-cannot be counted as a mutant kill.
+successful gold run, rebuilds the application from each arm's current source,
+restores the component atomically, and emits a receipt labelled
+`oracle_rehearsal_only`. A shared infrastructure failure therefore cannot be
+counted as a mutant kill.
 
-The 2026-09-17 preparation checkout built the selected Vue application under
-Node 24.19.0 and the two committed npm lockfiles. The strengthened oracle hash
-was `a91bd10963f434a9c7d981bb915fcf3dfef0475761363e6b63826bdf9c873c3a`.
-The browser qualification remained blocked before the gold run because the
-Cypress 15.14.2 executable download was corrupt twice in this environment and
-no browser binary was available locally. The fail-closed receipt recorded
-`gold_passed=false`, `mutant=null`, and `mutation_killed=false`; it is an
-environment diagnostic, not admission evidence. No provider was called.
+The qualified browser rehearsal completed at harness revision
+`371330595ef91b25e3bfaf4933189450f7377517`. The known-good implementation
+returned 0 and the targeted `Escape -> commitEdit` mutant returned 1 under the
+same rebuilt-bundle command and frozen Cypress oracle. The run therefore
+recorded `gold_passed=true` and `mutation_killed=true`. Its receipt SHA-256 is
+`4af6e35f24507abcace6be008eba65771971068868074b45fe75ee7d685864d7`;
+the preserved workflow artifact digest is
+`sha256:e585788dfd1f5f0fa58639bdd4663cec41de212faac7bd53aa0bbd1f30083960`.
+The authoritative CI run passed 1,473 tests and 9 subtests. No provider was
+called.
+
+This proves only that the frozen browser oracle accepts the known-good
+implementation and reveals this specific seeded fault. It does not establish
+that a requirement smell causes a generated defect, that the mutation is
+representative, or that the requirement-to-code mapping is semantically valid.
 
 ## Admission blockers
 
 - Independent mapping review has not approved the requirement-to-Vue linkage.
 - Independent manipulation review has not approved the rewrite control, the
   missing-condition treatment or the one-line mutant.
-- The upstream Cypress assertion covers title preservation but not edit-mode
-  exit; the strengthened shared oracle and its independent review are pending.
+- Independent oracle review has not approved the strengthened shared Cypress
+  oracle, despite its successful gold/mutant rehearsal.
 - Rights/governance review remains pending despite the public MIT license.
-- No qualified-environment gold-pass or mutant-kill receipts exist yet.
+- The four approvals must use four distinct pseudonymous reviewer identities;
+  one person cannot satisfy multiple review roles.
 - No provider configuration or paid collection is authorized by this dossier.
 
-The case must remain `screening` until every blocker has evidence and reviewer
-identity bound in a `repository-e2e-case/v1` manifest. Passing infrastructure
-checks, this upstream history, or an LLM judge cannot approve those fields.
+The case must remain `screening` until every blocker has evidence and a
+distinct reviewer identity bound in a `repository-e2e-case/v1` manifest.
+Distinct identifiers are an enforceable separation-of-duty control, not proof
+of expertise or organizational independence. Passing infrastructure checks,
+this upstream history, mutation kill, or an LLM judge cannot approve those
+fields.
