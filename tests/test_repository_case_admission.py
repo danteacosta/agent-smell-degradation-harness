@@ -169,6 +169,17 @@ def test_variant_specific_oracle_and_unknown_fields_are_rejected():
         assess_repository_case(case)
 
 
+def test_approved_review_roles_require_distinct_reviewers():
+    case = eligible_case()
+    case["reviews"]["oracle_review"]["reviewer_id"] = (
+        case["reviews"]["mapping_review"]["reviewer_id"])
+    result = assess_repository_case(case)
+    assert result["eligible"] is False
+    assert "reviewer_independence_not_established" in result["blockers"]
+    with pytest.raises(ValueError, match="reviewer_independence_not_established"):
+        admit_repository_case(case)
+
+
 def test_execution_and_review_claims_require_bound_evidence():
     case = eligible_case()
     case["gold_run_receipt_sha256"] = None
