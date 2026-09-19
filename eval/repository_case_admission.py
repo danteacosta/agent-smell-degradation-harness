@@ -221,7 +221,7 @@ def assess_repository_case(case: dict) -> dict:
     if not case["mutation_killed"]:
         blockers.append("oracle_did_not_kill_targeted_mutant")
     approved_reviewer_ids = [
-        reviews[review]["reviewer_id"].strip()
+        reviews[review]["reviewer_id"].strip().casefold()
         for review in sorted(REVIEW_KEYS)
         if reviews[review]["status"] == "approved"
     ]
