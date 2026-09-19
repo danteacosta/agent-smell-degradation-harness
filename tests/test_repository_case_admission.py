@@ -172,7 +172,7 @@ def test_variant_specific_oracle_and_unknown_fields_are_rejected():
 def test_approved_review_roles_require_distinct_reviewers():
     case = eligible_case()
     case["reviews"]["oracle_review"]["reviewer_id"] = (
-        case["reviews"]["mapping_review"]["reviewer_id"])
+        case["reviews"]["mapping_review"]["reviewer_id"].upper())
     result = assess_repository_case(case)
     assert result["eligible"] is False
     assert "reviewer_independence_not_established" in result["blockers"]
