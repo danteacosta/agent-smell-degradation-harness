@@ -1,0 +1,52 @@
+name: TodoMVC oracle qualification
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - eval/todomvc_escape_qualification.py
+      - eval/fixtures/todomvc-escape-oracle.patch
+      - .github/workflows/todomvc-oracle-qualification.yml
+
+permissions:
+  contents: read
+
+jobs:
+  qualify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    container: cypress/included:15.14.2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: harness
+          persist-credentials: false
+      - name: Install qualification runner
+        run: |
+          apt-get update
+          apt-get install --yes --no-install-recommends python3
+      - name: Checkout frozen TodoMVC revision
+        run: |
+          git clone --filter=blob:none https://github.com/tastejs/todomvc.git todomvc
+          git -C todomvc checkout --detach 1f2bd7f0a1fa8c602284451d282c3821d0d96aec
+          git -C todomvc apply ../harness/eval/fixtures/todomvc-escape-oracle.patch
+      - name: Install exact dependencies
+        working-directory: todomvc
+        run: |
+          npm ci --ignore-scripts
+          npm --prefix examples/vue ci --ignore-scripts
+      - name: Qualify gold and mutant with the same build and browser oracle
+        run: >-
+          python3 harness/eval/todomvc_escape_qualification.py
+          --checkout todomvc
+          --output harness/todomvc-escape-qualification.json
+          -- bash -lc
+          "npm --prefix examples/vue run build &&
+          npx start-server-and-test server http://localhost:8000
+          'cypress run --browser electron --env framework=vue --spec cypress/e2e/spec.cy.js'"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: todomvc-escape-qualification
+          path: harness/todomvc-escape-qualification.json
+          retention-days: 30
