@@ -93,8 +93,9 @@ def _oracle_result(report: bytes) -> dict:
             failure = failures[0]
             message = failure.get("message", "")
             if (name != ESCAPE_TEST or failure.get("type") != "AssertionError"
-                    or not re.search(r"to contain ['\"]feed the cat['\"]", message)
-                    or not re.search(r"(?:text was:? |expected )['\"]foo['\"]", message)):
+                    or re.fullmatch(
+                        r"(?:Timed out retrying(?: after [0-9]+ms)?: )?"
+                        r"expected '<li>' to contain 'feed the cat'", message) is None):
                 return invalid
             targeted_failure = True
         elif name == ESCAPE_TEST:

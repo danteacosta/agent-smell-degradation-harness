@@ -45,7 +45,7 @@ def junit(failure=None, name="TodoMVC - vue Editing should cancel edits on escap
     return ElementTree.tostring(root).decode()
 
 
-EXPECTED_FAILURE = "Timed out retrying: expected '<li>' to contain 'feed the cat', but the text was 'foo'"
+EXPECTED_FAILURE = "Timed out retrying after 4000ms: expected '<li>' to contain 'feed the cat'"
 
 
 def oracle_command(mutant_report=None, gold_report=None, mutant_exit=1) -> list[str]:
@@ -146,6 +146,9 @@ def test_non_oracle_mutant_failure_cannot_count_as_kill(tmp_path, monkeypatch, m
     (junit(EXPECTED_FAILURE, name="unrelated test"), 1),
     (junit("server unavailable", failure_type="Error"), 1),
     (junit("expected '.edit' to exist"), 1),
+    (junit("expected '<li>' to contain 'buy some cheese'"), 1),
+    (junit("expected '<input>' to contain 'feed the cat'"), 1),
+    (junit("unrelated error mentioning expected '<li>' to contain 'feed the cat'"), 1),
     (junit(EXPECTED_FAILURE, extra=True), 1),
     (junit(EXPECTED_FAILURE), 127),
     (junit(EXPECTED_FAILURE), 0),
@@ -209,3 +212,19 @@ def test_restores_component_when_mutant_run_is_interrupted(tmp_path, monkeypatch
         qualification.qualify(root, tmp_path / "receipt.json", oracle_command())
     assert (root / qualification.COMPONENT).read_bytes() == original
     assert not (tmp_path / "receipt.json").exists()
+
+
+def test_native_cypress_junit_original_title_failure_qualifies(tmp_path, monkeypatch):
+    # Exact testcase XML from qualification workflow run 35541981654.
+    # Cypress records the expected title but does not report the actual text.
+    report = """<testsuites><testsuite>
+    <testcase name="TodoMVC - vue Editing should cancel edits on escape" time="0.000" classname="should cancel edits on escape">
+      <failure message="Timed out retrying after 4000ms: expected &apos;&lt;li&gt;&apos; to contain &apos;feed the cat&apos;" type="AssertionError"><![CDATA[AssertionError: Timed out retrying after 4000ms: expected '<li>' to contain 'feed the cat'
+    at Context.eval (webpack://todomvc/./cypress/e2e/spec.cy.js:877:29)]]></failure>
+    </testcase>
+    </testsuite></testsuites>"""
+    root = checkout(tmp_path, monkeypatch)
+    receipt = qualification.qualify(root, tmp_path / "receipt.json", oracle_command(report))
+    assert receipt["gold_passed"] is True
+    assert receipt["mutation_killed"] is True
+    assert qualification.GOLD_BINDING in (root / qualification.COMPONENT).read_text()

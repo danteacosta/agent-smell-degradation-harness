@@ -140,8 +140,9 @@ successful gold run, rebuilds the application from each arm's current source,
 restores the component atomically, and emits a v2 receipt labelled
 `oracle_rehearsal_only`. Each arm must produce a fresh JUnit report; gold must
 include a passing `TodoMVC - vue Editing should cancel edits on escape` test.
-The mutant must fail that test with an `AssertionError` showing the expected
-`feed the cat` title and actual `foo` text. Other failures, missing or malformed
+The mutant must fail that test with the DOM `AssertionError` that its `<li>`
+should contain the original `feed the cat` title. Cypress JUnit omits the actual
+text value; qualification does not claim that the report observed `foo`. Other failures, missing or malformed
 reports, changed test inventories, and signal exits cannot count as a kill.
 The runner preserves per-arm stdout, stderr and JUnit files with receipt hashes.
 The [built-in Cypress JUnit reporter](https://docs.cypress.io/app/tooling/reporters)

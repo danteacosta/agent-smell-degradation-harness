@@ -527,8 +527,8 @@ mutated source produce the bundle exercised by Cypress. The runner verifies the
 exact upstream revision and blobs, requires both edit-mode-exit assertions,
 requires a fresh JUnit report for each arm, and changes only the reviewed Escape
 binding. A kill requires the named Escape test to fail with the expected
-original-title assertion; missing reports, crashes and unrelated failures do not
-qualify. Raw logs and JUnit reports are retained beside the v2 receipt in its
+original-title DOM assertion; the JUnit report need not include the actual text
+value. Missing reports, crashes and unrelated failures do not qualify. Raw logs and JUnit reports are retained beside the v2 receipt in its
 `.evidence` directory. The component is restored on normal exceptions, Ctrl-C
 and SIGTERM (forced process termination such as SIGKILL cannot run cleanup).
 The output remains an oracle rehearsal, not H1 evidence.
