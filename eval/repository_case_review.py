@@ -11,6 +11,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import stat
 from typing import Any
 
@@ -54,6 +55,8 @@ ROLE_MATERIAL_KEYS = {
 }
 CONFIDENCE = {"low", "medium", "high"}
 DECISIONS = {"approved", "rejected"}
+SHA40 = re.compile(r"[0-9a-f]{40}")
+SHA256 = re.compile(r"[0-9a-f]{64}")
 
 
 def _canonical(value: Any) -> bytes:
@@ -84,6 +87,13 @@ def _text(value: Any, label: str) -> str:
     return value.strip()
 
 
+def _single_line(value: Any, label: str) -> str:
+    text = _text(value, label)
+    if any(character in text for character in "\t\n\r"):
+        raise ValueError(f"{label} must be a single line")
+    return text
+
+
 def _validate_materials(role: str, materials: Any) -> dict:
     _require_exact(materials, ROLE_MATERIAL_KEYS[role], f"{role}.materials")
     for key, value in materials.items():
@@ -96,7 +106,12 @@ def _validate_materials(role: str, materials: Any) -> dict:
             if not isinstance(value, dict) or not value:
                 raise ValueError("interaction_contract must be a non-empty object")
         else:
-            _text(value, f"{role}.materials.{key}")
+            text = _text(value, f"{role}.materials.{key}")
+            if key == "source_revision" and SHA40.fullmatch(text) is None:
+                raise ValueError("source_revision must be a lowercase SHA-1")
+            if key in {"oracle_sha256", "license_sha256"} and (
+                    SHA256.fullmatch(text) is None):
+                raise ValueError(f"{key} must be a lowercase SHA-256")
     return materials
 
 
@@ -104,7 +119,7 @@ def validate_source(source: Any) -> dict:
     _require_exact(source, SOURCE_KEYS, "source")
     if source["schema_version"] != SOURCE_SCHEMA:
         raise ValueError("unsupported source schema")
-    _text(source["case_id"], "case_id")
+    _single_line(source["case_id"], "case_id")
     _require_exact(source["roles"], set(ROLES), "roles")
     for role in ROLES:
         _validate_materials(role, source["roles"][role])
@@ -208,6 +223,11 @@ def export_packets(source: dict, output: Path) -> dict:
     }
     receipt_path = output / "receipt.json"
     _write_new(receipt_path, _canonical(receipt) + b"\n")
+    for path in [output, *(item for item in output.rglob("*")
+                           if item.is_dir())]:
+        if path.is_symlink():
+            raise ValueError(f"symlink not allowed: {path}")
+        os.chmod(path, 0o700)
     _sync_tree(output)
     return receipt
 
@@ -239,6 +259,11 @@ def verify_export(output: Path) -> dict:
         raise ValueError("export root must be a real directory")
     if stat.S_IMODE(output.stat().st_mode) & 0o077:
         raise ValueError("export root must not be group/world accessible")
+    for path in output.rglob("*"):
+        if path.is_symlink():
+            raise ValueError(f"symlink not allowed: {path}")
+        if path.is_dir() and stat.S_IMODE(path.stat().st_mode) & 0o077:
+            raise ValueError(f"export directory is not private: {path}")
     receipt = _load_json(output / "receipt.json")
     _require_exact(receipt, {"schema_version", "case_id",
                              "confirmatory_eligible", "role_count", "inventory"},
@@ -281,15 +306,15 @@ def _validate_form(form: Any, completed: bool) -> dict:
     _require_exact(form, FORM_KEYS, "form")
     if form["schema_version"] != FORM_SCHEMA:
         raise ValueError("unsupported form schema")
-    role = _text(form["role"], "role")
+    role = _single_line(form["role"], "role")
     if role not in ROLES:
         raise ValueError("unknown review role")
-    _text(form["case_id"], "case_id")
+    _single_line(form["case_id"], "case_id")
     _validate_materials(role, form["materials"])
     if completed:
         if form["status"] != "completed":
             raise ValueError("completed form must have completed status")
-        _text(form["reviewer_id"], "reviewer_id")
+        _single_line(form["reviewer_id"], "reviewer_id")
         if not isinstance(form["prior_exposure_declared"], bool):
             raise ValueError("prior exposure must be declared")
         if form["decision"] not in DECISIONS:
