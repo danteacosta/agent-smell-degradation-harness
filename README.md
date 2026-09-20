@@ -519,15 +519,19 @@ python -m eval.todomvc_escape_qualification \
   -- bash -lc \
      "npm --prefix examples/vue run build && \
       npx start-server-and-test server http://localhost:8000 \
-      'cypress run --browser electron --env framework=vue --spec cypress/e2e/spec.cy.js'"
+      'cypress run --browser electron --env framework=vue --spec cypress/e2e/spec.cy.js --reporter junit --reporter-options mochaFile=todomvc-qualification-junit.xml'"
 ```
 
 The build belongs inside the unchanged command so both the gold source and the
 mutated source produce the bundle exercised by Cypress. The runner verifies the
 exact upstream revision and blobs, requires both edit-mode-exit assertions,
-changes only the reviewed Escape binding, restores
-the component even after interruption, and labels its output as oracle rehearsal
-rather than H1 evidence.
+requires a fresh JUnit report for each arm, and changes only the reviewed Escape
+binding. A kill requires the named Escape test to fail with the expected
+original-title assertion; missing reports, crashes and unrelated failures do not
+qualify. Raw logs and JUnit reports are retained beside the v2 receipt in its
+`.evidence` directory. The component is restored on normal exceptions, Ctrl-C
+and SIGTERM (forced process termination such as SIGKILL cannot run cleanup).
+The output remains an oracle rehearsal, not H1 evidence.
 
 Offline preflight before live LLM runs (secret-free; default CI unchanged):
 

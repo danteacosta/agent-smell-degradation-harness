@@ -7,18 +7,25 @@ it runs the same command twice and changes only the reviewed one-line mutant.
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
 import json
 import os
+import re
+import signal
 from pathlib import Path
 import subprocess
 import tempfile
+import threading
+from xml.etree import ElementTree
 
 
 REVISION = "1f2bd7f0a1fa8c602284451d282c3821d0d96aec"
 COMPONENT = Path("examples/vue/src/components/TodoItem.vue")
 ORACLE = Path("cypress/e2e/spec.cy.js")
+JUNIT_REPORT = Path("todomvc-qualification-junit.xml")
+ESCAPE_TEST = "TodoMVC - vue Editing should cancel edits on escape"
 ROOT_LOCK = Path("package-lock.json")
 VUE_LOCK = Path("examples/vue/package-lock.json")
 UPSTREAM_BLOBS = {
@@ -56,13 +63,88 @@ def _atomic_write(path: Path, data: bytes) -> None:
             os.unlink(temporary)
 
 
-def _run(command: list[str], checkout: Path) -> dict:
+def _oracle_result(report: bytes) -> dict:
+    """Accept only the frozen Escape test and its expected title assertion."""
+    invalid = {"valid": False, "escape_passed": False, "targeted_failure": False}
+    try:
+        root = ElementTree.fromstring(report)
+    except ElementTree.ParseError:
+        return invalid
+    if root.tag not in {"testsuites", "testsuite"}:
+        return invalid
+    tests = list(root.iter("testcase"))
+    names = [test.get("name") for test in tests]
+    if (not tests or any(not name for name in names)
+            or len(set(names)) != len(names) or names.count(ESCAPE_TEST) != 1):
+        return invalid
+    escape_passed = False
+    targeted_failure = False
+    skipped = []
+    for test in tests:
+        name = test.get("name")
+        failures = list(test.findall("failure"))
+        if test.findall("error") or len(failures) > 1:
+            return invalid
+        if test.findall("skipped"):
+            if name == ESCAPE_TEST or failures:
+                return invalid
+            skipped.append(name)
+        elif failures:
+            failure = failures[0]
+            message = failure.get("message", "")
+            if (name != ESCAPE_TEST or failure.get("type") != "AssertionError"
+                    or not re.search(r"to contain ['\"]feed the cat['\"]", message)
+                    or not re.search(r"(?:text was:? |expected )['\"]foo['\"]", message)):
+                return invalid
+            targeted_failure = True
+        elif name == ESCAPE_TEST:
+            escape_passed = True
+    return {
+        "valid": True,
+        "escape_passed": escape_passed,
+        "targeted_failure": targeted_failure,
+        "test_inventory_sha256": _sha256(json.dumps(sorted(names)).encode()),
+        "skipped_tests_sha256": _sha256(json.dumps(sorted(skipped)).encode()),
+    }
+
+
+def _run(command: list[str], checkout: Path, evidence: Path) -> dict:
+    evidence.mkdir()
     result = subprocess.run(command, cwd=checkout, text=False, capture_output=True)
+    _atomic_write(evidence / "stdout.log", result.stdout)
+    _atomic_write(evidence / "stderr.log", result.stderr)
+    report_path = checkout / JUNIT_REPORT
+    report = None
+    if report_path.is_file() and not report_path.is_symlink():
+        report = report_path.read_bytes()
+        _atomic_write(evidence / "junit.xml", report)
+    # The next arm must create its own report, never reuse the gold report.
+    report_path.unlink(missing_ok=True)
     return {
         "returncode": result.returncode,
         "stdout_sha256": _sha256(result.stdout),
         "stderr_sha256": _sha256(result.stderr),
+        "junit_sha256": _sha256(report) if report is not None else None,
+        "oracle": _oracle_result(report or b""),
     }
+
+
+@contextmanager
+def _restore_on_termination():
+    """Let the mutation's finally block run on normal CLI termination."""
+    if threading.current_thread() is not threading.main_thread():
+        yield
+        return
+    previous = signal.getsignal(signal.SIGTERM)
+
+    def interrupted(_signum, _frame):
+        raise KeyboardInterrupt("qualification terminated")
+
+    signal.signal(signal.SIGTERM, interrupted)
+    try:
+        yield
+    finally:
+        signal.signal(signal.SIGTERM, previous)
 
 
 def qualify(checkout: Path, output: Path, command: list[str]) -> dict:
@@ -96,31 +178,42 @@ def qualify(checkout: Path, output: Path, command: list[str]) -> dict:
         "root_lock_sha256": _sha256((checkout / ROOT_LOCK).read_bytes()),
         "vue_lock_sha256": _sha256((checkout / VUE_LOCK).read_bytes()),
     }
-    gold = _run(command, checkout)
+    report_path = checkout / JUNIT_REPORT
+    if report_path.exists() or report_path.is_symlink():
+        raise ValueError("qualification report path must not already exist")
+    evidence = output.with_suffix(".evidence")
+    evidence.mkdir(parents=True, exist_ok=False)
+    gold = _run(command, checkout, evidence / "gold")
+    gold_passed = gold["returncode"] == 0 and gold["oracle"]["escape_passed"]
     mutant_result = None
-    if gold["returncode"] == 0:
+    if gold_passed:
         mutant = component_text.replace(GOLD_BINDING, MUTANT_BINDING).encode()
-        try:
-            _atomic_write(component_path, mutant)
-            mutant_result = _run(command, checkout)
-        finally:
-            _atomic_write(component_path, component)
+        with _restore_on_termination():
+            try:
+                _atomic_write(component_path, mutant)
+                mutant_result = _run(command, checkout, evidence / "mutant")
+            finally:
+                _atomic_write(component_path, component)
     if component_path.read_bytes() != component:
         raise RuntimeError("component restoration failed")
+    mutation_killed = bool(
+        gold_passed and mutant_result is not None
+        and mutant_result["returncode"] == 1
+        and mutant_result["oracle"]["targeted_failure"]
+        and all(gold["oracle"][key] == mutant_result["oracle"][key]
+                for key in ("test_inventory_sha256", "skipped_tests_sha256"))
+    )
 
     receipt = {
-        "schema_version": "repository-e2e-qualification/v1",
+        "schema_version": "repository-e2e-qualification/v2",
         "case_id": "TODOMVC-EDIT-ESCAPE-001",
         "created_at": datetime.now(timezone.utc).isoformat(),
         "binding": binding,
         "gold": gold,
         "mutant": mutant_result,
-        "gold_passed": gold["returncode"] == 0,
-        "mutation_killed": (
-            gold["returncode"] == 0
-            and mutant_result is not None
-            and mutant_result["returncode"] != 0
-        ),
+        "gold_passed": gold_passed,
+        "mutation_killed": mutation_killed,
+        "evidence_directory": evidence.name,
         "scientific_claim": "oracle_rehearsal_only",
     }
     output.parent.mkdir(parents=True, exist_ok=True)

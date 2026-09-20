@@ -137,11 +137,17 @@ verifies the exact revision and upstream component/oracle blobs, requires the
 two edit-mode-exit assertions, binds both lockfiles and the strengthened oracle
 by SHA-256, and runs one unchanged command. It executes the mutant only after a
 successful gold run, rebuilds the application from each arm's current source,
-restores the component atomically, and emits a receipt labelled
-`oracle_rehearsal_only`. A shared infrastructure failure therefore cannot be
-counted as a mutant kill.
+restores the component atomically, and emits a v2 receipt labelled
+`oracle_rehearsal_only`. Each arm must produce a fresh JUnit report; gold must
+include a passing `TodoMVC - vue Editing should cancel edits on escape` test.
+The mutant must fail that test with an `AssertionError` showing the expected
+`feed the cat` title and actual `foo` text. Other failures, missing or malformed
+reports, changed test inventories, and signal exits cannot count as a kill.
+The runner preserves per-arm stdout, stderr and JUnit files with receipt hashes.
+The [built-in Cypress JUnit reporter](https://docs.cypress.io/app/tooling/reporters)
+provides this structured evidence without another dependency.
 
-The qualified browser rehearsal completed at harness revision
+A historical v1 browser rehearsal completed at harness revision
 `371330595ef91b25e3bfaf4933189450f7377517`. The known-good implementation
 returned 0 and the targeted `Escape -> commitEdit` mutant returned 1 under the
 same rebuilt-bundle command and frozen Cypress oracle. The run therefore
@@ -149,11 +155,14 @@ recorded `gold_passed=true` and `mutation_killed=true`. Its receipt SHA-256 is
 `4af6e35f24507abcace6be008eba65771971068868074b45fe75ee7d685864d7`;
 the preserved workflow artifact digest is
 `sha256:e585788dfd1f5f0fa58639bdd4663cec41de212faac7bd53aa0bbd1f30083960`.
-The authoritative CI run passed 1,473 tests and 9 subtests. No provider was
-called.
+The historical CI run passed 1,473 tests and 9 subtests. No provider was
+called. That v1 receipt classified any nonzero mutant exit as a kill and retained
+only output hashes, so it cannot distinguish an assertion failure from an
+infrastructure failure. It is historical execution metadata, not qualification
+under the v2 evidence contract; a fresh v2 browser rehearsal is required.
 
-This proves only that the frozen browser oracle accepts the known-good
-implementation and reveals this specific seeded fault. It does not establish
+Even a successful v2 qualification establishes only sensitivity to this specific
+seeded fault. It does not establish
 that a requirement smell causes a generated defect, that the mutation is
 representative, or that the requirement-to-code mapping is semantically valid.
 

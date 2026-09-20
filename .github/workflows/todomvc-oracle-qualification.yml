@@ -43,10 +43,12 @@ jobs:
           -- bash -lc
           "npm --prefix examples/vue run build &&
           npx start-server-and-test server http://localhost:8000
-          'cypress run --browser electron --env framework=vue --spec cypress/e2e/spec.cy.js'"
+          'cypress run --browser electron --env framework=vue --spec cypress/e2e/spec.cy.js --reporter junit --reporter-options mochaFile=todomvc-qualification-junit.xml'"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: todomvc-escape-qualification
-          path: harness/todomvc-escape-qualification.json
+          path: |
+            harness/todomvc-escape-qualification.json
+            harness/todomvc-escape-qualification.evidence/
           retention-days: 30
