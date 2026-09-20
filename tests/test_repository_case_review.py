@@ -127,7 +127,8 @@ def test_export_rejects_tampering_extra_files_and_symlinks(tmp_path: Path) -> No
     target.write_bytes(original.read_bytes())
     original.unlink()
     original.symlink_to(target)
-    with pytest.raises(ValueError, match="invalid export file|inventory mismatch"):
+    with pytest.raises(
+            ValueError, match="symlink not allowed|invalid export file|inventory mismatch"):
         verify_export(export3)
 
 
