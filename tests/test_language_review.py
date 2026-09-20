@@ -10,7 +10,8 @@ import sys
 import pytest
 
 from eval.language_controls import cases
-from eval.language_review import export_review, prepare_review
+from eval.language_review import (export_review, prepare_review, record_response,
+                                  verify_review_export)
 
 
 def read_forms(output):
@@ -64,8 +65,8 @@ def test_reviewer_files_preserve_exact_prompts_and_exclude_custody(tmp_path):
         for case in inventory:
             assert case['id'] not in serialized
             assert case['reference_source'] not in serialized
-        assert 'Somente este formulário' in markdown
-        assert 'Não implemente' in markdown
+        assert 'Only this form' in markdown
+        assert 'Do not implement' in markdown
     assert observed == expected
 
 
@@ -97,6 +98,95 @@ def test_export_is_deterministic_and_receipt_covers_every_file(tmp_path):
             assert p.read_bytes() == (second / p.relative_to(first)).read_bytes()
 
 
+def test_verifier_detects_tampering_and_unreceipted_files(tmp_path):
+    output = tmp_path / 'review'
+    export_review(output)
+    assert verify_review_export(output)['status'] == 'review_export_verified'
+    form = output / 'forms/FORM-A.md'
+    original = form.read_bytes()
+    form.write_bytes(original + b'changed')
+    with pytest.raises(ValueError, match='hash mismatch'):
+        verify_review_export(output)
+    form.write_bytes(original)
+    extra = output / 'unreceipted.txt'
+    extra.write_text('unexpected')
+    with pytest.raises(ValueError, match='inventory'):
+        verify_review_export(output)
+
+
+def test_verifier_rejects_symlink_and_relaxed_permissions(tmp_path):
+    output = tmp_path / 'review'
+    export_review(output)
+    target = tmp_path / 'outside.txt'
+    target.write_text('outside')
+    link = output / 'link.txt'
+    link.symlink_to(target)
+    with pytest.raises(ValueError, match='symbolic links'):
+        verify_review_export(output)
+    link.unlink()
+    form = output / 'forms/FORM-A.json'
+    form.chmod(0o644)
+    with pytest.raises(ValueError, match='mode 0600'):
+        verify_review_export(output)
+
+
+def completed_form(output, tmp_path):
+    form = json.loads((output / 'forms/FORM-A.json').read_text())
+    form['status'] = 'completed'
+    form['reviewer_id'] = 'reviewer-01'
+    form['prior_exposure_declared'] = False
+    for item in form['items']:
+        item.update({
+            'interpretation': 'The stated behavior is required.',
+            'other_plausible_interpretations': 'none',
+            'missing_context': 'none identified',
+            'confidence': 'high',
+            'rationale': 'This reading follows the explicit condition.',
+        })
+    path = tmp_path / 'completed.json'
+    path.write_text(json.dumps(form))
+    return path
+
+
+def test_completed_response_is_bound_to_original_form_and_immutable(tmp_path):
+    output = tmp_path / 'review'
+    export_review(output)
+    completed = completed_form(output, tmp_path)
+    recorded = tmp_path / 'responses' / 'FORM-A-reviewer-01.json'
+    recorded.parent.mkdir()
+    result = record_response(output, completed, recorded)
+    assert result == {'status': 'independent_response_recorded', 'form_id': 'FORM-A',
+                      'reviewer_id': 'reviewer-01', 'confirmatory_eligible': False,
+                      'bundle_forms': 6}
+    envelope = json.loads(recorded.read_text())
+    assert envelope['schema_version'] == 'candidate-interpretation-response/v1'
+    assert envelope['confirmatory_eligible'] is False
+    assert envelope['response']['items'][0]['confidence'] == 'high'
+    assert recorded.stat().st_mode & 0o777 == 0o600
+    before = recorded.read_bytes()
+    with pytest.raises(FileExistsError):
+        record_response(output, completed, recorded)
+    assert recorded.read_bytes() == before
+
+
+@pytest.mark.parametrize('mutation, match', [
+    (lambda form: form['items'][0].update({'observed_requirement_and_interface': 'changed'}),
+     'changed item identity'),
+    (lambda form: form['items'][0].update({'interpretation': ''}), 'interpretation'),
+    (lambda form: form['items'][0].update({'confidence': 'certain'}), 'confidence'),
+    (lambda form: form.update({'prior_exposure_declared': None}), 'prior_exposure'),
+])
+def test_completed_response_rejects_changed_or_incomplete_answers(tmp_path, mutation, match):
+    output = tmp_path / 'review'
+    export_review(output)
+    completed = completed_form(output, tmp_path)
+    form = json.loads(completed.read_text())
+    mutation(form)
+    completed.write_text(json.dumps(form))
+    with pytest.raises(ValueError, match=match):
+        record_response(output, completed, tmp_path / 'response.json')
+
+
 @pytest.mark.parametrize('symlink', [False, True])
 def test_existing_destination_is_never_modified(tmp_path, symlink):
     original = tmp_path / 'original'
@@ -112,6 +202,15 @@ def test_existing_destination_is_never_modified(tmp_path, symlink):
     assert sorted(p.name for p in original.iterdir()) == ['keep.txt']
 
 
+def test_export_rejects_relative_and_repository_paths(tmp_path):
+    with pytest.raises(ValueError, match='absolute'):
+        export_review(Path('relative-review'))
+    repository_output = Path(__file__).resolve().parents[1] / 'private-review'
+    with pytest.raises(ValueError, match='outside the repository'):
+        export_review(repository_output)
+    assert not repository_output.exists()
+
+
 def test_unsupported_profile_shape_is_rejected_before_export():
     with pytest.raises(ValueError, match='profile'):
         prepare_review(cases()[:-1], seed=42)
@@ -119,7 +218,8 @@ def test_unsupported_profile_shape_is_rejected_before_export():
 
 def test_command_line_prepares_an_offline_draft_and_rejects_reuse(tmp_path):
     output = tmp_path / 'cli'
-    command = [sys.executable, '-m', 'eval.language_review', '--output', str(output), '--seed', '123']
+    command = [sys.executable, '-m', 'eval.language_review', '--output', str(output),
+               '--seed', '123']
     run = subprocess.run(command, capture_output=True, text=True)
     assert run.returncode == 0, run.stderr
     assert json.loads(run.stdout)['status'] == 'drafts_prepared'
@@ -127,3 +227,124 @@ def test_command_line_prepares_an_offline_draft_and_rejects_reuse(tmp_path):
     repeated = subprocess.run(command, capture_output=True, text=True)
     assert repeated.returncode != 0
     assert (output / 'receipt.json').read_bytes() == before
+
+    verified = subprocess.run(
+        [sys.executable, '-m', 'eval.language_review', '--output', str(output),
+         '--verify-existing'], capture_output=True, text=True)
+    assert verified.returncode == 0, verified.stderr
+    assert json.loads(verified.stdout)['status'] == 'review_export_verified'
+
+    completed = completed_form(output, tmp_path)
+    response = tmp_path / 'cli-response.json'
+    recorded = subprocess.run(
+        [sys.executable, '-m', 'eval.language_review', '--output', str(output),
+         '--record-completed', str(completed), '--response-output', str(response)],
+        capture_output=True, text=True)
+    assert recorded.returncode == 0, recorded.stderr
+    assert json.loads(recorded.stdout)['status'] == 'independent_response_recorded'
+    assert response.is_file()
+
+
+@pytest.mark.parametrize('form_id', ['../../fake', '/private/tmp/fake', 'FORM-Z', None, ['FORM-A']])
+def test_response_rejects_nonmember_form_ids_before_output(tmp_path, form_id):
+    bundle = tmp_path / 'review'
+    export_review(bundle)
+    completed = completed_form(bundle, tmp_path)
+    submitted = json.loads(completed.read_text())
+    submitted['form_id'] = form_id
+    for row in submitted['items']:
+        row['observed_requirement_and_interface'] = 'Unexported prompt'
+    completed.write_text(json.dumps(submitted))
+    (tmp_path / 'fake.json').write_text(json.dumps(submitted))
+    destination = tmp_path / 'response.json'
+    with pytest.raises(ValueError, match='form_id'):
+        record_response(bundle, completed, destination)
+    assert not destination.exists()
+
+
+def test_verifier_rejects_nested_unreceipted_receipt(tmp_path):
+    bundle = tmp_path / 'review'
+    export_review(bundle)
+    nested = bundle / 'custodian/receipt.json'
+    nested.write_text('{}')
+    nested.chmod(0o600)
+    with pytest.raises(ValueError, match='inventory'):
+        verify_review_export(bundle)
+
+
+def test_verifier_rejects_reduced_topology_even_with_updated_receipt(tmp_path):
+    bundle = tmp_path / 'review'
+    export_review(bundle)
+    receipt_path = bundle / 'receipt.json'
+    receipt = json.loads(receipt_path.read_text())
+    for form_id in ('FORM-D', 'FORM-E', 'FORM-F'):
+        for extension in ('md', 'json'):
+            name = f'forms/{form_id}.{extension}'
+            (bundle / name).unlink()
+            del receipt['files'][name]
+    receipt['forms'] = 3
+    receipt_path.write_text(json.dumps(receipt))
+    with pytest.raises(ValueError, match='receipt|inventory|topology'):
+        verify_review_export(bundle)
+
+
+@pytest.mark.parametrize('artifact, mutation', [
+    ('receipt.json', lambda data: data.update({'human_labels': 1})),
+    ('receipt.json', lambda data: data.update({'extra': 'unknown'})),
+    ('custodian/manifest.json', lambda data: data['assignments'].append(data['assignments'][0])),
+    ('custodian/manifest.json', lambda data: data['items'][0].update({'mapping': []})),
+])
+def test_verifier_rejects_invalid_contract_even_when_rehashed(tmp_path, artifact, mutation):
+    bundle = tmp_path / 'review'
+    export_review(bundle)
+    path = bundle / artifact
+    data = json.loads(path.read_text())
+    mutation(data)
+    path.write_text(json.dumps(data))
+    if artifact != 'receipt.json':
+        receipt_path = bundle / 'receipt.json'
+        receipt = json.loads(receipt_path.read_text())
+        receipt['files'][artifact] = hashlib.sha256(path.read_bytes()).hexdigest()
+        receipt_path.write_text(json.dumps(receipt))
+    with pytest.raises(ValueError):
+        verify_review_export(bundle)
+
+
+@pytest.mark.parametrize('mutation', [
+    lambda form: form.update({'extra': 'unknown'}),
+    lambda form: form.update({'schema_version': 'unknown'}),
+    lambda form: form['items'][0].update({'item_id': 'unknown'}),
+    lambda form: form['items'][0].update({'extra': 'unknown'}),
+])
+def test_response_rejects_schema_and_identity_changes_before_output(tmp_path, mutation):
+    bundle = tmp_path / 'review'
+    export_review(bundle)
+    completed = completed_form(bundle, tmp_path)
+    submitted = json.loads(completed.read_text())
+    mutation(submitted)
+    completed.write_text(json.dumps(submitted))
+    destination = tmp_path / 'response.json'
+    with pytest.raises(ValueError):
+        record_response(bundle, completed, destination)
+    assert not destination.exists()
+
+
+def test_verifier_rejects_unbalanced_assignments_even_when_rehashed(tmp_path):
+    bundle = tmp_path / 'review'
+    export_review(bundle)
+    source = json.loads((bundle / 'forms/FORM-A.json').read_text())
+    target_path = bundle / 'forms/FORM-B.json'
+    target = json.loads(target_path.read_text())
+    target['items'] = source['items']
+    target_path.write_text(json.dumps(target))
+    manifest_path = bundle / 'custodian/manifest.json'
+    manifest = json.loads(manifest_path.read_text())
+    manifest['assignments'][1]['item_ids'] = [row['item_id'] for row in source['items']]
+    manifest_path.write_text(json.dumps(manifest))
+    receipt_path = bundle / 'receipt.json'
+    receipt = json.loads(receipt_path.read_text())
+    for name in ('forms/FORM-B.json', 'custodian/manifest.json'):
+        receipt['files'][name] = hashlib.sha256((bundle / name).read_bytes()).hexdigest()
+    receipt_path.write_text(json.dumps(receipt))
+    with pytest.raises(ValueError, match='seeded design'):
+        verify_review_export(bundle)
