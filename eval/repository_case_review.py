@@ -78,7 +78,8 @@ def _require_exact(value: dict, expected: set[str], label: str) -> None:
 def _text(value: Any, label: str) -> str:
     if not isinstance(value, str) or not value.strip():
         raise ValueError(f"{label} must contain text")
-    if any(ord(character) < 32 for character in value):
+    if any(ord(character) < 32 and character not in "\t\n\r"
+           for character in value):
         raise ValueError(f"{label} must not contain control characters")
     return value.strip()
 
