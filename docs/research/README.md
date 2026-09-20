@@ -10,6 +10,8 @@ experiment evidence.
 - [2026-09-07 evidence attribution](2026-09-07-evidence-attribution.md): ALCE, AIS, and version-bound span selectors; why locating a citation does not validate its support for a requirement.
 - [2026-09-07 comparison pricing check](2026-09-07-comparison-pricing-check.md): frozen rates, current vendor pricing and the boundary between computed cost and billed charges.
 
+- [2026-09-20 semantic-preservation scope](2026-09-20-semantic-preservation-scope.md): formalization as conceptual framing, with unchanged task and T1–T3/T4 boundary.
+
 ## Research execution guides
 
 - [Original Codex demonstration: post-hoc audit](codex-original-demo-posthoc-audit-20260914.md): 1,638 checks on the same 18 saved artifacts, with all original evidence preserved and no new inference calls.

@@ -450,6 +450,89 @@ a hash receipt last. It neither calls a model nor admits a corpus or distributes
 anything. Prior exposure must be recorded before claiming an unprimed reading.
 See the [candidate-admission checklist](docs/research/language-candidate-admission-checklist-20260914.md).
 
+Repository-level browser/API cases use a separate fail-closed gate. A candidate
+must bind the requirement revision, pre-feature and known-good commits,
+implementation and test paths, user-observable interaction, and one shared
+scaffold and oracle frozen before variant assignment. It also requires a
+distinct meaning-preserving rewrite-control requirement and an independently
+bound manipulation review, so ordinary wording sensitivity is measured rather
+than silently attributed to the smell. The known-good implementation must
+pass and the same oracle must kill a targeted mutant; both executions and all
+four reviews are hash-bound. Approved mapping, manipulation, oracle and rights
+reviews must use four distinct pseudonymous reviewer identities. This enforces
+role separation but does not itself prove reviewer expertise or independence.
+Tests generated separately from clean and smelly requirements are ineligible.
+
+```bash
+python -m eval.repository_case_admission --manifest /absolute/private/case.json
+```
+
+Before admission, prepare four private, role-isolated review packets from a
+custodian-controlled source file:
+
+```bash
+python -m eval.repository_case_review \
+  --source /absolute/private/repository-review-source.json \
+  --export /absolute/new/private/repository-review-packet
+```
+
+The exporter gives mapping, manipulation, oracle and rights reviewers only the
+materials needed for their criterion. Completed forms are recorded immutably
+against the export receipt, then assembled only when all four roles are present:
+
+```bash
+python -m eval.repository_case_review \
+  --export /absolute/private/repository-review-packet \
+  --completed-form /absolute/private/mapping-completed.json \
+  --response-output /absolute/new/private/mapping-response.json
+
+python -m eval.repository_case_review \
+  --export /absolute/private/repository-review-packet \
+  --responses /absolute/private/{mapping,manipulation,oracle,rights}-response.json \
+  --assembly-output /absolute/new/private/review-assembly.json
+```
+
+The assembly emits the exact `reviews` records consumed by the admission gate
+and rejects changed materials, mixed exports, missing roles and case-insensitive
+reviewer aliases. It remains non-confirmatory: distinct identifiers and isolated
+packets do not establish reviewer expertise, organizational independence or the
+correctness of an approval.
+
+The [four-project screening](docs/research/repository-e2e-candidate-screening-20260916.md)
+records TodoMVC, RealWorld, StrictDoc and CaSS as candidates, not admitted
+evidence. LLM-generated tests and LLM judges remain candidate-generation and
+diagnostic tools; executed, frozen E2E assertions are the behavioral label, and
+independent semantic review is still required.
+The [TodoMVC Escape dossier](docs/research/todomvc-edit-escape-screening-20260917.md)
+binds the priority candidate to exact upstream revisions and corrects the
+observable contract to same-session UI behavior; Vue persistence is outside
+that candidate's oracle.
+
+After independently freezing the strengthened Cypress oracle, a qualified
+checkout can rehearse the unchanged gold/mutant command and emit a hash-bound
+receipt without calling a provider:
+
+```bash
+python -m eval.todomvc_escape_qualification \
+  --checkout /absolute/todomvc \
+  --output /absolute/private/todomvc-escape-receipt.json \
+  -- bash -lc \
+     "npm --prefix examples/vue run build && \
+      npx start-server-and-test server http://localhost:8000 \
+      'cypress run --browser electron --env framework=vue --spec cypress/e2e/spec.cy.js --reporter junit --reporter-options mochaFile=todomvc-qualification-junit.xml'"
+```
+
+The build belongs inside the unchanged command so both the gold source and the
+mutated source produce the bundle exercised by Cypress. The runner verifies the
+exact upstream revision and blobs, requires both edit-mode-exit assertions,
+requires a fresh JUnit report for each arm, and changes only the reviewed Escape
+binding. A kill requires the named Escape test to fail with the expected
+original-title DOM assertion; the JUnit report need not include the actual text
+value. Missing reports, crashes and unrelated failures do not qualify. Raw logs and JUnit reports are retained beside the v2 receipt in its
+`.evidence` directory. The component is restored on normal exceptions, Ctrl-C
+and SIGTERM (forced process termination such as SIGKILL cannot run cleanup).
+The output remains an oracle rehearsal, not H1 evidence.
+
 Offline preflight before live LLM runs (secret-free; default CI unchanged):
 
 | Command | Purpose |
