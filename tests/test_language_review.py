@@ -243,3 +243,108 @@ def test_command_line_prepares_an_offline_draft_and_rejects_reuse(tmp_path):
     assert recorded.returncode == 0, recorded.stderr
     assert json.loads(recorded.stdout)['status'] == 'independent_response_recorded'
     assert response.is_file()
+
+
+@pytest.mark.parametrize('form_id', ['../../fake', '/private/tmp/fake', 'FORM-Z', None, ['FORM-A']])
+def test_response_rejects_nonmember_form_ids_before_output(tmp_path, form_id):
+    bundle = tmp_path / 'review'
+    export_review(bundle)
+    completed = completed_form(bundle, tmp_path)
+    submitted = json.loads(completed.read_text())
+    submitted['form_id'] = form_id
+    for row in submitted['items']:
+        row['observed_requirement_and_interface'] = 'Unexported prompt'
+    completed.write_text(json.dumps(submitted))
+    (tmp_path / 'fake.json').write_text(json.dumps(submitted))
+    destination = tmp_path / 'response.json'
+    with pytest.raises(ValueError, match='form_id'):
+        record_response(bundle, completed, destination)
+    assert not destination.exists()
+
+
+def test_verifier_rejects_nested_unreceipted_receipt(tmp_path):
+    bundle = tmp_path / 'review'
+    export_review(bundle)
+    nested = bundle / 'custodian/receipt.json'
+    nested.write_text('{}')
+    nested.chmod(0o600)
+    with pytest.raises(ValueError, match='inventory'):
+        verify_review_export(bundle)
+
+
+def test_verifier_rejects_reduced_topology_even_with_updated_receipt(tmp_path):
+    bundle = tmp_path / 'review'
+    export_review(bundle)
+    receipt_path = bundle / 'receipt.json'
+    receipt = json.loads(receipt_path.read_text())
+    for form_id in ('FORM-D', 'FORM-E', 'FORM-F'):
+        for extension in ('md', 'json'):
+            name = f'forms/{form_id}.{extension}'
+            (bundle / name).unlink()
+            del receipt['files'][name]
+    receipt['forms'] = 3
+    receipt_path.write_text(json.dumps(receipt))
+    with pytest.raises(ValueError, match='receipt|inventory|topology'):
+        verify_review_export(bundle)
+
+
+@pytest.mark.parametrize('artifact, mutation', [
+    ('receipt.json', lambda data: data.update({'human_labels': 1})),
+    ('receipt.json', lambda data: data.update({'extra': 'unknown'})),
+    ('custodian/manifest.json', lambda data: data['assignments'].append(data['assignments'][0])),
+    ('custodian/manifest.json', lambda data: data['items'][0].update({'mapping': []})),
+])
+def test_verifier_rejects_invalid_contract_even_when_rehashed(tmp_path, artifact, mutation):
+    bundle = tmp_path / 'review'
+    export_review(bundle)
+    path = bundle / artifact
+    data = json.loads(path.read_text())
+    mutation(data)
+    path.write_text(json.dumps(data))
+    if artifact != 'receipt.json':
+        receipt_path = bundle / 'receipt.json'
+        receipt = json.loads(receipt_path.read_text())
+        receipt['files'][artifact] = hashlib.sha256(path.read_bytes()).hexdigest()
+        receipt_path.write_text(json.dumps(receipt))
+    with pytest.raises(ValueError):
+        verify_review_export(bundle)
+
+
+@pytest.mark.parametrize('mutation', [
+    lambda form: form.update({'extra': 'unknown'}),
+    lambda form: form.update({'schema_version': 'unknown'}),
+    lambda form: form['items'][0].update({'item_id': 'unknown'}),
+    lambda form: form['items'][0].update({'extra': 'unknown'}),
+])
+def test_response_rejects_schema_and_identity_changes_before_output(tmp_path, mutation):
+    bundle = tmp_path / 'review'
+    export_review(bundle)
+    completed = completed_form(bundle, tmp_path)
+    submitted = json.loads(completed.read_text())
+    mutation(submitted)
+    completed.write_text(json.dumps(submitted))
+    destination = tmp_path / 'response.json'
+    with pytest.raises(ValueError):
+        record_response(bundle, completed, destination)
+    assert not destination.exists()
+
+
+def test_verifier_rejects_unbalanced_assignments_even_when_rehashed(tmp_path):
+    bundle = tmp_path / 'review'
+    export_review(bundle)
+    source = json.loads((bundle / 'forms/FORM-A.json').read_text())
+    target_path = bundle / 'forms/FORM-B.json'
+    target = json.loads(target_path.read_text())
+    target['items'] = source['items']
+    target_path.write_text(json.dumps(target))
+    manifest_path = bundle / 'custodian/manifest.json'
+    manifest = json.loads(manifest_path.read_text())
+    manifest['assignments'][1]['item_ids'] = [row['item_id'] for row in source['items']]
+    manifest_path.write_text(json.dumps(manifest))
+    receipt_path = bundle / 'receipt.json'
+    receipt = json.loads(receipt_path.read_text())
+    for name in ('forms/FORM-B.json', 'custodian/manifest.json'):
+        receipt['files'][name] = hashlib.sha256((bundle / name).read_bytes()).hexdigest()
+    receipt_path.write_text(json.dumps(receipt))
+    with pytest.raises(ValueError, match='seeded design'):
+        verify_review_export(bundle)
