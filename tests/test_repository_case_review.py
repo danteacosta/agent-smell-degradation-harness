@@ -99,6 +99,8 @@ def test_export_is_role_isolated_private_and_deterministic(tmp_path: Path) -> No
     assert receipt["role_count"] == 4
     assert not (export.stat().st_mode & 0o077)
     assert all(not (path.stat().st_mode & 0o077)
+               for path in export.rglob("*") if path.is_dir())
+    assert all(not (path.stat().st_mode & 0o077)
                for path in export.rglob("*") if path.is_file())
 
 
@@ -155,6 +157,18 @@ def test_record_rejects_changed_materials_and_is_immutable(tmp_path: Path) -> No
     record_response(export, completed, response)
     with pytest.raises(FileExistsError):
         record_response(export, completed, response)
+
+    form["reviewer_id"] = "reviewer\nalias"
+    completed.write_text(json.dumps(form), encoding="utf-8")
+    with pytest.raises(ValueError, match="single line"):
+        record_response(export, completed, root / "newline-response.json")
+
+
+def test_export_rejects_malformed_evidence_digests(tmp_path: Path) -> None:
+    candidate = source()
+    candidate["roles"]["oracle_review"]["oracle_sha256"] = "not-a-digest"
+    with pytest.raises(ValueError, match="lowercase SHA-256"):
+        export_packets(candidate, tmp_path / "invalid-export")
 
 
 def test_assembly_is_admission_compatible_and_preserves_rejection(tmp_path: Path) -> None:
