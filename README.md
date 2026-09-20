@@ -467,6 +467,37 @@ Tests generated separately from clean and smelly requirements are ineligible.
 python -m eval.repository_case_admission --manifest /absolute/private/case.json
 ```
 
+Before admission, prepare four private, role-isolated review packets from a
+custodian-controlled source file:
+
+```bash
+python -m eval.repository_case_review \
+  --source /absolute/private/repository-review-source.json \
+  --export /absolute/new/private/repository-review-packet
+```
+
+The exporter gives mapping, manipulation, oracle and rights reviewers only the
+materials needed for their criterion. Completed forms are recorded immutably
+against the export receipt, then assembled only when all four roles are present:
+
+```bash
+python -m eval.repository_case_review \
+  --export /absolute/private/repository-review-packet \
+  --completed-form /absolute/private/mapping-completed.json \
+  --response-output /absolute/new/private/mapping-response.json
+
+python -m eval.repository_case_review \
+  --export /absolute/private/repository-review-packet \
+  --responses /absolute/private/{mapping,manipulation,oracle,rights}-response.json \
+  --assembly-output /absolute/new/private/review-assembly.json
+```
+
+The assembly emits the exact `reviews` records consumed by the admission gate
+and rejects changed materials, mixed exports, missing roles and case-insensitive
+reviewer aliases. It remains non-confirmatory: distinct identifiers and isolated
+packets do not establish reviewer expertise, organizational independence or the
+correctness of an approval.
+
 The [four-project screening](docs/research/repository-e2e-candidate-screening-20260916.md)
 records TodoMVC, RealWorld, StrictDoc and CaSS as candidates, not admitted
 evidence. LLM-generated tests and LLM judges remain candidate-generation and
