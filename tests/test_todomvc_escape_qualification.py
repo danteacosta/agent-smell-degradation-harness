@@ -23,6 +23,12 @@ def checkout(tmp_path: Path, monkeypatch) -> Path:
     vue_lock.parent.mkdir(parents=True, exist_ok=True)
     vue_lock.write_text("vue-lock", encoding="utf-8")
 
+    component_blob = subprocess.check_output(
+        ["git", "hash-object", "--stdin"], input=component.read_bytes()).decode().strip()
+    monkeypatch.setattr(qualification, "UPSTREAM_BLOBS", {
+        **qualification.UPSTREAM_BLOBS, qualification.COMPONENT: component_blob,
+    })
+
     def fake_git(_checkout, *args):
         if args == ("rev-parse", "HEAD"):
             return qualification.REVISION
@@ -228,3 +234,43 @@ def test_native_cypress_junit_original_title_failure_qualifies(tmp_path, monkeyp
     assert receipt["gold_passed"] is True
     assert receipt["mutation_killed"] is True
     assert qualification.GOLD_BINDING in (root / qualification.COMPONENT).read_text()
+
+
+@pytest.mark.parametrize("alter_component", [False, True])
+def test_real_git_checkout_requires_frozen_component_but_allows_oracle_patch(
+        tmp_path, monkeypatch, alter_component):
+    root = tmp_path / "real-checkout"
+    root.mkdir()
+    for path, text in [
+        (qualification.COMPONENT, f'<input {qualification.GOLD_BINDING}>'),
+        (qualification.ORACLE, "// upstream oracle\n"),
+        (qualification.ROOT_LOCK, "{}"), (qualification.VUE_LOCK, "{}"),
+    ]:
+        (root / path).parent.mkdir(parents=True, exist_ok=True)
+        (root / path).write_text(text)
+
+    def git(*args):
+        return subprocess.check_output(
+            ["git", "-C", str(root), *args], text=True, stderr=subprocess.DEVNULL).strip()
+
+    git("init")
+    git("add", ".")
+    git("-c", "user.name=Regression", "-c", "user.email=regression@example.test",
+        "-c", "commit.gpgsign=false", "commit", "-m", "Frozen scaffold")
+    monkeypatch.setattr(qualification, "REVISION", git("rev-parse", "HEAD"))
+    monkeypatch.setattr(qualification, "UPSTREAM_BLOBS", {
+        path: git("rev-parse", f"HEAD:{path}")
+        for path in qualification.UPSTREAM_BLOBS
+    })
+    oracle = root / qualification.ORACLE
+    oracle.write_text(oracle.read_text() + "\n".join(qualification.REQUIRED_ORACLE_ASSERTIONS))
+    component = root / qualification.COMPONENT
+    if alter_component:
+        component.write_text(component.read_text() + "\n<script>const unrelatedChange = true</script>")
+        with pytest.raises(ValueError, match="working-tree component does not match"):
+            qualification.qualify(root, tmp_path / "receipt.json", oracle_command())
+        assert not (tmp_path / "receipt.evidence").exists()
+    else:
+        receipt = qualification.qualify(root, tmp_path / "receipt.json", oracle_command())
+        assert receipt["gold_passed"] is True
+        assert receipt["mutation_killed"] is True

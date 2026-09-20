@@ -163,6 +163,10 @@ def qualify(checkout: Path, output: Path, command: list[str]) -> dict:
     component_path = checkout / COMPONENT
     oracle_path = checkout / ORACLE
     component = component_path.read_bytes()
+    component_blob = hashlib.sha1(
+        f"blob {len(component)}\0".encode() + component, usedforsecurity=False).hexdigest()
+    if component_blob != UPSTREAM_BLOBS[COMPONENT]:
+        raise ValueError("working-tree component does not match the frozen upstream blob")
     oracle = oracle_path.read_text(encoding="utf-8")
     component_text = component.decode("utf-8")
     if component_text.count(GOLD_BINDING) != 1 or MUTANT_BINDING in component_text:
