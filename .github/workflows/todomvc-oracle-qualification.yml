@@ -6,6 +6,7 @@ on:
     paths:
       - eval/todomvc_escape_qualification.py
       - eval/fixtures/todomvc-escape-oracle.patch
+      - eval/fixtures/todomvc-visual-support.js
       - .github/workflows/todomvc-oracle-qualification.yml
 
 permissions:
@@ -30,6 +31,7 @@ jobs:
           git clone --filter=blob:none https://github.com/tastejs/todomvc.git todomvc
           git -C todomvc checkout --detach 1f2bd7f0a1fa8c602284451d282c3821d0d96aec
           git -C todomvc apply ../harness/eval/fixtures/todomvc-escape-oracle.patch
+          cp harness/eval/fixtures/todomvc-visual-support.js todomvc/cypress/support/qualification-visual.js
       - name: Install exact dependencies
         working-directory: todomvc
         run: |
@@ -40,10 +42,11 @@ jobs:
           python3 harness/eval/todomvc_escape_qualification.py
           --checkout todomvc
           --output harness/todomvc-escape-qualification.json
+          --capture-media
           -- bash -lc
           "npm --prefix examples/vue run build &&
           npx start-server-and-test server http://localhost:8000
-          'cypress run --browser electron --env framework=vue --spec cypress/e2e/spec.cy.js --reporter junit --reporter-options mochaFile=todomvc-qualification-junit.xml'"
+          'cypress run --browser electron --config video=true,supportFile=cypress/support/qualification-visual.js --env framework=vue --spec cypress/e2e/spec.cy.js --reporter junit --reporter-options mochaFile=todomvc-qualification-junit.xml'"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

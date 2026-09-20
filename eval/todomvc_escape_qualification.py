@@ -14,6 +14,7 @@ import json
 import os
 import re
 import signal
+import stat
 from pathlib import Path
 import subprocess
 import tempfile
@@ -25,6 +26,8 @@ REVISION = "1f2bd7f0a1fa8c602284451d282c3821d0d96aec"
 COMPONENT = Path("examples/vue/src/components/TodoItem.vue")
 ORACLE = Path("cypress/e2e/spec.cy.js")
 JUNIT_REPORT = Path("todomvc-qualification-junit.xml")
+VISUAL_SUPPORT = Path("cypress/support/qualification-visual.js")
+MEDIA_DIRECTORIES = (Path("cypress/screenshots"), Path("cypress/videos"))
 ESCAPE_TEST = "TodoMVC - vue Editing should cancel edits on escape"
 ROOT_LOCK = Path("package-lock.json")
 VUE_LOCK = Path("examples/vue/package-lock.json")
@@ -130,6 +133,82 @@ def _run(command: list[str], checkout: Path, evidence: Path) -> dict:
     }
 
 
+def _reject_symlink_ancestors(checkout: Path, relative: Path) -> None:
+    current = checkout
+    for part in relative.parts:
+        current = current / part
+        if current.is_symlink():
+            raise ValueError(f"media capture refuses symlink: {current}")
+
+
+def _require_fresh_media(checkout: Path) -> None:
+    for relative in MEDIA_DIRECTORIES:
+        _reject_symlink_ancestors(checkout, relative)
+        if (checkout / relative).exists():
+            raise ValueError(f"media directory must not already exist: {relative}")
+
+
+def _capture_media(checkout: Path, evidence: Path) -> dict:
+    """Preserve this run before Cypress can clear its output for the next arm.
+
+    Validate every tree entry before moving anything. Moving the complete trees
+    also preserves ancillary files without deleting unrelated content. Format
+    signatures are a sanity check; decoding and visual review remain CI checks.
+    """
+    directories = []
+    for relative in MEDIA_DIRECTORIES:
+        _reject_symlink_ancestors(checkout, relative)
+        source = checkout / relative
+        if not source.exists():
+            continue
+        if not source.is_dir():
+            raise ValueError(f"media path is not a directory: {relative}")
+        for parent, subdirs, files in os.walk(source, followlinks=False):
+            for name in subdirs + files:
+                path = Path(parent) / name
+                mode = path.lstat().st_mode
+                if stat.S_ISLNK(mode):
+                    raise ValueError(f"media capture refuses symlink: {path}")
+                if not (stat.S_ISREG(mode) or stat.S_ISDIR(mode)):
+                    raise ValueError(f"media capture requires regular files: {path}")
+        directories.append((source, evidence / "media" / relative.name))
+
+    manifest = []
+    screenshot = video = False
+    for source, destination in directories:
+        destination.parent.mkdir(exist_ok=True)
+        # Evidence is fresh and the source disappears, so the mutant cannot
+        # reuse gold media even if its command fails before launching Cypress.
+        source.rename(destination)
+        for path in sorted(destination.rglob("*")):
+            if not path.is_file() or path.suffix.lower() not in {".png", ".mp4"}:
+                continue
+            data = path.read_bytes()
+            manifest.append({
+                "path": path.relative_to(evidence.parent).as_posix(),
+                "bytes": len(data),
+                "sha256": _sha256(data),
+            })
+            if (path.name == "escape-after-interaction.png"
+                    and path.parent.name == "spec.cy.js"
+                    and destination.name == "screenshots"
+                    and len(data) > 8 and data.startswith(b"\x89PNG\r\n\x1a\n")):
+                screenshot = True
+            if (path.name == "spec.cy.js.mp4" and destination.name == "videos"
+                    and len(data) > 12 and data[4:8] == b"ftyp"):
+                video = True
+    return {"media": manifest, "visual_complete": screenshot and video}
+
+
+def _run_arm(command: list[str], checkout: Path, evidence: Path, capture_media: bool) -> dict:
+    if capture_media:
+        _require_fresh_media(checkout)
+    result = _run(command, checkout, evidence)
+    if capture_media:
+        result.update(_capture_media(checkout, evidence))
+    return result
+
+
 @contextmanager
 def _restore_on_termination():
     """Let the mutation's finally block run on normal CLI termination."""
@@ -148,10 +227,14 @@ def _restore_on_termination():
         signal.signal(signal.SIGTERM, previous)
 
 
-def qualify(checkout: Path, output: Path, command: list[str]) -> dict:
+def qualify(checkout: Path, output: Path, command: list[str], *,
+            capture_media: bool = False) -> dict:
     checkout = checkout.resolve(strict=True)
     if not command:
         raise ValueError("an oracle command is required after --")
+    if capture_media:
+        _require_fresh_media(checkout)
+        _reject_symlink_ancestors(checkout, VISUAL_SUPPORT)
     if _git(checkout, "rev-parse", "HEAD") != REVISION:
         raise ValueError(f"checkout must be detached at {REVISION}")
 
@@ -183,12 +266,14 @@ def qualify(checkout: Path, output: Path, command: list[str]) -> dict:
         "root_lock_sha256": _sha256((checkout / ROOT_LOCK).read_bytes()),
         "vue_lock_sha256": _sha256((checkout / VUE_LOCK).read_bytes()),
     }
+    if capture_media:
+        binding["visual_support_sha256"] = _sha256((checkout / VISUAL_SUPPORT).read_bytes())
     report_path = checkout / JUNIT_REPORT
     if report_path.exists() or report_path.is_symlink():
         raise ValueError("qualification report path must not already exist")
     evidence = output.with_suffix(".evidence")
     evidence.mkdir(parents=True, exist_ok=False)
-    gold = _run(command, checkout, evidence / "gold")
+    gold = _run_arm(command, checkout, evidence / "gold", capture_media)
     gold_passed = gold["returncode"] == 0 and gold["oracle"]["escape_passed"]
     mutant_result = None
     if gold_passed:
@@ -196,7 +281,7 @@ def qualify(checkout: Path, output: Path, command: list[str]) -> dict:
         with _restore_on_termination():
             try:
                 _atomic_write(component_path, mutant)
-                mutant_result = _run(command, checkout, evidence / "mutant")
+                mutant_result = _run_arm(command, checkout, evidence / "mutant", capture_media)
             finally:
                 _atomic_write(component_path, component)
     if component_path.read_bytes() != component:
@@ -221,6 +306,10 @@ def qualify(checkout: Path, output: Path, command: list[str]) -> dict:
         "evidence_directory": evidence.name,
         "scientific_claim": "oracle_rehearsal_only",
     }
+    if capture_media:
+        receipt["visual_complete"] = bool(
+            gold["visual_complete"] and mutant_result is not None
+            and mutant_result["visual_complete"])
     output.parent.mkdir(parents=True, exist_ok=True)
     encoded = json.dumps(receipt, indent=2, sort_keys=True).encode() + b"\n"
     _atomic_write(output, encoded)
@@ -231,15 +320,19 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--checkout", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--capture-media", action="store_true")
     parser.add_argument("command", nargs=argparse.REMAINDER)
     args = parser.parse_args()
     command = args.command[1:] if args.command[:1] == ["--"] else args.command
     try:
-        receipt = qualify(args.checkout, args.output, command)
+        receipt = qualify(args.checkout, args.output, command, capture_media=args.capture_media)
     except (OSError, ValueError, subprocess.CalledProcessError) as error:
         parser.error(str(error))
     print(json.dumps(receipt, sort_keys=True))
-    return 0 if receipt["gold_passed"] and receipt["mutation_killed"] else 2
+    passed = receipt["gold_passed"] and receipt["mutation_killed"]
+    if args.capture_media:
+        passed = passed and receipt["visual_complete"]
+    return 0 if passed else 2
 
 
 if __name__ == "__main__":
