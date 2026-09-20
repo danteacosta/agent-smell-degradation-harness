@@ -1,6 +1,6 @@
 # TodoMVC Escape-edit repository E2E screening dossier
 
-Checked: 2026-09-19. Status: screening only; not admitted to provider-backed or
+Checked: 2026-09-20. Status: screening only; not admitted to provider-backed or
 confirmatory execution.
 
 ## Narrow behavioral claim
@@ -156,6 +156,24 @@ This proves only that the frozen browser oracle accepts the known-good
 implementation and reveals this specific seeded fault. It does not establish
 that a requirement smell causes a generated defect, that the mutation is
 representative, or that the requirement-to-code mapping is semantically valid.
+
+## Role-isolated review handoff
+
+`eval/repository_case_review.py` now makes the four pending reviews executable
+without exposing every reviewer to every condition. The custodian supplies a
+private `repository-review-source/v1` file and receives separate mapping,
+manipulation, oracle and rights packets. In particular, the mapping reviewer
+does not receive the treatment variants, and the oracle reviewer does not
+receive the mutant outcome or run receipt. Each completed form must declare
+prior exposure and record a decision, confidence, rationale and limitations.
+
+The recorder binds each immutable response to the original form and export
+receipt. Assembly requires exactly the four roles, rejects changed materials,
+mixed cases and case-insensitive reviewer aliases, and emits records compatible
+with the repository admission gate. The generated packets and responses must
+remain outside the repository with private permissions. This workflow prepares
+human review; it does not supply reviewers, establish their competence, or turn
+their decisions into H1/H2 labels.
 
 ## Admission blockers
 
