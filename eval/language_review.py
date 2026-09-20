@@ -56,6 +56,11 @@ never overwrite forms or responses.
 """
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+FORM_IDS = frozenset(f'FORM-{letter}' for letter in 'ABCDEF')
+EXPORT_FILES = frozenset(
+    [f'forms/{form_id}.{suffix}' for form_id in FORM_IDS for suffix in ('json', 'md')]
+    + ['custodian/inventory.json', 'custodian/manifest.json', 'README.md']
+)
 FORM_KEYS = {'schema_version', 'status', 'form_id', 'reviewer_id',
              'prior_exposure_declared', 'items'}
 ITEM_KEYS = {'item_id', 'observed_requirement_and_interface', 'interpretation',
@@ -188,8 +193,8 @@ def verify_review_export(output: Path) -> dict:
     if not isinstance(expected_files, dict) or not expected_files:
         raise ValueError('receipt must contain file hashes')
     observed_files = {str(path.relative_to(output)) for path in output.rglob('*')
-                      if path.is_file() and path.name != 'receipt.json'}
-    if observed_files != set(expected_files):
+                      if path.is_file() and path != receipt_path}
+    if observed_files != EXPORT_FILES or set(expected_files) != EXPORT_FILES:
         raise ValueError('review export file inventory does not match receipt')
     for name, expected_sha in expected_files.items():
         path = output / name
@@ -211,6 +216,27 @@ def verify_review_export(output: Path) -> dict:
         raise ValueError('unsupported custody manifest')
     if manifest.get('inventory_sha256') != _sha(_json(inventory)):
         raise ValueError('custody inventory hash mismatch')
+    # Reconstruct the declared seeded design from custody, without requiring the
+    # verifier's current source hashes to match the historical exporter.
+    try:
+        canonical = prepare_review(inventory, manifest.get('seed'))
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError('invalid custody profile or seed') from error
+    canonical_receipt = json.loads(canonical['receipt.json'])
+    if (_json({key: value for key, value in receipt.items() if key != 'files'})
+            != _json({key: value for key, value in canonical_receipt.items() if key != 'files'})):
+        raise ValueError('review receipt does not match the supported topology')
+    canonical_manifest = json.loads(canonical['custodian/manifest.json'])
+    source_hashes = manifest.get('source_sha256')
+    if (not isinstance(source_hashes, dict)
+            or set(source_hashes) != set(canonical_manifest['source_sha256'])
+            or any(not isinstance(value, str) or len(value) != 64
+                   or any(char not in '0123456789abcdef' for char in value)
+                   for value in source_hashes.values())):
+        raise ValueError('invalid custody source hashes')
+    canonical_manifest['source_sha256'] = source_hashes
+    if _json(manifest) != _json(canonical_manifest):
+        raise ValueError('custody manifest does not match the seeded design')
     custody_items = manifest.get('items')
     assignments = manifest.get('assignments')
     if not isinstance(custody_items, list) or not isinstance(assignments, list):
@@ -231,6 +257,8 @@ def verify_review_export(output: Path) -> dict:
         if (set(form) != FORM_KEYS
                 or form.get('schema_version') != 'candidate-interpretation-review/v1'):
             raise ValueError(f'invalid reviewer form: {path.name}')
+        if _json(form) != _json(json.loads(canonical[f'forms/{path.name}'])):
+            raise ValueError(f'reviewer form does not match the seeded design: {path.name}')
         form_id = form.get('form_id')
         if path.stem != form_id or form.get('status') != 'draft_not_distributed':
             raise ValueError(f'invalid reviewer form identity: {path.name}')
@@ -302,6 +330,8 @@ def record_response(bundle: Path, completed_form: Path, output: Path) -> dict:
     if type(submitted.get('prior_exposure_declared')) is not bool:
         raise ValueError('prior_exposure_declared must be true or false')
     form_id = submitted.get('form_id')
+    if not isinstance(form_id, str) or form_id not in FORM_IDS:
+        raise ValueError('completed form_id is not part of this export')
     expected_path = bundle / 'forms' / f'{form_id}.json'
     if not expected_path.is_file():
         raise ValueError('completed form_id is not part of this export')
