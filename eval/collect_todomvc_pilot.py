@@ -4,7 +4,10 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
+import secrets
+import stat
 import subprocess
 
 from agents.codex_cli import CodexCLIProvider
@@ -14,12 +17,75 @@ from eval.todomvc_pilot_executor import execute
 
 
 def inventory(directory: Path) -> dict:
-    return {str(p.relative_to(directory)): {'sha256': sha256(p.read_bytes()), 'bytes': p.stat().st_size}
-            for p in sorted(directory.rglob('*')) if p.is_file() and not p.is_symlink()}
+    if directory.is_symlink() or not directory.is_dir():
+        raise ValueError('evidence directory must be a real directory')
+    files = {}
+    for path in sorted(directory.rglob('*')):
+        mode = path.lstat().st_mode
+        if stat.S_ISLNK(mode) or not (stat.S_ISREG(mode) or stat.S_ISDIR(mode)):
+            raise ValueError('evidence must contain only regular files and directories')
+        if stat.S_ISREG(mode):
+            data = path.read_bytes()
+            files[path.relative_to(directory).as_posix()] = {
+                'sha256': sha256(data), 'bytes': len(data)}
+    return files
+
+
+def _fsync_directory(directory: Path) -> None:
+    fd = os.open(directory, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        os.fsync(fd)
+    finally:
+        os.close(fd)
 
 
 def write_json(path: Path, value: object) -> None:
-    path.write_text(json.dumps(value, indent=2, sort_keys=True) + '\n')
+    """Atomically replace a private JSON record and durably publish its name."""
+    if path.is_symlink() or (path.exists() and not path.is_file()):
+        raise ValueError('JSON evidence path must be a regular file')
+    data = (json.dumps(value, indent=2, sort_keys=True) + '\n').encode('utf-8')
+    temporary = path.parent / f'.{path.name}.{os.getpid()}.{secrets.token_hex(8)}.tmp'
+    fd = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+    try:
+        with os.fdopen(fd, 'wb', closefd=False) as stream:
+            stream.write(data)
+            stream.flush()
+            os.fsync(fd)
+        os.replace(temporary, path)
+        _fsync_directory(path.parent)
+    finally:
+        os.close(fd)
+        temporary.unlink(missing_ok=True)
+
+
+def write_private(path: Path, data: bytes) -> None:
+    """Create immutable private evidence without following an existing link."""
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+    try:
+        with os.fdopen(fd, 'wb', closefd=False) as stream:
+            stream.write(data)
+            stream.flush()
+            os.fsync(fd)
+    finally:
+        os.close(fd)
+    _fsync_directory(path.parent)
+
+
+def _validate_private_destination(destination: Path, repository_root: Path) -> Path:
+    if not destination.is_absolute():
+        raise ValueError('destination must be an absolute private path')
+    resolved = destination.resolve()
+    try:
+        resolved.relative_to(repository_root.resolve())
+    except ValueError:
+        pass
+    else:
+        raise ValueError('destination must be outside the repository')
+    if destination.exists() or destination.is_symlink():
+        raise FileExistsError(destination)
+    if not destination.parent.is_dir() or destination.parent.is_symlink():
+        raise ValueError('destination parent must be an existing real directory')
+    return destination
 
 
 def has_native_media(output: Path) -> bool:
@@ -32,6 +98,8 @@ def has_native_media(output: Path) -> bool:
 
 def collect(destination: Path, original: Path, qualification: Path, image: str,
             executable: Path, model: str) -> dict:
+    root = Path(__file__).resolve().parents[1]
+    destination = _validate_private_destination(destination, root)
     # Validate qualification in the exact image before any provider dispatch.
     qualified = {}
     for arm, expected in [('gold', 'pass'), ('mutant', 'targeted_escape_defect')]:
@@ -45,8 +113,8 @@ def collect(destination: Path, original: Path, qualification: Path, image: str,
         if not has_native_media(output):
             raise ValueError('qualification lacks native media')
         qualified[arm] = {'result': result, 'files': inventory(output)}
-    destination.mkdir(parents=True, exist_ok=False)
-    root = Path(__file__).resolve().parents[1]
+    os.mkdir(destination, 0o700)
+    _fsync_directory(destination.parent)
     code = ['agents/codex_cli.py', 'eval/todomvc_pilot.py', 'eval/todomvc_pilot_executor.py',
             'eval/collect_todomvc_pilot.py', 'eval/fixtures/todomvc-pilot-run.sh',
             'eval/fixtures/todomvc-pilot.Dockerfile', 'eval/fixtures/todomvc-escape-oracle.patch',
@@ -66,7 +134,7 @@ def collect(destination: Path, original: Path, qualification: Path, image: str,
     write_json(results_path, outcomes)
     for slot in outcomes:
         run = destination / 'runs' / slot['slot_id']
-        run.mkdir(parents=True)
+        run.mkdir(parents=True, mode=0o700)
         provider = CodexCLIProvider(executable=str(executable), model=model, timeout_seconds=120,
                                     evidence_directory=run / 'cli-capture')
         prompt_entry = manifest['prompts'][slot['arm']]
@@ -84,7 +152,7 @@ def collect(destination: Path, original: Path, qualification: Path, image: str,
                         remaining_dispatch_stopped=True)
             write_json(results_path, outcomes)
             break
-        (run / 'response.json').write_text(raw)
+        write_private(run / 'response.json', raw.encode('utf-8'))
         write_json(run / 'provider-metadata.json', provider.last_call_metadata)
         try:
             component = assemble_response(scaffold, raw)
@@ -93,9 +161,9 @@ def collect(destination: Path, original: Path, qualification: Path, image: str,
             write_json(results_path, outcomes)
             continue
         inputs = run / 'input'
-        inputs.mkdir()
-        (inputs / 'TodoItem.vue').write_bytes(component)
-        (inputs / 'response.json').write_text(raw)
+        inputs.mkdir(mode=0o700)
+        write_private(inputs / 'TodoItem.vue', component)
+        write_private(inputs / 'response.json', raw.encode('utf-8'))
         slot['category'] = 'execution_in_progress'
         write_json(results_path, outcomes)
         try:
