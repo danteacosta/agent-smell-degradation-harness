@@ -28,3 +28,5 @@ experiment evidence.
   verified receipts, sequential collection and conditional evaluation.
 - [Completed v3/v4 development results](addressed-comparison-results.md): 48 calls,
   usable v4 evidence throughout, and a failed omission gate with evaluation unattempted.
+
+- [2026-09-21 StrictDoc exposure and case preparation](2026-09-21-strictdoc-exposure-and-case-preparation.md): reused SRS-110 excluded from fresh evaluation, historical reference rejected after CLI/browser verification, and SRS-163 draft prepared with scope ambiguity and human reviews pending.

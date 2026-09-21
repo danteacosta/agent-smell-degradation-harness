@@ -5,6 +5,12 @@ no admission approvals, and no change to the completed pilot's frozen evidence.
 Acceptance-criteria generation remains the primary thesis task; repository code
 generation remains a secondary extension.
 
+Subsequent audit: the metadata requirement was already selected in earlier
+studies and its historical feature commit fails the classification-only export
+check. The [exposure and preparation follow-up](2026-09-21-strictdoc-exposure-and-case-preparation.md)
+supersedes the recommendation to prepare SRS-110 as a new independent case.
+The original screening and private packet are retained.
+
 ## What the null result actually tells us
 
 The nine unchanged generated responses passed the same 28-test inventory in the
