@@ -15,12 +15,14 @@ executável é uma extensão comportamental.
 | Ambiguidade e reescrita | 24 episódios; textos explícitos 12/12; coordenação e pronome apresentam divergências; controles equivalentes preservados | Grupos dependentes; alternativas ainda sujeitas a revisão |
 | TodoMVC: mutante manual | Referência 28/28; mutante 27/28, apenas Escape falha, com prints e vídeos | Sensibilidade do oráculo à mutação manual |
 | TodoMVC: geração real | Nove gerações; após corrigir Acorn, nove reexecuções passaram 28/28 | Resultado nulo; nove erros originais de infraestrutura preservados |
+| TodoMVC: diagnóstico de contexto | Três corpos salvos × dois scaffolds; o corpo sem reset passa com guard e falha apenas Escape sem guard | Pós-hoc; mesmo corpo em três omissões e uma reescrita, mas só um representante executado por contexto |
 | StrictDoc SRS-110 | Exposição anterior comprovada; exportador histórico omite classificação sem UID/version; três controles e dois prints | Caso exposto; falha histórica de referência, sem efeito de LLM |
 | StrictDoc SRS-163 | Fonte, três variantes propostas, rubrica, prompts e ensaio offline preparados | Sem coleta ou rótulos; escopo comando/campo não resolvido |
 
 Fontes: [omissão e auditoria](masters-state-review-20260914.md),
 [piloto de linguagem](codex-language-controls-results-20260914.md),
 [piloto TodoMVC](../todomvc-exploratory-pilot.md),
+[diagnóstico de contexto](todomvc-context-diagnostic-20260921.md),
 [StrictDoc](2026-09-21-strictdoc-exposure-and-case-preparation.md).
 Não somar essas contagens como uma única amostra independente.
 
