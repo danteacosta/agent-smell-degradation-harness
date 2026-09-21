@@ -533,6 +533,14 @@ value. Missing reports, crashes and unrelated failures do not qualify. Raw logs 
 and SIGTERM (forced process termination such as SIGKILL cannot run cleanup).
 The output remains an oracle rehearsal, not H1 evidence.
 
+The separate exploratory three-arm collector is intentionally one-shot. Its
+`--destination` must be an absolute, previously absent path outside this
+repository. The collector creates the private root with mode `0700`, publishes
+mutable JSON atomically with mode `0600`, and refuses symlinks or special files
+instead of omitting them from the receipt. These are custody controls for future
+runs; they do not retroactively change the retained TodoMVC pilot, establish
+semantic correctness, or authorize provider calls.
+
 Offline preflight before live LLM runs (secret-free; default CI unchanged):
 
 | Command | Purpose |

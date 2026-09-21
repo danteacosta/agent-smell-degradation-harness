@@ -1,14 +1,19 @@
 #!/bin/bash
 # Runs only inside the pinned, credential-free, offline pilot container.
 set -uo pipefail
+for required in /input/response.json /input/TodoItem.vue; do
+  if [ ! -f "$required" ] || [ ! -r "$required" ] || [ -L "$required" ]; then
+    echo "required input is missing or unreadable: $required" >&2
+    exit 78
+  fi
+done
 export HOME=/tmp/home
-cp -a /opt/cypress-cache /tmp/cypress-cache
+cp -a --no-preserve=ownership /opt/cypress-cache /tmp/cypress-cache
 export CYPRESS_CACHE_FOLDER=/tmp/cypress-cache
 mkdir -p "$HOME" /tmp/todomvc
-cp -a /opt/todomvc/. /tmp/todomvc/
+cp -a --no-preserve=ownership /opt/todomvc/. /tmp/todomvc/
 cd /tmp/todomvc || exit 70
-if [ -f /input/response.json ]; then
-  node <<'NODE' > /output/body-validation.log 2>&1
+node <<'NODE' > /output/body-validation.log 2>&1
 const fs = require('fs');
 const acorn = require('/opt/body-validator/node_modules/acorn');
 const response = JSON.parse(fs.readFileSync('/input/response.json', 'utf8'));
@@ -17,12 +22,9 @@ if (program.body.length !== 1 || program.body[0].type !== 'FunctionDeclaration' 
   throw new Error('Response must remain inside the handler body');
 }
 NODE
-  body_status=$?
-  if [ "$body_status" -ne 0 ]; then exit "$body_status"; fi
-fi
-if [ -f /input/TodoItem.vue ]; then
-  cp /input/TodoItem.vue examples/vue/src/components/TodoItem.vue
-fi
+body_status=$?
+if [ "$body_status" -ne 0 ]; then exit "$body_status"; fi
+cp /input/TodoItem.vue examples/vue/src/components/TodoItem.vue || exit 78
 cp examples/vue/src/components/TodoItem.vue /output/executed-TodoItem.vue
 npm --prefix examples/vue run build > /output/build.log 2>&1
 build_status=$?

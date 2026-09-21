@@ -70,3 +70,20 @@ one task and three repetitions per arm cannot support population inference.
 Verification: `python -m pytest tests/test_codex_cli.py tests/test_todomvc_pilot.py
 tests/test_todomvc_pilot_executor.py tests/test_collect_todomvc_pilot.py
 tests/test_replay_todomvc_pilot.py -q`.
+
+## Private input boundary after the pilot
+
+Future executions use the collector's non-root UID/GID for the container, so
+Linux bind mounts retain access to private 0700 directories and 0600 files.
+Root collectors (including group 0) are rejected. Both response.json and
+TodoItem.vue must be readable regular, non-symlink files before runtime setup;
+a missing input is an infrastructure error, never permission to execute the
+image's baked-in component. Runtime copies do not preserve image ownership.
+
+Acceptance contract: given private inputs owned by a non-root collector whose
+UID differs from 1000, the offline container reads both exact supplied files
+and writes outputs without relaxing their permissions. Given either missing
+input, the real entrypoint exits 78 before preparing the runtime. CI exercises
+this boundary with a small transport-only Docker image; this check does not
+replace scientific reference/mutant qualification of a newly built pilot image.
+The completed pilot's immutable image, inputs and receipts remain unchanged.

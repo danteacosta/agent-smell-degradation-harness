@@ -14,6 +14,10 @@ jobs:
           python-version: "3.12"
       - run: python scripts/dependency_bundle.py
       - run: dependency-bundle/runtime/bin/python -m pytest -q
+      - name: Private input container boundary (no providers)
+        run: |
+          docker build -f tests/fixtures/todomvc-custody.Dockerfile --iidfile /tmp/custody-image eval/fixtures
+          TODOMVC_BOUNDARY_IMAGE=$(cat /tmp/custody-image) dependency-bundle/runtime/bin/python -m pytest tests/test_todomvc_pilot_executor.py -q
       - name: Behavioral executor smoke (original controls, no providers)
         run: dependency-bundle/runtime/bin/python -m eval.behavior_runtime_smoke
       - run: dependency-bundle/runtime/bin/python -m eval
