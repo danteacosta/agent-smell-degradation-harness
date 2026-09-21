@@ -5,6 +5,8 @@ from __future__ import annotations
 import random
 from typing import Any, Sequence
 
+from protocol.metrics import average_precision
+
 
 def _sign_flip_pvalue(values: list[float], *, rng: random.Random, max_exact_clusters: int = 16, monte_carlo_draws: int = 20_000) -> tuple[float, str]:
     observed = abs(sum(values) / len(values))
@@ -40,13 +42,7 @@ def _average_precision(scores: Sequence[float], labels: Sequence[int]) -> float:
     positives = sum(labels)
     if positives == 0:
         raise ValueError("PR-AUC is undefined without positive labels")
-    ranked = sorted(zip(scores, labels), key=lambda item: item[0], reverse=True)
-    hits, total = 0, 0.0
-    for rank, (_, label) in enumerate(ranked, start=1):
-        if label:
-            hits += 1
-            total += hits / rank
-    return total / positives
+    return average_precision(scores, labels)
 
 
 def _quantile(values: list[float], probability: float) -> float:

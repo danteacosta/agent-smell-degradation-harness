@@ -24,7 +24,7 @@ not human IRR — see `protocol/reliability.py` for the documented limitation.
 ## Related commands
 
 ```bash
-make analysis            # eval/analysis_report.json (C4 effect + observability)
+make analysis            # eval/analysis_report.json (synthetic demonstration; not confirmatory)
 python -m eval.mitigation_report
 ```
 
