@@ -4,13 +4,14 @@ import json
 from pathlib import Path
 from typing import Any
 
+from protocol.metrics import average_precision as _average_precision
+
 from baselines.compare import compare_baselines
 from eval.runner import run_eval
 from feature_plane import DeployableFeatureInput, extract_deployable_features
 from protocol.paired_stats import (
     clustered_bootstrap_ci,
     summarize_binary_pairs,
-    ordinal_paired_delta,
     paired_permutation_pvalue,
 )
 
@@ -18,19 +19,6 @@ from protocol.paired_stats import (
 def _summary_metrics(metrics: dict[str, Any]) -> dict[str, Any]:
     """Metrics snapshot without episode-level bulk."""
     return dict(metrics)
-
-
-def _average_precision(scores: list[float], labels: list[int]) -> float:
-    positives = sum(labels)
-    if positives == 0:
-        return 0.0
-    hits = 0
-    area = 0.0
-    for rank, (_, label) in enumerate(sorted(zip(scores, labels), reverse=True), start=1):
-        if label:
-            hits += 1
-            area += hits / rank
-    return area / positives
 
 
 def _ordinal_deltas(episodes: list[dict[str, Any]]) -> dict[str, list[float]]:
@@ -100,6 +88,14 @@ def build_analysis_report(work_dir: Path) -> dict[str, Any]:
     deployable_pr_auc = _h2_pr_auc(smell_blind_episodes, family="static")
 
     return {
+        "analysis_scope": "synthetic_demonstration_only",
+        "confirmatory_eligible": False,
+        "metric_definition": "non_interpolated_average_precision/v2",
+        "limitations": [
+            "Fixed synthetic fixtures and injected failures; no empirical H1/H2 claim.",
+            "Legacy estimand names are demonstration fields, not confirmatory estimates.",
+            "Scores use full synthetic traces and oracle-derived labels, not held-out human pre-final labels.",
+        ],
         "happy": _summary_metrics(happy_metrics),
         "smell_blind": _summary_metrics(smell_blind_metrics),
         "effect_detected": smell_blind_metrics["paired_degradation_rate"] > 0,

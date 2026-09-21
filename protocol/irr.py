@@ -3,9 +3,10 @@ from __future__ import annotations
 import csv
 import math
 import random
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Iterable, Mapping, Sequence
+from typing import Any, Mapping, Sequence
 
 
 def load_annotations(path: Path | str) -> list[dict[str, str]]:
@@ -16,7 +17,14 @@ def load_annotations(path: Path | str) -> list[dict[str, str]]:
         if reader.fieldnames is None or not required.issubset(set(reader.fieldnames)):
             missing = required - set(reader.fieldnames or [])
             raise ValueError(f"annotation file missing columns: {sorted(missing)}")
-        for row in reader:
+        seen: set[str] = set()
+        for line, row in enumerate(reader, start=2):
+            if any(row[key] is None or not row[key].strip() for key in required):
+                raise ValueError(f"annotation row {line} has blank or missing required values")
+            episode_id = row["episode_id"]
+            if episode_id in seen:
+                raise ValueError(f"duplicate episode_id in annotation row {line}")
+            seen.add(episode_id)
             rows.append({key: row[key] for key in required})
     return rows
 
@@ -91,8 +99,8 @@ def _as_matrix(data: Any) -> list[list[Any]]:
         values = list(data.values())
         if values and all(isinstance(value, Mapping) for value in values):
             # Convenient interchange form: item_id -> annotator_id -> label.
-            items = sorted(data)
-            annotators = sorted({str(annotator) for value in values for annotator in value})
+            items = list(data)
+            annotators = list(dict.fromkeys(annotator for value in values for annotator in value))
             return [[data[item].get(annotator) for item in items] for annotator in annotators]
         rows = values
     else:
@@ -106,7 +114,10 @@ def _as_matrix(data: Any) -> list[list[Any]]:
             annotator = str(row.annotator_id)
             if annotator not in annotators:
                 annotators.append(annotator)
-            grouped.setdefault(str(row.item_id), {})[annotator] = row.label
+            judgments = grouped.setdefault(str(row.item_id), {})
+            if annotator in judgments:
+                raise ValueError("duplicate annotation for the same item and annotator")
+            judgments[annotator] = row.label
         items = sorted(grouped)
         return [[grouped[item].get(annotator) for item in items] for annotator in annotators]
     matrix = [list(row) if not isinstance(row, Mapping) else list(row.values()) for row in rows]
@@ -116,16 +127,12 @@ def _as_matrix(data: Any) -> list[list[Any]]:
     return matrix
 
 
-def _distance(left: Any, right: Any, level: str, ranks: dict[Any, int]) -> float:
-    if level == "nominal":
-        return 0.0 if left == right else 1.0
-    span = max(len(ranks) - 1, 1)
-    return ((ranks[left] - ranks[right]) / span) ** 2
-
-
 def _ordinal_categories(values: list[Any], ordinal_order: Sequence[Any] | None) -> list[Any]:
     if ordinal_order is not None:
-        return list(ordinal_order)
+        categories = list(ordinal_order)
+        if len(set(categories)) != len(categories):
+            raise ValueError("ordinal_order must contain unique labels")
+        return categories
     unique = set(values)
     # Common rubric vocabularies get their declared semantic order.  Unknown
     # labels remain deterministic and should use an explicit order in a
@@ -142,47 +149,67 @@ def _ordinal_categories(values: list[Any], ordinal_order: Sequence[Any] | None) 
     return sorted(unique, key=lambda value: (type(value).__name__, str(value)))
 
 
+class _UndefinedAlpha(ValueError):
+    """An estimand unavailable for a valid but degenerate sample."""
+
+
 def krippendorff_alpha(
     data: Any,
     *,
     level_of_measurement: str = "nominal",
     ordinal_order: Sequence[Any] | None = None,
 ) -> float:
-    """Compute Krippendorff's alpha for annotator×unit labels.
+    """Compute nominal/ordinal alpha from pairable annotator×unit labels.
 
-    Missing labels (``None``, empty strings, and NaN) are omitted.  Ordinal
-    disagreement uses squared normalized rank distance; callers may provide an
-    explicit ``ordinal_order`` to avoid lexical ordering of labels.
+    None, empty strings and NaN are missing. Singleton units contribute to
+    neither disagreement term. Ordinal distances use marginal midranks; pass
+    the rubric's explicit order for nonnumeric labels. Raise ValueError when
+    no pairs exist or expected disagreement is zero (alpha is undefined).
     """
     level = level_of_measurement.casefold()
     if level not in {"nominal", "ordinal"}:
         raise ValueError("measurement level must be nominal or ordinal")
     matrix = _as_matrix(data)
-    if not matrix:
-        return 0.0
-    observed_units = [[row[index] for row in matrix if index < len(row) and not _is_missing(row[index])] for index in range(len(matrix[0]))]
-    observed_units = [unit for unit in observed_units if len(unit) >= 2]
-    all_values = [value for row in matrix for value in row if not _is_missing(value)]
-    if not all_values:
-        return 0.0
-    categories = _ordinal_categories(all_values, ordinal_order)
-    if any(value not in categories for value in all_values):
-        raise ValueError("ordinal_order must include every observed label")
-    ranks = {value: index for index, value in enumerate(categories)}
-    if level == "nominal":
-        ranks = {value: index for index, value in enumerate(categories)}
+    units = [
+        [value for value in column if not _is_missing(value)]
+        for column in zip(*matrix)
+    ]
+    units = [unit for unit in units if len(unit) >= 2]
+    counts = Counter(value for unit in units for value in unit)
+    n = sum(counts.values())
+    if not n:
+        raise _UndefinedAlpha("alpha is undefined: no pairable annotations")
+    categories = (
+        _ordinal_categories(list(counts), ordinal_order)
+        if level == "ordinal" else list(counts)
+    )
+    if any(value not in categories for value in counts):
+        raise ValueError("ordinal_order must include every pairable label")
+    midpoints: dict[Any, float] = {}
+    cumulative = 0
+    for value in categories:
+        midpoints[value] = cumulative + counts[value] / 2
+        cumulative += counts[value]
 
-    observed_pairs = [(left, right) for unit in observed_units for index, left in enumerate(unit) for right in unit[index + 1 :]]
-    if not observed_pairs:
-        return 1.0
-    do = sum(_distance(left, right, level, ranks) for left, right in observed_pairs) / len(observed_pairs)
-    expected_pairs = [(left, right) for index, left in enumerate(all_values) for right in all_values[index + 1 :]]
-    if not expected_pairs:
-        return 1.0
-    de = sum(_distance(left, right, level, ranks) for left, right in expected_pairs) / len(expected_pairs)
-    if de == 0.0:
-        return 1.0
-    return max(-1.0, min(1.0, 1.0 - do / de))
+    def distance(left: Any, right: Any) -> float:
+        if level == "nominal":
+            return float(left != right)
+        return (midpoints[left] - midpoints[right]) ** 2
+
+    # Unordered pairs occur twice in both disagreement terms, so the common
+    # factor 2/n cancels. Within-unit weights remain essential when m varies.
+    observed = sum(
+        sum(distance(left, right) for i, left in enumerate(unit) for right in unit[i + 1:])
+        / (len(unit) - 1)
+        for unit in units
+    )
+    expected = sum(
+        counts[left] * counts[right] * distance(left, right)
+        for i, left in enumerate(categories) for right in categories[i + 1:]
+    )
+    if expected == 0:
+        raise _UndefinedAlpha("alpha is undefined: zero expected disagreement")
+    return 1.0 - (n - 1) * observed / expected
 
 
 @dataclass(frozen=True, slots=True)
@@ -203,6 +230,8 @@ class IRRDecision:
 
 
 def irr_decision(alpha: float, *, target: float = 0.70, adjudication_threshold: float = 0.60) -> IRRDecision:
+    if not math.isfinite(alpha) or not -1 <= alpha <= 1:
+        raise ValueError("alpha must be finite and between -1 and 1")
     if not 0 <= target <= 1 or not 0 <= adjudication_threshold <= target:
         raise ValueError("IRR thresholds must satisfy 0 <= adjudication_threshold <= target <= 1")
     return IRRDecision(
@@ -231,26 +260,29 @@ def bootstrap_krippendorff_alpha(
     ordinal_order: Sequence[Any] | None = None,
     n_bootstrap: int = 1000,
     seed: int = 0,
-) -> dict[str, float | int]:
-    """Resample annotation units with a deterministic local RNG."""
+) -> dict[str, float | int | None]:
+    """Unit bootstrap; disclose undefined draws and conditional percentiles."""
     if n_bootstrap < 1:
         raise ValueError("n_bootstrap must be positive")
     matrix = _as_matrix(data)
     alpha = krippendorff_alpha(matrix, level_of_measurement=level_of_measurement, ordinal_order=ordinal_order)
     width = len(matrix[0]) if matrix else 0
-    if width == 0:
-        return {"alpha": alpha, "lower": alpha, "upper": alpha, "n_bootstrap": 0}
     rng = random.Random(seed)
     samples: list[float] = []
     for _ in range(n_bootstrap):
         indices = [rng.randrange(width) for _ in range(width)]
         sampled = [[row[index] for index in indices] for row in matrix]
-        samples.append(krippendorff_alpha(sampled, level_of_measurement=level_of_measurement, ordinal_order=ordinal_order))
+        try:
+            samples.append(krippendorff_alpha(sampled, level_of_measurement=level_of_measurement, ordinal_order=ordinal_order))
+        except _UndefinedAlpha:
+            pass
     return {
         "alpha": alpha,
-        "lower": _percentile(samples, 0.025),
-        "upper": _percentile(samples, 0.975),
+        "lower": _percentile(samples, 0.025) if samples else None,
+        "upper": _percentile(samples, 0.975) if samples else None,
         "n_bootstrap": n_bootstrap,
+        "n_valid": len(samples),
+        "n_undefined": n_bootstrap - len(samples),
     }
 
 

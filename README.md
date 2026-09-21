@@ -372,7 +372,7 @@ Offline overlays add deployable baselines, analysis reports, and an optional liv
 
 | Command | Purpose |
 |---------|---------|
-| `make analysis` | Run happy + smell-blind evals; write `eval/analysis_report.json` with effect/observability flags |
+| `make analysis` | Run synthetic happy + smell-blind demos; write explicitly non-confirmatory `eval/analysis_report.json` |
 | `make experiment` | Live experiment entrypoint (refuses without credentials; use `--stub-as-live` for offline schema demo) |
 | `pip install -e ".[live]"` | Optional OpenAI adapter (`agents/live.py`); raises `NotConfiguredError` without API key |
 

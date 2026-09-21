@@ -15,6 +15,10 @@ def test_build_analysis_report_shape(tmp_path):
         "observability_gate_passed",
         "paired_stats",
         "estimands",
+        "analysis_scope",
+        "confirmatory_eligible",
+        "metric_definition",
+        "limitations",
     }
 
     assert report["happy"]["paired_degradation_rate"] == 0.0
@@ -50,3 +54,13 @@ def test_analysis_report_does_not_touch_last_run(tmp_path):
     write_analysis_report(tmp_path / "work", repo_eval / "analysis_report.json")
 
     assert json.loads(last_run.read_text()) == sentinel
+
+
+def test_synthetic_report_cannot_be_mistaken_for_confirmatory_evidence(tmp_path):
+    output = tmp_path / 'report.json'
+    write_analysis_report(tmp_path / 'work', output)
+    report = json.loads(output.read_text())
+    assert report['analysis_scope'] == 'synthetic_demonstration_only'
+    assert report['confirmatory_eligible'] is False
+    assert report['metric_definition'] == 'non_interpolated_average_precision/v2'
+    assert report['limitations']

@@ -8,6 +8,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from protocol.metrics import average_precision
+
 from agents.stub import StubAgent
 from eval.identity import configuration_id_for
 from eval.h2_detection import evaluate_confirmatory
@@ -162,15 +164,7 @@ def _provenance_pr_auc(episodes: list[dict[str, Any]]) -> float:
         )
         scores.append(float(features["provenance"]["constraint_count"] == 0))
         labels.append(int(episode.get("variant") == "smelly" and not episode.get("oracle_passed")))
-    positives = sum(labels)
-    if positives == 0:
-        return 0.0
-    hits = area = 0.0
-    for rank, (_, label) in enumerate(sorted(zip(scores, labels), reverse=True), start=1):
-        if label:
-            hits += 1
-            area += hits / rank
-    return area / positives
+    return average_precision(scores, labels)
 
 
 def run_pre_pilot(*, output_root: Path, run_id: str = "prepilot-v4") -> dict[str, str | int]:

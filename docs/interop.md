@@ -32,7 +32,7 @@ and tier-gated thesis overlays (`taxonomy/`, `protocol/`, `baselines/`,
 | Provenance traces | JSONL under run output dirs | Spans/events for plans, tools, validators, cost/latency |
 | Eval metrics | `eval/last_run.json` | Latest paired Δ and oracle results from `make eval` |
 | Episode export | `eval/last_run_episodes.jsonl` | Per-episode records from `make eval` (taxonomy + oracle fields) |
-| Analysis report | `eval/analysis_report.json` | Effect + observability gates from `make analysis` |
+| Analysis report | `eval/analysis_report.json` | Synthetic effect/observability demonstration from `make analysis`; not H1/H2 evidence |
 | Mitigation report | `eval/mitigation_report.json` | H5 trade-off (direct vs rewrite vs clarify) from `make mitigation` |
 | Dissertation bundle | `eval/dissertation_bundle.json` | Thesis export from `make dissertation` |
 | Experiment export | `eval/experiment_run.json` | Replication summary from `make experiment` |

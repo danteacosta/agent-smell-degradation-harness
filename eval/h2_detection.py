@@ -6,6 +6,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from protocol.metrics import average_precision as _average_precision
+
 from baselines.score import mann_whitney_auroc
 from eval.calibration import CalibrationError, evaluate_threshold, fit_threshold, select_family
 from eval.splits import apply_split_manifest, build_grouped_split_manifest
@@ -47,20 +49,6 @@ def _family_score(family: str, features: dict[str, Any]) -> float:
     if family == "provenance_semantic":
         return semantic_risk(features["provenance_semantic"])
     return 0.0
-
-
-def _average_precision(scores: list[float], labels: list[int]) -> float:
-    positives = sum(labels)
-    if positives == 0:
-        return 0.0
-    ranked = sorted(zip(scores, labels), key=lambda item: item[0], reverse=True)
-    hits = 0
-    area = 0.0
-    for rank, (_, label) in enumerate(ranked, start=1):
-        if label:
-            hits += 1
-            area += hits / rank
-    return area / positives
 
 
 def group_kfold_intent_ids(intent_ids: list[str], k: int) -> list[list[str]]:

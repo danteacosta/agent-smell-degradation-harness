@@ -306,3 +306,16 @@ Delivery: [PR #46](https://github.com/danteacosta/agent-smell-degradation-harnes
 
 No visual companion is needed for this contract. No subagent is launched.
 Offline approval does not close a private study or authorize a paid call.
+
+## 2026-09-21 cross-repository quality audit
+
+Plan: [research quality corrections](../docs/superpowers/plans/2026-09-21-research-quality.md).
+The linked research stack comprises this harness, agent-reliability-protocol,
+and rag-reliability-harness. Unrelated local AI applications are outside scope.
+
+- [x] Preserve existing checkouts and historical evidence; isolate current main.
+- [x] Reproduce AP tie bias and malformed-input acceptance with failing tests.
+- [x] Share threshold-level AP across seven consumers; clarify synthetic report scope.
+- [x] Correct and independently verify IRR missing-data/ordinal behavior.
+- [x] Complete local tests, build, and independent scientific/code review.
+- [ ] Complete exact-head Linux CI merge gate.

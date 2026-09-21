@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any, Mapping, Sequence
 
+from protocol.metrics import average_precision
+
 
 class CalibrationError(ValueError):
     """Raised when calibration data cannot identify a binary threshold."""
@@ -88,23 +90,11 @@ def select_family(
         raise CalibrationError(f"{split} group must contain both positive and negative labels")
     from baselines.score import mann_whitney_auroc
 
-    def average_precision(scores: Sequence[float]) -> float:
-        positives = sum(labels)
-        if positives == 0:
-            return 0.0
-        ranked = sorted(zip(scores, labels), key=lambda item: float(item[0]), reverse=True)
-        hits = area = 0.0
-        for rank, (_, label) in enumerate(ranked, start=1):
-            if label:
-                hits += 1
-                area += hits / rank
-        return area / positives
-
     reports: dict[str, dict[str, float]] = {}
     for family, scores in sorted(family_scores.items()):
         _validate(scores, labels, split=split)
         reports[family] = {
-            "pr_auc": average_precision(scores),
+            "pr_auc": average_precision(scores, labels),
             "auroc": mann_whitney_auroc(list(scores), list(labels)),
         }
     selected = max(sorted(reports), key=lambda family: (reports[family]["pr_auc"], reports[family]["auroc"], family))
@@ -124,13 +114,7 @@ def evaluate_threshold(
     tp, fp, tn, fn = _confusion(scores, labels, threshold)
     positives = tp + fn
     negatives = fp + tn
-    ranked = sorted(zip(scores, labels), key=lambda item: float(item[0]), reverse=True)
-    hits = area = 0.0
-    for rank, (_, label) in enumerate(ranked, start=1):
-        if label:
-            hits += 1
-            area += hits / rank
-    pr_auc = area / positives if positives else 0.0
+    pr_auc = average_precision(scores, labels)
     return {
         "split": split,
         "n": len(scores),

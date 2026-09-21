@@ -7,19 +7,7 @@ from collections import defaultdict
 from collections.abc import Mapping, Sequence
 from typing import Any
 
-
-def average_precision(scores: Sequence[float], labels: Sequence[int]) -> float:
-    positives = sum(labels)
-    if positives == 0:
-        return 0.0
-    ranked = sorted(zip(scores, labels), key=lambda item: float(item[0]), reverse=True)
-    hits = 0
-    area = 0.0
-    for rank, (_, label) in enumerate(ranked, start=1):
-        if label:
-            hits += 1
-            area += hits / rank
-    return area / positives
+from protocol.metrics import average_precision
 
 
 def shuffled_negative_control(scores: Sequence[float], labels: Sequence[int], *, seed: int = 0) -> dict[str, Any]:
