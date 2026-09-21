@@ -20,7 +20,8 @@ from agents.providers import ProviderRequest
 class CodexCLIProvider:
     name = 'codex_cli'
 
-    def __init__(self, *, executable: str, model: str, timeout_seconds: float = 120):
+    def __init__(self, *, executable: str, model: str, timeout_seconds: float = 120,
+                 evidence_directory: Path | str | None = None):
         if not model.strip() or model.startswith('-'):
             raise ValueError('explicit model required')
         if not math.isfinite(timeout_seconds) or timeout_seconds <= 0:
@@ -29,12 +30,36 @@ class CodexCLIProvider:
         self.model = model
         self.timeout_seconds = timeout_seconds
         self.last_call_metadata = {}
+        self.evidence_directory = Path(evidence_directory) if evidence_directory is not None else None
 
     @staticmethod
     def _environment():
         # Only OS/auth-location variables; never forward provider keys, proxy
         # credentials, repository settings, or caller-supplied API endpoints.
         return {k: os.environ[k] for k in ('HOME', 'PATH', 'TMPDIR', 'LANG', 'CODEX_HOME') if k in os.environ}
+
+    def _capture_evidence(self, stdout, stderr, returncode: int) -> None:
+        if self.evidence_directory is None:
+            return
+        metadata = {'returncode': returncode, 'capture_limit_bytes': 2_000_000}
+        for name, stream, filename in (
+                ('stdout', stdout, 'stdout.jsonl'), ('stderr', stderr, 'stderr.log')):
+            size = os.fstat(stream.fileno()).st_size
+            position = stream.tell()
+            stream.seek(0)
+            data = stream.read(2_000_000)
+            stream.seek(position)
+            self._write_private_evidence(filename, data)
+            metadata[name] = {'total_bytes': size, 'captured_bytes': len(data),
+                              'truncated': size > len(data)}
+        self._write_private_evidence('capture.json',
+                                     (json.dumps(metadata, sort_keys=True) + '\n').encode())
+
+    def _write_private_evidence(self, filename: str, data: bytes) -> None:
+        descriptor = os.open(self.evidence_directory / filename,
+                             os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(descriptor, 'wb') as stream:
+            stream.write(data)
 
     def complete(self, request: ProviderRequest) -> str:
         self.last_call_metadata = {}
@@ -67,6 +92,10 @@ class CodexCLIProvider:
         for key, value in settings.items():
             command += ['-c', key + '=' + json.dumps(value)]
         command.append('-')
+        # A fresh private directory prevents overwriting a prior attempt.
+        # Authentication diagnostics and environment variables are never captured.
+        if self.evidence_directory is not None:
+            self.evidence_directory.mkdir(mode=0o700, exist_ok=False)
         started = time.monotonic()
         with tempfile.TemporaryDirectory(prefix='codex-completion-') as directory:
             # Anonymous files avoid unbounded in-memory capture and leave no
@@ -87,6 +116,7 @@ class CodexCLIProvider:
                     except ProcessLookupError:
                         pass
                     child.wait()
+                    self._capture_evidence(stdout, stderr, child.returncode)
                 if child.returncode:
                     raise RuntimeError(f'Codex exited {child.returncode}; no automatic retry')
                 if stdout.tell() > 2_000_000:
