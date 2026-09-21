@@ -97,3 +97,51 @@ def test_cancellation_reaps_detached_cli(tmp_path, monkeypatch):
             if child.poll() is None:
                 child.kill()
                 child.wait()
+
+
+@pytest.mark.parametrize('failure', ['malformed', 'timeout', 'exit', 'oversize'])
+def test_optional_evidence_preserves_failed_attempt_once(tmp_path, failure):
+    from agents.codex_cli import CodexCLIProvider
+    count = tmp_path / 'attempts'
+    executable = tmp_path / 'evidence-cli'
+    executable.write_text(f'''#!{sys.executable}
+import pathlib, sys, time
+if sys.argv[1:] == ['login', 'status']:
+    print('Logged in using ChatGPT')
+    sys.exit(0)
+with pathlib.Path({str(count)!r}).open('a') as stream: stream.write('attempt\\n')
+sys.stdout.buffer.write(b'not-json\\n' if {failure!r} != 'oversize' else b'x' * 2000010)
+sys.stdout.flush()
+sys.stderr.write('diagnostic\\n')
+sys.stderr.flush()
+if {failure!r} == 'timeout': time.sleep(30)
+sys.exit(3 if {failure!r} == 'exit' else 0)
+''')
+    executable.chmod(0o700)
+    evidence = tmp_path / 'capture'
+    provider = CodexCLIProvider(executable=str(executable), model='test',
+                                timeout_seconds=0.5, evidence_directory=evidence)
+    with pytest.raises((RuntimeError, TimeoutError)):
+        provider.complete(request())
+    assert count.read_text() == 'attempt\n'
+    assert (evidence / 'stderr.log').read_bytes() == b'diagnostic\n'
+    expected = b'x' * 2_000_000 if failure == 'oversize' else b'not-json\n'
+    assert (evidence / 'stdout.jsonl').read_bytes() == expected
+    metadata = json.loads((evidence / 'capture.json').read_text())
+    assert metadata['stdout']['truncated'] == (failure == 'oversize')
+    assert evidence.stat().st_mode & 0o777 == 0o700
+    assert all(path.stat().st_mode & 0o777 == 0o600 for path in evidence.iterdir())
+    with pytest.raises(FileExistsError):
+        provider.complete(request())
+    assert count.read_text() == 'attempt\n'
+
+
+def test_optional_evidence_also_preserves_success_without_changing_answer(tmp_path):
+    from agents.codex_cli import CodexCLIProvider
+    evidence = tmp_path / 'capture'
+    provider = CodexCLIProvider(executable=cli(tmp_path), model='test',
+                                evidence_directory=evidence)
+    assert provider.complete(request()) == '{"answer":42}'
+    events = [json.loads(line) for line in (evidence / 'stdout.jsonl').read_text().splitlines()]
+    assert events[-1]['type'] == 'turn.completed'
+    assert json.loads((evidence / 'capture.json').read_text())['returncode'] == 0
