@@ -1,5 +1,17 @@
 # Requirements-smell experiment hardening
 
+## Autonomous offline preparation — 2026-09-21
+
+- [x] Audit current blockers and correct the obsolete diagnostic launch instruction.
+- [x] Preserve the prior StrictDoc packet; prepare isolated draft requests and empty tables.
+- [x] Verify deterministic order, payload separation, format errors and custody failures.
+- [x] Obtain independent technical/scientific review and fix Unicode/private-mode findings.
+- [x] Record final packet receipt, refresh Drive/decks and verify exported artifacts.
+- [x] Review the complete documentation diff; require green CI before integration.
+
+Nine proposed positions and 54 null category cells are preparation, not outcomes.
+No provider dispatch, human approval, corpus admission or form distribution.
+
 ## Live addressed comparison preparation — 2026-09-07
 
 - [x] Review PR #46 and verify 1,113 tests, 7 skips and 9 subtests locally.

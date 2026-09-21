@@ -26,6 +26,12 @@ from props. The scaffold supplies behavior omitted from the treatment text.
 This is a source-grounded explanation compatible with the observations, not a
 separately randomized mediation experiment or proof of the model's reasoning.
 
+Subsequent [post-hoc context diagnostic](todomvc-context-diagnostic-20260921.md)
+executed the three saved handler bodies with and without that guard. The exit-only
+body failed only Escape after guard removal; the two draft-reset bodies still
+passed. This supports context compensation in the tested journey, while leaving
+the original prompt contrast and all nine original outcomes unchanged.
+
 Do not remove these guards and pool a new result with this pilot. A different
 scaffold would define a different task. Do not repeatedly query this task until
 a failure appears. Preserve all null, error and reverse outcomes. There are

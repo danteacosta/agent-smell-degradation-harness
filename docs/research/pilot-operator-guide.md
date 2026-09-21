@@ -113,8 +113,11 @@ reconciliation; never reset the directory or replay a trajectory with new times.
 The current private run is the source-faithfulness revision, not its stopped
 predecessor. The private handoff identifies its exact location. Screening and
 operator admission are recorded; one control review remains malformed and is
-explicitly not a second approval. The next step is the diagnostic block, after
-checking provider funding. Its collection has not been scheduled automatically.
+explicitly not a second approval. The diagnostic block completed all 96 planned
+calls and failed its frozen gate; see the [diagnostic results](source-diagnostic-results.md).
+Preserve that stopped collection and its evidence. Prospective dispatch remains
+`no_go`; this guide does not authorize repeating diagnostics or creating a new
+run to bypass the failure.
 
 For an initial source-screening-only revision, `revise-screening` accepts
 `--previous-run`, `--package` and the new `--run`. It requires exactly the first
