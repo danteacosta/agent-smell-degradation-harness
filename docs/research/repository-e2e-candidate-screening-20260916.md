@@ -81,3 +81,11 @@ The [TodoMVC screening dossier](todomvc-edit-escape-screening-20260917.md)
 binds the first candidate to exact requirement, implementation, test and license
 revisions. It also records why the broad historical base-to-gold diff is
 provenance rather than a causal contrast and why the case remains blocked.
+
+## Follow-up after the first pilot
+
+The [post-pilot mechanism and StrictDoc screening](post-todomvc-next-case-20260921.md)
+records the completed TodoMVC null result and a historical classification feature
+commit for StrictDoc. The latter is a provenance anchor, not a qualified gold or
+admitted case: the metadata SRS does not by itself specify the proposed entire
+UI/export journey, and requirement-before-code provenance remains unresolved.
