@@ -30,3 +30,5 @@ experiment evidence.
   usable v4 evidence throughout, and a failed omission gate with evaluation unattempted.
 
 - [2026-09-21 StrictDoc exposure and case preparation](2026-09-21-strictdoc-exposure-and-case-preparation.md): reused SRS-110 excluded from fresh evaluation, historical reference rejected after CLI/browser verification, and SRS-163 draft prepared with scope ambiguity and human reviews pending.
+- [2026-09-21 offline criteria protocol](2026-09-21-criteria-offline-protocol.md): draft prompts, nine rehearsal positions, unlabeled outcome tables and format/custody checks without provider dispatch.
+- [2026-09-21 estado do mestrado](masters-state-review-20260921.md): current evidence, limits and remaining human decisions.
