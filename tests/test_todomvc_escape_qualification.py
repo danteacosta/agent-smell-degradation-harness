@@ -274,3 +274,116 @@ def test_real_git_checkout_requires_frozen_component_but_allows_oracle_patch(
         receipt = qualification.qualify(root, tmp_path / "receipt.json", oracle_command())
         assert receipt["gold_passed"] is True
         assert receipt["mutation_killed"] is True
+
+
+def visual_checkout(tmp_path, monkeypatch):
+    root = checkout(tmp_path, monkeypatch)
+    support = root / 'cypress/support/qualification-visual.js'
+    support.parent.mkdir()
+    support.write_bytes(
+        (Path(__file__).parents[1] / 'eval/fixtures/todomvc-visual-support.js').read_bytes())
+    return root
+
+
+def media_command(*, gold_only=False, invalid=False, unsafe=None, unsafe_arm="gold"):
+    command = oracle_command()
+    code = command[-1]
+    media = f'''
+import shutil
+# Like Cypress, each run clears the configured output directories.
+for directory in (() if not gold and {gold_only!r} else ('cypress/screenshots', 'cypress/videos')):
+    shutil.rmtree(directory, ignore_errors=True)
+    Path(directory).mkdir(parents=True)
+if gold or not {gold_only!r}:
+    arm = b'gold' if gold else b'mutant'
+    Path('cypress/screenshots/spec.cy.js').mkdir()
+    Path('cypress/screenshots/spec.cy.js/escape-after-interaction.png').write_bytes(
+        (b'invalid' if {invalid!r} else b'\\x89PNG\\r\\n\\x1a\\n') + arm)
+    Path('cypress/videos/spec.cy.js.mp4').write_bytes(
+        (b'invalid' if {invalid!r} else b'\\x00\\x00\\x00\\x18ftypmp42') + arm)
+if {unsafe!r} and gold == ({unsafe_arm!r} == "gold"):
+    Path('cypress/screenshots/leak.png').symlink_to({unsafe!r})
+'''
+    command[-1] = code.replace('raise SystemExit(', media + '\nraise SystemExit(')
+    return command
+
+
+def test_capture_preserves_each_arm_before_cypress_clears_repeated_paths(tmp_path, monkeypatch):
+    root = visual_checkout(tmp_path, monkeypatch)
+    receipt = qualification.qualify(root, tmp_path / 'receipt.json', media_command(), capture_media=True)
+    assert receipt['gold_passed'] and receipt['mutation_killed'] and receipt['visual_complete']
+    assert receipt['binding']['visual_support_sha256'] == hashlib.sha256(
+        (root / 'cypress/support/qualification-visual.js').read_bytes()).hexdigest()
+    for arm in ('gold', 'mutant'):
+        entries = receipt[arm]['media']
+        assert {entry['path'] for entry in entries} == {
+            f'{arm}/media/screenshots/spec.cy.js/escape-after-interaction.png',
+            f'{arm}/media/videos/spec.cy.js.mp4',
+        }
+        for entry in entries:
+            data = (tmp_path / receipt['evidence_directory'] / entry['path']).read_bytes()
+            assert data.endswith(arm.encode())
+            assert entry['bytes'] == len(data)
+            assert entry['sha256'] == hashlib.sha256(data).hexdigest()
+    assert not (root / 'cypress/screenshots').exists()
+    assert not (root / 'cypress/videos').exists()
+
+
+@pytest.mark.parametrize('mode', ['none', 'gold_only', 'invalid'])
+def test_missing_or_invalid_media_keeps_behavioral_success_separate(tmp_path, monkeypatch, mode):
+    root = visual_checkout(tmp_path, monkeypatch)
+    command = oracle_command() if mode == 'none' else media_command(**{mode: True})
+    receipt = qualification.qualify(root, tmp_path / 'receipt.json', command, capture_media=True)
+    assert receipt['gold_passed'] is True
+    assert receipt['mutation_killed'] is True
+    assert receipt['visual_complete'] is False
+
+
+@pytest.mark.parametrize('relative', ['cypress/screenshots', 'cypress/videos'])
+def test_capture_rejects_existing_media_directories_before_running(tmp_path, monkeypatch, relative):
+    root = visual_checkout(tmp_path, monkeypatch)
+    stale = root / relative
+    stale.mkdir()
+    (stale / 'keep').write_bytes(b'previous run')
+    with pytest.raises(ValueError, match='media.*already exist'):
+        qualification.qualify(root, tmp_path / 'receipt.json', media_command(), capture_media=True)
+    assert (stale / 'keep').read_bytes() == b'previous run'
+    assert not (tmp_path / 'receipt.evidence').exists()
+
+
+@pytest.mark.parametrize('relative', ['cypress', 'cypress/screenshots', 'cypress/videos'])
+def test_capture_rejects_symlinks_in_media_ancestors(tmp_path, monkeypatch, relative):
+    root = visual_checkout(tmp_path, monkeypatch)
+    path = root / relative
+    external = tmp_path / 'outside'
+    if path.exists():
+        path.rename(external)
+    else:
+        external.mkdir()
+    path.symlink_to(external, target_is_directory=True)
+    with pytest.raises(ValueError, match='symlink'):
+        qualification.qualify(root, tmp_path / 'receipt.json', media_command(), capture_media=True)
+    assert not (tmp_path / 'receipt.evidence').exists()
+
+
+@pytest.mark.parametrize("arm", ["gold", "mutant"])
+def test_capture_rejects_symlink_created_by_run_without_reading_target(tmp_path, monkeypatch, arm):
+    root = visual_checkout(tmp_path, monkeypatch)
+    outside = tmp_path / 'private.png'
+    outside.write_bytes(b'sensitive')
+    with pytest.raises(ValueError, match='symlink'):
+        qualification.qualify(root, tmp_path / 'receipt.json', media_command(unsafe=str(outside), unsafe_arm=arm),
+                              capture_media=True)
+    assert outside.read_bytes() == b'sensitive'
+    assert qualification.GOLD_BINDING in (root / qualification.COMPONENT).read_text()
+
+
+@pytest.mark.parametrize('visual_complete,expected', [(True, 0), (False, 2)])
+def test_cli_capture_requires_visual_completeness(tmp_path, monkeypatch, visual_complete, expected):
+    monkeypatch.setattr(sys, 'argv', ['qualify', '--checkout', str(tmp_path), '--output',
+                                   str(tmp_path / 'receipt.json'), '--capture-media', '--', 'oracle'])
+    def completed(checkout, output, command, *, capture_media=False):
+        assert capture_media is True
+        return {'gold_passed': True, 'mutation_killed': True, 'visual_complete': visual_complete}
+    monkeypatch.setattr(qualification, 'qualify', completed)
+    assert qualification.main() == expected

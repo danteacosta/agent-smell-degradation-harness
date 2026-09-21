@@ -148,6 +148,28 @@ The runner preserves per-arm stdout, stderr and JUnit files with receipt hashes.
 The [built-in Cypress JUnit reporter](https://docs.cypress.io/app/tooling/reporters)
 provides this structured evidence without another dependency.
 
+The final pre-merge v2 rehearsal on harness
+`91e2bf00f86e9cebcc1206060cf51e2edc232a28` passed all 28 reference tests and
+recorded exactly one targeted Escape assertion failure in the manual mutant.
+[Native run 35542833602](https://github.com/danteacosta/agent-smell-degradation-harness/actions/runs/35542833602)
+has receipt SHA-256
+`d232956b18252fa4bd271f2520041d245b03098bfec3cf69576464da3cbaa42a`.
+All six retained output/XML hashes were verified. This historical v2 packet has
+no retained screenshot or video; the explanatory slide is not a browser capture.
+
+The optional `--capture-media` mode adds separate per-arm screenshots and video
+to a fresh rehearsal. It enables Cypress video explicitly and imports the
+original support entrypoint through a capture-only wrapper. The wrapper takes a
+viewport screenshot after the exact Escape test; the shared strengthened oracle
+and assertions remain unchanged. Every arm's media is preserved before the next
+Cypress run clears its media directories, with relative paths, sizes and hashes.
+Visual completeness is separate from behavioral qualification; requesting media
+requires both to pass. Native images and videos still require inspection before
+they are cited as visible evidence. New media belongs to its fresh run, not to
+the earlier receipt. See the
+[capture design](../superpowers/specs/2026-09-20-todomvc-visual-evidence-design.md)
+for acceptance criteria and official Cypress capture sources.
+
 A historical v1 browser rehearsal completed at harness revision
 `371330595ef91b25e3bfaf4933189450f7377517`. The known-good implementation
 returned 0 and the targeted `Escape -> commitEdit` mutant returned 1 under the
