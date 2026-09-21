@@ -2,10 +2,18 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
 import uuid
+
+
+def collector_identity() -> tuple[int, int]:
+    uid, gid = os.getuid(), os.getgid()
+    if uid == 0 or gid == 0:
+        raise ValueError("a non-root collector user and group are required")
+    return uid, gid
 
 
 def container_command(image: str, inputs: Path, output: Path, name: str) -> list[str]:
@@ -14,9 +22,10 @@ def container_command(image: str, inputs: Path, output: Path, name: str) -> list
     for directory in (inputs, output):
         if not directory.is_dir() or directory.is_symlink():
             raise ValueError("real input/output directories required")
+    uid, gid = collector_identity()
     return [
         "docker", "run", "--rm", "--name", name, "--network", "none",
-        "--user", "1000:1000", "--read-only", "--cap-drop", "ALL",
+        "--user", f"{uid}:{gid}", "--read-only", "--cap-drop", "ALL",
         "--security-opt", "no-new-privileges", "--pids-limit", "1024",
         "--memory", "4g", "--cpus", "2", "--shm-size", "512m",
         "--tmpfs", "/tmp:rw,exec,nosuid,size=3g",

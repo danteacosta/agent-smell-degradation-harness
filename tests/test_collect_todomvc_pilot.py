@@ -129,3 +129,12 @@ def test_json_write_is_atomic_private_and_refuses_symlink(tmp_path, monkeypatch)
     link.symlink_to(target)
     with pytest.raises(ValueError, match='regular file'):
         collector.write_json(link, {'state': 'forbidden'})
+
+
+def test_root_collector_stops_before_qualification_or_provider(tmp_path, monkeypatch):
+    monkeypatch.setattr(os, 'getuid', lambda: 0)
+    with pytest.raises(ValueError, match='non-root'):
+        collector.collect(tmp_path / 'new-run', tmp_path / 'absent-source',
+                          tmp_path / 'absent-qualification', 'frozen-image',
+                          tmp_path / 'absent-cli', 'model')
+    assert not (tmp_path / 'new-run').exists()

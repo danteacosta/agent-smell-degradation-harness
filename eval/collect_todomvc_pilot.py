@@ -13,7 +13,7 @@ import subprocess
 from agents.codex_cli import CodexCLIProvider
 from agents.providers import ProviderRequest
 from eval.todomvc_pilot import assemble_response, classify_junit, freeze_manifest, make_scaffold, sha256
-from eval.todomvc_pilot_executor import execute
+from eval.todomvc_pilot_executor import collector_identity, execute
 
 
 def inventory(directory: Path) -> dict:
@@ -98,6 +98,7 @@ def has_native_media(output: Path) -> bool:
 
 def collect(destination: Path, original: Path, qualification: Path, image: str,
             executable: Path, model: str) -> dict:
+    collector_identity()
     root = Path(__file__).resolve().parents[1]
     destination = _validate_private_destination(destination, root)
     # Validate qualification in the exact image before any provider dispatch.
