@@ -14,6 +14,12 @@ experiment evidence.
 
 ## Research execution guides
 
+- [SRS-163 consensus results](criteria-consensus-results-20260921.md): 39 subscription calls, nine artifacts and three judges; unanimous category coverage contrasts alongside observed auxiliary judging errors.
+
+- [Automated consensus boundary](2026-09-21-llm-consensus-boundary.md): primary
+  judge literature, procedural separation, calibration limits and the user's
+  separate exploratory authorization without human-label promotion.
+
 - [Original Codex demonstration: post-hoc audit](codex-original-demo-posthoc-audit-20260914.md): 1,638 checks on the same 18 saved artifacts, with all original evidence preserved and no new inference calls.
 
 - [2026-09-14 smell coverage and construct validity](2026-09-14-smell-coverage-and-construct-validity.md): ten literature entries, untested versus observed coverage, and correction of the whole-rule deletion/Paska equivalence.

@@ -40,9 +40,9 @@ sources. No historical artifacts are rewritten or human labels manufactured.
 - [x] Implement common metric and route existing consumers to it.
 - [x] Correct IRR with independent known-value regressions.
 - [x] Update operator-facing guidance and historical-result impact notes.
-- [x] Run focused tests, local suite, compile/build and diff checks; Linux CI pending.
+- [x] Run focused tests, local suite, compile/build and diff checks; Linux CI passed.
 - [x] Independently review correctness, scientific claims, SOLID/clean code.
-- [ ] Open PRs and merge only reviewed exact heads after CI succeeds.
+- [x] Open PRs and merge only reviewed exact heads after CI succeeds.
 
 Reference: scikit-learn average_precision_score official documentation,
 https://scikit-learn.org/1.5/modules/generated/sklearn.metrics.average_precision_score.html
@@ -66,3 +66,12 @@ source checkout, then freeze the environment until verification completes.
 Independent review corrected one additional AP consumer and checked IRR against
 1,000 exact-rational coincidence-matrix comparisons. Published-example oracles
 and boundary tests passed. No historical metric or raw evidence was rewritten.
+
+Integration completed: harness [PR #64](https://github.com/danteacosta/agent-smell-degradation-harness/pull/64)
+merged as `c28335d1234c0aaa3a0412293a836d4ac93cf52e` after six successful checks
+(1,621 Linux tests, nine subtests, eight container-boundary tests and smoke).
+ARP [PR #19](https://github.com/danteacosta/agent-reliability-protocol/pull/19)
+merged as `010c3f7ef5dfe5d849cf618d37e6a07f6645bef7`, with 119 tests and CI on
+three Python versions. RAG [PR #15](https://github.com/danteacosta/rag-reliability-harness/pull/15)
+merged as `949b219c1eb81f0756a2dceba88d1f8a51fb1def`, with 187 CI tests including
+PostgreSQL. Dependency pins and historical evidence were preserved.

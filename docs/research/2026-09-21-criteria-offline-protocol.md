@@ -1,5 +1,9 @@
 # Acceptance-criteria pilot: offline preparation
 
+Historical preparation record. The separately authorized successor is documented
+in [the criteria consensus results](criteria-consensus-results-20260921.md).
+The original packet and its zero-call preparation status remain unchanged.
+
 This draft prepares the next source-to-acceptance-criteria experiment without
 collecting model responses or resolving human review. It follows the
 [SRS-163 screening](2026-09-21-strictdoc-exposure-and-case-preparation.md).

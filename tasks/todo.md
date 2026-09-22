@@ -1,5 +1,23 @@
 # Requirements-smell experiment hardening
 
+## Authorized exploratory consensus — 2026-09-21
+
+Plan: [bounded criteria panel](../docs/plans/2026-09-21-criteria-consensus.md).
+This successor uses LLM labels with zero human approvals and does not reopen
+historical failed studies or release the confirmatory cohort.
+
+- [x] Freeze source, prompts, authored controls, schedule, models and CLI/code hashes.
+- [x] Verify behavior tests and independent pre-live review; correct unclear bounds.
+- [x] Verify the requirement and license against the immutable public source.
+- [x] Execute the three calibration batches; all eight fixtures passed per judge.
+- [x] Generate nine artifacts once; all satisfy the JSON output contract.
+- [x] Complete three isolated judgments per valid artifact and compute fixed consensus.
+- [x] Verify receipts and publish every category, missingness and disagreement.
+- [x] Reconcile current status, empirical synthesis, Drive, slides and exports.
+- [x] Complete independent review and CI submission; reviewed code passed six checks
+      (1,639 Linux tests, nine subtests, eight container checks and smoke).
+      Final-head integration state is tracked in [PR #65](https://github.com/danteacosta/agent-smell-degradation-harness/pull/65).
+
 ## Autonomous offline preparation — 2026-09-21
 
 - [x] Audit current blockers and correct the obsolete diagnostic launch instruction.
@@ -318,4 +336,6 @@ and rag-reliability-harness. Unrelated local AI applications are outside scope.
 - [x] Share threshold-level AP across seven consumers; clarify synthetic report scope.
 - [x] Correct and independently verify IRR missing-data/ordinal behavior.
 - [x] Complete local tests, build, and independent scientific/code review.
-- [ ] Complete exact-head Linux CI merge gate.
+- [x] Complete exact-head Linux CI merge gate: harness PR #64, ARP #19 and
+      RAG #15 merged after their reviewed heads passed CI. Harness Linux:
+      1,621 tests and nine subtests; eight container tests; six green checks.

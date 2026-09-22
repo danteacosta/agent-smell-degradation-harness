@@ -1,5 +1,10 @@
 # Agent Smell Degradation Harness
 
+**Research status:** see the [current evidence and limitations](docs/research/masters-state-review-20260921.md)
+for the real pilot results, preserved null outcomes, browser evidence and the
+separate exploratory acceptance-criteria work. The historical studies below
+retain their original decisions and denominators.
+
 **Product scope:** advisory constraint diagnostics for coding agents. Given a specification and a live trace, show which condition may have lost traceability, at which checkpoint, and with what evidence. Automatic semantic approval, defect prevention and product usefulness have not been validated. Deterministic policy checks remain separate from the confirmatory thesis protocol.
 
 **Current evidence boundary:** without human calibration, semantic judgments are

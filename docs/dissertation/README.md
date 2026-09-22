@@ -2,6 +2,10 @@
 
 This directory documents how to produce an offline thesis bundle from the harness.
 
+For the real studies and their limits, read the
+[empirical synthesis](EMPIRICAL_SYNTHESIS.md). The generated bundle below is not
+a replacement for that account and does not turn synthetic data into findings.
+
 ## Generate bundle
 
 ```bash

@@ -17,7 +17,7 @@ executável é uma extensão comportamental.
 | TodoMVC: geração real | Nove gerações; após corrigir Acorn, nove reexecuções passaram 28/28 | Resultado nulo; nove erros originais de infraestrutura preservados |
 | TodoMVC: diagnóstico de contexto | Três corpos salvos × dois scaffolds; o corpo sem reset passa com guard e falha apenas Escape sem guard | Pós-hoc; mesmo corpo em três omissões e uma reescrita, mas só um representante executado por contexto |
 | StrictDoc SRS-110 | Exposição anterior comprovada; exportador histórico omite classificação sem UID/version; três controles e dois prints | Caso exposto; falha histórica de referência, sem efeito de LLM |
-| StrictDoc SRS-163 | Fonte, três variantes propostas, rubrica, prompts e ensaio offline preparados | Sem coleta ou rótulos; escopo comando/campo não resolvido |
+| StrictDoc SRS-163 | Nove critérios gerados e 27 julgamentos; links preservados em 3/3 completos, 3/3 reescritas e 0/3 omissões; 54 categorias unânimes | Uma intenção; divergência de escopo em 8/9 artefatos e dois erros auxiliares dos juízes; sem validação humana |
 
 Fontes: [omissão e auditoria](masters-state-review-20260914.md),
 [piloto de linguagem](codex-language-controls-results-20260914.md),
@@ -28,34 +28,43 @@ Não somar essas contagens como uma única amostra independente.
 
 ## Avanço autônomo desta rodada
 
-O [protocolo offline de critérios](2026-09-21-criteria-offline-protocol.md)
-materializa nove posições propostas, com apenas uma variante por requisição,
-ordem reproduzível e tabela administrativa inteiramente `not_attempted`.
-As 54 células de cobertura ficam sem rótulo e sem evidência. Exercícios sintéticos
-testam somente formato, erros e custódia; não alimentam resultados científicos.
-O pacote preserva as fontes e os formulários anteriores e não contém um comando
-de disparo. Não houve chamada nova de modelo nem consumo de chave API.
+O [painel de critérios](criteria-consensus-results-20260921.md) terminou com
+39 chamadas pela assinatura Codex, sem chave API: três calibrações, nove
+artifatos e 27 julgamentos. Três modelos passaram pelos oito controles antes
+da geração. O consenso foi unânime nas 54 células de cobertura: somente links
+ficou ausente nas três respostas com essa obrigação removida. As outras cinco
+categorias foram preservadas nos três braços.
 
-Foi corrigida a instrução operacional obsoleta que ainda mandava executar o
-diagnóstico de fonte já encerrado. A coleção de 96 chamadas e seu gate falho
-continuam preservados; nenhuma autorização histórica foi reutilizada.
+A revisão independente conferiu os 258 arquivos do recibo, os 39 eventos de
+uso e as 153 citações de suporte. Também identificou limites do painel:
+divergência de escopo em oito artefatos e duas anotações auxiliares que chamam
+links ausentes de acréscimos. Esses erros permanecem registrados. Não houve
+reparo de votos, repetição de chamadas ou promoção a rótulo humano.
 
-## Próximas dependências reais
+O protocolo offline anterior continua preservado como preparação histórica.
+O sucessor tem autorização exploratória própria; a coleção de 96 chamadas
+com gate falho continua encerrada. A [síntese empírica](../dissertation/EMPIRICAL_SYNTHESIS.md)
+reúne estudos reais, resultados nulos e diagnósticos, separadamente do exportador
+sintético. As correções de AP/IRR e validação já foram integradas nos três
+repositórios após CI (harness #64, ARP #19 e RAG #15).
 
-| Decisão ou ação | Material disponível | Dependência |
+## O que está concluído e o que permanece aberto
+
+| Frente | Estado atual | Limite ou dependência |
 | --- | --- | --- |
-| Mapear SRS-163 para a tarefa | Fonte e formulário separado | Resposta de revisor competente e independente |
-| Avaliar reescrita/omissão | Três variantes e chave do custodiante | Revisão semântica da transformação |
-| Resolver escopo e rubrica | Seis categorias e incerteza explícita | Adjudicação; não presumir oito obrigações |
-| Dispor sobre direitos | Licença/NOTICE e revisão em branco | Decisão documentada de direitos/governança |
-| Congelar protocolo de coleta | Molde, nove posições propostas e tabelas | Revisões acima e configuração/amostra finais |
-| Executar e analisar | Rota Codex existente; contratos de erro e custódia preparados | Protocolo final e desfechos independentes |
-| H1/H2 confirmatórias | Instrumentação, gates e formulários existentes | Amostragem, governança, anotação e análise registradas |
+| Piloto exploratório SRS-163 | Coleta, consenso fixo e reanálise concluídos | Uma intenção; labels de LLM, não validação humana |
+| Mapeamento e transformação | Fonte pública verificada; três variantes congeladas e revisão técnica | Equivalência semântica independente ainda não certificada |
+| Rubrica e escopo | Cobertura coletiva de seis categorias analisada | Fonte não resolve distribuição por comando; painel também diverge |
+| Reprodução e integração | Código, testes, hashes, votos e capturas preservados | Aliases dos modelos não expõem snapshots imutáveis |
+| Revisão humana e governança | Formulários preservados sem assinaturas fabricadas | Decisões de revisores, orientador e instituição quando aplicáveis |
+| Validade externa e H1/H2 | Instrumentação e protocolos existentes | Novas fontes, separação por projeto, observações prospectivas e análise registrada |
 
-A configuração pretendida utiliza a assinatura ChatGPT via Codex, sem fallback
-para chave. As coletas anteriores por API permanecem séries separadas. Ausência
-de preço monetário exposto pelo CLI não significa custo zero.
+A autorização de consenso automatizado encerrou a dependência operacional de
+rótulos humanos para este piloto exploratório. Ela não modifica os requisitos
+do estudo confirmatório nem demonstra benefício de alerta precoce ou utilidade
+para usuários. Novas coletas devem usar seleção prospectiva de fontes e manter
+candidatos rejeitados, sem escolher casos por produzir um efeito favorável.
 
-Novas implementações devem ser guiadas por essas decisões. Mais chamadas,
-checks de CI ou um juiz automático adicional não substituem validade semântica
-nem tornam um caso exposto um teste independente.
+A coleta usou ChatGPT via Codex, sem fallback para chave. Foram reportados
+550.566 tokens de entrada e 14.698 de saída; preço monetário e snapshots de
+resposta não estão disponíveis. As séries anteriores de API ficam separadas.
