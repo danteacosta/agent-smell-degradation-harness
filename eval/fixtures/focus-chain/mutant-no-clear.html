@@ -1,0 +1,5 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Todo</title><style>body{font:20px sans-serif;margin:40px}.new-todo{display:block;width:400px;padding:12px}.todo-list{min-height:20px;margin-top:20px}</style></head><body><h1>Todos</h1><input class="new-todo" aria-label="New todo" autofocus><ul class="todo-list"></ul><script>
+const input=document.querySelector('.new-todo');const list=document.querySelector('.todo-list');
+
+input.addEventListener('keydown',event=>{if(event.key==='Enter'){const title=input.value.trim();if(title!==''){const item=document.createElement('li');const label=document.createElement('label');label.textContent=title;item.appendChild(label);list.appendChild(item);}}});
+</script></body></html>

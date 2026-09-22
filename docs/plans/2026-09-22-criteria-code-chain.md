@@ -23,7 +23,7 @@ changes/leakage. Other TodoMVC topics can follow after this instrument is qualif
 
 A public neutral interface requires one standalone HTML document, plain inline
 JavaScript/CSS, one new-todo input identifiable by `.new-todo`, one list
-`.todo-list` whose items are `li` with visible labels. Start empty. No libraries,
+`.todo-list` whose items are `li`, each with one visible `label` element. Start empty. No libraries,
 network, persistence, assets or other features requested. This interface fixes
 mechanics, not focus, trim, Enter, clearing or append behavior. It may still cue
 familiar TodoMVC behavior; all arms share it and recovery is retained.
@@ -93,7 +93,7 @@ actual active element. Record active-element tag/class and native screenshot.
 Non-target scenarios cover visible input above list, Enter creation and append
 order, input clearing, trimming, empty and whitespace-only rejection. Keep
 independent assertion IDs; no single full-output equality mixes targets.
-DOM timing horizon is a declared harness convention, not a source-specified SLA.
+Load and post-Enter observations use a 500 ms settling horizon. This timing is a declared harness convention, not a source-specified SLA. Label text is measured independently of outer item formatting; invisible labels cannot satisfy creation.
 Generated application runs only in a browser, never as Node/host code.
 
 Primary descriptive target-failure C−A within route/code-model; preserve original
