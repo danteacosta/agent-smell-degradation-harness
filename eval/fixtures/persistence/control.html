@@ -1,0 +1,52 @@
+<!doctype html><meta charset="utf-8"><meta name="qualification-mode" content="MODE"><title>Persistence control</title>
+<input class="new-todo" aria-label="New todo"><ul class="todo-list"></ul>
+<script>
+const mode=document.querySelector('meta[name="qualification-mode"]').content;
+const key='todos-vanilla';
+const input=document.querySelector('input.new-todo');
+const list=document.querySelector('ul.todo-list');
+let todos=[];
+if(mode!=='no-reload'){
+  try{todos=JSON.parse(mode==='encoded-value'
+    ? atob(localStorage.getItem(key)||'W10=') : localStorage.getItem(key)||'[]').map(item=>({...item,
+    completed:mode==='drop-completed'?false:Boolean(item.completed),
+    editing:mode==='restore-edit'&&Boolean(item.editing)}));}catch{todos=[];}
+}
+function save(){
+  const serialized=JSON.stringify(todos.map(item=>({
+    id:item.id,title:item.title,completed:item.completed,
+    ...(mode==='false-flag'?{editing:false}:{}),
+    ...(mode==='restore-edit'?{editing:item.editing}:{})
+  })));
+  localStorage.setItem(key,mode==='encoded-value'?btoa(serialized):serialized);
+}
+function render(){
+  list.replaceChildren();
+  for(const item of todos){
+    const row=document.createElement('li');
+    const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=item.completed;
+    checkbox.onchange=()=>{item.completed=checkbox.checked;save();render();};
+    row.append(checkbox);
+    if(mode==='no-edit-button'){
+      const action=document.createElement('input');action.type='button';action.value='Details';row.append(action);
+    }
+    if(item.editing){
+      const edit=document.createElement('input');edit.className='edit';edit.value=item.title;
+      edit.onkeydown=event=>{if(event.key==='Enter'){item.title=edit.value;item.editing=false;save();render();}};
+      row.append(edit);
+    }else{
+      const label=document.createElement('label');label.textContent=item.title;
+      label.ondblclick=()=>{if(mode==='no-edit'||mode==='no-edit-button')return;item.editing=true;save();render();};
+      row.append(label);
+    }
+    list.append(row);
+  }
+}
+input.onkeydown=event=>{
+  if(event.key==='Enter'&&input.value.trim()){
+    todos.push({id:String(Date.now()),title:input.value.trim(),completed:false,editing:false});
+    input.value='';save();render();
+  }
+};
+render();
+</script>
