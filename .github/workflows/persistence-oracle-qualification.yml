@@ -1,0 +1,41 @@
+name: Persistence oracle qualification
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - eval/persistence_executor.py
+      - eval/fixtures/persistence/**
+      - tests/test_persistence_executor.py
+      - .github/workflows/persistence-oracle-qualification.yml
+
+permissions:
+  contents: read
+
+jobs:
+  qualify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test report classification
+        run: python -m pip install pytest && python -m pytest -q tests/test_persistence_executor.py
+      - name: Build pinned offline browser instrument
+        run: docker build --iidfile "$RUNNER_TEMP/persistence-image" eval/fixtures/persistence
+      - name: Qualify valid and mutant controls
+        run: >-
+          python eval/fixtures/persistence/qualify.py
+          --image "$(cat "$RUNNER_TEMP/persistence-image")"
+          --output "$RUNNER_TEMP/persistence-qualification"
+      - name: Upload authored-control evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: persistence-qualification
+          path: ${{ runner.temp }}/persistence-qualification/
+          retention-days: 30

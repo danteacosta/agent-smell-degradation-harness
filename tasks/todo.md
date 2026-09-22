@@ -1,5 +1,17 @@
 # Requirements-smell experiment hardening
 
+## Behavioral expansion: TodoMVC persistence oracle — 2026-09-22
+
+- [x] Map the observable reload contract to the exact pinned source deletion.
+- [x] Write fail-first report-classification tests and the offline browser runner.
+- [x] Qualify ordinary, false-flag and encoded storage references and selective mutants;
+      all eight expected vectors matched in the final immutable image.
+- [ ] Obtain independent source/prompt-leakage review before admitting this case.
+- [ ] Freeze the eligible multi-project schedule only after all admitted oracles qualify.
+- [ ] Run the once-only model collection when sufficient account capacity exists.
+
+Qualification is instrument evidence, not a generated-code or H1 result.
+
 ## Authorized exploratory consensus — 2026-09-21
 
 Plan: [bounded criteria panel](../docs/plans/2026-09-21-criteria-consensus.md).
