@@ -1,0 +1,1325 @@
+{
+  "schema_version": "focus-chain-public-results/v1",
+  "analysis": {
+    "human_approvals": 0,
+    "label_source": "independent_behavioral_oracle",
+    "confirmatory_eligible": false,
+    "planned": 54,
+    "groups": [
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": "gpt-5.6-luna",
+        "variant": "A",
+        "planned": 3,
+        "target_failed": 0,
+        "target_passed": 2,
+        "unknown": 1,
+        "categories": {
+          "pass": 2,
+          "upstream_missing": 1
+        },
+        "target_failure_bounds": [
+          0.0,
+          0.3333333333333333
+        ],
+        "complete_executable_target_failure": 0.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": "gpt-5.6-luna",
+        "variant": "B",
+        "planned": 3,
+        "target_failed": 0,
+        "target_passed": 3,
+        "unknown": 0,
+        "categories": {
+          "pass": 3
+        },
+        "target_failure_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_target_failure": 0.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": "gpt-5.6-luna",
+        "variant": "C",
+        "planned": 3,
+        "target_failed": 3,
+        "target_passed": 0,
+        "unknown": 0,
+        "categories": {
+          "target_only_failure": 3
+        },
+        "target_failure_bounds": [
+          1.0,
+          1.0
+        ],
+        "complete_executable_target_failure": 1.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": "gpt-5.6-sol",
+        "variant": "A",
+        "planned": 3,
+        "target_failed": 0,
+        "target_passed": 3,
+        "unknown": 0,
+        "categories": {
+          "pass": 3
+        },
+        "target_failure_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_target_failure": 0.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": "gpt-5.6-sol",
+        "variant": "B",
+        "planned": 3,
+        "target_failed": 0,
+        "target_passed": 3,
+        "unknown": 0,
+        "categories": {
+          "pass": 3
+        },
+        "target_failure_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_target_failure": 0.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": "gpt-5.6-sol",
+        "variant": "C",
+        "planned": 3,
+        "target_failed": 3,
+        "target_passed": 0,
+        "unknown": 0,
+        "categories": {
+          "target_only_failure": 3
+        },
+        "target_failure_bounds": [
+          1.0,
+          1.0
+        ],
+        "complete_executable_target_failure": 1.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": "gpt-5.6-luna",
+        "variant": "A",
+        "planned": 3,
+        "target_failed": 0,
+        "target_passed": 2,
+        "unknown": 1,
+        "categories": {
+          "upstream_missing": 1,
+          "pass": 2
+        },
+        "target_failure_bounds": [
+          0.0,
+          0.3333333333333333
+        ],
+        "complete_executable_target_failure": 0.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": "gpt-5.6-luna",
+        "variant": "B",
+        "planned": 3,
+        "target_failed": 0,
+        "target_passed": 3,
+        "unknown": 0,
+        "categories": {
+          "pass": 3
+        },
+        "target_failure_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_target_failure": 0.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": "gpt-5.6-luna",
+        "variant": "C",
+        "planned": 3,
+        "target_failed": 3,
+        "target_passed": 0,
+        "unknown": 0,
+        "categories": {
+          "target_only_failure": 3
+        },
+        "target_failure_bounds": [
+          1.0,
+          1.0
+        ],
+        "complete_executable_target_failure": 1.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": "gpt-5.6-sol",
+        "variant": "A",
+        "planned": 3,
+        "target_failed": 0,
+        "target_passed": 3,
+        "unknown": 0,
+        "categories": {
+          "pass": 3
+        },
+        "target_failure_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_target_failure": 0.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": "gpt-5.6-sol",
+        "variant": "B",
+        "planned": 3,
+        "target_failed": 0,
+        "target_passed": 3,
+        "unknown": 0,
+        "categories": {
+          "pass": 3
+        },
+        "target_failure_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_target_failure": 0.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": "gpt-5.6-sol",
+        "variant": "C",
+        "planned": 3,
+        "target_failed": 1,
+        "target_passed": 2,
+        "unknown": 0,
+        "categories": {
+          "pass": 2,
+          "target_only_failure": 1
+        },
+        "target_failure_bounds": [
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "complete_executable_target_failure": 0.3333333333333333
+      },
+      {
+        "route": "direct",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": null,
+        "variant": "A",
+        "planned": 3,
+        "target_failed": 0,
+        "target_passed": 3,
+        "unknown": 0,
+        "categories": {
+          "pass": 3
+        },
+        "target_failure_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_target_failure": 0.0
+      },
+      {
+        "route": "direct",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": null,
+        "variant": "B",
+        "planned": 3,
+        "target_failed": 0,
+        "target_passed": 3,
+        "unknown": 0,
+        "categories": {
+          "pass": 3
+        },
+        "target_failure_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_target_failure": 0.0
+      },
+      {
+        "route": "direct",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": null,
+        "variant": "C",
+        "planned": 3,
+        "target_failed": 3,
+        "target_passed": 0,
+        "unknown": 0,
+        "categories": {
+          "target_only_failure": 3
+        },
+        "target_failure_bounds": [
+          1.0,
+          1.0
+        ],
+        "complete_executable_target_failure": 1.0
+      },
+      {
+        "route": "direct",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": null,
+        "variant": "A",
+        "planned": 3,
+        "target_failed": 0,
+        "target_passed": 3,
+        "unknown": 0,
+        "categories": {
+          "pass": 3
+        },
+        "target_failure_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_target_failure": 0.0
+      },
+      {
+        "route": "direct",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": null,
+        "variant": "B",
+        "planned": 3,
+        "target_failed": 0,
+        "target_passed": 3,
+        "unknown": 0,
+        "categories": {
+          "pass": 3
+        },
+        "target_failure_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_target_failure": 0.0
+      },
+      {
+        "route": "direct",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": null,
+        "variant": "C",
+        "planned": 3,
+        "target_failed": 3,
+        "target_passed": 0,
+        "unknown": 0,
+        "categories": {
+          "target_only_failure": 3
+        },
+        "target_failure_bounds": [
+          1.0,
+          1.0
+        ],
+        "complete_executable_target_failure": 1.0
+      }
+    ],
+    "contrasts": [
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": "gpt-5.6-luna",
+        "comparison": "C-A",
+        "target_failure_difference_bounds": [
+          0.6666666666666667,
+          1.0
+        ],
+        "complete_executable_difference": 1.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": "gpt-5.6-luna",
+        "comparison": "B-A",
+        "target_failure_difference_bounds": [
+          -0.3333333333333333,
+          0.0
+        ],
+        "complete_executable_difference": 0.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": "gpt-5.6-sol",
+        "comparison": "C-A",
+        "target_failure_difference_bounds": [
+          1.0,
+          1.0
+        ],
+        "complete_executable_difference": 1.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": "gpt-5.6-sol",
+        "comparison": "B-A",
+        "target_failure_difference_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_difference": 0.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": "gpt-5.6-luna",
+        "comparison": "C-A",
+        "target_failure_difference_bounds": [
+          0.6666666666666667,
+          1.0
+        ],
+        "complete_executable_difference": 1.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": "gpt-5.6-luna",
+        "comparison": "B-A",
+        "target_failure_difference_bounds": [
+          -0.3333333333333333,
+          0.0
+        ],
+        "complete_executable_difference": 0.0
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": "gpt-5.6-sol",
+        "comparison": "C-A",
+        "target_failure_difference_bounds": [
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "complete_executable_difference": 0.3333333333333333
+      },
+      {
+        "route": "criteria_only",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": "gpt-5.6-sol",
+        "comparison": "B-A",
+        "target_failure_difference_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_difference": 0.0
+      },
+      {
+        "route": "direct",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": null,
+        "comparison": "C-A",
+        "target_failure_difference_bounds": [
+          1.0,
+          1.0
+        ],
+        "complete_executable_difference": 1.0
+      },
+      {
+        "route": "direct",
+        "code_model": "gpt-5.6-luna",
+        "criteria_model": null,
+        "comparison": "B-A",
+        "target_failure_difference_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_difference": 0.0
+      },
+      {
+        "route": "direct",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": null,
+        "comparison": "C-A",
+        "target_failure_difference_bounds": [
+          1.0,
+          1.0
+        ],
+        "complete_executable_difference": 1.0
+      },
+      {
+        "route": "direct",
+        "code_model": "gpt-5.6-sol",
+        "criteria_model": null,
+        "comparison": "B-A",
+        "target_failure_difference_bounds": [
+          0.0,
+          0.0
+        ],
+        "complete_executable_difference": 0.0
+      }
+    ],
+    "limitations": [
+      "one retrospectively selected source intent",
+      "route contrasts are not mediation estimates",
+      "missingness bounds are not confidence intervals",
+      "no H1/H2 confirmation"
+    ],
+    "calls_attempted": 52,
+    "stop_reason": null
+  },
+  "audit": {
+    "verified_files": 754,
+    "planned": 54,
+    "calls_attempted": 52,
+    "categories": {
+      "target_only_failure": 16,
+      "pass": 36,
+      "upstream_missing": 2
+    },
+    "failed_assertions": {
+      "initial_focus": 16
+    },
+    "screenshots": 52,
+    "receipt_sha256": "cf7f03ce23dd98331cec8f6042668d690f7475fa16487d437eb550c97b4cbef1",
+    "frozen_receipt_sha256": "3675285c07b128fdad91b81bfc18dd935d5a272b01481b8ce3fcb2fad81a099c",
+    "analysis_groups_verified": 18,
+    "stop_reason": null,
+    "completed_usage_events": 52,
+    "usage_fields": {
+      "input_tokens": 717385,
+      "cached_input_tokens": 166400,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 19771,
+      "reasoning_output_tokens": 3799
+    }
+  },
+  "collector_commit": "cf8b270",
+  "image_id": "sha256:52d524fb7dd8070139429eefa9f498159d21dd47cf5b886930ef8f6f2eb9c234",
+  "rows": [
+    {
+      "slot_id": "code-24e7da26ae51a880fca0",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 3,
+      "variant": "C",
+      "upstream_artifact_id": "artifact-49f195a1a0b43c4a",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "a84f06be1e0cb8851764ccb1b52378f37046e1af35ca67a3664cc7a925bc5245"
+    },
+    {
+      "slot_id": "code-05730b00c281d1f74844",
+      "route": "direct",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": null,
+      "replication": 3,
+      "variant": "B",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "c718554dc26d24931b3d46c991b9e6375f653b7261ce78da802b32105b71c8e5"
+    },
+    {
+      "slot_id": "code-fe2f3c770113a310e96f",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 1,
+      "variant": "C",
+      "upstream_artifact_id": "artifact-20c8a5cb7a1b233c",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "303a703fe2e95fe63c474f25728b050abb1675ccea79d58be2f2fe3df4d6601e"
+    },
+    {
+      "slot_id": "code-2681e94e2c4e7a5d187c",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 3,
+      "variant": "B",
+      "upstream_artifact_id": "artifact-75585ea7407a6a6e",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "a0afee6e41bd8d174f4a1984facbb0c7e88f04dfd7e24aa523362945b839974d"
+    },
+    {
+      "slot_id": "code-191b8e950789232d2170",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 1,
+      "variant": "C",
+      "upstream_artifact_id": "artifact-7288923aba733fdc",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "ca1dc5e38cc9ecda87cdbbbed4954b16f156013200a55128b1b09682ff9f896e"
+    },
+    {
+      "slot_id": "code-fe1d0072a1161bf58077",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 2,
+      "variant": "B",
+      "upstream_artifact_id": "artifact-c142e63b82c4a2ff",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "d6e92f3505b43a44990b8b78743488b63e59dd17c411331389e8747fb443abeb"
+    },
+    {
+      "slot_id": "code-b0a60cea6320748f89c0",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 3,
+      "variant": "A",
+      "upstream_artifact_id": "artifact-fdb74b9947175fe6",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "b99fdba25932e5ebbe7612d280958497e418994856f2fcb5f9e8bfc5249def8d"
+    },
+    {
+      "slot_id": "code-fc515771b1978dfd359d",
+      "route": "direct",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": null,
+      "replication": 1,
+      "variant": "A",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "efa59e6a1fb2a04941773d3f644f4678f86b9b111228d2795b3b111af135d5c1"
+    },
+    {
+      "slot_id": "code-9668ce4e60cf99717755",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 3,
+      "variant": "A",
+      "upstream_artifact_id": "artifact-a646ddf828de87dc",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "3f8b3a19ae1563e24ba3f313429ca08d0953d53188bf5fef6b9378490077ecdd"
+    },
+    {
+      "slot_id": "code-08e9076a9d30b034616f",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 2,
+      "variant": "A",
+      "upstream_artifact_id": "artifact-4e6201d5ee855687",
+      "upstream_status": "invalid_output",
+      "generation_status": "upstream_missing",
+      "category": "upstream_missing",
+      "target_failed": null,
+      "non_target_failed": null,
+      "html_sha256": null
+    },
+    {
+      "slot_id": "code-4819c66a1091dcb95423",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 1,
+      "variant": "A",
+      "upstream_artifact_id": "artifact-e8755393f76b4eca",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "c28d111dee37455a4ae38c06e24c9ec6873f0971d4cc652d2655d563ba3ffd11"
+    },
+    {
+      "slot_id": "code-839945021fed7704340e",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 1,
+      "variant": "A",
+      "upstream_artifact_id": "artifact-1032958eabaf26a4",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "e3f6767317320caa0e6ca151f793da4e402b83fa2220956e6032d00af28e1974"
+    },
+    {
+      "slot_id": "code-b0879e26fd7e43bd42e4",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 2,
+      "variant": "C",
+      "upstream_artifact_id": "artifact-724b7fa45acb2d84",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "a4dd7ebe54ba92f2660f5e5cf0cc551e80af609abd083149667abcbfdc49a6db"
+    },
+    {
+      "slot_id": "code-4cd40c68b523f4f9652f",
+      "route": "direct",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": null,
+      "replication": 1,
+      "variant": "B",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "5e9beea14c3908315972718e3a8bf102e260c5d299ab3a79d932aa0679188a63"
+    },
+    {
+      "slot_id": "code-37b278383dd3f73185e6",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 3,
+      "variant": "C",
+      "upstream_artifact_id": "artifact-d5899faffe63d00f",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "aefc4d30728007b9cd4f5f82894e6ec3910c7300b02b6af196c1ff759e877ba8"
+    },
+    {
+      "slot_id": "code-c9652094e992b767a436",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 3,
+      "variant": "B",
+      "upstream_artifact_id": "artifact-75585ea7407a6a6e",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "2fb9f220838cac99def694fbba59d84229ba7593f937a2ed776cb295bba6b63d"
+    },
+    {
+      "slot_id": "code-9f9aed676daa7d6964db",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 1,
+      "variant": "B",
+      "upstream_artifact_id": "artifact-d4a009a8ee711e57",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "6b4c7cfa6b5b293800ca7082615b4b9695fc9e47be7a57f05812e8764d523b19"
+    },
+    {
+      "slot_id": "code-a6f11b1ffc05585a8904",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 2,
+      "variant": "B",
+      "upstream_artifact_id": "artifact-c142e63b82c4a2ff",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "c6fb8d62dd74266c8ba8fd82b6e190138c1bb477b5b983d2a62caed2c190f5f1"
+    },
+    {
+      "slot_id": "code-157f84295d6e2a8a054f",
+      "route": "direct",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": null,
+      "replication": 2,
+      "variant": "B",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "a6875c6884efdd6677faf2d6f227dfc572cd7fe7a75852a1d310bcb320ae1695"
+    },
+    {
+      "slot_id": "code-39ec7a758d021eae6e6c",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 2,
+      "variant": "B",
+      "upstream_artifact_id": "artifact-73a1a3b27bc6e291",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "803dfa7805af11176e8a82e0194ebff1f3299c8aa7e936740c1008dca8063649"
+    },
+    {
+      "slot_id": "code-e1bd1bc974cc2cb5a041",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 2,
+      "variant": "C",
+      "upstream_artifact_id": "artifact-9c65a91ad133f965",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "66b064d4316c1226e1b32ba84742713dfc69507c04b72a170e5a27eb46c9958d"
+    },
+    {
+      "slot_id": "code-a7cf7fc1129ca772d57b",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 2,
+      "variant": "C",
+      "upstream_artifact_id": "artifact-9c65a91ad133f965",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "08e79eeec8bf392f111b6cd845f92990ff2e858ca13d40406fddb0ca1ed2dd68"
+    },
+    {
+      "slot_id": "code-3119a6ebae3bdec91bbb",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 1,
+      "variant": "B",
+      "upstream_artifact_id": "artifact-6354dbb7d4658721",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "ac3bd51a4daf6b0000fdd23741189c7a5087ae11e13b1a9bba59c8de3a63148e"
+    },
+    {
+      "slot_id": "code-c1ff77bd13afde58e79a",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 2,
+      "variant": "A",
+      "upstream_artifact_id": "artifact-4e6201d5ee855687",
+      "upstream_status": "invalid_output",
+      "generation_status": "upstream_missing",
+      "category": "upstream_missing",
+      "target_failed": null,
+      "non_target_failed": null,
+      "html_sha256": null
+    },
+    {
+      "slot_id": "code-6fb2d67cbcc5dad36804",
+      "route": "direct",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": null,
+      "replication": 2,
+      "variant": "A",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "43a03090d940fbfcf00bb84ec595db6ab268524c60d990e5c0e883accccfc644"
+    },
+    {
+      "slot_id": "code-cd3c9f00108dc1b9ef9f",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 2,
+      "variant": "A",
+      "upstream_artifact_id": "artifact-fd061a5040aca1f8",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "c6492a838873061c034e2b0662d852498cc5a4112581364636961ebb86b50171"
+    },
+    {
+      "slot_id": "code-ba3de7f8387223978c01",
+      "route": "direct",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": null,
+      "replication": 1,
+      "variant": "B",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "5a5465fc89284134faca560bfc6a52a3f26275c448b15c93ca8276cec305905c"
+    },
+    {
+      "slot_id": "code-b499d2aa3e49809bb485",
+      "route": "direct",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": null,
+      "replication": 3,
+      "variant": "C",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "9e5c6944fa6e8b77dd8667bc87aee08558d7c504b803a99d41682dcd2365da0a"
+    },
+    {
+      "slot_id": "code-1a4101a624934ae4bca2",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 1,
+      "variant": "B",
+      "upstream_artifact_id": "artifact-d4a009a8ee711e57",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "7d1ba3e79ecb3b5c2ddc5af50527a765e14c0a0fc8d3f6ec7ac3251883eed077"
+    },
+    {
+      "slot_id": "code-9e40aecbbe8cc96063ed",
+      "route": "direct",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": null,
+      "replication": 2,
+      "variant": "C",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "84ec51ce866bfdbb83d1bc4bd9c2af941fde62cf579b89baa8e5b3bc40383651"
+    },
+    {
+      "slot_id": "code-2d22bd5c535fce23aac7",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 1,
+      "variant": "A",
+      "upstream_artifact_id": "artifact-1032958eabaf26a4",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "707bfc54f75a3bd6c86e9d8ed83362f0a460c781fc60734585d9bc9c808a6055"
+    },
+    {
+      "slot_id": "code-c461be62d2fd14d85ac3",
+      "route": "direct",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": null,
+      "replication": 3,
+      "variant": "B",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "adc29dbb80a069d141fbfb68f774e41b814a2ab7aa214c595bd1b64927b6f336"
+    },
+    {
+      "slot_id": "code-ae08285fb5c662ab2377",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 3,
+      "variant": "A",
+      "upstream_artifact_id": "artifact-fdb74b9947175fe6",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "d22c6cbba9f67bfeac7f1156b77c4a8cf5e3a50062bd3c336391c40ce13d7221"
+    },
+    {
+      "slot_id": "code-1d09d6b77010ca58fd72",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 2,
+      "variant": "A",
+      "upstream_artifact_id": "artifact-fd061a5040aca1f8",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "af17a19e0b229fc5e6fd546ab163da1466b7d777dec96690355a60780682fcc3"
+    },
+    {
+      "slot_id": "code-ee6a5822951716d096d6",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 1,
+      "variant": "A",
+      "upstream_artifact_id": "artifact-e8755393f76b4eca",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "5ecd1cf7fbbca14bd55f0d092f426aae0509d7157dd5da4e4b96fd3748988aad"
+    },
+    {
+      "slot_id": "code-252d72940977757ce696",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 2,
+      "variant": "C",
+      "upstream_artifact_id": "artifact-724b7fa45acb2d84",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "5a4b92a4d8276c2dbbd9f73850d0b96941a4a8e4f60865b55016c0e5f517855e"
+    },
+    {
+      "slot_id": "code-e68e394f2c43da4f4b1e",
+      "route": "direct",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": null,
+      "replication": 2,
+      "variant": "A",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "860433dfcac54a7bd34f23e1a0726cb2b4f86a2c72f370226117f8d4aea25203"
+    },
+    {
+      "slot_id": "code-75a12ffdb39c1c6c9a81",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 3,
+      "variant": "B",
+      "upstream_artifact_id": "artifact-63d3e31c6bd299ba",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "ae5d9f7f5fd6920940c0af80562c1d5ab2a8d8724332ef2578b549c3ee066925"
+    },
+    {
+      "slot_id": "code-870e5eb570c82baeb162",
+      "route": "direct",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": null,
+      "replication": 1,
+      "variant": "C",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "1eb317ec95abc28e3c61fad85e01b793a4d31220ea717d867344de20d91094ec"
+    },
+    {
+      "slot_id": "code-bcaf38bccce47644a89e",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 1,
+      "variant": "B",
+      "upstream_artifact_id": "artifact-6354dbb7d4658721",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "93df83316d7ac70ce202f80db82cb06e00e66232303daeb7bad9dc6df0d5cc13"
+    },
+    {
+      "slot_id": "code-fef25863071a687de26b",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 3,
+      "variant": "C",
+      "upstream_artifact_id": "artifact-49f195a1a0b43c4a",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "a362355c57107e6641782734398548423f2dbf29f9d74ed1d6f1f3e8762d418f"
+    },
+    {
+      "slot_id": "code-79ad63df57d3aede3ba4",
+      "route": "direct",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": null,
+      "replication": 1,
+      "variant": "C",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "c8faf849de1bc14384092bbecc378d766731ec7e1c23296de6c44f5233940656"
+    },
+    {
+      "slot_id": "code-cf7ad9fa469acec0fae3",
+      "route": "direct",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": null,
+      "replication": 3,
+      "variant": "A",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "66f783cdbeb132a47336192c71d7a1fe942b1c1c937291730755fc7be0918041"
+    },
+    {
+      "slot_id": "code-f39ab71834bc285ce11d",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 1,
+      "variant": "C",
+      "upstream_artifact_id": "artifact-20c8a5cb7a1b233c",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "c4780b2110598dc00b2aa5aeb0746f8e8219ab451dd2001564927de61feac2b6"
+    },
+    {
+      "slot_id": "code-0720f6762509d409b354",
+      "route": "direct",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": null,
+      "replication": 3,
+      "variant": "C",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "cfd47dcabed71abccb3d77a2951aa76c888fa035a5941d23ed26bcee2f4b8572"
+    },
+    {
+      "slot_id": "code-b2629987ce212e90173a",
+      "route": "direct",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": null,
+      "replication": 2,
+      "variant": "B",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "ce495051e6d15d3214413c0d29064ce8b54962fcf988d7795cb50e6fe9306282"
+    },
+    {
+      "slot_id": "code-14a2eeeafa76a3efdf1c",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-sol",
+      "replication": 3,
+      "variant": "A",
+      "upstream_artifact_id": "artifact-a646ddf828de87dc",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "2b21e55cfafecc1c46bbd49d20ae8211aee5535ea602f3ef13b62b41fad33b5a"
+    },
+    {
+      "slot_id": "code-4a4ef2a298b0f80d0c3d",
+      "route": "direct",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": null,
+      "replication": 1,
+      "variant": "A",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "7ed2ba7690122f43826ec4964715375c9bfa91bc926fff6165a4cf172f266746"
+    },
+    {
+      "slot_id": "code-e4f5c2c55d1de0c831ac",
+      "route": "direct",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": null,
+      "replication": 2,
+      "variant": "C",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "1b974c6910ca528340d846d47f3f98a691255bdcf145b8be9e4bc22ae6a39c1f"
+    },
+    {
+      "slot_id": "code-4585967f5e4ad680f8ed",
+      "route": "direct",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": null,
+      "replication": 3,
+      "variant": "A",
+      "upstream_artifact_id": null,
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "884a0d625822c3e281be052742bc27928a2fe9d687ef947f19d416c6ea3746bc"
+    },
+    {
+      "slot_id": "code-18dae5f914ba9a53e43f",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-luna",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 2,
+      "variant": "B",
+      "upstream_artifact_id": "artifact-73a1a3b27bc6e291",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "385f353f7ae076da5f042f50849f67901d1d3e255112f402c04ebd78687d908c"
+    },
+    {
+      "slot_id": "code-80512fa3453aa5b542ae",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 3,
+      "variant": "B",
+      "upstream_artifact_id": "artifact-63d3e31c6bd299ba",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "pass",
+      "target_failed": false,
+      "non_target_failed": [],
+      "html_sha256": "473960856753cc767d99221f4ed9fcf9535c585c2fba7aac5af3e932b240bb7f"
+    },
+    {
+      "slot_id": "code-e96ae5de63721943b9e7",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 1,
+      "variant": "C",
+      "upstream_artifact_id": "artifact-7288923aba733fdc",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "34280d26f64bffa7e667107fcba1eb5b01e8062e3753b418883aa025b09ca9ec"
+    },
+    {
+      "slot_id": "code-ebd31c5b3157785fe4c5",
+      "route": "criteria_only",
+      "code_model": "gpt-5.6-sol",
+      "criteria_model": "gpt-5.6-luna",
+      "replication": 3,
+      "variant": "C",
+      "upstream_artifact_id": "artifact-d5899faffe63d00f",
+      "upstream_status": "valid",
+      "generation_status": "valid",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "non_target_failed": [],
+      "html_sha256": "b812a5e126be3784c8be99f241c1c40ab70ca60f428fea4a95e6330f0e35f537"
+    }
+  ],
+  "limitations": [
+    "One retrospectively selected source intent; already exposed upstream",
+    "Frozen placement proxy can flag a hidden empty list without a source violation",
+    "Route contrast is not causal mediation; no H1/H2 confirmation"
+  ]
+}

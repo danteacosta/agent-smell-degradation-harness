@@ -45,3 +45,7 @@ experiment evidence.
 - [2026-09-21: IRR weighting, ordinal distances and undefined estimates](2026-09-21-irr-correction.md)
 
 - [Cross-project omission pilot results](criteria-expansion-results-20260921.md): 216 generations across 12 intents and four projects; incomplete judging and explicit missingness bounds.
+
+- [Research-stack audit](research-stack-audit-20260922.md): versioned retrieval metrics, malformed event validation, exact workspace authority and browser-oracle corrections.
+
+- [Source-to-browser results](focus-chain-results-20260922.md): 52 code outputs, 16 selective focus failures, two omission outputs preserving focus and two planned upstream absences; one exploratory intent.

@@ -90,3 +90,21 @@ O resultado sustenta propagação de omissão em critérios neste corpus e proto
 Não comprova defeito executável novo, efeito geral dos smells ou H1/H2.
 Consenso de LLMs, sem validação humana; a coleta anterior permanece separada.
 [Resultados, proveniência e limitações](../research/criteria-expansion-results-20260921.md).
+
+
+## Source/criteria-to-browser successor
+
+The [frozen focus pilot](../research/focus-chain-results-20260922.md) adds one
+retrospectively selected TodoMVC intent, not new project diversity. All52 eligible
+code generations completed before browser feedback; two of54 planned positions
+remain missing from an invalid upstream criterion. Direct-source omissions failed
+focus6/6 versus0/6 complete and0/6 rewrite. Criteria-route omissions failed10/12;
+two preserved focus. Complete criteria produced0 failures in10 executable outputs
+(two missing of12 planned), and rewrite0/12. Every executable output passed the
+six non-target assertions; all16 failures were selective initial-focus failures.
+Nine authored controls qualified the instrument beforehand. A post-freeze review
+identified an overstrict empty-list placement proxy; it did not fail in this
+collection and is not used as the primary endpoint. Original scores stay frozen.
+The preselected screenshot pair and externally observed active elements support
+the local counterexample. Repetition does not create independent requirements;
+route differences are not causal mediation and H1/H2 remain unconfirmed.

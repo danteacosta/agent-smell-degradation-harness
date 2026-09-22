@@ -1,8 +1,9 @@
 # From evaluator debugging to useful diagnostic evidence
 
-The next research contribution needs evidence of transfer to source-derived
-material. More features or another perfect score on development examples cannot
-supply it. The [completed studies](annotation-free-evaluation.md) already show
+Source-derived criteria evidence is available from the completed SRS-163 and
+four-project exploratory pilots. The next step investigates whether source-relative
+obligation loss reaches executable behavior, using independently qualified tests
+in a separately frozen successor. The [completed studies](annotation-free-evaluation.md) already show
 that evaluator behavior changes with the decision contract and observation
 scope. H1/H2 remain unanswered.
 

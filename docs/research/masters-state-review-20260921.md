@@ -1,5 +1,7 @@
 # Estado do mestrado — 21/09/2026
 
+Registro histórico. [Estado posterior e piloto comportamental](masters-state-review-20260922.md).
+
 O instrumento produz artefatos, executa contratos e preserva evidências.
 Existem exemplos de perda de obrigação em políticas construídas, mas ainda não
 uma estimativa validada do efeito de categorias de smells em requisitos naturais.

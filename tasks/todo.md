@@ -347,6 +347,19 @@ and rag-reliability-harness. Unrelated local AI applications are outside scope.
 - [x] Collect via Codex subscription; preserve missingness and original votes.
       Final: 216 generations; 565 judgments; four timeouts triggered stop.
 - [x] Update research report, Drive/slides and delivery packet.
-- [ ] Verify tests, review, CI and integration.
+- [x] Verify tests, review, CI and integration: PR66 merged at fb3b13d after six green checks.
 
 Plan: `docs/plans/2026-09-21-criteria-expansion.md`.
+
+
+## 2026-09-22 — Browser chain successor and research-stack audit
+
+- [x] Independently review single-intent source/criteria-to-code design.
+- [x] Merge reviewed ARP20 and MergeWave24 fixes after exact-head CI.
+- [x] Reproduce RAG metric inflation; version corrected metric contract and preserve historical results.
+- [ ] Qualify final independent browser oracle, freeze bounded collector.
+- [ ] Collect and independently audit all planned slots, including missing outcomes.
+- [ ] Update current prose, historical status labels, Drive and slides.
+- [ ] Applicable tests, review, build, exact-head CI and integration.
+
+Plan: `docs/plans/2026-09-22-criteria-code-chain.md`.
