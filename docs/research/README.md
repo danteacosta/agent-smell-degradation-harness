@@ -43,3 +43,5 @@ experiment evidence.
 - [2026-09-21: AP tie correction and synthetic-report scope](2026-09-21-ranking-metric-correction.md)
 
 - [2026-09-21: IRR weighting, ordinal distances and undefined estimates](2026-09-21-irr-correction.md)
+
+- [Cross-project omission pilot results](criteria-expansion-results-20260921.md): 216 generations across 12 intents and four projects; incomplete judging and explicit missingness bounds.

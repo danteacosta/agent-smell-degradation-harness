@@ -1,0 +1,401 @@
+{
+  "method": "Lowercase alphanumeric underscore token-set Jaccard and character SequenceMatcher; all66 unordered A/A pairs; descriptive, no eligibility cutoff.",
+  "pairs": [
+    {
+      "a": "realworld-follow-user",
+      "b": "realworld-add-comment",
+      "token_jaccard": 0.2647058823529412,
+      "sequence_ratio": 0.4404494382022472
+    },
+    {
+      "a": "strictdoc-srs-97",
+      "b": "strictdoc-srs-157",
+      "token_jaccard": 0.23684210526315788,
+      "sequence_ratio": 0.5288888888888889
+    },
+    {
+      "a": "cass-data-011",
+      "b": "cass-batch-002",
+      "token_jaccard": 0.18518518518518517,
+      "sequence_ratio": 0.22371364653243847
+    },
+    {
+      "a": "todomvc-new-todo",
+      "b": "todomvc-mark-all",
+      "token_jaccard": 0.17391304347826086,
+      "sequence_ratio": 0.020989505247376312
+    },
+    {
+      "a": "realworld-list-articles",
+      "b": "realworld-follow-user",
+      "token_jaccard": 0.1568627450980392,
+      "sequence_ratio": 0.31029619181946405
+    },
+    {
+      "a": "todomvc-mark-all",
+      "b": "todomvc-persistence",
+      "token_jaccard": 0.13432835820895522,
+      "sequence_ratio": 0.05263157894736842
+    },
+    {
+      "a": "realworld-list-articles",
+      "b": "realworld-add-comment",
+      "token_jaccard": 0.13333333333333333,
+      "sequence_ratio": 0.15024630541871922
+    },
+    {
+      "a": "todomvc-new-todo",
+      "b": "todomvc-persistence",
+      "token_jaccard": 0.12987012987012986,
+      "sequence_ratio": 0.025034770514603615
+    },
+    {
+      "a": "strictdoc-srs-47",
+      "b": "todomvc-new-todo",
+      "token_jaccard": 0.10714285714285714,
+      "sequence_ratio": 0.01008827238335435
+    },
+    {
+      "a": "cass-idata-007",
+      "b": "cass-batch-002",
+      "token_jaccard": 0.10416666666666667,
+      "sequence_ratio": 0.061601642710472276
+    },
+    {
+      "a": "strictdoc-srs-47",
+      "b": "strictdoc-srs-157",
+      "token_jaccard": 0.1,
+      "sequence_ratio": 0.2572347266881029
+    },
+    {
+      "a": "strictdoc-srs-47",
+      "b": "strictdoc-srs-97",
+      "token_jaccard": 0.08695652173913043,
+      "sequence_ratio": 0.02247191011235955
+    },
+    {
+      "a": "strictdoc-srs-47",
+      "b": "cass-data-011",
+      "token_jaccard": 0.07894736842105263,
+      "sequence_ratio": 0.017569546120058566
+    },
+    {
+      "a": "realworld-add-comment",
+      "b": "cass-batch-002",
+      "token_jaccard": 0.0784313725490196,
+      "sequence_ratio": 0.06666666666666667
+    },
+    {
+      "a": "strictdoc-srs-47",
+      "b": "todomvc-persistence",
+      "token_jaccard": 0.07317073170731707,
+      "sequence_ratio": 0.0049382716049382715
+    },
+    {
+      "a": "strictdoc-srs-97",
+      "b": "todomvc-new-todo",
+      "token_jaccard": 0.07246376811594203,
+      "sequence_ratio": 0.01610305958132045
+    },
+    {
+      "a": "strictdoc-srs-97",
+      "b": "cass-data-011",
+      "token_jaccard": 0.06779661016949153,
+      "sequence_ratio": 0.023483365949119372
+    },
+    {
+      "a": "todomvc-new-todo",
+      "b": "cass-data-011",
+      "token_jaccard": 0.06578947368421052,
+      "sequence_ratio": 0.02702702702702703
+    },
+    {
+      "a": "todomvc-persistence",
+      "b": "cass-idata-007",
+      "token_jaccard": 0.06557377049180328,
+      "sequence_ratio": 0.015408320493066256
+    },
+    {
+      "a": "strictdoc-srs-47",
+      "b": "todomvc-mark-all",
+      "token_jaccard": 0.06493506493506493,
+      "sequence_ratio": 0.036939313984168866
+    },
+    {
+      "a": "strictdoc-srs-47",
+      "b": "cass-idata-007",
+      "token_jaccard": 0.05970149253731343,
+      "sequence_ratio": 0.030428769017980636
+    },
+    {
+      "a": "strictdoc-srs-157",
+      "b": "cass-data-011",
+      "token_jaccard": 0.058823529411764705,
+      "sequence_ratio": 0.03800475059382423
+    },
+    {
+      "a": "strictdoc-srs-47",
+      "b": "cass-batch-002",
+      "token_jaccard": 0.05555555555555555,
+      "sequence_ratio": 0.021604938271604937
+    },
+    {
+      "a": "strictdoc-srs-97",
+      "b": "cass-batch-002",
+      "token_jaccard": 0.05555555555555555,
+      "sequence_ratio": 0.046218487394957986
+    },
+    {
+      "a": "cass-idata-007",
+      "b": "cass-data-011",
+      "token_jaccard": 0.05357142857142857,
+      "sequence_ratio": 0.05747126436781609
+    },
+    {
+      "a": "strictdoc-srs-157",
+      "b": "cass-idata-007",
+      "token_jaccard": 0.04878048780487805,
+      "sequence_ratio": 0.04338394793926247
+    },
+    {
+      "a": "strictdoc-srs-157",
+      "b": "todomvc-new-todo",
+      "token_jaccard": 0.04838709677419355,
+      "sequence_ratio": 0.04519774011299435
+    },
+    {
+      "a": "todomvc-new-todo",
+      "b": "realworld-list-articles",
+      "token_jaccard": 0.047619047619047616,
+      "sequence_ratio": 0.006749156355455568
+    },
+    {
+      "a": "todomvc-persistence",
+      "b": "realworld-add-comment",
+      "token_jaccard": 0.046875,
+      "sequence_ratio": 0.024922118380062305
+    },
+    {
+      "a": "strictdoc-srs-97",
+      "b": "todomvc-persistence",
+      "token_jaccard": 0.045454545454545456,
+      "sequence_ratio": 0.034482758620689655
+    },
+    {
+      "a": "realworld-follow-user",
+      "b": "cass-batch-002",
+      "token_jaccard": 0.045454545454545456,
+      "sequence_ratio": 0.08488063660477453
+    },
+    {
+      "a": "strictdoc-srs-97",
+      "b": "realworld-list-articles",
+      "token_jaccard": 0.04477611940298507,
+      "sequence_ratio": 0.027227722772277228
+    },
+    {
+      "a": "todomvc-new-todo",
+      "b": "cass-idata-007",
+      "token_jaccard": 0.04477611940298507,
+      "sequence_ratio": 0.006329113924050633
+    },
+    {
+      "a": "todomvc-mark-all",
+      "b": "cass-data-011",
+      "token_jaccard": 0.04477611940298507,
+      "sequence_ratio": 0.025134649910233394
+    },
+    {
+      "a": "todomvc-persistence",
+      "b": "cass-batch-002",
+      "token_jaccard": 0.04477611940298507,
+      "sequence_ratio": 0.03832752613240418
+    },
+    {
+      "a": "strictdoc-srs-157",
+      "b": "cass-batch-002",
+      "token_jaccard": 0.043478260869565216,
+      "sequence_ratio": 0.05699481865284974
+    },
+    {
+      "a": "todomvc-new-todo",
+      "b": "cass-batch-002",
+      "token_jaccard": 0.041666666666666664,
+      "sequence_ratio": 0.017953321364452424
+    },
+    {
+      "a": "todomvc-persistence",
+      "b": "cass-data-011",
+      "token_jaccard": 0.0410958904109589,
+      "sequence_ratio": 0.0361247947454844
+    },
+    {
+      "a": "todomvc-mark-all",
+      "b": "realworld-list-articles",
+      "token_jaccard": 0.04054054054054054,
+      "sequence_ratio": 0.02576112412177986
+    },
+    {
+      "a": "strictdoc-srs-97",
+      "b": "cass-idata-007",
+      "token_jaccard": 0.04,
+      "sequence_ratio": 0.047186932849364795
+    },
+    {
+      "a": "todomvc-mark-all",
+      "b": "cass-idata-007",
+      "token_jaccard": 0.03508771929824561,
+      "sequence_ratio": 0.01340033500837521
+    },
+    {
+      "a": "strictdoc-srs-47",
+      "b": "realworld-list-articles",
+      "token_jaccard": 0.03488372093023256,
+      "sequence_ratio": 0.024489795918367346
+    },
+    {
+      "a": "strictdoc-srs-157",
+      "b": "realworld-list-articles",
+      "token_jaccard": 0.03389830508474576,
+      "sequence_ratio": 0.027855153203342618
+    },
+    {
+      "a": "todomvc-mark-all",
+      "b": "realworld-add-comment",
+      "token_jaccard": 0.03389830508474576,
+      "sequence_ratio": 0.02711864406779661
+    },
+    {
+      "a": "realworld-add-comment",
+      "b": "cass-data-011",
+      "token_jaccard": 0.03389830508474576,
+      "sequence_ratio": 0.011650485436893204
+    },
+    {
+      "a": "strictdoc-srs-47",
+      "b": "realworld-follow-user",
+      "token_jaccard": 0.03225806451612903,
+      "sequence_ratio": 0.22838499184339314
+    },
+    {
+      "a": "realworld-list-articles",
+      "b": "cass-batch-002",
+      "token_jaccard": 0.028985507246376812,
+      "sequence_ratio": 0.053763440860215055
+    },
+    {
+      "a": "strictdoc-srs-157",
+      "b": "realworld-follow-user",
+      "token_jaccard": 0.02857142857142857,
+      "sequence_ratio": 0.2336182336182336
+    },
+    {
+      "a": "realworld-list-articles",
+      "b": "cass-data-011",
+      "token_jaccard": 0.02666666666666667,
+      "sequence_ratio": 0.01540436456996149
+    },
+    {
+      "a": "todomvc-persistence",
+      "b": "realworld-list-articles",
+      "token_jaccard": 0.024691358024691357,
+      "sequence_ratio": 0.024282560706401765
+    },
+    {
+      "a": "strictdoc-srs-97",
+      "b": "realworld-follow-user",
+      "token_jaccard": 0.022727272727272728,
+      "sequence_ratio": 0.19047619047619047
+    },
+    {
+      "a": "strictdoc-srs-157",
+      "b": "realworld-add-comment",
+      "token_jaccard": 0.022727272727272728,
+      "sequence_ratio": 0.039647577092511016
+    },
+    {
+      "a": "realworld-add-comment",
+      "b": "cass-idata-007",
+      "token_jaccard": 0.02040816326530612,
+      "sequence_ratio": 0.018018018018018018
+    },
+    {
+      "a": "realworld-follow-user",
+      "b": "cass-data-011",
+      "token_jaccard": 0.0196078431372549,
+      "sequence_ratio": 0.014563106796116505
+    },
+    {
+      "a": "strictdoc-srs-97",
+      "b": "realworld-add-comment",
+      "token_jaccard": 0.018867924528301886,
+      "sequence_ratio": 0.03676470588235294
+    },
+    {
+      "a": "strictdoc-srs-157",
+      "b": "todomvc-mark-all",
+      "token_jaccard": 0.018867924528301886,
+      "sequence_ratio": 0.020161290322580645
+    },
+    {
+      "a": "todomvc-persistence",
+      "b": "realworld-follow-user",
+      "token_jaccard": 0.017543859649122806,
+      "sequence_ratio": 0.18552875695732837
+    },
+    {
+      "a": "strictdoc-srs-157",
+      "b": "todomvc-persistence",
+      "token_jaccard": 0.01694915254237288,
+      "sequence_ratio": 0.021897810218978103
+    },
+    {
+      "a": "strictdoc-srs-97",
+      "b": "todomvc-mark-all",
+      "token_jaccard": 0.016129032258064516,
+      "sequence_ratio": 0.020477815699658702
+    },
+    {
+      "a": "todomvc-new-todo",
+      "b": "realworld-follow-user",
+      "token_jaccard": 0.016129032258064516,
+      "sequence_ratio": 0.1685823754789272
+    },
+    {
+      "a": "todomvc-mark-all",
+      "b": "cass-batch-002",
+      "token_jaccard": 0.015873015873015872,
+      "sequence_ratio": 0.02681992337164751
+    },
+    {
+      "a": "todomvc-new-todo",
+      "b": "realworld-add-comment",
+      "token_jaccard": 0.014084507042253521,
+      "sequence_ratio": 0.0448
+    },
+    {
+      "a": "strictdoc-srs-47",
+      "b": "realworld-add-comment",
+      "token_jaccard": 0.013888888888888888,
+      "sequence_ratio": 0.025139664804469275
+    },
+    {
+      "a": "todomvc-mark-all",
+      "b": "realworld-follow-user",
+      "token_jaccard": 0.0,
+      "sequence_ratio": 0.13141683778234087
+    },
+    {
+      "a": "realworld-list-articles",
+      "b": "cass-idata-007",
+      "token_jaccard": 0.0,
+      "sequence_ratio": 0.017094017094017096
+    },
+    {
+      "a": "realworld-follow-user",
+      "b": "cass-idata-007",
+      "token_jaccard": 0.0,
+      "sequence_ratio": 0.017699115044247787
+    }
+  ]
+}

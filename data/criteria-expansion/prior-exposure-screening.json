@@ -1,0 +1,7 @@
+{
+  "status": "bounded search does not establish held-out status",
+  "files_examined": 1006,
+  "eligible_string_values_examined": 403105,
+  "method": "JSON/JSONL under private-research-evidence, files <=20MB, string values <=12000chars; source locator IDs for StrictDoc/CaSS, full exact A for TodoMVC/RealWorld. Archives, text files, longer strings, other directories, external history, paraphrased exposure and pretraining excluded.",
+  "hits": []
+}

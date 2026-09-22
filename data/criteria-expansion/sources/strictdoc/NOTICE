@@ -1,0 +1,32 @@
+NOTICE file for the StrictDoc project, revision 2026-06-06
+==========================================================
+
+Purpose
+-------
+
+StrictDoc is open-source software for technical documentation and requirements management.
+
+Origin
+------
+
+This project is developed by Stanislav Pankevich and Maryna Balioura.
+For more information, please visit https://github.com/strictdoc-project/strictdoc.
+
+License
+-------
+
+This project is licensed under the Apache License, Version 2.0. Please see the
+LICENSE file for more information.
+
+Contact
+-------
+
+Stanislav Pankevich s.pankevich@gmail.com, Maryna Balioura mettta@gmail.com
+
+Modifications
+-------------
+
+If you make modifications to this project, please document them in this NOTICE
+file and clearly mark them as such. The suggested format is as follows:
+
+[date of modification] [affected file or folder] [description of modification]

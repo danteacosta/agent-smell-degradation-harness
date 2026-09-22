@@ -1,0 +1,2582 @@
+{
+  "status": "bounded negative search does not establish held-out status",
+  "files_examined": 1006,
+  "eligible_string_values_examined": 403105,
+  "method": "JSON/JSONL under private-research-evidence, files <=20MB, string values <=12000chars; source locator IDs for StrictDoc/CaSS, full exact A for TodoMVC/RealWorld. Archives, text files, longer strings, other directories, external history, paraphrased exposure and pretraining excluded.",
+  "hits": [
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithfulness-revision-20260906.json",
+      "json_path": "/revisions/3/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithfulness-revision-20260906.json",
+      "json_path": "/revisions/5/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/4/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/20/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/32/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/40/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/43/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/46/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/53/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/58/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/64/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/87/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/92/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/100/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/102/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/115/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/117/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/121/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/127/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/142/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/161/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/225/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/258/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/259/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/278/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/284/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/289/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/296/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/317/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/318/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/324/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/345/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/363/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/371/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/379/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/384/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/428/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/448/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/458/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/459/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/466/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-authorized-20260906/launch.json",
+      "json_path": "/trajectories/475/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "qualified-evidence-20260907-plan/approved-plan.json",
+      "json_path": "/cases/6/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "qualified-evidence-20260907-plan/approved-plan.json",
+      "json_path": "/cases/7/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "qualified-evidence-20260907-plan/approved-plan.json",
+      "json_path": "/cases/8/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "qualified-evidence-20260907-plan/approved-plan.json",
+      "json_path": "/cases/9/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "qualified-evidence-20260907-plan/approved-plan.json",
+      "json_path": "/cases/10/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "qualified-evidence-20260907-plan/approved-plan.json",
+      "json_path": "/cases/11/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/candidates.json",
+      "json_path": "/18/provenance/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/candidates.json",
+      "json_path": "/18/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/candidates.json",
+      "json_path": "/18/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/candidates.json",
+      "json_path": "/22/provenance/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/candidates.json",
+      "json_path": "/22/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/candidates.json",
+      "json_path": "/22/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/17/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/21/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/39/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/43/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/60/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/64/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/80/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/84/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/99/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/103/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/117/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/121/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/134/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/138/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/150/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/154/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/165/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/169/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/179/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/183/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/192/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/196/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/204/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/208/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/215/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/219/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/225/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/229/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/234/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/238/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/242/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/246/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/249/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/253/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/255/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/259/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/261/left",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/262/left",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/263/left",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/264/left",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/264/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/265/left",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/268/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/271/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/273/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/near-clone-screening.json",
+      "json_path": "/275/left",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/control-seeds.json",
+      "json_path": "/3/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906/control-seeds.json",
+      "json_path": "/3/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/control-seeds.json",
+      "json_path": "/5/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906/control-seeds.json",
+      "json_path": "/5/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/corpus-candidates.json",
+      "json_path": "/records/18/provenance/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/corpus-candidates.json",
+      "json_path": "/records/18/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/corpus-candidates.json",
+      "json_path": "/records/18/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/corpus-candidates.json",
+      "json_path": "/records/22/provenance/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/corpus-candidates.json",
+      "json_path": "/records/22/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/corpus-candidates.json",
+      "json_path": "/records/22/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/15/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/15/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/16/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/16/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/17/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/17/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/18/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/18/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/19/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/19/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/25/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/25/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/26/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/26/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/27/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/27/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/28/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/28/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/29/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/control-oracles.json",
+      "json_path": "/cases/29/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/reference-constraints.json",
+      "json_path": "/records/18/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/reference-constraints.json",
+      "json_path": "/records/22/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/control-seeds.json",
+      "json_path": "/3/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906-v2/control-seeds.json",
+      "json_path": "/3/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/control-seeds.json",
+      "json_path": "/5/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906-v2/control-seeds.json",
+      "json_path": "/5/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-offline-final/plan.json",
+      "json_path": "/cases/6/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-offline-final/plan.json",
+      "json_path": "/cases/7/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-offline-final/plan.json",
+      "json_path": "/cases/8/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-offline-final/plan.json",
+      "json_path": "/cases/9/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-offline-final/plan.json",
+      "json_path": "/cases/10/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-offline-final/plan.json",
+      "json_path": "/cases/11/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/corpus-candidates.json",
+      "json_path": "/records/18/provenance/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/corpus-candidates.json",
+      "json_path": "/records/18/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/corpus-candidates.json",
+      "json_path": "/records/18/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/corpus-candidates.json",
+      "json_path": "/records/22/provenance/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/corpus-candidates.json",
+      "json_path": "/records/22/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/corpus-candidates.json",
+      "json_path": "/records/22/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/15/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/15/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/16/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/16/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/17/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/17/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/18/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/18/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/19/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/19/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/25/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/25/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/26/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/26/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/27/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/27/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/28/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/28/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/29/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/control-oracles.json",
+      "json_path": "/cases/29/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/reference-constraints.json",
+      "json_path": "/records/18/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/reference-constraints.json",
+      "json_path": "/records/22/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/control-seeds.json",
+      "json_path": "/3/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-frozen-20260906/control-seeds.json",
+      "json_path": "/3/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/control-seeds.json",
+      "json_path": "/5/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-frozen-20260906/control-seeds.json",
+      "json_path": "/5/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/63/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/69/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/86/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/138/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/161/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/173/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/190/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/196/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/203/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/206/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/209/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/217/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/218/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/220/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/230/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/241/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/249/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/288/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/300/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/305/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/314/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/316/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/319/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/320/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/326/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/345/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/363/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/364/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/403/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/413/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/419/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/421/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/443/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/445/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/448/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/449/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/452/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/453/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/474/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/launch.json",
+      "json_path": "/trajectories/479/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/admission.json",
+      "json_path": "/control_oracle_dispositions/3/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/admission.json",
+      "json_path": "/control_oracle_dispositions/5/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/admission.json",
+      "json_path": "/records/18/independence_disposition",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/admission.json",
+      "json_path": "/records/18/intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-source-faithful-20260906/admission.json",
+      "json_path": "/records/18/source_revision_evidence",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/admission.json",
+      "json_path": "/records/22/independence_disposition",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/admission.json",
+      "json_path": "/records/22/intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-source-faithful-20260906/admission.json",
+      "json_path": "/records/22/source_revision_evidence",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/corpus-candidates.json",
+      "json_path": "/records/18/provenance/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/corpus-candidates.json",
+      "json_path": "/records/18/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/corpus-candidates.json",
+      "json_path": "/records/18/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/corpus-candidates.json",
+      "json_path": "/records/22/provenance/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/corpus-candidates.json",
+      "json_path": "/records/22/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/corpus-candidates.json",
+      "json_path": "/records/22/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/15/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/15/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/16/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/16/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/17/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/17/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/18/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/18/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/19/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/19/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/25/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/25/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/26/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/26/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/27/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/27/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/28/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/28/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/29/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/control-oracles.json",
+      "json_path": "/cases/29/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/reference-constraints.json",
+      "json_path": "/records/18/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/reference-constraints.json",
+      "json_path": "/records/22/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/control-seeds.json",
+      "json_path": "/3/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-20260906/control-seeds.json",
+      "json_path": "/3/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/control-seeds.json",
+      "json_path": "/5/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-20260906/control-seeds.json",
+      "json_path": "/5/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-live/manifest.json",
+      "json_path": "/plan/cases/8/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-live/manifest.json",
+      "json_path": "/plan/cases/9/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-live/manifest.json",
+      "json_path": "/plan/cases/10/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-live/manifest.json",
+      "json_path": "/plan/cases/11/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-live/manifest.json",
+      "json_path": "/plan/cases/12/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-live/manifest.json",
+      "json_path": "/plan/cases/13/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-live/manifest.json",
+      "json_path": "/plan/cases/14/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-live/manifest.json",
+      "json_path": "/plan/cases/15/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-live/manifest.json",
+      "json_path": "/plan/supplements/1/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/24/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/25/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/26/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/27/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/28/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/29/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/30/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/31/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/32/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/33/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/34/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/35/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/36/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/37/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/38/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/39/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/40/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/41/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/42/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/43/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/44/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/45/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/46/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/posthoc-error-audit.json",
+      "json_path": "/details/47/source_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/manifest.json",
+      "json_path": "/cases/6/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/manifest.json",
+      "json_path": "/cases/7/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/manifest.json",
+      "json_path": "/cases/8/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/manifest.json",
+      "json_path": "/cases/9/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/manifest.json",
+      "json_path": "/cases/10/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/manifest.json",
+      "json_path": "/cases/11/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/manifest.json",
+      "json_path": "/seeds/1/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "scoped-judge-study-20260907/manifest.json",
+      "json_path": "/seeds/1/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-live/manifest.json",
+      "json_path": "/plan/cases/6/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-live/manifest.json",
+      "json_path": "/plan/cases/7/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-live/manifest.json",
+      "json_path": "/plan/cases/8/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-live/manifest.json",
+      "json_path": "/plan/cases/9/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-live/manifest.json",
+      "json_path": "/plan/cases/10/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-live/manifest.json",
+      "json_path": "/plan/cases/11/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-offline/plan.json",
+      "json_path": "/cases/6/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-offline/plan.json",
+      "json_path": "/cases/7/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-offline/plan.json",
+      "json_path": "/cases/8/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-offline/plan.json",
+      "json_path": "/cases/9/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-offline/plan.json",
+      "json_path": "/cases/10/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "addressed-comparison-20260907-offline/plan.json",
+      "json_path": "/cases/11/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/corpus-candidates.json",
+      "json_path": "/records/18/provenance/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/corpus-candidates.json",
+      "json_path": "/records/18/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/corpus-candidates.json",
+      "json_path": "/records/18/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/corpus-candidates.json",
+      "json_path": "/records/22/provenance/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/corpus-candidates.json",
+      "json_path": "/records/22/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/corpus-candidates.json",
+      "json_path": "/records/22/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/15/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/15/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/16/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/16/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/17/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/17/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/18/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/18/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/19/oracle/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/19/oracle/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/25/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/25/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/26/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/26/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/27/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/27/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/28/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/28/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/29/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/control-oracles.json",
+      "json_path": "/cases/29/oracle/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/reference-constraints.json",
+      "json_path": "/records/18/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/reference-constraints.json",
+      "json_path": "/records/22/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/control-seeds.json",
+      "json_path": "/3/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-preparation-source-faithful-20260906/control-seeds.json",
+      "json_path": "/3/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/control-seeds.json",
+      "json_path": "/5/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-preparation-source-faithful-20260906/control-seeds.json",
+      "json_path": "/5/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/16/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/17/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/18/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/19/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/20/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/21/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/22/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/23/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/24/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/25/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/26/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/27/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/28/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/29/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/30/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/parsed-development-evidence.json",
+      "json_path": "/rows/31/expected/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/approved-plan.json",
+      "json_path": "/cases/8/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/approved-plan.json",
+      "json_path": "/cases/9/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/approved-plan.json",
+      "json_path": "/cases/10/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/approved-plan.json",
+      "json_path": "/cases/11/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/approved-plan.json",
+      "json_path": "/cases/12/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/approved-plan.json",
+      "json_path": "/cases/13/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/approved-plan.json",
+      "json_path": "/cases/14/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/approved-plan.json",
+      "json_path": "/cases/15/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/approved-plan.json",
+      "json_path": "/supplements/1/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "classified-study-20260908-inputs/reviewed-supplements.json",
+      "json_path": "/1/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "qualified-evidence-20260907-live/manifest.json",
+      "json_path": "/plan/cases/6/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "qualified-evidence-20260907-live/manifest.json",
+      "json_path": "/plan/cases/7/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "qualified-evidence-20260907-live/manifest.json",
+      "json_path": "/plan/cases/8/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "qualified-evidence-20260907-live/manifest.json",
+      "json_path": "/plan/cases/9/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "qualified-evidence-20260907-live/manifest.json",
+      "json_path": "/plan/cases/10/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "qualified-evidence-20260907-live/manifest.json",
+      "json_path": "/plan/cases/11/oracle/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/candidates.json",
+      "json_path": "/18/provenance/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/candidates.json",
+      "json_path": "/18/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/candidates.json",
+      "json_path": "/18/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/candidates.json",
+      "json_path": "/22/provenance/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/candidates.json",
+      "json_path": "/22/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/candidates.json",
+      "json_path": "/22/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/17/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/21/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/39/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/43/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/60/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/64/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/80/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/84/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/99/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/103/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/117/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/121/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/134/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/138/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/150/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/154/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/165/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/169/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/179/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/183/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/192/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/196/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/204/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/208/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/215/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/219/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/225/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/229/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/234/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/238/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/242/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/246/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/249/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/253/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/255/right",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/259/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/261/left",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/262/left",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/263/left",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/264/left",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/264/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/265/left",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/268/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/271/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/273/right",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/near-clone-screening.json",
+      "json_path": "/275/left",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/control-seeds.json",
+      "json_path": "/3/source_intent_id",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-151",
+      "file": "pilot-curation-inputs-20260906-v2/control-seeds.json",
+      "json_path": "/3/source_locator",
+      "needle": "SDOC-SRS-151"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/control-seeds.json",
+      "json_path": "/5/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "pilot-curation-inputs-20260906-v2/control-seeds.json",
+      "json_path": "/5/source_locator",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "advisor-meeting-20260907/scoped-inputs/seeds.json",
+      "json_path": "/1/source_intent_id",
+      "needle": "SDOC-SRS-125"
+    },
+    {
+      "case_id": "strictdoc-srs-125",
+      "file": "advisor-meeting-20260907/scoped-inputs/seeds.json",
+      "json_path": "/1/source_locator",
+      "needle": "SDOC-SRS-125"
+    }
+  ]
+}

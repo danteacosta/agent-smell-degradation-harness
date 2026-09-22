@@ -146,3 +146,7 @@ they cannot be inferred from API cost or regression-test counts.
 The scientific opportunity is to measure the boundary of reliable diagnosis,
 including where failures remain silent. That result can inform a product even
 if the study finds limits on autonomous semantic evaluation.
+
+## 12-source pilot delivery
+
+The exploratory expansion is finalized with 216 generation attempts and a protocol-stopped, incomplete judge phase. See [audited results](criteria-expansion-results-20260921.md). Any further collection requires a separately frozen successor protocol; the original packet must not be resumed or replaced. Human validation and broader sampling remain necessary for confirmatory claims.
