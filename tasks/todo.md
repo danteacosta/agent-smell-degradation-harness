@@ -363,3 +363,18 @@ Plan: `docs/plans/2026-09-21-criteria-expansion.md`.
 - [ ] Applicable tests, review, build, exact-head CI and integration.
 
 Plan: `docs/plans/2026-09-22-criteria-code-chain.md`.
+
+## 2026-09-22 behavioral expansion preparation
+
+- [x] Recheck all 12 source excerpts, license/source hashes and exact omissions.
+- [x] Record eight candidate behavioral contracts and four explicit deferrals.
+- [x] Specify direct-code design, prior exposure, non-target checks, missingness and project weighting.
+- [ ] Resolve linked API/KBAC/encryption contracts and audit target leakage.
+- [ ] Author and independently qualify browser/integration oracles and controls. TodoMVC Mark all has eleven local controls qualified and independently reviewed; other seven cases pending.
+- [ ] Freeze eligible cohort, exact prompts/runtime/schedule and capacity before new collection.
+- [ ] Collect once, independently recompute, publish results and update Drive/slides.
+
+Behavioral expansion analysis module:
+- [x] State scheduling, denominator and missingness contracts before code.
+- [x] Test-first schedule and analysis implementation with synthetic observations.
+- [ ] Verify focused checks, code/method review and CI.

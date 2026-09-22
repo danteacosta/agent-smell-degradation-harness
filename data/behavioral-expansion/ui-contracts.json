@@ -1,0 +1,69 @@
+{
+  "schema_version": "behavioral-expansion-ui-contracts/v1",
+  "status": "design_only_not_qualified_or_frozen",
+  "source_corpus": "data/criteria-expansion/corpus.json",
+  "generator_calls": 0,
+  "cases": [
+    {
+      "intent_id": "strictdoc-srs-97",
+      "source_locator": "SDOC-SRS-97 STATEMENT",
+      "target_assertion_id": "generation_date_visible",
+      "public_interface": [
+        "Standalone browser statistics view",
+        "window.projectStatistics supplies title, revision, documents, requirements, statuses and TBD/TBC data, but no date or time field",
+        "Ordinary browser Date API"
+      ],
+      "hidden_fixture": [
+        "Two fixed UTC wall-clock values, chosen before collection",
+        "Distinct non-date title, revision and count values"
+      ],
+      "target_observation": "A visible calendar date matches each hidden fixture clock; equivalent date formats are accepted",
+      "non_target_assertion_ids": [
+        "project_title_visible",
+        "git_revision_visible",
+        "document_total_visible",
+        "requirement_total_visible",
+        "status_breakdown_visible",
+        "tbd_tbc_total_visible"
+      ],
+      "valid_controls": ["ISO date rendering", "Localized date rendering"],
+      "target_mutants": ["Date omitted", "Wrong calendar date", "Date hidden from user", "Hard-coded first clock date"],
+      "non_target_mutants": ["Wrong revision", "Wrong count"],
+      "admission_issue": "Independent review must accept page creation as the generation event and adjudicate relative date words before freeze"
+    },
+    {
+      "intent_id": "todomvc-mark-all",
+      "source_locator": "Functionality / Mark all as complete",
+      "target_assertion_id": "clear_master_after_clear_completed",
+      "public_interface": [
+        "Standalone browser page with #toggle-all checkbox, #clear-completed button and #todo-list direct li records",
+        "Each todo row has one individual checkbox and a visible label",
+        "Two distinct active todos are supplied initially"
+      ],
+      "hidden_fixture": ["Two unique item titles; clean context per scenario"],
+      "target_observation": "After selecting both via master and clearing completed, no completed item remains and any still-present master has checked=false; removed master is valid",
+      "non_target_assertion_ids": ["master_sets_items", "master_tracks_individuals"],
+      "valid_controls": ["Explicit state reset", "Derived state with nonempty-all-completed rule"],
+      "target_mutants": ["Still-present master remains checked after clear"],
+      "non_target_mutants": ["Single-item synchronization disabled", "Bulk master toggle disabled"],
+      "admission_issue": "Do not require visible geometry of an empty list or treat an unmet checked precondition as target failure"
+    },
+    {
+      "intent_id": "todomvc-persistence",
+      "source_locator": "Functionality / Persistence",
+      "target_assertion_id": "editing_not_restored",
+      "public_interface": [
+        "Standalone vanilla-JavaScript browser page at one fixed origin with localStorage",
+        "input.new-todo accepts Enter and ul.todo-list contains direct li records with checkbox and visible label",
+        "Double-clicking a label exposes an editable input"
+      ],
+      "hidden_fixture": ["Unique item titles; clean origin per scenario; same browser context for pages before and after storage round-trip"],
+      "target_observation": "A second page restores the todo and title but displays no active edit input or active editing state",
+      "non_target_assertion_ids": ["todo_survives_reload", "completed_survives_reload", "local_storage_used"],
+      "valid_controls": ["Stored records omit editing field", "Stored records may carry false edit flag while restoration never activates editing"],
+      "target_mutants": ["Active editing state persisted and restored"],
+      "non_target_mutants": ["Todo dropped on reload", "Completed state dropped on reload"],
+      "admission_issue": "Browser-visible restoration is the target; serialized-byte absence is not established by this oracle"
+    }
+  ]
+}

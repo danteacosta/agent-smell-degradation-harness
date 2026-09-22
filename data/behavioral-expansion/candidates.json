@@ -1,0 +1,151 @@
+{
+  "schema_version": "behavioral-expansion-candidates/v1",
+  "status": "preparation_only_not_frozen",
+  "source_corpus_sha256": "62476aee6ffa1c6615a7ef396f55fcdf6e229a01482f0825384df43e49cf0068",
+  "human_approvals": 0,
+  "provider_calls": 0,
+  "candidate_count": 8,
+  "planned_generations_if_all_qualified": 144,
+  "records": [
+    {
+      "intent_id": "strictdoc-srs-47",
+      "project_id": "strictdoc",
+      "source_sha256": "de4b804342caac0211e5cabfa4dfb91b1e07ebe785bf34ef55de6c4ea60fc28f",
+      "prior_exposure": "criteria-expansion-20260921-v1; source already exposed; not held out",
+      "status": "deferred",
+      "new_behavioral_outputs": 0,
+      "reason": "Development-process testing obligation, not a runtime product behavior; requires a separate repository-change task."
+    },
+    {
+      "intent_id": "strictdoc-srs-97",
+      "project_id": "strictdoc",
+      "source_sha256": "de4b804342caac0211e5cabfa4dfb91b1e07ebe785bf34ef55de6c4ea60fc28f",
+      "prior_exposure": "criteria-expansion-20260921-v1; source already exposed; not held out",
+      "status": "candidate_pending_qualification",
+      "new_behavioral_outputs": 0,
+      "test_layer": "browser",
+      "target_scenario": "Given a fixed project fixture and generation clock, when statistics are displayed, then the generation date is visible and matches that clock. Accept equivalent date representations; do not require a specific label, locale or format.",
+      "non_target_invariants": "Title, revision, document/requirement counts, statuses and TBD/TBC totals remain correct.",
+      "qualification_controls": "Missing date; wrong date; date hidden from the user. Qualify two distinct valid date formats.",
+      "unresolved_contract": "Declare a neutral statistics data interface with no date field. Freeze two hidden browser clocks; independent review must accept view creation as generation event and legitimate localized dates."
+    },
+    {
+      "intent_id": "strictdoc-srs-157",
+      "project_id": "strictdoc",
+      "source_sha256": "de4b804342caac0211e5cabfa4dfb91b1e07ebe785bf34ef55de6c4ea60fc28f",
+      "prior_exposure": "criteria-expansion-20260921-v1; source already exposed; not held out",
+      "status": "deferred",
+      "new_behavioral_outputs": 0,
+      "reason": "Coverage semantics, mapping and visualization acceptance are underspecified for a bounded independent oracle; defer rather than require an arbitrary display."
+    },
+    {
+      "intent_id": "todomvc-new-todo",
+      "project_id": "todomvc",
+      "source_sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+      "prior_exposure": "criteria-expansion-20260921-v1; source already exposed; not held out",
+      "status": "deferred",
+      "new_behavioral_outputs": 0,
+      "reason": "Already measured in the completed focus pilot; historical evidence only, excluded from new-case aggregate."
+    },
+    {
+      "intent_id": "todomvc-mark-all",
+      "project_id": "todomvc",
+      "source_sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+      "prior_exposure": "criteria-expansion-20260921-v1; source already exposed; not held out",
+      "status": "candidate_pending_qualification",
+      "new_behavioral_outputs": 0,
+      "test_layer": "browser",
+      "target_scenario": "Given completed todos and a checked master checkbox, when Clear completed is activated, then completed items are removed and any remaining master checkbox is unchecked. Removal of the master when no todos remain is valid.",
+      "non_target_invariants": "Bulk toggle and synchronization with individual items remain correct.",
+      "qualification_controls": "Master state remains checked after clearing; individual toggle fails to synchronize. Qualify derived-state and explicit-state correct implementations.",
+      "unresolved_contract": "Shared selectors must not prescribe the reset logic. Define the empty-list observation without requiring visible empty-list geometry."
+    },
+    {
+      "intent_id": "todomvc-persistence",
+      "project_id": "todomvc",
+      "source_sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+      "prior_exposure": "criteria-expansion-20260921-v1; source already exposed; not held out",
+      "status": "candidate_pending_qualification",
+      "new_behavioral_outputs": 0,
+      "test_layer": "browser",
+      "target_scenario": "Given a persisted todo currently being edited, when a new page context loads the same storage, then the todo is restored without active editing mode.",
+      "non_target_invariants": "Todos persist dynamically; title and completed state survive reload. Conditional framework/key preferences stay conditional.",
+      "qualification_controls": "Editing mode survives reload; all todos lost on reload. Qualify storage that omits editing and storage that records a false editing flag.",
+      "unresolved_contract": "Declare how editing is entered and observed, without telling the generator what must persist. Do not require a specific internal storage schema beyond the source."
+    },
+    {
+      "intent_id": "realworld-list-articles",
+      "project_id": "realworld",
+      "source_sha256": "b1aecb6b88c7e7e75b3c7364abbbae4c911ee87bb2841ca486e36db16c6408e7",
+      "prior_exposure": "criteria-expansion-20260921-v1; source already exposed; not held out",
+      "status": "candidate_pending_qualification",
+      "new_behavioral_outputs": 0,
+      "test_layer": "integration",
+      "target_scenario": "Given distinct timestamps and more than 20 articles, when offset is omitted then the first page starts at zero; when a nonzero offset and bounded limit are supplied then the returned slice is correct.",
+      "non_target_invariants": "Recent-first ordering, limit default 20, tag/author/favorited filters and optional authentication.",
+      "qualification_controls": "Offset ignored; nonzero default; sorting after slicing. Qualify two different backing-store implementations.",
+      "unresolved_contract": "Retrieve and pin the linked response schema before fixture design. Do not invent malformed/negative offset policy as a source obligation."
+    },
+    {
+      "intent_id": "realworld-follow-user",
+      "project_id": "realworld",
+      "source_sha256": "b1aecb6b88c7e7e75b3c7364abbbae4c911ee87bb2841ca486e36db16c6408e7",
+      "prior_exposure": "criteria-expansion-20260921-v1; source already exposed; not held out",
+      "status": "candidate_pending_qualification",
+      "new_behavioral_outputs": 0,
+      "test_layer": "integration",
+      "target_scenario": "Given an authenticated user and an existing target username, when POST follow is sent with an empty body, then it succeeds and returns the target Profile.",
+      "non_target_invariants": "Authentication required and response conforms to the pinned Profile contract.",
+      "qualification_controls": "Mutant requiring extra input fails absent-body request; anonymous follow fails authorization control. An explicit empty JSON body may be accepted or rejected: do not require it. Confirm Profile wrapper from pinned schema.",
+      "unresolved_contract": "Pin Profile/authentication contracts. Do not equate no additional required parameters with a prohibition on optional parameters."
+    },
+    {
+      "intent_id": "realworld-add-comment",
+      "project_id": "realworld",
+      "source_sha256": "b1aecb6b88c7e7e75b3c7364abbbae4c911ee87bb2841ca486e36db16c6408e7",
+      "prior_exposure": "criteria-expansion-20260921-v1; source already exposed; not held out",
+      "status": "candidate_pending_qualification",
+      "new_behavioral_outputs": 0,
+      "test_layer": "integration",
+      "target_scenario": "Given an existing article and a valid body, when the request has no authentication then no comment is created; with valid authentication it creates and returns the comment.",
+      "non_target_invariants": "Required body and created Comment response.",
+      "qualification_controls": "Creates an anonymous comment; rejects valid authenticated requests; permits missing required body.",
+      "unresolved_contract": "Pin response/authentication references. Test authorization outcome and unchanged storage; do not invent exact rejection status from the excerpt alone."
+    },
+    {
+      "intent_id": "cass-idata-007",
+      "project_id": "CASS",
+      "source_sha256": "937b1f4ffb35548c4cbb7332e212ae5d52331b9d1ed9c464c0773411421485ce",
+      "prior_exposure": "criteria-expansion-20260921-v1; source already exposed; not held out",
+      "status": "candidate_pending_qualification",
+      "new_behavioral_outputs": 0,
+      "test_layer": "integration",
+      "target_scenario": "Given an assertion containing numeric confidence, when stored and read through the declared interface, then its numeric confidence is preserved.",
+      "non_target_invariants": "Subject, agent, competency and evidence support; individual encryption of subject and agent with reader public keys.",
+      "qualification_controls": "Drops confidence; changes its value or type; stores protected fields unencrypted.",
+      "unresolved_contract": "Support does not imply mandatory confidence or a [0,1] bound. Freeze encryption/round-trip contract and qualify alternate representations before admission."
+    },
+    {
+      "intent_id": "cass-data-011",
+      "project_id": "CASS",
+      "source_sha256": "937b1f4ffb35548c4cbb7332e212ae5d52331b9d1ed9c464c0773411421485ce",
+      "prior_exposure": "criteria-expansion-20260921-v1; source already exposed; not held out",
+      "status": "deferred",
+      "new_behavioral_outputs": 0,
+      "reason": "Uniform search across arbitrary JSON-LD types is a broad quantified contract; a few fixtures would overstate tested coverage. Separate scope needed."
+    },
+    {
+      "intent_id": "cass-batch-002",
+      "project_id": "CASS",
+      "source_sha256": "937b1f4ffb35548c4cbb7332e212ae5d52331b9d1ed9c464c0773411421485ce",
+      "prior_exposure": "criteria-expansion-20260921-v1; source already exposed; not held out",
+      "status": "candidate_pending_qualification",
+      "new_behavioral_outputs": 0,
+      "test_layer": "integration",
+      "target_scenario": "Given permitted and denied objects with different access rules, when multiPut processes the batch, then no object lacking permission is stored.",
+      "non_target_invariants": "Array input and the reported successful-storage count match actual stored objects. Given an all-permitted valid batch, all objects are stored and the returned count equals its length.",
+      "qualification_controls": "Checks only the first object; bypasses all permission checks; reports an incorrect count. Reject-all implementation that stores nothing and returns zero must fail the successful-storage control.",
+      "unresolved_contract": "Pin KBAC semantics and caller identity. Determine partial success versus atomic rejection from source before requiring either; do not silently choose one."
+    }
+  ]
+}

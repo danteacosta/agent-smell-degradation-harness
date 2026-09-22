@@ -1,0 +1,23 @@
+<!doctype html><meta charset="utf-8"><title>Todos</title>
+<input id="toggle-all" type="checkbox"><button id="clear-completed">Clear completed</button><ul id="todo-list"></ul>
+<script>
+let todos=window.initialTodos.map(todo=>({...todo}));
+let masterState=false;
+const master=document.getElementById('toggle-all');
+const clear=document.getElementById('clear-completed');
+const list=document.getElementById('todo-list');
+function render(){
+  list.replaceChildren();
+  for(const todo of todos){
+    const row=document.createElement('li');
+    const check=document.createElement('input');check.type='checkbox';check.checked=todo.completed;
+    check.onchange=()=>{todo.completed=check.checked;masterState=todos.length>0&&todos.every(item=>item.completed);master.checked=masterState;};
+    const label=document.createElement('label');label.textContent=todo.title;
+    row.append(check,label);list.append(row);
+  }
+  master.checked=masterState;
+}
+master.onchange=()=>{masterState=master.checked;todos.forEach(todo=>todo.completed=masterState);render();};
+clear.onclick=()=>{todos=todos.filter(todo=>!todo.completed);render();};
+render();
+</script>
