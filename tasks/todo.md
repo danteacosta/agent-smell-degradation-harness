@@ -13,8 +13,10 @@ historical failed studies or release the confirmatory cohort.
 - [x] Generate nine artifacts once; all satisfy the JSON output contract.
 - [x] Complete three isolated judgments per valid artifact and compute fixed consensus.
 - [x] Verify receipts and publish every category, missingness and disagreement.
-- [ ] Reconcile current status, empirical synthesis, Drive, slides and exports.
-- [ ] Complete independent review, exact-head CI and merge.
+- [x] Reconcile current status, empirical synthesis, Drive, slides and exports.
+- [x] Complete independent review and CI submission; reviewed code passed six checks
+      (1,639 Linux tests, nine subtests, eight container checks and smoke).
+      Final-head integration state is tracked in [PR #65](https://github.com/danteacosta/agent-smell-degradation-harness/pull/65).
 
 ## Autonomous offline preparation — 2026-09-21
 

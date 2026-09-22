@@ -96,3 +96,16 @@ subtests passed, with 12 skips and four OS resource-limit checks reserved for
 Linux CI. The full local attempt reproduced those four known macOS preexec
 failures. Wheel/sdist builds and compilation passed. Independent code review
 found no remaining P1/P2 issue after correcting bounds for unanimous `unclear`.
+
+## Delivery verification
+
+The reviewed implementation passed all six GitHub checks: 1,639 Linux tests,
+three skips and nine subtests; eight separate container-boundary tests; and the
+behavioral smoke. The final integration state is recorded in
+[PR #65](https://github.com/danteacosta/agent-smell-degradation-harness/pull/65).
+The operational report and proposal were updated with native readback; prior
+report blocks were preserved. Both decks retain original evidence, corrected
+historical speaker notes and a new consensus slide with auxiliary limitations.
+The 21-slide visual deck and 22-slide meeting deck were rendered and inspected;
+PowerPoint exports preserve the slide counts and notes. No screenshot or video
+from a prior experiment was modified.
