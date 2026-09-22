@@ -120,6 +120,8 @@ def proof(tmp_path,monkeypatch):
                 'cases':[{'id':i,'status':'failed' if i in failures else 'passed'} for i in ASSERTION_IDS]}
         receipt={'image':image,'app_sha256':apphash,'returncode':int(bool(failures)),
                  'timed_out':False,'category':category}
+        if category=='interface_error':
+            report['status']='interface_error';receipt['returncode']=2
         m.write(path/'executor.json',receipt); m.write(path/'report.json',report)
         m.write(path/'initial-focus.png',b'\x89PNG\r\n\x1a\nfixture')
         cases.append({'id':name,'expected':category,'observed':category,'evidence_dir':str(path),
@@ -251,3 +253,10 @@ def test_qualification_wrong_non_target_failure_cannot_qualify(tmp_path,monkeypa
     report.write_text(json.dumps(content));case['report_sha256']=m.digest(report.read_bytes())
     q.write_text(json.dumps(value))
     with pytest.raises(ValueError,match='assertion'):m.verify_qualification(q)
+
+
+def test_missing_label_control_is_required_as_infrastructure_not_defect():
+    m=module()
+    assert m.QUALIFICATION_CASES.get('control-interface-missing-label')=='interface_error'
+    assert m.QUALIFICATION_FAILURES.get('control-interface-missing-label')==[]
+    assert 'eval/fixtures/focus-chain/control-interface-missing-label.html' in m.RUNTIME_FILES

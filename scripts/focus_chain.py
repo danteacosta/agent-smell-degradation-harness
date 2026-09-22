@@ -118,13 +118,14 @@ QUALIFICATION_CASES = {'reference-autofocus': 'pass', 'reference-imperative': 'p
     'mutant-no-focus': 'target_only_failure', 'mutant-no-clear': 'non_target_only_failure',
     'control-page-tamper': 'target_only_failure',
     'reference-formatted-labels': 'pass', 'mutant-hidden-labels': 'non_target_only_failure',
-    'mutant-no-trim': 'non_target_only_failure'}
+    'mutant-no-trim': 'non_target_only_failure', 'control-interface-missing-label': 'interface_error'}
 QUALIFICATION_FAILURES = {
     'reference-autofocus': [], 'reference-imperative': [], 'reference-formatted-labels': [],
     'mutant-no-focus': ['initial_focus'], 'control-page-tamper': ['initial_focus'],
     'mutant-no-clear': ['input_cleared'],
     'mutant-hidden-labels': ['enter_append', 'trimmed_title'],
-    'mutant-no-trim': ['trimmed_title', 'whitespace_rejected']}
+    'mutant-no-trim': ['trimmed_title', 'whitespace_rejected'],
+    'control-interface-missing-label': []}
 RUNTIME_FILES = ('eval/focus_chain_executor.py',) + tuple(
     'eval/fixtures/focus-chain/'+name for name in
     ('Dockerfile', 'runner.cjs', 'package.json', 'package-lock.json', 'README.md', 'qualify.py',
