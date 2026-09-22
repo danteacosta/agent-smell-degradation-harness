@@ -1,0 +1,3 @@
+
+# Preserve byte-exact third-party source/license snapshots and their hashes.
+data/criteria-expansion/sources/** -text -whitespace

@@ -27,12 +27,23 @@ inferred. This is exploratory H1 preparation, not the confirmatory H1/H2 study.
   Serialize judge inputs by allowlist; target markers are excluded even if the
   condition can sometimes be inferred semantically. No debate/repair round.
 - Three calibration calls on eight authored fixtures precede generation. The
-  fixtures cover explicit support, omission, paraphrase, generic text, negation,
-  contradiction, uncertainty-only mention and distractor additions. All expected
+  fixtures cover explicit support, omission, paraphrase, generic text, signed
+  negative obligations and their opposite, contradiction, conditional/partial
+  coverage and uncertainty-only mention (some fixtures exercise multiple cases). All expected
   obligation labels and literal quotes must pass; otherwise stop without tuning.
 - Primary labels require 3/3 agreement on supported/absent/unclear; unresolved
   disagreement and incomplete votes stay unresolved. 2/3 majority is sensitivity.
   Only criteria, not uncertainty questions, establish obligation coverage.
+  Labels compare the signed source obligation: preserving a prohibition can be
+  supported; imposing its opposite is absent, and contradictory statements are
+  unclear. Partial compound-clause coverage is unclear. Preserve explicit
+  operative conditions and polarity. Optional implementation preferences and
+  illustrative examples need not be repeated for supported coverage. Promoting
+  a preference/example into a mandatory implementation/value is an unsupported
+  addition, scored separately from operative coverage. Genuine contradictory
+  behavior is unclear; only the opposite policy is absent. Targets are source clauses/categories,
+  not necessarily single atomic propositions. References to external response
+  schemas remain in all applicable variants but are not fetched for scoring.
 - Maximum observable CLI invocations 867 = 3 calibration + 216 generation + 648 judge. Bounded four
   concurrent calls; fresh isolated contexts. Exactly one attempt per call slot,
   no orchestrator retry, output repair, replacement, or API fallback. The CLI may
@@ -71,6 +82,11 @@ all intents/models/repeats) gives a conditional resampling spread for these four
 purposively selected projects, with no nominal population coverage or p-values.
 Unknown effects retain bounds; bootstrap endpoints must not erase missingness. Provide worst/best-case paired effect bounds across
 all planned observations. Do not pick models, families or exclusions after results.
+The generation instruction explicitly asks not to invent obligations. Thus an
+omitted-condition output can correctly obey its supplied prompt yet lose coverage
+relative to the full source. This experiment measures propagation/recovery of
+missing source obligations under that task instruction; it is not proof of model
+misbehavior, naturally occurring smell prevalence or a universal defect effect.
 No H2 detector training or temporal claim is part of this collection.
 
 ## Implementation plan and ownership
@@ -100,3 +116,14 @@ Build packages in a staging directory, never during custody tests. Review SOLID,
 clean code and provider/privacy boundaries. Retain fresh raw evidence for every
 claim. A runtime/provider failure is an outcome to report, not permission to
 substitute an easier model or requirement.
+
+## Pre-collection verification record
+
+All 12 final A/B/C transformations and source/license hashes were independently
+reviewed by a second assistant before collection. No P1/P2 findings remain after
+clarifying optional implementation preferences and negative/compound obligations.
+Main freshly ran 49 focused tests successfully. The three planned calibration
+batches test category labels and literal citations, not comprehensive correctness
+of auxiliary additions. Full portable software regression is running separately;
+no generator/judge call has occurred at this checkpoint. Source metadata remains
+assistant-reviewed, with zero human approvals.

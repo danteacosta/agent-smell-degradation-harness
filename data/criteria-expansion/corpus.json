@@ -1,0 +1,773 @@
+{
+  "schema_version": 1,
+  "status": "pre_generation_assistant_source_draft",
+  "human_approvals": 0,
+  "records": [
+    {
+      "id": "strictdoc-srs-47",
+      "project_id": "strictdoc",
+      "source": {
+        "url": "https://raw.githubusercontent.com/strictdoc-project/strictdoc/abf7be7daa2a25721a56980b5be15845336ea0b8/docs/strictdoc_21_l2_high_level_requirements.sdoc",
+        "revision": "abf7be7daa2a25721a56980b5be15845336ea0b8",
+        "license": "Apache-2.0",
+        "license_url": "https://raw.githubusercontent.com/strictdoc-project/strictdoc/abf7be7daa2a25721a56980b5be15845336ea0b8/LICENSE",
+        "path": "sources/strictdoc/docs__strictdoc_21_l2_high_level_requirements.sdoc",
+        "sha256": "de4b804342caac0211e5cabfa4dfb91b1e07ebe785bf34ef55de6c4ea60fc28f",
+        "license_path": "sources/strictdoc/LICENSE",
+        "license_sha256": "3392558ba768e0454ed2340433d5b9daf1ef32860368b9bf82b87a441fcd0438",
+        "locator": "SDOC-SRS-47 STATEMENT",
+        "start_char": 62081,
+        "end_char": 62523,
+        "start_line": 2605,
+        "end_line": 2613,
+        "notice_path": "sources/strictdoc/NOTICE",
+        "notice_sha256": "d929e44291248fbf463a8d22201bf958162dbbc2634c1d1eb230f41b6cf3b968"
+      },
+      "variants": {
+        "A": "Every update to the StrictDoc codebase shall be complemented with a\ncorresponding provision of at least one test as follows:\n\n- For web interface: at least one end-to-end test.\n- For command-line interface: at least one black-box integration test.\n- For internal Python functions: at least one unit test.\n\nNOTE: This requirement implies that no modifications to StrictDoc's\nfunctionality can be merged unless accompanied by at least one test.",
+        "B": "Every update to the StrictDoc codebase must include a corresponding test provision: at least one end-to-end test for the web interface, at least one black-box integration test for the command-line interface, and at least one unit test for internal Python functions. This means a change to StrictDoc functionality cannot be merged without at least one test.",
+        "C": "Every update to the StrictDoc codebase shall be complemented with a\ncorresponding provision of at least one test as follows:\n\n- For web interface: at least one end-to-end test.\n- For internal Python functions: at least one unit test.\n\nNOTE: This requirement implies that no modifications to StrictDoc's\nfunctionality can be merged unless accompanied by at least one test."
+      },
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Each update includes a corresponding test provision."
+        },
+        {
+          "id": "o02",
+          "text": "Web interface changes include at least one end-to-end test."
+        },
+        {
+          "id": "o03",
+          "text": "Command-line interface changes include at least one black-box integration test."
+        },
+        {
+          "id": "o04",
+          "text": "Internal Python function changes include at least one unit test."
+        },
+        {
+          "id": "o05",
+          "text": "No functionality change can be merged without at least one test."
+        }
+      ],
+      "target_obligation_id": "o03",
+      "omission": {
+        "start": 177,
+        "end": 248,
+        "text": "- For command-line interface: at least one black-box integration test.\n",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 177
+      },
+      "review": {
+        "status": "assistant_prepared_pending_independent_agent_review",
+        "human_approvals": 0,
+        "label_source": "assistant_authored_source_mapping",
+        "selection": "purposive_before_generation",
+        "scope": "acceptance criteria generation only",
+        "prior_exposure": "Project and full document previously screened; selected-intent bounded exposure audit recorded separately.",
+        "provenance_caveat": "Public project specification; no claim of unknown pretraining exposure."
+      }
+    },
+    {
+      "id": "strictdoc-srs-97",
+      "project_id": "strictdoc",
+      "source": {
+        "url": "https://raw.githubusercontent.com/strictdoc-project/strictdoc/abf7be7daa2a25721a56980b5be15845336ea0b8/docs/strictdoc_21_l2_high_level_requirements.sdoc",
+        "revision": "abf7be7daa2a25721a56980b5be15845336ea0b8",
+        "license": "Apache-2.0",
+        "license_url": "https://raw.githubusercontent.com/strictdoc-project/strictdoc/abf7be7daa2a25721a56980b5be15845336ea0b8/LICENSE",
+        "path": "sources/strictdoc/docs__strictdoc_21_l2_high_level_requirements.sdoc",
+        "sha256": "de4b804342caac0211e5cabfa4dfb91b1e07ebe785bf34ef55de6c4ea60fc28f",
+        "license_path": "sources/strictdoc/LICENSE",
+        "license_sha256": "3392558ba768e0454ed2340433d5b9daf1ef32860368b9bf82b87a441fcd0438",
+        "locator": "SDOC-SRS-97 STATEMENT",
+        "start_char": 31286,
+        "end_char": 31556,
+        "start_line": 1287,
+        "end_line": 1296,
+        "notice_path": "sources/strictdoc/NOTICE",
+        "notice_sha256": "d929e44291248fbf463a8d22201bf958162dbbc2634c1d1eb230f41b6cf3b968"
+      },
+      "variants": {
+        "A": "StrictDoc shall provide a Project Statistics screen that displays the following\nproject information:\n\n- Project title\n- Date of generation\n- Git revision\n- Total documents\n- Total requirements\n- Requirements status breakdown\n- Total number of TBD/TBC found in documents.",
+        "B": "StrictDoc must offer a Project Statistics screen showing the project title, generation date, Git revision, total document count, total requirement count, a breakdown of requirement statuses, and the total number of TBD/TBC occurrences found in documents.",
+        "C": "StrictDoc shall provide a Project Statistics screen that displays the following\nproject information:\n\n- Project title\n- Git revision\n- Total documents\n- Total requirements\n- Requirements status breakdown\n- Total number of TBD/TBC found in documents."
+      },
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Project Statistics screen displays project title."
+        },
+        {
+          "id": "o02",
+          "text": "Project Statistics screen displays date of generation."
+        },
+        {
+          "id": "o03",
+          "text": "Project Statistics screen displays Git revision."
+        },
+        {
+          "id": "o04",
+          "text": "Project Statistics screen displays total documents."
+        },
+        {
+          "id": "o05",
+          "text": "Project Statistics screen displays total requirements."
+        },
+        {
+          "id": "o06",
+          "text": "Project Statistics screen displays requirements status breakdown."
+        },
+        {
+          "id": "o07",
+          "text": "Project Statistics screen displays total TBD/TBC found in documents."
+        }
+      ],
+      "target_obligation_id": "o02",
+      "omission": {
+        "start": 118,
+        "end": 139,
+        "text": "- Date of generation\n",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 118
+      },
+      "review": {
+        "status": "assistant_prepared_pending_independent_agent_review",
+        "human_approvals": 0,
+        "label_source": "assistant_authored_source_mapping",
+        "selection": "purposive_before_generation",
+        "scope": "acceptance criteria generation only",
+        "prior_exposure": "Project and full document previously screened; selected-intent bounded exposure audit recorded separately.",
+        "provenance_caveat": "Public project specification; no claim of unknown pretraining exposure."
+      }
+    },
+    {
+      "id": "strictdoc-srs-157",
+      "project_id": "strictdoc",
+      "source": {
+        "url": "https://raw.githubusercontent.com/strictdoc-project/strictdoc/abf7be7daa2a25721a56980b5be15845336ea0b8/docs/strictdoc_21_l2_high_level_requirements.sdoc",
+        "revision": "abf7be7daa2a25721a56980b5be15845336ea0b8",
+        "license": "Apache-2.0",
+        "license_url": "https://raw.githubusercontent.com/strictdoc-project/strictdoc/abf7be7daa2a25721a56980b5be15845336ea0b8/LICENSE",
+        "path": "sources/strictdoc/docs__strictdoc_21_l2_high_level_requirements.sdoc",
+        "sha256": "de4b804342caac0211e5cabfa4dfb91b1e07ebe785bf34ef55de6c4ea60fc28f",
+        "license_path": "sources/strictdoc/LICENSE",
+        "license_sha256": "3392558ba768e0454ed2340433d5b9daf1ef32860368b9bf82b87a441fcd0438",
+        "locator": "SDOC-SRS-157 STATEMENT",
+        "start_char": 32483,
+        "end_char": 32663,
+        "start_line": 1339,
+        "end_line": 1344,
+        "notice_path": "sources/strictdoc/NOTICE",
+        "notice_sha256": "d929e44291248fbf463a8d22201bf958162dbbc2634c1d1eb230f41b6cf3b968"
+      },
+      "variants": {
+        "A": "StrictDoc shall provide a tree map screen, visualizing the following\ninformation:\n\n- Document tree map\n- Requirements coverage by source code\n- Requirements coverage by test files.",
+        "B": "StrictDoc must provide a tree map screen that visualizes the document tree map, requirements coverage by source code, and requirements coverage by test files.",
+        "C": "StrictDoc shall provide a tree map screen, visualizing the following\ninformation:\n\n- Document tree map\n- Requirements coverage by source code\n"
+      },
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Provide a tree map screen visualizing document tree map."
+        },
+        {
+          "id": "o02",
+          "text": "Tree map screen visualizes requirements coverage by source code."
+        },
+        {
+          "id": "o03",
+          "text": "Tree map screen visualizes requirements coverage by test files."
+        }
+      ],
+      "target_obligation_id": "o03",
+      "omission": {
+        "start": 142,
+        "end": 180,
+        "text": "- Requirements coverage by test files.",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 142
+      },
+      "review": {
+        "status": "assistant_prepared_pending_independent_agent_review",
+        "human_approvals": 0,
+        "label_source": "assistant_authored_source_mapping",
+        "selection": "purposive_before_generation",
+        "scope": "acceptance criteria generation only",
+        "prior_exposure": "Project and full document previously screened; selected-intent bounded exposure audit recorded separately.",
+        "provenance_caveat": "Public project specification; no claim of unknown pretraining exposure."
+      }
+    },
+    {
+      "id": "todomvc-new-todo",
+      "project_id": "todomvc",
+      "source": {
+        "url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/app-spec.md",
+        "revision": "ff43b02e59dfa604386bb382034b2cd07c2bcd8a",
+        "license": "MIT",
+        "license_url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/license.md",
+        "path": "sources/todomvc/app-spec.md",
+        "sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+        "license_path": "sources/todomvc/license.md",
+        "license_sha256": "32238c5c6759b589ea768661b6eb0fcb42449b74d57cdf09928743f2e1eb748d",
+        "locator": "Functionality / New todo",
+        "start_char": 3438,
+        "end_char": 3789,
+        "start_line": 88,
+        "end_line": 88
+      },
+      "variants": {
+        "A": "New todos are entered in the input at the top of the app. The input element should be focused when the page is loaded, preferably by using the `autofocus` input attribute. Pressing Enter creates the todo, appends it to the todo list, and clears the input. Make sure to `.trim()` the input and then check that it's not empty before creating a new todo.",
+        "B": "Users enter new todos through the input at the top of the app. On page load, that input should receive focus, preferably through its autofocus attribute. Pressing Enter creates a todo, adds it to the list, and clears the input. Before creation, trim the input and verify that the trimmed value is nonempty.",
+        "C": "New todos are entered in the input at the top of the app. Pressing Enter creates the todo, appends it to the todo list, and clears the input. Make sure to `.trim()` the input and then check that it's not empty before creating a new todo."
+      },
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Enter new todos in the input at the top of the app."
+        },
+        {
+          "id": "o02",
+          "text": "The input should receive focus when the page loads. The optional autofocus implementation preference is not required for coverage."
+        },
+        {
+          "id": "o03",
+          "text": "Pressing Enter creates the todo and appends it to the todo list."
+        },
+        {
+          "id": "o04",
+          "text": "Clear the input when Enter creates the todo."
+        },
+        {
+          "id": "o05",
+          "text": "Trim input before checking it is nonempty; do not create an empty todo."
+        }
+      ],
+      "target_obligation_id": "o02",
+      "omission": {
+        "start": 58,
+        "end": 172,
+        "text": "The input element should be focused when the page is loaded, preferably by using the `autofocus` input attribute. ",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 58
+      },
+      "review": {
+        "status": "assistant_prepared_pending_independent_agent_review",
+        "human_approvals": 0,
+        "label_source": "assistant_authored_source_mapping",
+        "selection": "purposive_before_generation",
+        "scope": "acceptance criteria generation only",
+        "prior_exposure": "Project and full document previously screened; selected-intent bounded exposure audit recorded separately.",
+        "provenance_caveat": "Public project specification; no claim of unknown pretraining exposure."
+      }
+    },
+    {
+      "id": "todomvc-mark-all",
+      "project_id": "todomvc",
+      "source": {
+        "url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/app-spec.md",
+        "revision": "ff43b02e59dfa604386bb382034b2cd07c2bcd8a",
+        "license": "MIT",
+        "license_url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/license.md",
+        "path": "sources/todomvc/app-spec.md",
+        "sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+        "license_path": "sources/todomvc/license.md",
+        "license_sha256": "32238c5c6759b589ea768661b6eb0fcb42449b74d57cdf09928743f2e1eb748d",
+        "locator": "Functionality / Mark all as complete",
+        "start_char": 3817,
+        "end_char": 4133,
+        "start_line": 92,
+        "end_line": 92
+      },
+      "variants": {
+        "A": "This checkbox toggles all the todos to the same state as itself. Make sure to clear the checked state after the \"Clear completed\" button is clicked. The \"Mark all as complete\" checkbox should also be updated when single todo items are checked/unchecked. Eg. When all the todos are checked it should also get checked.",
+        "B": "The Mark all as complete checkbox sets every todo to match its own state. Clear this checkbox's checked state after Clear completed is clicked. Checking or unchecking an individual todo should also update the checkbox; for example, it should be checked when all todos are checked.",
+        "C": "This checkbox toggles all the todos to the same state as itself. The \"Mark all as complete\" checkbox should also be updated when single todo items are checked/unchecked. Eg. When all the todos are checked it should also get checked."
+      },
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Mark all checkbox toggles all todos to its own state."
+        },
+        {
+          "id": "o02",
+          "text": "Clear the checked state of Mark all after Clear completed is clicked."
+        },
+        {
+          "id": "o03",
+          "text": "Update Mark all when individual todos are checked or unchecked, including checking it when all todos are checked."
+        }
+      ],
+      "target_obligation_id": "o02",
+      "omission": {
+        "start": 65,
+        "end": 149,
+        "text": "Make sure to clear the checked state after the \"Clear completed\" button is clicked. ",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 65
+      },
+      "review": {
+        "status": "assistant_prepared_pending_independent_agent_review",
+        "human_approvals": 0,
+        "label_source": "assistant_authored_source_mapping",
+        "selection": "purposive_before_generation",
+        "scope": "acceptance criteria generation only",
+        "prior_exposure": "Project and full document previously screened; selected-intent bounded exposure audit recorded separately.",
+        "provenance_caveat": "Public project specification; no claim of unknown pretraining exposure."
+      }
+    },
+    {
+      "id": "todomvc-persistence",
+      "project_id": "todomvc",
+      "source": {
+        "url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/app-spec.md",
+        "revision": "ff43b02e59dfa604386bb382034b2cd07c2bcd8a",
+        "license": "MIT",
+        "license_url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/license.md",
+        "path": "sources/todomvc/app-spec.md",
+        "sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+        "license_path": "sources/todomvc/license.md",
+        "license_sha256": "32238c5c6759b589ea768661b6eb0fcb42449b74d57cdf09928743f2e1eb748d",
+        "locator": "Functionality / Persistence",
+        "start_char": 5360,
+        "end_char": 5728,
+        "start_line": 118,
+        "end_line": 118
+      },
+      "variants": {
+        "A": "Your app should dynamically persist the todos to localStorage. If the framework has capabilities for persisting data (e.g. Backbone.sync), use that. Otherwise, use vanilla localStorage. If possible, use the keys `id`, `title`, `completed` for each item. Make sure to use this format for the localStorage name: `todos-[framework]`. Editing mode should not be persisted.",
+        "B": "The app should persist its todos dynamically to localStorage. Use the framework's persistence capabilities, such as Backbone.sync, when available; otherwise use vanilla localStorage. If possible, store each item with the keys id, title, and completed. Name the localStorage entry using todos-[framework]. Editing mode should not be persisted.",
+        "C": "Your app should dynamically persist the todos to localStorage. If the framework has capabilities for persisting data (e.g. Backbone.sync), use that. Otherwise, use vanilla localStorage. If possible, use the keys `id`, `title`, `completed` for each item. Make sure to use this format for the localStorage name: `todos-[framework]`."
+      },
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Dynamically persist todos to localStorage."
+        },
+        {
+          "id": "o02",
+          "text": "Use framework persistence capabilities if available; otherwise vanilla localStorage."
+        },
+        {
+          "id": "o03",
+          "text": "Use id, title, completed item keys if possible; this is conditional."
+        },
+        {
+          "id": "o04",
+          "text": "Use todos-[framework] as localStorage name format."
+        },
+        {
+          "id": "o05",
+          "text": "Do not persist editing mode."
+        }
+      ],
+      "target_obligation_id": "o05",
+      "omission": {
+        "start": 330,
+        "end": 368,
+        "text": " Editing mode should not be persisted.",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 330
+      },
+      "review": {
+        "status": "assistant_prepared_pending_independent_agent_review",
+        "human_approvals": 0,
+        "label_source": "assistant_authored_source_mapping",
+        "selection": "purposive_before_generation",
+        "scope": "acceptance criteria generation only",
+        "prior_exposure": "Project and full document previously screened; selected-intent bounded exposure audit recorded separately.",
+        "provenance_caveat": "Public project specification; no claim of unknown pretraining exposure."
+      }
+    },
+    {
+      "id": "realworld-list-articles",
+      "project_id": "realworld",
+      "source": {
+        "url": "https://raw.githubusercontent.com/realworld-apps/realworld/ebbcdeb8d55b42a3a613c787560498b8ef10003f/docs/src/content/docs/specifications/backend/endpoints.md",
+        "revision": "ebbcdeb8d55b42a3a613c787560498b8ef10003f",
+        "license": "MIT",
+        "license_url": "https://raw.githubusercontent.com/realworld-apps/realworld/ebbcdeb8d55b42a3a613c787560498b8ef10003f/LICENSE",
+        "path": "sources/realworld/docs__src__content__docs__specifications__backend__endpoints.md",
+        "sha256": "b1aecb6b88c7e7e75b3c7364abbbae4c911ee87bb2841ca486e36db16c6408e7",
+        "license_path": "sources/realworld/LICENSE",
+        "license_sha256": "a999311c4ccfecf18b7c7beb7a7a31682bb009839ab3827164fa2f8c333fc9dd",
+        "locator": "List Articles",
+        "start_char": 1933,
+        "end_char": 2471,
+        "start_line": 100,
+        "end_line": 126
+      },
+      "variants": {
+        "A": "`GET /api/articles`\n\nReturns most recent articles globally by default, provide `tag`, `author` or `favorited` query parameter to filter results\n\nQuery Parameters:\n\nFilter by tag:\n\n`?tag=AngularJS`\n\nFilter by author:\n\n`?author=jake`\n\nFavorited by user:\n\n`?favorited=jake`\n\nLimit number of articles (default is 20):\n\n`?limit=20`\n\nOffset/skip number of articles (default is 0):\n\n`?offset=0`\n\nAuthentication optional, will return [multiple articles](/specifications/backend/api-response-format#multiple-articles), ordered by most recent first",
+        "B": "GET /api/articles lists articles globally, newest first by default. The tag, author, and favorited query parameters respectively filter by tag, author, and the user who favorited the articles (examples: tag=AngularJS, author=jake, favorited=jake). The limit query parameter limits the number of articles and defaults to 20. The offset query parameter skips articles and defaults to 0. Authentication is optional. Return [multiple articles](/specifications/backend/api-response-format#multiple-articles), ordered with the most recent first.",
+        "C": "`GET /api/articles`\n\nReturns most recent articles globally by default, provide `tag`, `author` or `favorited` query parameter to filter results\n\nQuery Parameters:\n\nFilter by tag:\n\n`?tag=AngularJS`\n\nFilter by author:\n\n`?author=jake`\n\nFavorited by user:\n\n`?favorited=jake`\n\nLimit number of articles (default is 20):\n\n`?limit=20`\n\nAuthentication optional, will return [multiple articles](/specifications/backend/api-response-format#multiple-articles), ordered by most recent first"
+      },
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "List articles using GET /api/articles."
+        },
+        {
+          "id": "o02",
+          "text": "Default listing is global and ordered most recent first."
+        },
+        {
+          "id": "o03",
+          "text": "Support filtering by tag through tag query parameter."
+        },
+        {
+          "id": "o04",
+          "text": "Support filtering by author through author query parameter."
+        },
+        {
+          "id": "o05",
+          "text": "Support filtering by favoriting user through favorited query parameter."
+        },
+        {
+          "id": "o06",
+          "text": "Support limit query parameter with default 20."
+        },
+        {
+          "id": "o07",
+          "text": "Support offset/skip query parameter with default 0."
+        },
+        {
+          "id": "o08",
+          "text": "Authentication is optional."
+        },
+        {
+          "id": "o09",
+          "text": "Return multiple articles."
+        }
+      ],
+      "target_obligation_id": "o07",
+      "omission": {
+        "start": 328,
+        "end": 389,
+        "text": "Offset/skip number of articles (default is 0):\n\n`?offset=0`\n\n",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 328
+      },
+      "review": {
+        "status": "assistant_prepared_pending_independent_agent_review",
+        "human_approvals": 0,
+        "label_source": "assistant_authored_source_mapping",
+        "selection": "purposive_before_generation",
+        "scope": "acceptance criteria generation only",
+        "prior_exposure": "Project and full document previously screened; selected-intent bounded exposure audit recorded separately.",
+        "provenance_caveat": "Public project specification; no claim of unknown pretraining exposure."
+      }
+    },
+    {
+      "id": "realworld-follow-user",
+      "project_id": "realworld",
+      "source": {
+        "url": "https://raw.githubusercontent.com/realworld-apps/realworld/ebbcdeb8d55b42a3a613c787560498b8ef10003f/docs/src/content/docs/specifications/backend/endpoints.md",
+        "revision": "ebbcdeb8d55b42a3a613c787560498b8ef10003f",
+        "license": "MIT",
+        "license_url": "https://raw.githubusercontent.com/realworld-apps/realworld/ebbcdeb8d55b42a3a613c787560498b8ef10003f/LICENSE",
+        "path": "sources/realworld/docs__src__content__docs__specifications__backend__endpoints.md",
+        "sha256": "b1aecb6b88c7e7e75b3c7364abbbae4c911ee87bb2841ca486e36db16c6408e7",
+        "license_path": "sources/realworld/LICENSE",
+        "license_sha256": "a999311c4ccfecf18b7c7beb7a7a31682bb009839ab3827164fa2f8c333fc9dd",
+        "locator": "Follow user",
+        "start_char": 1547,
+        "end_char": 1718,
+        "start_line": 84,
+        "end_line": 88
+      },
+      "variants": {
+        "A": "`POST /api/profiles/:username/follow`\n\nAuthentication required, returns a [Profile](/specifications/backend/api-response-format#profile)\n\nNo additional parameters required",
+        "B": "Follow a user through POST /api/profiles/:username/follow. Authentication is required, and the response is a [Profile](/specifications/backend/api-response-format#profile). No additional parameters are required.",
+        "C": "`POST /api/profiles/:username/follow`\n\nAuthentication required, returns a [Profile](/specifications/backend/api-response-format#profile)"
+      },
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Follow user through POST /api/profiles/:username/follow."
+        },
+        {
+          "id": "o02",
+          "text": "Authentication is required."
+        },
+        {
+          "id": "o03",
+          "text": "Return a Profile."
+        },
+        {
+          "id": "o04",
+          "text": "No additional parameters are required."
+        }
+      ],
+      "target_obligation_id": "o04",
+      "omission": {
+        "start": 136,
+        "end": 171,
+        "text": "\n\nNo additional parameters required",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 136
+      },
+      "review": {
+        "status": "assistant_prepared_pending_independent_agent_review",
+        "human_approvals": 0,
+        "label_source": "assistant_authored_source_mapping",
+        "selection": "purposive_before_generation",
+        "scope": "acceptance criteria generation only",
+        "prior_exposure": "Project and full document previously screened; selected-intent bounded exposure audit recorded separately.",
+        "provenance_caveat": "Public project specification; no claim of unknown pretraining exposure."
+      }
+    },
+    {
+      "id": "realworld-add-comment",
+      "project_id": "realworld",
+      "source": {
+        "url": "https://raw.githubusercontent.com/realworld-apps/realworld/ebbcdeb8d55b42a3a613c787560498b8ef10003f/docs/src/content/docs/specifications/backend/endpoints.md",
+        "revision": "ebbcdeb8d55b42a3a613c787560498b8ef10003f",
+        "license": "MIT",
+        "license_url": "https://raw.githubusercontent.com/realworld-apps/realworld/ebbcdeb8d55b42a3a613c787560498b8ef10003f/LICENSE",
+        "path": "sources/realworld/docs__src__content__docs__specifications__backend__endpoints.md",
+        "sha256": "b1aecb6b88c7e7e75b3c7364abbbae4c911ee87bb2841ca486e36db16c6408e7",
+        "license_path": "sources/realworld/LICENSE",
+        "license_sha256": "a999311c4ccfecf18b7c7beb7a7a31682bb009839ab3827164fa2f8c333fc9dd",
+        "locator": "Add Comments to an Article",
+        "start_char": 4275,
+        "end_char": 4549,
+        "start_line": 195,
+        "end_line": 209
+      },
+      "variants": {
+        "A": "`POST /api/articles/:slug/comments`\n\nExample request body:\n\n```json\n{\n  \"comment\": {\n    \"body\": \"His name was my name too.\"\n  }\n}\n```\n\nAuthentication required, returns the created [Comment](/specifications/backend/api-response-format#single-comment)\n\nRequired field: `body`",
+        "B": "Add a comment with POST /api/articles/:slug/comments. The request body contains a comment object with a required body field; an example is {\"comment\": {\"body\": \"His name was my name too.\"}}. Authentication is required. Return the newly created [Comment](/specifications/backend/api-response-format#single-comment).",
+        "C": "`POST /api/articles/:slug/comments`\n\nExample request body:\n\n```json\n{\n  \"comment\": {\n    \"body\": \"His name was my name too.\"\n  }\n}\n```\n\nreturns the created [Comment](/specifications/backend/api-response-format#single-comment)\n\nRequired field: `body`"
+      },
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Add comment through POST /api/articles/:slug/comments."
+        },
+        {
+          "id": "o02",
+          "text": "Request contains comment object with required body field; example text is illustrative."
+        },
+        {
+          "id": "o03",
+          "text": "Authentication is required."
+        },
+        {
+          "id": "o04",
+          "text": "Return the created Comment."
+        }
+      ],
+      "target_obligation_id": "o03",
+      "omission": {
+        "start": 136,
+        "end": 161,
+        "text": "Authentication required, ",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 136
+      },
+      "review": {
+        "status": "assistant_prepared_pending_independent_agent_review",
+        "human_approvals": 0,
+        "label_source": "assistant_authored_source_mapping",
+        "selection": "purposive_before_generation",
+        "scope": "acceptance criteria generation only",
+        "prior_exposure": "Project and full document previously screened; selected-intent bounded exposure audit recorded separately.",
+        "provenance_caveat": "Public project specification; no claim of unknown pretraining exposure."
+      }
+    },
+    {
+      "id": "cass-idata-007",
+      "project_id": "CASS",
+      "source": {
+        "url": "https://raw.githubusercontent.com/cassproject/CASS/97fc0939ca3960504ce8b2f51749881543a4038c/REQUIREMENTS.md",
+        "revision": "97fc0939ca3960504ce8b2f51749881543a4038c",
+        "license": "Apache-2.0",
+        "license_url": "https://raw.githubusercontent.com/cassproject/CASS/97fc0939ca3960504ce8b2f51749881543a4038c/LICENSE",
+        "path": "sources/CASS/REQUIREMENTS.md",
+        "sha256": "937b1f4ffb35548c4cbb7332e212ae5d52331b9d1ed9c464c0773411421485ce",
+        "license_path": "sources/CASS/LICENSE",
+        "license_sha256": "7302489454b91cec7fb3afcec3b0a9f4b1abe18203c183ea37d78fd4b5da87dc",
+        "locator": "IDATA-007 requirement table text column",
+        "start_char": 57194,
+        "end_char": 57475,
+        "start_line": 647,
+        "end_line": 647
+      },
+      "variants": {
+        "A": "Assertion objects shall support `subject` (encrypted person reference), `agent` (encrypted asserter reference), `competency` (competency `@id`), `confidence` (numeric), and `evidence` fields. The `subject` and `agent` fields shall be individually encrypted with reader public keys.",
+        "B": "Assertion objects must support subject as an encrypted person reference, agent as an encrypted asserter reference, competency as a competency @id, numeric confidence, and evidence fields. Encrypt subject and agent individually using reader public keys.",
+        "C": "Assertion objects shall support `subject` (encrypted person reference), `agent` (encrypted asserter reference), `competency` (competency `@id`), and `evidence` fields. The `subject` and `agent` fields shall be individually encrypted with reader public keys."
+      },
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Assertion supports subject as encrypted person reference."
+        },
+        {
+          "id": "o02",
+          "text": "Assertion supports agent as encrypted asserter reference."
+        },
+        {
+          "id": "o03",
+          "text": "Assertion supports competency as competency @id."
+        },
+        {
+          "id": "o04",
+          "text": "Assertion supports numeric confidence field."
+        },
+        {
+          "id": "o05",
+          "text": "Assertion supports evidence field."
+        },
+        {
+          "id": "o06",
+          "text": "Encrypt subject and agent fields individually with reader public keys."
+        }
+      ],
+      "target_obligation_id": "o04",
+      "omission": {
+        "start": 145,
+        "end": 169,
+        "text": "`confidence` (numeric), ",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 145
+      },
+      "review": {
+        "status": "assistant_prepared_pending_independent_agent_review",
+        "human_approvals": 0,
+        "label_source": "assistant_authored_source_mapping",
+        "selection": "purposive_before_generation",
+        "scope": "acceptance criteria generation only",
+        "prior_exposure": "Project and full document previously screened; selected-intent bounded exposure audit recorded separately.",
+        "provenance_caveat": "Retrospective, initially auto-generated SRS; upstream document records architect review."
+      }
+    },
+    {
+      "id": "cass-data-011",
+      "project_id": "CASS",
+      "source": {
+        "url": "https://raw.githubusercontent.com/cassproject/CASS/97fc0939ca3960504ce8b2f51749881543a4038c/REQUIREMENTS.md",
+        "revision": "97fc0939ca3960504ce8b2f51749881543a4038c",
+        "license": "Apache-2.0",
+        "license_url": "https://raw.githubusercontent.com/cassproject/CASS/97fc0939ca3960504ce8b2f51749881543a4038c/LICENSE",
+        "path": "sources/CASS/REQUIREMENTS.md",
+        "sha256": "937b1f4ffb35548c4cbb7332e212ae5d52331b9d1ed9c464c0773411421485ce",
+        "license_path": "sources/CASS/LICENSE",
+        "license_sha256": "7302489454b91cec7fb3afcec3b0a9f4b1abe18203c183ea37d78fd4b5da87dc",
+        "locator": "DATA-011 requirement table text column",
+        "start_char": 14296,
+        "end_char": 14537,
+        "start_line": 216,
+        "end_line": 216
+      },
+      "variants": {
+        "A": "The system shall accept and store any valid JSON-LD object regardless of whether a dedicated SDK model class exists for its `@type`. Storage, indexing, search, KBAC enforcement, and version history shall apply uniformly to all JSON-LD types.",
+        "B": "The system must accept and store every valid JSON-LD object, whether or not its @type has a dedicated SDK model class. Storage, indexing, search, KBAC enforcement, and version history must apply uniformly across all JSON-LD types.",
+        "C": "The system shall accept and store any valid JSON-LD object regardless of whether a dedicated SDK model class exists for its `@type`. Storage, indexing, KBAC enforcement, and version history shall apply uniformly to all JSON-LD types."
+      },
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Accept and store any valid JSON-LD object regardless of a dedicated SDK model class for its @type."
+        },
+        {
+          "id": "o02",
+          "text": "Storage applies uniformly to all JSON-LD types."
+        },
+        {
+          "id": "o03",
+          "text": "Indexing applies uniformly to all JSON-LD types."
+        },
+        {
+          "id": "o04",
+          "text": "Search applies uniformly to all JSON-LD types."
+        },
+        {
+          "id": "o05",
+          "text": "KBAC enforcement applies uniformly to all JSON-LD types."
+        },
+        {
+          "id": "o06",
+          "text": "Version history applies uniformly to all JSON-LD types."
+        }
+      ],
+      "target_obligation_id": "o04",
+      "omission": {
+        "start": 150,
+        "end": 158,
+        "text": ", search",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 150
+      },
+      "review": {
+        "status": "assistant_prepared_pending_independent_agent_review",
+        "human_approvals": 0,
+        "label_source": "assistant_authored_source_mapping",
+        "selection": "purposive_before_generation",
+        "scope": "acceptance criteria generation only",
+        "prior_exposure": "Project and full document previously screened; selected-intent bounded exposure audit recorded separately.",
+        "provenance_caveat": "Retrospective, initially auto-generated SRS; upstream document records architect review."
+      }
+    },
+    {
+      "id": "cass-batch-002",
+      "project_id": "CASS",
+      "source": {
+        "url": "https://raw.githubusercontent.com/cassproject/CASS/97fc0939ca3960504ce8b2f51749881543a4038c/REQUIREMENTS.md",
+        "revision": "97fc0939ca3960504ce8b2f51749881543a4038c",
+        "license": "Apache-2.0",
+        "license_url": "https://raw.githubusercontent.com/cassproject/CASS/97fc0939ca3960504ce8b2f51749881543a4038c/LICENSE",
+        "path": "sources/CASS/REQUIREMENTS.md",
+        "sha256": "937b1f4ffb35548c4cbb7332e212ae5d52331b9d1ed9c464c0773411421485ce",
+        "license_path": "sources/CASS/LICENSE",
+        "license_sha256": "7302489454b91cec7fb3afcec3b0a9f4b1abe18203c183ea37d78fd4b5da87dc",
+        "locator": "BATCH-002 requirement table text column",
+        "start_char": 17877,
+        "end_char": 18083,
+        "start_line": 241,
+        "end_line": 241
+      },
+      "variants": {
+        "A": "The system shall support batch storage via `POST /api/sky/repo/multiPut`, accepting an array of JSON-LD objects, validating KBAC permissions for each, and returning the count of successfully stored objects.",
+        "B": "Support batch storage through POST /api/sky/repo/multiPut. Accept an array of JSON-LD objects, check each object's KBAC permissions, and return the number of objects stored successfully.",
+        "C": "The system shall support batch storage via `POST /api/sky/repo/multiPut`, accepting an array of JSON-LD objects, and returning the count of successfully stored objects."
+      },
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Support batch storage via POST /api/sky/repo/multiPut."
+        },
+        {
+          "id": "o02",
+          "text": "Accept an array of JSON-LD objects."
+        },
+        {
+          "id": "o03",
+          "text": "Validate KBAC permissions for each object."
+        },
+        {
+          "id": "o04",
+          "text": "Return count of successfully stored objects."
+        }
+      ],
+      "target_obligation_id": "o03",
+      "omission": {
+        "start": 113,
+        "end": 151,
+        "text": "validating KBAC permissions for each, ",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 113
+      },
+      "review": {
+        "status": "assistant_prepared_pending_independent_agent_review",
+        "human_approvals": 0,
+        "label_source": "assistant_authored_source_mapping",
+        "selection": "purposive_before_generation",
+        "scope": "acceptance criteria generation only",
+        "prior_exposure": "Project and full document previously screened; selected-intent bounded exposure audit recorded separately.",
+        "provenance_caveat": "Retrospective, initially auto-generated SRS; upstream document records architect review."
+      }
+    }
+  ]
+}
