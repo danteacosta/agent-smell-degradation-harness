@@ -51,3 +51,8 @@ experiment evidence.
 - [Source-to-browser results](focus-chain-results-20260922.md): 52 code outputs, 16 selective focus failures, two omission outputs preserving focus and two planned upstream absences; one exploratory intent.
 
 - [Behavioral expansion preparation](behavioral-expansion-preparation-20260922.md): eight candidate contracts across four already exposed projects, four explicit deferrals, and a provisional 144-generation direct-code design; no new collection or qualified-oracle claim.
+
+- [Behavioral oracle source reviews](ui-behavioral-contracts-20260922.md), [RealWorld API contracts](realworld-behavioral-contracts-20260922.md), and [CaSS contracts](cass-behavioral-contracts-20260922.md): authored controls and unresolved admission decisions for the eight candidates.
+- [Behavioral expansion analysis plan](../plans/2026-09-22-behavioral-expansion-analysis.md): finite schedule, fixed denominators and project weighting; no collection.
+
+- [TodoMVC Mark all oracle qualification](mark-all-oracle-qualification-20260922.md): 11 authored browser controls, immutable image and private receipt; no generated outcomes.

@@ -1,0 +1,27 @@
+<!doctype html><meta charset="utf-8"><title>Todos</title>
+<div id="controls"><input id="toggle-all" type="checkbox"><button id="clear-completed">Clear completed</button></div><ul id="todo-list"></ul>
+<script>
+const entries=new Map(window.initialTodos.map(item=>[item.id,{...item}]));
+const controls=document.getElementById('controls');
+const master=document.getElementById('toggle-all');
+const clear=document.getElementById('clear-completed');
+clear.hidden=true;
+const list=document.getElementById('todo-list');
+function paint(){
+  list.textContent='';
+  for(const item of entries.values()){
+    const row=document.createElement('li');
+    const toggle=document.createElement('input');toggle.type='checkbox';toggle.checked=item.completed;
+    const title=document.createElement('label');title.append(document.createTextNode(item.title));
+    toggle.addEventListener('change',()=>{item.completed=toggle.checked;paint();});
+    row.appendChild(toggle);row.appendChild(title);list.appendChild(row);
+  }
+  clear.hidden=![...entries.values()].some(item=>item.completed);
+  if(entries.size===0){master.remove();return;}
+  if(!master.isConnected)controls.insertBefore(master,clear);
+  master.checked=[...entries.values()].every(item=>item.completed);
+}
+master.addEventListener('change',()=>{for(const item of entries.values())item.completed=master.checked;paint();});
+clear.addEventListener('click',()=>{for(const [id,item] of entries)if(item.completed)entries.delete(id);paint();});
+paint();
+</script>

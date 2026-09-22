@@ -1,0 +1,39 @@
+name: Mark all oracle qualification
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - eval/mark_all_executor.py
+      - eval/fixtures/mark-all/**
+      - tests/test_mark_all_executor.py
+      - .github/workflows/mark-all-oracle-qualification.yml
+
+permissions:
+  contents: read
+
+jobs:
+  qualify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build pinned offline browser instrument
+        run: docker build --iidfile "$RUNNER_TEMP/mark-all-image" eval/fixtures/mark-all
+      - name: Qualify two valid implementations and five controls
+        run: >-
+          python eval/fixtures/mark-all/qualify.py
+          --image "$(cat "$RUNNER_TEMP/mark-all-image")"
+          --output "$RUNNER_TEMP/mark-all-qualification"
+      - name: Upload authored-control evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mark-all-qualification
+          path: ${{ runner.temp }}/mark-all-qualification/
+          retention-days: 30
