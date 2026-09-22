@@ -339,3 +339,13 @@ and rag-reliability-harness. Unrelated local AI applications are outside scope.
 - [x] Complete exact-head Linux CI merge gate: harness PR #64, ARP #19 and
       RAG #15 merged after their reviewed heads passed CI. Harness Linux:
       1,621 tests and nine subtests; eight container tests; six green checks.
+
+## 2026-09-21 — Intermediate omission pilot (authorized)
+
+- [ ] Freeze 12 intents / 4 projects and 216-slot protocol.
+- [ ] Implement and independently verify bounded collection and analysis.
+- [ ] Collect via Codex subscription; preserve missingness and original votes.
+- [ ] Update research report, Drive/slides and delivery packet.
+- [ ] Verify tests, review, CI and integration.
+
+Plan: `docs/plans/2026-09-21-criteria-expansion.md`.
