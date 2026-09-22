@@ -73,3 +73,20 @@ usuários. Essas perguntas exigem observações prospectivas e desfechos adequad
 - [Limites do consenso](../research/2026-09-21-llm-consensus-boundary.md)
 
 - [Resultado do consenso SRS-163](../research/criteria-consensus-results-20260921.md)
+
+## Ampliação exploratória: 12 requisitos, quatro projetos
+
+A coleta executou 216 gerações (212 válidas, quatro inválidas) e 565 julgamentos
+(539 válidos, 22 inválidos, quatro timeouts); 83 dos 648 julgamentos planejados
+não foram realizados. A regra congelada encerrou a coleta sem repetição.
+Os limites de perda de cobertura da obrigação omitida, C−A, são [−100; −16,67]
+pontos percentuais no Luna e [−100; −25] no Sol, incorporando os desfechos
+inconclusivos. São limites de ausência de informação condicionados à validade
+dos rótulos do painel, não intervalos de confiança. B−A inclui zero nos dois
+modelos e não comprova equivalência. Em C, há 47 ausências confirmadas e 25
+alvos inconclusivos; nenhuma recuperação confirmada.
+
+O resultado sustenta propagação de omissão em critérios neste corpus e protocolo.
+Não comprova defeito executável novo, efeito geral dos smells ou H1/H2.
+Consenso de LLMs, sem validação humana; a coleta anterior permanece separada.
+[Resultados, proveniência e limitações](../research/criteria-expansion-results-20260921.md).

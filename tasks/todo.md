@@ -342,10 +342,11 @@ and rag-reliability-harness. Unrelated local AI applications are outside scope.
 
 ## 2026-09-21 — Intermediate omission pilot (authorized)
 
-- [ ] Freeze 12 intents / 4 projects and 216-slot protocol.
-- [ ] Implement and independently verify bounded collection and analysis.
-- [ ] Collect via Codex subscription; preserve missingness and original votes.
-- [ ] Update research report, Drive/slides and delivery packet.
+- [x] Freeze 12 intents / 4 projects and 216-slot protocol.
+- [x] Implement and independently verify bounded collection and analysis.
+- [x] Collect via Codex subscription; preserve missingness and original votes.
+      Final: 216 generations; 565 judgments; four timeouts triggered stop.
+- [x] Update research report, Drive/slides and delivery packet.
 - [ ] Verify tests, review, CI and integration.
 
 Plan: `docs/plans/2026-09-21-criteria-expansion.md`.
