@@ -109,10 +109,10 @@ No label from source/criteria is used to choose or change hidden assertions.
 - [x] Inspect current code, prior oracle warnings, source and finalized PR66.
 - [x] Baseline52 focused tests pass.
 - [x] Independently review this contract and source-to-oracle mapping.
-- [ ] Write failing behavior tests; implement custody/runner/executor minimally.
-- [ ] Pin browser dependencies and qualify references/mutants; test containment.
-- [ ] Review implementation/security/SOLID and freeze hashes before live calls.
-- [ ] Collect <=54 calls, execute saved artifacts once, audit receipts/results.
+- [x] Write failing behavior tests; implement custody/runner/executor minimally.
+- [x] Pin browser dependencies and qualify references/mutants; test containment.
+- [x] Review implementation/security/SOLID and freeze hashes before live calls.
+- [x] Collect <=54 calls, execute saved artifacts once, audit receipts/results.
 - [ ] Update repository/Drive/slides with actual results and native screenshots.
 - [ ] Full applicable tests, build, exact-head CI; authorized merge only on green.
 
@@ -126,3 +126,5 @@ browser exploits. Use separate non-root user, no network and constrained mounts.
 Independent review accepted narrow source mapping and required explicit500 ms horizon and distinct interface/infrastructure errors. Both requirements are adopted before generation. Chromium sandbox is disabled within bounded non-root offline Docker; this is not a guarantee against browser exploits.
 
 Presentation selection fixed before collection: illustrate the direct-route Luna repetition1 A/C screenshot pair regardless of outcome; if either is unavailable, report its absence rather than replacing it with a stronger-looking pair. All executable screenshots remain in the delivery packet.
+
+Finalized: 52 valid code outputs, 16 selective focus failures, 36 complete passes and two upstream absences. Independent audit verified754 files and all contrast strata. Final receipt cf7f03ce23dd98331cec8f6042668d690f7475fa16487d437eb550c97b4cbef1. See the separate results report for the post-freeze placement-proxy limitation and full interpretation.

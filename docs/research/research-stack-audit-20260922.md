@@ -8,19 +8,19 @@ Original checkouts and frozen experimental packets were preserved.
 
 | Repository | Observed problem | Correction and verification |
 |---|---|---|
-| MergeWave | Additional changes to already-dirty files escaped path-set comparison; path parsing lost exact identities and conflated literal POSIX backslashes with separators. | Content/index/mode snapshots and NUL-delimited Git paths, with ambiguous backslashes rejected. PR24:123 local tests, four green CI checks; merge9fa862d. This remains an observational verifier, not a filesystem sandbox. |
-| ARP | Malformed event identities/checkpoints reached set operations after validation and raised TypeError. | Validate collection and identity shapes before dependent operations. PR20:132 local tests, three green CI checks; mergef6ecaf8. |
-| RAG harness | Recall used a denominator capped at k; repeated IDs inflated recall and binary nDCG, including values above1. | Versioned retrieval-set-v2: full unique relevant-set recall, one credit per document at its original rank. Cross-contract gate comparisons fail explicitly. PR16:196 CI tests including PostgreSQL, gate and loop pass; mergeb84955c. |
+| MergeWave | Additional changes to already-dirty files escaped path-set comparison; path parsing lost exact identities and conflated literal POSIX backslashes with separators. | Content/index/mode snapshots and NUL-delimited Git paths, with ambiguous backslashes rejected. PR 24: 123 local tests, four green CI checks; merge 9fa862d. This remains an observational verifier, not a filesystem sandbox. |
+| ARP | Malformed event identities/checkpoints reached set operations after validation and raised TypeError. | Validate collection and identity shapes before dependent operations. PR 20: 132 local tests, three green CI checks; merge f6ecaf8. |
+| RAG harness | Recall used a denominator capped at k; repeated IDs inflated recall and binary nDCG, including values above 1. | Versioned retrieval-set-v2: full unique relevant-set recall, one credit per document at its original rank. Cross-contract gate comparisons fail explicitly. PR 16: 196 CI tests including PostgreSQL, gate and loop pass; merge b84955c. |
 
-Sources: [MergeWave24](https://github.com/danteacosta/MergeWave/pull/24),
-[ARP20](https://github.com/danteacosta/agent-reliability-protocol/pull/20),
-[RAG16](https://github.com/danteacosta/rag-reliability-harness/pull/16).
+Sources: [MergeWave 24](https://github.com/danteacosta/MergeWave/pull/24),
+[ARP 20](https://github.com/danteacosta/agent-reliability-protocol/pull/20),
+[RAG 16](https://github.com/danteacosta/rag-reliability-harness/pull/16).
 Every merge used the exact reviewed head after green CI; merged trees matched.
 
 ## Scientific consequences
 
 Legacy RAG outputs are not silently reinterpreted under the new definition.
-The original CI baseline remains unchanged; a separate40-item deterministic
+The original CI baseline remains unchanged; a separate 40-item deterministic
 re-evaluation supplies the new baseline, source/input hashes and full per-item
 rankings. Its aggregate gate values are unchanged because this fixture has
 one relevant ID per retrieval query. That equality is not a retrieval improvement.
@@ -47,3 +47,12 @@ they do not establish a general effect of smells. H2 still requires its frozen
 B3-versus-B0 pre-final contrast on independent projects. The source-to-criteria
 and criteria-to-code route comparison changes information and representation,
 so it is not a causal mediation estimate.
+
+
+Post-freeze source review identified a remaining placement-proxy limitation before
+any generated output was inspected: `input_above_list` requires a measurable
+empty list, although neither the source nor shared interface requires displaying
+an empty list. Retain its original assertion result, but do not automatically
+call that result a natural requirement defect. Unpack non-target/mixed categories
+by assertion ID. The primary isolated-world focus observation is separate and
+unchanged; no frozen code, call or score is repaired retrospectively.
