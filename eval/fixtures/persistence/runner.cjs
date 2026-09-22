@@ -104,7 +104,7 @@ async function scenario(id,check) {
       else {
         await todo.locator('label').dblclick();await first.waitForTimeout(300);
         const editing=await editInput(todo);
-        if(!editing)target={status:'not_evaluable',reason:'edit_interface_unavailable'};
+        if(!editing)throw new InterfaceError('visible edit input required after double-click');
       }
       await first.screenshot({path:'/output/editing.png'});
       const second=await pageIn(context,errors);

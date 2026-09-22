@@ -18,8 +18,8 @@ EXPECTED = {
     'store-false-flag': ('pass', []),
     'encoded-value': ('pass', []),
     'restore-edit': ('target_only_failure', ['editing_not_restored']),
-    'no-edit': ('target_not_evaluable', []),
-    'no-edit-button': ('target_not_evaluable', []),
+    'no-edit': ('interface_error', []),
+    'no-edit-button': ('interface_error', []),
     'no-reload': ('target_not_evaluable', ['todo_survives_reload', 'completed_survives_reload']),
     'drop-completed': ('non_target_only_failure', ['completed_survives_reload']),
 }
@@ -62,9 +62,7 @@ def main() -> int:
         rows.append({'id': name, 'expected_category': expected_category,
                      'observed_category': receipt['category'],
                      'expected_failures': expected_failures, 'observed_failures': failures,
-                     'expected_target_reason': ('todo_missing_after_reload' if name == 'no-reload'
-                                                else 'edit_interface_unavailable' if name in {'no-edit', 'no-edit-button'}
-                                                else None),
+                     'expected_target_reason': 'todo_missing_after_reload' if name == 'no-reload' else None,
                      'observed_target_reason': target.get('reason'),
                      'receipt_sha256': digest(output / 'executor.json'),
                      'report_sha256': digest(output / 'report.json'),

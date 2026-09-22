@@ -34,6 +34,15 @@ def test_missing_todo_does_not_count_as_success_or_failure_of_edit_target():
         'non_target_failed': ['todo_survives_reload']}
 
 
+def test_missing_required_edit_interface_is_invalid_generation():
+    raw = json.dumps({'schema_version': 'persistence-browser/v1',
+                      'status': 'interface_error', 'app_sha256': HASH,
+                      'error': 'visible edit input required'}).encode()
+    assert oracle.classify_report(raw, 2) == {
+        'category': 'interface_error', 'reason': 'visible edit input required'}
+    assert oracle.classify_report(raw, 1)['category'] == 'browser_error'
+
+
 @pytest.mark.parametrize('raw,rc', [
     (b'{}', 0),
     (report(), 1),

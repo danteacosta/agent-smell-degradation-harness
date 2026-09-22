@@ -5,9 +5,10 @@ double-clicking its label, leave the editor open, and open a second page in the
 same browser context. A source-conformant implementation restores the todo and
 title without visible editing. A target mutant restores the editor and fails
 only `editing_not_restored`. Independent scenarios check todo reload, completed
-state reload, and use of the `todos-vanilla` localStorage key. A missing todo or
-unavailable editing interface makes the target not evaluable, not a target pass
-or failure. The test observes browser state and does not claim that no edit
+state reload, and use of the `todos-vanilla` localStorage key. A missing todo
+after reload makes the target not evaluable, not a target pass or failure.
+Failure to expose the required edit input is an interface error. The test
+observes browser state and does not claim that no edit
 related byte was ever serialized.
 
 The shared generator interface requires a standalone vanilla-JavaScript page,
@@ -22,7 +23,7 @@ BDD qualification: given an implementation omitting edit state, storing a false
 edit flag, or encoding the stored value, when the browser runs, all assertions
 pass. Given an implementation restoring active editing, only the target fails.
 Given a no-reload implementation, the todo and completion checks fail and the
-target is unknown. Given unavailable edit entry, the target is likewise unknown.
+target is unknown. Given unavailable edit entry, the generated page is interface-invalid.
 Given completion loss, only that invariant fails. Review
 visual evidence and exact source mapping before cohort admission. Only after
 an immutable image, source hashes, leakage review, and sufficient quota should

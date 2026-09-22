@@ -9,7 +9,8 @@ The trusted runner uses a second page in the same browser context and origin
 while the first remains open, avoiding blur/save side effects. It records native
 screenshots before edit, during edit, and after reload. `editing_not_restored`
 is assessed only if a visible edit input was reached and the todo is present
-after reload. Todo survival, completed state, and a nonempty `todos-vanilla`
+after reload. Missing edit entry violates the common interface and is invalid.
+Todo survival, completed state, and a nonempty `todos-vanilla`
 localStorage entry are separate assertions. Storage bytes and schema are not
 used to decide the target; encoded storage is a passing reference.
 
@@ -25,16 +26,16 @@ general smell effect, or H1/H2 confirmation.
 Final local qualification: **8/8 expected vectors matched**. The ordinary,
 false-flag and encoded references passed; restoring edit mode failed only the
 target; no-reload made the target not evaluable and failed both todo and
-completion survival; both no-edit controls made the target not evaluable without
+completion survival; both no-edit controls were interface errors without
 claiming a source-level failure; completed-state loss failed only its own invariant.
 The image ID is
-`sha256:8a863227e0a77362bc519eae38644a0a5410e8483bd9642c2c6c7b27b665ac79`.
+`sha256:2c987ec3345d00f5b27f25c40b666a8def180136dfaf27eb562bd9ea24ac1bc3`.
 The private packet is
-`.private-research-evidence/persistence-qualification-20260922-v3` with 65
+`.private-research-evidence/persistence-qualification-20260922-v4` with 61
 evidence files, qualification SHA-256
-`191a83483698ec4a3fbe03d39179a7f1380432976055a9ff8c7980e2d244336b`
+`1159d356222be2facf5c8658c94d68b3f706c2af78c5de687a67d24c056cc137`
 and receipt SHA-256
-`8a1c87252946de8c103f33a1297d18edf36d53fb65fa59b01c2e843de27f1ecd`.
+`75c95ae47647cbe744b444684110798c8a9863f499de97855edfeba3480cb95f`.
 The reference and mutant after-reload screenshots were visually inspected.
 
 The oracle observes *visible restoration*. It cannot establish literal absence
