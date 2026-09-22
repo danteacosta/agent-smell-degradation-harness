@@ -127,3 +127,12 @@ batches test category labels and literal citations, not comprehensive correctnes
 of auxiliary additions. Full portable software regression is running separately;
 no generator/judge call has occurred at this checkpoint. Source metadata remains
 assistant-reviewed, with zero human approvals.
+
+## 2026-09-22 supplementary analysis safeguard
+
+The frozen Astra/Terra-only agreement sensitivity remains unchanged. A separate,
+non-prespecified diagnostic now removes a judge only when its model identity
+matches the artifact generator: Luna artifacts retain the primary 3/3 rule,
+whereas Sol artifacts require Astra/Terra agreement. This prevents a global
+``without Sol`` panel from being misdescribed as generator-specific control.
+It does not replace the primary analysis and must be reported as supplementary.

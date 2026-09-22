@@ -301,6 +301,23 @@ def coverage(rows):
         'majority_supported':sum(r.get('sensitivity')=='supported' for r in rows)}
 
 
+def overlap_excluded_label(row):
+    """Return a label without a judge that also generated this artifact.
+
+    The primary 3/3 label remains unchanged when no generator/judge identity
+    overlaps.  When exactly one judge overlaps, the two remaining judges must
+    agree.  Missing or invalid votes remain unresolved.
+    """
+    votes = [vote for judge, vote in zip(JUDGES, row['votes'])
+             if judge != row['model']]
+    if len(votes) == len(JUDGES):
+        return row['primary']
+    if len(votes) != len(JUDGES) - 1 or any(
+            vote not in ('supported', 'absent', 'unclear') for vote in votes):
+        return None
+    return votes[0] if len(set(votes)) == 1 else None
+
+
 def paired_effects(rows):
     # Repeats are exchangeable samples, never matched across conditions by index.
     cells=defaultdict(lambda:defaultdict(list))
@@ -369,6 +386,8 @@ def analyze(packet):
         'obligation_rows':rows,'by_intent_model_arm':summaries,'paired_target_effects':paired_effects(target),
         'per_judge_by_generator':[{ 'judge':judge,'generator':model,'variant':arm,**coverage([{**r,'primary':r['votes'][j]} for r in target if r['model']==model and r['variant']==arm])} for j,judge in enumerate(JUDGES) for model in GENERATORS for arm in ('A','B','C')],
         'without_sol_sensitivity':paired_effects([{**r,'primary':r['votes'][0] if r['votes'][0]==r['votes'][2] else None} for r in target]),
+        'generator_specific_overlap_sensitivity':paired_effects([
+            {**r, 'primary': overlap_excluded_label(r)} for r in target]),
         'by_arm':[{'variant':a,'is_target':t,**coverage([r for r in rows if r['variant']==a and r['is_target']==t])} for a in ('A','B','C') for t in (True,False)],
         'omitted_target_recovered':sum(r['variant']=='C' and r['primary']=='supported' for r in target),
         'limitations':['Exploratory four-project purposive sample; conditional cluster resampling spread is not a confidence interval or population guarantee.',
@@ -378,6 +397,7 @@ def analyze(packet):
             'Unknown labels retain missingness bounds; complete-cell estimates may be selection-biased.',
             'Conditions are metadata-blinded but may be inferred from artifact semantics.',
             'Without-Sol sensitivity requires Astra/Terra agreement and is not three-judge consensus.',
+            'The supplementary generator-specific overlap sensitivity keeps the primary 3/3 label for Luna and requires Astra/Terra agreement for Sol; it was added after protocol freeze and is not a replacement primary analysis.',
             'Budget counts observable CLI invocations, not undocumented internal network retries; captures are bounded to 2 MB per stream with truncation metadata.']}
 
 

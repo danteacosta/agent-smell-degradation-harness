@@ -71,6 +71,22 @@ def test_unknown_bounds_and_project_pairing():
     assert report['C-A']['secondary_pooled']['bounds']==pytest.approx([-1,-11/12])
 
 
+def test_overlap_exclusion_is_generator_specific_and_fail_closed():
+    luna = {'model':'gpt-5.6-luna', 'primary':None,
+            'votes':['supported','supported','absent']}
+    assert m.overlap_excluded_label(luna) is None
+    luna['primary'] = 'supported'
+    assert m.overlap_excluded_label(luna) == 'supported'
+
+    sol = {'model':'gpt-5.6-sol', 'primary':None,
+           'votes':['supported','absent','supported']}
+    assert m.overlap_excluded_label(sol) == 'supported'
+    sol['votes'][2] = 'absent'
+    assert m.overlap_excluded_label(sol) is None
+    sol['votes'][2] = None
+    assert m.overlap_excluded_label(sol) is None
+
+
 def test_target_identity_does_not_change_judge_prompt():
     record=corpus()[0]; artifact={'criteria':['Display title'],'uncertainties':[]}
     before=m.judge_prompt(record,artifact)
