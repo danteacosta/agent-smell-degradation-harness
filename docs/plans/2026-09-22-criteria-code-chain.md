@@ -124,3 +124,5 @@ versions must match; Docker isolation is not proof against arbitrary hostile
 browser exploits. Use separate non-root user, no network and constrained mounts.
 
 Independent review accepted narrow source mapping and required explicit500 ms horizon and distinct interface/infrastructure errors. Both requirements are adopted before generation. Chromium sandbox is disabled within bounded non-root offline Docker; this is not a guarantee against browser exploits.
+
+Presentation selection fixed before collection: illustrate the direct-route Luna repetition1 A/C screenshot pair regardless of outcome; if either is unavailable, report its absence rather than replacing it with a stronger-looking pair. All executable screenshots remain in the delivery packet.
