@@ -1,5 +1,9 @@
 # StrictDoc: prior exposure, historical export and next-case preparation
 
+Historical preparation record. The separately authorized successor is documented
+in [the criteria consensus results](criteria-consensus-results-20260921.md).
+The original packet and its zero-call preparation status remain unchanged.
+
 ## Research question and disposition
 
 Can the next StrictDoc case supply a new, source-grounded test of obligation

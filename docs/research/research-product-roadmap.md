@@ -9,6 +9,15 @@ scope. H1/H2 remain unanswered.
 This roadmap separates completed development evidence from proposed future
 studies. It does not authorize spending or change any frozen launch gate.
 
+## Separate acceptance-criteria pilot completed
+
+The user's later authorization enabled a bounded source-derived
+[LLM consensus pilot](criteria-consensus-results-20260921.md), without reopening
+any failed comparison. Nine artifacts and 27 judgments show a links-coverage
+contrast for SRS-163. Unanimous coverage labels coexist with scope disagreement
+and two incorrect auxiliary additions annotations. The result supports this
+local exploratory contrast, not global evaluator reliability or H1/H2.
+
 ## Offline evidence contract: implemented
 
 The [artifact-addressing implementation](artifact-addressed-evidence.md) has
