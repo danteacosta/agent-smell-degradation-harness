@@ -546,6 +546,11 @@ instead of omitting them from the receipt. These are custody controls for future
 runs; they do not retroactively change the retained TodoMVC pilot, establish
 semantic correctness, or authorize provider calls.
 
+The current TodoMVC persistence browser instrument has a [27-control semantic
+selector qualification](docs/research/persistence-selector-qualification-20260923.md);
+the [frozen pilot result](docs/research/persistence-results-20260923.md) remains
+separate.
+
 Offline preflight before live LLM runs (secret-free; default CI unchanged):
 
 | Command | Purpose |

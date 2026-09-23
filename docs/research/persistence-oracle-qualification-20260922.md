@@ -70,3 +70,17 @@ the 69-file CI artifact ZIP SHA-256 is
 `98f411cf2c42616ff0b620fe0d33fd240d0105ce7e8ed2b09fd471fa0bc99c58`.
 Admission remains blocked until the exact prompt passes independent leakage
 review and the eligible cohort, runtime, and schedule are frozen.
+
+## 2026-09-23 semantic selector successor
+
+The frozen 18-generation pilot exposed another measurement limitation: four
+second-page screenshots show the named todo rendered with a `<span>`, while the
+runner recognized only an HTML `<label>` or edit input. Those four historical
+target outcomes remain unknown. The [semantic selector qualification](persistence-selector-qualification-20260923.md)
+defines a visible, exact rendered-title and actionable edit-entry contract and
+matched **27/27** authored controls, including alternative DOM structures and
+ambiguous or non-actionable titles. Its image ID is
+`sha256:7ec0ab7cde9cf5b84b0ee5d4c07e86a94f1a696c8a26c6ccdbd73569ae460d4a`.
+The new private packet and receipt are separate from the v4 and nine-control
+history above. This qualification does not revise the pilot classifications or
+establish a generated-code or smell effect.

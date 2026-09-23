@@ -56,7 +56,8 @@ experiment evidence.
 - [Behavioral expansion analysis plan](../plans/2026-09-22-behavioral-expansion-analysis.md): finite schedule, fixed denominators and project weighting; no collection.
 
 - [TodoMVC Mark all oracle qualification](mark-all-oracle-qualification-20260922.md): 11 authored browser controls, immutable image and private receipt; no generated outcomes.
-- [TodoMVC Persistence oracle qualification](persistence-oracle-qualification-20260922.md): eight authored browser controls with a second-page localStorage round trip; no generated outcomes.
+- [TodoMVC Persistence oracle qualification](persistence-oracle-qualification-20260922.md): historical eight-control v4 and nine-control visibility qualification; no generated outcomes.
+- [TodoMVC Persistence semantic selector qualification](persistence-selector-qualification-20260923.md): current successor instrument, 27 authored controls and a private evidence receipt; historical outcomes unchanged.
 
 - [StrictDoc statistics browser qualification](strictdoc-stats-oracle-qualification-20260923.md): 21 authored controls, rendered visibility and two-clock evidence; no new model collection.
 
