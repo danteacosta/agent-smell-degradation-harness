@@ -44,6 +44,11 @@ controls, explicit admission and a new frozen runtime before future collection.
 Replaying saved artifacts under a revised oracle would be labelled post-hoc
 diagnostic evidence, not a new prospective replication.
 
+The [27-control semantic selector successor](persistence-selector-qualification-20260923.md)
+has now been qualified on authored cases. This later qualification leaves the
+frozen **13 passes, zero target failures and five unknowns** unchanged; the four
+`<span>`-labelled outcomes remain unknown.
+
 The fifth unknown (Sol A repetition 2) is `interface_error`: a visible editable
 input was not observed after double-click. Its initial persistence assertions
 passed. A checkbox-linked title and rerender may explain the interaction, but
@@ -75,6 +80,7 @@ Interactive evidence index: `.private-research-evidence/persistence-execution-st
 [Frozen method](persistence-collection-method-20260923.md) ·
 [Implementation](https://github.com/danteacosta/agent-smell-degradation-harness/pull/73).
 
-Next: correct and qualify semantic row recognition for future execution; admit
-new licensed UI requirements from additional projects. The prior focus result
+Next: independently review prompts and freeze a new cohort, instrument,
+runtime and schedule before prospective execution; admit new licensed UI
+requirements from additional projects. The prior focus result
 and this bounded persistence result must both remain visible in the thesis.

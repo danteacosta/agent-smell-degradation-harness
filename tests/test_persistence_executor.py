@@ -44,6 +44,15 @@ def test_hidden_todo_does_not_count_as_restored_user_visible_state():
         'non_target_failed': ['todo_survives_reload', 'completed_survives_reload']}
 
 
+def test_ambiguous_todo_after_reload_does_not_count_as_target_failure():
+    value = json.loads(report(todo_survives_reload='failed',
+                              editing_not_restored='not_evaluable'))
+    value['cases'][-1]['reason'] = 'todo_ambiguous_after_reload'
+    assert oracle.classify_report(json.dumps(value).encode(), 1) == {
+        'category': 'target_not_evaluable', 'target_failed': None,
+        'non_target_failed': ['todo_survives_reload']}
+
+
 def test_missing_required_edit_interface_is_invalid_generation():
     raw = json.dumps({'schema_version': 'persistence-browser/v1',
                       'status': 'interface_error', 'app_sha256': HASH,

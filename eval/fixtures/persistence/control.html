@@ -2,6 +2,7 @@
 <input class="new-todo" aria-label="New todo"><ul class="todo-list"></ul>
 <script>
 const mode=document.querySelector('meta[name="qualification-mode"]').content;
+const restoresEditing=mode==='restore-edit'||mode==='restore-edit-wrapped-action';
 const key='todos-vanilla';
 const input=document.querySelector('input.new-todo');
 const list=document.querySelector('ul.todo-list');
@@ -11,13 +12,15 @@ if(mode!=='no-reload'){
   try{todos=JSON.parse(mode==='encoded-value'
     ? atob(localStorage.getItem(key)||'W10=') : localStorage.getItem(key)||'[]').map(item=>({...item,
     completed:mode==='drop-completed'?false:Boolean(item.completed),
-    editing:mode==='restore-edit'&&Boolean(item.editing)}));}catch{todos=[];}
+    editing:restoresEditing&&Boolean(item.editing)}));}catch{todos=[];}
 }
+if(mode==='duplicate-after-reload'&&loadedFromStorage)
+  todos=todos.flatMap(item=>[item,{...item}]);
 function save(){
   const serialized=JSON.stringify(todos.map(item=>({
     id:item.id,title:item.title,completed:item.completed,
     ...(mode==='false-flag'?{editing:false}:{}),
-    ...(mode==='restore-edit'?{editing:item.editing}:{})
+    ...(restoresEditing?{editing:item.editing}:{})
   })));
   localStorage.setItem(key,mode==='encoded-value'?btoa(serialized):serialized);
 }
@@ -27,7 +30,10 @@ function render(){
     const row=document.createElement('li');
     if(mode==='hidden-after-reload'&&loadedFromStorage)row.hidden=true;
     const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=item.completed;
-    checkbox.onchange=()=>{item.completed=checkbox.checked;save();render();};
+    checkbox.onchange=()=>{
+      item.completed=checkbox.checked;save();
+      if(mode!=='wrapped-checkbox-title')render();
+    };
     row.append(checkbox);
     if(mode==='no-edit-button'){
       const action=document.createElement('input');action.type='button';action.value='Details';row.append(action);
@@ -36,12 +42,73 @@ function render(){
       const edit=document.createElement('input');edit.className='edit';edit.value=item.title;
       edit.onkeydown=event=>{if(event.key==='Enter'){item.title=edit.value;item.editing=false;save();render();}};
       row.append(edit);
+      if(mode==='restore-edit-wrapped-action'){
+        const wrapper=document.createElement('div');
+        const action=document.createElement('button');action.textContent='Details';
+        wrapper.append(action);row.append(wrapper);
+      }
     }else{
-      const label=document.createElement('label');label.textContent=item.title;
-      label.ondblclick=()=>{if(mode==='no-edit'||mode==='no-edit-button')return;item.editing=true;save();render();};
-      row.append(label);
+      const target=item.title==='persist-target-row';
+      let title;
+      if(mode==='span-title')title=document.createElement('span');
+      else if(mode==='div-title'||mode==='nested-title'||mode==='title-with-hidden-input')
+        title=document.createElement('div');
+      else title=document.createElement('label');
+      if(mode==='nested-title'){
+        const nested=document.createElement('span');nested.textContent=item.title;title.append(nested);
+      }else title.textContent=item.title;
+      if(mode==='wrapped-checkbox-title')title.prepend(checkbox);
+      if(mode==='title-with-hidden-input'){
+        const metadata=document.createElement('input');metadata.type='hidden';metadata.value='metadata';
+        title.append(metadata);
+      }
+      if(target&&mode==='wrapped-control-title'){
+        title=document.createElement('div');
+        const action=document.createElement('button');
+        const output=document.createElement('output');output.textContent=item.title;
+        action.append(output);title.append(action);
+      }
+      if(mode==='mixed-title-wrapped-action'){
+        title=document.createElement('div');
+        const text=document.createElement('span');text.textContent=item.title;
+        const wrapper=document.createElement('div');
+        const action=document.createElement('button');action.textContent='Delete';
+        wrapper.append(action);title.append(text,wrapper);
+      }
+      if(target&&(mode==='transformed-title-with-action'||mode==='block-title-with-action')){
+        title=document.createElement('div');
+        if(mode==='transformed-title-with-action'){
+          title.style.textTransform='uppercase';title.append(item.title);
+        }else{
+          const first=document.createElement('div');first.textContent=item.title.slice(0,7);
+          const second=document.createElement('div');second.textContent=item.title.slice(7);
+          title.append(first,second);
+        }
+        const action=document.createElement('button');action.textContent='Delete';title.append(action);
+      }
+      let editSurface=title;
+      if(target&&mode==='hidden-exact-title'){
+        title.hidden=true;
+        const visible=document.createElement('label');visible.textContent='unrelated visible title';
+        row.append(visible);editSurface=visible;
+      }
+      if(target&&mode==='accessible-only-title'){
+        title.textContent='unrelated visible title';title.setAttribute('aria-label',item.title);
+      }
+      if(target&&mode==='control-value-title'){
+        title.textContent='unrelated visible title';
+        const unrelated=document.createElement('input');unrelated.type='text';
+        unrelated.className='unrelated-control';unrelated.value=item.title;
+        row.append(unrelated);
+      }
+      if(target&&mode==='substring-title')title.textContent=`prefix-${item.title}-suffix`;
+      if(target&&mode==='non-actionable-title')title.style.pointerEvents='none';
+      editSurface.ondblclick=()=>{if(mode==='no-edit'||mode==='no-edit-button')return;item.editing=true;save();render();};
+      row.append(title);
+      if(target&&mode==='duplicate-titles')row.append(title.cloneNode(true));
     }
     list.append(row);
+    if(item.title==='persist-target-row'&&mode==='duplicate-rows')list.append(row.cloneNode(true));
   }
 }
 input.onkeydown=event=>{

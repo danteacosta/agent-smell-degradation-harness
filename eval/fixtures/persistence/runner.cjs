@@ -31,19 +31,55 @@ async function pageIn(context, errors) {
   await page.waitForTimeout(300);
   return page;
 }
-async function row(page,title,{visibleOnly=true}={}) {
+async function recognizeRow(page,title,{visibleOnly=true}={}) {
   const rows=page.locator('ul.todo-list > li');
   const count=await rows.count();
+  let match;
   for(let i=0;i<count;i++){
     const candidate=rows.nth(i);
-    const label=candidate.locator('label');
-    if(await label.count()===1 && (await label.textContent()).trim()===title
-        && (!visibleOnly || await candidate.isVisible() && await label.isVisible()))return candidate;
-    const input=await editInput(candidate);
-    if(input && (await input.inputValue()).trim()===title
-        && (!visibleOnly || await candidate.isVisible()))return candidate;
+    // Even visibleOnly:false cannot turn hidden DOM text into a semantic match.
+    if(!await candidate.isVisible())continue;
+    const elements=candidate.locator(':visible');
+    const titles=await elements.evaluateAll((nodes,title)=>{
+      const formControls='input,textarea,select,option,button,output';
+      const renderedElements=nodes.map((element,index)=>({element,index,
+        text:typeof element.innerText==='string'?element.innerText.trim():''}));
+      const controlsWithText=renderedElements.filter(({element,text})=>
+        element.matches(formControls) && text.length>0);
+      const textNodes=renderedElements.filter(({element})=>!element.closest(formControls)
+        && !controlsWithText.some(({element:control})=>element.contains(control)));
+      const exact=textNodes.filter(({text})=>text===title);
+      // This boolean only gates the edit fallback; it never constructs a title match.
+      const hasText=nodes.some(element=>!element.closest(formControls)
+        && Array.from(element.childNodes).some(child=>
+          child.nodeType===Node.TEXT_NODE && child.textContent.trim().length>0));
+      return {hasText,
+        indices:exact.filter(({element})=>!exact.some(other=>
+          other.element!==element && element.contains(other.element))).map(({index})=>index)};
+    },title);
+    if(titles.indices.length>1)return {status:'ambiguous'};
+    let titleElement=titles.indices.length===1?elements.nth(titles.indices[0]):null;
+    if(!titleElement && !titles.hasText){
+      const input=await editInput(candidate);
+      if(input && (await input.inputValue()).trim()===title)titleElement=input;
+    }
+    if(titleElement){
+      if(match)return {status:'ambiguous'};
+      match={status:'matched',row:candidate,titleElement};
+    }
   }
-  return null;
+  return match || {status:'absent'};
+}
+async function hasExactDomTitle(page,title) {
+  const rows=page.locator('ul.todo-list > li');
+  for(let i=0;i<await rows.count();i++){
+    const candidate=rows.nth(i);
+    if(await candidate.isVisible())continue;
+    if(await candidate.locator('*').evaluateAll((elements,title)=>elements.some(element=>
+        !element.closest('input,textarea,select,option,button,output')
+        && (element.textContent || '').trim()===title),title))return true;
+  }
+  return false;
 }
 async function add(page,title) {
   const input=page.locator('input.new-todo');
@@ -71,20 +107,20 @@ async function scenario(id,check) {
       const errors=[];const first=await pageIn(context,errors);
       const title='persist-row-one';await add(first,title);
       const second=await pageIn(context,errors);
-      return Boolean(await row(second,title));
+      return (await recognizeRow(second,title)).status==='matched';
     });
     await scenario('completed_survives_reload',async context=>{
       const errors=[];const first=await pageIn(context,errors);
       const title='persist-row-two';await add(first,title);
-      const todo=await row(first,title);
-      if(!todo)return false;
-      const check=todo.locator('input[type="checkbox"]');
+      const todo=await recognizeRow(first,title);
+      if(todo.status!=='matched')return false;
+      const check=todo.row.locator('input[type="checkbox"]');
       if(await check.count()!==1)return false;
       await check.check();await first.waitForTimeout(300);
       const second=await pageIn(context,errors);
-      const restored=await row(second,title);
-      if(!restored)return false;
-      const restoredCheck=restored.locator('input[type="checkbox"]');
+      const restored=await recognizeRow(second,title);
+      if(restored.status!=='matched')return false;
+      const restoredCheck=restored.row.locator('input[type="checkbox"]');
       return await restoredCheck.count()===1 && await restoredCheck.isChecked();
     });
     await scenario('local_storage_used',async context=>{
@@ -100,33 +136,36 @@ async function scenario(id,check) {
       const errors=[];const first=await pageIn(context,errors);
       const title='persist-target-row';await add(first,title);
       await first.screenshot({path:'/output/before-edit.png'});
-      const todo=await row(first,title);
+      const todo=await recognizeRow(first,title);
       let target;
-      if(!todo){target={status:'not_evaluable',reason:'todo_missing_after_reload'};}
-      else {
-        await todo.locator('label').dblclick();await first.waitForTimeout(300);
-        const editing=await editInput(todo);
-        if(!editing)throw new InterfaceError('visible edit input required after double-click');
+      if(todo.status!=='matched')throw new InterfaceError('one exact visible todo title required before edit');
+      try {await todo.titleElement.dblclick();}
+      catch(error){
+        if(error.name!=='TimeoutError')throw error;
+        throw new InterfaceError('visible todo title could not receive double-click');
       }
+      await first.waitForTimeout(300);
+      const editing=await editInput(todo.row);
+      if(!editing)throw new InterfaceError('visible edit input required after double-click');
       await first.screenshot({path:'/output/editing.png'});
       const second=await pageIn(context,errors);
-      const restored=await row(second,title);
-      if(!target){
-        if(!restored){
-          const hidden=await row(second,title,{visibleOnly:false});
-          target={status:'not_evaluable',reason:hidden
-            ? 'todo_not_visible_after_reload':'todo_missing_after_reload'};
-        }
-        else target={status:await editInput(restored)?'failed':'passed'};
+      const restored=await recognizeRow(second,title);
+      if(restored.status==='absent'){
+        const hidden=await hasExactDomTitle(second,title);
+        target={status:'not_evaluable',reason:hidden
+          ? 'todo_not_visible_after_reload':'todo_missing_after_reload'};
       }
+      else if(restored.status==='ambiguous')
+        target={status:'not_evaluable',reason:'todo_ambiguous_after_reload'};
+      else target={status:await editInput(restored.row)?'failed':'passed'};
       await second.screenshot({path:'/output/after-reload.png'});
       const storage=await second.evaluate(()=>({
         storage_keys:Object.keys(localStorage).filter(key=>key==='todos-vanilla'),
         storage_key_count:localStorage.length}));
       report.target_observation={...storage,console_errors:errors,
-        before_edit_todo_present:Boolean(todo),editing_visible_before_reload:
-          Boolean(todo && await editInput(todo)),todo_present_after_reload:Boolean(restored),
-        editing_visible_after_reload:Boolean(restored && await editInput(restored))};
+        before_edit_todo_present:true,editing_visible_before_reload:
+          Boolean(await editInput(todo.row)),todo_present_after_reload:restored.status==='matched',
+        editing_visible_after_reload:Boolean(restored.status==='matched' && await editInput(restored.row))};
       report.cases.push({id:'editing_not_restored',...target});
     } finally {await context.close();}
     report.status='complete';
