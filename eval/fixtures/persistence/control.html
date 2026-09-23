@@ -6,6 +6,7 @@ const key='todos-vanilla';
 const input=document.querySelector('input.new-todo');
 const list=document.querySelector('ul.todo-list');
 let todos=[];
+const loadedFromStorage=localStorage.getItem(key)!==null;
 if(mode!=='no-reload'){
   try{todos=JSON.parse(mode==='encoded-value'
     ? atob(localStorage.getItem(key)||'W10=') : localStorage.getItem(key)||'[]').map(item=>({...item,
@@ -24,6 +25,7 @@ function render(){
   list.replaceChildren();
   for(const item of todos){
     const row=document.createElement('li');
+    if(mode==='hidden-after-reload'&&loadedFromStorage)row.hidden=true;
     const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=item.completed;
     checkbox.onchange=()=>{item.completed=checkbox.checked;save();render();};
     row.append(checkbox);

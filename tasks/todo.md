@@ -6,6 +6,10 @@
 - [x] Write fail-first report-classification tests and the offline browser runner.
 - [x] Qualify ordinary, false-flag and encoded storage references and selective mutants;
       all eight expected vectors matched in the final immutable image.
+- [x] Encode the hidden-DOM false-pass regression and require user-visible restoration;
+      add a ninth control and fail the target closed when only hidden state survives.
+- [ ] Requalify the corrected runner in a new immutable image; the v4 image remains
+      historical and cannot admit the successor bytes.
 - [ ] Obtain independent source/prompt-leakage review before admitting this case.
 - [ ] Freeze the eligible multi-project schedule only after all admitted oracles qualify.
 - [ ] Run the once-only model collection when sufficient account capacity exists.

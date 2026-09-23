@@ -31,15 +31,17 @@ async function pageIn(context, errors) {
   await page.waitForTimeout(300);
   return page;
 }
-async function row(page,title) {
+async function row(page,title,{visibleOnly=true}={}) {
   const rows=page.locator('ul.todo-list > li');
   const count=await rows.count();
   for(let i=0;i<count;i++){
     const candidate=rows.nth(i);
     const label=candidate.locator('label');
-    if(await label.count()===1 && (await label.textContent()).trim()===title)return candidate;
+    if(await label.count()===1 && (await label.textContent()).trim()===title
+        && (!visibleOnly || await candidate.isVisible() && await label.isVisible()))return candidate;
     const input=await editInput(candidate);
-    if(input && (await input.inputValue()).trim()===title)return candidate;
+    if(input && (await input.inputValue()).trim()===title
+        && (!visibleOnly || await candidate.isVisible()))return candidate;
   }
   return null;
 }
@@ -110,7 +112,11 @@ async function scenario(id,check) {
       const second=await pageIn(context,errors);
       const restored=await row(second,title);
       if(!target){
-        if(!restored)target={status:'not_evaluable',reason:'todo_missing_after_reload'};
+        if(!restored){
+          const hidden=await row(second,title,{visibleOnly:false});
+          target={status:'not_evaluable',reason:hidden
+            ? 'todo_not_visible_after_reload':'todo_missing_after_reload'};
+        }
         else target={status:await editInput(restored)?'failed':'passed'};
       }
       await second.screenshot({path:'/output/after-reload.png'});

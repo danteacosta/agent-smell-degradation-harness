@@ -42,3 +42,24 @@ The oracle observes *visible restoration*. It cannot establish literal absence
 of serialized edit-related bytes. The direct-code candidate remains pending
 independent prompt-leakage review and cohort freeze. The previous results and
 frozen packets are unchanged.
+
+## 2026-09-23 visibility correction
+
+A post-qualification audit found that the runner located a restored todo by DOM
+text without requiring the row and its identifying label to be visible. A page
+could therefore keep the todo in a hidden row after reload and receive passing
+`todo_survives_reload`, `completed_survives_reload`, and target observations even
+though no restored todo was available at the user interface. This is an oracle
+false positive, not evidence about a generated artifact.
+
+The successor runner requires a visible row and visible label (or visible edit
+input) for user-level restoration. A ninth authored control restores the exact
+todo and completed state in a hidden row; the expected outcome is two non-target
+failures and `editing_not_restored=not_evaluable` with
+`todo_not_visible_after_reload`. The Python adapter accepts that reason only as
+an unknown target outcome, never as a target pass or defect.
+
+The v4 packet and image above remain immutable qualification history for the old
+runner. They do not qualify the corrected bytes. Admission remains blocked until
+the nine-control successor qualification passes in a newly built immutable image,
+the exact prompt passes independent leakage review, and the cohort is frozen.
