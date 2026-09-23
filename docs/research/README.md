@@ -63,3 +63,5 @@ experiment evidence.
 - [Native UI source candidates](native-ui-source-candidates-20260923.md): pinned RealWorld/Kanboard UI sources; not admitted.
 
 - [E2E admission and prompt freeze](e2e-admission-freeze-20260923.md): one bounded persistence endpoint; Mark all and StrictDoc deferred; 18 unattempted positions, no execution-ready claim.
+
+- [Persistence UI collection](persistence-results-20260923.md): 18 calls, 13 target passes, five unknowns and a post-hoc selector-coverage audit; [frozen execution method](persistence-collection-method-20260923.md).
