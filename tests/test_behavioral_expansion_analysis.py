@@ -17,6 +17,22 @@ def result(slot, category, target_failed=None):
     return {'slot_id': slot['slot_id'], 'category': category, 'target_failed': target_failed}
 
 
+def e2e_cases():
+    return [dict(case, test_layer='browser', artifact_interface='generated_ui',
+                 oracle_receipt_sha256='a' * 64, prompt_bundle_sha256='b' * 64)
+            for case in cases()]
+
+
+def test_e2e_schedule_requires_browser_visible_generated_interface_and_freezes():
+    assert len(study.plan_e2e_slots(e2e_cases(), seed=9)) == 54
+    for change in ({'test_layer': 'integration'}, {'artifact_interface': 'authored_wrapper'},
+                   {'oracle_receipt_sha256': None}, {'prompt_bundle_sha256': None}):
+        candidate = e2e_cases()
+        candidate[0].update(change)
+        with pytest.raises(ValueError):
+            study.plan_e2e_slots(candidate, seed=9)
+
+
 def test_schedule_is_balanced_deterministic_and_contains_no_source_or_target_text():
     slots = study.plan_slots(cases(), seed=9)
     assert len(slots) == 54

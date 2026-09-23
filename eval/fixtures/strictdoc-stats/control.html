@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="qualification-mode" content="MODE"><title>Project Statistics</title>
+<style>body{font:18px sans-serif;margin:32px;max-width:620px}dl{display:grid;grid-template-columns:240px auto;gap:8px}dt{font-weight:bold}</style>
+<h1>Project Statistics</h1><dl id="statistics"></dl><p id="generation"></p>
+<script>
+const mode=document.querySelector('meta[name="qualification-mode"]').content;
+const fixture=window.projectStatistics;
+const fields=[
+  ['project-title','Project title',fixture.title],
+  ['git-revision','Git revision',mode==='wrong-revision'?'incorrect-revision':fixture.revision],
+  ['total-documents','Total documents',fixture.totalDocuments],
+  ['total-requirements','Total requirements',mode==='wrong-count'?99:fixture.totalRequirements],
+  ['status-active','Active',fixture.statusCounts.Active],
+  ['status-draft','Draft',fixture.statusCounts.Draft],
+  ['status-obsolete','Obsolete',fixture.statusCounts.Obsolete],
+  ['total-tbd-tbc','TBD/TBC',fixture.totalTbdTbc]
+];
+const list=document.getElementById('statistics');
+for(const [key,label,value] of fields){
+  const term=document.createElement('dt');term.textContent=label;
+  const detail=document.createElement('dd');
+  if(!(mode==='missing-handle'&&key==='git-revision'))detail.dataset.stat=key;
+  detail.textContent=String(value);list.append(term,detail);
+}
+const target=document.getElementById('generation');
+let date=new Date();
+if(mode==='wrong-date')date=new Date(date.getTime()+86400000);
+if(mode==='hardcoded-first')date=new Date('2032-04-17T12:00:00Z');
+if(mode!=='omit-date'&&mode!=='portuguese'&&mode!=='french'&&mode!=='short-month'&&mode!=='iso-timestamp'){
+  target.textContent=date.toISOString().slice(0,10);
+}else if(mode==='portuguese'){
+  target.textContent=new Intl.DateTimeFormat('pt-BR',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(date);
+}else if(mode==='french'){
+  target.textContent=new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(date);
+}else if(mode==='short-month'){
+  target.textContent=new Intl.DateTimeFormat('en-US',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(date);
+}else if(mode==='iso-timestamp'){
+  target.textContent=date.toISOString();
+}
+if(mode==='hidden-date')target.hidden=true;
+if(mode==='callable-date')target.textContent=Date();
+if(mode==='below-fold')target.style.marginTop='1000px';
+if(mode==='transparent')target.style.color='transparent';
+if(mode==='transparent-neutral')document.querySelector('[data-stat="git-revision"]').style.color='transparent';
+if(mode==='partially-clipped')target.style.cssText='width:10px;overflow:hidden;white-space:nowrap';
+if(mode==='pointer-events-none')target.style.pointerEvents='none';
+if(mode==='aria-hidden')target.setAttribute('aria-hidden','true');
+if(mode==='clipped'){
+  const clip=document.createElement('div');clip.style.cssText='height:0;overflow:hidden';
+  target.replaceWith(clip);clip.append(target);
+}
+if(mode==='covered'){
+  const rect=target.getBoundingClientRect();const cover=document.createElement('div');
+  cover.style.cssText=`position:absolute;left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;background:white;pointer-events:none`;
+  document.body.append(cover);
+}
+</script></html>
