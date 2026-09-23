@@ -19,8 +19,9 @@ The current contract identifies one **visible** todo row by its exact rendered
 title and requires a title element that can receive the edit action. It checks
 the visible edit input before opening a second page at the same origin, then
 checks the restored row and edit state there. A hidden, substring-only,
-accessible-name-only, control-value-only, ambiguous, or non-actionable title
-cannot silently satisfy that contract. Missing or ambiguous prerequisites are
+accessible-name-only, control-value-only outside a visible edit field,
+ambiguous, or non-actionable title cannot silently satisfy that contract.
+Missing or ambiguous prerequisites are
 classified as interface errors or an unevaluable target, with their stated
 reasons; they are not target passes or target defects. Todo survival, completed
 state, and nonempty storage remain separate observations. The target is visible
