@@ -65,7 +65,24 @@ Add modes and exact vectors from the approved design:
 Render each title structure directly in `control.html`. The ordinary edit
 handler must be attached to the visible title element or an ancestor reached by
 event bubbling. The control-value mode must use an unrelated non-editing
-`input`; it must never satisfy edit-input recognition.
+`input` that is visible and editable; it must never satisfy edit-input
+recognition because it is not the row's active editor.
+
+Apply the six initial-recognition-invalid mutations only when
+`item.title === "persist-target-row"`. The three earlier non-target scenarios
+must retain the ordinary valid title structure, so their successful assertions
+remain meaningful before the target scenario returns `interface_error`.
+`duplicate-after-reload` is the exception: duplicate every restored row only
+after loading from storage so the two non-target reload assertions fail and the
+target becomes ambiguous on the second page.
+
+Add an expected screenshot inventory per category to the qualification matrix.
+Complete and target-not-evaluable controls require exactly
+`before-edit.png`, `editing.png`, and `after-reload.png`.
+Initial-recognition `interface_error` controls require exactly
+`before-edit.png`. Qualification must compare this expected filename set with
+the actual regular PNG files; screenshot hashes alone are evidence, not the
+predicate.
 
 - [ ] **Step 2: Build a temporary successor image**
 
@@ -103,8 +120,10 @@ For each `ul.todo-list > li`, inspect visible non-form descendants using
 rendered `innerText`, trim only surrounding whitespace, require complete
 equality, and remove a candidate when it contains a more specific matching
 descendant. A match requires one candidate in one row. The edit-input fallback
-qualifies only an input returned by the existing `editInput(row)` predicate:
-visible, editable, text-like, and contained by that row.
+qualifies only an input returned by a tightened `editInput(row)` predicate:
+visible, editable, text-like, contained by that row, and carrying the
+instrument's edit role/class rather than merely being an arbitrary editable
+input.
 
 - [ ] **Step 2: Apply the phase-specific handling matrix**
 
@@ -113,6 +132,12 @@ checks return false for either. After second-page navigation, map absence to the
 existing missing/hidden reasons and ambiguity to
 `todo_ambiguous_after_reload`. Double-click `titleElement`, never a hard-coded
 `label` locator.
+
+Keep hidden-row diagnosis separate from semantic recognition. A diagnostic-only
+`hasExactDomTitle(page, title)` may inspect normalized `textContent` in
+non-visible rows after semantic recognition returns `absent`; it can select
+only the unknown reason `todo_not_visible_after_reload` and must never return
+a row, pass an assertion, or drive an interaction.
 
 - [ ] **Step 3: Rebuild and rerun qualification**
 
