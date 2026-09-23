@@ -21,12 +21,15 @@ EXPECTED = {
     'no-edit': ('interface_error', []),
     'no-edit-button': ('interface_error', []),
     'no-reload': ('target_not_evaluable', ['todo_survives_reload', 'completed_survives_reload']),
+    'hidden-after-reload': ('target_not_evaluable',
+                            ['todo_survives_reload', 'completed_survives_reload']),
     'drop-completed': ('non_target_only_failure', ['completed_survives_reload']),
 }
 MODES = {'omit-edit-state': 'omit', 'store-false-flag': 'false-flag',
          'encoded-value': 'encoded-value',
          'restore-edit': 'restore-edit', 'no-edit': 'no-edit',
          'no-edit-button': 'no-edit-button', 'no-reload': 'no-reload',
+         'hidden-after-reload': 'hidden-after-reload',
          'drop-completed': 'drop-completed'}
 
 
@@ -62,7 +65,9 @@ def main() -> int:
         rows.append({'id': name, 'expected_category': expected_category,
                      'observed_category': receipt['category'],
                      'expected_failures': expected_failures, 'observed_failures': failures,
-                     'expected_target_reason': 'todo_missing_after_reload' if name == 'no-reload' else None,
+                     'expected_target_reason': (
+                         'todo_missing_after_reload' if name == 'no-reload' else
+                         'todo_not_visible_after_reload' if name == 'hidden-after-reload' else None),
                      'observed_target_reason': target.get('reason'),
                      'receipt_sha256': digest(output / 'executor.json'),
                      'report_sha256': digest(output / 'report.json'),

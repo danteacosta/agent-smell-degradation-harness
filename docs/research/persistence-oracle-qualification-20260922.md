@@ -42,3 +42,31 @@ The oracle observes *visible restoration*. It cannot establish literal absence
 of serialized edit-related bytes. The direct-code candidate remains pending
 independent prompt-leakage review and cohort freeze. The previous results and
 frozen packets are unchanged.
+
+## 2026-09-23 visibility correction
+
+A post-qualification audit found that the runner located a restored todo by DOM
+text without requiring the row and its identifying label to be visible. A page
+could therefore keep the todo in a hidden row after reload and receive passing
+`todo_survives_reload`, `completed_survives_reload`, and target observations even
+though no restored todo was available at the user interface. This is an oracle
+false positive, not evidence about a generated artifact.
+
+The successor runner requires a visible row and visible label (or visible edit
+input) for user-level restoration. A ninth authored control restores the exact
+todo and completed state in a hidden row; the expected outcome is two non-target
+failures and `editing_not_restored=not_evaluable` with
+`todo_not_visible_after_reload`. The Python adapter accepts that reason only as
+an unknown target outcome, never as a target pass or defect.
+
+The v4 packet and image above remain immutable qualification history for the old
+runner. They do not qualify the corrected bytes. The successor workflow rebuilt
+the instrument and matched all **9/9** expected vectors, including the hidden-row
+control. The corrected image ID is
+`sha256:e284d3ef9996b7cf4d1662a1f0efbc8d89abc8dafa56a52d6e5177a74f1b81bb`;
+the qualification JSON SHA-256 is
+`3210afa73cd633193f6b27d4dac81fc3ea6468f0a368e52cfb10bb7295764667`, and
+the 69-file CI artifact ZIP SHA-256 is
+`98f411cf2c42616ff0b620fe0d33fd240d0105ce7e8ed2b09fd471fa0bc99c58`.
+Admission remains blocked until the exact prompt passes independent leakage
+review and the eligible cohort, runtime, and schedule are frozen.
