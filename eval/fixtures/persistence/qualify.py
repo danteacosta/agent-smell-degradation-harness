@@ -38,6 +38,8 @@ EXPECTED = {
     'wrapped-control-title': ('interface_error', []),
     'restore-edit-wrapped-action': ('target_only_failure', ['editing_not_restored']),
     'mixed-title-wrapped-action': ('pass', []),
+    'transformed-title-with-action': ('interface_error', []),
+    'block-title-with-action': ('interface_error', []),
 }
 MODES = {'omit-edit-state': 'omit', 'store-false-flag': 'false-flag',
          'encoded-value': 'encoded-value',
@@ -56,14 +58,17 @@ MODES = {'omit-edit-state': 'omit', 'store-false-flag': 'false-flag',
          'duplicate-after-reload': 'duplicate-after-reload',
          'wrapped-control-title': 'wrapped-control-title',
          'restore-edit-wrapped-action': 'restore-edit-wrapped-action',
-         'mixed-title-wrapped-action': 'mixed-title-wrapped-action'}
+         'mixed-title-wrapped-action': 'mixed-title-wrapped-action',
+         'transformed-title-with-action': 'transformed-title-with-action',
+         'block-title-with-action': 'block-title-with-action'}
 
 FULL_SCREENSHOTS = {'before-edit.png', 'editing.png', 'after-reload.png'}
 INITIAL_INTERFACE_ERRORS = {'no-edit', 'no-edit-button',
                             'hidden-exact-title', 'accessible-only-title',
                             'control-value-title', 'substring-title',
                             'duplicate-rows', 'duplicate-titles',
-                            'wrapped-control-title'}
+                            'wrapped-control-title', 'transformed-title-with-action',
+                            'block-title-with-action'}
 
 
 def digest(path: Path) -> str:

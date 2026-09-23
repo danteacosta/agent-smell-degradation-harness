@@ -60,11 +60,22 @@ function render(){
         action.append(output);title.append(action);
       }
       if(mode==='mixed-title-wrapped-action'){
-        title=document.createElement('div');title.append(item.title.slice(0,7));
-        const suffix=document.createElement('span');suffix.textContent=item.title.slice(7);
+        title=document.createElement('div');
+        const text=document.createElement('span');text.textContent=item.title;
         const wrapper=document.createElement('div');
         const action=document.createElement('button');action.textContent='Delete';
-        wrapper.append(action);title.append(suffix,wrapper);
+        wrapper.append(action);title.append(text,wrapper);
+      }
+      if(target&&(mode==='transformed-title-with-action'||mode==='block-title-with-action')){
+        title=document.createElement('div');
+        if(mode==='transformed-title-with-action'){
+          title.style.textTransform='uppercase';title.append(item.title);
+        }else{
+          const first=document.createElement('div');first.textContent=item.title.slice(0,7);
+          const second=document.createElement('div');second.textContent=item.title.slice(7);
+          title.append(first,second);
+        }
+        const action=document.createElement('button');action.textContent='Delete';title.append(action);
       }
       let editSurface=title;
       if(target&&mode==='hidden-exact-title'){
