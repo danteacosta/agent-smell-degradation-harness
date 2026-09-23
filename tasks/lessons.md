@@ -1,5 +1,16 @@
 # Lessons learned
 
+## 2026-09-23: enforce the requested endpoint before selecting cases
+
+- The user clarified that H1 effects must be demonstrated through a real UI and
+  browser E2E. API qualification alone does not meet that endpoint. Screen for
+  a sourced UI contract first, and keep API controls auxiliary unless a UI
+  journey is independently justified. A wrapper screen cannot create evidence
+  for a UI requirement absent from the source.
+- Freeze the endpoint and admission rules before counting the generation
+  budget. When the endpoint changes, publish exclusions and revise the cohort
+  before generation rather than retaining the old diversity claim.
+
 ## 2026-09-07: frozen runtimes and verification
 
 - Build packages in a separate source staging directory. Creating local

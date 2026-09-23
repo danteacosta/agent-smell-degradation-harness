@@ -1,0 +1,39 @@
+name: StrictDoc statistics E2E oracle qualification
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - eval/strictdoc_stats_executor.py
+      - eval/fixtures/strictdoc-stats/**
+      - tests/test_strictdoc_stats_executor.py
+      - .github/workflows/strictdoc-stats-oracle-qualification.yml
+
+permissions:
+  contents: read
+
+jobs:
+  qualify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build pinned offline browser instrument
+        run: docker build --iidfile "$RUNNER_TEMP/strictdoc-stats-image" eval/fixtures/strictdoc-stats
+      - name: Qualify valid and mutant UI controls
+        run: >-
+          python eval/fixtures/strictdoc-stats/qualify.py
+          --image "$(cat "$RUNNER_TEMP/strictdoc-stats-image")"
+          --output "$RUNNER_TEMP/strictdoc-stats-qualification"
+      - name: Upload authored UI evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: strictdoc-stats-qualification
+          path: ${{ runner.temp }}/strictdoc-stats-qualification/
+          retention-days: 30

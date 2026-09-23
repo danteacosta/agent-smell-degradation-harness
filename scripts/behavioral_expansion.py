@@ -9,6 +9,7 @@ from collections import Counter, defaultdict
 import hashlib
 import json
 import random
+import re
 
 MODELS = ('gpt-5.6-luna', 'gpt-5.6-sol')
 ARMS = ('A', 'B', 'C')
@@ -53,6 +54,20 @@ def plan_slots(cases: list[dict], seed: int = 20260922) -> list[dict]:
     if len({slot['slot_id'] for slot in slots}) != len(slots):
         raise ValueError('slot ID collision')
     return slots
+
+
+def plan_e2e_slots(cases: list[dict], seed: int = 20260922) -> list[dict]:
+    """Schedule only qualified generated-UI cases with frozen prompt and oracle receipts."""
+    if not isinstance(cases, list) or not cases:
+        raise ValueError('nonempty E2E cohort required')
+    for case in cases:
+        if (not isinstance(case, dict) or case.get('test_layer') != 'browser'
+                or case.get('artifact_interface') != 'generated_ui'
+                or any(not isinstance(case.get(key), str)
+                       or not re.fullmatch(r'[0-9a-f]{64}', case[key])
+                       for key in ('oracle_receipt_sha256', 'prompt_bundle_sha256'))):
+            raise ValueError('E2E cases require generated UI, browser oracle and frozen receipts')
+    return plan_slots(cases, seed)
 
 
 def _mean_bounds(values: list[dict]) -> list[float]:

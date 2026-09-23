@@ -1,5 +1,11 @@
 # Behavioral expansion: preparation, not a new result
 
+Update, 2026-09-23: the primary endpoint now requires generated UI observed in
+browser E2E. The mixed API/browser 144-slot proposal below is historical and
+superseded for that cohort by the [E2E-first plan](../plans/2026-09-23-e2e-first-h1.md).
+The new screening currently retains three candidate intents in two projects;
+it does not claim four-project diversity or authorize generation before freeze.
+
 The user approved expanding the behavioral comparison on 2026-09-22. This
 checkpoint screens all 12 source requirements from the completed criteria pilot.
 Eight are candidates across four projects; four are deferred with reasons in

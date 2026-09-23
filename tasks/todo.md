@@ -1,5 +1,18 @@
 # Requirements-smell experiment hardening
 
+## H1 through generated UI E2E — 2026-09-23
+
+- [x] Rescreen all 12 previous intents for the user-required browser UI endpoint.
+- [x] Preserve the mixed-layer proposal as historical; defer five API-only candidates.
+- [x] Add a schedule gate requiring generated UI, browser layer and freeze receipts.
+- [x] Qualify and independently review the StrictDoc statistics screen oracle (21 controls).
+- [ ] Freeze exact A/B/C prompts and oracle/runtime bytes for eligible UI cases.
+- [ ] Expand project diversity with independently sourced UI requirements.
+- [ ] Collect once in isolated randomized contexts and retain all planned outcomes.
+
+The current subset is three candidate intents in two exposed projects (54 slots
+if all are admitted), not the previous four-project proposal. No new generation.
+
 ## Behavioral expansion: TodoMVC persistence oracle — 2026-09-22
 
 - [x] Map the observable reload contract to the exact pinned source deletion.

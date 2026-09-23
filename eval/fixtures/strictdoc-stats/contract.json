@@ -1,0 +1,80 @@
+{
+  "clocks": [
+    "2032-04-17T12:00:00Z",
+    "2034-11-23T09:00:00Z"
+  ],
+  "stats": {
+    "title": "Atlas Mercury",
+    "revision": "f39bc71",
+    "totalDocuments": 4,
+    "totalRequirements": 12,
+    "statusCounts": {
+      "Active": 7,
+      "Draft": 3,
+      "Obsolete": 2
+    },
+    "totalTbdTbc": 13
+  },
+  "expected": {
+    "project-title": "Atlas Mercury",
+    "git-revision": "f39bc71",
+    "total-documents": "4",
+    "total-requirements": "12",
+    "status-active": "7",
+    "status-draft": "3",
+    "status-obsolete": "2",
+    "total-tbd-tbc": "13"
+  },
+  "groups": {
+    "project_identity": [
+      "project-title",
+      "git-revision"
+    ],
+    "totals": [
+      "total-documents",
+      "total-requirements"
+    ],
+    "status_breakdown": [
+      "status-active",
+      "status-draft",
+      "status-obsolete"
+    ],
+    "tbd_tbc_total": [
+      "total-tbd-tbc"
+    ]
+  },
+  "accepted_dates": {
+    "clock-one": [
+      "2032 04 17",
+      "17 04 2032",
+      "04 17 2032",
+      "17 4 2032",
+      "4 17 2032",
+      "april 17 2032",
+      "apr 17 2032",
+      "17 april 2032",
+      "17 apr 2032",
+      "17 de abril de 2032",
+      "17 de abr de 2032",
+      "17 avril 2032",
+      "17 avr 2032",
+      "17 abr 2032",
+      "17 aprile 2032",
+      "2032年4月17日"
+    ],
+    "clock-two": [
+      "2034 11 23",
+      "23 11 2034",
+      "11 23 2034",
+      "november 23 2034",
+      "nov 23 2034",
+      "23 november 2034",
+      "23 nov 2034",
+      "23 de novembro de 2034",
+      "23 de nov de 2034",
+      "23 novembre 2034",
+      "23 de noviembre de 2034",
+      "2034年11月23日"
+    ]
+  }
+}
