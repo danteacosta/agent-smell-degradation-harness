@@ -13,6 +13,8 @@ if(mode!=='no-reload'){
     completed:mode==='drop-completed'?false:Boolean(item.completed),
     editing:mode==='restore-edit'&&Boolean(item.editing)}));}catch{todos=[];}
 }
+if(mode==='duplicate-after-reload'&&loadedFromStorage)
+  todos=todos.flatMap(item=>[item,{...item}]);
 function save(){
   const serialized=JSON.stringify(todos.map(item=>({
     id:item.id,title:item.title,completed:item.completed,
@@ -37,11 +39,36 @@ function render(){
       edit.onkeydown=event=>{if(event.key==='Enter'){item.title=edit.value;item.editing=false;save();render();}};
       row.append(edit);
     }else{
-      const label=document.createElement('label');label.textContent=item.title;
-      label.ondblclick=()=>{if(mode==='no-edit'||mode==='no-edit-button')return;item.editing=true;save();render();};
-      row.append(label);
+      const target=item.title==='persist-target-row';
+      let title;
+      if(mode==='span-title')title=document.createElement('span');
+      else if(mode==='div-title'||mode==='nested-title')title=document.createElement('div');
+      else title=document.createElement('label');
+      if(mode==='nested-title'){
+        const nested=document.createElement('span');nested.textContent=item.title;title.append(nested);
+      }else title.textContent=item.title;
+      let editSurface=title;
+      if(target&&mode==='hidden-exact-title'){
+        title.hidden=true;
+        const visible=document.createElement('label');visible.textContent='unrelated visible title';
+        row.append(visible);editSurface=visible;
+      }
+      if(target&&mode==='accessible-only-title'){
+        title.textContent='unrelated visible title';title.setAttribute('aria-label',item.title);
+      }
+      if(target&&mode==='control-value-title'){
+        title.textContent='unrelated visible title';
+        const unrelated=document.createElement('input');unrelated.type='text';
+        unrelated.className='unrelated-control';unrelated.value=item.title;
+        row.append(unrelated);
+      }
+      if(target&&mode==='substring-title')title.textContent=`prefix-${item.title}-suffix`;
+      editSurface.ondblclick=()=>{if(mode==='no-edit'||mode==='no-edit-button')return;item.editing=true;save();render();};
+      row.append(title);
+      if(target&&mode==='duplicate-titles')row.append(title.cloneNode(true));
     }
     list.append(row);
+    if(item.title==='persist-target-row'&&mode==='duplicate-rows')list.append(row.cloneNode(true));
   }
 }
 input.onkeydown=event=>{

@@ -24,13 +24,39 @@ EXPECTED = {
     'hidden-after-reload': ('target_not_evaluable',
                             ['todo_survives_reload', 'completed_survives_reload']),
     'drop-completed': ('non_target_only_failure', ['completed_survives_reload']),
+    'span-title': ('pass', []),
+    'div-title': ('pass', []),
+    'nested-title': ('pass', []),
+    'hidden-exact-title': ('interface_error', []),
+    'accessible-only-title': ('interface_error', []),
+    'control-value-title': ('interface_error', []),
+    'substring-title': ('interface_error', []),
+    'duplicate-rows': ('interface_error', []),
+    'duplicate-titles': ('interface_error', []),
+    'duplicate-after-reload': ('target_not_evaluable',
+                               ['todo_survives_reload', 'completed_survives_reload']),
 }
 MODES = {'omit-edit-state': 'omit', 'store-false-flag': 'false-flag',
          'encoded-value': 'encoded-value',
          'restore-edit': 'restore-edit', 'no-edit': 'no-edit',
          'no-edit-button': 'no-edit-button', 'no-reload': 'no-reload',
          'hidden-after-reload': 'hidden-after-reload',
-         'drop-completed': 'drop-completed'}
+         'drop-completed': 'drop-completed',
+         'span-title': 'span-title', 'div-title': 'div-title',
+         'nested-title': 'nested-title',
+         'hidden-exact-title': 'hidden-exact-title',
+         'accessible-only-title': 'accessible-only-title',
+         'control-value-title': 'control-value-title',
+         'substring-title': 'substring-title',
+         'duplicate-rows': 'duplicate-rows',
+         'duplicate-titles': 'duplicate-titles',
+         'duplicate-after-reload': 'duplicate-after-reload'}
+
+FULL_SCREENSHOTS = {'before-edit.png', 'editing.png', 'after-reload.png'}
+INITIAL_INTERFACE_ERRORS = {'no-edit', 'no-edit-button',
+                            'hidden-exact-title', 'accessible-only-title',
+                            'control-value-title', 'substring-title',
+                            'duplicate-rows', 'duplicate-titles'}
 
 
 def digest(path: Path) -> str:
@@ -67,18 +93,26 @@ def main() -> int:
                      'expected_failures': expected_failures, 'observed_failures': failures,
                      'expected_target_reason': (
                          'todo_missing_after_reload' if name == 'no-reload' else
-                         'todo_not_visible_after_reload' if name == 'hidden-after-reload' else None),
+                         'todo_not_visible_after_reload' if name == 'hidden-after-reload' else
+                         'todo_ambiguous_after_reload' if name == 'duplicate-after-reload' else None),
                      'observed_target_reason': target.get('reason'),
+                     'expected_screenshots': sorted(
+                         {'before-edit.png'} if name in INITIAL_INTERFACE_ERRORS
+                         else FULL_SCREENSHOTS),
+                     'observed_screenshots': sorted(
+                         path.name for path in output.iterdir()
+                         if path.suffix == '.png' and path.is_file() and not path.is_symlink()),
                      'receipt_sha256': digest(output / 'executor.json'),
                      'report_sha256': digest(output / 'report.json'),
-                     'screenshot_sha256': {filename: digest(output / filename)
-                         for filename in ('before-edit.png', 'editing.png', 'after-reload.png')
-                         if (output / filename).is_file()}})
+                     'screenshot_sha256': {path.name: digest(path)
+                         for path in output.iterdir() if path.suffix == '.png'
+                         and path.is_file() and not path.is_symlink()}})
     paths = sorted(path for path in fixture_dir.iterdir() if path.is_file())
     paths.append(ROOT / 'eval/persistence_executor.py')
     qualified = all(row['expected_category'] == row['observed_category']
                     and row['expected_failures'] == row['observed_failures']
                     and row['expected_target_reason'] == row['observed_target_reason']
+                    and row['expected_screenshots'] == row['observed_screenshots']
                     for row in rows)
     report = {'schema_version': 'persistence-qualification/v1', 'qualified': qualified,
               'image_id': args.image, 'cases': rows,
