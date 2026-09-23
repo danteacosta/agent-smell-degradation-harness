@@ -41,9 +41,19 @@ async function recognizeRow(page,title,{visibleOnly=true}={}) {
     if(!await candidate.isVisible())continue;
     const elements=candidate.locator(':visible');
     const titles=await elements.evaluateAll((nodes,title)=>{
+      const formControls='input,textarea,select,option,button,output';
+      const visibleElements=new Set(nodes);
+      function renderedTitleText(element){
+        if(element.closest(formControls))return '';
+        if(!element.querySelector(formControls))
+          return typeof element.innerText==='string'?element.innerText:'';
+        // Aggregate only visible non-control text, without changing the live DOM.
+        return Array.from(element.childNodes).map(child=>
+          child.nodeType===Node.TEXT_NODE?child.textContent:
+          visibleElements.has(child)?renderedTitleText(child):'').join('');
+      }
       const textNodes=nodes.map((element,index)=>({element,index,
-        text:typeof element.innerText==='string'?element.innerText.trim():''}))
-        .filter(({element})=>!element.closest('input,textarea,select,option,button,output'));
+        text:renderedTitleText(element).trim()}));
       const exact=textNodes.filter(({text})=>text===title);
       return {hasText:textNodes.some(({text})=>text.length>0),
         indices:exact.filter(({element})=>!exact.some(other=>

@@ -2,6 +2,7 @@
 <input class="new-todo" aria-label="New todo"><ul class="todo-list"></ul>
 <script>
 const mode=document.querySelector('meta[name="qualification-mode"]').content;
+const restoresEditing=mode==='restore-edit'||mode==='restore-edit-wrapped-action';
 const key='todos-vanilla';
 const input=document.querySelector('input.new-todo');
 const list=document.querySelector('ul.todo-list');
@@ -11,7 +12,7 @@ if(mode!=='no-reload'){
   try{todos=JSON.parse(mode==='encoded-value'
     ? atob(localStorage.getItem(key)||'W10=') : localStorage.getItem(key)||'[]').map(item=>({...item,
     completed:mode==='drop-completed'?false:Boolean(item.completed),
-    editing:mode==='restore-edit'&&Boolean(item.editing)}));}catch{todos=[];}
+    editing:restoresEditing&&Boolean(item.editing)}));}catch{todos=[];}
 }
 if(mode==='duplicate-after-reload'&&loadedFromStorage)
   todos=todos.flatMap(item=>[item,{...item}]);
@@ -19,7 +20,7 @@ function save(){
   const serialized=JSON.stringify(todos.map(item=>({
     id:item.id,title:item.title,completed:item.completed,
     ...(mode==='false-flag'?{editing:false}:{}),
-    ...(mode==='restore-edit'?{editing:item.editing}:{})
+    ...(restoresEditing?{editing:item.editing}:{})
   })));
   localStorage.setItem(key,mode==='encoded-value'?btoa(serialized):serialized);
 }
@@ -38,6 +39,11 @@ function render(){
       const edit=document.createElement('input');edit.className='edit';edit.value=item.title;
       edit.onkeydown=event=>{if(event.key==='Enter'){item.title=edit.value;item.editing=false;save();render();}};
       row.append(edit);
+      if(mode==='restore-edit-wrapped-action'){
+        const wrapper=document.createElement('div');
+        const action=document.createElement('button');action.textContent='Details';
+        wrapper.append(action);row.append(wrapper);
+      }
     }else{
       const target=item.title==='persist-target-row';
       let title;
@@ -47,6 +53,19 @@ function render(){
       if(mode==='nested-title'){
         const nested=document.createElement('span');nested.textContent=item.title;title.append(nested);
       }else title.textContent=item.title;
+      if(target&&mode==='wrapped-control-title'){
+        title=document.createElement('div');
+        const action=document.createElement('button');
+        const output=document.createElement('output');output.textContent=item.title;
+        action.append(output);title.append(action);
+      }
+      if(mode==='mixed-title-wrapped-action'){
+        title=document.createElement('div');title.append(item.title.slice(0,7));
+        const suffix=document.createElement('span');suffix.textContent=item.title.slice(7);
+        const wrapper=document.createElement('div');
+        const action=document.createElement('button');action.textContent='Delete';
+        wrapper.append(action);title.append(suffix,wrapper);
+      }
       let editSurface=title;
       if(target&&mode==='hidden-exact-title'){
         title.hidden=true;
