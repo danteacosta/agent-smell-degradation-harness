@@ -102,6 +102,7 @@ function render(){
         row.append(unrelated);
       }
       if(target&&mode==='substring-title')title.textContent=`prefix-${item.title}-suffix`;
+      if(target&&mode==='non-actionable-title')title.style.pointerEvents='none';
       editSurface.ondblclick=()=>{if(mode==='no-edit'||mode==='no-edit-button')return;item.editing=true;save();render();};
       row.append(title);
       if(target&&mode==='duplicate-titles')row.append(title.cloneNode(true));

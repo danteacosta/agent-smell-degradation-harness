@@ -42,6 +42,7 @@ EXPECTED = {
     'block-title-with-action': ('interface_error', []),
     'wrapped-checkbox-title': ('pass', []),
     'title-with-hidden-input': ('pass', []),
+    'non-actionable-title': ('interface_error', []),
 }
 MODES = {'omit-edit-state': 'omit', 'store-false-flag': 'false-flag',
          'encoded-value': 'encoded-value',
@@ -64,7 +65,8 @@ MODES = {'omit-edit-state': 'omit', 'store-false-flag': 'false-flag',
          'transformed-title-with-action': 'transformed-title-with-action',
          'block-title-with-action': 'block-title-with-action',
          'wrapped-checkbox-title': 'wrapped-checkbox-title',
-         'title-with-hidden-input': 'title-with-hidden-input'}
+         'title-with-hidden-input': 'title-with-hidden-input',
+         'non-actionable-title': 'non-actionable-title'}
 
 FULL_SCREENSHOTS = {'before-edit.png', 'editing.png', 'after-reload.png'}
 INITIAL_INTERFACE_ERRORS = {'no-edit', 'no-edit-button',
@@ -72,7 +74,7 @@ INITIAL_INTERFACE_ERRORS = {'no-edit', 'no-edit-button',
                             'control-value-title', 'substring-title',
                             'duplicate-rows', 'duplicate-titles',
                             'wrapped-control-title', 'transformed-title-with-action',
-                            'block-title-with-action'}
+                            'block-title-with-action', 'non-actionable-title'}
 
 
 def digest(path: Path) -> str:

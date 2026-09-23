@@ -139,7 +139,12 @@ async function scenario(id,check) {
       const todo=await recognizeRow(first,title);
       let target;
       if(todo.status!=='matched')throw new InterfaceError('one exact visible todo title required before edit');
-      await todo.titleElement.dblclick();await first.waitForTimeout(300);
+      try {await todo.titleElement.dblclick();}
+      catch(error){
+        if(error.name!=='TimeoutError')throw error;
+        throw new InterfaceError('visible todo title could not receive double-click');
+      }
+      await first.waitForTimeout(300);
       const editing=await editInput(todo.row);
       if(!editing)throw new InterfaceError('visible edit input required after double-click');
       await first.screenshot({path:'/output/editing.png'});
