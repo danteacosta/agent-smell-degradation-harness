@@ -1,5 +1,17 @@
 # Requirements-smell experiment hardening
 
+## E2E prompt admission — 2026-09-23
+
+- [x] Verify source slices and exact single-span deletions; independently review all A/B/C prompts.
+- [x] Admit bounded persistence endpoint and explicitly defer Mark all/StrictDoc endpoint gaps.
+- [x] Rebuild and requalify corrected persistence runtime (9/9 authored controls).
+- [x] Freeze exact prompts and 18 randomized planned positions with immutable custody receipt.
+- [ ] Freeze collector/CLI configuration and verify isolated execution/capacity before dispatch.
+- [ ] Resolve deferred endpoints and qualify additional UI projects for cross-project expansion.
+
+Prompt freeze is preparation only; all positions remain unattempted.
+
+
 ## H1 through generated UI E2E — 2026-09-23
 
 - [x] Rescreen all 12 previous intents for the user-required browser UI endpoint.

@@ -1,0 +1,3 @@
+Implement one self-contained HTML page using vanilla JavaScript with no external resources. Implement the supplied requirement in a usable todo interface. Use vanilla JavaScript as the framework designation for this task (framework name: vanilla).
+
+Use input.new-todo for entering a title; pressing Enter creates a todo. Use ul.todo-list with direct li children, each containing one completion checkbox and a visible label with the item title. Toggling the row checkbox changes completion. Double-clicking the label enters editing through an ordinary text input. Choose the layout, styling and internal data representation. Return only the HTML artifact.

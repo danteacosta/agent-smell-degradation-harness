@@ -1,0 +1,26 @@
+{
+  "schema_version": "e2e-prompt-freeze/v1",
+  "status": "prompts_and_bounded_endpoint_frozen_not_execution_ready",
+  "frozen_at_utc": "2026-09-23T13:05:11.468907+00:00",
+  "base_commit": "a7f0a897b3554d214163b5effde51cb2a077e911",
+  "admitted_intents": 1,
+  "admitted_projects": 1,
+  "planned_slots": 18,
+  "seed": 20260923,
+  "image_id": "sha256:01788ecb167ccaebf14d392740dae898f30cbeb1a7997230b5e8c5a894d9118a",
+  "qualification_sha256": "e9f5b48e29e2915ca65acfdb10b0d5aa40f140e378556259179ceb56554f87df",
+  "prompt_bundle_sha256": "8c8b28f1ca5676997ec8bb57b2e0bb769325020873b839ec8f3bc8132a027821",
+  "source_prompt_review": "independent_assistant_accepted",
+  "human_approvals": 0,
+  "generator_calls": 0,
+  "automatic_dispatch_allowed": false,
+  "remaining_execution_requirements": [
+    "freeze collector and Codex executable/configuration",
+    "verify isolated per-request contexts and account capacity before dispatch",
+    "no API-key fallback, no retries/repair of generated artifacts"
+  ],
+  "scope": "Visible edit-mode restoration in second same-origin page; not serialized-byte absence or actual same-page reload. Single exposed TodoMVC intent; not cross-project expansion or H1/H2 confirmation.",
+  "packet_relative_path": ".private-research-evidence/e2e-prompt-freeze-20260923-v1",
+  "receipt_sha256": "98018df19b329ea2f10e3aa66f4443048a14eb8974cdcbc8f7bd05ca1e3110ce",
+  "evidence_files": 105
+}
