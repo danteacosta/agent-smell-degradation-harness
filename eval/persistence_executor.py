@@ -12,7 +12,8 @@ from eval.focus_chain_executor import container_command
 
 ASSERTION_IDS = ('todo_survives_reload', 'completed_survives_reload',
                  'local_storage_used', 'editing_not_restored')
-UNKNOWN_REASONS = {'todo_missing_after_reload', 'todo_not_visible_after_reload'}
+UNKNOWN_REASONS = {'todo_missing_after_reload', 'todo_not_visible_after_reload',
+                   'todo_ambiguous_after_reload'}
 
 
 def _unique_fields(pairs):
