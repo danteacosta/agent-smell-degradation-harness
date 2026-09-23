@@ -1,0 +1,433 @@
+{
+  "schema_version": "behavioral-expansion-analysis/v1",
+  "planned": 18,
+  "recorded_rows": 18,
+  "executable": 13,
+  "unknown": 5,
+  "groups": [
+    {
+      "project_id": "todomvc",
+      "intent_id": "todomvc-persistence",
+      "model": "gpt-5.6-luna",
+      "variant": "A",
+      "planned": 3,
+      "target_failed": 0,
+      "target_passed": 3,
+      "unknown": 0,
+      "categories": {
+        "pass": 3
+      },
+      "target_failure_bounds": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "project_id": "todomvc",
+      "intent_id": "todomvc-persistence",
+      "model": "gpt-5.6-luna",
+      "variant": "B",
+      "planned": 3,
+      "target_failed": 0,
+      "target_passed": 0,
+      "unknown": 3,
+      "categories": {
+        "target_not_evaluable": 3
+      },
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "project_id": "todomvc",
+      "intent_id": "todomvc-persistence",
+      "model": "gpt-5.6-luna",
+      "variant": "C",
+      "planned": 3,
+      "target_failed": 0,
+      "target_passed": 2,
+      "unknown": 1,
+      "categories": {
+        "target_not_evaluable": 1,
+        "pass": 2
+      },
+      "target_failure_bounds": [
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    {
+      "project_id": "todomvc",
+      "intent_id": "todomvc-persistence",
+      "model": "gpt-5.6-sol",
+      "variant": "A",
+      "planned": 3,
+      "target_failed": 0,
+      "target_passed": 2,
+      "unknown": 1,
+      "categories": {
+        "pass": 2,
+        "interface_error": 1
+      },
+      "target_failure_bounds": [
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    {
+      "project_id": "todomvc",
+      "intent_id": "todomvc-persistence",
+      "model": "gpt-5.6-sol",
+      "variant": "B",
+      "planned": 3,
+      "target_failed": 0,
+      "target_passed": 3,
+      "unknown": 0,
+      "categories": {
+        "pass": 3
+      },
+      "target_failure_bounds": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "project_id": "todomvc",
+      "intent_id": "todomvc-persistence",
+      "model": "gpt-5.6-sol",
+      "variant": "C",
+      "planned": 3,
+      "target_failed": 0,
+      "target_passed": 3,
+      "unknown": 0,
+      "categories": {
+        "pass": 3
+      },
+      "target_failure_bounds": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "contrasts": [
+    {
+      "project_id": "todomvc",
+      "intent_id": "todomvc-persistence",
+      "model": "gpt-5.6-luna",
+      "comparison": "C-A",
+      "difference_bounds": [
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    {
+      "project_id": "todomvc",
+      "intent_id": "todomvc-persistence",
+      "model": "gpt-5.6-luna",
+      "comparison": "B-A",
+      "difference_bounds": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "project_id": "todomvc",
+      "intent_id": "todomvc-persistence",
+      "model": "gpt-5.6-sol",
+      "comparison": "C-A",
+      "difference_bounds": [
+        -0.3333333333333333,
+        0.0
+      ]
+    },
+    {
+      "project_id": "todomvc",
+      "intent_id": "todomvc-persistence",
+      "model": "gpt-5.6-sol",
+      "comparison": "B-A",
+      "difference_bounds": [
+        -0.3333333333333333,
+        0.0
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "project_id": "todomvc",
+      "model": "gpt-5.6-luna",
+      "comparison": "B-A",
+      "difference_bounds": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "project_id": "todomvc",
+      "model": "gpt-5.6-luna",
+      "comparison": "C-A",
+      "difference_bounds": [
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    {
+      "project_id": "todomvc",
+      "model": "gpt-5.6-sol",
+      "comparison": "B-A",
+      "difference_bounds": [
+        -0.3333333333333333,
+        0.0
+      ]
+    },
+    {
+      "project_id": "todomvc",
+      "model": "gpt-5.6-sol",
+      "comparison": "C-A",
+      "difference_bounds": [
+        -0.3333333333333333,
+        0.0
+      ]
+    }
+  ],
+  "project_weighted": [
+    {
+      "model": "gpt-5.6-luna",
+      "comparison": "B-A",
+      "projects": 1,
+      "difference_bounds": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "comparison": "C-A",
+      "projects": 1,
+      "difference_bounds": [
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "comparison": "B-A",
+      "projects": 1,
+      "difference_bounds": [
+        -0.3333333333333333,
+        0.0
+      ]
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "comparison": "C-A",
+      "projects": 1,
+      "difference_bounds": [
+        -0.3333333333333333,
+        0.0
+      ]
+    }
+  ],
+  "intent_weighted": [
+    {
+      "model": "gpt-5.6-luna",
+      "comparison": "B-A",
+      "intents": 1,
+      "difference_bounds": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "comparison": "C-A",
+      "intents": 1,
+      "difference_bounds": [
+        0.0,
+        0.3333333333333333
+      ]
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "comparison": "B-A",
+      "intents": 1,
+      "difference_bounds": [
+        -0.3333333333333333,
+        0.0
+      ]
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "comparison": "C-A",
+      "intents": 1,
+      "difference_bounds": [
+        -0.3333333333333333,
+        0.0
+      ]
+    }
+  ],
+  "limitations": [
+    "missingness bounds are not confidence intervals",
+    "repetitions are nested within intent and project",
+    "no general H1 or H2 inference from purposive sources"
+  ],
+  "confirmatory_eligible": false,
+  "human_approvals": 0,
+  "label_source": "independent_behavioral_oracle",
+  "calls_attempted": 18,
+  "stop_reason": null,
+  "scope": "Visible edit-mode restoration in second same-origin page; not serialized-byte absence or actual same-page reload. Single exposed TodoMVC intent; not cross-project expansion or H1/H2 confirmation.",
+  "packet_receipt_sha256": "06917820f30abcd2e00e0e288afa36601dc63df2333522378ca38ab678b46df2",
+  "execution_freeze_receipt_sha256": "0c15879f34448f9d5b85bcfb5816e81d512ca4bf314375c2477318e0b55a0ed8",
+  "private_packet": ".private-research-evidence/persistence-collection-20260923-v1",
+  "native_pngs_total": 52,
+  "complete_three_image_sets": 17,
+  "unique_thread_ids": 18,
+  "measurement_audit": "Four target_not_evaluable rows have visible span title labels in screenshots. The frozen row selector only recognizes HTML label or editing inputs. The raw todo_missing_after_reload reason and non-target failures do not establish absent or unpersisted todos. Preserve original scores as unknown; no post-hoc rescoring.",
+  "rows": [
+    {
+      "slot_id": "behavior-00965368478e38fa0813",
+      "model": "gpt-5.6-luna",
+      "variant": "C",
+      "replication": 1,
+      "category": "target_not_evaluable",
+      "target_failed": null
+    },
+    {
+      "slot_id": "behavior-6979874435e32205548c",
+      "model": "gpt-5.6-sol",
+      "variant": "A",
+      "replication": 3,
+      "category": "pass",
+      "target_failed": false
+    },
+    {
+      "slot_id": "behavior-9b667c576d1303624ca2",
+      "model": "gpt-5.6-sol",
+      "variant": "C",
+      "replication": 2,
+      "category": "pass",
+      "target_failed": false
+    },
+    {
+      "slot_id": "behavior-7f8887ec59b4bacc866e",
+      "model": "gpt-5.6-sol",
+      "variant": "B",
+      "replication": 1,
+      "category": "pass",
+      "target_failed": false
+    },
+    {
+      "slot_id": "behavior-b5b4d2be2f8dc2d61e66",
+      "model": "gpt-5.6-sol",
+      "variant": "C",
+      "replication": 3,
+      "category": "pass",
+      "target_failed": false
+    },
+    {
+      "slot_id": "behavior-2cd230c8e32a3b1b5468",
+      "model": "gpt-5.6-luna",
+      "variant": "B",
+      "replication": 1,
+      "category": "target_not_evaluable",
+      "target_failed": null
+    },
+    {
+      "slot_id": "behavior-da7d54ee29632edeb6f5",
+      "model": "gpt-5.6-luna",
+      "variant": "B",
+      "replication": 2,
+      "category": "target_not_evaluable",
+      "target_failed": null
+    },
+    {
+      "slot_id": "behavior-9f8d0e2266e1cd57b52b",
+      "model": "gpt-5.6-luna",
+      "variant": "C",
+      "replication": 3,
+      "category": "pass",
+      "target_failed": false
+    },
+    {
+      "slot_id": "behavior-d7c98d29535ce00b67cd",
+      "model": "gpt-5.6-luna",
+      "variant": "A",
+      "replication": 1,
+      "category": "pass",
+      "target_failed": false
+    },
+    {
+      "slot_id": "behavior-1dca34f3165b1da7fefb",
+      "model": "gpt-5.6-sol",
+      "variant": "B",
+      "replication": 2,
+      "category": "pass",
+      "target_failed": false
+    },
+    {
+      "slot_id": "behavior-c129c8b62ddbc0f91928",
+      "model": "gpt-5.6-sol",
+      "variant": "B",
+      "replication": 3,
+      "category": "pass",
+      "target_failed": false
+    },
+    {
+      "slot_id": "behavior-9f38702205d6028c4d72",
+      "model": "gpt-5.6-luna",
+      "variant": "A",
+      "replication": 3,
+      "category": "pass",
+      "target_failed": false
+    },
+    {
+      "slot_id": "behavior-f500ea97391cf78f7bed",
+      "model": "gpt-5.6-luna",
+      "variant": "A",
+      "replication": 2,
+      "category": "pass",
+      "target_failed": false
+    },
+    {
+      "slot_id": "behavior-d9ecd3e21f47b2b3f5de",
+      "model": "gpt-5.6-sol",
+      "variant": "A",
+      "replication": 2,
+      "category": "interface_error",
+      "target_failed": null
+    },
+    {
+      "slot_id": "behavior-893be7e6f221d7727d12",
+      "model": "gpt-5.6-luna",
+      "variant": "C",
+      "replication": 2,
+      "category": "pass",
+      "target_failed": false
+    },
+    {
+      "slot_id": "behavior-ba5de04744f7764474c2",
+      "model": "gpt-5.6-sol",
+      "variant": "A",
+      "replication": 1,
+      "category": "pass",
+      "target_failed": false
+    },
+    {
+      "slot_id": "behavior-f52bea56e05159ca2e85",
+      "model": "gpt-5.6-luna",
+      "variant": "B",
+      "replication": 3,
+      "category": "target_not_evaluable",
+      "target_failed": null
+    },
+    {
+      "slot_id": "behavior-b204700b12d147c63455",
+      "model": "gpt-5.6-sol",
+      "variant": "C",
+      "replication": 1,
+      "category": "pass",
+      "target_failed": false
+    }
+  ]
+}

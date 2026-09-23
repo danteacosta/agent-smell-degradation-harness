@@ -1,15 +1,26 @@
 # Requirements-smell experiment hardening
 
+## Persistence collection checkpoint
+
+- [x] Freeze collector, executable, exact requests and qualified browser image.
+- [x] Verify isolated subscription execution and collect all 18 positions once.
+- [x] Execute 18 UI artifacts; preserve 13 target passes and five unknowns.
+- [x] Independently audit custody and inspect selected screenshots.
+- [ ] Qualify semantic row recognition: four visible span-labelled rows were unrecognized by the frozen selector. Preserve original reports; no retrospective score replacement.
+- [ ] Admit additional UI projects before claiming cross-project expansion.
+
+No target failure was observed here; five unknowns prevent an equivalence or zero-defect claim. The [results](../docs/research/persistence-results-20260923.md) retain the measurement limitation and all planned positions.
+
 ## E2E prompt admission — 2026-09-23
 
 - [x] Verify source slices and exact single-span deletions; independently review all A/B/C prompts.
 - [x] Admit bounded persistence endpoint and explicitly defer Mark all/StrictDoc endpoint gaps.
 - [x] Rebuild and requalify corrected persistence runtime (9/9 authored controls).
 - [x] Freeze exact prompts and 18 randomized planned positions with immutable custody receipt.
-- [ ] Freeze collector/CLI configuration and verify isolated execution/capacity before dispatch.
+- [x] Freeze collector/CLI configuration and verify isolated execution/capacity before dispatch.
 - [ ] Resolve deferred endpoints and qualify additional UI projects for cross-project expansion.
 
-Prompt freeze is preparation only; all positions remain unattempted.
+The PR72 prompt freeze retained all positions as unattempted. The successor PR73 collection executed all 18; see the current checkpoint above.
 
 
 ## H1 through generated UI E2E — 2026-09-23
@@ -22,8 +33,7 @@ Prompt freeze is preparation only; all positions remain unattempted.
 - [ ] Expand project diversity with independently sourced UI requirements.
 - [ ] Collect once in isolated randomized contexts and retain all planned outcomes.
 
-The current subset is three candidate intents in two exposed projects (54 slots
-if all are admitted), not the previous four-project proposal. No new generation.
+Historical screening proposed three candidate intents (54 slots if admitted). PR72 admitted only persistence; PR73 collected that single intent. Mark all and StrictDoc remain deferred.
 
 ## Behavioral expansion: TodoMVC persistence oracle — 2026-09-22
 

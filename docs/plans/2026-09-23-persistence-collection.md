@@ -49,9 +49,9 @@ persistence is admitted. A narrow collector with existing adapters is preferred.
 - [x] Run new tests red, implement scripts/persistence_collection.py, run green.
 - [x] Use fake CLI integration to prove separate empty cwd, sanitized environment,
       required isolation flags, prompt-only stdin and no resume command.
-- [ ] Review implementation for security, SOLID, clean code and evidence custody.
-- [ ] Freeze a successor private packet; verify CLI help/auth, capacity and image.
-- [ ] Execute one bounded collection; classify and visually inspect evidence.
+- [x] Review implementation for security, SOLID, clean code and evidence custody.
+- [x] Freeze a successor private packet; verify CLI help/auth, capacity and image.
+- [x] Execute one bounded collection; classify and visually inspect evidence.
 - [ ] Publish precise methods/results, update Drive/slides and merge after CI.
 
 Verification: pytest tests/test_codex_cli.py tests/test_persistence_collection.py
@@ -62,3 +62,7 @@ Verification: pytest tests/test_codex_cli.py tests/test_persistence_collection.p
 Frozen output rule: UTF-8 response <=200000 bytes; after outer whitespace only, starts with <!doctype html or <html (case-insensitive) and ends with </html>. No Markdown unwrapping, JSON extraction, repair or normalization of the stored artifact. This is an artifact-interface admission rule, not a functional correctness test. Immutable fsynced run-start and per-slot attempt records precede calls.
 
 Preflight evidence: Python 3.14 environment selected because baseline imports require >=3.11; 55 focused tests passed. CLI 0.155.0-alpha.9.2 explicitly selected (system CLI 0.3.0 excluded). Two separate nonexperimental availability calls returned READY for the frozen model labels with distinct thread IDs. No tools occurred. Review required durable directory links; regression test fails on unavailable fsync before any provider call.
+
+Execution checkpoint: all 18 scheduled calls completed with valid raw HTML and no provider stop; E2E execution follows only after the immutable collection boundary. CI for collector commit 74d1599 passed all six checks, including 1,774 tests, 12 skips and nine subtests.
+
+Final execution: 18 valid HTML, 13 target passes, zero target failures, five unknowns. Visual/source audit identified four span-labelled visible rows unrecognized by the frozen selector; preserve their unknown labels, not a persistence-defect claim. 52 PNGs total, including one partial set.
