@@ -30,7 +30,10 @@ function render(){
     const row=document.createElement('li');
     if(mode==='hidden-after-reload'&&loadedFromStorage)row.hidden=true;
     const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=item.completed;
-    checkbox.onchange=()=>{item.completed=checkbox.checked;save();render();};
+    checkbox.onchange=()=>{
+      item.completed=checkbox.checked;save();
+      if(mode!=='wrapped-checkbox-title')render();
+    };
     row.append(checkbox);
     if(mode==='no-edit-button'){
       const action=document.createElement('input');action.type='button';action.value='Details';row.append(action);
@@ -48,11 +51,17 @@ function render(){
       const target=item.title==='persist-target-row';
       let title;
       if(mode==='span-title')title=document.createElement('span');
-      else if(mode==='div-title'||mode==='nested-title')title=document.createElement('div');
+      else if(mode==='div-title'||mode==='nested-title'||mode==='title-with-hidden-input')
+        title=document.createElement('div');
       else title=document.createElement('label');
       if(mode==='nested-title'){
         const nested=document.createElement('span');nested.textContent=item.title;title.append(nested);
       }else title.textContent=item.title;
+      if(mode==='wrapped-checkbox-title')title.prepend(checkbox);
+      if(mode==='title-with-hidden-input'){
+        const metadata=document.createElement('input');metadata.type='hidden';metadata.value='metadata';
+        title.append(metadata);
+      }
       if(target&&mode==='wrapped-control-title'){
         title=document.createElement('div');
         const action=document.createElement('button');

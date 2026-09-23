@@ -40,6 +40,8 @@ EXPECTED = {
     'mixed-title-wrapped-action': ('pass', []),
     'transformed-title-with-action': ('interface_error', []),
     'block-title-with-action': ('interface_error', []),
+    'wrapped-checkbox-title': ('pass', []),
+    'title-with-hidden-input': ('pass', []),
 }
 MODES = {'omit-edit-state': 'omit', 'store-false-flag': 'false-flag',
          'encoded-value': 'encoded-value',
@@ -60,7 +62,9 @@ MODES = {'omit-edit-state': 'omit', 'store-false-flag': 'false-flag',
          'restore-edit-wrapped-action': 'restore-edit-wrapped-action',
          'mixed-title-wrapped-action': 'mixed-title-wrapped-action',
          'transformed-title-with-action': 'transformed-title-with-action',
-         'block-title-with-action': 'block-title-with-action'}
+         'block-title-with-action': 'block-title-with-action',
+         'wrapped-checkbox-title': 'wrapped-checkbox-title',
+         'title-with-hidden-input': 'title-with-hidden-input'}
 
 FULL_SCREENSHOTS = {'before-edit.png', 'editing.png', 'after-reload.png'}
 INITIAL_INTERFACE_ERRORS = {'no-edit', 'no-edit-button',

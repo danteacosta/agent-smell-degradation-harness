@@ -42,9 +42,12 @@ async function recognizeRow(page,title,{visibleOnly=true}={}) {
     const elements=candidate.locator(':visible');
     const titles=await elements.evaluateAll((nodes,title)=>{
       const formControls='input,textarea,select,option,button,output';
-      const textNodes=nodes.map((element,index)=>({element,index,
-        text:typeof element.innerText==='string'?element.innerText.trim():''}))
-        .filter(({element})=>!element.closest(formControls) && !element.querySelector(formControls));
+      const renderedElements=nodes.map((element,index)=>({element,index,
+        text:typeof element.innerText==='string'?element.innerText.trim():''}));
+      const controlsWithText=renderedElements.filter(({element,text})=>
+        element.matches(formControls) && text.length>0);
+      const textNodes=renderedElements.filter(({element})=>!element.closest(formControls)
+        && !controlsWithText.some(({element:control})=>element.contains(control)));
       const exact=textNodes.filter(({text})=>text===title);
       // This boolean only gates the edit fallback; it never constructs a title match.
       const hasText=nodes.some(element=>!element.closest(formControls)
