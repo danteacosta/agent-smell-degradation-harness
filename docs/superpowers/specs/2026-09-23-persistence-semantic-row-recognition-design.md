@@ -31,15 +31,29 @@ unknown; it is never converted into a target pass or failure.
 
 ## Design
 
-The JavaScript runner will expose one small row-recognition helper returning a
-structured match: the row plus the title element used for interaction. The
-helper will enumerate direct and nested visible text-bearing elements within
-each `ul.todo-list > li`, normalize only surrounding whitespace, and retain
-elements whose rendered text exactly equals the requested title. It will
-remove ancestor candidates when a more specific descendant has the same
-rendered text, reject interactive form controls except the existing visible
-editable text input path, and require exactly one row and one specific title
-element.
+The JavaScript runner will expose one small row-recognition helper returning
+exactly one of `matched`, `absent`, or `ambiguous`. A match carries the row
+and title element used for interaction; the other outcomes carry no locator.
+The helper will enumerate direct and nested text-bearing descendants within
+each `ul.todo-list > li` and use Playwright's rendered `innerText` after
+requiring both the element and row to be visible. It normalizes only surrounding
+whitespace and retains elements whose complete rendered text equals the
+requested title. It removes ancestor candidates when a more specific visible
+descendant has the same rendered text, rejects form controls except the existing
+visible editable text-input path, and requires exactly one row and one most
+specific title element.
+
+Handling is phase-specific:
+
+| Phase | `matched` | `absent` | `ambiguous` |
+| --- | --- | --- | --- |
+| After adding, before edit | continue and double-click the title | interface error | interface error |
+| Non-target reload checks | assertion passes | assertion fails | assertion fails |
+| Target second-page observation | evaluate visible edit state | unknown: `todo_missing_after_reload` | unknown: `todo_ambiguous_after_reload` |
+
+An invisible row or invisible exact-title element is treated as `absent` for
+recognition. Existing hidden-row diagnosis may still map a non-visible exact
+DOM match to `todo_not_visible_after_reload`; it must never become a match.
 
 Edit entry will double-click the returned title element. Existing edit-input
 detection remains responsible for verifying the observable result. Reload,
@@ -48,18 +62,32 @@ contracts remain unchanged.
 
 ## Qualification controls
 
-The authored fixture will add independently named modes for:
+The authored fixture will add independently named modes with these exact
+vectors:
 
 - visible title in a `span`, expected to follow the same outcome as the
-  ordinary conforming reference;
-- visible title in another neutral text container, expected to pass;
-- hidden matching text beside a visible nonmatching title, expected not to
-  select the hidden match;
-- two visible rows with the exact same title, expected to fail closed as an
-  interface error;
+  ordinary conforming reference: `pass`, no failures, no target reason;
+- visible title in another neutral text container: `pass`, no failures, no
+  target reason;
+- hidden exact text beside a visible nonmatching title: `interface_error`
+  during initial recognition, no assertion failures or target reason;
+- accessible-only exact text with a visible nonmatching title:
+  `interface_error`, no assertion failures or target reason;
+- form-control value equal to the title outside editing with a visible
+  nonmatching title: `interface_error`, no assertion failures or target
+  reason;
+- visible title that merely contains the requested title as a substring:
+  `interface_error`, no assertion failures or target reason;
+- two visible rows with the exact same title: `interface_error`, no assertion
+  failures or target reason;
+- two equally specific exact-title elements in one visible row:
+  `interface_error`, no assertion failures or target reason;
 - a visible wrapper and nested title element with identical aggregate text,
-  expected to resolve to the most specific element rather than appear
-  ambiguous.
+  expected to resolve to the most specific element: `pass`, no failures, no
+  target reason;
+- duplication introduced only after reload: `target_not_evaluable`, failed
+  `todo_survives_reload` and `completed_survives_reload`, with target reason
+  `todo_ambiguous_after_reload`.
 
 All existing selective mutants and controls must retain their expected vectors.
 Qualification succeeds only if every expected category, failure list, target
