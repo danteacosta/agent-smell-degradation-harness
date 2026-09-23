@@ -120,10 +120,12 @@ For each `ul.todo-list > li`, inspect visible non-form descendants using
 rendered `innerText`, trim only surrounding whitespace, require complete
 equality, and remove a candidate when it contains a more specific matching
 descendant. A match requires one candidate in one row. The edit-input fallback
-qualifies only an input returned by a tightened `editInput(row)` predicate:
-visible, editable, text-like, contained by that row, and carrying the
-instrument's edit role/class rather than merely being an arbitrary editable
-input.
+keeps the existing `editInput(row)` predicate: visible, editable, text-like,
+and contained by that row. It qualifies as the row title only when its value
+exactly matches and the row exposes no visible non-form element with non-empty
+rendered title text. This distinguishes an active edit state from the negative
+control's unrelated input plus visible nonmatching title without requiring a
+CSS class, ARIA role, or other implementation-specific attribute.
 
 - [ ] **Step 2: Apply the phase-specific handling matrix**
 
