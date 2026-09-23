@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 6706)
+Total output lines: 396
+
 # Requirements-smell experiment hardening
 
 ## Behavioral expansion: TodoMVC persistence oracle — 2026-09-22
@@ -8,8 +11,8 @@
       all eight expected vectors matched in the final immutable image.
 - [x] Encode the hidden-DOM false-pass regression and require user-visible restoration;
       add a ninth control and fail the target closed when only hidden state survives.
-- [ ] Requalify the corrected runner in a new immutable image; the v4 image remains
-      historical and cannot admit the successor bytes.
+- [x] Requalify the corrected runner in a new immutable image; all nine expected
+      vectors matched. Preserve the v4 image as history for the superseded bytes.
 - [ ] Obtain independent source/prompt-leakage review before admitting this case.
 - [ ] Freeze the eligible multi-project schedule only after all admitted oracles qualify.
 - [ ] Run the once-only model collection when sufficient account capacity exists.
@@ -153,99 +156,7 @@ The historical pilot remains frozen; new development must not overwrite it.
 
 Plan:
 
-- [x] Search the workspace and connected Google Drive for the 16 private candidates and reference-constraint input.
-- [x] Audit the existing 12-pair/6-project material against `prepilot-corpus/v4` without promoting it.
-- [x] Verify the immutable ARTA provenance and distinguish repository-code licensing from third-party dataset rights.
-- [x] Receive or place the private candidate JSON/JSONL and reference-constraint files under an approved private path.
-- [x] Run the v4 intake validator and retain only a redacted candidate manifest with 12 intents across 6 projects.
-- [x] Freeze the validated manifest and run the private preflight; execute the exploratory pre-pilot only if it returns ready.
-
-Verification checkpoint:
-
-- Private intake produced 16 `prepilot-corpus/v4` candidate records and a frozen 12-record subset spanning 6 projects; raw source text remains outside the repository.
-- The exact private input and the 12-record `prepilot-reference-constraints/v1` file are retained under `/private/tmp/prepilot-corpus-20260903/`.
-- The v4 validator accepted the selected records against the redacted canonical manifest, including immutable source references, rights review, near-clone screening, manipulation checks, and hashes.
-- The earlier exploratory run completed with 1,296 reconciled provider calls, 288 judged occurrences, and 4 uncertainty outcomes at a confirmed cost of US$0.187950, but its T1/T2 evidence was substantively vacuous; it is diagnostic only and does not support H1/H2.
-
-## 2026-09-03 substantive-evidence correction
-
-- [x] Add a fail-closed substantive-completeness gate for T1 and T2 before T4.
-- [x] Require judge consensus on both the outcome label and per-constraint status.
-- [x] Shorten T1/T2/artifact prompts and require explicit valid evidence types.
-- [x] Recalculate the corrected exploratory budget envelope: US$0.988200 reserved under the US$1.00 cap.
-- [x] Run the low-cost native smoke: 4/4 RF-04 episodes passed across OpenAI and DeepSeek.
-- [x] Record the corrected prompt hash `60077136a90e5be355bda5f1049ab39b3152381b27344f8f8833a3a5ef6f3330`.
-- [x] Record the corrected exploratory configuration hash `160423c8ef1beb6c343bc5f51ab5550f9e40f7aeda0aec7049c5cabc27b2e150`.
-- [x] Compact the T2 planning context after observed provider usage exceeded the frozen input/output bound; record prompt hash `85859c0a8ff5f7ab784bab4e4188aa1de7ec4bd84f3e0547927e266c569e2326` and configuration hash `fecd185cd77c0ac12b6372a3ae301fd531e112e1497cf417ec5a86ca12eeafb0`.
-- [x] Bound T1 constraint summaries after the first DeepSeek generation response truncated at the frozen output limit; record prompt hash `83b936236c31220d42508b6b42a4da3c6b2e5da8f1d09ffe4aec86f9b20a816e` and configuration hash `993eff92c5466b2bc7fdcc741a7582dd8a8f2c14f18ca6a70435f2de9896727a`.
-- [x] Run and review one corrected 120-episode exploratory report after fresh authorization for the external run.
-- [ ] Promote no `clean`/`uncertain` count to H1/H2 until substantive completeness and independent label conditions are verified.
-
-Corrected run result: 120/120 episodes, 240/240 artifacts, 288/288 judging
-occurrences per relation, 480/480 substantive T1/T2 checks, 720
-`no_compaction` events, zero incomplete episodes, and US$0.194731 observed
-provider cost. Consolidated exploratory labels were 279 `clean` and 9
-`uncertain`; they remain machine observations rather than human ground truth.
-
-## Progress
-
-- [x] Write and review the hardening specification.
-- [x] Write and review the implementation plan.
-- [x] Add a failing regression test for the `shall`/`all` completeness bug.
-- [x] Fix the detector with word-bounded matching.
-- [x] Normalize generated source and comparison diffs to LF with one final newline.
-- [x] Add Wilson 95% intervals and interval-support status.
-- [x] Deduplicate repeated behavior rows by intent, variant, and task family.
-- [x] Validate replication IDs and report missing, duplicate, and unstable repetitions.
-- [x] Record non-secret prompt and configuration identities.
-- [x] Isolate discovery temporary traces per artifact bundle so reruns do not reuse stale files.
-- [x] Run and verify `discovery-20260826-v7`.
-
-## v7 verification checkpoint
-
-Bundle: `artifacts/experiments/runs/discovery-20260826-v7/`
-
-- Mode: offline deterministic stub (`stub-smell-blind`)
-- Repetitions: 5 deterministic pipeline repeats; no independent-model claim
-- Total decisions: 240
-- Behavior decisions: 120
-- `test_gen` decisions excluded from binary efficacy: 120
-- Raw eligible behavior rows: 120
-- Unique eligible behavior cases: 24
-- Unique smelly/clean pairs: 12
-- Recall: 0.9167; Wilson 95% interval [0.6461, 0.9851]
-- Precision: 1.0000; Wilson 95% interval [0.7412, 1.0000]
-- Specificity: 1.0000; Wilson 95% interval [0.7575, 1.0000]
-- False-alert rate: 0.0000; Wilson 95% interval [0.0000, 0.2425]
-- Paired discrimination: 0.9167; Wilson 95% interval [0.6461, 0.9851]
-- Repetition stability: all five repetitions agree
-- Interval support status: inconclusive because the unique-case sample is small
-
-## Commands run
-
-```text
-.venv/bin/python -m pytest -q tests/test_discovery_verifier.py tests/test_discovery.py tests/test_live_agent.py tests/test_episode_identity.py tests/test_provider_run_manifest.py
-.venv/bin/python -m eval.discovery --mode offline --replications 5 --run-id discovery-20260826-v7
-.venv/bin/python -m eval.discovery --verify-artifacts --bundle-dir artifacts/experiments/runs/discovery-20260826-v7
-```
-
-The focused suite passed with 35 tests. The complete workstation suite was
-also attempted; its remaining failures are environment-specific Python 3.14
-sandbox/ARP compatibility issues, not failures of the hardened discovery
-tests. The supported Python 3.11/3.12 CI gates remain the authoritative full
-suite check.
-
-## Remaining work for the real-model phase
-
-- [x] Provide a provider-agnostic panel runner with secret-free configuration and smoke/full-run guards.
-- [x] Add staged panel execution metadata (`prepilot`, `pilot`, `full_panel`), exact task-count gates, explicit model snapshots, strict unknown-field validation, and atomic idempotent resume.
-- [x] Add automatic measured-cost budget stopping with fail-closed behavior when usage cannot be measured.
-- [x] Preserve panel agreement, model disagreement, and separate human/model disagreement metrics without using panel consensus as ground truth.
-- [x] Add a private four-stratum control-matrix contract: clear clean, surface-only, real defect, and lexically discreet defect.
-- [x] Add the versioned context-management contract, no-compaction primary condition, secondary stress matrix, and leakage-safe metrics.
-- [x] Add the article-informed typed hard-lane proxy as a non-confirmatory secondary mechanism.
-- [x] Add hash-bound atomic-obligation observations without raw obligation text or terminal evidence.
-- [x] Add the complete clean/smelly × no-compaction/compaction interaction estimator.
+- [x] Search the workspace and connecte…1706 tokens truncated…/smelly × no-compaction/compaction interaction estimator.
 - [x] Provide credentials through the approved secret mechanism for the private exploratory run; credentials remain untracked.
 - [x] Select at least two real provider/model configurations and record prompt/config versions for the exploratory run: OpenAI GPT-5.6 Luna and DeepSeek V4 Pro.
 - [x] Qualify the real runtime context-management hook and verify pre-final event emission on both provider configurations for the exploratory `no_compaction` path.

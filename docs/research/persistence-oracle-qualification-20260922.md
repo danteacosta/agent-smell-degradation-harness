@@ -60,6 +60,13 @@ failures and `editing_not_restored=not_evaluable` with
 an unknown target outcome, never as a target pass or defect.
 
 The v4 packet and image above remain immutable qualification history for the old
-runner. They do not qualify the corrected bytes. Admission remains blocked until
-the nine-control successor qualification passes in a newly built immutable image,
-the exact prompt passes independent leakage review, and the cohort is frozen.
+runner. They do not qualify the corrected bytes. The successor workflow rebuilt
+the instrument and matched all **9/9** expected vectors, including the hidden-row
+control. The corrected image ID is
+`sha256:e284d3ef9996b7cf4d1662a1f0efbc8d89abc8dafa56a52d6e5177a74f1b81bb`;
+the qualification JSON SHA-256 is
+`3210afa73cd633193f6b27d4dac81fc3ea6468f0a368e52cfb10bb7295764667`, and
+the 69-file CI artifact ZIP SHA-256 is
+`98f411cf2c42616ff0b620fe0d33fd240d0105ce7e8ed2b09fd471fa0bc99c58`.
+Admission remains blocked until the exact prompt passes independent leakage
+review and the eligible cohort, runtime, and schedule are frozen.
