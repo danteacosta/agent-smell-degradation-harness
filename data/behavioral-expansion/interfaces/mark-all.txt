@@ -1,0 +1,3 @@
+Implement one self-contained HTML page using vanilla JavaScript with no external resources. Implement the supplied requirement in a usable todo interface. Initial items are provided as window.initialTodos, an array of objects with id, title and completed fields.
+
+Use one input[type="checkbox"]#toggle-all for the master control, one button#clear-completed for the Clear completed action, and ul#todo-list with direct li children for todos. Each row must contain one checkbox and a visible label containing only the item title. The Clear completed action removes completed items. The empty list may have no visible size; controls may be removed when there are no todos. Choose the layout and styling. Return only the HTML artifact.

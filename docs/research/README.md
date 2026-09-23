@@ -59,3 +59,7 @@ experiment evidence.
 - [TodoMVC Persistence oracle qualification](persistence-oracle-qualification-20260922.md): eight authored browser controls with a second-page localStorage round trip; no generated outcomes.
 
 - [StrictDoc statistics browser qualification](strictdoc-stats-oracle-qualification-20260923.md): 21 authored controls, rendered visibility and two-clock evidence; no new model collection.
+
+- [Native UI source candidates](native-ui-source-candidates-20260923.md): pinned RealWorld/Kanboard UI sources; not admitted.
+
+- [E2E admission and prompt freeze](e2e-admission-freeze-20260923.md): one bounded persistence endpoint; Mark all and StrictDoc deferred; 18 unattempted positions, no execution-ready claim.

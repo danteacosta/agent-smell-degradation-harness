@@ -1,0 +1,187 @@
+{
+  "status": "source_prompt_review_accepted_endpoint_admission_separate",
+  "records": [
+    {
+      "id": "strictdoc-srs-97",
+      "source": {
+        "url": "https://raw.githubusercontent.com/strictdoc-project/strictdoc/abf7be7daa2a25721a56980b5be15845336ea0b8/docs/strictdoc_21_l2_high_level_requirements.sdoc",
+        "revision": "abf7be7daa2a25721a56980b5be15845336ea0b8",
+        "license": "Apache-2.0",
+        "license_url": "https://raw.githubusercontent.com/strictdoc-project/strictdoc/abf7be7daa2a25721a56980b5be15845336ea0b8/LICENSE",
+        "path": "sources/strictdoc/docs__strictdoc_21_l2_high_level_requirements.sdoc",
+        "sha256": "de4b804342caac0211e5cabfa4dfb91b1e07ebe785bf34ef55de6c4ea60fc28f",
+        "license_path": "sources/strictdoc/LICENSE",
+        "license_sha256": "3392558ba768e0454ed2340433d5b9daf1ef32860368b9bf82b87a441fcd0438",
+        "locator": "SDOC-SRS-97 STATEMENT",
+        "start_char": 31286,
+        "end_char": 31556,
+        "start_line": 1287,
+        "end_line": 1296,
+        "notice_path": "sources/strictdoc/NOTICE",
+        "notice_sha256": "d929e44291248fbf463a8d22201bf958162dbbc2634c1d1eb230f41b6cf3b968"
+      },
+      "variants": {
+        "A": "StrictDoc shall provide a Project Statistics screen that displays the following\nproject information:\n\n- Project title\n- Date of generation\n- Git revision\n- Total documents\n- Total requirements\n- Requirements status breakdown\n- Total number of TBD/TBC found in documents.",
+        "B": "StrictDoc must offer a Project Statistics screen showing the project title, generation date, Git revision, total document count, total requirement count, a breakdown of requirement statuses, and the total number of TBD/TBC occurrences found in documents.",
+        "C": "StrictDoc shall provide a Project Statistics screen that displays the following\nproject information:\n\n- Project title\n- Git revision\n- Total documents\n- Total requirements\n- Requirements status breakdown\n- Total number of TBD/TBC found in documents."
+      },
+      "omission": {
+        "start": 118,
+        "end": 139,
+        "text": "- Date of generation\n",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 118
+      },
+      "target_obligation_id": "o02",
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Project Statistics screen displays project title."
+        },
+        {
+          "id": "o02",
+          "text": "Project Statistics screen displays date of generation."
+        },
+        {
+          "id": "o03",
+          "text": "Project Statistics screen displays Git revision."
+        },
+        {
+          "id": "o04",
+          "text": "Project Statistics screen displays total documents."
+        },
+        {
+          "id": "o05",
+          "text": "Project Statistics screen displays total requirements."
+        },
+        {
+          "id": "o06",
+          "text": "Project Statistics screen displays requirements status breakdown."
+        },
+        {
+          "id": "o07",
+          "text": "Project Statistics screen displays total TBD/TBC found in documents."
+        }
+      ],
+      "common_interface": "Implement one self-contained HTML page using vanilla JavaScript, with no external resources. It should create a Project Statistics view when the page loads. The fixture is available as window.projectStatistics with fields title (string), revision (string), totalDocuments (integer), totalRequirements (integer), statusCounts (object with Active, Draft and Obsolete integer entries), and totalTbdTbc (integer).\n\nUse ordinary rendered DOM text. For independent observation, put each of the following values in one visible DOM element with the corresponding data-stat attribute: project-title, git-revision, total-documents, total-requirements, status-active, status-draft, status-obsolete and total-tbd-tbc. Each marked element should contain only its value; labels may be separate. Choose the layout and styling. Return only the HTML artifact.\n",
+      "requests": {
+        "A": "Build the browser application described below.\n\nRequirement:\nStrictDoc shall provide a Project Statistics screen that displays the following\nproject information:\n\n- Project title\n- Date of generation\n- Git revision\n- Total documents\n- Total requirements\n- Requirements status breakdown\n- Total number of TBD/TBC found in documents.\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript, with no external resources. It should create a Project Statistics view when the page loads. The fixture is available as window.projectStatistics with fields title (string), revision (string), totalDocuments (integer), totalRequirements (integer), statusCounts (object with Active, Draft and Obsolete integer entries), and totalTbdTbc (integer).\n\nUse ordinary rendered DOM text. For independent observation, put each of the following values in one visible DOM element with the corresponding data-stat attribute: project-title, git-revision, total-documents, total-requirements, status-active, status-draft, status-obsolete and total-tbd-tbc. Each marked element should contain only its value; labels may be separate. Choose the layout and styling. Return only the HTML artifact.\n",
+        "B": "Build the browser application described below.\n\nRequirement:\nStrictDoc must offer a Project Statistics screen showing the project title, generation date, Git revision, total document count, total requirement count, a breakdown of requirement statuses, and the total number of TBD/TBC occurrences found in documents.\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript, with no external resources. It should create a Project Statistics view when the page loads. The fixture is available as window.projectStatistics with fields title (string), revision (string), totalDocuments (integer), totalRequirements (integer), statusCounts (object with Active, Draft and Obsolete integer entries), and totalTbdTbc (integer).\n\nUse ordinary rendered DOM text. For independent observation, put each of the following values in one visible DOM element with the corresponding data-stat attribute: project-title, git-revision, total-documents, total-requirements, status-active, status-draft, status-obsolete and total-tbd-tbc. Each marked element should contain only its value; labels may be separate. Choose the layout and styling. Return only the HTML artifact.\n",
+        "C": "Build the browser application described below.\n\nRequirement:\nStrictDoc shall provide a Project Statistics screen that displays the following\nproject information:\n\n- Project title\n- Git revision\n- Total documents\n- Total requirements\n- Requirements status breakdown\n- Total number of TBD/TBC found in documents.\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript, with no external resources. It should create a Project Statistics view when the page loads. The fixture is available as window.projectStatistics with fields title (string), revision (string), totalDocuments (integer), totalRequirements (integer), statusCounts (object with Active, Draft and Obsolete integer entries), and totalTbdTbc (integer).\n\nUse ordinary rendered DOM text. For independent observation, put each of the following values in one visible DOM element with the corresponding data-stat attribute: project-title, git-revision, total-documents, total-requirements, status-active, status-draft, status-obsolete and total-tbd-tbc. Each marked element should contain only its value; labels may be separate. Choose the layout and styling. Return only the HTML artifact.\n"
+      }
+    },
+    {
+      "id": "todomvc-mark-all",
+      "source": {
+        "url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/app-spec.md",
+        "revision": "ff43b02e59dfa604386bb382034b2cd07c2bcd8a",
+        "license": "MIT",
+        "license_url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/license.md",
+        "path": "sources/todomvc/app-spec.md",
+        "sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+        "license_path": "sources/todomvc/license.md",
+        "license_sha256": "32238c5c6759b589ea768661b6eb0fcb42449b74d57cdf09928743f2e1eb748d",
+        "locator": "Functionality / Mark all as complete",
+        "start_char": 3817,
+        "end_char": 4133,
+        "start_line": 92,
+        "end_line": 92
+      },
+      "variants": {
+        "A": "This checkbox toggles all the todos to the same state as itself. Make sure to clear the checked state after the \"Clear completed\" button is clicked. The \"Mark all as complete\" checkbox should also be updated when single todo items are checked/unchecked. Eg. When all the todos are checked it should also get checked.",
+        "B": "The Mark all as complete checkbox sets every todo to match its own state. Clear this checkbox's checked state after Clear completed is clicked. Checking or unchecking an individual todo should also update the checkbox; for example, it should be checked when all todos are checked.",
+        "C": "This checkbox toggles all the todos to the same state as itself. The \"Mark all as complete\" checkbox should also be updated when single todo items are checked/unchecked. Eg. When all the todos are checked it should also get checked."
+      },
+      "omission": {
+        "start": 65,
+        "end": 149,
+        "text": "Make sure to clear the checked state after the \"Clear completed\" button is clicked. ",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 65
+      },
+      "target_obligation_id": "o02",
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Mark all checkbox toggles all todos to its own state."
+        },
+        {
+          "id": "o02",
+          "text": "Clear the checked state of Mark all after Clear completed is clicked."
+        },
+        {
+          "id": "o03",
+          "text": "Update Mark all when individual todos are checked or unchecked, including checking it when all todos are checked."
+        }
+      ],
+      "common_interface": "Implement one self-contained HTML page using vanilla JavaScript with no external resources. Implement the supplied requirement in a usable todo interface. Initial items are provided as window.initialTodos, an array of objects with id, title and completed fields.\n\nUse one input[type=\"checkbox\"]#toggle-all for the master control, one button#clear-completed for the Clear completed action, and ul#todo-list with direct li children for todos. Each row must contain one checkbox and a visible label containing only the item title. The Clear completed action removes completed items. The empty list may have no visible size; controls may be removed when there are no todos. Choose the layout and styling. Return only the HTML artifact.\n",
+      "requests": {
+        "A": "Build the browser application described below.\n\nRequirement:\nThis checkbox toggles all the todos to the same state as itself. Make sure to clear the checked state after the \"Clear completed\" button is clicked. The \"Mark all as complete\" checkbox should also be updated when single todo items are checked/unchecked. Eg. When all the todos are checked it should also get checked.\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Implement the supplied requirement in a usable todo interface. Initial items are provided as window.initialTodos, an array of objects with id, title and completed fields.\n\nUse one input[type=\"checkbox\"]#toggle-all for the master control, one button#clear-completed for the Clear completed action, and ul#todo-list with direct li children for todos. Each row must contain one checkbox and a visible label containing only the item title. The Clear completed action removes completed items. The empty list may have no visible size; controls may be removed when there are no todos. Choose the layout and styling. Return only the HTML artifact.\n",
+        "B": "Build the browser application described below.\n\nRequirement:\nThe Mark all as complete checkbox sets every todo to match its own state. Clear this checkbox's checked state after Clear completed is clicked. Checking or unchecking an individual todo should also update the checkbox; for example, it should be checked when all todos are checked.\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Implement the supplied requirement in a usable todo interface. Initial items are provided as window.initialTodos, an array of objects with id, title and completed fields.\n\nUse one input[type=\"checkbox\"]#toggle-all for the master control, one button#clear-completed for the Clear completed action, and ul#todo-list with direct li children for todos. Each row must contain one checkbox and a visible label containing only the item title. The Clear completed action removes completed items. The empty list may have no visible size; controls may be removed when there are no todos. Choose the layout and styling. Return only the HTML artifact.\n",
+        "C": "Build the browser application described below.\n\nRequirement:\nThis checkbox toggles all the todos to the same state as itself. The \"Mark all as complete\" checkbox should also be updated when single todo items are checked/unchecked. Eg. When all the todos are checked it should also get checked.\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Implement the supplied requirement in a usable todo interface. Initial items are provided as window.initialTodos, an array of objects with id, title and completed fields.\n\nUse one input[type=\"checkbox\"]#toggle-all for the master control, one button#clear-completed for the Clear completed action, and ul#todo-list with direct li children for todos. Each row must contain one checkbox and a visible label containing only the item title. The Clear completed action removes completed items. The empty list may have no visible size; controls may be removed when there are no todos. Choose the layout and styling. Return only the HTML artifact.\n"
+      }
+    },
+    {
+      "id": "todomvc-persistence",
+      "source": {
+        "url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/app-spec.md",
+        "revision": "ff43b02e59dfa604386bb382034b2cd07c2bcd8a",
+        "license": "MIT",
+        "license_url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/license.md",
+        "path": "sources/todomvc/app-spec.md",
+        "sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+        "license_path": "sources/todomvc/license.md",
+        "license_sha256": "32238c5c6759b589ea768661b6eb0fcb42449b74d57cdf09928743f2e1eb748d",
+        "locator": "Functionality / Persistence",
+        "start_char": 5360,
+        "end_char": 5728,
+        "start_line": 118,
+        "end_line": 118
+      },
+      "variants": {
+        "A": "Your app should dynamically persist the todos to localStorage. If the framework has capabilities for persisting data (e.g. Backbone.sync), use that. Otherwise, use vanilla localStorage. If possible, use the keys `id`, `title`, `completed` for each item. Make sure to use this format for the localStorage name: `todos-[framework]`. Editing mode should not be persisted.",
+        "B": "The app should persist its todos dynamically to localStorage. Use the framework's persistence capabilities, such as Backbone.sync, when available; otherwise use vanilla localStorage. If possible, store each item with the keys id, title, and completed. Name the localStorage entry using todos-[framework]. Editing mode should not be persisted.",
+        "C": "Your app should dynamically persist the todos to localStorage. If the framework has capabilities for persisting data (e.g. Backbone.sync), use that. Otherwise, use vanilla localStorage. If possible, use the keys `id`, `title`, `completed` for each item. Make sure to use this format for the localStorage name: `todos-[framework]`."
+      },
+      "omission": {
+        "start": 330,
+        "end": 368,
+        "text": " Editing mode should not be persisted.",
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "after_offset": 330
+      },
+      "target_obligation_id": "o05",
+      "obligations": [
+        {
+          "id": "o01",
+          "text": "Dynamically persist todos to localStorage."
+        },
+        {
+          "id": "o02",
+          "text": "Use framework persistence capabilities if available; otherwise vanilla localStorage."
+        },
+        {
+          "id": "o03",
+          "text": "Use id, title, completed item keys if possible; this is conditional."
+        },
+        {
+          "id": "o04",
+          "text": "Use todos-[framework] as localStorage name format."
+        },
+        {
+          "id": "o05",
+          "text": "Do not persist editing mode."
+        }
+      ],
+      "common_interface": "Implement one self-contained HTML page using vanilla JavaScript with no external resources. Implement the supplied requirement in a usable todo interface. Use vanilla JavaScript as the framework designation for this task (framework name: vanilla).\n\nUse input.new-todo for entering a title; pressing Enter creates a todo. Use ul.todo-list with direct li children, each containing one completion checkbox and a visible label with the item title. Toggling the row checkbox changes completion. Double-clicking the label enters editing through an ordinary text input. Choose the layout, styling and internal data representation. Return only the HTML artifact.\n",
+      "requests": {
+        "A": "Build the browser application described below.\n\nRequirement:\nYour app should dynamically persist the todos to localStorage. If the framework has capabilities for persisting data (e.g. Backbone.sync), use that. Otherwise, use vanilla localStorage. If possible, use the keys `id`, `title`, `completed` for each item. Make sure to use this format for the localStorage name: `todos-[framework]`. Editing mode should not be persisted.\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Implement the supplied requirement in a usable todo interface. Use vanilla JavaScript as the framework designation for this task (framework name: vanilla).\n\nUse input.new-todo for entering a title; pressing Enter creates a todo. Use ul.todo-list with direct li children, each containing one completion checkbox and a visible label with the item title. Toggling the row checkbox changes completion. Double-clicking the label enters editing through an ordinary text input. Choose the layout, styling and internal data representation. Return only the HTML artifact.\n",
+        "B": "Build the browser application described below.\n\nRequirement:\nThe app should persist its todos dynamically to localStorage. Use the framework's persistence capabilities, such as Backbone.sync, when available; otherwise use vanilla localStorage. If possible, store each item with the keys id, title, and completed. Name the localStorage entry using todos-[framework]. Editing mode should not be persisted.\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Implement the supplied requirement in a usable todo interface. Use vanilla JavaScript as the framework designation for this task (framework name: vanilla).\n\nUse input.new-todo for entering a title; pressing Enter creates a todo. Use ul.todo-list with direct li children, each containing one completion checkbox and a visible label with the item title. Toggling the row checkbox changes completion. Double-clicking the label enters editing through an ordinary text input. Choose the layout, styling and internal data representation. Return only the HTML artifact.\n",
+        "C": "Build the browser application described below.\n\nRequirement:\nYour app should dynamically persist the todos to localStorage. If the framework has capabilities for persisting data (e.g. Backbone.sync), use that. Otherwise, use vanilla localStorage. If possible, use the keys `id`, `title`, `completed` for each item. Make sure to use this format for the localStorage name: `todos-[framework]`.\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Implement the supplied requirement in a usable todo interface. Use vanilla JavaScript as the framework designation for this task (framework name: vanilla).\n\nUse input.new-todo for entering a title; pressing Enter creates a todo. Use ul.todo-list with direct li children, each containing one completion checkbox and a visible label with the item title. Toggling the row checkbox changes completion. Double-clicking the label enters editing through an ordinary text input. Choose the layout, styling and internal data representation. Return only the HTML artifact.\n"
+      }
+    }
+  ],
+  "schema_version": "e2e-reviewed-prompts/v1",
+  "reviewer": "independent_assistant/e2e_admission_review",
+  "human_approvals": 0
+}

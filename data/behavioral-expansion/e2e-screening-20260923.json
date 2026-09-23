@@ -1,6 +1,6 @@
 {
   "schema_version": "behavioral-e2e-screening/v1",
-  "status": "preparation_not_frozen",
+  "status": "superseded_by_admission_20260923",
   "primary_endpoint": "generated user interface observed in a real browser with native screenshots",
   "prior_provisional_144_slots_superseded": true,
   "new_candidate_intents_if_all_qualify": 3,
@@ -67,5 +67,6 @@
       "decision": "deferred_from_primary_e2e",
       "reason": "pinned obligation is API permission check; no UI contract"
     }
-  ]
+  ],
+  "current_admission": "data/behavioral-expansion/admission-20260923.json"
 }

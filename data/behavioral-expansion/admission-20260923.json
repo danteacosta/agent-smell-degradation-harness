@@ -1,0 +1,33 @@
+{
+  "schema_version": "e2e-endpoint-admission/v1",
+  "stage": "pre_generation",
+  "reviewer": "independent_assistant/e2e_admission_review",
+  "records": [
+    {
+      "intent_id": "strictdoc-srs-97",
+      "source_prompt_review": "accepted",
+      "endpoint_admission": "deferred_endpoint",
+      "reason": "Unrecognized but possibly valid dates fail under a finite lexicon; first render is not an independently established generation event. Resolve event interpretation and unassessable policy before admission.",
+      "human_approvals": 0
+    },
+    {
+      "intent_id": "todomvc-mark-all",
+      "source_prompt_review": "accepted",
+      "endpoint_admission": "deferred_endpoint",
+      "reason": "Hidden checked master fails while removed master can pass despite equivalent visible outcome. Resolve hidden/removed/replaced-control observation policy and requalify before admission.",
+      "human_approvals": 0
+    },
+    {
+      "intent_id": "todomvc-persistence",
+      "source_prompt_review": "accepted",
+      "endpoint_admission": "admitted_bounded_exploratory_endpoint",
+      "reason": "Ordinary visible edit-mode restoration in a second same-origin page while the first remains open. Missing/hidden restored todo is unknown. Does not measure serialized-byte absence, actual same-page reload, or complete source compliance.",
+      "human_approvals": 0
+    }
+  ],
+  "admitted_intents": 1,
+  "admitted_projects": 1,
+  "conditional_generation_slots": 18,
+  "cross_project_expansion_complete": false,
+  "model_calls": 0
+}
