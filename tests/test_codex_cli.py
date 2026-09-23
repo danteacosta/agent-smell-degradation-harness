@@ -145,3 +145,37 @@ def test_optional_evidence_also_preserves_success_without_changing_answer(tmp_pa
     events = [json.loads(line) for line in (evidence / 'stdout.jsonl').read_text().splitlines()]
     assert events[-1]['type'] == 'turn.completed'
     assert json.loads((evidence / 'capture.json').read_text())['returncode'] == 0
+
+
+def test_two_requests_have_distinct_empty_contexts_and_only_their_prompt(tmp_path):
+    from agents.codex_cli import CodexCLIProvider
+    audit = tmp_path / 'context-audit.jsonl'
+    path = tmp_path / 'isolation-cli'
+    path.write_text(f'''#!{sys.executable}
+import json, os, sys
+if sys.argv[1:] == ['login', 'status']:
+    print('Logged in using ChatGPT')
+    sys.exit(0)
+assert sys.argv[1] == 'exec' and 'resume' not in sys.argv and 'fork' not in sys.argv
+for flag in ('--ignore-user-config', '--ephemeral', '--skip-git-repo-check', '--json'):
+    assert flag in sys.argv
+for setting in ('project_doc_max_bytes=0', 'features.shell_tool=false',
+                'features.unified_exec=false', 'features.apps=false',
+                'features.browser_use=false', 'features.computer_use=false',
+                'features.multi_agent=false', 'features.skip_host_skill_discovery=true',
+                'mcp_servers={{}}', 'web_search="disabled"'):
+    assert setting in sys.argv
+assert os.listdir('.') == []
+with open({str(audit)!r}, 'a') as out:
+    out.write(json.dumps({{'cwd':os.getcwd(), 'prompt':sys.stdin.read()}})+'\\n')
+print(json.dumps({{'type':'item.completed','item':{{'type':'agent_message','text':'ok'}}}}))
+print(json.dumps({{'type':'turn.completed','usage':{{'input_tokens':1,'output_tokens':1}}}}))
+''')
+    path.chmod(0o700)
+    for prompt in ('first isolated prompt', 'second isolated prompt'):
+        assert CodexCLIProvider(executable=str(path), model='test').complete(
+            ProviderRequest(prompt, {'hidden':'oracle'}, 'C', 'experiment')) == 'ok'
+    contexts = [json.loads(line) for line in audit.read_text().splitlines()]
+    assert contexts[0]['cwd'] != contexts[1]['cwd']
+    assert [x['prompt'] for x in contexts] == ['first isolated prompt','second isolated prompt']
+    assert not any(os.path.exists(x['cwd']) for x in contexts)
