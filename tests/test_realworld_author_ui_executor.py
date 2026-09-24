@@ -14,6 +14,7 @@ import subprocess
 from types import SimpleNamespace
 
 import pytest
+import yaml
 
 from eval import realworld_author_ui_executor as oracle
 
@@ -1132,3 +1133,72 @@ def test_commit_custody_accepts_matching_image_label(monkeypatch):
         '{{index .Config.Labels "org.opencontainers.image.realworld-instrument-sha256"}}',
         IMAGE,
     ]
+
+
+def test_ci_workflow_preserves_qualification_custody_and_uploads_evidence():
+    workflow_path = (
+        Path(__file__).parents[1]
+        / ".github/workflows/realworld-author-ui-oracle-qualification.yml"
+    )
+    text = workflow_path.read_text(encoding="utf-8")
+    workflow = yaml.safe_load(text)
+    triggers = workflow.get("on", workflow.get(True))
+
+    assert workflow["name"] == "RealWorld author UI oracle qualification"
+    assert set(triggers) == {"workflow_dispatch", "pull_request"}
+    assert set(triggers["pull_request"]["paths"]) >= {
+        "eval/realworld_author_ui_executor.py",
+        "eval/focus_chain_executor.py",
+        "eval/fixtures/realworld-author-ui/**",
+        "tests/test_realworld_author_ui_executor.py",
+        ".github/workflows/realworld-author-ui-oracle-qualification.yml",
+    }
+    assert workflow["permissions"] == {"contents": "read"}
+
+    job = workflow["jobs"]["qualify"]
+    assert job["runs-on"] == "ubuntu-24.04"
+    assert job["timeout-minutes"] == 20
+    checkout = next(step for step in job["steps"]
+                    if step.get("uses") == "actions/checkout@v4")
+    assert checkout["with"]["persist-credentials"] is False
+    setup = next(step for step in job["steps"]
+                 if step.get("uses") == "actions/setup-python@v5")
+    assert setup["with"]["python-version"] == "3.12"
+
+    commands = "\n".join(step.get("run", "") for step in job["steps"])
+    required_commands = (
+        "python scripts/dependency_bundle.py",
+        "dependency-bundle/runtime/bin/python -m pytest "
+        "tests/test_realworld_author_ui_executor.py -q",
+        "dependency-bundle/runtime/bin/python -m compileall -q "
+        "eval/realworld_author_ui_executor.py "
+        "eval/fixtures/realworld-author-ui/qualify.py",
+        "node --test eval/fixtures/realworld-author-ui/finalize.test.cjs "
+        "eval/fixtures/realworld-author-ui/author-matches.test.cjs",
+        "node --check eval/fixtures/realworld-author-ui/runner.cjs",
+        "npm ci --ignore-scripts --omit=dev --no-audit --no-fund "
+        "--prefix eval/fixtures/realworld-author-ui",
+        "--print-instrument-digest",
+        "--build-arg \"REALWORLD_INSTRUMENT_SHA256=",
+        "--iidfile \"$RUNNER_TEMP/realworld-author-ui-qualification/image-id\"",
+        "eval/fixtures/realworld-author-ui",
+        "--image \"$(cat \"$RUNNER_TEMP/realworld-author-ui-qualification/image-id\")\"",
+        "--git-commit \"$GITHUB_SHA\"",
+        "--output \"$RUNNER_TEMP/realworld-author-ui-qualification/qualification\"",
+    )
+    assert all(command in commands for command in required_commands)
+    assert "docker_argv" in commands
+    assert '"instrument_sha256"' in commands
+    assert '"image_id"' in commands
+    assert '"github_sha"' in commands
+    assert "build-receipt.json" in commands
+    assert "secrets." not in text
+
+    upload = next(step for step in job["steps"]
+                  if step.get("uses") == "actions/upload-artifact@v4")
+    assert upload["if"] == "always()"
+    assert upload["with"] == {
+        "name": "realworld-author-ui-qualification",
+        "path": "${{ runner.temp }}/realworld-author-ui-qualification/",
+        "retention-days": 30,
+    }

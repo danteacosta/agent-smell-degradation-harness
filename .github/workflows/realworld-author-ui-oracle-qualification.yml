@@ -1,0 +1,101 @@
+name: RealWorld author UI oracle qualification
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - eval/realworld_author_ui_executor.py
+      - eval/focus_chain_executor.py
+      - eval/fixtures/realworld-author-ui/**
+      - tests/test_realworld_author_ui_executor.py
+      - .github/workflows/realworld-author-ui-oracle-qualification.yml
+
+permissions:
+  contents: read
+
+jobs:
+  qualify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build locked Python environment
+        run: python scripts/dependency_bundle.py
+      - name: Run focused Python checks
+        run: |
+          dependency-bundle/runtime/bin/python -m pytest tests/test_realworld_author_ui_executor.py -q
+          dependency-bundle/runtime/bin/python -m compileall -q eval/realworld_author_ui_executor.py eval/fixtures/realworld-author-ui/qualify.py
+      - name: Run focused Node checks
+        run: |
+          node --test eval/fixtures/realworld-author-ui/finalize.test.cjs eval/fixtures/realworld-author-ui/author-matches.test.cjs
+          node --check eval/fixtures/realworld-author-ui/runner.cjs
+          npm ci --ignore-scripts --omit=dev --no-audit --no-fund --prefix eval/fixtures/realworld-author-ui
+      - name: Compute canonical instrument digest
+        id: instrument
+        run: |
+          set -euo pipefail
+          evidence="$RUNNER_TEMP/realworld-author-ui-qualification"
+          mkdir "$evidence"
+          digest="$(dependency-bundle/runtime/bin/python eval/fixtures/realworld-author-ui/qualify.py --print-instrument-digest)"
+          if [[ ! "$digest" =~ ^[0-9a-f]{64}$ ]]; then
+            echo "qualifier returned an invalid instrument digest" >&2
+            exit 1
+          fi
+          printf '%s\n' "$digest" > "$evidence/instrument-digest"
+          printf 'sha256=%s\n' "$digest" >> "$GITHUB_OUTPUT"
+      - name: Build digest-bound browser instrument
+        run: |
+          docker build \
+            --build-arg "REALWORLD_INSTRUMENT_SHA256=${{ steps.instrument.outputs.sha256 }}" \
+            --iidfile "$RUNNER_TEMP/realworld-author-ui-qualification/image-id" \
+            eval/fixtures/realworld-author-ui
+      - name: Record exact build receipt
+        run: |
+          dependency-bundle/runtime/bin/python - "$RUNNER_TEMP/realworld-author-ui-qualification" "${{ steps.instrument.outputs.sha256 }}" "$GITHUB_SHA" <<'PY'
+          import json
+          from pathlib import Path
+          import sys
+
+          evidence = Path(sys.argv[1])
+          digest = sys.argv[2]
+          github_sha = sys.argv[3]
+          image_id = (evidence / "image-id").read_text(encoding="utf-8").strip()
+          docker_argv = [
+              "docker",
+              "build",
+              "--build-arg",
+              f"REALWORLD_INSTRUMENT_SHA256={digest}",
+              "--iidfile",
+              str(evidence / "image-id"),
+              "eval/fixtures/realworld-author-ui",
+          ]
+          receipt = {
+              "docker_argv": docker_argv,
+              "instrument_sha256": digest,
+              "image_id": image_id,
+              "github_sha": github_sha,
+          }
+          (evidence / "build-receipt.json").write_text(
+              json.dumps(receipt, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          PY
+      - name: Qualify authored UI controls with immutable custody
+        run: >-
+          dependency-bundle/runtime/bin/python
+          eval/fixtures/realworld-author-ui/qualify.py
+          --image "$(cat "$RUNNER_TEMP/realworld-author-ui-qualification/image-id")"
+          --git-commit "$GITHUB_SHA"
+          --output "$RUNNER_TEMP/realworld-author-ui-qualification/qualification"
+      - name: Upload qualification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: realworld-author-ui-qualification
+          path: ${{ runner.temp }}/realworld-author-ui-qualification/
+          retention-days: 30
