@@ -133,10 +133,13 @@ and a whitespace-normalized, case-insensitive exact accessible name of
 `Delete Article`. This follows the source and official template without
 requiring a private class, component name or test ID.
 
-The article-author prerequisite enumerates only elements matching
-`[rel~="author"]` and then requires whitespace-normalized, case-sensitive exact
-text equal to `article.author.username`. A matching username elsewhere on the
-page, including viewer navigation, never satisfies the prerequisite.
+The article-author prerequisite scopes Playwright's exact-text locator to
+elements matching `[rel~="author"]`, then applies the same perceptibility
+predicate to each smallest matched text-bearing element itself. The normalized,
+case-sensitive rendered text must equal `article.author.username`. A matching
+username elsewhere on the page, including viewer navigation, or only in a
+hidden descendant of a visible author container never satisfies the
+prerequisite.
 
 For each context, the report records bounded counts for:
 
@@ -262,6 +265,9 @@ The initial qualification contains:
 - a viewer-only-author-text control in which the expected username is visible
   outside any `[rel~="author"]` element and all dependent target assertions are
   not evaluable with `article_author_missing`;
+- a hidden-author-text control in which `[rel~="author"]` is visible but the
+  matching username exists only in a hidden descendant, with the same
+  `article_author_missing` outcome;
 - an interface-boundary control in which the qualifier deliberately supplies a
   state payload missing `article.author.username`; the runner rejects it as an
   operational `interface_failure` before navigation or candidate execution.

@@ -284,9 +284,10 @@ git commit -m "Bound RealWorld browser execution"
 - Create: `eval/fixtures/realworld-author-ui/control-broken-article.html`
 - Create: `eval/fixtures/realworld-author-ui/control-mixed-evaluability.html`
 - Create: `eval/fixtures/realworld-author-ui/control-viewer-only-author-text.html`
+- Create: `eval/fixtures/realworld-author-ui/control-hidden-author-text.html`
 - Modify: `tests/test_realworld_author_ui_executor.py`
 
-- [ ] **Step 1: Write the eighteen self-contained HTML acceptance controls**
+- [ ] **Step 1: Write the nineteen self-contained HTML acceptance controls**
 
 Each file reads only `window.initialState`, renders the fixed title/body/author
 with semantic markup, and varies only the ownership/presentation behavior under
@@ -305,12 +306,14 @@ control. For mixed evaluability, omit the body only for Bob's author context and
 expose a button for Alice viewing Bob's article. In the viewer-only-author-text
 control, display the expected username in viewer navigation but omit every
 `[rel~="author"]` element; both target assertions must be not evaluable with
-`article_author_missing` in their applicable contexts.
+`article_author_missing` in their applicable contexts. In the hidden-author-text
+control, render a visible `[rel~="author"]` container whose matching username is
+present only in a hidden descendant; require the same not-evaluable reasons.
 
 - [ ] **Step 2: Write custody and matrix declarations as failing tests**
 
 Before creating `qualify.py`, add tests that import it and require the exact
-eighteen-control ID set, expected target sets/reason arrays, two operational
+nineteen-control ID set, expected target sets/reason arrays, two operational
 controls, mutual exclusion of `--provisional`/`--git-commit`, rejection of a
 non-HEAD commit, rejection of dirty hashed paths, and the invariant that
 provisional output can never be qualified.
@@ -341,8 +344,8 @@ exactly these four canonically sorted objects:
 The mixed control has only the second object above and also fails
 `non_author_does_not_see_delete_article`. The viewer-only-author-text control
 uses the same four assertion/fixture/context tuples as the broken control with
-reason `article_author_missing` instead of `body_missing`. Add two operational
-runs. For invalid
+reason `article_author_missing` instead of `body_missing`; the hidden-author-text
+control has the identical expected reason array. Add two operational runs. For invalid
 interface, mount `reference-explicit.html` as `/input/app.html` and execute:
 
 ```python
@@ -437,11 +440,13 @@ enumerate all locators. Resolve buttons with
 name while normalizing intervening whitespace and folding case. Resolve title
 and body with Playwright `getByText(expected, {exact:true})`, using its smallest
 exact text matches instead of scanning ancestor `textContent`. Resolve article
-authorship only by enumerating `[rel~="author"]` elements whose normalized,
-case-sensitive full text equals `article.author.username`; viewer text or any
-unrelated username is excluded. This `rel="author"` relation is part of the
-common public candidate contract, not a fixture-only selector. Duplicates are
-counted and at least one perceptible match satisfies each page prerequisite.
+authorship by scoping `getByText(expected, {exact:true})` within each
+`[rel~="author"]` element, deduplicating the resulting smallest text-bearing
+elements, and applying perceptibility to those matched elements themselves.
+Viewer text, unrelated usernames and a username present only in a hidden
+descendant are excluded. This `rel="author"` relation is part of the common
+public candidate contract, not a fixture-only selector. Duplicates are counted
+and at least one perceptible match satisfies each page prerequisite.
 
 For each matched element:
 
@@ -461,7 +466,7 @@ Always write `report.json` in `finally`. A complete report includes exact observ
 - [ ] **Step 9: Build and run every browser acceptance control**
 
 Build the pinned image, then run the qualifier with `--provisional`. Expected:
-all eighteen HTML controls plus both operational controls match, while the
+all nineteen HTML controls plus both operational controls match, while the
 manifest remains explicitly unqualified because custody is provisional. This
 run must prove crossed identities, transparency, partial/full occlusion,
 pointer-event independence, multiplicity, exact route/final URL, fresh-context
@@ -495,7 +500,7 @@ git commit -m "Add crossed-identity RealWorld browser instrument"
 - [ ] **Step 1: Verify the prewritten matrix and custody regression tests**
 
 Confirm the tests written before `qualify.py` assert `EXPECTED` contains
-exactly the eighteen HTML IDs from Task 3. Assert all eight `reference-*`
+exactly the nineteen HTML IDs from Task 3. Assert all eight `reference-*`
 controls pass and the seven target mutants have these exact failed sets:
 
 ```python
@@ -540,7 +545,7 @@ python eval/fixtures/realworld-author-ui/qualify.py \
   --output /tmp/realworld-author-ui-qualification
 ```
 
-Expected: JSON reports `"qualified": true`; eighteen HTML controls and two
+Expected: JSON reports `"qualified": true`; nineteen HTML controls and two
 operational controls match exactly, the supplied commit equals `HEAD`, and all
 hashed instrument paths are clean.
 
@@ -636,7 +641,7 @@ Recompute hashes locally, verify `qualified:true`, verify the artifact's image I
 
 Record source URL/revision/SHA, exact head commit, image ID, qualification/report hashes, artifact digest, control denominator and outcome table, screenshot hashes and the browser-sandbox flag. State explicitly:
 
-- the oracle produced the expected outcomes for the enumerated eighteen HTML
+- the oracle produced the expected outcomes for the enumerated nineteen HTML
   controls and two operational controls under the pinned environment;
 - it does not admit RealWorld into the experiment;
 - it is not a provider-produced result and does not add evidence for H1/H2;
@@ -688,7 +693,7 @@ one fixed oracle and one fixed fixture policy.
 
 Search changed docs and code for accidental claims of admission, project
 generalization, H1/H2 confirmation or “two E2E projects” before prospective
-collection. Ensure all denominators say eighteen HTML controls plus two
+collection. Ensure all denominators say nineteen HTML controls plus two
 operational controls and that source/runtime/hash values agree across workflow
 artifact and documentation.
 
