@@ -20,8 +20,11 @@ EXPECTED = {
     'reference-hidden-clear': ('pass', []),
     'reference-nested-reversed': ('pass', []),
     'reference-extra-checkbox': ('pass', []),
-    'control-ambiguous-master': ('target_not_evaluable', []),
+    'reference-hidden-master': ('pass', []),
+    'control-ambiguous-master': ('pass', []),
+    'control-duplicate-master': ('target_not_evaluable', []),
     'mutant-stale-master': ('target_only_failure', ['clear_master_after_clear_completed']),
+    'mutant-replacement-stale-master': ('target_only_failure', ['clear_master_after_clear_completed']),
     'mutant-no-individual-sync': ('non_target_only_failure', ['master_tracks_individuals']),
     'mutant-no-bulk': ('target_not_evaluable', ['master_sets_items']),
     'mutant-no-clear': ('target_not_evaluable', ['clear_completed_removes_items']),
@@ -29,7 +32,7 @@ EXPECTED = {
 }
 EXPECTED_REASONS = {'mutant-no-bulk': 'bulk_selection_failed',
                     'mutant-no-clear': 'clear_failed',
-                    'control-ambiguous-master': 'master_identity_ambiguous'}
+                    'control-duplicate-master': 'master_identity_ambiguous'}
 EXPECTED_CLEAR_REASONS = {'mutant-no-bulk': 'bulk_selection_failed'}
 
 
@@ -82,7 +85,7 @@ def main() -> int:
                     and row['expected_target_reason'] == row['observed_target_reason']
                     and row['expected_clear_reason'] == row['observed_clear_reason']
                     for row in rows)
-    report = {'schema_version': 'mark-all-qualification/v1', 'qualified': qualified,
+    report = {'schema_version': 'mark-all-qualification/v2', 'qualified': qualified,
               'image_id': args.image, 'cases': rows,
               'files': {str(path.relative_to(ROOT)): digest(path) for path in paths},
               'limitations': 'Authored controls qualify this bounded oracle, not a source-smell effect or universal browser escape safety.'}

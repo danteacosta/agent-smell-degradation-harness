@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const crypto = require('node:crypto');
 const {chromium} = require('playwright');
 const html = fs.readFileSync('/input/app.html');
-const report = {schema_version:'mark-all-browser/v1', status:'browser_error',
+const report = {schema_version:'mark-all-browser/v2', status:'browser_error',
   app_sha256:crypto.createHash('sha256').update(html).digest('hex'),
   action_settle_ms:300, cases:[], browser_sandbox:false,
   isolation:'non-root offline resource-bounded Docker; browser sandbox disabled'};
@@ -53,6 +53,15 @@ async function fresh() {
   return {context,page,master,clear,list,checks,consoleErrors};
 }
 async function settled(page) {await page.waitForTimeout(300);}
+async function checkboxObservation(locator) {
+  const count=await locator.count();
+  const states=[];
+  for(let index=0;index<count;index++){
+    const item=locator.nth(index);
+    states.push({visible:await item.isVisible(),checked:await item.isChecked()});
+  }
+  return {count,visible_count:states.filter(item=>item.visible).length,states};
+}
 async function scenario(id, check) {
   const s=await fresh();
   try {
@@ -97,10 +106,7 @@ async function scenario(id, check) {
       const {page,master,clear,list,checks,consoleErrors}=target;
       const observe=async()=>({todo_count:await list.locator(':scope > li').count(),
         checked_items:await list.locator(':scope > li input[type="checkbox"]:checked').count(),
-        master_count:await master.count(), master_checked:await master.count()?await master.isChecked():null,
-        checked_outside_list:await page.locator('input[type="checkbox"]').evaluateAll(
-          elements=>elements.filter(element=>!element.closest('#todo-list') && element.checked)
-            .map(element=>element.id||'(unnamed)'))});
+        master:await checkboxObservation(master)});
       await page.screenshot({path:'/output/before-target.png'});
       const before=await observe();
       await master.check();await settled(page);
@@ -114,19 +120,20 @@ async function scenario(id, check) {
         if(await list.locator(':scope > li').count()!==0){
           targetCase={id:'clear_master_after_clear_completed',status:'not_evaluable',reason:'clear_failed'};
         }else{
-          const masterCount=await master.count();
-          if(masterCount===1){
-            targetCase={id:'clear_master_after_clear_completed',
-              status:await master.isChecked()?'failed':'passed'};
-          }else if(masterCount>1){
+          const masterState=await checkboxObservation(master);
+          if(masterState.count>1){
             targetCase={id:'clear_master_after_clear_completed',status:'not_evaluable',
               reason:'master_identity_ambiguous'};
-          }else{
-            const otherChecked=await page.locator('input[type="checkbox"]').evaluateAll(
-              elements=>elements.some(element=>!element.closest('#todo-list') && element.checked));
+          }else if(masterState.visible_count===1){
             targetCase={id:'clear_master_after_clear_completed',
-              status:otherChecked?'not_evaluable':'passed',
-              ...(otherChecked?{reason:'master_identity_ambiguous'}:{})};
+              status:masterState.states[0].checked?'failed':'passed'};
+          }else{
+            // The endpoint is user-observable state. Once the list is empty, a
+            // removed or hidden exact master control has no visible checked
+            // state to clear. Other checkboxes are not reinterpreted as the
+            // master because the public interface binds that role to
+            // #toggle-all.
+            targetCase={id:'clear_master_after_clear_completed',status:'passed'};
           }
         }
       }

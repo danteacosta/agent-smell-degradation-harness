@@ -25,7 +25,7 @@ jobs:
           python-version: '3.12'
       - name: Build pinned offline browser instrument
         run: docker build --iidfile "$RUNNER_TEMP/mark-all-image" eval/fixtures/mark-all
-      - name: Qualify two valid implementations and five controls
+      - name: Qualify visible-state policy and adversarial controls
         run: >-
           python eval/fixtures/mark-all/qualify.py
           --image "$(cat "$RUNNER_TEMP/mark-all-image")"
