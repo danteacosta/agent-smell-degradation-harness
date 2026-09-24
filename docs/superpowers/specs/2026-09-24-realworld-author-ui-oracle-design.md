@@ -113,7 +113,11 @@ annotation, oracle code, source URL or fixture expectation. A serialized-prompt
 leakage review remains an admission gate.
 
 The future prompt will require a self-contained article page at
-`/article/bounded-ui-case` and consumption of `window.initialState`. The exact
+`/article/bounded-ui-case`, consumption of `window.initialState`, and the
+article author's visible identity in an element whose standard HTML link type
+contains `author` (`rel="author"`). This semantic relation prevents unrelated
+viewer text from satisfying the page prerequisite. It is common to every arm
+and discloses article authorship, not the delete-control verdict. The exact
 A/B/C prompt texts require a separate leakage review and freeze after the
 instrument qualifies.
 
@@ -128,6 +132,11 @@ The delete-control role is resolved through Playwright's accessible button role
 and a whitespace-normalized, case-insensitive exact accessible name of
 `Delete Article`. This follows the source and official template without
 requiring a private class, component name or test ID.
+
+The article-author prerequisite enumerates only elements matching
+`[rel~="author"]` and then requires whitespace-normalized, case-sensitive exact
+text equal to `article.author.username`. A matching username elsewhere on the
+page, including viewer navigation, never satisfies the prerequisite.
 
 For each context, the report records bounded counts for:
 
@@ -250,6 +259,9 @@ The initial qualification contains:
 - a mixed-evaluability control in which one assertion has a prerequisite
   failure while another has an evaluable failure, proving category precedence
   and preservation of both receipt sets; and
+- a viewer-only-author-text control in which the expected username is visible
+  outside any `[rel~="author"]` element and all dependent target assertions are
+  not evaluable with `article_author_missing`;
 - an interface-boundary control in which the qualifier deliberately supplies a
   state payload missing `article.author.username`; the runner rejects it as an
   operational `interface_failure` before navigation or candidate execution.

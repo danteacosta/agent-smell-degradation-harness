@@ -15,6 +15,8 @@
 Implement the approved design in `docs/superpowers/specs/2026-09-24-realworld-author-ui-oracle-design.md`. Keep these boundaries:
 
 - fixed route and slug: `/article/bounded-ui-case` and `bounded-ui-case`;
+- public article-author relation: visible exact username inside an element whose
+  `rel` token list contains `author`;
 - target IDs: `author_sees_delete_article` and `non_author_does_not_see_delete_article`;
 - page preservation is a measurement prerequisite, not a non-target requirement;
 - no provider call, prompt A/B/C freeze, corpus admission, result rescoring or H1/H2 claim;
@@ -90,7 +92,7 @@ screenshots and never enter scientific classification.
 - Create: `tests/test_realworld_author_ui_executor.py`
 - Create: `eval/realworld_author_ui_executor.py`
 
-- [ ] **Step 1: Write report builders and the passing classification test**
+- [ ] **Step 1: Write the complete classifier contract before implementation**
 
 Create a test helper that serializes a complete four-observation report to
 bytes. Each observation has exactly:
@@ -120,13 +122,30 @@ assert oracle.classify_report(report_bytes(), 0) == {
 }
 ```
 
-- [ ] **Step 2: Run the focused test and verify the expected import failure**
+In the same test-first change, add all failure-direction, prerequisite,
+mixed-evaluability, schema and return-code tests before creating the executor.
+Cover:
 
-Run: `python -m pytest tests/test_realworld_author_ui_executor.py::test_crossed_author_and_non_author_contexts_pass -q`
+- zero perceptible author buttons, perceptible non-author buttons, both target
+  directions together, two valid author buttons, and hidden/removed non-author
+  buttons;
+- each closed prerequisite reason and simultaneous prerequisite reasons;
+- the mixed case where Bob's author page lacks its body while Alice viewing
+  Bob's article exposes a delete button;
+- duplicate keys as raw bytes, unknown schema, extra/missing fields, booleans as
+  counts, negative/oversized counts, `perceptible > matched`, duplicate pairs,
+  bad final URLs, malformed screenshot names, unsupported IDs/reasons, unsorted
+  sets, inconsistent reason/set membership, oversized runtime errors, wrong
+  operational fields and return-code contradictions.
 
-Expected: FAIL because `eval.realworld_author_ui_executor` does not exist.
+- [ ] **Step 2: Run the complete classifier contract and verify it is red**
 
-- [ ] **Step 3: Add closed schema constants and the minimal passing classifier**
+Run: `python -m pytest tests/test_realworld_author_ui_executor.py -q`
+
+Expected: collection/import FAIL because
+`eval.realworld_author_ui_executor` does not exist. Preserve this red result.
+
+- [ ] **Step 3: Implement the closed classifier contract**
 
 Define:
 
@@ -151,23 +170,9 @@ closed schema above, including canonical screenshot names and observation
 ordering. Compute the classification from observations and require the
 runner-declared target sets, reasons and return code to match it exactly.
 
-- [ ] **Step 4: Add failure-direction and multiplicity tests**
+- [ ] **Step 4: Implement exact prerequisite reasoning and precedence**
 
-Assert these public outcomes:
-
-- any author context with `perceptible == 0` fails only `author_sees_delete_article`;
-- any non-author context with `perceptible >= 1` fails only `non_author_does_not_see_delete_article`;
-- failures in both directions produce both sorted IDs;
-- two perceptible author buttons still pass;
-- matched-but-hidden or removed non-author buttons pass.
-
-Run: `python -m pytest tests/test_realworld_author_ui_executor.py -q`
-
-Expected: PASS for the implemented cases.
-
-- [ ] **Step 5: Add prerequisite and mixed-evaluability tests**
-
-For each closed prerequisite reason, mutate one observation and assert the dependent assertion ID appears in `target_not_evaluable` with an exact reason object:
+For each violated prerequisite, derive a reason object shaped as:
 
 ```python
 {
@@ -178,24 +183,19 @@ For each closed prerequisite reason, mutate one observation and assert the depen
 }
 ```
 
-Add a mixed case where the Bob-author page lacks its body while an Alice non-author context exposes a delete button. Assert category `target_not_evaluable`, return code `11`, `target_failed == ["non_author_does_not_see_delete_article"]`, and `target_not_evaluable == ["author_sees_delete_article"]`.
+Implement category precedence so any non-evaluable assertion produces
+`target_not_evaluable` while retaining evaluable target failures. A complete
+report does not carry a category field: category is adapter-only. The adapter
+recomputes sets/reasons, validates the runner declarations and derives category
+plus the required `0`, `10` or `11` return code.
 
-- [ ] **Step 6: Add fail-closed schema and return-code tests**
-
-Parameterize duplicate keys using raw byte fixtures, unknown schema,
-extra/missing fields, booleans used as counts, negative/oversized counts,
-`perceptible > matched`, duplicate fixture/context pairs, bad final URLs,
-malformed screenshot names, unsupported IDs/reasons, unsorted sets,
-inconsistent reason/set membership, simultaneous prerequisite reasons,
-oversized runtime errors, wrong fields on operational reports and
-category/return-code mismatches. Require `malformed_report` and preserve the
-observed subprocess return code as diagnostic data.
+- [ ] **Step 5: Run the previously red contract and make it green**
 
 Run: `python -m pytest tests/test_realworld_author_ui_executor.py -q`
 
-Expected: PASS.
+Expected: every prewritten classifier test passes.
 
-- [ ] **Step 7: Commit the classifier contract**
+- [ ] **Step 6: Commit the classifier contract**
 
 ```bash
 git add eval/realworld_author_ui_executor.py tests/test_realworld_author_ui_executor.py
@@ -283,8 +283,10 @@ git commit -m "Bound RealWorld browser execution"
 - Create: `eval/fixtures/realworld-author-ui/mutant-fully-occluded-author.html`
 - Create: `eval/fixtures/realworld-author-ui/control-broken-article.html`
 - Create: `eval/fixtures/realworld-author-ui/control-mixed-evaluability.html`
+- Create: `eval/fixtures/realworld-author-ui/control-viewer-only-author-text.html`
+- Modify: `tests/test_realworld_author_ui_executor.py`
 
-- [ ] **Step 1: Write the seventeen self-contained HTML acceptance controls**
+- [ ] **Step 1: Write the eighteen self-contained HTML acceptance controls**
 
 Each file reads only `window.initialState`, renders the fixed title/body/author
 with semantic markup, and varies only the ownership/presentation behavior under
@@ -300,9 +302,24 @@ unconditional hide, inverted equality, hard-coded Alice, transparent author,
 visible plus transparent non-author, and fully covering hit-testable overlay as
 seven target mutants. Omit the body in every context for the broken-article
 control. For mixed evaluability, omit the body only for Bob's author context and
-expose a button for Alice viewing Bob's article.
+expose a button for Alice viewing Bob's article. In the viewer-only-author-text
+control, display the expected username in viewer navigation but omit every
+`[rel~="author"]` element; both target assertions must be not evaluable with
+`article_author_missing` in their applicable contexts.
 
-- [ ] **Step 2: Write the executable qualifier and exact expectations**
+- [ ] **Step 2: Write custody and matrix declarations as failing tests**
+
+Before creating `qualify.py`, add tests that import it and require the exact
+eighteen-control ID set, expected target sets/reason arrays, two operational
+controls, mutual exclusion of `--provisional`/`--git-commit`, rejection of a
+non-HEAD commit, rejection of dirty hashed paths, and the invariant that
+provisional output can never be qualified.
+
+Run: `python -m pytest tests/test_realworld_author_ui_executor.py -q`
+
+Expected: FAIL because `qualify.py` does not exist. Preserve this red result.
+
+- [ ] **Step 3: Implement the executable qualifier and exact expectations**
 
 Create the full `EXPECTED` map before writing runner code. The seven target
 mutants declare the exact failed assertion sets. The broken-article reasons are
@@ -322,7 +339,10 @@ exactly these four canonically sorted objects:
 ```
 
 The mixed control has only the second object above and also fails
-`non_author_does_not_see_delete_article`. Add two operational runs. For invalid
+`non_author_does_not_see_delete_article`. The viewer-only-author-text control
+uses the same four assertion/fixture/context tuples as the broken control with
+reason `article_author_missing` instead of `body_missing`. Add two operational
+runs. For invalid
 interface, mount `reference-explicit.html` as `/input/app.html` and execute:
 
 ```python
@@ -347,10 +367,15 @@ row per expected control, exact observed/expected category/sets/reasons,
 receipt/report/screenshot hashes, every fixture/runtime/executor input hash,
 the pinned source revision/SHA, and narrow limitation text.
 
-- [ ] **Step 3: Add the pinned image shell and confirm the acceptance test is red**
+- [ ] **Step 4: Make the custody tests green, then add a deliberately incomplete runner**
 
-Create `package.json`, its lock and the Dockerfile before creating `runner.cjs`.
-Use package metadata:
+Run the focused Python suite and make every prewritten custody/matrix test pass.
+Then create a buildable `runner.cjs` that only hashes `/input/app.html`, emits a
+schema-incomplete browser-failure report and exits `21`. This stub contains no
+browser contract behavior and will be replaced, not extended with production
+branches.
+
+Create the pinned `package.json`, lock and Dockerfile using the metadata below.
 
 ```json
 {
@@ -366,17 +391,20 @@ the same digest-pinned Playwright 1.58.2 Noble base as Mark-all, install with
 `npm ci --ignore-scripts --omit=dev --no-audit --no-fund`, copy only
 `runner.cjs`, set `HOME=/tmp`, run as `pwuser`, and use the runner as entrypoint.
 
-Run:
+Build the stub and run the actual qualifier:
 
 ```bash
 docker build --iidfile /tmp/realworld-author-ui-red-image eval/fixtures/realworld-author-ui
+python eval/fixtures/realworld-author-ui/qualify.py \
+  --provisional --image "$(cat /tmp/realworld-author-ui-red-image)" \
+  --output /tmp/realworld-author-ui-red
 ```
 
-Expected: FAIL at `COPY runner.cjs` because the trusted controller is not yet
-implemented. The complete executable controls and qualifier already exist; the
-later Docker qualification, not source inspection, proves their acceptance.
+Expected: FAIL with explicit mismatches for the HTML matrix. This proves the
+executable acceptance harness is red because browser behavior is absent, rather
+than because a file or image is missing.
 
-- [ ] **Step 4: Implement the runner and fixture validation**
+- [ ] **Step 5: Replace the stub with the runner and fixture validation**
 
 Embed the two canonical fixtures in trusted runner code. Both use slug `bounded-ui-case`, title `Bounded UI case`, body `Observable article body`; only article/viewer usernames vary. Deep-freeze every nested value and install `window.initialState` with `writable:false` and `configurable:false` via `addInitScript`.
 
@@ -386,7 +414,7 @@ before browser launch or candidate execution. The browser-failure mode launches
 Chromium, throws before any page/context is created, and closes the browser in
 `finally`.
 
-- [ ] **Step 5: Implement the offline route and fresh-context loop**
+- [ ] **Step 6: Implement the offline route and fresh-context loop**
 
 Launch headless Chromium with `chromiumSandbox:false`. For each ordered pair:
 
@@ -401,16 +429,19 @@ Launch headless Chromium with `chromiumSandbox:false`. For each ordered pair:
 
 create a fresh context at viewport `1000 × 720`, block service workers/downloads, fulfill only the exact navigation URL `http://fixture.invalid/article/bounded-ui-case`, attach a CSP denying network, frames, objects and forms, and abort every other request. Bound default and navigation timeouts; dismiss dialogs; record capped console/page errors.
 
-- [ ] **Step 6: Implement locators and the perceptibility predicate exactly once**
+- [ ] **Step 7: Implement locators and the perceptibility predicate exactly once**
 
 After navigation reaches `load`, wait one fixed 300-ms settle interval, then
 enumerate all locators. Resolve buttons with
 `getByRole('button', {name:/^Delete\s+Article$/i})`, which anchors the accessible
-name while normalizing intervening whitespace and folding case. Resolve title,
-body and expected author username with Playwright `getByText(expected,
-{exact:true})`; use Playwright's smallest exact text matches instead of scanning
-ancestor `textContent`. Duplicates are counted and at least one perceptible
-match satisfies each page prerequisite.
+name while normalizing intervening whitespace and folding case. Resolve title
+and body with Playwright `getByText(expected, {exact:true})`, using its smallest
+exact text matches instead of scanning ancestor `textContent`. Resolve article
+authorship only by enumerating `[rel~="author"]` elements whose normalized,
+case-sensitive full text equals `article.author.username`; viewer text or any
+unrelated username is excluded. This `rel="author"` relation is part of the
+common public candidate contract, not a fixture-only selector. Duplicates are
+counted and at least one perceptible match satisfies each page prerequisite.
 
 For each matched element:
 
@@ -423,20 +454,20 @@ For each matched element:
 
 Use this same predicate for the role-based exact accessible-name button and the exact title/body/article-author prerequisite elements. Record both matched and perceptible counts. Keep the documented limitation for non-hit-testable overlays.
 
-- [ ] **Step 7: Emit the closed report and screenshots**
+- [ ] **Step 8: Emit the closed report and screenshots**
 
 Always write `report.json` in `finally`. A complete report includes exact observations, `browser_sandbox:false`, isolation text, runner/browser versions and four bounded screenshot names. Derive assertion sets and reason objects from observations, sort them, and assign return codes `0`, `10`, or `11`. Use `20` only for interface failure and `21` for browser failure.
 
-- [ ] **Step 8: Build and run every browser acceptance control**
+- [ ] **Step 9: Build and run every browser acceptance control**
 
 Build the pinned image, then run the qualifier with `--provisional`. Expected:
-all seventeen HTML controls plus both operational controls match, while the
+all eighteen HTML controls plus both operational controls match, while the
 manifest remains explicitly unqualified because custody is provisional. This
 run must prove crossed identities, transparency, partial/full occlusion,
 pointer-event independence, multiplicity, exact route/final URL, fresh-context
 isolation, mixed evaluability, interface failure and browser failure.
 
-- [ ] **Step 9: Check JavaScript and package integrity**
+- [ ] **Step 10: Check JavaScript and package integrity**
 
 Run:
 
@@ -448,7 +479,7 @@ git diff --check
 
 Expected: syntax succeeds, lockfile install succeeds, diff check is clean.
 
-- [ ] **Step 10: Commit the complete browser instrument**
+- [ ] **Step 11: Commit the complete browser instrument**
 
 ```bash
 git add eval/fixtures/realworld-author-ui
@@ -461,11 +492,11 @@ git commit -m "Add crossed-identity RealWorld browser instrument"
 - Modify: `eval/fixtures/realworld-author-ui/qualify.py`
 - Modify: `tests/test_realworld_author_ui_executor.py`
 
-- [ ] **Step 1: Add static matrix and custody regression tests**
+- [ ] **Step 1: Verify the prewritten matrix and custody regression tests**
 
-Import `qualify.py` and assert `EXPECTED` contains exactly the seventeen HTML
-IDs from Task 3. Assert all eight `reference-*` controls pass and the seven
-target mutants have these exact failed sets:
+Confirm the tests written before `qualify.py` assert `EXPECTED` contains
+exactly the eighteen HTML IDs from Task 3. Assert all eight `reference-*`
+controls pass and the seven target mutants have these exact failed sets:
 
 ```python
 ONE_AUTHOR = ["author_sees_delete_article"]
@@ -509,7 +540,7 @@ python eval/fixtures/realworld-author-ui/qualify.py \
   --output /tmp/realworld-author-ui-qualification
 ```
 
-Expected: JSON reports `"qualified": true`; seventeen HTML controls and two
+Expected: JSON reports `"qualified": true`; eighteen HTML controls and two
 operational controls match exactly, the supplied commit equals `HEAD`, and all
 hashed instrument paths are clean.
 
@@ -605,7 +636,7 @@ Recompute hashes locally, verify `qualified:true`, verify the artifact's image I
 
 Record source URL/revision/SHA, exact head commit, image ID, qualification/report hashes, artifact digest, control denominator and outcome table, screenshot hashes and the browser-sandbox flag. State explicitly:
 
-- the oracle produced the expected outcomes for the enumerated seventeen HTML
+- the oracle produced the expected outcomes for the enumerated eighteen HTML
   controls and two operational controls under the pinned environment;
 - it does not admit RealWorld into the experiment;
 - it is not a provider-produced result and does not add evidence for H1/H2;
@@ -649,15 +680,15 @@ Verify exact-route network abortion, CSP, no host execution of candidate code, n
 Confirm the executor owns schema/process policy, the runner owns browser
 observation plus its independently declared status, and the qualifier owns
 authored expectations. The adapter must recompute and validate runner-declared
-sets/category rather than trusting them; this deliberate cross-check is not
-shared policy code. Reject generic factories or strategy hierarchies: there is
+sets and reasons, then derive its own category; this deliberate cross-check is
+not shared policy code. Reject generic factories or strategy hierarchies: there is
 one fixed oracle and one fixed fixture policy.
 
 - [ ] **Step 4: Check scientific scope and staleness**
 
 Search changed docs and code for accidental claims of admission, project
 generalization, H1/H2 confirmation or “two E2E projects” before prospective
-collection. Ensure all denominators say seventeen HTML controls plus two
+collection. Ensure all denominators say eighteen HTML controls plus two
 operational controls and that source/runtime/hash values agree across workflow
 artifact and documentation.
 
