@@ -50,6 +50,12 @@ The primary paper is the causal/temporal study: controlled single-condition requ
 
 The product is a requirement-integrity gate, not a generic AgentOps dashboard. It consumes a requirement and a live pre-final trace, maps each declared constraint to planned checks and bounded observations, and emits `approve`, `warn`, or `block` with evidence. It starts in shadow mode and measures false alerts, review time, lead time, cost, and escaped regressions. Synthetic replay is not customer evidence.
 
+The initial commercial test is a
+[pre-merge requirement audit](research/2026-09-24-premerge-requirement-audit-market-check.md)
+for pull requests produced with code agents. Market evidence supports testing
+this narrower review workflow, but does not establish revenue, differentiation
+or willingness to pay.
+
 The confirmatory outcome table is label-plane data. Each constraint receives a human/adjudicated `covered`, `omitted`, or `uncertain` status keyed by `constraint_id`. Lexical overlap is only a diagnostic baseline and never the semantic outcome.
 
 ## Non-claims
