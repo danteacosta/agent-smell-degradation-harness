@@ -147,13 +147,20 @@ in both dimensions, its effective opacity across its ancestor chain is greater
 than `0.01`, and, after it is scrolled into view, at least one point in a fixed
 `5 × 5` inset grid over the intersection of its bounding box and viewport
 hit-tests to the element or one of its descendants. Grid coordinates and edge
-insets are fixed in the runner and recorded in its source hash. This bounded
-exposed-area sample accepts a partially occluded element when a sampled portion
-remains exposed and rejects one whose sampled area is fully occluded. Removed
-controls, `display:none`, `visibility:hidden` and effectively transparent
-controls are not perceptible. The policy does not claim to model every
-human-perception or accessibility condition. Exact Playwright, Chromium and
-viewport versions are pinned in the qualification image.
+insets are fixed in the runner and recorded in its source hash. Pointer-event
+targeting is not part of the source obligation: inside a `try/finally` around
+the hit-test only, the controller saves the target and ancestor inline
+`pointer-events` declarations, applies `pointer-events:auto !important`, then
+restores every saved declaration before recording the observation. It changes
+neither layout nor opacity nor visibility. This bounded exposed-area sample
+therefore accepts a visible `pointer-events:none` element and a partially
+occluded element when a sampled portion remains exposed, while rejecting one
+whose sampled area is fully occluded by a hit-testable element. It does not
+claim to detect occlusion by a non-hit-testable overlay or to model every
+human-perception or accessibility condition. Removed controls, `display:none`,
+`visibility:hidden` and effectively transparent controls are not perceptible.
+Exact Playwright, Chromium and viewport versions are pinned in the qualification
+image.
 
 ## Classification
 
@@ -224,6 +231,9 @@ The initial qualification contains:
   non-author button;
 - a valid partially occluded author control with at least one exposed sampled
   point;
+- a valid visible author button styled `pointer-events:none`;
+- a valid page whose perceptible title, body and author prerequisite elements
+  are styled `pointer-events:none`;
 - an always-visible mutant;
 - a never-visible mutant;
 - a wrong-identity mutant;
