@@ -3,6 +3,7 @@
 const fs = require('node:fs');
 const crypto = require('node:crypto');
 const {chromium} = require('playwright');
+const {finalize} = require('./finalize.cjs');
 
 const URL = 'http://fixture.invalid/article/bounded-ui-case';
 const TITLE = 'Bounded UI case';
@@ -340,8 +341,13 @@ async function run() {
     report.browser_started = browserStarted;
     exitCode = error instanceof InterfaceError ? 20 : 21;
   } finally {
-    if (browser) await browser.close();
-    fs.writeFileSync('/output/report.json', JSON.stringify(report, null, 2));
-    process.exitCode = exitCode;
+    const outcome = await finalize({
+      browser,
+      report,
+      exitCode,
+      browserStarted,
+      outputPath: '/output/report.json',
+    });
+    process.exitCode = outcome.exitCode;
   }
 })();
