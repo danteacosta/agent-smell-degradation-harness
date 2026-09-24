@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
 import stat
 import subprocess
 from types import SimpleNamespace
@@ -496,7 +497,9 @@ def _execute_with_fake_process(monkeypatch, tmp_path, *, report=None, returncode
                                screenshot_fault=None, run_error=None, call_log=None,
                                extra_png=False, cleanup_error=None,
                                cleanup_returncode=0, race_target=None,
-                               nested_png=False):
+                               cleanup_stdout=b"", cleanup_stderr=b"",
+                               staging_observation=None,
+                               staging_cleanup_error=None):
     app = b"<html></html>"
     inputs = tmp_path / "inputs"
     inputs.mkdir()
@@ -522,22 +525,42 @@ def _execute_with_fake_process(monkeypatch, tmp_path, *, report=None, returncode
 
         monkeypatch.setattr(os, "open", swapping_open)
 
+    if staging_cleanup_error is not None:
+        def fail_staging_cleanup(path):
+            raise staging_cleanup_error
+
+        monkeypatch.setattr(shutil, "rmtree", fail_staging_cleanup)
+
     def fake_run(command, **kwargs):
         calls.append((command, kwargs))
         if command[:3] == ["docker", "rm", "--force"]:
             if cleanup_error is not None:
                 raise cleanup_error
-            return SimpleNamespace(returncode=cleanup_returncode)
+            return SimpleNamespace(
+                returncode=cleanup_returncode,
+                stdout=cleanup_stdout,
+                stderr=cleanup_stderr,
+            )
         if run_error is not None:
             raise run_error
+        if staging_observation is not None:
+            mount = next(
+                item for item in command
+                if item.startswith("type=bind,") and "dst=/input" in item
+            )
+            fields = dict(part.split("=", 1) for part in mount.split(",") if "=" in part)
+            staged_app = Path(fields["src"]) / "app.html"
+            staging_observation.update(
+                source=Path(fields["src"]),
+                bytes=staged_app.read_bytes(),
+                mode=stat.S_IMODE(staged_app.stat().st_mode),
+            )
         if report is not None:
             if report.get("status") == "complete":
                 _write_complete_artifacts(
                     output, report, screenshot_fault=screenshot_fault)
                 if extra_png:
                     (output / "unexpected.png").write_bytes(PNG)
-                if nested_png:
-                    (output / "trusted-input" / "ignored.png").write_bytes(PNG)
             else:
                 (output / "report.json").write_bytes(encoded(report))
         kwargs["stdout"].write(b"browser output\n")
@@ -550,8 +573,9 @@ def _execute_with_fake_process(monkeypatch, tmp_path, *, report=None, returncode
 
 def test_execute_accepts_complete_report_and_writes_auditable_receipts(monkeypatch, tmp_path):
     value = complete_report()
+    staged = {}
     receipt, output, calls = _execute_with_fake_process(
-        monkeypatch, tmp_path, report=value)
+        monkeypatch, tmp_path, report=value, staging_observation=staged)
 
     assert receipt == {
         "image": IMAGE,
@@ -571,13 +595,19 @@ def test_execute_accepts_complete_report_and_writes_auditable_receipts(monkeypat
     assert calls[1][0] == ["docker", "rm", "--force", command[5]]
     assert calls[1][1] == {"capture_output": True, "timeout": 30, "check": False}
     assert command[5].startswith("realworld-author-ui-")
-    trusted_input = output / "trusted-input"
-    assert (trusted_input / "app.html").read_bytes() == b"<html></html>"
-    assert stat.S_IMODE((trusted_input / "app.html").stat().st_mode) == 0o400
-    assert any(
-        item == f"type=bind,src={trusted_input.resolve()},dst=/input,readonly"
-        for item in command
+    output_mount = next(
+        item for item in command
+        if item.startswith("type=bind,") and "dst=/output" in item
     )
+    output_source = Path(dict(
+        part.split("=", 1) for part in output_mount.split(",") if "=" in part
+    )["src"])
+    assert staged["bytes"] == b"<html></html>"
+    assert staged["mode"] == 0o400
+    assert staged["source"] != output_source
+    assert output_source not in staged["source"].parents
+    assert not staged["source"].exists()
+    assert not (output / "trusted-input").exists()
 
 
 def test_execute_timeout_is_diagnostic_and_always_cleans_up(monkeypatch, tmp_path):
@@ -602,6 +632,25 @@ def test_timeout_survives_cleanup_timeout(monkeypatch, tmp_path):
     assert receipt["category"] == "timeout"
     assert receipt["returncode"] == 124
     assert receipt["cleanup_error"] == "docker cleanup timed out"
+    assert json.loads((output / "executor.json").read_text()) == receipt
+
+
+def test_timeout_records_nonzero_cleanup_output_without_changing_primary_outcome(
+        monkeypatch, tmp_path):
+    receipt, output, _ = _execute_with_fake_process(
+        monkeypatch,
+        tmp_path,
+        run_error=subprocess.TimeoutExpired(["docker", "run"], 7),
+        cleanup_returncode=7,
+        cleanup_stdout=b"already gone\xff" + b"x" * 1_000,
+        cleanup_stderr="permission denied",
+    )
+    assert receipt["category"] == "timeout"
+    assert receipt["returncode"] == 124
+    assert receipt["cleanup_error"].startswith(
+        "docker cleanup exited 7; stdout=already gone�")
+    assert "stderr=permission denied" in receipt["cleanup_error"]
+    assert len(receipt["cleanup_error"]) <= 500
     assert json.loads((output / "executor.json").read_text()) == receipt
 
 
@@ -648,6 +697,31 @@ def test_nonzero_cleanup_return_is_not_a_cleanup_failure(monkeypatch, tmp_path):
         cleanup_returncode=1,
     )
     assert receipt["category"] == "pass"
+
+
+def test_staging_cleanup_error_does_not_escape(monkeypatch, tmp_path):
+    receipt, output, _ = _execute_with_fake_process(
+        monkeypatch,
+        tmp_path,
+        report=complete_report(),
+        staging_cleanup_error=OSError("staging busy"),
+    )
+    assert receipt["category"] == "cleanup_failure"
+    assert receipt["cleanup_error"] == "staging cleanup failed: staging busy"
+    assert json.loads((output / "executor.json").read_text()) == receipt
+
+
+def test_staging_cleanup_error_does_not_mask_timeout(monkeypatch, tmp_path):
+    receipt, output, _ = _execute_with_fake_process(
+        monkeypatch,
+        tmp_path,
+        run_error=subprocess.TimeoutExpired(["docker", "run"], 7),
+        staging_cleanup_error=OSError("staging busy"),
+    )
+    assert receipt["category"] == "timeout"
+    assert receipt["returncode"] == 124
+    assert receipt["cleanup_error"] == "staging cleanup failed: staging busy"
+    assert json.loads((output / "executor.json").read_text()) == receipt
 
 
 @pytest.mark.parametrize("report_fault", ["missing", "symlink", "oversize", "malformed"])
@@ -745,12 +819,6 @@ def test_complete_outcome_rejects_extra_png_output(monkeypatch, tmp_path):
         monkeypatch, tmp_path, report=complete_report(), extra_png=True)
     assert receipt["category"] == "browser_failure"
     assert receipt["reason"] == "unexpected screenshot: unexpected.png"
-
-
-def test_complete_outcome_ignores_png_below_trusted_input(monkeypatch, tmp_path):
-    receipt, _, _ = _execute_with_fake_process(
-        monkeypatch, tmp_path, report=complete_report(), nested_png=True)
-    assert receipt["category"] == "pass"
 
 
 def test_complete_outcome_requires_report_to_match_executed_app(monkeypatch, tmp_path):

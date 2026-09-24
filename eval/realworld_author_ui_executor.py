@@ -6,8 +6,10 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import stat
 import subprocess
+import tempfile
 import uuid
 
 from eval.focus_chain_executor import container_command
@@ -318,9 +320,9 @@ def _read_bounded_regular(path: Path, maximum: int) -> bytes | None:
                 pass
 
 
-def _stage_trusted_app(output: Path, raw: bytes) -> Path:
-    trusted_input = output / "trusted-input"
-    trusted_input.mkdir(mode=0o700)
+def _stage_trusted_app(parent: Path, raw: bytes) -> Path:
+    trusted_input = Path(tempfile.mkdtemp(
+        prefix=".realworld-author-ui-input-", dir=parent))
     app = trusted_input / "app.html"
     flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
     descriptor = os.open(app, flags, 0o400)
@@ -341,19 +343,51 @@ def _bounded_diagnostic(prefix: str, error: OSError) -> str:
     return f"{prefix}: {error}"[:500]
 
 
-def _cleanup_container(name: str) -> str | None:
+def _bounded_cleanup_output(value: object) -> str:
+    if isinstance(value, bytes):
+        text = value.decode("utf-8", errors="replace")
+    elif isinstance(value, str):
+        text = value
+    elif value is None:
+        text = ""
+    else:
+        text = str(value)
+    return text[:180]
+
+
+def _cleanup_container(name: str, *, interrupted: bool) -> str | None:
     try:
-        subprocess.run(
+        result = subprocess.run(
             ["docker", "rm", "--force", name],
             capture_output=True,
             timeout=30,
             check=False,
         )
+        if interrupted and result.returncode != 0:
+            stdout = _bounded_cleanup_output(getattr(result, "stdout", None))
+            stderr = _bounded_cleanup_output(getattr(result, "stderr", None))
+            return (
+                f"docker cleanup exited {result.returncode}; "
+                f"stdout={stdout}; stderr={stderr}"
+            )[:500]
         return None
     except subprocess.TimeoutExpired:
         return "docker cleanup timed out"
     except OSError as error:
         return _bounded_diagnostic("docker cleanup failed", error)
+
+
+def _cleanup_staged_input(trusted_input: Path) -> str | None:
+    try:
+        shutil.rmtree(trusted_input)
+        return None
+    except OSError as error:
+        return _bounded_diagnostic("staging cleanup failed", error)
+
+
+def _combine_cleanup_errors(*errors: str | None) -> str | None:
+    present = [error for error in errors if error]
+    return "; ".join(present)[:500] if present else None
 
 
 def execute(image: str, inputs: Path, output: Path, timeout: int = 90) -> dict:
@@ -363,34 +397,44 @@ def execute(image: str, inputs: Path, output: Path, timeout: int = 90) -> dict:
     app = _read_bounded_regular(inputs / "app.html", 200_000)
     if app is None:
         raise ValueError("bounded regular app.html required")
-    trusted_input = _stage_trusted_app(output, app)
-    command = container_command(image, trusted_input, output, name)
-    app_hash = hashlib.sha256(app).hexdigest()
-    (output / "container-command.json").write_text(json.dumps(command, indent=2))
-
-    run_outcome = None
+    trusted_input = _stage_trusted_app(output.parent, app)
     try:
-        with (output / "container.log").open("wb") as log:
-            try:
-                result = subprocess.run(
-                    command,
-                    stdout=log,
-                    stderr=subprocess.STDOUT,
-                    timeout=timeout,
-                    check=False,
-                )
-                returncode = result.returncode
-            except subprocess.TimeoutExpired:
-                returncode = 124
-                run_outcome = {"category": "timeout"}
-            except OSError as error:
-                returncode = 125
-                run_outcome = {
-                    "category": "execution_failure",
-                    "reason": _bounded_diagnostic("docker execution failed", error),
-                }
+        command = container_command(image, trusted_input, output, name)
+        app_hash = hashlib.sha256(app).hexdigest()
+        (output / "container-command.json").write_text(json.dumps(command, indent=2))
+
+        run_outcome = None
+        try:
+            with (output / "container.log").open("wb") as log:
+                try:
+                    result = subprocess.run(
+                        command,
+                        stdout=log,
+                        stderr=subprocess.STDOUT,
+                        timeout=timeout,
+                        check=False,
+                    )
+                    returncode = result.returncode
+                except subprocess.TimeoutExpired:
+                    returncode = 124
+                    run_outcome = {"category": "timeout"}
+                except OSError as error:
+                    returncode = 125
+                    run_outcome = {
+                        "category": "execution_failure",
+                        "reason": _bounded_diagnostic(
+                            "docker execution failed", error),
+                    }
+        finally:
+            cleanup_error = _cleanup_container(
+                name,
+                interrupted=(run_outcome or {}).get("category") == "timeout",
+            )
     finally:
-        cleanup_error = _cleanup_container(name)
+        staging_cleanup_error = _cleanup_staged_input(trusted_input)
+
+    cleanup_error = _combine_cleanup_errors(
+        cleanup_error, staging_cleanup_error)
 
     if run_outcome is not None:
         outcome = run_outcome
