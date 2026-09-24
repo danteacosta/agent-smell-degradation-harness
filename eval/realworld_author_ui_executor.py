@@ -1,8 +1,14 @@
 """Strict adapter for trusted RealWorld article-author browser reports."""
 from __future__ import annotations
 
+import hashlib
 import json
+from pathlib import Path
 import re
+import subprocess
+import uuid
+
+from eval.focus_chain_executor import container_command
 
 
 SCHEMA_VERSION = "realworld-author-ui-browser/v1"
@@ -279,3 +285,78 @@ def classify_report(raw: bytes | None, returncode: int) -> dict:
         return _classify_operational(value, returncode)
     except (KeyError, RecursionError, TypeError, ValueError):
         return _invalid()
+
+
+def _read_bounded_regular(path: Path, maximum: int) -> bytes | None:
+    try:
+        if path.is_symlink() or not path.is_file():
+            return None
+        with path.open("rb") as stream:
+            raw = stream.read(maximum + 1)
+        return raw if len(raw) <= maximum else None
+    except OSError:
+        return None
+
+
+def execute(image: str, inputs: Path, output: Path, timeout: int = 90) -> dict:
+    """Run one bounded offline HTML artifact and retain its diagnostic evidence."""
+    output.mkdir(parents=True, exist_ok=False)
+    name = "realworld-author-ui-" + uuid.uuid4().hex
+    command = container_command(image, inputs, output, name)
+    app_hash = hashlib.sha256((inputs / "app.html").read_bytes()).hexdigest()
+    (output / "container-command.json").write_text(json.dumps(command, indent=2))
+
+    timed_out = False
+    try:
+        with (output / "container.log").open("wb") as log:
+            try:
+                result = subprocess.run(
+                    command,
+                    stdout=log,
+                    stderr=subprocess.STDOUT,
+                    timeout=timeout,
+                    check=False,
+                )
+                returncode = result.returncode
+            except subprocess.TimeoutExpired:
+                returncode = 124
+                timed_out = True
+    finally:
+        subprocess.run(
+            ["docker", "rm", "--force", name],
+            capture_output=True,
+            timeout=30,
+            check=False,
+        )
+
+    raw = _read_bounded_regular(output / "report.json", 100_000)
+    outcome = {"category": "timeout"} if timed_out else classify_report(raw, returncode)
+
+    if outcome["category"] not in {"timeout", "malformed_report"}:
+        report = json.loads(raw)
+        if report["app_sha256"] != app_hash:
+            outcome = {
+                "category": "browser_failure",
+                "reason": "executed app hash mismatch",
+            }
+
+    if outcome["category"] in {
+        "pass", "target_only_failure", "target_not_evaluable",
+    }:
+        for screenshot_name in _SCREENSHOTS:
+            screenshot = _read_bounded_regular(output / screenshot_name, 4_000_000)
+            if screenshot is None or not screenshot.startswith(b"\x89PNG\r\n\x1a\n"):
+                outcome = {
+                    "category": "browser_failure",
+                    "reason": f"invalid screenshot: {screenshot_name}",
+                }
+                break
+
+    receipt = {
+        "image": image,
+        "app_sha256": app_hash,
+        "returncode": returncode,
+        **outcome,
+    }
+    (output / "executor.json").write_text(json.dumps(receipt, indent=2))
+    return receipt

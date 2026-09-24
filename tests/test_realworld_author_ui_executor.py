@@ -4,6 +4,8 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import subprocess
+from types import SimpleNamespace
 
 import pytest
 
@@ -463,3 +465,190 @@ def test_wrong_operational_shapes_or_return_codes_are_rejected(value, returncode
 def test_complete_return_code_must_match_recomputed_category(mutation, returncode):
     value = complete_report(mutate=mutation)
     assert oracle.classify_report(encoded(value), returncode) == INVALID
+
+
+PNG = b"\x89PNG\r\n\x1a\nimage"
+IMAGE = "sha256:" + "a" * 64
+
+
+def _write_complete_artifacts(output, value, *, screenshot_fault=None):
+    (output / "report.json").write_bytes(encoded(value))
+    for name in SCREENSHOTS:
+        path = output / name
+        if screenshot_fault == (name, "missing"):
+            continue
+        if screenshot_fault == (name, "symlink"):
+            target = output.parent / f"outside-{name}"
+            target.write_bytes(PNG)
+            path.symlink_to(target)
+        elif screenshot_fault == (name, "oversize"):
+            path.write_bytes(PNG + b"x" * 4_000_000)
+        elif screenshot_fault == (name, "bad_signature"):
+            path.write_bytes(b"not a png")
+        else:
+            path.write_bytes(PNG)
+
+
+def _execute_with_fake_process(monkeypatch, tmp_path, *, report=None, returncode=0,
+                               screenshot_fault=None, run_error=None, call_log=None):
+    app = b"<html></html>"
+    inputs = tmp_path / "inputs"
+    inputs.mkdir()
+    (inputs / "app.html").write_bytes(app)
+    output = tmp_path / "output"
+    calls = call_log if call_log is not None else []
+
+    def fake_run(command, **kwargs):
+        calls.append((command, kwargs))
+        if command[:3] == ["docker", "rm", "--force"]:
+            return SimpleNamespace(returncode=0)
+        if run_error is not None:
+            raise run_error
+        if report is not None:
+            if report.get("status") == "complete":
+                _write_complete_artifacts(
+                    output, report, screenshot_fault=screenshot_fault)
+            else:
+                (output / "report.json").write_bytes(encoded(report))
+        kwargs["stdout"].write(b"browser output\n")
+        return SimpleNamespace(returncode=returncode)
+
+    monkeypatch.setattr(oracle.subprocess, "run", fake_run)
+    receipt = oracle.execute(IMAGE, inputs, output, timeout=7)
+    return receipt, output, calls
+
+
+def test_execute_accepts_complete_report_and_writes_auditable_receipts(monkeypatch, tmp_path):
+    value = complete_report()
+    receipt, output, calls = _execute_with_fake_process(
+        monkeypatch, tmp_path, report=value)
+
+    assert receipt == {
+        "image": IMAGE,
+        "app_sha256": value["app_sha256"],
+        "returncode": 0,
+        **expected_complete(value),
+    }
+    command = json.loads((output / "container-command.json").read_text())
+    assert command == calls[0][0]
+    assert command[:6] == ["docker", "run", "--rm", "--init", "--name",
+                            calls[1][0][-1]]
+    assert calls[0][1]["stderr"] is subprocess.STDOUT
+    assert calls[0][1]["timeout"] == 7
+    assert calls[0][1]["check"] is False
+    assert (output / "container.log").read_bytes() == b"browser output\n"
+    assert json.loads((output / "executor.json").read_text()) == receipt
+    assert calls[1][0] == ["docker", "rm", "--force", command[5]]
+    assert calls[1][1] == {"capture_output": True, "timeout": 30, "check": False}
+    assert command[5].startswith("realworld-author-ui-")
+
+
+def test_execute_timeout_is_diagnostic_and_always_cleans_up(monkeypatch, tmp_path):
+    receipt, output, calls = _execute_with_fake_process(
+        monkeypatch, tmp_path,
+        run_error=subprocess.TimeoutExpired(["docker", "run"], 7),
+    )
+
+    assert receipt["category"] == "timeout"
+    assert receipt["returncode"] == 124
+    assert json.loads((output / "executor.json").read_text()) == receipt
+    assert calls[-1][0][:3] == ["docker", "rm", "--force"]
+
+
+def test_execute_cleans_up_when_process_invocation_fails(monkeypatch, tmp_path):
+    calls = []
+    with pytest.raises(OSError, match="docker unavailable"):
+        _execute_with_fake_process(
+            monkeypatch, tmp_path, run_error=OSError("docker unavailable"),
+            call_log=calls)
+    assert calls[-1][0][:3] == ["docker", "rm", "--force"]
+
+
+@pytest.mark.parametrize("report_fault", ["missing", "symlink", "oversize", "malformed"])
+def test_execute_rejects_missing_or_unsafe_report(monkeypatch, tmp_path, report_fault):
+    app = b"<html></html>"
+    inputs = tmp_path / "inputs"
+    inputs.mkdir()
+    (inputs / "app.html").write_bytes(app)
+    output = tmp_path / "output"
+    calls = []
+
+    def fake_run(command, **kwargs):
+        calls.append(command)
+        if command[:3] == ["docker", "rm", "--force"]:
+            return SimpleNamespace(returncode=0)
+        report_path = output / "report.json"
+        if report_fault == "symlink":
+            target = tmp_path / "outside-report.json"
+            target.write_bytes(encoded(complete_report()))
+            report_path.symlink_to(target)
+        elif report_fault == "oversize":
+            report_path.write_bytes(b" " * 100_001)
+        elif report_fault == "malformed":
+            report_path.write_bytes(b"not json")
+        return SimpleNamespace(returncode=0)
+
+    monkeypatch.setattr(oracle.subprocess, "run", fake_run)
+    receipt = oracle.execute(IMAGE, inputs, output)
+
+    assert receipt["category"] == "malformed_report"
+    assert receipt["returncode"] == 0
+    assert calls[-1][:3] == ["docker", "rm", "--force"]
+
+
+def test_execute_rejects_valid_json_with_inconsistent_schema(monkeypatch, tmp_path):
+    receipt, _, _ = _execute_with_fake_process(
+        monkeypatch, tmp_path, report={"schema_version": oracle.SCHEMA_VERSION})
+    assert receipt["category"] == "malformed_report"
+
+
+def _classified_report(category):
+    if category == "pass":
+        return complete_report(), 0
+    if category == "target_only_failure":
+        return complete_report(mutate=lambda value: value["observations"][0].update(
+            delete_buttons={"matched": 0, "perceptible": 0})), 10
+    if category == "target_not_evaluable":
+        return complete_report(mutate=lambda value: value["observations"][0]["body"].update(
+            perceptible=0)), 11
+    if category == "interface_failure":
+        return operational_report("interface_failure", False), 20
+    return operational_report("browser_failure", True), 21
+
+
+@pytest.mark.parametrize("category", [
+    "pass", "target_only_failure", "target_not_evaluable",
+    "interface_failure", "browser_failure",
+])
+def test_execute_accepts_report_return_codes_only_through_classifier(
+        monkeypatch, tmp_path, category):
+    value, returncode = _classified_report(category)
+    value["app_sha256"] = hashlib.sha256(b"<html></html>").hexdigest()
+    receipt, output, _ = _execute_with_fake_process(
+        monkeypatch, tmp_path, report=value, returncode=returncode)
+    assert receipt["category"] == category
+    if category in {"interface_failure", "browser_failure"}:
+        assert not any((output / name).exists() for name in SCREENSHOTS)
+        assert "target_failed" not in receipt
+
+
+@pytest.mark.parametrize("fault", ["missing", "symlink", "oversize", "bad_signature"])
+def test_complete_outcome_requires_each_bounded_png(monkeypatch, tmp_path, fault):
+    receipt, _, _ = _execute_with_fake_process(
+        monkeypatch, tmp_path, report=complete_report(),
+        screenshot_fault=(SCREENSHOTS[2], fault))
+    assert receipt == {
+        "image": IMAGE,
+        "app_sha256": hashlib.sha256(b"<html></html>").hexdigest(),
+        "returncode": 0,
+        "category": "browser_failure",
+        "reason": f"invalid screenshot: {SCREENSHOTS[2]}",
+    }
+
+
+def test_complete_outcome_requires_report_to_match_executed_app(monkeypatch, tmp_path):
+    value = complete_report()
+    value["app_sha256"] = "b" * 64
+    receipt, _, _ = _execute_with_fake_process(monkeypatch, tmp_path, report=value)
+    assert receipt["category"] == "browser_failure"
+    assert receipt["reason"] == "executed app hash mismatch"
