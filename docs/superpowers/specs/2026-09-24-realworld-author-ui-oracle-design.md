@@ -102,8 +102,10 @@ The controller executes two crossed fixture pairs:
 | `article-alice` | `alice` | `alice` | `bob` |
 | `article-bob` | `bob` | `bob` | `alice` |
 
-Only fixture values change; the interface shape and candidate bytes remain
-identical. The viewer and article-author identities are necessary feasibility
+Only the viewer and article-author usernames change. Both fixture pairs retain
+`slug: "bounded-ui-case"`, the fixed `/article/bounded-ui-case` route and the
+same title and body; the interface shape and candidate bytes remain identical.
+The viewer and article-author identities are necessary feasibility
 data and therefore cue that an ownership comparison is possible. They do not
 state the delete-control verdict, but this residual cue is recorded as a threat
 to construct validity. The interface contains no target label, omission
@@ -117,8 +119,8 @@ instrument qualifies.
 
 ## Browser observations
 
-The trusted controller serves candidate bytes only at the fixture's
-`http://fixture.invalid/article/<slug>` route and aborts every other network
+The trusted controller serves candidate bytes only at
+`http://fixture.invalid/article/bounded-ui-case` and aborts every other network
 request. It creates a new browser context for each of the four fixture/viewer
 combinations and injects the state before candidate scripts run.
 
@@ -137,16 +139,21 @@ For each context, the report records bounded counts for:
 - console and page errors.
 
 Screenshots illustrate the rendered state but never replace structured browser
-observations as the verdict source. A matching button is **perceptible** only
-when Playwright reports it visible, its finite bounding box is at least one CSS
-pixel in both dimensions, its effective opacity across its ancestor chain is
-greater than `0.01`, and, after it is scrolled into view, a center-point hit
-test resolves to the button or one of its descendants. Removed controls,
-`display:none`, `visibility:hidden`, effectively transparent controls and fully
-occluded controls are not perceptible. The policy is deliberately bounded; it
-does not claim to model every human-perception or accessibility condition.
-Exact Playwright, Chromium and viewport versions are pinned in the qualification
-image.
+observations as the verdict source. The controller applies one generic
+perceptibility predicate to delete buttons and to the title, body and author
+elements used as page prerequisites. An element is **perceptible** only when
+Playwright reports it visible, its finite bounding box is at least one CSS pixel
+in both dimensions, its effective opacity across its ancestor chain is greater
+than `0.01`, and, after it is scrolled into view, at least one point in a fixed
+`5 × 5` inset grid over the intersection of its bounding box and viewport
+hit-tests to the element or one of its descendants. Grid coordinates and edge
+insets are fixed in the runner and recorded in its source hash. This bounded
+exposed-area sample accepts a partially occluded element when a sampled portion
+remains exposed and rejects one whose sampled area is fully occluded. Removed
+controls, `display:none`, `visibility:hidden` and effectively transparent
+controls are not perceptible. The policy does not claim to model every
+human-perception or accessibility condition. Exact Playwright, Chromium and
+viewport versions are pinned in the qualification image.
 
 ## Classification
 
@@ -165,25 +172,37 @@ into a target failure. Button multiplicity is recorded but does not affect the
 verdict. Any perceptible matching button in a non-author context is a target
 failure.
 
-The receipt contains exact, sorted `target_failed` and
-`target_not_evaluable` assertion-ID sets. `target_failed` includes an assertion
-when any evaluable applicable context contradicts it. `target_not_evaluable`
-includes an assertion when any applicable context lacks a valid page
-prerequisite, even if another context produced an evaluable failure. Every
-not-evaluable entry names the assertion, fixture, context and one of the closed
-reasons `route_mismatch`, `title_missing`, `body_missing`, or
-`article_author_missing`.
+The receipt contains exact, sorted `target_failed: string[]` and
+`target_not_evaluable: string[]` assertion-ID sets. `target_failed` includes an
+assertion when any evaluable applicable context contradicts it.
+`target_not_evaluable` includes an assertion when any applicable context lacks
+a valid page prerequisite, even if another context produced an evaluable
+failure. A separate `not_evaluable_reasons: object[]` is sorted by assertion ID,
+fixture ID, context ID and reason. Each unique object contains exactly those
+four fields and uses one of the closed reasons `route_mismatch`,
+`title_missing`, `body_missing`, or `article_author_missing`. An assertion ID is
+present in `target_not_evaluable` if and only if at least one reason object
+names it. IDs may appear in both target sets when one applicable context is
+unassessable and another yields an evaluable failure.
 
 Category precedence and exit codes are fixed:
 
-1. `malformed_report` or `interface_failure` is operational exit code `20`,
-   `browser_failure` is `21`, and `timeout` is `22`; none reaches scientific
-   classification;
+1. a report-bearing trusted runner uses return code `20` for
+   `interface_failure` and `21` for `browser_failure`; neither reaches
+   scientific classification;
 2. any non-empty `target_not_evaluable` set yields `target_not_evaluable` and
    exit code `11`, while retaining all evaluable IDs in `target_failed`;
 3. otherwise a non-empty `target_failed` set yields `target_only_failure` and
    exit code `10`; and
 4. otherwise the result is `pass` with exit code `0`.
+
+The report-bearing runner's return code must be `0`, `10`, `11`, `20` or `21`
+and must agree with its category. A Python-side `TimeoutExpired` maps directly
+to executor outcome `timeout` after process termination and keeps the observed
+subprocess return code, if any, as diagnostic data. Missing or malformed output
+maps directly to `malformed_report` and likewise retains, but does not trust,
+the observed subprocess return code. These executor outcomes do not pretend the
+runner emitted a valid receipt.
 
 The adapter rejects duplicate JSON fields, unknown schema versions, extra or
 missing observation fields, wrong scalar types, counts outside fixed bounds,
@@ -203,6 +222,8 @@ The initial qualification contains:
   perceptible non-author button;
 - a valid reference with a perceptible author button and a transparent
   non-author button;
+- a valid partially occluded author control with at least one exposed sampled
+  point;
 - an always-visible mutant;
 - a never-visible mutant;
 - a wrong-identity mutant;
@@ -212,6 +233,8 @@ The initial qualification contains:
   `author_sees_delete_article`;
 - a transparent non-author plus visible non-author mutant that must fail
   `non_author_does_not_see_delete_article`;
+- a fully occluded author mutant that must fail
+  `author_sees_delete_article`;
 - a broken-article control that emits a schema-valid observation but produces
   `target_not_evaluable` through a failed page prerequisite;
 - a mixed-evaluability control in which one assertion has a prerequisite
@@ -256,8 +279,8 @@ factory, strategy hierarchy or generic oracle framework is needed.
 
 - `eval/realworld_author_ui_executor.py`: schema validation, classification and
   bounded container execution.
-- `eval/fixtures/realworld-author-ui/runner.cjs`: trusted two-context browser
-  controller.
+- `eval/fixtures/realworld-author-ui/runner.cjs`: trusted four-context
+  crossed-identity browser controller.
 - `eval/fixtures/realworld-author-ui/Dockerfile`, `package.json` and
   `package-lock.json`: pinned offline runtime.
 - `eval/fixtures/realworld-author-ui/qualify.py`: authored-control matrix and
