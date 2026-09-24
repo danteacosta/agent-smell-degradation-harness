@@ -1,9 +1,9 @@
 # TodoMVC Mark all visible-state successor
 
-Status: **successor instrument implemented; endpoint admission remains deferred
-until the rebuilt browser qualification passes and the successor evidence is
-reviewed**. This change does not replay or rescore prior artifacts, make a model
-call, or add evidence for H1/H2.
+Status: **successor instrument qualified; endpoint admission remains deferred
+until the successor evidence and endpoint are independently reviewed**. This
+change does not replay or rescore prior artifacts, make a model call, or add
+evidence for H1/H2.
 
 ## Blocker and observation policy
 
@@ -63,13 +63,27 @@ causality or the choice to treat hidden and removed controls as equivalent.
 Unlike WebTestPilot's learned oracle inference, this study keeps one frozen,
 deterministic assertion across A/B/C arms.
 
+## Qualification evidence
+
+The rebuilt browser qualification matched all 14 authored expectations under
+`mark-all-qualification/v2`, with no category, failure-set or reason mismatch.
+The pinned browser image was
+`sha256:0d15f621ee19e16acdf496cdb49722de7b03a09d8dd8b7b5d070e2cd5945eb34`.
+The qualification JSON digest was
+`701f7a607f096ac9a6559ba7c25d2caf6ffb280c213b0ed4b67316b677847d22`,
+and the archived 110-file evidence bundle digest was
+`c5e7f4e2cd4c6437646e85a5db5d8de6f6fd4d623753cc906da01b9a0d01959d`.
+This qualifies the declared controls and observation adapter; it is not a
+completeness claim for TodoMVC or evidence that a requirement smell causes a
+generated implementation defect.
+
 ## Admission consequence
 
-The historical v1 packet and every prior model result remain immutable. A green
-successor qualification would remove the hidden/removed/replacement policy
-defect, but it would not by itself admit Mark all. Admission still requires an
-independent review of the exact endpoint and prompts, a frozen runtime and
-schedule, evidence custody, and explicit treatment of any unassessable output.
+The historical v1 packet and every prior model result remain immutable. The
+green successor qualification removes the known hidden/removed/replacement
+policy inconsistency, but it does not by itself admit Mark all. Admission still
+requires an independent review of the exact endpoint and prompts, a frozen
+runtime and schedule, evidence custody, and explicit treatment of any
+unassessable output.
 Project diversity remains unresolved because Mark all and persistence are both
 TodoMVC requirements.
-
