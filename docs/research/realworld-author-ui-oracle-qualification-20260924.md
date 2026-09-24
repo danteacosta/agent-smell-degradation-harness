@@ -53,11 +53,13 @@ The immutable image ID is
 `sha256:7bad7454229a355ebedef92678d540778aa2cc9c3ebfb281d0455e874aa0dd59`.
 The recomputed canonical instrument SHA-256 is
 `18a1c3d32cccd26c896f3539b6a776034be3ab82a35bfb79996d5e78bfb68e11`.
-The build receipt, `image-id`, `instrument-digest`, qualification manifest and
-every executor receipt agree on these values. Commit-mode qualification also
-inspected the OCI label
+The build receipt and qualification manifest agree on both the image ID and
+instrument digest. The `image-id` file and every executor receipt agree on the
+image ID; the `instrument-digest` file agrees on the instrument digest.
+Commit-mode qualification also inspected the OCI label
 `org.opencontainers.image.realworld-instrument-sha256` and required it to equal
-that digest before any control ran.
+that digest before any control ran, binding the verified image to the verified
+instrument bytes.
 
 GitHub artifact `10820860904`, `realworld-author-ui-qualification`, was 666,453
 bytes when uploaded. GitHub reports archive digest
@@ -70,6 +72,33 @@ missing file was found. The recomputed qualification-manifest SHA-256 is
 Every manifest report, receipt and screenshot hash was recomputed; every input
 hash matched both its browser report and executor receipt; and all 31 manifest
 instrument hashes matched the committed files.
+
+The report hashes below follow the qualification manifest's canonical order.
+They cover all 19 HTML cases followed by both operational diagnostics.
+
+| Case ID | Report SHA-256 |
+| --- | --- |
+| `reference-explicit` | `af92417e52ddbc3a1eb644eb60e5b75a198ca37768f069c531c7985a6b11a451` |
+| `reference-derived-hidden` | `3c0442d863e69cf3d965103e4f8715dd8514eb88029fdd4aeae9b150adb78e2a` |
+| `reference-two-buttons` | `8ece36a1f7345f362d6241197109e87e3a734bf93b02b0001fd4235c5f2ca061` |
+| `reference-transparent-nonauthor` | `d069c68acd4e7e65292536e197dccbbb5eb571ee25f21d4655e6e34ad4d35765` |
+| `reference-partial-occlusion` | `c1c77a4c1513c8dc6db853d84ce7a5232a49089cd8016e7fbba3d359982dcdb2` |
+| `reference-pointer-events-button` | `a839c872a2e888de1aaa9f53adc75cb39712304ee7713a2536ba6f204a848809` |
+| `reference-pointer-events-prerequisites` | `058de271b169705d4135b516d37b78f768f3e51d5f4184adab4911293c4ad275` |
+| `reference-fresh-context` | `7f1c103ea6791d168cdd6e763d30236701cc5e4e536874e2cdd137def72ed497` |
+| `mutant-always-visible` | `f2108e1bf09e08193a6c7d3922b5a5be5aab556081e00349e20dec0a46b629c3` |
+| `mutant-never-visible` | `6704498676d27c9ba224f279ef95771fac6a6d3f04c8dcec8e6abf91cee8e686` |
+| `mutant-wrong-identity` | `b396c1687089fc1536eedbd8ad2af86a30e6f34a1707ec6a6d08a90aea0705a3` |
+| `mutant-hardcoded-alice` | `ee1cbca1d986ef684fd38403afe96372a0f932b2996e5511f187c429cb83574a` |
+| `mutant-transparent-author` | `442aea26eb6023098f5d9c50ad6ebbab278567a3b2f685345a91c48bd2c75f24` |
+| `mutant-visible-and-transparent-nonauthor` | `01aa87bc899bd8d8262cba81093c82b5d15fc0c97f81e60b59237532175bfc38` |
+| `mutant-fully-occluded-author` | `a47e433fef50c44c8da523dbf779d31769e4e4db6dc027d1c54498e9ff565717` |
+| `control-broken-article` | `c5ca3646eec9f7c7a4651220cc1bfaea9fcdd98457b6b174a0cc7f411ba378bd` |
+| `control-mixed-evaluability` | `6677529c9954fc64f57481d069fc5d302f679085e458da16c14317dd9f5ae572` |
+| `control-viewer-only-author-text` | `aaa85ea47a77945c65a329aa2aba9c798d6a3bdabfb40a4bbb1bb0cf3a481929` |
+| `control-hidden-author-text` | `9dee86534a7197c67bcbae9d78e2c4f814caed288f89a9374fbb23f5497f3679` |
+| `operational-invalid-interface` | `d6418389a80df1f49c060afd1b08cf0698435a283d2ce2de09deec622ec310e6` |
+| `operational-browser-failure` | `2cbd6c968307e6e5ff0491809396e4e9e8f6e125d31ff63732bd5cac074148b0` |
 
 The runtime was Playwright 1.58.2 with Chromium `145.0.7632.6`, a 1000 x 720
 viewport and a fixed 5 x 5 inset sampling grid. Each fixture/viewer pair used a
@@ -144,11 +173,18 @@ browser observations and the Python classifier determine each result.
 
 At `2026-09-24T16:35:50Z`, the qualification, constraint-replay and wedge
 checks were green. The pull-request and push `eval-gate` jobs were still in
-progress, so this record does not claim that every pull-request check passed.
+progress. Both later passed for head
+`b12b25a4b445d90b704e78fa17e044bd38f3351f`: the
+[pull-request eval job](https://github.com/danteacosta/agent-smell-degradation-harness/actions/runs/36027518035/job/107727702739)
+completed at `2026-09-24T16:36:19Z`, and the
+[push eval job](https://github.com/danteacosta/agent-smell-degradation-harness/actions/runs/36027511488/job/107727681268)
+completed at `2026-09-24T16:36:50Z`. These checks qualify that code head; this
+record's later documentation-only commits are distinct Git heads.
 
 This qualification measures authored controls only. It does not establish
-general sensitivity, specificity or completeness; prove browser-escape safety;
-contain provider-generated output; admit this case to collection; or add H1/H2
+general sensitivity, specificity or completeness; establish requirement-smell
+effects or smell causality; prove browser-escape safety; contain
+provider-generated output; admit this case to collection; or add H1/H2
 evidence. TodoMVC remains the only project with collected end-to-end evidence
 until the prospective RealWorld A/B/C prompts, cohort, runtime and schedule are
 reviewed, frozen and run.
