@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -882,3 +883,185 @@ def test_app_swap_to_symlink_before_descriptor_open_is_rejected(monkeypatch, tmp
             call_log=calls,
         )
     assert calls == []
+
+
+QUALIFIER_PATH = (
+    Path(__file__).resolve().parents[1]
+    / "eval/fixtures/realworld-author-ui/qualify.py"
+)
+HTML_CONTROL_IDS = {
+    "reference-explicit",
+    "reference-derived-hidden",
+    "reference-two-buttons",
+    "reference-transparent-nonauthor",
+    "reference-partial-occlusion",
+    "reference-pointer-events-button",
+    "reference-pointer-events-prerequisites",
+    "reference-fresh-context",
+    "mutant-always-visible",
+    "mutant-never-visible",
+    "mutant-wrong-identity",
+    "mutant-hardcoded-alice",
+    "mutant-transparent-author",
+    "mutant-visible-and-transparent-nonauthor",
+    "mutant-fully-occluded-author",
+    "control-broken-article",
+    "control-mixed-evaluability",
+    "control-viewer-only-author-text",
+    "control-hidden-author-text",
+}
+ONE_AUTHOR = ["author_sees_delete_article"]
+ONE_NON_AUTHOR = ["non_author_does_not_see_delete_article"]
+BOTH_ASSERTIONS = sorted(ONE_AUTHOR + ONE_NON_AUTHOR)
+MUTANT_FAILURES = {
+    "mutant-always-visible": ONE_NON_AUTHOR,
+    "mutant-never-visible": ONE_AUTHOR,
+    "mutant-wrong-identity": BOTH_ASSERTIONS,
+    "mutant-hardcoded-alice": BOTH_ASSERTIONS,
+    "mutant-transparent-author": ONE_AUTHOR,
+    "mutant-visible-and-transparent-nonauthor": ONE_NON_AUTHOR,
+    "mutant-fully-occluded-author": ONE_AUTHOR,
+}
+
+
+def _qualification_module():
+    spec = importlib.util.spec_from_file_location("realworld_author_ui_qualify", QUALIFIER_PATH)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _reason(assertion_id, fixture_id, context_id, reason):
+    return {
+        "assertion_id": assertion_id,
+        "fixture_id": fixture_id,
+        "context_id": context_id,
+        "reason": reason,
+    }
+
+
+def _four_reasons(reason):
+    return [
+        _reason(ONE_AUTHOR[0], "article-alice", "author", reason),
+        _reason(ONE_AUTHOR[0], "article-bob", "author", reason),
+        _reason(ONE_NON_AUTHOR[0], "article-alice", "non-author", reason),
+        _reason(ONE_NON_AUTHOR[0], "article-bob", "non-author", reason),
+    ]
+
+
+def test_qualification_declares_exact_html_and_operational_controls():
+    qualifier = _qualification_module()
+
+    assert set(qualifier.EXPECTED) == HTML_CONTROL_IDS
+    assert set(qualifier.OPERATIONAL_EXPECTED) == {
+        "operational-invalid-interface",
+        "operational-browser-failure",
+    }
+    for control_id in HTML_CONTROL_IDS:
+        assert (QUALIFIER_PATH.parent / f"{control_id}.html").is_file()
+
+
+def test_qualification_declares_exact_target_expectations():
+    qualifier = _qualification_module()
+
+    for control_id in HTML_CONTROL_IDS:
+        expected = qualifier.EXPECTED[control_id]
+        if control_id.startswith("reference-"):
+            assert expected == {
+                "category": "pass",
+                "target_failed": [],
+                "target_not_evaluable": [],
+                "not_evaluable_reasons": [],
+            }
+    for control_id, failed in MUTANT_FAILURES.items():
+        assert qualifier.EXPECTED[control_id] == {
+            "category": "target_only_failure",
+            "target_failed": failed,
+            "target_not_evaluable": [],
+            "not_evaluable_reasons": [],
+        }
+
+
+def test_qualification_declares_exact_not_evaluable_expectations():
+    qualifier = _qualification_module()
+
+    broken = qualifier.EXPECTED["control-broken-article"]
+    assert broken == {
+        "category": "target_not_evaluable",
+        "target_failed": [],
+        "target_not_evaluable": BOTH_ASSERTIONS,
+        "not_evaluable_reasons": _four_reasons("body_missing"),
+    }
+    assert qualifier.EXPECTED["control-mixed-evaluability"] == {
+        "category": "target_not_evaluable",
+        "target_failed": ONE_NON_AUTHOR,
+        "target_not_evaluable": ONE_AUTHOR,
+        "not_evaluable_reasons": [
+            _reason(ONE_AUTHOR[0], "article-bob", "author", "body_missing")
+        ],
+    }
+    for control_id in (
+        "control-viewer-only-author-text", "control-hidden-author-text"
+    ):
+        assert qualifier.EXPECTED[control_id] == {
+            "category": "target_not_evaluable",
+            "target_failed": [],
+            "target_not_evaluable": BOTH_ASSERTIONS,
+            "not_evaluable_reasons": _four_reasons("article_author_missing"),
+        }
+
+
+def test_qualification_custody_modes_are_mutually_exclusive():
+    parser = _qualification_module().build_parser()
+    with pytest.raises(SystemExit):
+        parser.parse_args([
+            "--image", IMAGE,
+            "--output", "/tmp/result",
+            "--provisional",
+            "--git-commit", "a" * 40,
+        ])
+
+
+def test_qualification_rejects_non_head_commit(monkeypatch):
+    qualifier = _qualification_module()
+    monkeypatch.setattr(
+        qualifier.subprocess,
+        "run",
+        lambda *args, **kwargs: SimpleNamespace(stdout="b" * 40 + "\n"),
+    )
+    with pytest.raises(ValueError, match="must equal HEAD"):
+        qualifier.validate_commit_custody("a" * 40, [QUALIFIER_PATH])
+
+
+def test_qualification_rejects_dirty_hashed_path(monkeypatch):
+    qualifier = _qualification_module()
+    responses = iter([
+        SimpleNamespace(stdout="a" * 40 + "\n"),
+        SimpleNamespace(stdout=" M eval/fixtures/realworld-author-ui/qualify.py\n"),
+    ])
+    monkeypatch.setattr(
+        qualifier.subprocess, "run", lambda *args, **kwargs: next(responses)
+    )
+    with pytest.raises(ValueError, match="hashed instrument paths must be clean"):
+        qualifier.validate_commit_custody("a" * 40, [QUALIFIER_PATH])
+
+
+def test_provisional_output_can_never_be_qualified():
+    qualifier = _qualification_module()
+    assert qualifier.is_qualified(matrix_matches=True, custody_mode="provisional") is False
+    assert qualifier.is_qualified(matrix_matches=False, custody_mode="git-commit") is False
+    assert qualifier.is_qualified(matrix_matches=True, custody_mode="git-commit") is True
+
+
+def test_operational_controls_match_without_scientific_screenshots():
+    qualifier = _qualification_module()
+    html_rows = [{
+        "matches": True,
+        "receipt_fields_exact": True,
+        "report_status": "complete",
+        "screenshot_sha256": {name: "a" * 64 for name in SCREENSHOTS},
+    }]
+    operational_rows = [{"matches": True, "screenshot_sha256": {}}]
+
+    assert qualifier.matrix_matches(html_rows, operational_rows) is True

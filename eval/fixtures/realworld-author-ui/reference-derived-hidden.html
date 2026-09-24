@@ -1,0 +1,6 @@
+<!doctype html><meta charset="utf-8"><title>Article</title>
+<style>body{font:18px sans-serif;margin:40px}.concealed{display:none}</style>
+<main id="app"></main><script>
+const {viewer,article}=window.initialState;const mayManage=viewer.username===article.author.username;
+document.querySelector('#app').innerHTML=`<article><h1>${article.title}</h1><div>${article.body}</div><a rel="author">${article.author.username}</a><button class="${mayManage?'':'concealed'}">Delete Article</button></article>`;
+</script>

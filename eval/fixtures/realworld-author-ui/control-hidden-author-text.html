@@ -1,0 +1,3 @@
+<!doctype html><meta charset="utf-8"><title>Article</title><style>.hidden{display:none}</style><main id="app"></main><script>
+const {viewer,article}=window.initialState;document.querySelector('#app').innerHTML=`<h1>${article.title}</h1><p>${article.body}</p><span rel="author">Written by <span class="hidden">${article.author.username}</span></span>${viewer.username===article.author.username?'<button>Delete Article</button>':''}`;
+</script>

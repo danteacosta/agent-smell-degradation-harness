@@ -1,0 +1,3 @@
+<!doctype html><meta charset="utf-8"><title>Article</title><main id="app"></main><script>
+const {viewer,article}=window.initialState;const own=viewer.username===article.author.username;const omitBody=article.author.username==='bob'&&own;const expose=own||(article.author.username==='bob'&&viewer.username==='alice');document.querySelector('#app').innerHTML=`<h1>${article.title}</h1>${omitBody?'':`<p>${article.body}</p>`}<span rel="author">${article.author.username}</span>${expose?'<button>Delete Article</button>':''}`;
+</script>

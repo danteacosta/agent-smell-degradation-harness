@@ -1,0 +1,6 @@
+<!doctype html><meta charset="utf-8"><title>Article</title>
+<style>body{font:18px sans-serif;margin:40px}.control{position:relative;width:180px;height:44px}.control button{width:180px;height:44px}.cover{position:absolute;inset:0 50% 0 0;background:#555;z-index:2}</style>
+<main id="app"></main><script>
+const {viewer,article}=window.initialState;const control=viewer.username===article.author.username?'<div class="control"><button>Delete Article</button><span class="cover"></span></div>':'';
+document.querySelector('#app').innerHTML=`<h1>${article.title}</h1><p>${article.body}</p><span rel="author">${article.author.username}</span>${control}`;
+</script>
