@@ -109,14 +109,14 @@ browser-escape guarantee.
 
 ## Direct screenshot inspection (31/76)
 
-The 31-file visual sample was prespecified in the Task 6 execution instruction
-before artifact inspection. The selection rule took all four contexts for the
-explicit reference and hardcoded-Alice mutant, then targeted author/context
-frames for multiplicity, transparency, partial and full occlusion,
-pointer-events, broken and mixed pages, viewer-only author text and hidden
-authorship. The following artifact screenshots were inspected directly. Paths
-are relative to `qualification/`; hashes were recomputed from the inspected
-files.
+This qualification review selected a representative 31-file visual sample by
+taking all four contexts for the explicit reference and hardcoded-Alice mutant,
+then targeted author/context frames for multiplicity, transparency, partial and
+full occlusion, pointer-events, broken and mixed pages, viewer-only author text
+and hidden authorship. This was a coverage-directed review sample, not a
+preregistered or random sample. The following artifact screenshots were
+inspected directly. Paths are relative to `qualification/`; hashes were
+recomputed from the inspected files.
 
 | Screenshot | SHA-256 |
 | --- | --- |
@@ -185,7 +185,8 @@ expires at `2026-10-24T16:29:48Z`. Download the exact artifact and verify its
 qualification hash, flags and 185-file denominator with:
 
 ```bash
-artifact=/tmp/realworld-author-ui-ci-36027518118
+set -euo pipefail
+artifact='/tmp/realworld-author-ui-ci-36027518118'
 test ! -e "$artifact"
 gh run download 36027518118 \
   --repo danteacosta/agent-smell-degradation-harness \
@@ -205,6 +206,8 @@ against both, and recomputes every screenshot signature, dimension and hash
 against the manifest:
 
 ```bash
+set -euo pipefail
+artifact='/tmp/realworld-author-ui-ci-36027518118'
 python3 - "$artifact" \
   docs/research/realworld-author-ui-oracle-qualification-20260924.md <<'PY'
 from pathlib import Path
@@ -260,7 +263,9 @@ To rebuild the digest-bound image and rerun the qualifier in a clean detached
 worktree:
 
 ```bash
+set -euo pipefail
 git fetch origin refs/pull/77/merge
+test ! -e /tmp/realworld-author-ui-qualified
 git worktree add --detach /tmp/realworld-author-ui-qualified \
   750fdda8b6ff6037437de8e5397a54d276cd5202
 cd /tmp/realworld-author-ui-qualified
