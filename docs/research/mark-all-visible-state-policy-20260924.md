@@ -65,14 +65,26 @@ deterministic assertion across A/B/C arms.
 
 ## Qualification evidence
 
-The rebuilt browser qualification matched all 14 authored expectations under
-`mark-all-qualification/v2`, with no category, failure-set or reason mismatch.
-The pinned browser image was
+The first rebuilt browser qualification matched all 14 authored expectations
+under `mark-all-qualification/v2`, with no category, failure-set or reason
+mismatch. Its pinned browser image was
 `sha256:0d15f621ee19e16acdf496cdb49722de7b03a09d8dd8b7b5d070e2cd5945eb34`.
 The qualification JSON digest was
 `701f7a607f096ac9a6559ba7c25d2caf6ffb280c213b0ed4b67316b677847d22`,
 and the archived 110-file evidence bundle digest was
 `c5e7f4e2cd4c6437646e85a5db5d8de6f6fd4d623753cc906da01b9a0d01959d`.
+
+The final-head CI rerun at commit
+`1b2d3d916c9040555245423a71af0d48db9afa93` independently matched the same
+14 expectations. Its pinned browser image was
+`sha256:56798de1b10786ad610c94137da1a161e38a2e533ea2045832389db0c22f0bb5`.
+The downloaded `qualification.json` digest was
+`0c85112eb3d5a8bb5ddec41cc0d087778fa3af0b4c53c704b765ecffceb28971`,
+and GitHub recorded the 110-file artifact digest as
+`sha256:4d76c36981524ee2e164698d74cfd90893991933435d057b8fe0ef1193d4ccfb`.
+The CI run is
+[35993817386](https://github.com/danteacosta/agent-smell-degradation-harness/actions/runs/35993817386).
+
 This qualifies the declared controls and observation adapter; it is not a
 completeness claim for TodoMVC or evidence that a requirement smell causes a
 generated implementation defect.
