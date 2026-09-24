@@ -7,6 +7,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import stat
 import subprocess
@@ -1065,3 +1066,69 @@ def test_operational_controls_match_without_scientific_screenshots():
     operational_rows = [{"matches": True, "screenshot_sha256": {}}]
 
     assert qualifier.matrix_matches(html_rows, operational_rows) is True
+
+
+def test_instrument_digest_is_canonical_and_includes_both_executors():
+    qualifier = _qualification_module()
+    paths = qualifier.instrument_paths()
+    relative = {str(path.relative_to(qualifier.ROOT)) for path in paths}
+
+    assert "eval/realworld_author_ui_executor.py" in relative
+    assert "eval/focus_chain_executor.py" in relative
+    assert "tests/test_realworld_author_ui_executor.py" in relative
+    assert qualifier.instrument_digest(paths) == qualifier.instrument_digest(
+        list(reversed(paths)))
+    assert re.fullmatch(r"[0-9a-f]{64}", qualifier.instrument_digest(paths))
+    assert set(qualifier.file_hashes(paths)) == relative
+
+
+def test_focus_chain_executor_is_part_of_dirty_commit_custody(monkeypatch):
+    qualifier = _qualification_module()
+    focus_path = qualifier.ROOT / "eval/focus_chain_executor.py"
+    responses = iter([
+        SimpleNamespace(stdout="a" * 40 + "\n"),
+        SimpleNamespace(stdout=" M eval/focus_chain_executor.py\n"),
+    ])
+    monkeypatch.setattr(
+        qualifier.subprocess, "run", lambda *args, **kwargs: next(responses)
+    )
+
+    with pytest.raises(ValueError, match="hashed instrument paths must be clean"):
+        qualifier.validate_commit_custody("a" * 40, [focus_path])
+
+
+@pytest.mark.parametrize("label", ["", "b" * 64])
+def test_commit_custody_rejects_missing_or_stale_image_label(monkeypatch, label):
+    qualifier = _qualification_module()
+    responses = iter([
+        SimpleNamespace(stdout=IMAGE + "\n"),
+        SimpleNamespace(stdout=label + "\n"),
+    ])
+    monkeypatch.setattr(
+        qualifier.subprocess, "run", lambda *args, **kwargs: next(responses)
+    )
+
+    with pytest.raises(ValueError, match="instrument label mismatch"):
+        qualifier.validate_image(IMAGE, expected_instrument_digest="a" * 64)
+
+
+def test_commit_custody_accepts_matching_image_label(monkeypatch):
+    qualifier = _qualification_module()
+    responses = iter([
+        SimpleNamespace(stdout=IMAGE + "\n"),
+        SimpleNamespace(stdout="a" * 64 + "\n"),
+    ])
+    calls = []
+
+    def fake_run(command, **kwargs):
+        calls.append(command)
+        return next(responses)
+
+    monkeypatch.setattr(qualifier.subprocess, "run", fake_run)
+
+    qualifier.validate_image(IMAGE, expected_instrument_digest="a" * 64)
+    assert calls[1] == [
+        "docker", "image", "inspect", "--format",
+        '{{index .Config.Labels "org.opencontainers.image.realworld-instrument-sha256"}}',
+        IMAGE,
+    ]

@@ -3,6 +3,7 @@
 const fs = require('node:fs');
 const crypto = require('node:crypto');
 const {chromium} = require('playwright');
+const {createCappedDeduplicator} = require('./author-matches.cjs');
 const {finalize} = require('./finalize.cjs');
 
 const URL = 'http://fixture.invalid/article/bounded-ui-case';
@@ -155,13 +156,13 @@ async function observeLocator(locator) {
 
 async function authorLocators(page, expected) {
   const scopes = page.locator('[rel~="author"]');
-  const unique = [];
-  const keys = new Set();
-  const scopeCount = Math.min(await scopes.count(), 20);
-  for (let scopeIndex = 0; scopeIndex < scopeCount; scopeIndex += 1) {
+  const unique = createCappedDeduplicator(20);
+  const scopeCount = await scopes.count();
+  for (let scopeIndex = 0; scopeIndex < scopeCount && !unique.full;
+       scopeIndex += 1) {
     const matches = scopes.nth(scopeIndex).getByText(expected, {exact: true});
-    const count = Math.min(await matches.count(), 20);
-    for (let index = 0; index < count; index += 1) {
+    const count = await matches.count();
+    for (let index = 0; index < count && !unique.full; index += 1) {
       const candidate = matches.nth(index);
       const key = await candidate.evaluate((node) => {
         const path = [];
@@ -172,13 +173,10 @@ async function authorLocators(page, expected) {
         }
         return path.reverse().join('/');
       });
-      if (!keys.has(key)) {
-        keys.add(key);
-        unique.push(candidate);
-      }
+      unique.add(key, candidate);
     }
   }
-  return unique;
+  return unique.values;
 }
 
 async function observeAuthor(page, expected) {
