@@ -41,10 +41,13 @@ _OBSERVATION_FIELDS = {
 _COUNT_FIELDS = {"matched", "perceptible"}
 _RUNTIME_ERROR_FIELDS = {"kind", "message"}
 _REASON_FIELDS = {"assertion_id", "fixture_id", "context_id", "reason"}
-_INVALID = {
-    "category": "malformed_report",
-    "reason": "incomplete or inconsistent trusted report",
-}
+
+
+def _invalid() -> dict:
+    return {
+        "category": "malformed_report",
+        "reason": "incomplete or inconsistent trusted report",
+    }
 
 
 def _unique_fields(pairs):
@@ -216,7 +219,7 @@ def _classify_complete(value: dict, returncode: int) -> dict:
         or not _valid_reasons(value["not_evaluable_reasons"])
         or value["screenshots"] != list(_SCREENSHOTS)
     ):
-        return _INVALID
+        return _invalid()
 
     failed, not_evaluable, reasons = _recompute(value["observations"])
     if (
@@ -224,7 +227,7 @@ def _classify_complete(value: dict, returncode: int) -> dict:
         or value["target_not_evaluable"] != not_evaluable
         or value["not_evaluable_reasons"] != reasons
     ):
-        return _INVALID
+        return _invalid()
 
     category = ("target_not_evaluable" if not_evaluable else
                 "target_only_failure" if failed else "pass")
@@ -234,7 +237,7 @@ def _classify_complete(value: dict, returncode: int) -> dict:
         "target_not_evaluable": 11,
     }[category]
     if type(returncode) is not int or returncode != expected_returncode:
-        return _INVALID
+        return _invalid()
     return {
         "category": category,
         "target_failed": failed,
@@ -250,16 +253,16 @@ def _classify_operational(value: dict, returncode: int) -> dict:
         or type(value["browser_started"]) is not bool
         or type(returncode) is not int
     ):
-        return _INVALID
+        return _invalid()
     status = value["status"]
     if status == "interface_failure":
         if value["browser_started"] is not False or returncode != 20:
-            return _INVALID
+            return _invalid()
     elif status == "browser_failure":
         if returncode != 21:
-            return _INVALID
+            return _invalid()
     else:
-        return _INVALID
+        return _invalid()
     return {"category": status, "reason": value["error"]}
 
 
@@ -267,12 +270,12 @@ def classify_report(raw: bytes | None, returncode: int) -> dict:
     """Validate and classify one closed trusted-runner report."""
     try:
         if not isinstance(raw, bytes) or not raw or len(raw) > 100_000:
-            return _INVALID
+            return _invalid()
         value = json.loads(raw, object_pairs_hook=_unique_fields)
         if not isinstance(value, dict) or not _valid_common(value):
-            return _INVALID
+            return _invalid()
         if value["status"] == "complete":
             return _classify_complete(value, returncode)
         return _classify_operational(value, returncode)
     except (KeyError, RecursionError, TypeError, ValueError):
-        return _INVALID
+        return _invalid()

@@ -324,6 +324,17 @@ def test_missing_malformed_or_oversized_raw_report_is_rejected(raw):
     assert oracle.classify_report(raw, 0) == INVALID
 
 
+def test_mutating_one_malformed_result_does_not_corrupt_later_results():
+    first = oracle.classify_report(None, 0)
+    first["category"] = "corrupted"
+    first["extra"] = True
+
+    second = oracle.classify_report(None, 0)
+
+    assert second == INVALID
+    assert second is not first
+
+
 def test_unknown_schema_is_rejected():
     value = complete_report()
     value["schema_version"] = "realworld-author-ui-browser/v2"
