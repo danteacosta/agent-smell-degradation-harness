@@ -538,16 +538,47 @@ Do not produce a custody-bearing manifest from dirty instrument paths.
 Run:
 
 ```bash
-docker build --iidfile /tmp/realworld-author-ui-image eval/fixtures/realworld-author-ui
+realworld_evidence_dir="$(mktemp -d /private/tmp/realworld-author-ui-qualification.XXXXXX)"
+realworld_instrument_digest="$(python eval/fixtures/realworld-author-ui/qualify.py --print-instrument-digest)"
+realworld_head="$(git rev-parse HEAD)"
+docker build \
+  --build-arg REALWORLD_INSTRUMENT_SHA256="$realworld_instrument_digest" \
+  --iidfile "$realworld_evidence_dir/image-id" \
+  eval/fixtures/realworld-author-ui
+python - "$realworld_evidence_dir" "$realworld_instrument_digest" "$realworld_head" <<'PY'
+import json
+from pathlib import Path
+import sys
+
+evidence_dir = Path(sys.argv[1])
+instrument_digest = sys.argv[2]
+head = sys.argv[3]
+receipt = {
+    "build_command": [
+        "docker", "build", "--build-arg",
+        f"REALWORLD_INSTRUMENT_SHA256={instrument_digest}",
+        "--iidfile", str(evidence_dir / "image-id"),
+        "eval/fixtures/realworld-author-ui",
+    ],
+    "instrument_sha256": instrument_digest,
+    "image_id": (evidence_dir / "image-id").read_text().strip(),
+    "git_commit": head,
+}
+(evidence_dir / "build-command.json").write_text(
+    json.dumps(receipt, indent=2) + "\n"
+)
+PY
 python eval/fixtures/realworld-author-ui/qualify.py \
-  --image "$(cat /tmp/realworld-author-ui-image)" \
-  --git-commit "$(git rev-parse HEAD)" \
-  --output /tmp/realworld-author-ui-qualification
+  --image "$(cat "$realworld_evidence_dir/image-id")" \
+  --git-commit "$realworld_head" \
+  --output "$realworld_evidence_dir/qualification"
 ```
 
 Expected: JSON reports `"qualified": true`; nineteen HTML controls and two
-operational controls match exactly, the supplied commit equals `HEAD`, and all
-hashed instrument paths are clean.
+operational controls match exactly, the supplied commit equals `HEAD`, the
+image label equals the computed instrument digest, all hashed instrument paths
+are clean, and `build-command.json` records the exact Docker argv, digest,
+immutable image ID and head commit used for the run.
 
 - [ ] **Step 5: Inspect representative visual evidence**
 
@@ -639,7 +670,17 @@ Recompute hashes locally, verify `qualified:true`, verify the artifact's image I
 
 - [ ] **Step 3: Write the qualification record**
 
-Record source URL/revision/SHA, exact head commit, image ID, qualification/report hashes, artifact digest, control denominator and outcome table, screenshot hashes and the browser-sandbox flag. State explicitly:
+Record source URL/revision/SHA, exact head commit, image ID, qualification/report
+hashes, artifact digest, control denominator and outcome table, screenshot
+hashes and the browser-sandbox flag. Report the denominators separately as 8/8
+passing references, 7/7 detected target mutants, 4/4 expected not-evaluable
+controls, 2/2 operational controls and 76/76 expected screenshots. The four
+fixed screenshot filenames for every HTML control are
+`article-alice-author.png`, `article-alice-non-author.png`,
+`article-bob-author.png` and `article-bob-non-author.png`. Describe the two
+operational controls as diagnostic checks for interface and browser failure
+classification; do not count them as scientific target controls or as evidence
+of target sensitivity. State explicitly:
 
 - the oracle produced the expected outcomes for the enumerated nineteen HTML
   controls and two operational controls under the pinned environment;
