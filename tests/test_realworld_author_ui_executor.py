@@ -490,7 +490,8 @@ def _write_complete_artifacts(output, value, *, screenshot_fault=None):
 
 
 def _execute_with_fake_process(monkeypatch, tmp_path, *, report=None, returncode=0,
-                               screenshot_fault=None, run_error=None, call_log=None):
+                               screenshot_fault=None, run_error=None, call_log=None,
+                               extra_png=False):
     app = b"<html></html>"
     inputs = tmp_path / "inputs"
     inputs.mkdir()
@@ -508,6 +509,8 @@ def _execute_with_fake_process(monkeypatch, tmp_path, *, report=None, returncode
             if report.get("status") == "complete":
                 _write_complete_artifacts(
                     output, report, screenshot_fault=screenshot_fault)
+                if extra_png:
+                    (output / "unexpected.png").write_bytes(PNG)
             else:
                 (output / "report.json").write_bytes(encoded(report))
         kwargs["stdout"].write(b"browser output\n")
@@ -602,6 +605,12 @@ def test_execute_rejects_valid_json_with_inconsistent_schema(monkeypatch, tmp_pa
     assert receipt["category"] == "malformed_report"
 
 
+def test_execute_rejects_report_with_unrecognized_return_code(monkeypatch, tmp_path):
+    receipt, _, _ = _execute_with_fake_process(
+        monkeypatch, tmp_path, report=complete_report(), returncode=99)
+    assert receipt["category"] == "malformed_report"
+
+
 def _classified_report(category):
     if category == "pass":
         return complete_report(), 0
@@ -632,18 +641,27 @@ def test_execute_accepts_report_return_codes_only_through_classifier(
         assert "target_failed" not in receipt
 
 
+@pytest.mark.parametrize("screenshot_name", SCREENSHOTS)
 @pytest.mark.parametrize("fault", ["missing", "symlink", "oversize", "bad_signature"])
-def test_complete_outcome_requires_each_bounded_png(monkeypatch, tmp_path, fault):
+def test_complete_outcome_requires_each_bounded_png(
+        monkeypatch, tmp_path, screenshot_name, fault):
     receipt, _, _ = _execute_with_fake_process(
         monkeypatch, tmp_path, report=complete_report(),
-        screenshot_fault=(SCREENSHOTS[2], fault))
+        screenshot_fault=(screenshot_name, fault))
     assert receipt == {
         "image": IMAGE,
         "app_sha256": hashlib.sha256(b"<html></html>").hexdigest(),
         "returncode": 0,
         "category": "browser_failure",
-        "reason": f"invalid screenshot: {SCREENSHOTS[2]}",
+        "reason": f"invalid screenshot: {screenshot_name}",
     }
+
+
+def test_complete_outcome_rejects_extra_png_output(monkeypatch, tmp_path):
+    receipt, _, _ = _execute_with_fake_process(
+        monkeypatch, tmp_path, report=complete_report(), extra_png=True)
+    assert receipt["category"] == "browser_failure"
+    assert receipt["reason"] == "unexpected screenshot: unexpected.png"
 
 
 def test_complete_outcome_requires_report_to_match_executed_app(monkeypatch, tmp_path):
@@ -652,3 +670,35 @@ def test_complete_outcome_requires_report_to_match_executed_app(monkeypatch, tmp
     receipt, _, _ = _execute_with_fake_process(monkeypatch, tmp_path, report=value)
     assert receipt["category"] == "browser_failure"
     assert receipt["reason"] == "executed app hash mismatch"
+
+
+def test_execute_uses_a_unique_container_name_each_time(monkeypatch, tmp_path):
+    names = []
+    for directory_name in ("first", "second"):
+        directory = tmp_path / directory_name
+        directory.mkdir()
+        _, _, calls = _execute_with_fake_process(
+            monkeypatch, directory, report=complete_report())
+        names.append(calls[0][0][5])
+
+    assert names[0].startswith("realworld-author-ui-")
+    assert names[1].startswith("realworld-author-ui-")
+    assert names[0] != names[1]
+
+
+def test_execute_rejects_a_preexisting_output_directory(monkeypatch, tmp_path):
+    inputs = tmp_path / "inputs"
+    inputs.mkdir()
+    (inputs / "app.html").write_bytes(b"<html></html>")
+    output = tmp_path / "output"
+    output.mkdir()
+    run_called = False
+
+    def fake_run(*args, **kwargs):
+        nonlocal run_called
+        run_called = True
+
+    monkeypatch.setattr(oracle.subprocess, "run", fake_run)
+    with pytest.raises(FileExistsError):
+        oracle.execute(IMAGE, inputs, output)
+    assert run_called is False

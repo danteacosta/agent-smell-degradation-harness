@@ -343,14 +343,32 @@ def execute(image: str, inputs: Path, output: Path, timeout: int = 90) -> dict:
     if outcome["category"] in {
         "pass", "target_only_failure", "target_not_evaluable",
     }:
-        for screenshot_name in _SCREENSHOTS:
-            screenshot = _read_bounded_regular(output / screenshot_name, 4_000_000)
-            if screenshot is None or not screenshot.startswith(b"\x89PNG\r\n\x1a\n"):
-                outcome = {
-                    "category": "browser_failure",
-                    "reason": f"invalid screenshot: {screenshot_name}",
-                }
+        expected_png_names = set(report["screenshots"])
+        png_names = set()
+        unexpected = None
+        for path in output.glob("*.png"):
+            if path.name not in expected_png_names:
+                unexpected = path.name
                 break
+            png_names.add(path.name)
+        if unexpected is not None or png_names != expected_png_names:
+            missing = sorted(expected_png_names - png_names)
+            reason = (f"unexpected screenshot: {unexpected}" if unexpected else
+                      f"invalid screenshot: {missing[0]}")
+            outcome = {
+                "category": "browser_failure",
+                "reason": reason,
+            }
+        else:
+            for screenshot_name in _SCREENSHOTS:
+                screenshot = _read_bounded_regular(
+                    output / screenshot_name, 4_000_000)
+                if screenshot is None or not screenshot.startswith(b"\x89PNG\r\n\x1a\n"):
+                    outcome = {
+                        "category": "browser_failure",
+                        "reason": f"invalid screenshot: {screenshot_name}",
+                    }
+                    break
 
     receipt = {
         "image": image,
