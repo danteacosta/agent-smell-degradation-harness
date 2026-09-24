@@ -3,8 +3,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
+import stat
 import subprocess
 import uuid
 
@@ -288,25 +290,85 @@ def classify_report(raw: bytes | None, returncode: int) -> dict:
 
 
 def _read_bounded_regular(path: Path, maximum: int) -> bytes | None:
+    descriptor = None
     try:
-        if path.is_symlink() or not path.is_file():
+        flags = (os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+                 | getattr(os, "O_NONBLOCK", 0))
+        descriptor = os.open(path, flags)
+        info = os.fstat(descriptor)
+        if not stat.S_ISREG(info.st_mode) or info.st_size > maximum:
             return None
-        with path.open("rb") as stream:
-            raw = stream.read(maximum + 1)
+        chunks = []
+        remaining = maximum + 1
+        while remaining:
+            chunk = os.read(descriptor, min(65_536, remaining))
+            if not chunk:
+                break
+            chunks.append(chunk)
+            remaining -= len(chunk)
+        raw = b"".join(chunks)
         return raw if len(raw) <= maximum else None
     except OSError:
         return None
+    finally:
+        if descriptor is not None:
+            try:
+                os.close(descriptor)
+            except OSError:
+                pass
+
+
+def _stage_trusted_app(output: Path, raw: bytes) -> Path:
+    trusted_input = output / "trusted-input"
+    trusted_input.mkdir(mode=0o700)
+    app = trusted_input / "app.html"
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(app, flags, 0o400)
+    try:
+        remaining = memoryview(raw)
+        while remaining:
+            written = os.write(descriptor, remaining)
+            if written <= 0:
+                raise OSError("unable to stage trusted app")
+            remaining = remaining[written:]
+        os.fchmod(descriptor, 0o400)
+    finally:
+        os.close(descriptor)
+    return trusted_input
+
+
+def _bounded_diagnostic(prefix: str, error: OSError) -> str:
+    return f"{prefix}: {error}"[:500]
+
+
+def _cleanup_container(name: str) -> str | None:
+    try:
+        subprocess.run(
+            ["docker", "rm", "--force", name],
+            capture_output=True,
+            timeout=30,
+            check=False,
+        )
+        return None
+    except subprocess.TimeoutExpired:
+        return "docker cleanup timed out"
+    except OSError as error:
+        return _bounded_diagnostic("docker cleanup failed", error)
 
 
 def execute(image: str, inputs: Path, output: Path, timeout: int = 90) -> dict:
     """Run one bounded offline HTML artifact and retain its diagnostic evidence."""
     output.mkdir(parents=True, exist_ok=False)
     name = "realworld-author-ui-" + uuid.uuid4().hex
-    command = container_command(image, inputs, output, name)
-    app_hash = hashlib.sha256((inputs / "app.html").read_bytes()).hexdigest()
+    app = _read_bounded_regular(inputs / "app.html", 200_000)
+    if app is None:
+        raise ValueError("bounded regular app.html required")
+    trusted_input = _stage_trusted_app(output, app)
+    command = container_command(image, trusted_input, output, name)
+    app_hash = hashlib.sha256(app).hexdigest()
     (output / "container-command.json").write_text(json.dumps(command, indent=2))
 
-    timed_out = False
+    run_outcome = None
     try:
         with (output / "container.log").open("wb") as log:
             try:
@@ -320,25 +382,37 @@ def execute(image: str, inputs: Path, output: Path, timeout: int = 90) -> dict:
                 returncode = result.returncode
             except subprocess.TimeoutExpired:
                 returncode = 124
-                timed_out = True
+                run_outcome = {"category": "timeout"}
+            except OSError as error:
+                returncode = 125
+                run_outcome = {
+                    "category": "execution_failure",
+                    "reason": _bounded_diagnostic("docker execution failed", error),
+                }
     finally:
-        subprocess.run(
-            ["docker", "rm", "--force", name],
-            capture_output=True,
-            timeout=30,
-            check=False,
-        )
+        cleanup_error = _cleanup_container(name)
 
-    raw = _read_bounded_regular(output / "report.json", 100_000)
-    outcome = {"category": "timeout"} if timed_out else classify_report(raw, returncode)
+    if run_outcome is not None:
+        outcome = run_outcome
+        if cleanup_error is not None:
+            outcome["cleanup_error"] = cleanup_error
+    elif cleanup_error is not None:
+        outcome = {
+            "category": "cleanup_failure",
+            "cleanup_error": cleanup_error,
+        }
+    else:
+        raw = _read_bounded_regular(output / "report.json", 100_000)
+        outcome = classify_report(raw, returncode)
 
     if outcome["category"] not in {"timeout", "malformed_report"}:
-        report = json.loads(raw)
-        if report["app_sha256"] != app_hash:
-            outcome = {
-                "category": "browser_failure",
-                "reason": "executed app hash mismatch",
-            }
+        if outcome["category"] not in {"execution_failure", "cleanup_failure"}:
+            report = json.loads(raw)
+            if report["app_sha256"] != app_hash:
+                outcome = {
+                    "category": "browser_failure",
+                    "reason": "executed app hash mismatch",
+                }
 
     if outcome["category"] in {
         "pass", "target_only_failure", "target_not_evaluable",

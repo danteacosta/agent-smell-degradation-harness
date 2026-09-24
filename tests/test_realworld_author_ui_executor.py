@@ -4,6 +4,9 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import os
+from pathlib import Path
+import stat
 import subprocess
 from types import SimpleNamespace
 
@@ -491,7 +494,9 @@ def _write_complete_artifacts(output, value, *, screenshot_fault=None):
 
 def _execute_with_fake_process(monkeypatch, tmp_path, *, report=None, returncode=0,
                                screenshot_fault=None, run_error=None, call_log=None,
-                               extra_png=False):
+                               extra_png=False, cleanup_error=None,
+                               cleanup_returncode=0, race_target=None,
+                               nested_png=False):
     app = b"<html></html>"
     inputs = tmp_path / "inputs"
     inputs.mkdir()
@@ -499,10 +504,30 @@ def _execute_with_fake_process(monkeypatch, tmp_path, *, report=None, returncode
     output = tmp_path / "output"
     calls = call_log if call_log is not None else []
 
+    if race_target is not None:
+        target = inputs / "app.html" if race_target == "app" else output / "report.json"
+        outside = tmp_path / f"outside-{race_target}"
+        outside.write_bytes(
+            b"<html>swapped</html>" if race_target == "app" else encoded(complete_report()))
+        original_open = os.open
+        swapped = False
+
+        def swapping_open(path, flags, *args, **kwargs):
+            nonlocal swapped
+            if Path(path) == target and not swapped:
+                swapped = True
+                target.unlink()
+                target.symlink_to(outside)
+            return original_open(path, flags, *args, **kwargs)
+
+        monkeypatch.setattr(os, "open", swapping_open)
+
     def fake_run(command, **kwargs):
         calls.append((command, kwargs))
         if command[:3] == ["docker", "rm", "--force"]:
-            return SimpleNamespace(returncode=0)
+            if cleanup_error is not None:
+                raise cleanup_error
+            return SimpleNamespace(returncode=cleanup_returncode)
         if run_error is not None:
             raise run_error
         if report is not None:
@@ -511,6 +536,8 @@ def _execute_with_fake_process(monkeypatch, tmp_path, *, report=None, returncode
                     output, report, screenshot_fault=screenshot_fault)
                 if extra_png:
                     (output / "unexpected.png").write_bytes(PNG)
+                if nested_png:
+                    (output / "trusted-input" / "ignored.png").write_bytes(PNG)
             else:
                 (output / "report.json").write_bytes(encoded(report))
         kwargs["stdout"].write(b"browser output\n")
@@ -544,6 +571,13 @@ def test_execute_accepts_complete_report_and_writes_auditable_receipts(monkeypat
     assert calls[1][0] == ["docker", "rm", "--force", command[5]]
     assert calls[1][1] == {"capture_output": True, "timeout": 30, "check": False}
     assert command[5].startswith("realworld-author-ui-")
+    trusted_input = output / "trusted-input"
+    assert (trusted_input / "app.html").read_bytes() == b"<html></html>"
+    assert stat.S_IMODE((trusted_input / "app.html").stat().st_mode) == 0o400
+    assert any(
+        item == f"type=bind,src={trusted_input.resolve()},dst=/input,readonly"
+        for item in command
+    )
 
 
 def test_execute_timeout_is_diagnostic_and_always_cleans_up(monkeypatch, tmp_path):
@@ -558,13 +592,62 @@ def test_execute_timeout_is_diagnostic_and_always_cleans_up(monkeypatch, tmp_pat
     assert calls[-1][0][:3] == ["docker", "rm", "--force"]
 
 
-def test_execute_cleans_up_when_process_invocation_fails(monkeypatch, tmp_path):
+def test_timeout_survives_cleanup_timeout(monkeypatch, tmp_path):
+    receipt, output, _ = _execute_with_fake_process(
+        monkeypatch,
+        tmp_path,
+        run_error=subprocess.TimeoutExpired(["docker", "run"], 7),
+        cleanup_error=subprocess.TimeoutExpired(["docker", "rm"], 30),
+    )
+    assert receipt["category"] == "timeout"
+    assert receipt["returncode"] == 124
+    assert receipt["cleanup_error"] == "docker cleanup timed out"
+    assert json.loads((output / "executor.json").read_text()) == receipt
+
+
+def test_execute_and_cleanup_failures_are_bounded_diagnostics(monkeypatch, tmp_path):
     calls = []
-    with pytest.raises(OSError, match="docker unavailable"):
-        _execute_with_fake_process(
-            monkeypatch, tmp_path, run_error=OSError("docker unavailable"),
-            call_log=calls)
+    receipt, output, _ = _execute_with_fake_process(
+        monkeypatch,
+        tmp_path,
+        run_error=OSError("docker unavailable"),
+        cleanup_error=OSError("x" * 1_000),
+        call_log=calls,
+    )
+    assert receipt["category"] == "execution_failure"
+    assert receipt["returncode"] == 125
+    assert receipt["reason"] == "docker execution failed: docker unavailable"
+    assert receipt["cleanup_error"].startswith("docker cleanup failed: ")
+    assert len(receipt["cleanup_error"]) <= 500
+    assert json.loads((output / "executor.json").read_text()) == receipt
     assert calls[-1][0][:3] == ["docker", "rm", "--force"]
+
+
+def test_successful_run_with_cleanup_error_is_cleanup_failure(monkeypatch, tmp_path):
+    receipt, output, _ = _execute_with_fake_process(
+        monkeypatch,
+        tmp_path,
+        report=complete_report(),
+        cleanup_error=OSError("permission denied"),
+    )
+    assert receipt == {
+        "image": IMAGE,
+        "app_sha256": hashlib.sha256(b"<html></html>").hexdigest(),
+        "returncode": 0,
+        "category": "cleanup_failure",
+        "cleanup_error": "docker cleanup failed: permission denied",
+    }
+    assert json.loads((output / "executor.json").read_text()) == receipt
+
+
+def test_nonzero_cleanup_return_is_not_a_cleanup_failure(monkeypatch, tmp_path):
+    receipt, _, _ = _execute_with_fake_process(
+        monkeypatch,
+        tmp_path,
+        report=complete_report(),
+        cleanup_returncode=1,
+    )
+    assert receipt["category"] == "pass"
 
 
 @pytest.mark.parametrize("report_fault", ["missing", "symlink", "oversize", "malformed"])
@@ -664,6 +747,12 @@ def test_complete_outcome_rejects_extra_png_output(monkeypatch, tmp_path):
     assert receipt["reason"] == "unexpected screenshot: unexpected.png"
 
 
+def test_complete_outcome_ignores_png_below_trusted_input(monkeypatch, tmp_path):
+    receipt, _, _ = _execute_with_fake_process(
+        monkeypatch, tmp_path, report=complete_report(), nested_png=True)
+    assert receipt["category"] == "pass"
+
+
 def test_complete_outcome_requires_report_to_match_executed_app(monkeypatch, tmp_path):
     value = complete_report()
     value["app_sha256"] = "b" * 64
@@ -702,3 +791,26 @@ def test_execute_rejects_a_preexisting_output_directory(monkeypatch, tmp_path):
     with pytest.raises(FileExistsError):
         oracle.execute(IMAGE, inputs, output)
     assert run_called is False
+
+
+def test_report_swap_to_symlink_before_descriptor_open_is_rejected(monkeypatch, tmp_path):
+    receipt, _, _ = _execute_with_fake_process(
+        monkeypatch,
+        tmp_path,
+        report=complete_report(),
+        race_target="report",
+    )
+    assert receipt["category"] == "malformed_report"
+
+
+def test_app_swap_to_symlink_before_descriptor_open_is_rejected(monkeypatch, tmp_path):
+    calls = []
+    with pytest.raises(ValueError, match="bounded regular app.html required"):
+        _execute_with_fake_process(
+            monkeypatch,
+            tmp_path,
+            report=complete_report(),
+            race_target="app",
+            call_log=calls,
+        )
+    assert calls == []
