@@ -22,9 +22,10 @@ H2.
 
 ### Standalone generated article page — selected
 
-The generated artifact is one self-contained HTML page that consumes a neutral
-`window.initialState` containing a viewer and an article. A trusted Playwright
-controller renders the same bytes in separate author and non-author contexts.
+The generated artifact is one self-contained HTML page that consumes a common
+feasibility interface, `window.initialState`, containing a viewer and an
+article. A trusted Playwright controller renders the same bytes in crossed
+author and non-author contexts.
 
 This option preserves a real browser boundary, keeps fixtures deterministic,
 and avoids coupling the model output to a particular RealWorld framework or
@@ -49,21 +50,27 @@ surface are disproportionate for the first cross-project instrument.
 The implementation is accepted when all of the following observable scenarios
 hold.
 
-1. **Author view:** given viewer `alice` and an article authored by `alice`, when
-   the article route renders, then exactly one visible button with accessible
-   name `Delete Article` is present.
-2. **Non-author view:** given viewer `bob` and the same article authored by
-   `alice`, when the article route renders in a fresh browser context, then no
-   visible button with accessible name `Delete Article` is present. A removed or
-   hidden button satisfies this bounded “only shown” condition.
-3. **Page prerequisite:** in both contexts, the expected route, article title,
-   body and author identity are visible before the ownership condition receives
-   a target verdict. If the article page is unavailable or materially broken,
-   the target is not evaluable and the page failure is reported separately.
+1. **Author views:** given an article authored by `alice` and viewer `alice`, and
+   separately an article authored by `bob` and viewer `bob`, when each article
+   route renders, then at least one perceptible button with accessible name
+   `Delete Article` is present. Multiplicity is diagnostic because the official
+   pinned template renders the action in two article-meta regions; the source
+   does not require exactly one instance.
+2. **Non-author views:** given the same Alice article with viewer `bob`, and the
+   same Bob article with viewer `alice`, when each route renders in a fresh
+   browser context, then no perceptible button with accessible name
+   `Delete Article` is present. A removed or non-perceptible button satisfies
+   this bounded “only shown” condition.
+3. **Page prerequisite:** in all four contexts, the expected route, article
+   title, body and author identity are perceptible before the ownership
+   condition receives a target verdict. If an article page is unavailable or
+   materially broken, the affected target assertion is not evaluable and the
+   prerequisite failure is reported separately.
 4. **Oracle sensitivity:** two independently structured valid controls pass;
-   always-visible and never-visible target mutants fail the corresponding
-   ownership assertion; a broken-article control is not mislabeled as a target
-   failure; duplicate author controls are reported as unassessable.
+   always-visible, never-visible, hard-coded-identity and transparent target
+   mutants fail the corresponding ownership assertion; a broken-article
+   control is not mislabeled as a target failure; and a valid two-button author
+   control passes.
 5. **Evidence:** the qualifier records the immutable browser image, input and
    runtime hashes, exact categories and assertion IDs, structured observations,
    and author/non-author screenshots.
@@ -74,7 +81,7 @@ oracle.
 
 ## Public candidate interface
 
-The candidate receives the same interface in every future A/B/C arm:
+The candidate receives the same interface schema in every future A/B/C arm:
 
 ```javascript
 window.initialState = {
@@ -88,10 +95,20 @@ window.initialState = {
 };
 ```
 
-The controller changes only `viewer.username` to `bob` for the non-author
-context. The interface describes available data but does not say when any
-control must be rendered. It contains no target label, omission annotation,
-oracle code, source URL or fixture expectation.
+The controller executes two crossed fixture pairs:
+
+| Fixture | Article author | Author viewer | Non-author viewer |
+| --- | --- | --- | --- |
+| `article-alice` | `alice` | `alice` | `bob` |
+| `article-bob` | `bob` | `bob` | `alice` |
+
+Only fixture values change; the interface shape and candidate bytes remain
+identical. The viewer and article-author identities are necessary feasibility
+data and therefore cue that an ownership comparison is possible. They do not
+state the delete-control verdict, but this residual cue is recorded as a threat
+to construct validity. The interface contains no target label, omission
+annotation, oracle code, source URL or fixture expectation. A serialized-prompt
+leakage review remains an admission gate.
 
 The future prompt will require a self-contained article page at
 `/article/bounded-ui-case` and consumption of `window.initialState`. The exact
@@ -100,10 +117,10 @@ instrument qualifies.
 
 ## Browser observations
 
-The trusted controller serves candidate bytes only at
-`http://fixture.invalid/article/bounded-ui-case` and aborts every other network
-request. It creates a new browser context for each viewer and injects the state
-before candidate scripts run.
+The trusted controller serves candidate bytes only at the fixture's
+`http://fixture.invalid/article/<slug>` route and aborts every other network
+request. It creates a new browser context for each of the four fixture/viewer
+combinations and injects the state before candidate scripts run.
 
 The delete-control role is resolved through Playwright's accessible button role
 and a whitespace-normalized, case-insensitive exact accessible name of
@@ -112,47 +129,67 @@ requiring a private class, component name or test ID.
 
 For each context, the report records bounded counts for:
 
-- visible title text;
-- visible article body text;
-- visible author identity;
-- all matching delete buttons and the subset that is visible;
+- perceptible title text;
+- perceptible article body text;
+- perceptible author identity;
+- all matching delete buttons and the subset that is perceptible;
 - final URL; and
 - console and page errors.
 
 Screenshots illustrate the rendered state but never replace structured browser
-observations as the verdict source. Opacity-only hiding remains visible under
-the declared endpoint because a rendered control still occupies the interface;
-the exact Playwright visibility behavior and browser version are pinned in the
-qualification image.
+observations as the verdict source. A matching button is **perceptible** only
+when Playwright reports it visible, its finite bounding box is at least one CSS
+pixel in both dimensions, its effective opacity across its ancestor chain is
+greater than `0.01`, and, after it is scrolled into view, a center-point hit
+test resolves to the button or one of its descendants. Removed controls,
+`display:none`, `visibility:hidden`, effectively transparent controls and fully
+occluded controls are not perceptible. The policy is deliberately bounded; it
+does not claim to model every human-perception or accessibility condition.
+Exact Playwright, Chromium and viewport versions are pinned in the qualification
+image.
 
 ## Classification
 
-The report schema is `realworld-author-ui-browser/v1`. The Python adapter rejects
-duplicate JSON fields, unknown schema versions, extra or missing observation
-fields, wrong scalar types, counts outside fixed bounds, inconsistent visible
-counts, oversized console errors, unsupported assertion IDs and exit-code
-contradictions.
+The report schema is `realworld-author-ui-browser/v1`.
 
 Target assertions:
 
 - `author_sees_delete_article`;
 - `non_author_does_not_see_delete_article`.
 
-Non-target assertion:
+`article_page_preserved` is a measurement prerequisite, not a non-target
+requirement. It is evaluated per fixture/context from the route, title, body and
+article-author observations. A prerequisite failure makes every target
+assertion that depends on that context not evaluable; it is never converted
+into a target failure. Button multiplicity is recorded but does not affect the
+verdict. Any perceptible matching button in a non-author context is a target
+failure.
 
-- `article_page_preserved`.
+The receipt contains exact, sorted `target_failed` and
+`target_not_evaluable` assertion-ID sets. `target_failed` includes an assertion
+when any evaluable applicable context contradicts it. `target_not_evaluable`
+includes an assertion when any applicable context lacks a valid page
+prerequisite, even if another context produced an evaluable failure. Every
+not-evaluable entry names the assertion, fixture, context and one of the closed
+reasons `route_mismatch`, `title_missing`, `body_missing`, or
+`article_author_missing`.
 
-The page assertion is a prerequisite for both target assertions. If it fails in
-either context, target status is `not_evaluable`; it is never converted into a
-requirement-smell failure. More than one visible author delete button is also
-`not_evaluable` because the declared singular control identity is ambiguous.
-Any visible matching delete button in the non-author context is a target
-failure, regardless of duplicates.
+Category precedence and exit codes are fixed:
 
-The adapter maps complete reports into `pass`, `target_only_failure`,
-`non_target_only_failure`, `mixed_failure`, or `target_not_evaluable`.
-Malformed reports, interface failures, browser failures and timeouts remain
-separate operational categories.
+1. `malformed_report` or `interface_failure` is operational exit code `20`,
+   `browser_failure` is `21`, and `timeout` is `22`; none reaches scientific
+   classification;
+2. any non-empty `target_not_evaluable` set yields `target_not_evaluable` and
+   exit code `11`, while retaining all evaluable IDs in `target_failed`;
+3. otherwise a non-empty `target_failed` set yields `target_only_failure` and
+   exit code `10`; and
+4. otherwise the result is `pass` with exit code `0`.
+
+The adapter rejects duplicate JSON fields, unknown schema versions, extra or
+missing observation fields, wrong scalar types, counts outside fixed bounds,
+inconsistent perceptible counts, unsupported assertion IDs or reason codes,
+oversized console errors, unsorted or duplicate receipt sets, and category or
+exit-code contradictions.
 
 ## Authored-control matrix
 
@@ -162,24 +199,53 @@ The initial qualification contains:
   username equality;
 - a structurally different reference that derives an ownership policy and
   keeps a hidden non-author control;
+- a valid reference that renders two perceptible author buttons and no
+  perceptible non-author button;
+- a valid reference with a perceptible author button and a transparent
+  non-author button;
 - an always-visible mutant;
 - a never-visible mutant;
 - a wrong-identity mutant;
-- a broken-article control that prevents target evaluation;
-- a duplicate-author-button control; and
-- a missing-interface control that fails before classification.
+- a hard-coded-`alice` mutant that must fail both target assertion IDs across
+  the crossed fixtures;
+- a transparent-only-author mutant that must fail
+  `author_sees_delete_article`;
+- a transparent non-author plus visible non-author mutant that must fail
+  `non_author_does_not_see_delete_article`;
+- a broken-article control that emits a schema-valid observation but produces
+  `target_not_evaluable` through a failed page prerequisite;
+- a mixed-evaluability control in which one assertion has a prerequisite
+  failure while another has an evaluable failure, proving category precedence
+  and preservation of both receipt sets; and
+- an interface-boundary control in which the qualifier deliberately supplies a
+  state payload missing `article.author.username`; the runner rejects it as an
+  operational `interface_failure` before navigation or candidate execution.
 
-The qualifier must match every expected category, target/non-target failure set
-and not-evaluable reason. A mutant kill demonstrates sensitivity only to this
-bounded obligation; it is not evidence of completeness or smell causality.
+The broken-article control receives a valid, immutable interface and executes,
+but fails to render the expected page body, so its target is not evaluable. The
+interface-boundary control instead proves that invalid harness input never
+reaches candidate execution. The controller installs each valid fixture as a
+deep-frozen, non-writable and non-configurable `window.initialState` property
+before candidate scripts run.
+
+The qualifier must match every expected category, target-failure set,
+not-evaluable set and closed reason. A mutant kill demonstrates sensitivity
+only to this bounded obligation; it is not evidence of completeness or smell
+causality.
 
 ## Isolation and trust boundary
 
-The candidate HTML is untrusted. It runs in the existing offline,
+The candidate HTML is treated as untrusted. It runs in the existing offline,
 resource-bounded Docker pattern with a read-only input, writable evidence
 directory, no network, dropped capabilities, bounded processes, memory and
 time, and a trusted external Playwright controller. The controller writes the
 report and screenshots. Candidate code never writes the classification receipt.
+
+As in the existing browser-oracle image, Chromium may run with its sandbox
+disabled inside the constrained container. The evidence records the exact
+sandbox flags. Container qualification demonstrates deterministic containment
+under the declared controls; it does not prove browser-escape safety or make
+the candidate safe to execute outside that boundary.
 
 The implementation reuses the existing container command and receipt patterns.
 One adapter boundary is justified: it isolates the external browser-report
@@ -208,13 +274,15 @@ factory, strategy hierarchy or generic oracle framework is needed.
 
 Implementation must proceed test-first:
 
-1. write classifier tests for pass, the two target directions, prerequisite
-   failure, ambiguity, malformed observations and exit-code mismatch;
+1. write classifier tests for pass, the two target directions, crossed
+   identities, prerequisite failure, mixed evaluability, multiplicity,
+   perceptibility, malformed observations and exit-code mismatch;
 2. confirm those tests fail for the intended missing behavior;
 3. implement the minimal adapter and runner;
 4. run focused Python tests plus JavaScript syntax and JSON checks;
 5. build the pinned browser image and execute every authored control;
-6. inspect representative author, non-author, mutant and ambiguous screenshots;
+6. inspect representative author, non-author, transparent, multiplicity and
+   mutant screenshots;
 7. run the repository eval, replay and wedge gates in the supported Linux
    CPython 3.12 CI environment; and
 8. record exact hashes without admitting the case or calling a provider.
