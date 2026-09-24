@@ -11,6 +11,7 @@ experiment evidence.
 - [2026-09-07 comparison pricing check](2026-09-07-comparison-pricing-check.md): frozen rates, current vendor pricing and the boundary between computed cost and billed charges.
 
 - [2026-09-20 semantic-preservation scope](2026-09-20-semantic-preservation-scope.md): formalization as conceptual framing, with unchanged task and T1–T3/T4 boundary.
+- [2026-09-24 pre-merge requirement audit market check](2026-09-24-premerge-requirement-audit-market-check.md): verified Lemma overlap and funding announcement, rejected unsupported revenue figures, and defined a separate 3–5-team commercial validation protocol.
 
 ## Research execution guides
 
