@@ -41,12 +41,12 @@
         "Two distinct active todos are supplied initially"
       ],
       "hidden_fixture": ["Two unique item titles; clean context per scenario"],
-      "target_observation": "After selecting both via master and clearing completed, no completed item remains and any still-present master has checked=false; removed master is valid",
+      "target_observation": "After selecting both via master and clearing completed, no completed item remains and any visible exact #toggle-all master has checked=false; a removed or hidden master is equivalent at this user-visible endpoint",
       "non_target_assertion_ids": ["master_sets_items", "master_tracks_individuals"],
-      "valid_controls": ["Explicit state reset", "Derived state with nonempty-all-completed rule"],
-      "target_mutants": ["Still-present master remains checked after clear"],
+      "valid_controls": ["Explicit state reset", "Derived state with nonempty-all-completed rule", "Master removed after the list becomes empty", "Master hidden after the list becomes empty"],
+      "target_mutants": ["Visible original master remains checked after clear", "Visible replacement #toggle-all remains checked after clear"],
       "non_target_mutants": ["Single-item synchronization disabled", "Bulk master toggle disabled"],
-      "admission_issue": "Do not require visible geometry of an empty list or treat an unmet checked precondition as target failure"
+      "admission_issue": "Treat duplicate exact master identities as unassessable; do not require visible geometry of an empty list or treat an unmet checked precondition as target failure"
     },
     {
       "intent_id": "todomvc-persistence",
