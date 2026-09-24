@@ -330,6 +330,28 @@ def test_unknown_schema_is_rejected():
     assert oracle.classify_report(encoded(value), 0) == INVALID
 
 
+@pytest.mark.parametrize(("field", "member", "bad"), [
+    ("viewport", "width", 1000.0),
+    ("viewport", "height", 720.0),
+    ("viewport", "width", True),
+    ("viewport", "height", False),
+    ("sample_grid", "dimension", 5.0),
+    ("sample_grid", "dimension", True),
+    ("sample_grid", "inset_ratio", False),
+    ("sample_grid", "inset_ratio", "0.08"),
+])
+def test_viewport_and_sample_grid_reject_wrong_scalar_types(field, member, bad):
+    value = complete_report()
+    value[field][member] = bad
+    assert oracle.classify_report(encoded(value), 0) == INVALID
+
+
+def test_sample_grid_requires_float_inset_ratio():
+    value = complete_report()
+    assert type(value["sample_grid"]["inset_ratio"]) is float
+    assert oracle.classify_report(encoded(value), 0) == expected_complete(value)
+
+
 @pytest.mark.parametrize("field", ["target_failed", "target_not_evaluable"])
 def test_declared_target_sets_must_be_sorted_unique_supported_and_consistent(field):
     for bad in (
@@ -407,6 +429,8 @@ def test_operational_reports_are_classified_without_target_failures():
       if key != "error"}, 21),
     ({**operational_report("browser_failure", True), "error": "x" * 1501}, 21),
     ({**operational_report("browser_failure", True), "browser_started": 1}, 21),
+    (operational_report("interface_failure", False), 20.0),
+    (operational_report("browser_failure", True), 21.0),
 ])
 def test_wrong_operational_shapes_or_return_codes_are_rejected(value, returncode):
     assert oracle.classify_report(encoded(value), returncode) == INVALID

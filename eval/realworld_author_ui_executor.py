@@ -100,6 +100,28 @@ def _valid_runtime_errors(value: object) -> bool:
     )
 
 
+def _valid_viewport(value: object) -> bool:
+    return (
+        isinstance(value, dict)
+        and set(value) == {"width", "height"}
+        and type(value["width"]) is int
+        and value["width"] == 1000
+        and type(value["height"]) is int
+        and value["height"] == 720
+    )
+
+
+def _valid_sample_grid(value: object) -> bool:
+    return (
+        isinstance(value, dict)
+        and set(value) == {"dimension", "inset_ratio"}
+        and type(value["dimension"]) is int
+        and value["dimension"] == 5
+        and type(value["inset_ratio"]) is float
+        and value["inset_ratio"] == 0.08
+    )
+
+
 def _valid_observations(value: object) -> bool:
     if not isinstance(value, list) or len(value) != len(_PAIRS):
         return False
@@ -186,8 +208,8 @@ def _classify_complete(value: dict, returncode: int) -> dict:
     if (
         set(value) != _COMPLETE_FIELDS
         or not _bounded_string(value["browser_version"], 200, nonempty=True)
-        or value["viewport"] != {"width": 1000, "height": 720}
-        or value["sample_grid"] != {"dimension": 5, "inset_ratio": 0.08}
+        or not _valid_viewport(value["viewport"])
+        or not _valid_sample_grid(value["sample_grid"])
         or not _valid_observations(value["observations"])
         or not _valid_target_set(value["target_failed"])
         or not _valid_target_set(value["target_not_evaluable"])
@@ -226,6 +248,7 @@ def _classify_operational(value: dict, returncode: int) -> dict:
         set(value) != _OPERATIONAL_FIELDS
         or not _bounded_string(value["error"], 1500)
         or type(value["browser_started"]) is not bool
+        or type(returncode) is not int
     ):
         return _INVALID
     status = value["status"]
