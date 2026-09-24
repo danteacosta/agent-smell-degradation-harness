@@ -107,10 +107,16 @@ resource-bounded Docker container. Chromium reported
 `browser_sandbox:false`; this state is explicit rather than treated as a
 browser-escape guarantee.
 
-## Fixed screenshot inspection
+## Direct screenshot inspection (31/76)
 
-The following artifact screenshots were inspected directly. Paths are relative
-to `qualification/`; hashes were recomputed from the inspected files.
+The 31-file visual sample was prespecified in the Task 6 execution instruction
+before artifact inspection. The selection rule took all four contexts for the
+explicit reference and hardcoded-Alice mutant, then targeted author/context
+frames for multiplicity, transparency, partial and full occlusion,
+pointer-events, broken and mixed pages, viewer-only author text and hidden
+authorship. The following artifact screenshots were inspected directly. Paths
+are relative to `qualification/`; hashes were recomputed from the inspected
+files.
 
 | Screenshot | SHA-256 |
 | --- | --- |
@@ -168,6 +174,118 @@ These comparisons agree with the closed structured observations.
 
 Screenshots are diagnostic records, not the source of verdicts. The structured
 browser observations and the Python classifier determine each result.
+The remaining 45 screenshots received automated PNG-signature, 1000 x 720
+dimension, canonical-filename and SHA-256 validation only; they were not part
+of the direct visual review.
+
+## Audit and reproduce
+
+The authenticated [artifact download](https://github.com/danteacosta/agent-smell-degradation-harness/actions/runs/36027518118/artifacts/10820860904)
+expires at `2026-10-24T16:29:48Z`. Download the exact artifact and verify its
+qualification hash, flags and 185-file denominator with:
+
+```bash
+artifact=/tmp/realworld-author-ui-ci-36027518118
+test ! -e "$artifact"
+gh run download 36027518118 \
+  --repo danteacosta/agent-smell-degradation-harness \
+  --name realworld-author-ui-qualification \
+  --dir "$artifact"
+(cd "$artifact" && printf '%s  %s\n' \
+  'a56fc961fdf8bfe509890a802f8fa906479afc267fe868e424226fdd989d0358' \
+  'qualification/qualification.json' | shasum -a 256 -c -)
+jq -e '.qualified == true and .matrix_matches == true' \
+  "$artifact/qualification/qualification.json"
+test "$(find "$artifact" -type f | wc -l | tr -d ' ')" = 185
+```
+
+From the repository root, this command verifies that the report table above is
+identical to the manifest's canonical case order, recomputes each report hash
+against both, and recomputes every screenshot signature, dimension and hash
+against the manifest:
+
+```bash
+python3 - "$artifact" \
+  docs/research/realworld-author-ui-oracle-qualification-20260924.md <<'PY'
+from pathlib import Path
+import hashlib
+import json
+import re
+import struct
+import sys
+
+artifact = Path(sys.argv[1])
+document = Path(sys.argv[2]).read_text(encoding="utf-8")
+manifest = json.loads(
+    (artifact / "qualification/qualification.json").read_text(encoding="utf-8")
+)
+section = document.split("| Case ID | Report SHA-256 |", 1)[1].split(
+    "The runtime was", 1
+)[0]
+table = re.findall(
+    r"^\| `([^`]+)` \| `([0-9a-f]{64})` \|$", section, re.MULTILINE
+)
+rows = manifest["cases"] + manifest["operational_cases"]
+expected = [(row["id"], row["report_sha256"]) for row in rows]
+assert len(expected) == 21
+assert table == expected
+
+def sha256(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+for case_id, expected_hash in expected:
+    report = artifact / "qualification" / case_id / "output/report.json"
+    assert sha256(report) == expected_hash
+screenshots = [
+    (row["id"], name, expected_hash)
+    for row in rows
+    for name, expected_hash in row["screenshot_sha256"].items()
+]
+assert len(screenshots) == 76
+for case_id, name, expected_hash in screenshots:
+    image = artifact / "qualification" / case_id / "output" / name
+    raw = image.read_bytes()
+    assert raw[:8] == b"\x89PNG\r\n\x1a\n"
+    assert struct.unpack(">II", raw[16:24]) == (1000, 720)
+    assert sha256(image) == expected_hash
+print("21 reports and 76 PNGs verified")
+PY
+```
+
+The exact qualified checkout is
+[`750fdda8b6ff6037437de8e5397a54d276cd5202`](https://github.com/danteacosta/agent-smell-degradation-harness/commit/750fdda8b6ff6037437de8e5397a54d276cd5202),
+and the qualification definition is the pinned
+[workflow](https://github.com/danteacosta/agent-smell-degradation-harness/blob/b12b25a4b445d90b704e78fa17e044bd38f3351f/.github/workflows/realworld-author-ui-oracle-qualification.yml).
+To rebuild the digest-bound image and rerun the qualifier in a clean detached
+worktree:
+
+```bash
+git fetch origin refs/pull/77/merge
+git worktree add --detach /tmp/realworld-author-ui-qualified \
+  750fdda8b6ff6037437de8e5397a54d276cd5202
+cd /tmp/realworld-author-ui-qualified
+test -z "$(git status --porcelain)"
+python3 scripts/dependency_bundle.py
+evidence_root=$(mktemp -d /tmp/realworld-author-ui-rerun.XXXXXX)
+instrument_digest=$(dependency-bundle/runtime/bin/python \
+  eval/fixtures/realworld-author-ui/qualify.py --print-instrument-digest)
+test "$instrument_digest" = \
+  '18a1c3d32cccd26c896f3539b6a776034be3ab82a35bfb79996d5e78bfb68e11'
+docker build \
+  --build-arg "REALWORLD_INSTRUMENT_SHA256=$instrument_digest" \
+  --iidfile "$evidence_root/image-id" \
+  eval/fixtures/realworld-author-ui
+dependency-bundle/runtime/bin/python \
+  eval/fixtures/realworld-author-ui/qualify.py \
+  --image "$(tr -d '\n' < "$evidence_root/image-id")" \
+  --git-commit 750fdda8b6ff6037437de8e5397a54d276cd5202 \
+  --output "$evidence_root/qualification"
+```
+
+No durable copy of the 185-file artifact is currently archived beyond
+GitHub's 30-day retention. The committed hashes, pinned source and procedure
+remain, but direct screenshot audit requires downloading before expiry or
+rerunning the qualification.
 
 ## Current check state and limits
 
