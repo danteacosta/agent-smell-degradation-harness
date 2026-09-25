@@ -1,0 +1,9 @@
+{
+  "schema_version": "four-project-ui-browser/v1",
+  "project_id": "nextcloud",
+  "status": "browser_error",
+  "app_sha256": "3a90364904ada8e3757aee958757819ac144a6beceac6f04ddbbdbb0282d4f2e",
+  "assertions": {},
+  "console_errors": [],
+  "error": "TimeoutError: locator.click: Timeout 2500ms exceeded.\nCall log:\n  - waiting for locator('[data-file-id=\"file-target\"]').getByRole('button', { name: 'Delete', exact: true })\n"
+}

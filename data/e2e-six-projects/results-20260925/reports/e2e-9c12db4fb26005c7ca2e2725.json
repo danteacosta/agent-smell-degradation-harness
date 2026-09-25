@@ -1,0 +1,9 @@
+{
+  "schema_version": "four-project-ui-browser/v1",
+  "project_id": "paperless-ngx",
+  "status": "interface_error",
+  "app_sha256": "3267f37ba14087a00efbbbab1dccef3d27dff2b74a98fd9b9adb17dc3d044b4c",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: one visible button[aria-label=\"Upload document\"] required"
+}

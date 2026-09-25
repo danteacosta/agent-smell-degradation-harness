@@ -1,0 +1,13 @@
+{
+  "schema_version": "four-project-ui-browser/v1",
+  "project_id": "paperless-ngx",
+  "status": "complete",
+  "app_sha256": "8fd2c83a9e8ea98d559aa8a767ca79aa507f1ca4a3ef8592c462f6e819807bbd",
+  "assertions": {
+    "existing_document_visible": true,
+    "upload_button_usable": true,
+    "drop_creates_document": true
+  },
+  "console_errors": [],
+  "screenshot": "final.png"
+}

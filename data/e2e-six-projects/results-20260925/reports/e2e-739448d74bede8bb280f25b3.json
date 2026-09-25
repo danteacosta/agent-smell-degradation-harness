@@ -1,0 +1,9 @@
+{
+  "schema_version": "four-project-ui-browser/v1",
+  "project_id": "kanboard",
+  "status": "browser_error",
+  "app_sha256": "efa087b10073849986e9e9529eb6f33b3b22c116b21ae970e18fb610839dd4ae",
+  "assertions": {},
+  "console_errors": [],
+  "error": "TimeoutError: locator.click: Timeout 2500ms exceeded.\nCall log:\n  - waiting for locator('[data-task-id=\"task-target\"]').getByRole('button', { name: 'Close task', exact: true })\n"
+}

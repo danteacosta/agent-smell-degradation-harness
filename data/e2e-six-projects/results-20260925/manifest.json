@@ -1,0 +1,32 @@
+{
+  "claims": {
+    "h1_confirmed": false,
+    "h2_evaluated": false,
+    "pilot": true
+  },
+  "collected_at": "2026-09-25",
+  "executable": 8,
+  "planned": 72,
+  "posthoc_visualization": {
+    "A_slot_id": "e2e-cc870c03b74f9929d0aa417c",
+    "C_slot_id": "e2e-900818b6205deabcdf294d4f",
+    "classification_unchanged": true,
+    "model": "gpt-5.6-luna",
+    "project_id": "kanboard",
+    "purpose": "show the already-classified Closed tasks state; not used to assign labels",
+    "replication": 1
+  },
+  "private_file_count": 1164,
+  "private_receipt_sha256": "6039b4bb2fba7d32e0ab6a4ee41e2ab002d96df3e8b26985a70fe1405805212a",
+  "projects": [
+    "paperless-ngx",
+    "kanboard",
+    "nextcloud",
+    "openproject"
+  ],
+  "provider_calls": 72,
+  "published_provider_captures": false,
+  "published_raw_generations": false,
+  "schema_version": "six-project-e2e-public-results/v1",
+  "unknown": 64
+}

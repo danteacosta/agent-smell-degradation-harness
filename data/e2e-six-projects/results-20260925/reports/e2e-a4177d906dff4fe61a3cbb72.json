@@ -1,0 +1,15 @@
+{
+  "schema_version": "four-project-ui-browser/v1",
+  "project_id": "kanboard",
+  "status": "complete",
+  "app_sha256": "ab4ec2d9669102df3d6908529f3cc87adfaa3db69aa10857be826843da5a2863",
+  "assertions": {
+    "subtask_todo-subtask_done": true,
+    "subtask_progress-subtask_done": true,
+    "subtask_done-subtask_done": true,
+    "closed_task_leaves_board": true,
+    "unrelated_task_unchanged": true
+  },
+  "console_errors": [],
+  "screenshot": "final.png"
+}
