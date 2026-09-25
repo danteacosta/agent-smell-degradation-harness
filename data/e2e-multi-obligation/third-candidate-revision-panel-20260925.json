@@ -1,0 +1,376 @@
+{
+  "schema_version": "third-candidate-revision-panel/v1",
+  "stage": "pre_oracle_pre_generation_replacement_screening",
+  "collection_authorized": false,
+  "provider_calls_for_generation": 0,
+  "prior_panel_path": "data/e2e-multi-obligation/deferred-candidate-revision-panel-20260925.json",
+  "revision_register_sha256": "ff433c6b0bbed8767fdecc77ef3cbcfd41d2d586927a91ebd72a4a169fbb1ba2",
+  "review_prompt_sha256": "42fb30f7b16cfc4fa8db50917992949d5f4d7c4d1c2eabfff832ac8ad1d4b1ee",
+  "consensus_rule": "ACCEPT only when all three requested model configurations return ACCEPT",
+  "revisions": [
+    {
+      "candidate_id": "todo-clear-button-hidden",
+      "replaces_candidate_id": "todo-clear-master",
+      "project_id": "todomvc",
+      "source": {
+        "path": "data/criteria-expansion/sources/todomvc/app-spec.md",
+        "sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+        "line_start": 112,
+        "line_end": 114,
+        "exact_context": "### Clear completed button\n\nRemoves completed todos when clicked. Should be hidden when there are no completed todos."
+      },
+      "revised_target": "With two todos, complete one and leave one active. The Clear completed button is visible before activation. Activating it removes the completed todo; after the list settles, the active todo remains and the Clear completed button is hidden. Only hiding the button when no completed todos remain is scored; removal and active-item preservation are controls.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "todo-edit-state-not-persisted",
+      "replaces_candidate_id": "todo-edit-state-not-persisted",
+      "project_id": "todomvc",
+      "source": {
+        "path": "data/criteria-expansion/sources/todomvc/app-spec.md",
+        "sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+        "line_start": 94,
+        "line_end": 118,
+        "exact_context": "### Item\n\nA todo item has three possible interactions:\n\n1. Clicking the checkbox marks the todo as complete by updating its `completed` value and toggling the class `completed` on its parent `<li>`\n\n2. Double-clicking the `<label>` activates editing mode, by toggling the `.editing` class on its `<li>`\n\n3. Hovering over the todo shows the remove button (`.destroy`)\n\n### Editing\n\nWhen editing mode is activated it will hide the other controls and bring forward an input that contains the todo title, which should be focused (`.focus()`). The edit should be saved on both blur and enter, and the `editing` class should be removed. Make sure to `.trim()` the input and then check that it's not empty. If it's empty the todo should instead be destroyed. If escape is pressed during the edit, the edit state should be left and any changes be discarded.\n\n### Counter\n\nDisplays the number of active todos in a pluralized form. Make sure the number is wrapped by a `<strong>` tag. Also make sure to pluralize the `item` word correctly: `0 items`, `1 item`, `2 items`. Example: **2** items left\n\n### Clear completed button\n\nRemoves completed todos when clicked. Should be hidden when there are no completed todos.\n\n### Persistence\n\nYour app should dynamically persist the todos to localStorage. If the framework has capabilities for persisting data (e.g. Backbone.sync), use that. Otherwise, use vanilla localStorage. If possible, use the keys `id`, `title`, `completed` for each item. Make sure to use this format for the localStorage name: `todos-[framework]`. Editing mode should not be persisted."
+      },
+      "revised_target": "Create and persist one todo, double-click its label so the edit input is visibly active, then open a fresh same-origin page without saving the edit. The todo is present but no todo is in editing mode. Todo presence is a persistence control; absence of restored editing mode is the single scored obligation.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "realworld-favorites-route-populated",
+      "replaces_candidate_id": "realworld-follow-no-extra-input",
+      "project_id": "realworld",
+      "source": {
+        "path": "data/criteria-expansion/sources/realworld/docs__src__content__docs__specifications__frontend__routing.md",
+        "sha256": "65fbd975a3ab2021057b1c1944cf66418aa846039e51b166d2a98eb29e7169fb",
+        "line_start": 19,
+        "line_end": 21,
+        "exact_context": "- Profile page (URL: `/profile/:username`, `/profile/:username/favorites` )\n  - Show basic user info\n  - List of articles populated from author's created articles or author's favorited articles"
+      },
+      "revised_target": "For a user with one frozen favorited article and one authored but non-favorited article, opening /profile/:username/favorites shows the favorited article and does not show the authored-only article. Route reachability and the authored-only article are controls; population from favorites is the single scored obligation.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "realworld-comment-delete-author-only",
+      "replaces_candidate_id": "realworld-comment-auth-required",
+      "project_id": "realworld",
+      "source": {
+        "path": "data/criteria-expansion/sources/realworld/docs__src__content__docs__specifications__frontend__routing.md",
+        "sha256": "65fbd975a3ab2021057b1c1944cf66418aa846039e51b166d2a98eb29e7169fb",
+        "line_start": 14,
+        "line_end": 18,
+        "exact_context": "- Article page (URL: `/article/article-slug-here` )\n  - Delete article button (only shown to article's author)\n  - Render markdown from server client side\n  - Comments section at bottom of page\n  - Delete comment button (only shown to comment's author)"
+      },
+      "revised_target": "On the same article containing a frozen comment by user A, user A sees that comment's Delete button. In a separate fresh session, authenticated user B sees the comment but not its Delete button. Comment visibility is a control; author-only visibility of the delete action is the single scored obligation.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "kanboard-duplicate-preserves-title",
+      "replaces_candidate_id": "kanboard-duplicate-preserves-properties",
+      "project_id": "kanboard",
+      "source": {
+        "path": "data/e2e-six-projects/sources/kanboard/tasks.md",
+        "sha256": "281c39c6e4c5a9c071d28bf01d08d2544929942977eeff4ae53ce0716510f081",
+        "line_start": 45,
+        "line_end": 54,
+        "exact_context": "Duplicating and Moving Tasks\n----------------------------\n\n### Duplicate a task into the same project\n\nGo to the task view and choose **Duplicate** on the left.\n\n![Duplicate a task into the same project](/images/v1/task-duplication.png)\n\nA new task will be created with the same properties as the original."
+      },
+      "revised_target": "From a task whose visible title is a frozen unique string, choose Duplicate in the task view. A distinct new task is created in the same project and its visible title equals the source title. Distinct identity and same-project placement are controls; title preservation is the single scored obligation.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "paperless-accept-suggestion",
+      "replaces_candidate_id": "paperless-suggestion-decisions",
+      "project_id": "paperless-ngx",
+      "source": {
+        "path": "data/e2e-six-projects/sources/paperless-ngx/usage.md",
+        "sha256": "78fc960ff99fb102d11e9db2830f9e879f4894822ff8f18684e972ffe04bd9dd",
+        "line_start": 316,
+        "line_end": 320,
+        "exact_context": "## Document Suggestions\n\nPaperless-ngx can suggest tags, correspondents, document types and storage paths for documents based on the content of the document. This is done using a (non-LLM) machine learning model that is trained on the documents in your database. The suggestions are shown in the document detail page and can be accepted or rejected by the user.\n\nSuggestions are requested automatically when you open a document that still has an inbox tag. To only request them by pressing the \"Suggest\" button instead, turn off \"Automatically request suggestions for inbox documents\" under Settings > Documents."
+      },
+      "revised_target": "Given a document detail page with a frozen suggested tag already shown and absent from the document, activate Accept for that tag. The tag becomes applied to the document after the UI settles. Initial suggestion visibility is a control; applying the accepted suggestion is the single scored obligation.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "openproject-derive-remaining-hours",
+      "replaces_candidate_id": "openproject-derive-remaining",
+      "project_id": "openproject",
+      "source": {
+        "path": "data/e2e-six-projects/sources/openproject/progress-tracking.md",
+        "sha256": "9aec062470806acf90d8dec1eab6f90d61377ec1ef20f7217fe5c3ed89ee27f9",
+        "line_start": 71,
+        "line_end": 103,
+        "exact_context": "#### Automatic values for % Complete\n\nIf you enter a value for _% Complete_ and one other field (_Work_ or _Remaining work_), the third one will automatically be derived based on the other two. This means that there can be one value (if % Complete is entered manually) or three values but never just two  values.\n\n>**%&nbsp;Complete** is work done (**Work** - **Remaining work**) divided by **Work**, expressed as a percentage. For example, if Work is set at 50h and Remaining work is 30h, this means that %&nbsp;Complete is _(50h-30h)/50h))_ = **40%**. Please note that these calculations are independent and unrelated to the value of **Spent time** (which is based on actual time logged).\n\nTo make this link clear and transparent, clicking on _Work_ or _Remaining work_ to modify them will display the following pop-over:\n\n![Work estimates and progress pop-over with work-based progress reporting](progress-popover-work-based-days.png)\n\nThis allows you to edit Work or Remaining work and get a preview of the updated %&nbsp;Complete value before saving changes. Changing any one field will automatically update the other two.\n\nWhen you add, edit, or remove a value for _Work_, _Remaining Work_, or _% Complete_, and it affects another field, a helpful message will appear explaining what has changed and why.\n\n![Helpful hint on progress tracking calculation in OpenProject](openproject_user_guide_percentage_complete_calculation_hint.png)\n\n#### Calculation logic\n\n**When no field is set**\n\nWhen none of the three fields (% Complete, Work, or Remaining Work) have values set, the field you fill in first will determine how the others are calculated:\n\n- If you enter % Complete only, no other fields will be automatically updated. Work and Remaining Work will remain empty.\n- If you enter Work only, Remaining Work will automatically match the Work value, and % Complete will be set to 0%. You can manually clear these values if needed.\n- If you enter Remaining Work only, Work will automatically match the Remaining Work value, and % Complete will be set to 0%. You can manually clear these values if needed.\n\n**When one field is set**\n\nWhen one field is already set and you enter a value in a second field, the third field will be automatically calculated:\n\n- If Work is already set and you enter % Complete, Remaining Work will be automatically calculated.\n- If Remaining Work is already set and you enter % Complete, Work will be automatically calculated.\n- If you enter Remaining Work when Work is already set (or vice versa), % Complete will be automatically calculated."
+      },
+      "revised_target": "With Work already saved as 10h, enter 40% Complete and save. The visible Remaining work becomes 6h according to the documented formula. Preserving Work=10h and Complete=40% are controls; automatic derivation of Remaining work=6h is the single scored obligation.",
+      "revision_stage": "before_oracle_and_generation"
+    }
+  ],
+  "reviewers": [
+    {
+      "requested_model": "gpt-6-astra",
+      "response_sha256": "4f3aaf067f9e26d406d3835402c793a6dd018297611f5b9ddfe81bba3ec43e5a",
+      "accepted_count": 7,
+      "deferred_count": 0,
+      "candidates": [
+        {
+          "candidate_id": "todo-clear-button-hidden",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly requires hiding the button when no completed todos remain. The bounded UI journey isolates hiding, with removal and active-item preservation as controls."
+        },
+        {
+          "candidate_id": "todo-edit-state-not-persisted",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly prohibits persisting editing mode. A fresh application page can expose restored editing state through the UI, while todo persistence remains a control and the original edit remains unsaved."
+        },
+        {
+          "candidate_id": "realworld-favorites-route-populated",
+          "verdict": "ACCEPT",
+          "concise_reason": "The documented favorites route directly supports displaying favorited articles. Frozen contrasting articles make favorites population observable in one page visit, with reachability and authored-only exclusion retained as controls."
+        },
+        {
+          "candidate_id": "realworld-comment-delete-author-only",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source directly specifies author-only visibility. Two bounded authenticated sessions observe one visibility policy, with comment presence controlled and no deletion behavior added."
+        },
+        {
+          "candidate_id": "kanboard-duplicate-preserves-title",
+          "verdict": "ACCEPT",
+          "concise_reason": "Creating a duplicate with the same properties directly supports title preservation. The UI journey isolates title equality while distinct task identity and same-project placement remain controls."
+        },
+        {
+          "candidate_id": "paperless-accept-suggestion",
+          "verdict": "ACCEPT",
+          "concise_reason": "User acceptance of suggested tags supports applying the selected tag. An already-visible frozen suggestion bounds the journey and isolates acceptance from suggestion generation."
+        },
+        {
+          "candidate_id": "openproject-derive-remaining-hours",
+          "verdict": "ACCEPT",
+          "concise_reason": "The documented formula and automatic recalculation directly support deriving 6h from 10h and 40%. The visible result isolates remaining-work derivation while the supplied values remain controls."
+        }
+      ]
+    },
+    {
+      "requested_model": "gpt-6-sol",
+      "response_sha256": "5d1b3367579e708a74317016724d66496d6a167cc517c4e4f043589a1a70a54b",
+      "accepted_count": 6,
+      "deferred_count": 1,
+      "candidates": [
+        {
+          "candidate_id": "todo-clear-button-hidden",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly requires the button to be hidden when no completed todos remain; the UI journey isolates that outcome."
+        },
+        {
+          "candidate_id": "todo-edit-state-not-persisted",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly says editing mode should not be persisted, and a fresh page makes that observable."
+        },
+        {
+          "candidate_id": "realworld-favorites-route-populated",
+          "verdict": "ACCEPT",
+          "concise_reason": "The listed favorites route and favorited-article population support a bounded profile-page check."
+        },
+        {
+          "candidate_id": "realworld-comment-delete-author-only",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly limits the delete-comment button to the comment author; the two sessions isolate visibility."
+        },
+        {
+          "candidate_id": "kanboard-duplicate-preserves-title",
+          "verdict": "ACCEPT",
+          "concise_reason": "A title is a task property, and the source says the duplicate retains the original task’s properties."
+        },
+        {
+          "candidate_id": "paperless-accept-suggestion",
+          "verdict": "DEFER",
+          "concise_reason": "The source permits accepting a suggestion but does not specify an “Accept” control label or explicitly state the resulting applied-tag state."
+        },
+        {
+          "candidate_id": "openproject-derive-remaining-hours",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly describes automatic derivation and the formula yielding 6h from 10h and 40%."
+        }
+      ]
+    },
+    {
+      "requested_model": "gpt-6-luna",
+      "response_sha256": "0b10de2e90462cb92e9ada24f9d3f2c0e27c3c797edb66063f016587b85dde31",
+      "accepted_count": 6,
+      "deferred_count": 1,
+      "candidates": [
+        {
+          "candidate_id": "todo-clear-button-hidden",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly says Clear completed removes completed todos and is hidden when none remain. The UI journey isolates that visibility rule; removal and active-item preservation are controls."
+        },
+        {
+          "candidate_id": "todo-edit-state-not-persisted",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly requires persistence of todos and says editing mode should not be persisted. A fresh same-origin page can show the saved todo without restored editing mode."
+        },
+        {
+          "candidate_id": "realworld-favorites-route-populated",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source specifies the favorites profile route and says it lists favorited articles. The frozen authored-only article controls whether the route is incorrectly showing authored content."
+        },
+        {
+          "candidate_id": "realworld-comment-delete-author-only",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly limits the comment Delete button to the comment's author. Comparing two authenticated users on the same comment isolates that visibility rule."
+        },
+        {
+          "candidate_id": "kanboard-duplicate-preserves-title",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source says a duplicate has the same properties as the original, which supports preserving its title. The task-view journey observes the title and uses identity and project placement as controls."
+        },
+        {
+          "candidate_id": "paperless-accept-suggestion",
+          "verdict": "DEFER",
+          "concise_reason": "The source says suggestions can be accepted, but does not directly specify that accepting a suggested tag applies it to the document."
+        },
+        {
+          "candidate_id": "openproject-derive-remaining-hours",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source says that with Work set and % Complete entered, Remaining work is derived, and gives the formula. With 10h and 40%, the UI should show 6h."
+        }
+      ]
+    }
+  ],
+  "consensus": [
+    {
+      "candidate_id": "todo-clear-button-hidden",
+      "replaces_candidate_id": "todo-clear-master",
+      "project_id": "todomvc",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "ACCEPT"
+    },
+    {
+      "candidate_id": "todo-edit-state-not-persisted",
+      "replaces_candidate_id": "todo-edit-state-not-persisted",
+      "project_id": "todomvc",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "ACCEPT"
+    },
+    {
+      "candidate_id": "realworld-favorites-route-populated",
+      "replaces_candidate_id": "realworld-follow-no-extra-input",
+      "project_id": "realworld",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "ACCEPT"
+    },
+    {
+      "candidate_id": "realworld-comment-delete-author-only",
+      "replaces_candidate_id": "realworld-comment-auth-required",
+      "project_id": "realworld",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "ACCEPT"
+    },
+    {
+      "candidate_id": "kanboard-duplicate-preserves-title",
+      "replaces_candidate_id": "kanboard-duplicate-preserves-properties",
+      "project_id": "kanboard",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "ACCEPT"
+    },
+    {
+      "candidate_id": "paperless-accept-suggestion",
+      "replaces_candidate_id": "paperless-suggestion-decisions",
+      "project_id": "paperless-ngx",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "DEFER",
+        "gpt-6-luna": "DEFER"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "openproject-derive-remaining-hours",
+      "replaces_candidate_id": "openproject-derive-remaining",
+      "project_id": "openproject",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "ACCEPT"
+    }
+  ],
+  "newly_eligible_candidate_ids": [
+    "todo-clear-button-hidden",
+    "todo-edit-state-not-persisted",
+    "realworld-favorites-route-populated",
+    "realworld-comment-delete-author-only",
+    "kanboard-duplicate-preserves-title",
+    "openproject-derive-remaining-hours"
+  ],
+  "still_deferred_candidate_ids": [
+    "paperless-accept-suggestion"
+  ],
+  "prior_eligible_candidate_ids": [
+    "kanboard-close-hides-task",
+    "nextcloud-restore-name-conflict",
+    "openproject-reject-remaining-over-work",
+    "paperless-accept-duplicate",
+    "nextcloud-delete-permanently"
+  ],
+  "total_eligible_candidate_ids": [
+    "kanboard-close-hides-task",
+    "nextcloud-restore-name-conflict",
+    "openproject-reject-remaining-over-work",
+    "paperless-accept-duplicate",
+    "nextcloud-delete-permanently",
+    "todo-clear-button-hidden",
+    "todo-edit-state-not-persisted",
+    "realworld-favorites-route-populated",
+    "realworld-comment-delete-author-only",
+    "kanboard-duplicate-preserves-title",
+    "openproject-derive-remaining-hours"
+  ],
+  "newly_accepted": 6,
+  "still_deferred": 1,
+  "total_eligible": 11,
+  "eligible_positions": 198,
+  "represented_projects": [
+    "kanboard",
+    "nextcloud",
+    "openproject",
+    "paperless-ngx",
+    "realworld",
+    "todomvc"
+  ],
+  "claims": {
+    "outcomes_observed": false,
+    "h1_confirmed": false,
+    "h2_evaluated": false
+  },
+  "eligible_project_counts": {
+    "kanboard": 2,
+    "nextcloud": 2,
+    "openproject": 2,
+    "paperless-ngx": 1,
+    "todomvc": 2,
+    "realworld": 2
+  }
+}

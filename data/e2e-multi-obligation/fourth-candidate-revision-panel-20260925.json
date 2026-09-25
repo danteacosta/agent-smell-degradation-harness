@@ -1,0 +1,136 @@
+{
+  "schema_version": "fourth-candidate-revision-panel/v1",
+  "stage": "pre_oracle_pre_generation_replacement_screening",
+  "collection_authorized": false,
+  "provider_calls_for_generation": 0,
+  "prior_panel_path": "data/e2e-multi-obligation/third-candidate-revision-panel-20260925.json",
+  "revision_register_sha256": "6a92f1b83653cb9cdf25fdb4ebc77bc1d1c81e992886072bda00121fa4d7ca68",
+  "review_prompt_sha256": "524bd6e8b08aa6e04e1cc258018187191375988adf4c020cebc37e49e0d4ccd9",
+  "consensus_rule": "ACCEPT only when all three requested model configurations return ACCEPT",
+  "claims": {
+    "outcomes_observed": false,
+    "h1_confirmed": false,
+    "h2_evaluated": false
+  },
+  "revisions": [
+    {
+      "candidate_id": "paperless-nested-tag-adds-parent",
+      "replaces_candidate_id": "paperless-accept-suggestion",
+      "project_id": "paperless-ngx",
+      "source": {
+        "path": "data/e2e-six-projects/sources/paperless-ngx/usage.md",
+        "sha256": "78fc960ff99fb102d11e9db2830f9e879f4894822ff8f18684e972ffe04bd9dd",
+        "line_start": 114,
+        "line_end": 122,
+        "exact_context": "### Nested Tags\n\nPaperless-ngx v2.19 introduces support for nested tags, allowing you to create a\nhierarchy of tags, which may be useful for organizing your documents. Tags can\nhave a 'parent' tag, creating a tree-like structure, to a maximum depth of 5. When\na tag is added to a document, all of its parent tags are also added automatically\nand similarly, when a tag is removed from a document, all of its child tags are\nalso removed. Additionally, assigning a parent to an existing tag will automatically\nupdate all documents that have this tag assigned, adding the parent tag as well."
+      },
+      "revised_target": "Given a frozen document with no tags and a frozen two-level hierarchy in which tag Child has parent Parent, assign Child to the document through the document UI. After the UI settles, Child and Parent are both visibly assigned to that document. Successful assignment of Child and the pre-existing hierarchy are controls; automatic visible assignment of Parent is the single scored obligation.",
+      "revision_stage": "before_oracle_and_generation"
+    }
+  ],
+  "reviewers": [
+    {
+      "requested_model": "gpt-6-astra",
+      "response_sha256": "06b4fd78cfcdc7bc16da779500fc35e6caec956d356dada689fd2b8e315b1fae",
+      "accepted_count": 1,
+      "deferred_count": 0,
+      "candidates": [
+        {
+          "candidate_id": "paperless-nested-tag-adds-parent",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly requires automatic addition of parent tags when a tag is assigned. Parent’s visible assignment is one independently deletable scored obligation, observable in the browser within the bounded frozen fixture. Successful Child assignment and the pre-existing hierarchy are explicitly separated as controls."
+        }
+      ]
+    },
+    {
+      "requested_model": "gpt-6-sol",
+      "response_sha256": "3329bccf9cb1f5728c79fb28ed1a1eeda1569b6bea76c0db3ed311e35b37a031",
+      "accepted_count": 1,
+      "deferred_count": 0,
+      "candidates": [
+        {
+          "candidate_id": "paperless-nested-tag-adds-parent",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly says adding a tag to a document automatically adds its parents. The target scores only Parent’s visible assignment; Child assignment and the fixed hierarchy are controls. A two-tag document fixture makes the UI endpoint bounded and observable."
+        }
+      ]
+    },
+    {
+      "requested_model": "gpt-6-luna",
+      "response_sha256": "a85a3a2015f5f772307b377533ef1f9b2f77a099e03e2e635521527b0099687b",
+      "accepted_count": 1,
+      "deferred_count": 0,
+      "candidates": [
+        {
+          "candidate_id": "paperless-nested-tag-adds-parent",
+          "verdict": "ACCEPT",
+          "concise_reason": "The frozen source directly states that adding a tag to a document automatically adds all parent tags. The target scores only Parent’s visible assignment, observable after assigning Child in a bounded two-level fixture; the assignment and existing hierarchy are named controls."
+        }
+      ]
+    }
+  ],
+  "consensus": [
+    {
+      "candidate_id": "paperless-nested-tag-adds-parent",
+      "replaces_candidate_id": "paperless-accept-suggestion",
+      "project_id": "paperless-ngx",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "ACCEPT"
+    }
+  ],
+  "prior_eligible_candidate_ids": [
+    "kanboard-close-hides-task",
+    "nextcloud-restore-name-conflict",
+    "openproject-reject-remaining-over-work",
+    "paperless-accept-duplicate",
+    "nextcloud-delete-permanently",
+    "todo-clear-button-hidden",
+    "todo-edit-state-not-persisted",
+    "realworld-favorites-route-populated",
+    "realworld-comment-delete-author-only",
+    "kanboard-duplicate-preserves-title",
+    "openproject-derive-remaining-hours"
+  ],
+  "newly_eligible_candidate_ids": [
+    "paperless-nested-tag-adds-parent"
+  ],
+  "still_deferred_candidate_ids": [],
+  "total_eligible_candidate_ids": [
+    "kanboard-close-hides-task",
+    "nextcloud-restore-name-conflict",
+    "openproject-reject-remaining-over-work",
+    "paperless-accept-duplicate",
+    "nextcloud-delete-permanently",
+    "todo-clear-button-hidden",
+    "todo-edit-state-not-persisted",
+    "realworld-favorites-route-populated",
+    "realworld-comment-delete-author-only",
+    "kanboard-duplicate-preserves-title",
+    "openproject-derive-remaining-hours",
+    "paperless-nested-tag-adds-parent"
+  ],
+  "newly_accepted": 1,
+  "still_deferred": 0,
+  "total_eligible": 12,
+  "eligible_positions": 216,
+  "represented_projects": [
+    "kanboard",
+    "nextcloud",
+    "openproject",
+    "paperless-ngx",
+    "realworld",
+    "todomvc"
+  ],
+  "eligible_project_counts": {
+    "kanboard": 2,
+    "nextcloud": 2,
+    "openproject": 2,
+    "paperless-ngx": 2,
+    "todomvc": 2,
+    "realworld": 2
+  }
+}
