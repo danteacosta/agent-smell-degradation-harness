@@ -1,0 +1,9 @@
+{
+  "schema_version": "three-project-fixed-scaffold-browser/v1",
+  "project_id": "nextcloud",
+  "status": "interface_error",
+  "app_sha256": "f5e324a27694a56bf13df9f651cb3367806f2b87fde03d0ecb1975590a631859",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: one visible [data-file-id=\"file-target\"] required"
+}

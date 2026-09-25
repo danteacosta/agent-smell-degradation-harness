@@ -1,0 +1,9 @@
+{
+  "schema_version": "three-project-fixed-scaffold-browser/v1",
+  "project_id": "paperless-ngx",
+  "status": "interface_error",
+  "app_sha256": "7eac68d7a2ae899897037c34d3dfe56bf370294f4683a70d14a0a98aecb97f25",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: one visible [data-document-id=\"document-control\"] required"
+}

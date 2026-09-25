@@ -1,0 +1,13 @@
+{
+  "schema_version": "three-project-fixed-scaffold-browser/v1",
+  "project_id": "paperless-ngx",
+  "status": "complete",
+  "app_sha256": "3b614dc3f114e086ef33257fe84315903afceba1c40d502f90b41cfd524e64cd",
+  "assertions": {
+    "existing_document_visible": true,
+    "upload_creates_document": true,
+    "drop_creates_document": true
+  },
+  "console_errors": [],
+  "screenshot": "final.png"
+}

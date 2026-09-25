@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Documents</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button{font:inherit;padding:.5rem}.row{border:1px solid #bbb;padding:.7rem;margin:.5rem 0}</style></head>
+<body><header><h1>Documents</h1><button aria-label="Upload document">Upload document</button></header><main id="documents"></main>
+<script>
+const state={documents:structuredClone(window.initialState.documents)};
+const handlers=new Map();
+const app=Object.freeze({
+  register(action,handler){if(!['upload','page-drop'].includes(action)||typeof handler!=='function'||handlers.has(action))throw new Error('invalid behavior registration');handlers.set(action,handler)},
+  addDocument(file){state.documents.push({id:'document-'+state.documents.length,title:file.name});render()}
+});
+function render(){const root=document.querySelector('#documents');root.replaceChildren();for(const doc of state.documents){const row=document.createElement('div');row.className='row';row.setAttribute('data-document-id',doc.id);row.textContent=doc.title;root.append(row)}}
+document.querySelector('[aria-label="Upload document"]').addEventListener('click',()=>handlers.get('upload')?.({name:'Selected.pdf'}));
+document.body.addEventListener('dragover',event=>event.preventDefault());
+document.body.addEventListener('drop',event=>{event.preventDefault();const file=event.dataTransfer.files[0];handlers.get('page-drop')?.(file)});
+/* MODEL_BEHAVIOR */
+render();
+</script></body></html>
