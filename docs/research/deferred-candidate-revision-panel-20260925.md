@@ -4,7 +4,7 @@ Status: **prospective revision screening completed before oracle construction an
 
 ## Why a second panel was run
 
-The first screening admitted three of twelve candidate obligations. The nine deferred candidates were narrowed using fuller, hash-bound source context. Their revisions were made before any oracle or A/B/C generation, so the process cannot select cases based on experimental outcomes.
+The first screening admitted three of twelve candidate obligations. The nine deferred candidates were narrowed using fuller, hash-bound source context. The panel artifacts and commit order record the revisions as preceding oracle construction and A/B/C generation. This is a custody claim supported by the retained private prompt and response hashes; the checked-in stage labels alone are not independent proof of chronology.
 
 Three isolated Codex sessions reviewed the same revision packet at high reasoning effort. A candidate advanced only when `gpt-6-astra`, `gpt-6-sol`, and `gpt-6-luna` all returned `ACCEPT`.
 

@@ -4,7 +4,7 @@ Status: **replacement screening completed before oracle construction and generat
 
 ## Method
 
-Seven candidates that remained deferred after the second panel were either narrowed or replaced with source-supported browser obligations. Replacements are methodologically permissible here because no oracle, A/B/C prompt, or generated implementation exists for these cases. Each replacement records the deferred candidate it supersedes.
+Seven candidates that remained deferred after the second panel were either narrowed or replaced with source-supported browser obligations. The retained artifacts and commit order record this as occurring before oracle construction, A/B/C prompts and generated implementations for these cases; the checked-in stage labels do not independently prove that chronology. Each replacement records the deferred candidate it supersedes.
 
 Three isolated Codex sessions reviewed the same hash-bound packet at high reasoning effort. The gate remained unanimous: `gpt-6-astra`, `gpt-6-sol`, and `gpt-6-luna` all had to return `ACCEPT`.
 

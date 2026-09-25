@@ -364,5 +364,13 @@
     "outcomes_observed": false,
     "h1_confirmed": false,
     "h2_evaluated": false
+  },
+  "eligible_project_counts": {
+    "kanboard": 2,
+    "nextcloud": 2,
+    "openproject": 2,
+    "paperless-ngx": 1,
+    "todomvc": 2,
+    "realworld": 2
   }
 }

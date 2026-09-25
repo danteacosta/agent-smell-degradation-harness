@@ -108,9 +108,9 @@ def validate_screening(screening_path: Path) -> dict[str, int]:
     reviewers = payload.get("reviewers")
     consensus = payload.get("consensus")
     expected_models = {"gpt-6-astra", "gpt-6-sol", "gpt-6-luna"}
-    register_ids = {
-        row["candidate_id"] for row in json.loads(REGISTER_PATH.read_text())["candidates"]
-    }
+    register_rows = json.loads(REGISTER_PATH.read_text())["candidates"]
+    register_projects = {row["candidate_id"]: row["project_id"] for row in register_rows}
+    register_ids = set(register_projects)
     if (
         payload.get("schema_version") != "multi-obligation-screening-panel/v1"
         or payload.get("stage") != "pre_oracle_pre_generation_screening"
@@ -139,7 +139,14 @@ def validate_screening(screening_path: Path) -> dict[str, int]:
         ):
             raise ValueError("screening reviewer evidence drift")
         indexed = {row.get("candidate_id"): row.get("verdict") for row in decisions}
-        if set(indexed) != register_ids or set(indexed.values()) - {"ACCEPT", "DEFER"}:
+        if (
+            set(indexed) != register_ids
+            or set(indexed.values()) - {"ACCEPT", "DEFER"}
+            or reviewer.get("accepted_count")
+            != sum(verdict == "ACCEPT" for verdict in indexed.values())
+            or reviewer.get("deferred_count")
+            != sum(verdict == "DEFER" for verdict in indexed.values())
+        ):
             raise ValueError("screening reviewer decision drift")
         decisions_by_model[reviewer["requested_model"]] = indexed
 
@@ -150,7 +157,11 @@ def validate_screening(screening_path: Path) -> dict[str, int]:
             model: decisions_by_model[model][candidate_id] for model in expected_models
         } if candidate_id in register_ids else None
         expected_verdict = "ACCEPT" if expected and set(expected.values()) == {"ACCEPT"} else "DEFER"
-        if row.get("decisions") != expected or row.get("verdict") != expected_verdict:
+        if (
+            row.get("decisions") != expected
+            or row.get("verdict") != expected_verdict
+            or row.get("project_id") != register_projects.get(candidate_id)
+        ):
             raise ValueError("screening consensus drift")
         if expected_verdict == "ACCEPT":
             accepted.append(candidate_id)
@@ -183,6 +194,10 @@ def validate_revision_panel(panel_path: Path) -> dict[str, int]:
     prior_deferred = {
         row["candidate_id"] for row in prior["consensus"] if row["verdict"] == "DEFER"
     }
+    register_projects = {
+        row["candidate_id"]: row["project_id"]
+        for row in json.loads(REGISTER_PATH.read_text())["candidates"]
+    }
     if (
         payload.get("schema_version") != "deferred-candidate-revision-panel/v1"
         or payload.get("stage") != "pre_oracle_pre_generation_revision_screening"
@@ -211,6 +226,8 @@ def validate_revision_panel(panel_path: Path) -> dict[str, int]:
             "revised_target"
         ):
             raise ValueError("revision target drift")
+        if row.get("project_id") != register_projects.get(row.get("candidate_id")):
+            raise ValueError("revision candidate drift")
         source = row.get("source", {})
         source_path = (ROOT / str(source.get("path", ""))).resolve()
         try:
@@ -267,7 +284,11 @@ def validate_revision_panel(panel_path: Path) -> dict[str, int]:
             else None
         )
         expected_verdict = "ACCEPT" if expected and set(expected.values()) == {"ACCEPT"} else "DEFER"
-        if row.get("decisions") != expected or row.get("verdict") != expected_verdict:
+        if (
+            row.get("decisions") != expected
+            or row.get("verdict") != expected_verdict
+            or row.get("project_id") != register_projects.get(candidate_id)
+        ):
             raise ValueError("revision consensus drift")
         (newly_accepted if expected_verdict == "ACCEPT" else still_deferred).append(candidate_id)
 
@@ -304,6 +325,9 @@ def validate_third_panel(panel_path: Path) -> dict[str, int]:
     prior = json.loads(REVISION_PANEL_PATH.read_text())
     prior_eligible = prior["total_eligible_candidate_ids"]
     prior_deferred = set(prior["still_deferred_candidate_ids"])
+    prior_deferred_projects = {
+        row["candidate_id"]: row["project_id"] for row in prior["revisions"]
+    }
     if (
         payload.get("schema_version") != "third-candidate-revision-panel/v1"
         or payload.get("stage") != "pre_oracle_pre_generation_replacement_screening"
@@ -333,12 +357,18 @@ def validate_third_panel(panel_path: Path) -> dict[str, int]:
     ):
         raise ValueError("third panel replacement drift")
     project_by_id: dict[str, str] = {}
+    replacement_by_id: dict[str, str] = {}
     for row in revisions:
         if row.get("revision_stage") != "before_oracle_and_generation" or not row.get(
             "revised_target"
         ):
             raise ValueError("third panel target drift")
-        project_by_id[row["candidate_id"]] = row.get("project_id")
+        candidate_id = row["candidate_id"]
+        replaced_id = row.get("replaces_candidate_id")
+        if row.get("project_id") != prior_deferred_projects.get(replaced_id):
+            raise ValueError("third panel replacement drift")
+        project_by_id[candidate_id] = row.get("project_id")
+        replacement_by_id[candidate_id] = replaced_id
         source = row.get("source", {})
         source_path = (ROOT / str(source.get("path", ""))).resolve()
         try:
@@ -399,12 +429,25 @@ def validate_third_panel(panel_path: Path) -> dict[str, int]:
             row.get("decisions") != expected
             or row.get("verdict") != expected_verdict
             or row.get("project_id") != project_by_id.get(candidate_id)
+            or row.get("replaces_candidate_id") != replacement_by_id.get(candidate_id)
         ):
             raise ValueError("third panel consensus drift")
         (newly_accepted if expected_verdict == "ACCEPT" else still_deferred).append(candidate_id)
 
     total_eligible = prior_eligible + newly_accepted
     represented_projects = payload.get("represented_projects")
+    first_projects = {
+        row["candidate_id"]: row["project_id"]
+        for row in json.loads(SCREENING_PATH.read_text())["consensus"]
+    }
+    prior_projects = {
+        **first_projects,
+        **{row["candidate_id"]: row["project_id"] for row in prior["revisions"]},
+    }
+    eligible_project_counts = Counter(
+        [prior_projects[candidate_id] for candidate_id in prior_eligible]
+        + [project_by_id[candidate_id] for candidate_id in newly_accepted]
+    )
     if (
         {row.get("candidate_id") for row in consensus} != revision_ids
         or payload.get("newly_eligible_candidate_ids") != newly_accepted
@@ -415,8 +458,12 @@ def validate_third_panel(panel_path: Path) -> dict[str, int]:
         or payload.get("still_deferred") != len(still_deferred)
         or payload.get("total_eligible") != len(total_eligible)
         or payload.get("eligible_positions") != len(total_eligible) * 18
+        or len(set(total_eligible)) != len(total_eligible)
+        or set(prior_eligible) & set(newly_accepted)
         or not isinstance(represented_projects, list)
+        or len(represented_projects) != len(set(represented_projects))
         or set(represented_projects) != EXPECTED_PROJECTS
+        or payload.get("eligible_project_counts") != dict(eligible_project_counts)
     ):
         raise ValueError("third panel summary drift")
     return {
@@ -430,11 +477,27 @@ def validate_third_panel(panel_path: Path) -> dict[str, int]:
     }
 
 
+def validate_chain() -> dict[str, int]:
+    """Validate every prospective stage before reporting the final ceiling."""
+    register = validate(REGISTER_PATH)
+    validate_screening(SCREENING_PATH)
+    validate_revision_panel(REVISION_PANEL_PATH)
+    final = validate_third_panel(THIRD_PANEL_PATH)
+    return {
+        "projects": final["represented_projects"],
+        "registered_candidates": register["candidates"],
+        "eligible_obligations": final["total_eligible"],
+        "eligible_positions": final["eligible_positions"],
+        "still_deferred": final["still_deferred"],
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--register", type=Path, default=REGISTER_PATH)
+    parser.add_argument("--register", type=Path)
     args = parser.parse_args()
-    print(json.dumps(validate(args.register), indent=2))
+    result = validate(args.register) if args.register else validate_chain()
+    print(json.dumps(result, indent=2))
 
 
 if __name__ == "__main__":
