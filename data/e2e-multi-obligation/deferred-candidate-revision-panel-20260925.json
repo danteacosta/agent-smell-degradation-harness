@@ -1,0 +1,416 @@
+{
+  "schema_version": "deferred-candidate-revision-panel/v1",
+  "stage": "pre_oracle_pre_generation_revision_screening",
+  "collection_authorized": false,
+  "provider_calls_for_generation": 0,
+  "prior_screening_path": "data/e2e-multi-obligation/screening-panel-20260925.json",
+  "revision_register_sha256": "a162e3f64440630a3d137e774b24b652a37f3052e3e63ec55d878c41f2050454",
+  "review_prompt_sha256": "df6465fde2c41a966730c2de57ef9ed1df0e676ca8e7570de4fe1f5bdb99d192",
+  "consensus_rule": "ACCEPT only when all three requested model configurations return ACCEPT",
+  "revisions": [
+    {
+      "candidate_id": "todo-clear-master",
+      "project_id": "todomvc",
+      "source": {
+        "path": "data/criteria-expansion/sources/todomvc/app-spec.md",
+        "sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+        "line_start": 90,
+        "line_end": 114,
+        "exact_context": "### Mark all as complete\n\nThis checkbox toggles all the todos to the same state as itself. Make sure to clear the checked state after the \"Clear completed\" button is clicked. The \"Mark all as complete\" checkbox should also be updated when single todo items are checked/unchecked. Eg. When all the todos are checked it should also get checked.\n\n### Item\n\nA todo item has three possible interactions:\n\n1. Clicking the checkbox marks the todo as complete by updating its `completed` value and toggling the class `completed` on its parent `<li>`\n\n2. Double-clicking the `<label>` activates editing mode, by toggling the `.editing` class on its `<li>`\n\n3. Hovering over the todo shows the remove button (`.destroy`)\n\n### Editing\n\nWhen editing mode is activated it will hide the other controls and bring forward an input that contains the todo title, which should be focused (`.focus()`). The edit should be saved on both blur and enter, and the `editing` class should be removed. Make sure to `.trim()` the input and then check that it's not empty. If it's empty the todo should instead be destroyed. If escape is pressed during the edit, the edit state should be left and any changes be discarded.\n\n### Counter\n\nDisplays the number of active todos in a pluralized form. Make sure the number is wrapped by a `<strong>` tag. Also make sure to pluralize the `item` word correctly: `0 items`, `1 item`, `2 items`. Example: **2** items left\n\n### Clear completed button\n\nRemoves completed todos when clicked. Should be hidden when there are no completed todos."
+      },
+      "revised_target": "After selecting all todos, Clear completed removes them; any exact master checkbox that remains, visible or hidden, is unchecked. Removal of the master is accepted because no checked state remains.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "todo-edit-state-not-persisted",
+      "project_id": "todomvc",
+      "source": {
+        "path": "data/criteria-expansion/sources/todomvc/app-spec.md",
+        "sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+        "line_start": 116,
+        "line_end": 118,
+        "exact_context": "### Persistence\n\nYour app should dynamically persist the todos to localStorage. If the framework has capabilities for persisting data (e.g. Backbone.sync), use that. Otherwise, use vanilla localStorage. If possible, use the keys `id`, `title`, `completed` for each item. Make sure to use this format for the localStorage name: `todos-[framework]`. Editing mode should not be persisted."
+      },
+      "revised_target": "After a todo is persisted, a fresh same-origin page shows that todo without restoring active editing mode.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "realworld-follow-no-extra-input",
+      "project_id": "realworld",
+      "source": {
+        "path": "data/criteria-expansion/sources/realworld/docs__src__content__docs__specifications__backend__endpoints.md",
+        "sha256": "b1aecb6b88c7e7e75b3c7364abbbae4c911ee87bb2841ca486e36db16c6408e7",
+        "line_start": 82,
+        "line_end": 88,
+        "exact_context": "### Follow user\n\n`POST /api/profiles/:username/follow`\n\nAuthentication required, returns a [Profile](/specifications/backend/api-response-format#profile)\n\nNo additional parameters required"
+      },
+      "revised_target": "An authenticated user can invoke Follow without a request body or extra query fields and receive a Profile response; exact visible wording is not scored.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "realworld-comment-auth-required",
+      "project_id": "realworld",
+      "source": {
+        "path": "data/criteria-expansion/sources/realworld/docs__src__content__docs__specifications__backend__endpoints.md",
+        "sha256": "b1aecb6b88c7e7e75b3c7364abbbae4c911ee87bb2841ca486e36db16c6408e7",
+        "line_start": 193,
+        "line_end": 209,
+        "exact_context": "### Add Comments to an Article\n\n`POST /api/articles/:slug/comments`\n\nExample request body:\n\n```json\n{\n  \"comment\": {\n    \"body\": \"His name was my name too.\"\n  }\n}\n```\n\nAuthentication required, returns the created [Comment](/specifications/backend/api-response-format#single-comment)\n\nRequired field: `body`"
+      },
+      "revised_target": "An anonymous comment submission creates no comment, while an authenticated submission with body creates one comment; status wording is not scored.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "kanboard-duplicate-preserves-properties",
+      "project_id": "kanboard",
+      "source": {
+        "path": "data/e2e-six-projects/sources/kanboard/tasks.md",
+        "sha256": "281c39c6e4c5a9c071d28bf01d08d2544929942977eeff4ae53ce0716510f081",
+        "line_start": 45,
+        "line_end": 96,
+        "exact_context": "Duplicating and Moving Tasks\n----------------------------\n\n### Duplicate a task into the same project\n\nGo to the task view and choose **Duplicate** on the left.\n\n![Duplicate a task into the same project](/images/v1/task-duplication.png)\n\nA new task will be created with the same properties as the original.\n\n### Duplicate a task to another project\n\nGo to the task view and choose **Duplicate to another project**.\n\n![Duplicate a task to another project](/images/v1/task-duplication-another-project.png)\n\nOnly projects where you are a member will be shown in the dropdown.\n\nBefore copying the task, Kanboard will ask you to define the destination properties that are not common between the source and destination project.\n\nYou need to define:\n\n- The destination swimlane\n- The column\n- The category\n- The assignee\n\n### Move a task to another project\n\nGo to the task view and choose **Move to another project**.\n\nMoving a task to another project works in the same way as duplication. You have to choose the new properties of the task.\n\n### List of duplicated properties\n\n- `title`\n- `description`\n- `date_due`\n- `color_id`\n- `project_id`\n- `column_id`\n- `owner_id`\n- `score`\n- `category_id`\n- `time_estimated`\n- `swimlane_id`\n- `recurrence_status`\n- `recurrence_trigger`\n- `recurrence_factor`\n- `recurrence_timeframe`\n- `recurrence_basedate`"
+      },
+      "revised_target": "Duplicating a task into the same project creates a distinct task that preserves the source values for the listed user-visible properties; generated identity is allowed to differ.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "paperless-accept-duplicate",
+      "project_id": "paperless-ngx",
+      "source": {
+        "path": "data/e2e-six-projects/sources/paperless-ngx/usage.md",
+        "sha256": "78fc960ff99fb102d11e9db2830f9e879f4894822ff8f18684e972ffe04bd9dd",
+        "line_start": 299,
+        "line_end": 304,
+        "exact_context": "### Duplicate documents\n\nBy default, Paperless-ngx **does not reject duplicates**. If you consume a file whose\ncontents exactly match an existing document (same checksum), the new copy is still\nconsumed and a warning is logged. The task entry for the upload also flags that a\nduplicate was detected and links to the existing document(s)."
+      },
+      "revised_target": "Under default settings, consuming the same-checksum file twice leaves two document records. The logged warning is diagnostic and is not a required visible assertion.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "paperless-suggestion-decisions",
+      "project_id": "paperless-ngx",
+      "source": {
+        "path": "data/e2e-six-projects/sources/paperless-ngx/usage.md",
+        "sha256": "78fc960ff99fb102d11e9db2830f9e879f4894822ff8f18684e972ffe04bd9dd",
+        "line_start": 316,
+        "line_end": 320,
+        "exact_context": "## Document Suggestions\n\nPaperless-ngx can suggest tags, correspondents, document types and storage paths for documents based on the content of the document. This is done using a (non-LLM) machine learning model that is trained on the documents in your database. The suggestions are shown in the document detail page and can be accepted or rejected by the user.\n\nSuggestions are requested automatically when you open a document that still has an inbox tag. To only request them by pressing the \"Suggest\" button instead, turn off \"Automatically request suggestions for inbox documents\" under Settings > Documents."
+      },
+      "revised_target": "Given a document detail page where frozen suggestions are already shown, accepting a suggestion applies it and rejecting a suggestion does not apply it; use separate fresh scenarios.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "nextcloud-delete-permanently",
+      "project_id": "nextcloud",
+      "source": {
+        "path": "data/e2e-six-projects/sources/nextcloud/deleted_file_management.rst",
+        "sha256": "9e8218c16b5f8e558cb535834271e9a02fd27ac733c7f45bba0126f62e67106f",
+        "line_start": 9,
+        "line_end": 20,
+        "exact_context": "Items in the trash bin are permanently deleted when one of the following\noccurs:\n\n- You manually select *Delete permanently*.\n- The Deleted Files app removes the item according to the configured retention\n  policy.\n- The effective trash-bin size limit is exceeded and the item is eligible for\n  removal to free space.\n\nFind your deleted files by selecting **Deleted files** in the Files area of the\nNextcloud Web interface. From there, you can restore items, download them to\nyour device, or delete them permanently."
+      },
+      "revised_target": "Selecting Delete permanently for one item removes that item from Deleted files after refresh. An unrelated trashed item is a non-target preservation control.",
+      "revision_stage": "before_oracle_and_generation"
+    },
+    {
+      "candidate_id": "openproject-derive-remaining",
+      "project_id": "openproject",
+      "source": {
+        "path": "data/e2e-six-projects/sources/openproject/progress-tracking.md",
+        "sha256": "9aec062470806acf90d8dec1eab6f90d61377ec1ef20f7217fe5c3ed89ee27f9",
+        "line_start": 71,
+        "line_end": 103,
+        "exact_context": "#### Automatic values for % Complete\n\nIf you enter a value for _% Complete_ and one other field (_Work_ or _Remaining work_), the third one will automatically be derived based on the other two. This means that there can be one value (if % Complete is entered manually) or three values but never just two  values.\n\n>**%&nbsp;Complete** is work done (**Work** - **Remaining work**) divided by **Work**, expressed as a percentage. For example, if Work is set at 50h and Remaining work is 30h, this means that %&nbsp;Complete is _(50h-30h)/50h))_ = **40%**. Please note that these calculations are independent and unrelated to the value of **Spent time** (which is based on actual time logged).\n\nTo make this link clear and transparent, clicking on _Work_ or _Remaining work_ to modify them will display the following pop-over:\n\n![Work estimates and progress pop-over with work-based progress reporting](progress-popover-work-based-days.png)\n\nThis allows you to edit Work or Remaining work and get a preview of the updated %&nbsp;Complete value before saving changes. Changing any one field will automatically update the other two.\n\nWhen you add, edit, or remove a value for _Work_, _Remaining Work_, or _% Complete_, and it affects another field, a helpful message will appear explaining what has changed and why.\n\n![Helpful hint on progress tracking calculation in OpenProject](openproject_user_guide_percentage_complete_calculation_hint.png)\n\n#### Calculation logic\n\n**When no field is set**\n\nWhen none of the three fields (% Complete, Work, or Remaining Work) have values set, the field you fill in first will determine how the others are calculated:\n\n- If you enter % Complete only, no other fields will be automatically updated. Work and Remaining Work will remain empty.\n- If you enter Work only, Remaining Work will automatically match the Work value, and % Complete will be set to 0%. You can manually clear these values if needed.\n- If you enter Remaining Work only, Work will automatically match the Remaining Work value, and % Complete will be set to 0%. You can manually clear these values if needed.\n\n**When one field is set**\n\nWhen one field is already set and you enter a value in a second field, the third field will be automatically calculated:\n\n- If Work is already set and you enter % Complete, Remaining Work will be automatically calculated.\n- If Remaining Work is already set and you enter % Complete, Work will be automatically calculated.\n- If you enter Remaining Work when Work is already set (or vice versa), % Complete will be automatically calculated."
+      },
+      "revised_target": "With Work=10 already set, entering 40% Complete derives Remaining work=6 using the documented formula; entered Work and percent are separate preservation controls.",
+      "revision_stage": "before_oracle_and_generation"
+    }
+  ],
+  "reviewers": [
+    {
+      "requested_model": "gpt-6-astra",
+      "response_sha256": "c6a6af8bf04cd387c3e3b892ac7a709f462b508267b6effb2e58724efeb00ee2",
+      "accepted_count": 4,
+      "deferred_count": 5,
+      "candidates": [
+        {
+          "candidate_id": "todo-clear-master",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly requires clearing the master checkbox state after Clear completed. The bounded journey isolates that obligation; todo removal is a prerequisite control, and removing the checkbox leaves no checked state."
+        },
+        {
+          "candidate_id": "todo-edit-state-not-persisted",
+          "verdict": "DEFER",
+          "concise_reason": "The journey never explicitly enters editing mode before opening the fresh page. It could pass without exercising the non-persistence obligation."
+        },
+        {
+          "candidate_id": "realworld-follow-no-extra-input",
+          "verdict": "DEFER",
+          "concise_reason": "The source supports the API contract, but the revised target remains a request/response assertion without an established browser interaction and observable browser endpoint."
+        },
+        {
+          "candidate_id": "realworld-comment-auth-required",
+          "verdict": "DEFER",
+          "concise_reason": "The authentication obligation is supported, and authenticated creation can serve as a control. However, the supplied context does not establish a browser journey that actually attempts anonymous submission; an unavailable form would not verify server rejection."
+        },
+        {
+          "candidate_id": "kanboard-duplicate-preserves-properties",
+          "verdict": "DEFER",
+          "concise_reason": "Preservation is supported, but 'listed user-visible properties' leaves the scored subset undefined. The supplied context does not identify which listed fields have observable browser representations."
+        },
+        {
+          "candidate_id": "paperless-accept-duplicate",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source directly supports consuming an identical file again under defaults. Two resulting document records provide a bounded observable endpoint for the single duplicate-acceptance obligation."
+        },
+        {
+          "candidate_id": "paperless-suggestion-decisions",
+          "verdict": "DEFER",
+          "concise_reason": "Acceptance applying a suggestion and rejection withholding it are independently deletable obligations. Separate scenarios do not isolate one target; select one decision behavior and define any other behavior as a control."
+        },
+        {
+          "candidate_id": "nextcloud-delete-permanently",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly provides the browser action and destination. The selected item's absence after refresh is bounded and observable; the unrelated item is appropriately a preservation control."
+        },
+        {
+          "candidate_id": "openproject-derive-remaining",
+          "verdict": "ACCEPT",
+          "concise_reason": "The documented formula directly yields Remaining work=6 from Work=10 and 40% Complete. Automatic derivation is the single target, while retaining entered values is a separate control."
+        }
+      ]
+    },
+    {
+      "requested_model": "gpt-6-sol",
+      "response_sha256": "c53765208c3de4f67aedb4ab85bef91cbc334853ab0ca09d329510dad9f4bed2",
+      "accepted_count": 5,
+      "deferred_count": 4,
+      "candidates": [
+        {
+          "candidate_id": "todo-clear-master",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source requires the master checkbox’s checked state to clear after Clear completed. The revised endpoint is bounded and allows the checkbox to disappear when no todos remain."
+        },
+        {
+          "candidate_id": "todo-edit-state-not-persisted",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly excludes editing mode from persistence. A fresh same-origin page gives a bounded, visible check of that single obligation."
+        },
+        {
+          "candidate_id": "realworld-follow-no-extra-input",
+          "verdict": "DEFER",
+          "concise_reason": "The source specifies an API contract but supplies no browser journey for invoking Follow or observing its request and Profile response."
+        },
+        {
+          "candidate_id": "realworld-comment-auth-required",
+          "verdict": "DEFER",
+          "concise_reason": "The source specifies API authentication, but the revised anonymous and authenticated submissions lack a supported browser journey."
+        },
+        {
+          "candidate_id": "kanboard-duplicate-preserves-properties",
+          "verdict": "DEFER",
+          "concise_reason": "“Listed user-visible properties” leaves the scored property set unclear; the source list includes identifiers and fields whose browser visibility is unspecified."
+        },
+        {
+          "candidate_id": "paperless-accept-duplicate",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source directly says same-checksum duplicates are consumed by default. Two document records are a bounded visible endpoint for that obligation."
+        },
+        {
+          "candidate_id": "paperless-suggestion-decisions",
+          "verdict": "DEFER",
+          "concise_reason": "Accepting and rejecting are separate scored behaviors, so the revised target does not isolate one obligation for A/B/C."
+        },
+        {
+          "candidate_id": "nextcloud-delete-permanently",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source directly supports permanent deletion in Deleted files. The unrelated trashed item serves only as a preservation control."
+        },
+        {
+          "candidate_id": "openproject-derive-remaining",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source explicitly specifies deriving Remaining work from Work and % Complete. The 10 and 40% inputs yield a bounded visible result of 6."
+        }
+      ]
+    },
+    {
+      "requested_model": "gpt-6-luna",
+      "response_sha256": "61fe00171828538b505446088a506850046b8b85e05127390f1d38ab31e49e4b",
+      "accepted_count": 4,
+      "deferred_count": 5,
+      "candidates": [
+        {
+          "candidate_id": "todo-clear-master",
+          "verdict": "DEFER",
+          "concise_reason": "The target combines completed-item removal with master-checkbox behavior, and allows removal of the checkbox as a substitute for observing its reset state. The source supports clearing the checked state, but the endpoint is not a clear, single observable obligation."
+        },
+        {
+          "candidate_id": "todo-edit-state-not-persisted",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source directly specifies todo persistence and that editing mode is not persisted. A same-origin reload provides a bounded observable check of both."
+        },
+        {
+          "candidate_id": "realworld-follow-no-extra-input",
+          "verdict": "DEFER",
+          "concise_reason": "The source specifies a backend endpoint and Profile response, but does not establish a browser journey for invoking Follow. Request-body and query-field assertions are not browser-observable."
+        },
+        {
+          "candidate_id": "realworld-comment-auth-required",
+          "verdict": "DEFER",
+          "concise_reason": "The source supports the authenticated endpoint contract, but does not establish a browser journey. The target also combines anonymous rejection and authenticated creation."
+        },
+        {
+          "candidate_id": "kanboard-duplicate-preserves-properties",
+          "verdict": "DEFER",
+          "concise_reason": "The source lists many duplicated properties, making the target a bundle of obligations. The context does not establish that every listed field is user-visible or how to observe each one."
+        },
+        {
+          "candidate_id": "paperless-accept-duplicate",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source directly says duplicates are not rejected and the new copy is consumed. Two uploads of the same file and checking for two document records is bounded and observable."
+        },
+        {
+          "candidate_id": "paperless-suggestion-decisions",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source says suggestions are shown and can be accepted or rejected. Applying versus not applying a suggestion is observable in separate fresh scenarios."
+        },
+        {
+          "candidate_id": "nextcloud-delete-permanently",
+          "verdict": "ACCEPT",
+          "concise_reason": "The source directly documents manual permanent deletion in the web interface. Removal after refresh is observable; the unrelated trashed item is only a preservation control."
+        },
+        {
+          "candidate_id": "openproject-derive-remaining",
+          "verdict": "DEFER",
+          "concise_reason": "The source supports the calculation, but the target's Work=10 omits the unit or suffix needed to enter and verify the value unambiguously."
+        }
+      ]
+    }
+  ],
+  "consensus": [
+    {
+      "candidate_id": "todo-clear-master",
+      "project_id": "todomvc",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "DEFER"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "todo-edit-state-not-persisted",
+      "project_id": "todomvc",
+      "decisions": {
+        "gpt-6-astra": "DEFER",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "realworld-follow-no-extra-input",
+      "project_id": "realworld",
+      "decisions": {
+        "gpt-6-astra": "DEFER",
+        "gpt-6-sol": "DEFER",
+        "gpt-6-luna": "DEFER"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "realworld-comment-auth-required",
+      "project_id": "realworld",
+      "decisions": {
+        "gpt-6-astra": "DEFER",
+        "gpt-6-sol": "DEFER",
+        "gpt-6-luna": "DEFER"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "kanboard-duplicate-preserves-properties",
+      "project_id": "kanboard",
+      "decisions": {
+        "gpt-6-astra": "DEFER",
+        "gpt-6-sol": "DEFER",
+        "gpt-6-luna": "DEFER"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "paperless-accept-duplicate",
+      "project_id": "paperless-ngx",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "ACCEPT"
+    },
+    {
+      "candidate_id": "paperless-suggestion-decisions",
+      "project_id": "paperless-ngx",
+      "decisions": {
+        "gpt-6-astra": "DEFER",
+        "gpt-6-sol": "DEFER",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "nextcloud-delete-permanently",
+      "project_id": "nextcloud",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "ACCEPT"
+    },
+    {
+      "candidate_id": "openproject-derive-remaining",
+      "project_id": "openproject",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "DEFER"
+      },
+      "verdict": "DEFER"
+    }
+  ],
+  "newly_eligible_candidate_ids": [
+    "paperless-accept-duplicate",
+    "nextcloud-delete-permanently"
+  ],
+  "still_deferred_candidate_ids": [
+    "todo-clear-master",
+    "todo-edit-state-not-persisted",
+    "realworld-follow-no-extra-input",
+    "realworld-comment-auth-required",
+    "kanboard-duplicate-preserves-properties",
+    "paperless-suggestion-decisions",
+    "openproject-derive-remaining"
+  ],
+  "prior_eligible_candidate_ids": [
+    "kanboard-close-hides-task",
+    "nextcloud-restore-name-conflict",
+    "openproject-reject-remaining-over-work"
+  ],
+  "total_eligible_candidate_ids": [
+    "kanboard-close-hides-task",
+    "nextcloud-restore-name-conflict",
+    "openproject-reject-remaining-over-work",
+    "paperless-accept-duplicate",
+    "nextcloud-delete-permanently"
+  ],
+  "newly_accepted": 2,
+  "still_deferred": 7,
+  "total_eligible": 5,
+  "eligible_positions": 90,
+  "claims": {
+    "outcomes_observed": false,
+    "h1_confirmed": false,
+    "h2_evaluated": false
+  }
+}

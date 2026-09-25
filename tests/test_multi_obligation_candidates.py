@@ -79,3 +79,24 @@ def test_screening_rejects_consensus_drift(tmp_path) -> None:
 
     with pytest.raises(ValueError, match="screening consensus drift"):
         candidates.validate_screening(path)
+
+
+def test_canonical_revision_panel_adds_only_unanimous_candidates() -> None:
+    assert candidates.validate_revision_panel(candidates.REVISION_PANEL_PATH) == {
+        "reviewers": 3,
+        "revised_candidates": 9,
+        "newly_accepted": 2,
+        "still_deferred": 7,
+        "total_eligible": 5,
+        "eligible_positions": 90,
+    }
+
+
+def test_revision_panel_rejects_inflated_eligibility(tmp_path) -> None:
+    payload = json.loads(candidates.REVISION_PANEL_PATH.read_text())
+    payload["total_eligible_candidate_ids"].append("todo-clear-master")
+    path = tmp_path / "revision-panel.json"
+    path.write_text(json.dumps(payload))
+
+    with pytest.raises(ValueError, match="revision panel summary drift"):
+        candidates.validate_revision_panel(path)
