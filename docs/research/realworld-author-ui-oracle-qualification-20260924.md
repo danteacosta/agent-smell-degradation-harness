@@ -24,57 +24,61 @@ CI reproduced the complete declared matrix:
 
 | Evidence class | Exact outcome |
 | --- | --- |
-| Passing references | 8/8 |
+| Passing references | 9/9 |
 | Target mutants discriminated | 7/7 |
-| Expected not-evaluable controls | 4/4 |
-| Operational diagnostics | 2/2: one `interface_failure`, one `browser_failure` |
-| Screenshots | 76/76 present, valid PNG, 1000 x 720, and hash-matched |
+| Expected not-evaluable scientific controls | 4/4 |
+| Overflow HTML diagnostics | 2/2 `interface_failure` after browser start |
+| Flag-based operational diagnostics | 2/2: one pre-browser `interface_failure`, one `browser_failure` |
+| Screenshots | 80/80 present, valid PNG, 1000 x 720, and hash-matched |
 
-All 19 HTML cases had exact expected/observed vectors, complete reports and
-exact receipt fields. The two operational cases had their exact expected
-status, browser-started state, return code and category, without screenshots.
-The qualification manifest records `qualified:true` and
-`matrix_matches:true`.
+All 20 scientific HTML cases had exact expected/observed vectors, complete
+reports and exact receipt fields. The two overflow HTML diagnostics and two
+flag-based operational diagnostics had their exact expected status,
+browser-started state, return code and category, without screenshots. The
+qualification manifest records `qualified:true` and `matrix_matches:true`.
 
 ## CI and custody
 
-The successful [workflow run 36027518118](https://github.com/danteacosta/agent-smell-degradation-harness/actions/runs/36027518118)
-and [qualification job 107727703132](https://github.com/danteacosta/agent-smell-degradation-harness/actions/runs/36027518118/job/107727703132)
+The successful [workflow run 36138707951](https://github.com/danteacosta/agent-smell-degradation-harness/actions/runs/36138707951)
+and [qualification job 108082955698](https://github.com/danteacosta/agent-smell-degradation-harness/actions/runs/36138707951/job/108082955698)
 were triggered for pull-request head
-`b12b25a4b445d90b704e78fa17e044bd38f3351f`. GitHub Actions checked out the
+`6bd059197d1298ee8d440a3d70278854cb83ca61`. GitHub Actions checked out the
 synthetic pull-request merge commit
-`750fdda8b6ff6037437de8e5397a54d276cd5202`, whose parents are base
-`9eb9d69952d36cf230fe25eedd8466a60da96f22` and that exact head. The
+`13761bdd38812aecc618174d6b2deb3588c824e3`, whose parents are base
+`9eb9d69952d36cf230fe25eedd8466a60da96f22` and that exact head. The parent
+relationship was verified after fetching `refs/pull/77/merge`. The
 qualification and build receipt correctly bind to the checked-out merge
-commit. A direct tree comparison found no differences in the 31 hashed
+commit. A direct tree comparison found no differences in the 34 hashed
 instrument files between the pull-request head and qualified merge checkout.
 
 The immutable image ID is
-`sha256:7bad7454229a355ebedef92678d540778aa2cc9c3ebfb281d0455e874aa0dd59`.
+`sha256:bfa780d015f8549cd70f4ece4d48e2fa51a4d8399322661314001e564021f617`.
 The recomputed canonical instrument SHA-256 is
-`18a1c3d32cccd26c896f3539b6a776034be3ab82a35bfb79996d5e78bfb68e11`.
+`526a2aee0264ac81e4c318ad6b9c58d968113bae7dc41d776d40b3500112434e`.
 The build receipt and qualification manifest agree on both the image ID and
 instrument digest. The `image-id` file and every executor receipt agree on the
 image ID; the `instrument-digest` file agrees on the instrument digest.
 Commit-mode qualification also inspected the OCI label
 `org.opencontainers.image.realworld-instrument-sha256` and required it to equal
 that digest before any control ran, binding the verified image to the verified
-instrument bytes.
+instrument bytes. The build-receipt SHA-256 is
+`ca3ea38953e2ed80925bacd1bc9d734952edb9740e61ff4515f4d9220bcf34ec`.
 
-GitHub artifact `10820860904`, `realworld-author-ui-qualification`, was 666,453
+GitHub artifact `10864624699`, `realworld-author-ui-qualification`, was 709,970
 bytes when uploaded. GitHub reports archive digest
-`sha256:8627c7405c70112cad0bc82205989d536edd359938adc231aa4bb3e3b4979a65`.
-The independently downloaded payload contains exactly 185 files: three
-top-level custody files, one qualification manifest, 21 inputs, 21 reports, 21
-receipts, 21 container commands, 21 logs and 76 screenshots. No unlisted or
+`sha256:2b2b301f21838d515e2ea56636425d0c50f81ae14d73b7f0ba607b9890b368d8`.
+The independently downloaded payload contains exactly 204 files: three
+top-level custody files, one qualification manifest, 24 inputs, 24 reports, 24
+receipts, 24 container commands, 24 logs and 80 screenshots. No unlisted or
 missing file was found. The recomputed qualification-manifest SHA-256 is
-`a56fc961fdf8bfe509890a802f8fa906479afc267fe868e424226fdd989d0358`.
+`cf5baf358bc64914f16e1023eb48f34d73c9034127d9b02079dcfe8f4006a820`.
 Every manifest report, receipt and screenshot hash was recomputed; every input
-hash matched both its browser report and executor receipt; and all 31 manifest
-instrument hashes matched the committed files.
+hash matched both its browser report and executor receipt; and all 34 manifest
+instrument hashes matched the qualified merge checkout.
 
 The report hashes below follow the qualification manifest's canonical order.
-They cover all 19 HTML cases followed by both operational diagnostics.
+They cover all 20 scientific HTML cases followed by the two overflow HTML and
+two flag-based operational diagnostics.
 
 | Case ID | Report SHA-256 |
 | --- | --- |
@@ -86,6 +90,7 @@ They cover all 19 HTML cases followed by both operational diagnostics.
 | `reference-pointer-events-button` | `a839c872a2e888de1aaa9f53adc75cb39712304ee7713a2536ba6f204a848809` |
 | `reference-pointer-events-prerequisites` | `058de271b169705d4135b516d37b78f768f3e51d5f4184adab4911293c4ad275` |
 | `reference-fresh-context` | `7f1c103ea6791d168cdd6e763d30236701cc5e4e536874e2cdd137def72ed497` |
+| `reference-shadowed-globals` | `804c93c5f8de9c18bb8e4c8c9577c92ca7c515f3745a20aaa986773882dfc023` |
 | `mutant-always-visible` | `f2108e1bf09e08193a6c7d3922b5a5be5aab556081e00349e20dec0a46b629c3` |
 | `mutant-never-visible` | `6704498676d27c9ba224f279ef95771fac6a6d3f04c8dcec8e6abf91cee8e686` |
 | `mutant-wrong-identity` | `b396c1687089fc1536eedbd8ad2af86a30e6f34a1707ec6a6d08a90aea0705a3` |
@@ -97,6 +102,8 @@ They cover all 19 HTML cases followed by both operational diagnostics.
 | `control-mixed-evaluability` | `6677529c9954fc64f57481d069fc5d302f679085e458da16c14317dd9f5ae572` |
 | `control-viewer-only-author-text` | `aaa85ea47a77945c65a329aa2aba9c798d6a3bdabfb40a4bbb1bb0cf3a481929` |
 | `control-hidden-author-text` | `9dee86534a7197c67bcbae9d78e2c4f814caed288f89a9374fbb23f5497f3679` |
+| `control-button-overflow` | `a12eb4465092fe4d9d1abde24a4bf4fb0533f79905e7f1309bd0498ff54357a7` |
+| `control-prerequisite-overflow` | `397db41b8a77220b907bd3eb522e1c33678e2ff30c557dbd363a1c60c57f83c6` |
 | `operational-invalid-interface` | `d6418389a80df1f49c060afd1b08cf0698435a283d2ce2de09deec622ec310e6` |
 | `operational-browser-failure` | `2cbd6c968307e6e5ff0491809396e4e9e8f6e125d31ff63732bd5cac074148b0` |
 
@@ -107,16 +114,16 @@ resource-bounded Docker container. Chromium reported
 `browser_sandbox:false`; this state is explicit rather than treated as a
 browser-escape guarantee.
 
-## Direct screenshot inspection (31/76)
+## Direct screenshot inspection (35/80)
 
-This qualification review selected a representative 31-file visual sample by
+This qualification review selected a representative 35-file visual sample by
 taking all four contexts for the explicit reference and hardcoded-Alice mutant,
 then targeted author/context frames for multiplicity, transparency, partial and
 full occlusion, pointer-events, broken and mixed pages, viewer-only author text
-and hidden authorship. This was a coverage-directed review sample, not a
-preregistered or random sample. The following artifact screenshots were
-inspected directly. Paths are relative to `qualification/`; hashes were
-recomputed from the inspected files.
+and hidden authorship, plus all four shadowed-global contexts. This was a
+coverage-directed review sample, not a preregistered or random sample. The
+following artifact screenshots were inspected directly. Paths are relative to
+`qualification/`; hashes were recomputed from the inspected files.
 
 | Screenshot | SHA-256 |
 | --- | --- |
@@ -151,6 +158,10 @@ recomputed from the inspected files.
 | `control-hidden-author-text/output/article-alice-non-author.png` | `4df5d2887f2fa5446efef52dfe16c79c1a31296cc34ea6ea3f111d8aa986ff28` |
 | `control-hidden-author-text/output/article-bob-author.png` | `41a514f4945c53c39363a6154b1d5b0d999a306594a43fbcc03e7e805935f3ed` |
 | `control-hidden-author-text/output/article-bob-non-author.png` | `4df5d2887f2fa5446efef52dfe16c79c1a31296cc34ea6ea3f111d8aa986ff28` |
+| `reference-shadowed-globals/output/article-alice-author.png` | `cbb75f2c49819b5d718a1b29565584105b19b818d4540f3dc9b6731ecc83cd50` |
+| `reference-shadowed-globals/output/article-alice-non-author.png` | `9c3084e33066a5cd93986b992b5274e7ba16095fe09ce60bad980f783b658595` |
+| `reference-shadowed-globals/output/article-bob-author.png` | `f966aace83a9ecd4a5143f1d9a3b2edc3105a90ac9deceba9b176ffb16578e85` |
+| `reference-shadowed-globals/output/article-bob-non-author.png` | `981f3f5ace18976e8fd1ba9c4bfe2c59cd14abccf38701353b23b571041223fc` |
 
 The four explicit-reference images show a delete button only in the two author
 contexts, matching structured delete counts `1/1`, `0/0`, `1/1`, `0/0`
@@ -171,6 +182,10 @@ and one target failure. Viewer-only images visibly repeat usernames outside the
 semantic author relation but report article-author `0/0`; hidden-author images
 show only “Written by” and report matched/perceptible article-author `1/0`.
 These comparisons agree with the closed structured observations.
+The four shadowed-global images also show the correct article author in each
+crossed pair; the delete button appears only in the two author contexts and is
+absent in both non-author contexts, despite candidate attempts to replace the
+page-realm observation primitives.
 
 Screenshots are diagnostic records, not the source of verdicts. The structured
 browser observations and the Python classifier determine each result.
@@ -180,34 +195,35 @@ of the direct visual review.
 
 ## Audit and reproduce
 
-The authenticated [artifact download](https://github.com/danteacosta/agent-smell-degradation-harness/actions/runs/36027518118/artifacts/10820860904)
-expires at `2026-10-24T16:29:48Z`. Download the exact artifact and verify its
-qualification hash, flags and 185-file denominator with:
+The authenticated [artifact download](https://github.com/danteacosta/agent-smell-degradation-harness/actions/runs/36138707951/artifacts/10864624699)
+expires at `2026-10-25T13:06:53Z`. Download the exact artifact and verify its
+qualification hash, flags and 204-file denominator with:
 
 ```bash
 set -euo pipefail
-artifact='/tmp/realworld-author-ui-ci-36027518118'
+artifact='/tmp/realworld-author-ui-ci-36138707951'
 test ! -e "$artifact"
-gh run download 36027518118 \
+gh run download 36138707951 \
   --repo danteacosta/agent-smell-degradation-harness \
   --name realworld-author-ui-qualification \
   --dir "$artifact"
 (cd "$artifact" && printf '%s  %s\n' \
-  'a56fc961fdf8bfe509890a802f8fa906479afc267fe868e424226fdd989d0358' \
+  'cf5baf358bc64914f16e1023eb48f34d73c9034127d9b02079dcfe8f4006a820' \
   'qualification/qualification.json' | shasum -a 256 -c -)
 jq -e '.qualified == true and .matrix_matches == true' \
   "$artifact/qualification/qualification.json"
-test "$(find "$artifact" -type f | wc -l | tr -d ' ')" = 185
+test "$(find "$artifact" -type f | wc -l | tr -d ' ')" = 204
 ```
 
-From the repository root, this command verifies that the report table above is
-identical to the manifest's canonical case order, recomputes each report hash
-against both, and recomputes every screenshot signature, dimension and hash
-against the manifest:
+From the repository root, this command verifies the merge parents, head/merge
+instrument equality, custody files, exact artifact inventory, the 24-row report
+table, all reports, receipts, inputs and 80 PNGs, and the 35-image direct-review
+table:
 
 ```bash
 set -euo pipefail
-artifact='/tmp/realworld-author-ui-ci-36027518118'
+artifact='/tmp/realworld-author-ui-ci-36138707951'
+git fetch origin refs/pull/77/merge
 python3 - "$artifact" \
   docs/research/realworld-author-ui-oracle-qualification-20260924.md <<'PY'
 from pathlib import Path
@@ -215,50 +231,113 @@ import hashlib
 import json
 import re
 import struct
+import subprocess
 import sys
 
 artifact = Path(sys.argv[1])
 document = Path(sys.argv[2]).read_text(encoding="utf-8")
-manifest = json.loads(
-    (artifact / "qualification/qualification.json").read_text(encoding="utf-8")
-)
-section = document.split("| Case ID | Report SHA-256 |", 1)[1].split(
+qualified = "13761bdd38812aecc618174d6b2deb3588c824e3"
+base = "9eb9d69952d36cf230fe25eedd8466a60da96f22"
+head = "6bd059197d1298ee8d440a3d70278854cb83ca61"
+manifest_path = artifact / "qualification/qualification.json"
+manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+assert hashlib.sha256(manifest_path.read_bytes()).hexdigest() == \
+    "cf5baf358bc64914f16e1023eb48f34d73c9034127d9b02079dcfe8f4006a820"
+assert manifest["qualified"] is True and manifest["matrix_matches"] is True
+assert manifest["custody"] == {"mode": "git-commit", "git_commit": qualified}
+assert manifest["image_id"] == \
+    "sha256:bfa780d015f8549cd70f4ece4d48e2fa51a4d8399322661314001e564021f617"
+assert manifest["instrument_sha256"] == \
+    "526a2aee0264ac81e4c318ad6b9c58d968113bae7dc41d776d40b3500112434e"
+assert (artifact / "image-id").read_text().strip() == manifest["image_id"]
+assert (artifact / "instrument-digest").read_text().strip() == \
+    manifest["instrument_sha256"]
+build = artifact / "build-receipt.json"
+assert hashlib.sha256(build.read_bytes()).hexdigest() == \
+    "ca3ea38953e2ed80925bacd1bc9d734952edb9740e61ff4515f4d9220bcf34ec"
+receipt = json.loads(build.read_text())
+assert receipt["github_sha"] == qualified
+assert receipt["image_id"] == manifest["image_id"]
+assert receipt["instrument_sha256"] == manifest["instrument_sha256"]
+parents = subprocess.check_output(
+    ["git", "rev-list", "--parents", "-n", "1", qualified], text=True
+).split()
+assert parents == [qualified, base, head]
+rows = manifest["cases"] + manifest["operational_cases"]
+assert len(manifest["cases"]) == 20
+assert len(manifest["operational_cases"]) == 4
+assert len(rows) == 24
+paths = list(manifest["files"])
+subprocess.run(["git", "diff", "--quiet", qualified, head, "--", *paths], check=True)
+for relative, expected_hash in manifest["files"].items():
+    raw = subprocess.check_output(["git", "show", f"{qualified}:{relative}"])
+    assert hashlib.sha256(raw).hexdigest() == expected_hash
+report_section = document.split("| Case ID | Report SHA-256 |", 1)[1].split(
     "The runtime was", 1
 )[0]
-table = re.findall(
-    r"^\| `([^`]+)` \| `([0-9a-f]{64})` \|$", section, re.MULTILINE
+report_table = re.findall(
+    r"^\| `([^`]+)` \| `([0-9a-f]{64})` \|$", report_section, re.MULTILINE
 )
-rows = manifest["cases"] + manifest["operational_cases"]
-expected = [(row["id"], row["report_sha256"]) for row in rows]
-assert len(expected) == 21
-assert table == expected
+assert report_table == [(row["id"], row["report_sha256"]) for row in rows]
 
 def sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
-for case_id, expected_hash in expected:
-    report = artifact / "qualification" / case_id / "output/report.json"
-    assert sha256(report) == expected_hash
-screenshots = [
-    (row["id"], name, expected_hash)
-    for row in rows
-    for name, expected_hash in row["screenshot_sha256"].items()
-]
-assert len(screenshots) == 76
-for case_id, name, expected_hash in screenshots:
+expected_files = {
+    "build-receipt.json", "image-id", "instrument-digest",
+    "qualification/qualification.json",
+}
+all_screenshots = []
+for row in rows:
+    case = artifact / "qualification" / row["id"]
+    output = case / "output"
+    expected_files.add(f"qualification/{row['id']}/input/app.html")
+    for name in ("container-command.json", "container.log", "executor.json", "report.json"):
+        expected_files.add(f"qualification/{row['id']}/output/{name}")
+    report = output / "report.json"
+    executor = output / "executor.json"
+    app = case / "input/app.html"
+    assert sha256(report) == row["report_sha256"]
+    assert sha256(executor) == row["receipt_sha256"]
+    report_data = json.loads(report.read_text())
+    executor_data = json.loads(executor.read_text())
+    assert sha256(app) == report_data["app_sha256"] == executor_data["app_sha256"]
+    assert executor_data["image"] == manifest["image_id"]
+    for name, expected_hash in row["screenshot_sha256"].items():
+        expected_files.add(f"qualification/{row['id']}/output/{name}")
+        all_screenshots.append((row["id"], name, expected_hash))
+actual_files = {str(path.relative_to(artifact)) for path in artifact.rglob("*") if path.is_file()}
+assert actual_files == expected_files
+assert len(actual_files) == 204
+assert len(all_screenshots) == 80
+for case_id, name, expected_hash in all_screenshots:
     image = artifact / "qualification" / case_id / "output" / name
     raw = image.read_bytes()
     assert raw[:8] == b"\x89PNG\r\n\x1a\n"
     assert struct.unpack(">II", raw[16:24]) == (1000, 720)
-    assert sha256(image) == expected_hash
-print("21 reports and 76 PNGs verified")
+    assert hashlib.sha256(raw).hexdigest() == expected_hash
+review_section = document.split("| Screenshot | SHA-256 |", 1)[1].split(
+    "The four explicit-reference images", 1
+)[0]
+review_table = re.findall(
+    r"^\| `([^`]+)` \| `([0-9a-f]{64})` \|$", review_section, re.MULTILINE
+)
+expected_screenshots = {
+    f"{case_id}/output/{name}": expected_hash
+    for case_id, name, expected_hash in all_screenshots
+}
+assert len(review_table) == 35
+assert len(set(review_table)) == 35
+for relative, expected_hash in review_table:
+    assert expected_screenshots[relative] == expected_hash
+print("24 reports, 80 PNGs, 35 reviewed images and custody verified")
 PY
 ```
 
 The exact qualified checkout is
-[`750fdda8b6ff6037437de8e5397a54d276cd5202`](https://github.com/danteacosta/agent-smell-degradation-harness/commit/750fdda8b6ff6037437de8e5397a54d276cd5202),
+[`13761bdd38812aecc618174d6b2deb3588c824e3`](https://github.com/danteacosta/agent-smell-degradation-harness/commit/13761bdd38812aecc618174d6b2deb3588c824e3),
 and the qualification definition is the pinned
-[workflow](https://github.com/danteacosta/agent-smell-degradation-harness/blob/b12b25a4b445d90b704e78fa17e044bd38f3351f/.github/workflows/realworld-author-ui-oracle-qualification.yml).
+[workflow](https://github.com/danteacosta/agent-smell-degradation-harness/blob/6bd059197d1298ee8d440a3d70278854cb83ca61/.github/workflows/realworld-author-ui-oracle-qualification.yml).
 To rebuild the digest-bound image and rerun the qualifier in a clean detached
 worktree:
 
@@ -267,7 +346,7 @@ set -euo pipefail
 git fetch origin refs/pull/77/merge
 test ! -e /tmp/realworld-author-ui-qualified
 git worktree add --detach /tmp/realworld-author-ui-qualified \
-  750fdda8b6ff6037437de8e5397a54d276cd5202
+  13761bdd38812aecc618174d6b2deb3588c824e3
 cd /tmp/realworld-author-ui-qualified
 test -z "$(git status --porcelain)"
 python3 scripts/dependency_bundle.py
@@ -275,7 +354,7 @@ evidence_root=$(mktemp -d /tmp/realworld-author-ui-rerun.XXXXXX)
 instrument_digest=$(dependency-bundle/runtime/bin/python \
   eval/fixtures/realworld-author-ui/qualify.py --print-instrument-digest)
 test "$instrument_digest" = \
-  '18a1c3d32cccd26c896f3539b6a776034be3ab82a35bfb79996d5e78bfb68e11'
+  '526a2aee0264ac81e4c318ad6b9c58d968113bae7dc41d776d40b3500112434e'
 docker build \
   --build-arg "REALWORLD_INSTRUMENT_SHA256=$instrument_digest" \
   --iidfile "$evidence_root/image-id" \
@@ -283,26 +362,24 @@ docker build \
 dependency-bundle/runtime/bin/python \
   eval/fixtures/realworld-author-ui/qualify.py \
   --image "$(tr -d '\n' < "$evidence_root/image-id")" \
-  --git-commit 750fdda8b6ff6037437de8e5397a54d276cd5202 \
+  --git-commit 13761bdd38812aecc618174d6b2deb3588c824e3 \
   --output "$evidence_root/qualification"
 ```
 
-No durable copy of the 185-file artifact is currently archived beyond
+No durable copy of the 204-file artifact is currently archived beyond
 GitHub's 30-day retention. The committed hashes, pinned source and procedure
 remain, but direct screenshot audit requires downloading before expiry or
 rerunning the qualification.
 
 ## Current check state and limits
 
-At `2026-09-24T16:35:50Z`, the qualification, constraint-replay and wedge
-checks were green. The pull-request and push `eval-gate` jobs were still in
-progress. Both later passed for head
-`b12b25a4b445d90b704e78fa17e044bd38f3351f`: the
-[pull-request eval job](https://github.com/danteacosta/agent-smell-degradation-harness/actions/runs/36027518035/job/107727702739)
-completed at `2026-09-24T16:36:19Z`, and the
-[push eval job](https://github.com/danteacosta/agent-smell-degradation-harness/actions/runs/36027511488/job/107727681268)
-completed at `2026-09-24T16:36:50Z`. These checks qualify that code head; this
-record's later documentation-only commits are distinct Git heads.
+The qualification workflow and job completed successfully for PR head
+`6bd059197d1298ee8d440a3d70278854cb83ca61` at
+`2026-09-25T13:06:57Z`. The checkout, build receipt and qualification manifest
+bind the result to synthetic merge
+`13761bdd38812aecc618174d6b2deb3588c824e3`. This record's later
+documentation-only commit is a distinct Git head and does not alter the
+qualified instrument files.
 
 This qualification measures authored controls only. It does not establish
 general sensitivity, specificity or completeness; establish requirement-smell
