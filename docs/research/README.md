@@ -55,6 +55,7 @@ experiment evidence.
 
 - [Behavioral oracle source reviews](ui-behavioral-contracts-20260922.md), [RealWorld API contracts](realworld-behavioral-contracts-20260922.md), and [CaSS contracts](cass-behavioral-contracts-20260922.md): authored controls and unresolved admission decisions for the eight candidates.
 - [Prospective multi-obligation E2E expansion](multi-obligation-e2e-expansion-protocol-20260925.md): 12 source-bound UI candidates across the six observed projects, yielding 216 A/B/C positions if every oracle passes pre-generation qualification.
+- [Multi-obligation screening panel](multi-obligation-screening-panel-20260925.md): three-model unanimous gate admits 3/12 candidates to oracle construction, a 54-position ceiling before qualification; no generated outcomes.
 - [Behavioral expansion analysis plan](../plans/2026-09-22-behavioral-expansion-analysis.md): finite schedule, fixed denominators and project weighting; no collection.
 
 - [TodoMVC Mark all oracle qualification](mark-all-oracle-qualification-20260922.md): 11 authored browser controls, immutable image and private receipt; no generated outcomes.

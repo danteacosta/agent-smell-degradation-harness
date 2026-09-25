@@ -1,0 +1,349 @@
+{
+  "schema_version": "multi-obligation-screening-panel/v1",
+  "stage": "pre_oracle_pre_generation_screening",
+  "collection_authorized": false,
+  "provider_calls_for_generation": 0,
+  "review_prompt_sha256": "002aa90e62f6f04067cf27e60ac2d102b1c29554608f3c6460587b0246e6f27b",
+  "reviewers": [
+    {
+      "requested_model": "gpt-6-astra",
+      "response_sha256": "14ce363ffe594d42ab7aae6addbc4ac901f16202e59d63b8995af9aa852ebf5e",
+      "accepted_count": 4,
+      "deferred_count": 8,
+      "candidates": [
+        {
+          "candidate_id": "todo-clear-master",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt does not identify the master checkbox or establish its presence after the list becomes empty."
+        },
+        {
+          "candidate_id": "todo-edit-state-not-persisted",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt prohibits persisting edit mode but does not require restoring the todo on a fresh page."
+        },
+        {
+          "candidate_id": "realworld-follow-no-extra-input",
+          "verdict": "DEFER",
+          "concise_reason": "The fragment does not identify following or authentication; absence of request body and query fields is also a transport constraint rather than a browser-observable outcome."
+        },
+        {
+          "candidate_id": "realworld-comment-auth-required",
+          "verdict": "DEFER",
+          "concise_reason": "The API excerpt supports authentication enforcement and comment creation, but the candidate does not bound a browser journey capable of exercising an anonymous submission."
+        },
+        {
+          "candidate_id": "kanboard-close-hides-task",
+          "verdict": "ACCEPT",
+          "concise_reason": "Board removal and closed-filter retrieval are explicit, separately observable browser obligations with a clean deletion contrast."
+        },
+        {
+          "candidate_id": "kanboard-duplicate-preserves-properties",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt leaves the preserved property set undefined and does not establish the same-project constraint."
+        },
+        {
+          "candidate_id": "paperless-accept-duplicate",
+          "verdict": "ACCEPT",
+          "concise_reason": "Default settings and identical contents bound the condition; duplicate consumption and the logged warning are explicit, separable effects confirmable after browser consumption."
+        },
+        {
+          "candidate_id": "paperless-suggestion-decisions",
+          "verdict": "DEFER",
+          "concise_reason": "The candidate does not bound how two actionable suggestions become available, leaving the browser journey dependent on unspecified suggestion prerequisites."
+        },
+        {
+          "candidate_id": "nextcloud-restore-name-conflict",
+          "verdict": "ACCEPT",
+          "concise_reason": "The excerpt supports resolving the collision by uniquely naming the restored item; both items and their distinct names can be checked without prescribing a suffix."
+        },
+        {
+          "candidate_id": "nextcloud-delete-permanently",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt names an action but does not establish its deletion scope or preservation of unrelated trashed items."
+        },
+        {
+          "candidate_id": "openproject-reject-remaining-over-work",
+          "verdict": "ACCEPT",
+          "concise_reason": "Visible error feedback and prevention of saving the invalid value are explicit, separable obligations; persistence reads can confirm unchanged stored values."
+        },
+        {
+          "candidate_id": "openproject-derive-remaining",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt specifies automatic calculation without its rule, and the target does not identify a second independent obligation for a clean deletion contrast."
+        }
+      ]
+    },
+    {
+      "requested_model": "gpt-6-sol",
+      "response_sha256": "326b5d7d0d5a35626f47b3bac57b0aa80e1218fa8f538400c796548e21166881",
+      "accepted_count": 7,
+      "deferred_count": 5,
+      "candidates": [
+        {
+          "candidate_id": "todo-clear-master",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt does not identify the master checkbox or establish that it remains when the list is empty."
+        },
+        {
+          "candidate_id": "todo-edit-state-not-persisted",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt rules out persisting edit mode but does not establish that the todo itself is restored on a fresh page."
+        },
+        {
+          "candidate_id": "realworld-follow-no-extra-input",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt does not identify the follow action, and the absence of body or query fields is an API detail rather than a browser-visible outcome."
+        },
+        {
+          "candidate_id": "realworld-comment-auth-required",
+          "verdict": "ACCEPT",
+          "concise_reason": "The excerpt supports the authentication boundary and creation of a comment; both can be checked through bounded user journeys."
+        },
+        {
+          "candidate_id": "kanboard-close-hides-task",
+          "verdict": "ACCEPT",
+          "concise_reason": "The excerpt directly supports both hiding the closed task from the board and retrieving it through the closed-task filter."
+        },
+        {
+          "candidate_id": "kanboard-duplicate-preserves-properties",
+          "verdict": "ACCEPT",
+          "concise_reason": "A new task with the original task's user-visible properties is supported and can be checked in a bounded duplication journey."
+        },
+        {
+          "candidate_id": "paperless-accept-duplicate",
+          "verdict": "ACCEPT",
+          "concise_reason": "The excerpt explicitly bounds the behavior to default settings and supports both consuming the duplicate and logging a warning as a side effect."
+        },
+        {
+          "candidate_id": "paperless-suggestion-decisions",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt permits accepting or rejecting suggestions but does not establish that two suggestions will be shown together."
+        },
+        {
+          "candidate_id": "nextcloud-restore-name-conflict",
+          "verdict": "ACCEPT",
+          "concise_reason": "The excerpt directly supports assigning a unique name on conflict, without requiring a particular suffix or layout."
+        },
+        {
+          "candidate_id": "nextcloud-delete-permanently",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt names the action but does not establish its scope or that an unrelated trashed item remains available."
+        },
+        {
+          "candidate_id": "openproject-reject-remaining-over-work",
+          "verdict": "ACCEPT",
+          "concise_reason": "The excerpt explicitly requires an error and prevents saving the invalid value; the target needs no exact error wording."
+        },
+        {
+          "candidate_id": "openproject-derive-remaining",
+          "verdict": "ACCEPT",
+          "concise_reason": "The stated precondition and automatic calculation are explicit, and the result can be observed in the browser without prescribing an internal method."
+        }
+      ]
+    },
+    {
+      "requested_model": "gpt-6-luna",
+      "response_sha256": "2e400614cfe079e2470262c805d22d7eeabd14bc52cbcc005c02797a001053ed",
+      "accepted_count": 6,
+      "deferred_count": 6,
+      "candidates": [
+        {
+          "candidate_id": "todo-clear-master",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt requires clearing checked state, but does not say the list becomes empty or that a master checkbox remains."
+        },
+        {
+          "candidate_id": "todo-edit-state-not-persisted",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt supports non-persistence of edit mode, but does not guarantee the todo itself is restored after reload."
+        },
+        {
+          "candidate_id": "realworld-follow-no-extra-input",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt only says no additional parameters are required; it does not establish authentication, an existing profile, or a browser-observable check for absent request fields."
+        },
+        {
+          "candidate_id": "realworld-comment-auth-required",
+          "verdict": "ACCEPT",
+          "concise_reason": "The excerpt explicitly requires authentication; anonymous rejection and authenticated creation form an observable browser contrast."
+        },
+        {
+          "candidate_id": "kanboard-close-hides-task",
+          "verdict": "ACCEPT",
+          "concise_reason": "Both hiding from the board and retrieval through the closed-task filter are explicit and observable in one bounded journey."
+        },
+        {
+          "candidate_id": "kanboard-duplicate-preserves-properties",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt supports a new task with matching properties, but does not specify that duplication occurs in the same project."
+        },
+        {
+          "candidate_id": "paperless-accept-duplicate",
+          "verdict": "DEFER",
+          "concise_reason": "The default behavior is bounded, but the excerpt says the warning is logged; it does not establish a browser-visible warning."
+        },
+        {
+          "candidate_id": "paperless-suggestion-decisions",
+          "verdict": "ACCEPT",
+          "concise_reason": "The excerpt explicitly places suggestions on the document detail page and supports accepting or rejecting them; the target scopes the journey to shown suggestions."
+        },
+        {
+          "candidate_id": "nextcloud-restore-name-conflict",
+          "verdict": "ACCEPT",
+          "concise_reason": "The excerpt directly specifies a unique name on conflict; both items and the restored name are observable without prescribing a suffix format."
+        },
+        {
+          "candidate_id": "nextcloud-delete-permanently",
+          "verdict": "DEFER",
+          "concise_reason": "The excerpt only describes selecting Delete permanently; it does not establish removal or preservation of another trashed item."
+        },
+        {
+          "candidate_id": "openproject-reject-remaining-over-work",
+          "verdict": "ACCEPT",
+          "concise_reason": "The excerpt specifies an error and says a lower value is required to save; rejection and unchanged persisted values are observable without fixing message wording."
+        },
+        {
+          "candidate_id": "openproject-derive-remaining",
+          "verdict": "ACCEPT",
+          "concise_reason": "The excerpt explicitly specifies automatic calculation when Work is set and percent complete is entered; the resulting field change is observable."
+        }
+      ]
+    }
+  ],
+  "consensus_rule": "ACCEPT only when all three requested model configurations return ACCEPT",
+  "consensus": [
+    {
+      "candidate_id": "todo-clear-master",
+      "project_id": "todomvc",
+      "decisions": {
+        "gpt-6-astra": "DEFER",
+        "gpt-6-sol": "DEFER",
+        "gpt-6-luna": "DEFER"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "todo-edit-state-not-persisted",
+      "project_id": "todomvc",
+      "decisions": {
+        "gpt-6-astra": "DEFER",
+        "gpt-6-sol": "DEFER",
+        "gpt-6-luna": "DEFER"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "realworld-follow-no-extra-input",
+      "project_id": "realworld",
+      "decisions": {
+        "gpt-6-astra": "DEFER",
+        "gpt-6-sol": "DEFER",
+        "gpt-6-luna": "DEFER"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "realworld-comment-auth-required",
+      "project_id": "realworld",
+      "decisions": {
+        "gpt-6-astra": "DEFER",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "kanboard-close-hides-task",
+      "project_id": "kanboard",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "ACCEPT"
+    },
+    {
+      "candidate_id": "kanboard-duplicate-preserves-properties",
+      "project_id": "kanboard",
+      "decisions": {
+        "gpt-6-astra": "DEFER",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "DEFER"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "paperless-accept-duplicate",
+      "project_id": "paperless-ngx",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "DEFER"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "paperless-suggestion-decisions",
+      "project_id": "paperless-ngx",
+      "decisions": {
+        "gpt-6-astra": "DEFER",
+        "gpt-6-sol": "DEFER",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "nextcloud-restore-name-conflict",
+      "project_id": "nextcloud",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "ACCEPT"
+    },
+    {
+      "candidate_id": "nextcloud-delete-permanently",
+      "project_id": "nextcloud",
+      "decisions": {
+        "gpt-6-astra": "DEFER",
+        "gpt-6-sol": "DEFER",
+        "gpt-6-luna": "DEFER"
+      },
+      "verdict": "DEFER"
+    },
+    {
+      "candidate_id": "openproject-reject-remaining-over-work",
+      "project_id": "openproject",
+      "decisions": {
+        "gpt-6-astra": "ACCEPT",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "ACCEPT"
+    },
+    {
+      "candidate_id": "openproject-derive-remaining",
+      "project_id": "openproject",
+      "decisions": {
+        "gpt-6-astra": "DEFER",
+        "gpt-6-sol": "ACCEPT",
+        "gpt-6-luna": "ACCEPT"
+      },
+      "verdict": "DEFER"
+    }
+  ],
+  "eligible_candidate_ids": [
+    "kanboard-close-hides-task",
+    "nextcloud-restore-name-conflict",
+    "openproject-reject-remaining-over-work"
+  ],
+  "unanimously_accepted": 3,
+  "deferred": 9,
+  "eligible_positions": 54,
+  "claims": {
+    "outcomes_observed": false,
+    "h1_confirmed": false,
+    "h2_evaluated": false
+  }
+}
