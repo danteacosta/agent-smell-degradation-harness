@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import copy
+import hashlib
+import json
+
 import pytest
 
 from eval.splits import apply_split_manifest, build_grouped_split_manifest
@@ -63,3 +67,47 @@ def test_manifest_rejects_insufficient_disjoint_groups():
         row["project_id"] = "one-project"
     with pytest.raises(ValueError, match="three"):
         build_grouped_split_manifest(episodes)
+
+
+def test_applying_manifest_rejects_tampered_assignment_even_if_all_splits_exist():
+    episodes = _episodes()
+    manifest = copy.deepcopy(build_grouped_split_manifest(episodes))
+    manifest["assignments"][0]["source_intent_id"] = "different-intent"
+    with pytest.raises(ValueError, match="hash mismatch"):
+        apply_split_manifest(episodes, manifest)
+
+
+def test_applying_manifest_rejects_cross_project_leakage_with_recomputed_hash():
+    episodes = _episodes()
+    manifest = copy.deepcopy(build_grouped_split_manifest(episodes))
+    first = manifest["assignments"][0]
+    sibling = next(row for row in manifest["assignments"] if row["project_id"] == first["project_id"] and row is not first)
+    sibling["split"] = next(split for split in ("train", "calibration", "test") if split != first["split"])
+    manifest["provenance"]["assignment_hash"] = hashlib.sha256(
+        json.dumps(manifest["assignments"], sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    with pytest.raises(ValueError, match="project_id crosses split boundary"):
+        apply_split_manifest(episodes, manifest)
+
+
+def test_applying_manifest_rejects_duplicate_assignment_instead_of_overwriting_it():
+    episodes = _episodes()
+    manifest = copy.deepcopy(build_grouped_split_manifest(episodes))
+    manifest["assignments"].append(dict(manifest["assignments"][0]))
+    with pytest.raises(ValueError, match="duplicate split assignment"):
+        apply_split_manifest(episodes, manifest)
+
+
+def test_applying_manifest_rejects_intent_leakage_across_projects():
+    episodes = [
+        {"source_intent_id": source, "project_id": project}
+        for source, project in (("shared", "p1"), ("shared", "p2"), ("other", "p3"), ("third", "p4"))
+    ]
+    manifest = copy.deepcopy(build_grouped_split_manifest(episodes))
+    shared = [row for row in manifest["assignments"] if row["source_intent_id"] == "shared"]
+    shared[1]["split"] = next(split for split in ("train", "calibration", "test") if split != shared[0]["split"])
+    manifest["provenance"]["assignment_hash"] = hashlib.sha256(
+        json.dumps(manifest["assignments"], sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    with pytest.raises(ValueError, match="source_intent_id crosses split boundary"):
+        apply_split_manifest(episodes, manifest)
