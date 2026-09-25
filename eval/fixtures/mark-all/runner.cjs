@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const crypto = require('node:crypto');
 const {chromium} = require('playwright');
 const html = fs.readFileSync('/input/app.html');
-const report = {schema_version:'mark-all-browser/v2', status:'browser_error',
+const report = {schema_version:'mark-all-browser/v3', status:'browser_error',
   app_sha256:crypto.createHash('sha256').update(html).digest('hex'),
   action_settle_ms:300, cases:[], browser_sandbox:false,
   isolation:'non-root offline resource-bounded Docker; browser sandbox disabled'};
@@ -124,15 +124,13 @@ async function scenario(id, check) {
           if(masterState.count>1){
             targetCase={id:'clear_master_after_clear_completed',status:'not_evaluable',
               reason:'master_identity_ambiguous'};
-          }else if(masterState.visible_count===1){
+          }else if(masterState.count===1){
             targetCase={id:'clear_master_after_clear_completed',
               status:masterState.states[0].checked?'failed':'passed'};
           }else{
-            // The endpoint is user-observable state. Once the list is empty, a
-            // removed or hidden exact master control has no visible checked
-            // state to clear. Other checkboxes are not reinterpreted as the
-            // master because the public interface binds that role to
-            // #toggle-all.
+            // Removal leaves no master state to clear. If the exact master
+            // remains, even hidden, its checked DOM property is the state
+            // named by the source obligation and is evaluated above.
             targetCase={id:'clear_master_after_clear_completed',status:'passed'};
           }
         }

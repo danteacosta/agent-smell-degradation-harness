@@ -14,8 +14,8 @@ function paint(){
     toggle.addEventListener('change',()=>{item.completed=toggle.checked;paint();});
     row.append(toggle,title);list.append(row);
   }
-  master.checked=entries.size>0&&[...entries.values()].every(item=>item.completed);
   master.hidden=entries.size===0;
+  if(entries.size>0)master.checked=[...entries.values()].every(item=>item.completed);
 }
 master.addEventListener('change',()=>{for(const item of entries.values())item.completed=master.checked;paint();});
 clear.addEventListener('click',()=>{for(const [id,item] of entries)if(item.completed)entries.delete(id);paint();});
