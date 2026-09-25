@@ -195,7 +195,10 @@ def prepare(
         "billing_mode": "chatgpt_subscription",
         "api_key_fallback": False,
         "generation_before_execution": True,
-        "output_admission": "complete HTML with scaffold bytes unchanged outside the single behavior region; no repair",
+        "output_admission": (
+            "complete HTML with scaffold bytes unchanged outside the single behavior region; "
+            "one missing terminal LF is canonicalized; no semantic repair"
+        ),
         "artifact_limit_bytes": 200000,
         "claims": {"pilot": True, "h1_confirmed": False, "h2_evaluated": False},
     }
@@ -338,6 +341,12 @@ def admit_fixed_scaffold(raw: str, project_id: str, limit: int = 200000) -> byte
     scaffold = (
         ROOT / "eval/fixtures/three-project-scaffold" / f"{project_id}.html"
     ).read_bytes()
+    # Text generation commonly omits the file's invisible terminal line feed.
+    # Canonicalize only that one serialization byte before the exact comparison.
+    if scaffold.endswith(b"\n") and not artifact.endswith(b"\n"):
+        artifact += b"\n"
+        if len(artifact) > limit:
+            raise ValueError("artifact exceeds frozen size limit")
     marker = freeze.PLACEHOLDER.encode()
     if scaffold.count(marker) != 1:
         raise ValueError("frozen scaffold marker mismatch")
@@ -390,8 +399,8 @@ def run(packet: Path, provider_factory=CodexCLIProvider, executor=execute_genera
                 artifact = admit_fixed_scaffold(
                     raw, source["project_id"], manifest["artifact_limit_bytes"]
                 )
-            except (UnicodeError, ValueError):
-                row["category"] = "invalid_output"
+            except (UnicodeError, ValueError) as error:
+                row.update(category="invalid_output", invalid_reason=str(error))
             else:
                 inputs = packet / "artifacts" / slot_id
                 put(inputs / "app.html", artifact)

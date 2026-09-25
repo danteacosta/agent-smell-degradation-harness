@@ -128,6 +128,7 @@ def test_invalid_output_and_provider_error_preserve_denominator(packet) -> None:
     assert [row["category"] for row in rows[:4]] == [
         "pass", "invalid_output", "provider_error", "not_attempted"
     ]
+    assert rows[1]["invalid_reason"] == "bounded standalone raw HTML required; no output repair"
     assert len(calls) == 3
     assert len(executed) == 1
     assert report["planned"] == 54
@@ -141,6 +142,7 @@ def test_output_admission_allows_only_behavior_region_changes() -> None:
     ).read_text()
     valid = scaffold.replace(c.freeze.PLACEHOLDER, "app.register('upload',()=>{});")
     assert c.admit_fixed_scaffold(valid, project) == valid.encode()
+    assert c.admit_fixed_scaffold(valid.removesuffix("\n"), project) == valid.encode()
 
     with pytest.raises(ValueError, match="changed frozen scaffold"):
         c.admit_fixed_scaffold(valid.replace("<title>Documents</title>", "<title>Changed</title>"), project)
