@@ -1,0 +1,27 @@
+{
+  "common_interface": "Implementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Consume window.initialState exactly as supplied with this shape: window.initialState = { viewer: { username: string }, article: { slug: string, title: string, body: string, author: { username: string } } }. Render the supplied article at the fixed route /article/bounded-ui-case using the supplied title and body. Render the article author's username as visible text in an element matching [rel~=\"author\"]. If you implement Delete Article, expose it as an accessible button with the exact accessible name Delete Article. Choose the layout, styling, and internal data representation. Return only the raw HTML artifact.\n",
+  "common_interface_sha256": "d9995e17a814890bf7ad3ae6bf39999120e7d61c8c16d657b5da046542e770a0",
+  "omission": {
+    "coordinate_system": "zero-based Unicode code points; end exclusive",
+    "end": 54,
+    "start": 21,
+    "text": " (only shown to article's author)"
+  },
+  "request_text_sha256": {
+    "A": "17ade428a291bf3e2739dc09e137635ed6375c1b8bd9cc6d04415ade99839290",
+    "B": "81c1e11641c9f1ced965716557f2dc5793051dd632dc295e4fdd41c825c81b4f",
+    "C": "923497d3f253a053f03f0519407e72441268aff6e730f699fce65cdf1c67ae24"
+  },
+  "requests": {
+    "A": "Build the browser application described below.\n\nRequirement:\nDelete article button (only shown to article's author)\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Consume window.initialState exactly as supplied with this shape: window.initialState = { viewer: { username: string }, article: { slug: string, title: string, body: string, author: { username: string } } }. Render the supplied article at the fixed route /article/bounded-ui-case using the supplied title and body. Render the article author's username as visible text in an element matching [rel~=\"author\"]. If you implement Delete Article, expose it as an accessible button with the exact accessible name Delete Article. Choose the layout, styling, and internal data representation. Return only the raw HTML artifact.\n",
+    "B": "Build the browser application described below.\n\nRequirement:\nDisplay the Delete article button only to the article's author.\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Consume window.initialState exactly as supplied with this shape: window.initialState = { viewer: { username: string }, article: { slug: string, title: string, body: string, author: { username: string } } }. Render the supplied article at the fixed route /article/bounded-ui-case using the supplied title and body. Render the article author's username as visible text in an element matching [rel~=\"author\"]. If you implement Delete Article, expose it as an accessible button with the exact accessible name Delete Article. Choose the layout, styling, and internal data representation. Return only the raw HTML artifact.\n",
+    "C": "Build the browser application described below.\n\nRequirement:\nDelete article button\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Consume window.initialState exactly as supplied with this shape: window.initialState = { viewer: { username: string }, article: { slug: string, title: string, body: string, author: { username: string } } }. Render the supplied article at the fixed route /article/bounded-ui-case using the supplied title and body. Render the article author's username as visible text in an element matching [rel~=\"author\"]. If you implement Delete Article, expose it as an accessible button with the exact accessible name Delete Article. Choose the layout, styling, and internal data representation. Return only the raw HTML artifact.\n"
+  },
+  "schema_version": "realworld-author-ui-prompts/v1",
+  "status": "approved_for_execution-freeze_preparation",
+  "variants": {
+    "A": "Delete article button (only shown to article's author)",
+    "B": "Display the Delete article button only to the article's author.",
+    "C": "Delete article button"
+  }
+}

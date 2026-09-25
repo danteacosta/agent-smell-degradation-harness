@@ -1,0 +1,40 @@
+{
+  "decision": "approved_for_execution-freeze_preparation",
+  "human_approvals": 0,
+  "leakage_risk": {
+    "description": "The common interface reveals viewer and article-author identities, the author relation, and Delete Article accessibility. These feasibility cues are byte-identical across arms and disclose no expected ownership verdict.",
+    "shared_across_arms": true,
+    "status": "accepted_bounded_residual_risk"
+  },
+  "limits": [
+    "button click behavior is not evaluated",
+    "backend authorization is not evaluated",
+    "article deletion is not evaluated",
+    "collector executable and runtime are not frozen",
+    "provider dispatch is not authorized",
+    "no experimental result or H1/H2 inference exists"
+  ],
+  "review_date": "2026-09-25",
+  "reviewed": {
+    "common_interface": "approved",
+    "schedule": "approved",
+    "source_manipulation": "approved"
+  },
+  "reviewed_evidence": {
+    "ci_artifact_archive_sha256": "2b2b301f21838d515e2ea56636425d0c50f81ae14d73b7f0ba607b9890b368d8",
+    "common_interface_sha256": "d9995e17a814890bf7ad3ae6bf39999120e7d61c8c16d657b5da046542e770a0",
+    "instrument_sha256": "526a2aee0264ac81e4c318ad6b9c58d968113bae7dc41d776d40b3500112434e",
+    "license_sha256": "a999311c4ccfecf18b7c7beb7a7a31682bb009839ab3827164fa2f8c333fc9dd",
+    "qualification_manifest_sha256": "cf5baf358bc64914f16e1023eb48f34d73c9034127d9b02079dcfe8f4006a820",
+    "request_text_sha256": {
+      "A": "17ade428a291bf3e2739dc09e137635ed6375c1b8bd9cc6d04415ade99839290",
+      "B": "81c1e11641c9f1ced965716557f2dc5793051dd632dc295e4fdd41c825c81b4f",
+      "C": "923497d3f253a053f03f0519407e72441268aff6e730f699fce65cdf1c67ae24"
+    },
+    "schedule_sha256": "a57ac56dfcf9a4dd7e96c15e4489874427ed7e7712b1c78fe28d23fdf6b79363",
+    "source_sha256": "65fbd975a3ab2021057b1c1944cf66418aa846039e51b166d2a98eb29e7169fb"
+  },
+  "reviewer_id": "codex-agent-independent-admission-review-20260925",
+  "schema_version": "realworld-author-ui-admission-review/v1",
+  "scope": "visibility of the Delete Article button"
+}

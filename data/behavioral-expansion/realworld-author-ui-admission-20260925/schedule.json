@@ -1,0 +1,110 @@
+[
+  {
+    "arm": "C",
+    "model": "gpt-5.6-luna",
+    "replication": 2,
+    "slot_id": "rw-f208b860b4a8581d093fe725"
+  },
+  {
+    "arm": "A",
+    "model": "gpt-5.6-sol",
+    "replication": 2,
+    "slot_id": "rw-172ddc3bee40e1eb570ee37f"
+  },
+  {
+    "arm": "B",
+    "model": "gpt-5.6-luna",
+    "replication": 1,
+    "slot_id": "rw-7728629b1ec272f698eefb7b"
+  },
+  {
+    "arm": "C",
+    "model": "gpt-5.6-luna",
+    "replication": 3,
+    "slot_id": "rw-5de63e2fef4a6b6c37025e2c"
+  },
+  {
+    "arm": "C",
+    "model": "gpt-5.6-luna",
+    "replication": 1,
+    "slot_id": "rw-e79a3dc4230b0ca7499df74f"
+  },
+  {
+    "arm": "B",
+    "model": "gpt-5.6-sol",
+    "replication": 3,
+    "slot_id": "rw-5c84842f7bc31fcaba869c17"
+  },
+  {
+    "arm": "A",
+    "model": "gpt-5.6-luna",
+    "replication": 1,
+    "slot_id": "rw-bd9b43f719398ea27a620a9f"
+  },
+  {
+    "arm": "C",
+    "model": "gpt-5.6-sol",
+    "replication": 2,
+    "slot_id": "rw-269326a9008b406bcbc35921"
+  },
+  {
+    "arm": "B",
+    "model": "gpt-5.6-luna",
+    "replication": 3,
+    "slot_id": "rw-415ccab13f5eccedfb236689"
+  },
+  {
+    "arm": "A",
+    "model": "gpt-5.6-sol",
+    "replication": 3,
+    "slot_id": "rw-b35d974937110d46416283a0"
+  },
+  {
+    "arm": "B",
+    "model": "gpt-5.6-sol",
+    "replication": 2,
+    "slot_id": "rw-1f83372c5a4a56312ba2ea1e"
+  },
+  {
+    "arm": "C",
+    "model": "gpt-5.6-sol",
+    "replication": 3,
+    "slot_id": "rw-26e2f56f9eed314c54577136"
+  },
+  {
+    "arm": "C",
+    "model": "gpt-5.6-sol",
+    "replication": 1,
+    "slot_id": "rw-98f02c78403ad96eba86d172"
+  },
+  {
+    "arm": "A",
+    "model": "gpt-5.6-sol",
+    "replication": 1,
+    "slot_id": "rw-228a72c565e30a6c89312d20"
+  },
+  {
+    "arm": "A",
+    "model": "gpt-5.6-luna",
+    "replication": 3,
+    "slot_id": "rw-56cbb4f9e5449899957542dd"
+  },
+  {
+    "arm": "A",
+    "model": "gpt-5.6-luna",
+    "replication": 2,
+    "slot_id": "rw-9eb549f44dbdc384192076dc"
+  },
+  {
+    "arm": "B",
+    "model": "gpt-5.6-luna",
+    "replication": 2,
+    "slot_id": "rw-1fcb4ac2a7f9d19e22d0dca0"
+  },
+  {
+    "arm": "B",
+    "model": "gpt-5.6-sol",
+    "replication": 1,
+    "slot_id": "rw-ca12bc4f0301275b4c1b657b"
+  }
+]

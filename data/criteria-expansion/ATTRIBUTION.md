@@ -7,7 +7,8 @@ and copyright notices are retained in their project directories:
   LICENSE and NOTICE retained; full Apache license in `sources/APACHE-2.0.txt`.
 - TodoMVC: upstream contributors, MIT; see `sources/todomvc/license.md`.
 - RealWorld: Copyright 2021 Thinkster, 2026 c4ffein; MIT. Excluded framework logos
-  were not copied. `specs__api__openapi.yml` was inspected but not selected.
+  were not copied. Preserved inputs include the API specification and frontend
+  routing specification at the revision recorded in `sources/realworld/revision.txt`.
 - CaSS: Eduworks Corporation and contributing parties; Apache-2.0; see source
   SRS copyright notice and `sources/CASS/LICENSE`.
 

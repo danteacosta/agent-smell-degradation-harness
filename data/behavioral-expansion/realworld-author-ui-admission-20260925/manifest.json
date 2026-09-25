@@ -1,0 +1,225 @@
+{
+  "automatic_dispatch_allowed": false,
+  "claims": {
+    "experimental_outcome": false,
+    "h1_supported": false,
+    "h2_supported": false
+  },
+  "endpoint_admission": "admitted_bounded_exploratory_endpoint",
+  "execution_configuration_frozen": false,
+  "freeze_status": "prompts_and_bounded_endpoint_frozen_not_execution_ready",
+  "human_approvals": 0,
+  "instrument": {
+    "ci_artifact_archive_sha256": "2b2b301f21838d515e2ea56636425d0c50f81ae14d73b7f0ba607b9890b368d8",
+    "instrument_sha256": "526a2aee0264ac81e4c318ad6b9c58d968113bae7dc41d776d40b3500112434e",
+    "qualification_manifest_sha256": "cf5baf358bc64914f16e1023eb48f34d73c9034127d9b02079dcfe8f4006a820",
+    "qualification_scope": "authorship-conditioned perceptibility in four crossed browser contexts"
+  },
+  "model_calls": 0,
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "planned_slots": 18,
+  "prompt_bundle": {
+    "common_interface": "Implementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Consume window.initialState exactly as supplied with this shape: window.initialState = { viewer: { username: string }, article: { slug: string, title: string, body: string, author: { username: string } } }. Render the supplied article at the fixed route /article/bounded-ui-case using the supplied title and body. Render the article author's username as visible text in an element matching [rel~=\"author\"]. If you implement Delete Article, expose it as an accessible button with the exact accessible name Delete Article. Choose the layout, styling, and internal data representation. Return only the raw HTML artifact.\n",
+    "common_interface_sha256": "d9995e17a814890bf7ad3ae6bf39999120e7d61c8c16d657b5da046542e770a0",
+    "omission": {
+      "coordinate_system": "zero-based Unicode code points; end exclusive",
+      "end": 54,
+      "start": 21,
+      "text": " (only shown to article's author)"
+    },
+    "request_text_sha256": {
+      "A": "17ade428a291bf3e2739dc09e137635ed6375c1b8bd9cc6d04415ade99839290",
+      "B": "81c1e11641c9f1ced965716557f2dc5793051dd632dc295e4fdd41c825c81b4f",
+      "C": "923497d3f253a053f03f0519407e72441268aff6e730f699fce65cdf1c67ae24"
+    },
+    "requests": {
+      "A": "Build the browser application described below.\n\nRequirement:\nDelete article button (only shown to article's author)\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Consume window.initialState exactly as supplied with this shape: window.initialState = { viewer: { username: string }, article: { slug: string, title: string, body: string, author: { username: string } } }. Render the supplied article at the fixed route /article/bounded-ui-case using the supplied title and body. Render the article author's username as visible text in an element matching [rel~=\"author\"]. If you implement Delete Article, expose it as an accessible button with the exact accessible name Delete Article. Choose the layout, styling, and internal data representation. Return only the raw HTML artifact.\n",
+      "B": "Build the browser application described below.\n\nRequirement:\nDisplay the Delete article button only to the article's author.\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Consume window.initialState exactly as supplied with this shape: window.initialState = { viewer: { username: string }, article: { slug: string, title: string, body: string, author: { username: string } } }. Render the supplied article at the fixed route /article/bounded-ui-case using the supplied title and body. Render the article author's username as visible text in an element matching [rel~=\"author\"]. If you implement Delete Article, expose it as an accessible button with the exact accessible name Delete Article. Choose the layout, styling, and internal data representation. Return only the raw HTML artifact.\n",
+      "C": "Build the browser application described below.\n\nRequirement:\nDelete article button\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Consume window.initialState exactly as supplied with this shape: window.initialState = { viewer: { username: string }, article: { slug: string, title: string, body: string, author: { username: string } } }. Render the supplied article at the fixed route /article/bounded-ui-case using the supplied title and body. Render the article author's username as visible text in an element matching [rel~=\"author\"]. If you implement Delete Article, expose it as an accessible button with the exact accessible name Delete Article. Choose the layout, styling, and internal data representation. Return only the raw HTML artifact.\n"
+    },
+    "schema_version": "realworld-author-ui-prompts/v1",
+    "status": "approved_for_execution-freeze_preparation",
+    "variants": {
+      "A": "Delete article button (only shown to article's author)",
+      "B": "Display the Delete article button only to the article's author.",
+      "C": "Delete article button"
+    }
+  },
+  "provider_calls": 0,
+  "remaining_execution_requirements": [
+    "freeze collector executable, configuration, runtime, and per-request isolation",
+    "verify capacity and custody before any provider dispatch"
+  ],
+  "repetitions": [
+    1,
+    2,
+    3
+  ],
+  "request_sha256": {
+    "rw-172ddc3bee40e1eb570ee37f": "01741e9178ab81fb3658d251f57e696344b194e9d1b8a50633822b9f803d9925",
+    "rw-1f83372c5a4a56312ba2ea1e": "a28d30a4610b41b02fe0188aba0f7bf9f7bafa411b55c442b87d6e2d995542e8",
+    "rw-1fcb4ac2a7f9d19e22d0dca0": "a28d30a4610b41b02fe0188aba0f7bf9f7bafa411b55c442b87d6e2d995542e8",
+    "rw-228a72c565e30a6c89312d20": "01741e9178ab81fb3658d251f57e696344b194e9d1b8a50633822b9f803d9925",
+    "rw-269326a9008b406bcbc35921": "72f50196e990ef082e28494880bd17bd38e0d49079dbed2fa14abb4fb8ac4f6c",
+    "rw-26e2f56f9eed314c54577136": "72f50196e990ef082e28494880bd17bd38e0d49079dbed2fa14abb4fb8ac4f6c",
+    "rw-415ccab13f5eccedfb236689": "a28d30a4610b41b02fe0188aba0f7bf9f7bafa411b55c442b87d6e2d995542e8",
+    "rw-56cbb4f9e5449899957542dd": "01741e9178ab81fb3658d251f57e696344b194e9d1b8a50633822b9f803d9925",
+    "rw-5c84842f7bc31fcaba869c17": "a28d30a4610b41b02fe0188aba0f7bf9f7bafa411b55c442b87d6e2d995542e8",
+    "rw-5de63e2fef4a6b6c37025e2c": "72f50196e990ef082e28494880bd17bd38e0d49079dbed2fa14abb4fb8ac4f6c",
+    "rw-7728629b1ec272f698eefb7b": "a28d30a4610b41b02fe0188aba0f7bf9f7bafa411b55c442b87d6e2d995542e8",
+    "rw-98f02c78403ad96eba86d172": "72f50196e990ef082e28494880bd17bd38e0d49079dbed2fa14abb4fb8ac4f6c",
+    "rw-9eb549f44dbdc384192076dc": "01741e9178ab81fb3658d251f57e696344b194e9d1b8a50633822b9f803d9925",
+    "rw-b35d974937110d46416283a0": "01741e9178ab81fb3658d251f57e696344b194e9d1b8a50633822b9f803d9925",
+    "rw-bd9b43f719398ea27a620a9f": "01741e9178ab81fb3658d251f57e696344b194e9d1b8a50633822b9f803d9925",
+    "rw-ca12bc4f0301275b4c1b657b": "a28d30a4610b41b02fe0188aba0f7bf9f7bafa411b55c442b87d6e2d995542e8",
+    "rw-e79a3dc4230b0ca7499df74f": "72f50196e990ef082e28494880bd17bd38e0d49079dbed2fa14abb4fb8ac4f6c",
+    "rw-f208b860b4a8581d093fe725": "72f50196e990ef082e28494880bd17bd38e0d49079dbed2fa14abb4fb8ac4f6c"
+  },
+  "review": {
+    "decision": "approved_for_execution-freeze_preparation",
+    "evidence_path": "independent-review.json",
+    "evidence_sha256": "659c56629edea07eb39e4014d09df315650a413026ac70d4e7c4920d1307aee1",
+    "reviewer_id": "codex-agent-independent-admission-review-20260925"
+  },
+  "rights": {
+    "license": "MIT",
+    "path": "data/criteria-expansion/sources/realworld/LICENSE",
+    "revision": "ebbcdeb8d55b42a3a613c787560498b8ef10003f",
+    "sha256": "a999311c4ccfecf18b7c7beb7a7a31682bb009839ab3827164fa2f8c333fc9dd",
+    "url": "https://raw.githubusercontent.com/realworld-apps/realworld/ebbcdeb8d55b42a3a613c787560498b8ef10003f/LICENSE"
+  },
+  "schedule": [
+    {
+      "arm": "C",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "slot_id": "rw-f208b860b4a8581d093fe725"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "slot_id": "rw-172ddc3bee40e1eb570ee37f"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "slot_id": "rw-7728629b1ec272f698eefb7b"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "slot_id": "rw-5de63e2fef4a6b6c37025e2c"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "slot_id": "rw-e79a3dc4230b0ca7499df74f"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "slot_id": "rw-5c84842f7bc31fcaba869c17"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "slot_id": "rw-bd9b43f719398ea27a620a9f"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "slot_id": "rw-269326a9008b406bcbc35921"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "slot_id": "rw-415ccab13f5eccedfb236689"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "slot_id": "rw-b35d974937110d46416283a0"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "slot_id": "rw-1f83372c5a4a56312ba2ea1e"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "slot_id": "rw-26e2f56f9eed314c54577136"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "slot_id": "rw-98f02c78403ad96eba86d172"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "slot_id": "rw-228a72c565e30a6c89312d20"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "slot_id": "rw-56cbb4f9e5449899957542dd"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "slot_id": "rw-9eb549f44dbdc384192076dc"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "slot_id": "rw-1fcb4ac2a7f9d19e22d0dca0"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "slot_id": "rw-ca12bc4f0301275b4c1b657b"
+    }
+  ],
+  "schema_version": "realworld-author-ui-admission/v1",
+  "scope": {
+    "excluded": [
+      "button click behavior",
+      "backend authorization",
+      "article deletion"
+    ],
+    "included": "visibility of the Delete Article button"
+  },
+  "seed": 20260925,
+  "source": {
+    "exact_line": "  - Delete article button (only shown to article's author)",
+    "preserved_path": "data/criteria-expansion/sources/realworld/docs__src__content__docs__specifications__frontend__routing.md",
+    "repository": "realworld-apps/realworld",
+    "revision": "ebbcdeb8d55b42a3a613c787560498b8ef10003f",
+    "sha256": "65fbd975a3ab2021057b1c1944cf66418aa846039e51b166d2a98eb29e7169fb",
+    "slice": "Delete article button (only shown to article's author)",
+    "upstream_path": "docs/src/content/docs/specifications/frontend/routing.md",
+    "url": "https://raw.githubusercontent.com/realworld-apps/realworld/ebbcdeb8d55b42a3a613c787560498b8ef10003f/docs/src/content/docs/specifications/frontend/routing.md"
+  },
+  "stage": "approved_pre_execution_freeze"
+}
