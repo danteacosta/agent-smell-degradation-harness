@@ -66,6 +66,8 @@ experiment evidence.
 
 - [RealWorld article-author admission and prompt freeze](realworld-author-ui-admission-20260925.md): independent review approval, exact source and rights custody, A/B/C requests and 18-position schedule bound to the qualified instrument; execution freeze remains pending, with no model calls.
 
+- [RealWorld article-author collection freeze status](realworld-author-collection-freeze-20260925.md): separate local-image qualification, CLI/runtime custody and single-attempt two-phase collector verified with doubles; no live call or experimental result.
+
 - [Native UI source candidates](native-ui-source-candidates-20260923.md): pinned RealWorld/Kanboard UI sources; not admitted.
 
 - [E2E admission and prompt freeze](e2e-admission-freeze-20260923.md): one bounded persistence endpoint; Mark all and StrictDoc deferred; 18 unattempted positions, no execution-ready claim.
