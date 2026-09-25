@@ -1,6 +1,8 @@
 import hashlib
 import json
 from pathlib import Path
+import subprocess
+import sys
 
 import pytest
 
@@ -89,3 +91,16 @@ def test_materialization_hash_binds_all_requests(tmp_path: Path) -> None:
     assert successor.validate_materialized(output)["planned_slots"] == 54
     with pytest.raises(FileExistsError):
         successor.materialize(output)
+
+
+def test_command_line_materializes_from_repository_root(tmp_path: Path) -> None:
+    output = tmp_path / "cli-freeze"
+    result = subprocess.run(
+        [sys.executable, "scripts/three_project_scaffold_freeze.py", "--output", str(output)],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    assert successor.validate_materialized(output)["planned_slots"] == 54
