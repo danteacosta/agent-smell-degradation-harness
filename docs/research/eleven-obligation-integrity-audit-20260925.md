@@ -34,6 +34,8 @@ A second isolated pass verified the new guards. Two reviewers independently foun
 
 The isolated reviewers ran in read-only sandboxes; two could not execute the full pytest command because no writable temporary directory was available. That environment limitation does not substitute for the root verification above.
 
+This audit remains the record for the 11-obligation state. The later fourth panel is separately recorded in `fourth-candidate-revision-panel-20260925.md` and brings the prospective pool to 12 obligations; it does not retroactively change the counts audited here.
+
 ## Residual limitation
 
 CI can validate the embedded public decisions, source locators and declared digests, but it cannot recompute hashes of private prompt and response files that are intentionally excluded from Git. Independent custody review of those private files remains necessary before treating chronology and session isolation as externally verified.

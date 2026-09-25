@@ -35,6 +35,8 @@ Six of seven candidates passed unanimously:
 
 Combining all three panels yields **11 eligible obligations across all six projects**, or at most **198 planned positions** under the frozen design: `11 obligations × 3 arms × 2 model configurations × 3 repetitions`.
 
+Subsequent prospective work is recorded in `fourth-candidate-revision-panel-20260925.md`. It replaces the sole remaining deferred case with a source-supported Paperless nested-tag obligation and raises the final candidate ceiling to 12 obligations and 216 positions. This does not alter the historical third-panel result above.
+
 | Project | Eligible obligations |
 | --- | ---: |
 | TodoMVC | 2 |

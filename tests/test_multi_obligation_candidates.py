@@ -24,9 +24,9 @@ def test_canonical_chain_reports_final_prospective_ceiling() -> None:
     assert candidates.validate_chain() == {
         "projects": 6,
         "registered_candidates": 12,
-        "eligible_obligations": 11,
-        "eligible_positions": 198,
-        "still_deferred": 1,
+        "eligible_obligations": 12,
+        "eligible_positions": 216,
+        "still_deferred": 0,
     }
 
 
@@ -234,3 +234,37 @@ def test_third_panel_rejects_coverage_without_eligible_candidate(tmp_path) -> No
 
     with pytest.raises(ValueError, match="third panel summary drift"):
         candidates.validate_third_panel(path)
+
+
+def test_fourth_panel_admits_final_candidate_only_by_unanimity() -> None:
+    assert candidates.validate_fourth_panel(candidates.FOURTH_PANEL_PATH) == {
+        "reviewers": 3,
+        "replacement_candidates": 1,
+        "newly_accepted": 1,
+        "still_deferred": 0,
+        "total_eligible": 12,
+        "represented_projects": 6,
+        "eligible_positions": 216,
+    }
+
+
+def test_fourth_panel_rejects_non_unanimous_eligibility(tmp_path) -> None:
+    payload = json.loads(candidates.FOURTH_PANEL_PATH.read_text())
+    payload["reviewers"][0]["candidates"][0]["verdict"] = "DEFER"
+    payload["reviewers"][0]["accepted_count"] = 0
+    payload["reviewers"][0]["deferred_count"] = 1
+    path = tmp_path / "fourth-panel-non-unanimous.json"
+    path.write_text(json.dumps(payload))
+
+    with pytest.raises(ValueError, match="fourth panel consensus drift"):
+        candidates.validate_fourth_panel(path)
+
+
+def test_fourth_panel_rejects_wrong_predecessor(tmp_path) -> None:
+    payload = json.loads(candidates.FOURTH_PANEL_PATH.read_text())
+    payload["revisions"][0]["replaces_candidate_id"] = "paperless-accept-duplicate"
+    path = tmp_path / "fourth-panel-wrong-predecessor.json"
+    path.write_text(json.dumps(payload))
+
+    with pytest.raises(ValueError, match="fourth panel replacement drift"):
+        candidates.validate_fourth_panel(path)
