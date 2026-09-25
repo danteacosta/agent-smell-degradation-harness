@@ -68,6 +68,8 @@ experiment evidence.
 
 - [RealWorld article-author collection freeze status](realworld-author-collection-freeze-20260925.md): separate local-image qualification, CLI/runtime custody and single-attempt two-phase collector verified with doubles; no live call or experimental result.
 
+- [RealWorld article-author E2E results](realworld-author-ui-results-20260925.md): second-project generated-code browser evidence; Luna shows C−A +1, Sol C−A −1/3, one B unknown, and a heterogeneous bounded result without an H1/H2 claim.
+
 - [Native UI source candidates](native-ui-source-candidates-20260923.md): pinned RealWorld/Kanboard UI sources; not admitted.
 
 - [E2E admission and prompt freeze](e2e-admission-freeze-20260923.md): one bounded persistence endpoint; Mark all and StrictDoc deferred; 18 unattempted positions, no execution-ready claim.

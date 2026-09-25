@@ -1,0 +1,416 @@
+{
+  "schema_version": "realworld-author-ui-public-ledger/v1",
+  "planned": 18,
+  "recorded_rows": 18,
+  "rows": [
+    {
+      "slot_id": "rw-f208b860b4a8581d093fe725",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "variant": "C",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "target_assertions_failed": [
+        "non_author_does_not_see_delete_article"
+      ],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "bb62607afb58b4b03a5910ddf7a32b9548eac61926706c4a2905ddb0966fb5d9",
+      "report_sha256": "bc9a8d6b99017846e8e711c757d4252c78c36ea8b9830805c7d65baeed4252b4",
+      "executor_sha256": "09f7e29ac79e41a6ce51186d89c618258ecb92ed3b1379bdde654634477e6857",
+      "usage": {
+        "input_tokens": 44849,
+        "cached_input_tokens": 27136,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1199,
+        "reasoning_output_tokens": 251
+      }
+    },
+    {
+      "slot_id": "rw-172ddc3bee40e1eb570ee37f",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "variant": "A",
+      "category": "pass",
+      "target_failed": false,
+      "target_assertions_failed": [],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "8fa299b7347cc25aaf2fe3cdececbf64ff0931c23e79327bf991bf3ae7e8c9cc",
+      "report_sha256": "013ee7a96b348c113ab99682871401c379541f350520120b3634d84779db8541",
+      "executor_sha256": "dcbd72435f1123d143d9bbaed6cf4d15a4f536a424a8e5e74ed2a4b4433708f9",
+      "usage": {
+        "input_tokens": 13920,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1522,
+        "reasoning_output_tokens": 127
+      }
+    },
+    {
+      "slot_id": "rw-7728629b1ec272f698eefb7b",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "variant": "B",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "target_assertions_failed": [
+        "non_author_does_not_see_delete_article"
+      ],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "50585b43db01e1ff37f429efc4f243507586959ef8212c59f21da8597889fd6a",
+      "report_sha256": "d033428fb10fa4352b0f79acbb3f358a89990ea919f6df292ee3a2fc38943154",
+      "executor_sha256": "dc73b8476ffc9250c63f5c8decbf17afa3866b876c41dd5bac633a0ef48a4793",
+      "usage": {
+        "input_tokens": 25002,
+        "cached_input_tokens": 13824,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1356,
+        "reasoning_output_tokens": 218
+      }
+    },
+    {
+      "slot_id": "rw-5de63e2fef4a6b6c37025e2c",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "variant": "C",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "target_assertions_failed": [
+        "non_author_does_not_see_delete_article"
+      ],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "eeb00af1773b980820dfa6785214aabf16f84e3df6fa418b9819ff823ad7accc",
+      "report_sha256": "45e989ae00f33b3325301bdd8f59b7101d692445959f4fceaff0c47f2acd4778",
+      "executor_sha256": "bb0fd9202ee349c8bbc8348d51fdb7def71e3f9ef111ab0eee0e3ced9ea38b5c",
+      "usage": {
+        "input_tokens": 12406,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1546,
+        "reasoning_output_tokens": 134
+      }
+    },
+    {
+      "slot_id": "rw-e79a3dc4230b0ca7499df74f",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "variant": "C",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "target_assertions_failed": [
+        "non_author_does_not_see_delete_article"
+      ],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "e3f07382595182f5b1cf6f5a7e11895496ab5c9ff89eb580e35a8d9eccb22fc5",
+      "report_sha256": "7502a33497034b8a3d3160ad14ca5aaa57e4e7449b466aa72850738b8d4ac6c3",
+      "executor_sha256": "26aa8df8448540bf9f5fe9bb28c2d8015b2b51eac002f9dbc9e7c6f238a4d333",
+      "usage": {
+        "input_tokens": 41418,
+        "cached_input_tokens": 34048,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2179,
+        "reasoning_output_tokens": 151
+      }
+    },
+    {
+      "slot_id": "rw-5c84842f7bc31fcaba869c17",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "variant": "B",
+      "category": "pass",
+      "target_failed": false,
+      "target_assertions_failed": [],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "26bfdd9012f7ac7515d29e0e659802635344fdaee84895f1f4e2f50436fbb492",
+      "report_sha256": "981986d9f1b18c2b1de02c72597ab657341f5b063c92da6bb7bba0f456e1f426",
+      "executor_sha256": "1639ad43fe1c061304d2ad4870e09c6b3e4445fe02394337576c6f81633ed90c",
+      "usage": {
+        "input_tokens": 27961,
+        "cached_input_tokens": 13696,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 751,
+        "reasoning_output_tokens": 133
+      }
+    },
+    {
+      "slot_id": "rw-bd9b43f719398ea27a620a9f",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "variant": "A",
+      "category": "pass",
+      "target_failed": false,
+      "target_assertions_failed": [],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "cf5e52b0e7b847df53fd1a02ce8c88cfd09112154ecbc973246f0c929d53bc13",
+      "report_sha256": "d4eb8061de79896f854b01c55b2c36c7d3c84288a78e1942c5b0c0628db29ee7",
+      "executor_sha256": "281c7d6b6bb13deabb7bb05b5ec56fb0b5cb744eb494e2a8459058ef8c27d409",
+      "usage": {
+        "input_tokens": 24964,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1920,
+        "reasoning_output_tokens": 265
+      }
+    },
+    {
+      "slot_id": "rw-269326a9008b406bcbc35921",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "variant": "C",
+      "category": "pass",
+      "target_failed": false,
+      "target_assertions_failed": [],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "e19bb21a4b032b3e675792318a5c174798272d21ec2f3939122b6e6beb3b7532",
+      "report_sha256": "e836a33b21c76ef1c29b059b51ab95816790b6bf3d0cda87cc747688571c1195",
+      "executor_sha256": "ab21f36e1a42831e98c0ba12db9c18842bf47fdacfcd00a7f86a24a4bc45e63b",
+      "usage": {
+        "input_tokens": 13917,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1449,
+        "reasoning_output_tokens": 287
+      }
+    },
+    {
+      "slot_id": "rw-415ccab13f5eccedfb236689",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "variant": "B",
+      "category": "pass",
+      "target_failed": false,
+      "target_assertions_failed": [],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "8a7c2dca991b1d912fa0c80b07877a6962780b1e073f9d88cf738d2ed5882be0",
+      "report_sha256": "7b85b9d4994cc986fa7208901ab6c83f543e9c9432da1098645c938424ee46be",
+      "executor_sha256": "ab1d5412bd88380621cb622138291e812da42d6e7e6b89e9713491b04d6808e6",
+      "usage": {
+        "input_tokens": 40096,
+        "cached_input_tokens": 25856,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1031,
+        "reasoning_output_tokens": 219
+      }
+    },
+    {
+      "slot_id": "rw-b35d974937110d46416283a0",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "variant": "A",
+      "category": "pass",
+      "target_failed": false,
+      "target_assertions_failed": [],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "1f82ce627646d212dc011fa72b9a51443644dedee72babe9b6e6d4c8c4da742c",
+      "report_sha256": "f7aea42b87561226bcfe6bdf8e8db528963bfe1155e23ac3b4ddccf1ca2f3be4",
+      "executor_sha256": "b4ddbbd63a87c0f251bdb6f30f4070f28597507bfa2c20b86b00a84079fd6407",
+      "usage": {
+        "input_tokens": 13924,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1384,
+        "reasoning_output_tokens": 171
+      }
+    },
+    {
+      "slot_id": "rw-1f83372c5a4a56312ba2ea1e",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "variant": "B",
+      "category": "pass",
+      "target_failed": false,
+      "target_assertions_failed": [],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "5785367b44667d80bc8f85f2c2d43c51e66abe610ef6c223694de6605044644e",
+      "report_sha256": "1f7a4b6eb55f7402db86aefc02045dd9e836e003a29dbe3ac2804137cc0dcbde",
+      "executor_sha256": "a7abd21916138705f87004333d3dd5d82aee8e30f8fdc8b45a3b0ad3462c8ead",
+      "usage": {
+        "input_tokens": 13921,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 895,
+        "reasoning_output_tokens": 127
+      }
+    },
+    {
+      "slot_id": "rw-26e2f56f9eed314c54577136",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "variant": "C",
+      "category": "pass",
+      "target_failed": false,
+      "target_assertions_failed": [],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "eb95da93f4afc505de9c0faa576ed75c19f683d2646539bddf9ce0d80ad7dbe7",
+      "report_sha256": "84933fb9b5be0dabfeda937e80ae092de5af16f2ff8212fc5302084ae40d987a",
+      "executor_sha256": "74b04e3affbc6d13564606b25438ce51372b8a4912ad6b86d93fae8c85f09b56",
+      "usage": {
+        "input_tokens": 13915,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1526,
+        "reasoning_output_tokens": 256
+      }
+    },
+    {
+      "slot_id": "rw-98f02c78403ad96eba86d172",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "variant": "C",
+      "category": "pass",
+      "target_failed": false,
+      "target_assertions_failed": [],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "9cba8874f376825989b726a5e4aab01abee8b63bf535e5b4cda03bafe5d68171",
+      "report_sha256": "eb476fb67a94b7ae769305a7891592ea14027a4f93036032ec6f7425a5b8f896",
+      "executor_sha256": "458aab39a61d66797701b2bef508661a3394d8e40c1149db213ad44be5448ff7",
+      "usage": {
+        "input_tokens": 13915,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1436,
+        "reasoning_output_tokens": 124
+      }
+    },
+    {
+      "slot_id": "rw-228a72c565e30a6c89312d20",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "variant": "A",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "target_assertions_failed": [
+        "non_author_does_not_see_delete_article"
+      ],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "6e0576cb1fe10f8a5c4b76493e6a64cf376d4aafd78cd7460a2b9db7a3dc3ab3",
+      "report_sha256": "0768b7903f04236250f4aeb785483eae64e6d0c00ec030dd35759296d1334216",
+      "executor_sha256": "1a7535ac06f7c8a4059d0be3e01226b5e2aa81148acf76c6db3e605cc7766ffc",
+      "usage": {
+        "input_tokens": 13926,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2749,
+        "reasoning_output_tokens": 422
+      }
+    },
+    {
+      "slot_id": "rw-56cbb4f9e5449899957542dd",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "variant": "A",
+      "category": "pass",
+      "target_failed": false,
+      "target_assertions_failed": [],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "2be142c9c15bf642e1d07b12e91dd241c1be7b94702e05ab9deaa7ec23691cb5",
+      "report_sha256": "b25a02f74a150bddc2a46f86517148ae95c56d81b2646af829796dd01fa03273",
+      "executor_sha256": "fa3465c26678585d2443294fd717e08b42c2377690c33ae33d1daf4abc097461",
+      "usage": {
+        "input_tokens": 26837,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1843,
+        "reasoning_output_tokens": 164
+      }
+    },
+    {
+      "slot_id": "rw-9eb549f44dbdc384192076dc",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "variant": "A",
+      "category": "pass",
+      "target_failed": false,
+      "target_assertions_failed": [],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "f9927e9deea165bdc01fc1b1131cbeac643536dc1718e469e4b1e5efcee2126b",
+      "report_sha256": "42807e51263ad39806422776cb1430d77eb748aa8d50ee4ec3aaebc848065a3c",
+      "executor_sha256": "b353043b876df386fc3d15e1a45d4742873d138773ca48ef492e2bc9e282da7b",
+      "usage": {
+        "input_tokens": 12409,
+        "cached_input_tokens": 9984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1081,
+        "reasoning_output_tokens": 102
+      }
+    },
+    {
+      "slot_id": "rw-1fcb4ac2a7f9d19e22d0dca0",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "variant": "B",
+      "category": "target_not_evaluable",
+      "target_failed": null,
+      "target_assertions_failed": [],
+      "target_assertions_not_evaluable": [
+        "author_sees_delete_article",
+        "non_author_does_not_see_delete_article"
+      ],
+      "artifact_sha256": "6d95e5e5399e2d5d09347c190a582277484ee2e4cb36192cf49562edde178b0c",
+      "report_sha256": "bef80562f2a2fa7b33ea36cb4f50f6849dae7e882f4561dcb9bd9adec8d72982",
+      "executor_sha256": "c1ccc550677c300a8ee8971dca10778e1cfdc77c39ed5d2d78704c2b2ca1a581",
+      "usage": {
+        "input_tokens": 24964,
+        "cached_input_tokens": 22016,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 931,
+        "reasoning_output_tokens": 212
+      }
+    },
+    {
+      "slot_id": "rw-ca12bc4f0301275b4c1b657b",
+      "intent_id": "realworld-article-author",
+      "project_id": "realworld",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "variant": "B",
+      "category": "pass",
+      "target_failed": false,
+      "target_assertions_failed": [],
+      "target_assertions_not_evaluable": [],
+      "artifact_sha256": "958b7637887ce5b53598775839673a116514c89f05cc71b1f4c2a876c8476700",
+      "report_sha256": "e675e8a183157ecf6103a61834c2b95c391e96d456dcbb7f3ee1547081fc1bd0",
+      "executor_sha256": "3fb61e6286fe88f861767dbf4428ebfc1a82eca9c9add5a76c55d59ad31e15cc",
+      "usage": {
+        "input_tokens": 13923,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1047,
+        "reasoning_output_tokens": 81
+      }
+    }
+  ]
+}

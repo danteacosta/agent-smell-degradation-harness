@@ -1,0 +1,121 @@
+{
+  "schema_version": "realworld-author-ui-results/v1",
+  "status": "bounded_exploratory_second_project_e2e",
+  "source_sha256": {
+    "receipt.json": "1bb56d83986f8d3ff6e50f2005da68382116ea8e6a5f2919a13f9f9e1552a625",
+    "frozen/manifest.json": "28e659b7eb9424b3ca0dcc22fac5188dbce03f6f4ecd080e30547878cc11e046",
+    "frozen/receipt.json": "1587ff4cc3e4c13b0f5035b2dd6b8aa402b5dee9f29b8fe1120a170e5ecb7f9e",
+    "collection.json": "01d3f103474de4a04fb887fa9c74f64558d469539485cbfc5950380feb37dab1",
+    "results.json": "fef7e9ec8a7102e85ef9938aff5355cddbe3c0ea55a10af5983c8442fcea6a8b",
+    "analysis.json": "6090319e0bed99c6f20d2b435c961535ba7e7990304e5faa958e49a1633e5210"
+  },
+  "audit": {
+    "models": {
+      "gpt-5.6-luna": 9,
+      "gpt-5.6-sol": 9
+    },
+    "usage": {
+      "input_tokens": 392267,
+      "cached_input_tokens": 150144,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 25845,
+      "reasoning_output_tokens": 3444
+    },
+    "screenshots": 72,
+    "classifications_recomputed": 18,
+    "generation_before_browser": true
+  },
+  "claims": {
+    "finding": "heterogeneous_effect",
+    "luna_c_minus_a": [
+      1.0,
+      1.0
+    ],
+    "sol_c_minus_a": [
+      -0.3333333333333333,
+      -0.3333333333333333
+    ],
+    "unknown": {
+      "count": 1,
+      "slot_id": "rw-1fcb4ac2a7f9d19e22d0dca0",
+      "variant": "B"
+    },
+    "b_is_sensitivity_control": true,
+    "h1_supported": false,
+    "h2_supported": false
+  },
+  "samples": [
+    {
+      "id": "luna-c-failure-nonauthor",
+      "slot_id": "rw-f208b860b4a8581d093fe725",
+      "model": "gpt-5.6-luna",
+      "variant": "C",
+      "category": "target_only_failure",
+      "context": "non-author",
+      "file": "screenshots/luna-c-failure-nonauthor.png",
+      "sha256": "443ebb20a0e06a58c543eab9c08ad25aaabb6adf96987a7edd9c6f71d999506c",
+      "dimensions": [
+        1000,
+        720
+      ]
+    },
+    {
+      "id": "sol-a-failure-nonauthor",
+      "slot_id": "rw-228a72c565e30a6c89312d20",
+      "model": "gpt-5.6-sol",
+      "variant": "A",
+      "category": "target_only_failure",
+      "context": "non-author",
+      "file": "screenshots/sol-a-failure-nonauthor.png",
+      "sha256": "eafaf73fde5a8a7b6d018a99b5aa393f919442714261212f10b86136f194a81d",
+      "dimensions": [
+        1000,
+        720
+      ]
+    },
+    {
+      "id": "sol-c-pass-nonauthor",
+      "slot_id": "rw-269326a9008b406bcbc35921",
+      "model": "gpt-5.6-sol",
+      "variant": "C",
+      "category": "pass",
+      "context": "non-author",
+      "file": "screenshots/sol-c-pass-nonauthor.png",
+      "sha256": "c23a3ec37560d3312403c3a38f750d51172aeac777c310835f20b56edd7db835",
+      "dimensions": [
+        1000,
+        720
+      ]
+    },
+    {
+      "id": "luna-b-unknown-author",
+      "slot_id": "rw-1fcb4ac2a7f9d19e22d0dca0",
+      "model": "gpt-5.6-luna",
+      "variant": "B",
+      "category": "target_not_evaluable",
+      "context": "author",
+      "file": "screenshots/luna-b-unknown-author.png",
+      "sha256": "7462ef52d133ed7588baa0421050fc873adaccaa2e52d3b1a58667560af5cde7",
+      "dimensions": [
+        1000,
+        720
+      ]
+    }
+  ],
+  "privacy": {
+    "included": [
+      "manifest",
+      "ledger",
+      "analysis",
+      "four preselected screenshots"
+    ],
+    "excluded": [
+      "prompts",
+      "generated HTML",
+      "raw provider captures",
+      "private filesystem paths"
+    ]
+  },
+  "ledger_sha256": "df53e3c07a04c30034a4c77f0b2ac4838e1e44df5378528be173a6319f4cc036",
+  "analysis_sha256": "6090319e0bed99c6f20d2b435c961535ba7e7990304e5faa958e49a1633e5210"
+}

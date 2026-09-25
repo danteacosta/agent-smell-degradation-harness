@@ -1,0 +1,11 @@
+{
+  "files": {
+    "analysis.json": "6090319e0bed99c6f20d2b435c961535ba7e7990304e5faa958e49a1633e5210",
+    "ledger.json": "df53e3c07a04c30034a4c77f0b2ac4838e1e44df5378528be173a6319f4cc036",
+    "manifest.json": "ad92401315347cbd90c4b80918bc279c604d248d1969e16d7a8fa5fdc21a52f1",
+    "screenshots/luna-b-unknown-author.png": "7462ef52d133ed7588baa0421050fc873adaccaa2e52d3b1a58667560af5cde7",
+    "screenshots/luna-c-failure-nonauthor.png": "443ebb20a0e06a58c543eab9c08ad25aaabb6adf96987a7edd9c6f71d999506c",
+    "screenshots/sol-a-failure-nonauthor.png": "eafaf73fde5a8a7b6d018a99b5aa393f919442714261212f10b86136f194a81d",
+    "screenshots/sol-c-pass-nonauthor.png": "c23a3ec37560d3312403c3a38f750d51172aeac777c310835f20b56edd7db835"
+  }
+}
