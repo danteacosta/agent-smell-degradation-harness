@@ -268,3 +268,34 @@ def test_fourth_panel_rejects_wrong_predecessor(tmp_path) -> None:
 
     with pytest.raises(ValueError, match="fourth panel replacement drift"):
         candidates.validate_fourth_panel(path)
+
+
+def test_fifth_panel_replaces_composite_boundary_without_changing_ceiling() -> None:
+    assert candidates.validate_fifth_panel(candidates.FIFTH_PANEL_PATH) == {
+        "reviewers": 3,
+        "replaced_candidates": 1,
+        "total_eligible": 12,
+        "represented_projects": 6,
+        "eligible_positions": 216,
+        "still_deferred": 0,
+    }
+
+
+def test_fifth_panel_rejects_non_unanimous_replacement(tmp_path) -> None:
+    payload = json.loads(candidates.FIFTH_PANEL_PATH.read_text())
+    payload["reviewers"][0]["verdict"] = "DEFER"
+    path = tmp_path / "fifth-panel-non-unanimous.json"
+    path.write_text(json.dumps(payload))
+
+    with pytest.raises(ValueError, match="fifth panel consensus drift"):
+        candidates.validate_fifth_panel(path)
+
+
+def test_fifth_panel_rejects_replacing_unknown_candidate(tmp_path) -> None:
+    payload = json.loads(candidates.FIFTH_PANEL_PATH.read_text())
+    payload["revision"]["replaces_candidate_id"] = "not-eligible"
+    path = tmp_path / "fifth-panel-unknown-predecessor.json"
+    path.write_text(json.dumps(payload))
+
+    with pytest.raises(ValueError, match="fifth panel replacement drift"):
+        candidates.validate_fifth_panel(path)

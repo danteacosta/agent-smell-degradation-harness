@@ -1,0 +1,108 @@
+{
+  "schema_version": "eligible-candidate-narrowing-panel/v1",
+  "stage": "pre_oracle_pre_generation_boundary_correction",
+  "collection_authorized": false,
+  "provider_calls_for_generation": 0,
+  "prior_panel_path": "data/e2e-multi-obligation/fourth-candidate-revision-panel-20260925.json",
+  "revision_register_sha256": "9031e9af868efaedd91981746957131e527d4aa7f097889c2590832ff96e5690",
+  "review_prompt_sha256": "d51097b6d51578f657ccf53064038d25c65df1c575845dcae9f2da4e67e14af3",
+  "private_manifest_sha256": "6c190973770c8621dcf031e1b0d4a48342bc3e8813bc34efb9338c766504e3bf",
+  "consensus_rule": "ACCEPT only when all three requested model configurations return ACCEPT",
+  "claims": {
+    "outcomes_observed": false,
+    "h1_confirmed": false,
+    "h2_evaluated": false
+  },
+  "revision": {
+    "candidate_id": "openproject-invalid-remaining-not-saved",
+    "replaces_candidate_id": "openproject-reject-remaining-over-work",
+    "project_id": "openproject",
+    "source": {
+      "path": "data/e2e-six-projects/sources/openproject/progress-tracking.md",
+      "sha256": "9aec062470806acf90d8dec1eab6f90d61377ec1ef20f7217fe5c3ed89ee27f9",
+      "line_start": 105,
+      "line_end": 107,
+      "exact_context": "> [!NOTE]\n> If you enter a value for Remaining work that is higher than Work, you will see an error message telling you that this is not possible. You will have to enter a value lower than Work to be able to save the new value.\n> Additionally, the value for Remaining work cannot be removed if a value for Work exists. If you wish to unset Remaining work, you need to also unset Work."
+    },
+    "revised_target": "Given Work=8h and stored Remaining work=7h, enter Remaining work=9h and attempt to save through the work-package UI. After the UI settles and the page is refreshed, stored Remaining work is still 7h. The Work value and successful page reload are controls; prevention of saving the invalid Remaining-work value is the single scored obligation. The target makes no assertion about the presence, absence, or wording of error feedback.",
+    "revision_stage": "before_oracle_and_generation"
+  },
+  "reviewers": [
+    {
+      "requested_model": "gpt-6-astra",
+      "response_sha256": "0e7942ed2b00c94a05d2b393dc0878b97192d16f7dd6aa516ad7cf663fa8fbc0",
+      "verdict": "ACCEPT",
+      "concise_reason": "The source directly prohibits saving Remaining work above Work. Retaining the stored 7h after attempting 9h and refreshing is one independently deletable, browser-observable obligation in a bounded deterministic fixture. Work and successful reload are explicitly unscored controls; error feedback is excluded."
+    },
+    {
+      "requested_model": "gpt-6-sol",
+      "response_sha256": "f8a662dc2b2592929102c72bac45cd16c307e841bd362633df84b6d7faaff20a",
+      "verdict": "ACCEPT",
+      "concise_reason": "The source directly says Remaining work above Work cannot be saved. The target scores only whether the invalid value remains unsaved, observable after a browser refresh with fixed fixture values. Work and reload are controls, and error feedback is excluded."
+    },
+    {
+      "requested_model": "gpt-6-luna",
+      "response_sha256": "821df6144637840bb68b3d4b08e1b72562ae9a623b1c5ceeaf45d7d8fc9bd7ae",
+      "verdict": "ACCEPT",
+      "concise_reason": "The source directly says Remaining work above Work cannot be saved. The target has one deletable scored outcome—stored Remaining work remains 7h—and treats Work=8h and reload success as controls. Persistence after refresh is browser-observable in a bounded fixture."
+    }
+  ],
+  "consensus": {
+    "candidate_id": "openproject-invalid-remaining-not-saved",
+    "replaces_candidate_id": "openproject-reject-remaining-over-work",
+    "project_id": "openproject",
+    "decisions": {
+      "gpt-6-astra": "ACCEPT",
+      "gpt-6-sol": "ACCEPT",
+      "gpt-6-luna": "ACCEPT"
+    },
+    "verdict": "ACCEPT"
+  },
+  "prior_eligible_candidate_ids": [
+    "kanboard-close-hides-task",
+    "nextcloud-restore-name-conflict",
+    "openproject-reject-remaining-over-work",
+    "paperless-accept-duplicate",
+    "nextcloud-delete-permanently",
+    "todo-clear-button-hidden",
+    "todo-edit-state-not-persisted",
+    "realworld-favorites-route-populated",
+    "realworld-comment-delete-author-only",
+    "kanboard-duplicate-preserves-title",
+    "openproject-derive-remaining-hours",
+    "paperless-nested-tag-adds-parent"
+  ],
+  "total_eligible_candidate_ids": [
+    "kanboard-close-hides-task",
+    "nextcloud-restore-name-conflict",
+    "openproject-invalid-remaining-not-saved",
+    "paperless-accept-duplicate",
+    "nextcloud-delete-permanently",
+    "todo-clear-button-hidden",
+    "todo-edit-state-not-persisted",
+    "realworld-favorites-route-populated",
+    "realworld-comment-delete-author-only",
+    "kanboard-duplicate-preserves-title",
+    "openproject-derive-remaining-hours",
+    "paperless-nested-tag-adds-parent"
+  ],
+  "total_eligible": 12,
+  "eligible_positions": 216,
+  "still_deferred": 0,
+  "represented_projects": [
+    "kanboard",
+    "nextcloud",
+    "openproject",
+    "paperless-ngx",
+    "realworld",
+    "todomvc"
+  ],
+  "eligible_project_counts": {
+    "kanboard": 2,
+    "nextcloud": 2,
+    "openproject": 2,
+    "paperless-ngx": 2,
+    "todomvc": 2,
+    "realworld": 2
+  }
+}

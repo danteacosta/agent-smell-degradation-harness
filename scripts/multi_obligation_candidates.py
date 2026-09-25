@@ -21,6 +21,9 @@ THIRD_PANEL_PATH = (
 FOURTH_PANEL_PATH = (
     ROOT / "data/e2e-multi-obligation/fourth-candidate-revision-panel-20260925.json"
 )
+FIFTH_PANEL_PATH = (
+    ROOT / "data/e2e-multi-obligation/fifth-candidate-narrowing-panel-20260925.json"
+)
 EXPECTED_PROJECTS = {
     "todomvc",
     "realworld",
@@ -631,13 +634,148 @@ def validate_fourth_panel(panel_path: Path) -> dict[str, int]:
     }
 
 
+def validate_fifth_panel(panel_path: Path) -> dict[str, int]:
+    """Validate a unanimous narrowing of one already eligible candidate."""
+    payload = json.loads(panel_path.read_text())
+    revision = payload.get("revision")
+    reviewers = payload.get("reviewers")
+    consensus = payload.get("consensus")
+    expected_models = {"gpt-6-astra", "gpt-6-sol", "gpt-6-luna"}
+    prior = json.loads(FOURTH_PANEL_PATH.read_text())
+    prior_eligible = prior["total_eligible_candidate_ids"]
+    if (
+        payload.get("schema_version") != "eligible-candidate-narrowing-panel/v1"
+        or payload.get("stage") != "pre_oracle_pre_generation_boundary_correction"
+        or payload.get("collection_authorized") is not False
+        or payload.get("provider_calls_for_generation") != 0
+        or payload.get("prior_panel_path")
+        != "data/e2e-multi-obligation/fourth-candidate-revision-panel-20260925.json"
+        or payload.get("claims")
+        != {"outcomes_observed": False, "h1_confirmed": False, "h2_evaluated": False}
+        or not re.fullmatch(r"[0-9a-f]{64}", str(payload.get("revision_register_sha256", "")))
+        or not re.fullmatch(r"[0-9a-f]{64}", str(payload.get("review_prompt_sha256", "")))
+        or not re.fullmatch(r"[0-9a-f]{64}", str(payload.get("private_manifest_sha256", "")))
+        or not isinstance(revision, dict)
+        or not isinstance(reviewers, list)
+        or len(reviewers) != 3
+        or not isinstance(consensus, dict)
+    ):
+        raise ValueError("fifth panel contract drift")
+
+    candidate_id = revision.get("candidate_id")
+    replaced_id = revision.get("replaces_candidate_id")
+    first_projects = {
+        row["candidate_id"]: row["project_id"]
+        for row in json.loads(SCREENING_PATH.read_text())["consensus"]
+    }
+    second = json.loads(REVISION_PANEL_PATH.read_text())
+    third = json.loads(THIRD_PANEL_PATH.read_text())
+    project_by_id = {
+        **first_projects,
+        **{row["candidate_id"]: row["project_id"] for row in second["revisions"]},
+        **{row["candidate_id"]: row["project_id"] for row in third["revisions"]},
+        **{row["candidate_id"]: row["project_id"] for row in prior["revisions"]},
+    }
+    if (
+        replaced_id not in prior_eligible
+        or not candidate_id
+        or candidate_id in prior_eligible
+        or revision.get("project_id") != project_by_id.get(replaced_id)
+    ):
+        raise ValueError("fifth panel replacement drift")
+    if (
+        revision.get("revision_stage") != "before_oracle_and_generation"
+        or not revision.get("revised_target")
+    ):
+        raise ValueError("fifth panel target drift")
+    source = revision.get("source", {})
+    source_path = (ROOT / str(source.get("path", ""))).resolve()
+    try:
+        source_path.relative_to(ROOT)
+    except ValueError as error:
+        raise ValueError("fifth panel source path escapes repository") from error
+    if not source_path.is_file() or _digest(source_path) != source.get("sha256"):
+        raise ValueError("fifth panel source hash drift")
+    context = source.get("exact_context")
+    lines = source_path.read_text().splitlines()
+    line_start, line_end = source.get("line_start"), source.get("line_end")
+    if (
+        not isinstance(context, str)
+        or not context
+        or not isinstance(line_start, int)
+        or not isinstance(line_end, int)
+        or line_start < 1
+        or line_end < line_start
+        or line_end > len(lines)
+        or context not in "\n".join(lines[line_start - 1 : line_end])
+    ):
+        raise ValueError("fifth panel source locator drift")
+
+    if {row.get("requested_model") for row in reviewers} != expected_models:
+        raise ValueError("fifth panel reviewer drift")
+    decisions: dict[str, str] = {}
+    for reviewer in reviewers:
+        if (
+            not re.fullmatch(r"[0-9a-f]{64}", str(reviewer.get("response_sha256", "")))
+            or reviewer.get("verdict") not in {"ACCEPT", "DEFER"}
+            or not reviewer.get("concise_reason")
+        ):
+            raise ValueError("fifth panel reviewer evidence drift")
+        decisions[reviewer["requested_model"]] = reviewer["verdict"]
+    expected_verdict = "ACCEPT" if set(decisions.values()) == {"ACCEPT"} else "DEFER"
+    if (
+        consensus.get("candidate_id") != candidate_id
+        or consensus.get("replaces_candidate_id") != replaced_id
+        or consensus.get("project_id") != revision.get("project_id")
+        or consensus.get("decisions") != decisions
+        or consensus.get("verdict") != expected_verdict
+    ):
+        raise ValueError("fifth panel consensus drift")
+
+    total_eligible = [
+        candidate_id if eligible_id == replaced_id else eligible_id
+        for eligible_id in prior_eligible
+    ] if expected_verdict == "ACCEPT" else prior_eligible
+    final_projects = {
+        **project_by_id,
+        candidate_id: revision["project_id"],
+    }
+    eligible_project_counts = Counter(
+        final_projects[eligible_id] for eligible_id in total_eligible
+    )
+    represented_projects = payload.get("represented_projects")
+    if (
+        payload.get("prior_eligible_candidate_ids") != prior_eligible
+        or payload.get("total_eligible_candidate_ids") != total_eligible
+        or payload.get("total_eligible") != len(total_eligible)
+        or payload.get("eligible_positions") != len(total_eligible) * 18
+        or payload.get("still_deferred") != int(expected_verdict != "ACCEPT")
+        or len(set(total_eligible)) != len(total_eligible)
+        or not isinstance(represented_projects, list)
+        or len(represented_projects) != len(set(represented_projects))
+        or set(represented_projects) != EXPECTED_PROJECTS
+        or set(represented_projects) != set(eligible_project_counts)
+        or payload.get("eligible_project_counts") != dict(eligible_project_counts)
+    ):
+        raise ValueError("fifth panel summary drift")
+    return {
+        "reviewers": len(reviewers),
+        "replaced_candidates": int(expected_verdict == "ACCEPT"),
+        "total_eligible": len(total_eligible),
+        "represented_projects": len(represented_projects),
+        "eligible_positions": len(total_eligible) * 18,
+        "still_deferred": int(expected_verdict != "ACCEPT"),
+    }
+
+
 def validate_chain() -> dict[str, int]:
     """Validate every prospective stage before reporting the final ceiling."""
     register = validate(REGISTER_PATH)
     validate_screening(SCREENING_PATH)
     validate_revision_panel(REVISION_PANEL_PATH)
     validate_third_panel(THIRD_PANEL_PATH)
-    final = validate_fourth_panel(FOURTH_PANEL_PATH)
+    validate_fourth_panel(FOURTH_PANEL_PATH)
+    final = validate_fifth_panel(FIFTH_PANEL_PATH)
     return {
         "projects": final["represented_projects"],
         "registered_candidates": register["candidates"],
