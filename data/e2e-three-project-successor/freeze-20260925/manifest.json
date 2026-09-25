@@ -1,0 +1,614 @@
+{
+  "automatic_dispatch_allowed": false,
+  "cases": {
+    "nextcloud": {
+      "endpoint": {
+        "invalid_if": "the required interface cannot be exercised",
+        "layer": "browser_e2e",
+        "non_targets": [
+          "deleted file leaves All files",
+          "deleted file appears in Deleted files",
+          "unrelated active file remains"
+        ],
+        "target": "A file in Deleted files can be restored and becomes visible in All files again.",
+        "unknown_if": "the rendered state cannot be classified without guessing"
+      },
+      "omission": {
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "end": 159,
+        "start": 122,
+        "text": " This allows you to restore it\nlater."
+      },
+      "project_id": "nextcloud",
+      "rights": {
+        "blob_sha": "1d658d6d37633decaec4382fcc8a2c05ac21bdf9",
+        "license": "CC-BY-3.0",
+        "path": "data/e2e-six-projects/sources/nextcloud/COPYING",
+        "sha256": "5138a74ac20f2965d97b2a9c35219ca74e24f4a93618b33f0e36e4b3c7873197",
+        "upstream_path": "COPYING"
+      },
+      "scaffold": {
+        "path": "eval/fixtures/three-project-scaffold/nextcloud.html",
+        "sha256": "bf53ce1e14886733f0f59ee325cea19d1d9e58aeb922246c7c9ed213506a44bc"
+      },
+      "source": {
+        "blob_sha": "2dd0da71dc2a848d6000579e329cd135d0691bea",
+        "exact_excerpt": "When you delete a file or folder in Nextcloud, it is normally moved to the\ntrash bin instead of being deleted immediately. This allows you to restore it\nlater.",
+        "locator": "Deleted files",
+        "path": "data/e2e-six-projects/sources/nextcloud/deleted_file_management.rst",
+        "repository": "nextcloud/documentation",
+        "revision": "121cb83001db7722870050b7980aea35fab82141",
+        "sha256": "9e8218c16b5f8e558cb535834271e9a02fd27ac733c7f45bba0126f62e67106f",
+        "upstream_path": "user_manual/files/deleted_file_management.rst"
+      },
+      "variants": {
+        "A": "When you delete a file or folder in Nextcloud, it is normally moved to the\ntrash bin instead of being deleted immediately. This allows you to restore it\nlater.",
+        "B": "Deleting a Nextcloud file moves it to the trash rather than erasing it immediately, so it can be restored later.",
+        "C": "When you delete a file or folder in Nextcloud, it is normally moved to the\ntrash bin instead of being deleted immediately."
+      }
+    },
+    "openproject": {
+      "endpoint": {
+        "invalid_if": "the required interface cannot be exercised",
+        "layer": "browser_e2e",
+        "non_targets": [
+          "% Complete becomes 0%",
+          "entered Work remains visible"
+        ],
+        "target": "Entering only Work and saving visibly makes Remaining Work equal Work.",
+        "unknown_if": "the rendered state cannot be classified without guessing"
+      },
+      "omission": {
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "end": 246,
+        "start": 186,
+        "text": "Remaining Work will automatically match the Work value, and "
+      },
+      "project_id": "openproject",
+      "rights": {
+        "blob_sha": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+        "license": "GPL-3.0",
+        "path": "data/e2e-six-projects/sources/openproject/LICENSE",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "upstream_path": "LICENSE"
+      },
+      "scaffold": {
+        "path": "eval/fixtures/three-project-scaffold/openproject.html",
+        "sha256": "45d4c8c6d837ce6fb98fb95aec246f13b92ddbadfd2b0a2b7b3cd642ec6202c0"
+      },
+      "source": {
+        "blob_sha": "1da0385336c3c2601ad76941a3969c20b1ef9ce8",
+        "exact_excerpt": "If you enter Work only, Remaining Work will automatically match the Work value, and % Complete will be set to 0%.",
+        "locator": "Calculation logic / When no field is set",
+        "path": "data/e2e-six-projects/sources/openproject/progress-tracking.md",
+        "repository": "opf/openproject",
+        "revision": "de051918ba8771d5415c172cc81bcd49f7d10472",
+        "sha256": "9aec062470806acf90d8dec1eab6f90d61377ec1ef20f7217fe5c3ed89ee27f9",
+        "upstream_path": "docs/user-guide/time-and-costs/progress-tracking/README.md"
+      },
+      "variants": {
+        "A": "When none of the three fields (% Complete, Work, or Remaining Work) have values set, the field you fill in first will determine how the others are calculated:\n\n- If you enter Work only, Remaining Work will automatically match the Work value, and % Complete will be set to 0%.",
+        "B": "With Work, Remaining Work, and % Complete initially empty, entering only Work sets Remaining Work to the same value and sets % Complete to 0%.",
+        "C": "When none of the three fields (% Complete, Work, or Remaining Work) have values set, the field you fill in first will determine how the others are calculated:\n\n- If you enter Work only, % Complete will be set to 0%."
+      }
+    },
+    "paperless-ngx": {
+      "endpoint": {
+        "invalid_if": "the required interface cannot be exercised",
+        "layer": "browser_e2e",
+        "non_targets": [
+          "existing document remains visible",
+          "upload button remains usable"
+        ],
+        "target": "Dropping a file over the rendered app creates a visible document row.",
+        "unknown_if": "the rendered state cannot be classified without guessing"
+      },
+      "omission": {
+        "coordinate_system": "zero-based Unicode code points; end exclusive",
+        "end": 111,
+        "start": 59,
+        "text": " or you\ncan simply drag a file anywhere into the app"
+      },
+      "project_id": "paperless-ngx",
+      "rights": {
+        "blob_sha": "733c072369ca77331f392c40da7404c85c36542c",
+        "license": "GPL-3.0",
+        "path": "data/e2e-six-projects/sources/paperless-ngx/LICENSE",
+        "sha256": "d62f065830aa3739cc031156b9690805c7b2e811b4a178c8b4acd8725d561c94",
+        "upstream_path": "LICENSE"
+      },
+      "scaffold": {
+        "path": "eval/fixtures/three-project-scaffold/paperless-ngx.html",
+        "sha256": "07c237ea62bf22c65b6a0c552cd82fa4bcc9c31f1d9d5ecb8411db2615139ae3"
+      },
+      "source": {
+        "blob_sha": "12cdaa921cc4fad9edbad5e9bf6c4ea9279d9c6f",
+        "exact_excerpt": "The dashboard has a button to upload documents to paperless or you\ncan simply drag a file anywhere into the app to initiate the consumption\nprocess.",
+        "locator": "Web UI Upload",
+        "path": "data/e2e-six-projects/sources/paperless-ngx/usage.md",
+        "repository": "paperless-ngx/paperless-ngx",
+        "revision": "4f777d7438378fe0b6dcc9f140a7eb469f9f0b0b",
+        "sha256": "78fc960ff99fb102d11e9db2830f9e879f4894822ff8f18684e972ffe04bd9dd",
+        "upstream_path": "docs/usage.md"
+      },
+      "variants": {
+        "A": "The dashboard has a button to upload documents to paperless or you\ncan simply drag a file anywhere into the app to initiate the consumption\nprocess.",
+        "B": "The Paperless-ngx dashboard lets users start document consumption either with its upload button or by dragging a file anywhere over the app.",
+        "C": "The dashboard has a button to upload documents to paperless to initiate the consumption\nprocess."
+      }
+    }
+  },
+  "claims": {
+    "confirmatory": false,
+    "h1_confirmed": false,
+    "h2_evaluated": false,
+    "pilot": true
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "new_provider_calls": 0,
+  "oracle_qualification": {
+    "controls": 18,
+    "image_id": "sha256:274868c475888f4228e376a2596e99dd7daebacccde04df5b678f7a31212e7a5",
+    "qualification_path": "data/e2e-three-project-successor/oracle-qualification-20260925/qualification.json",
+    "qualification_sha256": "a426cb4fa49568dc872270268b0a85e099cdce184819e81fbc39099637f1d46c",
+    "qualified": true,
+    "receipt_path": "data/e2e-three-project-successor/oracle-qualification-20260925/receipt.json",
+    "receipt_sha256": "5a002d2cacedd046458f19dc1a8c360a12f67d02efd2a27177f0a6b5781c3070"
+  },
+  "outcomes_observed_in_predecessor": true,
+  "planned_slots": 54,
+  "predecessor": "data/e2e-six-projects/results-20260925/manifest.json",
+  "projects": [
+    "paperless-ngx",
+    "nextcloud",
+    "openproject"
+  ],
+  "repetitions": [
+    1,
+    2,
+    3
+  ],
+  "replaces_original_collection": false,
+  "request_sha256": {
+    "successor-0436daa798a54e9a8d052ff6": "b316afad158259ed277656ab51154ecd06481f11802aaa3599003cf4076e9a7d",
+    "successor-109631d95223f83a5e579013": "7afef575a69bebaaf027eab1445dc8cc8a7a93fb166b12aedcd0c4df0aba5d48",
+    "successor-126e2f7f427c4ef42ccc3d59": "02e14395ae7bfac0b36dfd7fbfaad185b94bcbf13bc970937e935f834726fb0c",
+    "successor-151a7e810fd7b8e5bb3ca9d7": "30a1136eb448f5ad28b9c5c21e9e4dd8ebd509c2b52a2017cea8ac70bea8bbea",
+    "successor-17b058ee7e4ad31a124c5aa3": "e9e2fda9569eaab0336457add3f0ada777fd71e3e90fc29ca9421047024ffbaf",
+    "successor-19bee1a043f5e694fd100f8e": "92d47c720d06c8bbc6317e453a469fba13772b9e2808428aedc53dd4c1461fe3",
+    "successor-1b2f9bda5b8e7361b4c4455f": "02e14395ae7bfac0b36dfd7fbfaad185b94bcbf13bc970937e935f834726fb0c",
+    "successor-28b4bea675a07294c5941c74": "4638f547ab488677c0f236c3e80fe8d9619f63834918af7948b8832185f17379",
+    "successor-29a205b7ddc711e2254e6eb5": "27c2f9b81f6622c01f19be8c48ee52c0ab58686cd6f8bd501ddee546285bc7b4",
+    "successor-2a85bd2d34399f5214cfc7e3": "7afef575a69bebaaf027eab1445dc8cc8a7a93fb166b12aedcd0c4df0aba5d48",
+    "successor-2ee486ae539b6d1f685a5608": "e9e2fda9569eaab0336457add3f0ada777fd71e3e90fc29ca9421047024ffbaf",
+    "successor-362182c52c09898986608897": "a49661bc8cacd19b6f2915f0a3b6b73e07fccc12c2b2a32bc8f168376fbc8bd2",
+    "successor-39f0206f3c97e5eb97f99bd2": "30a1136eb448f5ad28b9c5c21e9e4dd8ebd509c2b52a2017cea8ac70bea8bbea",
+    "successor-3a3439e1ec7808e5928e8c09": "4638f547ab488677c0f236c3e80fe8d9619f63834918af7948b8832185f17379",
+    "successor-3cdd094d5fbe7f973190c4a6": "7afef575a69bebaaf027eab1445dc8cc8a7a93fb166b12aedcd0c4df0aba5d48",
+    "successor-44a31fa326351d30b82925c8": "27c2f9b81f6622c01f19be8c48ee52c0ab58686cd6f8bd501ddee546285bc7b4",
+    "successor-4a0e5843e25f04a3909706da": "92d47c720d06c8bbc6317e453a469fba13772b9e2808428aedc53dd4c1461fe3",
+    "successor-4d4f515becdf66311c4bbdd3": "92d47c720d06c8bbc6317e453a469fba13772b9e2808428aedc53dd4c1461fe3",
+    "successor-5fbe74ab1a149ab95c2d936e": "27c2f9b81f6622c01f19be8c48ee52c0ab58686cd6f8bd501ddee546285bc7b4",
+    "successor-660a850c7bb8050cb07d2703": "a49661bc8cacd19b6f2915f0a3b6b73e07fccc12c2b2a32bc8f168376fbc8bd2",
+    "successor-670b11452bcc98a1589ad3fd": "4638f547ab488677c0f236c3e80fe8d9619f63834918af7948b8832185f17379",
+    "successor-68496e3fc25e66544679c0eb": "30a1136eb448f5ad28b9c5c21e9e4dd8ebd509c2b52a2017cea8ac70bea8bbea",
+    "successor-6ed7967aeda89da0e934ac77": "02e14395ae7bfac0b36dfd7fbfaad185b94bcbf13bc970937e935f834726fb0c",
+    "successor-6f29733efad9a5bb8f80ee0d": "02e14395ae7bfac0b36dfd7fbfaad185b94bcbf13bc970937e935f834726fb0c",
+    "successor-6f9013acc6bd288a370b8fc5": "92d47c720d06c8bbc6317e453a469fba13772b9e2808428aedc53dd4c1461fe3",
+    "successor-707dcffd75f087e65e241643": "4638f547ab488677c0f236c3e80fe8d9619f63834918af7948b8832185f17379",
+    "successor-746bd228e6cb53d9ecd2ace9": "b316afad158259ed277656ab51154ecd06481f11802aaa3599003cf4076e9a7d",
+    "successor-809f0f3f3dc83ec35321155e": "a49661bc8cacd19b6f2915f0a3b6b73e07fccc12c2b2a32bc8f168376fbc8bd2",
+    "successor-88b6f7236734a89e47fdc1f8": "a49661bc8cacd19b6f2915f0a3b6b73e07fccc12c2b2a32bc8f168376fbc8bd2",
+    "successor-8d08fa4f77ae75c08fe5512d": "a49661bc8cacd19b6f2915f0a3b6b73e07fccc12c2b2a32bc8f168376fbc8bd2",
+    "successor-8d84d962234626df373cf13b": "7afef575a69bebaaf027eab1445dc8cc8a7a93fb166b12aedcd0c4df0aba5d48",
+    "successor-91ed9c971b06435eac64a40f": "e9e2fda9569eaab0336457add3f0ada777fd71e3e90fc29ca9421047024ffbaf",
+    "successor-92dc5b73716946b64df80376": "a49661bc8cacd19b6f2915f0a3b6b73e07fccc12c2b2a32bc8f168376fbc8bd2",
+    "successor-955b75d54e76587d21e22415": "4638f547ab488677c0f236c3e80fe8d9619f63834918af7948b8832185f17379",
+    "successor-981fceeb1811f6668c20d7c2": "30a1136eb448f5ad28b9c5c21e9e4dd8ebd509c2b52a2017cea8ac70bea8bbea",
+    "successor-98d3fab3456da8ec4cc12179": "30a1136eb448f5ad28b9c5c21e9e4dd8ebd509c2b52a2017cea8ac70bea8bbea",
+    "successor-9e67acc1c7d634c20670aad5": "27c2f9b81f6622c01f19be8c48ee52c0ab58686cd6f8bd501ddee546285bc7b4",
+    "successor-9e6a0b63e01d6bc2e7812b34": "02e14395ae7bfac0b36dfd7fbfaad185b94bcbf13bc970937e935f834726fb0c",
+    "successor-a6a51acb5209074d3707864c": "e9e2fda9569eaab0336457add3f0ada777fd71e3e90fc29ca9421047024ffbaf",
+    "successor-b3a375c3746568b5140e479c": "4638f547ab488677c0f236c3e80fe8d9619f63834918af7948b8832185f17379",
+    "successor-b8f87b09cba663a0b0a4e2ea": "b316afad158259ed277656ab51154ecd06481f11802aaa3599003cf4076e9a7d",
+    "successor-bd4865f794c8a40e1fcb5c89": "27c2f9b81f6622c01f19be8c48ee52c0ab58686cd6f8bd501ddee546285bc7b4",
+    "successor-be3708c12e42f8c756a7d7b3": "92d47c720d06c8bbc6317e453a469fba13772b9e2808428aedc53dd4c1461fe3",
+    "successor-c37f198b311632451036521c": "e9e2fda9569eaab0336457add3f0ada777fd71e3e90fc29ca9421047024ffbaf",
+    "successor-c92fd66c37af00e999fb63cf": "02e14395ae7bfac0b36dfd7fbfaad185b94bcbf13bc970937e935f834726fb0c",
+    "successor-d0ab9ad2d205de4a87fd6fec": "92d47c720d06c8bbc6317e453a469fba13772b9e2808428aedc53dd4c1461fe3",
+    "successor-d264288676c61614f38191cf": "b316afad158259ed277656ab51154ecd06481f11802aaa3599003cf4076e9a7d",
+    "successor-d4424aecfa9026781d1b19c9": "30a1136eb448f5ad28b9c5c21e9e4dd8ebd509c2b52a2017cea8ac70bea8bbea",
+    "successor-d869fc7a08f183a80cc86c10": "27c2f9b81f6622c01f19be8c48ee52c0ab58686cd6f8bd501ddee546285bc7b4",
+    "successor-e825d703fd08bf18a9fb012e": "7afef575a69bebaaf027eab1445dc8cc8a7a93fb166b12aedcd0c4df0aba5d48",
+    "successor-e9c951d6e0cbc859192345b5": "7afef575a69bebaaf027eab1445dc8cc8a7a93fb166b12aedcd0c4df0aba5d48",
+    "successor-eb1979dc47f834fcc17d8a98": "b316afad158259ed277656ab51154ecd06481f11802aaa3599003cf4076e9a7d",
+    "successor-fab959c602c2e4c26356b88d": "e9e2fda9569eaab0336457add3f0ada777fd71e3e90fc29ca9421047024ffbaf",
+    "successor-fd94352f501612d8544bbd1b": "b316afad158259ed277656ab51154ecd06481f11802aaa3599003cf4076e9a7d"
+  },
+  "schedule": [
+    {
+      "arm": "C",
+      "model": "gpt-5.6-luna",
+      "project_id": "nextcloud",
+      "replication": 1,
+      "slot_id": "successor-b3a375c3746568b5140e479c"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-sol",
+      "project_id": "paperless-ngx",
+      "replication": 1,
+      "slot_id": "successor-fab959c602c2e4c26356b88d"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-sol",
+      "project_id": "nextcloud",
+      "replication": 2,
+      "slot_id": "successor-0436daa798a54e9a8d052ff6"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-luna",
+      "project_id": "paperless-ngx",
+      "replication": 2,
+      "slot_id": "successor-981fceeb1811f6668c20d7c2"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-sol",
+      "project_id": "nextcloud",
+      "replication": 3,
+      "slot_id": "successor-eb1979dc47f834fcc17d8a98"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 1,
+      "slot_id": "successor-d0ab9ad2d205de4a87fd6fec"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 3,
+      "slot_id": "successor-44a31fa326351d30b82925c8"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 3,
+      "slot_id": "successor-4a0e5843e25f04a3909706da"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 3,
+      "slot_id": "successor-4d4f515becdf66311c4bbdd3"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 1,
+      "slot_id": "successor-8d08fa4f77ae75c08fe5512d"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 3,
+      "slot_id": "successor-362182c52c09898986608897"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-luna",
+      "project_id": "nextcloud",
+      "replication": 2,
+      "slot_id": "successor-6ed7967aeda89da0e934ac77"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-luna",
+      "project_id": "paperless-ngx",
+      "replication": 3,
+      "slot_id": "successor-2ee486ae539b6d1f685a5608"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-luna",
+      "project_id": "nextcloud",
+      "replication": 1,
+      "slot_id": "successor-fd94352f501612d8544bbd1b"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 2,
+      "slot_id": "successor-bd4865f794c8a40e1fcb5c89"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 1,
+      "slot_id": "successor-6f9013acc6bd288a370b8fc5"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-luna",
+      "project_id": "nextcloud",
+      "replication": 2,
+      "slot_id": "successor-b8f87b09cba663a0b0a4e2ea"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-luna",
+      "project_id": "nextcloud",
+      "replication": 3,
+      "slot_id": "successor-d264288676c61614f38191cf"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-sol",
+      "project_id": "paperless-ngx",
+      "replication": 3,
+      "slot_id": "successor-98d3fab3456da8ec4cc12179"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-sol",
+      "project_id": "nextcloud",
+      "replication": 1,
+      "slot_id": "successor-28b4bea675a07294c5941c74"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-sol",
+      "project_id": "paperless-ngx",
+      "replication": 2,
+      "slot_id": "successor-e9c951d6e0cbc859192345b5"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-luna",
+      "project_id": "paperless-ngx",
+      "replication": 1,
+      "slot_id": "successor-a6a51acb5209074d3707864c"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 1,
+      "slot_id": "successor-5fbe74ab1a149ab95c2d936e"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 3,
+      "slot_id": "successor-9e67acc1c7d634c20670aad5"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 2,
+      "slot_id": "successor-19bee1a043f5e694fd100f8e"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 1,
+      "slot_id": "successor-29a205b7ddc711e2254e6eb5"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 2,
+      "slot_id": "successor-be3708c12e42f8c756a7d7b3"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-sol",
+      "project_id": "paperless-ngx",
+      "replication": 3,
+      "slot_id": "successor-3cdd094d5fbe7f973190c4a6"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 2,
+      "slot_id": "successor-d869fc7a08f183a80cc86c10"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-luna",
+      "project_id": "nextcloud",
+      "replication": 3,
+      "slot_id": "successor-126e2f7f427c4ef42ccc3d59"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-sol",
+      "project_id": "nextcloud",
+      "replication": 1,
+      "slot_id": "successor-746bd228e6cb53d9ecd2ace9"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-sol",
+      "project_id": "nextcloud",
+      "replication": 3,
+      "slot_id": "successor-955b75d54e76587d21e22415"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-sol",
+      "project_id": "paperless-ngx",
+      "replication": 1,
+      "slot_id": "successor-e825d703fd08bf18a9fb012e"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-sol",
+      "project_id": "nextcloud",
+      "replication": 1,
+      "slot_id": "successor-6f29733efad9a5bb8f80ee0d"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-sol",
+      "project_id": "paperless-ngx",
+      "replication": 2,
+      "slot_id": "successor-91ed9c971b06435eac64a40f"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-sol",
+      "project_id": "nextcloud",
+      "replication": 3,
+      "slot_id": "successor-1b2f9bda5b8e7361b4c4455f"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-luna",
+      "project_id": "nextcloud",
+      "replication": 1,
+      "slot_id": "successor-c92fd66c37af00e999fb63cf"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-luna",
+      "project_id": "paperless-ngx",
+      "replication": 2,
+      "slot_id": "successor-c37f198b311632451036521c"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-luna",
+      "project_id": "nextcloud",
+      "replication": 3,
+      "slot_id": "successor-3a3439e1ec7808e5928e8c09"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-luna",
+      "project_id": "paperless-ngx",
+      "replication": 3,
+      "slot_id": "successor-39f0206f3c97e5eb97f99bd2"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 2,
+      "slot_id": "successor-88b6f7236734a89e47fdc1f8"
+    },
+    {
+      "arm": "A",
+      "model": "gpt-5.6-sol",
+      "project_id": "paperless-ngx",
+      "replication": 3,
+      "slot_id": "successor-17b058ee7e4ad31a124c5aa3"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-sol",
+      "project_id": "nextcloud",
+      "replication": 2,
+      "slot_id": "successor-9e6a0b63e01d6bc2e7812b34"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-luna",
+      "project_id": "nextcloud",
+      "replication": 2,
+      "slot_id": "successor-670b11452bcc98a1589ad3fd"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-luna",
+      "project_id": "paperless-ngx",
+      "replication": 3,
+      "slot_id": "successor-2a85bd2d34399f5214cfc7e3"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 3,
+      "slot_id": "successor-660a850c7bb8050cb07d2703"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 2,
+      "slot_id": "successor-92dc5b73716946b64df80376"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-sol",
+      "project_id": "paperless-ngx",
+      "replication": 1,
+      "slot_id": "successor-151a7e810fd7b8e5bb3ca9d7"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-sol",
+      "project_id": "nextcloud",
+      "replication": 2,
+      "slot_id": "successor-707dcffd75f087e65e241643"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-sol",
+      "project_id": "paperless-ngx",
+      "replication": 2,
+      "slot_id": "successor-d4424aecfa9026781d1b19c9"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 1,
+      "slot_id": "successor-809f0f3f3dc83ec35321155e"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-luna",
+      "project_id": "paperless-ngx",
+      "replication": 1,
+      "slot_id": "successor-8d84d962234626df373cf13b"
+    },
+    {
+      "arm": "C",
+      "model": "gpt-5.6-luna",
+      "project_id": "paperless-ngx",
+      "replication": 1,
+      "slot_id": "successor-68496e3fc25e66544679c0eb"
+    },
+    {
+      "arm": "B",
+      "model": "gpt-5.6-luna",
+      "project_id": "paperless-ngx",
+      "replication": 2,
+      "slot_id": "successor-109631d95223f83a5e579013"
+    }
+  ],
+  "schema_version": "three-project-fixed-scaffold-freeze/v1",
+  "seed": 20260926,
+  "stage": "post_outcome_successor_pre_generation"
+}
