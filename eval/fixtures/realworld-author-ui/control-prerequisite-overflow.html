@@ -1,0 +1,3 @@
+<!doctype html><meta charset="utf-8"><title>Article</title><style>.hidden{opacity:0}</style><main id="app"></main><script>
+const {viewer,article}=window.initialState;const titles=Array.from({length:21},(_,index)=>`<h1 class="${index<20?'hidden':''}">${article.title}</h1>`).join('');document.querySelector('#app').innerHTML=`${titles}<p>${article.body}</p><span rel="author">${article.author.username}</span>${viewer.username===article.author.username?'<button>Delete Article</button>':''}`;
+</script>

@@ -1,0 +1,7 @@
+<!doctype html><meta charset="utf-8"><title>Article</title>
+<style>body{font:18px sans-serif;margin:40px}</style>
+<main id="app"></main><script>
+const {viewer,article}=window.initialState;const reused=localStorage.getItem('article-rendered')==='yes';localStorage.setItem('article-rendered','yes');
+const show=reused||viewer.username===article.author.username;
+document.querySelector('#app').innerHTML=`<h1>${article.title}</h1><p>${article.body}</p><span rel="author">${article.author.username}</span>${show?'<button>Delete Article</button>':''}`;
+</script>

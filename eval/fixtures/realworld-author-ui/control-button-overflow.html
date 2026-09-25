@@ -1,0 +1,3 @@
+<!doctype html><meta charset="utf-8"><title>Article</title><style>.hidden{opacity:0}</style><main id="app"></main><script>
+const {article}=window.initialState;const controls=Array.from({length:21},(_,index)=>`<button class="${index<20?'hidden':''}">Delete Article</button>`).join('');document.querySelector('#app').innerHTML=`<h1>${article.title}</h1><p>${article.body}</p><span rel="author">${article.author.username}</span>${controls}`;
+</script>

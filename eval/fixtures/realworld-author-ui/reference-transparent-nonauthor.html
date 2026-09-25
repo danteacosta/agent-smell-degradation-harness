@@ -1,0 +1,6 @@
+<!doctype html><meta charset="utf-8"><title>Article</title>
+<style>body{font:18px sans-serif;margin:40px}.unavailable{opacity:0}</style>
+<main id="app"></main><script>
+const {viewer,article}=window.initialState;const unavailable=viewer.username===article.author.username?'':'unavailable';
+document.querySelector('#app').innerHTML=`<h1>${article.title}</h1><p>${article.body}</p><a rel="author">${article.author.username}</a><button class="${unavailable}">Delete Article</button>`;
+</script>

@@ -62,6 +62,8 @@ experiment evidence.
 
 - [StrictDoc statistics browser qualification](strictdoc-stats-oracle-qualification-20260923.md): 21 authored controls, rendered visibility and two-clock evidence; no new model collection.
 
+- [RealWorld article-author UI oracle qualification](realworld-author-ui-oracle-qualification-20260924.md): CI-qualified four-context browser oracle, 19 authored HTML controls, two operational diagnostics and independently verified artifact custody; no admission or model collection.
+
 - [Native UI source candidates](native-ui-source-candidates-20260923.md): pinned RealWorld/Kanboard UI sources; not admitted.
 
 - [E2E admission and prompt freeze](e2e-admission-freeze-20260923.md): one bounded persistence endpoint; Mark all and StrictDoc deferred; 18 unattempted positions, no execution-ready claim.
