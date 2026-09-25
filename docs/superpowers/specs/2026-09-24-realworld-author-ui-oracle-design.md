@@ -1,6 +1,6 @@
 # RealWorld Article-Author UI Oracle Design
 
-Date: 2026-09-24  
+Date: 2026-09-24
 Status: design approved; implementation and experimental admission pending
 
 ## Purpose
@@ -121,6 +121,13 @@ and discloses article authorship, not the delete-control verdict. The exact
 A/B/C prompt texts require a separate leakage review and freeze after the
 instrument qualifies.
 
+Before candidate scripts run, the controller captures and binds the original
+`getComputedStyle`, `document.elementFromPoint`, DOM containment and array
+membership/index primitives. It installs them in a deeply frozen, non-writable
+and non-configurable property. Perceptibility and author-match deduplication use
+these captured references, so candidate mutation of the corresponding page
+globals and prototypes cannot change the observation.
+
 ## Browser observations
 
 The trusted controller serves candidate bytes only at
@@ -191,6 +198,11 @@ into a target failure. Button multiplicity is recorded but does not affect the
 verdict. Any perceptible matching button in a non-author context is a target
 failure.
 
+Counts are bounded without truncation. More than 20 matches for a general
+locator, or more than 20 unique scoped author-text matches after global
+deduplication, is an operational `interface_failure` with return code `20`.
+It produces no scientific verdict or screenshots.
+
 The receipt contains exact, sorted `target_failed: string[]` and
 `target_not_evaluable: string[]` assertion-ID sets. `target_failed` includes an
 assertion when any evaluable applicable context contradicts it.
@@ -246,6 +258,9 @@ The initial qualification contains:
 - a valid visible author button styled `pointer-events:none`;
 - a valid page whose perceptible title, body and author prerequisite elements
   are styled `pointer-events:none`;
+- a valid page that remains measurable after candidate code replaces
+  `getComputedStyle`, `document.elementFromPoint` and array index/membership
+  methods;
 - an always-visible mutant;
 - a never-visible mutant;
 - a wrong-identity mutant;
@@ -268,6 +283,9 @@ The initial qualification contains:
 - a hidden-author-text control in which `[rel~="author"]` is visible but the
   matching username exists only in a hidden descendant, with the same
   `article_author_missing` outcome;
+- two operational HTML diagnostics that create 21 matching buttons or 21
+  matching prerequisite elements and must fail closed as `interface_failure`
+  before scientific classification or screenshots;
 - an interface-boundary control in which the qualifier deliberately supplies a
   state payload missing `article.author.username`; the runner rejects it as an
   operational `interface_failure` before navigation or candidate execution.

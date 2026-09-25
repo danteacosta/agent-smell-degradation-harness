@@ -433,15 +433,17 @@ def operational_report(status: str, browser_started: bool) -> dict:
 
 def test_operational_reports_are_classified_without_target_failures():
     interface = operational_report("interface_failure", False)
+    browser_interface = operational_report("interface_failure", True)
     browser = operational_report("browser_failure", True)
     assert oracle.classify_report(encoded(interface), 20) == {
         "category": "interface_failure", "reason": interface["error"]}
     assert oracle.classify_report(encoded(browser), 21) == {
         "category": "browser_failure", "reason": browser["error"]}
+    assert oracle.classify_report(encoded(browser_interface), 20) == {
+        "category": "interface_failure", "reason": browser_interface["error"]}
 
 
 @pytest.mark.parametrize(("value", "returncode"), [
-    (operational_report("interface_failure", True), 20),
     (operational_report("interface_failure", False), 21),
     (operational_report("browser_failure", False), 20),
     ({**operational_report("browser_failure", True), "observations": []}, 21),
@@ -891,7 +893,7 @@ QUALIFIER_PATH = (
     Path(__file__).resolve().parents[1]
     / "eval/fixtures/realworld-author-ui/qualify.py"
 )
-HTML_CONTROL_IDS = {
+SCIENTIFIC_CONTROL_IDS = {
     "reference-explicit",
     "reference-derived-hidden",
     "reference-two-buttons",
@@ -900,6 +902,7 @@ HTML_CONTROL_IDS = {
     "reference-pointer-events-button",
     "reference-pointer-events-prerequisites",
     "reference-fresh-context",
+    "reference-shadowed-globals",
     "mutant-always-visible",
     "mutant-never-visible",
     "mutant-wrong-identity",
@@ -912,6 +915,11 @@ HTML_CONTROL_IDS = {
     "control-viewer-only-author-text",
     "control-hidden-author-text",
 }
+OPERATIONAL_HTML_IDS = {
+    "control-button-overflow",
+    "control-prerequisite-overflow",
+}
+HTML_CONTROL_IDS = SCIENTIFIC_CONTROL_IDS | OPERATIONAL_HTML_IDS
 ONE_AUTHOR = ["author_sees_delete_article"]
 ONE_NON_AUTHOR = ["non_author_does_not_see_delete_article"]
 BOTH_ASSERTIONS = sorted(ONE_AUTHOR + ONE_NON_AUTHOR)
@@ -955,19 +963,20 @@ def _four_reasons(reason):
 def test_qualification_declares_exact_html_and_operational_controls():
     qualifier = _qualification_module()
 
-    assert set(qualifier.EXPECTED) == HTML_CONTROL_IDS
+    assert set(qualifier.EXPECTED) == SCIENTIFIC_CONTROL_IDS
+    assert set(qualifier.OPERATIONAL_HTML_EXPECTED) == OPERATIONAL_HTML_IDS
     assert set(qualifier.OPERATIONAL_EXPECTED) == {
         "operational-invalid-interface",
         "operational-browser-failure",
     }
-    for control_id in HTML_CONTROL_IDS:
+    for control_id in SCIENTIFIC_CONTROL_IDS:
         assert (QUALIFIER_PATH.parent / f"{control_id}.html").is_file()
 
 
 def test_qualification_declares_exact_target_expectations():
     qualifier = _qualification_module()
 
-    for control_id in HTML_CONTROL_IDS:
+    for control_id in SCIENTIFIC_CONTROL_IDS:
         expected = qualifier.EXPECTED[control_id]
         if control_id.startswith("reference-"):
             assert expected == {
@@ -1067,6 +1076,29 @@ def test_operational_controls_match_without_scientific_screenshots():
     operational_rows = [{"matches": True, "screenshot_sha256": {}}]
 
     assert qualifier.matrix_matches(html_rows, operational_rows) is True
+
+
+def test_special_operational_report_hash_must_match_staged_input():
+    qualifier = _qualification_module()
+    expected = {
+        "status": "interface_failure",
+        "browser_started": False,
+        "returncode": 20,
+        "category": "interface_failure",
+    }
+    raw = operational_report("interface_failure", False)
+    raw["app_sha256"] = "a" * 64
+    classified = {"category": "interface_failure", "reason": raw["error"]}
+
+    assert qualifier.operational_report_matches(
+        raw, expected, returncode=20, classified=classified,
+        screenshot_names=[], staged_app_sha256="a" * 64,
+    ) is True
+    raw["app_sha256"] = "b" * 64
+    assert qualifier.operational_report_matches(
+        raw, expected, returncode=20, classified=classified,
+        screenshot_names=[], staged_app_sha256="a" * 64,
+    ) is False
 
 
 def test_instrument_digest_is_canonical_and_includes_both_executors():

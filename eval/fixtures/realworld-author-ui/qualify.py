@@ -73,6 +73,7 @@ EXPECTED = {
         "reference-pointer-events-button",
         "reference-pointer-events-prerequisites",
         "reference-fresh-context",
+        "reference-shadowed-globals",
     )
 }
 EXPECTED.update({
@@ -99,6 +100,21 @@ EXPECTED.update({
         "target_not_evaluable", not_evaluable=sorted([AUTHOR, NON_AUTHOR]),
         reasons=_four_reasons("article_author_missing")),
 })
+
+OPERATIONAL_HTML_EXPECTED = {
+    "control-button-overflow": {
+        "status": "interface_failure",
+        "browser_started": True,
+        "returncode": 20,
+        "category": "interface_failure",
+    },
+    "control-prerequisite-overflow": {
+        "status": "interface_failure",
+        "browser_started": True,
+        "returncode": 20,
+        "category": "interface_failure",
+    },
+}
 
 OPERATIONAL_EXPECTED = {
     "operational-invalid-interface": {
@@ -262,6 +278,53 @@ def _regular_row(control_id: str, expected: dict, image: str,
     }
 
 
+def operational_report_matches(raw: dict, expected: dict, *, returncode: int,
+                               classified: dict, screenshot_names: list[str],
+                               staged_app_sha256: str) -> bool:
+    exact_fields = {
+        "schema_version", "status", "app_sha256", "runner_version",
+        "browser_sandbox", "isolation", "error", "browser_started",
+    }
+    return (
+        set(raw) == exact_fields
+        and raw.get("app_sha256") == staged_app_sha256
+        and raw.get("status") == expected["status"]
+        and raw.get("browser_started") is expected["browser_started"]
+        and returncode == expected["returncode"]
+        and classified.get("category") == expected["category"]
+        and screenshot_names == []
+    )
+
+
+def _operational_html_row(control_id: str, expected: dict, image: str,
+                          fixture_dir: Path, output_root: Path) -> dict:
+    inputs = _copy_input(fixture_dir, output_root, control_id, f"{control_id}.html")
+    staged_hash = digest(inputs / "app.html")
+    output = output_root / control_id / "output"
+    receipt = execute(image, inputs, output)
+    report_path = output / "report.json"
+    raw = json.loads(report_path.read_text())
+    screenshot_names = sorted(path.name for path in output.glob("*.png"))
+    matches = operational_report_matches(
+        raw, expected, returncode=receipt.get("returncode"), classified=receipt,
+        screenshot_names=screenshot_names, staged_app_sha256=staged_hash,
+    )
+    return {
+        "id": control_id,
+        "expected": expected,
+        "observed": {
+            "status": raw.get("status"),
+            "browser_started": raw.get("browser_started"),
+            "returncode": receipt.get("returncode"),
+            "category": receipt.get("category"),
+        },
+        "matches": matches,
+        "receipt_sha256": digest(output / "executor.json"),
+        "report_sha256": digest(report_path),
+        "screenshot_sha256": {},
+    }
+
+
 def _operational_row(control_id: str, expected: dict, image: str,
                      fixture_dir: Path, output_root: Path) -> dict:
     inputs = _copy_input(
@@ -286,22 +349,17 @@ def _operational_row(control_id: str, expected: dict, image: str,
     raw_bytes = report_path.read_bytes() if report_path.is_file() else b""
     raw = json.loads(raw_bytes) if raw_bytes else {}
     classified = classify_report(raw_bytes, result.returncode)
-    exact_fields = {
-        "schema_version", "status", "app_sha256", "runner_version",
-        "browser_sandbox", "isolation", "error", "browser_started",
-    }
     screenshot_names = sorted(path.name for path in output.glob("*.png"))
-    matches = (
-        set(raw) == exact_fields
-        and raw.get("status") == expected["status"]
-        and raw.get("browser_started") is expected["browser_started"]
-        and result.returncode == expected["returncode"]
-        and classified.get("category") == expected["category"]
-        and screenshot_names == []
+    staged_hash = digest(inputs / "app.html")
+    matches = operational_report_matches(
+        raw, expected, returncode=result.returncode, classified=classified,
+        screenshot_names=screenshot_names, staged_app_sha256=staged_hash,
     )
+    verified_app_hash = (
+        staged_hash if raw.get("app_sha256") == staged_hash else None)
     receipt = {
         "image": image,
-        "app_sha256": raw.get("app_sha256"),
+        "app_sha256": verified_app_hash,
         "returncode": result.returncode,
         **classified,
     }
@@ -346,10 +404,16 @@ def main(argv=None) -> int:
         _regular_row(control_id, expected, args.image, fixture_dir, args.output)
         for control_id, expected in EXPECTED.items()
     ]
-    operational = [
+    operational_html = [
+        _operational_html_row(
+            control_id, expected, args.image, fixture_dir, args.output)
+        for control_id, expected in OPERATIONAL_HTML_EXPECTED.items()
+    ]
+    operational_flags = [
         _operational_row(control_id, expected, args.image, fixture_dir, args.output)
         for control_id, expected in OPERATIONAL_EXPECTED.items()
     ]
+    operational = [*operational_html, *operational_flags]
     matrix_ok = matrix_matches(rows, operational)
     report = {
         "schema_version": "realworld-author-ui-qualification/v1",

@@ -3,7 +3,11 @@
 const fs = require('node:fs');
 const crypto = require('node:crypto');
 const {chromium} = require('playwright');
-const {createCappedDeduplicator} = require('./author-matches.cjs');
+const {
+  MatchOverflowError,
+  createCappedDeduplicator,
+  requireBoundedCount,
+} = require('./author-matches.cjs');
 const {finalize} = require('./finalize.cjs');
 
 const URL = 'http://fixture.invalid/article/bounded-ui-case';
@@ -66,6 +70,21 @@ async function installState(context, state) {
       }
       return value;
     };
+    const trusted = {
+      getComputedStyle: window.getComputedStyle.bind(window),
+      elementFromPoint: document.elementFromPoint.bind(document),
+      indexOf: Function.prototype.call.bind(Array.prototype.indexOf),
+      includes: Function.prototype.call.bind(Array.prototype.includes),
+      contains: Function.prototype.call.bind(Node.prototype.contains),
+    };
+    for (const value of Object.values(trusted)) Object.freeze(value);
+    Object.freeze(trusted);
+    Object.defineProperty(window, '__realworldTrustedPrimitivesV1', {
+      value: trusted,
+      writable: false,
+      configurable: false,
+      enumerable: false,
+    });
     Object.defineProperty(window, 'initialState', {
       value: freeze(payload),
       writable: false,
@@ -87,9 +106,10 @@ async function perceptible(locator) {
     let box = await locator.boundingBox();
     if (!validBox(box)) return false;
     const opacity = await locator.evaluate((node) => {
+      const trusted = window.__realworldTrustedPrimitivesV1;
       let product = 1;
       for (let current = node; current; current = current.parentElement) {
-        product *= Number.parseFloat(getComputedStyle(current).opacity);
+        product *= Number.parseFloat(trusted.getComputedStyle(current).opacity);
       }
       return product;
     });
@@ -116,6 +136,7 @@ async function perceptible(locator) {
       }
     }
     return await locator.evaluate((node, samples) => {
+      const trusted = window.__realworldTrustedPrimitivesV1;
       const chain = [];
       for (let current = node; current; current = current.parentElement) {
         chain.push({
@@ -128,10 +149,13 @@ async function perceptible(locator) {
         for (const item of chain) {
           item.node.style.setProperty('pointer-events', 'auto', 'important');
         }
-        return samples.some(({x, y}) => {
-          const hit = document.elementFromPoint(x, y);
-          return hit === node || (hit !== null && node.contains(hit));
-        });
+        for (const {x, y} of samples) {
+          const hit = trusted.elementFromPoint(x, y);
+          if (hit === node || (hit !== null && trusted.contains(node, hit))) {
+            return true;
+          }
+        }
+        return false;
       } finally {
         for (const item of chain) {
           if (item.value === '') item.node.style.removeProperty('pointer-events');
@@ -144,9 +168,8 @@ async function perceptible(locator) {
   }
 }
 
-async function observeLocator(locator) {
-  const rawCount = await locator.count();
-  const matched = Math.min(rawCount, 20);
+async function observeLocator(locator, label) {
+  const matched = requireBoundedCount(await locator.count(), 20, label);
   let visible = 0;
   for (let index = 0; index < matched; index += 1) {
     if (await perceptible(locator.nth(index))) visible += 1;
@@ -158,20 +181,20 @@ async function authorLocators(page, expected) {
   const scopes = page.locator('[rel~="author"]');
   const unique = createCappedDeduplicator(20);
   const scopeCount = await scopes.count();
-  for (let scopeIndex = 0; scopeIndex < scopeCount && !unique.full;
-       scopeIndex += 1) {
+  for (let scopeIndex = 0; scopeIndex < scopeCount; scopeIndex += 1) {
     const matches = scopes.nth(scopeIndex).getByText(expected, {exact: true});
     const count = await matches.count();
-    for (let index = 0; index < count && !unique.full; index += 1) {
+    for (let index = 0; index < count; index += 1) {
       const candidate = matches.nth(index);
       const key = await candidate.evaluate((node) => {
-        const path = [];
+        let path = '';
         for (let current = node; current && current.parentElement;
              current = current.parentElement) {
-          path.push(Array.prototype.indexOf.call(
-            current.parentElement.children, current));
+          const position = window.__realworldTrustedPrimitivesV1.indexOf(
+            current.parentElement.children, current);
+          path = `${position}/${path}`;
         }
-        return path.reverse().join('/');
+        return path;
       });
       unique.add(key, candidate);
     }
@@ -226,11 +249,13 @@ async function observeContext(fixtureId, contextId, articleUsername, viewerUsern
     await page.goto(URL, {waitUntil: 'load', timeout: 10000});
     await page.waitForTimeout(300);
 
-    const title = await observeLocator(page.getByText(TITLE, {exact: true}));
-    const body = await observeLocator(page.getByText(BODY, {exact: true}));
+    const title = await observeLocator(
+      page.getByText(TITLE, {exact: true}), 'title');
+    const body = await observeLocator(
+      page.getByText(BODY, {exact: true}), 'body');
     const articleAuthor = await observeAuthor(page, articleUsername);
     const deleteButtons = await observeLocator(
-      page.getByRole('button', {name: /^Delete\s+Article$/i}));
+      page.getByRole('button', {name: /^Delete\s+Article$/i}), 'delete button');
     const screenshot = `${fixtureId}-${contextId}.png`;
     await page.screenshot({path: `/output/${screenshot}`});
     return {
@@ -333,11 +358,13 @@ async function run() {
   try {
     await run();
   } catch (error) {
-    report.status = error instanceof InterfaceError
+    const interfaceFailure = error instanceof InterfaceError
+      || error instanceof MatchOverflowError;
+    report.status = interfaceFailure
       ? 'interface_failure' : 'browser_failure';
     report.error = String(error).slice(0, 1500);
     report.browser_started = browserStarted;
-    exitCode = error instanceof InterfaceError ? 20 : 21;
+    exitCode = interfaceFailure ? 20 : 21;
   } finally {
     const outcome = await finalize({
       browser,

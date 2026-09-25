@@ -82,7 +82,7 @@ preserved rather than collapsed.
 An operational report has no observations, target sets, screenshots, viewport,
 grid or browser-version fields. It has exactly the common fields plus
 `error: string <= 1500` and `browser_started: bool`. `interface_failure`
-requires `browser_started:false` and return code `20`; `browser_failure` accepts
+accepts either Boolean and requires return code `20`; `browser_failure` accepts
 either Boolean and requires return code `21`. Operational reports never require
 screenshots and never enter scientific classification.
 
@@ -274,6 +274,7 @@ git commit -m "Bound RealWorld browser execution"
 - Create: `eval/fixtures/realworld-author-ui/reference-pointer-events-button.html`
 - Create: `eval/fixtures/realworld-author-ui/reference-pointer-events-prerequisites.html`
 - Create: `eval/fixtures/realworld-author-ui/reference-fresh-context.html`
+- Create: `eval/fixtures/realworld-author-ui/reference-shadowed-globals.html`
 - Create: `eval/fixtures/realworld-author-ui/mutant-always-visible.html`
 - Create: `eval/fixtures/realworld-author-ui/mutant-never-visible.html`
 - Create: `eval/fixtures/realworld-author-ui/mutant-wrong-identity.html`
@@ -285,9 +286,11 @@ git commit -m "Bound RealWorld browser execution"
 - Create: `eval/fixtures/realworld-author-ui/control-mixed-evaluability.html`
 - Create: `eval/fixtures/realworld-author-ui/control-viewer-only-author-text.html`
 - Create: `eval/fixtures/realworld-author-ui/control-hidden-author-text.html`
+- Create: `eval/fixtures/realworld-author-ui/control-button-overflow.html`
+- Create: `eval/fixtures/realworld-author-ui/control-prerequisite-overflow.html`
 - Modify: `tests/test_realworld_author_ui_executor.py`
 
-- [ ] **Step 1: Write the nineteen self-contained HTML acceptance controls**
+- [ ] **Step 1: Write the twenty-two self-contained HTML acceptance controls**
 
 Each file reads only `window.initialState`, renders the fixed title/body/author
 with semantic markup, and varies only the ownership/presentation behavior under
@@ -297,8 +300,8 @@ candidate-visible bytes.
 
 Implement explicit equality, derived ownership with hidden non-author state,
 two author buttons, transparent non-author, partial overlay, pointer-disabled
-button, pointer-disabled prerequisite text, and a local-storage fresh-context
-sentinel as eight passing references. Implement unconditional show,
+button, pointer-disabled prerequisite text, a local-storage fresh-context
+sentinel and captured-global independence as nine passing references. Implement unconditional show,
 unconditional hide, inverted equality, hard-coded Alice, transparent author,
 visible plus transparent non-author, and fully covering hit-testable overlay as
 seven target mutants. Omit the body in every context for the broken-article
@@ -309,12 +312,15 @@ control, display the expected username in viewer navigation but omit every
 `article_author_missing` in their applicable contexts. In the hidden-author-text
 control, render a visible `[rel~="author"]` container whose matching username is
 present only in a hidden descendant; require the same not-evaluable reasons.
+Add two operational HTML diagnostics with 21 matching buttons or prerequisite
+elements; both must fail closed as `interface_failure` without screenshots.
 
 - [ ] **Step 2: Write custody and matrix declarations as failing tests**
 
 Before creating `qualify.py`, add tests that import it and require the exact
-nineteen-control ID set, expected target sets/reason arrays, two operational
-controls, mutual exclusion of `--provisional`/`--git-commit`, rejection of a
+twenty scientific-control ID set, two overflow operational HTML IDs, expected
+target sets/reason arrays, two flag-based operational controls, mutual exclusion
+of `--provisional`/`--git-commit`, rejection of a
 non-HEAD commit, rejection of dirty hashed paths, and the invariant that
 provisional output can never be qualified.
 
@@ -345,7 +351,8 @@ The mixed control has only the second object above and also fails
 `non_author_does_not_see_delete_article`. The viewer-only-author-text control
 uses the same four assertion/fixture/context tuples as the broken control with
 reason `article_author_missing` instead of `body_missing`; the hidden-author-text
-control has the identical expected reason array. Add two operational runs. For invalid
+control has the identical expected reason array. Add two overflow operational
+HTML runs and two flag-based operational runs. For invalid
 interface, mount `reference-explicit.html` as `/input/app.html` and execute:
 
 ```python
@@ -411,6 +418,11 @@ than because a file or image is missing.
 
 Embed the two canonical fixtures in trusted runner code. Both use slug `bounded-ui-case`, title `Bounded UI case`, body `Observable article body`; only article/viewer usernames vary. Deep-freeze every nested value and install `window.initialState` with `writable:false` and `configurable:false` via `addInitScript`.
 
+In the same pre-script hook, capture and bind the original computed-style,
+hit-test, DOM-containment and array index/membership primitives. Deep-freeze
+the captured object and install it as non-writable and non-configurable. All
+custom perceptibility and author-deduplication code uses those references.
+
 Support the two qualifier-only arguments defined above and reject every other
 argument. The invalid-interface mode deletes `article.author.username` and exits
 before browser launch or candidate execution. The browser-failure mode launches
@@ -459,6 +471,10 @@ For each matched element:
 
 Use this same predicate for the role-based exact accessible-name button and the exact title/body/article-author prerequisite elements. Record both matched and perceptible counts. Keep the documented limitation for non-hit-testable overlays.
 
+Never truncate locator results. More than 20 general matches or more than 20
+unique author-text matches after cross-scope deduplication throws an operational
+`interface_failure` before any verdict or screenshot.
+
 - [ ] **Step 8: Emit the closed report and screenshots**
 
 Always write `report.json` in `finally`. A complete report includes exact observations, `browser_sandbox:false`, isolation text, runner/browser versions and four bounded screenshot names. Derive assertion sets and reason objects from observations, sort them, and assign return codes `0`, `10`, or `11`. Use `20` only for interface failure and `21` for browser failure.
@@ -466,8 +482,9 @@ Always write `report.json` in `finally`. A complete report includes exact observ
 - [ ] **Step 9: Build and run every browser acceptance control**
 
 Build the pinned image, then run the qualifier with `--provisional`. Expected:
-all nineteen HTML controls plus both operational controls match, while the
-manifest remains explicitly unqualified because custody is provisional. This
+all twenty scientific HTML controls, both overflow operational HTML controls
+and both flag-based operational controls match, while the manifest remains
+explicitly unqualified because custody is provisional. This
 run must prove crossed identities, transparency, partial/full occlusion,
 pointer-event independence, multiplicity, exact route/final URL, fresh-context
 isolation, mixed evaluability, interface failure and browser failure.
@@ -500,7 +517,8 @@ git commit -m "Add crossed-identity RealWorld browser instrument"
 - [ ] **Step 1: Verify the prewritten matrix and custody regression tests**
 
 Confirm the tests written before `qualify.py` assert `EXPECTED` contains
-exactly the nineteen HTML IDs from Task 3. Assert all eight `reference-*`
+exactly the twenty scientific HTML IDs from Task 3 and the operational map
+contains both overflow HTML IDs. Assert all nine `reference-*`
 controls pass and the seven target mutants have these exact failed sets:
 
 ```python
@@ -574,8 +592,8 @@ python eval/fixtures/realworld-author-ui/qualify.py \
   --output "$realworld_evidence_dir/qualification"
 ```
 
-Expected: JSON reports `"qualified": true`; nineteen HTML controls and two
-operational controls match exactly, the supplied commit equals `HEAD`, the
+Expected: JSON reports `"qualified": true`; twenty-two HTML controls and two
+flag-based operational controls match exactly, the supplied commit equals `HEAD`, the
 image label equals the computed instrument digest, all hashed instrument paths
 are clean, and `build-command.json` records the exact Docker argv, digest,
 immutable image ID and head commit used for the run.
@@ -672,18 +690,19 @@ Recompute hashes locally, verify `qualified:true`, verify the artifact's image I
 
 Record source URL/revision/SHA, exact head commit, image ID, qualification/report
 hashes, artifact digest, control denominator and outcome table, screenshot
-hashes and the browser-sandbox flag. Report the denominators separately as 8/8
+hashes and the browser-sandbox flag. Report the denominators separately as 9/9
 passing references, 7/7 detected target mutants, 4/4 expected not-evaluable
-controls, 2/2 operational controls and 76/76 expected screenshots. The four
-fixed screenshot filenames for every HTML control are
+controls, 2/2 overflow operational HTML diagnostics, 2/2 flag-based operational
+diagnostics and 80/80 expected screenshots. The four fixed screenshot filenames
+for every scientific HTML control are
 `article-alice-author.png`, `article-alice-non-author.png`,
 `article-bob-author.png` and `article-bob-non-author.png`. Describe the two
 operational controls as diagnostic checks for interface and browser failure
 classification; do not count them as scientific target controls or as evidence
 of target sensitivity. State explicitly:
 
-- the oracle produced the expected outcomes for the enumerated nineteen HTML
-  controls and two operational controls under the pinned environment;
+- the oracle produced the expected outcomes for the enumerated twenty-two HTML
+  controls and two flag-based operational controls under the pinned environment;
 - it does not admit RealWorld into the experiment;
 - it is not a provider-produced result and does not add evidence for H1/H2;
 - TodoMVC remains the only project with collected E2E experimental outputs until a prospective RealWorld A/B/C collection is frozen and run;
@@ -734,8 +753,9 @@ one fixed oracle and one fixed fixture policy.
 
 Search changed docs and code for accidental claims of admission, project
 generalization, H1/H2 confirmation or “two E2E projects” before prospective
-collection. Ensure all denominators say nineteen HTML controls plus two
-operational controls and that source/runtime/hash values agree across workflow
+collection. Ensure all denominators say twenty-two HTML controls plus two
+flag-based operational controls, with 20 scientific controls and 80 screenshots,
+and that source/runtime/hash values agree across workflow
 artifact and documentation.
 
 - [ ] **Step 5: Request final code review and update the draft PR**

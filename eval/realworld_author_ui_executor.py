@@ -266,7 +266,7 @@ def _classify_operational(value: dict, returncode: int) -> dict:
         return _invalid()
     status = value["status"]
     if status == "interface_failure":
-        if value["browser_started"] is not False or returncode != 20:
+        if returncode != 20:
             return _invalid()
     elif status == "browser_failure":
         if returncode != 21:
