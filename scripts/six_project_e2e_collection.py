@@ -43,21 +43,16 @@ FLAGS = {
 
 def _runtime_paths() -> list[Path]:
     paths = {
-        ROOT / "agents/codex_cli.py",
-        ROOT / "agents/providers.py",
-        ROOT / "scripts/behavioral_expansion.py",
-        ROOT / "scripts/persistence_collection.py",
-        ROOT / "scripts/six_project_e2e_collection.py",
-        ROOT / "scripts/six_project_e2e_freeze.py",
-        ROOT / "eval/fixtures/four-project-ui/qualify.py",
         ROOT / "eval/fixtures/four-project-ui/runner.cjs",
         ROOT / "eval/fixtures/four-project-ui/Dockerfile",
         ROOT / "eval/fixtures/four-project-ui/package.json",
         ROOT / "eval/fixtures/four-project-ui/package-lock.json",
     }
-    for package in (ROOT / "agents/__init__.py", ROOT / "scripts/__init__.py"):
-        if package.is_file():
-            paths.add(package)
+    # Package initializers and helper imports can affect execution without being
+    # named directly above. Bind every Python runtime module, as the earlier
+    # admitted collectors do, instead of understating the executable surface.
+    for package in ("agents", "protocol", "eval", "scripts"):
+        paths.update((ROOT / package).rglob("*.py"))
     return sorted(paths)
 
 
