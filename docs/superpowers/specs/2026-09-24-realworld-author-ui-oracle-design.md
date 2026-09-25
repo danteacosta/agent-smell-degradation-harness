@@ -122,11 +122,14 @@ A/B/C prompt texts require a separate leakage review and freeze after the
 instrument qualifies.
 
 Before candidate scripts run, the controller captures and binds the original
-`getComputedStyle`, `document.elementFromPoint`, DOM containment and array
-membership/index primitives. It installs them in a deeply frozen, non-writable
-and non-configurable property. Perceptibility and author-match deduplication use
-these captured references, so candidate mutation of the corresponding page
-globals and prototypes cannot change the observation.
+`getComputedStyle`, `document.elementFromPoint`, numeric parsing, DOM traversal,
+DOM containment, CSS declaration and array membership/index primitives. It
+installs them in a deeply frozen, non-writable and non-configurable property.
+Perceptibility and author-match deduplication use these captured references, so
+candidate mutation of the corresponding page globals and prototypes cannot
+change the observation. The array iterator and methods required by Playwright's
+page-realm bridge are additionally fixed to their original values before the
+candidate runs.
 
 ## Browser observations
 

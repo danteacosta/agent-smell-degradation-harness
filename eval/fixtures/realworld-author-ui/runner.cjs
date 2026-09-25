@@ -73,10 +73,37 @@ async function installState(context, state) {
     const trusted = {
       getComputedStyle: window.getComputedStyle.bind(window),
       elementFromPoint: document.elementFromPoint.bind(document),
+      parseFloat: Number.parseFloat,
       indexOf: Function.prototype.call.bind(Array.prototype.indexOf),
       includes: Function.prototype.call.bind(Array.prototype.includes),
       contains: Function.prototype.call.bind(Node.prototype.contains),
+      parentElement: Function.prototype.call.bind(
+        Object.getOwnPropertyDescriptor(Node.prototype, 'parentElement').get),
+      children: Function.prototype.call.bind(
+        Object.getOwnPropertyDescriptor(Element.prototype, 'children').get),
+      style: Function.prototype.call.bind(
+        Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'style').get),
+      getPropertyValue: Function.prototype.call.bind(
+        CSSStyleDeclaration.prototype.getPropertyValue),
+      getPropertyPriority: Function.prototype.call.bind(
+        CSSStyleDeclaration.prototype.getPropertyPriority),
+      setProperty: Function.prototype.call.bind(
+        CSSStyleDeclaration.prototype.setProperty),
+      removeProperty: Function.prototype.call.bind(
+        CSSStyleDeclaration.prototype.removeProperty),
     };
+    const lockArrayPrimitive = (key) => {
+      const descriptor = Object.getOwnPropertyDescriptor(Array.prototype, key);
+      Object.defineProperty(Array.prototype, key, {
+        ...descriptor,
+        writable: false,
+        configurable: false,
+      });
+    };
+    lockArrayPrimitive('indexOf');
+    lockArrayPrimitive('includes');
+    lockArrayPrimitive('push');
+    lockArrayPrimitive(Symbol.iterator);
     for (const value of Object.values(trusted)) Object.freeze(value);
     Object.freeze(trusted);
     Object.defineProperty(window, '__realworldTrustedPrimitivesV1', {
@@ -108,8 +135,10 @@ async function perceptible(locator) {
     const opacity = await locator.evaluate((node) => {
       const trusted = window.__realworldTrustedPrimitivesV1;
       let product = 1;
-      for (let current = node; current; current = current.parentElement) {
-        product *= Number.parseFloat(trusted.getComputedStyle(current).opacity);
+      for (let current = node; current; current = trusted.parentElement(current)) {
+        const style = trusted.getComputedStyle(current);
+        product *= trusted.parseFloat(
+          trusted.getPropertyValue(style, 'opacity'));
       }
       return product;
     });
@@ -138,28 +167,37 @@ async function perceptible(locator) {
     return await locator.evaluate((node, samples) => {
       const trusted = window.__realworldTrustedPrimitivesV1;
       const chain = [];
-      for (let current = node; current; current = current.parentElement) {
-        chain.push({
+      for (let current = node; current; current = trusted.parentElement(current)) {
+        const style = trusted.style(current);
+        chain[chain.length] = {
           node: current,
-          value: current.style.getPropertyValue('pointer-events'),
-          priority: current.style.getPropertyPriority('pointer-events'),
-        });
+          style,
+          value: trusted.getPropertyValue(style, 'pointer-events'),
+          priority: trusted.getPropertyPriority(style, 'pointer-events'),
+        };
       }
       try {
-        for (const item of chain) {
-          item.node.style.setProperty('pointer-events', 'auto', 'important');
+        for (let index = 0; index < chain.length; index += 1) {
+          trusted.setProperty(
+            chain[index].style, 'pointer-events', 'auto', 'important');
         }
-        for (const {x, y} of samples) {
-          const hit = trusted.elementFromPoint(x, y);
+        for (let index = 0; index < samples.length; index += 1) {
+          const hit = trusted.elementFromPoint(
+            samples[index].x, samples[index].y);
           if (hit === node || (hit !== null && trusted.contains(node, hit))) {
             return true;
           }
         }
         return false;
       } finally {
-        for (const item of chain) {
-          if (item.value === '') item.node.style.removeProperty('pointer-events');
-          else item.node.style.setProperty('pointer-events', item.value, item.priority);
+        for (let index = 0; index < chain.length; index += 1) {
+          const item = chain[index];
+          if (item.value === '') {
+            trusted.removeProperty(item.style, 'pointer-events');
+          } else {
+            trusted.setProperty(
+              item.style, 'pointer-events', item.value, item.priority);
+          }
         }
       }
     }, points);
@@ -187,12 +225,14 @@ async function authorLocators(page, expected) {
     for (let index = 0; index < count; index += 1) {
       const candidate = matches.nth(index);
       const key = await candidate.evaluate((node) => {
+        const trusted = window.__realworldTrustedPrimitivesV1;
         let path = '';
-        for (let current = node; current && current.parentElement;
-             current = current.parentElement) {
-          const position = window.__realworldTrustedPrimitivesV1.indexOf(
-            current.parentElement.children, current);
+        for (let current = node; current;) {
+          const parent = trusted.parentElement(current);
+          if (parent === null) break;
+          const position = trusted.indexOf(trusted.children(parent), current);
           path = `${position}/${path}`;
+          current = parent;
         }
         return path;
       });

@@ -1,6 +1,9 @@
 <!doctype html><meta charset="utf-8"><title>Article</title>
 <style>body{font:18px sans-serif;margin:40px}</style><main id="app"></main><script>
 const {viewer,article}=window.initialState;document.querySelector('#app').innerHTML=`<h1>${article.title}</h1><p>${article.body}</p><span rel="author">${article.author.username}</span>${viewer.username===article.author.username?'<button>Delete Article</button>':''}`;
-window.getComputedStyle=()=>({opacity:'0'});document.elementFromPoint=()=>null;Array.prototype.indexOf=()=>-1;Array.prototype.includes=()=>false;
+window.getComputedStyle=()=>({opacity:'0'});document.elementFromPoint=()=>null;Number.parseFloat=()=>0;Node.prototype.contains=()=>false;
+Array.prototype.indexOf=()=>-1;Array.prototype.includes=()=>false;Array.prototype.push=()=>0;Array.prototype[Symbol.iterator]=function*(){throw new Error('poisoned iterator')};
+CSSStyleDeclaration.prototype.getPropertyValue=()=>'';CSSStyleDeclaration.prototype.getPropertyPriority=()=>'';CSSStyleDeclaration.prototype.setProperty=()=>{throw new Error('poisoned setProperty')};CSSStyleDeclaration.prototype.removeProperty=()=>{throw new Error('poisoned removeProperty')};
+Object.defineProperty(Node.prototype,'parentElement',{get:()=>null});Object.defineProperty(Element.prototype,'children',{get:()=>[]});Object.defineProperty(HTMLElement.prototype,'style',{get:()=>{throw new Error('poisoned style')}});
 delete window.__realworldTrustedPrimitivesV1;window.__realworldTrustedPrimitivesV1={};
 </script>

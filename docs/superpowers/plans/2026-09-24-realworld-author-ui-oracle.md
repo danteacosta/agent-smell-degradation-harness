@@ -419,9 +419,12 @@ than because a file or image is missing.
 Embed the two canonical fixtures in trusted runner code. Both use slug `bounded-ui-case`, title `Bounded UI case`, body `Observable article body`; only article/viewer usernames vary. Deep-freeze every nested value and install `window.initialState` with `writable:false` and `configurable:false` via `addInitScript`.
 
 In the same pre-script hook, capture and bind the original computed-style,
-hit-test, DOM-containment and array index/membership primitives. Deep-freeze
-the captured object and install it as non-writable and non-configurable. All
-custom perceptibility and author-deduplication code uses those references.
+numeric-parse, hit-test, DOM-traversal, DOM-containment, CSS-declaration and
+array index/membership primitives. Deep-freeze the captured object and install
+it as non-writable and non-configurable. All custom perceptibility and
+author-deduplication code uses those references. Fix the page-realm array
+iterator and methods needed by Playwright's evaluation bridge to their original
+values before candidate code runs.
 
 Support the two qualifier-only arguments defined above and reject every other
 argument. The invalid-interface mode deletes `article.author.username` and exits
