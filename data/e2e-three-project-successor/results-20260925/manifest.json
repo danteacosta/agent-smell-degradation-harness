@@ -1,0 +1,23 @@
+{
+  "claims": {
+    "h1_confirmed": false,
+    "h2_evaluated": false,
+    "pilot": true
+  },
+  "collected_at": "2026-09-25",
+  "executable": 53,
+  "planned": 54,
+  "private_file_count": 958,
+  "private_receipt_sha256": "560c3b68f0d9c6ee3cc275b0f64f83440f19f0e7b6f6ada5640adbc0f17b7d22",
+  "projects": [
+    "paperless-ngx",
+    "nextcloud",
+    "openproject"
+  ],
+  "provider_calls": 54,
+  "published_provider_captures": false,
+  "published_raw_generations": false,
+  "schema_version": "three-project-fixed-scaffold-public-results/v1",
+  "terminal_lf_canonicalization_declared_before_v4": true,
+  "unknown": 1
+}

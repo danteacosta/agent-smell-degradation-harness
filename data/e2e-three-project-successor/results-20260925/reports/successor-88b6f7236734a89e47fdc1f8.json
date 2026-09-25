@@ -1,0 +1,13 @@
+{
+  "schema_version": "three-project-fixed-scaffold-browser/v1",
+  "project_id": "openproject",
+  "status": "complete",
+  "app_sha256": "3f26df80392e62e9d64647b61b3aff63e4a031c0078f4e500c4b9a8269642611",
+  "assertions": {
+    "work_preserved": true,
+    "remaining_matches_work": true,
+    "percent_zero": true
+  },
+  "console_errors": [],
+  "screenshot": "final.png"
+}
