@@ -1,0 +1,9 @@
+{
+  "schema_version": "three-project-fixed-scaffold-browser/v1",
+  "project_id": "openproject",
+  "status": "interface_error",
+  "app_sha256": "37022f1e76f6430e6efdae91602c34a048a40ccb9598f6d8d2e7720be8ba7acc",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: one visible [aria-label=\"Remaining Work\"] required"
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "three-project-fixed-scaffold-browser/v1",
+  "project_id": "nextcloud",
+  "status": "complete",
+  "app_sha256": "916bfaafba48f333ae24a9455cf93f0ae75b71c397e6e57730fb804c9d4b1028",
+  "assertions": {
+    "deleted_absent_from_all": false,
+    "unrelated_file_unchanged": true,
+    "deleted_visible_in_trash": false,
+    "restore_returns_to_all": false
+  },
+  "console_errors": [],
+  "screenshot": "final.png"
+}

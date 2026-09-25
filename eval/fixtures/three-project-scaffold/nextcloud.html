@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Files</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button{font:inherit;margin:.3rem;padding:.5rem}.row{border:1px solid #bbb;padding:.7rem;margin:.5rem 0}</style></head>
+<body><nav><button id="all">All files</button><button id="deleted">Deleted files</button></nav><main id="files"></main>
+<script>
+const state={active:structuredClone(window.initialState.files),trash:[],view:'all'};
+const handlers=new Map();
+const app=Object.freeze({
+  register(action,handler){if(!['delete','restore'].includes(action)||typeof handler!=='function'||handlers.has(action))throw new Error('invalid behavior registration');handlers.set(action,handler)},
+  moveToTrash(id){const index=state.active.findIndex(file=>file.id===id);if(index>=0)state.trash.push(...state.active.splice(index,1))},
+  restore(id){const index=state.trash.findIndex(file=>file.id===id);if(index>=0)state.active.push(...state.trash.splice(index,1))}
+});
+function render(){const root=document.querySelector('#files');root.replaceChildren();const files=state.view==='all'?state.active:state.trash;for(const file of files){const row=document.createElement('div');row.className='row';row.setAttribute('data-file-id',file.id);row.append(file.name+' ');const button=document.createElement('button');const action=state.view==='all'?'delete':'restore';button.textContent=action==='delete'?'Delete':'Restore';button.addEventListener('click',()=>{handlers.get(action)?.(file.id);render()});row.append(button);root.append(row)}}
+document.querySelector('#all').addEventListener('click',()=>{state.view='all';render()});
+document.querySelector('#deleted').addEventListener('click',()=>{state.view='deleted';render()});
+/* MODEL_BEHAVIOR */
+render();
+</script></body></html>
