@@ -100,3 +100,25 @@ def test_revision_panel_rejects_inflated_eligibility(tmp_path) -> None:
 
     with pytest.raises(ValueError, match="revision panel summary drift"):
         candidates.validate_revision_panel(path)
+
+
+def test_third_panel_reaches_all_projects_without_relaxing_unanimity() -> None:
+    assert candidates.validate_third_panel(candidates.THIRD_PANEL_PATH) == {
+        "reviewers": 3,
+        "replacement_candidates": 7,
+        "newly_accepted": 6,
+        "still_deferred": 1,
+        "total_eligible": 11,
+        "represented_projects": 6,
+        "eligible_positions": 198,
+    }
+
+
+def test_third_panel_rejects_replacement_mapping_drift(tmp_path) -> None:
+    payload = json.loads(candidates.THIRD_PANEL_PATH.read_text())
+    payload["revisions"][0]["replaces_candidate_id"] = "not-a-deferred-candidate"
+    path = tmp_path / "third-panel.json"
+    path.write_text(json.dumps(payload))
+
+    with pytest.raises(ValueError, match="third panel replacement drift"):
+        candidates.validate_third_panel(path)

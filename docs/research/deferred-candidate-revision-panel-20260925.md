@@ -39,3 +39,5 @@ This pool represents at most **90 planned positions**: `5 obligations × 3 arms 
 ## Interpretation
 
 The revision panel increases the prospective pool without weakening the unanimous gate. It does not increase the number of projects already represented by qualified experimental E2E outcomes. TodoMVC and RealWorld still need replacement or further revision if the collection is to cover all six projects. No call from this screening should be counted among the planned 90 generations.
+
+Subsequent prospective work is recorded in `third-candidate-revision-panel-20260925.md`. That panel replaces or narrows the remaining cases before oracle construction and raises the eligible ceiling to 11 obligations across all six projects; it does not change the historical result reported here.
