@@ -1,5 +1,9 @@
 # TodoMVC Mark all visible-state successor
 
+> Superseded on 25 September 2026 by the v3 remaining-state policy after the
+> [independent LLM instrument review](mark-all-llm-instrument-review-20260925.md)
+> failed its unanimity gate. Historical v2 evidence below remains unchanged.
+
 Status: **successor instrument qualified; endpoint admission remains deferred
 until the successor evidence and endpoint are independently reviewed**. This
 change does not replay or rescore prior artifacts, make a model call, or add

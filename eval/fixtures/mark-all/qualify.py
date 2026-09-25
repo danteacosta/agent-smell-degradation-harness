@@ -21,6 +21,7 @@ EXPECTED = {
     'reference-nested-reversed': ('pass', []),
     'reference-extra-checkbox': ('pass', []),
     'reference-hidden-master': ('pass', []),
+    'mutant-hidden-stale-master': ('target_only_failure', ['clear_master_after_clear_completed']),
     'control-ambiguous-master': ('pass', []),
     'control-duplicate-master': ('target_not_evaluable', []),
     'mutant-stale-master': ('target_only_failure', ['clear_master_after_clear_completed']),
@@ -85,7 +86,7 @@ def main() -> int:
                     and row['expected_target_reason'] == row['observed_target_reason']
                     and row['expected_clear_reason'] == row['observed_clear_reason']
                     for row in rows)
-    report = {'schema_version': 'mark-all-qualification/v2', 'qualified': qualified,
+    report = {'schema_version': 'mark-all-qualification/v3', 'qualified': qualified,
               'image_id': args.image, 'cases': rows,
               'files': {str(path.relative_to(ROOT)): digest(path) for path in paths},
               'limitations': 'Authored controls qualify this bounded oracle, not a source-smell effect or universal browser escape safety.'}

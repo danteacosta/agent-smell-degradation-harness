@@ -71,7 +71,7 @@ def classify_report(raw: bytes | None, returncode: int) -> dict:
         value = json.loads(raw, object_pairs_hook=_unique_fields) if raw and len(raw) <= 100000 else None
     except (ValueError, TypeError):
         return invalid
-    if not isinstance(value, dict) or value.get('schema_version') != 'mark-all-browser/v2':
+    if not isinstance(value, dict) or value.get('schema_version') != 'mark-all-browser/v3':
         return invalid
     if not isinstance(value.get('app_sha256'), str) or not re.fullmatch(r'[0-9a-f]{64}', value['app_sha256']):
         return invalid

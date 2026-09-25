@@ -21,7 +21,7 @@ def report(statuses, target_reason=None, clear_reason=None):
     observation = {'before': {'todo_count': 2, 'checked_items': 0, 'master': master},
                    'after': {'todo_count': 0, 'checked_items': 0, 'master': master},
                    'console_errors': []}
-    return json.dumps({'schema_version': 'mark-all-browser/v2', 'status': 'complete',
+    return json.dumps({'schema_version': 'mark-all-browser/v3', 'status': 'complete',
         'app_sha256': HASH, 'cases': cases, 'target_observation': observation}).encode()
 
 
@@ -64,7 +64,7 @@ def test_duplicate_exact_master_identity_can_be_reported_as_unassessable():
         'target_failed': None, 'non_target_failed': []}
 
 
-def test_qualification_matrix_covers_visible_state_policy():
+def test_qualification_matrix_covers_remaining_master_state_policy():
     path = Path(__file__).parents[1] / 'eval' / 'fixtures' / 'mark-all' / 'qualify.py'
     spec = importlib.util.spec_from_file_location('mark_all_qualify', path)
     assert spec and spec.loader
@@ -72,6 +72,8 @@ def test_qualification_matrix_covers_visible_state_policy():
     spec.loader.exec_module(module)
 
     assert module.EXPECTED['reference-hidden-master'] == ('pass', [])
+    assert module.EXPECTED['mutant-hidden-stale-master'] == (
+        'target_only_failure', ['clear_master_after_clear_completed'])
     assert module.EXPECTED['control-ambiguous-master'] == ('pass', [])
     assert module.EXPECTED['mutant-replacement-stale-master'] == (
         'target_only_failure', ['clear_master_after_clear_completed'])
@@ -93,14 +95,14 @@ def test_observation_schema_rejects_unbounded_or_non_string_console_errors():
 
 @pytest.mark.parametrize('bad,rc', [
     (b'{}', 0), (report(states()), 1),
-    (report(states()).replace(b'mark-all-browser/v2', b'mark-all-browser/v1'), 0),
+    (report(states()).replace(b'mark-all-browser/v3', b'mark-all-browser/v2'), 0),
     (report(states(clear_master_after_clear_completed='not_evaluable')), 0),
     (report(states(clear_master_after_clear_completed='not_evaluable'), target_reason='unknown'), 0),
     (report(states(clear_completed_removes_items='not_evaluable',
                    clear_master_after_clear_completed='not_evaluable'),
             target_reason='bulk_selection_failed'), 1),
     (report(states(unknown='failed')), 1),
-    (b'{"schema_version":"mark-all-browser/v2","status":"complete","app_sha256":"' +
+    (b'{"schema_version":"mark-all-browser/v3","status":"complete","app_sha256":"' +
      HASH.encode() + b'","cases":[{"id":[],"status":"passed"}]}', 0),
 ])
 def test_inconsistent_or_incomplete_report_fails_closed(bad, rc):
