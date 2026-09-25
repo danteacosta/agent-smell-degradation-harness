@@ -23,6 +23,17 @@ The validator now rejects all of these cases. It derives project counts from the
 
 The reviewers also agreed that stage labels and well-formed hashes do not independently prove chronology. The research notes now describe pre-oracle timing as a recorded custody claim supported by retained private evidence and commit order. They no longer claim that outcome-based selection is impossible merely because a stage field says so.
 
+## Follow-up audit
+
+A second isolated pass verified the new guards. Two reviewers independently found one remaining coherent corruption: all eligible candidates from one project could be changed to `DEFER` while the declared six-project list remained unchanged. The validator compared that declaration with the expected project set, but not with the project keys derived from the surviving eligible candidates. A new regression test reproduces this case, and the validator now requires the declared and derived project sets to be identical. The complete focused suite passes with 17 tests.
+
+- Follow-up prompt SHA-256: `c00ebcf3528f9265cf53b2330872baba63d4b4fbb9369e8bb348a43abc88c447`
+- Astra response SHA-256: `ce95d90f105ddf4c5af06f8b47d57fb62bb78f3eadbf52497db033e8bc28db21`
+- Sol response SHA-256: `13ab727450825b6f4b396a15667c77e9d67ddd73a6d1c21e2576990592a78c09`
+- Luna response SHA-256: `06dca9da3ac6161670ab0e9c29a39d46ba77c3b2071bdf80bf1b1cc31e802b01`
+
+The isolated reviewers ran in read-only sandboxes; two could not execute the full pytest command because no writable temporary directory was available. That environment limitation does not substitute for the root verification above.
+
 ## Residual limitation
 
 CI can validate the embedded public decisions, source locators and declared digests, but it cannot recompute hashes of private prompt and response files that are intentionally excluded from Git. Independent custody review of those private files remains necessary before treating chronology and session isolation as externally verified.

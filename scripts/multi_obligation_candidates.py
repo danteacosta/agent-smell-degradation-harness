@@ -463,6 +463,7 @@ def validate_third_panel(panel_path: Path) -> dict[str, int]:
         or not isinstance(represented_projects, list)
         or len(represented_projects) != len(set(represented_projects))
         or set(represented_projects) != EXPECTED_PROJECTS
+        or set(represented_projects) != set(eligible_project_counts)
         or payload.get("eligible_project_counts") != dict(eligible_project_counts)
     ):
         raise ValueError("third panel summary drift")

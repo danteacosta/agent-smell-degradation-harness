@@ -187,3 +187,50 @@ def test_third_panel_rejects_claimed_project_coverage_drift(tmp_path) -> None:
 
     with pytest.raises(ValueError, match="third panel summary drift"):
         candidates.validate_third_panel(path)
+
+
+def test_third_panel_rejects_coverage_without_eligible_candidate(tmp_path) -> None:
+    payload = json.loads(candidates.THIRD_PANEL_PATH.read_text())
+    removed_ids = {
+        row["candidate_id"]
+        for row in payload["revisions"]
+        if row["project_id"] == "todomvc"
+    }
+    for reviewer in payload["reviewers"]:
+        for decision in reviewer["candidates"]:
+            if decision["candidate_id"] in removed_ids:
+                decision["verdict"] = "DEFER"
+        reviewer["accepted_count"] = sum(
+            row["verdict"] == "ACCEPT" for row in reviewer["candidates"]
+        )
+        reviewer["deferred_count"] = sum(
+            row["verdict"] == "DEFER" for row in reviewer["candidates"]
+        )
+    for row in payload["consensus"]:
+        if row["candidate_id"] in removed_ids:
+            row["verdict"] = "DEFER"
+            row["decisions"] = {model: "DEFER" for model in row["decisions"]}
+    payload["newly_eligible_candidate_ids"] = [
+        candidate_id
+        for candidate_id in payload["newly_eligible_candidate_ids"]
+        if candidate_id not in removed_ids
+    ]
+    payload["still_deferred_candidate_ids"] = [
+        row["candidate_id"]
+        for row in payload["consensus"]
+        if row["verdict"] == "DEFER"
+    ]
+    payload["total_eligible_candidate_ids"] = (
+        payload["prior_eligible_candidate_ids"]
+        + payload["newly_eligible_candidate_ids"]
+    )
+    payload["newly_accepted"] = len(payload["newly_eligible_candidate_ids"])
+    payload["still_deferred"] = len(payload["still_deferred_candidate_ids"])
+    payload["total_eligible"] = len(payload["total_eligible_candidate_ids"])
+    payload["eligible_positions"] = payload["total_eligible"] * 18
+    del payload["eligible_project_counts"]["todomvc"]
+    path = tmp_path / "third-panel-false-project-coverage.json"
+    path.write_text(json.dumps(payload))
+
+    with pytest.raises(ValueError, match="third panel summary drift"):
+        candidates.validate_third_panel(path)
