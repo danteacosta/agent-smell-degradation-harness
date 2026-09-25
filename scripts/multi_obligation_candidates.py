@@ -6,10 +6,12 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTER_PATH = ROOT / "data/e2e-multi-obligation/candidates-20260925.json"
+SCREENING_PATH = ROOT / "data/e2e-multi-obligation/screening-panel-20260925.json"
 EXPECTED_PROJECTS = {
     "todomvc",
     "realworld",
@@ -92,6 +94,74 @@ def validate(register_path: Path) -> dict[str, int]:
         "projects": len(project_counts),
         "candidates": len(rows),
         "planned_positions": planned,
+    }
+
+
+def validate_screening(screening_path: Path) -> dict[str, int]:
+    payload = json.loads(screening_path.read_text())
+    reviewers = payload.get("reviewers")
+    consensus = payload.get("consensus")
+    expected_models = {"gpt-6-astra", "gpt-6-sol", "gpt-6-luna"}
+    register_ids = {
+        row["candidate_id"] for row in json.loads(REGISTER_PATH.read_text())["candidates"]
+    }
+    if (
+        payload.get("schema_version") != "multi-obligation-screening-panel/v1"
+        or payload.get("stage") != "pre_oracle_pre_generation_screening"
+        or payload.get("collection_authorized") is not False
+        or payload.get("provider_calls_for_generation") != 0
+        or payload.get("claims")
+        != {"outcomes_observed": False, "h1_confirmed": False, "h2_evaluated": False}
+        or not re.fullmatch(r"[0-9a-f]{64}", str(payload.get("review_prompt_sha256", "")))
+        or not isinstance(reviewers, list)
+        or len(reviewers) != 3
+        or not isinstance(consensus, list)
+        or len(consensus) != 12
+    ):
+        raise ValueError("screening contract drift")
+    reviewer_models = {row.get("requested_model") for row in reviewers}
+    if reviewer_models != expected_models:
+        raise ValueError("screening reviewer drift")
+
+    decisions_by_model: dict[str, dict[str, str]] = {}
+    for reviewer in reviewers:
+        decisions = reviewer.get("candidates")
+        if (
+            not re.fullmatch(r"[0-9a-f]{64}", str(reviewer.get("response_sha256", "")))
+            or not isinstance(decisions, list)
+            or len(decisions) != 12
+        ):
+            raise ValueError("screening reviewer evidence drift")
+        indexed = {row.get("candidate_id"): row.get("verdict") for row in decisions}
+        if set(indexed) != register_ids or set(indexed.values()) - {"ACCEPT", "DEFER"}:
+            raise ValueError("screening reviewer decision drift")
+        decisions_by_model[reviewer["requested_model"]] = indexed
+
+    accepted = []
+    for row in consensus:
+        candidate_id = row.get("candidate_id")
+        expected = {
+            model: decisions_by_model[model][candidate_id] for model in expected_models
+        } if candidate_id in register_ids else None
+        expected_verdict = "ACCEPT" if expected and set(expected.values()) == {"ACCEPT"} else "DEFER"
+        if row.get("decisions") != expected or row.get("verdict") != expected_verdict:
+            raise ValueError("screening consensus drift")
+        if expected_verdict == "ACCEPT":
+            accepted.append(candidate_id)
+    if (
+        {row.get("candidate_id") for row in consensus} != register_ids
+        or payload.get("eligible_candidate_ids") != accepted
+        or payload.get("unanimously_accepted") != len(accepted)
+        or payload.get("deferred") != 12 - len(accepted)
+        or payload.get("eligible_positions") != len(accepted) * 18
+    ):
+        raise ValueError("screening summary drift")
+    return {
+        "reviewers": len(reviewers),
+        "candidates": len(consensus),
+        "unanimously_accepted": len(accepted),
+        "deferred": 12 - len(accepted),
+        "eligible_positions": len(accepted) * 18,
     }
 
 

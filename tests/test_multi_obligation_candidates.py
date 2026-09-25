@@ -59,3 +59,23 @@ def test_register_rejects_excerpt_outside_declared_lines(tmp_path) -> None:
 
     with pytest.raises(ValueError, match="source locator drift"):
         candidates.validate(path)
+
+
+def test_canonical_screening_preserves_unanimity_gate() -> None:
+    assert candidates.validate_screening(candidates.SCREENING_PATH) == {
+        "reviewers": 3,
+        "candidates": 12,
+        "unanimously_accepted": 3,
+        "deferred": 9,
+        "eligible_positions": 54,
+    }
+
+
+def test_screening_rejects_consensus_drift(tmp_path) -> None:
+    payload = json.loads(candidates.SCREENING_PATH.read_text())
+    payload["consensus"][0]["verdict"] = "ACCEPT"
+    path = tmp_path / "screening.json"
+    path.write_text(json.dumps(payload))
+
+    with pytest.raises(ValueError, match="screening consensus drift"):
+        candidates.validate_screening(path)

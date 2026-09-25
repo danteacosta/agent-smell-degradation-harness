@@ -4,6 +4,11 @@ Status: **candidate protocol before oracle implementation, qualification, prompt
 freeze, or model dispatch**. This document defines the next evidence block; it
 does not add an outcome to the six-project evidence matrix.
 
+The [independent screening panel](multi-obligation-screening-panel-20260925.md)
+subsequently accepted 3 of these 12 candidates unanimously. The resulting
+pre-qualification ceiling is 54 positions; the 216-position design below
+remains the target only after deferred candidates are narrowed or replaced.
+
 ## Research contract
 
 The current pilots show that deleting one requirement obligation can produce a
