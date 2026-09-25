@@ -1,0 +1,44 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Qualified UI control</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input{font:inherit;margin:.3rem;padding:.45rem}.row{border:1px solid #bbb;padding:.7rem;margin:.5rem 0}.status{font-weight:700}</style></head>
+<body><nav id="nav"></nav><main id="app"></main><script>
+const mode=window.qualificationMode||'reference';
+const app=document.querySelector('#app');const nav=document.querySelector('#nav');
+const el=(tag,attrs={},value='')=>{const node=document.createElement(tag);for(const [key,val] of Object.entries(attrs)){if(key==='text')node.textContent=val;else node.setAttribute(key,val)}if(value)node.textContent=value;return node};
+if(window.caseProject==='paperless-ngx'){
+  const documents=structuredClone(window.initialState.documents);
+  const upload=el('button',{'aria-label':'Upload document'},'Upload document');nav.append(upload);
+  if(mode==='non-target-mutant')upload.disabled=true;
+  function render(){app.replaceChildren();for(const doc of documents)app.append(el('div',{'data-document-id':doc.id,class:'row'},doc.title));
+    if(mode==='interface-ambiguous'&&documents.length)app.append(app.firstElementChild.cloneNode(true));}
+  const dropTarget=mode==='alternative'?document.documentElement:document.body;
+  dropTarget.addEventListener('dragover',event=>event.preventDefault());
+  if(mode!=='target-mutant')dropTarget.addEventListener('drop',event=>{event.preventDefault();const file=event.dataTransfer.files[0];documents.push({id:'dropped-document',title:file.name});render()});
+  render();
+}
+if(window.caseProject==='kanboard'){
+  if(mode==='alternative')document.body.style.background='#f3f7ff';
+  let view='board';const tasks=structuredClone(window.initialState.tasks);
+  const board=el('button',{},'Board'),closed=el('button',{},'Closed tasks');nav.append(board,closed);
+  function render(){app.replaceChildren();for(const task of tasks.filter(t=>view==='board'?!t.closed:t.closed)){
+    const row=el(mode==='alternative'?'article':'section',{'data-task-id':task.id,class:'row'});row.append(el('h2',{},task.title));
+    for(const sub of task.subtasks){const sr=el(mode==='alternative'?'p':'div',{'data-subtask-id':sub.id});sr.append(sub.title+' ');sr.append(el(mode==='alternative'?'output':'span',{class:'status'},sub.status));row.append(sr)}
+    if(!task.closed){const close=el('button',{},'Close task');close.onclick=()=>{task.closed=true;if(mode!=='target-mutant')for(const sub of task.subtasks)sub.status='Done';if(mode==='non-target-mutant')tasks.splice(tasks.findIndex(t=>t.id==='task-control'),1);render()};row.append(close)}app.append(row)}
+    if(mode==='interface-ambiguous'&&view==='closed'&&tasks.some(t=>t.closed))app.append(app.firstElementChild.cloneNode(true));}
+  board.onclick=()=>{view='board';render()};closed.onclick=()=>{view='closed';render()};render();
+}
+if(window.caseProject==='nextcloud'){
+  if(mode==='alternative')document.body.style.background='#fff8ef';
+  let view='all';const active=structuredClone(window.initialState.files),trash=[];
+  const allButton=el('button',{},'All files'),deletedButton=el('button',{},'Deleted files');nav.append(allButton,deletedButton);
+  function render(){app.replaceChildren();const files=view==='all'?active:trash;for(const file of files){const row=el(mode==='alternative'?'article':'div',{'data-file-id':file.id,class:'row'},file.name+' ');if(view==='all'){const del=el('button',{},'Delete');del.onclick=()=>{active.splice(active.indexOf(file),1);trash.push(file);if(mode==='non-target-mutant')active.splice(active.findIndex(f=>f.id==='file-control'),1);render()};row.append(del)}else if(mode!=='target-mutant'){const restore=el('button',{},'Restore');restore.onclick=()=>{trash.splice(trash.indexOf(file),1);active.push(file);render()};row.append(restore)}app.append(row)}if(mode==='interface-ambiguous'&&files.length)app.append(app.firstElementChild.cloneNode(true));}
+  allButton.onclick=()=>{view='all';render()};deletedButton.onclick=()=>{view='trash';render()};render();
+}
+if(window.caseProject==='openproject'){
+  if(mode==='alternative')document.body.style.background='#f2fff5';
+  const work=el('input',{'aria-label':'Work'}),remaining=el('input',{'aria-label':'Remaining Work'}),percent=el('input',{'aria-label':'% Complete'}),save=el('button',{},'Save');
+  const saveValues=()=>{if(mode!=='target-mutant')remaining.value=work.value;percent.value=mode==='non-target-mutant'?'50%':'0%'};
+  if(mode==='alternative')save.addEventListener('click',saveValues);else save.onclick=saveValues;
+  if(mode==='alternative')app.append('Remaining Work ',remaining,' Work ',work,' % Complete ',percent,save);else app.append('Work ',work,' Remaining Work ',remaining,' % Complete ',percent,save);
+  if(mode==='interface-ambiguous')app.append(el('input',{'aria-label':'Remaining Work'}));
+}
+</script></body></html>

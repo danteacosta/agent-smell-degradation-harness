@@ -1,0 +1,13 @@
+{
+  "schema_version": "four-project-ui-browser/v1",
+  "project_id": "openproject",
+  "status": "complete",
+  "app_sha256": "ee1f9173a01a09c2e70c8c2c4e421b2118baf405ae6280a00fbc07967d70ad38",
+  "assertions": {
+    "work_preserved": true,
+    "remaining_matches_work": true,
+    "percent_zero": false
+  },
+  "console_errors": [],
+  "screenshot": "final.png"
+}

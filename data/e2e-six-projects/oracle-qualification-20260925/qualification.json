@@ -1,0 +1,190 @@
+{
+  "schema_version": "four-project-ui-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:529bf59afccb0572970b728de7235f0f0130da00248fab232121cd2c3eef60df",
+  "cases": [
+    {
+      "project_id": "paperless-ngx",
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "returncode": 0,
+      "report_sha256": "ecf4c7a73ce98c43440403901fc38e0e27e16258967586b22dfceb2b1c8daae8",
+      "screenshot_sha256": "c844b4af55d3df91be5e395db67e387a43b9615e013c2fe534b951250169bb83"
+    },
+    {
+      "project_id": "paperless-ngx",
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "returncode": 0,
+      "report_sha256": "ecf4c7a73ce98c43440403901fc38e0e27e16258967586b22dfceb2b1c8daae8",
+      "screenshot_sha256": "c844b4af55d3df91be5e395db67e387a43b9615e013c2fe534b951250169bb83"
+    },
+    {
+      "project_id": "paperless-ngx",
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "returncode": 0,
+      "report_sha256": "f14f03c884f7b32b92114935777207b2cc799065e4bead63c63894731e6b0780",
+      "screenshot_sha256": "dfb224479a05726693278bad279be351532bc512a8eb724632b27048e6e6882d"
+    },
+    {
+      "project_id": "paperless-ngx",
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "returncode": 0,
+      "report_sha256": "9b9bd9b5091ec3e839ab23210ce8bd1526f76bbc4c4baa9da8eabfb8b694df06",
+      "screenshot_sha256": "4869103107423bd11b634a6716509bb4c7f46bb0b993829b80aba8ed29e68425"
+    },
+    {
+      "project_id": "paperless-ngx",
+      "mode": "interface-ambiguous",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "returncode": 2,
+      "report_sha256": "8d2226d74813b3022d42cbf8fa34a81fe8224327639bbad318a2bd5b41e9cbd7",
+      "screenshot_sha256": null
+    },
+    {
+      "project_id": "kanboard",
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "returncode": 0,
+      "report_sha256": "75b357eb63f7a9735efb4d3d3a477684e24d69491fd04e57e74ddc2fed6ba814",
+      "screenshot_sha256": "a40cc761f1dea38047d0fbda3e3b869bbfcfb5f2784942ba34787d32482f1719"
+    },
+    {
+      "project_id": "kanboard",
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "returncode": 0,
+      "report_sha256": "75b357eb63f7a9735efb4d3d3a477684e24d69491fd04e57e74ddc2fed6ba814",
+      "screenshot_sha256": "5239f50e2b3bc45d76395f8c57a35317687a5dbf707d575e7b99fecc37472954"
+    },
+    {
+      "project_id": "kanboard",
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "returncode": 0,
+      "report_sha256": "8d50243775ef9e917f619ff217906a76ca92e8a752e0b484b804f6b7ea91e62f",
+      "screenshot_sha256": "a40cc761f1dea38047d0fbda3e3b869bbfcfb5f2784942ba34787d32482f1719"
+    },
+    {
+      "project_id": "kanboard",
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "returncode": 0,
+      "report_sha256": "427c5739082ec6374ed8ab171a47be8c13f3946e235d66564db1945cf6a22bf3",
+      "screenshot_sha256": "64b1116fb0037f8b81bfb44e2af592ee2089f5bd25f2dc731192582502cc9006"
+    },
+    {
+      "project_id": "kanboard",
+      "mode": "interface-ambiguous",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "returncode": 2,
+      "report_sha256": "cb5e2705fead071bd8dd220d5d5772b9144b48e65e4528e8daf04dc4df32a7c5",
+      "screenshot_sha256": null
+    },
+    {
+      "project_id": "nextcloud",
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "returncode": 0,
+      "report_sha256": "1b11272a3993de64a8a137cb57a851f0f35718790dd0ed74b3519da8db0683aa",
+      "screenshot_sha256": "926dcc946b0a39bfc847dda04828bf853ef9b6a40e8a177a425ad4966640cd0f"
+    },
+    {
+      "project_id": "nextcloud",
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "returncode": 0,
+      "report_sha256": "1b11272a3993de64a8a137cb57a851f0f35718790dd0ed74b3519da8db0683aa",
+      "screenshot_sha256": "cae40bc9af1b5cdfac68e43a52b053b781d9b071540351020813e21ef226709d"
+    },
+    {
+      "project_id": "nextcloud",
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "returncode": 0,
+      "report_sha256": "d537825267434262e067616c94fa10bab04579283298e82316029fd8ebec0512",
+      "screenshot_sha256": "0a1987a405333660168557d63c50d1f41ff833dbc39b7e93ef4d467c937b2f9e"
+    },
+    {
+      "project_id": "nextcloud",
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "returncode": 0,
+      "report_sha256": "b1e5df7e6c263de190afafbf0244601942e1aeae95a49ca11bd36cadc8176f69",
+      "screenshot_sha256": "46bb1178176954e913bbfcd573389298ed7b280c93214edd37843fc57c54f4fb"
+    },
+    {
+      "project_id": "nextcloud",
+      "mode": "interface-ambiguous",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "returncode": 2,
+      "report_sha256": "77e7f6b90a6a746e6d6a1ce1b4591ef40dc36d689c831f51f04fb080ec806d34",
+      "screenshot_sha256": null
+    },
+    {
+      "project_id": "openproject",
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "returncode": 0,
+      "report_sha256": "fbbda2cbe4386bf3042e9b172f67536b40a3e4b121d0ad188aa223a2447e3ef8",
+      "screenshot_sha256": "0b8ecc149ff088983a099fa3e1806005181a17acd8c342e40e0bf6c352d15495"
+    },
+    {
+      "project_id": "openproject",
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "returncode": 0,
+      "report_sha256": "fbbda2cbe4386bf3042e9b172f67536b40a3e4b121d0ad188aa223a2447e3ef8",
+      "screenshot_sha256": "04251079e3a26b657ab11dc0a9356a805862e9048e53ebd408dff679da7a3ed6"
+    },
+    {
+      "project_id": "openproject",
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "returncode": 0,
+      "report_sha256": "7967864ab754ada6b802b20f9b2f0464b2cee24aef4a58cd158c55c7ab57de89",
+      "screenshot_sha256": "7579e9d745de0f5995a236022f4612df23b8df4527e097795a1e31fa6200ed02"
+    },
+    {
+      "project_id": "openproject",
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "returncode": 0,
+      "report_sha256": "c5be28332be720afa7cb90ed4c06564c432953ee68c2a4893c1849682abcd360",
+      "screenshot_sha256": "33c48c2461d5bf88a989ccffa58748ebb096d0390eab1fb9e48b7cd8f5851313"
+    },
+    {
+      "project_id": "openproject",
+      "mode": "interface-ambiguous",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "returncode": 2,
+      "report_sha256": "46cfb0b651750bcc107434de798723b07d8c8ee80ea22227698003f8839ff707",
+      "screenshot_sha256": null
+    }
+  ],
+  "controls": 20,
+  "project_count": 4,
+  "limitations": "Authored controls qualify bounded replica oracles; no generated artifact or H1/H2 result."
+}
