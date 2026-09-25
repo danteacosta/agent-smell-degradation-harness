@@ -211,10 +211,38 @@ def apply_split_manifest(
 ) -> dict[str, list[Mapping[str, Any]]]:
     """Apply and validate a split manifest to records without reassigning them."""
 
-    assignments = {
-        (str(row["source_intent_id"]), str(row["project_id"])): str(row["split"])
-        for row in manifest.get("assignments", [])
-    }
+    if manifest.get("schema_version") != "h2-split-1" or manifest.get("group_by") != [
+        "source_intent_id", "project_id"
+    ]:
+        raise ValueError("unsupported split manifest schema or grouping")
+    rows = manifest.get("assignments")
+    if not isinstance(rows, list) or not rows:
+        raise ValueError("split manifest needs assignment rows")
+    assignments: dict[tuple[str, str], str] = {}
+    project_splits: dict[str, str] = {}
+    intent_splits: dict[str, str] = {}
+    for row in rows:
+        if not isinstance(row, Mapping) or set(row) != {"source_intent_id", "project_id", "split"}:
+            raise ValueError("malformed split assignment")
+        source, project, split = (row[key] for key in ("source_intent_id", "project_id", "split"))
+        if not all(isinstance(value, str) and value.strip() for value in (source, project, split)):
+            raise ValueError("malformed split assignment")
+        key = (source, project)
+        if key in assignments:
+            raise ValueError("duplicate split assignment")
+        if project in project_splits and project_splits[project] != split:
+            raise ValueError("project_id crosses split boundary")
+        if source in intent_splits and intent_splits[source] != split:
+            raise ValueError("source_intent_id crosses split boundary")
+        assignments[key] = split
+        project_splits[project] = split
+        intent_splits[source] = split
+    expected_hash = hashlib.sha256(
+        json.dumps(rows, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    provenance = manifest.get("provenance")
+    if not isinstance(provenance, Mapping) or provenance.get("assignment_hash") != expected_hash:
+        raise ValueError("split assignment hash mismatch")
     if set(assignments.values()) != set(SPLITS):
         raise ValueError("split manifest must contain train, calibration, and test assignments")
     partitions: dict[str, list[Mapping[str, Any]]] = {split: [] for split in SPLITS}
