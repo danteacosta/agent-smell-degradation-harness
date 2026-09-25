@@ -1,0 +1,3 @@
+{
+  "prompt": "Build the browser application described below.\n\nRequirement:\nThe dashboard has a button to upload documents to paperless or you\ncan simply drag a file anywhere into the app to initiate the consumption\nprocess.\n\nImplementation interface:\nImplement one self-contained HTML page using vanilla JavaScript with no external resources. Render a document dashboard. Consume window.initialState.documents, whose entries have id and title. Render document rows with data-document-id and an accessible Upload document button. When a new document is accepted, render its supplied title as a document row. Return only raw HTML.\n"
+}

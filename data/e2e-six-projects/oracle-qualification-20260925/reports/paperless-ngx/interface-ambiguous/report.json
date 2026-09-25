@@ -1,0 +1,9 @@
+{
+  "schema_version": "four-project-ui-browser/v1",
+  "project_id": "paperless-ngx",
+  "status": "interface_error",
+  "app_sha256": "ee1f9173a01a09c2e70c8c2c4e421b2118baf405ae6280a00fbc07967d70ad38",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: one visible [data-document-id=\"document-control\"] required"
+}

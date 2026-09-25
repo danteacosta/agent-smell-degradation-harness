@@ -1,0 +1,14 @@
+{
+  "schema_version": "four-project-ui-browser/v1",
+  "project_id": "nextcloud",
+  "status": "complete",
+  "app_sha256": "ee1f9173a01a09c2e70c8c2c4e421b2118baf405ae6280a00fbc07967d70ad38",
+  "assertions": {
+    "deleted_absent_from_all": true,
+    "unrelated_file_unchanged": true,
+    "deleted_visible_in_trash": true,
+    "restore_returns_to_all": true
+  },
+  "console_errors": [],
+  "screenshot": "final.png"
+}
