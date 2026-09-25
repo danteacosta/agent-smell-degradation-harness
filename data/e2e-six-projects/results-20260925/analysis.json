@@ -1,0 +1,682 @@
+{
+  "calls_attempted": 72,
+  "claims": {
+    "h1_confirmed": false,
+    "h2_evaluated": false,
+    "pilot": true
+  },
+  "confirmatory_eligible": false,
+  "contrasts": [
+    {
+      "comparison": "C-A",
+      "difference_bounds": [
+        0.6666666666666666,
+        1.0
+      ],
+      "intent_id": "kanboard-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard"
+    },
+    {
+      "comparison": "B-A",
+      "difference_bounds": [
+        0.0,
+        0.6666666666666666
+      ],
+      "intent_id": "kanboard-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard"
+    },
+    {
+      "comparison": "C-A",
+      "difference_bounds": [
+        -1.0,
+        1.0
+      ],
+      "intent_id": "kanboard-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard"
+    },
+    {
+      "comparison": "B-A",
+      "difference_bounds": [
+        -1.0,
+        1.0
+      ],
+      "intent_id": "kanboard-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard"
+    },
+    {
+      "comparison": "C-A",
+      "difference_bounds": [
+        -1.0,
+        1.0
+      ],
+      "intent_id": "nextcloud-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "project_id": "nextcloud"
+    },
+    {
+      "comparison": "B-A",
+      "difference_bounds": [
+        -1.0,
+        1.0
+      ],
+      "intent_id": "nextcloud-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "project_id": "nextcloud"
+    },
+    {
+      "comparison": "C-A",
+      "difference_bounds": [
+        -1.0,
+        1.0
+      ],
+      "intent_id": "nextcloud-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "project_id": "nextcloud"
+    },
+    {
+      "comparison": "B-A",
+      "difference_bounds": [
+        -1.0,
+        1.0
+      ],
+      "intent_id": "nextcloud-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "project_id": "nextcloud"
+    },
+    {
+      "comparison": "C-A",
+      "difference_bounds": [
+        -1.0,
+        1.0
+      ],
+      "intent_id": "openproject-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject"
+    },
+    {
+      "comparison": "B-A",
+      "difference_bounds": [
+        -1.0,
+        0.6666666666666666
+      ],
+      "intent_id": "openproject-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject"
+    },
+    {
+      "comparison": "C-A",
+      "difference_bounds": [
+        -1.0,
+        1.0
+      ],
+      "intent_id": "openproject-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject"
+    },
+    {
+      "comparison": "B-A",
+      "difference_bounds": [
+        -1.0,
+        1.0
+      ],
+      "intent_id": "openproject-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject"
+    },
+    {
+      "comparison": "C-A",
+      "difference_bounds": [
+        -1.0,
+        1.0
+      ],
+      "intent_id": "paperless-ngx-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "project_id": "paperless-ngx"
+    },
+    {
+      "comparison": "B-A",
+      "difference_bounds": [
+        -1.0,
+        1.0
+      ],
+      "intent_id": "paperless-ngx-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "project_id": "paperless-ngx"
+    },
+    {
+      "comparison": "C-A",
+      "difference_bounds": [
+        -0.6666666666666666,
+        1.0
+      ],
+      "intent_id": "paperless-ngx-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "project_id": "paperless-ngx"
+    },
+    {
+      "comparison": "B-A",
+      "difference_bounds": [
+        -0.6666666666666666,
+        1.0
+      ],
+      "intent_id": "paperless-ngx-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "project_id": "paperless-ngx"
+    }
+  ],
+  "executable": 8,
+  "groups": [
+    {
+      "categories": {
+        "pass": 3
+      },
+      "intent_id": "kanboard-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "planned": 3,
+      "project_id": "kanboard",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        0.0
+      ],
+      "target_passed": 3,
+      "unknown": 0,
+      "variant": "A"
+    },
+    {
+      "categories": {
+        "browser_error": 2,
+        "pass": 1
+      },
+      "intent_id": "kanboard-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "planned": 3,
+      "project_id": "kanboard",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        0.6666666666666666
+      ],
+      "target_passed": 1,
+      "unknown": 2,
+      "variant": "B"
+    },
+    {
+      "categories": {
+        "interface_error": 1,
+        "target_only_failure": 2
+      },
+      "intent_id": "kanboard-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "planned": 3,
+      "project_id": "kanboard",
+      "target_failed": 2,
+      "target_failure_bounds": [
+        0.6666666666666666,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 1,
+      "variant": "C"
+    },
+    {
+      "categories": {
+        "browser_error": 3
+      },
+      "intent_id": "kanboard-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "planned": 3,
+      "project_id": "kanboard",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "A"
+    },
+    {
+      "categories": {
+        "browser_error": 3
+      },
+      "intent_id": "kanboard-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "planned": 3,
+      "project_id": "kanboard",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "B"
+    },
+    {
+      "categories": {
+        "browser_error": 3
+      },
+      "intent_id": "kanboard-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "planned": 3,
+      "project_id": "kanboard",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "C"
+    },
+    {
+      "categories": {
+        "browser_error": 2,
+        "interface_error": 1
+      },
+      "intent_id": "nextcloud-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "planned": 3,
+      "project_id": "nextcloud",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "A"
+    },
+    {
+      "categories": {
+        "browser_error": 1,
+        "interface_error": 2
+      },
+      "intent_id": "nextcloud-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "planned": 3,
+      "project_id": "nextcloud",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "B"
+    },
+    {
+      "categories": {
+        "browser_error": 3
+      },
+      "intent_id": "nextcloud-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "planned": 3,
+      "project_id": "nextcloud",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "C"
+    },
+    {
+      "categories": {
+        "browser_error": 3
+      },
+      "intent_id": "nextcloud-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "planned": 3,
+      "project_id": "nextcloud",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "A"
+    },
+    {
+      "categories": {
+        "browser_error": 3
+      },
+      "intent_id": "nextcloud-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "planned": 3,
+      "project_id": "nextcloud",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "B"
+    },
+    {
+      "categories": {
+        "browser_error": 3
+      },
+      "intent_id": "nextcloud-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "planned": 3,
+      "project_id": "nextcloud",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "C"
+    },
+    {
+      "categories": {
+        "interface_error": 3
+      },
+      "intent_id": "openproject-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "planned": 3,
+      "project_id": "openproject",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "A"
+    },
+    {
+      "categories": {
+        "interface_error": 2,
+        "pass": 1
+      },
+      "intent_id": "openproject-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "planned": 3,
+      "project_id": "openproject",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        0.6666666666666666
+      ],
+      "target_passed": 1,
+      "unknown": 2,
+      "variant": "B"
+    },
+    {
+      "categories": {
+        "interface_error": 3
+      },
+      "intent_id": "openproject-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "planned": 3,
+      "project_id": "openproject",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "C"
+    },
+    {
+      "categories": {
+        "interface_error": 3
+      },
+      "intent_id": "openproject-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "planned": 3,
+      "project_id": "openproject",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "A"
+    },
+    {
+      "categories": {
+        "interface_error": 3
+      },
+      "intent_id": "openproject-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "planned": 3,
+      "project_id": "openproject",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "B"
+    },
+    {
+      "categories": {
+        "interface_error": 3
+      },
+      "intent_id": "openproject-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "planned": 3,
+      "project_id": "openproject",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "C"
+    },
+    {
+      "categories": {
+        "interface_error": 3
+      },
+      "intent_id": "paperless-ngx-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "planned": 3,
+      "project_id": "paperless-ngx",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "A"
+    },
+    {
+      "categories": {
+        "interface_error": 3
+      },
+      "intent_id": "paperless-ngx-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "planned": 3,
+      "project_id": "paperless-ngx",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "B"
+    },
+    {
+      "categories": {
+        "interface_error": 3
+      },
+      "intent_id": "paperless-ngx-omitted-obligation",
+      "model": "gpt-5.6-luna",
+      "planned": 3,
+      "project_id": "paperless-ngx",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "C"
+    },
+    {
+      "categories": {
+        "interface_error": 2,
+        "pass": 1
+      },
+      "intent_id": "paperless-ngx-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "planned": 3,
+      "project_id": "paperless-ngx",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        0.6666666666666666
+      ],
+      "target_passed": 1,
+      "unknown": 2,
+      "variant": "A"
+    },
+    {
+      "categories": {
+        "interface_error": 3
+      },
+      "intent_id": "paperless-ngx-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "planned": 3,
+      "project_id": "paperless-ngx",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "B"
+    },
+    {
+      "categories": {
+        "interface_error": 3
+      },
+      "intent_id": "paperless-ngx-omitted-obligation",
+      "model": "gpt-5.6-sol",
+      "planned": 3,
+      "project_id": "paperless-ngx",
+      "target_failed": 0,
+      "target_failure_bounds": [
+        0.0,
+        1.0
+      ],
+      "target_passed": 0,
+      "unknown": 3,
+      "variant": "C"
+    }
+  ],
+  "human_approvals": 0,
+  "intent_weighted": [
+    {
+      "comparison": "B-A",
+      "difference_bounds": [
+        -0.75,
+        0.8333333333333333
+      ],
+      "intents": 4,
+      "model": "gpt-5.6-luna"
+    },
+    {
+      "comparison": "C-A",
+      "difference_bounds": [
+        -0.5833333333333334,
+        1.0
+      ],
+      "intents": 4,
+      "model": "gpt-5.6-luna"
+    },
+    {
+      "comparison": "B-A",
+      "difference_bounds": [
+        -0.9166666666666666,
+        1.0
+      ],
+      "intents": 4,
+      "model": "gpt-5.6-sol"
+    },
+    {
+      "comparison": "C-A",
+      "difference_bounds": [
+        -0.9166666666666666,
+        1.0
+      ],
+      "intents": 4,
+      "model": "gpt-5.6-sol"
+    }
+  ],
+  "label_source": "independent_behavioral_oracle",
+  "limitations": [
+    "missingness bounds are not confidence intervals",
+    "repetitions are nested within intent and project",
+    "no general H1 or H2 inference from purposive sources"
+  ],
+  "planned": 72,
+  "project_weighted": [
+    {
+      "comparison": "B-A",
+      "difference_bounds": [
+        -0.75,
+        0.8333333333333333
+      ],
+      "model": "gpt-5.6-luna",
+      "projects": 4
+    },
+    {
+      "comparison": "C-A",
+      "difference_bounds": [
+        -0.5833333333333334,
+        1.0
+      ],
+      "model": "gpt-5.6-luna",
+      "projects": 4
+    },
+    {
+      "comparison": "B-A",
+      "difference_bounds": [
+        -0.9166666666666666,
+        1.0
+      ],
+      "model": "gpt-5.6-sol",
+      "projects": 4
+    },
+    {
+      "comparison": "C-A",
+      "difference_bounds": [
+        -0.9166666666666666,
+        1.0
+      ],
+      "model": "gpt-5.6-sol",
+      "projects": 4
+    }
+  ],
+  "projects": [
+    "paperless-ngx",
+    "kanboard",
+    "nextcloud",
+    "openproject"
+  ],
+  "recorded_rows": 72,
+  "schema_version": "behavioral-expansion-analysis/v1",
+  "stop_reason": null,
+  "unknown": 64
+}

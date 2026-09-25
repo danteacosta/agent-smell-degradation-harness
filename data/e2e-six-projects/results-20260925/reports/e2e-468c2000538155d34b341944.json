@@ -1,0 +1,11 @@
+{
+  "schema_version": "four-project-ui-browser/v1",
+  "project_id": "paperless-ngx",
+  "status": "interface_error",
+  "app_sha256": "c729d9cebc524f136d4633758bafb663f85dbf2c6e004e3d4a9bac6b6ac30850",
+  "assertions": {},
+  "console_errors": [
+    "TypeError: document.createElement is not a function"
+  ],
+  "error": "Error: one visible [data-document-id=\"document-control\"] required"
+}

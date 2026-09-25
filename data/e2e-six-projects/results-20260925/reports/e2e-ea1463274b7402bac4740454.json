@@ -1,0 +1,9 @@
+{
+  "schema_version": "four-project-ui-browser/v1",
+  "project_id": "openproject",
+  "status": "interface_error",
+  "app_sha256": "5138c4695de89a7cf63d248fae744151d56bef806c2532a6bd553c134a5c5c19",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: one visible [aria-label=\"Work\"] required"
+}
