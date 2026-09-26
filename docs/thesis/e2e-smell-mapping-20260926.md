@@ -25,11 +25,12 @@ clause; those exact labels are **not** assigned here. See the
 | [Paperless duplicate consumption](../research/paperless-duplicate-consumption-20260926.md) | Consume same-checksum copy by default | Partial content: missing default/exception clause | Qualified successor: 4/6 selective C failures |
 | [RealWorld favorites](../research/realworld-favorites-20260926.md) | Populate Favorites from favorited articles | Partial content: missing route-specific selection clause | Qualified successor: 0/6 C failures |
 | [TodoMVC edit-state persistence bridge](../research/todomvc-persistence-bridge-20260926.md) | Do not persist editing mode | Partial content: missing persistence constraint | Replication: 0/5 evaluable C failures; one interface error |
+| [OpenProject invalid Remaining work](../research/openproject-invalid-remaining-20260926.md) | Reject saving Remaining work greater than Work | Partial content: missing validation constraint | 6/6 selective C failures; A/B 12/12 passes |
 
 These rows are separate exploratory strata. The same broad family does not
 make their prompts, scaffolds, tasks, models, or outcomes exchangeable. The
-first six rows established the six-project spread; the next four add new
-obligations; the last TodoMVC row is a replication, not new diversity.
+first six rows established the six-project spread; five later rows add new
+obligations; the TodoMVC bridge is a replication, not new diversity.
 
 The non-browser [12-requirement criteria pilot](../research/criteria-expansion-results-20260921.md)
 and [StrictDoc SRS-163](../research/criteria-consensus-results-20260921.md)

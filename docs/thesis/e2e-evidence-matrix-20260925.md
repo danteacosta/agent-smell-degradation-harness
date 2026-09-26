@@ -135,3 +135,11 @@ A/B passed 6/6 each. C passed 5/6, while one C output was an interface error
 before the target could be assessed. There was no observed target failure in
 the five evaluable C outputs. This is a replication of an existing obligation,
 not a fifth new requirement; seven planned new obligations remain.
+
+The [OpenProject invalid Remaining work pilot](../research/openproject-invalid-remaining-20260926.md)
+adds a fifth new obligation in the planned block. All 18 fresh outputs were
+evaluable: A and B passed 6/6 each, while C failed only the invalid-save
+target 6/6. The two numeric fixtures checked persistence after reload. The
+project count remains six, and six planned new obligations remain. This
+single selected obligation is a strong within-case contrast, not evidence
+for a general effect across requirements or the formal H1/H2 outcomes.
