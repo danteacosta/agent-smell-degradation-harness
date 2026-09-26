@@ -1,0 +1,85 @@
+{
+  "schema_version": "openproject-remaining-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "source_scaffold_sha256": "01555a40514488286b111bda4a4ec4440ed18927ee294bf98765da4bec34c357",
+  "runner_sha256": "13bf68a858837eb5bf147e7148a2aa481e8a591f459bed6e59babb51d6faab06",
+  "controls": 7,
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "returncode": 0,
+      "report_sha256": "aca6b0ac5fc777e72d66301f2ccb68ce0e7e7cb3a20850e5bf2c33a904b91937",
+      "screenshots": {
+        "fixture-1.png": "a66b47aec70e0462fae7701e16956d1f42d78495602af5cc20d68935eb050361",
+        "fixture-2.png": "f810821a7ce0cbdab20c2969631d329ac534a5eaad0f4849490ae54721329156"
+      }
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "returncode": 0,
+      "report_sha256": "675336d21f38dd88d59dec61885fc1e0dc27cb76f2a414c689660b70b2ed0874",
+      "screenshots": {
+        "fixture-1.png": "a66b47aec70e0462fae7701e16956d1f42d78495602af5cc20d68935eb050361",
+        "fixture-2.png": "f810821a7ce0cbdab20c2969631d329ac534a5eaad0f4849490ae54721329156"
+      }
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "returncode": 0,
+      "report_sha256": "aeeb9c96ceba2ec2cc67127cc3beeeea48d5ced47dd585c6d60bb2cb942e6e42",
+      "screenshots": {
+        "fixture-1.png": "28042c83319dc0c68e46a49cc8705e14a835ba7de5fba38352cb67daf0aec15f",
+        "fixture-2.png": "94cc72a347476b912e2c088ba6ff0697065a0b5159c374ed7eae3ceb769cb15e"
+      }
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "returncode": 0,
+      "report_sha256": "c6ccd41bb1a3ca0a3e944566ab3c0c0cef4883c98366c3cccdd4671274dd0c91",
+      "screenshots": {
+        "fixture-1.png": "44cd57f57244cdcb5c58e84d818c0bb547acc219094d6ec294b1d6cf7b81dde4",
+        "fixture-2.png": "252c23368bbffa131ac2cbf4d72c0293861e14461492444f5d1a978a227c98bf"
+      }
+    },
+    {
+      "mode": "duplicate-interface",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "returncode": 2,
+      "report_sha256": "edfe2a7cbb5e55d8daeb15309a8f4310cc579385550f2b44503ba1eeadd929ef",
+      "screenshots": {}
+    },
+    {
+      "mode": "missing-behavior",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "returncode": 0,
+      "report_sha256": "484b76e644a9f6d12a9c8f543f0cc02eb3125ec638dca73c05096cf69136e8b4",
+      "screenshots": {
+        "fixture-1.png": "28042c83319dc0c68e46a49cc8705e14a835ba7de5fba38352cb67daf0aec15f",
+        "fixture-2.png": "94cc72a347476b912e2c088ba6ff0697065a0b5159c374ed7eae3ceb769cb15e"
+      }
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "returncode": 0,
+      "report_sha256": "26f16c288518b4bab8dd1f665ae7407c46f2555c1c0c5b2baa5ddc37b6feb6e2",
+      "screenshots": {
+        "fixture-1.png": "28042c83319dc0c68e46a49cc8705e14a835ba7de5fba38352cb67daf0aec15f",
+        "fixture-2.png": "94cc72a347476b912e2c088ba6ff0697065a0b5159c374ed7eae3ceb769cb15e"
+      }
+    }
+  ],
+  "limitations": "Authored control qualification only; no generated implementation or H1/H2 result."
+}

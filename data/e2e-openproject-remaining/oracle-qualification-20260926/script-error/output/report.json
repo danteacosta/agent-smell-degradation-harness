@@ -1,0 +1,23 @@
+{
+  "schema_version": "openproject-remaining-browser/v1",
+  "status": "complete",
+  "app_sha256": "9ad2d69025b3b0cb5f4c4de0f79b3b54b99fc10812078c37ec4c4e5eb5942688",
+  "assertions": {
+    "remaining_6h": false,
+    "work_10h": true,
+    "percent_40": true,
+    "remaining_15h": false,
+    "work_20h": true,
+    "percent_25": true
+  },
+  "console_errors": [
+    "Error: qualification control",
+    "Error: qualification control",
+    "Error: qualification control",
+    "Error: qualification control"
+  ],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

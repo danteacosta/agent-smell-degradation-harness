@@ -1,0 +1,228 @@
+{
+  "arms": [
+    "A",
+    "B",
+    "C"
+  ],
+  "artifact_limit_bytes": 200000,
+  "case_id": "openproject-derive-remaining-hours",
+  "claims": {
+    "confirmatory": false,
+    "h1_confirmed": false,
+    "h2_evaluated": false
+  },
+  "concurrency": 1,
+  "endpoint": "browser target failure after save and reload with Work and percent preserved",
+  "generation_before_browser": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "planned_slots": 18,
+  "project_id": "openproject",
+  "provider": "Codex CLI saved ChatGPT subscription; no API key fallback",
+  "qualification": {
+    "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+    "path": "data/e2e-openproject-remaining/oracle-qualification-20260926",
+    "qualification_sha256": "df94ca403183928110ff81c2839ca3f3494fbc592861db4d4160588b351ae98c",
+    "receipt_sha256": "cad40ebd97f1e115a677e785f7341f8306f96e510ce37942dfc72f46b92eddd4"
+  },
+  "reasoning_effort": "low",
+  "reconstruction": true,
+  "removed_in_C": "derive Remaining work as Work multiplied by (1 minus % Complete divided by 100)",
+  "repetitions": [
+    1,
+    2,
+    3
+  ],
+  "request_sha256": {
+    "remaining-25035d7fb5939f8ea8d30d71": "bef3dc9aef7b71e266a3f6130221a182e41859f8bfb02c0e7a1729b42ebbd8dc",
+    "remaining-25e482f558bd96d2f7219eed": "c9c73f53389ce163a8a6733d348a72973e4e65d146ebf379d89bd6f0d742215b",
+    "remaining-33edf99abf7f48a6567d9f3b": "cc9e0e51e3fbe57188343e2d9372ea4b1297a2ac03c9675d1d2c7856c766af0e",
+    "remaining-3e76b07047e43ead8d0658f8": "c9c73f53389ce163a8a6733d348a72973e4e65d146ebf379d89bd6f0d742215b",
+    "remaining-6567acf548727b3b52d28bdd": "bef3dc9aef7b71e266a3f6130221a182e41859f8bfb02c0e7a1729b42ebbd8dc",
+    "remaining-8bdec696583ea304aaea0cbb": "bef3dc9aef7b71e266a3f6130221a182e41859f8bfb02c0e7a1729b42ebbd8dc",
+    "remaining-8c0a5b8ac94cdfbff2eb89ce": "cc9e0e51e3fbe57188343e2d9372ea4b1297a2ac03c9675d1d2c7856c766af0e",
+    "remaining-90a8d1195c8d9577d3f74fc5": "cc9e0e51e3fbe57188343e2d9372ea4b1297a2ac03c9675d1d2c7856c766af0e",
+    "remaining-9b46df56121f9a12df0c3f63": "c9c73f53389ce163a8a6733d348a72973e4e65d146ebf379d89bd6f0d742215b",
+    "remaining-a8b93c594e9dcecb8c0ac123": "c9c73f53389ce163a8a6733d348a72973e4e65d146ebf379d89bd6f0d742215b",
+    "remaining-af4f341fd2e95f3ee7456bbe": "bef3dc9aef7b71e266a3f6130221a182e41859f8bfb02c0e7a1729b42ebbd8dc",
+    "remaining-c164d7e93944316ef478e2b5": "bef3dc9aef7b71e266a3f6130221a182e41859f8bfb02c0e7a1729b42ebbd8dc",
+    "remaining-ce6a55799ee3523a82700555": "cc9e0e51e3fbe57188343e2d9372ea4b1297a2ac03c9675d1d2c7856c766af0e",
+    "remaining-d0faf99b10483d2aa9305ce2": "c9c73f53389ce163a8a6733d348a72973e4e65d146ebf379d89bd6f0d742215b",
+    "remaining-d1ea7f748201182e3ecbf026": "cc9e0e51e3fbe57188343e2d9372ea4b1297a2ac03c9675d1d2c7856c766af0e",
+    "remaining-dee532e6758f1467788a8160": "cc9e0e51e3fbe57188343e2d9372ea4b1297a2ac03c9675d1d2c7856c766af0e",
+    "remaining-f97121fc63d13e89a603f40b": "bef3dc9aef7b71e266a3f6130221a182e41859f8bfb02c0e7a1729b42ebbd8dc",
+    "remaining-fae1e1e38b3657d243b1977b": "c9c73f53389ce163a8a6733d348a72973e4e65d146ebf379d89bd6f0d742215b"
+  },
+  "requirements": {
+    "A": "A work package already has Work set. When the user enters % Complete and saves, derive Remaining work as Work multiplied by (1 minus % Complete divided by 100). Preserve the entered Work and % Complete after save and reload.",
+    "B": "For a work package with an existing Work value, saving a newly entered completion percentage must set Remaining work to the unfinished portion of Work. The Work value and the entered completion percentage must still be present after saving and reloading.",
+    "C": "A work package already has Work set. When the user enters % Complete and saves, preserve the entered Work and % Complete after save and reload."
+  },
+  "retry_policy": "no_retry_no_resume_no_repair",
+  "schedule": [
+    {
+      "arm": "C",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 2,
+      "slot_id": "remaining-f97121fc63d13e89a603f40b"
+    },
+    {
+      "arm": "A",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 3,
+      "slot_id": "remaining-33edf99abf7f48a6567d9f3b"
+    },
+    {
+      "arm": "C",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 1,
+      "slot_id": "remaining-af4f341fd2e95f3ee7456bbe"
+    },
+    {
+      "arm": "B",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 2,
+      "slot_id": "remaining-a8b93c594e9dcecb8c0ac123"
+    },
+    {
+      "arm": "B",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 3,
+      "slot_id": "remaining-9b46df56121f9a12df0c3f63"
+    },
+    {
+      "arm": "A",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 2,
+      "slot_id": "remaining-90a8d1195c8d9577d3f74fc5"
+    },
+    {
+      "arm": "B",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 2,
+      "slot_id": "remaining-3e76b07047e43ead8d0658f8"
+    },
+    {
+      "arm": "C",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 2,
+      "slot_id": "remaining-8bdec696583ea304aaea0cbb"
+    },
+    {
+      "arm": "B",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 3,
+      "slot_id": "remaining-d0faf99b10483d2aa9305ce2"
+    },
+    {
+      "arm": "A",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 3,
+      "slot_id": "remaining-8c0a5b8ac94cdfbff2eb89ce"
+    },
+    {
+      "arm": "B",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 1,
+      "slot_id": "remaining-fae1e1e38b3657d243b1977b"
+    },
+    {
+      "arm": "C",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 3,
+      "slot_id": "remaining-6567acf548727b3b52d28bdd"
+    },
+    {
+      "arm": "C",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 3,
+      "slot_id": "remaining-c164d7e93944316ef478e2b5"
+    },
+    {
+      "arm": "A",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 2,
+      "slot_id": "remaining-d1ea7f748201182e3ecbf026"
+    },
+    {
+      "arm": "A",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-sol",
+      "project_id": "openproject",
+      "replication": 1,
+      "slot_id": "remaining-dee532e6758f1467788a8160"
+    },
+    {
+      "arm": "A",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 1,
+      "slot_id": "remaining-ce6a55799ee3523a82700555"
+    },
+    {
+      "arm": "B",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 1,
+      "slot_id": "remaining-25e482f558bd96d2f7219eed"
+    },
+    {
+      "arm": "C",
+      "intent_id": "openproject-derive-remaining-hours",
+      "model": "gpt-5.6-luna",
+      "project_id": "openproject",
+      "replication": 1,
+      "slot_id": "remaining-25035d7fb5939f8ea8d30d71"
+    }
+  ],
+  "schema_version": "openproject-remaining-freeze/v1",
+  "seed": 20260926,
+  "source_and_runtime_sha256": {
+    "data/e2e-multi-obligation/third-candidate-revision-panel-20260925.json": "0c2fbb3c9b5f00e340c27720d37f8a1fd4ef8cca19ee0f43c053975447e374d3",
+    "data/e2e-six-projects/sources/openproject/LICENSE": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+    "data/e2e-six-projects/sources/openproject/progress-tracking.md": "9aec062470806acf90d8dec1eab6f90d61377ec1ef20f7217fe5c3ed89ee27f9",
+    "eval/fixtures/openproject-remaining-pilot/Dockerfile": "8d639976c476d6744ffb1e139c5798cdead9608e3f5accd1d671e024af5397d2",
+    "eval/fixtures/openproject-remaining-pilot/package-lock.json": "418a82439f56ea02fb470ed6c25e6182dc53f67eeb6537d5123403ecef38ab36",
+    "eval/fixtures/openproject-remaining-pilot/package.json": "7147f098995eff4bd028fdc10116318d9a7ae0872652c255c3f8a1fbda153b39",
+    "eval/fixtures/openproject-remaining-pilot/page.html": "01555a40514488286b111bda4a4ec4440ed18927ee294bf98765da4bec34c357",
+    "eval/fixtures/openproject-remaining-pilot/qualify.py": "8f832046a7b2e6be584aa18254a692b6575bcd21c12a51e3b32ee5637b4363c8",
+    "eval/fixtures/openproject-remaining-pilot/runner.cjs": "13bf68a858837eb5bf147e7148a2aa481e8a591f459bed6e59babb51d6faab06"
+  },
+  "source_obligation": "If Work is already set and you enter % Complete, Remaining Work will be automatically calculated.",
+  "source_revision": "de051918ba8771d5415c172cc81bcd49f7d10472",
+  "status": "pre_generation_exploratory",
+  "timeout_seconds": 240
+}
