@@ -1,0 +1,22 @@
+{
+  "schema_version": "kanboard-duplicate-title-public-receipt/v1",
+  "files": {
+    "qualification.json": "88608548467a3c608b2878d0dd28e15b1299f9c9d50091f09dbbff560e49cdd0",
+    "reports/alternative/report.json": "06f5ac51c4d58f2fc797617be8179b43aa07d879b46100779d2c0db105a9fd8e",
+    "reports/duplicate-identity/report.json": "26e993408b200abcef4d8e598683cf6719691d5fccce8022ba918f2db6c70cc1",
+    "reports/missing-behavior/report.json": "9f1d18d076d25bb5857deb1604ca4742cb72356958fd74e7196fa20512626e31",
+    "reports/non-target-mutant/report.json": "eac76cd590337b09d4330942c53b695962508d0ffcd485b6f3b05d98fb8178a1",
+    "reports/precreated-duplicate/report.json": "e0986a4308836612f5ca6654817410a31a0bcba705a0089794a38971b0a596ad",
+    "reports/reference/report.json": "ca0de7b2f6a062f0abc727289e48429b04f0f7486d9bf0d4a58153f9f4f431bd",
+    "reports/script-error/report.json": "2d016b626717d00b58c4075348f7efbbf39fe3e7d78000104cb5386a851b7133",
+    "reports/target-mutant/report.json": "d0fd5985931755118d3e4a25d38c1202f0d0b3738892a16badca84e443724644",
+    "screenshots/alternative/fixture-1.png": "d37173fc7f836b61f251b51fbbb206fe89957f92cbc9a8456aa098031f12745d",
+    "screenshots/alternative/fixture-2.png": "f106e7e12d38c65d70e7757e805d500b71353d22c90835fdb2499d38c91cf4ad",
+    "screenshots/non-target-mutant/fixture-1.png": "503f352b70bb9b95c44e19839610396ba6518df2893b1abb2e2fbee9a0ef0aa8",
+    "screenshots/non-target-mutant/fixture-2.png": "8f0a9250a7b12ead8dcff7c06046d090b961676015c62a7935b59100d216e39a",
+    "screenshots/reference/fixture-1.png": "d37173fc7f836b61f251b51fbbb206fe89957f92cbc9a8456aa098031f12745d",
+    "screenshots/reference/fixture-2.png": "f106e7e12d38c65d70e7757e805d500b71353d22c90835fdb2499d38c91cf4ad",
+    "screenshots/target-mutant/fixture-1.png": "539e80e7d8e1eab60848f6950a02c473488cee43ce078263680a01eb14659b7c",
+    "screenshots/target-mutant/fixture-2.png": "784df689c187e50b5d3b23f8abb43ff54b83f24b2137206e98412674dff55305"
+  }
+}

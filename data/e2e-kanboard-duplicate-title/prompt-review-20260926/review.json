@@ -1,0 +1,47 @@
+{
+  "schema_version": "kanboard-duplicate-title-prompt-review/v1",
+  "stage": "pre_generation",
+  "prompt_sha256": "2eb67779af7249cd7af49f1c44c7e465810a732fc03d24a57844671b9199d872",
+  "arms_sha256": "47e05f63cc4e585d74532cca5a5cae7d614396d117452178d1daa4b0558fd820",
+  "scaffold_sha256": "49bf52e885b4e733eabbdcf97ed0265ea24ba12839ed672453f9c8e901ec04f0",
+  "reviewers": [
+    {
+      "model": "gpt-6-sol",
+      "verdict": "ACCEPT",
+      "response_sha256": "f31dbcdb0dff786151dff173f8b9c6cdf586ceb7d044dc2f1163529731d733b0",
+      "usage": {
+        "input_tokens": 16498,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 98,
+        "reasoning_output_tokens": 47
+      }
+    },
+    {
+      "model": "gpt-6-luna",
+      "verdict": "ACCEPT",
+      "response_sha256": "f31dbcdb0dff786151dff173f8b9c6cdf586ceb7d044dc2f1163529731d733b0",
+      "usage": {
+        "input_tokens": 16264,
+        "cached_input_tokens": 1792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 49,
+        "reasoning_output_tokens": 0
+      }
+    },
+    {
+      "model": "gpt-6-astra",
+      "verdict": "ACCEPT",
+      "response_sha256": "a39cd7fc57d6c42cff42faf4dee6e8635ba3c6f0d7a1a76b666c91c92f1e4a7e",
+      "usage": {
+        "input_tokens": 16886,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 65,
+        "reasoning_output_tokens": 0
+      }
+    }
+  ],
+  "unanimous": true,
+  "human_approvals": 0
+}

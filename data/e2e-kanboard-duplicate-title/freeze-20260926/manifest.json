@@ -1,0 +1,229 @@
+{
+  "arms": [
+    "A",
+    "B",
+    "C"
+  ],
+  "artifact_limit_bytes": 200000,
+  "case_id": "kanboard-duplicate-preserves-title",
+  "claims": {
+    "confirmatory": false,
+    "h1_confirmed": false,
+    "h2_evaluated": false
+  },
+  "concurrency": 1,
+  "endpoint": "browser target failure after Duplicate with distinct same-project task and source/control preserved",
+  "generation_before_browser": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "planned_slots": 18,
+  "project_id": "kanboard",
+  "provider": "Codex CLI saved ChatGPT subscription; no API key fallback",
+  "qualification": {
+    "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+    "path": "data/e2e-kanboard-duplicate-title/oracle-qualification-20260926",
+    "qualification_sha256": "88608548467a3c608b2878d0dd28e15b1299f9c9d50091f09dbbff560e49cdd0",
+    "receipt_sha256": "5907d3c461767321cab108ce6d60d919abe624dc920a3b4bf6962d3ba80e4337"
+  },
+  "reasoning_effort": "low",
+  "reconstruction": true,
+  "removed_in_C": "duplicate's visible title equals the source task's visible title",
+  "repetitions": [
+    1,
+    2,
+    3
+  ],
+  "request_sha256": {
+    "duplicate-title-088959f3a7f9755515cd0d32": "10b9a8d867a0bd9776f9d71860ff85b92174c8f4a456e1493b5084c0cb40ca0e",
+    "duplicate-title-0975a51d632533027eb2d02c": "705cb9d8af0dd30d3b5302a35d5412642f0ff5fe211573ee45b9ae621508f720",
+    "duplicate-title-099c053e492b91803508518e": "705cb9d8af0dd30d3b5302a35d5412642f0ff5fe211573ee45b9ae621508f720",
+    "duplicate-title-0e6220819e1696875effb9ab": "705cb9d8af0dd30d3b5302a35d5412642f0ff5fe211573ee45b9ae621508f720",
+    "duplicate-title-3688627a8950121a135f3331": "10b9a8d867a0bd9776f9d71860ff85b92174c8f4a456e1493b5084c0cb40ca0e",
+    "duplicate-title-38074282cb5ffe01a9e68508": "10b9a8d867a0bd9776f9d71860ff85b92174c8f4a456e1493b5084c0cb40ca0e",
+    "duplicate-title-38424195c021355aa1d26a04": "6aba8c36fcf6a9d927a3143ce3ed697ff43b8570f6c00f7e33a70ef2d18ff927",
+    "duplicate-title-5a8ad594a639be4f4945097a": "6aba8c36fcf6a9d927a3143ce3ed697ff43b8570f6c00f7e33a70ef2d18ff927",
+    "duplicate-title-5c1db54245d6a6dc762c5632": "10b9a8d867a0bd9776f9d71860ff85b92174c8f4a456e1493b5084c0cb40ca0e",
+    "duplicate-title-61858a9edc29ef8d8ec78548": "705cb9d8af0dd30d3b5302a35d5412642f0ff5fe211573ee45b9ae621508f720",
+    "duplicate-title-65ecbde4b2d5ecf4b056f44c": "10b9a8d867a0bd9776f9d71860ff85b92174c8f4a456e1493b5084c0cb40ca0e",
+    "duplicate-title-695eeed2b474c25c59c99f08": "6aba8c36fcf6a9d927a3143ce3ed697ff43b8570f6c00f7e33a70ef2d18ff927",
+    "duplicate-title-7b25f0b1a05a3d8cc6845abd": "10b9a8d867a0bd9776f9d71860ff85b92174c8f4a456e1493b5084c0cb40ca0e",
+    "duplicate-title-a16f688b4f1b8c9dc375cb13": "6aba8c36fcf6a9d927a3143ce3ed697ff43b8570f6c00f7e33a70ef2d18ff927",
+    "duplicate-title-bb8604bbe516537640270ba4": "6aba8c36fcf6a9d927a3143ce3ed697ff43b8570f6c00f7e33a70ef2d18ff927",
+    "duplicate-title-c3c421f40c8b00bc8c672677": "6aba8c36fcf6a9d927a3143ce3ed697ff43b8570f6c00f7e33a70ef2d18ff927",
+    "duplicate-title-d63825048279c69c38d8d4a1": "705cb9d8af0dd30d3b5302a35d5412642f0ff5fe211573ee45b9ae621508f720",
+    "duplicate-title-ec5068f768bb721c6315c07f": "705cb9d8af0dd30d3b5302a35d5412642f0ff5fe211573ee45b9ae621508f720"
+  },
+  "requirements": {
+    "A": "In the task view, choosing Duplicate creates a distinct new task in the same project with the source task's visible title. Preserve the source and an unrelated task.",
+    "B": "When a user duplicates a task within its project, the copied task must be a separate task and display the original task title. The original and an unrelated task remain unchanged.",
+    "C": "In the task view, choosing Duplicate creates a distinct new task in the same project. Preserve the source and an unrelated task."
+  },
+  "retry_policy": "no_retry_no_resume_no_repair",
+  "schedule": [
+    {
+      "arm": "B",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 3,
+      "slot_id": "duplicate-title-65ecbde4b2d5ecf4b056f44c"
+    },
+    {
+      "arm": "A",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 2,
+      "slot_id": "duplicate-title-61858a9edc29ef8d8ec78548"
+    },
+    {
+      "arm": "A",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 2,
+      "slot_id": "duplicate-title-099c053e492b91803508518e"
+    },
+    {
+      "arm": "B",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 2,
+      "slot_id": "duplicate-title-3688627a8950121a135f3331"
+    },
+    {
+      "arm": "B",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 1,
+      "slot_id": "duplicate-title-7b25f0b1a05a3d8cc6845abd"
+    },
+    {
+      "arm": "B",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 3,
+      "slot_id": "duplicate-title-38074282cb5ffe01a9e68508"
+    },
+    {
+      "arm": "A",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 3,
+      "slot_id": "duplicate-title-0e6220819e1696875effb9ab"
+    },
+    {
+      "arm": "B",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 2,
+      "slot_id": "duplicate-title-088959f3a7f9755515cd0d32"
+    },
+    {
+      "arm": "A",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 1,
+      "slot_id": "duplicate-title-0975a51d632533027eb2d02c"
+    },
+    {
+      "arm": "C",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 3,
+      "slot_id": "duplicate-title-38424195c021355aa1d26a04"
+    },
+    {
+      "arm": "B",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 1,
+      "slot_id": "duplicate-title-5c1db54245d6a6dc762c5632"
+    },
+    {
+      "arm": "C",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 1,
+      "slot_id": "duplicate-title-5a8ad594a639be4f4945097a"
+    },
+    {
+      "arm": "C",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 3,
+      "slot_id": "duplicate-title-695eeed2b474c25c59c99f08"
+    },
+    {
+      "arm": "C",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 1,
+      "slot_id": "duplicate-title-bb8604bbe516537640270ba4"
+    },
+    {
+      "arm": "A",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 1,
+      "slot_id": "duplicate-title-d63825048279c69c38d8d4a1"
+    },
+    {
+      "arm": "C",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 2,
+      "slot_id": "duplicate-title-a16f688b4f1b8c9dc375cb13"
+    },
+    {
+      "arm": "C",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 2,
+      "slot_id": "duplicate-title-c3c421f40c8b00bc8c672677"
+    },
+    {
+      "arm": "A",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 3,
+      "slot_id": "duplicate-title-ec5068f768bb721c6315c07f"
+    }
+  ],
+  "schema_version": "kanboard-duplicate-title-freeze/v1",
+  "seed": 2026092602,
+  "source_and_runtime_sha256": {
+    "data/e2e-kanboard-duplicate-title/prompt-review-20260926/gpt-6-astra.txt": "a39cd7fc57d6c42cff42faf4dee6e8635ba3c6f0d7a1a76b666c91c92f1e4a7e",
+    "data/e2e-kanboard-duplicate-title/prompt-review-20260926/gpt-6-luna.txt": "f31dbcdb0dff786151dff173f8b9c6cdf586ceb7d044dc2f1163529731d733b0",
+    "data/e2e-kanboard-duplicate-title/prompt-review-20260926/gpt-6-sol.txt": "f31dbcdb0dff786151dff173f8b9c6cdf586ceb7d044dc2f1163529731d733b0",
+    "data/e2e-kanboard-duplicate-title/prompt-review-20260926/review.json": "4c320f39ba0a82f33e48deff621170ed79a9c062bdcf3587e198015980100033",
+    "data/e2e-multi-obligation/third-candidate-revision-panel-20260925.json": "0c2fbb3c9b5f00e340c27720d37f8a1fd4ef8cca19ee0f43c053975447e374d3",
+    "data/e2e-six-projects/sources/kanboard/LICENSE": "b14398501e47b08042d57b3ef7994cb2aab8d353a87d928a2395b7aea7c8ca2a",
+    "data/e2e-six-projects/sources/kanboard/tasks.md": "281c39c6e4c5a9c071d28bf01d08d2544929942977eeff4ae53ce0716510f081",
+    "eval/fixtures/kanboard-duplicate-title-pilot/page.html": "49bf52e885b4e733eabbdcf97ed0265ea24ba12839ed672453f9c8e901ec04f0",
+    "eval/fixtures/kanboard-duplicate-title-pilot/qualify.py": "ee280b28018d132eb2848461f6a975c4e9010cd8d8b46e2079280da8b68a65d9",
+    "eval/fixtures/kanboard-duplicate-title-pilot/runner.cjs": "142043f1b7e9ba14feb4f67a934339e0fefd3a5f5216122563981fe29638c1b3"
+  },
+  "source_obligation": "A new task will be created with the same properties as the original; title is a listed duplicated property.",
+  "source_revision": "4455fd04fb48ed42817fc99402d4c1fb3bde1c0d",
+  "status": "pre_generation_exploratory",
+  "timeout_seconds": 240
+}
