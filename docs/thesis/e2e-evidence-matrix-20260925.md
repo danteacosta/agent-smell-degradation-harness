@@ -101,3 +101,26 @@ Evidence:
 - Second Kanboard obligation, original and post-outcome diagnostic:
   `data/e2e-kanboard-duplicate-title/results-20260926/` and
   `data/e2e-kanboard-duplicate-title/secure-origin-diagnostic-20260926/`
+
+## 26 September: later qualified obligations
+
+The [new Kanboard replication](../research/kanboard-duplicate-title-qualification-20260926.md#nova-replicação-prospectiva-com-origem-segura)
+ran 18 fresh generations under a qualified origin: A/B passed 6/6 each,
+while C had two selective title failures and four passes. This replaces no
+earlier outcome and adds no requirement diversity.
+
+The [Paperless duplicate-consumption pilot](../research/paperless-duplicate-consumption-20260926.md)
+added a third previously unexecuted obligation in the planned block. A/B
+passed 12/12 and C had four selective failures in six evaluable outputs.
+Its first 18-generation lot remains an instrument failure, not part of that
+contrast.
+
+The [RealWorld favorites-route pilot](../research/realworld-favorites-20260926.md)
+added a fourth obligation but **no observed omission effect**: its qualified
+successor had 18/18 evaluable outputs, with A/B/C each passing 6/6. The
+models reconstructed the favorites rule in C from the route and common data
+schema. Its first 18-generation lot also remains a separate instrument
+failure. The evidence matrix now includes a successful recovery case alongside
+selective defect cases. Seven planned new obligations and the TodoMVC bridge
+remain; the project count stays at six. These selected, separate pilots do not
+estimate formal H1 or test H2.

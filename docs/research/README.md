@@ -16,6 +16,7 @@ experiment evidence.
 ## Research execution guides
 
 - [Paperless-ngx duplicate-consumption E2E pilot](paperless-duplicate-consumption-20260926.md): 18 new evaluable generations, A/B 12/12 pass, C 4/6 selective failures; the earlier 18-generation instrument failure is preserved separately.
+- [RealWorld favorites-route E2E pilot](realworld-favorites-20260926.md): successor 18/18 evaluable, A/B/C 6/6 pass each; the first 18-generation instrument failure is preserved separately.
 - [Nextcloud permanent-delete admission](nextcloud-permanent-delete-admission-20260926.md): browser oracle 8/8 qualified, but source-to-visual-endpoint panel remained 2–1; no generation admitted.
 
 - [Secondary H1 ordinal audit of saved criteria](h1-existing-criteria-ordinal-audit-20260926.md): 92 valid blind LLM judgments over 46 saved artifacts; strict evidence leaves 29 consensus labels and A−C missingness bounds that include zero. Not confirmatory.

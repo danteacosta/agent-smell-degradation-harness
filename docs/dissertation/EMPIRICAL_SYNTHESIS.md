@@ -158,6 +158,19 @@ Luna concentrou três falhas C; Sol recuperou a obrigação em duas de três C.
 Isto acrescenta diversidade de obrigações dentro dos seis projetos já
 representados, sem estimar efeito populacional nem confirmar H1/H2.
 
+Uma [nova obrigação RealWorld](../research/realworld-favorites-20260926.md)
+testou a lista de artigos favoritados no perfil. O primeiro lote de 18
+gerações expôs um contrato de dados incompleto no scaffold e permanece como
+falha de instrumento, sem contraste causal. Um sucessor, com formato de dados
+comum declarado, passou oito controles de navegador e três revisões LLM
+antes do congelamento. Nas 18 novas gerações, **A, B e C passaram 6/6 cada**,
+sem casos não avaliáveis. O contraste observado de falha-alvo C−A foi zero:
+os modelos recuperaram a seleção de favoritos usando a rota e os campos do
+scaffold, mesmo quando C omitiu a regra. Este resultado sem efeito observado
+deve permanecer ao lado dos efeitos Paperless, OpenProject e Kanboard; não
+prova equivalência nem confirma H1/H2. Agora são quatro obrigações novas
+executadas no bloco planejado, restando sete e a ponte TodoMVC.
+
 Os experimentos demonstram que a omissão pode produzir defeito visível em
 contextos distintos, mas há recuperações da informação omitida e diferenças
 entre modelos. A seleção foi intencional, os scaffolds e datas diferem e as

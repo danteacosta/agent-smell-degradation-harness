@@ -1,0 +1,8 @@
+{
+  "schema_version": "realworld-favorites-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "162f983f0617cefab396c42b7baa88f915273bf5bdc8d034eda00587f52645ed",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: one visible [data-article-id=\"authored-a\"] h2 required"
+}

@@ -1,0 +1,31 @@
+{
+  "files": {
+    "proof/a-luna-rep1-fixture-1.png": "d1bf76e3aa492220fe34105b7f3ec2f3a5c13f3e024915bd047d04c6a6db6cb5",
+    "proof/a-luna-rep1-fixture-2.png": "924e3b52eb164abc9a09a995d941e0f5595ad819d3f0dfeace9a00e16ce61602",
+    "proof/a-sol-rep1-fixture-1.png": "d1bf76e3aa492220fe34105b7f3ec2f3a5c13f3e024915bd047d04c6a6db6cb5",
+    "proof/a-sol-rep1-fixture-2.png": "924e3b52eb164abc9a09a995d941e0f5595ad819d3f0dfeace9a00e16ce61602",
+    "proof/c-luna-rep1-fixture-1.png": "d1bf76e3aa492220fe34105b7f3ec2f3a5c13f3e024915bd047d04c6a6db6cb5",
+    "proof/c-luna-rep1-fixture-2.png": "924e3b52eb164abc9a09a995d941e0f5595ad819d3f0dfeace9a00e16ce61602",
+    "proof/c-sol-rep1-fixture-1.png": "d1bf76e3aa492220fe34105b7f3ec2f3a5c13f3e024915bd047d04c6a6db6cb5",
+    "proof/c-sol-rep1-fixture-2.png": "924e3b52eb164abc9a09a995d941e0f5595ad819d3f0dfeace9a00e16ce61602",
+    "reports/gpt-5.6-luna-A-rep1.json": "e053e681ec5ce39b2d5de092fab09a6b4750c4f17bb3ee4b7136b5e899c5a17e",
+    "reports/gpt-5.6-luna-A-rep2.json": "e157c41dfdabe1c0f7342e91dc5e1f1632a21aa8bc8f03c200bb06e30d6501be",
+    "reports/gpt-5.6-luna-A-rep3.json": "ead68e013ab57d0c1ccd421cac89d90a24833e987738b554f5358b92460cfd3e",
+    "reports/gpt-5.6-luna-B-rep1.json": "a9af8d7bae2780c7393963dd6fe8c1cd3399411d7455f5458f60ac5fddc0a7ac",
+    "reports/gpt-5.6-luna-B-rep2.json": "60d0ab1ef7133b64dd5330ed98933e4f979a67c949563942d2dfe5638ef13df1",
+    "reports/gpt-5.6-luna-B-rep3.json": "89c4aea1f32ab19452cf628edff3ef1ba19065c397281b08a407c6a27096df41",
+    "reports/gpt-5.6-luna-C-rep1.json": "6ad4bff97aa33498e83354cc3d0be30e83660580441ce648a462aed514bd19fa",
+    "reports/gpt-5.6-luna-C-rep2.json": "71ddc8d10ca48fa8b5ae3edfbc65c36eb38063d6d5c69c8479099b328afab2ef",
+    "reports/gpt-5.6-luna-C-rep3.json": "d71d197c11ce2037831ad5228f7001a2db6c64a60d14a251f240250db8f4093e",
+    "reports/gpt-5.6-sol-A-rep1.json": "43d2799764c475b008cc09a25b1ea8aa10d51bb14bce7d042e00e517bd292473",
+    "reports/gpt-5.6-sol-A-rep2.json": "5b0e3d7519249430d4f4c883e61fa43e97b678f911bbdc8c7f91d909762a0322",
+    "reports/gpt-5.6-sol-A-rep3.json": "817d13132882899586e82631243fa16407334cc59af82c92edebf56fdf16865a",
+    "reports/gpt-5.6-sol-B-rep1.json": "2b647e59acb946abb367c6ce254b623ede94e759f3531236a35080c8c843de0a",
+    "reports/gpt-5.6-sol-B-rep2.json": "29c072ba640e94001e421440e0bec288e9c7a25360edabcb4b44891c647f1143",
+    "reports/gpt-5.6-sol-B-rep3.json": "0f9dfa7b8cd12dfd4d906d06ab75b2667c8554ec7aa25636bae7a98ce52f204a",
+    "reports/gpt-5.6-sol-C-rep1.json": "0a2c76e8c3cff22425a37f5903eca4e5bf0b008f4899c62aada117052cc48cf2",
+    "reports/gpt-5.6-sol-C-rep2.json": "4f13bb67e42401de068a52bd986fbea5eded41e8e1119afda5f14336b44e8a89",
+    "reports/gpt-5.6-sol-C-rep3.json": "f74217ce2a6c81d3edddd8df0e32f65978a51cc6ad97d09f94047719efc046b5",
+    "summary.json": "6ffb1b7346766166137342155d624d3c767eb68ab54e30a7c05c25dcf35454fd"
+  }
+}
