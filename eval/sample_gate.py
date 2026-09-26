@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from collections import Counter
 from collections.abc import Mapping, Sequence
 from typing import Any
@@ -15,6 +16,45 @@ MIN_PROJECTS_PER_SPLIT = 2
 MIN_TEST_PROJECTS = 6
 MIN_TEST_INTENTS = 24
 PRECISION_PLAN_SCHEMA = "h2-precision-plan/v2"
+PRECISION_SIMULATION_METHOD = "frozen_test_project_cluster_bootstrap_pr_auc_delta-v3"
+
+
+def _nonnegative_int(mapping: Mapping[str, Any], key: str) -> int:
+    value = mapping.get(key)
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise ValueError(f"confirmatory precision plan has invalid {key}")
+    return value
+
+
+def _validate_v3_simulation_accounting(simulation: Mapping[str, Any]) -> None:
+    simulations = _nonnegative_int(simulation, "simulations")
+    completed = _nonnegative_int(simulation, "completed_simulations")
+    inferentially_valid = _nonnegative_int(
+        simulation, "inferentially_valid_simulations"
+    )
+    invalid = _nonnegative_int(simulation, "invalid_simulations")
+    observed_single_class = _nonnegative_int(
+        simulation, "observed_single_class_simulations"
+    )
+    bootstrap_degenerate_support = _nonnegative_int(
+        simulation, "bootstrap_degenerate_support_simulations"
+    )
+    supported = _nonnegative_int(simulation, "supported_simulations")
+    if simulations == 0:
+        raise ValueError("confirmatory precision plan has invalid simulations")
+    if (
+        completed + invalid != simulations
+        or inferentially_valid != completed
+        or observed_single_class + bootstrap_degenerate_support != invalid
+        or supported > completed
+    ):
+        raise ValueError("confirmatory precision plan has inconsistent simulation accounting")
+    try:
+        estimated_power = float(simulation["estimated_margin_power"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError("confirmatory precision plan has invalid power accounting") from error
+    if not math.isfinite(estimated_power) or abs(estimated_power - supported / simulations) > 1e-12:
+        raise ValueError("confirmatory precision plan has inconsistent power accounting")
 
 
 def _counts(episodes: Sequence[Mapping[str, Any]], partitions: Mapping[str, Sequence[Mapping[str, Any]]]) -> dict[str, Any]:
@@ -63,15 +103,39 @@ def validate_confirmatory_design(
     if not all(isinstance(value, Mapping) for value in (simulation, thresholds, design)):
         raise ValueError("confirmatory precision plan is incomplete")
     assert isinstance(simulation, Mapping) and isinstance(thresholds, Mapping) and isinstance(design, Mapping)
+    if simulation.get("method") != PRECISION_SIMULATION_METHOD:
+        raise ValueError("confirmatory precision plan has an unsupported simulation method")
     if simulation.get("evaluation_scope") != "test_partition_only":
         raise ValueError("confirmatory precision plan must simulate the frozen test partition")
     if simulation.get("cluster_key") != "project_id":
         raise ValueError("confirmatory precision plan must resample project_id clusters")
-    if float(simulation["median_ci_width"]) > float(thresholds["max_median_ci_width"]):
+    _validate_v3_simulation_accounting(simulation)
+    try:
+        median_ci_width = float(simulation["median_ci_width"])
+        degenerate_rate = float(simulation["degenerate_rate"])
+        estimated_margin_power = float(simulation["estimated_margin_power"])
+        max_median_ci_width = float(thresholds["max_median_ci_width"])
+        max_degenerate_rate = float(thresholds["max_degenerate_rate"])
+        target_margin_power = float(thresholds["target_margin_power"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError("confirmatory precision plan has invalid numeric thresholds") from error
+    if not all(
+        math.isfinite(value)
+        for value in (
+            median_ci_width,
+            degenerate_rate,
+            estimated_margin_power,
+            max_median_ci_width,
+            max_degenerate_rate,
+            target_margin_power,
+        )
+    ):
+        raise ValueError("confirmatory precision plan has invalid numeric thresholds")
+    if median_ci_width > max_median_ci_width:
         raise ValueError("confirmatory precision plan fails its CI-width threshold")
-    if float(simulation["degenerate_rate"]) > float(thresholds["max_degenerate_rate"]):
+    if degenerate_rate > max_degenerate_rate:
         raise ValueError("confirmatory precision plan fails its degenerate-bootstrap threshold")
-    if float(simulation["estimated_margin_power"]) < float(thresholds["target_margin_power"]):
+    if estimated_margin_power < target_margin_power:
         raise ValueError("confirmatory precision plan fails its target margin power")
     counts = _counts(episodes, partitions)
     required_intents = max(MIN_CONFIRMATORY_INTENTS, int(design["intents"]))
@@ -100,4 +164,4 @@ def validate_confirmatory_design(
     return {"status": "confirmatory", "counts": counts, "precision_plan": {"schema_version": PRECISION_PLAN_SCHEMA, "design": dict(design), "simulation": dict(simulation), "thresholds": dict(thresholds)}}
 
 
-__all__ = ("MIN_CONFIRMATORY_INTENTS", "MIN_CONFIRMATORY_PROJECTS", "MIN_INTENTS_PER_PROJECT", "MIN_PROJECTS_PER_SPLIT", "MIN_TEST_PROJECTS", "MIN_TEST_INTENTS", "PILOT_MIN_INTENTS", "PILOT_MIN_PROJECTS", "PRECISION_PLAN_SCHEMA", "validate_confirmatory_design", "validate_pilot_design")
+__all__ = ("MIN_CONFIRMATORY_INTENTS", "MIN_CONFIRMATORY_PROJECTS", "MIN_INTENTS_PER_PROJECT", "MIN_PROJECTS_PER_SPLIT", "MIN_TEST_PROJECTS", "MIN_TEST_INTENTS", "PILOT_MIN_INTENTS", "PILOT_MIN_PROJECTS", "PRECISION_PLAN_SCHEMA", "PRECISION_SIMULATION_METHOD", "validate_confirmatory_design", "validate_pilot_design")

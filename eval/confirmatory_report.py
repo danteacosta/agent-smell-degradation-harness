@@ -49,6 +49,7 @@ def clustered_pr_auc_delta(
             "delta_pr_auc": average_precision(provenance_scores, labels)
             - average_precision(baseline_scores, labels),
             "ci95": {"low": None, "high": None},
+            "conditional_percentile_interval": {"low": None, "high": None},
             "bootstrap": {
                 "clusters": len(cluster_ids),
                 "draws": 0,
@@ -56,13 +57,27 @@ def clustered_pr_auc_delta(
                 "degenerate_draws": 0,
                 "degenerate_rate": None,
                 "max_degenerate_rate": max_degenerate_rate,
+                "within_frozen_degeneracy_limit": None,
+                "degenerate_support_possible": None,
                 "valid_for_inference": False,
+                "seed": seed,
+                "cluster_key": cluster_key,
+            },
+            "leave_one_cluster_out": {
+                "draws": 0,
+                "min": None,
+                "max": None,
+                "max_abs_shift_from_observed": None,
             },
             "claim": "descriptive_only",
         }
     observed_prov = average_precision(provenance_scores, labels)
     observed_base = average_precision(baseline_scores, labels)
     observed_delta = observed_prov - observed_base
+    degenerate_support_possible = any(
+        len({labels[index] for index in groups[cluster_id]}) < 2
+        for cluster_id in cluster_ids
+    )
     rng = random.Random(seed)
     bootstrap: list[float] = []
     degenerate = 0
@@ -90,8 +105,19 @@ def clustered_pr_auc_delta(
         else None
     )
     degenerate_rate = degenerate / requested_draws
-    valid_for_inference = bool(bootstrap) and (
+    within_frozen_degeneracy_limit = (
         max_degenerate_rate is None or degenerate_rate <= max_degenerate_rate
+    )
+    # The percentile endpoints above are conditional on an estimable resample.
+    # Until coverage for that conditional procedure is established, the
+    # possibility of a one-class resample makes the result descriptive. This
+    # support check is deterministic and cannot change with seed or draw count.
+    valid_for_inference = bool(bootstrap) and not degenerate_support_possible
+    conditional_percentile_interval = {"low": low, "high": high}
+    inferential_interval = (
+        conditional_percentile_interval
+        if valid_for_inference
+        else {"low": None, "high": None}
     )
     leave_one_cluster_out = []
     if len(cluster_ids) > 3:
@@ -117,7 +143,8 @@ def clustered_pr_auc_delta(
         "provenance_pr_auc": observed_prov,
         "baseline_pr_auc": observed_base,
         "delta_pr_auc": observed_delta,
-        "ci95": {"low": low, "high": high},
+        "ci95": inferential_interval,
+        "conditional_percentile_interval": conditional_percentile_interval,
         "bootstrap": {
             "clusters": len(cluster_ids),
             "draws": requested_draws,
@@ -125,6 +152,8 @@ def clustered_pr_auc_delta(
             "degenerate_draws": degenerate,
             "degenerate_rate": degenerate_rate,
             "max_degenerate_rate": max_degenerate_rate,
+            "within_frozen_degeneracy_limit": within_frozen_degeneracy_limit,
+            "degenerate_support_possible": degenerate_support_possible,
             "valid_for_inference": valid_for_inference,
             "seed": seed,
             "cluster_key": cluster_key,
@@ -139,7 +168,7 @@ def clustered_pr_auc_delta(
                 else None
             ),
         },
-        "claim": "not_supported" if bootstrap else "descriptive_only",
+        "claim": "not_supported" if valid_for_inference else "descriptive_only",
     }
 
 
@@ -148,16 +177,16 @@ def finalize_h2_claim(effect: dict[str, Any], *, margin: float = 0.05) -> dict[s
     effect["margin"] = margin
     low = effect.get("ci95", {}).get("low")
     bootstrap_valid = effect.get("bootstrap", {}).get("valid_for_inference", True)
-    effect["claim"] = (
-        "supported"
-        if (
-            bootstrap_valid
-            and effect.get("delta_pr_auc", 0.0) >= margin
-            and low is not None
-            and low > 0
-        )
-        else effect.get("claim", "not_supported")
-    )
+    if not bootstrap_valid:
+        effect["claim"] = "descriptive_only"
+    elif (
+        effect.get("delta_pr_auc", 0.0) >= margin
+        and low is not None
+        and low > 0
+    ):
+        effect["claim"] = "supported"
+    else:
+        effect["claim"] = "not_supported"
     return effect
 
 

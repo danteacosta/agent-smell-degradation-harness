@@ -21,11 +21,14 @@ claim.
 Before changing the manifest to confirmed:
 
 1. freeze an outcome-blind `h2-precision-plan/v2`, then collect at least its
-   required design; the simulation must evaluate only the frozen test partition
-   and resample `project_id`. The unconditional floor is 60 independent intents
+   required design; the simulation must use
+   `frozen_test_project_cluster_bootstrap_pr_auc_delta-v3`, evaluate only the
+   frozen test partition, resample `project_id`, reject every simulation whose
+   project-label support can produce a one-class resample, validate the v3
+   simulation counters, and divide power by all planned simulations. The unconditional floor is 60 independent intents
    across 12 projects with at least 6 test projects/24 test intents; the current
    conservative candidate is 220 intents/36 projects with 11 test projects and
-   remains unfrozen pending the pre-pilot variance update;
+   remains unfrozen pending regeneration with `v3` and the pre-pilot variance update;
 2. record source URL/license, project ID, defect family, canonical hash, and
    near-clone result for each source intent;
 3. run at least two real provider/model configurations through one instrumented
