@@ -38,6 +38,7 @@ def test_boundary_links_external_gate_and_non_confirmatory_status() -> None:
     assert "60 independent intents" in acquisition
     assert "220 intents/36 projects failed the v3" in acquisition
     assert "288-intent/36-project design is only an unfrozen central-effect candidate" in acquisition
+    assert "latent score parameter, not a ΔPR-AUC effect size" in acquisition
     assert "no frozen human/adjudicated primary labels" in acquisition
 
 

@@ -148,8 +148,10 @@ approved private storage.
 The rejected 220/36 candidate must not be frozen: outcome-blind v3 diagnostic
 regeneration missed the 0.80 target in all three effect scenarios. The 288/36
 grid point is only an unfrozen central-effect candidate. The confirmatory
-precision plan must fix the smallest meaningful effect and Monte Carlo
-uncertainty rule before selection, and must be frozen before collection.
+precision plan must express and calibrate the smallest meaningful effect on
+the primary ΔPR-AUC scale, fix a Monte Carlo uncertainty rule before selection,
+and be frozen before collection. The current latent score increment is not
+itself a scientifically interpretable ΔPR-AUC effect size.
 
 Before interpreting any pattern, review the corrected report for complete
 artifact and judgment counts, substantive completeness, native context events,

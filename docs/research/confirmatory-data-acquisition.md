@@ -28,8 +28,9 @@ Before changing the manifest to confirmed:
    simulation counters, and divide power by all planned simulations. The unconditional floor is 60 independent intents
    across 12 projects with at least 6 test projects/24 test intents. The former
    220 intents/36 projects failed the v3 diagnostic regeneration in every effect
-   scenario and must not be frozen. A 288-intent/36-project design is only an unfrozen central-effect candidate;
-   weak-effect power and the Monte Carlo uncertainty rule remain unresolved;
+   scenario and must not be frozen. A 288-intent/36-project design is only an unfrozen central-effect candidate.
+   The simulated `provenance_increment` is a latent score parameter, not a ΔPR-AUC effect size;
+   its scientific meaning, weak-effect power, and the Monte Carlo uncertainty rule remain unresolved;
 2. record source URL/license, project ID, defect family, canonical hash, and
    near-clone result for each source intent;
 3. run at least two real provider/model configurations through one instrumented

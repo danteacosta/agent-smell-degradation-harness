@@ -5,7 +5,7 @@
 ### Changed
 
 - H2 project-bootstrap inference now fails closed whenever project-label support can produce a one-class resample, and the confirmatory gate verifies v3 precision-simulation accounting.
-- Research documentation now records that the 220-intent/36-project H2 plan failed v3 diagnostic regeneration and distinguishes the unfrozen 288/36 central-effect grid point from an approved confirmatory design.
+- Research documentation now records that the 220-intent/36-project H2 plan failed v3 diagnostic regeneration, distinguishes the unfrozen 288/36 central-scenario grid point from an approved confirmatory design, and identifies the remaining latent-score-to-ΔPR-AUC calibration gap.
 
 ### Added
 
