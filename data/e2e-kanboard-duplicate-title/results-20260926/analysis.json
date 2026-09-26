@@ -1,0 +1,420 @@
+{
+  "confirmatory_eligible": false,
+  "human_approvals": 0,
+  "label_source": "independent_browser_oracle",
+  "schema_version": "kanboard-duplicate-title-analysis/v1",
+  "case_id": "kanboard-duplicate-preserves-title",
+  "planned_slots": 18,
+  "calls_attempted": 18,
+  "stop_reason": null,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "browser_error": 1,
+        "pass": 2,
+        "target_only_failure": 0
+      },
+      "B": {
+        "browser_error": 3,
+        "pass": 0,
+        "target_only_failure": 0
+      },
+      "C": {
+        "browser_error": 0,
+        "pass": 1,
+        "target_only_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "browser_error": 2,
+        "pass": 1,
+        "target_only_failure": 0
+      },
+      "B": {
+        "browser_error": 2,
+        "pass": 1,
+        "target_only_failure": 0
+      },
+      "C": {
+        "browser_error": 1,
+        "pass": 2,
+        "target_only_failure": 0
+      }
+    }
+  },
+  "contrasts": {
+    "C_minus_A": {
+      "arm": "C",
+      "baseline": "A",
+      "arm_counts": {
+        "planned": 6,
+        "target_failures": 2,
+        "evaluable": 5
+      },
+      "baseline_counts": {
+        "planned": 6,
+        "target_failures": 0,
+        "evaluable": 3
+      },
+      "planned_denominator_difference": 0.3333333333333333,
+      "evaluable_difference": 0.4
+    },
+    "B_minus_A": {
+      "arm": "B",
+      "baseline": "A",
+      "arm_counts": {
+        "planned": 6,
+        "target_failures": 0,
+        "evaluable": 1
+      },
+      "baseline_counts": {
+        "planned": 6,
+        "target_failures": 0,
+        "evaluable": 3
+      },
+      "planned_denominator_difference": 0.0,
+      "evaluable_difference": 0.0
+    }
+  },
+  "rows": [
+    {
+      "arm": "B",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 3,
+      "slot_id": "duplicate-title-65ecbde4b2d5ecf4b056f44c",
+      "category": "browser_error",
+      "target_failed": null,
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 2,
+        "report_sha256": "1121dd43e977f570f77cb23485d50c501e1fed9fc654d8f4526afb008e96574a",
+        "screenshots": {}
+      }
+    },
+    {
+      "arm": "A",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 2,
+      "slot_id": "duplicate-title-61858a9edc29ef8d8ec78548",
+      "category": "pass",
+      "target_failed": false,
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "210830047ee3372e353188a2687937df4916f1fe8ce40a22191e92d2e2e85287",
+        "screenshots": {
+          "fixture-1.png": "d37173fc7f836b61f251b51fbbb206fe89957f92cbc9a8456aa098031f12745d",
+          "fixture-2.png": "f106e7e12d38c65d70e7757e805d500b71353d22c90835fdb2499d38c91cf4ad"
+        }
+      }
+    },
+    {
+      "arm": "A",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 2,
+      "slot_id": "duplicate-title-099c053e492b91803508518e",
+      "category": "browser_error",
+      "target_failed": null,
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 2,
+        "report_sha256": "7f1c56ac9c23e7cc22cf483e1b0e914366fb35d7a954bbfd058e54afe3d14732",
+        "screenshots": {}
+      }
+    },
+    {
+      "arm": "B",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 2,
+      "slot_id": "duplicate-title-3688627a8950121a135f3331",
+      "category": "browser_error",
+      "target_failed": null,
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 2,
+        "report_sha256": "f835b25cb8cf7f680e2265c729b7827e96af043b1582d04fd841d5d41970b873",
+        "screenshots": {}
+      }
+    },
+    {
+      "arm": "B",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 1,
+      "slot_id": "duplicate-title-7b25f0b1a05a3d8cc6845abd",
+      "category": "pass",
+      "target_failed": false,
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "6952d948a0b81ba2d6b7f008a477fdd268f204569ed8fa6e19d1eb3eee90319a",
+        "screenshots": {
+          "fixture-1.png": "d37173fc7f836b61f251b51fbbb206fe89957f92cbc9a8456aa098031f12745d",
+          "fixture-2.png": "f106e7e12d38c65d70e7757e805d500b71353d22c90835fdb2499d38c91cf4ad"
+        }
+      }
+    },
+    {
+      "arm": "B",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 3,
+      "slot_id": "duplicate-title-38074282cb5ffe01a9e68508",
+      "category": "browser_error",
+      "target_failed": null,
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 2,
+        "report_sha256": "b51921d5c5b7ded2fb5098358691cf233e22ebbb5ba1be4945db44bf77231b8f",
+        "screenshots": {}
+      }
+    },
+    {
+      "arm": "A",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 3,
+      "slot_id": "duplicate-title-0e6220819e1696875effb9ab",
+      "category": "browser_error",
+      "target_failed": null,
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 2,
+        "report_sha256": "31a2e2f5879aef35945b5c8ed49234c8b005c7e68b1f50db83223cdb3fccf7f5",
+        "screenshots": {}
+      }
+    },
+    {
+      "arm": "B",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 2,
+      "slot_id": "duplicate-title-088959f3a7f9755515cd0d32",
+      "category": "browser_error",
+      "target_failed": null,
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 2,
+        "report_sha256": "f835b25cb8cf7f680e2265c729b7827e96af043b1582d04fd841d5d41970b873",
+        "screenshots": {}
+      }
+    },
+    {
+      "arm": "A",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 1,
+      "slot_id": "duplicate-title-0975a51d632533027eb2d02c",
+      "category": "pass",
+      "target_failed": false,
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "e09a0460da02cc9360e0af6aece3da6a7da84b8b3b75429151e1c304c9a5b7ef",
+        "screenshots": {
+          "fixture-1.png": "d37173fc7f836b61f251b51fbbb206fe89957f92cbc9a8456aa098031f12745d",
+          "fixture-2.png": "f106e7e12d38c65d70e7757e805d500b71353d22c90835fdb2499d38c91cf4ad"
+        }
+      }
+    },
+    {
+      "arm": "C",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 3,
+      "slot_id": "duplicate-title-38424195c021355aa1d26a04",
+      "category": "pass",
+      "target_failed": false,
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "b77b078e6f34af5189e24dcd4ada19e51557bd7404f7a047b0d6b06a4ec1c611",
+        "screenshots": {
+          "fixture-1.png": "d37173fc7f836b61f251b51fbbb206fe89957f92cbc9a8456aa098031f12745d",
+          "fixture-2.png": "f106e7e12d38c65d70e7757e805d500b71353d22c90835fdb2499d38c91cf4ad"
+        }
+      }
+    },
+    {
+      "arm": "B",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 1,
+      "slot_id": "duplicate-title-5c1db54245d6a6dc762c5632",
+      "category": "browser_error",
+      "target_failed": null,
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 2,
+        "report_sha256": "31a2e2f5879aef35945b5c8ed49234c8b005c7e68b1f50db83223cdb3fccf7f5",
+        "screenshots": {}
+      }
+    },
+    {
+      "arm": "C",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 1,
+      "slot_id": "duplicate-title-5a8ad594a639be4f4945097a",
+      "category": "browser_error",
+      "target_failed": null,
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 2,
+        "report_sha256": "0c1a889fef2324bff41bd24f24b93c85bf348c47b2c4a14de102eb913ccce9fe",
+        "screenshots": {}
+      }
+    },
+    {
+      "arm": "C",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 3,
+      "slot_id": "duplicate-title-695eeed2b474c25c59c99f08",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "d2eacc976e1fa372b581f95efcaeec1cf75be5b9c75a97376e79dfa20cbe799c",
+        "screenshots": {
+          "fixture-1.png": "2411bfaec9ba60e2dcea994132dcf4d4f756b37da8112862629185df0377b1fe",
+          "fixture-2.png": "6a94dac6e3edd5aa605ac43d434c4c405ac4a5729e66ce095721c6eeff636ebf"
+        }
+      }
+    },
+    {
+      "arm": "C",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 1,
+      "slot_id": "duplicate-title-bb8604bbe516537640270ba4",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "068d8503a5a217fa84e82d84ec240a57bd8d97b5f2d6db761ddbf27a270b87b1",
+        "screenshots": {
+          "fixture-1.png": "ad59f0dbbfae8c9d332b42d8f2836f6de7794b8294aeb1beceec6a35184790d3",
+          "fixture-2.png": "41c233d7a46a03cc22d9107619bd31c3db33868d02ecc5e343cdbed70a4cf86e"
+        }
+      }
+    },
+    {
+      "arm": "A",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 1,
+      "slot_id": "duplicate-title-d63825048279c69c38d8d4a1",
+      "category": "pass",
+      "target_failed": false,
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "3ddda062e3ef696dba861e4156a799304f44752a8330d8bc3824814d6a937fa1",
+        "screenshots": {
+          "fixture-1.png": "d37173fc7f836b61f251b51fbbb206fe89957f92cbc9a8456aa098031f12745d",
+          "fixture-2.png": "f106e7e12d38c65d70e7757e805d500b71353d22c90835fdb2499d38c91cf4ad"
+        }
+      }
+    },
+    {
+      "arm": "C",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 2,
+      "slot_id": "duplicate-title-a16f688b4f1b8c9dc375cb13",
+      "category": "pass",
+      "target_failed": false,
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "8ec653077f30f63401c93b162664671c333a621050c5db1b50b1124ac2791ec5",
+        "screenshots": {
+          "fixture-1.png": "d37173fc7f836b61f251b51fbbb206fe89957f92cbc9a8456aa098031f12745d",
+          "fixture-2.png": "f106e7e12d38c65d70e7757e805d500b71353d22c90835fdb2499d38c91cf4ad"
+        }
+      }
+    },
+    {
+      "arm": "C",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-luna",
+      "project_id": "kanboard",
+      "replication": 2,
+      "slot_id": "duplicate-title-c3c421f40c8b00bc8c672677",
+      "category": "pass",
+      "target_failed": false,
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "0681de2263c54613719c9088af0e9ee9ded70f372d9cb82f05c2fb2c90af9dd4",
+        "screenshots": {
+          "fixture-1.png": "d37173fc7f836b61f251b51fbbb206fe89957f92cbc9a8456aa098031f12745d",
+          "fixture-2.png": "f106e7e12d38c65d70e7757e805d500b71353d22c90835fdb2499d38c91cf4ad"
+        }
+      }
+    },
+    {
+      "arm": "A",
+      "intent_id": "kanboard-duplicate-preserves-title",
+      "model": "gpt-5.6-sol",
+      "project_id": "kanboard",
+      "replication": 3,
+      "slot_id": "duplicate-title-ec5068f768bb721c6315c07f",
+      "category": "browser_error",
+      "target_failed": null,
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 2,
+        "report_sha256": "926d938cb6d7396de7fa68168ab5c8f10cf3aa4e0ef0cfeed367e5f3c99263c0",
+        "screenshots": {}
+      }
+    }
+  ],
+  "claims": {
+    "confirmatory": false,
+    "h1_confirmed": false,
+    "h2_evaluated": false
+  }
+}

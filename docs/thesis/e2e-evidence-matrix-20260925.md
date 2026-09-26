@@ -67,6 +67,30 @@ non-target mutants before generation, and analyzes requirement-level effects
 with project and model as grouping factors. Existing pilots remain a separate
 exploratory stratum.
 
+## 26 September: second Kanboard obligation
+
+The [duplicate-title pilot](../research/kanboard-duplicate-title-qualification-20260926.md)
+adds a second obligation in Kanboard, in a different interaction from
+completing unfinished subtasks. All 18 code generations passed the frozen
+HTML admission check. The original browser run had seven passes, two
+target-only C failures, and nine unknown browser errors. Every unknown used
+`crypto.randomUUID()`, unavailable at the frozen fixture origin. These are
+not evidence of a title defect. The original planned-denominator C−A
+target-failure difference was +2/6; unequal unknowns prevent a clean
+interpretation.
+
+A separately qualified, **post-outcome** diagnostic changed only the runner
+origin to `localhost` and re-evaluated the same saved artifacts, with no new
+model calls. It yielded 16 passes and the same two C title failures. Luna
+had two C failures in three runs, while Sol passed C in all three. The two
+failures appended `(Copy)`/`(copy)` to the duplicated title; A and B passed
+3/3 in each model. This explains the original unknowns but is not a
+prospectively frozen replacement result. It leaves the project count at six,
+with two distinct obligations now executed in both Kanboard and OpenProject.
+Nine of the original 11 previously unexecuted obligations remain, plus the
+TodoMVC persistence bridge replication. The formal H1/H2 outcomes remain
+unmeasured.
+
 Evidence:
 
 - TodoMVC focus chain: `data/focus-chain/results-20260922.json`
@@ -74,3 +98,6 @@ Evidence:
 - Initial four-project expansion, including Kanboard: `data/e2e-six-projects/results-20260925/`
 - Fixed-scaffold successor: `data/e2e-three-project-successor/results-20260925/`
 - Second OpenProject obligation: `data/e2e-openproject-remaining/results-20260926/`
+- Second Kanboard obligation, original and post-outcome diagnostic:
+  `data/e2e-kanboard-duplicate-title/results-20260926/` and
+  `data/e2e-kanboard-duplicate-title/secure-origin-diagnostic-20260926/`

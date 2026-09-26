@@ -126,6 +126,19 @@ ao informar % Complete com Work já preenchido. Portanto, o piloto acrescenta
 projeto. A auditoria posterior de rótulos por LLM registrou discordâncias e
 não substitui o oráculo de navegador nem validação humana.
 
+Um [segundo requisito do Kanboard](../research/kanboard-duplicate-title-qualification-20260926.md)
+foi testado na ação de duplicar uma tarefa, desta vez verificando se a cópia
+mantém o título visível. As 18 gerações foram admitidas. No navegador
+congelado, sete passaram, duas falharam apenas no título sob C e nove ficaram
+sem avaliação porque os códigos usaram `crypto.randomUUID()`, indisponível na
+origem da página de teste. Uma reavaliação diagnóstica **posterior ao
+resultado**, com os mesmos artefatos e uma origem segura qualificada, obteve
+16 acertos e as mesmas duas falhas em C, ambas no modelo Luna; Sol preservou
+o título em C nas três repetições. Esse diagnóstico explica os casos
+desconhecidos, mas não substitui o desfecho congelado. O total continua em
+seis projetos; Kanboard e OpenProject agora têm duas obrigações distintas
+cada um.
+
 Os experimentos demonstram que a omissão pode produzir defeito visível em
 contextos distintos, mas há recuperações da informação omitida e diferenças
 entre modelos. A seleção foi intencional, os scaffolds e datas diferem e as
