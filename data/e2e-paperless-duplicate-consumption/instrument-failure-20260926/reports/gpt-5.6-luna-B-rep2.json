@@ -1,0 +1,23 @@
+{
+  "schema_version": "paperless-duplicate-consumption-browser/v1",
+  "status": "complete",
+  "app_sha256": "3e6043572a2771f8acdc44516bc9a76a08715d418a360f391fefab20c310d208",
+  "assertions": {
+    "duplicate_consumed_1": false,
+    "original_preserved_1": true,
+    "control_preserved_1": true,
+    "unique_identity_1": true,
+    "duplicate_consumed_2": false,
+    "original_preserved_2": true,
+    "control_preserved_2": true,
+    "unique_identity_2": true
+  },
+  "console_errors": [
+    "Error: document identity required",
+    "Error: document identity required"
+  ],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

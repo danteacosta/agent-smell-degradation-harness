@@ -147,6 +147,17 @@ falhas ocorreram em Luna, com título da cópia alterado por um sufixo; Sol
 recuperou o título em C nas três repetições. É uma replicação limpa do efeito
 local e da heterogeneidade entre modelos, não nova diversidade de requisitos.
 
+Uma [nova obrigação Paperless-ngx](../research/paperless-duplicate-consumption-20260926.md)
+testou a aceitação padrão de uma cópia com o mesmo checksum. O primeiro lote
+de 18 gerações revelou um desencaixe entre o arquivo entregue ao código e a
+API do scaffold; nenhum caso passou, e esse lote permanece como falha de
+instrumento. Após corrigir a interface, requalificar nove controles e
+congelar outro lote antes de gerar código, houve **18/18 E2Es avaliáveis**.
+A e B passaram 6/6 cada; C falhou apenas no alvo em 4/6 e passou em 2/6.
+Luna concentrou três falhas C; Sol recuperou a obrigação em duas de três C.
+Isto acrescenta diversidade de obrigações dentro dos seis projetos já
+representados, sem estimar efeito populacional nem confirmar H1/H2.
+
 Os experimentos demonstram que a omissão pode produzir defeito visível em
 contextos distintos, mas há recuperações da informação omitida e diferenças
 entre modelos. A seleção foi intencional, os scaffolds e datas diferem e as
