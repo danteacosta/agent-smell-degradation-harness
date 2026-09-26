@@ -5,11 +5,19 @@ from pathlib import Path
 ROOT = Path(__file__).parents[1]
 
 
-def test_machine_readable_protocol_freezes_claim_and_boundaries() -> None:
+def test_machine_readable_protocol_records_claim_and_boundaries() -> None:
     precision = json.loads(
         (ROOT / "data" / "confirmatory" / "precision-plan.candidate.json").read_text(
             encoding="utf-8"
         )
+    )
+    sensitivity = json.loads(
+        (
+            ROOT
+            / "data"
+            / "confirmatory"
+            / "precision-sensitivity.candidate.json"
+        ).read_text(encoding="utf-8")
     )
     rubric = json.loads(
         (ROOT / "tasks" / "annotation_rubric.json").read_text(encoding="utf-8")
@@ -18,7 +26,11 @@ def test_machine_readable_protocol_freezes_claim_and_boundaries() -> None:
         encoding="utf-8"
     )
 
-    assert precision["status"] == "candidate"
+    assert precision["status"] == "rejected"
+    assert precision["simulation"]["method"].endswith("-v2")
+    assert precision["decision"] == "rejected_do_not_freeze"
+    assert sensitivity["status"] == "historical_v2_diagnostic_rejected_for_freeze"
+    assert "v3" in sensitivity["interpretation"]
     assert precision["design"]["intents"] >= 60
     assert precision["design"]["projects"] >= 12
     assert precision["design"]["minimum_test_projects"] >= 6
@@ -55,6 +67,18 @@ def test_e2e_endpoint_is_not_mislabeled_as_the_h1_estimand() -> None:
         assert "target-failure contrast" in prose
         assert "does not estimate `H1.ordinal_delta`" in prose
         assert "primary, co-primary, or construct-validation" in prose
+
+
+def test_roadmap_reports_current_six_project_e2e_boundary() -> None:
+    roadmap = (
+        ROOT / "docs" / "research" / "research-product-roadmap.md"
+    ).read_text(encoding="utf-8")
+    prose = " ".join(roadmap.split())
+
+    assert "informative browser outcomes in six projects" in prose
+    assert "53 of 54" in prose
+    assert "target-failure contrast" in prose
+    assert "does not estimate `H1.ordinal_delta`" in prose
 
 
 def test_prepilot_launch_pack_preserves_claim_boundary() -> None:

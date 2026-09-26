@@ -1,11 +1,20 @@
 # From evaluator debugging to useful diagnostic evidence
 
 Source-derived criteria evidence is available from the completed SRS-163 and
-four-project exploratory pilots. The next step investigates whether source-relative
-obligation loss reaches executable behavior, using independently qualified tests
-in a separately frozen successor. The [completed studies](annotation-free-evaluation.md) already show
-that evaluator behavior changes with the decision contract and observation
-scope. H1/H2 remain unanswered.
+four-project exploratory pilots. Separate E2E pilots now provide informative
+browser outcomes in six projects. In the three-project fixed-scaffold successor,
+53 of 54 outputs were executable, all 17 evaluable A outputs and all 18 B outputs
+passed, and C produced 11 target-only failures. Together with TodoMVC, RealWorld,
+and Kanboard, these results show that source-relative obligation loss can reach
+visible behavior and that the result depends on model and context.
+
+The measured endpoint is an A/B/C target-failure contrast. It does not estimate
+`H1.ordinal_delta`, whose outcome is human/adjudicated ordinal severity, and the
+separate pilots cannot be pooled into a population effect. The next decision is
+whether browser failure is primary, co-primary, or construct-validation evidence
+before confirmatory sizing. The [completed studies](annotation-free-evaluation.md)
+also show that evaluator behavior changes with the decision contract and
+observation scope. H1/H2 remain unanswered.
 
 This roadmap separates completed development evidence from proposed future
 studies. It does not authorize spending or change any frozen launch gate.
@@ -141,6 +150,7 @@ they cannot be inferred from API cost or regression-test counts.
 | Completed evaluator controls | Specific failure modes occur under frozen configurations | General sensitivity or semantic preservation prevalence |
 | Executable contracts and regression tests | Declared software invariants hold for tested cases | Natural-language reference correctness |
 | Artifact-addressing development | Exact evidence location; 24/24 valid v4 outputs on two development sources | General semantic superiority or a passed omission gate |
+| Six-project E2E pilots | Omission can cause a visible defect; the target-failure contrast varies by model and context | `H1.ordinal_delta`, population prevalence, or an average causal effect |
 | Temporal analyzer | A prospective analysis is implemented | Empirical lead-time or B3-over-B0 benefit |
 | Proposed shadow-mode workflow | A testable product hypothesis | User value, avoided defects, or safe automatic approval |
 
