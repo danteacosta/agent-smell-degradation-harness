@@ -1,5 +1,9 @@
 # E2E evidence matrix — through 26 September 2026
 
+The [per-experiment smell mapping](e2e-smell-mapping-20260926.md) relates each
+controlled omission to the literature's broad incompleteness family and
+separates that construct alignment from the observed browser outcome.
+
 The exploratory program now contains informative browser outcomes in six
 projects. The rows below are a synthesis of separate pilots, not one pooled
 experiment. Their scaffolds, requirements, denominators, and collection dates

@@ -1,0 +1,5 @@
+{
+  "A": "When a deleted file is restored, return it to its original location when that location exists and is writable. If an active file already has the same name there, give the restored file a unique name.",
+  "B": "Restore a deleted file to its original writable location. If that location already contains a file with the deleted item's name, rename the restored item so its name is unique.",
+  "C": "When a deleted file is restored, return it to its original location when that location exists and is writable."
+}

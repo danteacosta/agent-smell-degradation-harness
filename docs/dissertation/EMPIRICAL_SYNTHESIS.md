@@ -117,6 +117,10 @@ Nextcloud e OpenProject. No sucessor de scaffold fixo em três projetos, houve
 54 chamadas, 53 saídas executáveis e 11 falhas seletivas em C; todas as 17
 saídas A avaliáveis e todas as 18 saídas B passaram. Esses totais pertencem
 somente àquele sucessor, não a uma amostra combinada dos seis projetos.
+A [matriz de mapeamento aos smells](../thesis/e2e-smell-mapping-20260926.md)
+identifica a intervenção como omissão controlada de obrigação, alinhada à
+família ampla de incompletude semântica da literatura. Os subtipos por caso
+são interpretação analítica, não labels independentes de smells naturais.
 
 Em 26 de setembro, um [segundo requisito do OpenProject](../research/openproject-remaining-pilot-20260926.md)
 foi testado: 18/18 saídas avaliáveis, A e B com 3/3 acertos por modelo, C com

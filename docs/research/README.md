@@ -1,5 +1,8 @@
 # Research catalog
 
+- [26 September 2026: smell mapping for E2E](2026-09-26-smell-mapping-for-e2e.md): credited sources and construct boundaries for the per-experiment omission mapping.
+- [Per-experiment smell mapping](../thesis/e2e-smell-mapping-20260926.md): each completed E2E linked to a literature-aligned family; non-browser ambiguity controls stay separate.
+
 This directory records external evidence that changes the thesis protocol,
 provider configuration, or launch decision. Each entry links the downstream
 artifact it informs and distinguishes vendor documentation from local
@@ -20,6 +23,7 @@ experiment evidence.
 - [TodoMVC Clear completed admission](todomvc-clear-button-admission-20260926.md): revised browser oracle passed 7/7 controls, but the instrument-review gate did not pass; no generation.
 - [TodoMVC persistence bridge](todomvc-persistence-bridge-20260926.md): 18 fresh generations, 17 E2E outputs evaluable, no observed target failure; one C interface error preserved.
 - [Nextcloud permanent-delete admission](nextcloud-permanent-delete-admission-20260926.md): browser oracle 8/8 qualified, but source-to-visual-endpoint panel remained 2–1; no generation admitted.
+- [Nextcloud restore-name admission](nextcloud-restore-conflict-admission-20260926.md): three qualified local oracle versions and three preserved review rounds; source-to-endpoint gate still failed, no generation.
 
 - [Secondary H1 ordinal audit of saved criteria](h1-existing-criteria-ordinal-audit-20260926.md): 92 valid blind LLM judgments over 46 saved artifacts; strict evidence leaves 29 consensus labels and A−C missingness bounds that include zero. Not confirmatory.
 
