@@ -41,6 +41,10 @@ browser target-failure contrast, and B−A checks wording sensitivity. This is
 exploratory evidence within one project and uses a browser failure endpoint,
 not the formal human ordinal-severity H1 endpoint. H2 is not evaluated.
 
+The [post-outcome label audit](openproject-remaining-label-audit-20260926.md)
+records both agreement and dissent among blinded LLM reviewers; it does not
+change the browser labels.
+
 ## Collected result
 
 All 18 saved-ChatGPT-Codex generations completed before the first generated
