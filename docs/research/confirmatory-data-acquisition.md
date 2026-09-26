@@ -26,9 +26,11 @@ Before changing the manifest to confirmed:
    frozen test partition, resample `project_id`, reject every simulation whose
    project-label support can produce a one-class resample, validate the v3
    simulation counters, and divide power by all planned simulations. The unconditional floor is 60 independent intents
-   across 12 projects with at least 6 test projects/24 test intents; the current
-   conservative candidate is 220 intents/36 projects with 11 test projects and
-   remains unfrozen pending regeneration with `v3` and the pre-pilot variance update;
+   across 12 projects with at least 6 test projects/24 test intents. The former
+   220 intents/36 projects failed the v3 diagnostic regeneration in every effect
+   scenario and must not be frozen. A 288-intent/36-project design is only an unfrozen central-effect candidate.
+   The simulated `provenance_increment` is a latent score parameter, not a ΔPR-AUC effect size;
+   its scientific meaning, weak-effect power, and the Monte Carlo uncertainty rule remain unresolved;
 2. record source URL/license, project ID, defect family, canonical hash, and
    near-clone result for each source intent;
 3. run at least two real provider/model configurations through one instrumented

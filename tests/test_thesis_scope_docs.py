@@ -36,7 +36,9 @@ def test_boundary_links_external_gate_and_non_confirmatory_status() -> None:
     assert "planned confirmatory experiment" in boundary
     assert "non-confirmatory" in boundary
     assert "60 independent intents" in acquisition
-    assert "current\n   conservative candidate is 220 intents/36 projects" in acquisition
+    assert "220 intents/36 projects failed the v3" in acquisition
+    assert "288-intent/36-project design is only an unfrozen central-effect candidate" in acquisition
+    assert "latent score parameter, not a ΔPR-AUC effect size" in acquisition
     assert "no frozen human/adjudicated primary labels" in acquisition
 
 
@@ -47,6 +49,6 @@ def test_prepilot_launch_pack_preserves_claim_boundary() -> None:
         "two distinct real provider/model configurations",
         "It cannot support H1 or H2",
         "Credentials never enter that file",
-        "The current 220/36 candidate may increase or decrease",
+        "The rejected 220/36 candidate must not be frozen",
     ):
         assert phrase in launch
