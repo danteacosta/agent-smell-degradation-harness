@@ -1,6 +1,11 @@
 {
   "schema_version": "h2-precision-plan/v2",
-  "status": "candidate",
+  "status": "rejected",
+  "rejection": {
+    "reason": "fails_v3_diagnostic_regeneration_all_effect_scenarios",
+    "preserved_as": "historical_v2_diagnostic",
+    "successor_frozen": false
+  },
   "design": {
     "intents": 220,
     "projects": 36,
@@ -35,5 +40,5 @@
     "max_median_ci_width": 0.2,
     "max_degenerate_rate": 0.05
   },
-  "decision": "candidate_only_pre_pilot_must_inform_outcome_blind_final_grid"
+  "decision": "rejected_do_not_freeze"
 }

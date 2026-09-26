@@ -1,9 +1,15 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import pytest
 
 from eval.sample_gate import validate_confirmatory_design, validate_pilot_design
 from eval.splits import apply_split_manifest, build_grouped_split_manifest
+
+
+ROOT = Path(__file__).parents[1]
 
 
 def _episodes(intent_count: int = 24) -> list[dict[str, str]]:
@@ -64,6 +70,23 @@ def test_confirmatory_design_requires_frozen_precision_plan():
     manifest = build_grouped_split_manifest(episodes, min_groups_per_split=2)
     with pytest.raises(ValueError, match="frozen H2 precision plan"):
         validate_confirmatory_design(episodes, apply_split_manifest(episodes, manifest))
+
+
+def test_rejected_checked_in_precision_plan_cannot_unlock_confirmatory_gate():
+    episodes = _episodes(220)
+    manifest = build_grouped_split_manifest(episodes)
+    precision = json.loads(
+        (ROOT / "data" / "confirmatory" / "precision-plan.candidate.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    with pytest.raises(ValueError, match="status=frozen"):
+        validate_confirmatory_design(
+            episodes,
+            apply_split_manifest(episodes, manifest),
+            precision_plan=precision,
+        )
 
 
 def test_confirmatory_design_accepts_precision_governed_minimum():

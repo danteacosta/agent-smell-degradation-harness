@@ -1,6 +1,6 @@
 {
   "schema_version": "h2-precision-sensitivity/v1",
-  "status": "design_diagnostic",
+  "status": "historical_v2_diagnostic_rejected_for_freeze",
   "design": {
     "intents": 220,
     "projects": 36,
@@ -50,5 +50,5 @@
       "decision": "passes_candidate_thresholds"
     }
   ],
-  "interpretation": "The weak-signal scenario fails. This file is planning evidence only and cannot freeze the confirmatory sample before the outcome-blind pre-pilot variance update."
+  "interpretation": "Historical v2 planning evidence only. The weak-signal scenario failed here, and outcome-blind v3 diagnostic regeneration later failed all three scenarios. This design is rejected for freeze; no successor is frozen."
 }
