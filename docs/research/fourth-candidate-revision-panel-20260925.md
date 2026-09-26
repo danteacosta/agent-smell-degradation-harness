@@ -18,8 +18,8 @@ The prompt hash is `524bd6e8b08aa6e04e1cc258018187191375988adf4c020cebc37e49e0d4
 
 ## Result and limit
 
-The complete prospective pool now contains **12 eligible obligations across six projects**, balanced at two per project. Under three A/B/C arms, two model configurations and three repetitions, the ceiling is **216 planned positions**.
+The complete prospective pool now contains **12 eligible obligation slots across six projects**, balanced operationally at two per project. It comprises **11 previously unexecuted obligations** and **one bridge replication**: `todo-edit-state-not-persisted` repeats the TodoMVC persistence obligation already executed on 23 September 2026. The bridge can assess reproducibility but does not add requirement diversity. Under three A/B/C arms, two model configurations and three repetitions, the ceiling remains **216 planned positions**.
 
-This closes candidate selection only. None of the 12 obligations becomes an E2E result until its browser oracle, target and non-target mutants, A/B/C prompts, runtime, schedule and custody bundle are frozen and qualified. The panel therefore does not add evidence for H1 or H2.
+This closes candidate selection only. None of the 12 slots becomes an E2E result until its browser oracle, target and non-target mutants, A/B/C prompts, runtime, schedule and custody bundle are frozen and qualified. The panel therefore does not add evidence for H1 or H2.
 
 A later cross-candidate audit narrowed one already eligible OpenProject case without changing this ceiling. See `fifth-candidate-narrowing-panel-20260925.md`.

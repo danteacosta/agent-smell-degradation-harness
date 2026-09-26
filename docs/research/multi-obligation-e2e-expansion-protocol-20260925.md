@@ -13,15 +13,20 @@ remains the target only after deferred candidates are narrowed or replaced.
 
 The current pilots show that deleting one requirement obligation can produce a
 visible defect, but they contain only one observed obligation per project. The
-next block tests whether that result survives new obligations within the same
-six projects. The unit that increases external evidence is the independently
-sourced obligation. Repetitions measure generation variability and are not
-treated as independent requirements.
+final screened pool contains 11 previously unexecuted obligations plus one bridge replication:
+`todo-edit-state-not-persisted` repeats the TodoMVC persistence obligation that
+already ran on 23 September 2026. That bridge can test instrument and run
+reproducibility, but it does not increase requirement diversity and must remain
+separate from counts of new obligations. The unit that increases external
+evidence is the independently sourced, previously unexecuted obligation.
+Repetitions measure generation variability and are not treated as independent
+requirements.
 
-The candidate design contains 12 obligations, two per project. If every
+The candidate design contains 12 obligation slots, two per project. Eleven are
+previously unexecuted and one is the bridge replication above. If every
 candidate passes admission, the collection has 216 positions:
 
-`12 obligations × 3 arms (A/B/C) × 2 model configurations × 3 repetitions`.
+`12 slots × 3 arms (A/B/C) × 2 model configurations × 3 repetitions`.
 
 Each position generates one self-contained browser application or bounded UI
 replica in a fresh context. The generator receives one requirement variant and

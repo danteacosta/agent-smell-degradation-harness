@@ -30,6 +30,22 @@ def test_canonical_chain_reports_final_prospective_ceiling() -> None:
     }
 
 
+def test_public_protocol_separates_new_obligations_from_bridge_replication() -> None:
+    protocol = (
+        candidates.ROOT
+        / "docs/research/multi-obligation-e2e-expansion-protocol-20260925.md"
+    ).read_text(encoding="utf-8")
+    final_panel = (
+        candidates.ROOT
+        / "docs/research/fourth-candidate-revision-panel-20260925.md"
+    ).read_text(encoding="utf-8")
+
+    assert "11 previously unexecuted obligations plus one bridge replication" in protocol
+    assert "does not increase requirement diversity" in protocol
+    assert "11 previously unexecuted obligations" in final_panel
+    assert "one bridge replication" in final_panel
+
+
 def test_register_rejects_source_hash_drift(tmp_path) -> None:
     path = _copy_register(tmp_path)
     payload = json.loads(path.read_text())

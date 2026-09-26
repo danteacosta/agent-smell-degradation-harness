@@ -16,4 +16,4 @@ The first review wording called error feedback a control and received a 2–1 de
 
 Final prompt SHA-256: `d51097b6d51578f657ccf53064038d25c65df1c575845dcae9f2da4e67e14af3`. Private custody manifest SHA-256: `6c190973770c8621dcf031e1b0d4a48342bc3e8813bc34efb9338c766504e3bf`.
 
-The pool remains **12 eligible obligations across six projects**, two per project, with a ceiling of **216 positions**. This correction changes the identity and scoring boundary of one prospective OpenProject case. It produces no E2E result and adds no evidence for H1 or H2.
+The pool remains **12 eligible obligation slots across six projects**, two per project, with a ceiling of **216 positions**: 11 previously unexecuted obligations and one TodoMVC persistence bridge replication. The bridge does not add requirement diversity. This correction changes the identity and scoring boundary of one prospective OpenProject case. It produces no E2E result and adds no evidence for H1 or H2.

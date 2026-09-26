@@ -54,7 +54,7 @@ experiment evidence.
 - [Behavioral expansion preparation](behavioral-expansion-preparation-20260922.md): historical mixed API/browser 144-slot proposal; superseded for the primary endpoint by the [E2E-first plan](../plans/2026-09-23-e2e-first-h1.md), with three UI candidates across two projects and no new collection.
 
 - [Behavioral oracle source reviews](ui-behavioral-contracts-20260922.md), [RealWorld API contracts](realworld-behavioral-contracts-20260922.md), and [CaSS contracts](cass-behavioral-contracts-20260922.md): authored controls and unresolved admission decisions for the eight candidates.
-- [Prospective multi-obligation E2E expansion](multi-obligation-e2e-expansion-protocol-20260925.md): 12 source-bound UI candidates across the six observed projects, yielding 216 A/B/C positions if every oracle passes pre-generation qualification.
+- [Prospective multi-obligation E2E expansion](multi-obligation-e2e-expansion-protocol-20260925.md): 12 source-bound UI slots across the six observed projects—11 previously unexecuted obligations plus one TodoMVC persistence bridge replication—yielding 216 A/B/C positions if every oracle passes pre-generation qualification.
 - [Multi-obligation screening panel](multi-obligation-screening-panel-20260925.md): three-model unanimous gate admits 3/12 candidates to oracle construction, a 54-position ceiling before qualification; no generated outcomes.
 - [Behavioral expansion analysis plan](../plans/2026-09-22-behavioral-expansion-analysis.md): finite schedule, fixed denominators and project weighting; no collection.
 

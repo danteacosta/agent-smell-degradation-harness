@@ -28,13 +28,15 @@ Projects and obligations were selected purposively, repetitions are nested,
 and the fixed-scaffold successor was designed after an earlier interface
 failure. H1 and H2 remain open.
 
-The next collection should increase the number of independently sourced
-obligations within projects instead of adding repetitions to these six cases.
-A defensible next block would freeze at least two new UI obligations per
-project, retain A/B/C and both models, qualify each oracle with target and
-non-target mutants before generation, and analyze requirement-level effects
-with project and model as grouping factors. Existing pilots should remain a
-separate exploratory stratum.
+The next collection should increase the number of independently sourced,
+previously unexecuted obligations within projects instead of adding repetitions
+to these six cases. The screened 12-slot pool contains 11 such obligations and
+one TodoMVC persistence bridge replication. That bridge must be analyzed as a
+replication and cannot count toward new requirement diversity. A defensible
+block retains A/B/C and both models, qualifies each oracle with target and
+non-target mutants before generation, and analyzes requirement-level effects
+with project and model as grouping factors. Existing pilots remain a separate
+exploratory stratum.
 
 Evidence:
 
