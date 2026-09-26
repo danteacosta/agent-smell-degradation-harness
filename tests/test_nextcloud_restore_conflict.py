@@ -1,11 +1,13 @@
 """Observable contracts for the Nextcloud restore-name conflict instrument."""
 import json
+import importlib.util
 from pathlib import Path
-import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "eval/fixtures/nextcloud-restore-conflict"))
-from qualify import classify, NON_TARGET, TARGET
+spec = importlib.util.spec_from_file_location("nextcloud_restore_qualify", ROOT / "eval/fixtures/nextcloud-restore-conflict/qualify.py")
+qualifier = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(qualifier)
+classify, NON_TARGET, TARGET = qualifier.classify, qualifier.NON_TARGET, qualifier.TARGET
 
 
 def test_malformed_or_partial_browser_report_cannot_be_a_pass():

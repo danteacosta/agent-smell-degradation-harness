@@ -1,0 +1,5 @@
+{
+  "A": "When a task is closed, hide it from the board. The closed task remains reachable through the Closed tasks filter.",
+  "B": "Closing a task removes it from the board view, while the Closed tasks filter still lists it.",
+  "C": "When a task is closed, it remains reachable through the Closed tasks filter."
+}

@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Board</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button{font:inherit;padding:.4rem}.task{border:1px solid #bbb;padding:.8rem;margin:.7rem 0}nav{display:flex;gap:.8rem}</style></head>
+<body><main><h1>Board</h1><nav><button id="board" type="button">Board</button><button id="closed" type="button">Closed tasks</button></nav><div id="tasks"></div></main><script>
+const storageKey='kanboard-close-pilot';
+if(localStorage.getItem(storageKey)===null)localStorage.setItem(storageKey,JSON.stringify(window.initialState.tasks));
+let tasks=JSON.parse(localStorage.getItem(storageKey));
+let view='board';let closeBehavior=null;
+const app=Object.freeze({
+  onClose(handler){if(typeof handler!=='function'||closeBehavior)throw new Error('invalid close handler');closeBehavior=handler;render()},
+  tasks(){return structuredClone(tasks)},
+  save(next){if(!Array.isArray(next))throw new Error('task list required');tasks=structuredClone(next);localStorage.setItem(storageKey,JSON.stringify(tasks));render()}
+});
+function render(){
+  document.querySelector('h1').textContent=view==='board'?'Board':'Closed tasks';
+  const root=document.querySelector('#tasks');root.replaceChildren();
+  for(const task of tasks.filter(x=>view==='board'?x.boardVisible===true:x.status==='closed')){
+    const row=document.createElement('section');row.className='task';row.dataset.taskId=String(task.id);
+    const name=document.createElement('h2');name.textContent=String(task.title??'');row.append(name);
+    if(view==='board'){
+      const button=document.createElement('button');button.type='button';button.textContent='Close task';button.disabled=!closeBehavior;
+      button.addEventListener('click',()=>{if(closeBehavior)closeBehavior(structuredClone(task))});row.append(button);
+    }
+    root.append(row);
+  }
+}
+document.querySelector('#board').addEventListener('click',()=>{view='board';render()});
+document.querySelector('#closed').addEventListener('click',()=>{view='closed';render()});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

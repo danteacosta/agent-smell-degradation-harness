@@ -24,6 +24,7 @@ experiment evidence.
 - [TodoMVC persistence bridge](todomvc-persistence-bridge-20260926.md): 18 fresh generations, 17 E2E outputs evaluable, no observed target failure; one C interface error preserved.
 - [Nextcloud permanent-delete admission](nextcloud-permanent-delete-admission-20260926.md): browser oracle 8/8 qualified, but source-to-visual-endpoint panel remained 2–1; no generation admitted.
 - [Nextcloud restore-name admission](nextcloud-restore-conflict-admission-20260926.md): three qualified local oracle versions and three preserved review rounds; source-to-endpoint gate still failed, no generation.
+- [Kanboard close-task admission](kanboard-close-admission-20260926.md): eight browser controls passed, but two full instrument-review panels stayed 2–1; no generation.
 
 - [Secondary H1 ordinal audit of saved criteria](h1-existing-criteria-ordinal-audit-20260926.md): 92 valid blind LLM judgments over 46 saved artifacts; strict evidence leaves 29 consensus labels and A−C missingness bounds that include zero. Not confirmatory.
 
