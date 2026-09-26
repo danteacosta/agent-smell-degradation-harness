@@ -213,9 +213,28 @@ def test_confirmatory_h2_reports_delta_ci_and_claim_decision(tmp_path: Path):
     assert effect["margin"] == pytest.approx(0.05)
     assert effect["bootstrap"]["clusters"] == 4
     assert effect["bootstrap"]["cluster_key"] == "project_id"
+    assert effect["bootstrap"]["effective_draws"] <= effect["bootstrap"]["draws"]
+    assert effect["bootstrap"]["valid_for_inference"] is True
     assert effect["leave_one_cluster_out"]["draws"] == 4
     assert effect["claim"] in {"supported", "not_supported", "descriptive_only"}
     assert set(report["test_pr_auc_by_model"]) == {"B0", "B1", "B2", "B3"}
     assert report["model_selection"]["in_sample_selection"] is False
     assert 0.0 <= report["test_label_prevalence"] <= 1.0
     assert report["claim_decision"] == effect["claim"]
+
+
+def test_confirmatory_h2_applies_frozen_observed_degeneracy_limit(tmp_path: Path):
+    episodes = _episodes()
+    for row in episodes:
+        row.pop("h2_scores", None)
+    feature_manifest = _feature_manifest(episodes, tmp_path)
+    report = evaluate_confirmatory(
+        episodes,
+        confirmatory=True,
+        primary_labels=_labels(episodes),
+        feature_manifest=feature_manifest,
+        enforce_design=False,
+        precision_plan={"thresholds": {"max_degenerate_rate": 0.05}},
+    )
+
+    assert report["primary_effect"]["bootstrap"]["max_degenerate_rate"] == pytest.approx(0.05)

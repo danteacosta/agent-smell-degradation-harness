@@ -31,6 +31,7 @@ def clustered_pr_auc_delta(
     cluster_key: str = "project_id",
     draws: int = 2000,
     seed: int = 0,
+    max_degenerate_rate: float | None = None,
 ) -> dict[str, Any]:
     if not (len(rows) == len(provenance_scores) == len(baseline_scores) == len(labels)):
         raise ValueError("H2 effect rows, scores, and labels must have equal length")
@@ -48,7 +49,15 @@ def clustered_pr_auc_delta(
             "delta_pr_auc": average_precision(provenance_scores, labels)
             - average_precision(baseline_scores, labels),
             "ci95": {"low": None, "high": None},
-            "bootstrap": {"clusters": len(cluster_ids), "draws": 0, "degenerate_draws": 0},
+            "bootstrap": {
+                "clusters": len(cluster_ids),
+                "draws": 0,
+                "effective_draws": 0,
+                "degenerate_draws": 0,
+                "degenerate_rate": None,
+                "max_degenerate_rate": max_degenerate_rate,
+                "valid_for_inference": False,
+            },
             "claim": "descriptive_only",
         }
     observed_prov = average_precision(provenance_scores, labels)
@@ -57,19 +66,33 @@ def clustered_pr_auc_delta(
     rng = random.Random(seed)
     bootstrap: list[float] = []
     degenerate = 0
-    for _ in range(max(1, int(draws))):
+    requested_draws = max(1, int(draws))
+    for _ in range(requested_draws):
         sampled_ids = [rng.choice(cluster_ids) for _ in cluster_ids]
         indices = [index for group in sampled_ids for index in groups[group]]
         sampled_labels = [labels[index] for index in indices]
         if len(set(sampled_labels)) < 2:
             degenerate += 1
+            continue
         bootstrap.append(
             average_precision([provenance_scores[index] for index in indices], sampled_labels)
             - average_precision([baseline_scores[index] for index in indices], sampled_labels)
         )
     bootstrap.sort()
-    low = bootstrap[max(0, int(0.025 * (len(bootstrap) - 1)))]
-    high = bootstrap[min(len(bootstrap) - 1, int(0.975 * (len(bootstrap) - 1)))]
+    low = (
+        bootstrap[max(0, int(0.025 * (len(bootstrap) - 1)))]
+        if bootstrap
+        else None
+    )
+    high = (
+        bootstrap[min(len(bootstrap) - 1, int(0.975 * (len(bootstrap) - 1)))]
+        if bootstrap
+        else None
+    )
+    degenerate_rate = degenerate / requested_draws
+    valid_for_inference = bool(bootstrap) and (
+        max_degenerate_rate is None or degenerate_rate <= max_degenerate_rate
+    )
     leave_one_cluster_out = []
     if len(cluster_ids) > 3:
         for omitted in cluster_ids:
@@ -97,8 +120,12 @@ def clustered_pr_auc_delta(
         "ci95": {"low": low, "high": high},
         "bootstrap": {
             "clusters": len(cluster_ids),
-            "draws": len(bootstrap),
+            "draws": requested_draws,
+            "effective_draws": len(bootstrap),
             "degenerate_draws": degenerate,
+            "degenerate_rate": degenerate_rate,
+            "max_degenerate_rate": max_degenerate_rate,
+            "valid_for_inference": valid_for_inference,
             "seed": seed,
             "cluster_key": cluster_key,
         },
@@ -112,7 +139,7 @@ def clustered_pr_auc_delta(
                 else None
             ),
         },
-        "claim": "not_supported",
+        "claim": "not_supported" if bootstrap else "descriptive_only",
     }
 
 
@@ -120,9 +147,15 @@ def finalize_h2_claim(effect: dict[str, Any], *, margin: float = 0.05) -> dict[s
     effect = dict(effect)
     effect["margin"] = margin
     low = effect.get("ci95", {}).get("low")
+    bootstrap_valid = effect.get("bootstrap", {}).get("valid_for_inference", True)
     effect["claim"] = (
         "supported"
-        if effect.get("delta_pr_auc", 0.0) >= margin and low is not None and low > 0
+        if (
+            bootstrap_valid
+            and effect.get("delta_pr_auc", 0.0) >= margin
+            and low is not None
+            and low > 0
+        )
         else effect.get("claim", "not_supported")
     )
     return effect
