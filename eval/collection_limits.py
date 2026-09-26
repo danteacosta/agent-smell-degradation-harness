@@ -13,6 +13,7 @@ import resource
 import signal
 import stat
 import subprocess
+import sys
 import tempfile
 import threading
 
@@ -95,6 +96,10 @@ def supervise(command, *, root=None, max_runs=1, wall_seconds=3600,
         raise ValueError("supervisor must be launched from a single-threaded process")
     group = verify_cgroup(cgroup, memory_bytes=memory_bytes, max_tasks=max_tasks,
                           cpu_quota_us=cpu_quota_us) if cgroup else None
+    if sys.platform == "darwin":
+        # Darwin advertises RLIMIT_AS but refuses finite values. Never launch a
+        # worker with a missing memory boundary.
+        raise RuntimeError("finite RLIMIT_AS is unavailable on macOS; run supervised collection on Linux")
 
     def child_limits():
         # CLI is single-threaded. Do not call this launcher from multithreaded
