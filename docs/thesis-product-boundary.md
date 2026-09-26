@@ -11,6 +11,15 @@ The scientific estimands are:
 - `H1.ordinal_delta`: mean clean-minus-defective ordinal severity delta, clustered by source intent, with intent-cluster bootstrap 95% CI and paired sign-flip permutation p-value;
 - `H2.pre_final_pr_auc`: held-out PR-AUC for pre-final human labels under fixed nested models: B0=static+operational and B1/B2/B3=B0 plus cumulative provenance through T1/T2/T3. There is no in-sample family selection. Threshold fitting uses calibration and test projects remain untouched. The primary effect is B3−B0, with a frozen `ΔPR-AUC ≥ 0.05` margin, project-cluster percentile interval, and leave-one-project-out stability report. Every bootstrap attempt is counted. If any test-project cluster contains only one label class, repeating that cluster makes a one-class resample possible; the report is therefore descriptive-only regardless of the realized seed or draw count because coverage of an interval conditioned on estimable attempts has not been established. Conditional percentile endpoints remain diagnostics and are not reported as a 95% inferential interval. The frozen maximum degeneracy rate remains a design-health threshold; satisfying it does not restore an inferential claim.
 
+The exploratory browser studies use a different endpoint: the A/B/C
+target-failure contrast under a frozen E2E oracle. A visible target failure is
+direct behavioral evidence that an omitted obligation can matter, but it does
+not estimate `H1.ordinal_delta`, which requires human/adjudicated ordinal
+severity. Before a confirmatory collection is sized or frozen, the protocol
+must decide whether browser failure is primary, co-primary, or
+construct-validation evidence and power the selected estimand on its own
+scale. Existing E2E pilots remain exploratory under either decision.
+
 Replications are repeated measures and variants stay together. The 12×2×5 design is a structured pre-pilot; 24 intents/6 projects is only a pilot floor. Confirmatory project generalization requires a frozen outcome-blind precision plan, never fewer than 60 intents/12 projects or 6 test projects/24 test intents. The historical 220-intent/36-project candidate with a 50/20/30 project split failed outcome-blind v3 diagnostic regeneration in the weak, central, and strong scenarios. It must not be frozen. A 288-intent/36-project grid point is only an unfrozen central-effect candidate. The simulated provenance increment is a latent score parameter rather than an effect size on the primary ΔPR-AUC scale; the smallest meaningful effect and the Monte Carlo uncertainty rule must be fixed before selecting a design. A manifest that reaches a count by duplicating source intents fails closed.
 
 ## Product protocol

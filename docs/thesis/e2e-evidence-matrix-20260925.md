@@ -28,6 +28,14 @@ Projects and obligations were selected purposively, repetitions are nested,
 and the fixed-scaffold successor was designed after an earlier interface
 failure. H1 and H2 remain open.
 
+The measured E2E endpoint is the A/B/C target-failure contrast. It does not
+estimate `H1.ordinal_delta`, whose outcome is human/adjudicated ordinal
+severity. Before the next confirmatory freeze, browser failure must be assigned
+explicitly as primary, co-primary, or construct-validation evidence, and the
+chosen estimand must receive its own scale-appropriate precision analysis. No
+retrospective relabeling of these pilots can make them estimates of the formal
+H1 outcome.
+
 The next collection should increase the number of independently sourced,
 previously unexecuted obligations within projects instead of adding repetitions
 to these six cases. The screened 12-slot pool contains 11 such obligations and
