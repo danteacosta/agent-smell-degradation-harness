@@ -1,0 +1,15 @@
+{
+  "browser_evaluable": 18,
+  "calls_attempted": 18,
+  "claims": {
+    "confirmatory": false,
+    "h1_confirmed": false,
+    "h2_evaluated": false
+  },
+  "freeze_manifest_sha256": "da4b1aecf33396ed11ad3dae89021ab80ed84c6b275dbe3799742a059dc1a481",
+  "limitations": "One requirement in one previously represented project; exploratory fixed-scaffold browser endpoint, not formal H1 severity or H2.",
+  "private_receipt_sha256": "083dbed9641aafe5b32cbfd1eb570f73c2a924d9e57ad656d039d4c8bca99d24",
+  "qualification_receipt_sha256": "cad40ebd97f1e115a677e785f7341f8306f96e510ce37942dfc72f46b92eddd4",
+  "schema_version": "openproject-remaining-public-results/v1",
+  "stop_reason": null
+}

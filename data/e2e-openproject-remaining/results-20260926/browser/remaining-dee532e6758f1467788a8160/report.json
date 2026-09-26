@@ -1,0 +1,18 @@
+{
+  "schema_version": "openproject-remaining-browser/v1",
+  "status": "complete",
+  "app_sha256": "f46380e049fa41c9f8ba1189d25c3e7b781ed50008960163507039b5737b1007",
+  "assertions": {
+    "remaining_6h": true,
+    "work_10h": true,
+    "percent_40": true,
+    "remaining_15h": true,
+    "work_20h": true,
+    "percent_25": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

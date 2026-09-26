@@ -40,3 +40,46 @@ retain invalid outputs, provider failures, and unevaluable slots. C−A is the
 browser target-failure contrast, and B−A checks wording sensitivity. This is
 exploratory evidence within one project and uses a browser failure endpoint,
 not the formal human ordinal-severity H1 endpoint. H2 is not evaluated.
+
+## Collected result
+
+All 18 saved-ChatGPT-Codex generations completed before the first generated
+page was executed. There were no provider errors, output-admission failures,
+browser errors, or unevaluable slots. The provider reported 265,844 input
+tokens (62,464 cached), 9,170 output tokens, and 2,103 reasoning output tokens;
+it did not expose an immutable model snapshot or USD cost. The private packet
+receipt SHA-256 is
+`083dbed9641aafe5b32cbfd1eb570f73c2a924d9e57ad656d039d4c8bca99d24`.
+
+| Model | A: complete | B: reworded | C: derivation omitted |
+|---|---:|---:|---:|
+| `gpt-5.6-luna` | 3/3 pass | 3/3 pass | 3/3 target-only failure |
+| `gpt-5.6-sol` | 3/3 pass | 3/3 pass | 3/3 target-only failure |
+
+Every browser report retained Work and % Complete after save and reload in
+both numeric fixtures, with no console errors. Every A/B artifact derived 6h
+from Work=10h and 40%, and 15h from Work=20h and 25%. Every C artifact left
+Remaining work blank in both fixtures. The observed C−A target-failure
+difference is +100 percentage points in each model cell; B−A is zero. These
+are descriptive contrasts over three repeated calls per cell, not six
+independent requirements or a general-effect estimate.
+
+The original browser reports and all 36 screenshots are in
+`data/e2e-openproject-remaining/results-20260926/`. Its public receipt SHA-256
+is `a5a392cd045d8f185164e3337b3bb2d5ef4f79cc9c64dc9c9c3d36b2f3ab40b2`.
+The following original captures show one A/C pair for each model, after the
+first save and reload; the second fixture is also included in the public bundle.
+
+| Model | A: derivation present | C: derivation omitted |
+|---|---|---|
+| Luna | ![Luna A: Remaining work 6h](../../data/e2e-openproject-remaining/results-20260926/browser/remaining-33edf99abf7f48a6567d9f3b/fixture-1.png) | ![Luna C: Remaining work empty](../../data/e2e-openproject-remaining/results-20260926/browser/remaining-8bdec696583ea304aaea0cbb/fixture-1.png) |
+| Sol | ![Sol A: Remaining work 6h](../../data/e2e-openproject-remaining/results-20260926/browser/remaining-90a8d1195c8d9577d3f74fc5/fixture-1.png) | ![Sol C: Remaining work empty](../../data/e2e-openproject-remaining/results-20260926/browser/remaining-f97121fc63d13e89a603f40b/fixture-1.png) |
+
+This adds a clean within-requirement browser demonstration in OpenProject.
+The selected obligation and scaffold follow earlier pilots, so selection and
+scaffold effects remain plausible. One case cannot establish a general effect
+of requirement smells, the formal H1 severity endpoint, or the H2 claim that
+pre-final provenance signals predict defects. The next scientific decision is
+to obtain independent human review of the mappings and labels and run a small
+predeclared set of other obligations/projects, reporting null results and
+unknowns without replacement.
