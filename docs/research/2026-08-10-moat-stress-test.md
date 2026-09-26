@@ -76,7 +76,7 @@ The moat claim should be rejected if any of these occur:
 
 Before calling the project defensible, publish:
 
-- a frozen split-aware precision plan, never fewer than 60 independent intents across 12 projects and 6 test projects/24 test intents (current conservative candidate: 220/36), with licensing and
+- a frozen split-aware precision plan, never fewer than 60 independent intents across 12 projects and 6 test projects/24 test intents (the rejected 220/36 plan is not a candidate; 288/36 is an unfrozen central-effect grid point), with licensing and
   near-clone checks;
 - two providers/models and two agent/framework configurations;
 - blinded double annotation, adjudication, Krippendorff alpha, and clustered
