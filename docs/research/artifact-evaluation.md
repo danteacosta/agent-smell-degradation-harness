@@ -7,7 +7,7 @@ The public artifact is considered research-ready only when the following evidenc
 - live-provider run manifests with provider, model/version, configuration hash, latency, cost, request/response hashes, and mode separation;
 - T1/T2/T3 checkpoint traces externally materialized by the instrumented runtime and timestamped before T4, plus proof that no retrospective snapshot or chain-of-thought entered the feature plane;
 - blinded human annotations, a 20% duplicate subset, missing-label export, adjudication records, Krippendorff alpha, and bootstrap CI;
-- a feature manifest bound to trace hashes and a confirmatory H2 report containing fixed B0–B3 models, primary B3−B0 delta, cluster bootstrap interval, and claim decision;
+- a feature manifest bound to trace hashes and a confirmatory H2 report containing fixed B0–B3 models, primary B3−B0 delta, project-cluster percentile interval, requested/effective/degenerate draw counts, the frozen degeneracy threshold, and a fail-closed claim decision that treats any bootstrap support capable of producing a one-class resample as descriptive-only until conditional-interval coverage is established;
 - negative-control and ablation results showing that shuffled or terminal-leaking evidence cannot pass the feature boundary;
 - clean-environment replay instructions with the exact ARP compatibility matrix;
 - a product smoke bundle containing a pre-merge JSON/SARIF decision, reviewed candidate-memory record, semantic-QA findings, and operational ROI fields.

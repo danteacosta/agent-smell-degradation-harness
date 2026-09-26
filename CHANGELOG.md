@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Changed
+
+- H2 project-bootstrap inference now fails closed whenever project-label support can produce a one-class resample, and the confirmatory gate verifies v3 precision-simulation accounting.
+
 ### Added
 
 - Wedge reliability check CLI (`python -m wedge`) with `approve` / `warn` / `clarify` decisions and demo fixtures.

@@ -73,7 +73,7 @@
 - Create: `eval/confirmatory_report.py`
 - Modify: `protocol/paired_stats.py`
 
-- [ ] **Step 1: Write tests** for the frozen binary label mapping, train-only baseline selection, source-intent cluster unit, provenance-minus-best-baseline delta, cluster bootstrap CI with degenerate resamples retained, frozen `0.05` margin, and deterministic claim status.
+- [ ] **Step 1: Write tests** for the frozen binary label mapping, train-only baseline selection, project-cluster unit, provenance-minus-best-baseline delta, project-bootstrap percentile interval with every attempt reported, descriptive-only output whenever project-label support permits a one-class resample, precision power over every planned simulation, frozen degeneracy-rate limit, frozen `0.05` margin, and deterministic claim status.
 - [ ] **Step 2: Run** focused tests and verify missing report fields fail.
 - [ ] **Step 3: Implement** report generation using source-intent/project clusters and no test-set model selection.
 - [ ] **Step 4: Keep** false-alert, warning-coverage, lead-time, and decision-utility metrics in the RAG product report, not in the primary H2 estimand.

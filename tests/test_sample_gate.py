@@ -37,11 +37,19 @@ def _precision_plan() -> dict[str, object]:
             "minimum_test_intents": 24,
         },
         "simulation": {
+            "method": "frozen_test_project_cluster_bootstrap_pr_auc_delta-v3",
             "evaluation_scope": "test_partition_only",
             "cluster_key": "project_id",
             "median_ci_width": 0.18,
             "degenerate_rate": 0.01,
             "estimated_margin_power": 0.82,
+            "simulations": 100,
+            "completed_simulations": 99,
+            "inferentially_valid_simulations": 99,
+            "invalid_simulations": 1,
+            "observed_single_class_simulations": 1,
+            "bootstrap_degenerate_support_simulations": 0,
+            "supported_simulations": 82,
         },
         "thresholds": {
             "max_median_ci_width": 0.20,
@@ -78,6 +86,74 @@ def test_confirmatory_design_rejects_intent_clustered_precision_plan():
     plan = _precision_plan()
     plan["simulation"]["cluster_key"] = "source_intent_id"  # type: ignore[index]
     with pytest.raises(ValueError, match="project_id clusters"):
+        validate_confirmatory_design(
+            episodes,
+            apply_split_manifest(episodes, manifest),
+            precision_plan=plan,
+        )
+
+
+def test_confirmatory_design_rejects_legacy_precision_simulation_method():
+    episodes = _episodes(120)
+    manifest = build_grouped_split_manifest(episodes)
+    plan = _precision_plan()
+    plan["simulation"]["method"] = (  # type: ignore[index]
+        "frozen_test_project_cluster_bootstrap_pr_auc_delta-v2"
+    )
+
+    with pytest.raises(ValueError, match="simulation method"):
+        validate_confirmatory_design(
+            episodes,
+            apply_split_manifest(episodes, manifest),
+            precision_plan=plan,
+        )
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "message"),
+    (
+        ("completed_simulations", 98, "simulation accounting"),
+        ("inferentially_valid_simulations", 98, "simulation accounting"),
+        ("supported_simulations", 81, "power accounting"),
+    ),
+)
+def test_confirmatory_design_rejects_inconsistent_v3_accounting(
+    field: str, value: int, message: str
+):
+    episodes = _episodes(120)
+    manifest = build_grouped_split_manifest(episodes)
+    plan = _precision_plan()
+    plan["simulation"][field] = value  # type: ignore[index]
+
+    with pytest.raises(ValueError, match=message):
+        validate_confirmatory_design(
+            episodes,
+            apply_split_manifest(episodes, manifest),
+            precision_plan=plan,
+        )
+
+
+def test_confirmatory_design_rejects_v3_plan_without_required_accounting():
+    episodes = _episodes(120)
+    manifest = build_grouped_split_manifest(episodes)
+    plan = _precision_plan()
+    del plan["simulation"]["supported_simulations"]  # type: ignore[index]
+
+    with pytest.raises(ValueError, match="supported_simulations"):
+        validate_confirmatory_design(
+            episodes,
+            apply_split_manifest(episodes, manifest),
+            precision_plan=plan,
+        )
+
+
+def test_confirmatory_design_rejects_nonfinite_v3_power():
+    episodes = _episodes(120)
+    manifest = build_grouped_split_manifest(episodes)
+    plan = _precision_plan()
+    plan["simulation"]["estimated_margin_power"] = float("nan")  # type: ignore[index]
+
+    with pytest.raises(ValueError, match="power accounting"):
         validate_confirmatory_design(
             episodes,
             apply_split_manifest(episodes, manifest),

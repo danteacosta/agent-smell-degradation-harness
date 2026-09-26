@@ -395,6 +395,11 @@ def evaluate_confirmatory(
             cluster_key="project_id",
             draws=2000,
             seed=seed,
+            max_degenerate_rate=(
+                float(precision_plan["thresholds"]["max_degenerate_rate"])
+                if precision_plan is not None
+                else None
+            ),
         )
         primary_effect["baseline_model"] = "B0"
         primary_effect["provenance_model"] = "B3"

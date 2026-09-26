@@ -100,6 +100,8 @@ def simulate_h2_precision(
         raise ValueError("split fractions must be positive and sum to one")
     quotas = _split_project_quotas(projects, fractions)
     rng, widths, supported, degenerate = random.Random(seed), [], 0, 0
+    observed_single_class = 0
+    bootstrap_degenerate_support = 0
     for _ in range(simulations):
         project_order = list(range(projects))
         rng.shuffle(project_order)
@@ -115,10 +117,18 @@ def simulate_h2_precision(
         observed_labels = [row[1] for row in rows]
         if len(set(observed_labels)) < 2:
             degenerate += bootstrap_draws
+            observed_single_class += 1
             continue
         observed_delta = _average_precision(
             [row[3] for row in rows], observed_labels
         ) - _average_precision([row[2] for row in rows], observed_labels)
+        labels_by_project = {
+            project: {row[1] for row in rows if row[0] == project}
+            for project in test_projects
+        }
+        degenerate_support_possible = any(
+            len(project_labels) < 2 for project_labels in labels_by_project.values()
+        )
         deltas: list[float] = []
         for _draw in range(bootstrap_draws):
             project_ids = sorted(test_projects)
@@ -129,14 +139,15 @@ def simulate_h2_precision(
                 degenerate += 1
                 continue
             deltas.append(_average_precision([row[3] for row in sampled], labels) - _average_precision([row[2] for row in sampled], labels))
-        if len(deltas) < max(20, bootstrap_draws // 2):
+        if degenerate_support_possible:
+            bootstrap_degenerate_support += 1
             continue
         lower, upper = _quantile(deltas, 0.025), _quantile(deltas, 0.975)
         widths.append(upper - lower)
         supported += int(observed_delta >= practical_margin and lower > 0)
     expected_test_intents = round(intents * quotas["test"] / projects)
     return {
-        "method": "frozen_test_project_cluster_bootstrap_pr_auc_delta-v2",
+        "method": "frozen_test_project_cluster_bootstrap_pr_auc_delta-v3",
         "evaluation_scope": "test_partition_only",
         "cluster_key": "project_id",
         "design": {
@@ -156,7 +167,12 @@ def simulate_h2_precision(
         "bootstrap_draws": bootstrap_draws,
         "seed": seed,
         "completed_simulations": len(widths),
-        "estimated_margin_power": supported / len(widths) if widths else 0.0,
+        "inferentially_valid_simulations": len(widths),
+        "invalid_simulations": simulations - len(widths),
+        "observed_single_class_simulations": observed_single_class,
+        "bootstrap_degenerate_support_simulations": bootstrap_degenerate_support,
+        "supported_simulations": supported,
+        "estimated_margin_power": supported / simulations,
         "median_ci_width": _quantile(widths, 0.5) if widths else 1.0,
         "p90_ci_width": _quantile(widths, 0.9) if widths else 1.0,
         "degenerate_rate": degenerate / (simulations * bootstrap_draws),
