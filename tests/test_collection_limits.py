@@ -6,6 +6,13 @@ import pytest
 from eval.collection_limits import global_slot, supervise
 
 
+# Darwin reports an address-space limit but refuses to install a finite one.
+# These execution guarantees are therefore exercised in the Linux eval gate.
+requires_address_space_limit = pytest.mark.skipif(
+    sys.platform == "darwin", reason="finite RLIMIT_AS is unavailable on macOS; verified in Linux CI"
+)
+
+
 def test_global_slots_cover_distinct_processes_and_preserve_policy(tmp_path):
     root = tmp_path / "global"
     with global_slot(root):
@@ -21,6 +28,7 @@ def test_global_slots_cover_distinct_processes_and_preserve_policy(tmp_path):
             pass
 
 
+@requires_address_space_limit
 def test_wall_deadline_terminates_worker_and_releases_global_slot(tmp_path):
     started = time.monotonic()
     assert supervise([sys.executable, "-c", "import time; time.sleep(60)"],
@@ -30,12 +38,14 @@ def test_wall_deadline_terminates_worker_and_releases_global_slot(tmp_path):
         pass
 
 
+@requires_address_space_limit
 def test_resource_limits_are_installed_before_child_code(tmp_path):
     script = "import resource; assert resource.getrlimit(resource.RLIMIT_AS)==(268435456,268435456); assert resource.getrlimit(resource.RLIMIT_NOFILE)==(64,64); assert resource.getrlimit(resource.RLIMIT_FSIZE)==(4096,4096)"
     assert supervise([sys.executable, "-c", script], root=tmp_path / "global",
                      memory_bytes=268435456, open_files=64, file_bytes=4096) == 0
 
 
+@requires_address_space_limit
 def test_file_growth_is_rejected_by_kernel(tmp_path):
     output = tmp_path / "oversize"
     script = "import sys; f=open(sys.argv[1],'wb'); f.write(b'x'*8192); f.flush()"
@@ -62,10 +72,20 @@ def test_unqualified_cgroup_blocks_before_child_start(tmp_path):
     assert not output.exists()
 
 
+@requires_address_space_limit
 def test_background_worker_cannot_outlive_completed_supervised_command(tmp_path):
     output = tmp_path / "escaped"
     child = f"import time; time.sleep(1); open({str(output)!r},'w').close()"
     parent = f"import subprocess,sys; subprocess.Popen([sys.executable,'-c',{child!r}])"
     assert supervise([sys.executable, "-c", parent], root=tmp_path / "global") == 0
     time.sleep(1.2)
+    assert not output.exists()
+
+
+@pytest.mark.skipif(sys.platform != "darwin", reason="Darwin-specific unsupported limit")
+def test_macos_fails_closed_before_launching_unbounded_child(tmp_path):
+    output = tmp_path / "must-not-run"
+    with pytest.raises(RuntimeError, match="finite RLIMIT_AS.*Linux"):
+        supervise([sys.executable, "-c", f"open({str(output)!r},'w').close()"],
+                  root=tmp_path / "global")
     assert not output.exists()
