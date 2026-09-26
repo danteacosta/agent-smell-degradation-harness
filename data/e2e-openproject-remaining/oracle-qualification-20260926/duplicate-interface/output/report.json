@@ -1,0 +1,8 @@
+{
+  "schema_version": "openproject-remaining-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "4fb6a5568a1b1f0142ce65bbe39186c8460c28e8ca9ed131e3ee31af11132ae1",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: one visible [aria-label=\"Remaining work\"] required"
+}

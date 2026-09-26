@@ -1,0 +1,19 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Work package progress</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}label{display:block;margin:.7rem}button,input{font:inherit;padding:.4rem}</style></head>
+<body><main><h1>Work package progress</h1><label>Work <input aria-label="Work"></label><label>Remaining work <input aria-label="Remaining work"></label><label>% Complete <input aria-label="% Complete"></label><button type="button">Save</button></main>
+<script>
+const fields=Object.freeze({work:document.querySelector('[aria-label="Work"]'),remaining:document.querySelector('[aria-label="Remaining work"]'),percent:document.querySelector('[aria-label="% Complete"]')});
+let saveBehavior=null;
+const app=Object.freeze({
+  onSave(handler){if(typeof handler!=='function'||saveBehavior)throw new Error('invalid save behavior');saveBehavior=handler},
+  values(){return {work:fields.work.value,remaining:fields.remaining.value,percent:fields.percent.value}},
+  apply(values){for(const key of ['work','remaining','percent'])if(Object.hasOwn(values,key))fields[key].value=String(values[key])}
+});
+const stored=localStorage.getItem('progress');
+app.apply(stored===null?window.initialState:JSON.parse(stored));
+document.querySelector('button').addEventListener('click',()=>{
+  if(saveBehavior){const next=saveBehavior(app.values());if(next&&typeof next==='object')app.apply(next)}
+  localStorage.setItem('progress',JSON.stringify(app.values()));
+});
+app.onSave(values=>({...values,remaining:String(Number(values.work)*(1-Number(values.percent)/100))}));
+</script></body></html>

@@ -1,0 +1,7 @@
+{
+  "verdict": "ACCEPT",
+  "ab_semantic_equivalence": true,
+  "c_deletes_only_target_derivation": true,
+  "c_prompt_or_scaffold_leaks_target_algorithm": false,
+  "observability_or_causal_confound": false
+}

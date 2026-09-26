@@ -1,0 +1,7 @@
+{
+  "verdict": "ACCEPT",
+  "A_B_semantic_equivalence": true,
+  "C_deletes_only_target_derivation": true,
+  "C_prompt_or_scaffold_leaks_target_algorithm": false,
+  "observability_or_causal_confound": "No material confound. The oracle directly observes the omitted derivation while separately checking Work and % Complete preservation. The scaffold exposes a Remaining work field but provides no derivation logic."
+}
