@@ -42,6 +42,21 @@ def test_boundary_links_external_gate_and_non_confirmatory_status() -> None:
     assert "no frozen human/adjudicated primary labels" in acquisition
 
 
+def test_e2e_endpoint_is_not_mislabeled_as_the_h1_estimand() -> None:
+    boundary = (ROOT / "docs" / "thesis-product-boundary.md").read_text(
+        encoding="utf-8"
+    )
+    matrix = (
+        ROOT / "docs" / "thesis" / "e2e-evidence-matrix-20260925.md"
+    ).read_text(encoding="utf-8")
+
+    for text in (boundary, matrix):
+        prose = " ".join(text.split())
+        assert "target-failure contrast" in prose
+        assert "does not estimate `H1.ordinal_delta`" in prose
+        assert "primary, co-primary, or construct-validation" in prose
+
+
 def test_prepilot_launch_pack_preserves_claim_boundary() -> None:
     launch = (ROOT / "docs" / "research" / "prepilot-launch-pack.md").read_text(encoding="utf-8")
     for phrase in (
