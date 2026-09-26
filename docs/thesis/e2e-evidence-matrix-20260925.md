@@ -1,4 +1,4 @@
-# E2E evidence matrix — 25 September 2026
+# E2E evidence matrix — through 26 September 2026
 
 The exploratory program now contains informative browser outcomes in six
 projects. The rows below are a synthesis of separate pilots, not one pooled
@@ -36,10 +36,31 @@ chosen estimand must receive its own scale-appropriate precision analysis. No
 retrospective relabeling of these pilots can make them estimates of the formal
 H1 outcome.
 
+## 26 September: second OpenProject obligation
+
+The [prospectively frozen Remaining work pilot](../research/openproject-remaining-pilot-20260926.md)
+adds a **second obligation within OpenProject**, not a seventh project or an
+additional observation of the earlier copy-Work obligation. With Work already
+set, entering % Complete should derive Remaining work. In 18/18 evaluable
+browser executions, A and B passed 3/3 per model and C failed only this target
+3/3 per model. Two numeric fixtures were checked after save and reload.
+The [post-outcome label audit](../research/openproject-remaining-label-audit-20260926.md)
+records two revised-prompt LLM reviewers agreeing with all 18 browser labels
+and one reviewer disagreeing on five passing outputs. Its prompt revision was
+post hoc; browser outcomes remain primary.
+
+This updates the descriptive count to **six projects with informative E2E
+evidence, including two distinct OpenProject obligations**. The pilots are
+separate strata and cannot be pooled into a population effect. Of the 12-slot
+screened pool below, ten previously unexecuted obligations remain after this
+pilot, plus the TodoMVC persistence bridge replication. Candidate admission
+alone is not an E2E outcome.
+
 The next collection should increase the number of independently sourced,
 previously unexecuted obligations within projects instead of adding repetitions
-to these six cases. The screened 12-slot pool contains 11 such obligations and
-one TodoMVC persistence bridge replication. That bridge must be analyzed as a
+to these cases. The screened 12-slot pool originally contained 11 such
+obligations; OpenProject Remaining work has now been executed, leaving ten.
+The TodoMVC persistence bridge must be analyzed as a
 replication and cannot count toward new requirement diversity. A defensible
 block retains A/B/C and both models, qualifies each oracle with target and
 non-target mutants before generation, and analyzes requirement-level effects
@@ -52,3 +73,4 @@ Evidence:
 - RealWorld author visibility: `data/behavioral-expansion/realworld-author-ui-results-20260925/`
 - Initial four-project expansion, including Kanboard: `data/e2e-six-projects/results-20260925/`
 - Fixed-scaffold successor: `data/e2e-three-project-successor/results-20260925/`
+- Second OpenProject obligation: `data/e2e-openproject-remaining/results-20260926/`

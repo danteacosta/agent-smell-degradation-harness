@@ -108,3 +108,28 @@ collection and is not used as the primary endpoint. Original scores stay frozen.
 The preselected screenshot pair and externally observed active elements support
 the local counterexample. Repetition does not create independent requirements;
 route differences are not causal mediation and H1/H2 remain unconfirmed.
+
+## Evidência E2E em seis projetos
+
+A [matriz de evidências](../thesis/e2e-evidence-matrix-20260925.md) reúne
+pilotos exploratórios separados de TodoMVC, RealWorld, Kanboard, Paperless-ngx,
+Nextcloud e OpenProject. No sucessor de scaffold fixo em três projetos, houve
+54 chamadas, 53 saídas executáveis e 11 falhas seletivas em C; todas as 17
+saídas A avaliáveis e todas as 18 saídas B passaram. Esses totais pertencem
+somente àquele sucessor, não a uma amostra combinada dos seis projetos.
+
+Em 26 de setembro, um [segundo requisito do OpenProject](../research/openproject-remaining-pilot-20260926.md)
+foi testado: 18/18 saídas avaliáveis, A e B com 3/3 acertos por modelo, C com
+3/3 falhas seletivas por modelo. A obrigação omitida era derivar Remaining work
+ao informar % Complete com Work já preenchido. Portanto, o piloto acrescenta
+**diversidade de obrigações dentro de um projeto existente**, não um sétimo
+projeto. A auditoria posterior de rótulos por LLM registrou discordâncias e
+não substitui o oráculo de navegador nem validação humana.
+
+Os experimentos demonstram que a omissão pode produzir defeito visível em
+contextos distintos, mas há recuperações da informação omitida e diferenças
+entre modelos. A seleção foi intencional, os scaffolds e datas diferem e as
+repetições são aninhadas em requisitos. Não se estima efeito populacional.
+O desfecho E2E é falha comportamental; H1 usa severidade ordinal adjudicada,
+e H2 exige sinais anteriores ao código final em projetos de avaliação
+separados. Nenhuma das duas hipóteses está confirmada.

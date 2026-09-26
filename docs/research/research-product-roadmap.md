@@ -8,6 +8,12 @@ passed, and C produced 11 target-only failures. Together with TodoMVC, RealWorld
 and Kanboard, these results show that source-relative obligation loss can reach
 visible behavior and that the result depends on model and context.
 
+The subsequent OpenProject Remaining work pilot tested a second, previously
+unexecuted obligation in that project: 18/18 outputs were evaluable, A and B
+passed every cell, and C failed only the target in all six outputs. It adds
+requirement diversity within OpenProject, not project diversity. The six-project
+count was already reached by the earlier fixed-scaffold successor.
+
 The measured endpoint is an A/B/C target-failure contrast. It does not estimate
 `H1.ordinal_delta`, whose outcome is human/adjudicated ordinal severity, and the
 separate pilots cannot be pooled into a population effect. The next decision is
