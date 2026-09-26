@@ -1,0 +1,59 @@
+{
+  "schema_version": "kanboard-duplicate-title-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 8,
+  "source_scaffold_sha256": "49bf52e885b4e733eabbdcf97ed0265ea24ba12839ed672453f9c8e901ec04f0",
+  "runner_sha256": "142043f1b7e9ba14feb4f67a934339e0fefd3a5f5216122563981fe29638c1b3",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "ca0de7b2f6a062f0abc727289e48429b04f0f7486d9bf0d4a58153f9f4f431bd"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "06f5ac51c4d58f2fc797617be8179b43aa07d879b46100779d2c0db105a9fd8e"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "d0fd5985931755118d3e4a25d38c1202f0d0b3738892a16badca84e443724644"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "eac76cd590337b09d4330942c53b695962508d0ffcd485b6f3b05d98fb8178a1"
+    },
+    {
+      "mode": "duplicate-identity",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "26e993408b200abcef4d8e598683cf6719691d5fccce8022ba918f2db6c70cc1"
+    },
+    {
+      "mode": "precreated-duplicate",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "e0986a4308836612f5ca6654817410a31a0bcba705a0089794a38971b0a596ad"
+    },
+    {
+      "mode": "missing-behavior",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "9f1d18d076d25bb5857deb1604ca4742cb72356958fd74e7196fa20512626e31"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "2d016b626717d00b58c4075348f7efbbf39fe3e7d78000104cb5386a851b7133"
+    }
+  ],
+  "qualifier_sha256": "ee280b28018d132eb2848461f6a975c4e9010cd8d8b46e2079280da8b68a65d9"
+}

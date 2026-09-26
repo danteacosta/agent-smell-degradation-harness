@@ -1,0 +1,8 @@
+{
+  "schema_version": "kanboard-duplicate-title-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "fe377d0fc7c407261b89101b0c32e6e9e9d9cd1ef8f23dea3afa672a44aea004",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: duplicate must be created by the click handler"
+}

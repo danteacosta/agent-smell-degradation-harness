@@ -1,0 +1,1 @@
+{"verdict":"ACCEPT","a_b_equivalent":true,"c_single_omission":true,"source_support":true,"scaffold_leakage":false,"target_isolation":true,"concerns":[]}
