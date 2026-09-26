@@ -1,0 +1,37 @@
+{
+  "schema_version": "persistence-browser/v1",
+  "status": "complete",
+  "app_sha256": "5ab0a31e751757bb795d7bcf70d99279fc0a89ddacae5d5b5b7f64a5cc6e26c4",
+  "action_settle_ms": 300,
+  "cases": [
+    {
+      "id": "todo_survives_reload",
+      "status": "passed"
+    },
+    {
+      "id": "completed_survives_reload",
+      "status": "passed"
+    },
+    {
+      "id": "local_storage_used",
+      "status": "passed"
+    },
+    {
+      "id": "editing_not_restored",
+      "status": "passed"
+    }
+  ],
+  "browser_sandbox": false,
+  "isolation": "non-root offline resource-bounded Docker; browser sandbox disabled",
+  "target_observation": {
+    "storage_keys": [
+      "todos-vanilla"
+    ],
+    "storage_key_count": 1,
+    "console_errors": [],
+    "before_edit_todo_present": true,
+    "editing_visible_before_reload": true,
+    "todo_present_after_reload": true,
+    "editing_visible_after_reload": false
+  }
+}

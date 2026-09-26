@@ -124,3 +124,10 @@ failure. The evidence matrix now includes a successful recovery case alongside
 selective defect cases. Seven planned new obligations and the TodoMVC bridge
 remain; the project count stays at six. These selected, separate pilots do not
 estimate formal H1 or test H2.
+
+The [TodoMVC persistence bridge](../research/todomvc-persistence-bridge-20260926.md)
+has now run with a prospectively qualified selector and 18 fresh generations.
+A/B passed 6/6 each. C passed 5/6, while one C output was an interface error
+before the target could be assessed. There was no observed target failure in
+the five evaluable C outputs. This is a replication of an existing obligation,
+not a fifth new requirement; seven planned new obligations remain.

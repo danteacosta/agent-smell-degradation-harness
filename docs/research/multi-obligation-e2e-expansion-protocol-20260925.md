@@ -8,7 +8,9 @@ Update on 26 September: four of the 11 previously unexecuted obligations have
 since produced separate pilots (OpenProject remaining-work derivation, Kanboard
 duplicate title, Paperless default duplicate consumption, and RealWorld
 favorites population). The RealWorld successor produced no observed target
-failure in C. Seven new obligations and the TodoMVC persistence bridge remain.
+failure in C. Seven new obligations remain. The TodoMVC persistence bridge
+replication was executed separately on 26 September, with 17/18 evaluable
+outputs and no observed target failure; it did not add requirement diversity.
 The candidate table below records the original planning state; later narrowed
 targets and outcomes are documented in their individual reports and the
 [evidence matrix](../thesis/e2e-evidence-matrix-20260925.md).

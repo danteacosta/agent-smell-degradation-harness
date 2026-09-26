@@ -169,7 +169,14 @@ os modelos recuperaram a seleção de favoritos usando a rota e os campos do
 scaffold, mesmo quando C omitiu a regra. Este resultado sem efeito observado
 deve permanecer ao lado dos efeitos Paperless, OpenProject e Kanboard; não
 prova equivalência nem confirma H1/H2. Agora são quatro obrigações novas
-executadas no bloco planejado, restando sete e a ponte TodoMVC.
+executadas no bloco planejado, restando sete.
+
+A [ponte de persistência TodoMVC](../research/todomvc-persistence-bridge-20260926.md)
+foi replicada prospectivamente com o seletor qualificado: 18 novas gerações,
+17 saídas E2E avaliáveis, A e B com 6/6 passes cada, C com 5/6 passes e um
+erro de interface. Não houve falha-alvo observada. O erro não é contado como
+sucesso ou defeito. Essa replicação não acrescenta obrigação nova e não altera
+as contagens dos pilotos anteriores.
 
 Os experimentos demonstram que a omissão pode produzir defeito visível em
 contextos distintos, mas há recuperações da informação omitida e diferenças
