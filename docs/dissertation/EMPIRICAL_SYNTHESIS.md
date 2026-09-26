@@ -146,3 +146,19 @@ repetições são aninhadas em requisitos. Não se estima efeito populacional.
 O desfecho E2E é falha comportamental; H1 usa severidade ordinal adjudicada,
 e H2 exige sinais anteriores ao código final em projetos de avaliação
 separados. Nenhuma das duas hipóteses está confirmada.
+
+## Auditoria ordinal secundária de H1
+
+Uma [auditoria dos critérios já gerados](../research/h1-existing-criteria-ordinal-audit-20260926.md)
+avaliou 48 posições predefinidas da coleta de 12 intenções e quatro projetos;
+duas tinham geração inválida. Dois modelos julgaram as 46 saídas válidas com
+uma rubrica ordinal preexistente, sem receber condição ou gerador. As 92
+respostas tiveram formato válido, mas só 29 artefatos atenderam simultaneamente
+ao consenso exato de severidade e estados das obrigações e à exigência de
+citações literais. Nove das 24 comparações A–C ficaram completas. O contraste
+A−C nessas nove foi −2 em oito e zero em uma; considerando todas as 24 e
+mantendo os rótulos ausentes como 0–3, os limites são [−2,25; +0,125].
+Portanto, o sinal exploratório é compatível com degradação, **mas não exclui
+efeito nulo**. Julgadores do mesmo provedor, ausência de adjudicação humana,
+quatro projetos intencionais e seleção de uma repetição impedem tratá-lo como
+teste confirmatório de H1.

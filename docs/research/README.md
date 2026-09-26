@@ -15,6 +15,8 @@ experiment evidence.
 
 ## Research execution guides
 
+- [Secondary H1 ordinal audit of saved criteria](h1-existing-criteria-ordinal-audit-20260926.md): 92 valid blind LLM judgments over 46 saved artifacts; strict evidence leaves 29 consensus labels and A−C missingness bounds that include zero. Not confirmatory.
+
 - [SRS-163 consensus results](criteria-consensus-results-20260921.md): 39 subscription calls, nine artifacts and three judges; unanimous category coverage contrasts alongside observed auxiliary judging errors.
 
 - [Automated consensus boundary](2026-09-21-llm-consensus-boundary.md): primary
