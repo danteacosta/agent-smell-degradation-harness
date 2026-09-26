@@ -139,6 +139,14 @@ desconhecidos, mas não substitui o desfecho congelado. O total continua em
 seis projetos; Kanboard e OpenProject agora têm duas obrigações distintas
 cada um.
 
+Uma [replicação nova e previamente congelada](../research/kanboard-duplicate-title-qualification-20260926.md#nova-replicação-prospectiva-com-origem-segura)
+da mesma obrigação Kanboard executou outras 18 gerações e 18 avaliações E2E
+com a origem segura qualificada antes da geração. Não houve caso desconhecido:
+A e B passaram 6/6 cada; C passou 4/6 e falhou seletivamente 2/6. As duas
+falhas ocorreram em Luna, com título da cópia alterado por um sufixo; Sol
+recuperou o título em C nas três repetições. É uma replicação limpa do efeito
+local e da heterogeneidade entre modelos, não nova diversidade de requisitos.
+
 Os experimentos demonstram que a omissão pode produzir defeito visível em
 contextos distintos, mas há recuperações da informação omitida e diferenças
 entre modelos. A seleção foi intencional, os scaffolds e datas diferem e as

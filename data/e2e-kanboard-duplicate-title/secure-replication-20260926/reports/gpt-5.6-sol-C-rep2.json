@@ -1,0 +1,20 @@
+{
+  "schema_version": "kanboard-duplicate-title-browser/v1",
+  "status": "complete",
+  "app_sha256": "07b37a0f6c52b1b065b77389b033c14d1395872ade3dcb18b2e594863c144114",
+  "assertions": {
+    "duplicate_title_1": true,
+    "same_project_1": true,
+    "source_preserved_1": true,
+    "unrelated_preserved_1": true,
+    "duplicate_title_2": true,
+    "same_project_2": true,
+    "source_preserved_2": true,
+    "unrelated_preserved_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

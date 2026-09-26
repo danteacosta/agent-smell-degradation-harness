@@ -124,3 +124,48 @@ was selected after earlier results, uses a narrow fixed page rather than the
 upstream application, and has only three repetitions per model and arm.
 The original fixture compatibility gap further limits interpretation.
 Neither result estimates the formal H1 ordinal-severity outcome or tests H2.
+
+## Nova replicação prospectiva com origem segura
+
+Em 26 de setembro, uma coleta sucessora congelou **antes das novas gerações**
+uma agenda aleatória de 18 posições A/B/C × dois modelos × três repetições.
+Manteve os textos A/B/C e a página anterior, mas adotou o runner qualificado
+em `http://localhost/`. A qualificação de nove controles, incluindo uma
+implementação correta que usa `crypto.randomUUID()`, precedeu todas as chamadas.
+O recibo do congelamento é
+`cb0e899a1b53998b6edbd73d2527712f48a5dffd407c6b7679201eb4656c2c`.
+Não se reutilizou nenhum HTML anterior, nem se reparou ou repetiu uma resposta.
+
+**18/18 gerações novas** foram admitidas e **18/18 execuções no navegador**
+ficaram avaliáveis. A e B passaram nas seis posições de cada braço. Em C,
+Luna teve dois defeitos seletivos e um acerto; Sol teve três acertos. Nas duas
+falhas, a cópia foi criada no mesmo projeto, as tarefas de origem e controle
+permaneceram preservadas e não houve erro de console. Só o título da cópia
+divergiu: `(Copy)` e `(copy)` foram acrescentados aos títulos originais.
+
+| Modelo | A completa | B reescrita | C sem título |
+| --- | ---: | ---: | ---: |
+| `gpt-5.6-luna` | 3/3 acertos | 3/3 acertos | 1/3 acerto, 2/3 defeitos seletivos |
+| `gpt-5.6-sol` | 3/3 acertos | 3/3 acertos | 3/3 acertos |
+
+O contraste C−A de falha seletiva é **+2/6**, ou **+33,3 pontos percentuais**
+no conjunto; ele se concentra em Luna (+2/3) e é zero em Sol. A conclusão
+operacional é mais forte que a do primeiro lote: a origem não criou casos
+desconhecidos, e uma nova geração reproduziu os dois defeitos seletivos no
+mesmo modelo. Continua sendo **uma obrigação de um projeto**, escolhida após
+resultados prévios, com apenas três repetições por célula. Não é estimativa
+populacional, confirmação da H1 ordinal nem avaliação de H2.
+
+O pacote privado selado tem recibo SHA-256
+`cc0648c8c11b65dfbb3e4a6604588ff2d8f5becc785476bd71f3b2b7f3aa4ab9`.
+O [resumo público](../../data/e2e-kanboard-duplicate-title/secure-replication-20260926/summary.json),
+os 18 relatórios de navegador e as imagens têm recibo SHA-256
+`5216d311eec6b1394023eebfdd1b8fec8406fc3cfbe06320ca61d39a698f3bf1`.
+Os prints abaixo mostram um A ilustrativo e as duas falhas C; repetições
+numéricas não são pares naturais entre braços.
+
+![A completa: título preservado](../../data/e2e-kanboard-duplicate-title/secure-replication-20260926/proof/a-luna-rep3-fixture-1.png)
+
+![C: sufixo Copy na repetição 3](../../data/e2e-kanboard-duplicate-title/secure-replication-20260926/proof/c-luna-rep3-fixture-1.png)
+
+![C: sufixo copy na repetição 2](../../data/e2e-kanboard-duplicate-title/secure-replication-20260926/proof/c-luna-rep2-fixture-1.png)
