@@ -166,3 +166,16 @@ All were evaluable and A/B/C each passed 6/6: **no omission effect was
 observed**. The models could recover the rule from the visible filter option
 and status data. Four planned obligations remain. This null result is retained
 alongside positive and mixed cases; no formal H1/H2 estimate follows.
+
+## 27 September: Nextcloud restore-name conflict
+
+The [restore-name conflict pilot](../research/nextcloud-restore-conflict-20260927.md)
+adds an eighth new obligation. The new path-aware, writable-directory
+instrument passed 10/10 browser controls and unanimous pre-generation LLM
+review. Its first 18-generation lot remains an instrument failure because the
+generic collector required differently named screenshots; a separate
+diagnostic read of its complete reports is not the primary outcome. A
+separately frozen successor generated 18 new outputs: A/B passed 6/6 each,
+while C had 6/6 target-only failures in the browser. Three new obligations
+remain in the planned block, still within six projects. This selected-case
+contrast does not estimate formal H1 ordinal severity or H2 early warning.

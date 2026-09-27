@@ -1,0 +1,23 @@
+{
+  "files": {
+    "reports/gpt-5.6-luna-A-rep1.json": "c35a9ead1044ac1d9882ca6ec4b716e071a886e3362b93d6db22d36559af4aa2",
+    "reports/gpt-5.6-luna-A-rep2.json": "5a06f8b390bb403b0eae2d479d64e8ddcf7e584cc292e2cef0367ad413058dd3",
+    "reports/gpt-5.6-luna-A-rep3.json": "a6226d4011708238d9950b6f3afe3af61464cc00e09bab40d7e8b577c27eb745",
+    "reports/gpt-5.6-luna-B-rep1.json": "654559f6ed02ede258d3d16b165356664c2fb0c4b651eb9b29bd1fcc70c2e4a8",
+    "reports/gpt-5.6-luna-B-rep2.json": "709989ede726b96b6a05d3d4caad8cada50c691a8aed041c6f818dd7092c3bd7",
+    "reports/gpt-5.6-luna-B-rep3.json": "c84eaff57ab94864135358976125ce1a4b31dfa7efe34ed53f75ceeb6a64ac8e",
+    "reports/gpt-5.6-luna-C-rep1.json": "2925e30aa0186d4a1975cf543fafd54fa3fec11c8f45d1a7395fd728a760a1f4",
+    "reports/gpt-5.6-luna-C-rep2.json": "ea29bc9ea83c3d6fe207b6afed23d325ac02db1e0c02be62c438cb6360873b51",
+    "reports/gpt-5.6-luna-C-rep3.json": "4298f112fec8bb89a39583ae64a89da206afc9e880ddb0882a259274d705cd32",
+    "reports/gpt-5.6-sol-A-rep1.json": "ad49ffc9aba3a2fc5dadabbdc30a3998ffdabaf3b34ab6d2441129d1564febe5",
+    "reports/gpt-5.6-sol-A-rep2.json": "3328bfaf9b99eff5d9cc741fe5e640a86c6fcd083ab2c7ba7d4d1d62cd44bfad",
+    "reports/gpt-5.6-sol-A-rep3.json": "e0579abf8ee0c6687bb90dca2299f1497053c6ccaabcf68c9b60f294b14df827",
+    "reports/gpt-5.6-sol-B-rep1.json": "b996a7c4869282ee07713fa4e6bf4c0a81abb3e42a5a06735549e98c565f4122",
+    "reports/gpt-5.6-sol-B-rep2.json": "d671700d10e0548c9f74facea992ddedf5a474e51a86eab63b651e2ecc6dd740",
+    "reports/gpt-5.6-sol-B-rep3.json": "b8f5e47e3a0fd8f06286aa15e460427b502112a5dfbc2a2cd249b60bc18cf62a",
+    "reports/gpt-5.6-sol-C-rep1.json": "7b50a85209c8a96c7c247935231055d4a5e2f63456ef87332e1600977366f52f",
+    "reports/gpt-5.6-sol-C-rep2.json": "9130a5875901bf875cdaa93be59e42cd5b2a449ff676f8c9ad18905478648e09",
+    "reports/gpt-5.6-sol-C-rep3.json": "8e505ddd09a178e3613626b42ed4e1c796f5c827cda1569826ccad06e68b22d8",
+    "summary.json": "8375ca96dc1ca97110118dd277d82e71a38978ef95bc917e0b49e7f42b9ae9c5"
+  }
+}

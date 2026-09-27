@@ -1,0 +1,26 @@
+{
+  "schema_version": "nextcloud-restore-conflict-browser/v4",
+  "status": "complete",
+  "app_sha256": "da11e1b14a95409edee3fa79fc5913efdcf7086cc0747a8f4e2361280ec663c8",
+  "assertions": {
+    "active_preserved_1": true,
+    "restored_visible_1": true,
+    "restored_original_path_1": true,
+    "unique_name_1": true,
+    "active_count_1": true,
+    "removed_from_trash_1": true,
+    "trash_control_1": true,
+    "active_preserved_2": true,
+    "restored_visible_2": true,
+    "restored_original_path_2": true,
+    "unique_name_2": true,
+    "active_count_2": true,
+    "removed_from_trash_2": true,
+    "trash_control_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "files-1.png",
+    "files-2.png"
+  ]
+}

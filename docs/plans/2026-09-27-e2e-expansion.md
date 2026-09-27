@@ -101,3 +101,13 @@ Missing restore, corruption of unrelated files, wrong destination and
 unavailable action are controls or interface errors, not target-only defects.
 This design needs a fresh source-to-endpoint review and qualification before
 any generation; it does not amend the three earlier failed reviews.
+
+The new path-aware v4 instrument passed 10/10 authored browser controls and
+three independent ACCEPT reviews. Its first frozen 18-generation lot exposed
+a collector screenshot-name mismatch; all original categories remain
+`browser_error` and a separate diagnostic read is labeled accordingly. A
+newly frozen collector successor generated 18 fresh HTMLs and produced A/B
+12/12 passes and C 6/6 target-only failures. This is the eighth new
+obligation in the block. Three remain: TodoMVC Clear completed, RealWorld
+comment Delete visibility, and Nextcloud permanent deletion. The review-defer
+records for the first two and the original Nextcloud candidate remain intact.
