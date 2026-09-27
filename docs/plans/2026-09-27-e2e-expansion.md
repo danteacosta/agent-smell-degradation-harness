@@ -61,3 +61,43 @@ to the comment's author. The same qualification, independent review, freeze,
 single-attempt collection, and custody gates apply. No new pattern is needed:
 the page provides state, the generated code decides visibility, and the runner
 observes the UI in isolated contexts.
+
+## Kanboard closed-task filter replacement, before generation
+
+The prior close-task candidate combined status mutation, board hiding and
+closed-filter retrieval and failed unanimous instrument review. Its votes and
+packet remain unchanged. This replacement narrows the same source excerpt to
+one browser obligation: with an already closed task in the data, selecting
+**Closed tasks** from the filter dropdown shows it. The board's initial open
+task view is a control. A/B require the board and closed-filter views; C
+deletes only the closed-filter rule. Two fixtures use different task identities
+and titles. The common page provides tasks and rendering but no filter policy.
+Target failure is a missing closed task after selecting the filter; interface
+absence, malformed observations, and broken board controls are separate.
+The source expressly names the Closed tasks filter, so no status-changing
+action or inferred board persistence is scored. This replacement requires a
+new qualification and independent instrument review before any generation.
+
+The first Kanboard closed-filter lot exposed an incomplete data contract: the
+page did not declare that task status is the string `open` or `closed`, and
+many generations assumed a boolean `closed` field. That original lot remains
+an instrument failure. A successor declares the record shape in the common
+page, was requalified and independently accepted before new generations.
+
+## Nextcloud conflict redesign candidate
+
+The prior three restore-name-conflict instruments were deferred. A genuinely
+new design will represent an original directory as structured data with path
+and writability; active and deleted file records carry paths. The browser
+first observes an existing file with the target name and another active file
+whose name could collide with a naïve rename, then clicks Restore. After
+reload in the original directory, it should see the original and restored IDs
+with distinct names, and the restored name must be distinct from *every*
+active name in that directory. The original directory path and writable state
+must be visible before action and the restored path must be visible after.
+The generated handler owns restoration, destination and naming. The common
+page only persists supplied records and renders the current directory.
+Missing restore, corruption of unrelated files, wrong destination and
+unavailable action are controls or interface errors, not target-only defects.
+This design needs a fresh source-to-endpoint review and qualification before
+any generation; it does not amend the three earlier failed reviews.

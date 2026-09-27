@@ -154,3 +154,15 @@ browser error caused by passing an undefined tag to the persistence API.
 The A outcomes and one unknown preclude a clean uniform A/B-versus-C claim;
 the C−B within-case contrast is 6/6. Five planned new obligations remain.
 No formal H1 ordinal or H2 early-warning outcome was measured.
+
+## 27 September: Kanboard Closed tasks filter
+
+The [Closed tasks filter pilot](../research/kanboard-closed-filter-20260927.md)
+adds a seventh new obligation. Its first 18-generation lot is preserved as an
+instrument failure because the common page did not declare the task record
+shape; mixed failures affected A, B and C. A separately frozen and qualified
+successor declared the shared record shape and generated 18 fresh outputs.
+All were evaluable and A/B/C each passed 6/6: **no omission effect was
+observed**. The models could recover the rule from the visible filter option
+and status data. Four planned obligations remain. This null result is retained
+alongside positive and mixed cases; no formal H1/H2 estimate follows.
