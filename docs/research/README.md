@@ -1,5 +1,7 @@
 # Research catalog
 
+- [27 September 2026: Frattini endpoint PR review](2026-09-27-frattini-pr-review.md): primary-study check and the confirmatory scope of the proposed decision gate.
+
 - [27 September 2026: Nextcloud permanent deletion source](2026-09-27-nextcloud-permanent-delete-source.md): official manual wording and the remaining source-to-E2E inference.
 
 - [26 September 2026: smell mapping for E2E](2026-09-26-smell-mapping-for-e2e.md): credited sources and construct boundaries for the per-experiment omission mapping.

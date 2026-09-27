@@ -34,3 +34,6 @@ Natural-smell frequency, independent ordinal severity H1, and early-warning
 performance H2 remain unanswered. The next decisive collection should use a
 frozen case-selection rule and independent labels, including null cases,
 rather than selecting only obligations expected to fail.
+This endpoint distinction is also consistent with the
+[primary-study review](2026-09-27-frattini-pr-review.md), which concerns a
+different downstream activity and supplies no transferable agent effect size.
