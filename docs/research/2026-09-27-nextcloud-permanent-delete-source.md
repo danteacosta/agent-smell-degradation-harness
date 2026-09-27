@@ -2,7 +2,7 @@
 
 - **Slug:** `2026-09-27-nextcloud-permanent-delete-source`
 - **Date:** 2026-09-27
-- **Status:** in-progress
+- **Status:** complete
 - **Triggered by:** The 2–1 pre-generation review of the permanent-delete candidate.
 - **Informed:** [candidate admission](nextcloud-permanent-delete-admission-20260926.md)
 
@@ -25,7 +25,8 @@ the Deleted files interface after selecting **Delete permanently**?
   **Delete permanently** permanently deletes an item in the trash bin.
   It does not spell out a particular DOM disappearance animation. Absence
   after refresh is an operational observation of deletion, still requiring
-  independent endpoint review.
+  independent endpoint review. A new panel ultimately remained split, so
+  the official manual did not remove the validity concern.
 
 ## Synthesis
 

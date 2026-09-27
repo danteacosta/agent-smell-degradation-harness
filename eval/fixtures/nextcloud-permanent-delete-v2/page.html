@@ -1,0 +1,25 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Deleted files</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button{font:inherit;padding:.4rem}.file{border:1px solid #bbb;padding:.8rem;margin:.7rem 0}</style></head>
+<body><main><h1>Deleted files</h1><div id="files"></div></main><script>
+const storageKey='deleted-files-pilot';
+if(localStorage.getItem(storageKey)===null)localStorage.setItem(storageKey,JSON.stringify(window.initialState.files));
+let files=JSON.parse(localStorage.getItem(storageKey));
+let deleteBehavior=null;
+const app=Object.freeze({
+  onDelete(handler){if(typeof handler!=='function'||deleteBehavior)throw new Error('invalid delete behavior');deleteBehavior=handler;render()},
+  files(){return structuredClone(files)},
+  save(next){if(!Array.isArray(next))throw new Error('file list required');files=structuredClone(next);localStorage.setItem(storageKey,JSON.stringify(files));render()}
+});
+function render(){
+  const root=document.querySelector('#files');root.replaceChildren();
+  for(const file of files){
+    const row=document.createElement('section');row.className='file';row.dataset.fileId=String(file.id);
+    const name=document.createElement('h2');name.textContent=String(file.name??'');row.append(name);
+    const button=document.createElement('button');button.type='button';button.textContent='Delete permanently';button.disabled=!deleteBehavior;
+    button.addEventListener('click',()=>{if(deleteBehavior)deleteBehavior(structuredClone(file))});
+    row.append(button);root.append(row);
+  }
+}
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

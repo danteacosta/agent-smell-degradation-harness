@@ -111,3 +111,15 @@ newly frozen collector successor generated 18 fresh HTMLs and produced A/B
 obligation in the block. Three remain: TodoMVC Clear completed, RealWorld
 comment Delete visibility, and Nextcloud permanent deletion. The review-defer
 records for the first two and the original Nextcloud candidate remain intact.
+
+## Nextcloud permanent-delete endpoint revision
+
+The original endpoint inspected a private handler variable before clicking.
+The revision exposes action readiness through the button's enabled state,
+then checks one selected item's absence after a reload. Another trash item
+and row count are non-target controls. A/B describe selected-item deletion;
+C retains the action and other-item context while omitting only selected-item
+deletion. The official manual links the command to permanent deletion, but
+the visual absence after refresh remains an operational inference. The
+eight-control browser qualification and a fresh independent source-to-oracle
+review must pass before any generation. Previous 2–1 reviews remain intact.

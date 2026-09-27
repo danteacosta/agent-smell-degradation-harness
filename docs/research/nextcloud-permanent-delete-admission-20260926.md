@@ -27,3 +27,19 @@ confirmou o vínculo entre o comando **Delete permanently** e a exclusão do
 item da lixeira, mas não enuncia o estado exato da lista após recarga. O voto
 discordante original permanece válido como registro e nenhuma geração foi
 admitida por essa consulta isolada.
+
+Uma revisão nova do endpoint removeu a inspeção de `deleteBehavior`, estado
+privado do scaffold. O navegador agora exige que o botão selecionado esteja
+visível e habilitado antes do clique, e observa a lista após recarga. A/B/C
+estão em
+[arms-20260927.json](../../data/e2e-nextcloud-permanent-delete/arms-20260927.json).
+O oráculo v2 passou **8/8 controles** no Chromium fixado, recibo
+`13559624b49659b68044bcff0cf57d0db932683f292f97086cb84a0ba85a7bce`.
+O painel independente pré-geração terminou **2 DEFER, 1 ACCEPT**, recibo
+`b92c93f6a08d2fc7db5aedcf6791dbc5935251bd41cd9600bdfd9c036455e13c`.
+A objeção material persistiu: ausência na lista local após recarga não prova
+exclusão permanente do item no backend. Alguns motivos secundários dos votos
+confundem a omissão planejada em C com não equivalência, mas isso não elimina
+a objeção principal. O gate de unanimidade não passou. **Nenhuma geração foi
+feita para a v2**; o candidato continua fora da contagem de obrigações
+executadas.
