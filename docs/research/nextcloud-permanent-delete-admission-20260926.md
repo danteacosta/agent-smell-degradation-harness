@@ -21,3 +21,9 @@ endpoint. O recibo privado da segunda revisão é
 disponível para eventual revisão de fonte ou endpoint, mas não é uma obrigação
 executada nem evidência para H1/H2. A qualificação do software, por si só,
 não resolve o desacordo de validade de construto.
+
+A [consulta posterior à documentação oficial](2026-09-27-nextcloud-permanent-delete-source.md)
+confirmou o vínculo entre o comando **Delete permanently** e a exclusão do
+item da lixeira, mas não enuncia o estado exato da lista após recarga. O voto
+discordante original permanece válido como registro e nenhuma geração foi
+admitida por essa consulta isolada.

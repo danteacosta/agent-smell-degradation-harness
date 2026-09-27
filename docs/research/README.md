@@ -1,5 +1,7 @@
 # Research catalog
 
+- [27 September 2026: Nextcloud permanent deletion source](2026-09-27-nextcloud-permanent-delete-source.md): official manual wording and the remaining source-to-E2E inference.
+
 - [26 September 2026: smell mapping for E2E](2026-09-26-smell-mapping-for-e2e.md): credited sources and construct boundaries for the per-experiment omission mapping.
 - [Per-experiment smell mapping](../thesis/e2e-smell-mapping-20260926.md): each completed E2E linked to a literature-aligned family; non-browser ambiguity controls stay separate.
 
