@@ -40,3 +40,24 @@ Completion requires a qualified oracle, prospective freeze, complete
 single-attempt collection, inventory checks, local tests and code review, and
 an updated evidence matrix. H1 ordinal severity and H2 warning prediction
 remain separate outcomes.
+
+## ATDD contract for RealWorld comment Delete visibility
+
+Given one source-grounded article comment by user A, when A opens the article
+in a fresh authenticated browser context, the comment's Delete button is
+visible. When a different authenticated user B opens the same article in a
+separate context, the comment remains visible but its Delete button is not.
+A and B express that author-only visibility policy; C omits only the policy.
+The common page may render the comment and viewer identity as fixture data,
+but must neither add nor hide the Delete button. The generated handler owns
+the button policy. Two fixtures with distinct article, comment and user IDs
+protect against a single hard-coded identity. Missing comments or identity,
+duplicate controls, exceptions, and malformed observations are non-evaluable
+or non-target failures rather than evidence of an author-only defect.
+
+The observable contract comes from the RealWorld frontend routing
+specification, which explicitly says the Delete comment button is shown only
+to the comment's author. The same qualification, independent review, freeze,
+single-attempt collection, and custody gates apply. No new pattern is needed:
+the page provides state, the generated code decides visibility, and the runner
+observes the UI in isolated contexts.

@@ -1,0 +1,22 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Article comments</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}.comment{border:1px solid #bbb;padding:.8rem;margin:.7rem 0}button{font:inherit;padding:.3rem .6rem}</style></head>
+<body><main><h1 id="article-title"></h1><p id="viewer"></p><section aria-label="Comments" id="comments"></section></main><script>
+const comments=structuredClone(window.initialState.comments);
+let viewHandler=null;
+const app=Object.freeze({
+  onView(handler){if(typeof handler!=='function'||viewHandler)throw new Error('invalid view handler');viewHandler=handler;handler()},
+  viewer(){return window.initialState.viewer},
+  comments(){return structuredClone(comments)},
+  addDeleteButton(id){const row=document.querySelectorAll(`[data-comment-id="${CSS.escape(String(id))}"]`);
+    if(row.length!==1)throw new Error('comment row unavailable');
+    const button=document.createElement('button');button.type='button';button.setAttribute('aria-label','Delete comment');button.textContent='Delete';row[0].append(button)}
+});
+document.querySelector('#article-title').textContent=window.initialState.articleTitle;
+document.querySelector('#viewer').textContent='Signed in as '+window.initialState.viewer;
+const root=document.querySelector('#comments');
+for(const comment of comments){const row=document.createElement('article');row.className='comment';row.dataset.commentId=String(comment.id);
+  const author=document.createElement('strong');author.className='comment-author';author.textContent=comment.author.username;
+  const body=document.createElement('p');body.className='comment-body';body.textContent=comment.body;
+  row.append(author,body);root.append(row)}
+/* MODEL_BEHAVIOR */
+</script></body></html>
