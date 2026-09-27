@@ -26,10 +26,11 @@ clause; those exact labels are **not** assigned here. See the
 | [RealWorld favorites](../research/realworld-favorites-20260926.md) | Populate Favorites from favorited articles | Partial content: missing route-specific selection clause | Qualified successor: 0/6 C failures |
 | [TodoMVC edit-state persistence bridge](../research/todomvc-persistence-bridge-20260926.md) | Do not persist editing mode | Partial content: missing persistence constraint | Replication: 0/5 evaluable C failures; one interface error |
 | [OpenProject invalid Remaining work](../research/openproject-invalid-remaining-20260926.md) | Reject saving Remaining work greater than Work | Partial content: missing validation constraint | 6/6 selective C failures; A/B 12/12 passes |
+| [Paperless nested tags](../research/paperless-nested-tags-20260927.md) | Add parent tag when assigning a child tag | Partial content: missing propagation clause | C 6/6 target failures; B 6/6 passes; A 4 passes, 1 target failure, 1 browser error |
 
 These rows are separate exploratory strata. The same broad family does not
 make their prompts, scaffolds, tasks, models, or outcomes exchangeable. The
-first six rows established the six-project spread; five later rows add new
+first six rows established the six-project spread; six later rows add new
 obligations; the TodoMVC bridge is a replication, not new diversity.
 
 The non-browser [12-requirement criteria pilot](../research/criteria-expansion-results-20260921.md)

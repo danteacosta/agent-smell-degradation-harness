@@ -1,0 +1,5 @@
+{
+  "A": "Assign a selected tag to the document when the user clicks Add tag. Also add every ancestor tag automatically.",
+  "B": "When Add tag is clicked, attach the chosen tag to the document and include its parent tags without another user action.",
+  "C": "Assign a selected tag to the document when the user clicks Add tag."
+}

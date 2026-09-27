@@ -143,3 +143,14 @@ target 6/6. The two numeric fixtures checked persistence after reload. The
 project count remains six, and six planned new obligations remain. This
 single selected obligation is a strong within-case contrast, not evidence
 for a general effect across requirements or the formal H1/H2 outcomes.
+
+## 27 September: Paperless nested-tag obligation
+
+The [nested-tag pilot](../research/paperless-nested-tags-20260927.md) adds a
+sixth new obligation in the same six projects. Its source requires automatic
+parent-tag assignment. In 18 fresh generations, B passed 6/6 and C had six
+target-only failures. A had four passes, one target-only failure, and one
+browser error caused by passing an undefined tag to the persistence API.
+The A outcomes and one unknown preclude a clean uniform A/B-versus-C claim;
+the C−B within-case contrast is 6/6. Five planned new obligations remain.
+No formal H1 ordinal or H2 early-warning outcome was measured.

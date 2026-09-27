@@ -1,0 +1,27 @@
+{
+  "schema_version": "paperless-nested-tags-browser/v1",
+  "status": "complete",
+  "app_sha256": "dbe8c74eea5da0c71b64fb1a0e3337b54fdb3b6beda131d45f6e36cfed833a70",
+  "assertions": {
+    "child_visible_1": false,
+    "parent_visible_1": false,
+    "unrelated_absent_1": true,
+    "no_duplicate_tags_1": true,
+    "document_preserved_1": true,
+    "hierarchy_preserved_1": true,
+    "child_visible_2": false,
+    "parent_visible_2": false,
+    "unrelated_absent_2": true,
+    "no_duplicate_tags_2": true,
+    "document_preserved_2": true,
+    "hierarchy_preserved_2": true
+  },
+  "console_errors": [
+    "Error: tag list required",
+    "Error: tag list required"
+  ],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}
