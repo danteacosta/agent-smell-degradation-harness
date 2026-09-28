@@ -14,9 +14,9 @@ jobs:
         with:
           python-version: "3.12"
       - run: python scripts/dependency_bundle.py
-      - run: dependency-bundle/runtime/bin/python -m pytest -q
       - name: H2 project and source holdout mutation gate (offline)
         run: dependency-bundle/runtime/bin/python scripts/check_split_mutation_gate.py
+      - run: dependency-bundle/runtime/bin/python -m pytest -q
       - name: Private input container boundary (no providers)
         run: |
           docker build -f tests/fixtures/todomvc-custody.Dockerfile --iidfile /tmp/custody-image eval/fixtures
