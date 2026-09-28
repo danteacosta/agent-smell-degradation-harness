@@ -251,6 +251,8 @@ def validate_feature_manifest(
                     )
             if cutoff != checkpoint_cutoffs["T3"]:
                 raise ValueError(f"confirmatory feature row {episode_id} has inconsistent T3 cutoff")
+            if not (checkpoint_cutoffs["T1"] < checkpoint_cutoffs["T2"] < checkpoint_cutoffs["T3"]):
+                raise ValueError(f"confirmatory feature row {episode_id} has non-monotonic checkpoints")
             expected_features = _feature_families(episode, cutoff="T3")
             if by_id[episode_id].get("features") != expected_features:
                 raise ValueError(f"confirmatory feature row {episode_id} does not match its trace")
