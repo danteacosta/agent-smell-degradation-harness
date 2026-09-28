@@ -6,7 +6,9 @@ from pathlib import Path
 import pytest
 
 from eval.feature_manifest import build_feature_manifest
-from eval.h2_detection import evaluate_confirmatory
+from eval.h2_detection import _nested_model_features, evaluate_confirmatory
+from eval.modeling import StandardizedMeanDifferenceRanker
+from eval.splits import apply_split_manifest
 
 
 def _episodes() -> list[dict[str, object]]:
@@ -165,6 +167,14 @@ def test_confirmatory_h2_fits_bound_raw_features_and_never_uses_oracle_label(tmp
     assert report["features"]["schema_version"] == "h2-features/v3"
     assert report["features"]["representation"] == "trace-bound-raw-numeric"
     assert all(model["fit_split"] == "train" for model in report["fitted_models"].values())
+    train_rows = apply_split_manifest(episodes, report["split"])["train"]
+    labels = _labels(episodes)
+    for model_name in ("B0", "B3"):
+        expected_model = StandardizedMeanDifferenceRanker.fit(
+            _nested_model_features(train_rows, feature_manifest, model_name),
+            [labels[str(row["episode_id"])] for row in train_rows],
+        )
+        assert report["fitted_models"][model_name] == expected_model.to_dict()
     assert set(report["checkpoint_boundary"]) == {"T1", "T2", "T3"}
     assert all(
         boundary["held_out_split"] == "test"
