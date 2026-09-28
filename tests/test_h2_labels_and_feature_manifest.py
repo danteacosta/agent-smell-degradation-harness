@@ -154,6 +154,17 @@ def test_strict_manifest_rejects_checkpoint_bound_to_other_event_type(tmp_path: 
         validate_feature_manifest(manifest, episodes, strict=True)
 
 
+def test_manifest_rejects_reversed_t1_t2_sequence_even_with_matching_trace(tmp_path: Path):
+    episodes = _episodes()
+    _feature_manifest(episodes, tmp_path)
+    path = Path(episodes[0]["provenance_path"])
+    events = [json.loads(line) for line in path.read_text().splitlines()]
+    events[0]["sequence_number"], events[1]["sequence_number"] = 2, 1
+    path.write_text("".join(json.dumps(event) + "\n" for event in events), encoding="utf-8")
+    with pytest.raises(ValueError, match="non-monotonic checkpoints"):
+        build_feature_manifest(episodes)
+
+
 def test_confirmatory_h2_rejects_non_finite_raw_feature(tmp_path: Path):
     episodes = _episodes()
     for row in episodes:
