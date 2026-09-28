@@ -252,6 +252,8 @@ The acceptance boundary, estimands, leakage rules, split invariants, and product
 
 The offline engineering mutation gate `python scripts/check_split_mutation_gate.py` runs in an isolated temporary copy during `eval-gate`. It removes the project and source-intent crossing guards one at a time and requires the corresponding leakage regression test to fail for the expected reason. This protects the H2 split implementation; its two killed mutants are neither scientific labels nor evidence for H1/H2.
 
+The focused `python scripts/check_feature_plane_mutation_gate.py` gate likewise runs in a temporary copy before the full suite. Three isolated mutations test the pre-final feature boundary: a T4 checkpoint disguised as a tool event, a pre-final event after T4, and a canonical label attribute. Each has a dedicated regression test and must fail for the intended reason. These engineering checks do not validate semantic labels, H1/H2, or the generated artifacts.
+
 The current orientation and related-work review is versioned in [2026-08-10 orientation review](docs/research/2026-08-10-orientation-review.md). It records the novelty boundary, EASY alignment, direct comparison with prefix monitors, and the evidence still required before a confirmatory claim.
 
 The deduplicated [literature matrix](docs/research/literature-matrix.md) records
