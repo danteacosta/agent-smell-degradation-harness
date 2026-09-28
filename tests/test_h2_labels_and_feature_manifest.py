@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from eval.feature_manifest import build_feature_manifest
+from eval.feature_manifest import build_feature_manifest, validate_feature_manifest
 from eval.h2_detection import _nested_model_features, evaluate_confirmatory
 from eval.modeling import StandardizedMeanDifferenceRanker
 from eval.splits import apply_split_manifest
@@ -133,6 +133,25 @@ def test_confirmatory_h2_rejects_incomplete_trace_binding(
             feature_manifest=feature_manifest,
             enforce_design=False,
         )
+
+
+def test_strict_manifest_rejects_wrong_but_well_formed_trace_hash(tmp_path: Path):
+    episodes = _episodes()
+    manifest = _feature_manifest(episodes, tmp_path)
+    manifest["rows"][0]["trace_sha256"] = "0" * 64
+    with pytest.raises(ValueError, match="trace hash mismatch"):
+        validate_feature_manifest(manifest, episodes, strict=True)
+
+
+def test_strict_manifest_rejects_checkpoint_bound_to_other_event_type(tmp_path: Path):
+    episodes = _episodes()
+    manifest = _feature_manifest(episodes, tmp_path)
+    row = manifest["rows"][0]
+    episode_id = row["episode_id"]
+    row["checkpoint_event_ids"]["T1"] = f"event-{episode_id}-t2"
+    row["checkpoint_cutoff_sequences"]["T1"] = 2
+    with pytest.raises(ValueError, match="binds T1 to the wrong event"):
+        validate_feature_manifest(manifest, episodes, strict=True)
 
 
 def test_confirmatory_h2_rejects_non_finite_raw_feature(tmp_path: Path):
