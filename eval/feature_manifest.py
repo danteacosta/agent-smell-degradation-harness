@@ -230,6 +230,17 @@ def validate_feature_manifest(
             if not isinstance(cutoff, int) or cutoff < 0:
                 raise ValueError(f"confirmatory feature row {episode_id} requires cutoff_sequence")
             events = _trace_events(trace_path)
+            seen_event_ids: set[str] = set()
+            previous_sequence = -1
+            for event in events:
+                event_id = event.get("event_id", event.get("id"))
+                sequence = event.get("sequence_number", event.get("sequence"))
+                if not isinstance(event_id, str) or not event_id.strip() or event_id in seen_event_ids:
+                    raise ValueError(f"confirmatory feature row {episode_id} has missing or duplicate event_id")
+                if type(sequence) is not int or sequence <= previous_sequence:
+                    raise ValueError(f"confirmatory feature row {episode_id} has unordered sequence_number")
+                seen_event_ids.add(event_id)
+                previous_sequence = sequence
             event_ids = {
                 str(event.get("event_id", event.get("id", ""))): event
                 for event in events
