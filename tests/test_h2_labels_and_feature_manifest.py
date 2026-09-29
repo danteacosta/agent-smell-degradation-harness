@@ -161,7 +161,42 @@ def test_manifest_rejects_reversed_t1_t2_sequence_even_with_matching_trace(tmp_p
     events = [json.loads(line) for line in path.read_text().splitlines()]
     events[0]["sequence_number"], events[1]["sequence_number"] = 2, 1
     path.write_text("".join(json.dumps(event) + "\n" for event in events), encoding="utf-8")
-    with pytest.raises(ValueError, match="non-monotonic checkpoints"):
+    with pytest.raises(ValueError, match="unordered sequence_number"):
+        build_feature_manifest(episodes)
+
+
+@pytest.mark.parametrize(
+    ("fault", "message"),
+    [
+        ("duplicate_sequence", "unordered sequence_number"),
+        ("duplicate_id", "duplicate event_id"),
+        ("descending_sequence", "unordered sequence_number"),
+    ],
+)
+def test_manifest_rejects_ambiguous_trace_event_order_and_identity(
+    tmp_path: Path, fault: str, message: str
+):
+    episodes = _episodes()
+    _feature_manifest(episodes, tmp_path)
+    path = Path(episodes[0]["provenance_path"])
+    events = [json.loads(line) for line in path.read_text().splitlines()]
+    inputs = [
+        {"event_id": f"input-{index}", "event_type": "input.received",
+         "checkpoint": "input.received", "sequence_number": index, "attributes": {}}
+        for index in (0, 1)
+    ]
+    for event in events:
+        event["sequence_number"] += 1
+    if fault == "duplicate_sequence":
+        inputs[1]["sequence_number"] = 0
+    elif fault == "duplicate_id":
+        inputs[1]["event_id"] = inputs[0]["event_id"]
+    else:
+        inputs[1]["sequence_number"] = -1
+    path.write_text(
+        "".join(json.dumps(event) + "\n" for event in inputs + events), encoding="utf-8"
+    )
+    with pytest.raises(ValueError, match=message):
         build_feature_manifest(episodes)
 
 
