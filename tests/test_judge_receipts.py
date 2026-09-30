@@ -72,6 +72,38 @@ def test_restores_calls_and_consolidated_result(tmp_path):
     assert receipts.load_call(bindings[0], request).label == "clean"
 
 
+def test_consensus_cannot_claim_agreement_when_constraint_statuses_disagree():
+    bindings = [
+        {"provider_slot_id": "slot-a", "judge_relation": "self"},
+        {"provider_slot_id": "slot-b", "judge_relation": "cross"},
+    ]
+    result = {
+        "label": "clean",
+        "consensus": True,
+        "judges": [
+            {
+                "provider_slot_id": binding["provider_slot_id"],
+                "judge_relation": binding["judge_relation"],
+                "label": "clean",
+                "constraint_statuses": [
+                    {"constraint_id": "constraint", "status": status}
+                ],
+            }
+            for binding, status in zip(bindings, ("covered", "omitted"), strict=True)
+        ],
+    }
+    with pytest.raises(RecoveryBlocked, match="consensus is inconsistent"):
+        JudgeReceipts._validated_result(
+            result, {"provider_slot_ids": ["slot-a", "slot-b"]}, bindings
+        )
+
+    result["consensus"] = False
+    result["label"] = "uncertain"
+    assert JudgeReceipts._validated_result(
+        result, {"provider_slot_ids": ["slot-a", "slot-b"]}, bindings
+    ) == result
+
+
 @pytest.mark.parametrize("target", ["call", "result"])
 def test_tampering_blocks_recovery(tmp_path, target):
     ledger = _ledger(tmp_path / "ledger.jsonl")
