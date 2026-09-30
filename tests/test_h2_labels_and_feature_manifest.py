@@ -1,12 +1,15 @@
 from __future__ import annotations
 
+import copy
 import json
 from pathlib import Path
 
 import pytest
 
-from eval.feature_manifest import build_feature_manifest
-from eval.h2_detection import evaluate_confirmatory
+from eval.feature_manifest import build_feature_manifest, validate_feature_manifest
+from eval.h2_detection import _nested_model_features, evaluate_confirmatory
+from eval.modeling import StandardizedMeanDifferenceRanker
+from eval.splits import apply_split_manifest
 
 
 def _episodes() -> list[dict[str, object]]:
@@ -80,6 +83,55 @@ def test_confirmatory_h2_requires_primary_human_labels():
         evaluate_confirmatory(_episodes(), confirmatory=True, enforce_design=False)
 
 
+@pytest.mark.parametrize("checkpoint", ["T1", "T2", "T3"])
+def test_strict_manifest_rejects_rebinding_to_later_checkpoint(tmp_path: Path, checkpoint: str):
+    episodes = _episodes()[:1]
+    _feature_manifest(episodes, tmp_path)
+    path = Path(episodes[0]["provenance_path"])
+    events = [json.loads(line) for line in path.read_text().splitlines()]
+    index = int(checkpoint[1]) - 1
+    later = copy.deepcopy(events[index])
+    later["event_id"] += "-later"
+    # Equal feature values do not make the two observations interchangeable.
+    events.insert(index + 1, later)
+    for sequence, event in enumerate(events, 1):
+        event["sequence_number"] = sequence
+    path.write_text("".join(json.dumps(event) + "\n" for event in events))
+    manifest = build_feature_manifest(episodes)
+    row = manifest["rows"][0]
+    assert row["checkpoint_event_ids"][checkpoint] == events[index]["event_id"]
+    row["checkpoint_event_ids"][checkpoint] = later["event_id"]
+    row["checkpoint_cutoff_sequences"][checkpoint] = later["sequence_number"]
+    if checkpoint == "T3":
+        row["cutoff_sequence"] = later["sequence_number"]
+    with pytest.raises(ValueError, match="first deployable checkpoint"):
+        validate_feature_manifest(manifest, episodes, strict=True)
+
+
+@pytest.mark.parametrize("checkpoint", ["T1", "T2", "T3"])
+def test_manifest_does_not_bind_tier_b_checkpoint(tmp_path: Path, checkpoint: str):
+    episodes = _episodes()[:1]
+    _feature_manifest(episodes, tmp_path)
+    path = Path(episodes[0]["provenance_path"])
+    events = [json.loads(line) for line in path.read_text().splitlines()]
+    index = int(checkpoint[1]) - 1
+    label_event = copy.deepcopy(events[index])
+    label_event.update(event_id="label-only-event", tier="B")
+    events.insert(index, label_event)
+    for sequence, event in enumerate(events, 1):
+        event["sequence_number"] = sequence
+    path.write_text("".join(json.dumps(event) + "\n" for event in events))
+    manifest = build_feature_manifest(episodes)
+    row = manifest["rows"][0]
+    assert row["checkpoint_event_ids"][checkpoint] == events[index + 1]["event_id"]
+    row["checkpoint_event_ids"][checkpoint] = label_event["event_id"]
+    row["checkpoint_cutoff_sequences"][checkpoint] = label_event["sequence_number"]
+    if checkpoint == "T3":
+        row["cutoff_sequence"] = label_event["sequence_number"]
+    with pytest.raises(ValueError, match="first deployable checkpoint"):
+        validate_feature_manifest(manifest, episodes, strict=True)
+
+
 def test_confirmatory_h2_rejects_unbound_score_injection():
     episodes = _episodes()
     with pytest.raises(ValueError, match="feature manifest"):
@@ -133,6 +185,71 @@ def test_confirmatory_h2_rejects_incomplete_trace_binding(
         )
 
 
+def test_strict_manifest_rejects_wrong_but_well_formed_trace_hash(tmp_path: Path):
+    episodes = _episodes()
+    manifest = _feature_manifest(episodes, tmp_path)
+    manifest["rows"][0]["trace_sha256"] = "0" * 64
+    with pytest.raises(ValueError, match="trace hash mismatch"):
+        validate_feature_manifest(manifest, episodes, strict=True)
+
+
+def test_strict_manifest_rejects_checkpoint_bound_to_other_event_type(tmp_path: Path):
+    episodes = _episodes()
+    manifest = _feature_manifest(episodes, tmp_path)
+    row = manifest["rows"][0]
+    episode_id = row["episode_id"]
+    row["checkpoint_event_ids"]["T1"] = f"event-{episode_id}-t2"
+    row["checkpoint_cutoff_sequences"]["T1"] = 2
+    with pytest.raises(ValueError, match="binds T1 to the wrong event"):
+        validate_feature_manifest(manifest, episodes, strict=True)
+
+
+def test_manifest_rejects_reversed_t1_t2_sequence_even_with_matching_trace(tmp_path: Path):
+    episodes = _episodes()
+    _feature_manifest(episodes, tmp_path)
+    path = Path(episodes[0]["provenance_path"])
+    events = [json.loads(line) for line in path.read_text().splitlines()]
+    events[0]["sequence_number"], events[1]["sequence_number"] = 2, 1
+    path.write_text("".join(json.dumps(event) + "\n" for event in events), encoding="utf-8")
+    with pytest.raises(ValueError, match="unordered sequence_number"):
+        build_feature_manifest(episodes)
+
+
+@pytest.mark.parametrize(
+    ("fault", "message"),
+    [
+        ("duplicate_sequence", "unordered sequence_number"),
+        ("duplicate_id", "duplicate event_id"),
+        ("descending_sequence", "unordered sequence_number"),
+    ],
+)
+def test_manifest_rejects_ambiguous_trace_event_order_and_identity(
+    tmp_path: Path, fault: str, message: str
+):
+    episodes = _episodes()
+    _feature_manifest(episodes, tmp_path)
+    path = Path(episodes[0]["provenance_path"])
+    events = [json.loads(line) for line in path.read_text().splitlines()]
+    inputs = [
+        {"event_id": f"input-{index}", "event_type": "input.received",
+         "checkpoint": "input.received", "sequence_number": index, "attributes": {}}
+        for index in (0, 1)
+    ]
+    for event in events:
+        event["sequence_number"] += 1
+    if fault == "duplicate_sequence":
+        inputs[1]["sequence_number"] = 0
+    elif fault == "duplicate_id":
+        inputs[1]["event_id"] = inputs[0]["event_id"]
+    else:
+        inputs[1]["sequence_number"] = -1
+    path.write_text(
+        "".join(json.dumps(event) + "\n" for event in inputs + events), encoding="utf-8"
+    )
+    with pytest.raises(ValueError, match=message):
+        build_feature_manifest(episodes)
+
+
 def test_confirmatory_h2_rejects_non_finite_raw_feature(tmp_path: Path):
     episodes = _episodes()
     for row in episodes:
@@ -165,6 +282,14 @@ def test_confirmatory_h2_fits_bound_raw_features_and_never_uses_oracle_label(tmp
     assert report["features"]["schema_version"] == "h2-features/v3"
     assert report["features"]["representation"] == "trace-bound-raw-numeric"
     assert all(model["fit_split"] == "train" for model in report["fitted_models"].values())
+    train_rows = apply_split_manifest(episodes, report["split"])["train"]
+    labels = _labels(episodes)
+    for model_name in ("B0", "B3"):
+        expected_model = StandardizedMeanDifferenceRanker.fit(
+            _nested_model_features(train_rows, feature_manifest, model_name),
+            [labels[str(row["episode_id"])] for row in train_rows],
+        )
+        assert report["fitted_models"][model_name] == expected_model.to_dict()
     assert set(report["checkpoint_boundary"]) == {"T1", "T2", "T3"}
     assert all(
         boundary["held_out_split"] == "test"

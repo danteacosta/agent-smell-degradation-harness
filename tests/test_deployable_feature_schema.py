@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from feature_plane import DeployableFeatureInput, extract_deployable_features
 
 
@@ -80,6 +82,51 @@ def test_pre_final_feature_extractor_ignores_legacy_payload_metadata(tmp_path: P
     )
     assert "smelly" not in str(features)
     assert "oracle" not in str(features)
+
+
+def test_t4_checkpoint_cannot_enter_deployable_features(tmp_path: Path):
+    path = tmp_path / "trace.jsonl"
+    path.write_text(
+        json.dumps({
+            "event_type": "tool.completed",
+            "checkpoint": "T4",
+            "attributes": {"revisions": 9},
+        }) + "\n",
+        encoding="utf-8",
+    )
+    features = extract_deployable_features(
+        DeployableFeatureInput("I-1", "acceptance_criteria", "x"), path, cutoff="T3"
+    )
+    assert features["operational"]["event_count"] == 0
+
+
+def test_pre_final_event_after_t4_is_rejected(tmp_path: Path):
+    path = tmp_path / "trace.jsonl"
+    events = [
+        {"event_type": "interpretation.completed", "attributes": {"constraints": ["x"]}},
+        {"event_type": "artifact.completed", "checkpoint": "T4", "attributes": {}},
+        {"event_type": "plan.completed", "attributes": {"validation_checks": ["x"]}},
+    ]
+    path.write_text("\n".join(json.dumps(event) for event in events) + "\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="after the label plane"):
+        extract_deployable_features(
+            DeployableFeatureInput("I-1", "acceptance_criteria", "x"), path, cutoff="T3"
+        )
+
+
+def test_canonical_label_field_is_rejected_from_deployable_trace(tmp_path: Path):
+    path = tmp_path / "trace.jsonl"
+    path.write_text(
+        json.dumps({
+            "event_type": "interpretation.completed",
+            "attributes": {"constraints": ["x"], "semantic_label": "incorrect"},
+        }) + "\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="terminal field 'semantic_label'"):
+        extract_deployable_features(
+            DeployableFeatureInput("I-1", "acceptance_criteria", "x"), path, cutoff="T3"
+        )
 
 
 def test_context_metrics_are_available_only_at_t3(tmp_path: Path):

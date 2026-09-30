@@ -14,6 +14,10 @@ jobs:
         with:
           python-version: "3.12"
       - run: python scripts/dependency_bundle.py
+      - name: H2 project and source holdout mutation gate (offline)
+        run: dependency-bundle/runtime/bin/python scripts/check_split_mutation_gate.py
+      - name: H2 pre-final feature boundary mutation gate (offline)
+        run: dependency-bundle/runtime/bin/python scripts/check_feature_plane_mutation_gate.py
       - run: dependency-bundle/runtime/bin/python -m pytest -q
       - name: Private input container boundary (no providers)
         run: |
