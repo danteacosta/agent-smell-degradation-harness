@@ -1,7 +1,7 @@
 # Agent Smell Degradation Harness
 
-**Research status:** see the [current evidence and limitations](docs/research/masters-state-review-20260921.md)
-for the real pilot results, preserved null outcomes, browser evidence and the
+**Research status:** see the [current evidence and limitations](docs/research/masters-state-review-20260922.md)
+(and the later [E2E evidence matrix](docs/thesis/e2e-evidence-matrix-20260925.md)) for the real pilot results, preserved null outcomes, browser evidence and the
 separate exploratory acceptance-criteria work. The historical studies below
 retain their original decisions and denominators.
 
