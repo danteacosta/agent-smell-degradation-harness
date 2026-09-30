@@ -389,3 +389,19 @@ it is not evidence of empirical leakage, H1/H2 performance, or corpus validity.
 The existing first-observation policy is preserved. A different checkpoint
 aggregation policy would require coordinated extractor/manifest changes and
 an explicit protocol decision, not a silent reinterpretation of old traces.
+
+## 2026-09-30 — Search log: candidates not yet read (not matrix entries)
+
+Search date: 2026-09-30. The cloud session's network egress blocked arxiv.org,
+doi.org, ACM, OpenReview, W3C and OpenTelemetry hosts, so only search-result
+snippets were available. Under this matrix's policy (abstract plus method,
+results and limitations must be read), none of the items below is a matrix entry,
+has a credibility score, or supports any claim. All are preprints or unverified
+venues. arXiv 2609.29208 is excluded: it was read and entered above the same day. Next action: read the rest from an unrestricted session, then classify.
+
+| Candidate (preprint unless noted) | Why it may matter | Intended check |
+| --- | --- | --- |
+| arXiv 2603.26233, *Ask or Assume? Uncertainty-Aware Clarification-Seeking in Coding Agents* | Underspecified SWE-bench Verified variants; state-history underspecification detection | Relevance to optional RQ3 and to B0 operational signals |
+| arXiv 2603.00187, *ClarEval*; arXiv 2608.09072, *SWE-RPG* | Ambiguity taxonomies (missing goal/premise/terminology) for code agents | Compare taxonomy with the smell/condition-loss separation |
+| arXiv 2603.24755, *SlopCodeBench* | Degradation over iterative checkpoints | Possible multi-step analogue of T1–T4 |
+| arXiv 2607.01980, *Epic-Organized vs. Requirement-Aligned Gherkin* | LLM acceptance-criteria generation quality | Rubric and rater-agreement design for the primary task |
