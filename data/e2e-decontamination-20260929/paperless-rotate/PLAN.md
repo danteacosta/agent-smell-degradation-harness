@@ -1,0 +1,9 @@
+# Paperless Rotate documentation decontamination pilot v4
+
+The earlier v3 generator received a fixed HTML page whose confirmation disclosed that Rotate permanently changes the original. This new derived-excerpt pilot withholds the page and oracle from the generator, and uses neutral confirmation text in the browser. It does not replace the v3 frozen result.
+
+Acceptance contract: given the old or corrected historical note, one generated callback handles Rotate on a document with original and archived representations. The browser confirms an owner action and reloads the displayed original orientation, checks cancellation, and denies a non-owner. An independently pinned pre-change UI/backend reference expects a confirmed owner rotation to update the original by 90 degrees; archive regeneration is not constrained. An unchanged original is a target defect. Provider, format, runtime, browser and mixed failures remain unknown in paired comparisons.
+
+Freeze before generation: verify both excerpts occur verbatim in the historical full pages and differ only in the parenthetical exception; verify the common prompt and fixed page do not disclose the target answer; check historical GPL, source reference, CLI and browser image; qualify nine adversarial browser controls; freeze all source, fixtures, seed, 12-position randomized schedule and requests. Use old/new × Luna/Sol model aliases × three repetitions, one attempt per position in separate model contexts, and close generation before browser observation.
+
+Interpretation boundary: the corrected note says “certain document actions” but does not identify Rotate. The pilot therefore tests whether that broader exception changes generated Rotate behavior; it is not an unambiguous specification of Rotate. Results are exploratory in a reconstructed interface, not full Paperless, ordinal H1 or H2 evidence. No previous packet is edited.

@@ -1,5 +1,9 @@
 # Research catalog
 
+- [30 September 2026: literature-bound audit of historical smells](2026-09-30-literature-validated-smell-audit.md): six literature-linked candidates, four unmapped changes, and no independent smell confirmation.
+- [30 September 2026: historical E2E closure](2026-09-30-natural-e2e-closure.md): ten distinct requirements, 60 nested pairs, eligibility decisions, and preserved unknowns.
+- [29 September 2026: historical E2E contamination follow-up](2026-09-29-natural-e2e-contamination-followup.md): separate decontaminated successor pilots and their limits.
+
 - [27 September 2026: Frattini endpoint PR review](2026-09-27-frattini-pr-review.md): primary-study check and the confirmatory scope of the proposed decision gate.
 
 - [27 September 2026: Nextcloud permanent deletion source](2026-09-27-nextcloud-permanent-delete-source.md): official manual wording and the remaining source-to-E2E inference.

@@ -1,0 +1,63 @@
+{
+  "schema_version": "paperless-original-natural-analysis/v4",
+  "planned": 12,
+  "pairs": [
+    {
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "old": "target_only_failure",
+      "new": "target_only_failure",
+      "comparison": "equal"
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "old": "target_only_failure",
+      "new": "target_only_failure",
+      "comparison": "equal"
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "old": "target_only_failure",
+      "new": "target_only_failure",
+      "comparison": "equal"
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "old": "target_only_failure",
+      "new": "target_only_failure",
+      "comparison": "equal"
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "old": "target_only_failure",
+      "new": "target_only_failure",
+      "comparison": "equal"
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "old": "target_only_failure",
+      "new": "target_only_failure",
+      "comparison": "equal"
+    }
+  ],
+  "counts": {
+    "target_only_failure": 12
+  },
+  "confirmatory_eligible": false,
+  "limitations": "Derived historical excerpt, no UI shown to generator. Corrected clause does not identify Rotate specifically. Fixed reconstructed browser, not full Paperless or ordinal H1. Model aliases unpinned; unknowns retained.",
+  "frozen_receipt_sha256": "53f46cda1cdd49eea3b6b5f62183e067f5892929d215e5c19989c19f6a5246b0",
+  "private_packet_name": "paperless-original-natural-20260929-v4-decontaminated",
+  "representative_pair": {
+    "model": "gpt-5.6-luna",
+    "replication": 1,
+    "old": "target_only_failure",
+    "new": "target_only_failure",
+    "comparison": "equal",
+    "screen": "owner-confirm.png"
+  }
+}

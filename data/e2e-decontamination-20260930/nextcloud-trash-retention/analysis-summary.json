@@ -1,0 +1,68 @@
+{
+  "schema_version": "nextcloud-trash-retention-natural-analysis/v1",
+  "planned": 12,
+  "pairs": [
+    {
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "old": "target_only_failure",
+      "new": "pass",
+      "comparison": "improved"
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "old": "target_only_failure",
+      "new": "pass",
+      "comparison": "improved"
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "old": "target_only_failure",
+      "new": "pass",
+      "comparison": "improved"
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "old": "non_target_only_failure",
+      "new": "pass",
+      "comparison": "unknown"
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "old": "non_target_only_failure",
+      "new": "pass",
+      "comparison": "unknown"
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "old": "pass",
+      "new": "pass",
+      "comparison": "equal"
+    }
+  ],
+  "counts": {
+    "non_target_only_failure": 2,
+    "pass": 7,
+    "target_only_failure": 3
+  },
+  "confirmatory_eligible": false,
+  "limitations": "One historical note plus its linked admin documentation in a reconstructed deleted-files UI; two changed pages are one treatment. Not full Nextcloud or ordinal H1/H2; model aliases not pinned. Unknowns retained.",
+  "frozen_receipt_sha256": "892a23ba9ee6893827fdde43b00b5de55eec7e7316046e653b4f2669c431881f",
+  "private_packet_name": "nextcloud-trash-retention-natural-20260930-v4",
+  "representative_pair": {
+    "model": "gpt-5.6-luna",
+    "replication": 1,
+    "screen": "override-normal-space.png",
+    "comparison": "improved"
+  },
+  "comparison_counts": {
+    "improved": 3,
+    "unknown": 2,
+    "equal": 1
+  }
+}
