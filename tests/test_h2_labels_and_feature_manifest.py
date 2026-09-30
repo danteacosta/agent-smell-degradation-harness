@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import json
 from pathlib import Path
 
@@ -80,6 +81,55 @@ def _feature_manifest(episodes: list[dict[str, object]], root: Path) -> dict[str
 def test_confirmatory_h2_requires_primary_human_labels():
     with pytest.raises(ValueError, match="primary human labels"):
         evaluate_confirmatory(_episodes(), confirmatory=True, enforce_design=False)
+
+
+@pytest.mark.parametrize("checkpoint", ["T1", "T2", "T3"])
+def test_strict_manifest_rejects_rebinding_to_later_checkpoint(tmp_path: Path, checkpoint: str):
+    episodes = _episodes()[:1]
+    _feature_manifest(episodes, tmp_path)
+    path = Path(episodes[0]["provenance_path"])
+    events = [json.loads(line) for line in path.read_text().splitlines()]
+    index = int(checkpoint[1]) - 1
+    later = copy.deepcopy(events[index])
+    later["event_id"] += "-later"
+    # Equal feature values do not make the two observations interchangeable.
+    events.insert(index + 1, later)
+    for sequence, event in enumerate(events, 1):
+        event["sequence_number"] = sequence
+    path.write_text("".join(json.dumps(event) + "\n" for event in events))
+    manifest = build_feature_manifest(episodes)
+    row = manifest["rows"][0]
+    assert row["checkpoint_event_ids"][checkpoint] == events[index]["event_id"]
+    row["checkpoint_event_ids"][checkpoint] = later["event_id"]
+    row["checkpoint_cutoff_sequences"][checkpoint] = later["sequence_number"]
+    if checkpoint == "T3":
+        row["cutoff_sequence"] = later["sequence_number"]
+    with pytest.raises(ValueError, match="first deployable checkpoint"):
+        validate_feature_manifest(manifest, episodes, strict=True)
+
+
+@pytest.mark.parametrize("checkpoint", ["T1", "T2", "T3"])
+def test_manifest_does_not_bind_tier_b_checkpoint(tmp_path: Path, checkpoint: str):
+    episodes = _episodes()[:1]
+    _feature_manifest(episodes, tmp_path)
+    path = Path(episodes[0]["provenance_path"])
+    events = [json.loads(line) for line in path.read_text().splitlines()]
+    index = int(checkpoint[1]) - 1
+    label_event = copy.deepcopy(events[index])
+    label_event.update(event_id="label-only-event", tier="B")
+    events.insert(index, label_event)
+    for sequence, event in enumerate(events, 1):
+        event["sequence_number"] = sequence
+    path.write_text("".join(json.dumps(event) + "\n" for event in events))
+    manifest = build_feature_manifest(episodes)
+    row = manifest["rows"][0]
+    assert row["checkpoint_event_ids"][checkpoint] == events[index + 1]["event_id"]
+    row["checkpoint_event_ids"][checkpoint] = label_event["event_id"]
+    row["checkpoint_cutoff_sequences"][checkpoint] = label_event["sequence_number"]
+    if checkpoint == "T3":
+        row["cutoff_sequence"] = label_event["sequence_number"]
+    with pytest.raises(ValueError, match="first deployable checkpoint"):
+        validate_feature_manifest(manifest, episodes, strict=True)
 
 
 def test_confirmatory_h2_rejects_unbound_score_injection():

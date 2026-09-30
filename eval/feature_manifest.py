@@ -53,6 +53,20 @@ def _event_type(event: Mapping[str, Any]) -> str:
     return str(event.get("checkpoint", event.get("event_type", event.get("name", ""))))
 
 
+def _first_checkpoint(
+    events: Sequence[Mapping[str, Any]], expected_type: str
+) -> Mapping[str, Any] | None:
+    # Match the extractor's first-observation policy and Tier-B exclusion.
+    return next(
+        (
+            event
+            for event in events
+            if event.get("tier", "A") != "B" and _event_type(event) == expected_type
+        ),
+        None,
+    )
+
+
 def _feature_families(
     episode: Mapping[str, Any],
     *,
@@ -88,7 +102,7 @@ def build_feature_manifest(
         checkpoint_ids: dict[str, str] = {}
         checkpoint_cutoffs: dict[str, int] = {}
         for checkpoint, expected_type in _CHECKPOINT_EVENT_TYPES.items():
-            event = next((item for item in events if _event_type(item) == expected_type), None)
+            event = _first_checkpoint(events, expected_type)
             if event is None:
                 raise ValueError(f"trace {episode_id} is missing {checkpoint}/{expected_type}")
             event_id = str(event.get("event_id", event.get("id", "")))
@@ -255,6 +269,12 @@ def validate_feature_manifest(
                 if _event_type(event) != _CHECKPOINT_EVENT_TYPES[checkpoint]:
                     raise ValueError(
                         f"confirmatory feature row {episode_id} binds {checkpoint} to the wrong event"
+                    )
+                first = _first_checkpoint(events, _CHECKPOINT_EVENT_TYPES[checkpoint])
+                if event is not first:
+                    raise ValueError(
+                        f"confirmatory feature row {episode_id} must bind {checkpoint} "
+                        "to the first deployable checkpoint"
                     )
                 if sequence != checkpoint_cutoffs[checkpoint] or sequence > cutoff:
                     raise ValueError(
