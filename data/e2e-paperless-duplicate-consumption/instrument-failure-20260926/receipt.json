@@ -1,0 +1,23 @@
+{
+  "files": {
+    "reports/gpt-5.6-luna-A-rep1.json": "96f6adb31c0a232083ba5fe91d83a7fb0cd0e83ffe89e2e468a32cc2f02c7aea",
+    "reports/gpt-5.6-luna-A-rep2.json": "8c507721b4783553b5f0490a406de7e92f09596a8f6120e00d527bd9fcfacc84",
+    "reports/gpt-5.6-luna-A-rep3.json": "4827d8ac08115a8b8575a9057e45f8fb0018a307ce31e1f7ecf9eb73dd503025",
+    "reports/gpt-5.6-luna-B-rep1.json": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9",
+    "reports/gpt-5.6-luna-B-rep2.json": "3269ebe3b5dadfae0be6f5d79d6814f092789bb312b413588ac54b6294d1a95a",
+    "reports/gpt-5.6-luna-B-rep3.json": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9",
+    "reports/gpt-5.6-luna-C-rep1.json": "03bb37317b87eedc57638ec19bdcc095ceec06e4f19dad38c1b7591448d26ce6",
+    "reports/gpt-5.6-luna-C-rep2.json": "03bb37317b87eedc57638ec19bdcc095ceec06e4f19dad38c1b7591448d26ce6",
+    "reports/gpt-5.6-luna-C-rep3.json": "03bb37317b87eedc57638ec19bdcc095ceec06e4f19dad38c1b7591448d26ce6",
+    "reports/gpt-5.6-sol-A-rep1.json": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9",
+    "reports/gpt-5.6-sol-A-rep2.json": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9",
+    "reports/gpt-5.6-sol-A-rep3.json": "4922439faf6d144d3a1907f07186f13a2dff26caa7c46814398f6a4513b8be5b",
+    "reports/gpt-5.6-sol-B-rep1.json": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9",
+    "reports/gpt-5.6-sol-B-rep2.json": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9",
+    "reports/gpt-5.6-sol-B-rep3.json": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9",
+    "reports/gpt-5.6-sol-C-rep1.json": "f830eaaf740e804839898907452a57e89788859e303b34a52da610379b8323b8",
+    "reports/gpt-5.6-sol-C-rep2.json": "ba0d8f4152d4581d4d2ced3d537d65d2f47aa68ccec4f29d70cb0589c9e50439",
+    "reports/gpt-5.6-sol-C-rep3.json": "f830eaaf740e804839898907452a57e89788859e303b34a52da610379b8323b8",
+    "summary.json": "820b55ce092a1c34e25f3239f2dd6d725e1b29a82a8073f8c58589c04627836c"
+  }
+}

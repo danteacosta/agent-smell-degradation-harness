@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Files</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button{font:inherit;padding:.4rem}.file{border:1px solid #bbb;padding:.8rem;margin:.7rem 0}nav{display:flex;gap:.8rem}</style></head>
+<body><main><h1>Files</h1><p id="location">Original location: /files (writable)</p><nav><button id="show-files" type="button">Files</button><button id="show-deleted" type="button">Deleted files</button></nav><div id="file-list"></div></main><script>
+const storageKey='restore-conflict-pilot';
+if(localStorage.getItem(storageKey)===null)localStorage.setItem(storageKey,JSON.stringify(window.initialState));
+let state=JSON.parse(localStorage.getItem(storageKey));
+let view='files';
+let restoreBehavior=null;
+const app=Object.freeze({
+  onRestore(handler){if(typeof handler!=='function'||restoreBehavior)throw new Error('invalid restore behavior');restoreBehavior=handler;render()},
+  snapshot(){return structuredClone(state)},
+  commit(next){if(!next||!Array.isArray(next.active)||!Array.isArray(next.deleted))throw new Error('file lists required');state=structuredClone(next);localStorage.setItem(storageKey,JSON.stringify(state));render()}
+});
+function render(){
+  document.querySelector('h1').textContent=view==='files'?'Files':'Deleted files';
+  const root=document.querySelector('#file-list');root.replaceChildren();
+  const rows=view==='files'?state.active:state.deleted;
+  for(const file of rows){
+    const row=document.createElement('section');row.className='file';row.dataset.fileId=String(file.id);
+    const name=document.createElement('h2');name.textContent=String(file.name??'');row.append(name);
+    if(view==='deleted'){
+      const button=document.createElement('button');button.type='button';button.textContent='Restore';button.disabled=!restoreBehavior;
+      button.addEventListener('click',()=>{if(restoreBehavior)restoreBehavior(structuredClone(file))});
+      row.append(button);
+    }
+    root.append(row);
+  }
+}
+document.querySelector('#show-files').addEventListener('click',()=>{view='files';render()});
+document.querySelector('#show-deleted').addEventListener('click',()=>{view='deleted';render()});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

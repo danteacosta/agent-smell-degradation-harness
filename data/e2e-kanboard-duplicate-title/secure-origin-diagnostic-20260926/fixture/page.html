@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Kanboard task view</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button{font:inherit;padding:.4rem}.task{border:1px solid #bbb;padding:.8rem;margin:.7rem 0}</style></head>
+<body><main><h1>Project tasks</h1><div id="tasks"></div></main><script>
+const tasks=structuredClone(window.initialState.tasks);
+const list=document.querySelector('#tasks');
+let duplicateBehavior=null;
+const app=Object.freeze({
+  onDuplicate(handler){if(typeof handler!=='function'||duplicateBehavior)throw new Error('invalid duplicate behavior');duplicateBehavior=handler},
+  tasks(){return structuredClone(tasks)}
+});
+function render(){
+  list.replaceChildren();
+  for(const task of tasks){
+    const row=document.createElement('section');row.className='task';row.dataset.taskId=String(task.id);row.dataset.projectId=String(task.projectId);
+    const title=document.createElement('h2');title.textContent=String(task.title??'');row.append(title);
+    const project=document.createElement('p');project.className='project';project.textContent='Project: '+String(task.projectId??'');row.append(project);
+    if(task.id==='source-task'){
+      const duplicate=document.createElement('button');duplicate.type='button';duplicate.textContent='Duplicate';
+      duplicate.addEventListener('click',()=>{
+        if(duplicateBehavior){const result=duplicateBehavior(structuredClone(task));if(result&&typeof result==='object')tasks.push(structuredClone(result))}
+        render();
+      });row.append(duplicate);
+    }
+    list.append(row);
+  }
+}
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

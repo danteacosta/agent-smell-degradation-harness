@@ -1,0 +1,22 @@
+{
+  "schema_version": "realworld-favorites-browser/v1",
+  "status": "complete",
+  "app_sha256": "9d4ff89e9192bf648b7e21226348f33f08ae82d1675d7c71ca618461f1192c07",
+  "assertions": {
+    "favorite_listed_1": true,
+    "authored_only_excluded_1": true,
+    "profile_preserved_1": true,
+    "navigation_preserved_1": true,
+    "unique_article_ids_1": true,
+    "favorite_listed_2": true,
+    "authored_only_excluded_2": true,
+    "profile_preserved_2": true,
+    "navigation_preserved_2": true,
+    "unique_article_ids_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

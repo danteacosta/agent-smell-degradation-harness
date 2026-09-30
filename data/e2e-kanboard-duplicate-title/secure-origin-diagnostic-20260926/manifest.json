@@ -1,0 +1,16 @@
+{
+  "change": "Runner URL changed from http://fixture.invalid/ to http://localhost/; qualifier adds crypto.randomUUID reference control.",
+  "claims": {
+    "confirmatory": false,
+    "h1_confirmed": false,
+    "h2_evaluated": false
+  },
+  "diagnostic_qualification_receipt_sha256": "78a586cfb2d613a77b9d7d7ae17ef5d77736443ffb2a515b5ab8ffbafe4a77ef",
+  "new_generation_calls": 0,
+  "post_outcome": true,
+  "primary_private_receipt_sha256": "0f243dc3ce832638497c970636d40a327d36c98b90d14a9236b0ed7bf8f14cfe",
+  "primary_result_replaced": false,
+  "private_diagnostic_receipt_sha256": "da8c3107167c2ca9322d8b8b1da0b4b7f2eafeac2e08051f2b21d88e5efc2769",
+  "reused_same_generated_artifacts": true,
+  "schema_version": "kanboard-duplicate-secure-origin-diagnostic-public/v1"
+}

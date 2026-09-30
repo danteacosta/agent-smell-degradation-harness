@@ -1,0 +1,10 @@
+{
+  "schema_version": "kanboard-duplicate-title-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "27021a395041ee03270f5486a8c902e893f1393d6f3695f61565eb4f08c4ded9",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: duplicate must be created by the click handler"
+}

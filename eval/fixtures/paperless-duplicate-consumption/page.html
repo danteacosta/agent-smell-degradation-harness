@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Documents</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button{font:inherit;padding:.4rem}.document{border:1px solid #bbb;padding:.8rem;margin:.7rem 0}</style></head>
+<body><main><h1>Documents</h1><button id="upload" type="button">Upload document</button><div id="documents"></div></main><script>
+const storageKey='paperless-duplicate-pilot';
+if(localStorage.getItem(storageKey)===null)localStorage.setItem(storageKey,JSON.stringify(window.initialState.documents));
+let documents=JSON.parse(localStorage.getItem(storageKey));
+let uploadBehavior=null;
+const app=Object.freeze({
+  onUpload(handler){if(typeof handler!=='function'||uploadBehavior)throw new Error('invalid upload behavior');uploadBehavior=handler},
+  documents(){return structuredClone(documents)},
+  addDocument(item){if(!item||typeof item!=='object'||!(item.title??item.name))throw new Error('document title required');
+    const id=item.id??crypto.randomUUID();if(documents.some(document=>String(document.id)===String(id)))throw new Error('duplicate identity');
+    documents.push({id,title:item.title??item.name,checksum:item.checksum});localStorage.setItem(storageKey,JSON.stringify(documents));render()}
+});
+function render(){
+  const root=document.querySelector('#documents');root.replaceChildren();
+  for(const item of documents){const row=document.createElement('section');row.className='document';row.dataset.documentId=String(item.id);
+    const title=document.createElement('h2');title.textContent=String(item.title??'');row.append(title);root.append(row)}
+}
+document.querySelector('#upload').addEventListener('click',()=>{if(uploadBehavior)uploadBehavior(structuredClone(window.initialState.upload))});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

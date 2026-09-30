@@ -1,5 +1,9 @@
 # E2E evidence matrix — through 26 September 2026
 
+The [per-experiment smell mapping](e2e-smell-mapping-20260926.md) relates each
+controlled omission to the literature's broad incompleteness family and
+separates that construct alignment from the observed browser outcome.
+
 The exploratory program now contains informative browser outcomes in six
 projects. The rows below are a synthesis of separate pilots, not one pooled
 experiment. Their scaffolds, requirements, denominators, and collection dates
@@ -67,6 +71,30 @@ non-target mutants before generation, and analyzes requirement-level effects
 with project and model as grouping factors. Existing pilots remain a separate
 exploratory stratum.
 
+## 26 September: second Kanboard obligation
+
+The [duplicate-title pilot](../research/kanboard-duplicate-title-qualification-20260926.md)
+adds a second obligation in Kanboard, in a different interaction from
+completing unfinished subtasks. All 18 code generations passed the frozen
+HTML admission check. The original browser run had seven passes, two
+target-only C failures, and nine unknown browser errors. Every unknown used
+`crypto.randomUUID()`, unavailable at the frozen fixture origin. These are
+not evidence of a title defect. The original planned-denominator C−A
+target-failure difference was +2/6; unequal unknowns prevent a clean
+interpretation.
+
+A separately qualified, **post-outcome** diagnostic changed only the runner
+origin to `localhost` and re-evaluated the same saved artifacts, with no new
+model calls. It yielded 16 passes and the same two C title failures. Luna
+had two C failures in three runs, while Sol passed C in all three. The two
+failures appended `(Copy)`/`(copy)` to the duplicated title; A and B passed
+3/3 in each model. This explains the original unknowns but is not a
+prospectively frozen replacement result. It leaves the project count at six,
+with two distinct obligations now executed in both Kanboard and OpenProject.
+Nine of the original 11 previously unexecuted obligations remain, plus the
+TodoMVC persistence bridge replication. The formal H1/H2 outcomes remain
+unmeasured.
+
 Evidence:
 
 - TodoMVC focus chain: `data/focus-chain/results-20260922.json`
@@ -74,3 +102,80 @@ Evidence:
 - Initial four-project expansion, including Kanboard: `data/e2e-six-projects/results-20260925/`
 - Fixed-scaffold successor: `data/e2e-three-project-successor/results-20260925/`
 - Second OpenProject obligation: `data/e2e-openproject-remaining/results-20260926/`
+- Second Kanboard obligation, original and post-outcome diagnostic:
+  `data/e2e-kanboard-duplicate-title/results-20260926/` and
+  `data/e2e-kanboard-duplicate-title/secure-origin-diagnostic-20260926/`
+
+## 26 September: later qualified obligations
+
+The [new Kanboard replication](../research/kanboard-duplicate-title-qualification-20260926.md#nova-replicação-prospectiva-com-origem-segura)
+ran 18 fresh generations under a qualified origin: A/B passed 6/6 each,
+while C had two selective title failures and four passes. This replaces no
+earlier outcome and adds no requirement diversity.
+
+The [Paperless duplicate-consumption pilot](../research/paperless-duplicate-consumption-20260926.md)
+added a third previously unexecuted obligation in the planned block. A/B
+passed 12/12 and C had four selective failures in six evaluable outputs.
+Its first 18-generation lot remains an instrument failure, not part of that
+contrast.
+
+The [RealWorld favorites-route pilot](../research/realworld-favorites-20260926.md)
+added a fourth obligation but **no observed omission effect**: its qualified
+successor had 18/18 evaluable outputs, with A/B/C each passing 6/6. The
+models reconstructed the favorites rule in C from the route and common data
+schema. Its first 18-generation lot also remains a separate instrument
+failure. The evidence matrix now includes a successful recovery case alongside
+selective defect cases. Seven planned new obligations and the TodoMVC bridge
+remain; the project count stays at six. These selected, separate pilots do not
+estimate formal H1 or test H2.
+
+The [TodoMVC persistence bridge](../research/todomvc-persistence-bridge-20260926.md)
+has now run with a prospectively qualified selector and 18 fresh generations.
+A/B passed 6/6 each. C passed 5/6, while one C output was an interface error
+before the target could be assessed. There was no observed target failure in
+the five evaluable C outputs. This is a replication of an existing obligation,
+not a fifth new requirement; seven planned new obligations remain.
+
+The [OpenProject invalid Remaining work pilot](../research/openproject-invalid-remaining-20260926.md)
+adds a fifth new obligation in the planned block. All 18 fresh outputs were
+evaluable: A and B passed 6/6 each, while C failed only the invalid-save
+target 6/6. The two numeric fixtures checked persistence after reload. The
+project count remains six, and six planned new obligations remain. This
+single selected obligation is a strong within-case contrast, not evidence
+for a general effect across requirements or the formal H1/H2 outcomes.
+
+## 27 September: Paperless nested-tag obligation
+
+The [nested-tag pilot](../research/paperless-nested-tags-20260927.md) adds a
+sixth new obligation in the same six projects. Its source requires automatic
+parent-tag assignment. In 18 fresh generations, B passed 6/6 and C had six
+target-only failures. A had four passes, one target-only failure, and one
+browser error caused by passing an undefined tag to the persistence API.
+The A outcomes and one unknown preclude a clean uniform A/B-versus-C claim;
+the C−B within-case contrast is 6/6. Five planned new obligations remain.
+No formal H1 ordinal or H2 early-warning outcome was measured.
+
+## 27 September: Kanboard Closed tasks filter
+
+The [Closed tasks filter pilot](../research/kanboard-closed-filter-20260927.md)
+adds a seventh new obligation. Its first 18-generation lot is preserved as an
+instrument failure because the common page did not declare the task record
+shape; mixed failures affected A, B and C. A separately frozen and qualified
+successor declared the shared record shape and generated 18 fresh outputs.
+All were evaluable and A/B/C each passed 6/6: **no omission effect was
+observed**. The models could recover the rule from the visible filter option
+and status data. Four planned obligations remain. This null result is retained
+alongside positive and mixed cases; no formal H1/H2 estimate follows.
+
+## 27 September: Nextcloud restore-name conflict
+
+The [restore-name conflict pilot](../research/nextcloud-restore-conflict-20260927.md)
+adds an eighth new obligation. The new path-aware, writable-directory
+instrument passed 10/10 browser controls and unanimous pre-generation LLM
+review. Its first 18-generation lot remains an instrument failure because the
+generic collector required differently named screenshots; a separate
+diagnostic read of its complete reports is not the primary outcome. A
+separately frozen successor generated 18 new outputs: A/B passed 6/6 each,
+while C had 6/6 target-only failures in the browser. Three new obligations
+remain in the planned block, still within six projects. This selected-case
+contrast does not estimate formal H1 ordinal severity or H2 early warning.

@@ -1,0 +1,5 @@
+{
+  "A": "In Deleted files, selecting Delete permanently for a trashed item permanently deletes that selected item. Other trashed items remain available.",
+  "B": "When a user chooses Delete permanently on an item in Deleted files, remove the selected item from the trash. Keep unrelated trashed items available.",
+  "C": "In Deleted files, a trashed item has a Delete permanently action. Other trashed items remain available."
+}

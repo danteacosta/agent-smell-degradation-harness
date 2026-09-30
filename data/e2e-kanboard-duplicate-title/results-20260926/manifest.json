@@ -1,0 +1,18 @@
+{
+  "calls_attempted": 18,
+  "claims": {
+    "confirmatory": false,
+    "h1_confirmed": false,
+    "h2_evaluated": false
+  },
+  "evaluable": 9,
+  "freeze_manifest_sha256": "9954878ecab7fa169fd421b319b0dbb47e6ee64428ed069dbb50789c08d19d32",
+  "limitations": "One exploratory obligation in previously represented Kanboard; insecure fixture origin made crypto.randomUUID unavailable and nine slots unevaluable; no formal H1 or H2 inference.",
+  "planned_slots": 18,
+  "posthoc_diagnostic_included": false,
+  "primary_frozen_result": true,
+  "private_receipt_sha256": "0f243dc3ce832638497c970636d40a327d36c98b90d14a9236b0ed7bf8f14cfe",
+  "qualification_receipt_sha256": "5907d3c461767321cab108ce6d60d919abe624dc920a3b4bf6962d3ba80e4337",
+  "schema_version": "kanboard-duplicate-title-public-results/v1",
+  "unknown": 9
+}

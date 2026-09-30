@@ -117,6 +117,10 @@ Nextcloud e OpenProject. No sucessor de scaffold fixo em três projetos, houve
 54 chamadas, 53 saídas executáveis e 11 falhas seletivas em C; todas as 17
 saídas A avaliáveis e todas as 18 saídas B passaram. Esses totais pertencem
 somente àquele sucessor, não a uma amostra combinada dos seis projetos.
+A [matriz de mapeamento aos smells](../thesis/e2e-smell-mapping-20260926.md)
+identifica a intervenção como omissão controlada de obrigação, alinhada à
+família ampla de incompletude semântica da literatura. Os subtipos por caso
+são interpretação analítica, não labels independentes de smells naturais.
 
 Em 26 de setembro, um [segundo requisito do OpenProject](../research/openproject-remaining-pilot-20260926.md)
 foi testado: 18/18 saídas avaliáveis, A e B com 3/3 acertos por modelo, C com
@@ -126,6 +130,58 @@ ao informar % Complete com Work já preenchido. Portanto, o piloto acrescenta
 projeto. A auditoria posterior de rótulos por LLM registrou discordâncias e
 não substitui o oráculo de navegador nem validação humana.
 
+Um [segundo requisito do Kanboard](../research/kanboard-duplicate-title-qualification-20260926.md)
+foi testado na ação de duplicar uma tarefa, desta vez verificando se a cópia
+mantém o título visível. As 18 gerações foram admitidas. No navegador
+congelado, sete passaram, duas falharam apenas no título sob C e nove ficaram
+sem avaliação porque os códigos usaram `crypto.randomUUID()`, indisponível na
+origem da página de teste. Uma reavaliação diagnóstica **posterior ao
+resultado**, com os mesmos artefatos e uma origem segura qualificada, obteve
+16 acertos e as mesmas duas falhas em C, ambas no modelo Luna; Sol preservou
+o título em C nas três repetições. Esse diagnóstico explica os casos
+desconhecidos, mas não substitui o desfecho congelado. O total continua em
+seis projetos; Kanboard e OpenProject agora têm duas obrigações distintas
+cada um.
+
+Uma [replicação nova e previamente congelada](../research/kanboard-duplicate-title-qualification-20260926.md#nova-replicação-prospectiva-com-origem-segura)
+da mesma obrigação Kanboard executou outras 18 gerações e 18 avaliações E2E
+com a origem segura qualificada antes da geração. Não houve caso desconhecido:
+A e B passaram 6/6 cada; C passou 4/6 e falhou seletivamente 2/6. As duas
+falhas ocorreram em Luna, com título da cópia alterado por um sufixo; Sol
+recuperou o título em C nas três repetições. É uma replicação limpa do efeito
+local e da heterogeneidade entre modelos, não nova diversidade de requisitos.
+
+Uma [nova obrigação Paperless-ngx](../research/paperless-duplicate-consumption-20260926.md)
+testou a aceitação padrão de uma cópia com o mesmo checksum. O primeiro lote
+de 18 gerações revelou um desencaixe entre o arquivo entregue ao código e a
+API do scaffold; nenhum caso passou, e esse lote permanece como falha de
+instrumento. Após corrigir a interface, requalificar nove controles e
+congelar outro lote antes de gerar código, houve **18/18 E2Es avaliáveis**.
+A e B passaram 6/6 cada; C falhou apenas no alvo em 4/6 e passou em 2/6.
+Luna concentrou três falhas C; Sol recuperou a obrigação em duas de três C.
+Isto acrescenta diversidade de obrigações dentro dos seis projetos já
+representados, sem estimar efeito populacional nem confirmar H1/H2.
+
+Uma [nova obrigação RealWorld](../research/realworld-favorites-20260926.md)
+testou a lista de artigos favoritados no perfil. O primeiro lote de 18
+gerações expôs um contrato de dados incompleto no scaffold e permanece como
+falha de instrumento, sem contraste causal. Um sucessor, com formato de dados
+comum declarado, passou oito controles de navegador e três revisões LLM
+antes do congelamento. Nas 18 novas gerações, **A, B e C passaram 6/6 cada**,
+sem casos não avaliáveis. O contraste observado de falha-alvo C−A foi zero:
+os modelos recuperaram a seleção de favoritos usando a rota e os campos do
+scaffold, mesmo quando C omitiu a regra. Este resultado sem efeito observado
+deve permanecer ao lado dos efeitos Paperless, OpenProject e Kanboard; não
+prova equivalência nem confirma H1/H2. Agora são quatro obrigações novas
+executadas no bloco planejado, restando sete.
+
+A [ponte de persistência TodoMVC](../research/todomvc-persistence-bridge-20260926.md)
+foi replicada prospectivamente com o seletor qualificado: 18 novas gerações,
+17 saídas E2E avaliáveis, A e B com 6/6 passes cada, C com 5/6 passes e um
+erro de interface. Não houve falha-alvo observada. O erro não é contado como
+sucesso ou defeito. Essa replicação não acrescenta obrigação nova e não altera
+as contagens dos pilotos anteriores.
+
 Os experimentos demonstram que a omissão pode produzir defeito visível em
 contextos distintos, mas há recuperações da informação omitida e diferenças
 entre modelos. A seleção foi intencional, os scaffolds e datas diferem e as
@@ -133,3 +189,19 @@ repetições são aninhadas em requisitos. Não se estima efeito populacional.
 O desfecho E2E é falha comportamental; H1 usa severidade ordinal adjudicada,
 e H2 exige sinais anteriores ao código final em projetos de avaliação
 separados. Nenhuma das duas hipóteses está confirmada.
+
+## Auditoria ordinal secundária de H1
+
+Uma [auditoria dos critérios já gerados](../research/h1-existing-criteria-ordinal-audit-20260926.md)
+avaliou 48 posições predefinidas da coleta de 12 intenções e quatro projetos;
+duas tinham geração inválida. Dois modelos julgaram as 46 saídas válidas com
+uma rubrica ordinal preexistente, sem receber condição ou gerador. As 92
+respostas tiveram formato válido, mas só 29 artefatos atenderam simultaneamente
+ao consenso exato de severidade e estados das obrigações e à exigência de
+citações literais. Nove das 24 comparações A–C ficaram completas. O contraste
+A−C nessas nove foi −2 em oito e zero em uma; considerando todas as 24 e
+mantendo os rótulos ausentes como 0–3, os limites são [−2,25; +0,125].
+Portanto, o sinal exploratório é compatível com degradação, **mas não exclui
+efeito nulo**. Julgadores do mesmo provedor, ausência de adjudicação humana,
+quatro projetos intencionais e seleção de uma repetição impedem tratá-lo como
+teste confirmatório de H1.

@@ -1,0 +1,180 @@
+{
+  "attempted_calls": 18,
+  "browser_rows": [
+    {
+      "arm": "A",
+      "category": "target_only_failure",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "report": "reports/gpt-5.6-luna-A-rep1.json",
+      "report_sha256": "96f6adb31c0a232083ba5fe91d83a7fb0cd0e83ffe89e2e468a32cc2f02c7aea"
+    },
+    {
+      "arm": "A",
+      "category": "target_only_failure",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "report": "reports/gpt-5.6-luna-A-rep2.json",
+      "report_sha256": "8c507721b4783553b5f0490a406de7e92f09596a8f6120e00d527bd9fcfacc84"
+    },
+    {
+      "arm": "A",
+      "category": "target_only_failure",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "report": "reports/gpt-5.6-luna-A-rep3.json",
+      "report_sha256": "4827d8ac08115a8b8575a9057e45f8fb0018a307ce31e1f7ecf9eb73dd503025"
+    },
+    {
+      "arm": "B",
+      "category": "browser_error",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "report": "reports/gpt-5.6-luna-B-rep1.json",
+      "report_sha256": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9"
+    },
+    {
+      "arm": "B",
+      "category": "browser_error",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "report": "reports/gpt-5.6-luna-B-rep2.json",
+      "report_sha256": "3269ebe3b5dadfae0be6f5d79d6814f092789bb312b413588ac54b6294d1a95a"
+    },
+    {
+      "arm": "B",
+      "category": "browser_error",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "report": "reports/gpt-5.6-luna-B-rep3.json",
+      "report_sha256": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9"
+    },
+    {
+      "arm": "C",
+      "category": "target_only_failure",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "report": "reports/gpt-5.6-luna-C-rep1.json",
+      "report_sha256": "03bb37317b87eedc57638ec19bdcc095ceec06e4f19dad38c1b7591448d26ce6"
+    },
+    {
+      "arm": "C",
+      "category": "target_only_failure",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "report": "reports/gpt-5.6-luna-C-rep2.json",
+      "report_sha256": "03bb37317b87eedc57638ec19bdcc095ceec06e4f19dad38c1b7591448d26ce6"
+    },
+    {
+      "arm": "C",
+      "category": "target_only_failure",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "report": "reports/gpt-5.6-luna-C-rep3.json",
+      "report_sha256": "03bb37317b87eedc57638ec19bdcc095ceec06e4f19dad38c1b7591448d26ce6"
+    },
+    {
+      "arm": "A",
+      "category": "browser_error",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "report": "reports/gpt-5.6-sol-A-rep1.json",
+      "report_sha256": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9"
+    },
+    {
+      "arm": "A",
+      "category": "browser_error",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "report": "reports/gpt-5.6-sol-A-rep2.json",
+      "report_sha256": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9"
+    },
+    {
+      "arm": "A",
+      "category": "target_only_failure",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "report": "reports/gpt-5.6-sol-A-rep3.json",
+      "report_sha256": "4922439faf6d144d3a1907f07186f13a2dff26caa7c46814398f6a4513b8be5b"
+    },
+    {
+      "arm": "B",
+      "category": "browser_error",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "report": "reports/gpt-5.6-sol-B-rep1.json",
+      "report_sha256": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9"
+    },
+    {
+      "arm": "B",
+      "category": "browser_error",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "report": "reports/gpt-5.6-sol-B-rep2.json",
+      "report_sha256": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9"
+    },
+    {
+      "arm": "B",
+      "category": "browser_error",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "report": "reports/gpt-5.6-sol-B-rep3.json",
+      "report_sha256": "633b0601eab4836977f92890b8a9f83442aea4ceeda73632c329ea1127d489b9"
+    },
+    {
+      "arm": "C",
+      "category": "target_only_failure",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "report": "reports/gpt-5.6-sol-C-rep1.json",
+      "report_sha256": "f830eaaf740e804839898907452a57e89788859e303b34a52da610379b8323b8"
+    },
+    {
+      "arm": "C",
+      "category": "browser_error",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "report": "reports/gpt-5.6-sol-C-rep2.json",
+      "report_sha256": "ba0d8f4152d4581d4d2ced3d537d65d2f47aa68ccec4f29d70cb0589c9e50439"
+    },
+    {
+      "arm": "C",
+      "category": "target_only_failure",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "report": "reports/gpt-5.6-sol-C-rep3.json",
+      "report_sha256": "f830eaaf740e804839898907452a57e89788859e303b34a52da610379b8323b8"
+    }
+  ],
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "target_only_failure": 3
+      },
+      "B": {
+        "browser_error": 3
+      },
+      "C": {
+        "target_only_failure": 3
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "browser_error": 2,
+        "target_only_failure": 1
+      },
+      "B": {
+        "browser_error": 3
+      },
+      "C": {
+        "browser_error": 1,
+        "target_only_failure": 2
+      }
+    }
+  },
+  "frozen_receipt_sha256": "50ee7a15d4ef05b394a0a6320237072194cc6f810144f9387eae47ff3a2362cb",
+  "planned_slots": 18,
+  "private_packet_receipt_sha256": "284a0577bf68de5fdbcb42761c49c2b9d7563596fd82a41ac2b381a4b7eca9e6",
+  "schema_version": "paperless-duplicate-consumption-public/v1",
+  "status": "instrument_failure"
+}

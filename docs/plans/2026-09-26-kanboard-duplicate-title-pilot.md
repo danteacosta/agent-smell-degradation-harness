@@ -1,7 +1,9 @@
 # Kanboard duplicate-title E2E successor
 
-Status: oracle qualified and prompt/schedule frozen before generation; no
-generated implementation has yet been evaluated. Qualification and review are
+Status: 18/18 generations and frozen browser executions completed; nine
+original outputs were unevaluable because the fixture origin did not expose
+`crypto.randomUUID()`. A separately labeled post-outcome secure-origin
+diagnostic re-evaluated the same saved outputs. Qualification and results are
 recorded in the [research note](../research/kanboard-duplicate-title-qualification-20260926.md).
 
 This case is `kanboard-duplicate-preserves-title`, unanimously accepted in the

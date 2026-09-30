@@ -1,0 +1,5 @@
+{
+  "A": "Saving edits updates the persisted Work and Remaining work values. A Remaining work value greater than Work cannot be saved.",
+  "B": "Persist edits to Work and Remaining work when valid. Reject a save if Remaining work exceeds Work.",
+  "C": "Saving edits updates the persisted Work and Remaining work values."
+}

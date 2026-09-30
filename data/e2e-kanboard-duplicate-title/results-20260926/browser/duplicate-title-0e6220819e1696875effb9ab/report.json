@@ -1,0 +1,10 @@
+{
+  "schema_version": "kanboard-duplicate-title-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "dd3ce8e425e7e63571ba8350e12ae9ad5c60c7723cc8e0e1857710b6bd34a8ca",
+  "assertions": {},
+  "console_errors": [
+    "TypeError: crypto.randomUUID is not a function"
+  ],
+  "error": "Error: one distinct duplicate required"
+}

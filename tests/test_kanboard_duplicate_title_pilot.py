@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from pathlib import Path
+import hashlib
+import json
 import runpy
 import subprocess
 import pytest
@@ -171,3 +173,27 @@ def test_collection_generates_before_browser_and_retains_unknowns(tmp_path: Path
     assert analysis["contrasts"]["B_minus_A"]["planned_denominator_difference"] == 0
     with pytest.raises(FileExistsError, match="no resume"):
         collect.run(packet, Provider, executor)
+
+
+def test_public_primary_and_posthoc_packets_keep_distinct_results() -> None:
+    base = ROOT / "data/e2e-kanboard-duplicate-title"
+
+    def checked_packet(name: str) -> Path:
+        packet = base / name
+        receipt = json.loads((packet / "receipt.json").read_text())
+        inventory = {path.relative_to(packet).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+                     for path in packet.rglob("*") if path.is_file() and path != packet / "receipt.json"}
+        assert receipt["files"] == inventory
+        return packet
+
+    primary = checked_packet("results-20260926")
+    diagnostic = checked_packet("secure-origin-diagnostic-20260926")
+    primary_rows = json.loads((primary / "analysis.json").read_text())["rows"]
+    diagnostic_rows = json.loads((diagnostic / "diagnostic.json").read_text())["rows"]
+    assert len(primary_rows) == len(diagnostic_rows) == 18
+    assert sum(row["category"] == "browser_error" for row in primary_rows) == 9
+    assert sum(row["category"] == "target_only_failure" for row in primary_rows) == 2
+    assert {row["slot_id"] for row in primary_rows} == {row["slot_id"] for row in diagnostic_rows}
+    assert sum(row["diagnostic_category"] == "pass" for row in diagnostic_rows) == 16
+    assert sum(row["diagnostic_category"] == "target_only_failure" for row in diagnostic_rows) == 2
+    assert json.loads((diagnostic / "manifest.json").read_text())["post_outcome"] is True

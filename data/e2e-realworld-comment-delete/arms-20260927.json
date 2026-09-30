@@ -1,0 +1,5 @@
+{
+  "A": "Render a Delete button for the article comment if and only if the signed-in viewer is the comment's author.",
+  "B": "On the article page, display the comment's Delete action if and only if the signed-in viewer wrote that comment.",
+  "C": "Render a Delete button for the article comment."
+}

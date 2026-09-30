@@ -1,0 +1,8 @@
+{
+  "schema_version": "kanboard-duplicate-title-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "8d61bafc387537e9fc52c71425986ea1ece4a88ce7d8d3985ea99871ad54df2a",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: distinct task identity required"
+}

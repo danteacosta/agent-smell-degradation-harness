@@ -1,0 +1,61 @@
+{
+  "citation_invalid_assessments_by_judge": {
+    "gpt-6-astra": 5,
+    "gpt-6-sol": 21
+  },
+  "complete_a_c_cells": 9,
+  "complete_cell_delta_distribution": {
+    "-2": 8,
+    "0": 1
+  },
+  "complete_cell_mean_a_minus_c": -1.7777777777777777,
+  "confirmatory_eligible": false,
+  "full_label_and_constraint_agreement_artifacts": 36,
+  "human_approvals": 0,
+  "interpretation": "Missingness bounds and LLM consensus are descriptive; not an H1 confidence interval or human adjudication.",
+  "invalid_original_generations": 2,
+  "judge_calls": 92,
+  "label_agreement_artifacts": 39,
+  "parent_receipt_sha256": "5c72ebe1ab3cce7a09b804514680e3dc82c96b2a5cdb481a57b0cc928e8a7561",
+  "planned_a_c_cells": 24,
+  "planned_artifacts": 48,
+  "planned_denominator_bounds_a_minus_c": {
+    "lower": -2.25,
+    "upper": 0.125
+  },
+  "project_bounds": {
+    "CASS": {
+      "cells": 6,
+      "complete_pairs": 2,
+      "lower": -2.0,
+      "upper": 0.0
+    },
+    "realworld": {
+      "cells": 6,
+      "complete_pairs": 0,
+      "lower": -2.6666666666666665,
+      "upper": 1.8333333333333333
+    },
+    "strictdoc": {
+      "cells": 6,
+      "complete_pairs": 4,
+      "lower": -2.3333333333333335,
+      "upper": -0.8333333333333334
+    },
+    "todomvc": {
+      "cells": 6,
+      "complete_pairs": 3,
+      "lower": -2.0,
+      "upper": -0.5
+    }
+  },
+  "schema_version": "h1-existing-ordinal-audit-results/v1",
+  "status": "secondary_exploratory",
+  "strict_consensus_artifacts": 29,
+  "strict_consensus_labels": {
+    "clean": 13,
+    "moderate": 16
+  },
+  "valid_artifacts": 46,
+  "valid_judge_calls": 92
+}

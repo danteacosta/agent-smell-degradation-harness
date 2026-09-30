@@ -1,5 +1,12 @@
 # Research catalog
 
+- [27 September 2026: Frattini endpoint PR review](2026-09-27-frattini-pr-review.md): primary-study check and the confirmatory scope of the proposed decision gate.
+
+- [27 September 2026: Nextcloud permanent deletion source](2026-09-27-nextcloud-permanent-delete-source.md): official manual wording and the remaining source-to-E2E inference.
+
+- [26 September 2026: smell mapping for E2E](2026-09-26-smell-mapping-for-e2e.md): credited sources and construct boundaries for the per-experiment omission mapping.
+- [Per-experiment smell mapping](../thesis/e2e-smell-mapping-20260926.md): each completed E2E linked to a literature-aligned family; non-browser ambiguity controls stay separate.
+
 This directory records external evidence that changes the thesis protocol,
 provider configuration, or launch decision. Each entry links the downstream
 artifact it informs and distinguishes vendor documentation from local
@@ -14,6 +21,16 @@ experiment evidence.
 - [2026-09-24 pre-merge requirement audit market check](2026-09-24-premerge-requirement-audit-market-check.md): verified Lemma overlap and funding announcement, rejected unsupported revenue figures, and defined a separate 3–5-team commercial validation protocol.
 
 ## Research execution guides
+
+- [Paperless-ngx duplicate-consumption E2E pilot](paperless-duplicate-consumption-20260926.md): 18 new evaluable generations, A/B 12/12 pass, C 4/6 selective failures; the earlier 18-generation instrument failure is preserved separately.
+- [RealWorld favorites-route E2E pilot](realworld-favorites-20260926.md): successor 18/18 evaluable, A/B/C 6/6 pass each; the first 18-generation instrument failure is preserved separately.
+- [TodoMVC Clear completed admission](todomvc-clear-button-admission-20260926.md): revised browser oracle passed 7/7 controls, but the instrument-review gate did not pass; no generation.
+- [TodoMVC persistence bridge](todomvc-persistence-bridge-20260926.md): 18 fresh generations, 17 E2E outputs evaluable, no observed target failure; one C interface error preserved.
+- [Nextcloud permanent-delete admission](nextcloud-permanent-delete-admission-20260926.md): browser oracle 8/8 qualified, but source-to-visual-endpoint panel remained 2–1; no generation admitted.
+- [Nextcloud restore-name admission](nextcloud-restore-conflict-admission-20260926.md): three qualified local oracle versions and three preserved review rounds; source-to-endpoint gate still failed, no generation.
+- [Kanboard close-task admission](kanboard-close-admission-20260926.md): eight browser controls passed, but two full instrument-review panels stayed 2–1; no generation.
+
+- [Secondary H1 ordinal audit of saved criteria](h1-existing-criteria-ordinal-audit-20260926.md): 92 valid blind LLM judgments over 46 saved artifacts; strict evidence leaves 29 consensus labels and A−C missingness bounds that include zero. Not confirmatory.
 
 - [SRS-163 consensus results](criteria-consensus-results-20260921.md): 39 subscription calls, nine artifacts and three judges; unanimous category coverage contrasts alongside observed auxiliary judging errors.
 
@@ -56,7 +73,7 @@ experiment evidence.
 - [Behavioral oracle source reviews](ui-behavioral-contracts-20260922.md), [RealWorld API contracts](realworld-behavioral-contracts-20260922.md), and [CaSS contracts](cass-behavioral-contracts-20260922.md): authored controls and unresolved admission decisions for the eight candidates.
 - [Prospective multi-obligation E2E expansion](multi-obligation-e2e-expansion-protocol-20260925.md): 12 source-bound UI slots across the six observed projects—11 previously unexecuted obligations plus one TodoMVC persistence bridge replication—yielding 216 A/B/C positions if every oracle passes pre-generation qualification.
 - [OpenProject Remaining work pilot](openproject-remaining-pilot-20260926.md) and [post-outcome label audit](openproject-remaining-label-audit-20260926.md): one of those 11 new obligations was subsequently executed in 18/18 evaluable browser runs; ten remain unexecuted. This adds no project and does not confirm H1/H2.
-- [Kanboard duplicate-title qualification](kanboard-duplicate-title-qualification-20260926.md): a second Kanboard obligation with eight qualified browser controls, unanimous three-LLM pre-generation instrument review, and an 18-slot frozen schedule; no generated outcome yet.
+- [Kanboard duplicate-title pilot](kanboard-duplicate-title-qualification-20260926.md): a second Kanboard obligation, 18 frozen generations, two target-only C failures and nine unknown browser outcomes; a separately labeled post-outcome secure-origin diagnostic resolves the unknowns without new generations. Neither result confirms H1/H2.
 - [Multi-obligation screening panel](multi-obligation-screening-panel-20260925.md): three-model unanimous gate admits 3/12 candidates to oracle construction, a 54-position ceiling before qualification; no generated outcomes.
 - [Behavioral expansion analysis plan](../plans/2026-09-22-behavioral-expansion-analysis.md): finite schedule, fixed denominators and project weighting; no collection.
 

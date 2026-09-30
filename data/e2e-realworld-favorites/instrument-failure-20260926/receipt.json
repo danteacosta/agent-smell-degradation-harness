@@ -1,0 +1,23 @@
+{
+  "files": {
+    "reports/gpt-5.6-luna-A-rep1.json": "217b5512224d085716284496393987833c596bb67d6ba54405cdb2ec91ab0d51",
+    "reports/gpt-5.6-luna-A-rep2.json": "3bcafd3da72708ab52c20f1bd7d482c118ad63cdc6a9983ba2b6d03c812a4419",
+    "reports/gpt-5.6-luna-A-rep3.json": "2aafc85c2b4575bb31539248e51c8cc2baa77c0a001ed39b9e4af4589854193f",
+    "reports/gpt-5.6-luna-B-rep1.json": "22c6e6f99b964ce127441c4ebbad9103c7a8f00484c63e7b0fdd2611f9b16afe",
+    "reports/gpt-5.6-luna-B-rep2.json": "8d7ea6e20266bad8500a70f2f02ea9ca6b41c8cb0d5a005ae370b5592d498dce",
+    "reports/gpt-5.6-luna-B-rep3.json": "fdeeb6f73ed24fba0b2cffe558f86a42748a2cc2890216e21cfcd168fd060188",
+    "reports/gpt-5.6-luna-C-rep1.json": "2989d0a98efe1fc971d996eeb24869e6d2dafb488cf4b6c213e6a4763ea9ba37",
+    "reports/gpt-5.6-luna-C-rep2.json": "12e9f8f2a1a9fe70bc515afa40fe5d636df150858e6d63612b83b868318d4409",
+    "reports/gpt-5.6-luna-C-rep3.json": "f170082102a3e1dfa881b939e4b0a22da8a91e27a57a5a8ddf5077391e595b2f",
+    "reports/gpt-5.6-sol-A-rep1.json": "8d6eeb5fc7007ae706366519c617831dcb293a718c4e87ea3c136775c6dc79fd",
+    "reports/gpt-5.6-sol-A-rep2.json": "469e9bdf9620e753d0ea4a896cf5d1a5c3639293c36729e363cf88666d0e161a",
+    "reports/gpt-5.6-sol-A-rep3.json": "0063b61f4e8e8736bbf7b4bfc5cfeab12c84abc51c48842612b392a9b312dae7",
+    "reports/gpt-5.6-sol-B-rep1.json": "7b3475e5763de03d216193d6aaccca581135b173745b2bcc6f96911a0812a33e",
+    "reports/gpt-5.6-sol-B-rep2.json": "179f63b7e763e7ad0554676da0b5898f91fc4a0ccfcebfa6a1c3c634b4ae2961",
+    "reports/gpt-5.6-sol-B-rep3.json": "aece7c2cc09755fae0f58045fd4bca683ea3d6e98351c9154b0349b795e18429",
+    "reports/gpt-5.6-sol-C-rep1.json": "8e294b3d3289c599cf6b26ab348ef954f9a2a050646190e1b756e4796a645319",
+    "reports/gpt-5.6-sol-C-rep2.json": "54ec82980ba88fef832e2887fd55830763f2020c8095fbefa9ff7e89c8bab180",
+    "reports/gpt-5.6-sol-C-rep3.json": "c51782549f41b0b519f0eaef2876dea07f702200b5dea7d7eb4feb86f4a13498",
+    "summary.json": "1b7ebff7fad7d1b9fd72aedbb0570d0f3b1c4ee3da50cfb653276ad7dc13d63b"
+  }
+}

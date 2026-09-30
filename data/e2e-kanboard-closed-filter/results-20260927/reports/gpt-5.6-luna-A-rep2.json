@@ -1,0 +1,22 @@
+{
+  "schema_version": "kanboard-closed-filter-browser/v1",
+  "status": "complete",
+  "app_sha256": "fb65ea471411115af3c560fa066d77e0b53aafe4e8614850c9ce01d53abd88ed",
+  "assertions": {
+    "open_on_board_1": true,
+    "closed_absent_on_board_1": true,
+    "closed_visible_1": true,
+    "view_changed_1": true,
+    "rows_unique_1": true,
+    "open_on_board_2": true,
+    "closed_absent_on_board_2": true,
+    "closed_visible_2": true,
+    "view_changed_2": true,
+    "rows_unique_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "persistence-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "333b3c9fc3a4e19b76d1b0ada53da1c3d3206b621b9b09739a55ce63fd433b5f",
+  "action_settle_ms": 300,
+  "cases": [
+    {
+      "id": "todo_survives_reload",
+      "status": "failed"
+    },
+    {
+      "id": "completed_survives_reload",
+      "status": "failed"
+    },
+    {
+      "id": "local_storage_used",
+      "status": "failed"
+    }
+  ],
+  "browser_sandbox": false,
+  "isolation": "non-root offline resource-bounded Docker; browser sandbox disabled",
+  "error": "Error: one exact visible todo title required before edit"
+}
