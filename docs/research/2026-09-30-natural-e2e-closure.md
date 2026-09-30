@@ -1,0 +1,30 @@
+# Fechamento dos candidatos históricos E2E : 30/09/2026
+
+## Resultado observado
+
+O conjunto inicial de **26 registros** terminou a revisão de elegibilidade. A coleta original de oito requisitos continua imutável: **7 melhoras, 38 empates e 3 pares desconhecidos em 48 comparações**. Nesta rodada, dois requisitos adicionais receberam novas gerações e observação no navegador. Ambos usam excertos derivados e interfaces reconstruídas, não as aplicações completas.
+
+| Novo requisito | Mudança histórica e categoria proposta | Pares antigo/corrigido | Evidência |
+| --- | --- | --- | --- |
+| Kanboard, estado de subtarefa | “Have 3 different statuses” → “Has 1 of 3 different statuses”; ambiguidade de cardinalidade. O código contemporâneo guardava um estado escalar. | **1 melhora, 5 empates, 0 desconhecidos.** No par Sol/3, o texto antigo deixou Todo, In progress e Done simultaneamente ativos; o corrigido mostrou apenas Done após seleção e recarga. | [Pacote](../../data/e2e-decontamination-20260930/kanboard-cardinality/analysis-summary.json) · [commit documental](https://github.com/kanboard/documentation/commit/85632cdaf1ff362bb9d4999628d0ad40422c923e) |
+| Nextcloud, política administrativa de lixeira | Uma nota acrescentada a **duas páginas do mesmo commit** indica que a retenção configurada pelo administrador pode prevalecer sobre a limpeza por espaço. Categoria proposta: exceção omitida. As duas páginas formam **um único tratamento**. | **3 melhoras, 1 empate, 2 desconhecidos.** Luna/1–3 reteve incorretamente o arquivo de 100 dias sem falta de espaço no braço antigo; o braço corrigido respeitou `60,90`. Em Sol/1–2 houve falha adicional no controle `auto`, por isso não se isolou o efeito. | [Pacote](../../data/e2e-decontamination-20260930/nextcloud-trash-retention/analysis-summary.json) · [commit documental](https://github.com/nextcloud/documentation/commit/8b687e504b3f4360d15b3cd2c440c064fa1655e6) |
+
+As duas coletas usaram versão antiga/corrigida × dois aliases Codex (Luna e Sol) × três repetições, **12 gerações por requisito**. Fonte, licença, referência de comportamento, UI fixa oculta do gerador, cronograma aleatório e oráculo foram congelados antes da geração. Só após encerrar as gerações os HTMLs foram abertos no Chromium. A qualificação adversarial passou em **6/6** controles Kanboard e **7/7** Nextcloud. Os selos privados foram conferidos integralmente: **270/270** e **281/281** arquivos, sem divergência de hash. Nenhuma chamada usou chave `OPENAI_API_KEY` nem GitHub Actions.
+
+O piloto Nextcloud v3 permanece como diagnóstico separado: seis pares desconhecidos. Seu validador rejeitava `<` como se fosse HTML inválido, e o controle padrão sob falta de espaço não isolava o alvo. Corrigimos o instrumento e **congelamos um v4 novo antes de gerar novamente**; nenhum resultado v3 foi reclassificado.
+
+## Placar e unidade de análise
+
+Somando **apenas requisitos históricos distintos** da coleta original aos dois novos: **10 requisitos, 60 pares aninhados: 11 melhoras, 44 empates, 5 desconhecidos; nenhuma piora isolada observada**. Quatro requisitos tiveram ao menos uma melhora. Isso é contagem descritiva de pilotos selecionados, **não** proporção populacional, estimativa confirmatória ou dez projetos independentes. As seis repetições por requisito não criam seis unidades independentes.
+
+Separadamente, a auditoria de contaminação refez três dos oito requisitos antigos com excertos e UI oculta: Kanboard busca **4 melhoras/2 empates**, Paperless barcode **2 melhoras/4 desconhecidos**, Paperless Rotate **6 empates em falha**. São **6 melhoras, 8 empates e 4 desconhecidos em 18 pares sucessores**. Não se somam esses 18 aos 60 nem se substituem os 48 originais. Os efeitos dos excertos medem uma intervenção informacional mais estreita que a comparação dos documentos completos.
+
+## Destino dos 26 registros
+
+São **11 registros vinculados a 10 requisitos executados**, porque a nota de lixeira aparece em duas páginas do mesmo commit; **14 registros retirados do contraste histórico atual** por mudança de comportamento/escopo, braço antigo vazio ou contraste que não isola uma obrigação; e **1 registro ainda sem referência independente qualificada**: Nextcloud versionamento “a cada/ao menos dois minutos”. Este último **não foi gerado nem contado como empate**. A inspeção do código da versão contemporânea encontrou intervalos de expiração/retenção, mas não comprovou uma regra de criação fixa de dois minutos. Uma avaliação binária congelada agora arriscaria rotular o comportamento errado. Os 14 retirados exigiriam nova pergunta, novos recortes e novos oráculos; executar literalmente o par antigo/novo desses registros não responderia ao efeito do smell.
+
+O destino de cada registro está no [CSV de fechamento](../../data/e2e-decontamination-20260930/historical-26-closure.csv). A [auditoria de smells com definições publicadas](2026-09-30-literature-validated-smell-audit.md) separa candidatos vinculados à literatura de mudanças sem smell demonstrado; nenhum está confirmado por adjudicação independente. O [CSV intermediário no Drive](https://drive.google.com/file/d/17WBWN-M_26x2xL5sUnUuPLamfquHI_hk/view) conserva as decisões anteriores; seu estado `hold_oracle` é anterior a estas novas coletas. Os pacotes selados acima e este fechamento registram a atualização, sem reescrever os resultados anteriores.
+
+## Alcance da conclusão
+
+Os pilotos mostram **efeitos locais observáveis** para algumas correções naturais, sobretudo no OpenProject original, colisão de restore da Nextcloud, cardinalidade do Kanboard e retenção da Nextcloud. Há muitos empates avaliáveis e alguns desconhecidos. As categorias são propostas analíticas, não smells confirmados por revisão independente; a correção natural pode incluir mais informação que uma injeção controlada. Os endpoints são E2E de interfaces reconstruídas com lógica gerada pelo modelo, não E2E dos produtos integrais. **H1 geral exige qualidade/severidade ordinal com rótulos independentes e análise por requisito/projeto; H2 exige avaliar alertas antes do defeito com validação fora dos projetos de ajuste.**

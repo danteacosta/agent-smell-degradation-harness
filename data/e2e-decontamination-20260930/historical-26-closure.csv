@@ -1,0 +1,27 @@
+record_id,disposition,requirement_group,pair_result,reason
+NH-fff4b2fbc4cf,tested,kanboard-subtask-cardinality,1 improved / 5 equal,one of three active statuses
+NH-b306be58df8e,tested,kanboard-search,4 equal / 2 unknown,original full-document pilot preserved separately from excerpt successor
+NH-182f9503a52c,unqualified,nextcloud-version-control,,two-minute version creation rule lacks independent application oracle at matched revision
+NH-12b4d64b8b14,noncomparable,,,quota chapter changes multiple obligations
+NH-1843c3fdcce9,tested,nextcloud-trash-retention,3 improved / 1 equal / 2 unknown,same treatment as NH-29048414eec0
+NH-29048414eec0,duplicate_treatment,nextcloud-trash-retention,,second page in the same commit; no independent pair count
+NH-1448acd46259,tested,nextcloud-ownership-transfer,6 equal,original frozen pilot
+NH-9a66fa683e91,tested,nextcloud-trash-restore-collision,2 improved / 4 equal,one scoped collision pilot
+NH-76e1603edc4b,tested,paperless-separator-retention,6 equal,original full-document pilot preserved separately from excerpt successor
+NH-754725420556,tested,paperless-profile-permission,6 equal,original frozen pilot
+NH-9e3b25493606,tested,paperless-original-pdf-action,6 equal,original full-document pilot preserved separately from excerpt successor
+NH-6766b1ab3cc2,noncomparable,,,permission table changes multiple obligations
+NH-e9d0846b943c,tested,paperless-new-user-permissions,6 equal,one scoped default-permission pilot
+NH-aabf32d4491e,noncomparable,,,workflow permission path not independently isolated in the historical pair
+NH-39c5727dd554,tested,openproject-default-progress,5 improved / 1 unknown,original frozen pilot
+NH-dc77ac9f10fd,noncomparable,,,new implemented upload behaviors change the contract
+NH-fa2b278861fc,noncomparable,,,same broad upload implementation as other inventory rows
+NH-d15eb175a179,noncomparable,,,endpoint grouping expands along with requirement
+NH-582776f246cc,noncomparable,,,new format policy and implementation
+NH-3a26cb5b44a1,noncomparable,,,requirement identity reused for another action
+NH-36686f5f7d63,noncomparable,,,node and document scope broadened
+NH-eb8b1dfc9676,noncomparable,,,function and class markers merge into a broader scope
+NH-d15f9b108518,noncomparable,,,old arm contains no comparable requirement
+NH-3348c3234d42,noncomparable,,,new statistics requirement and implementation
+NH-c2e91992f78f,noncomparable,,,new search requirement and implementation
+NH-8505ee5b213b,noncomparable,,,new tree-export scope and bundle-PDF changes confound the pair

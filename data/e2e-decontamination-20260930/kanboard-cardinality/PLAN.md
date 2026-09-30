@@ -1,0 +1,7 @@
+# Kanboard historical subtask-cardinality pilot
+
+Historical documentation commit 85632cd (11 Aug 2021) changes “Have 3 different statuses” to “Has 1 of 3 different statuses” and also singularizes two other bullets. This derived-excerpt pilot exposes only the changed status bullet. Contemporary app commit 6db1653 stores one scalar `status` in each subtask and toggles it through Todo, In progress, Done. The saved-session Codex model generates only a status-selection callback; the fixed browser UI is hidden from the model.
+
+ATDD: after the user clicks each of the three status options and reloads, exactly that option is visibly active and the title remains. Missing/duplicate controls, runtime faults and malformed outputs are unknown, not successes or target failures. BDD: given one subtask and a prior selection, when the user chooses a different status, then the previous selection disappears and the new one remains after reload.
+
+Before generation, confirm source membership and one-line contrast, historical app reference and MIT license, qualify reference, accumulating/wrong-status, missing/duplicate-control and runtime-error mutants, and freeze source, requests, UI, browser runner, image, model aliases, seed, order and receipt. Execute old/new × Luna/Sol × three repetitions with separate single attempts. End all generations before any observational browsing. This is one selected historical requirement in a reconstructed interface, not the full Kanboard app or confirmatory H1/H2 evidence.

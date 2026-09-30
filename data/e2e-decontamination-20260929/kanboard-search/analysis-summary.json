@@ -1,0 +1,64 @@
+{
+  "schema_version": "kanboard-natural-search-analysis/v1",
+  "planned": 12,
+  "pairs": [
+    {
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "old": "target_only_failure",
+      "new": "target_only_failure",
+      "comparison": "equal"
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "old": "target_only_failure",
+      "new": "pass",
+      "comparison": "improved"
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "old": "target_only_failure",
+      "new": "pass",
+      "comparison": "improved"
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "old": "target_only_failure",
+      "new": "pass",
+      "comparison": "improved"
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "old": "pass",
+      "new": "pass",
+      "comparison": "equal"
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "old": "target_only_failure",
+      "new": "pass",
+      "comparison": "improved"
+    }
+  ],
+  "counts": {
+    "pass": 6,
+    "target_only_failure": 6
+  },
+  "confirmatory_eligible": false,
+  "limitations": "One historical example correction in a fixed standalone scaffold, binary UI endpoint, not full Kanboard, no ordinal judges, model aliases not pinned snapshots. Unknowns retained.",
+  "frozen_receipt_sha256": "4ed9190dd64230d30d08b9d1db21e0d93e1f2e0528c307ca921858d91e60508f",
+  "private_packet_name": "kanboard-search-natural-20260929-v4-decontaminated",
+  "representative_pair": {
+    "model": "gpt-5.6-luna",
+    "replication": 2,
+    "old": "target_only_failure",
+    "new": "pass",
+    "comparison": "improved",
+    "screen": "alice-me.png"
+  }
+}

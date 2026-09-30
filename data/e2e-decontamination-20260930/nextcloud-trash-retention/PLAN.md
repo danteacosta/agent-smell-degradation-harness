@@ -1,0 +1,9 @@
+# Nextcloud historical trash-retention override pilot
+
+Commit 8b687e5 (23 Mar 2020) adds the same administrator-policy exception to two documentation pages. They count as one historical treatment. This derived pilot compares the old space-shortage paragraph with the new note and resolves only the administrative documentation explicitly linked by that note. The 2020 server's `Expiration.php` and `config.sample.php` independently define `auto` and `D1,D2` behavior. The generator sees the text excerpt but not the browser page or oracle.
+
+ATDD: With three deleted files aged 20, 70 and 100 days, administrator policy `60,90`, and storage shortage, cleanup must leave only the 20-day file. Without shortage, it must leave the 20- and 70-day files. Under default `auto` without shortage, the fixture's files remain. This avoids the contradictory wording about minimum retention under storage shortage. Browser error, malformed callback or mixed failure is unknown. BDD: Given an admin retention setting, when the user runs cleanup and views Deleted files, then the visible rows match the historical policy even when space is low.
+
+Before generation verify source membership, CC-BY-3.0, app/config reference, seven browser controls, image, prompts, seed and 12-position randomized schedule. Freeze the administrative link expansion in the new arm before any model call; this is a change of information available through the corrected note, not the isolated sentence alone. Generate old/new × Luna/Sol × three repetitions with one attempt each, finish all generations, then observe independently in Chromium. This is a reconstructed UI, not a complete Nextcloud installation or H1/H2 confirmation.
+
+The v3 diagnostic packet remained sealed: 6/6 pairs unknown because the validator rejected comparison operators and the default-with-shortage control conflicted with the administrator comment. This v4 is a fresh successor, not a reclassification of v3.

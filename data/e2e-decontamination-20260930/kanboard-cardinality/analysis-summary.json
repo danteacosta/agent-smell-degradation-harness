@@ -1,0 +1,66 @@
+{
+  "schema_version": "kanboard-cardinality-natural-analysis/v1",
+  "planned": 12,
+  "pairs": [
+    {
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "old": "pass",
+      "new": "pass",
+      "comparison": "equal"
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "old": "pass",
+      "new": "pass",
+      "comparison": "equal"
+    },
+    {
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "old": "pass",
+      "new": "pass",
+      "comparison": "equal"
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "old": "pass",
+      "new": "pass",
+      "comparison": "equal"
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "old": "pass",
+      "new": "pass",
+      "comparison": "equal"
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "old": "target_only_failure",
+      "new": "pass",
+      "comparison": "improved"
+    }
+  ],
+  "counts": {
+    "pass": 11,
+    "target_only_failure": 1
+  },
+  "confirmatory_eligible": false,
+  "limitations": "One historical cardinality sentence in a fixed standalone scaffold, binary UI endpoint, not full Kanboard, no ordinal judges, model aliases not pinned snapshots. Unknowns retained.",
+  "frozen_receipt_sha256": "63f22a95adaf1301a87a235c38ac67367bd7a051fb9ecb015d2b68751b50296e",
+  "private_packet_name": "kanboard-cardinality-natural-20260930-v1",
+  "representative_pair": {
+    "model": "gpt-5.6-sol",
+    "replication": 3,
+    "screen": "step-3.png",
+    "comparison": "improved"
+  },
+  "comparison_counts": {
+    "equal": 5,
+    "improved": 1
+  }
+}
