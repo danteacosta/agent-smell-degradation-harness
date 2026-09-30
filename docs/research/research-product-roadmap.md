@@ -25,6 +25,31 @@ observation scope. H1/H2 remain unanswered.
 This roadmap separates completed development evidence from proposed future
 studies. It does not authorize spending or change any frozen launch gate.
 
+## Endpoint decision required before confirmatory sizing
+
+The six-project E2E series now contains both target failures and recovery/null
+cases, including the RealWorld favorites and TodoMVC persistence pilots. More
+selected browser cases would refine mechanisms, but would not by themselves
+resolve the primary outcome or human-label gate. Frattini et al.
+([*Empirical Software Engineering*, 2025 volume](https://doi.org/10.1007/s10664-024-10582-1))
+found different downstream effects for passive voice and ambiguous pronouns in
+human domain modeling. Their task, treatments and effect sizes do not transfer
+to agents; the relevant lesson is to declare the affected activity and measured
+attribute before inferring a general quality effect.
+
+| Decision for advisor review | Current protocol boundary | Evidence needed to change it |
+| --- | --- | --- |
+| Acceptance-criteria generation | Primary thesis task; grade preservation by frozen `constraint_id` against independently reviewed references. | Human review of source conditions and blinded artifact labels, followed by an outcome-blind freeze. |
+| `H1.ordinal_delta` | Formal H1 outcome remains human/adjudicated ordinal artifact severity. Browser target failure is a separate observed measure. | To make E2E primary or co-primary, approve a revised estimand, unit, missingness rule and multiplicity/precision plan **before** confirmatory collection. Otherwise retain E2E as construct-validation evidence. |
+| H2 early warning | Compare B3 with B0 using only native T1–T3 features and held-out project labels; no T4 content in the feature plane. | A frozen eligible corpus, independent labels, project split, provider qualification and provider-backed runtime authorization. |
+
+**Pending human decision:** the advisor and candidate must choose the H1 endpoint
+status before any confirmatory sample-size claim or candidate admission. Until
+then, report each exploratory task, project, provider, obligation and unknown
+outcome separately. Repeated generations and a second obligation in the same
+project increase neither the project count nor independent label validity.
+Search and full-text reading date for Frattini et al.: 2026-09-27.
+
 ## Separate acceptance-criteria pilot completed
 
 The user's later authorization enabled a bounded source-derived
