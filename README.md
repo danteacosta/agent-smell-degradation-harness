@@ -1,9 +1,6 @@
 # Agent Smell Degradation Harness
 
-**Research status:** see the [current evidence and limitations](docs/research/masters-state-review-20260922.md)
-(and the later [E2E evidence matrix](docs/thesis/e2e-evidence-matrix-20260925.md)) for the real pilot results, preserved null outcomes, browser evidence and the
-separate exploratory acceptance-criteria work. The historical studies below
-retain their original decisions and denominators.
+**Research status:** the [historical E2E closure](docs/research/2026-09-30-natural-e2e-closure.md) preserves the latest ten-requirement pilot counts and unknown outcomes. The [literature-bound smell audit](docs/research/2026-09-30-literature-validated-smell-audit.md) separates candidate smell mappings from ordinary requirement changes. The [E2E evidence matrix](docs/thesis/e2e-evidence-matrix-20260925.md) covers the controlled omission series; the [thesis status review](docs/research/masters-state-review-20260922.md) records the formal H1/H2 limits. These are distinct exploratory results, not a pooled confirmatory estimate.
 
 **Product scope:** advisory constraint diagnostics for coding agents. Given a specification and a live trace, show which condition may have lost traceability, at which checkpoint, and with what evidence. Automatic semantic approval, defect prevention and product usefulness have not been validated. Deterministic policy checks remain separate from the confirmatory thesis protocol.
 
