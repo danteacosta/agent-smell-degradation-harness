@@ -4,7 +4,7 @@
 
 The [context-recoverability audit](docs/research/2026-10-01-e2e-recoverability-audit.md) maps existing interventions to outcomes and remaining contextual cues, separates passing ties from failing ties, and provides reproducible public-packet accounting.
 
-The [2026-10-01 two-case E2E replication](docs/research/2026-10-01-two-case-e2e-replication.md) records 36 new provider calls and browser runs: a repeated RealWorld null case and a repeated OpenProject target-failure case, with public reports and screenshots. These are repeated requirements, not a broader confirmatory sample.
+The [2026-10-01 three-case E2E replication](docs/research/2026-10-01-three-case-e2e-replication.md) records 54 new provider calls and browser runs: a repeated RealWorld null case, OpenProject target-failure case and Paperless mixed case, with public reports and screenshots. These are repeated requirements, not a broader confirmatory sample.
 
 **Product scope:** advisory constraint diagnostics for coding agents. Given a specification and a live trace, show which condition may have lost traceability, at which checkpoint, and with what evidence. Automatic semantic approval, defect prevention and product usefulness have not been validated. Deterministic policy checks remain separate from the confirmatory thesis protocol.
 
