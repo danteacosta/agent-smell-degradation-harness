@@ -1,0 +1,20 @@
+{
+  "schema_version": "paperless-duplicate-consumption-browser/v1",
+  "status": "complete",
+  "app_sha256": "eec4521fafc0c32807fbfecda6545542b922bd522acbb2871fff57e6f7977d89",
+  "assertions": {
+    "duplicate_consumed_1": true,
+    "original_preserved_1": true,
+    "control_preserved_1": true,
+    "unique_identity_1": true,
+    "duplicate_consumed_2": true,
+    "original_preserved_2": true,
+    "control_preserved_2": true,
+    "unique_identity_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}
