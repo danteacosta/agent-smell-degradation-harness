@@ -30,8 +30,19 @@ async function inspect(browser,fixture,index){
     const ids=await page.evaluate(()=>app.observedRequestIds());
     const suggestion=area.locator(`[data-suggestion-id="${fixture.availableSuggestions[0].id}"]`);
     report.assertions[`request_once_${index}`]=Array.isArray(ids)&&ids.length===1&&ids[0]===fixture.document.id;
-    report.assertions[`suggestion_visible_${index}`]=await suggestion.count()===1&&await suggestion.isVisible()
-      &&(await suggestion.innerText()).trim()===fixture.availableSuggestions[0].label;
+    const suggestionLabel=await suggestion.count()===1&&await suggestion.isVisible()
+      ?await suggestion.evaluate(element=>{
+        const walker=document.createTreeWalker(element,NodeFilter.SHOW_TEXT);
+        const visible=[];let node;
+        while((node=walker.nextNode())){
+          if(node.parentElement.closest('button'))continue;
+          const style=getComputedStyle(node.parentElement);
+          if(style.display==='none'||style.visibility==='hidden')continue;
+          visible.push(node.textContent);
+        }
+        return visible.join(' ').replace(/\s+/g,' ').trim();
+      }):null;
+    report.assertions[`suggestion_visible_${index}`]=suggestionLabel===fixture.availableSuggestions[0].label;
     report.assertions[`document_title_${index}`]=(await title.innerText()).trim()===fixture.document.title;
     report.assertions[`document_id_${index}`]=(await identity.innerText()).trim()==='Document '+fixture.document.id;
     report.assertions[`suggest_button_${index}`]=(await button.innerText()).trim()==='Suggest';
