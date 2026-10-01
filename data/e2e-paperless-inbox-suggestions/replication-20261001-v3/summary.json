@@ -1,0 +1,310 @@
+{
+  "schema_version": "paperless-inbox-suggestions-replication-public/20261001-v3",
+  "status": "exploratory_not_confirmatory",
+  "planned_slots": 18,
+  "attempted_calls": 18,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 3
+      },
+      "B": {
+        "pass": 3
+      },
+      "C": {
+        "target_only_failure": 1,
+        "pass": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 3
+      },
+      "B": {
+        "pass": 3
+      },
+      "C": {
+        "target_only_failure": 3
+      }
+    }
+  },
+  "frozen_receipt_sha256": "b83eeb072fc284f1697c2b8d7cac856206b536b7e956a96fb44aeb9d377c35c8",
+  "private_results_sha256": "3d122f9d6160a954e61d54e06016f890a45cc0753adf8daf3ec64d73a83b737b",
+  "private_receipt_sha256": "fcb980b3c114dea6228849fc63da953df2e05f16a64c458de23d8fdcc1feffa6",
+  "distinct_html_hashes": 18,
+  "rows": [
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-a5ee93ad8b02623ff8c2c398",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "generated_html_sha256": "c196c85a86b2fb281adcc138ecfc778e04b91be3aa8c024a8e18ded9c629c947",
+      "browser_report_sha256": "668f2497a70af0d080f2fdbc1c485fdb12f80bf1088b42ded0865879c679e72d",
+      "screenshots_sha256": {
+        "fixture-1.png": "084cf2f332ae2376108118c25e3bd85ebdc8e231fbc18b3d8d33beb266e70707",
+        "fixture-2.png": "7aeae771008af5a594b4c6bd0b1ce911d6ec12036345b0368904030729abb3c2"
+      },
+      "browser_report": "reports/gpt-5.6-luna-C-rep1.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-246ec407425feddc37a3807b",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "generated_html_sha256": "58474284cb905d697eb88f0bbdbb0286508ffcb021670719a5d11d8961bb0188",
+      "browser_report_sha256": "74f8d50e574f7d367783eb2a1b41878d558a577ac9af14509af4fc57257d05d7",
+      "screenshots_sha256": {
+        "fixture-1.png": "084cf2f332ae2376108118c25e3bd85ebdc8e231fbc18b3d8d33beb266e70707",
+        "fixture-2.png": "7aeae771008af5a594b4c6bd0b1ce911d6ec12036345b0368904030729abb3c2"
+      },
+      "browser_report": "reports/gpt-5.6-sol-C-rep1.json",
+      "public_proof_screenshot": "proof/gpt-5.6-sol-C-rep1-fixture-1.png"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-6aa235cb1a8f34268167e60f",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "0939bf89ac82237181318ae010aa2e4f7bdf7df9ac285c7703c065f98b7f50c5",
+      "browser_report_sha256": "6bf0d8af7a182bf76ededdb75560083fe9b7074ccf03c022193ad4dc6b505358",
+      "screenshots_sha256": {
+        "fixture-1.png": "8c95d51a127e726a98c8b50166bf96f8e00162aeed42a898fef57fc92afed680",
+        "fixture-2.png": "2c313fa293ff7d632b6f503b23cac246861e99dd62f57627a008c1313c175623"
+      },
+      "browser_report": "reports/gpt-5.6-sol-B-rep2.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-e108fd5381214d230d4dca65",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "571a7b0aeb8a2bce3250881bf19c8a1f0c2988ebfa4725afcca9b467d1ed5b29",
+      "browser_report_sha256": "fbc2999057bea786cc76f5613034fc1c509aa993e54b474587bcb60eb657a928",
+      "screenshots_sha256": {
+        "fixture-1.png": "8c95d51a127e726a98c8b50166bf96f8e00162aeed42a898fef57fc92afed680",
+        "fixture-2.png": "2c313fa293ff7d632b6f503b23cac246861e99dd62f57627a008c1313c175623"
+      },
+      "browser_report": "reports/gpt-5.6-luna-A-rep3.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-bd034f77ea9e4441deedad82",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "arm": "C",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "generated_html_sha256": "eb68aa1569a6c0bdaf9db13ff785beea8801eb14a2db0b1b921a83e3547e10ce",
+      "browser_report_sha256": "0a8178da1106e8c1b023a47e947ce02bdd805de219ec3cd5d1a2aae3b83035a4",
+      "screenshots_sha256": {
+        "fixture-1.png": "084cf2f332ae2376108118c25e3bd85ebdc8e231fbc18b3d8d33beb266e70707",
+        "fixture-2.png": "7aeae771008af5a594b4c6bd0b1ce911d6ec12036345b0368904030729abb3c2"
+      },
+      "browser_report": "reports/gpt-5.6-sol-C-rep3.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-b38eff45e00b58d6435b15bd",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "cb94d2b59e456b253135abc79ac8badda717717b59bc3c3f90c6c37964d3b032",
+      "browser_report_sha256": "18b3d73ec6a164e881abe6cce145e0c8de8d41d03edd12c378a15a5e4f1a3203",
+      "screenshots_sha256": {
+        "fixture-1.png": "8c95d51a127e726a98c8b50166bf96f8e00162aeed42a898fef57fc92afed680",
+        "fixture-2.png": "2c313fa293ff7d632b6f503b23cac246861e99dd62f57627a008c1313c175623"
+      },
+      "browser_report": "reports/gpt-5.6-sol-A-rep1.json",
+      "public_proof_screenshot": "proof/gpt-5.6-sol-A-rep1-fixture-1.png"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-72a84357f6ec1fae617a235f",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "arm": "C",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "c81685882ff6e9a78e3a7dd332b2fa7a60d332be53d4839efdca23e46f7cb535",
+      "browser_report_sha256": "0ca0aa78a821b9965fdfb206a4e704f445f21e4ada7fb79de7147a4144c365f6",
+      "screenshots_sha256": {
+        "fixture-1.png": "8c95d51a127e726a98c8b50166bf96f8e00162aeed42a898fef57fc92afed680",
+        "fixture-2.png": "2c313fa293ff7d632b6f503b23cac246861e99dd62f57627a008c1313c175623"
+      },
+      "browser_report": "reports/gpt-5.6-luna-C-rep3.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-d59384cbdadd30868c300d56",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "5b788e121ff4ac614b3fd9d133306857b90998f01f9f2f2e1eb49b925d1798fc",
+      "browser_report_sha256": "9c939701f262ab670389c68272619cce017061411b10605bc0a2c5ad715938c7",
+      "screenshots_sha256": {
+        "fixture-1.png": "8c95d51a127e726a98c8b50166bf96f8e00162aeed42a898fef57fc92afed680",
+        "fixture-2.png": "2c313fa293ff7d632b6f503b23cac246861e99dd62f57627a008c1313c175623"
+      },
+      "browser_report": "reports/gpt-5.6-luna-A-rep1.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-dcd2600eeb309dc626bdcf1b",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "d2b9da98c5f333d69ef52ee0ea8cba75b82916842b7792ad82a120b1a8f6e882",
+      "browser_report_sha256": "370f4b5ddac1c5cd06acae89aef3186f98c3489e8daae4cfa0198fc938a2d2e3",
+      "screenshots_sha256": {
+        "fixture-1.png": "8c95d51a127e726a98c8b50166bf96f8e00162aeed42a898fef57fc92afed680",
+        "fixture-2.png": "2c313fa293ff7d632b6f503b23cac246861e99dd62f57627a008c1313c175623"
+      },
+      "browser_report": "reports/gpt-5.6-luna-B-rep3.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-1491965cc6c1b08974eafd7f",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "1046968c3f74bfe062cbba0f683d121756280b929acb3cab0c775ea8d8dbdadb",
+      "browser_report_sha256": "fdbe42c3cc54bd2fa8396a07d87b4d867d3405647121eaa736205c32663c292f",
+      "screenshots_sha256": {
+        "fixture-1.png": "8c95d51a127e726a98c8b50166bf96f8e00162aeed42a898fef57fc92afed680",
+        "fixture-2.png": "2c313fa293ff7d632b6f503b23cac246861e99dd62f57627a008c1313c175623"
+      },
+      "browser_report": "reports/gpt-5.6-sol-B-rep3.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-46fb79f0c9508bb37aa6fd4e",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "generated_html_sha256": "0988ad98784aa84e685391ca90bee740d5a620906bae176e85977acfc56a3815",
+      "browser_report_sha256": "9aafa773ae4577a3ed6995f81c39e32e293665462e760da2d5ce67c416ac3ebf",
+      "screenshots_sha256": {
+        "fixture-1.png": "084cf2f332ae2376108118c25e3bd85ebdc8e231fbc18b3d8d33beb266e70707",
+        "fixture-2.png": "7aeae771008af5a594b4c6bd0b1ce911d6ec12036345b0368904030729abb3c2"
+      },
+      "browser_report": "reports/gpt-5.6-sol-C-rep2.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-dc31b71f44a719c25fb35c7f",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "6ece2e8b4f2b0a216fca6e7ff70581941e7dd14dcb1ae97f6ad62528471f93a4",
+      "browser_report_sha256": "4b56cd8cf5e054ad2ce0f0204e9ebcbd6297c0a04b0f60ca179a2b736016bf6c",
+      "screenshots_sha256": {
+        "fixture-1.png": "8c95d51a127e726a98c8b50166bf96f8e00162aeed42a898fef57fc92afed680",
+        "fixture-2.png": "2c313fa293ff7d632b6f503b23cac246861e99dd62f57627a008c1313c175623"
+      },
+      "browser_report": "reports/gpt-5.6-luna-C-rep2.json",
+      "public_proof_screenshot": "proof/gpt-5.6-luna-C-rep2-fixture-1.png"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-4f9ccfa96c433f470592f800",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "03315c0f4387256dcd6dde88b0becc36bba1f2b15fd307cf9a01f3f8b7dfaf85",
+      "browser_report_sha256": "88ed09a70cb386f805e5a9144f38c0ffad1f0fc31d30a52185dc1c4acf09735f",
+      "screenshots_sha256": {
+        "fixture-1.png": "8c95d51a127e726a98c8b50166bf96f8e00162aeed42a898fef57fc92afed680",
+        "fixture-2.png": "2c313fa293ff7d632b6f503b23cac246861e99dd62f57627a008c1313c175623"
+      },
+      "browser_report": "reports/gpt-5.6-sol-B-rep1.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-9a3d58f9407d185ff8e2ca17",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "9fb27f89d3d4055aaa1119f0176acad8a4720dbd2b1129daf04b373aaeace3a3",
+      "browser_report_sha256": "ba57b119a781706bbe6ce126f5e3d21141e151233eeb90349a189a3adff96144",
+      "screenshots_sha256": {
+        "fixture-1.png": "8c95d51a127e726a98c8b50166bf96f8e00162aeed42a898fef57fc92afed680",
+        "fixture-2.png": "2c313fa293ff7d632b6f503b23cac246861e99dd62f57627a008c1313c175623"
+      },
+      "browser_report": "reports/gpt-5.6-luna-B-rep1.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-7393b7b5aa42746cc1009ead",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "64cd2b910c807be158beafb9dc774f6ce379b290df5ce5d228e7b8970f803128",
+      "browser_report_sha256": "e095aad1e6a6df7e4b2291aae5d94fd370f75067c0f714a4380c522320617417",
+      "screenshots_sha256": {
+        "fixture-1.png": "8c95d51a127e726a98c8b50166bf96f8e00162aeed42a898fef57fc92afed680",
+        "fixture-2.png": "2c313fa293ff7d632b6f503b23cac246861e99dd62f57627a008c1313c175623"
+      },
+      "browser_report": "reports/gpt-5.6-sol-A-rep2.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-6a51e4f98a61b300f846f73c",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "0e8d36c231c18e71077182765fb67c1a318be4f32a7444b9b194061ae28ad4f6",
+      "browser_report_sha256": "7d25efec9bf4a03a7523f73322897acf443b91f95d47e3183bbcda7065d3e408",
+      "screenshots_sha256": {
+        "fixture-1.png": "8c95d51a127e726a98c8b50166bf96f8e00162aeed42a898fef57fc92afed680",
+        "fixture-2.png": "2c313fa293ff7d632b6f503b23cac246861e99dd62f57627a008c1313c175623"
+      },
+      "browser_report": "reports/gpt-5.6-luna-B-rep2.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-c1fc17f78d74f24c9aed5cdd",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "b588512b49d29cc71822b6860c8eb0504353b664821d58723e85a0d2ffc85e01",
+      "browser_report_sha256": "0f552a3bb515f3da2a1d1ca0feede4e4f5a27ee7eaabb3b7526a8b5c8d7f36bc",
+      "screenshots_sha256": {
+        "fixture-1.png": "8c95d51a127e726a98c8b50166bf96f8e00162aeed42a898fef57fc92afed680",
+        "fixture-2.png": "2c313fa293ff7d632b6f503b23cac246861e99dd62f57627a008c1313c175623"
+      },
+      "browser_report": "reports/gpt-5.6-luna-A-rep2.json"
+    },
+    {
+      "slot_id": "paperless-inbox-suggestions-20261001-v3-4049a5590c295a322d1d9b85",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "cad19a19287f9d41b93f97d90808354bee2f83e19542fd6ad093cdbd871b3d25",
+      "browser_report_sha256": "aa236914449dcdc087a5b4c3adee0ad3b9d050092a3b25112cb384aaafbf7f72",
+      "screenshots_sha256": {
+        "fixture-1.png": "2009b9183a69325a733a2b0be1047d4be3431f8762c02f2fbbea226d47548b51",
+        "fixture-2.png": "948eb2f383254b17a969837245c43d38d44c18f6c971dd934129831006136eb9"
+      },
+      "browser_report": "reports/gpt-5.6-sol-A-rep3.json"
+    }
+  ]
+}

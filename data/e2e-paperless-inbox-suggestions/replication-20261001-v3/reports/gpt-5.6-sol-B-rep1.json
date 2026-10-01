@@ -1,0 +1,22 @@
+{
+  "schema_version": "paperless-inbox-suggestions-browser/v1",
+  "status": "complete",
+  "app_sha256": "03315c0f4387256dcd6dde88b0becc36bba1f2b15fd307cf9a01f3f8b7dfaf85",
+  "assertions": {
+    "request_once_1": true,
+    "suggestion_visible_1": true,
+    "document_title_1": true,
+    "document_id_1": true,
+    "suggest_button_1": true,
+    "request_once_2": true,
+    "suggestion_visible_2": true,
+    "document_title_2": true,
+    "document_id_2": true,
+    "suggest_button_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

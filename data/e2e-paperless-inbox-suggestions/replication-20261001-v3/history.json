@@ -1,0 +1,118 @@
+{
+  "schema_version": "paperless-inbox-suggestions-collection-history/20261001-v1",
+  "status": "separate_runs_no_replacement",
+  "runs": [
+    {
+      "version": "v1",
+      "planned_slots": 18,
+      "attempted_calls": 18,
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "invalid_output": 1,
+            "target_only_failure": 2
+          },
+          "B": {
+            "target_only_failure": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "target_only_failure": 3
+          },
+          "B": {
+            "target_only_failure": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        }
+      },
+      "results_sha256": "52eb9ecd34e097e79450dab4656e9157543a4c2630950d30710607366a1ccc12",
+      "receipt_sha256": "3dd3b0d618d1a0802c0753f6621aeb5c968cdb2b905155739563c6775b8572aa",
+      "frozen_receipt_sha256": "77e50439928e3c8bae3f086471e3bc86fd2553792f1cddb8d505cfca79677417",
+      "interpretation": "Original v1 frozen oracle misclassified decorated suggestion labels as absent; later diagnostic replay is separate, not a correction to the frozen result."
+    },
+    {
+      "version": "v2",
+      "planned_slots": 18,
+      "attempted_calls": 9,
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "not_attempted": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 2,
+            "not_attempted": 1
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "not_attempted": 3
+          },
+          "B": {
+            "pass": 1,
+            "not_attempted": 2
+          },
+          "C": {
+            "target_only_failure": 2,
+            "provider_error": 1
+          }
+        }
+      },
+      "results_sha256": "d4ce00be3382feae8d5fd400534f4377b878a707df7d66743b77a4402218cefb",
+      "receipt_sha256": "655a25dac93cc4f11ef94866fa4e78bde6a52983cc4603cf524336c6b994a32d",
+      "frozen_receipt_sha256": "3eb9621a2fcf6c9cfa4b3f64ba625765e1c6e730ff611034d696165c11498998",
+      "interpretation": "Partial run stopped after provider capacity error; nine remaining slots not attempted."
+    },
+    {
+      "version": "v3",
+      "planned_slots": 18,
+      "attempted_calls": 18,
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 1,
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        }
+      },
+      "results_sha256": "3d122f9d6160a954e61d54e06016f890a45cc0753adf8daf3ec64d73a83b737b",
+      "receipt_sha256": "fcb980b3c114dea6228849fc63da953df2e05f16a64c458de23d8fdcc1feffa6",
+      "frozen_receipt_sha256": "b83eeb072fc284f1697c2b8d7cac856206b536b7e956a96fb44aeb9d377c35c8",
+      "interpretation": "Fresh 18-slot replication with corrected prequalified browser oracle."
+    }
+  ],
+  "diagnostic_replay": {
+    "version": "v1-generated-html/v2-browser-only",
+    "receipt_sha256": "5c3d80967c463479ffb990ebf44152a67afb86b258d03268ec65ff593ec243f5",
+    "A": "5 pass, 1 invalid",
+    "B": "6 pass",
+    "C": "6 target_only_failure",
+    "status": "post_hoc_diagnostic_not_replacement"
+  }
+}
