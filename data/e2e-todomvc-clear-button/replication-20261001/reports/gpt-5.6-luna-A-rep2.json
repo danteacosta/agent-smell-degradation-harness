@@ -1,0 +1,28 @@
+{
+  "schema_version": "todomvc-clear-button-browser/v5",
+  "status": "complete",
+  "app_sha256": "9df48e2fb549159d706ceff477d99603d0048efdabb1ef9771e650c1791ce3b8",
+  "assertions": {
+    "initial_button_visible_1": true,
+    "clear_button_hidden_1": true,
+    "completed_removed_1": true,
+    "active_preserved_1": true,
+    "only_active_id_1": true,
+    "initial_button_visible_2": true,
+    "clear_button_hidden_2": true,
+    "completed_removed_2": true,
+    "active_preserved_2": true,
+    "only_active_id_2": true,
+    "empty_button_hidden_3": true,
+    "active_preserved_3": true,
+    "empty_list_button_hidden_4": true,
+    "empty_list_preserved_4": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png",
+    "fixture-3.png",
+    "fixture-4.png"
+  ]
+}

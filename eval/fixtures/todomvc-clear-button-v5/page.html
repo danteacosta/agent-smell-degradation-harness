@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Todos</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button{font:inherit;padding:.4rem}li{margin:.6rem 0}</style></head>
+<body><main><h1>Todos</h1><ul id="todo-list"></ul><button id="clear-completed" type="button" disabled>Clear completed</button></main><script>
+let todos=structuredClone(window.initialState.todos);
+let clearHandler=null;
+const app=Object.freeze({
+  onClear(handler){if(typeof handler!=='function'||clearHandler)throw new Error('invalid clear handler');clearHandler=handler;document.querySelector('#clear-completed').disabled=false},
+  todos(){return structuredClone(todos)},
+  setTodos(items){if(!Array.isArray(items))throw new Error('todos array required');todos=structuredClone(items);render()},
+});
+function render(){const root=document.querySelector('#todo-list');root.replaceChildren();
+  for(const item of todos){const row=document.createElement('li');row.dataset.todoId=String(item.id);
+    const check=document.createElement('input');check.type='checkbox';check.checked=Boolean(item.completed);check.disabled=true;
+    const title=document.createElement('span');title.textContent=String(item.title);row.append(check,title);root.append(row)}}
+document.querySelector('#clear-completed').addEventListener('click',()=>{if(clearHandler)clearHandler()});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>
