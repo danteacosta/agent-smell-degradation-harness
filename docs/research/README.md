@@ -31,7 +31,7 @@ experiment evidence.
 
 - [Paperless-ngx duplicate-consumption E2E pilot](paperless-duplicate-consumption-20260926.md): 18 new evaluable generations, A/B 12/12 pass, C 4/6 selective failures; the earlier 18-generation instrument failure is preserved separately.
 - [RealWorld favorites-route E2E pilot](realworld-favorites-20260926.md): successor 18/18 evaluable, A/B/C 6/6 pass each; the first 18-generation instrument failure is preserved separately.
-- [TodoMVC Clear completed admission](todomvc-clear-button-admission-20260926.md): revised browser oracle passed 7/7 controls, but the instrument-review gate did not pass; no generation.
+- [TodoMVC Clear completed admission](todomvc-clear-button-admission-20260926.md): historical 26 September gate; later pilots supersede its zero-generation status. The [1 October E2E replication](2026-10-01-todomvc-clear-replication-results.md) had 18/18 evaluable outputs, A/B 12 passes and C six target-only failures, with public reports and screenshots.
 - [TodoMVC persistence bridge](todomvc-persistence-bridge-20260926.md): 18 fresh generations, 17 E2E outputs evaluable, no observed target failure; one C interface error preserved.
 - [Nextcloud permanent-delete admission](nextcloud-permanent-delete-admission-20260926.md): browser oracle 8/8 qualified, but source-to-visual-endpoint panel remained 2–1; no generation admitted.
 - [Nextcloud restore-name admission](nextcloud-restore-conflict-admission-20260926.md): three qualified local oracle versions and three preserved review rounds; source-to-endpoint gate still failed, no generation.

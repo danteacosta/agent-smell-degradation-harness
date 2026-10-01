@@ -1,0 +1,323 @@
+{
+  "schema_version": "todomvc-clear-button-replication-public/20261001-v1",
+  "status": "exploratory_not_confirmatory",
+  "planned_slots": 18,
+  "attempted_calls": 18,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 3
+      },
+      "B": {
+        "pass": 3
+      },
+      "C": {
+        "target_only_failure": 3
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 3
+      },
+      "B": {
+        "pass": 3
+      },
+      "C": {
+        "target_only_failure": 3
+      }
+    }
+  },
+  "frozen_receipt_sha256": "e41dafd979d0a45cfdf3a67eae7addf2d902cdac523e23e10a186fd26fddcadb",
+  "private_results_sha256": "f46b946156baf9a7328c925020797ee98673b400a96022dbf05673e2a654eabe",
+  "private_receipt_sha256": "e056fe0064cf180c331c78787848171a10f31e8be72bf1d0e7b6432b571a3f58",
+  "rows": [
+    {
+      "slot_id": "todomvc-clear-replication-20261001-327ae14652cea9657b116611",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "generated_html_sha256": "406f8c9a19519de7f18488f2c704561e9f849f3caccc2d22c6c63b0584295faa",
+      "browser_report_sha256": "5923ac57891c4dd09522a531c8005db04c4e73f604efa1e61d06bf945d7f42d3",
+      "screenshots_sha256": {
+        "fixture-1.png": "70162917b631b5905dac1e2a5e6ba8432c91b696b6fcc41879a4d8d5b3d21176",
+        "fixture-2.png": "b71e4402955114df3e72eb92eca94e09fc52a2935a8007437f68ed5c261281cf",
+        "fixture-3.png": "b71e4402955114df3e72eb92eca94e09fc52a2935a8007437f68ed5c261281cf",
+        "fixture-4.png": "1c15863658f57ec32850b253a27c6e95ee4505c2154465da457612515f63f2a0"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-7954da8be1c884ed6e65698d",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "a297b40ddea6b4b6f94bec9674fc3f00da02d217ddf1c9a9c69d40edf4966642",
+      "browser_report_sha256": "1b0479010a8f8fc05c995fc58e518ead562de201b552c7465268e73d1e0496cb",
+      "screenshots_sha256": {
+        "fixture-1.png": "ab04628a55f44a9e01ff914a67181eedb12c664f8cd1e5ff04d628596b9a76ac",
+        "fixture-2.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-3.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-4.png": "53f179b35a350919ddbbaab1ccf70e2d6e2893c3a6c933dd159b6d32d1fd13be"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-820a808c1320199bda3597a9",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "8628f66fbbe4578726666f05f336e8f38f14cf62030692b0f0250e5aa5726eac",
+      "browser_report_sha256": "87cdda00b25280b954916afa1493571e8e615eb57b7921917140a8a2dedb3c7a",
+      "screenshots_sha256": {
+        "fixture-1.png": "ab04628a55f44a9e01ff914a67181eedb12c664f8cd1e5ff04d628596b9a76ac",
+        "fixture-2.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-3.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-4.png": "53f179b35a350919ddbbaab1ccf70e2d6e2893c3a6c933dd159b6d32d1fd13be"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-836026f8ceb2bde1821eee24",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "fb81165a77ec5ef0ffb0f4f7aac0640e4aa3a0f3cbc2173b1379d0dcbae8b9ce",
+      "browser_report_sha256": "686accdc12edda32f0b1e033c490af1290b7c17410da747118f741260f112f63",
+      "screenshots_sha256": {
+        "fixture-1.png": "ab04628a55f44a9e01ff914a67181eedb12c664f8cd1e5ff04d628596b9a76ac",
+        "fixture-2.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-3.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-4.png": "53f179b35a350919ddbbaab1ccf70e2d6e2893c3a6c933dd159b6d32d1fd13be"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-e37c7329641d09290ed07543",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "arm": "C",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "generated_html_sha256": "4000d0ab05f89eeca66e38f1257aea4823a4c37995e288ed9813cafee9f804e0",
+      "browser_report_sha256": "6f0ec7019df19e737960f07ebc6de126eb746637b3425c2c0af27494e59ccb35",
+      "screenshots_sha256": {
+        "fixture-1.png": "70162917b631b5905dac1e2a5e6ba8432c91b696b6fcc41879a4d8d5b3d21176",
+        "fixture-2.png": "b71e4402955114df3e72eb92eca94e09fc52a2935a8007437f68ed5c261281cf",
+        "fixture-3.png": "b71e4402955114df3e72eb92eca94e09fc52a2935a8007437f68ed5c261281cf",
+        "fixture-4.png": "1c15863658f57ec32850b253a27c6e95ee4505c2154465da457612515f63f2a0"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-bc64dd45104cdb9b55980161",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "d03dcdb8a07edcc575b5c031801155b2f7d3d92746e624a89b2473d10f0c1da5",
+      "browser_report_sha256": "7643014cf48e73860853ef45baa0a0a26c2577030c4e9c302a3a88a1c9611df1",
+      "screenshots_sha256": {
+        "fixture-1.png": "ab04628a55f44a9e01ff914a67181eedb12c664f8cd1e5ff04d628596b9a76ac",
+        "fixture-2.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-3.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-4.png": "53f179b35a350919ddbbaab1ccf70e2d6e2893c3a6c933dd159b6d32d1fd13be"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-60f40253b268c8b459a5c38a",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "c49bf8f7ccc9d3ab2926b81cf77c90452e860b293a58db4b0eac921fb4ab5af1",
+      "browser_report_sha256": "203b43afec40195eb105e9a2db22e726384662d7fe380ec34a4981bd002e9a0f",
+      "screenshots_sha256": {
+        "fixture-1.png": "ab04628a55f44a9e01ff914a67181eedb12c664f8cd1e5ff04d628596b9a76ac",
+        "fixture-2.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-3.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-4.png": "53f179b35a350919ddbbaab1ccf70e2d6e2893c3a6c933dd159b6d32d1fd13be"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-3a24e76372dac43fe7d21505",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "3473f891cebd5b94588b4b0e7d4377e5c1fec41ef517e3f824a225635104efd0",
+      "browser_report_sha256": "f9ee7eec695ae780a2a993ba48513893fbf367574474d3a55ca93eae4c2e20a1",
+      "screenshots_sha256": {
+        "fixture-1.png": "ab04628a55f44a9e01ff914a67181eedb12c664f8cd1e5ff04d628596b9a76ac",
+        "fixture-2.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-3.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-4.png": "53f179b35a350919ddbbaab1ccf70e2d6e2893c3a6c933dd159b6d32d1fd13be"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-1b2ea89f201611fd3da9a130",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "generated_html_sha256": "406f8c9a19519de7f18488f2c704561e9f849f3caccc2d22c6c63b0584295faa",
+      "browser_report_sha256": "5923ac57891c4dd09522a531c8005db04c4e73f604efa1e61d06bf945d7f42d3",
+      "screenshots_sha256": {
+        "fixture-1.png": "70162917b631b5905dac1e2a5e6ba8432c91b696b6fcc41879a4d8d5b3d21176",
+        "fixture-2.png": "b71e4402955114df3e72eb92eca94e09fc52a2935a8007437f68ed5c261281cf",
+        "fixture-3.png": "b71e4402955114df3e72eb92eca94e09fc52a2935a8007437f68ed5c261281cf",
+        "fixture-4.png": "1c15863658f57ec32850b253a27c6e95ee4505c2154465da457612515f63f2a0"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-2ae74088a326aa75fecc5d0c",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "73c9d56bd911a9a71732bca3729d678d11a0ad1fc477c02ae8fc59d46c04fadb",
+      "browser_report_sha256": "47ab454c77c0d772726c3ceb9ac3ef2e257bdc5f9a31d3337ac6c8e600acafd8",
+      "screenshots_sha256": {
+        "fixture-1.png": "ab04628a55f44a9e01ff914a67181eedb12c664f8cd1e5ff04d628596b9a76ac",
+        "fixture-2.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-3.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-4.png": "53f179b35a350919ddbbaab1ccf70e2d6e2893c3a6c933dd159b6d32d1fd13be"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-ddb617d500933d7ae34fee02",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "9df48e2fb549159d706ceff477d99603d0048efdabb1ef9771e650c1791ce3b8",
+      "browser_report_sha256": "d2eb1e2dadd9e2c181722574fc03a86a81fc03771270a3d6b33d1d5db87bd0de",
+      "screenshots_sha256": {
+        "fixture-1.png": "ab04628a55f44a9e01ff914a67181eedb12c664f8cd1e5ff04d628596b9a76ac",
+        "fixture-2.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-3.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-4.png": "53f179b35a350919ddbbaab1ccf70e2d6e2893c3a6c933dd159b6d32d1fd13be"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-1847477c07656a3f1c27e4d7",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "6ae434430f37e5afc8a9e8fc59b6dbfe4c223911cdf863a64955633df9da182e",
+      "browser_report_sha256": "86df182a41ad65ed39a0d16f57ff503c1cb3ae93e481634fb03cc211ca7fd085",
+      "screenshots_sha256": {
+        "fixture-1.png": "ab04628a55f44a9e01ff914a67181eedb12c664f8cd1e5ff04d628596b9a76ac",
+        "fixture-2.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-3.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-4.png": "53f179b35a350919ddbbaab1ccf70e2d6e2893c3a6c933dd159b6d32d1fd13be"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-bcdcea1d1caef1de997a27e6",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "generated_html_sha256": "4000d0ab05f89eeca66e38f1257aea4823a4c37995e288ed9813cafee9f804e0",
+      "browser_report_sha256": "6f0ec7019df19e737960f07ebc6de126eb746637b3425c2c0af27494e59ccb35",
+      "screenshots_sha256": {
+        "fixture-1.png": "70162917b631b5905dac1e2a5e6ba8432c91b696b6fcc41879a4d8d5b3d21176",
+        "fixture-2.png": "b71e4402955114df3e72eb92eca94e09fc52a2935a8007437f68ed5c261281cf",
+        "fixture-3.png": "b71e4402955114df3e72eb92eca94e09fc52a2935a8007437f68ed5c261281cf",
+        "fixture-4.png": "1c15863658f57ec32850b253a27c6e95ee4505c2154465da457612515f63f2a0"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-60db155d329c03e73f417806",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "fcfc833588567db14ebfe07612cae378f679cdc43332e7ac8f96b4ddad8936b3",
+      "browser_report_sha256": "c554daf41ba482756f861ac7d1c9668ee3158238f904a0cb9686e9c52a56a2ee",
+      "screenshots_sha256": {
+        "fixture-1.png": "ab04628a55f44a9e01ff914a67181eedb12c664f8cd1e5ff04d628596b9a76ac",
+        "fixture-2.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-3.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-4.png": "53f179b35a350919ddbbaab1ccf70e2d6e2893c3a6c933dd159b6d32d1fd13be"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-9f8eda8f721be8fc3483b3c6",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "generated_html_sha256": "7637c3a2b61c52b7f6fd273debd962271da5eb676635eaea0e5598e2cb224b66",
+      "browser_report_sha256": "edaa6e77472625538cb219e845ee96ec48fed038b154d44127b523741996f244",
+      "screenshots_sha256": {
+        "fixture-1.png": "70162917b631b5905dac1e2a5e6ba8432c91b696b6fcc41879a4d8d5b3d21176",
+        "fixture-2.png": "b71e4402955114df3e72eb92eca94e09fc52a2935a8007437f68ed5c261281cf",
+        "fixture-3.png": "b71e4402955114df3e72eb92eca94e09fc52a2935a8007437f68ed5c261281cf",
+        "fixture-4.png": "1c15863658f57ec32850b253a27c6e95ee4505c2154465da457612515f63f2a0"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-35dcb97c93683a6bb3446464",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "arm": "C",
+      "category": "target_only_failure",
+      "target_failed": true,
+      "generated_html_sha256": "4000d0ab05f89eeca66e38f1257aea4823a4c37995e288ed9813cafee9f804e0",
+      "browser_report_sha256": "6f0ec7019df19e737960f07ebc6de126eb746637b3425c2c0af27494e59ccb35",
+      "screenshots_sha256": {
+        "fixture-1.png": "70162917b631b5905dac1e2a5e6ba8432c91b696b6fcc41879a4d8d5b3d21176",
+        "fixture-2.png": "b71e4402955114df3e72eb92eca94e09fc52a2935a8007437f68ed5c261281cf",
+        "fixture-3.png": "b71e4402955114df3e72eb92eca94e09fc52a2935a8007437f68ed5c261281cf",
+        "fixture-4.png": "1c15863658f57ec32850b253a27c6e95ee4505c2154465da457612515f63f2a0"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-ede79bc81d2d1b371124ff11",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "6363c142820249e872b0fd808d681656651709400cd7bd0ca4d312139d620c2f",
+      "browser_report_sha256": "af50c7459c10bb39eae9bfbda54e0aa767a412384a458dd8c995fbc278c2776f",
+      "screenshots_sha256": {
+        "fixture-1.png": "ab04628a55f44a9e01ff914a67181eedb12c664f8cd1e5ff04d628596b9a76ac",
+        "fixture-2.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-3.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-4.png": "53f179b35a350919ddbbaab1ccf70e2d6e2893c3a6c933dd159b6d32d1fd13be"
+      }
+    },
+    {
+      "slot_id": "todomvc-clear-replication-20261001-4654f68a969107101921971d",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "c49bf8f7ccc9d3ab2926b81cf77c90452e860b293a58db4b0eac921fb4ab5af1",
+      "browser_report_sha256": "203b43afec40195eb105e9a2db22e726384662d7fe380ec34a4981bd002e9a0f",
+      "screenshots_sha256": {
+        "fixture-1.png": "ab04628a55f44a9e01ff914a67181eedb12c664f8cd1e5ff04d628596b9a76ac",
+        "fixture-2.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-3.png": "d6e74e81cbbb8861b69d46d854f47b359bbd7f99a9a4d0538e2f85f7153c3a80",
+        "fixture-4.png": "53f179b35a350919ddbbaab1ccf70e2d6e2893c3a6c933dd159b6d32d1fd13be"
+      }
+    }
+  ]
+}
