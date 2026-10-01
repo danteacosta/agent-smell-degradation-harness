@@ -184,3 +184,25 @@ def test_human_annotations_do_not_silently_overwrite_duplicate_judgments(second_
     ]
     with pytest.raises(ValueError, match="duplicate"):
         krippendorff_alpha(rows)
+
+
+def test_scale_offset_is_judged_by_declared_measurement_level():
+    """A one-step scale-usage offset leaves ranks intact.
+
+    Nominal alpha then reads as chance-level or worse, as in graded-rubric
+    studies reporting near-zero Fleiss kappa despite shared direction, while
+    ordinal alpha stays acceptable. The rubric must therefore declare the level
+    before agreement is computed; the verdict must not be chosen afterwards.
+    """
+    from protocol.irr import irr_decision, krippendorff_alpha
+
+    rater_a = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 3]
+    rater_b = [min(value + 1, 5) for value in rater_a]
+
+    nominal = krippendorff_alpha([rater_a, rater_b])
+    ordinal = krippendorff_alpha([rater_a, rater_b], level_of_measurement="ordinal")
+
+    assert nominal < 0.0
+    assert ordinal >= 0.70
+    assert irr_decision(nominal).claim_narrowing_required
+    assert irr_decision(ordinal).status == "acceptable"
