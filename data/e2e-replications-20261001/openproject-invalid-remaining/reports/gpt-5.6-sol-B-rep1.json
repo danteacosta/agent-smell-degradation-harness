@@ -1,0 +1,22 @@
+{
+  "schema_version": "openproject-invalid-remaining-browser/v1",
+  "status": "complete",
+  "app_sha256": "bf261279af4afa244c6fca8a76e25d8606f442f44bfbd06915e36c798fc6bc09",
+  "assertions": {
+    "valid_saved_1": true,
+    "work_preserved_after_valid_1": true,
+    "invalid_rejected_1": true,
+    "work_preserved_after_invalid_1": true,
+    "form_reloaded_1": true,
+    "valid_saved_2": true,
+    "work_preserved_after_valid_2": true,
+    "invalid_rejected_2": true,
+    "work_preserved_after_invalid_2": true,
+    "form_reloaded_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}
