@@ -194,7 +194,7 @@ def test_scale_offset_is_judged_by_declared_measurement_level():
     ordinal alpha stays acceptable. The rubric must therefore declare the level
     before agreement is computed; the verdict must not be chosen afterwards.
     """
-    from protocol.irr import irr_decision, krippendorff_alpha
+    from protocol.irr import evaluate_primary_irr, irr_decision, krippendorff_alpha
 
     rater_a = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 3]
     rater_b = [min(value + 1, 5) for value in rater_a]
@@ -206,3 +206,32 @@ def test_scale_offset_is_judged_by_declared_measurement_level():
     assert ordinal >= 0.70
     assert irr_decision(nominal).claim_narrowing_required
     assert irr_decision(ordinal).status == "acceptable"
+
+    policy = {
+        "statistic": "krippendorff_alpha",
+        "level_of_measurement": "ordinal",
+        "ordinal_order": [1, 2, 3, 4, 5],
+        "bootstrap_replicates": 100,
+        "bootstrap_seed": 7,
+        "target": 0.70,
+        "adjudication_threshold": 0.60,
+    }
+    frozen_result = evaluate_primary_irr([rater_a, rater_b], policy)
+    assert frozen_result["level_of_measurement"] == "ordinal"
+    assert frozen_result["ordinal_order"] == [1, 2, 3, 4, 5]
+    assert frozen_result["decision"] == "acceptable"
+
+
+def test_primary_irr_policy_rejects_post_hoc_measurement_level_choice():
+    from protocol.irr import validate_primary_irr_policy
+
+    ambiguous = {
+        "statistic": "krippendorff_alpha",
+        "ordinal_order": ["clean", "minor", "moderate", "severe"],
+        "bootstrap_replicates": 2000,
+        "bootstrap_seed": 0,
+        "target": 0.70,
+        "adjudication_threshold": 0.60,
+    }
+    with pytest.raises(ValueError, match="level_of_measurement"):
+        validate_primary_irr_policy(ambiguous)

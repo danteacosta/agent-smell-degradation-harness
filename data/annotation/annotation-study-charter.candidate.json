@@ -13,7 +13,7 @@
     "role_independence_confirmed": false
   },
   "artifacts": {
-    "rubric_sha256": "e869222deedeed39f444be36baeaa65e7cad93f81c99d0a40868cf9552826679",
+    "rubric_sha256": "d9159fc6b5023496cef05e16ce5a73b4f7a2d4901eb0747c41a1bbb3c60b7171",
     "queue_manifest_sha256": null,
     "queue_roles_separated": true
   },
@@ -35,7 +35,7 @@
     {
       "requirement_id": "ANN-STD-01",
       "scenario_type": "standard",
-      "vertical_trace": "H1/H2 primary outcome rubric-v2",
+      "vertical_trace": "H1/H2 primary outcome rubric-v3",
       "stimulus": "A complete blinded artifact and its frozen reference constraints are shown.",
       "context": "The item is readable and contains enough information to apply the rubric.",
       "annotator_response": "Assign exactly one severity label and record the required rationale.",
@@ -45,7 +45,7 @@
     {
       "requirement_id": "ANN-EDGE-01",
       "scenario_type": "edge_case",
-      "vertical_trace": "rubric-v2 missing-label policy",
+      "vertical_trace": "rubric-v3 missing-label policy",
       "stimulus": "The artifact is readable but the reference does not support a confident severity decision.",
       "context": "No treatment, provider, machine judgment or detector output is visible.",
       "annotator_response": "Submit no severity label and record insufficient_context or another allowed missing reason.",

@@ -1,8 +1,28 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import pytest
 
-from eval.freeze import build_freeze_manifest, main, validate_freeze
+from eval.freeze import DEFAULT_FREEZE_FILES, build_freeze_manifest, main, validate_freeze
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_default_freeze_includes_primary_irr_policy_and_implementation():
+    assert "tasks/annotation_rubric.json" in DEFAULT_FREEZE_FILES
+    assert "label_plane/annotation_protocol.py" in DEFAULT_FREEZE_FILES
+    assert "protocol/irr.py" in DEFAULT_FREEZE_FILES
+
+
+def test_candidate_freeze_matches_the_current_repository():
+    manifest = json.loads(
+        (ROOT / "docs/thesis/confirmatory-freeze.json").read_text(encoding="utf-8")
+    )
+    assert set(manifest["files"]) == set(DEFAULT_FREEZE_FILES)
+    assert validate_freeze(manifest, repository_root=ROOT)["status"] == "candidate"
 
 
 def test_freeze_manifest_detects_file_drift_and_requires_confirmation(tmp_path):

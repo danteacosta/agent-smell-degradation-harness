@@ -26,7 +26,9 @@ DEFAULT_FREEZE_FILES = (
     "eval/sample_gate.py",
     "eval/splits.py",
     "feature_plane/deployable.py",
+    "label_plane/annotation_protocol.py",
     "label_plane/human_annotation/__init__.py",
+    "protocol/irr.py",
     "protocol/power.py",
     "tasks/annotation_rubric.json",
 )
