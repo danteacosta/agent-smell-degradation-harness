@@ -1,6 +1,7 @@
 # Research catalog
 
 - [1 October 2026: blind historical source triage](2026-10-01-historical-blind-review-protocol.md): two model readings of all ten old/new changes, preserved disagreements, and a source-gated next collection.
+- [1 October 2026: Paperless barcode A/B/C E2E pilot](2026-10-01-paperless-barcode-abc-pilot.md): two separately sealed 18-generation runs; the revised run yielded one isolated omission defect, two ties and three unknown comparisons.
 - [30 September 2026: literature-bound audit of historical smells](2026-09-30-literature-validated-smell-audit.md): six literature-linked candidates, four unmapped changes, and no independent smell confirmation.
 - [30 September 2026: historical E2E closure](2026-09-30-natural-e2e-closure.md): ten distinct requirements, 60 nested pairs, eligibility decisions, and preserved unknowns.
 - [29 September 2026: historical E2E contamination follow-up](2026-09-29-natural-e2e-contamination-followup.md): separate decontaminated successor pilots and their limits.

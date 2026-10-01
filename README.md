@@ -8,6 +8,8 @@ The [2026-10-01 three-case E2E replication](docs/research/2026-10-01-three-case-
 
 The [historical source triage](docs/research/2026-10-01-historical-blind-review-protocol.md) records two exploratory model readings of all ten old/new changes before revealing their E2E outcomes. It preserves disagreements and does not replace independent human review.
 
+The [Paperless barcode A/B/C pilot](docs/research/2026-10-01-paperless-barcode-abc-pilot.md) preserves two new 18-generation browser runs separately. After a first-run prompt confound was diagnosed, the revised run yielded one isolated omission defect, two ties and three unknown comparisons for one requirement; it does not establish H1.
+
 **Product scope:** advisory constraint diagnostics for coding agents. Given a specification and a live trace, show which condition may have lost traceability, at which checkpoint, and with what evidence. Automatic semantic approval, defect prevention and product usefulness have not been validated. Deterministic policy checks remain separate from the confirmatory thesis protocol.
 
 **Current evidence boundary:** without human calibration, semantic judgments are
