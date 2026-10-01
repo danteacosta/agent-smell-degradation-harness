@@ -127,3 +127,49 @@ Next safe action: prepare input-only review material with the existing exact
 source IDs and constraint mappings, excluding these retrospective outcomes.
 The retrospective cue annotations here belong to the audit/label side and
 must never enter B0/B3 features or drive outcome-selected holdout admission.
+
+## Preparing independent review without leaking these results
+
+Preparation status: blocked on reviewer assignment and source-only packet
+assembly. No review has been performed or approved by this audit. A reviewer
+who has read this report must declare that exposure; their later judgment
+cannot be described as outcome-blind.
+
+Use the existing review workflows where their contracts fit. Do not coerce
+historical old/new pairs into `repository-review-source/v1`: its manipulation
+role requires a canonical requirement, a rewrite control and a smelly variant.
+A historical correction does not supply those three arms. Similarly, the
+existing natural-rubric-v1 taxonomy does not cover every incompleteness claim
+in this audit. Extending either contract requires a versioned methodological
+decision, not placeholder fields or automatic labels.
+
+| Material | Custodian prepares | Independent reviewer answers | Release gate |
+| --- | --- | --- | --- |
+| First reading | Exact source revision and requirement text, neutral case ID, frozen context boundary; no old/new labels, diff, outcomes or model identity | What behavior does this text require? Which details remain unspecified? For example, does “three statuses” mean one status or three simultaneous statuses? | Assign readers and freeze instructions before revealing the paired text. |
+| Manipulation | Both texts after first-reading responses are sealed; changed spans and all other changed input channels | Which obligation changed? Is the difference a named smell, missing information, factual correction or unresolved? | Independently adjudicate taxonomy; never force all corrections into a smell family. |
+| Requirement/oracle mapping | Canonical obligation, observable interface and frozen oracle; exclude generated outputs and mutation receipts | Does the oracle test this obligation? For example, does the Rotate statement actually specify the action being scored? | Resolve mapping before treating an output failure as condition loss. |
+| Context exposure | Exact assembled model input, scaffold and included linked guidance; exclude outcomes | Is the supposedly removed fact still available? Identify the channel and quote the cue, or record uncertainty. | Source-only review; retrospective cue guesses stay on the audit side. |
+
+Start with Kanboard cardinality and Paperless Rotate to resolve the concrete
+mapping questions above. This is a purposive calibration subset, not a new
+confirmatory sample. Include the other cases under a prospectively specified
+rule; do not admit only cases whose existing E2Es improved. Nextcloud retention
+also needs an explicit decision about whether linked guidance belongs to the
+treatment. Do not claim sentence-level isolation for that existing lot.
+
+The custodian should seal a manifest with source revision, exact input hashes,
+constraint mapping, packet version, permitted context and reviewer exposure
+status. Keep the identity key and completed forms outside the repository.
+Do not redistribute public outcome-bearing plans as blind review material.
+Reviewer recruitment, independent judgments and taxonomy approval remain human
+work; this preparation does not replace them or authorize paid collection.
+
+### Review export boundary correction
+
+The existing exporter previously treated the caller's working directory as
+the repository boundary. Running it from elsewhere could accept an output
+inside this checkout and reject a legitimate external output. The boundary
+now derives from the module's checkout location. Three regression cases
+reproduce both unsafe acceptance paths and the false rejection before the fix,
+then pass afterward. This protects this checkout's boundary; it is not a
+universal detector of other repositories or a security certification.

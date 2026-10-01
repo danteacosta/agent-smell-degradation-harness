@@ -129,7 +129,7 @@ def validate_source(source: Any) -> dict:
 def _assert_private_root(path: Path) -> None:
     if not path.is_absolute():
         raise ValueError("output path must be absolute")
-    repository = Path.cwd().resolve()
+    repository = Path(__file__).resolve().parents[1]
     resolved = path.resolve(strict=False)
     if resolved == repository or repository in resolved.parents:
         raise ValueError("review artifacts must be stored outside the repository")
