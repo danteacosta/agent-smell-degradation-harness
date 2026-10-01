@@ -1,0 +1,26 @@
+{
+  "schema_version": "realworld-comment-delete-browser/v1",
+  "status": "complete",
+  "app_sha256": "c4f07d7fb6d3980d4238aefdba784519d4ece6f63b62ad747e20a48662924606",
+  "assertions": {
+    "author_delete_visible_1": true,
+    "other_delete_hidden_1": true,
+    "comment_visible_1": true,
+    "article_preserved_1": true,
+    "viewer_preserved_1": true,
+    "one_comment_1": true,
+    "author_delete_visible_2": true,
+    "other_delete_hidden_2": true,
+    "comment_visible_2": true,
+    "article_preserved_2": true,
+    "viewer_preserved_2": true,
+    "one_comment_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png",
+    "fixture-3.png",
+    "fixture-4.png"
+  ]
+}
