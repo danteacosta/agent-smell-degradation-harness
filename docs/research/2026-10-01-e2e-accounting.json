@@ -1,0 +1,287 @@
+{
+  "confirmatory_eligible": false,
+  "controlled_packets": {
+    "kanboard-closed-filter": {
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 3
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 3
+          }
+        }
+      },
+      "report_hashes_verified": 18
+    },
+    "kanboard-duplicate-title": {
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 1,
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 3
+          }
+        }
+      },
+      "report_hashes_verified": 18
+    },
+    "nextcloud-restore-conflict": {
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        }
+      },
+      "report_hashes_verified": 18
+    },
+    "openproject-invalid-remaining": {
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        }
+      },
+      "report_hashes_verified": 18
+    },
+    "paperless-duplicate-consumption": {
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 2,
+            "target_only_failure": 1
+          }
+        }
+      },
+      "report_hashes_verified": 18
+    },
+    "paperless-nested-tags": {
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "browser_error": 1,
+            "pass": 1,
+            "target_only_failure": 1
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        }
+      },
+      "report_hashes_verified": 18
+    },
+    "realworld-favorites": {
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 3
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 3
+          }
+        }
+      },
+      "report_hashes_verified": 18
+    },
+    "todomvc-persistence-bridge": {
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "interface_error": 1,
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 3
+          }
+        }
+      },
+      "report_hashes_verified": 18
+    }
+  },
+  "historical_registry_dispositions": {
+    "duplicate_treatment": 1,
+    "noncomparable": 14,
+    "tested": 10,
+    "unqualified": 1
+  },
+  "historical_registry_unique_tested_requirements": 10,
+  "paired_packets": {
+    "data/e2e-decontamination-20260929/kanboard-search/analysis-summary.json": {
+      "comparisons": {
+        "equal": 2,
+        "improved": 4
+      },
+      "equal_outcomes": {
+        "pass": 1,
+        "target_only_failure": 1
+      },
+      "pairs": 6
+    },
+    "data/e2e-decontamination-20260929/paperless-barcode/analysis-summary.json": {
+      "comparisons": {
+        "improved": 2,
+        "unknown": 4
+      },
+      "equal_outcomes": {},
+      "pairs": 6
+    },
+    "data/e2e-decontamination-20260929/paperless-rotate/analysis-summary.json": {
+      "comparisons": {
+        "equal": 6
+      },
+      "equal_outcomes": {
+        "target_only_failure": 6
+      },
+      "pairs": 6
+    },
+    "data/e2e-decontamination-20260930/kanboard-cardinality/analysis-summary.json": {
+      "comparisons": {
+        "equal": 5,
+        "improved": 1
+      },
+      "equal_outcomes": {
+        "pass": 5
+      },
+      "pairs": 6
+    },
+    "data/e2e-decontamination-20260930/nextcloud-trash-retention/analysis-summary.json": {
+      "comparisons": {
+        "equal": 1,
+        "improved": 3,
+        "unknown": 2
+      },
+      "equal_outcomes": {
+        "pass": 1
+      },
+      "pairs": 6
+    }
+  },
+  "public_inventory_hashes_verified": 31,
+  "schema_version": "e2e-public-accounting-audit/v1",
+  "scope": "Public packet accounting only; no private seal or causal validation."
+}

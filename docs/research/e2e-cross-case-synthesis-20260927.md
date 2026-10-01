@@ -18,7 +18,7 @@ per-case reports carry the outcome details and preserved instrument failures.
 | Nextcloud restore-name conflict | 6/6 target failures | A/B passed; first lot collector failure |
 
 In this selected block, six of eight obligations had at least one
-target-only C failure; two showed recovery. This is a **description of the
+target-only C failure; two had no observed target failure. This is a **description of the
 chosen cases**, not an estimate that 75% of requirement omissions produce
 defects. Repetitions share prompts, scaffold and requirement; treating 48 C
 generations as independent requirements would exaggerate precision. A/B/C
@@ -28,7 +28,8 @@ restore-name conflict.
 
 The useful scientific conclusion is narrower: omission of a source-grounded
 clause can produce a browser-observable defect in multiple projects, while
-context can also let a model reconstruct an omitted clause. The observed
+some omitted-clause outputs still satisfy the target. Contextual recovery is a
+plausible explanation, but the responsible cue was not experimentally isolated. The observed
 mechanism depends on the requirement, model and surrounding interface data.
 Natural-smell frequency, independent ordinal severity H1, and early-warning
 performance H2 remain unanswered. The next decisive collection should use a
@@ -37,3 +38,11 @@ rather than selecting only obligations expected to fail.
 This endpoint distinction is also consistent with the
 [primary-study review](2026-09-27-frattini-pr-review.md), which concerns a
 different downstream activity and supplies no transferable agent effect size.
+
+## Retrospective context audit
+
+The [1 October audit](2026-10-01-e2e-recoverability-audit.md) links these
+contrasts to remaining prompt/scaffold cues and the five newly reviewed
+clarification, stage-attribution and acceptance-criteria papers. It keeps
+local behavioral success separate from an identified recovery mechanism
+and reconciles public result records without rerunning generation.
