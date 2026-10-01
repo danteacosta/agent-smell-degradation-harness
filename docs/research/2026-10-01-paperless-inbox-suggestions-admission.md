@@ -1,0 +1,7 @@
+# Paperless inbox suggestions: admission status
+
+The public Paperless-ngx usage guide says an inbox-tagged document triggers an automatic suggestions request when opened. The proposed E2E measures that request and the visible suggestion returned by a fixed local service; it does not assess suggestion quality, acceptance/rejection, or the setting that changes the behavior to manual-only.
+
+The first authored-control run exposed an oracular mistake: an empty `<ul>` was itself considered invisible, so a missing request became `interface_error`. That incomplete packet was preserved. A fixed-height suggestion area corrected the observability boundary before any generation. The versioned successor matched **12/12** expected browser categories in the pinned Chromium image: two correct implementations, missing/manual/fake/double requests, wrong document or suggestion, a wrong title, hidden controls, and a script error. The private qualification receipt is versioned `paperless-inbox-suggestions-qualification-20261001-v2`, SHA-256 `b891cea5c870836e32e2ec9f87c4847b8f8e39d3706ccd86dd4c2f05571e52a6`.
+
+**Status: awaiting independent source-to-oracle review; zero generation calls.** The collector requires three favorable votes on the exact A/B/C prompts, page, runner, classifier and qualification receipt before freezing its randomized 18-slot schedule. Authored controls establish technical behavior of the instrument, not a smell effect or a generated outcome.
