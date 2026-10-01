@@ -1,0 +1,97 @@
+{
+  "schema_version": "prospective-h1-six-selection/v1",
+  "status": "selection_frozen_before_new_generation_not_admission",
+  "selection_date": "2026-10-01",
+  "source_base_commit": "9ba899f16c426ad701849b9887749573214a4827",
+  "unit": "requirement_obligation",
+  "design": {
+    "arms": ["A_complete", "B_equivalent_rewrite", "C_one_omission"],
+    "generator_aliases": ["gpt-5.6-luna", "gpt-5.6-sol"],
+    "repetitions_per_arm_model": 3,
+    "maximum_positions_if_all_admitted": 108,
+    "primary_comparison": "C versus A within each obligation and model",
+    "analysis": "Report every selected case, including deferred and unknown. One obligation per project makes requirement and project levels coincide in this cohort; do not estimate separate variance components. Repetitions are nested, not independent requirements. Human ordinal labels remain a separate confirmatory gate."
+  },
+  "selection_rule": "One previously unexecuted, source-bound, browser-observable obligation from each of six distinct open-source projects already present in the pinned source corpus. Preserve these six identities and all admission failures. No replacement after generation begins; any changed target requires a separately versioned selection before its first provider call.",
+  "limitations": "Purposive, not random: the operator knew earlier project-level pilot outcomes before selecting these cases. Prospective applies to these cases' future A/B/C generations only. Literature-category and human severity labels are not established by this manifest.",
+  "cases": [
+    {
+      "id": "todo-clear-button-hidden",
+      "project_id": "todomvc",
+      "source_path": "data/criteria-expansion/sources/todomvc/app-spec.md",
+      "source_revision": "ff43b02e59dfa604386bb382034b2cd07c2bcd8a",
+      "source_sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+      "license_path": "data/criteria-expansion/sources/todomvc/license.md",
+      "license_sha256": "32238c5c6759b589ea768661b6eb0fcb42449b74d57cdf09928743f2e1eb748d",
+      "target": "After Clear completed removes the last completed todo, the Clear completed button is hidden while an active todo remains visible.",
+      "source_locator": "Clear completed button, lines 112-114",
+      "prior_status": "deferred_after_instrument_review; no experimental generation",
+      "admission_issue": "The earlier browser oracle qualified 7/7 controls, but instrument review did not reach unanimity. Reconcile the meaning of no completed todos after the click and the intentional deletion in C without changing outcomes retrospectively."
+    },
+    {
+      "id": "realworld-comment-delete-author-only",
+      "project_id": "realworld",
+      "source_path": "data/criteria-expansion/sources/realworld/docs__src__content__docs__specifications__frontend__routing.md",
+      "source_revision": "ebbcdeb8d55b42a3a613c787560498b8ef10003f",
+      "source_sha256": "65fbd975a3ab2021057b1c1944cf66418aa846039e51b166d2a98eb29e7169fb",
+      "license_path": "data/criteria-expansion/sources/realworld/LICENSE",
+      "license_sha256": "a999311c4ccfecf18b7c7beb7a7a31682bb009839ab3827164fa2f8c333fc9dd",
+      "target": "Only the comment author sees the Delete comment action on an article, while another authenticated viewer still sees the comment.",
+      "source_locator": "Article page, line 18",
+      "prior_status": "deferred_after_instrument_review; no experimental generation",
+      "admission_issue": "Resolve the previous A/B equivalence and author-only manipulation disagreement prospectively; visible action is the endpoint, not button enablement."
+    },
+    {
+      "id": "nextcloud-delete-permanently",
+      "project_id": "nextcloud",
+      "source_path": "data/e2e-six-projects/sources/nextcloud/deleted_file_management.rst",
+      "source_revision": "121cb83001db7722870050b7980aea35fab82141",
+      "source_sha256": "9e8218c16b5f8e558cb535834271e9a02fd27ac733c7f45bba0126f62e67106f",
+      "license_path": "data/e2e-six-projects/sources/nextcloud/COPYING",
+      "license_sha256": "5138a74ac20f2965d97b2a9c35219ca74e24f4a93618b33f0e36e4b3c7873197",
+      "target": "Delete permanently removes one selected item from Deleted files after a fresh read while an unrelated trashed item remains.",
+      "source_locator": "Deleted files, lines 9-20",
+      "prior_status": "deferred_after_instrument_review; no experimental generation",
+      "admission_issue": "Show that the post-refresh state is authoritative, not only a client-side list illusion; prior reviewers did not accept the endpoint."
+    },
+    {
+      "id": "strictdoc-statistics-generation-date",
+      "project_id": "strictdoc",
+      "source_path": "data/criteria-expansion/sources/strictdoc/docs__strictdoc_21_l2_high_level_requirements.sdoc",
+      "source_revision": "abf7be7daa2a25721a56980b5be15845336ea0b8",
+      "source_sha256": "de4b804342caac0211e5cabfa4dfb91b1e07ebe785bf34ef55de6c4ea60fc28f",
+      "license_path": "data/criteria-expansion/sources/strictdoc/LICENSE",
+      "license_sha256": "3392558ba768e0454ed2340433d5b9daf1ef32860368b9bf82b87a441fcd0438",
+      "target": "The Project Statistics screen visibly displays the generation date matching a frozen generation clock, alongside unchanged title, revision and counts.",
+      "source_locator": "SDOC-SRS-97, lines 1283-1296",
+      "prior_status": "candidate_pending_qualification; no behavioral generation",
+      "admission_issue": "Declare a neutral data interface and hidden browser clock without a date field; accept equivalent date formats and define the generation event."
+    },
+    {
+      "id": "kanboard-due-date-colors",
+      "project_id": "kanboard",
+      "source_path": "data/e2e-six-projects/sources/kanboard/tasks.md",
+      "source_revision": "4455fd04fb48ed42817fc99402d4c1fb3bde1c0d",
+      "source_sha256": "281c39c6e4c5a9c071d28bf01d08d2544929942977eeff4ae53ce0716510f081",
+      "license_path": "data/e2e-six-projects/sources/kanboard/LICENSE",
+      "license_sha256": "b14398501e47b08042d57b3ef7994cb2aab8d353a87d928a2395b7aea7c8ca2a",
+      "target": "On the task board, an overdue due date is visibly red and an upcoming due date is visibly black under a frozen date/time and two task fixtures.",
+      "source_locator": "task fields, line 41",
+      "prior_status": "new candidate; no known E2E generation for this obligation",
+      "admission_issue": "Frozen timezone and computed-color semantics must distinguish the due-date rule from unrelated card styling and inaccessible color-only cues."
+    },
+    {
+      "id": "paperless-inbox-auto-suggestions",
+      "project_id": "paperless-ngx",
+      "source_path": "data/e2e-six-projects/sources/paperless-ngx/usage.md",
+      "source_revision": "4f777d7438378fe0b6dcc9f140a7eb469f9f0b0b",
+      "source_sha256": "78fc960ff99fb102d11e9db2830f9e879f4894822ff8f18684e972ffe04bd9dd",
+      "license_path": "data/e2e-six-projects/sources/paperless-ngx/LICENSE",
+      "license_sha256": "d62f065830aa3739cc031156b9690805c7b2e811b4a178c8b4acd8725d561c94",
+      "target": "Opening the detail page of a document with an inbox tag automatically requests and shows available suggestions, without clicking Suggest.",
+      "source_locator": "Document Suggestions, lines 316-321",
+      "prior_status": "new source-grounded candidate; no known E2E generation for this obligation",
+      "admission_issue": "The source says suggestions are requested automatically, not that the model always returns one. Freeze available suggestion data and distinguish a missing request from an empty model response; manual Suggest and a non-inbox document are controls."
+    }
+  ]
+}
