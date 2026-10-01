@@ -1,0 +1,5 @@
+{
+  "A": "When Clear completed is clicked, remove completed todos and preserve active todos. Hide the Clear completed button whenever no completed todos exist, including when the list initially has none.",
+  "B": "Clicking Clear completed deletes the completed items without removing active items. Show that button only while at least one completed item exists, both on initial display and after a click.",
+  "C": "When Clear completed is clicked, remove completed todos and preserve active todos."
+}

@@ -1,0 +1,15 @@
+# TodoMVC Clear completed: outcome-aware replication contract
+
+This is an **exploratory replication** of the 27 September v5c result, not an independent H1 discovery. The source obligation is that Clear completed removes completed todos and the button is hidden whenever none remain. A and B retain it; C deletes only the visibility rule. The existing v5 browser instrument, pre-generation qualification (9/9 authored controls), three ACCEPT instrument reviews, pinned TodoMVC source/license and two-model set are reused. The new packet must be frozen before any new provider call, with a new seed and a fresh private directory.
+
+Acceptance contract: given the source, identical common page and a fresh randomized schedule of A/B/C × Luna/Sol × three repetitions, when each model generates HTML in a separate context, preserve every attempted slot, generation error and browser observation. The target is whether Clear completed is hidden after removing the last completed item and on initially active-only or empty lists. Non-target controls verify removal and active-todo preservation. A/B/C output must not alter common scaffold bytes. A visible button with no completed todo is a target failure only if the surrounding journey and interface are evaluable. Browser errors, malformed output or broken controls remain unknown, never counted as a defect or success.
+
+Behavior scenarios:
+
+- Given a qualified v5 instrument and unchanged prompts, when the fresh packet is prepared, then the seed, schedule, prompt hashes, runtime, source/license hashes and prior-pilot identity are sealed before generation.
+- Given a generated page for any arm, when it changes the common scaffold or omits the behavior insertion, then the output is invalid and receives no target verdict.
+- Given an attempted slot, when execution is interrupted, then its attempt receipt prevents retry; its outcome stays unknown.
+- Given a complete set of generated HTMLs, when browser execution runs in the pinned image, then all slots receive separate target, non-target, invalid-interface or browser-error categories and screenshots are retained.
+- Given final results, when comparing A with C, then the denominator is the six matched model/repetition triplets, with unknown triplets explicit. These are nested observations of one obligation, not six independent requirements.
+
+Design: restore the previously reviewed v5 fixture and collector from Git history, keep its one-call/one-receipt provider boundary, and change only the run identity and schedule seed for the replication. The collector owns private packet custody; the fixture owns browser classification; the public report summarizes hashes and outcomes without copying generated code. No new abstraction is needed. Unit tests cover schedule uniqueness, one-attempt behavior and scaffold integrity; the pinned browser qualification and an actual browser run cover the user-visible journey. Before finalizing, inspect the diff for unrelated changes, security at the private-output boundary, and accurate distinction between exploratory and confirmatory evidence.
