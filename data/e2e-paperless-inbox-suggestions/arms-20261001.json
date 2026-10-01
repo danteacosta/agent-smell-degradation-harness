@@ -1,0 +1,5 @@
+{
+  "A": "Suggestions are shown on the document detail page and can be accepted or rejected. Suggestions are requested automatically when you open a document that still has an inbox tag.",
+  "B": "On a document detail page, show suggestions that the user can accept or reject. Opening an inbox-tagged document automatically requests its suggestions.",
+  "C": "Suggestions are shown on the document detail page and can be accepted or rejected."
+}
