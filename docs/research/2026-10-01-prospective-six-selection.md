@@ -6,8 +6,8 @@ The earlier 26-change historical catalog cannot supply six unused eligible cases
 
 | Project | Selected obligation and source | Current gate |
 | --- | --- | --- |
-| TodoMVC | Hide **Clear completed** after it removes the last completed item; `app-spec.md`. | Earlier v5c pilot: 18/18 E2E attempts, A/B pass 12/12, C target-only failure 6/6; exploratory, selected for replication. Reconcile that pilot's later review and runtime before admission. |
-| RealWorld | Show **Delete comment** only to the comment author; frontend `routing.md`. | Earlier v3 and v4 pilots: v4 has 18/18 passes across A/B/C; exploratory, selected for replication. Preserve v3 separately and reconcile why results changed. |
+| TodoMVC | Hide **Clear completed** after it removes the last completed item; `app-spec.md`. | Later v5 qualified 9/9 controls and received 3/3 pre-generation LLM ACCEPT votes. Its v5c pilot had 18/18 E2E attempts, A/B pass 12/12 and C target-only failure 6/6; exploratory, selected for replication. Audit its frozen runtime before reusing it. |
+| RealWorld | Show **Delete comment** only to the comment author; frontend `routing.md`. | V4 qualified 11/11 controls; panel 2 ACCEPT/1 DEFER and separate pre-generation adjudication 3/3 no material blocker. The v4 pilot had 18/18 passes across A/B/C; exploratory, selected for replication. Preserve v3 separately; the v4 prompt clarified types and cannot be treated as an identical rerun. |
 | Nextcloud | **Delete permanently** removes the selected item from Deleted files; `deleted_file_management.rst`. | Browser observation after refresh must be linked to authoritative persistent state. |
 | StrictDoc | Show generation date on **Project Statistics**; `SDOC-SRS-97`. | Freeze generation clock and accept semantically equivalent date formats without leaking the value. |
 | Kanboard | Show overdue due dates red and upcoming dates black on the board; `tasks.md`. | Freeze clock/timezone and score computed visible styling separately from other card fields. |
@@ -19,4 +19,4 @@ The manipulated family is a **proposed** instance of *Incomplete System Behavior
 
 The original selection was committed as `037066c` with SHA-256 `dfaeb083da3dab4f9981b30cf77aac0257a4ca96694d300a09f192c48d597ad5`. It incorrectly said TodoMVC and RealWorld were unexecuted. This correction is a separate commit before any generation under this cohort; the original remains in Git history. The next deliverable is a case-by-case admission ledger. No new generated result exists under this cohort at this corrected freeze.
 
-Corrected selection SHA-256: `6f1394235681ed17ceb5d247ca43bf853717d48c13e00f165d5397cead84df61`.
+Corrected selection SHA-256: `1c07fc068e448c1af2a99f3232f03911dad44f48060d753fc3ade8f64d31598d`.

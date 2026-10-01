@@ -26,7 +26,7 @@
       "target": "After Clear completed removes the last completed todo, the Clear completed button is hidden while an active todo remains visible.",
       "source_locator": "Clear completed button, lines 112-114",
       "prior_status": "exploratory_pilot_completed_20260927_v5c; 18_attempted; A_and_B_12_pass; C_6_target_only_failure; not_confirmatory; selected_for_explicit_replication",
-      "admission_issue": "The earlier browser oracle qualified 7/7 controls, but instrument review did not reach unanimity. Reconcile the meaning of no completed todos after the click and the intentional deletion in C without changing outcomes retrospectively."
+      "admission_issue": "The later v5 instrument qualified 9/9 controls and its pre-generation LLM panel returned 3/3 ACCEPT for the earlier pilot. Before any new replication, audit the exact frozen v5c prompt, browser runtime and outcome custody; do not substitute the older 7/7 deferred instrument."
     },
     {
       "id": "realworld-comment-delete-author-only",
@@ -39,7 +39,7 @@
       "target": "Only the comment author sees the Delete comment action on an article, while another authenticated viewer still sees the comment.",
       "source_locator": "Article page, line 18",
       "prior_status": "exploratory_pilots_completed_20260927_v3_and_v4; latest_v4_18_attempted_all_pass; not_confirmatory; selected_for_explicit_replication",
-      "admission_issue": "Resolve the previous A/B equivalence and author-only manipulation disagreement prospectively; visible action is the endpoint, not button enablement."
+      "admission_issue": "The v4 instrument qualified 11/11 controls; prompt review gave 2 ACCEPT and 1 DEFER, followed by a separate 3/3 no-material-blocker adjudication before its earlier generation. Audit the type-clarification change from v3 to v4 and context cues before repeating; visible action is the endpoint, not button enablement."
     },
     {
       "id": "nextcloud-delete-permanently",
