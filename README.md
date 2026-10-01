@@ -6,6 +6,8 @@ The [context-recoverability audit](docs/research/2026-10-01-e2e-recoverability-a
 
 The [2026-10-01 three-case E2E replication](docs/research/2026-10-01-three-case-e2e-replication.md) records 54 new provider calls and browser runs: a repeated RealWorld null case, OpenProject target-failure case and Paperless mixed case, with public reports and screenshots. These are repeated requirements, not a broader confirmatory sample.
 
+The [historical source triage](docs/research/2026-10-01-historical-blind-review-protocol.md) records two exploratory model readings of all ten old/new changes before revealing their E2E outcomes. It preserves disagreements and does not replace independent human review.
+
 **Product scope:** advisory constraint diagnostics for coding agents. Given a specification and a live trace, show which condition may have lost traceability, at which checkpoint, and with what evidence. Automatic semantic approval, defect prevention and product usefulness have not been validated. Deterministic policy checks remain separate from the confirmatory thesis protocol.
 
 **Current evidence boundary:** without human calibration, semantic judgments are
