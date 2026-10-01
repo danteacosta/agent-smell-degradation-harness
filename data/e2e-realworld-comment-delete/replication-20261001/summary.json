@@ -1,0 +1,324 @@
+{
+  "schema_version": "realworld-comment-delete-replication-public/20261001-v1",
+  "status": "exploratory_not_confirmatory",
+  "planned_slots": 18,
+  "attempted_calls": 18,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 3
+      },
+      "B": {
+        "pass": 3
+      },
+      "C": {
+        "pass": 3
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 3
+      },
+      "B": {
+        "pass": 3
+      },
+      "C": {
+        "pass": 3
+      }
+    }
+  },
+  "frozen_receipt_sha256": "01fde3deb76adbd7721f4d0b73b92729dd3b305b283e5bd22c4dfaa50d7c59b7",
+  "private_results_sha256": "9ef32a3a6fb728fed46b5f334b785cb6ec9bb92f85ac4a79ed3762e3f6d32d88",
+  "private_receipt_sha256": "5f2f5f8dbccdabe9c0bc86ffc8efbfca7512dd5a6d6c5cdbcdc79fa0553165e6",
+  "distinct_html_hashes": 4,
+  "rows": [
+    {
+      "slot_id": "realworld-comment-rep-20261001-f6c2ad0c9a6a49462e6479f4",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "0ec0c5b58ef2038cba63a723a1ed1147755f4fa3a24c610911842ff09a00bca8",
+      "browser_report_sha256": "760265294bd902a5e5cc4c6ec48a816e608c297b497e451a3371c6c9b8ee4a1e",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-a2963042189864808688d7c3",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "9126e9df8367f68243a8389f6ce2581b39a71ef804fc0b8f60acd91a383d2543",
+      "browser_report_sha256": "761b3761798c7ed13eb2ca95b2b5798aed3a3fd23e2a67e7147a9ac6e37bee9b",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-3f8b130b568f7ce1f870d5d5",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "arm": "C",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "9126e9df8367f68243a8389f6ce2581b39a71ef804fc0b8f60acd91a383d2543",
+      "browser_report_sha256": "761b3761798c7ed13eb2ca95b2b5798aed3a3fd23e2a67e7147a9ac6e37bee9b",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-6900c49e74b32f0a5f3bfcbf",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "0ec0c5b58ef2038cba63a723a1ed1147755f4fa3a24c610911842ff09a00bca8",
+      "browser_report_sha256": "760265294bd902a5e5cc4c6ec48a816e608c297b497e451a3371c6c9b8ee4a1e",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-f2c3d1dc660ec7e07f80adbc",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "9126e9df8367f68243a8389f6ce2581b39a71ef804fc0b8f60acd91a383d2543",
+      "browser_report_sha256": "761b3761798c7ed13eb2ca95b2b5798aed3a3fd23e2a67e7147a9ac6e37bee9b",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-9bc2d73e0929edd2abfb4a78",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "0ec0c5b58ef2038cba63a723a1ed1147755f4fa3a24c610911842ff09a00bca8",
+      "browser_report_sha256": "760265294bd902a5e5cc4c6ec48a816e608c297b497e451a3371c6c9b8ee4a1e",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-a38868107779f3ab2173c563",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "arm": "C",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "9126e9df8367f68243a8389f6ce2581b39a71ef804fc0b8f60acd91a383d2543",
+      "browser_report_sha256": "761b3761798c7ed13eb2ca95b2b5798aed3a3fd23e2a67e7147a9ac6e37bee9b",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-aaa1dd410381392f24bf877c",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "0ec0c5b58ef2038cba63a723a1ed1147755f4fa3a24c610911842ff09a00bca8",
+      "browser_report_sha256": "760265294bd902a5e5cc4c6ec48a816e608c297b497e451a3371c6c9b8ee4a1e",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-00307602209003cbea08d5a7",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "9126e9df8367f68243a8389f6ce2581b39a71ef804fc0b8f60acd91a383d2543",
+      "browser_report_sha256": "761b3761798c7ed13eb2ca95b2b5798aed3a3fd23e2a67e7147a9ac6e37bee9b",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-4eadae2d55831b7e3fa4742f",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "0ec0c5b58ef2038cba63a723a1ed1147755f4fa3a24c610911842ff09a00bca8",
+      "browser_report_sha256": "760265294bd902a5e5cc4c6ec48a816e608c297b497e451a3371c6c9b8ee4a1e",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-590b0cbd17f1a4f4062d5d9d",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "fb8c592a0a865e17840b777536f652172acf1ae1d48dedbe77e8e27cca97b5c0",
+      "browser_report_sha256": "c4d315fd49077142e957f72172ad357a7f181c8cb24fad9b01f11ee001ad87df",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-1a36beda7da97da3031b8530",
+      "model": "gpt-5.6-luna",
+      "replication": 3,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "0ec0c5b58ef2038cba63a723a1ed1147755f4fa3a24c610911842ff09a00bca8",
+      "browser_report_sha256": "760265294bd902a5e5cc4c6ec48a816e608c297b497e451a3371c6c9b8ee4a1e",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-f618dd7e0f5723f880937455",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "9126e9df8367f68243a8389f6ce2581b39a71ef804fc0b8f60acd91a383d2543",
+      "browser_report_sha256": "761b3761798c7ed13eb2ca95b2b5798aed3a3fd23e2a67e7147a9ac6e37bee9b",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-67b3993071f9687573f4eb97",
+      "model": "gpt-5.6-sol",
+      "replication": 3,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "0ec0c5b58ef2038cba63a723a1ed1147755f4fa3a24c610911842ff09a00bca8",
+      "browser_report_sha256": "760265294bd902a5e5cc4c6ec48a816e608c297b497e451a3371c6c9b8ee4a1e",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-1e5141121be9517a24627580",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "c4f07d7fb6d3980d4238aefdba784519d4ece6f63b62ad747e20a48662924606",
+      "browser_report_sha256": "514c7f7fb378f1beab7fd32fe1260d8bb132e1d4ec93e105047cea1a8234a96b",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-c8288a51bd64184fc630baf5",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "0ec0c5b58ef2038cba63a723a1ed1147755f4fa3a24c610911842ff09a00bca8",
+      "browser_report_sha256": "760265294bd902a5e5cc4c6ec48a816e608c297b497e451a3371c6c9b8ee4a1e",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-fc379d290fea4e496ee9cd9e",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "9126e9df8367f68243a8389f6ce2581b39a71ef804fc0b8f60acd91a383d2543",
+      "browser_report_sha256": "761b3761798c7ed13eb2ca95b2b5798aed3a3fd23e2a67e7147a9ac6e37bee9b",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    },
+    {
+      "slot_id": "realworld-comment-rep-20261001-37dc2e14d9e7804f50ad199b",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "target_failed": false,
+      "generated_html_sha256": "0ec0c5b58ef2038cba63a723a1ed1147755f4fa3a24c610911842ff09a00bca8",
+      "browser_report_sha256": "760265294bd902a5e5cc4c6ec48a816e608c297b497e451a3371c6c9b8ee4a1e",
+      "screenshots_sha256": {
+        "fixture-1.png": "08bdb85d4e5d384022459e3a6f480676fbe5302f31e550f9523a28003244295e",
+        "fixture-2.png": "a9dc0a44f0c73dc430f2a5e161435ac96d9630fdc615087ec1047451303f6ece",
+        "fixture-3.png": "153b89e44e0b3dfa9eca502197575af3d83baa228cc2443a127c8cbf4c6feab5",
+        "fixture-4.png": "304098bc1c64470b993776147fe1ed08b68cdc46ffb64979b19540aa9b407626"
+      }
+    }
+  ]
+}
