@@ -1,0 +1,5 @@
+{
+  "A": "Due Date: Overdue tasks will have a red due date, and upcoming due dates will be black on the board. Several date formats are accepted in addition to the date picker.",
+  "B": "Show each due date on the task board: use red for overdue dates and black for upcoming dates. The due-date field accepts multiple formats as well as the picker.",
+  "C": "Due Date: Several date formats are accepted in addition to the date picker."
+}
