@@ -10,7 +10,7 @@ import subprocess
 import sys
 
 
-SCHEMA = "kanboard-due-date-browser/v1"
+SCHEMA = "kanboard-due-date-browser/v2"
 TARGET = {f"{name}_{index}" for index in (1, 2)
           for name in ("overdue_red", "upcoming_black")}
 NON_TARGET = {f"{name}_{index}" for index in (1, 2)
@@ -63,12 +63,16 @@ def behavior(*, overdue: str = "#b91c1c", upcoming: str = "#111827",
              wrong_title: bool = False, wrong_text: bool = False,
              duplicate: bool = False, missing_date: bool = False,
              hidden_date: bool = False, covered_date: bool = False,
-             card_background_only: bool = False) -> str:
+             card_background_only: bool = False,
+             nested_text_colors: tuple[str, str] | None = None) -> str:
     """Authored controls, never included in model prompts."""
     title = "'Wrong title'" if wrong_title else "task.title"
     date_text = "'?'+task.dueDate" if wrong_text else "task.dueDate"
     color = "'#111827'" if card_background_only else f"(task.dueDate<today?{overdue!r}:{upcoming!r})"
-    due = "" if missing_date else f"const due=document.createElement('span');due.dataset.role='due-date';due.textContent={date_text};due.style.color={color};card.append(due);"
+    date_render = (f"due.textContent={date_text};" if nested_text_colors is None else
+                   f"const ink=document.createElement('span');ink.textContent={date_text};"
+                   f"ink.style.color=task.dueDate<today?{nested_text_colors[0]!r}:{nested_text_colors[1]!r};due.append(ink);")
+    due = "" if missing_date else f"const due=document.createElement('span');due.dataset.role='due-date';{date_render}due.style.color={color};card.append(due);"
     if hidden_date:
         due += "due.hidden=true;"
     if covered_date:
@@ -101,6 +105,9 @@ CONTROLS = {
     "all-red": (behavior(upcoming="#b91c1c"), "target_only_failure"),
     "swapped": (behavior(overdue="#111827", upcoming="#b91c1c"), "target_only_failure"),
     "background-only": (behavior(card_background_only=True), "target_only_failure"),
+    "nested-wrong-text-color": (behavior(nested_text_colors=("#111827", "#b91c1c")), "target_only_failure"),
+    "nested-correct-text-color": (behavior(overdue="#111827", upcoming="#b91c1c",
+                                           nested_text_colors=("#b91c1c", "#111827")), "pass"),
     "wrong-title": (behavior(wrong_title=True), "non_target_only_failure"),
     "wrong-date-text": (behavior(wrong_text=True), "non_target_only_failure"),
     "duplicate-card": (behavior(duplicate=True), "interface_error"),
@@ -142,7 +149,7 @@ def qualify(image: str, destination: Path) -> dict:
         print(json.dumps(rows[-1]), flush=True)
         if result["category"] != expected:
             raise ValueError(f"{name}: expected {expected}, got {result['category']}")
-    summary = {"schema_version": "kanboard-due-date-qualification/v1", "qualified": True,
+    summary = {"schema_version": "kanboard-due-date-qualification/v2", "qualified": True,
                "controls": len(rows), "image_id": image, "page_sha256": digest(PAGE),
                "runner_sha256": digest(RUNNER), "qualifier_sha256": digest(Path(__file__)),
                "cases": rows}

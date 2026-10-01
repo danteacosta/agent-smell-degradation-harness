@@ -25,8 +25,8 @@ MODELS = ("gpt-5.6-luna", "gpt-5.6-sol")
 ARMS = ("A", "B", "C")
 REPETITIONS = (1, 2, 3)
 FIXTURE = ROOT / "eval/fixtures/kanboard-due-date"
-QUALIFICATION = Path("/Users/dantecosta/Documents/GitHub/.private-research-evidence/kanboard-due-date-qualification-20261001-v1")
-REVIEW = Path("/Users/dantecosta/Documents/GitHub/.private-research-evidence/kanboard-due-date-adjudication-20261001-v2")
+QUALIFICATION = Path("/Users/dantecosta/Documents/GitHub/.private-research-evidence/kanboard-due-date-qualification-20261001-v2")
+REVIEW = Path("/Users/dantecosta/Documents/GitHub/.private-research-evidence/kanboard-due-date-adjudication-20261001-v3")
 SOURCE = ROOT / "data/e2e-six-projects/sources/kanboard/tasks.md"
 LICENSE = ROOT / "data/e2e-six-projects/sources/kanboard/LICENSE"
 ARM_FILE = ROOT / "data/e2e-kanboard-due-date/arms-20261001.json"
@@ -62,6 +62,8 @@ def prompt(arm: str) -> str:
             "window.boardTasks contains two objects with id, title, and dueDate (ISO YYYY-MM-DD). "
             "Render a board with one visible element [data-task-id=<id>] per task, its visible title, "
             "and one visible descendant [data-role=due-date] showing the ISO dueDate string. "
+            "Use the current UTC day to classify a dueDate strictly earlier as overdue and "
+            "a dueDate strictly later as upcoming; the fixtures exclude dates equal to today. "
             "The page receives a normal JavaScript Date clock. Return only the complete HTML page.\n\nRequirement:\n"
             + arms()[arm] + "\n\nFrozen page:\n" + page)
 
@@ -87,7 +89,7 @@ def preflight() -> None:
     verify_inventory(QUALIFICATION)
     verify_inventory(REVIEW)
     qualification = json.loads((QUALIFICATION / "qualification.json").read_text())
-    if (qualification.get("qualified") is not True or qualification.get("controls") != 13
+    if (qualification.get("qualified") is not True or qualification.get("controls") != 15
             or qualification.get("image_id") != IMAGE
             or qualification.get("page_sha256") != hash_file(FIXTURE / "page.html")
             or qualification.get("runner_sha256") != hash_file(FIXTURE / "runner.cjs")

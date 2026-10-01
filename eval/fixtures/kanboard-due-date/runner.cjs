@@ -12,7 +12,7 @@ const fixtures=[
   [{id:'task-83',title:'Check migration',dueDate:'2032-03-30'},
    {id:'task-84',title:'Prepare workshop',dueDate:'2032-05-01'}],
 ];
-const report={schema_version:'kanboard-due-date-browser/v1',status:'browser_error',
+const report={schema_version:'kanboard-due-date-browser/v2',status:'browser_error',
   app_sha256:crypto.createHash('sha256').update(html).digest('hex'),assertions:{},console_errors:[]};
 class InterfaceError extends Error{}
 function rgb(color){
@@ -50,20 +50,31 @@ async function runFixture(browser,tasks,index){
       if(await due.count()!==1||!await due.isVisible())throw new InterfaceError('one visible due-date text required');
       await due.scrollIntoViewIfNeeded();
       const observation=await due.evaluate(element=>{
-        const box=element.getBoundingClientRect();
-        const point=document.elementFromPoint(box.left+box.width/2,box.top+box.height/2);
-        return {visible:box.width>0&&box.height>0&&Boolean(point)&&
-          (point===element||element.contains(point)),color:getComputedStyle(element).color};
+        const walker=document.createTreeWalker(element,NodeFilter.SHOW_TEXT);
+        const colors=[];let node;
+        while((node=walker.nextNode())){
+          if(!node.textContent.trim())continue;
+          const range=document.createRange();range.selectNodeContents(node);
+          const boxes=[...range.getClientRects()];
+          if(!boxes.length)return {visible:false,colors:[]};
+          for(const box of boxes){
+            const point=document.elementFromPoint(box.left+box.width/2,box.top+box.height/2);
+            if(!(box.width>0&&box.height>0&&point&&
+              (point===element||element.contains(point))))return {visible:false,colors:[]};
+          }
+          colors.push(getComputedStyle(node.parentElement).color);
+        }
+        return {visible:colors.length>0,colors};
       });
       if(!observation.visible)throw new InterfaceError('due-date text is covered or clipped');
       dueTexts.push((await due.innerText()).trim()===task.dueDate);
-      colors.push(rgb(observation.color));
+      colors.push(observation.colors.map(rgb));
     }
     const suffix=index+1;
     report.assertions[`task_titles_${suffix}`]=titles.every(Boolean);
     report.assertions[`due_text_${suffix}`]=dueTexts.every(Boolean);
-    report.assertions[`overdue_red_${suffix}`]=red(colors[0]);
-    report.assertions[`upcoming_black_${suffix}`]=black(colors[1]);
+    report.assertions[`overdue_red_${suffix}`]=colors[0].every(red);
+    report.assertions[`upcoming_black_${suffix}`]=colors[1].every(black);
     await page.screenshot({path:`/output/fixture-${suffix}.png`,fullPage:true});
   }finally{await context.close()}
 }

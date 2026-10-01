@@ -5,6 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 classify = runpy.run_path(str(ROOT / "eval/fixtures/kanboard-due-date/qualify.py"))["classify"]
+CONTROLS = runpy.run_path(str(ROOT / "eval/fixtures/kanboard-due-date/qualify.py"))["CONTROLS"]
 
 
 def report(*, target=True, neutral=True):
@@ -15,7 +16,7 @@ def report(*, target=True, neutral=True):
         assertions[f"task_titles_{index}"] = neutral
         assertions[f"due_text_{index}"] = neutral
     return {
-        "schema_version": "kanboard-due-date-browser/v1",
+        "schema_version": "kanboard-due-date-browser/v2",
         "status": "complete",
         "app_sha256": "a" * 64,
         "assertions": assertions,
@@ -44,3 +45,8 @@ def test_console_error_with_complete_report_is_unknown():
     data = report()
     data["console_errors"] = ["uncaught exception"]
     assert classify(data) == "browser_error"
+
+
+def test_nested_text_color_controls_are_part_of_browser_qualification():
+    assert CONTROLS["nested-wrong-text-color"][1] == "target_only_failure"
+    assert CONTROLS["nested-correct-text-color"][1] == "pass"
