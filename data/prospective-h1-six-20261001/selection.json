@@ -1,6 +1,6 @@
 {
   "schema_version": "prospective-h1-six-selection/v1",
-  "status": "selection_frozen_before_new_generation_not_admission",
+  "status": "corrected_selection_before_any_generation_in_this_cohort_not_admission",
   "selection_date": "2026-10-01",
   "source_base_commit": "9ba899f16c426ad701849b9887749573214a4827",
   "unit": "requirement_obligation",
@@ -12,8 +12,8 @@
     "primary_comparison": "C versus A within each obligation and model",
     "analysis": "Report every selected case, including deferred and unknown. One obligation per project makes requirement and project levels coincide in this cohort; do not estimate separate variance components. Repetitions are nested, not independent requirements. Human ordinal labels remain a separate confirmatory gate."
   },
-  "selection_rule": "One previously unexecuted, source-bound, browser-observable obligation from each of six distinct open-source projects already present in the pinned source corpus. Preserve these six identities and all admission failures. No replacement after generation begins; any changed target requires a separately versioned selection before its first provider call.",
-  "limitations": "Purposive, not random: the operator knew earlier project-level pilot outcomes before selecting these cases. Prospective applies to these cases' future A/B/C generations only. Literature-category and human severity labels are not established by this manifest.",
+  "selection_rule": "One source-bound, browser-observable obligation from each of six distinct open-source projects already present in the pinned source corpus. TodoMVC Clear completed and RealWorld comment Delete have earlier exploratory generations and are designated explicit replications; the other four have no known generation for these obligations. Preserve all six identities and all admission failures. No replacement after generation begins; any changed target requires a separately versioned selection before its first provider call.",
+  "limitations": "Purposive, not random: the operator knew earlier project-level outcomes and, before this corrective freeze, discovered case-level TodoMVC and RealWorld outcomes in private custody. Those two cases are outcome-informed replications, not independent discovery samples. Prospective applies only to this cohort's future A/B/C generations. Literature-category and human severity labels are not established by this manifest.",
   "cases": [
     {
       "id": "todo-clear-button-hidden",
@@ -25,7 +25,7 @@
       "license_sha256": "32238c5c6759b589ea768661b6eb0fcb42449b74d57cdf09928743f2e1eb748d",
       "target": "After Clear completed removes the last completed todo, the Clear completed button is hidden while an active todo remains visible.",
       "source_locator": "Clear completed button, lines 112-114",
-      "prior_status": "deferred_after_instrument_review; no experimental generation",
+      "prior_status": "exploratory_pilot_completed_20260927_v5c; 18_attempted; A_and_B_12_pass; C_6_target_only_failure; not_confirmatory; selected_for_explicit_replication",
       "admission_issue": "The earlier browser oracle qualified 7/7 controls, but instrument review did not reach unanimity. Reconcile the meaning of no completed todos after the click and the intentional deletion in C without changing outcomes retrospectively."
     },
     {
@@ -38,7 +38,7 @@
       "license_sha256": "a999311c4ccfecf18b7c7beb7a7a31682bb009839ab3827164fa2f8c333fc9dd",
       "target": "Only the comment author sees the Delete comment action on an article, while another authenticated viewer still sees the comment.",
       "source_locator": "Article page, line 18",
-      "prior_status": "deferred_after_instrument_review; no experimental generation",
+      "prior_status": "exploratory_pilots_completed_20260927_v3_and_v4; latest_v4_18_attempted_all_pass; not_confirmatory; selected_for_explicit_replication",
       "admission_issue": "Resolve the previous A/B equivalence and author-only manipulation disagreement prospectively; visible action is the endpoint, not button enablement."
     },
     {

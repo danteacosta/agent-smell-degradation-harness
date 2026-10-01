@@ -1,5 +1,7 @@
 # RealWorld comment Delete visibility: admission deferred
 
+> **Custody correction (2026-10-01):** this note records the earlier admission state. Two later 27 September pilots each attempted 18 generations and browser checks. See the [later-pilot audit](2026-10-01-unreported-browser-pilots-custody.md); the zero-generation statement below is no longer current.
+
 The [source](../../data/criteria-expansion/sources/realworld/docs__src__content__docs__specifications__frontend__routing.md)
 requires the Delete comment button to be shown only to the comment author.
 The [A/B/C arms](../../data/e2e-realworld-comment-delete/arms-20260927.json)
