@@ -1,6 +1,6 @@
 {
   "schema_version": "human-annotation/v1",
-  "rubric_version": "rubric-v2",
+  "rubric_version": "rubric-v3",
   "labels": [
     "clean",
     "minor",
@@ -31,9 +31,7 @@
   "duplicate_subset_seed": 0,
   "primary_irr": {
     "statistic": "krippendorff_alpha",
-    "nominal_for": [
-      "clean"
-    ],
+    "level_of_measurement": "ordinal",
     "ordinal_order": [
       "clean",
       "minor",

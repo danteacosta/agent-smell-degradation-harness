@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-09-30
+Last updated: 2026-10-01
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -416,3 +416,57 @@ venues. arXiv 2609.29208 is excluded: it was read and entered above the same day
 | arXiv 2603.00187, *ClarEval*; arXiv 2608.09072, *SWE-RPG* | Ambiguity taxonomies (missing goal/premise/terminology) for code agents | Compare taxonomy with the smell/condition-loss separation |
 | arXiv 2603.24755, *SlopCodeBench* | Degradation over iterative checkpoints | Possible multi-step analogue of T1–T4 |
 | arXiv 2607.01980, *Epic-Organized vs. Requirement-Aligned Gherkin* | LLM acceptance-criteria generation quality | Rubric and rater-agreement design for the primary task |
+
+Resolution (2026-10-01): all five candidates above were read from an unrestricted
+session; see the next section. This log is kept as history.
+
+## 2026-10-01 — Clarification, stage attribution and rater-scale evidence
+
+Search/read date: 2026-10-01. Candidates came from the 2026-09-30 log; each was
+deduplicated by arXiv ID/title. Read the abstract and the accessible full text
+(method, results, limitations) via arXiv HTML. None is peer-review verified
+except where stated; none supports a confirmatory H1/H2 claim.
+
+| Reference / evidence | Question, sample and method | Result / limitations | Thesis / experiment / product relevance and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Li et al., *ClarEval*, arXiv 2603.00187, 2026, **preprint**; [arXiv](https://arxiv.org/abs/2603.00187), [code](https://github.com/JialinLi13/ClarEval) | Can agents elicit missing information? GPT-4o injects three ambiguity types (missing goal, missing premise, ambiguous terminology) into code tasks; three senior engineers review (Fleiss κ 0.82, about 12% discarded/rewritten); rule-based user simulator (96.5% agreement with an LLM judge on 200 turns); 11 agents. | Single-turn and multi-turn clarification skill correlate weakly (r = 0.32); ambiguous terminology is hardest (GPT-4o Pass@1 6.71% vs 9.76% and 10.37%). Synthetic injection by an LLM; small human validation; no link shown to real-development outcomes. | Thesis: injected ambiguity is a *smell* manipulation, not a measure of lost testable conditions; confirms the need to keep smell family and constraint loss separate. Experiment: reuse the idea of reviewer-filtered injection with agreement reporting for clean/defective pair construction. Product: clarification is a different workflow from post-hoc loss detection. Action: incorporated into the recoverability audit as a rationale for independent manipulation review, without adopting its taxonomy as validated labels. | 5/10: transparent code, reviewed injection, but unreviewed preprint and synthetic tasks. |
+| Edwards and Schuster, *Ask or Assume? Uncertainty-Aware Clarification-Seeking in Coding Agents*, arXiv 2603.26233v3, 2026, **preprint**; [arXiv](https://arxiv.org/abs/2603.26233), [code](https://github.com/nedwards99/ask-or-assume) | Can agents decide when to ask? Underspecified SWE-bench Verified variants from prior work (GPT-4o summaries); an intent agent monitors state history; Full/Hidden/Interactive baselines; two models. | UA-Multi resolves 69.40% vs 61.2–61.6% single-agent and 70.8–72.8% fully specified; queries rise with difficulty. Only a 10-task manual spot-check of the variants (5 essential, 5 recoverable); user simulator is an LLM; cost about $3.50/task for one model. | Experiment: provides a conceptual comparator for underspecification monitoring, not an admitted B0 baseline; its semantic history access and clarification intervention require a matched-information and cost audit; the same 10-task check shows removed detail is not always load-bearing, supporting per-constraint labels rather than treating every omission as a defect. Product: cost per task is a deployment constraint. Action: incorporated into the context-recoverability audit; no B0 feature or protocol change. | 4/10: relevant design, but preprint, weak dataset validation, LLM-simulated user. |
+| *SWE-RPG*, arXiv 2608.09072, 2026, **preprint**; [arXiv](https://arxiv.org/abs/2608.09072) | Where do agent trajectories diverge? 163 tasks, 31 repositories; ground-truth clarification and planning references from interviews with ten engineers, LLM synthesis and review by two authors; LLM judge assigns the earliest deviating stage; three agents, six backends. | Resolve rate 31.5%; requirement-clarification failures 24.5–46.0%. Similar resolve rates hide different bottlenecks (40.5% vs 39.3% resolved, 26.4% vs 40.5% requirement failures). Judge agreed with humans on 96% of 50 coverage items and 92% of 50 stage labels. Python/Java only; LLM-built references; agreement sample small. | Thesis: a close stage-attribution comparator among the sources reviewed. Its information-point references and full-trajectory coverage overlap the motivation; the testable distinction is prospective pre-T4 predictive value under matched information boundaries, not an asserted absence of fine-grained references. Experiment: propose, subject to human approval, an earliest-loss-stage descriptor as a *secondary* readout; its judge-agreement sample is too small to adopt as a label source. Action: incorporated into the audit discussion as a retrospective comparator; novelty remains to be demonstrated empirically. | 5/10: directly on topic with numbers, but unreviewed and judge-dependent. |
+| *SlopCodeBench*, arXiv 2603.24755v2, 2026, **preprint**; [arXiv](https://arxiv.org/abs/2603.24755) | Does quality degrade across iterative extensions? 36 problems, 196 checkpoints, 15 agents, 473 human repositories as reference. | Best agent passes 14.8% of checkpoints; erosion rises in 77% and verbosity in 75.5% of trajectories; quality prompts lower initial but not iterative degradation. Measures structure, not requirement retention. | Thesis/product: shows degradation can accumulate while checkpoints pass; a code-quality, not requirement-loss, construct. Experiment: no change. Action: context only. | 5/10: open benchmark, wide agent coverage, wrong construct for H1/H2. |
+| *Epic-Organized vs. Requirement-Aligned Gherkin*, SEET 2026 (Springer proceedings per the preprint), arXiv 2607.01980; [arXiv](https://arxiv.org/abs/2607.01980) | Does epic-level organization improve LLM acceptance-criteria quality? 107 requirements from four PURE documents; one gpt-4o-mini run; TF-IDF and embedding coverage; four blinded researchers, pre-registered. | Semantic coverage 94.3% vs 92.9%; expert ratings favour epic-organized (completeness 4.31 vs 3.50). Fleiss κ between −0.08 and 0.03 despite preferences, attributed to scale-usage differences; coverage embeddings come from the generating provider family; single run. | Experiment: the authors recommend complementary lexical and semantic measures and report scale-use disagreements; this does not validate our ordinal alpha or 0.70 threshold. Independent constraint labels remain necessary. Action taken: regression test `test_scale_offset_is_judged_by_declared_measurement_level` shows a one-step offset yields negative nominal alpha but ordinal alpha at or above 0.70, so the rubric must declare its level beforehand. | 5/10: peer-reviewed venue claimed by the authors but not independently verified here; pre-registered and candid, tiny sample. |
+
+Tension to record: none of these sources contradicts a current decision. The
+SWE-RPG stage-attribution framing is close to the thesis motivation, so related
+work must state that it localizes failures after the fact from references, whereas
+T1–T3 provenance targets constraint loss before the final artifact. Whether to add
+earliest-loss-stage as a secondary readout is a human decision.
+
+## 2026-10-01 — SMT checking is a bounded auxiliary control
+
+Search/read date: 2026-10-01; new source, deduplicated by DOI/title. Read the
+abstract, method, data construction, four research questions, results, threats
+and conclusion.
+
+| Reference / evidence | Question, sample and method | Result / limitations | Thesis / experiment / product relevance and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Chen, Babikian, Feng, Varró and Mussbacher, *LLM-based Satisfiability Checking of String Requirements by Consistent Data and Checker Generation*, IEEE RE 2025, peer-reviewed; [DOI](https://doi.org/10.1109/RE63999.2025.00030), [author manuscript](https://arxiv.org/html/2506.16639) | Can LLM-generated data and Python/SMT checkers decide consistency for natural-language string requirements? The study builds 340 manually formalized requirement sets across 12 string-constraint categories (283 satisfiable, 57 unsatisfiable), evaluates four LLMs, and compares direct generation, hybrid checking and feedback-enhanced variants against manually defined ground truth. | Hybrid generation plus valid-formula feedback substantially improves generated-string validity and unsatisfiable-case detection; the best end-to-end F1 remains below the ground-truth-checker upper bound. A generated example and a generated checker can agree while both are wrong. The corpus is imbalanced, manually constructed from programming exercises, limited to string constraints, uses differing temperatures, and is not industrial scale. | Thesis: no H1/H2 evidence and no basis for equating satisfiability with requirement quality. Experiment: an SMT checker may become a secondary control only for constraints explicitly marked formalizable; it must remain outside the label plane and cannot replace the independent executable oracle or human mapping. Product: a structured contradiction warning could be useful for exact string constraints, with abstention elsewhere. Action: record a future feasibility slice rather than add SMT to the confirmatory protocol now. | 9/10: peer-reviewed IEEE RE research paper with explicit ground truth, four models, artifacts and detailed threats; strong within a narrow formal domain, but indirect for requirement smells, repository agents and temporal provenance. |
+
+Implementation outcome: the primary human-agreement policy is now bound to
+`rubric-v3`. It explicitly freezes ordinal Krippendorff alpha, label order,
+bootstrap configuration and decision thresholds. The analysis entry point
+validates that policy before reading labels, and the rubric loader rejects a
+missing level, a nominal policy carrying an ordinal order, or an order that
+does not exactly match the non-missing labels. This prevents the nominal versus
+ordinal choice from being made after the observed agreement is known. It does
+not establish annotator reliability; actual independent annotations remain a
+human dependency.
+
+## 2026-10-01 — Incorporation and outcome audit
+
+Re-read the five author manuscripts above (ClarEval v1, Ask or Assume v3,
+SWE-RPG v1, SlopCodeBench v2 and Gherkin v1), including methods and relevant
+limitations. Credibility ratings remain provisional and unchanged. Corrected
+the automatic B0 analogy, categorical novelty claim and overinterpretation
+of Gherkin agreement/coverage findings. The [E2E recoverability audit](2026-10-01-e2e-recoverability-audit.md) incorporates all five into concrete interpretation
+and review decisions, with public-record accounting and limits of verification.
+No source is counted twice and no existing outcome is reclassified.

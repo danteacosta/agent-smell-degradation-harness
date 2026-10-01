@@ -208,3 +208,25 @@ def test_assembly_rejects_duplicate_aliases_and_mixed_exports(tmp_path: Path) ->
     paths[-1] = mixed
     with pytest.raises(ValueError, match="binding failed"):
         assemble_responses(export, paths, root / "mixed.json")
+
+
+@pytest.mark.parametrize("cwd_kind", ["outside", "subdirectory"])
+def test_private_boundary_is_independent_of_working_directory(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, cwd_kind: str,
+) -> None:
+    from eval import repository_case_review as review
+
+    repository = Path(review.__file__).resolve().parents[1]
+    monkeypatch.chdir(tmp_path if cwd_kind == "outside" else repository / "eval")
+    # Validate without writing any private material into the checkout.
+    with pytest.raises(ValueError, match="outside the repository"):
+        review._assert_private_root(repository / "review-packets")
+
+
+def test_private_export_can_use_callers_external_working_directory(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    export = tmp_path / "review-export"
+    receipt = export_packets(source(), export)
+    assert verify_export(export) == receipt

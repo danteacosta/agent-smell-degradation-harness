@@ -14,6 +14,8 @@ import random
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
+from protocol.irr import validate_primary_irr_policy
+
 
 _FORBIDDEN_FIELDS = frozenset({"variant", "defect_family", "oracle_label", "model_id", "artifact"})
 
@@ -37,7 +39,7 @@ class BlindedAnnotationTask:
         record: Mapping[str, Any],
         *,
         duplicate_subset: bool = False,
-        rubric_version: str = "rubric-v2",
+        rubric_version: str = "rubric-v3",
     ) -> "BlindedAnnotationTask":
         item_id = str(record.get("episode_id") or record.get("item_id") or "")
         text = str(
@@ -68,7 +70,7 @@ class BlindedOutcomeTask:
     item_id: str
     generated_acceptance_criteria: str
     reference_constraints: tuple[str, ...]
-    rubric_version: str = "rubric-v2"
+    rubric_version: str = "rubric-v3"
     duplicate_subset: bool = False
 
     def __post_init__(self) -> None:
@@ -87,7 +89,7 @@ class BlindedOutcomeTask:
         record: Mapping[str, Any],
         *,
         duplicate_subset: bool = False,
-        rubric_version: str = "rubric-v2",
+        rubric_version: str = "rubric-v3",
     ) -> "BlindedOutcomeTask":
         item_id = str(record.get("episode_id") or record.get("item_id") or "")
         artifact = record.get("generated_acceptance_criteria")
@@ -154,7 +156,7 @@ class BlindedOutputSmellTask:
 
     item_id: str
     generated_acceptance_criteria: str
-    rubric_version: str = "rubric-v2"
+    rubric_version: str = "rubric-v3"
     duplicate_subset: bool = False
 
     def __post_init__(self) -> None:
@@ -171,7 +173,7 @@ class BlindedOutputSmellTask:
         record: Mapping[str, Any],
         *,
         duplicate_subset: bool = False,
-        rubric_version: str = "rubric-v2",
+        rubric_version: str = "rubric-v3",
     ) -> "BlindedOutputSmellTask":
         item_id = str(record.get("episode_id") or record.get("item_id") or "")
         generated = record.get(
@@ -277,7 +279,7 @@ def freeze_blinded_tasks(
     *,
     fraction: float = 0.20,
     seed: int = 0,
-    rubric_version: str = "rubric-v2",
+    rubric_version: str = "rubric-v3",
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """Create annotator packets and freeze duplicates before any labels exist."""
 
@@ -314,7 +316,7 @@ def freeze_blinded_outcome_tasks(
     *,
     fraction: float = 0.20,
     seed: int = 0,
-    rubric_version: str = "rubric-v2",
+    rubric_version: str = "rubric-v3",
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """Freeze primary outcome packets and duplicate assignment before labels."""
 
@@ -356,6 +358,13 @@ def load_annotation_rubric(path: Path | str | None = None) -> dict[str, Any]:
         raise ValueError("unsupported annotation rubric")
     if not payload.get("labels") or not payload.get("missing_label_policy", {}).get("never_impute"):
         raise ValueError("annotation rubric must freeze labels and no-imputation policy")
+    irr_policy = validate_primary_irr_policy(payload.get("primary_irr", {}))
+    excluded = set(payload["missing_label_policy"].get("allowed", []))
+    primary_labels = [label for label in payload["labels"] if label not in excluded]
+    if irr_policy["level_of_measurement"] == "ordinal" and irr_policy["ordinal_order"] != primary_labels:
+        raise ValueError(
+            "primary IRR ordinal_order must match the rubric's non-missing labels exactly"
+        )
     return payload
 
 

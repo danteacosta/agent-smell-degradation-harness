@@ -241,6 +241,70 @@ def irr_decision(alpha: float, *, target: float = 0.70, adjudication_threshold: 
     )
 
 
+def validate_primary_irr_policy(policy: Mapping[str, Any]) -> dict[str, Any]:
+    """Validate and normalize the frozen primary-agreement policy.
+
+    The measurement level is part of the estimand: callers must not be able to
+    select nominal or ordinal alpha after seeing the labels.  This validator is
+    shared by rubric loading and analysis so both fail closed on an ambiguous
+    policy.
+    """
+
+    if policy.get("statistic") != "krippendorff_alpha":
+        raise ValueError("primary IRR statistic must be krippendorff_alpha")
+    level = policy.get("level_of_measurement")
+    if not isinstance(level, str) or level.casefold() not in {"nominal", "ordinal"}:
+        raise ValueError("primary IRR must declare nominal or ordinal level_of_measurement")
+    level = level.casefold()
+
+    raw_order = policy.get("ordinal_order")
+    if level == "ordinal":
+        if not isinstance(raw_order, list) or not raw_order:
+            raise ValueError("ordinal primary IRR requires a non-empty ordinal_order")
+        order = list(raw_order)
+        if len(set(order)) != len(order):
+            raise ValueError("ordinal_order must contain unique labels")
+    else:
+        if raw_order not in (None, []):
+            raise ValueError("nominal primary IRR must not declare ordinal_order")
+        order = None
+
+    n_bootstrap = policy.get("bootstrap_replicates")
+    seed = policy.get("bootstrap_seed")
+    if isinstance(n_bootstrap, bool) or not isinstance(n_bootstrap, int) or n_bootstrap < 1:
+        raise ValueError("primary IRR bootstrap_replicates must be a positive integer")
+    if isinstance(seed, bool) or not isinstance(seed, int):
+        raise ValueError("primary IRR bootstrap_seed must be an integer")
+
+    target = policy.get("target")
+    threshold = policy.get("adjudication_threshold")
+    if (
+        isinstance(target, bool)
+        or not isinstance(target, (int, float))
+        or isinstance(threshold, bool)
+        or not isinstance(threshold, (int, float))
+    ):
+        raise ValueError("primary IRR target and adjudication_threshold must be numeric")
+    target = float(target)
+    threshold = float(threshold)
+    if not math.isfinite(target) or not math.isfinite(threshold):
+        raise ValueError("primary IRR thresholds must be finite")
+    if not 0 <= threshold <= target <= 1:
+        raise ValueError(
+            "primary IRR thresholds must satisfy 0 <= adjudication_threshold <= target <= 1"
+        )
+
+    return {
+        "statistic": "krippendorff_alpha",
+        "level_of_measurement": level,
+        "ordinal_order": order,
+        "bootstrap_replicates": n_bootstrap,
+        "bootstrap_seed": seed,
+        "target": target,
+        "adjudication_threshold": threshold,
+    }
+
+
 def _percentile(values: list[float], probability: float) -> float:
     if not values:
         return 0.0
@@ -283,6 +347,31 @@ def bootstrap_krippendorff_alpha(
         "n_bootstrap": n_bootstrap,
         "n_valid": len(samples),
         "n_undefined": n_bootstrap - len(samples),
+    }
+
+
+def evaluate_primary_irr(data: Any, policy: Mapping[str, Any]) -> dict[str, Any]:
+    """Evaluate primary IRR using only the policy frozen in the rubric."""
+
+    frozen = validate_primary_irr_policy(policy)
+    estimate = bootstrap_krippendorff_alpha(
+        data,
+        level_of_measurement=frozen["level_of_measurement"],
+        ordinal_order=frozen["ordinal_order"],
+        n_bootstrap=frozen["bootstrap_replicates"],
+        seed=frozen["bootstrap_seed"],
+    )
+    decision = irr_decision(
+        float(estimate["alpha"]),
+        target=frozen["target"],
+        adjudication_threshold=frozen["adjudication_threshold"],
+    )
+    return {
+        **estimate,
+        **frozen,
+        "decision": decision.status,
+        "adjudication_required": decision.adjudication_required,
+        "claim_narrowing_required": decision.claim_narrowing_required,
     }
 
 
