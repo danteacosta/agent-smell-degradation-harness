@@ -1,5 +1,7 @@
 # TodoMVC Clear completed: instrumento adiado
 
+> **Correção de custódia (2026-10-01):** este documento registra o estado em 26/09. Um piloto posterior de 27/09 executou 18 gerações e E2Es. Ver a [auditoria dos pilotos posteriores](2026-10-01-unreported-browser-pilots-custody.md); a afirmação de zero gerações abaixo não descreve o estado atual.
+
 A [especificação fixada](../../data/criteria-expansion/sources/todomvc/app-spec.md)
 diz que **Clear completed** remove os itens concluídos e deve ficar oculto
 quando não há itens concluídos. O candidato A/B mantém as duas condições; C
