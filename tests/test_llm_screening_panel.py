@@ -96,3 +96,19 @@ def test_parse_vote_rejects_inconsistent_answers() -> None:
 def test_kappa() -> None:
     assert panel.cohen_kappa(["a", "b", "a", "b"], ["a", "b", "a", "b"]) == 1.0
     assert panel.cohen_kappa([], []) is None
+
+
+def test_unqualified_tiebreaker_stops_before_candidates(tmp_path: Path, screening: Path) -> None:
+    class UnqualifiedTiebreaker(_Provider):
+        def complete(self, request) -> str:
+            if self.model == "m3":
+                return json.dumps(ADMIT)
+            return super().complete(request)
+
+    out = tmp_path / "run"
+    panel.prepare(out, ["m1", "m2"], "m3", Path("/bin/sh"))
+    result = panel.run(out, provider_factory=UnqualifiedTiebreaker)
+    assert result["status"] == "stopped_controls_failed"
+    assert not (out / "calls" / "m1" / "rc-a").exists()
+    controls = json.loads((out / "controls.json").read_text())
+    assert all(set(row["decisions"]) == {"m1", "m2", "m3"} for row in controls["rows"])

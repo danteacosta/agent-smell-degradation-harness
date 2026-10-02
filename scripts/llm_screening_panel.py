@@ -173,7 +173,7 @@ def run(out: Path, provider_factory=None) -> dict:
 
     control_rows = []
     for control in manifest["controls"]:
-        votes = {m: _call(out, provider_factory, m, control["id"]) for m in models}
+        votes = {m: _call(out, provider_factory, m, control["id"]) for m in [*models, tiebreaker]}
         decisions = {m: v.get("vote", {}).get("decision") for m, v in votes.items()}
         control_rows.append({"id": control["id"], "expected": control["expected"], "decisions": decisions})
     qualified = all(set(r["decisions"].values()) == {r["expected"]} for r in control_rows)
