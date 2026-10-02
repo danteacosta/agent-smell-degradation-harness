@@ -1,5 +1,7 @@
 # Research catalog
 
+- [2 October 2026: test-anchor results](2026-10-02-test-anchor-results.md): 81 generated test suites, 180 original evaluations, a separate 180-pair origin diagnostic, and the remaining bounded-profile scope limitation.
+
 - [1 October 2026: blind historical source triage](2026-10-01-historical-blind-review-protocol.md): two model readings of all ten old/new changes, preserved disagreements, and a source-gated next collection.
 - [1 October 2026: Paperless barcode A/B/C E2E pilot](2026-10-01-paperless-barcode-abc-pilot.md): two separately sealed 18-generation runs; the revised run yielded one isolated omission defect, two ties and three unknown comparisons.
 - [1 October 2026: prospective six-case H1 browser selection](2026-10-01-prospective-six-selection.md): six pinned UI candidate identities across six projects, including three previously deferred; 108 positions only if all later pass admission.

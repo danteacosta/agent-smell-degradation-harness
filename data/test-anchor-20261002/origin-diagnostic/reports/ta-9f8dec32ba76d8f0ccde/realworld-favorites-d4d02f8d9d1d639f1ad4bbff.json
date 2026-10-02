@@ -1,0 +1,28 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "2ae69a360120f8e3546c5c3a11dc64d9b9bdbfdfbc5635ae183ba776bc83e550",
+  "suite_sha256": "5ed4f3d78c799e7eed2002ba0ae4916036065dad81b0c579c870e07c2c43b52d",
+  "tests": [
+    {
+      "name": "Profile shows Alice and only her authored articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Favorites route shows articles Alice favorited regardless of author",
+      "outcome": "pass"
+    },
+    {
+      "name": "Profile tabs switch routes and replace the article list",
+      "outcome": "pass"
+    },
+    {
+      "name": "Empty favorites do not retain authored articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "A profile with no authored articles can still have favorites",
+      "outcome": "pass"
+    }
+  ]
+}

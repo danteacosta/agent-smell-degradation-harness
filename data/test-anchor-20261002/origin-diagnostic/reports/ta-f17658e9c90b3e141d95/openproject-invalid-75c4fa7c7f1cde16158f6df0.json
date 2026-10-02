@@ -1,0 +1,20 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "14d1e8b597d509dde6fff4cfbeed26f7443d0d3c566f6c6c3a5fec3755fb5456",
+  "suite_sha256": "37837b55716ccfcba36344bb92b2697860f17bbbdb0af89e8d0cb82057e12732",
+  "tests": [
+    {
+      "name": "Saving both edits preserves them after reload",
+      "outcome": "pass"
+    },
+    {
+      "name": "Editing either value preserves the other saved value",
+      "outcome": "pass"
+    },
+    {
+      "name": "Later saves replace earlier values including zero remaining work",
+      "outcome": "pass"
+    }
+  ]
+}

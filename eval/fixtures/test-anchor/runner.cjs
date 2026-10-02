@@ -9,6 +9,7 @@ const { chromium } = require('playwright');
 
 const html = fs.readFileSync('/input/app.html');
 const URL = 'http://localhost/';
+const ORIGIN = new global.URL(URL).origin;
 const CSP = "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'";
 const report = {
   schema_version: 'test-anchor-execution/v1',
@@ -49,7 +50,7 @@ function withTimeout(promise, ms) {
       const context = await browser.newContext({ viewport: { width: 1000, height: 720 }, timezoneId: 'UTC', serviceWorkers: 'block' });
       const row = { name: test.name.slice(0, 200), outcome: 'pass' };
       try {
-        await context.route('**/*', route => (route.request().url() === URL && route.request().isNavigationRequest()
+        await context.route('**/*', route => (route.request().isNavigationRequest() && new global.URL(route.request().url()).origin === ORIGIN
           ? route.fulfill({ body: html, contentType: 'text/html', headers: { 'Content-Security-Policy': CSP } })
           : route.abort()));
         const page = await context.newPage();

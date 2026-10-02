@@ -259,6 +259,14 @@ CONTROL_SUITE = """module.exports = { tests: [
       await page.reload();
       assert.equal(await page.getByLabel('Remaining work').inputValue(), '7');
   } },
+  { name: 'same-origin deep navigation serves the frozen page', run: async ({ context, page, url, assert }) => {
+      await context.addInitScript(() => { window.initialState = { work: '8', remaining: '7' }; });
+      await page.goto(new URL('/profile/alice/favorites', url).href);
+      assert.equal(await page.getByLabel('Work', { exact: true }).inputValue(), '8');
+  } },
+  { name: 'foreign-origin navigation remains blocked', run: async ({ page, url, assert }) => {
+      await assert.rejects(page.goto('http://localhost.evil.invalid/profile/alice'));
+  } },
 ] };
 """
 CONTROL_EXPECTED = {"keeps_rule": "quiet", "lost_rule": "assertion_alarm", "broken_save": "assertion_alarm"}

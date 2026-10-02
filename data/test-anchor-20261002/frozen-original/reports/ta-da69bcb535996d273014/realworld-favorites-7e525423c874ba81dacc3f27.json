@@ -1,0 +1,28 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "d002d1c51b59bd65896d7519deab299630d2919ad170a175cada2d348b8e3b3a",
+  "suite_sha256": "da1fb2cb18744e9b0dd3d74a15dc8687d7d7285abfbb28c357b561e2d935aa22",
+  "tests": [
+    {
+      "name": "Profile shows the requested user and only their authored articles",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob\nCall log:\n  - navigating to \"http://localhost/profile/bob\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Direct favorites route shows articles favorited by the profile user",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob/favorites\nCall log:\n  - navigating to \"http://localhost/profile/bob/favorites\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Profile navigation switches lists while preserving the username",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/carol\nCall log:\n  - navigating to \"http://localhost/profile/carol\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Profiles with no matching articles keep both lists empty",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/dana\nCall log:\n  - navigating to \"http://localhost/profile/dana\", waiting until \"load\"\n"
+    }
+  ]
+}

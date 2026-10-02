@@ -1,0 +1,26 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "14d1e8b597d509dde6fff4cfbeed26f7443d0d3c566f6c6c3a5fec3755fb5456",
+  "suite_sha256": "d9fabc0053ebc6331015e65f00edf975627c4432404aa6f733dafff985d648e7",
+  "tests": [
+    {
+      "name": "Saving edits persists both values after reload",
+      "outcome": "pass"
+    },
+    {
+      "name": "Remaining work equal to Work can be saved",
+      "outcome": "pass"
+    },
+    {
+      "name": "Remaining work greater than Work cannot overwrite a saved value",
+      "outcome": "assertion_failure",
+      "message": "Expected values to be strictly equal:\n\n'10' !== '4'\n"
+    },
+    {
+      "name": "Reducing Work below Remaining work cannot be saved",
+      "outcome": "assertion_failure",
+      "message": "Expected values to be strictly equal:\n\n'6' !== '12'\n"
+    }
+  ]
+}

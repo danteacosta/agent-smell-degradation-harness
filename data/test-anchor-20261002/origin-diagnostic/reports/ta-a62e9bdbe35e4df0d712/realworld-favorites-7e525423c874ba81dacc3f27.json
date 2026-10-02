@@ -1,0 +1,28 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "d002d1c51b59bd65896d7519deab299630d2919ad170a175cada2d348b8e3b3a",
+  "suite_sha256": "a5e988010d613cd7fd36965e61e8db891f7d6e503168cce7493d3b975bc91e0e",
+  "tests": [
+    {
+      "name": "Profile shows the username and only authored articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Direct favorites URL shows articles favorited by the profile user",
+      "outcome": "pass"
+    },
+    {
+      "name": "Profile navigation switches article lists and survives reload",
+      "outcome": "pass"
+    },
+    {
+      "name": "Empty favorites do not fall back to authored or unrelated articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Article filtering uses the username in each profile URL",
+      "outcome": "pass"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "d002d1c51b59bd65896d7519deab299630d2919ad170a175cada2d348b8e3b3a",
+  "suite_sha256": "85e5882b6ea20a9fe0ce835ed32aa253b278b010ebd885322f41ce6ca09a85c6",
+  "tests": [
+    {
+      "name": "Profile shows username and only articles authored by that user",
+      "outcome": "pass"
+    },
+    {
+      "name": "Favorites lists favorited articles regardless of author",
+      "outcome": "pass"
+    },
+    {
+      "name": "Switching profile tabs preserves the selected user and survives reload",
+      "outcome": "pass"
+    },
+    {
+      "name": "A user with no authored or favorited articles sees no unrelated articles",
+      "outcome": "pass"
+    }
+  ]
+}

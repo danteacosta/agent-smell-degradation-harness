@@ -1,0 +1,13 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "ad2efe7a8b19521aa20cf6232ec6f92497710a1ec24f369b7b5302cc1d62fedc",
+  "suite_sha256": "a69498971ce2303a6cb78ab66fa621df9b160bd8b80ba5059dfee248d58a827f",
+  "tests": [
+    {
+      "name": "Default upload creates a separate duplicate and preserves documents after reload",
+      "outcome": "assertion_failure",
+      "message": "Matching content should create a third document\n\n2 !== 3\n"
+    }
+  ]
+}

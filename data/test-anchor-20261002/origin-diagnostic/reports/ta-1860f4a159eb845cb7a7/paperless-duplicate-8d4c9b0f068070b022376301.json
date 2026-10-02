@@ -1,0 +1,16 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "e96470cfa84285e7c6f36fdb3675acda449cec2137652023731411d8b76308c4",
+  "suite_sha256": "ccf6bec66baff773f56c1ad557700941ad8de48a9e3f9a64db7f3e4bc27690f8",
+  "tests": [
+    {
+      "name": "Matching content creates a new document and preserves existing documents",
+      "outcome": "pass"
+    },
+    {
+      "name": "Matching content and filename still create separate documents",
+      "outcome": "pass"
+    }
+  ]
+}

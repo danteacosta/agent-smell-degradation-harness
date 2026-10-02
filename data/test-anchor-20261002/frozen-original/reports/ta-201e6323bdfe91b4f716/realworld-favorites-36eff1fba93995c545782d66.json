@@ -1,0 +1,28 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "0978909cf0037ebcddc3fc2ed1fa5a29457917283d3a886c893e2358cf16802f",
+  "suite_sha256": "23d3b62bb9c64e5e53b3df28a15141d75ec88a4a55db13d75609a6a66ffab6d1",
+  "tests": [
+    {
+      "name": "Profile shows the requested user and only their authored articles",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob\nCall log:\n  - navigating to \"http://localhost/profile/bob\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Favorites lists exactly the articles favorited by the requested user",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob/favorites\nCall log:\n  - navigating to \"http://localhost/profile/bob/favorites\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Profile links switch lists while preserving the encoded username",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/zo%C3%AB%20smith\nCall log:\n  - navigating to \"http://localhost/profile/zo%C3%AB%20smith\", waiting until \"load\"\n"
+    },
+    {
+      "name": "A user with no authored articles or favorites sees empty lists",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/carol\nCall log:\n  - navigating to \"http://localhost/profile/carol\", waiting until \"load\"\n"
+    }
+  ]
+}

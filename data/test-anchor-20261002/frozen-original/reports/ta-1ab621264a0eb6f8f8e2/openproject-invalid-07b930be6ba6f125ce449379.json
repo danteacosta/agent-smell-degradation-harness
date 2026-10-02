@@ -1,0 +1,20 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "14d1e8b597d509dde6fff4cfbeed26f7443d0d3c566f6c6c3a5fec3755fb5456",
+  "suite_sha256": "2e436498736598b521a8302e0a6a9650226a18e4b559d676548516ab83ee4ce7",
+  "tests": [
+    {
+      "name": "Saving both edited values persists them after reload",
+      "outcome": "pass"
+    },
+    {
+      "name": "Subsequent saves update each field while preserving the other",
+      "outcome": "pass"
+    },
+    {
+      "name": "Zero values replace previously saved nonzero values",
+      "outcome": "pass"
+    }
+  ]
+}

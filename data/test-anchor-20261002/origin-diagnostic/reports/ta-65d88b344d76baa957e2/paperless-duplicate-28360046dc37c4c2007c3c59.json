@@ -1,0 +1,12 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "0bfcb25af7bc8551e79494a72a73920b9546dab899dcb7ca58b1c0596edff22d",
+  "suite_sha256": "1d1ef923aa65c5aab6ea4392fe5ef39bdf41828031f2c56913048455f8e3a082",
+  "tests": [
+    {
+      "name": "Default upload accepts duplicate content and preserves existing documents",
+      "outcome": "pass"
+    }
+  ]
+}

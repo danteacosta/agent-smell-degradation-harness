@@ -1,0 +1,29 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "539f12e6a2a20987f7cec6e4ecc834ed7e246738f7341245aa3c965b412754c3",
+  "suite_sha256": "a5e988010d613cd7fd36965e61e8db891f7d6e503168cce7493d3b975bc91e0e",
+  "tests": [
+    {
+      "name": "Profile shows the username and only authored articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Direct favorites URL shows articles favorited by the profile user",
+      "outcome": "pass"
+    },
+    {
+      "name": "Profile navigation switches article lists and survives reload",
+      "outcome": "pass"
+    },
+    {
+      "name": "Empty favorites do not fall back to authored or unrelated articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Article filtering uses the username in each profile URL",
+      "outcome": "error",
+      "message": "page.waitForFunction: Timeout 3000ms exceeded."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "dce41fc5c9a50347b51698b13e7e9e6fcfba960a74d425b37319bdbe463942a4",
+  "suite_sha256": "37a2c9773665b5bbe01b71f0eaf652918d6999250be244973b5584c39ece3bb3",
+  "tests": [
+    {
+      "name": "Saving edits persists both Work and Remaining work",
+      "outcome": "pass"
+    },
+    {
+      "name": "Remaining work equal to Work can be saved",
+      "outcome": "pass"
+    },
+    {
+      "name": "Remaining work greater than Work cannot overwrite saved values",
+      "outcome": "pass"
+    },
+    {
+      "name": "Lowering Work below Remaining work is rejected and corrected edits can save",
+      "outcome": "pass"
+    }
+  ]
+}

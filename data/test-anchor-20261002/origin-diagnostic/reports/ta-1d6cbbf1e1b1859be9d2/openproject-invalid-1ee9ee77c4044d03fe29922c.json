@@ -1,0 +1,20 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "4824f33569e3a4b479d6a9a6f91b3a700fedd26a2b2ff71a87c34674254794f3",
+  "suite_sha256": "fa8562d134a645dd81ed571278eb4912b543893e91238d3558f2438a79e270da",
+  "tests": [
+    {
+      "name": "Saving edits persists both values after reload",
+      "outcome": "pass"
+    },
+    {
+      "name": "Remaining greater than Work cannot overwrite saved values",
+      "outcome": "pass"
+    },
+    {
+      "name": "Remaining equal to Work can be saved, including zero",
+      "outcome": "pass"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "4655c77daaeb0ad673438560c9823be9a483395b93881179673370fadfc72efb",
+  "suite_sha256": "90d191d01a3f2d31e49333a00770f887c05dec823d7800c169893d07658db587",
+  "tests": [
+    {
+      "name": "Profile shows the requested user and only their authored articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Favorites shows articles favorited by the requested user regardless of author",
+      "outcome": "pass"
+    },
+    {
+      "name": "Profile links switch article lists while preserving the requested user",
+      "outcome": "pass"
+    },
+    {
+      "name": "A user with no authored or favorited articles has empty lists",
+      "outcome": "pass"
+    }
+  ]
+}
