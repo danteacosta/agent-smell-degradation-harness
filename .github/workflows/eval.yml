@@ -4,10 +4,12 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: "17 5 * * *"  # nightly full suite, including the slow study tests
 jobs:
   eval:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -18,7 +20,13 @@ jobs:
         run: dependency-bundle/runtime/bin/python scripts/check_split_mutation_gate.py
       - name: H2 pre-final feature boundary mutation gate (offline)
         run: dependency-bundle/runtime/bin/python scripts/check_feature_plane_mutation_gate.py
-      - run: dependency-bundle/runtime/bin/python -m pytest -q
+      - name: Tests (fast suite on pull requests, full suite on main and nightly)
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            dependency-bundle/runtime/bin/python -m pytest -q -m "not slow"
+          else
+            dependency-bundle/runtime/bin/python -m pytest -q
+          fi
       - name: Private input container boundary (no providers)
         run: |
           docker build -f tests/fixtures/todomvc-custody.Dockerfile --iidfile /tmp/custody-image eval/fixtures
