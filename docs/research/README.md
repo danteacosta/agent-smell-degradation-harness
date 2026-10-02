@@ -106,3 +106,5 @@ experiment evidence.
 - [E2E admission and prompt freeze](e2e-admission-freeze-20260923.md): one bounded persistence endpoint; Mark all and StrictDoc deferred; 18 unattempted positions, no execution-ready claim.
 
 - [Persistence UI collection](persistence-results-20260923.md): 18 calls, 13 target passes, five unknowns and a post-hoc selector-coverage audit; [frozen execution method](persistence-collection-method-20260923.md).
+
+- [Triagem por consenso de LLMs: 258 candidatos, 2 de outubro de 2026](2026-10-02-llm-screening-results.md). Dados públicos, recálculo, custódia e limitações dos mappings; não confirma smells ou H1/H2.
