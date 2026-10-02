@@ -1,0 +1,28 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "4a8a630f2ec245dc465fb1d4a27f946189bfd351deeee3cbd049494538898764",
+  "suite_sha256": "35b38dc4335ba0496dc58fb4152cdbaa81ca725c750c814d0cfef1eb280429db",
+  "tests": [
+    {
+      "name": "Profile shows the requested user and only their authored articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Favorites lists articles favorited by the profile user",
+      "outcome": "pass"
+    },
+    {
+      "name": "Profile tabs preserve the user and survive reload",
+      "outcome": "pass"
+    },
+    {
+      "name": "Profiles without matching articles do not show other users' articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Encoded usernames display correctly and retain their profile when switching tabs",
+      "outcome": "pass"
+    }
+  ]
+}

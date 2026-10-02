@@ -1,0 +1,5432 @@
+{
+  "confirmatory_eligible": false,
+  "provider_calls": 0,
+  "rows": [
+    {
+      "arm": "A",
+      "call_id": "ta-dc4ee182df117b7b2953",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-21c325f55bdadb8bedaf20e3",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Default upload keeps matching-content documents separately and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-25a2610bc6867a4e20de",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-8cf77f6819616b857ee7f1bc",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Invalid edits must not persist Work\n\n'20' !== '10'\n",
+          "name": "Increasing Remaining work above Work preserves saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Work below Remaining work must not persist\n\n'8' !== '12'\n",
+          "name": "Lowering Work below Remaining work cannot be saved",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-ed8c87168bfaaf97d7ad",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-36eff1fba93995c545782d66",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile lists only articles authored by the requested user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites lists articles favorited by the profile user regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article tabs preserve the profile username and switch the displayed list",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profiles with no matching articles show neither other users' articles nor favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-9f8dec32ba76d8f0ccde",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-9dd7112597ba9f6fcf6c124c",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Profile shows Alice and only her authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites route shows articles Alice favorited regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs switch routes and replace the article list",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not retain authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no authored articles can still have favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-9f8dec32ba76d8f0ccde",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-36eff1fba93995c545782d66",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Profile shows Alice and only her authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites route shows articles Alice favorited regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs switch routes and replace the article list",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not retain authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no authored articles can still have favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-9f8dec32ba76d8f0ccde",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-d4d02f8d9d1d639f1ad4bbff",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Profile shows Alice and only her authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites route shows articles Alice favorited regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs switch routes and replace the article list",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not retain authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no authored articles can still have favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-9f8dec32ba76d8f0ccde",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-466b5cfb9e43c86afba91247",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Profile shows Alice and only her authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites route shows articles Alice favorited regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs switch routes and replace the article list",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not retain authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no authored articles can still have favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-9f8dec32ba76d8f0ccde",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-c1552d4391fe257933e65713",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Profile shows Alice and only her authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites route shows articles Alice favorited regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs switch routes and replace the article list",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not retain authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no authored articles can still have favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-9f8dec32ba76d8f0ccde",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-9c3376387a23120c9a5d0ce9",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Profile shows Alice and only her authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites route shows articles Alice favorited regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs switch routes and replace the article list",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not retain authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no authored articles can still have favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-9f8dec32ba76d8f0ccde",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-dfbd99a0297b0a45e7d75d3c",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Profile shows Alice and only her authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites route shows articles Alice favorited regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs switch routes and replace the article list",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not retain authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no authored articles can still have favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-9f8dec32ba76d8f0ccde",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-350bce56ad539ec41c273d8f",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Profile shows Alice and only her authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites route shows articles Alice favorited regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs switch routes and replace the article list",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not retain authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no authored articles can still have favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-9f8dec32ba76d8f0ccde",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-84d017b4272e3ca14860a483",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Profile shows Alice and only her authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites route shows articles Alice favorited regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs switch routes and replace the article list",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not retain authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no authored articles can still have favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-9f8dec32ba76d8f0ccde",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-df82f9b4440c182d4b5cf22a",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Profile shows Alice and only her authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites route shows articles Alice favorited regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs switch routes and replace the article list",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not retain authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no authored articles can still have favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-9f8dec32ba76d8f0ccde",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-328e89293cd695391edafa0a",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Profile shows Alice and only her authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites route shows articles Alice favorited regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs switch routes and replace the article list",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not retain authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no authored articles can still have favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-9f8dec32ba76d8f0ccde",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-7e525423c874ba81dacc3f27",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Profile shows Alice and only her authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites route shows articles Alice favorited regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs switch routes and replace the article list",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not retain authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no authored articles can still have favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-bed1b7d84c1338170996",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-fcc0efee3bdd1e70161adf10",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining greater than Work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining equal to Work can be saved, including zero",
+          "outcome": "pass"
+        },
+        {
+          "name": "Lowering Work below Remaining is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-cf911d2938cc9949a1c2",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-eb3b9a97c82a837fd7472c8f",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Duplicate content uploads as a separate document and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-9f9300549349e0e1c089",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-9dd7112597ba9f6fcf6c124c",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the requested user and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites shows articles favorited by the requested user",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '/profile/alice/favorites'\n- '/profile/bob/favorites'\n            ^\n",
+          "name": "Profile navigation preserves the viewed username",
+          "outcome": "assertion_failure"
+        },
+        {
+          "name": "Empty authored and favorites lists do not show unrelated articles",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-7f07e599aaf1073f9f7e",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-8d4c9b0f068070b022376301",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Default upload creates a separate document for duplicate content",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-38ee538e1783027f0160",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "paperless-duplicate-77ed8c7751c0ae84195255d0",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "message": "Matching content must create another document\n\n2 !== 3\n",
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-a1e2e93180a4b4e81f82",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-1ee9ee77c4044d03fe29922c",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both work values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work, including zero, can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Excess remaining work is rejected and corrected edits can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below unchanged Remaining work cannot overwrite saved values",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-7ed02f7c79f6bd061a60",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "paperless-duplicate-e78580b65e62cc2c87dc9216",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "message": "Matching content should create a separate document while preserving both existing documents\n+ actual - expected\n\n  [\n    'Original invoice',\n    'Unrelated receipt',\n-   'Uploaded invoice copy'\n  ]\n",
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-1799c1b66f7eb94eb61f",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-8cf77f6819616b857ee7f1bc",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving both edits preserves them after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Saving Work alone preserves Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Later saves replace Remaining work, including zero",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-486a759479e807831875",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-3608548430ddc38053625b44",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both work values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work above Work is rejected without changing saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "An invalid edit can be corrected and saved with zero remaining work",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-0dcf4fe167585cdb8cfc",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-bd982d6e0d1e7dcfa66eb1d8",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Default upload accepts duplicate content and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-f289c844c01785e4a165",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-9c3376387a23120c9a5d0ce9",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profiles show the requested user and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites show articles favorited by the requested user regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "A user with no authored or favorited articles has empty lists",
+          "outcome": "pass"
+        },
+        {
+          "message": "page.waitForURL: Timeout 4000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"http://localhost/profile/bob/favorites\" until \"load\"\n  navigated to \"http://localhost/profile/alice/favorites\"\n============================================================",
+          "name": "Switching profile tabs preserves the viewed username and updates articles",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-a62e9bdbe35e4df0d712",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-9dd7112597ba9f6fcf6c124c",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Profile shows the username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites URL shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation switches article lists and survives reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not fall back to authored or unrelated articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article filtering uses the username in each profile URL",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-a62e9bdbe35e4df0d712",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-36eff1fba93995c545782d66",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Profile shows the username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites URL shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation switches article lists and survives reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not fall back to authored or unrelated articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article filtering uses the username in each profile URL",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-a62e9bdbe35e4df0d712",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-d4d02f8d9d1d639f1ad4bbff",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Profile shows the username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites URL shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation switches article lists and survives reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not fall back to authored or unrelated articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article filtering uses the username in each profile URL",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-a62e9bdbe35e4df0d712",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-466b5cfb9e43c86afba91247",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Profile shows the username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites URL shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation switches article lists and survives reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not fall back to authored or unrelated articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article filtering uses the username in each profile URL",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-a62e9bdbe35e4df0d712",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-c1552d4391fe257933e65713",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Profile shows the username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites URL shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation switches article lists and survives reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not fall back to authored or unrelated articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article filtering uses the username in each profile URL",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-a62e9bdbe35e4df0d712",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-9c3376387a23120c9a5d0ce9",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Profile shows the username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites URL shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation switches article lists and survives reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not fall back to authored or unrelated articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article filtering uses the username in each profile URL",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-a62e9bdbe35e4df0d712",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-dfbd99a0297b0a45e7d75d3c",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Profile shows the username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites URL shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation switches article lists and survives reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not fall back to authored or unrelated articles",
+          "outcome": "pass"
+        },
+        {
+          "message": "page.waitForFunction: Timeout 3000ms exceeded.",
+          "name": "Article filtering uses the username in each profile URL",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-a62e9bdbe35e4df0d712",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-350bce56ad539ec41c273d8f",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Profile shows the username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites URL shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation switches article lists and survives reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not fall back to authored or unrelated articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article filtering uses the username in each profile URL",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-a62e9bdbe35e4df0d712",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-84d017b4272e3ca14860a483",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Profile shows the username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites URL shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation switches article lists and survives reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not fall back to authored or unrelated articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article filtering uses the username in each profile URL",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-a62e9bdbe35e4df0d712",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-df82f9b4440c182d4b5cf22a",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Profile shows the username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites URL shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation switches article lists and survives reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not fall back to authored or unrelated articles",
+          "outcome": "pass"
+        },
+        {
+          "message": "page.waitForFunction: Timeout 3000ms exceeded.",
+          "name": "Article filtering uses the username in each profile URL",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-a62e9bdbe35e4df0d712",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-328e89293cd695391edafa0a",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Profile shows the username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites URL shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation switches article lists and survives reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not fall back to authored or unrelated articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article filtering uses the username in each profile URL",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-a62e9bdbe35e4df0d712",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-7e525423c874ba81dacc3f27",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Profile shows the username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites URL shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation switches article lists and survives reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Empty favorites do not fall back to authored or unrelated articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article filtering uses the username in each profile URL",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-9790a203953da70cb282",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-ad10583d752d133b3186f8ea",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Increasing Remaining work above Work preserves the last saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Lowering Work below Remaining work is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-9790a203953da70cb282",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-dc2c3c450edff5180357c4ce",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'9' !== '8'\n",
+          "name": "Increasing Remaining work above Work preserves the last saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'7' !== '12'\n",
+          "name": "Lowering Work below Remaining work is rejected and can be corrected",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-9790a203953da70cb282",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-047a1e9d563e0ebc98bd227e",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Increasing Remaining work above Work preserves the last saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Lowering Work below Remaining work is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-9790a203953da70cb282",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-2e61ac769b6481d96afcf16e",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'9' !== '8'\n",
+          "name": "Increasing Remaining work above Work preserves the last saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'7' !== '12'\n",
+          "name": "Lowering Work below Remaining work is rejected and can be corrected",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-9790a203953da70cb282",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-1ee9ee77c4044d03fe29922c",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Increasing Remaining work above Work preserves the last saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Lowering Work below Remaining work is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-9790a203953da70cb282",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-75c4fa7c7f1cde16158f6df0",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'9' !== '8'\n",
+          "name": "Increasing Remaining work above Work preserves the last saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'7' !== '12'\n",
+          "name": "Lowering Work below Remaining work is rejected and can be corrected",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-9790a203953da70cb282",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-07b930be6ba6f125ce449379",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'9' !== '8'\n",
+          "name": "Increasing Remaining work above Work preserves the last saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'7' !== '12'\n",
+          "name": "Lowering Work below Remaining work is rejected and can be corrected",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-9790a203953da70cb282",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-fcc0efee3bdd1e70161adf10",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Increasing Remaining work above Work preserves the last saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Lowering Work below Remaining work is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-9790a203953da70cb282",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-5366f1e3eede85af4a950a81",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'9' !== '8'\n",
+          "name": "Increasing Remaining work above Work preserves the last saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'7' !== '12'\n",
+          "name": "Lowering Work below Remaining work is rejected and can be corrected",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-9790a203953da70cb282",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-3608548430ddc38053625b44",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Increasing Remaining work above Work preserves the last saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Lowering Work below Remaining work is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-9790a203953da70cb282",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-8cf77f6819616b857ee7f1bc",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'9' !== '8'\n",
+          "name": "Increasing Remaining work above Work preserves the last saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'7' !== '12'\n",
+          "name": "Lowering Work below Remaining work is rejected and can be corrected",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-9790a203953da70cb282",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-bb0ff39784f9f12e9e9b7ce3",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Increasing Remaining work above Work preserves the last saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Lowering Work below Remaining work is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-f96c88188d6b7b5cd3c7",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-84d017b4272e3ca14860a483",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows authored articles and switches to favorites",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites URL uses the requested user's favorites",
+          "outcome": "pass"
+        },
+        {
+          "name": "Encoded usernames display correctly and retain their article lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "Users without articles or favorites see no unrelated articles",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-0806093e8be47c2e97c1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-9aac1b7ca612318b64d35fa1",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "message": "page.waitForFunction: Timeout 5000ms exceeded.",
+          "name": "Default upload creates a separate duplicate-content document and preserves existing documents",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-0806093e8be47c2e97c1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-5497cb4a338e41e86773ac2c",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate-content document and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-0806093e8be47c2e97c1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-e78580b65e62cc2c87dc9216",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "message": "page.waitForFunction: Timeout 5000ms exceeded.",
+          "name": "Default upload creates a separate duplicate-content document and preserves existing documents",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-0806093e8be47c2e97c1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-23cda8307112233ff7f66f92",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate-content document and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-0806093e8be47c2e97c1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-21c325f55bdadb8bedaf20e3",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate-content document and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-0806093e8be47c2e97c1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-bd982d6e0d1e7dcfa66eb1d8",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate-content document and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-0806093e8be47c2e97c1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-eb3b9a97c82a837fd7472c8f",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate-content document and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-0806093e8be47c2e97c1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-103bb7258f384c6f43409af4",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "message": "page.waitForFunction: Timeout 5000ms exceeded.",
+          "name": "Default upload creates a separate duplicate-content document and preserves existing documents",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-0806093e8be47c2e97c1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-77ed8c7751c0ae84195255d0",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "message": "page.waitForFunction: Timeout 5000ms exceeded.",
+          "name": "Default upload creates a separate duplicate-content document and preserves existing documents",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-0806093e8be47c2e97c1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-8d4c9b0f068070b022376301",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate-content document and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-0806093e8be47c2e97c1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-994837f18d5419032442aa44",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "message": "page.waitForFunction: Timeout 5000ms exceeded.",
+          "name": "Default upload creates a separate duplicate-content document and preserves existing documents",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-0806093e8be47c2e97c1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-28360046dc37c4c2007c3c59",
+      "strategy": "spec_only",
+      "suite_index": 3,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate-content document and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-33a81b234dcdb9da30da",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-28360046dc37c4c2007c3c59",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Uploading duplicate content creates a separate document and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-dd618cec2629e6281705",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-5366f1e3eede85af4a950a81",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved, including zero",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'10' !== '4'\n",
+          "name": "Increasing Remaining work above Work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'5' !== '12'\n",
+          "name": "Reducing Work below Remaining work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-03ff89c4d3849c006996",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-fcc0efee3bdd1e70161adf10",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Invalid edits leave both previously saved values unchanged",
+          "outcome": "pass"
+        },
+        {
+          "name": "An invalid edit can be corrected and saved with zero remaining work",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-fd17cad9c78c42aea7e5",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-21c325f55bdadb8bedaf20e3",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Uploading duplicate content creates a new document and preserves both existing documents",
+          "outcome": "pass"
+        },
+        {
+          "name": "Duplicate content with the same title remains a separate document after reload",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-45f2327042a720365d43",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-eb3b9a97c82a837fd7472c8f",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Duplicate-content upload creates a separate document and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-6c2288e0044a337ee8d0",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-d4d02f8d9d1d639f1ad4bbff",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the user and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites include articles favorited by the profile user regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct routes select the requested username exactly",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profiles without matching articles show neither other users' articles nor favorites",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '/profile/alice/favorites'\n- '/profile/bob/favorites'\n            ^\n",
+          "name": "Profile navigation switches lists while retaining the current user",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-d643861a51b591a30cb3",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-9c3376387a23120c9a5d0ce9",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the username and only articles authored by that user",
+          "outcome": "pass"
+        },
+        {
+          "name": "The requested username determines whose profile and articles appear",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites shows articles favorited by the requested user regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Users can switch between authored articles and favorites",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no matching articles or favorites shows no unrelated articles",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-7799f0500586af9f04f9",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-7e525423c874ba81dacc3f27",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows username and only articles authored by that user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites lists favorited articles regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Switching profile tabs preserves the selected user and survives reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "A user with no authored or favorited articles sees no unrelated articles",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-b534c68041164d22bb45",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-103bb7258f384c6f43409af4",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Duplicate upload preserves both existing documents after reload",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-a3c773b1db018e757dc7",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-5366f1e3eede85af4a950a81",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving both edits preserves them after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Saving Work alone preserves Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Saving zero Remaining work preserves Work",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-994580354ded891d6926",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "paperless-duplicate-994837f18d5419032442aa44",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "message": "Uploading matching content should create a third document\n\n2 !== 3\n",
+          "name": "Duplicate-content upload creates a separate document and preserves existing documents",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-864cb1527ab2752f5a54",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-466b5cfb9e43c86afba91247",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the user's name and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites lists articles favorited by the profile user regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article and favorites navigation stays on the selected user's profile",
+          "outcome": "pass"
+        },
+        {
+          "name": "Users without matching articles have empty authored and favorites lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "Username matching does not include articles belonging to similar usernames",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-855a6997c4527726de09",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-07b930be6ba6f125ce449379",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'10' !== '4'\n",
+          "name": "Increasing Remaining work above Work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'4' !== '12'\n",
+          "name": "Reducing Work below Remaining work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-201e6323bdfe91b4f716",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-36eff1fba93995c545782d66",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the requested user and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites lists exactly the articles favorited by the requested user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch lists while preserving the encoded username",
+          "outcome": "pass"
+        },
+        {
+          "name": "A user with no authored articles or favorites sees empty lists",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-a27a03c1e858f624733d",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-84d017b4272e3ca14860a483",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the user and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites includes all favorited articles regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article tabs retain the visited profile and survive reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "A profile with no matching articles shows neither other users' articles nor favorites",
+          "outcome": "pass"
+        },
+        {
+          "name": "Encoded usernames display correctly and select the correct articles",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-d63688041500978a8f1b",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-3608548430ddc38053625b44",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Invalid edits preserve both previously saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Correcting invalid Remaining work allows saving",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-da69bcb535996d273014",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-7e525423c874ba81dacc3f27",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the requested user and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct favorites route shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation switches lists while preserving the username",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profiles with no matching articles keep both lists empty",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-f17658e9c90b3e141d95",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-75c4fa7c7f1cde16158f6df0",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving both edits preserves them after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Editing either value preserves the other saved value",
+          "outcome": "pass"
+        },
+        {
+          "name": "Later saves replace earlier values including zero remaining work",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-05d3ee3def706b2dc1fc",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-ad10583d752d133b3186f8ea",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Zero remaining work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Excess remaining work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below remaining is rejected and correction can be saved",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-05d3ee3def706b2dc1fc",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-dc2c3c450edff5180357c4ce",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Zero remaining work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'10' !== '3'\n",
+          "name": "Excess remaining work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'5' !== '10'\n",
+          "name": "Reducing Work below remaining is rejected and correction can be saved",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-05d3ee3def706b2dc1fc",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-047a1e9d563e0ebc98bd227e",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Zero remaining work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Excess remaining work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below remaining is rejected and correction can be saved",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-05d3ee3def706b2dc1fc",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-2e61ac769b6481d96afcf16e",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Zero remaining work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'10' !== '3'\n",
+          "name": "Excess remaining work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'5' !== '10'\n",
+          "name": "Reducing Work below remaining is rejected and correction can be saved",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-05d3ee3def706b2dc1fc",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-1ee9ee77c4044d03fe29922c",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Zero remaining work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Excess remaining work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below remaining is rejected and correction can be saved",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-05d3ee3def706b2dc1fc",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-75c4fa7c7f1cde16158f6df0",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Zero remaining work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'10' !== '3'\n",
+          "name": "Excess remaining work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'5' !== '10'\n",
+          "name": "Reducing Work below remaining is rejected and correction can be saved",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-05d3ee3def706b2dc1fc",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-07b930be6ba6f125ce449379",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Zero remaining work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'10' !== '3'\n",
+          "name": "Excess remaining work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'5' !== '10'\n",
+          "name": "Reducing Work below remaining is rejected and correction can be saved",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-05d3ee3def706b2dc1fc",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-fcc0efee3bdd1e70161adf10",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Zero remaining work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Excess remaining work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below remaining is rejected and correction can be saved",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-05d3ee3def706b2dc1fc",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-5366f1e3eede85af4a950a81",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Zero remaining work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'10' !== '3'\n",
+          "name": "Excess remaining work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'5' !== '10'\n",
+          "name": "Reducing Work below remaining is rejected and correction can be saved",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-05d3ee3def706b2dc1fc",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-3608548430ddc38053625b44",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Zero remaining work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Excess remaining work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below remaining is rejected and correction can be saved",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-05d3ee3def706b2dc1fc",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-8cf77f6819616b857ee7f1bc",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Zero remaining work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'10' !== '3'\n",
+          "name": "Excess remaining work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'5' !== '10'\n",
+          "name": "Reducing Work below remaining is rejected and correction can be saved",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-05d3ee3def706b2dc1fc",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-bb0ff39784f9f12e9e9b7ce3",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Zero remaining work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Excess remaining work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below remaining is rejected and correction can be saved",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-f1d0efcda6fd6ddeebcb",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-328e89293cd695391edafa0a",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the requested user and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites shows articles favorited by the requested user regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch article lists while preserving the requested user",
+          "outcome": "pass"
+        },
+        {
+          "name": "A user with no authored or favorited articles has empty lists",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-de5cd7965fbb0427a342",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-bb0ff39784f9f12e9e9b7ce3",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Excess Remaining work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Lowering Work below Remaining work is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-cdf68ddd62f9b1d73b6e",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-9aac1b7ca612318b64d35fa1",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "message": "page.waitForFunction: Timeout 5000ms exceeded.",
+          "name": "Default upload accepts duplicate content as a separate document",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-cdf68ddd62f9b1d73b6e",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-5497cb4a338e41e86773ac2c",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Default upload accepts duplicate content as a separate document",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-cdf68ddd62f9b1d73b6e",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-e78580b65e62cc2c87dc9216",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "message": "page.waitForFunction: Timeout 5000ms exceeded.",
+          "name": "Default upload accepts duplicate content as a separate document",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-cdf68ddd62f9b1d73b6e",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-23cda8307112233ff7f66f92",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Default upload accepts duplicate content as a separate document",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-cdf68ddd62f9b1d73b6e",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-21c325f55bdadb8bedaf20e3",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Default upload accepts duplicate content as a separate document",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-cdf68ddd62f9b1d73b6e",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-bd982d6e0d1e7dcfa66eb1d8",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Default upload accepts duplicate content as a separate document",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-cdf68ddd62f9b1d73b6e",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-eb3b9a97c82a837fd7472c8f",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Default upload accepts duplicate content as a separate document",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-cdf68ddd62f9b1d73b6e",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-103bb7258f384c6f43409af4",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "message": "page.waitForFunction: Timeout 5000ms exceeded.",
+          "name": "Default upload accepts duplicate content as a separate document",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-cdf68ddd62f9b1d73b6e",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-77ed8c7751c0ae84195255d0",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "message": "page.waitForFunction: Timeout 5000ms exceeded.",
+          "name": "Default upload accepts duplicate content as a separate document",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-cdf68ddd62f9b1d73b6e",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-8d4c9b0f068070b022376301",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Default upload accepts duplicate content as a separate document",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-cdf68ddd62f9b1d73b6e",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-994837f18d5419032442aa44",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "message": "page.waitForFunction: Timeout 5000ms exceeded.",
+          "name": "Default upload accepts duplicate content as a separate document",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-cdf68ddd62f9b1d73b6e",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-28360046dc37c4c2007c3c59",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Default upload accepts duplicate content as a separate document",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-d51f9ac9bb1fd7353663",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-328e89293cd695391edafa0a",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the requested user and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites lists articles favorited by the profile user regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs preserve an encoded username and switch article lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "A user without authored or favorited articles sees empty lists",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-aca9829ca1c3ee1ed22b",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-9dd7112597ba9f6fcf6c124c",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the username and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct profile URLs select the requested author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites show articles favorited by the requested user",
+          "outcome": "pass"
+        },
+        {
+          "message": "page.waitForURL: Timeout 4000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation until \"load\"\n  navigated to \"http://localhost/profile/alice/favorites\"\n============================================================",
+          "name": "Profile navigation preserves the selected username",
+          "outcome": "error"
+        },
+        {
+          "name": "Profiles with no matching articles show no unrelated articles",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-28f0cea6736b4277c499",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-047a1e9d563e0ebc98bd227e",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work greater than Work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Lowering Work below Remaining work is rejected and corrected edits can save",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-08962ae5fd8d462ad19a",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-dfbd99a0297b0a45e7d75d3c",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the username and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites show articles favorited by the profile user and tabs navigate correctly",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'alice' !== 'bob'\n",
+          "name": "A different username selects that user's profile and authored articles",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'alice' !== 'bob'\n",
+          "name": "A different user's favorites are selected independently of authorship",
+          "outcome": "assertion_failure"
+        },
+        {
+          "name": "Profiles with no matching articles do not show other users' articles",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-c3d0ba8cefe3873b01e6",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-c1552d4391fe257933e65713",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the requested user and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites lists articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs preserve the user and survive reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profiles without matching articles do not show other users' articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Encoded usernames display correctly and retain their profile when switching tabs",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-75b87b00ba933504aa52",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-350bce56ad539ec41c273d8f",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the user and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites shows articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article tabs preserve another user's profile",
+          "outcome": "pass"
+        },
+        {
+          "name": "A user with no matching articles has empty lists",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-a97b97effef92f8ccbe3",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-c1552d4391fe257933e65713",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the username and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites lists articles favorited by the profile user regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile navigation preserves an encoded username and switches article lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "A user with no authored or favorite articles sees empty lists",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-c9cdfb18cfc36f5d3258",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-77ed8c7751c0ae84195255d0",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Duplicate upload preserves the existing and unrelated documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-c89ec3620ab86e378087",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-994837f18d5419032442aa44",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Duplicate upload preserves both existing documents after reload",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-6716d57f0e398d75519e",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-bb0ff39784f9f12e9e9b7ce3",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits preserves both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Invalid edits show an error and preserve both saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "A rejected edit can be corrected and saved",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-c635eda7b098931c2458",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-bd982d6e0d1e7dcfa66eb1d8",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Default duplicate upload creates a separate document and preserves both existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-1cef406e637a3984fe5d",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-9dd7112597ba9f6fcf6c124c",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Profile shows username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites includes exactly articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch lists without retaining stale articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "No matching articles produces empty authored and favorites lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article lists follow the username in the requested route",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-1cef406e637a3984fe5d",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-36eff1fba93995c545782d66",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Profile shows username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites includes exactly articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch lists without retaining stale articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "No matching articles produces empty authored and favorites lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article lists follow the username in the requested route",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-1cef406e637a3984fe5d",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-d4d02f8d9d1d639f1ad4bbff",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Profile shows username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites includes exactly articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch lists without retaining stale articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "No matching articles produces empty authored and favorites lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article lists follow the username in the requested route",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-1cef406e637a3984fe5d",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-466b5cfb9e43c86afba91247",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Profile shows username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites includes exactly articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch lists without retaining stale articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "No matching articles produces empty authored and favorites lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article lists follow the username in the requested route",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-1cef406e637a3984fe5d",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-c1552d4391fe257933e65713",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Profile shows username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites includes exactly articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch lists without retaining stale articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "No matching articles produces empty authored and favorites lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article lists follow the username in the requested route",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-1cef406e637a3984fe5d",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-9c3376387a23120c9a5d0ce9",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Profile shows username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites includes exactly articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch lists without retaining stale articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "No matching articles produces empty authored and favorites lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article lists follow the username in the requested route",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-1cef406e637a3984fe5d",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-dfbd99a0297b0a45e7d75d3c",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Profile shows username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites includes exactly articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch lists without retaining stale articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "No matching articles produces empty authored and favorites lists",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ []\n- [\n-   'Bob article'\n- ]\n",
+          "name": "Article lists follow the username in the requested route",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-1cef406e637a3984fe5d",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-350bce56ad539ec41c273d8f",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Profile shows username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites includes exactly articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch lists without retaining stale articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "No matching articles produces empty authored and favorites lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article lists follow the username in the requested route",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-1cef406e637a3984fe5d",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-84d017b4272e3ca14860a483",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Profile shows username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites includes exactly articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch lists without retaining stale articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "No matching articles produces empty authored and favorites lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article lists follow the username in the requested route",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-1cef406e637a3984fe5d",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-df82f9b4440c182d4b5cf22a",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Profile shows username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites includes exactly articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch lists without retaining stale articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "No matching articles produces empty authored and favorites lists",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n+   'Alice article'\n-   'Bob article'\n  ]\n",
+          "name": "Article lists follow the username in the requested route",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-1cef406e637a3984fe5d",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-328e89293cd695391edafa0a",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Profile shows username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites includes exactly articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch lists without retaining stale articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "No matching articles produces empty authored and favorites lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article lists follow the username in the requested route",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-1cef406e637a3984fe5d",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-7e525423c874ba81dacc3f27",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Profile shows username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites includes exactly articles favorited by the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile links switch lists without retaining stale articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "No matching articles produces empty authored and favorites lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "Article lists follow the username in the requested route",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-78e4cc0ba9d0e48cfb47",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-ad10583d752d133b3186f8ea",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Invalid edits leave both previously saved values unchanged",
+          "outcome": "pass"
+        },
+        {
+          "name": "Lowering Work below Remaining is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-b9b964d678d43ff7356c",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-dfbd99a0297b0a45e7d75d3c",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows username and only articles authored by that user",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'alice' !== 'bob'\n",
+          "name": "Profile identity and authored articles follow the requested username",
+          "outcome": "assertion_failure"
+        },
+        {
+          "name": "Favorites route shows the user's favorites regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '/profile/alice/favorites'\n- '/profile/bob/favorites'\n            ^\n",
+          "name": "Profile tabs preserve the requested user and replace the article list",
+          "outcome": "assertion_failure"
+        },
+        {
+          "name": "A profile with no matching articles does not show another user's articles",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-1ab621264a0eb6f8f8e2",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-07b930be6ba6f125ce449379",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving both edited values persists them after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Subsequent saves update each field while preserving the other",
+          "outcome": "pass"
+        },
+        {
+          "name": "Zero values replace previously saved nonzero values",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-7855d534093eb7d57a1b",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-dc2c3c450edff5180357c4ce",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving both edits preserves Work and Remaining work after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Saving a Work edit preserves unchanged Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "A later save persists zero Remaining work and preserves Work",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-d95eacb2664d7e790a3c",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-23cda8307112233ff7f66f92",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Duplicate-content upload creates a separate document and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-05d60bf5aa22fdc0c2e1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "paperless-duplicate-103bb7258f384c6f43409af4",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "message": "Uploading matching content should create a third document\n\n2 !== 3\n",
+          "name": "Default upload keeps matching and unrelated documents and adds a separate document",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-51f78660d1d59724daa1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "paperless-duplicate-9aac1b7ca612318b64d35fa1",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "message": "Matching content should create a third document\n\n2 !== 3\n",
+          "name": "Default upload creates a separate duplicate and preserves documents after reload",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-39d5634929de7ed860b9",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-2e61ac769b6481d96afcf16e",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving both edits preserves them after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Saving only Work preserves Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Later saves persist zero Remaining work without changing Work",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-26576531daacd81cd46f",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-9aac1b7ca612318b64d35fa1",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Duplicate upload preserves both existing documents after reload",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-8cacc5aabae3757862f4",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-ad10583d752d133b3186f8ea",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work and zero remaining can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work above Work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below Remaining work is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-8cacc5aabae3757862f4",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-dc2c3c450edff5180357c4ce",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work and zero remaining can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'30' !== '20'\n",
+          "name": "Remaining work above Work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'7' !== '20'\n",
+          "name": "Reducing Work below Remaining work is rejected and can be corrected",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-8cacc5aabae3757862f4",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-047a1e9d563e0ebc98bd227e",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work and zero remaining can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work above Work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below Remaining work is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-8cacc5aabae3757862f4",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-2e61ac769b6481d96afcf16e",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work and zero remaining can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'30' !== '20'\n",
+          "name": "Remaining work above Work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'7' !== '20'\n",
+          "name": "Reducing Work below Remaining work is rejected and can be corrected",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-8cacc5aabae3757862f4",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-1ee9ee77c4044d03fe29922c",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work and zero remaining can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work above Work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below Remaining work is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-8cacc5aabae3757862f4",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-75c4fa7c7f1cde16158f6df0",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work and zero remaining can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'30' !== '20'\n",
+          "name": "Remaining work above Work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'7' !== '20'\n",
+          "name": "Reducing Work below Remaining work is rejected and can be corrected",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-8cacc5aabae3757862f4",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-07b930be6ba6f125ce449379",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work and zero remaining can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'30' !== '20'\n",
+          "name": "Remaining work above Work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'7' !== '20'\n",
+          "name": "Reducing Work below Remaining work is rejected and can be corrected",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-8cacc5aabae3757862f4",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-fcc0efee3bdd1e70161adf10",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work and zero remaining can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work above Work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below Remaining work is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-8cacc5aabae3757862f4",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-5366f1e3eede85af4a950a81",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work and zero remaining can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'30' !== '20'\n",
+          "name": "Remaining work above Work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'7' !== '20'\n",
+          "name": "Reducing Work below Remaining work is rejected and can be corrected",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-8cacc5aabae3757862f4",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-3608548430ddc38053625b44",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work and zero remaining can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work above Work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below Remaining work is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-8cacc5aabae3757862f4",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-8cf77f6819616b857ee7f1bc",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work and zero remaining can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'30' !== '20'\n",
+          "name": "Remaining work above Work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'7' !== '20'\n",
+          "name": "Reducing Work below Remaining work is rejected and can be corrected",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-8cacc5aabae3757862f4",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-bb0ff39784f9f12e9e9b7ce3",
+      "strategy": "spec_only",
+      "suite_index": 1,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work and zero remaining can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work above Work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below Remaining work is rejected and can be corrected",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-01684ec70d0a3f92c72b",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-e78580b65e62cc2c87dc9216",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Duplicate upload preserves existing and unrelated documents after reload",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-e1e4a086a14d49f1a86e",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-2e61ac769b6481d96afcf16e",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Invalid edits must not persist Work\n\n'9' !== '10'\n",
+          "name": "Remaining work greater than Work cannot replace saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Work must not be saved below Remaining work\n\n'5' !== '10'\n",
+          "name": "Reducing Work below saved Remaining work cannot be saved",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-1d6cbbf1e1b1859be9d2",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-1ee9ee77c4044d03fe29922c",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining greater than Work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining equal to Work can be saved, including zero",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-a77543a5889040bf60ae",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-047a1e9d563e0ebc98bd227e",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining greater than Work is rejected without overwriting saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Reducing Work below Remaining is rejected and corrected edits can be saved",
+          "outcome": "pass"
+        },
+        {
+          "name": "Equal Work and Remaining values, including zero, can be saved",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-12f08be3d23bc68625c4",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-5497cb4a338e41e86773ac2c",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Default upload accepts duplicate content and preserves existing documents",
+          "outcome": "pass"
+        },
+        {
+          "name": "Duplicate content with the same title creates a separate document",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-1860f4a159eb845cb7a7",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-8d4c9b0f068070b022376301",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Matching content creates a new document and preserves existing documents",
+          "outcome": "pass"
+        },
+        {
+          "name": "Matching content and filename still create separate documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-f356f4579f94709347f2",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "openproject-invalid-ad10583d752d133b3186f8ea",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both work values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work greater than Work cannot overwrite saved values",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work is accepted and persisted",
+          "outcome": "pass"
+        },
+        {
+          "name": "An invalid edit can be corrected and saved with zero remaining work",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-d069c582ee476df04de1",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-23cda8307112233ff7f66f92",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-96a16fbcbeba03a3eb41",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-466b5cfb9e43c86afba91247",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the username and only that user's articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Direct profile URLs select the requested user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites and authored navigation preserve the profile user",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profiles with no matching articles show no unrelated articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "An empty article collection still displays the profile and navigation",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-8a72c7c09a60fd4a2157",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-df82f9b4440c182d4b5cf22a",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows username and only authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites and authored tabs show their respective articles",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'alice' !== 'bob'\n",
+          "name": "Authored profile uses the username in the URL",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'alice' !== 'bob'\n",
+          "name": "Direct favorites URL shows the requested user's favorites",
+          "outcome": "assertion_failure"
+        },
+        {
+          "name": "Profiles with no matching articles show no unrelated articles",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-b24bec64a5d0d7329c62",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-350bce56ad539ec41c273d8f",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the user's name and only their authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites lists articles favorited by the profile user regardless of author",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profile tabs preserve an encoded username and switch article lists",
+          "outcome": "pass"
+        },
+        {
+          "name": "Profiles with no matching articles show no unrelated articles on either tab",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-65d88b344d76baa957e2",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-28360046dc37c4c2007c3c59",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Default upload accepts duplicate content and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-001320d5b71bca8549eb",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "paperless-duplicate-5497cb4a338e41e86773ac2c",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "message": "Uploading matching content must preserve the original and unrelated document without adding a duplicate\n+ actual - expected\n\n  [\n    'Original invoice',\n    'Unrelated receipt',\n+   'Renamed invoice copy'\n  ]\n",
+          "name": "Duplicate upload preserves both existing documents without adding a copy",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-fd0043f1c3ae9c4f1840",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-d4d02f8d9d1d639f1ad4bbff",
+      "strategy": "code_request",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Profile shows the user's name and authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites direct route shows only articles favorited by that user",
+          "outcome": "pass"
+        },
+        {
+          "message": "page.waitForURL: Timeout 3000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/profile/bob/favorites\" until \"load\"\n============================================================",
+          "name": "Profile tabs preserve the viewed username",
+          "outcome": "error"
+        },
+        {
+          "name": "Empty authored and favorite lists do not show other users' articles",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-80e48ad2bfae62043da1",
+      "case": "realworld-favorites",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "error_alarm",
+      "slot_id": "realworld-favorites-df82f9b4440c182d4b5cf22a",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Alice's profile shows her name and only her authored articles",
+          "outcome": "pass"
+        },
+        {
+          "name": "Favorites opens directly and retains the correct list after reload",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'alice' !== 'bob'\n",
+          "name": "Another username shows that user's profile and authored articles",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'alice' !== 'bob'\n",
+          "name": "Another user's favorites are selected by that username",
+          "outcome": "assertion_failure"
+        },
+        {
+          "name": "No favorites produces an empty list even when authored articles exist",
+          "outcome": "pass"
+        },
+        {
+          "name": "No authored articles does not substitute the user's favorites",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-17451f300be19e5a6491",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-9aac1b7ca612318b64d35fa1",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "message": "locator.waitFor: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator('#documents .document').nth(2) to be visible\n",
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-17451f300be19e5a6491",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-5497cb4a338e41e86773ac2c",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-17451f300be19e5a6491",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-e78580b65e62cc2c87dc9216",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "message": "locator.waitFor: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator('#documents .document').nth(2) to be visible\n",
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-17451f300be19e5a6491",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-23cda8307112233ff7f66f92",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-17451f300be19e5a6491",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-21c325f55bdadb8bedaf20e3",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-17451f300be19e5a6491",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-bd982d6e0d1e7dcfa66eb1d8",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-17451f300be19e5a6491",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-eb3b9a97c82a837fd7472c8f",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-17451f300be19e5a6491",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-103bb7258f384c6f43409af4",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "message": "locator.waitFor: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator('#documents .document').nth(2) to be visible\n",
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-17451f300be19e5a6491",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-77ed8c7751c0ae84195255d0",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "message": "locator.waitFor: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator('#documents .document').nth(2) to be visible\n",
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-17451f300be19e5a6491",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-8d4c9b0f068070b022376301",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-17451f300be19e5a6491",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "error_alarm",
+      "slot_id": "paperless-duplicate-994837f18d5419032442aa44",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "message": "locator.waitFor: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator('#documents .document').nth(2) to be visible\n",
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "error"
+        }
+      ],
+      "verdict": "error_alarm"
+    },
+    {
+      "arm": "A",
+      "call_id": "ta-17451f300be19e5a6491",
+      "case": "paperless-duplicate-consumption",
+      "model": "gpt-5.6-sol",
+      "oracle_category": "pass",
+      "oracle_target_failed": false,
+      "original_verdict": "quiet",
+      "slot_id": "paperless-duplicate-28360046dc37c4c2007c3c59",
+      "strategy": "spec_only",
+      "suite_index": 2,
+      "tests": [
+        {
+          "name": "Default upload creates a separate duplicate and preserves existing documents",
+          "outcome": "pass"
+        }
+      ],
+      "verdict": "quiet"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-e732e6c2730a9e6bf2d4",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-dc2c3c450edff5180357c4ce",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both Work and Remaining work",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'10' !== '4'\n",
+          "name": "Increasing Remaining work above Work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'3' !== '12'\n",
+          "name": "Reducing Work below Remaining work cannot overwrite saved values",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    },
+    {
+      "arm": "C",
+      "call_id": "ta-b1318ec8b6e629ab9359",
+      "case": "openproject-invalid-remaining",
+      "model": "gpt-5.6-luna",
+      "oracle_category": "target_only_failure",
+      "oracle_target_failed": true,
+      "original_verdict": "assertion_alarm",
+      "slot_id": "openproject-invalid-75c4fa7c7f1cde16158f6df0",
+      "strategy": "code_spec",
+      "suite_index": null,
+      "tests": [
+        {
+          "name": "Saving edits persists both values after reload",
+          "outcome": "pass"
+        },
+        {
+          "name": "Remaining work equal to Work can be saved",
+          "outcome": "pass"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'10' !== '4'\n",
+          "name": "Remaining work greater than Work cannot overwrite a saved value",
+          "outcome": "assertion_failure"
+        },
+        {
+          "message": "Expected values to be strictly equal:\n\n'6' !== '12'\n",
+          "name": "Reducing Work below Remaining work cannot be saved",
+          "outcome": "assertion_failure"
+        }
+      ],
+      "verdict": "assertion_alarm"
+    }
+  ],
+  "status": "post_hoc_browser_only_diagnostic",
+  "summary": {
+    "code_request": {
+      "by_case": {
+        "openproject-invalid-remaining": {
+          "oracle_failure": {
+            "alarms": 0,
+            "assertion_alarms": 0,
+            "pairs": 6,
+            "usable": 6,
+            "verdicts": {
+              "quiet": 6
+            }
+          },
+          "oracle_pass": {
+            "alarms": 0,
+            "assertion_alarms": 0,
+            "pairs": 6,
+            "usable": 6,
+            "verdicts": {
+              "quiet": 6
+            }
+          }
+        },
+        "paperless-duplicate-consumption": {
+          "oracle_failure": {
+            "alarms": 0,
+            "assertion_alarms": 0,
+            "pairs": 5,
+            "usable": 5,
+            "verdicts": {
+              "quiet": 5
+            }
+          },
+          "oracle_pass": {
+            "alarms": 1,
+            "assertion_alarms": 1,
+            "pairs": 7,
+            "usable": 7,
+            "verdicts": {
+              "assertion_alarm": 1,
+              "quiet": 6
+            }
+          }
+        },
+        "realworld-favorites": {
+          "oracle_failure": {
+            "alarms": 0,
+            "assertion_alarms": 0,
+            "pairs": 0,
+            "usable": 0,
+            "verdicts": {}
+          },
+          "oracle_pass": {
+            "alarms": 4,
+            "assertion_alarms": 2,
+            "pairs": 12,
+            "usable": 12,
+            "verdicts": {
+              "assertion_alarm": 2,
+              "error_alarm": 2,
+              "quiet": 8
+            }
+          }
+        }
+      },
+      "detection_assertion_itt": 0.0,
+      "detection_itt": 0.0,
+      "detection_usable_only": 0.0,
+      "false_alarm_assertion_itt": 0.12,
+      "false_alarm_itt": 0.2,
+      "false_alarm_usable_only": 0.2,
+      "pooled_counts": {
+        "oracle_failure": {
+          "alarms": 0,
+          "assertion_alarms": 0,
+          "pairs": 11,
+          "usable": 11
+        },
+        "oracle_pass": {
+          "alarms": 5,
+          "assertion_alarms": 3,
+          "pairs": 25,
+          "usable": 25
+        }
+      }
+    },
+    "code_spec": {
+      "by_case": {
+        "openproject-invalid-remaining": {
+          "oracle_failure": {
+            "alarms": 6,
+            "assertion_alarms": 6,
+            "pairs": 6,
+            "usable": 6,
+            "verdicts": {
+              "assertion_alarm": 6
+            }
+          },
+          "oracle_pass": {
+            "alarms": 0,
+            "assertion_alarms": 0,
+            "pairs": 6,
+            "usable": 6,
+            "verdicts": {
+              "quiet": 6
+            }
+          }
+        },
+        "paperless-duplicate-consumption": {
+          "oracle_failure": {
+            "alarms": 5,
+            "assertion_alarms": 5,
+            "pairs": 5,
+            "usable": 5,
+            "verdicts": {
+              "assertion_alarm": 5
+            }
+          },
+          "oracle_pass": {
+            "alarms": 0,
+            "assertion_alarms": 0,
+            "pairs": 7,
+            "usable": 7,
+            "verdicts": {
+              "quiet": 7
+            }
+          }
+        },
+        "realworld-favorites": {
+          "oracle_failure": {
+            "alarms": 0,
+            "assertion_alarms": 0,
+            "pairs": 0,
+            "usable": 0,
+            "verdicts": {}
+          },
+          "oracle_pass": {
+            "alarms": 5,
+            "assertion_alarms": 4,
+            "pairs": 12,
+            "usable": 12,
+            "verdicts": {
+              "assertion_alarm": 4,
+              "error_alarm": 1,
+              "quiet": 7
+            }
+          }
+        }
+      },
+      "detection_assertion_itt": 1.0,
+      "detection_itt": 1.0,
+      "detection_usable_only": 1.0,
+      "false_alarm_assertion_itt": 0.16,
+      "false_alarm_itt": 0.2,
+      "false_alarm_usable_only": 0.2,
+      "pooled_counts": {
+        "oracle_failure": {
+          "alarms": 11,
+          "assertion_alarms": 11,
+          "pairs": 11,
+          "usable": 11
+        },
+        "oracle_pass": {
+          "alarms": 5,
+          "assertion_alarms": 4,
+          "pairs": 25,
+          "usable": 25
+        }
+      }
+    },
+    "spec_only": {
+      "by_case": {
+        "openproject-invalid-remaining": {
+          "oracle_failure": {
+            "alarms": 18,
+            "assertion_alarms": 18,
+            "pairs": 18,
+            "usable": 18,
+            "verdicts": {
+              "assertion_alarm": 18
+            }
+          },
+          "oracle_pass": {
+            "alarms": 0,
+            "assertion_alarms": 0,
+            "pairs": 18,
+            "usable": 18,
+            "verdicts": {
+              "quiet": 18
+            }
+          }
+        },
+        "paperless-duplicate-consumption": {
+          "oracle_failure": {
+            "alarms": 15,
+            "assertion_alarms": 0,
+            "pairs": 15,
+            "usable": 15,
+            "verdicts": {
+              "error_alarm": 15
+            }
+          },
+          "oracle_pass": {
+            "alarms": 0,
+            "assertion_alarms": 0,
+            "pairs": 21,
+            "usable": 21,
+            "verdicts": {
+              "quiet": 21
+            }
+          }
+        },
+        "realworld-favorites": {
+          "oracle_failure": {
+            "alarms": 0,
+            "assertion_alarms": 0,
+            "pairs": 0,
+            "usable": 0,
+            "verdicts": {}
+          },
+          "oracle_pass": {
+            "alarms": 4,
+            "assertion_alarms": 2,
+            "pairs": 36,
+            "usable": 36,
+            "verdicts": {
+              "assertion_alarm": 2,
+              "error_alarm": 2,
+              "quiet": 32
+            }
+          }
+        }
+      },
+      "detection_assertion_itt": 0.5454545454545454,
+      "detection_itt": 1.0,
+      "detection_usable_only": 1.0,
+      "false_alarm_assertion_itt": 0.02666666666666667,
+      "false_alarm_itt": 0.05333333333333334,
+      "false_alarm_usable_only": 0.05333333333333334,
+      "pooled_counts": {
+        "oracle_failure": {
+          "alarms": 33,
+          "assertion_alarms": 18,
+          "pairs": 33,
+          "usable": 33
+        },
+        "oracle_pass": {
+          "alarms": 4,
+          "assertion_alarms": 2,
+          "pairs": 75,
+          "usable": 75
+        }
+      }
+    }
+  }
+}

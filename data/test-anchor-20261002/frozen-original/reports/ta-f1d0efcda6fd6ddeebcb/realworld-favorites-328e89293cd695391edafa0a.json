@@ -1,0 +1,28 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "4655c77daaeb0ad673438560c9823be9a483395b93881179673370fadfc72efb",
+  "suite_sha256": "90d191d01a3f2d31e49333a00770f887c05dec823d7800c169893d07658db587",
+  "tests": [
+    {
+      "name": "Profile shows the requested user and only their authored articles",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob\nCall log:\n  - navigating to \"http://localhost/profile/bob\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Favorites shows articles favorited by the requested user regardless of author",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob/favorites\nCall log:\n  - navigating to \"http://localhost/profile/bob/favorites\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Profile links switch article lists while preserving the requested user",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/carol\nCall log:\n  - navigating to \"http://localhost/profile/carol\", waiting until \"load\"\n"
+    },
+    {
+      "name": "A user with no authored or favorited articles has empty lists",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/dana\nCall log:\n  - navigating to \"http://localhost/profile/dana\", waiting until \"load\"\n"
+    }
+  ]
+}

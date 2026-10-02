@@ -1,0 +1,28 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "736a09e198f2367fcdf9cda94b54babe87c9c1b1220daf42397a953c14f00914",
+  "suite_sha256": "a154d163ff45220eee93009172ea1bc097045abf4eba271520bd16c0304803e6",
+  "tests": [
+    {
+      "name": "Profile shows the username and only that user's articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Direct profile URLs select the requested user",
+      "outcome": "pass"
+    },
+    {
+      "name": "Favorites and authored navigation preserve the profile user",
+      "outcome": "pass"
+    },
+    {
+      "name": "Profiles with no matching articles show no unrelated articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "An empty article collection still displays the profile and navigation",
+      "outcome": "pass"
+    }
+  ]
+}

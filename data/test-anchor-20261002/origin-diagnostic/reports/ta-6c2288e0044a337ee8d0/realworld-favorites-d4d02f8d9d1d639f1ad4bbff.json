@@ -1,0 +1,29 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "2ae69a360120f8e3546c5c3a11dc64d9b9bdbfdfbc5635ae183ba776bc83e550",
+  "suite_sha256": "a067c17e1cb79d675f17c162480c7758b06b5e76fc80e862da7238a62a8e1301",
+  "tests": [
+    {
+      "name": "Profile shows the user and only their authored articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Favorites include articles favorited by the profile user regardless of author",
+      "outcome": "pass"
+    },
+    {
+      "name": "Direct routes select the requested username exactly",
+      "outcome": "pass"
+    },
+    {
+      "name": "Profiles without matching articles show neither other users' articles nor favorites",
+      "outcome": "pass"
+    },
+    {
+      "name": "Profile navigation switches lists while retaining the current user",
+      "outcome": "assertion_failure",
+      "message": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '/profile/alice/favorites'\n- '/profile/bob/favorites'\n            ^\n"
+    }
+  ]
+}

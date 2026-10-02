@@ -1,0 +1,38 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "539f12e6a2a20987f7cec6e4ecc834ed7e246738f7341245aa3c965b412754c3",
+  "suite_sha256": "46475545c54be6cfad67250d2c4e8d3743cff587de951b3129687a338ba55788",
+  "tests": [
+    {
+      "name": "Alice's profile shows her name and only her authored articles",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice\nCall log:\n  - navigating to \"http://localhost/profile/alice\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Favorites opens directly and retains the correct list after reload",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice/favorites\nCall log:\n  - navigating to \"http://localhost/profile/alice/favorites\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Another username shows that user's profile and authored articles",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob\nCall log:\n  - navigating to \"http://localhost/profile/bob\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Another user's favorites are selected by that username",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob/favorites\nCall log:\n  - navigating to \"http://localhost/profile/bob/favorites\", waiting until \"load\"\n"
+    },
+    {
+      "name": "No favorites produces an empty list even when authored articles exist",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice/favorites\nCall log:\n  - navigating to \"http://localhost/profile/alice/favorites\", waiting until \"load\"\n"
+    },
+    {
+      "name": "No authored articles does not substitute the user's favorites",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice\nCall log:\n  - navigating to \"http://localhost/profile/alice\", waiting until \"load\"\n"
+    }
+  ]
+}

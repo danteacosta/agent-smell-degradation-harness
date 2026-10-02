@@ -1,0 +1,24 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "4a8a630f2ec245dc465fb1d4a27f946189bfd351deeee3cbd049494538898764",
+  "suite_sha256": "ff44a31e624ee96c0808950a38434ea8528628c5777bf0aadc3601ea428916a5",
+  "tests": [
+    {
+      "name": "Profile shows the username and only their authored articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Favorites lists articles favorited by the profile user regardless of author",
+      "outcome": "pass"
+    },
+    {
+      "name": "Profile navigation preserves an encoded username and switches article lists",
+      "outcome": "pass"
+    },
+    {
+      "name": "A user with no authored or favorite articles sees empty lists",
+      "outcome": "pass"
+    }
+  ]
+}

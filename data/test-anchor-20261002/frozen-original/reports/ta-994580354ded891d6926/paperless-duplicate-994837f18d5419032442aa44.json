@@ -1,0 +1,13 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "ad2efe7a8b19521aa20cf6232ec6f92497710a1ec24f369b7b5302cc1d62fedc",
+  "suite_sha256": "18a44c1f50164ba98a721896b4f45ea55e44847de383c37b44daeb128f6560f3",
+  "tests": [
+    {
+      "name": "Duplicate-content upload creates a separate document and preserves existing documents",
+      "outcome": "assertion_failure",
+      "message": "Uploading matching content should create a third document\n\n2 !== 3\n"
+    }
+  ]
+}

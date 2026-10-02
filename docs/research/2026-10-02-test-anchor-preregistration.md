@@ -107,3 +107,7 @@ python scripts/test_anchor_experiment.py prepare --out RUN/study --model MODEL \
 python scripts/test_anchor_experiment.py generate --out RUN/study
 python scripts/test_anchor_experiment.py execute --out RUN/study
 ```
+
+## Post-collection instrument note
+
+The first local run completed 81 calls and 180 evaluations, then exposed a deep-navigation defect in the generic runner. The original controls covered only root navigation. The corrected qualification adds same-origin deep navigation and rejection of a foreign origin; this change occurred after generation. A separate browser-only diagnostic retains the original suites and interfaces. See the [results report](2026-10-02-test-anchor-results.md) for both versions and the remaining RealWorld scope mismatch. This amendment does not retroactively qualify the original run.

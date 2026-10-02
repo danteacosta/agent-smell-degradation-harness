@@ -1,0 +1,25 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "f33ba495dddbac0055cf7ed953423aa0bf56d47269ae952831381367e8de4a20",
+  "suite_sha256": "bbbf8bc7ad9f17368d0d1f82470b62600bf7a4ecbbe5949f73ac915a6d056661",
+  "tests": [
+    {
+      "name": "Profiles show the requested user and only their authored articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Favorites show articles favorited by the requested user regardless of author",
+      "outcome": "pass"
+    },
+    {
+      "name": "A user with no authored or favorited articles has empty lists",
+      "outcome": "pass"
+    },
+    {
+      "name": "Switching profile tabs preserves the viewed username and updates articles",
+      "outcome": "error",
+      "message": "page.waitForURL: Timeout 4000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"http://localhost/profile/bob/favorites\" until \"load\"\n  navigated to \"http://localhost/profile/alice/favorites\"\n============================================================"
+    }
+  ]
+}

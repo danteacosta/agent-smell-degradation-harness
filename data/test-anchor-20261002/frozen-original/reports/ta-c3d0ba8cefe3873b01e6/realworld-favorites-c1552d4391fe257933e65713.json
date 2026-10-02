@@ -1,0 +1,33 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "4a8a630f2ec245dc465fb1d4a27f946189bfd351deeee3cbd049494538898764",
+  "suite_sha256": "35b38dc4335ba0496dc58fb4152cdbaa81ca725c750c814d0cfef1eb280429db",
+  "tests": [
+    {
+      "name": "Profile shows the requested user and only their authored articles",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob\nCall log:\n  - navigating to \"http://localhost/profile/bob\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Favorites lists articles favorited by the profile user",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice/favorites\nCall log:\n  - navigating to \"http://localhost/profile/alice/favorites\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Profile tabs preserve the user and survive reload",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob\nCall log:\n  - navigating to \"http://localhost/profile/bob\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Profiles without matching articles do not show other users' articles",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/carol\nCall log:\n  - navigating to \"http://localhost/profile/carol\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Encoded usernames display correctly and retain their profile when switching tabs",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/ren%C3%A9e\nCall log:\n  - navigating to \"http://localhost/profile/ren%C3%A9e\", waiting until \"load\"\n"
+    }
+  ]
+}

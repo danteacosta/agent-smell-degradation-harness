@@ -1,0 +1,839 @@
+[
+  {
+    "call_id": "ta-dc4ee182df117b7b2953",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-21c325f55bdadb8bedaf20e3",
+    "strategy": "code_spec",
+    "targets": [
+      "paperless-duplicate-21c325f55bdadb8bedaf20e3"
+    ]
+  },
+  {
+    "call_id": "ta-25a2610bc6867a4e20de",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-8cf77f6819616b857ee7f1bc",
+    "strategy": "code_spec",
+    "targets": [
+      "openproject-invalid-8cf77f6819616b857ee7f1bc"
+    ]
+  },
+  {
+    "call_id": "ta-ed8c87168bfaaf97d7ad",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-36eff1fba93995c545782d66",
+    "strategy": "code_request",
+    "targets": [
+      "realworld-favorites-36eff1fba93995c545782d66"
+    ]
+  },
+  {
+    "call_id": "ta-9f8dec32ba76d8f0ccde",
+    "case": "realworld-favorites",
+    "for_slot": null,
+    "strategy": "spec_only",
+    "suite_index": 1,
+    "targets": [
+      "realworld-favorites-9dd7112597ba9f6fcf6c124c",
+      "realworld-favorites-36eff1fba93995c545782d66",
+      "realworld-favorites-d4d02f8d9d1d639f1ad4bbff",
+      "realworld-favorites-466b5cfb9e43c86afba91247",
+      "realworld-favorites-c1552d4391fe257933e65713",
+      "realworld-favorites-9c3376387a23120c9a5d0ce9",
+      "realworld-favorites-dfbd99a0297b0a45e7d75d3c",
+      "realworld-favorites-350bce56ad539ec41c273d8f",
+      "realworld-favorites-84d017b4272e3ca14860a483",
+      "realworld-favorites-df82f9b4440c182d4b5cf22a",
+      "realworld-favorites-328e89293cd695391edafa0a",
+      "realworld-favorites-7e525423c874ba81dacc3f27"
+    ]
+  },
+  {
+    "call_id": "ta-bed1b7d84c1338170996",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-fcc0efee3bdd1e70161adf10",
+    "strategy": "code_spec",
+    "targets": [
+      "openproject-invalid-fcc0efee3bdd1e70161adf10"
+    ]
+  },
+  {
+    "call_id": "ta-cf911d2938cc9949a1c2",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-eb3b9a97c82a837fd7472c8f",
+    "strategy": "code_spec",
+    "targets": [
+      "paperless-duplicate-eb3b9a97c82a837fd7472c8f"
+    ]
+  },
+  {
+    "call_id": "ta-9f9300549349e0e1c089",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-9dd7112597ba9f6fcf6c124c",
+    "strategy": "code_spec",
+    "targets": [
+      "realworld-favorites-9dd7112597ba9f6fcf6c124c"
+    ]
+  },
+  {
+    "call_id": "ta-7f07e599aaf1073f9f7e",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-8d4c9b0f068070b022376301",
+    "strategy": "code_spec",
+    "targets": [
+      "paperless-duplicate-8d4c9b0f068070b022376301"
+    ]
+  },
+  {
+    "call_id": "ta-38ee538e1783027f0160",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-77ed8c7751c0ae84195255d0",
+    "strategy": "code_spec",
+    "targets": [
+      "paperless-duplicate-77ed8c7751c0ae84195255d0"
+    ]
+  },
+  {
+    "call_id": "ta-a1e2e93180a4b4e81f82",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-1ee9ee77c4044d03fe29922c",
+    "strategy": "code_request",
+    "targets": [
+      "openproject-invalid-1ee9ee77c4044d03fe29922c"
+    ]
+  },
+  {
+    "call_id": "ta-7ed02f7c79f6bd061a60",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-e78580b65e62cc2c87dc9216",
+    "strategy": "code_spec",
+    "targets": [
+      "paperless-duplicate-e78580b65e62cc2c87dc9216"
+    ]
+  },
+  {
+    "call_id": "ta-1799c1b66f7eb94eb61f",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-8cf77f6819616b857ee7f1bc",
+    "strategy": "code_request",
+    "targets": [
+      "openproject-invalid-8cf77f6819616b857ee7f1bc"
+    ]
+  },
+  {
+    "call_id": "ta-486a759479e807831875",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-3608548430ddc38053625b44",
+    "strategy": "code_request",
+    "targets": [
+      "openproject-invalid-3608548430ddc38053625b44"
+    ]
+  },
+  {
+    "call_id": "ta-0dcf4fe167585cdb8cfc",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-bd982d6e0d1e7dcfa66eb1d8",
+    "strategy": "code_spec",
+    "targets": [
+      "paperless-duplicate-bd982d6e0d1e7dcfa66eb1d8"
+    ]
+  },
+  {
+    "call_id": "ta-f289c844c01785e4a165",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-9c3376387a23120c9a5d0ce9",
+    "strategy": "code_spec",
+    "targets": [
+      "realworld-favorites-9c3376387a23120c9a5d0ce9"
+    ]
+  },
+  {
+    "call_id": "ta-a62e9bdbe35e4df0d712",
+    "case": "realworld-favorites",
+    "for_slot": null,
+    "strategy": "spec_only",
+    "suite_index": 3,
+    "targets": [
+      "realworld-favorites-9dd7112597ba9f6fcf6c124c",
+      "realworld-favorites-36eff1fba93995c545782d66",
+      "realworld-favorites-d4d02f8d9d1d639f1ad4bbff",
+      "realworld-favorites-466b5cfb9e43c86afba91247",
+      "realworld-favorites-c1552d4391fe257933e65713",
+      "realworld-favorites-9c3376387a23120c9a5d0ce9",
+      "realworld-favorites-dfbd99a0297b0a45e7d75d3c",
+      "realworld-favorites-350bce56ad539ec41c273d8f",
+      "realworld-favorites-84d017b4272e3ca14860a483",
+      "realworld-favorites-df82f9b4440c182d4b5cf22a",
+      "realworld-favorites-328e89293cd695391edafa0a",
+      "realworld-favorites-7e525423c874ba81dacc3f27"
+    ]
+  },
+  {
+    "call_id": "ta-9790a203953da70cb282",
+    "case": "openproject-invalid-remaining",
+    "for_slot": null,
+    "strategy": "spec_only",
+    "suite_index": 3,
+    "targets": [
+      "openproject-invalid-ad10583d752d133b3186f8ea",
+      "openproject-invalid-dc2c3c450edff5180357c4ce",
+      "openproject-invalid-047a1e9d563e0ebc98bd227e",
+      "openproject-invalid-2e61ac769b6481d96afcf16e",
+      "openproject-invalid-1ee9ee77c4044d03fe29922c",
+      "openproject-invalid-75c4fa7c7f1cde16158f6df0",
+      "openproject-invalid-07b930be6ba6f125ce449379",
+      "openproject-invalid-fcc0efee3bdd1e70161adf10",
+      "openproject-invalid-5366f1e3eede85af4a950a81",
+      "openproject-invalid-3608548430ddc38053625b44",
+      "openproject-invalid-8cf77f6819616b857ee7f1bc",
+      "openproject-invalid-bb0ff39784f9f12e9e9b7ce3"
+    ]
+  },
+  {
+    "call_id": "ta-f96c88188d6b7b5cd3c7",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-84d017b4272e3ca14860a483",
+    "strategy": "code_spec",
+    "targets": [
+      "realworld-favorites-84d017b4272e3ca14860a483"
+    ]
+  },
+  {
+    "call_id": "ta-0806093e8be47c2e97c1",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": null,
+    "strategy": "spec_only",
+    "suite_index": 3,
+    "targets": [
+      "paperless-duplicate-9aac1b7ca612318b64d35fa1",
+      "paperless-duplicate-5497cb4a338e41e86773ac2c",
+      "paperless-duplicate-e78580b65e62cc2c87dc9216",
+      "paperless-duplicate-23cda8307112233ff7f66f92",
+      "paperless-duplicate-21c325f55bdadb8bedaf20e3",
+      "paperless-duplicate-bd982d6e0d1e7dcfa66eb1d8",
+      "paperless-duplicate-eb3b9a97c82a837fd7472c8f",
+      "paperless-duplicate-103bb7258f384c6f43409af4",
+      "paperless-duplicate-77ed8c7751c0ae84195255d0",
+      "paperless-duplicate-8d4c9b0f068070b022376301",
+      "paperless-duplicate-994837f18d5419032442aa44",
+      "paperless-duplicate-28360046dc37c4c2007c3c59"
+    ]
+  },
+  {
+    "call_id": "ta-33a81b234dcdb9da30da",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-28360046dc37c4c2007c3c59",
+    "strategy": "code_request",
+    "targets": [
+      "paperless-duplicate-28360046dc37c4c2007c3c59"
+    ]
+  },
+  {
+    "call_id": "ta-dd618cec2629e6281705",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-5366f1e3eede85af4a950a81",
+    "strategy": "code_spec",
+    "targets": [
+      "openproject-invalid-5366f1e3eede85af4a950a81"
+    ]
+  },
+  {
+    "call_id": "ta-03ff89c4d3849c006996",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-fcc0efee3bdd1e70161adf10",
+    "strategy": "code_request",
+    "targets": [
+      "openproject-invalid-fcc0efee3bdd1e70161adf10"
+    ]
+  },
+  {
+    "call_id": "ta-fd17cad9c78c42aea7e5",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-21c325f55bdadb8bedaf20e3",
+    "strategy": "code_request",
+    "targets": [
+      "paperless-duplicate-21c325f55bdadb8bedaf20e3"
+    ]
+  },
+  {
+    "call_id": "ta-45f2327042a720365d43",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-eb3b9a97c82a837fd7472c8f",
+    "strategy": "code_request",
+    "targets": [
+      "paperless-duplicate-eb3b9a97c82a837fd7472c8f"
+    ]
+  },
+  {
+    "call_id": "ta-6c2288e0044a337ee8d0",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-d4d02f8d9d1d639f1ad4bbff",
+    "strategy": "code_spec",
+    "targets": [
+      "realworld-favorites-d4d02f8d9d1d639f1ad4bbff"
+    ]
+  },
+  {
+    "call_id": "ta-d643861a51b591a30cb3",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-9c3376387a23120c9a5d0ce9",
+    "strategy": "code_request",
+    "targets": [
+      "realworld-favorites-9c3376387a23120c9a5d0ce9"
+    ]
+  },
+  {
+    "call_id": "ta-7799f0500586af9f04f9",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-7e525423c874ba81dacc3f27",
+    "strategy": "code_spec",
+    "targets": [
+      "realworld-favorites-7e525423c874ba81dacc3f27"
+    ]
+  },
+  {
+    "call_id": "ta-b534c68041164d22bb45",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-103bb7258f384c6f43409af4",
+    "strategy": "code_request",
+    "targets": [
+      "paperless-duplicate-103bb7258f384c6f43409af4"
+    ]
+  },
+  {
+    "call_id": "ta-a3c773b1db018e757dc7",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-5366f1e3eede85af4a950a81",
+    "strategy": "code_request",
+    "targets": [
+      "openproject-invalid-5366f1e3eede85af4a950a81"
+    ]
+  },
+  {
+    "call_id": "ta-994580354ded891d6926",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-994837f18d5419032442aa44",
+    "strategy": "code_spec",
+    "targets": [
+      "paperless-duplicate-994837f18d5419032442aa44"
+    ]
+  },
+  {
+    "call_id": "ta-864cb1527ab2752f5a54",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-466b5cfb9e43c86afba91247",
+    "strategy": "code_spec",
+    "targets": [
+      "realworld-favorites-466b5cfb9e43c86afba91247"
+    ]
+  },
+  {
+    "call_id": "ta-855a6997c4527726de09",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-07b930be6ba6f125ce449379",
+    "strategy": "code_spec",
+    "targets": [
+      "openproject-invalid-07b930be6ba6f125ce449379"
+    ]
+  },
+  {
+    "call_id": "ta-201e6323bdfe91b4f716",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-36eff1fba93995c545782d66",
+    "strategy": "code_spec",
+    "targets": [
+      "realworld-favorites-36eff1fba93995c545782d66"
+    ]
+  },
+  {
+    "call_id": "ta-a27a03c1e858f624733d",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-84d017b4272e3ca14860a483",
+    "strategy": "code_request",
+    "targets": [
+      "realworld-favorites-84d017b4272e3ca14860a483"
+    ]
+  },
+  {
+    "call_id": "ta-d63688041500978a8f1b",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-3608548430ddc38053625b44",
+    "strategy": "code_spec",
+    "targets": [
+      "openproject-invalid-3608548430ddc38053625b44"
+    ]
+  },
+  {
+    "call_id": "ta-da69bcb535996d273014",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-7e525423c874ba81dacc3f27",
+    "strategy": "code_request",
+    "targets": [
+      "realworld-favorites-7e525423c874ba81dacc3f27"
+    ]
+  },
+  {
+    "call_id": "ta-f17658e9c90b3e141d95",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-75c4fa7c7f1cde16158f6df0",
+    "strategy": "code_request",
+    "targets": [
+      "openproject-invalid-75c4fa7c7f1cde16158f6df0"
+    ]
+  },
+  {
+    "call_id": "ta-05d3ee3def706b2dc1fc",
+    "case": "openproject-invalid-remaining",
+    "for_slot": null,
+    "strategy": "spec_only",
+    "suite_index": 2,
+    "targets": [
+      "openproject-invalid-ad10583d752d133b3186f8ea",
+      "openproject-invalid-dc2c3c450edff5180357c4ce",
+      "openproject-invalid-047a1e9d563e0ebc98bd227e",
+      "openproject-invalid-2e61ac769b6481d96afcf16e",
+      "openproject-invalid-1ee9ee77c4044d03fe29922c",
+      "openproject-invalid-75c4fa7c7f1cde16158f6df0",
+      "openproject-invalid-07b930be6ba6f125ce449379",
+      "openproject-invalid-fcc0efee3bdd1e70161adf10",
+      "openproject-invalid-5366f1e3eede85af4a950a81",
+      "openproject-invalid-3608548430ddc38053625b44",
+      "openproject-invalid-8cf77f6819616b857ee7f1bc",
+      "openproject-invalid-bb0ff39784f9f12e9e9b7ce3"
+    ]
+  },
+  {
+    "call_id": "ta-f1d0efcda6fd6ddeebcb",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-328e89293cd695391edafa0a",
+    "strategy": "code_spec",
+    "targets": [
+      "realworld-favorites-328e89293cd695391edafa0a"
+    ]
+  },
+  {
+    "call_id": "ta-de5cd7965fbb0427a342",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-bb0ff39784f9f12e9e9b7ce3",
+    "strategy": "code_spec",
+    "targets": [
+      "openproject-invalid-bb0ff39784f9f12e9e9b7ce3"
+    ]
+  },
+  {
+    "call_id": "ta-cdf68ddd62f9b1d73b6e",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": null,
+    "strategy": "spec_only",
+    "suite_index": 1,
+    "targets": [
+      "paperless-duplicate-9aac1b7ca612318b64d35fa1",
+      "paperless-duplicate-5497cb4a338e41e86773ac2c",
+      "paperless-duplicate-e78580b65e62cc2c87dc9216",
+      "paperless-duplicate-23cda8307112233ff7f66f92",
+      "paperless-duplicate-21c325f55bdadb8bedaf20e3",
+      "paperless-duplicate-bd982d6e0d1e7dcfa66eb1d8",
+      "paperless-duplicate-eb3b9a97c82a837fd7472c8f",
+      "paperless-duplicate-103bb7258f384c6f43409af4",
+      "paperless-duplicate-77ed8c7751c0ae84195255d0",
+      "paperless-duplicate-8d4c9b0f068070b022376301",
+      "paperless-duplicate-994837f18d5419032442aa44",
+      "paperless-duplicate-28360046dc37c4c2007c3c59"
+    ]
+  },
+  {
+    "call_id": "ta-d51f9ac9bb1fd7353663",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-328e89293cd695391edafa0a",
+    "strategy": "code_request",
+    "targets": [
+      "realworld-favorites-328e89293cd695391edafa0a"
+    ]
+  },
+  {
+    "call_id": "ta-aca9829ca1c3ee1ed22b",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-9dd7112597ba9f6fcf6c124c",
+    "strategy": "code_request",
+    "targets": [
+      "realworld-favorites-9dd7112597ba9f6fcf6c124c"
+    ]
+  },
+  {
+    "call_id": "ta-28f0cea6736b4277c499",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-047a1e9d563e0ebc98bd227e",
+    "strategy": "code_spec",
+    "targets": [
+      "openproject-invalid-047a1e9d563e0ebc98bd227e"
+    ]
+  },
+  {
+    "call_id": "ta-08962ae5fd8d462ad19a",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-dfbd99a0297b0a45e7d75d3c",
+    "strategy": "code_spec",
+    "targets": [
+      "realworld-favorites-dfbd99a0297b0a45e7d75d3c"
+    ]
+  },
+  {
+    "call_id": "ta-c3d0ba8cefe3873b01e6",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-c1552d4391fe257933e65713",
+    "strategy": "code_request",
+    "targets": [
+      "realworld-favorites-c1552d4391fe257933e65713"
+    ]
+  },
+  {
+    "call_id": "ta-75b87b00ba933504aa52",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-350bce56ad539ec41c273d8f",
+    "strategy": "code_spec",
+    "targets": [
+      "realworld-favorites-350bce56ad539ec41c273d8f"
+    ]
+  },
+  {
+    "call_id": "ta-a97b97effef92f8ccbe3",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-c1552d4391fe257933e65713",
+    "strategy": "code_spec",
+    "targets": [
+      "realworld-favorites-c1552d4391fe257933e65713"
+    ]
+  },
+  {
+    "call_id": "ta-c9cdfb18cfc36f5d3258",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-77ed8c7751c0ae84195255d0",
+    "strategy": "code_request",
+    "targets": [
+      "paperless-duplicate-77ed8c7751c0ae84195255d0"
+    ]
+  },
+  {
+    "call_id": "ta-c89ec3620ab86e378087",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-994837f18d5419032442aa44",
+    "strategy": "code_request",
+    "targets": [
+      "paperless-duplicate-994837f18d5419032442aa44"
+    ]
+  },
+  {
+    "call_id": "ta-6716d57f0e398d75519e",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-bb0ff39784f9f12e9e9b7ce3",
+    "strategy": "code_request",
+    "targets": [
+      "openproject-invalid-bb0ff39784f9f12e9e9b7ce3"
+    ]
+  },
+  {
+    "call_id": "ta-c635eda7b098931c2458",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-bd982d6e0d1e7dcfa66eb1d8",
+    "strategy": "code_request",
+    "targets": [
+      "paperless-duplicate-bd982d6e0d1e7dcfa66eb1d8"
+    ]
+  },
+  {
+    "call_id": "ta-1cef406e637a3984fe5d",
+    "case": "realworld-favorites",
+    "for_slot": null,
+    "strategy": "spec_only",
+    "suite_index": 2,
+    "targets": [
+      "realworld-favorites-9dd7112597ba9f6fcf6c124c",
+      "realworld-favorites-36eff1fba93995c545782d66",
+      "realworld-favorites-d4d02f8d9d1d639f1ad4bbff",
+      "realworld-favorites-466b5cfb9e43c86afba91247",
+      "realworld-favorites-c1552d4391fe257933e65713",
+      "realworld-favorites-9c3376387a23120c9a5d0ce9",
+      "realworld-favorites-dfbd99a0297b0a45e7d75d3c",
+      "realworld-favorites-350bce56ad539ec41c273d8f",
+      "realworld-favorites-84d017b4272e3ca14860a483",
+      "realworld-favorites-df82f9b4440c182d4b5cf22a",
+      "realworld-favorites-328e89293cd695391edafa0a",
+      "realworld-favorites-7e525423c874ba81dacc3f27"
+    ]
+  },
+  {
+    "call_id": "ta-78e4cc0ba9d0e48cfb47",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-ad10583d752d133b3186f8ea",
+    "strategy": "code_spec",
+    "targets": [
+      "openproject-invalid-ad10583d752d133b3186f8ea"
+    ]
+  },
+  {
+    "call_id": "ta-b9b964d678d43ff7356c",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-dfbd99a0297b0a45e7d75d3c",
+    "strategy": "code_request",
+    "targets": [
+      "realworld-favorites-dfbd99a0297b0a45e7d75d3c"
+    ]
+  },
+  {
+    "call_id": "ta-1ab621264a0eb6f8f8e2",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-07b930be6ba6f125ce449379",
+    "strategy": "code_request",
+    "targets": [
+      "openproject-invalid-07b930be6ba6f125ce449379"
+    ]
+  },
+  {
+    "call_id": "ta-7855d534093eb7d57a1b",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-dc2c3c450edff5180357c4ce",
+    "strategy": "code_request",
+    "targets": [
+      "openproject-invalid-dc2c3c450edff5180357c4ce"
+    ]
+  },
+  {
+    "call_id": "ta-d95eacb2664d7e790a3c",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-23cda8307112233ff7f66f92",
+    "strategy": "code_request",
+    "targets": [
+      "paperless-duplicate-23cda8307112233ff7f66f92"
+    ]
+  },
+  {
+    "call_id": "ta-05d60bf5aa22fdc0c2e1",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-103bb7258f384c6f43409af4",
+    "strategy": "code_spec",
+    "targets": [
+      "paperless-duplicate-103bb7258f384c6f43409af4"
+    ]
+  },
+  {
+    "call_id": "ta-51f78660d1d59724daa1",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-9aac1b7ca612318b64d35fa1",
+    "strategy": "code_spec",
+    "targets": [
+      "paperless-duplicate-9aac1b7ca612318b64d35fa1"
+    ]
+  },
+  {
+    "call_id": "ta-39d5634929de7ed860b9",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-2e61ac769b6481d96afcf16e",
+    "strategy": "code_request",
+    "targets": [
+      "openproject-invalid-2e61ac769b6481d96afcf16e"
+    ]
+  },
+  {
+    "call_id": "ta-26576531daacd81cd46f",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-9aac1b7ca612318b64d35fa1",
+    "strategy": "code_request",
+    "targets": [
+      "paperless-duplicate-9aac1b7ca612318b64d35fa1"
+    ]
+  },
+  {
+    "call_id": "ta-8cacc5aabae3757862f4",
+    "case": "openproject-invalid-remaining",
+    "for_slot": null,
+    "strategy": "spec_only",
+    "suite_index": 1,
+    "targets": [
+      "openproject-invalid-ad10583d752d133b3186f8ea",
+      "openproject-invalid-dc2c3c450edff5180357c4ce",
+      "openproject-invalid-047a1e9d563e0ebc98bd227e",
+      "openproject-invalid-2e61ac769b6481d96afcf16e",
+      "openproject-invalid-1ee9ee77c4044d03fe29922c",
+      "openproject-invalid-75c4fa7c7f1cde16158f6df0",
+      "openproject-invalid-07b930be6ba6f125ce449379",
+      "openproject-invalid-fcc0efee3bdd1e70161adf10",
+      "openproject-invalid-5366f1e3eede85af4a950a81",
+      "openproject-invalid-3608548430ddc38053625b44",
+      "openproject-invalid-8cf77f6819616b857ee7f1bc",
+      "openproject-invalid-bb0ff39784f9f12e9e9b7ce3"
+    ]
+  },
+  {
+    "call_id": "ta-01684ec70d0a3f92c72b",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-e78580b65e62cc2c87dc9216",
+    "strategy": "code_request",
+    "targets": [
+      "paperless-duplicate-e78580b65e62cc2c87dc9216"
+    ]
+  },
+  {
+    "call_id": "ta-e1e4a086a14d49f1a86e",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-2e61ac769b6481d96afcf16e",
+    "strategy": "code_spec",
+    "targets": [
+      "openproject-invalid-2e61ac769b6481d96afcf16e"
+    ]
+  },
+  {
+    "call_id": "ta-1d6cbbf1e1b1859be9d2",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-1ee9ee77c4044d03fe29922c",
+    "strategy": "code_spec",
+    "targets": [
+      "openproject-invalid-1ee9ee77c4044d03fe29922c"
+    ]
+  },
+  {
+    "call_id": "ta-a77543a5889040bf60ae",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-047a1e9d563e0ebc98bd227e",
+    "strategy": "code_request",
+    "targets": [
+      "openproject-invalid-047a1e9d563e0ebc98bd227e"
+    ]
+  },
+  {
+    "call_id": "ta-12f08be3d23bc68625c4",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-5497cb4a338e41e86773ac2c",
+    "strategy": "code_spec",
+    "targets": [
+      "paperless-duplicate-5497cb4a338e41e86773ac2c"
+    ]
+  },
+  {
+    "call_id": "ta-1860f4a159eb845cb7a7",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-8d4c9b0f068070b022376301",
+    "strategy": "code_request",
+    "targets": [
+      "paperless-duplicate-8d4c9b0f068070b022376301"
+    ]
+  },
+  {
+    "call_id": "ta-f356f4579f94709347f2",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-ad10583d752d133b3186f8ea",
+    "strategy": "code_request",
+    "targets": [
+      "openproject-invalid-ad10583d752d133b3186f8ea"
+    ]
+  },
+  {
+    "call_id": "ta-d069c582ee476df04de1",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-23cda8307112233ff7f66f92",
+    "strategy": "code_spec",
+    "targets": [
+      "paperless-duplicate-23cda8307112233ff7f66f92"
+    ]
+  },
+  {
+    "call_id": "ta-96a16fbcbeba03a3eb41",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-466b5cfb9e43c86afba91247",
+    "strategy": "code_request",
+    "targets": [
+      "realworld-favorites-466b5cfb9e43c86afba91247"
+    ]
+  },
+  {
+    "call_id": "ta-8a72c7c09a60fd4a2157",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-df82f9b4440c182d4b5cf22a",
+    "strategy": "code_request",
+    "targets": [
+      "realworld-favorites-df82f9b4440c182d4b5cf22a"
+    ]
+  },
+  {
+    "call_id": "ta-b24bec64a5d0d7329c62",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-350bce56ad539ec41c273d8f",
+    "strategy": "code_request",
+    "targets": [
+      "realworld-favorites-350bce56ad539ec41c273d8f"
+    ]
+  },
+  {
+    "call_id": "ta-65d88b344d76baa957e2",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-28360046dc37c4c2007c3c59",
+    "strategy": "code_spec",
+    "targets": [
+      "paperless-duplicate-28360046dc37c4c2007c3c59"
+    ]
+  },
+  {
+    "call_id": "ta-001320d5b71bca8549eb",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": "paperless-duplicate-5497cb4a338e41e86773ac2c",
+    "strategy": "code_request",
+    "targets": [
+      "paperless-duplicate-5497cb4a338e41e86773ac2c"
+    ]
+  },
+  {
+    "call_id": "ta-fd0043f1c3ae9c4f1840",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-d4d02f8d9d1d639f1ad4bbff",
+    "strategy": "code_request",
+    "targets": [
+      "realworld-favorites-d4d02f8d9d1d639f1ad4bbff"
+    ]
+  },
+  {
+    "call_id": "ta-80e48ad2bfae62043da1",
+    "case": "realworld-favorites",
+    "for_slot": "realworld-favorites-df82f9b4440c182d4b5cf22a",
+    "strategy": "code_spec",
+    "targets": [
+      "realworld-favorites-df82f9b4440c182d4b5cf22a"
+    ]
+  },
+  {
+    "call_id": "ta-17451f300be19e5a6491",
+    "case": "paperless-duplicate-consumption",
+    "for_slot": null,
+    "strategy": "spec_only",
+    "suite_index": 2,
+    "targets": [
+      "paperless-duplicate-9aac1b7ca612318b64d35fa1",
+      "paperless-duplicate-5497cb4a338e41e86773ac2c",
+      "paperless-duplicate-e78580b65e62cc2c87dc9216",
+      "paperless-duplicate-23cda8307112233ff7f66f92",
+      "paperless-duplicate-21c325f55bdadb8bedaf20e3",
+      "paperless-duplicate-bd982d6e0d1e7dcfa66eb1d8",
+      "paperless-duplicate-eb3b9a97c82a837fd7472c8f",
+      "paperless-duplicate-103bb7258f384c6f43409af4",
+      "paperless-duplicate-77ed8c7751c0ae84195255d0",
+      "paperless-duplicate-8d4c9b0f068070b022376301",
+      "paperless-duplicate-994837f18d5419032442aa44",
+      "paperless-duplicate-28360046dc37c4c2007c3c59"
+    ]
+  },
+  {
+    "call_id": "ta-e732e6c2730a9e6bf2d4",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-dc2c3c450edff5180357c4ce",
+    "strategy": "code_spec",
+    "targets": [
+      "openproject-invalid-dc2c3c450edff5180357c4ce"
+    ]
+  },
+  {
+    "call_id": "ta-b1318ec8b6e629ab9359",
+    "case": "openproject-invalid-remaining",
+    "for_slot": "openproject-invalid-75c4fa7c7f1cde16158f6df0",
+    "strategy": "code_spec",
+    "targets": [
+      "openproject-invalid-75c4fa7c7f1cde16158f6df0"
+    ]
+  }
+]

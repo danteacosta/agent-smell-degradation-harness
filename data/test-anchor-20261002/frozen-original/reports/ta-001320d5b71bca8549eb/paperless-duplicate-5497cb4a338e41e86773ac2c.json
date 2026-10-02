@@ -1,0 +1,13 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "3cfd8c187ffc75be5c8f95459d5eb515ec0fc05f2400e84d033fccbd7c40bda7",
+  "suite_sha256": "34662dddbc0ed3c2d4d07ee9cc0891a55133560cda55c576939a2af1b184fda9",
+  "tests": [
+    {
+      "name": "Duplicate upload preserves both existing documents without adding a copy",
+      "outcome": "assertion_failure",
+      "message": "Uploading matching content must preserve the original and unrelated document without adding a duplicate\n+ actual - expected\n\n  [\n    'Original invoice',\n    'Unrelated receipt',\n+   'Renamed invoice copy'\n  ]\n"
+    }
+  ]
+}

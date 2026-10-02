@@ -1,0 +1,26 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "9d8d5c5e6e0ddb195e82a7935d7160a48c70cb3586a745f90e16df86e5d3b84a",
+  "suite_sha256": "bbf0ddcd2af8258c47537aa16681d18a04eed812283b65660f8e85c300c63b0a",
+  "tests": [
+    {
+      "name": "Saving edits persists both Work and Remaining work",
+      "outcome": "pass"
+    },
+    {
+      "name": "Remaining work equal to Work can be saved",
+      "outcome": "pass"
+    },
+    {
+      "name": "Remaining work greater than Work cannot replace saved values",
+      "outcome": "assertion_failure",
+      "message": "Invalid edits must not persist Work\n\n'9' !== '10'\n"
+    },
+    {
+      "name": "Reducing Work below saved Remaining work cannot be saved",
+      "outcome": "assertion_failure",
+      "message": "Work must not be saved below Remaining work\n\n'5' !== '10'\n"
+    }
+  ]
+}

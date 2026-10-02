@@ -1,0 +1,24 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "be2caef41da876b384602e0b0cb3de18ef9aa481dfb44546029afa947d2e0481",
+  "suite_sha256": "f27e55a8197261f00824df1abae2e4a0d68fbac8085ec86dbff1dd497064633d",
+  "tests": [
+    {
+      "name": "Saving edits persists both values after reload",
+      "outcome": "pass"
+    },
+    {
+      "name": "Remaining work equal to Work can be saved",
+      "outcome": "pass"
+    },
+    {
+      "name": "Invalid edits leave both previously saved values unchanged",
+      "outcome": "pass"
+    },
+    {
+      "name": "Lowering Work below Remaining is rejected and can be corrected",
+      "outcome": "pass"
+    }
+  ]
+}

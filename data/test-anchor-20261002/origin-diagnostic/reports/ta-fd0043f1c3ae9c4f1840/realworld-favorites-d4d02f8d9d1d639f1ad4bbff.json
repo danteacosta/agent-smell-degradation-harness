@@ -1,0 +1,25 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "2ae69a360120f8e3546c5c3a11dc64d9b9bdbfdfbc5635ae183ba776bc83e550",
+  "suite_sha256": "3ea19668f65d3742a18c5b1fc40f71c450f90992d98b87e6dcceace63d0aeae2",
+  "tests": [
+    {
+      "name": "Profile shows the user's name and authored articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Favorites direct route shows only articles favorited by that user",
+      "outcome": "pass"
+    },
+    {
+      "name": "Profile tabs preserve the viewed username",
+      "outcome": "error",
+      "message": "page.waitForURL: Timeout 3000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/profile/bob/favorites\" until \"load\"\n============================================================"
+    },
+    {
+      "name": "Empty authored and favorite lists do not show other users' articles",
+      "outcome": "pass"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "736a09e198f2367fcdf9cda94b54babe87c9c1b1220daf42397a953c14f00914",
+  "suite_sha256": "29b06d8d6de1c3e649caa93d0d8bd5902dddadd10fca0081fc406a22383572c5",
+  "tests": [
+    {
+      "name": "Profile shows the user's name and only their authored articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Favorites lists articles favorited by the profile user regardless of author",
+      "outcome": "pass"
+    },
+    {
+      "name": "Article and favorites navigation stays on the selected user's profile",
+      "outcome": "pass"
+    },
+    {
+      "name": "Users without matching articles have empty authored and favorites lists",
+      "outcome": "pass"
+    },
+    {
+      "name": "Username matching does not include articles belonging to similar usernames",
+      "outcome": "pass"
+    }
+  ]
+}

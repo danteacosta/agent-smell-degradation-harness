@@ -1,0 +1,24 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "be2caef41da876b384602e0b0cb3de18ef9aa481dfb44546029afa947d2e0481",
+  "suite_sha256": "fd01c75a57491c88861b1d2e90fce10ef0c309480039793ba90ee9755a3d8eeb",
+  "tests": [
+    {
+      "name": "Saving edits persists both Work and Remaining work",
+      "outcome": "pass"
+    },
+    {
+      "name": "Remaining work equal to Work can be saved",
+      "outcome": "pass"
+    },
+    {
+      "name": "Increasing Remaining work above Work preserves the last saved values",
+      "outcome": "pass"
+    },
+    {
+      "name": "Lowering Work below Remaining work is rejected and can be corrected",
+      "outcome": "pass"
+    }
+  ]
+}

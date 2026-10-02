@@ -1,0 +1,13 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "96f2f0290457d4b707f4e36f959a9666d5c0c25fcba637ffad9f6d5ebdafdc8e",
+  "suite_sha256": "c21a3c514d6438f0564aa7578dcaa50e5c0e4e07b2c67f2f6e63ef73f985b6bd",
+  "tests": [
+    {
+      "name": "Default upload keeps matching and unrelated documents and adds a separate document",
+      "outcome": "assertion_failure",
+      "message": "Uploading matching content should create a third document\n\n2 !== 3\n"
+    }
+  ]
+}

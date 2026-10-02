@@ -1,0 +1,28 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "20f1cb6b0d9649a39f747d4d9c38d63e0168bc86d47ff20bb404a6a165f5cb6d",
+  "suite_sha256": "5c1c4747a98ed604d16591282cbe5e316b9dd0a1c50db2fd425a12b9c7805e81",
+  "tests": [
+    {
+      "name": "Profile shows authored articles and switches to favorites",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice\nCall log:\n  - navigating to \"http://localhost/profile/alice\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Direct favorites URL uses the requested user's favorites",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob/favorites\nCall log:\n  - navigating to \"http://localhost/profile/bob/favorites\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Encoded usernames display correctly and retain their article lists",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/ren%C3%A9e\nCall log:\n  - navigating to \"http://localhost/profile/ren%C3%A9e\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Users without articles or favorites see no unrelated articles",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/carol\nCall log:\n  - navigating to \"http://localhost/profile/carol\", waiting until \"load\"\n"
+    }
+  ]
+}

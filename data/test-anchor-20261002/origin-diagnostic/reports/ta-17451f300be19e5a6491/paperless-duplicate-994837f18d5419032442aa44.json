@@ -1,0 +1,13 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "ad2efe7a8b19521aa20cf6232ec6f92497710a1ec24f369b7b5302cc1d62fedc",
+  "suite_sha256": "53f69655eccfd0f426cc8b48ebc700fadf836dd49317bc1a88b6c1424b4ab186",
+  "tests": [
+    {
+      "name": "Default upload creates a separate duplicate and preserves existing documents",
+      "outcome": "error",
+      "message": "locator.waitFor: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator('#documents .document').nth(2) to be visible\n"
+    }
+  ]
+}

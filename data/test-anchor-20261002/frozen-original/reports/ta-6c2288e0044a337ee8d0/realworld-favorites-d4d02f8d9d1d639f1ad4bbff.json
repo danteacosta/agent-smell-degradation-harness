@@ -1,0 +1,33 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "2ae69a360120f8e3546c5c3a11dc64d9b9bdbfdfbc5635ae183ba776bc83e550",
+  "suite_sha256": "a067c17e1cb79d675f17c162480c7758b06b5e76fc80e862da7238a62a8e1301",
+  "tests": [
+    {
+      "name": "Profile shows the user and only their authored articles",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice\nCall log:\n  - navigating to \"http://localhost/profile/alice\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Favorites include articles favorited by the profile user regardless of author",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice/favorites\nCall log:\n  - navigating to \"http://localhost/profile/alice/favorites\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Direct routes select the requested username exactly",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob\nCall log:\n  - navigating to \"http://localhost/profile/bob\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Profiles without matching articles show neither other users' articles nor favorites",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/carol\nCall log:\n  - navigating to \"http://localhost/profile/carol\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Profile navigation switches lists while retaining the current user",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob\nCall log:\n  - navigating to \"http://localhost/profile/bob\", waiting until \"load\"\n"
+    }
+  ]
+}

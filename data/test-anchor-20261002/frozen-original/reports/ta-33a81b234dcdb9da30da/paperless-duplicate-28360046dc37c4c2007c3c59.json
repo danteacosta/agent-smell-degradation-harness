@@ -1,0 +1,12 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "0bfcb25af7bc8551e79494a72a73920b9546dab899dcb7ca58b1c0596edff22d",
+  "suite_sha256": "e108aac799b47e07b605e6d8063f870e40f143c9cb876daeef3b4592478318d1",
+  "tests": [
+    {
+      "name": "Uploading duplicate content creates a separate document and preserves existing documents",
+      "outcome": "pass"
+    }
+  ]
+}

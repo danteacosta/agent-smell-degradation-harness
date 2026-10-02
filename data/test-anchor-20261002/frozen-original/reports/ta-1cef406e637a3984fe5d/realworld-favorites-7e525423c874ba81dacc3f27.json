@@ -1,0 +1,33 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "d002d1c51b59bd65896d7519deab299630d2919ad170a175cada2d348b8e3b3a",
+  "suite_sha256": "90b2ce40b2a3616d6cac299f53b0b8e26329fecb8c56672f2f03883a67789142",
+  "tests": [
+    {
+      "name": "Profile shows username and only authored articles",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice\nCall log:\n  - navigating to \"http://localhost/profile/alice\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Favorites includes exactly articles favorited by the profile user",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice/favorites\nCall log:\n  - navigating to \"http://localhost/profile/alice/favorites\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Profile links switch lists without retaining stale articles",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice\nCall log:\n  - navigating to \"http://localhost/profile/alice\", waiting until \"load\"\n"
+    },
+    {
+      "name": "No matching articles produces empty authored and favorites lists",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice\nCall log:\n  - navigating to \"http://localhost/profile/alice\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Article lists follow the username in the requested route",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob\nCall log:\n  - navigating to \"http://localhost/profile/bob\", waiting until \"load\"\n"
+    }
+  ]
+}

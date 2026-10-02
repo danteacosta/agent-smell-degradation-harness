@@ -1,0 +1,28 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "f33ba495dddbac0055cf7ed953423aa0bf56d47269ae952831381367e8de4a20",
+  "suite_sha256": "b29d18baa4126cc0aa6e107c80850778321f1b73814dcb0cf58c891db03facc4",
+  "tests": [
+    {
+      "name": "Profile shows the username and only articles authored by that user",
+      "outcome": "pass"
+    },
+    {
+      "name": "The requested username determines whose profile and articles appear",
+      "outcome": "pass"
+    },
+    {
+      "name": "Favorites shows articles favorited by the requested user regardless of author",
+      "outcome": "pass"
+    },
+    {
+      "name": "Users can switch between authored articles and favorites",
+      "outcome": "pass"
+    },
+    {
+      "name": "A profile with no matching articles or favorites shows no unrelated articles",
+      "outcome": "pass"
+    }
+  ]
+}

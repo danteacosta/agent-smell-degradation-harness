@@ -1,0 +1,20 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "14d1e8b597d509dde6fff4cfbeed26f7443d0d3c566f6c6c3a5fec3755fb5456",
+  "suite_sha256": "4398d024fbe05d92b666cfc8b856be42e697d6eaf4206b9de5985e73c8c5ba93",
+  "tests": [
+    {
+      "name": "Saving both edits preserves Work and Remaining work after reload",
+      "outcome": "pass"
+    },
+    {
+      "name": "Saving a Work edit preserves unchanged Remaining work",
+      "outcome": "pass"
+    },
+    {
+      "name": "A later save persists zero Remaining work and preserves Work",
+      "outcome": "pass"
+    }
+  ]
+}

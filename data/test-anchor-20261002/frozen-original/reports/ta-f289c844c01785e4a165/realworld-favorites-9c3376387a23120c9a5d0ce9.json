@@ -1,0 +1,28 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "f33ba495dddbac0055cf7ed953423aa0bf56d47269ae952831381367e8de4a20",
+  "suite_sha256": "bbbf8bc7ad9f17368d0d1f82470b62600bf7a4ecbbe5949f73ac915a6d056661",
+  "tests": [
+    {
+      "name": "Profiles show the requested user and only their authored articles",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice\nCall log:\n  - navigating to \"http://localhost/profile/alice\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Favorites show articles favorited by the requested user regardless of author",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/alice/favorites\nCall log:\n  - navigating to \"http://localhost/profile/alice/favorites\", waiting until \"load\"\n"
+    },
+    {
+      "name": "A user with no authored or favorited articles has empty lists",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/carol\nCall log:\n  - navigating to \"http://localhost/profile/carol\", waiting until \"load\"\n"
+    },
+    {
+      "name": "Switching profile tabs preserves the viewed username and updates articles",
+      "outcome": "error",
+      "message": "page.goto: net::ERR_FAILED at http://localhost/profile/bob\nCall log:\n  - navigating to \"http://localhost/profile/bob\", waiting until \"load\"\n"
+    }
+  ]
+}

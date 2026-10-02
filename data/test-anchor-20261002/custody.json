@@ -1,0 +1,28 @@
+{
+  "schema_version": "test-anchor-public-custody/20261002-v1",
+  "tester_requested_model": "gpt-6-astra",
+  "response_model_snapshot": "not_exposed_by_cli",
+  "confirmatory_eligible": false,
+  "runs": {
+    "frozen-original": {
+      "results_sha256": "34cde89f71aff6239b4642bad11a89d65c2a56ccfe2a5d502e62f2c337b362b6",
+      "receipt_sha256": "80f5cc5477f4acad0b9c384aa0eca9aa009d94ee263a485e7b6c1162c9c794de",
+      "verified_private_files": 1374,
+      "pairs": 180,
+      "status": "frozen_result_with_known_origin_defect",
+      "provider_calls": 81
+    },
+    "origin-diagnostic": {
+      "results_sha256": "338873e224eec5552e863c7ecd50ea61a28f72d43f862e30625d1cbb7b7294b5",
+      "receipt_sha256": "4fc8af16121784acabadd8973baf84e6cca5e3f89abb965ede4ffcef5aeaf1f9",
+      "verified_private_files": 722,
+      "pairs": 180,
+      "status": "post_hoc_browser_only_diagnostic",
+      "provider_calls": 0
+    }
+  },
+  "source_frozen_receipt_sha256": "7f1bacb7d5eabf76d92aa18cae182a3f45d0f798750bb1cffa6aaf9c66d2ff96",
+  "original_runner_sha256": "1c73d313b810a7afcbb65e4a44cd923634a31dec0131b59d924c5c5216fbc605",
+  "original_script_sha256": "1cc27f4ebd9bd205e0d1594b1376b30f104a37a954d76e787f69364a4529e920",
+  "diagnostic_runner_sha256": "bcf284411cfab28290570151b87dedb09e1165c1ee78eec222fadc5cad68e95e"
+}

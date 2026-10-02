@@ -1,0 +1,12 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "ad2efe7a8b19521aa20cf6232ec6f92497710a1ec24f369b7b5302cc1d62fedc",
+  "suite_sha256": "a9899038484f5f7dc0fa924ea5ddab768bda61b41af65e56e91c6dd82b771d07",
+  "tests": [
+    {
+      "name": "Duplicate upload preserves both existing documents after reload",
+      "outcome": "pass"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "test-anchor-execution/v1",
+  "status": "complete",
+  "app_sha256": "f33ba495dddbac0055cf7ed953423aa0bf56d47269ae952831381367e8de4a20",
+  "suite_sha256": "90b2ce40b2a3616d6cac299f53b0b8e26329fecb8c56672f2f03883a67789142",
+  "tests": [
+    {
+      "name": "Profile shows username and only authored articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "Favorites includes exactly articles favorited by the profile user",
+      "outcome": "pass"
+    },
+    {
+      "name": "Profile links switch lists without retaining stale articles",
+      "outcome": "pass"
+    },
+    {
+      "name": "No matching articles produces empty authored and favorites lists",
+      "outcome": "pass"
+    },
+    {
+      "name": "Article lists follow the username in the requested route",
+      "outcome": "pass"
+    }
+  ]
+}
