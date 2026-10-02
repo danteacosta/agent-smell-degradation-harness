@@ -1,0 +1,73 @@
+{
+  "schema_version": "temporal-warning-cohort-candidate/v1",
+  "status": "no_go",
+  "confirmatory_eligible": false,
+  "primary_task": "acceptance_criteria_generation",
+  "design_candidate": {
+    "new_intents": 12,
+    "projects": 6,
+    "variants": [
+      "clean",
+      "defective"
+    ],
+    "distinct_providers": 2,
+    "replications_per_provider_variant": 3,
+    "planned_episodes": 144,
+    "split_project_counts": {
+      "train": 3,
+      "calibration": 1,
+      "test": 2
+    }
+  },
+  "selected_requirements": [
+    "prospective-sdoc-srs-151",
+    "prospective-sdoc-srs-110",
+    "prospective-cass-srch-002",
+    "prospective-cass-srch-006",
+    "prospective-todomvc-counter",
+    "prospective-todomvc-clear-completed-button",
+    "prospective-realworld-feed-articles",
+    "prospective-realworld-unfollow-user",
+    "prospective-kanboard-destination-membership",
+    "prospective-kanboard-destination-assignee",
+    "prospective-paperless-share-expiry",
+    "prospective-paperless-share-no-login"
+  ],
+  "selection_frozen": false,
+  "split_frozen": false,
+  "qualified_provider_configurations": [],
+  "independent_human_reviews": [],
+  "fpr_budget_candidate": 0.05,
+  "primary_threshold_policy": "existing_f1_unchanged",
+  "supplementary_comparator": "S-structure",
+  "blockers": [
+    "independent_source_freshness_and_residual_cue_review",
+    "independent_mapping_and_manipulation_reviews",
+    "project_split_freeze",
+    "rubric_and_blinded_annotators",
+    "two_distinct_qualified_providers",
+    "runtime_event_normalization_qualification",
+    "cost_envelope_and_launch_authorization"
+  ],
+  "collection_performed": false,
+  "candidate_source_manifest": {
+    "path": "data/prepilot/temporal-warning-source-drafts.json",
+    "sha256": "fe7f61736a97da51b7581792028108482d996b4b4652c4efe926b9e118fd1abb",
+    "status": "assistant_draft_pending_independent_review"
+  },
+  "exposure_audit": {
+    "path": "data/prepilot/temporal-warning-exposure-audit.json",
+    "sha256": "b3db5821b33dda7c990319d5456bf3424c6aca66305c851ab3346c329af555e9",
+    "registry_files": 898,
+    "absence_is_not_proof_of_no_exposure": true
+  },
+  "runtime_preparation": {
+    "structural_adapter": "eval.temporal_comparator.runtime_prefix_features",
+    "comparison_cli": "eval.temporal_comparison_report",
+    "status": "offline_regression_verified_not_provider_qualified",
+    "readiness_check": "eval.temporal_warning_readiness"
+  },
+  "historical_launch_gate_reference": "data/prepilot/launch-plan.candidate.json",
+  "readiness_check": "eval.temporal_warning_readiness",
+  "launch_gate": "external_reviewed_temporal_pilot_launch_required"
+}

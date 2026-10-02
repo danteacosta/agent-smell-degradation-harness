@@ -1,0 +1,29 @@
+{
+  "schema_version": "temporal-warning-readiness/v1",
+  "decision": "no_go",
+  "collection_authorized_by_this_report": false,
+  "confirmatory_eligible": false,
+  "planned_episodes": 144,
+  "pairs_verified": 12,
+  "reviewed_intents": 0,
+  "qualified_distinct_providers": 0,
+  "blockers": [
+    "selection_not_frozen",
+    "project_and_related_intent_split_not_frozen",
+    "independent_reviews_incomplete_or_not_bound_to_source",
+    "two_distinct_runtime_native_providers_not_qualified",
+    "rubric_frozen_missing",
+    "annotation_blinding_verified_missing",
+    "independent_annotators_ready_missing",
+    "prefix_clock_and_collector_qualified_missing",
+    "feature_and_score_policy_frozen_missing",
+    "schedule_frozen_missing",
+    "launch_authorized_missing",
+    "finite_cost_envelope_and_approved_cap_missing"
+  ],
+  "limitations": [
+    "Declarative receipts require independent authenticity verification before launch.",
+    "This audit neither runs providers nor validates scientific labels.",
+    "Train-only detector fitting follows training collection; freeze the feature/score policy before that collection."
+  ]
+}

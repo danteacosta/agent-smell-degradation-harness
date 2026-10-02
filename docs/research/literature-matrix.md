@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-01
+Last updated: 2026-10-02
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -471,6 +471,29 @@ of Gherkin agreement/coverage findings. The [E2E recoverability audit](2026-10-0
 and review decisions, with public-record accounting and limits of verification.
 No source is counted twice and no existing outcome is reclassified.
 
+## 2026-10-02 — Structure-only trace monitors as an operational comparator
+
+Search/read date: 2026-10-02 (web search plus arXiv HTML full text). Both items are
+new (deduplicated by arXiv ID/title against this matrix). Abstract, method, data,
+results and stated limitations were read. Both are **preprints**; neither supports
+a confirmatory H1/H2 claim.
+
+| Reference / evidence | Question, sample and method | Result / limitations | Thesis / experiment / product relevance and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| *Automata from Agent Traces: Failure and Next-Step Prediction*, arXiv 2608.23670v1, 2026, **preprint**; [arXiv](https://arxiv.org/abs/2608.23670) | Can finite-state machines extracted from agent traces predict failure and next steps? 12 public benchmarks over 8 domains; 2,000 SWE-agent traces; deterministic prefix-tree/right-congruence construction; gradient-boosted failure classifier; prefix monitor. | Full-trace failure AUROC 0.799 on SWE-agent (up to 0.941 on tau2-bench telecom) differs from prefix-monitor rank-AUROC 0.66 near 25% completion. Retrospective trace replay simulates stopping near 32%; it does not establish a live intervention benefit. High failure prevalence makes F1 alone misleading. Splits are random 80/20 by trace with no task/repo stratification reported; the activity-extraction function is dataset-specific; no requirement or task semantics. | Thesis/experiment: shows that a semantics-free process-structure monitor can already rank failing runs before the end, so B0 (static + operational) must not be assumed weak; any B3 gain has to be shown over a strong structure-only operational feature set, with project-level splits (their trace-level split does not establish unseen-project generalization and risks shared-project regularities). Product: a cheap generic trace monitor is the obvious alternative to explaining *which* requirement condition was lost. Action: add a "structure-only trace monitor" as an optional operational ablation (see `temporal-warning-protocol.md`); no change to B0/B3 definitions. | 5/10: transparent method and many datasets, but preprint, trace-level split, outcome = task failure rather than constraint loss. |
+| Li et al., *CodeTracer: Towards Traceable Agent States*, arXiv 2604.11641v3, 2026, **preprint**; [arXiv](https://arxiv.org/abs/2604.11641) | Can failure onset be localized in long code-agent trajectories? CodeTraceBench: 4,354 annotated trajectories (3,326 after filtering) from 5 benchmarks, 5 backbones, 4 agent frameworks; tree-indexed traces and backward tracing from failing tests; reflective replay of diagnoses into failed runs. | Step-level macro F1 about 46-48% vs 16-19% for bare LLM; replay improves Pass@1 with matched replay budgets, but diagnosis tokens are additional expenditure. Labels by the authors only, Cohen kappa 0.73 on a 15% double-annotated subset; error taxonomy is environment/dependency/localization/hypothesis/verification/looping, not requirement conditions; offline matched budgets. | Thesis: another *post hoc* earliest-failure localizer working backward from test failure; it reinforces the SWE-RPG framing already recorded (retrospective attribution vs prospective pre-T4 lineage) and adds no requirement-loss construct. Experiment: its agreement level (0.73, single annotation team) is a reminder that stage labels need blind double annotation; no change. Product: tree-indexed trace normalization across frameworks is the integration cost our adapter layer will also face; context only. | 5/10: large, open-ended benchmark, but preprint, author-only labels, wrong construct. |
+
+Candidates found but not read in full (not matrix entries, no claim): arXiv 2606.04990
+(survey of evidence tracing and execution provenance in LLM agents), arXiv 2605.09934
+(TRACER, claim-level provenance for multimodal agents), arXiv 2606.25550 (requirements
+generation from code, experience report). OpenTelemetry GenAI conventions: per
+secondary reports (not the primary repository) they moved to a dedicated repository in
+June 2026 and are still marked Development; pin versions in any exporter. Primary
+documentation was not verified in this run.
+
+Tension recorded: none of the above contradicts a decision. Human decision needed:
+whether a structure-only trace monitor becomes a preregistered B0 ablation or stays an
+optional sensitivity analysis.
 
 ## 2026-10-02 — Repeated generations are not independent requirements
 
