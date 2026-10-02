@@ -95,7 +95,7 @@ language models, with a third breaking ties
 (`scripts/llm_screening_panel.py`). The panel sees only the project, file and
 changed sentences: never the assistant pre-screen, pilot status or any
 outcome. Each panel model must first reproduce the expected decision on six
-authored controls; any mismatch stops the run. Agreement between the two
+authored controls, including the third adjudicator (18 qualification calls in total); any mismatch stops the run. Agreement between the two
 primary models is reported as Cohen's kappa. This is a recorded deviation
 from human review. It matters because earlier controls showed language-model
 judges missing every constructed deletion when rating acceptance criteria;
