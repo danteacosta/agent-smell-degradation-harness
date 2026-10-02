@@ -23,6 +23,15 @@ provenance adds value beyond more information, also compare a content-only
 version with the same stage content and budget but lineage fields removed.
 Do not use terminal results to construct any alert or tune the threshold.
 
+Optional comparator (not a redefinition of B0): a semantics-free, structure-only
+trace monitor (for example a finite-state or directly-follows model over tool/step
+activity, as in [arXiv 2608.23670](https://arxiv.org/abs/2608.23670), a preprint)
+may be run as an extra operational ablation with the same project-level split,
+calibration-only thresholds and stage allowlists. It is fitted on training projects
+only; the cited work splits by trace, which would leak same-project regularities
+here. Whether it is preregistered is a human decision; see
+`literature-matrix.md` (2026-10-02).
+
 `python -m eval.temporal_diagnostics --episodes PRIVATE.jsonl --output PRIVATE-report.json`
 consumes one row per episode with:
 
