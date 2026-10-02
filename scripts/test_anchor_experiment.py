@@ -339,16 +339,20 @@ CASES = ("realworld-favorites", "openproject-invalid-remaining", "paperless-dupl
 
 
 def locate(evidence_root: Path) -> dict[str, str]:
-    """Find each private packet whose frozen receipt matches the public summary hash."""
+    """Bind a collection by both receipts; replications may reuse a freeze."""
     wanted = {}
     for case in CASES:
         summary = json.loads((PUBLIC_SUMMARIES / case / "summary.json").read_text())
-        wanted[summary["frozen_receipt_sha256"]] = case
+        wanted[(summary["frozen_receipt_sha256"], summary["collection_receipt_sha256"])] = case
     found: dict[str, list[str]] = defaultdict(list)
     for receipt in sorted(evidence_root.glob("*/frozen/receipt.json")):
-        case = wanted.get(sha256_file(receipt))
-        if case and (receipt.parent.parent / "results.json").is_file():
-            found[case].append(str(receipt.parent.parent))
+        packet = receipt.parent.parent
+        collection_receipt = packet / "receipt.json"
+        if not collection_receipt.is_file() or not (packet / "results.json").is_file():
+            continue
+        case = wanted.get((sha256_file(receipt), sha256_file(collection_receipt)))
+        if case:
+            found[case].append(str(packet))
     missing = [case for case in CASES if len(found.get(case, [])) != 1]
     if missing:
         raise SystemExit(f"could not identify exactly one packet for: {', '.join(missing)}")

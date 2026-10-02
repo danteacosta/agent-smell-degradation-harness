@@ -146,7 +146,7 @@ def test_controls_compare_observed_with_expected(tmp_path: Path) -> None:
     assert "lost_rule" in result["observed"]
 
 
-def test_locate_matches_public_frozen_receipt(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_locate_uses_collection_receipt_to_disambiguate_replicated_freeze(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     public = tmp_path / "public"
     evidence = tmp_path / "evidence"
     for index, case in enumerate(ta.CASES):
@@ -154,15 +154,34 @@ def test_locate_matches_public_frozen_receipt(tmp_path: Path, monkeypatch: pytes
         (packet / "frozen").mkdir(parents=True)
         (packet / "frozen/receipt.json").write_text(json.dumps({"n": index}))
         (packet / "results.json").write_text("{}")
+        (packet / "receipt.json").write_text(json.dumps({"run": index}))
+        prior = evidence / f"{case}-prior"
+        (prior / "frozen").mkdir(parents=True)
+        (prior / "frozen/receipt.json").write_bytes((packet / "frozen/receipt.json").read_bytes())
+        (prior / "results.json").write_text("{}")
+        (prior / "receipt.json").write_text(json.dumps({"prior": index}))
         (public / case).mkdir(parents=True)
         (public / case / "summary.json").write_text(json.dumps(
-            {"frozen_receipt_sha256": ta.sha256_file(packet / "frozen/receipt.json")}))
+            {"frozen_receipt_sha256": ta.sha256_file(packet / "frozen/receipt.json"),
+             "collection_receipt_sha256": ta.sha256_file(packet / "receipt.json")}))
     decoy = evidence / "unrelated"
     (decoy / "frozen").mkdir(parents=True)
     (decoy / "frozen/receipt.json").write_text("{}")
     monkeypatch.setattr(ta, "PUBLIC_SUMMARIES", public)
     found = ta.locate(evidence)
     assert found == {case: str(evidence / f"{case}-packet") for case in ta.CASES}
+    import shutil
+    chosen = evidence / "realworld-favorites-packet"
+    duplicate = evidence / "realworld-favorites-duplicate"
+    shutil.copytree(chosen, duplicate)
+    with pytest.raises(SystemExit):
+        ta.locate(evidence)
+    shutil.rmtree(duplicate)
+    receipt_bytes = (chosen / "receipt.json").read_bytes()
+    (chosen / "receipt.json").write_text("changed")
+    with pytest.raises(SystemExit):
+        ta.locate(evidence)
+    (chosen / "receipt.json").write_bytes(receipt_bytes)
     (evidence / "realworld-favorites-packet/frozen/receipt.json").write_text("changed")
     with pytest.raises(SystemExit):
         ta.locate(evidence)
