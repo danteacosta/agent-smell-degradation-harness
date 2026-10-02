@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from protocol.labels import exploratory_loss_label
+
 import json
 from pathlib import Path
 from typing import Any
@@ -48,7 +50,7 @@ def _h2_pr_auc(episodes: list[dict[str, Any]], *, family: str = "provenance") ->
             scores.append(float(features["static"]["requirement_length"]))
         else:
             scores.append(float(provenance["constraint_count"] == 0))
-        labels.append(int(episode.get("variant") == "smelly" and not episode.get("oracle_passed")))
+        labels.append(exploratory_loss_label(episode))
     return _average_precision(scores, labels)
 
 

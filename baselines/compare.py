@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from protocol.labels import exploratory_loss_label
+
 from typing import Any
 
 from baselines.features import extract_features
@@ -10,7 +12,7 @@ FAMILIES = ("static_smell", "output_only", "operational", "provenance_semantic")
 
 
 def _episode_label(episode: dict[str, Any]) -> int:
-    return 1 if episode.get("variant") == "smelly" and not episode.get("oracle_passed") else 0
+    return exploratory_loss_label(episode)
 
 
 def _family_score(family: str, features: dict[str, Any]) -> float:

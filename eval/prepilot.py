@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from protocol.labels import exploratory_loss_label
+
 import argparse
 import copy
 import json
@@ -163,7 +165,7 @@ def _provenance_pr_auc(episodes: list[dict[str, Any]]) -> float:
             DeployableFeatureInput.from_episode(episode), episode["provenance_path"]
         )
         scores.append(float(features["provenance"]["constraint_count"] == 0))
-        labels.append(int(episode.get("variant") == "smelly" and not episode.get("oracle_passed")))
+        labels.append(exploratory_loss_label(episode))
     return average_precision(scores, labels)
 
 
