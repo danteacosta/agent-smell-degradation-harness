@@ -94,8 +94,10 @@ One shot, from the repository root on the collection machine:
 bash scripts/run_test_anchor.sh            # tester model defaults to gpt-6-astra
 ```
 
-The script locates each private packet by matching its frozen receipt hash with
-the public summary, so no path is typed by hand. Step by step:
+The script locates each private packet by matching both its frozen receipt and
+final collection receipt hashes with the public summary. Replications may reuse
+a frozen receipt, so that receipt alone does not identify a collection. Missing
+or duplicate matches stop the script before tester calls. Step by step:
 
 ```sh
 python scripts/test_anchor_experiment.py controls --out RUN/controls
