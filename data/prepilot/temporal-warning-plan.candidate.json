@@ -2,7 +2,6 @@
   "schema_version": "temporal-warning-cohort-candidate/v1",
   "status": "no_go",
   "confirmatory_eligible": false,
-  "launch_gate": "data/prepilot/launch-plan.candidate.json",
   "primary_task": "acceptance_criteria_generation",
   "design_candidate": {
     "new_intents": 12,
@@ -65,6 +64,10 @@
   "runtime_preparation": {
     "structural_adapter": "eval.temporal_comparator.runtime_prefix_features",
     "comparison_cli": "eval.temporal_comparison_report",
-    "status": "offline_regression_verified_not_provider_qualified"
-  }
+    "status": "offline_regression_verified_not_provider_qualified",
+    "readiness_check": "eval.temporal_warning_readiness"
+  },
+  "historical_launch_gate_reference": "data/prepilot/launch-plan.candidate.json",
+  "readiness_check": "eval.temporal_warning_readiness",
+  "launch_gate": "external_reviewed_temporal_pilot_launch_required"
 }

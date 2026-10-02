@@ -285,3 +285,34 @@ Score-file hashes in the report support custody, not proof of blinding or
 causal validity. Primary H2 B0/B3 definitions and the existing F1 threshold
 policy are unchanged. No provider-backed episodes were collected for this
 preparation, and no synthetic test fixture is experimental evidence.
+
+### Readiness audit: keep the 120- and 144-episode plans separate
+
+The historical `eval.prepilot_readiness` gate is intentionally fixed to its
+120-episode design. It cannot admit this proposed 144-episode cohort. The
+candidate now references `eval.temporal_warning_readiness` for an offline
+readiness audit and preserves the old launch-plan path as historical context.
+The new check verifies the cohort/source/audit hashes, declared design,
+selection and project partition, source-bound review metadata, two distinct
+runtime-native provider identities, annotation/blinding, prefix clocks,
+feature/score policy, schedule and finite cost envelope. It does not modify
+the historical gate or authorize provider execution.
+
+```sh
+python -m eval.temporal_warning_readiness \
+  --plan data/prepilot/temporal-warning-plan.candidate.json \
+  --output /private/temporal-warning-readiness.json
+```
+
+A blocked candidate returns exit code 2 while preserving the report. Even
+when all prerequisites are declared, the result is `prerequisites_declared`,
+not scientific validation or launch authority. Review metadata and hashed
+qualification references require authenticity checks by an independent human;
+this declarative check cannot prove independence or competence.
+
+For this candidate, freeze the feature definitions and comparable score policy
+before training collection. Fit detector weights only on the training
+partition after independent training labels become available; then seal those
+weights before calibration/test scoring. Freeze thresholds on calibration
+only. Do not require fitted weights before collecting the data needed to fit
+them, and do not fit on held-out outcomes to fill that gap.
