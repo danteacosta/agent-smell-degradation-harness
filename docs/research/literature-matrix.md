@@ -470,3 +470,12 @@ the automatic B0 analogy, categorical novelty claim and overinterpretation
 of Gherkin agreement/coverage findings. The [E2E recoverability audit](2026-10-01-e2e-recoverability-audit.md) incorporates all five into concrete interpretation
 and review decisions, with public-record accounting and limits of verification.
 No source is counted twice and no existing outcome is reclassified.
+
+
+## 2026-10-02 — Repeated generations are not independent requirements
+
+Search/read date: 2026-10-02. Read the abstract, survey, method and limitations in the primary paper; deduplicated by DOI/title.
+
+| Source / status | Question, sample and method | Finding / limits | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | --- |
+| Dror, Baumer, Shlomov and Reichart, *The Hitchhiker's Guide to Testing Statistical Significance in Natural Language Processing*, ACL 2018, peer-reviewed methods/opinion paper; [original](https://aclanthology.org/P18-1128/), DOI 10.18653/v1/P18-1128 | How should significance tests match NLP experiments? Test-selection protocol plus survey of 196 ACL and 37 TACL papers from 2017. | Testing was often omitted or underspecified. Section 5 identifies dependent observations as an unresolved complication. Predates LLM agents; does not solve our clustered design. | Thesis: preserve the sampling unit. Experiment: retain per-requirement nested repetitions in the [extended audit](2026-10-01-e2e-recoverability-audit.md), without pooled iid inference. Product: report sample provenance with comparisons. Action implemented: six-lot accounting and classification replay; no post-hoc test selection or protocol change. | 8/10: peer-reviewed, transparent survey and test assumptions; reproducible guidance, but indirect to agents and insufficient for our dependency structure. |

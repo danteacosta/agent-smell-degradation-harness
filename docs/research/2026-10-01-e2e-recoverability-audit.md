@@ -173,3 +173,58 @@ now derives from the module's checkout location. Three regression cases
 reproduce both unsafe acceptance paths and the false rejection before the fix,
 then pass afterward. This protects this checkout's boundary; it is not a
 universal detector of other repositories or a security certification.
+
+
+## 2026-10-02 update: six completed lots checked separately
+
+Snapshot: `b057c627943230bfe4188f3a44e035133fae0d9d`. This update covers
+five replication lots (90 outputs) and one new obligation (18 outputs).
+It does not add six independent projects or replace the historical audit.
+The barcode experiments and deferred Kanboard Due Date case are outside this update.
+
+A is the complete requirement; B is a meaning-preserving rewrite; C omits
+one target clause. These are controlled omission manipulations, not independently
+validated natural-smell labels. Each lot has two model configurations, three
+repetitions per arm and 18 outputs. All A and B outputs in these six lots passed.
+
+| Obligation / omitted clause in C | Lot type | A pass | B pass | C target failure | C pass |
+| --- | --- | ---: | ---: | ---: | ---: |
+| RealWorld Favorites: filter articles by the profile's favorites | Replication | 6/6 | 6/6 | 0/6 | 6/6 |
+| OpenProject: reject Remaining greater than Work | Replication | 6/6 | 6/6 | 6/6 | 0/6 |
+| Paperless: reject duplicate document consumption | Replication | 6/6 | 6/6 | 5/6 | 1/6 |
+| TodoMVC: hide Clear completed when no completed items remain | Replication | 6/6 | 6/6 | 6/6 | 0/6 |
+| RealWorld: show Delete comment only to the comment author | Replication | 6/6 | 6/6 | 0/6 | 6/6 |
+| Paperless Inbox: request suggestions automatically on document opening | New obligation, exploratory v3 | 6/6 | 6/6 | 4/6 | 2/6 |
+
+The extended auditor reclassified **108 stored browser reports** using each
+case's current checked-in classifier and checked **232 public files** against
+the supplied receipts. All categories agree. It also checks the exact schedule,
+unique slot identities, row/receipt report bindings and available HTML identity
+bindings. Six regression corruptions cover duplicated identities, changed labels,
+broken report bindings, mismatched HTML identities, missing schedule slots and
+receipt changes. The [derived output](2026-10-02-e2e-accounting.json) records
+classifier hashes and nested triplet counts:
+
+```sh
+python scripts/audit_existing_e2e_results.py --recent
+python -m pytest tests/test_existing_e2e_audit.py -q
+```
+
+This is offline reclassification, not a new browser run or provider collection.
+It does not authenticate private HTMLs, original prompts or frozen historical
+runtime/classifier versions. Receipt agreement alone is not independent authenticity.
+Repeated generations remain nested within requirements and projects; no pooled
+p-value or general H1 estimate was computed. H2 remains untested here.
+
+The new Inbox result is mixed; Delete comment remains all-pass under omission.
+Neither passing condition identifies *why* the behavior survived. The Inbox
+narrative now distinguishes observable success from untested contextual recovery.
+A predeclared cue-ablation comparison could investigate that mechanism, but needs
+human design approval and a fresh prospective schedule; these outputs cannot
+be reused as blinded confirmatory evidence.
+
+Next decision: independently review the manipulation mappings, then freeze the
+requirement/project sample and analysis plan. Preserve unsuccessful or interrupted
+lots and the Inbox oracle-repair history; do not select only clauses that produced
+failures. The significance-method rationale is recorded in the literature matrix
+under Dror et al. (ACL 2018); it does not validate our instrument or findings.
