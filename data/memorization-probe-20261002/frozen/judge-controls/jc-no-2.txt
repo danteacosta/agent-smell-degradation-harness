@@ -1,0 +1,7 @@
+Decide whether an answer states a given product rule.
+
+Rule: Only administrators can set a project as a template.
+
+Answer: I am not sure how templates work in this application.
+
+Reply with a single JSON object: {"states_rule": "yes" or "no"}. Say "yes" only if the answer describes the same behavior as the rule, including its condition and outcome. An answer that is vague, says it does not know, or describes different behavior is "no".

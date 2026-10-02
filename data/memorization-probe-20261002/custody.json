@@ -1,0 +1,20 @@
+{
+  "schema_version": "memorization-public-custody/v1",
+  "source_receipt_sha256": "d1de725bc7e8863ef71e2b59c4749add7b637424198931764451ff09fb2e1cc3",
+  "source_frozen_receipt_sha256": "e72f6ae26c4a9477b0ee69f152a5ecb6c2a7e582fdac9b8fd5b0c64be8e5589b",
+  "source_manifest_sha256": "8460c592ee2325b8ce5cc57188b248c13066ce97e65d1291c446b802b4d1ebf2",
+  "source_results_sha256": "59c3c8bc5c137044190c370ecc88eeb4fd028950fbbce81de5b4d9e84b131dee",
+  "source_audit_sha256": "3f972db818c02e4f862f21ae1afec55b6a905eefd6f30896d627318b1ac7b04e",
+  "panel_results_sha256": "95e2acc6bb9757b3584359e6c7919769d57456da30cd91592c504eb937628d9f",
+  "executor_sha256": "c3fa8b84622b7a9dca8d2b32699dfd13d9493b69bf59aa298a71e1078f78bf1a",
+  "audit_helper_sha256": "26642741d9a9974efe060858a2100425367e64641b0b06c71666412f6e9add91",
+  "export_helper_sha256": "bb23ba51d34fc0c0ea9d8df8184c2e73f847d9f4ffb5a850c9abcafbd9c3a6bb",
+  "public_verifier_sha256": "e49a1b707ea72db7d623221e064d4f7911484ffe8753a21c9580d7b6344a6336",
+  "excluded": [
+    "executable path",
+    "CLI captures and streams",
+    "untruncated probe response"
+  ],
+  "answer_projection": "Python raw.strip()[:4000], exactly as supplied to judges; original SHA and lengths retained",
+  "labels_unchanged": true
+}

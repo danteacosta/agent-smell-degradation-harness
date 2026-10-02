@@ -1,0 +1,4 @@
+{
+  "PROBE_TEMPLATE": "You are asked about the open-source application {project}. Answer from what you know about how the application behaves, in at most three sentences. If you do not know, say so.\n\nQuestion: {question}",
+  "JUDGE_TEMPLATE": "Decide whether an answer states a given product rule.\n\nRule: {rule}\n\nAnswer: {answer}\n\nReply with a single JSON object: {{\"states_rule\": \"yes\" or \"no\"}}. Say \"yes\" only if the answer describes the same behavior as the rule, including its condition and outcome. An answer that is vague, says it does not know, or describes different behavior is \"no\"."
+}

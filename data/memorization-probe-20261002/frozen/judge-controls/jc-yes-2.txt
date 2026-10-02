@@ -1,0 +1,7 @@
+Decide whether an answer states a given product rule.
+
+Rule: A shopping list combines items with the same food: 1 cup plus 2 cups of cheese shows 3 cups.
+
+Answer: Duplicate foods are merged into one line and their quantities added, so 1 and 2 cups become 3 cups.
+
+Reply with a single JSON object: {"states_rule": "yes" or "no"}. Say "yes" only if the answer describes the same behavior as the rule, including its condition and outcome. An answer that is vague, says it does not know, or describes different behavior is "no".
