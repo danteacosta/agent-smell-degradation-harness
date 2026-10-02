@@ -1,0 +1,21 @@
+{
+  "case": "paperless-nested-tags",
+  "intent_id": "paperless-nested-tags",
+  "project_id": "paperless-ngx",
+  "fixture": "eval/fixtures/paperless-nested-tags",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onAssign to handle the visible Add tag button. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Assign a selected tag to the document when the user clicks Add tag. Also add every ancestor tag automatically.",
+    "B": "When Add tag is clicked, attach the chosen tag to the document and include its parent tags without another user action.",
+    "C": "Assign a selected tag to the document when the user clicks Add tag."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 3,
+  "seed": 2026092701,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "migrated_from": "scripts.paperless_nested_tags_pilot"
+}

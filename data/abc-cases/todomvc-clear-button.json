@@ -1,0 +1,21 @@
+{
+  "case": "todomvc-clear-button",
+  "intent_id": "todomvc-clear-button",
+  "project_id": "todomvc",
+  "fixture": "eval/fixtures/todomvc-clear-button-v5",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onClear for the visible Clear completed control. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "When Clear completed is clicked, remove completed todos and preserve active todos. Hide the Clear completed button whenever no completed todos exist, including when the list initially has none.",
+    "B": "Clicking Clear completed deletes the completed items without removing active items. Show that button only while at least one completed item exists, both on initial display and after a click.",
+    "C": "When Clear completed is clicked, remove completed todos and preserve active todos."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 3,
+  "seed": 2026100101,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "migrated_from": "scripts.todomvc_clear_button_replication"
+}

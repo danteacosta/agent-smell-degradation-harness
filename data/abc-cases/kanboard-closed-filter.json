@@ -1,0 +1,21 @@
+{
+  "case": "kanboard-closed-filter",
+  "intent_id": "kanboard-closed-filter",
+  "project_id": "kanboard",
+  "fixture": "eval/fixtures/kanboard-closed-filter",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onView to render the Board and Closed tasks filter views. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "On the board show open tasks and hide closed tasks. The Closed tasks filter shows closed tasks.",
+    "B": "The board lists only open tasks. Selecting Closed tasks must display the previously closed tasks.",
+    "C": "On the board show open tasks and hide closed tasks."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 3,
+  "seed": 2026092703,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "migrated_from": "scripts.kanboard_closed_filter_pilot_v2"
+}

@@ -1,0 +1,21 @@
+{
+  "case": "paperless-inbox-suggestions",
+  "intent_id": "paperless-inbox-suggestions",
+  "project_id": "paperless-ngx",
+  "fixture": "eval/fixtures/paperless-inbox-suggestions",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the fixed standalone browser page. Replace its single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript; keep every other byte unchanged. Register app.onView with one callback for opening the detail page. app.document() returns {id, title, tags}; app.requestSuggestions(id) records a request and renders the available suggestions for that document. The fixed page already renders the title, document ID, Suggest button, and empty suggestion area. Return only the complete HTML page.",
+  "arms": {
+    "A": "Suggestions are shown on the document detail page and can be accepted or rejected. Suggestions are requested automatically when you open a document that still has an inbox tag.",
+    "B": "On a document detail page, show suggestions that the user can accept or reject. Opening an inbox-tagged document automatically requests its suggestions.",
+    "C": "Suggestions are shown on the document detail page and can be accepted or rejected."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 3,
+  "seed": 2026100106,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "migrated_from": "scripts.paperless_inbox_suggestions_pilot_v3"
+}
