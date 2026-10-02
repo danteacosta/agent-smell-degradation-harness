@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from protocol.labels import exploratory_loss_label
+
 import argparse
 import json
 from collections import defaultdict
@@ -36,7 +38,7 @@ def _episode_label(
         if label not in (0, 1):
             raise ValueError(f"primary human label for {episode_id} must be binary")
         return label
-    return 1 if episode.get("variant") == "smelly" and not episode.get("oracle_passed") else 0
+    return exploratory_loss_label(episode)
 
 
 def _family_score(family: str, features: dict[str, Any]) -> float:
