@@ -1,0 +1,203 @@
+{
+  "confirmatory_eligible": false,
+  "packets": {
+    "data/e2e-paperless-inbox-suggestions/replication-20261001-v3": {
+      "classifier_sha256": "b2539133c3748c1f45fc62ac793500757e425df76720937894415495db4abc32",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 2,
+            "target_only_failure": 1
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        }
+      },
+      "nested_triplets": {
+        "C_target_failure_with_AB_pass": 4,
+        "all_pass": 2
+      },
+      "public_files_verified": 23,
+      "rows_verified": 18
+    },
+    "data/e2e-realworld-comment-delete/replication-20261001": {
+      "classifier_sha256": "adc30fe122707ffeb6d4b30bb6021520631da240164f1b6b703f24463e8056ed",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 3
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 3
+          }
+        }
+      },
+      "nested_triplets": {
+        "all_pass": 6
+      },
+      "public_files_verified": 23,
+      "rows_verified": 18
+    },
+    "data/e2e-replications-20261001/openproject-invalid-remaining": {
+      "classifier_sha256": "f5d8c63cdab952a0577a482b5b3c5e483e598791d5cd9c32ef5ded5f4562bcd6",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        }
+      },
+      "nested_triplets": {
+        "C_target_failure_with_AB_pass": 6
+      },
+      "public_files_verified": 55,
+      "rows_verified": 18
+    },
+    "data/e2e-replications-20261001/paperless-duplicate-consumption": {
+      "classifier_sha256": "f17966f950e54bd6b7bccf9d9b195289ca032f81ada44a5ed93eef61b6dd6999",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 1,
+            "target_only_failure": 2
+          }
+        }
+      },
+      "nested_triplets": {
+        "C_target_failure_with_AB_pass": 5,
+        "all_pass": 1
+      },
+      "public_files_verified": 55,
+      "rows_verified": 18
+    },
+    "data/e2e-replications-20261001/realworld-favorites": {
+      "classifier_sha256": "6fa4ce5cd0eb73e3d07b9441e9bf17375c9e3d6dd2a1fc875ba4d05106c7f717",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 3
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "pass": 3
+          }
+        }
+      },
+      "nested_triplets": {
+        "all_pass": 6
+      },
+      "public_files_verified": 55,
+      "rows_verified": 18
+    },
+    "data/e2e-todomvc-clear-button/replication-20261001": {
+      "classifier_sha256": "5e0ead193c0e6b5c5409ff1c365fd4e3f30e6b11a000c845d63705c78ee09fe2",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 3
+          },
+          "B": {
+            "pass": 3
+          },
+          "C": {
+            "target_only_failure": 3
+          }
+        }
+      },
+      "nested_triplets": {
+        "C_target_failure_with_AB_pass": 6
+      },
+      "public_files_verified": 21,
+      "rows_verified": 18
+    }
+  },
+  "schema_version": "e2e-recent-public-audit/v1",
+  "scope": "Six completed public lots; classifications replayed from stored reports. No new browser or provider execution; private custody unverified."
+}

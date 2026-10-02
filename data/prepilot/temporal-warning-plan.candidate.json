@@ -1,0 +1,41 @@
+{
+  "schema_version": "temporal-warning-cohort-candidate/v1",
+  "status": "no_go",
+  "confirmatory_eligible": false,
+  "launch_gate": "data/prepilot/launch-plan.candidate.json",
+  "primary_task": "acceptance_criteria_generation",
+  "design_candidate": {
+    "new_intents": 12,
+    "projects": 6,
+    "variants": [
+      "clean",
+      "defective"
+    ],
+    "distinct_providers": 2,
+    "replications_per_provider_variant": 3,
+    "planned_episodes": 144,
+    "split_project_counts": {
+      "train": 3,
+      "calibration": 1,
+      "test": 2
+    }
+  },
+  "selected_requirements": [],
+  "selection_frozen": false,
+  "split_frozen": false,
+  "qualified_provider_configurations": [],
+  "independent_human_reviews": [],
+  "fpr_budget_candidate": 0.05,
+  "primary_threshold_policy": "existing_f1_unchanged",
+  "supplementary_comparator": "S-structure",
+  "blockers": [
+    "fresh_source_selection_and_prior_exposure_audit",
+    "independent_mapping_and_manipulation_reviews",
+    "project_split_freeze",
+    "rubric_and_blinded_annotators",
+    "two_distinct_qualified_providers",
+    "runtime_event_normalization_qualification",
+    "cost_envelope_and_launch_authorization"
+  ],
+  "collection_performed": false
+}

@@ -28,7 +28,7 @@ trace monitor (for example a finite-state or directly-follows model over tool/st
 activity, as in [arXiv 2608.23670](https://arxiv.org/abs/2608.23670), a preprint)
 may be run as an extra operational ablation with the same project-level split,
 calibration-only thresholds and stage allowlists. It is fitted on training projects
-only; the cited work splits by trace, which would leak same-project regularities
+only; the cited work splits by trace, which risks shared-project regularities
 here. Whether it is preregistered is a human decision; see
 `literature-matrix.md` (2026-10-02).
 
@@ -106,3 +106,96 @@ Historical empirical limitation: the original 72-call control run found poor del
 sensitivity. Historical machine-clean labels cannot supply a trustworthy
 false-alert denominator. Collection of new temporal/lineage observations and
 valid terminal outcomes remains necessary before claiming early-warning value.
+
+
+## Prefix access contract and supplementary comparator (2026-10-02)
+
+The primary fixed B0/B3 model definitions and existing F1 threshold policy remain
+unchanged. The following structural comparator and recall-at-FPR operating point
+are supplementary candidates pending a prospective freeze, not new primary claims.
+Full-trace classification (Automata's SWE-agent AUROC 0.799), prefix ranking
+(rank-AUROC 0.66 near 25%) and simulated stopping are different evaluations.
+CodeTracer's backward localization is post-outcome; its diagnosis inputs are not
+admissible early-warning inputs. Diagnosis costs must be included in total cost.
+
+| Detector | T0 input | Available T1–T3 prefix | Never accessible |
+| --- | --- | --- | --- |
+| B0 | Submitted requirement and frozen static features | Operational features available by the same cutoff | Provenance family, T4, oracle outputs, terminal labels, clean counterpart, removed-clause identity |
+| B3 | Same submitted requirement/static input | B0 plus cumulative constraint provenance through the current stage; primary B3 uses T1–T3 | T4, oracle outputs, terminal labels, clean counterpart, removed-clause identity |
+| S-structure (supplementary) | No requirement text | Registered activity types, order and monotonic availability timestamps; derived counts/transitions/repetition | Text/diffs, semantic payloads, constraint IDs, labels, total/future trace length, T4 |
+| Content-only (supplementary) | Same static input | Same permitted stage content and budget as the provenance comparison with lineage links removed | Terminal information and privileged counterpart/label data |
+
+No detector receives the arm name, project ID, run ID or replication ID as a
+predictor. IDs join records and define splits only. A missing checkpoint is an
+abstention/missing observation, not a missing requirement condition. Online
+cutoffs use absolute elapsed time and stage completion, never a percentage of
+future total trace length. Fit preprocessing, activity vocabulary and structural
+models on training projects only. Choose thresholds on calibration only. Freeze
+alerts, feature hashes and cutoff receipts before the label-plane join.
+
+`eval.temporal_comparator.structural_features` is a bounded supplementary adapter
+for already isolated prefix events. It admits only stage/time/registered activity;
+rejects extra fields, future stages, future times and free-text activities; and
+preserves ordered transition counts. It is not an implementation of the paper's
+FSM and does not replace the hash-bound feature extractor. Before a real run,
+qualify the runtime event-normalization mapping and bind its code/config hashes.
+The staged runtime's small activity alphabet may offer little signal: this is a
+measured limitation to report, not a reason to add semantic text to S-structure.
+
+`fit_fpr_threshold` supplies a supplementary calibration-only operating point:
+maximize recall under a prospectively specified empirical FPR budget. Equal recall
+prefers the larger threshold; no useful feasible threshold returns null (abstain).
+The candidate budget is 0.05, pending approval; it is not a guaranteed test FPR.
+Report calibration negative counts and attained FPR/recall on test. Do not silently
+replace the frozen primary F1 policy or select the budget after seeing outcomes.
+
+## Next temporal cohort: candidate preparation and gates
+
+The [candidate register](../../data/prepilot/temporal-warning-plan.candidate.json)
+reuses the existing pre-pilot launch gate, but does not promote its old corpus to
+unseen data. Proposed scale: 12 NEW independently reviewed intents from six
+projects, clean/defective pairs, two distinct qualified providers, three runs per
+variant/provider: 144 planned episodes if all gates pass. This is an engineering
+and estimation pilot, not a sufficiently powered confirmatory H2 sample. Source
+selection is currently empty: no fresh requirement or human approval is fabricated.
+
+Use the existing pinned sources as a search pool, not as admitted cases. Review
+prior run registries, near clones and exposure logs before assigning fresh IDs.
+Select on source eligibility and auditable constraints before observing generated
+outcomes; retain null cases and failed admissions. Record source/revision/license,
+constraint IDs, A/B-equivalence where a rewrite is used, single-condition deletion,
+reviewer identity and prior exposure. Two genuinely independent human reviewers
+must resolve mapping/manipulation disagreements before admission. LLM votes do not
+satisfy this gate. Never expose the complete counterpart or rubric to the generator.
+
+Assign all intents/variants/repeats and near-clone-connected projects together with
+`eval.splits`. Candidate allocation is 3 training / 1 calibration / 2 test projects;
+the exact identities and seed require freeze before generation. One calibration
+project and two test projects cannot support robust population inference; enlarge
+for confirmation using the existing precision/sample gates. If either calibration
+or test is one-class, affected metrics are undefined/blocked, not zero.
+
+Collection uses the existing runtime-native staged producer with separate bounded
+T1 interpretation, T2 plan, T3 externally materialized execution evidence and T4
+acceptance criteria. Validate substantive checkpoints, identities, monotonic times,
+request/configuration hashes, cost and stage receipts. Do not reconstruct timestamps
+from final output or call retrospective E2E reports temporal trajectories. Qualify
+two real configurations, the event adapter and private custody before collection.
+Browser E2Es can qualify engineering controls; they do not replace blinded ordinal
+acceptance-criteria labels, annotation agreement or the primary label manifest.
+
+After alerts are sealed, independently double-annotate T4 under the frozen rubric,
+adjudicate, and join by run_id/replication_id/constraint_id. Evaluate B0 and B3 on
+identical eligible records; report comparator/window-specific missingness and paired
+complete-case plus missing-stage sensitivity. Primary PR-AUC means the existing
+average-precision implementation. Add supplementary recall/FPR and first observed
+alert lead time to T4. Ranker scores are not probabilities: calibration/Brier/ECE
+requires a separately frozen calibration-only probability mapping. Reuse the
+existing project-cluster bootstrap and report descriptive-only intervals when the
+small/one-class cluster design fails existing gates. Do not pool repeated generations
+as independent requirements or claim causal recovery without a cue intervention.
+
+Current dependencies: fresh corpus identities and reviews, exact split freeze,
+annotation rubric/annotators, two qualified providers, runtime/event adapter and
+budget authorization. This execution found neither Codex CLI nor Docker available;
+no new provider episode or empirical comparison was performed.
