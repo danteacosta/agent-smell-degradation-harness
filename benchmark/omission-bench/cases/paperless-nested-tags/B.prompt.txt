@@ -1,0 +1,30 @@
+Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onAssign to handle the visible Add tag button. Do not change any other byte of the page. Return only the complete HTML page.
+
+Requirement:
+When Add tag is clicked, attach the chosen tag to the document and include its parent tags without another user action.
+
+Frozen page:
+<!doctype html><html><head><meta charset="utf-8"><title>Document tags</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button{font:inherit;padding:.4rem}.tag{display:inline-block;border:1px solid #888;border-radius:.4rem;padding:.3rem .6rem;margin:.3rem}</style></head>
+<body><main><h1 id="document-title"></h1><p id="hierarchy"></p><button id="assign-child" type="button">Add tag</button><section aria-label="Assigned tags" id="assigned"></section></main><script>
+const storageKey='paperless-nested-tags-pilot';
+if(localStorage.getItem(storageKey)===null)localStorage.setItem(storageKey,JSON.stringify([]));
+let assigned=JSON.parse(localStorage.getItem(storageKey));
+let assignBehavior=null;
+const app=Object.freeze({
+  onAssign(handler){if(typeof handler!=='function'||assignBehavior)throw new Error('invalid assignment handler');assignBehavior=handler},
+  hierarchy(){return structuredClone(window.initialState.hierarchy)},
+  tags(){return structuredClone(assigned)},
+  persistTags(tags){if(!Array.isArray(tags)||!tags.every(tag=>typeof tag==='string'))throw new Error('tag list required');
+    assigned=[...new Set(tags)];localStorage.setItem(storageKey,JSON.stringify(assigned));render()}
+});
+function render(){
+  document.querySelector('#document-title').textContent=window.initialState.documentTitle;
+  document.querySelector('#hierarchy').textContent=window.initialState.child+' → '+window.initialState.parent;
+  const root=document.querySelector('#assigned');root.replaceChildren();
+  for(const tag of assigned){const chip=document.createElement('span');chip.className='tag';chip.dataset.tag=tag;chip.textContent=tag;root.append(chip)}
+}
+document.querySelector('#assign-child').addEventListener('click',()=>{if(assignBehavior)assignBehavior(window.initialState.child)});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

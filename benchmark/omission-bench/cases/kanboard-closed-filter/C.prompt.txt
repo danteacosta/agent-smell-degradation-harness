@@ -1,0 +1,23 @@
+Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onView to render the Board and Closed tasks filter views. Do not change any other byte of the page. Return only the complete HTML page.
+
+Requirement:
+On the board show open tasks and hide closed tasks.
+
+Frozen page:
+<!doctype html><html><head><meta charset="utf-8"><title>Task board</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}.task{border:1px solid #bbb;padding:.7rem;margin:.5rem 0}select{font:inherit;padding:.3rem}</style></head>
+<body><main><h1>Tasks</h1><label for="view">Filter</label><select id="view"><option value="board">Board</option><option value="closed">Closed tasks</option></select><section id="tasks" aria-label="Tasks"></section></main><script>
+// app.tasks() records are {id, title, status: 'open' | 'closed'}.
+const tasks=structuredClone(window.initialState.tasks);
+let viewHandler=null;
+const app=Object.freeze({
+  onView(handler){if(typeof handler!=='function'||viewHandler)throw new Error('invalid view handler');viewHandler=handler;handler('board')},
+  tasks(){return structuredClone(tasks)},
+  show(items){if(!Array.isArray(items))throw new Error('task array required');const root=document.querySelector('#tasks');root.replaceChildren();
+    for(const item of items){if(!tasks.some(task=>task.id===item.id))throw new Error('unknown task');
+      const row=document.createElement('article');row.className='task';row.dataset.taskId=String(item.id);
+      row.textContent=String(item.title??'');root.append(row)}}
+});
+document.querySelector('#view').addEventListener('change',event=>{if(viewHandler)viewHandler(event.target.value)});
+/* MODEL_BEHAVIOR */
+</script></body></html>

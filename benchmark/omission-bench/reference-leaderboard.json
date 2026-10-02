@@ -1,0 +1,380 @@
+[
+  {
+    "case": "kanboard-closed-filter",
+    "model": "gpt-5.6-luna",
+    "arm": "A",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "kanboard-closed-filter",
+    "model": "gpt-5.6-luna",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "kanboard-closed-filter",
+    "model": "gpt-5.6-luna",
+    "arm": "C",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "kanboard-closed-filter",
+    "model": "gpt-5.6-sol",
+    "arm": "A",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "kanboard-closed-filter",
+    "model": "gpt-5.6-sol",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "kanboard-closed-filter",
+    "model": "gpt-5.6-sol",
+    "arm": "C",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "nextcloud-restore-conflict",
+    "model": "gpt-5.6-luna",
+    "arm": "A",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "nextcloud-restore-conflict",
+    "model": "gpt-5.6-luna",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "nextcloud-restore-conflict",
+    "model": "gpt-5.6-luna",
+    "arm": "C",
+    "runs": 3,
+    "pass": 0,
+    "target_failure": 3,
+    "other": 0
+  },
+  {
+    "case": "nextcloud-restore-conflict",
+    "model": "gpt-5.6-sol",
+    "arm": "A",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "nextcloud-restore-conflict",
+    "model": "gpt-5.6-sol",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "nextcloud-restore-conflict",
+    "model": "gpt-5.6-sol",
+    "arm": "C",
+    "runs": 3,
+    "pass": 0,
+    "target_failure": 3,
+    "other": 0
+  },
+  {
+    "case": "openproject-invalid-remaining",
+    "model": "gpt-5.6-luna",
+    "arm": "A",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "openproject-invalid-remaining",
+    "model": "gpt-5.6-luna",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "openproject-invalid-remaining",
+    "model": "gpt-5.6-luna",
+    "arm": "C",
+    "runs": 3,
+    "pass": 0,
+    "target_failure": 3,
+    "other": 0
+  },
+  {
+    "case": "openproject-invalid-remaining",
+    "model": "gpt-5.6-sol",
+    "arm": "A",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "openproject-invalid-remaining",
+    "model": "gpt-5.6-sol",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "openproject-invalid-remaining",
+    "model": "gpt-5.6-sol",
+    "arm": "C",
+    "runs": 3,
+    "pass": 0,
+    "target_failure": 3,
+    "other": 0
+  },
+  {
+    "case": "paperless-inbox-suggestions",
+    "model": "gpt-5.6-luna",
+    "arm": "A",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "paperless-inbox-suggestions",
+    "model": "gpt-5.6-luna",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "paperless-inbox-suggestions",
+    "model": "gpt-5.6-luna",
+    "arm": "C",
+    "runs": 3,
+    "pass": 2,
+    "target_failure": 1,
+    "other": 0
+  },
+  {
+    "case": "paperless-inbox-suggestions",
+    "model": "gpt-5.6-sol",
+    "arm": "A",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "paperless-inbox-suggestions",
+    "model": "gpt-5.6-sol",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "paperless-inbox-suggestions",
+    "model": "gpt-5.6-sol",
+    "arm": "C",
+    "runs": 3,
+    "pass": 0,
+    "target_failure": 3,
+    "other": 0
+  },
+  {
+    "case": "paperless-nested-tags",
+    "model": "gpt-5.6-luna",
+    "arm": "A",
+    "runs": 3,
+    "pass": 1,
+    "target_failure": 1,
+    "other": 1
+  },
+  {
+    "case": "paperless-nested-tags",
+    "model": "gpt-5.6-luna",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "paperless-nested-tags",
+    "model": "gpt-5.6-luna",
+    "arm": "C",
+    "runs": 3,
+    "pass": 0,
+    "target_failure": 3,
+    "other": 0
+  },
+  {
+    "case": "paperless-nested-tags",
+    "model": "gpt-5.6-sol",
+    "arm": "A",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "paperless-nested-tags",
+    "model": "gpt-5.6-sol",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "paperless-nested-tags",
+    "model": "gpt-5.6-sol",
+    "arm": "C",
+    "runs": 3,
+    "pass": 0,
+    "target_failure": 3,
+    "other": 0
+  },
+  {
+    "case": "realworld-comment-delete",
+    "model": "gpt-5.6-luna",
+    "arm": "A",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "realworld-comment-delete",
+    "model": "gpt-5.6-luna",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "realworld-comment-delete",
+    "model": "gpt-5.6-luna",
+    "arm": "C",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "realworld-comment-delete",
+    "model": "gpt-5.6-sol",
+    "arm": "A",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "realworld-comment-delete",
+    "model": "gpt-5.6-sol",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "realworld-comment-delete",
+    "model": "gpt-5.6-sol",
+    "arm": "C",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "todomvc-clear-button",
+    "model": "gpt-5.6-luna",
+    "arm": "A",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "todomvc-clear-button",
+    "model": "gpt-5.6-luna",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "todomvc-clear-button",
+    "model": "gpt-5.6-luna",
+    "arm": "C",
+    "runs": 3,
+    "pass": 0,
+    "target_failure": 3,
+    "other": 0
+  },
+  {
+    "case": "todomvc-clear-button",
+    "model": "gpt-5.6-sol",
+    "arm": "A",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "todomvc-clear-button",
+    "model": "gpt-5.6-sol",
+    "arm": "B",
+    "runs": 3,
+    "pass": 3,
+    "target_failure": 0,
+    "other": 0
+  },
+  {
+    "case": "todomvc-clear-button",
+    "model": "gpt-5.6-sol",
+    "arm": "C",
+    "runs": 3,
+    "pass": 0,
+    "target_failure": 3,
+    "other": 0
+  }
+]

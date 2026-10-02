@@ -1,0 +1,20 @@
+Implement only the requirement in the fixed standalone browser page. Replace its single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript; keep every other byte unchanged. Register app.onView with one callback for opening the detail page. app.document() returns {id, title, tags}; app.requestSuggestions(id) records a request and renders the available suggestions for that document. The fixed page already renders the title, document ID, Suggest button, and empty suggestion area. Return only the complete HTML page.
+
+Requirement:
+Suggestions are shown on the document detail page and can be accepted or rejected. Suggestions are requested automatically when you open a document that still has an inbox tag.
+
+Frozen page:
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Document detail</title><style>body{font:18px system-ui;max-width:850px;margin:36px auto}button{font:inherit;padding:6px 14px}#suggestions{min-height:24px;border:1px solid #bbb}li{margin:8px 0}</style><main><h1 id="document-title"></h1><p id="document-id"></p><button id="suggest-button" type="button">Suggest</button><h2>Suggestions</h2><ul id="suggestions"></ul></main><script>
+const activeDocument=structuredClone(window.initialState.document);
+const requestIds=[];
+let viewHandler=null;
+const app=Object.freeze({
+  onView(handler){if(typeof handler!=='function'||viewHandler)throw new Error('invalid view handler');viewHandler=handler;handler()},
+  document(){return structuredClone(activeDocument)},
+  requestSuggestions(id){if(String(id)!==String(activeDocument.id))throw new Error('wrong document ID');requestIds.push(String(id));for(const item of window.initialState.availableSuggestions){const li=document.createElement('li');li.dataset.suggestionId=String(item.id);li.textContent=item.label;document.querySelector('#suggestions').append(li)}},
+  observedRequestIds(){return [...requestIds]}
+});
+document.querySelector('#document-title').textContent=activeDocument.title;
+document.querySelector('#document-id').textContent='Document '+activeDocument.id;
+/* MODEL_BEHAVIOR */
+</script></html>

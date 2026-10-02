@@ -1,0 +1,24 @@
+Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onSave to handle the visible Save button. Do not change any other byte of the page. Return only the complete HTML page.
+
+Requirement:
+Saving edits updates the persisted Work and Remaining work values.
+
+Frozen page:
+<!doctype html><html><head><meta charset="utf-8"><title>Work package progress</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}label{display:block;margin:.7rem}button,input{font:inherit;padding:.4rem}</style></head>
+<body><main><h1>Work package progress</h1><label>Work <input aria-label="Work"></label><label>Remaining work <input aria-label="Remaining work"></label><button id="save" type="button" disabled>Save</button><p id="message" role="status"></p></main><script>
+const fields=Object.freeze({work:document.querySelector('[aria-label="Work"]'),remaining:document.querySelector('[aria-label="Remaining work"]')});
+const key='openproject-invalid-remaining-pilot';
+let saveBehavior=null;
+const app=Object.freeze({
+  onSave(handler){if(typeof handler!=='function'||saveBehavior)throw new Error('invalid save behavior');saveBehavior=handler;document.querySelector('#save').disabled=false},
+  values(){return {work:fields.work.value,remaining:fields.remaining.value}},
+  persist(next){if(!next||typeof next.work!=='string'||typeof next.remaining!=='string')throw new Error('work values required');localStorage.setItem(key,JSON.stringify(next));fields.work.value=next.work;fields.remaining.value=next.remaining},
+  message(text){document.querySelector('#message').textContent=String(text)}
+});
+const stored=localStorage.getItem(key);
+const initial=stored===null?window.initialState:JSON.parse(stored);
+fields.work.value=String(initial.work);fields.remaining.value=String(initial.remaining);
+document.querySelector('#save').addEventListener('click',()=>{if(saveBehavior)saveBehavior(app.values())});
+/* MODEL_BEHAVIOR */
+</script></body></html>

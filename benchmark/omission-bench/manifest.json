@@ -1,0 +1,152 @@
+{
+  "schema_version": "omission-bench/v1",
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "arms": [
+    "A",
+    "B",
+    "C"
+  ],
+  "cases": [
+    {
+      "case": "kanboard-closed-filter",
+      "prompt_sha256": {
+        "A": "85359766e9bf0cdf68131f19dac0573b85ccf962e51c6a1a444282e9d1949a93",
+        "B": "e97acc9b456d526287b40c3dd34dabb6870204aefe8291032559799e1945369c",
+        "C": "3e2614f3efe11e32f1905e0ee7e1eb04f8560f52e0859834e5207244ace19e72"
+      },
+      "oracle": {
+        "page.html": "eval/fixtures/kanboard-closed-filter/page.html",
+        "runner.cjs": "eval/fixtures/kanboard-closed-filter/runner.cjs",
+        "qualify.py": "eval/fixtures/kanboard-closed-filter/qualify.py"
+      },
+      "oracle_sha256": {
+        "page.html": "151949622995c331b2ba03c3464d5d1b365ff47e39be9fcc0eefdd5fd79cfad3",
+        "runner.cjs": "1fc93b94b00dfde7f4ece9ccf7a3db2862b4769beffaf8cbe3b0b14aa4eeb849",
+        "qualify.py": "d7b9cf09f58e55e1aa2f6ae13e871fed8e6bd39c93587d4dbb75e9d4e53e346f"
+      },
+      "reference_results": "data/e2e-kanboard-closed-filter/results-20260927/summary.json",
+      "collector": "scripts.kanboard_closed_filter_pilot_v2"
+    },
+    {
+      "case": "nextcloud-restore-conflict",
+      "prompt_sha256": {
+        "A": "ac058873635b59d32f3a8d14198355e4b5a57f9a21a02bb6610928448f2806df",
+        "B": "280d72f210fa332053007fd9680ed4b5958e9369bc5af7159bb41882b09eeec5",
+        "C": "757a60ff1d2b43e9ce43e288eb142dfc9d51c441b61755541dd6ba05cac1ecc0"
+      },
+      "oracle": {
+        "page.html": "eval/fixtures/nextcloud-restore-conflict-v4/page.html",
+        "runner.cjs": "eval/fixtures/nextcloud-restore-conflict-v4/runner.cjs",
+        "qualify.py": "eval/fixtures/nextcloud-restore-conflict-v4/qualify.py"
+      },
+      "oracle_sha256": {
+        "page.html": "0d3a29262a5169029d483d6aca1c99c08daa733719ccf227178ea8131d85d48f",
+        "runner.cjs": "641fa3bc29d8c77d1d650e7f5c39ff6f9b394a1deca760e5be090c05b168d0df",
+        "qualify.py": "5eee702fe136bd0e96774b40ca07d7419a9c1755c46648b938cd719a812d336e"
+      },
+      "reference_results": "data/e2e-nextcloud-restore-conflict/results-20260927/summary.json",
+      "collector": "scripts.nextcloud_restore_conflict_v4_pilot"
+    },
+    {
+      "case": "openproject-invalid-remaining",
+      "prompt_sha256": {
+        "A": "7b96ef243faa442d42ca676775843b209904bedade09cf0cec11110979e36bab",
+        "B": "ffc8a272b884216fda2c8d54788d11a2ea1b43d2683864d345ea21287b526eaa",
+        "C": "c1534cbb4aaa98a1d6d11533a45ebe121d9efd7e8b883acd6447dab2610af24d"
+      },
+      "oracle": {
+        "page.html": "eval/fixtures/openproject-invalid-remaining/page.html",
+        "runner.cjs": "eval/fixtures/openproject-invalid-remaining/runner.cjs",
+        "qualify.py": "eval/fixtures/openproject-invalid-remaining/qualify.py"
+      },
+      "oracle_sha256": {
+        "page.html": "ce30394e8581df53b2b7613cadde27ca88cea7ba70565d0a0d7d95994c936c4b",
+        "runner.cjs": "f7b1e71826788a8920fcc93b407e6ec80cae709f60305cdb94ae7a18868939ab",
+        "qualify.py": "f5d8c63cdab952a0577a482b5b3c5e483e598791d5cd9c32ef5ded5f4562bcd6"
+      },
+      "reference_results": "data/e2e-openproject-invalid-remaining/results-20260926/summary.json",
+      "collector": "scripts.openproject_invalid_remaining_pilot"
+    },
+    {
+      "case": "paperless-inbox-suggestions",
+      "prompt_sha256": {
+        "A": "5c7ee7a022fdf84be4bd9ec4226f29d9ca0fe77a42eea4769c47c486009d11a0",
+        "B": "1fea58d7f2a991d06c17e4c2816a7cb54df0a5974a08a0c2c203ea04f22a607d",
+        "C": "ce1e9253d4d7ee0d2ecf9f02b1c6635278def0c15bcc790a49aa1cd6d65b8dfa"
+      },
+      "oracle": {
+        "page.html": "eval/fixtures/paperless-inbox-suggestions/page.html",
+        "runner.cjs": "eval/fixtures/paperless-inbox-suggestions/runner.cjs",
+        "qualify.py": "eval/fixtures/paperless-inbox-suggestions/qualify.py"
+      },
+      "oracle_sha256": {
+        "page.html": "3d9554106e57398c89b254ba8c5d798fcffb4d7e6d282fe557bb9c5f6b558bd0",
+        "runner.cjs": "4fbb130b5a46760b694322839b4b6f7cf345ce0b0a1228f100f4a14daf503f4b",
+        "qualify.py": "b2539133c3748c1f45fc62ac793500757e425df76720937894415495db4abc32"
+      },
+      "reference_results": "data/e2e-paperless-inbox-suggestions/replication-20261001-v3/summary.json",
+      "collector": "scripts.paperless_inbox_suggestions_pilot_v3"
+    },
+    {
+      "case": "paperless-nested-tags",
+      "prompt_sha256": {
+        "A": "399a66530c74204dd2609462113fd8a23ed7fe70d52062ca70c9de296f08229a",
+        "B": "bf71effda8c8cc901471de015d5e0a14a019c748ba8fb021002f73fc8a3def8a",
+        "C": "9812937fbf99a3b9d7f69a4373e98cb94dc21d0ac9c84b9f43ae1f3e52b448d0"
+      },
+      "oracle": {
+        "page.html": "eval/fixtures/paperless-nested-tags/page.html",
+        "runner.cjs": "eval/fixtures/paperless-nested-tags/runner.cjs",
+        "qualify.py": "eval/fixtures/paperless-nested-tags/qualify.py"
+      },
+      "oracle_sha256": {
+        "page.html": "8eec17ace6cac2d3c9f7609da024b9d2b5b5306f05dc158e4002534dee85dbe8",
+        "runner.cjs": "a63dcf045f436f26fd554156a9fcdb379fdd8ea18e201ce903417ebdaeafff35",
+        "qualify.py": "2ad56892d7f33ea2557ea484b5596a5ca2309946b363fef40e675ac9a4f250d7"
+      },
+      "reference_results": "data/e2e-paperless-nested-tags/results-20260927/summary.json",
+      "collector": "scripts.paperless_nested_tags_pilot"
+    },
+    {
+      "case": "realworld-comment-delete",
+      "prompt_sha256": {
+        "A": "ed469dda355ec0ed7ff1802704279ddc02ddc8929a8c621d7b6c0ca1396ec60a",
+        "B": "54a11f2ee27b12a9fafbe2e69d8afc266adc64d287d6a67c2bcf7d0a0f91edbb",
+        "C": "5f737a7c017d8f9d1228821d72d08d63713b3e8316fbb1d3cb84d4c322be0854"
+      },
+      "oracle": {
+        "page.html": "eval/fixtures/realworld-comment-delete/page.html",
+        "runner.cjs": "eval/fixtures/realworld-comment-delete/runner.cjs",
+        "qualify.py": "eval/fixtures/realworld-comment-delete/qualify.py"
+      },
+      "oracle_sha256": {
+        "page.html": "2524c17fc0cd8d454d60e5c9d5ede1d90a2ad26f2965a9d3c9fc0d9e5361772f",
+        "runner.cjs": "f9f1f564fb38b62da7947e3575b6c3d1e1331815a73f5cb792c900f2a44c6e79",
+        "qualify.py": "adc30fe122707ffeb6d4b30bb6021520631da240164f1b6b703f24463e8056ed"
+      },
+      "reference_results": "data/e2e-realworld-comment-delete/replication-20261001/summary.json",
+      "collector": "scripts.realworld_comment_delete_replication"
+    },
+    {
+      "case": "todomvc-clear-button",
+      "prompt_sha256": {
+        "A": "fd60916e674cd8bea43486ac3d9d157d0cddae0f2bbfcb9f98642aa1afb2f714",
+        "B": "a15d203b9fbf2350377be356c09740f366dcdfe2f1447c9691afcdaf6b4e4566",
+        "C": "1f3392b273f286fd08e1b05c7f0ea582f5679d78891b8c90e5a8c63bdf136671"
+      },
+      "oracle": {
+        "page.html": "eval/fixtures/todomvc-clear-button-v5/page.html",
+        "runner.cjs": "eval/fixtures/todomvc-clear-button-v5/runner.cjs",
+        "qualify.py": "eval/fixtures/todomvc-clear-button-v5/qualify.py"
+      },
+      "oracle_sha256": {
+        "page.html": "e6db189a08dd80724345cb5e56e7109f854b976b3a2f7883bd7742e584ab3904",
+        "runner.cjs": "8b3d14bc95d9e7b9743f263f3822c3ab99b9e6d321ca3d082391a603766104f5",
+        "qualify.py": "5e0ead193c0e6b5c5409ff1c365fd4e3f30e6b11a000c845d63705c78ee09fe2"
+      },
+      "reference_results": "data/e2e-todomvc-clear-button/replication-20261001/summary.json",
+      "collector": "scripts.todomvc_clear_button_replication"
+    }
+  ],
+  "license_note": "Requirement texts are excerpts of each project's documentation under its own license; see the project sources recorded with each case."
+}
