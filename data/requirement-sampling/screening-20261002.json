@@ -1,0 +1,4181 @@
+{
+ "schema_version": "requirement-screening/v1",
+ "screened_by": "assistant pre-screen (suggestion only; admission requires two human reviewers)",
+ "date": "2026-10-02",
+ "criteria": [
+  "web-UI observable",
+  "one testable obligation",
+  "self-contained scaffold possible",
+  "not a pilot case"
+ ],
+ "candidates": [
+  {
+   "candidate_id": "rc-0779cf6e53b0",
+   "project": "kanboard",
+   "commit": "29039da0b1cfdda1a62600c3960f412ac91087a8",
+   "date": "2025-03-28",
+   "file": "content/en/v1/dev/tests.md",
+   "kind": "deletion",
+   "removed": [
+    "Test with Mysql  You must have Mysql or MariaDb installed on localhost."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-0ce5cce0aff8",
+   "project": "kanboard",
+   "commit": "c4a073ad94ba1d3c607bb65951a8d8e83ecc7d0d",
+   "date": "2025-06-22",
+   "file": "content/en/v1/admin/email.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Kanboard URL  You must define explicitly the application URL to generate correct links in the emails otherwise the links will default to http://localhost/ domain."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-10d9172de147",
+   "project": "kanboard",
+   "commit": "b1aa26cb8141a97c0f83f1d9b84bb0da8018b4c6",
+   "date": "2025-10-24",
+   "file": "content/en/v1/dev/tests.md",
+   "kind": "deletion",
+   "removed": [
+    "Default credentials:  Hostname: localhost Username: root Password: none Database: kanboard_unit_test"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-1a6fb34ec7df",
+   "project": "kanboard",
+   "commit": "29039da0b1cfdda1a62600c3960f412ac91087a8",
+   "date": "2025-03-28",
+   "file": "content/en/v1/dev/tests.md",
+   "kind": "deletion",
+   "removed": [
+    "You must have Postgresql installed on localhost."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-2706863ba656",
+   "project": "kanboard",
+   "commit": "c4a073ad94ba1d3c607bb65951a8d8e83ecc7d0d",
+   "date": "2025-06-22",
+   "file": "content/en/v1/admin/requirements.md",
+   "kind": "modification",
+   "removed": [
+    "The latest version of PHP is recommended."
+   ],
+   "added": [
+    "Since version 1.2.46, Kanboard requires at least PHP 8.1.",
+    "PHP 7.x is end-of-life and no longer supported."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-52cda9e9bce0",
+   "project": "kanboard",
+   "commit": "29039da0b1cfdda1a62600c3960f412ac91087a8",
+   "date": "2025-03-28",
+   "file": "content/en/v1/dev/tests.md",
+   "kind": "modification",
+   "removed": [
+    "By default, those credentials are used:"
+   ],
+   "added": [
+    "Ensure MySQL or MariaDB is installed on localhost."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-571b127ceaaf",
+   "project": "kanboard",
+   "commit": "29039da0b1cfdda1a62600c3960f412ac91087a8",
+   "date": "2025-03-28",
+   "file": "content/en/v1/dev/tests.md",
+   "kind": "modification",
+   "removed": [
+    "In order to run these tests you must have Selenium Standalone Server installed, and a compatible version of Firefox."
+   ],
+   "added": [
+    "Run the tests using the config file tests/acceptance.xml :"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-684fcb133a0b",
+   "project": "kanboard",
+   "commit": "8cc6d1458210b18373bd412bd09e29fc55133e24",
+   "date": "2026-01-05",
+   "file": "content/en/v1/admin/reverse_proxy_authentication.md",
+   "kind": "modification",
+   "removed": [
+    "Create a custom config.php file or copy the config.default.php file:"
+   ],
+   "added": [
+    "Since Kanboard version 1.2.49, it is mandatory to configure the TRUSTED_PROXY_NETWORKS option when enabling reverse proxy authentication.",
+    "This setting specifies the list of trusted proxy networks in CIDR format that are permitted to set the authentication header.",
+    "For instance, if your reverse proxy operates on the same server as Kanboard, you can configure it as follows: 127.0.0.1/32,::1/128 ."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-786414596cfa",
+   "project": "kanboard",
+   "commit": "b1aa26cb8141a97c0f83f1d9b84bb0da8018b4c6",
+   "date": "2025-10-24",
+   "file": "content/en/v1/dev/tests.md",
+   "kind": "deletion",
+   "removed": [
+    "Default credentials:  Hostname: localhost Username: postgres Password: none Database: kanboard_unit_test"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-85a8ff54250b",
+   "project": "kanboard",
+   "commit": "29039da0b1cfdda1a62600c3960f412ac91087a8",
+   "date": "2025-03-28",
+   "file": "content/en/v1/dev/assets.md",
+   "kind": "modification",
+   "removed": [
+    "Building assets is not possible from the Kanboard's archive, you have to clone the repository."
+   ],
+   "added": [
+    "Building assets is not possible from Kanboard's archive.",
+    "You must clone the repository."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-93ae3056b461",
+   "project": "kanboard",
+   "commit": "8cc6d1458210b18373bd412bd09e29fc55133e24",
+   "date": "2026-01-05",
+   "file": "content/en/v1/admin/reverse_proxy_authentication.md",
+   "kind": "modification",
+   "removed": [
+    "Apache authentication on the same server or a properly configured reverse proxy."
+   ],
+   "added": [
+    "Apache or another web server with authentication capabilities (e.g., Basic Auth, LDAP, OAuth, SAML) A reverse proxy configured to authenticate users and forward authentication headers to Kanboard Network configuration ensuring Kanboard is only accessible through the reverse proxy"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-b6e659ff5c8d",
+   "project": "kanboard",
+   "commit": "72a7858cefa4a17bbc2f5057a2d4835bc1a502ce",
+   "date": "2025-03-31",
+   "file": "content/en/v1/admin/email.md",
+   "kind": "modification",
+   "removed": [
+    "define('MAIL_SMTP_ENCRYPTION', 'ssl'); // Valid values: null, \"ssl\", or \"tls\""
+   ],
+   "added": [
+    "define('MAIL_SMTP_PORT', 587); define('MAIL_SMTP_ENCRYPTION', 'tls');"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-b7821c966983",
+   "project": "kanboard",
+   "commit": "29039da0b1cfdda1a62600c3960f412ac91087a8",
+   "date": "2025-03-28",
+   "file": "content/en/v1/dev/tests.md",
+   "kind": "modification",
+   "removed": [
+    "By default, those credentials are used:"
+   ],
+   "added": [
+    "Ensure PostgreSQL is installed on localhost."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-e0c923f5ce8d",
+   "project": "kanboard",
+   "commit": "24f89f0a2b1d57bb7dde361250c6a3408b51dc27",
+   "date": "2025-03-29",
+   "file": "content/fr/v1/utilisateur/projets.md",
+   "kind": "deletion",
+   "removed": [
+    "Permissions Catégories Actions Swimlanes Tâches"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-f7d6b6ee776f",
+   "project": "kanboard",
+   "commit": "d5c0612a797239723a94d348914ffa64b0f4de75",
+   "date": "2026-01-05",
+   "file": "content/en/v1/admin/security.md",
+   "kind": "deletion",
+   "removed": [
+    "General Advice  Change the default username/password.",
+    "Prevent public access to the data directory via the URL.",
+    "A .htaccess file for Apache and a web.config file for IIS are included, but other web servers must be configured manually."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-059de6f6d139",
+   "project": "paperless",
+   "commit": "a4e69aac9da5a390328f0b87f8947e176faf7c60",
+   "date": "2026-09-15",
+   "file": "docs/usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "correspondent:\"acme corp\" tag:bills,unpaid asn: 50 to 150] checksum:9f86d081*"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-f7aa63a16f88",
+   "project": "paperless",
+   "commit": "f197d09b3e287d93f73ea40028046ff0f36930bb",
+   "date": "2026-09-07",
+   "file": "docs/usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Suggestions are requested automatically when you open a document that still has an inbox tag.",
+    "To only request them by pressing the \"Suggest\" button instead, turn off \"Automatically request suggestions for inbox documents\" under Settings > Documents."
+   ],
+   "suggestion": "exclude",
+   "reason": "used_in_pilot",
+   "note": "paperless-inbox-suggestions pilot"
+  },
+  {
+   "candidate_id": "rc-1acafda0e7c2",
+   "project": "paperless",
+   "commit": "a4e69aac9da5a390328f0b87f8947e176faf7c60",
+   "date": "2026-09-15",
+   "file": "docs/usage.md",
+   "kind": "modification",
+   "removed": [
+    "created: 2005 to 2009] added:yesterday modified:today"
+   ],
+   "added": [
+    "invoice* title:Invoice* 20 12]?"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-eec48dd3b711",
+   "project": "paperless",
+   "commit": "edb8c06e2a7cf5e434b098046e102d350d9518b4",
+   "date": "2025-08-11",
+   "file": "docs/administration.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "!!! note  As of Paperless-ngx v2.18, the minimum supported version of PostgreSQL is 13."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-975847acd070",
+   "project": "paperless",
+   "commit": "ca9b5d95868269716c12029c997e48a38a73fcf0",
+   "date": "2025-08-17",
+   "file": "docs/advanced_usage.md",
+   "kind": "deletion",
+   "removed": [
+    "{{ \"2024-01-15T14:30:00\" | format_datetime('%m/%d/%Y') }}"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-5c79d421d1c9",
+   "project": "paperless",
+   "commit": "e2947ccff259059217c741b60c8aa47ca44cb842",
+   "date": "2026-03-12",
+   "file": "docs/advanced_usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "... webserver: environment: PAPERLESS_ENABLE_FLOWER ports: 5555:5555 # (2)!"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-0f7ffc126be1",
+   "project": "paperless",
+   "commit": "df03207eef9fa13c8024aeb40594746df738cab9",
+   "date": "2026-03-04",
+   "file": "docs/usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Version files follow normal filename formatting (including storage paths) and add a _vN suffix (for example _v1 , _v2 )."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-806442660eb5",
+   "project": "paperless",
+   "commit": "41bcc12cc2ae01d99957518a9b88126e16bb7c71",
+   "date": "2025-01-20",
+   "file": "docs/usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Superuser status can only be granted by another superuser."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Only an existing superuser can grant superuser status to another user.",
+   "oracle_sketch": "Non-superuser admin opens a user's edit form: the superuser toggle is absent or disabled; a superuser can enable it and it persists.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-8f4bd73a2cd1",
+   "project": "paperless",
+   "commit": "bb5d7438b1bb24f2b502eb46f4fbafbd4fe3adc8",
+   "date": "2026-06-18",
+   "file": "docs/administration.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "!!! note  Upgrading to v3 clears the existing task history; previously completed, failed, or acknowledged tasks will no longer appear in the task list afterward.",
+    "No action is required."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-a29de75f6414",
+   "project": "paperless",
+   "commit": "1646756c6c4d4860d8f7f3f4022862cd19d3c391",
+   "date": "2026-07-25",
+   "file": "docs/administration.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "!!! warning  Extracting a new release archive on top of an existing installation (e.g. tar -xf paperless-ngx-vX.Y.Z.tar.xz -C /opt/paperless ) only adds and overwrites files -- it does not remove files that were deleted in the new release.",
+    "Leftover files from an old version, such as superseded database migrations, can remain on disk and cause errors like NodeNotFoundError during manage.py migrate .",
+    "Before unpacking a new release over an existing bare-metal installation, remove the previous source tree first (everything except your media , data , and consume directories and your paperless.conf / .env ), or unpack into a fresh directory and move your persistent data and configuration over.",
+    "Installations updated via git pull on a clean checkout are not affected, since Git removes files that no longer exist upstream."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-39879db02b49",
+   "project": "paperless",
+   "commit": "7f1609332aa34516b4f25b7c6ef6bbed2d21ec6c",
+   "date": "2026-08-24",
+   "file": "docs/usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "By default, every document of a supported file type is sent to the remote engine.",
+    "To use it more selectively, set the remote OCR mode to workflow_only .",
+    "Documents are then processed locally unless a workflow explicitly enables remote OCR for them, so you can limit the remote engine to particular documents."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-78d2574258d8",
+   "project": "paperless",
+   "commit": "df03207eef9fa13c8024aeb40594746df738cab9",
+   "date": "2026-03-04",
+   "file": "docs/advanced_usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "For versioned files, this counter is appended after the version suffix (for example statement_v2_01.pdf )."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-96ccb077f55d",
+   "project": "paperless",
+   "commit": "e822e7296476dd3f9d71c32bbe614e2a0e40acc4",
+   "date": "2026-05-04",
+   "file": "docs/administration.md",
+   "kind": "modification",
+   "removed": [
+    "Option | Required | Default | Description |  source | Yes | N/A | The directory containing an export | --no-progress-bar | No | False | If provided, the progress bar will be hidden | --data-only | No | False | If provided, only import data, do not import document files or thumbnails | --passphrase | No | N/A | If your export was encrypted with a passphrase, must be provided |"
+   ],
+   "added": [
+    "Option | Required | Default | Description |  source | Yes | N/A | The directory containing an export | --no-progress-bar | No | False | If provided, the progress bar will be hidden | --data-only | No | False | If provided, only import data, do not import document files or thumbnails | --passphrase | No | N/A | If your export was encrypted with a passphrase, must be provided | --batch-size | No | 500 | Number of database records inserted per batch.",
+    "Lower values reduce peak memory usage on very large installs. |"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-e85708bbda67",
+   "project": "paperless",
+   "commit": "ff13847d0a77fbfcf709ba751df46cf44d6f7ef7",
+   "date": "2026-08-13",
+   "file": "docs/administration.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "The compression method for the zip can be set with --zip-compression ( stored , deflated (default), bzip2 , lzma , or zstd ) and tuned with --zip-compression-level (deflated: 0–9, bzip2: 1–9, zstd: -22–22; ignored for stored and lzma ).",
+    "Both options require --zip .  !!! warning  zstd compression requires Python 3.14 or newer on both the machine creating the export and any machine importing it.",
+    "An archive compressed with zstd (or lzma / bzip2 where those modules are unavailable) cannot be imported on a runtime that lacks the codec; the importer will refuse it with a clear error.",
+    "The default deflated is universally readable."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-035e8af08cd7",
+   "project": "paperless",
+   "commit": "1ba6c31385b078e26b7e8fff1b0eaaec8487c411",
+   "date": "2026-04-07",
+   "file": "docs/usage.md",
+   "kind": "modification",
+   "removed": [
+    "User | Add, edit, delete or view Users. |"
+   ],
+   "added": [
+    "User | Add, edit, delete or view other user accounts via Settings > Users & Groups and /api/users/ .",
+    "These permissions are not needed for users to edit their own profile via \"My Profile\" or /api/profile/ . |"
+   ],
+   "suggestion": "admit",
+   "target_rule": "A user without User permissions can still edit their own profile via My Profile.",
+   "oracle_sketch": "User lacking User permissions saves a change in My Profile; reload shows the change.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-180f12f5ce15",
+   "project": "paperless",
+   "commit": "e770ff572eee25b35c86f904d3154c261a5877b8",
+   "date": "2025-12-12",
+   "file": "docs/usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "L Scheduled Task Check hourly at :05] --> M Get All Scheduled Triggers] M --> scheduled scheduled --> |Yes| N Workflow Actions Run] scheduled --> |No| O Document Saved] N --> O"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-1cdd063160cf",
+   "project": "paperless",
+   "commit": "782634d912608e398751945d2825540c95e94e40",
+   "date": "2026-03-23",
+   "file": "docs/advanced_usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Barcodes are only supported for PDF documents or TIFF, if enabled ."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-603780a99c3f",
+   "project": "paperless",
+   "commit": "879cd4a30a50f0d6d28f67336b21412e3e48c311",
+   "date": "2026-08-12",
+   "file": "docs/administration.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "url | No | blank | If an instance URL is provided, the output table will show URLs to each documents instead of the document ID and name. |"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-6ede608bd86b",
+   "project": "paperless",
+   "commit": "afaf39e43aebf5fa810fe3c620dfb116085f6e11",
+   "date": "2026-02-16",
+   "file": "docs/advanced_usage.md",
+   "kind": "modification",
+   "removed": [
+    "In addition, the entire Document instance is available to be utilized in a more advanced way, as well as some variables which only make sense to be accessed with more complex logic."
+   ],
+   "added": [
+    "In addition, a limited document object is available for advanced templates.",
+    "This object includes common metadata fields such as id , pk , title , content , page_count , created , added , modified , mime_type , checksum , archive_checksum , archive_serial_number , filename , archive_filename , and original_filename .",
+    "Related values are available as nested objects with limited fields, for example document.correspondent.name, etc."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-29dd3b4e767b",
+   "project": "paperless",
+   "commit": "3281ec24016910dcf6dfb7c1af6f6c53441e9d2d",
+   "date": "2026-01-28",
+   "file": "docs/administration.md",
+   "kind": "modification",
+   "removed": [
+    "Paperless already catches and prevents upload of exactly matching documents,"
+   ],
+   "added": [
+    "Paperless-ngx already catches and warns of exactly matching documents,"
+   ],
+   "suggestion": "exclude",
+   "reason": "used_in_pilot",
+   "note": "paperless-duplicate-consumption pilot"
+  },
+  {
+   "candidate_id": "rc-086a9d210266",
+   "project": "paperless",
+   "commit": "855669ddf93e25fe5c45420781e191a7df63884d",
+   "date": "2026-08-10",
+   "file": "docs/usage.md",
+   "kind": "modification",
+   "removed": [
+    "Note that no value for the field will be set"
+   ],
+   "added": [
+    "Custom fields, optionally with a value.",
+    "If no value is set, the field is only added to the document and any value it may already have is left untouched.",
+    "If a value is set, it will overwrite an existing value of that field on the document."
+   ],
+   "suggestion": "admit",
+   "target_rule": "A workflow custom-field action with no value only adds the field and leaves an existing value untouched; with a value it overwrites.",
+   "oracle_sketch": "Run action without value on a document whose field holds 'X': field still shows 'X'.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-13e3558f8cbe",
+   "project": "paperless",
+   "commit": "4cff907ba0a5a2fd117a9bec3a0e61c1d5c8c5da",
+   "date": "2025-09-17",
+   "file": "docs/usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Nested Tags  Paperless-ngx v2.19 introduces support for nested tags, allowing you to create a hierarchy of tags, which may be useful for organizing your documents.",
+    "Tags can have a 'parent' tag, creating a tree-like structure, to a maximum depth of 5.",
+    "When a tag is added to a document, all of its parent tags are also added automatically and similarly, when a tag is removed from a document, all of its child tags are also removed.",
+    "Additionally, assigning a parent to an existing tag will automatically update all documents that have this tag assigned, adding the parent tag as well."
+   ],
+   "suggestion": "exclude",
+   "reason": "used_in_pilot",
+   "note": "paperless-nested-tags pilot"
+  },
+  {
+   "candidate_id": "rc-9e198862b86e",
+   "project": "paperless",
+   "commit": "63c0e2f72b53ca2d38851930a4bcd1d5c8b52321",
+   "date": "2026-02-03",
+   "file": "docs/usage.md",
+   "kind": "modification",
+   "removed": [
+    "{{doc_title}} : current document title"
+   ],
+   "added": [
+    "{{doc_title}} : current document title (cannot be used in title assignment)"
+   ],
+   "suggestion": "admit",
+   "target_rule": "The {{doc_title}} placeholder cannot be used in a title assignment.",
+   "oracle_sketch": "Entering {{doc_title}} in a workflow title assignment is rejected with a visible validation error.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-1ca8cfc42b84",
+   "project": "paperless",
+   "commit": "bb5d7438b1bb24f2b502eb46f4fbafbd4fe3adc8",
+   "date": "2026-06-18",
+   "file": "docs/advanced_usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Data Matrix Aztec PDF417"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-f210a3ab9ea5",
+   "project": "paperless",
+   "commit": "df03207eef9fa13c8024aeb40594746df738cab9",
+   "date": "2026-03-04",
+   "file": "docs/advanced_usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "When a document has file versions, each version uses the same naming rules and storage path resolution as any other document file, with an added version suffix such as _v1 , _v2 , etc."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-84013890a131",
+   "project": "paperless",
+   "commit": "937feb1befdbc5712a612e9be44a926b0b6fc84c",
+   "date": "2026-09-07",
+   "file": "docs/usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Documents whose processed text is empty or contains only whitespace are skipped."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-daa95dd0b1c3",
+   "project": "paperless",
+   "commit": "e940764fe01038bec4d0fb14009dc375b44d9323",
+   "date": "2026-01-13",
+   "file": "docs/index.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "New : Paperless-ngx can now leverage AI (Large Language Models or LLMs) for document suggestions.",
+    "This is an optional feature that can be enabled (and is disabled by default)."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-508ba9ef7f49",
+   "project": "paperless",
+   "commit": "e34eda07bbc12f17b2b6ba46ea59aa63e73d3f25",
+   "date": "2026-09-23",
+   "file": "docs/advanced_usage.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "By default, the main LLM API key and endpoint are used, but an optional embedding-specific API key and endpoint can be configured."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-44373c34e94f",
+   "project": "paperless",
+   "commit": "c232d443fa5d377e5aa6809b9dd6052c62734de6",
+   "date": "2026-04-06",
+   "file": "docs/usage.md",
+   "kind": "modification",
+   "removed": [
+    "paperless to create archived versions for digital documents, you can configure that by configuring PAPERLESS_OCR_SKIP_ARCHIVE_FILE=with_text ."
+   ],
+   "added": [
+    "paperless to create archived versions for born-digital documents, set PAPERLESS_ARCHIVE_FILE_GENERATION=auto (the default).",
+    "To skip archives entirely, use never ."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-8b39c100a3eb",
+   "project": "paperless",
+   "commit": "bdbf1b57cee1d43253009dea46fed76d187069a0",
+   "date": "2025-05-25",
+   "file": "docs/usage.md",
+   "kind": "modification",
+   "removed": [
+    "Note that Workflows are global, in other words all users who can access workflows have access to the same set of them. |"
+   ],
+   "added": [
+    "Note that Workflows are global; all users who can access workflows see the same set.",
+    "Workflows have other permission implications — see Workflow permissions . |"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-d3faa64f9193",
+   "project": "nextcloud",
+   "commit": "0458effea45a59c924abaedc90d5f1dcc89ad666",
+   "date": "2025-10-07",
+   "file": "user_manual/talk/talk_basics.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    ":width: 500px  Then, you can add a title and description for the thread and start the discussion."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-d46adb03ac60",
+   "project": "nextcloud",
+   "commit": "f74d1ade7c10fedeb169abbadc67cc6af02dd0f4",
+   "date": "2026-09-21",
+   "file": "user_manual/desktop/usage.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    ":width: 50% :align: center"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-e669bada5eee",
+   "project": "nextcloud",
+   "commit": "88ea4766ce9a72a5554f9b6bcf38e799f958dc26",
+   "date": "2026-04-16",
+   "file": "user_manual/files/collaboration.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Sharing & collaboration    :maxdepth: 1  sharing file_drop federated_cloud_sharing transfer_ownership"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-ab0227c1eb5b",
+   "project": "nextcloud",
+   "commit": "215c005b076f6166e21d851bdbabc690dcc792a3",
+   "date": "2026-01-13",
+   "file": "user_manual/groupware/mail.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Sort favorites up     This setting allows you to show messages set as favorite in a separate section on top of the message list.",
+    "Visit mail settings 2.",
+    "Go to *Appearance* 3.",
+    "Enable sorting favorites up"
+   ],
+   "suggestion": "admit",
+   "target_rule": "With 'Sort favorites up' enabled, favorite messages appear in a separate section above the message list.",
+   "oracle_sketch": "Enable setting; favorite message is listed under the favorites section at the top.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-9d801a70d5d2",
+   "project": "nextcloud",
+   "commit": "f9dff2cff30abeb81ad52fd1010023e5077f34e2",
+   "date": "2026-08-08",
+   "file": "user_manual/files/deleted_file_management.rst",
+   "kind": "modification",
+   "removed": [
+    "When you delete a file in Nextcloud, it is not immediately deleted permanently, only moved into the trash bin.",
+    "It is not permanently deleted until you manually delete it, or when the Deleted Files app deletes it to make room for new files."
+   ],
+   "added": [
+    "When you delete a file or folder in Nextcloud, it is normally moved to the trash bin instead of being deleted immediately.",
+    "This allows you to restore it later."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-926bffca6bb1",
+   "project": "nextcloud",
+   "commit": "52b52d09546af032ee8efa6777e6c6cde97287f9",
+   "date": "2026-09-21",
+   "file": "user_manual/desktop/usage.rst",
+   "kind": "modification",
+   "removed": [
+    ":alt: Status icon, sign \"!\" in yellow circle"
+   ],
+   "added": [
+    "If prompted for a client certificate, choose the PKCS#12 file provided by your administrator, enter its password, and click Connect ."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-4af52986d601",
+   "project": "nextcloud",
+   "commit": "88ea4766ce9a72a5554f9b6bcf38e799f958dc26",
+   "date": "2026-04-16",
+   "file": "user_manual/files/security.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Security & encryption    :maxdepth: 1  encrypting_files using_e2ee"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-c38fa60b1164",
+   "project": "nextcloud",
+   "commit": "58b21da96daa240caabc74866c1f82cb51ebb375",
+   "date": "2026-06-05",
+   "file": "user_manual/groupware/mail.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Native account delegation ^^^^^^^^^^^^^^^^^^^^^^^^^    Native account delegation lets you grant other Nextcloud users access to one of your mail accounts directly from the app, without any server-side alias configuration.",
+    "A delegate can do everything the account owner can — send, receive, and delete mail on your behalf — except deleting the account or updating its authentication information.",
+    "To delegate one of your accounts:  1) Open the account's three-dot menu and select Delegate account 2) In the Delegation dialog, click Add delegate 3) Use the Select a user field to choose the Nextcloud user you want to grant access to 4) Confirm with Delegate access  The shared account then appears in the delegate's account list, marked as delegated.",
+    "To remove access:  1) Open the Delegate account dialog again 2) Click Revoke next to the delegate you want to remove 3) Confirm with Revoke access"
+   ],
+   "suggestion": "admit",
+   "target_rule": "A mail delegate can send, receive and delete, but cannot delete the account or edit its authentication.",
+   "oracle_sketch": "As delegate, account menu shows no delete or authentication actions while message delete works.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-b4f22ab14078",
+   "project": "nextcloud",
+   "commit": "f74d1ade7c10fedeb169abbadc67cc6af02dd0f4",
+   "date": "2026-09-21",
+   "file": "user_manual/desktop/usage.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    ":width: 50% :align: center"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-ad6b491c404f",
+   "project": "nextcloud",
+   "commit": "e0f1171d3a7684197a8cf27e601b6db5bfd717ad",
+   "date": "2026-06-17",
+   "file": "user_manual/desktop/usage.rst",
+   "kind": "deletion",
+   "removed": [
+    "Virtual Files on macOS  For information about using virtual files integration on macOS, see:   :maxdepth: 1  macosvfs"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-1248ae53ed03",
+   "project": "nextcloud",
+   "commit": "65b82c05161ad69853622865370faaa49155c81a",
+   "date": "2026-03-11",
+   "file": "user_manual/desktop/macosvfs.rst",
+   "kind": "modification",
+   "removed": [
+    "Upon first accessing one of these domains, the desktop client will being to request information on remote files from the server.",
+    "This first synchronisation may take some time depending on the quantity of files hosted on the server."
+   ],
+   "added": [
+    "When disabling the file provider extension while still having unsynchronized changes, macOS will save the unsynchronized items in a folder that is automatically revealed after the integration is disabled."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-996cff2d34b5",
+   "project": "nextcloud",
+   "commit": "4a788d4c86f77a4b742fc506a5cdc6db27383f43",
+   "date": "2026-09-21",
+   "file": "user_manual/desktop/usage.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    ":width: 25px :class: desktop-status-icon"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-a8a02b0d406a",
+   "project": "nextcloud",
+   "commit": "4d482982af33ac47f7d2aa9d0cedcfe511b05d84",
+   "date": "2026-04-23",
+   "file": "user_manual/groupware/sync_windows10.rst",
+   "kind": "modification",
+   "removed": [
+    "Repeat steps 1–7 from the Calendar instructions.",
+    "If you already have setup the Calendar synchronization, you can use the same account for this."
+   ],
+   "added": [
+    "For Windows 10 your Nextcloud https server must support TLSv1.2 _.",
+    "This is apparent if no connection attempts are seen on the server, and the Windows client Event Viewer will display Schannel TLS errors under \"Windows Logs -> System\"."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-a587b165d3fd",
+   "project": "nextcloud",
+   "commit": "f74d1ade7c10fedeb169abbadc67cc6af02dd0f4",
+   "date": "2026-09-21",
+   "file": "user_manual/desktop/usage.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    ":width: 50% :align: center"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-0dde4b87ef72",
+   "project": "nextcloud",
+   "commit": "bf4d00b72d002c1f1efb62a4b71b82af36cf5669",
+   "date": "2025-09-30",
+   "file": "user_manual/talk/talk_basics.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Polls in chat   You can create a poll in groups chats from the new message additional actions.   :width: 400px  A poll has two settings:  Anonymous polls : Participants cannot see who voted for which option.",
+    "Allow multiple choices : Participants can select more than one option.",
+    "You can also import polls for auto-fill and export polls as JSON files to save it locally.   :width: 400px  Closing poll is possible from the poll dialog.   :width: 400px  As a moderator, you can create the poll directly or you can save it as a draft to edit it later.   :width: 400px  You can find poll drafts in Shared items tab or next to the poll title input field.   :width: 400px"
+   ],
+   "suggestion": "admit",
+   "target_rule": "In an anonymous poll, participants cannot see who voted for which option.",
+   "oracle_sketch": "After two users vote, the results view shows counts but no voter names.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-d595b3b1510f",
+   "project": "nextcloud",
+   "commit": "bf4d00b72d002c1f1efb62a4b71b82af36cf5669",
+   "date": "2025-09-30",
+   "file": "user_manual/talk/join_a_call_or_chat_as_guest.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Joining as an email guest   A guest can be invited to a conversation via email.",
+    "The email contains a link to join the conversation.",
+    "If the guest clicks the link, they will be redirected to the conversation with an individual access token.   :width: 500px  An invitation can be done via inserting the email address in Participants tab search field.   :width: 500px  You can bulk invite email participants by uploading a CSV file.",
+    "The option is available in the conversation settings under Meeting section.   :width: 500px"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-6b760138b4ae",
+   "project": "nextcloud",
+   "commit": "f74d1ade7c10fedeb169abbadc67cc6af02dd0f4",
+   "date": "2026-09-21",
+   "file": "user_manual/desktop/usage.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    ":width: 50% :align: center"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-4702bdd1bac9",
+   "project": "nextcloud",
+   "commit": "2a658896ac1a4d470920431371988954ad266e5d",
+   "date": "2026-04-15",
+   "file": "user_manual/desktop/autoupdate.rst",
+   "kind": "deletion",
+   "removed": [
+    "a. (32-bit-Windows) HKEY_LOCAL_MACHINE\\Software\\Nextcloud\\Nextcloud b. (64-bit-Windows) HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Nextcloud\\Nextcloud"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-946f02ef19b6",
+   "project": "nextcloud",
+   "commit": "a88e2fc1fb99c424aef8ba8333c6a6ce094c34e7",
+   "date": "2026-04-16",
+   "file": "user_manual/talk/call.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Breakout rooms allow you to divide a call into smaller groups for more focused discussions.",
+    "Depending on your permissions and how your instance is configured, this option may not be available to you.",
+    "For more information, see ."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-52c9fb7ce816",
+   "project": "nextcloud",
+   "commit": "e772ce3698100327e8bcf6b66fe88bd925d3035b",
+   "date": "2026-04-26",
+   "file": "user_manual/groupware/sync_android.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "If you enabled 2FA after already configuring DAVx⁵, update your DAVx⁵ account to replace your login password with an app password."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-f4ea6f278e80",
+   "project": "nextcloud",
+   "commit": "f74d1ade7c10fedeb169abbadc67cc6af02dd0f4",
+   "date": "2026-09-21",
+   "file": "user_manual/desktop/usage.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    ":width: 50% :align: center"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-76784eb342eb",
+   "project": "nextcloud",
+   "commit": "98cf5e2992f453fa398ed8cd61eb2b7b0dd6ea10",
+   "date": "2025-10-06",
+   "file": "user_manual/groupware/calendar.rst",
+   "kind": "modification",
+   "removed": [
+    "You may share your calendar with other users or groups."
+   ],
+   "added": [
+    "You may share your calendar with local users, groups or read-only with remote users on federated servers."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-8080194f156f",
+   "project": "nextcloud",
+   "commit": "88ea4766ce9a72a5554f9b6bcf38e799f958dc26",
+   "date": "2026-04-16",
+   "file": "user_manual/files/index.rst",
+   "kind": "modification",
+   "removed": [
+    "access_webgui access_webdav deleted_file_management desktop_mobile_sync encrypting_files using_e2ee sharing file_drop large_file_upload quota version_control projects transfer_ownership federated_cloud_sharing"
+   ],
+   "added": [
+    "accessing managing collaboration security"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-205a87a83e29",
+   "project": "nextcloud",
+   "commit": "2b71d3488f5bd41bd599fbe6fb6796fd2714721b",
+   "date": "2026-09-24",
+   "file": "user_manual/groupware/sync_ios.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Toggle 'SSL' on .",
+    "For port, fill in 443"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-e594b40135ff",
+   "project": "nextcloud",
+   "commit": "ce0623394e355a3599e48f7c011874ef21ebaf9f",
+   "date": "2025-10-02",
+   "file": "user_manual/talk/advanced_features.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Schedule from Calendar ^^^^^^^^^^^^^^^^^^^^^^  When creating a new event in Calendar, you can set a Talk conversation as event location.",
+    "This will create a new conversation if one does not exist yet.   :width: 600px  When the event is created, you will see a link to the conversation in the event details.",
+    "Conversation will also show up in the list of conversations (discoverable by Events filter).   :width: 300px  Like instant meetings, event conversations will be automatically deleted after configured period of inactivity (by default 28 days)."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Setting a Talk conversation as an event location creates the conversation if it does not exist and links it in the event details.",
+   "oracle_sketch": "Create event with a new conversation as location: conversation list gains it and event details show its link.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-3379538287cc",
+   "project": "nextcloud",
+   "commit": "e0f1171d3a7684197a8cf27e601b6db5bfd717ad",
+   "date": "2026-06-17",
+   "file": "user_manual/desktop/macosfileprovider.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Troubleshooting   Debug-level Logging ^^^^^^^^^^^^^^^^^^^^^^^^^^^^  Debug-level log entries for the File Provider extension are disabled by default.",
+    "If you want to report an issue with the File Provider, it can be helpful to enable them to get more detailed information about what is happening under the hood.",
+    "To enable them, you have to issue the following command in Terminal:  .. code-block:: bash  defaults write com.nextcloud.desktopclient.FileProviderExt debugLoggingEnabled -bool YES  The change takes effect within a couple of seconds; no restart of the extension or the Mac is required.",
+    "It is recommended to restore the default value by deleting the explicit value after you have resolved the problem you were investigating:  .. code-block:: bash  defaults delete com.nextcloud.desktopclient.FileProviderExt debugLoggingEnabled"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-16b088247c39",
+   "project": "nextcloud",
+   "commit": "645987bd2c9b183360d9c38144f3ca2212717ffd",
+   "date": "2026-04-29",
+   "file": "user_manual/groupware/calendar.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "If you would like all the events in a calendar to have a default reminder, you can configure that in the settings of that calendar."
+   ],
+   "suggestion": "admit",
+   "target_rule": "A calendar can define a default reminder applied to every new event in that calendar.",
+   "oracle_sketch": "Set default reminder; a newly created event shows that reminder preselected.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-3d153b91ab4e",
+   "project": "nextcloud",
+   "commit": "a806a064bc8adebbdaf8525c387543b55d4b00db",
+   "date": "2026-05-04",
+   "file": "user_manual/session_management.rst",
+   "kind": "modification",
+   "removed": [
+    "Nextcloud will not save the plain password, so it is recommended to enter the password on the new client immediately."
+   ],
+   "added": [
+    "You only have access to the device password when creating it.",
+    "Nextcloud does not save the plain password, so enter the password on the new client immediately."
+   ],
+   "suggestion": "admit",
+   "target_rule": "A device (app) password is shown only when it is created.",
+   "oracle_sketch": "After closing the creation dialog, the password cannot be displayed again from the device list.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-f7001d6abcaf",
+   "project": "nextcloud",
+   "commit": "eb8d9662928ed78ef1bdb5c4f2512487c8d56222",
+   "date": "2026-05-04",
+   "file": "user_manual/files/file_drop.rst",
+   "kind": "modification",
+   "removed": [
+    "files to you without having to log in to the server, and without being a Nextcloud user.",
+    "They will not be allowed to see the contents of this directory, or to make any changes."
+   ],
+   "added": [
+    "files to you without logging in to the server or having a Nextcloud account.",
+    "Uploaders cannot see the contents of the directory or make any changes."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-4e8f1539ddcb",
+   "project": "nextcloud",
+   "commit": "d8ea8f9185f38db46faf997bc224b956e764779e",
+   "date": "2026-04-16",
+   "file": "user_manual/talk/matterbridge.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "The Matterbridge app must be installed by an administrator before this feature is available.",
+    "See the Talk administration documentation _ for setup instructions."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-499bc328bdd4",
+   "project": "realworld",
+   "commit": "ffb221887fb654e929f064109c48c0e7ac51e287",
+   "date": "2026-05-21",
+   "file": "docs/src/content/docs/specifications/backend/endpoints.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "The slug is the article's URL identifier.",
+    "The spec only requires it to be a unique string that you can use to fetch, update, and delete the article — duplicate titles must still produce distinct slugs.",
+    "How you derive it is up to your implementation (commonly a kebab-cased title); no particular format is enforced by the test suite."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Two articles with the same title must get distinct slugs and both remain reachable.",
+   "oracle_sketch": "Publish two articles with identical titles; each opens its own page at a distinct URL.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-50daffe5bc4a",
+   "project": "realworld",
+   "commit": "e991d7d9fe35c7375022aa657ed04a014af482b5",
+   "date": "2025-07-08",
+   "file": "README.md",
+   "kind": "modification",
+   "removed": [
+    "c4ffein - Maintainer  c4ffein currently maintains the demo website .",
+    "Manuel Vila - Maintainer  Manuel is the creator of the Layr framework and the CodebaseShow website ."
+   ],
+   "added": [
+    "c4ffein - Maintainer - currently maintains the demo website .",
+    "Manuel Vila - Maintainer - creator of the Layr framework and the CodebaseShow website ."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-522e7349a9c7",
+   "project": "realworld",
+   "commit": "69d17bf8d074d3a61844ee2c804b7b7e30c516bd",
+   "date": "2025-07-08",
+   "file": "README.md",
+   "kind": "modification",
+   "removed": [
+    "Gérôme is a Frontend Software Engineer at Lucca.",
+    "He's an open-source enthusiast."
+   ],
+   "added": [
+    "c4ffein currently maintains the demo website ."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-5b422c8d8a67",
+   "project": "realworld",
+   "commit": "2ba31c05d7af0772138fadacf98123ca8dbf6b2a",
+   "date": "2026-02-09",
+   "file": "README.md",
+   "kind": "modification",
+   "removed": [
+    "Every frontend utilizes the same handcrafted Bootstrap 4 theme for identical UI/UX"
+   ],
+   "added": [
+    "A CSS file is provided to build frontend implementations with identical UI/UX (currently being reworked)"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-8c9fbfd319ab",
+   "project": "realworld",
+   "commit": "73d9741c9b5a1fe96af54e286ad63598c620248c",
+   "date": "2026-02-21",
+   "file": "README.md",
+   "kind": "modification",
+   "removed": [
+    "A CSS file is provided to build frontend implementations with identical UI/UX (currently being reworked)"
+   ],
+   "added": [
+    "A shared CSS theme is provided to build frontend implementations with identical UI/UX A shared E2E test suite is available to validate frontend implementations"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-95e0014e94fe",
+   "project": "realworld",
+   "commit": "254470a2a24b97ca31890a49a2937aa9e5feb36d",
+   "date": "2026-05-21",
+   "file": "README.md",
+   "kind": "modification",
+   "removed": [
+    "While most \"todo\" demos provide an excellent cursory glance at a framework's capabilities, they typically don't convey the knowledge & perspective required to actually build _real_ applications with it."
+   ],
+   "added": [
+    "While most \"todo\" demos provide an excellent cursory glance at a framework's capabilities, they typically don't convey the knowledge required to actually build _real_ applications with it — nor the real-world constraints a minimal demo never has to face."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-a56dabd43601",
+   "project": "realworld",
+   "commit": "79dd5d5e2e3be026af7d1c7c5878c53d9392e854",
+   "date": "2026-02-19",
+   "file": "apps/documentation/src/content/docs/specifications/frontend/styles.md",
+   "kind": "modification",
+   "removed": [
+    "We created a custom Bootstrap 4 style & templates to ensure all frontends had consistent UI functionality.",
+    "Our starter kit includes all the templates & info required to get up and running ."
+   ],
+   "added": [
+    "The recommended approach is to use a self-contained CSS file that includes only the classes actually used by Conduit.",
+    "See the Angular implementation's styles.css for a reference implementation."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-b98c41586c02",
+   "project": "realworld",
+   "commit": "79dd5d5e2e3be026af7d1c7c5878c53d9392e854",
+   "date": "2026-02-19",
+   "file": "apps/documentation/src/content/docs/specifications/frontend/styles.md",
+   "kind": "deletion",
+   "removed": [
+    "Instead of having the Bootstrap theme included locally, we recommend loading the precompiled theme from our CDN (our header template does this by default):"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-ece91c451af0",
+   "project": "realworld",
+   "commit": "254470a2a24b97ca31890a49a2937aa9e5feb36d",
+   "date": "2026-05-21",
+   "file": "README.md",
+   "kind": "modification",
+   "removed": [
+    "There is a hosted version of the backend API available for public usage at api.realworld.show (with strong account isolation), no API keys are required"
+   ],
+   "added": [
+    "There is a hosted version of the backend API available for public usage at api.realworld.show , no API keys required — demo accounts are provided, and real accounts can't see each other"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-80070ef86b86",
+   "project": "strictdoc",
+   "commit": "78b35f247b8af3e97669837a608a00cb47538530",
+   "date": "2026-05-16",
+   "file": "docs/sphinx/source/strictdoc_01_user_guide.rst",
+   "kind": "modification",
+   "removed": [
+    "To activate language-aware traceability, configure the project with the following features:"
+   ],
+   "added": [
+    "Language-aware parsing is enabled automatically for supported source file types when requirement-to-source traceability is enabled:"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-d07c58de3c69",
+   "project": "strictdoc",
+   "commit": "78b35f247b8af3e97669837a608a00cb47538530",
+   "date": "2026-05-16",
+   "file": "docs/sphinx/source/strictdoc_01_user_guide.rst",
+   "kind": "modification",
+   "removed": [
+    "Currently, only Python and C/C++ parsers are implemented.",
+    "Upcoming implementations include parsers for Rust, Bash, and more."
+   ],
+   "added": [
+    "def create_config() -> ProjectConfig: config = ProjectConfig( project_features= \"REQUIREMENT_TO_SOURCE_TRACEABILITY\" ], ) return config"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-ff8db4d843a7",
+   "project": "strictdoc",
+   "commit": "c595cfeb917b75184328fc2d7e1d932d5cd4fbfd",
+   "date": "2026-04-17",
+   "file": "docs/sphinx/source/strictdoc_01_user_guide.rst",
+   "kind": "deletion",
+   "removed": [
+    "Standalone HTML pages   .. list-table:: :align: left :header-rows: 0  MID: 5674bfd50f31420baf56625d79d1ebff  The following command creates a normal HTML export with all pages having their assets embedded into HTML using Data URI / Base64.",
+    "In the project's strictdoc.toml file, specify:  .. code-block:: yaml  project]  features = \"STANDALONE_DOCUMENT_SCREEN\" ]  The generated document are self-contained HTML pages that can be shared via email as single files.",
+    "This option might be especially useful if you work with a single document instead of a documentation tree with multiple documents."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-e436521e462d",
+   "project": "openproject",
+   "commit": "4af6f743b0cb15a114e717afdf659692f8dc5577",
+   "date": "2025-06-17",
+   "file": "docs/user-guide/projects/project-settings/files/README.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Show attachments in the work packages files tab  To activate or de-activate the attachments being shown under Files tab in work packages, navigate to *Project settings > Files* and select the *Attachments* tab.",
+    "Here you can decide whether the attachments option will be shown under *Files* tab of work packages detailed view for a specific project.  !",
+    "Show attachments in the work packages files tab in OpenProject  !NOTE] Please note that you need a *Manage files in project* permission to be able to activate or deactivate this work package attachment option."
+   ],
+   "suggestion": "admit",
+   "target_rule": "The Files tab of a work package shows attachments only if the project setting enables it.",
+   "oracle_sketch": "Disable the setting: the Files tab has no attachments section; enable it: section appears.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-1986ea85580a",
+   "project": "openproject",
+   "commit": "5b08b3bc68f6e445a25f79da12eb84b3ac57d73c",
+   "date": "2026-06-03",
+   "file": "docs/user-guide/work-packages/README.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Work package ID is a unique identifier assigned to a newly created work package.",
+    "By default, OpenProject uses an instance-wide numerical sequence (for example, #12345 ).",
+    "Administrators can alternatively enable project-based identifiers, which combine a project identifier with a sequential number (for example, PROJ-123 )."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Work package IDs follow an instance-wide numeric sequence by default.",
+   "oracle_sketch": "Create two work packages in different projects: IDs display as #N and #N+1.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-276016ee58a0",
+   "project": "openproject",
+   "commit": "06284360f2206793cc6795b313f5491add50e411",
+   "date": "2025-03-18",
+   "file": "docs/user-guide/work-packages/set-change-dates/README.md",
+   "kind": "modification",
+   "removed": [
+    "Manual scheduling also decouples the start and end dates of parent and children work packages.",
+    "This means that the dates of parents are no longer constrained by those of the children, and children can be scheduled outside of the range of parent work packages.",
+    "These relationships are completely ignored as far as scheduling is concerned, but are not removed (so they will still be visible in Gantt view; the constraints are respected again if you switch manual scheduling off."
+   ],
+   "added": [
+    "You can enter dates by typing them in into the start and finish date fields."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Manual scheduling decouples parent and child dates: a child can be scheduled outside the parent's range.",
+   "oracle_sketch": "With parent in manual mode, set child dates outside the parent span: save succeeds and parent dates do not change.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-1114153d4704",
+   "project": "openproject",
+   "commit": "db54165614946caf2436a5cb2d601c898412326b",
+   "date": "2025-04-11",
+   "file": "docs/user-guide/work-packages/work-package-table-configuration/README.md",
+   "kind": "modification",
+   "removed": [
+    "The results will be displayed accordingly in the work package table."
+   ],
+   "added": [
+    "The results will automatically update and display in the work package table."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-931d3421121d",
+   "project": "openproject",
+   "commit": "06284360f2206793cc6795b313f5491add50e411",
+   "date": "2025-03-18",
+   "file": "docs/user-guide/gantt-chart/scheduling/README.md",
+   "kind": "deletion",
+   "removed": [
+    "The automatic scheduling mode is generally set as the default mode for new work packages.",
+    "For dependencies between two work packages this means:"
+   ],
+   "added": [],
+   "suggestion": "admit",
+   "target_rule": "New work packages default to automatic scheduling mode.",
+   "oracle_sketch": "Create a work package: date picker shows automatic scheduling selected.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-02df56f00b58",
+   "project": "openproject",
+   "commit": "5e64e38f60a7893217b0da71fc0508bb59a9d9d5",
+   "date": "2025-09-30",
+   "file": "docs/user-guide/account-settings/README.md",
+   "kind": "modification",
+   "removed": [
+    "If this option is selected, OpenProject will automatically match your operating system’s light or dark theme."
+   ],
+   "added": [
+    "If this option is selected, OpenProject will automatically match your operating system’s light or dark theme, including the system's contrast settings.",
+    "You will also see additional settings to force high-contrast when Light or Dark mode is selected — this would ensure that OpenProject always increases contrast in automatic mode, regardless of the system contrast settings."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-0c831f7cb825",
+   "project": "openproject",
+   "commit": "06284360f2206793cc6795b313f5491add50e411",
+   "date": "2025-03-18",
+   "file": "docs/user-guide/work-packages/set-change-dates/README.md",
+   "kind": "modification",
+   "removed": [
+    "Switching Working days only off will turn the previously disabled non-working days into regular working days, and make them available for scheduling.",
+    "The duration will now take these days into account."
+   ],
+   "added": [
+    "A yellow banner warning the user that manual scheduling will ignore existing relations in OpenProject date picker"
+   ],
+   "suggestion": "admit",
+   "target_rule": "Turning 'Working days only' off makes non-working days selectable and counts them in the duration.",
+   "oracle_sketch": "Toggle off, pick a span covering a weekend: duration includes the weekend days.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-6d9563c1be9d",
+   "project": "openproject",
+   "commit": "06284360f2206793cc6795b313f5491add50e411",
+   "date": "2025-03-18",
+   "file": "docs/user-guide/work-packages/set-change-dates/README.md",
+   "kind": "modification",
+   "removed": [
+    "Duration without start and finish dates"
+   ],
+   "added": [
+    "A date picker modal for a newly created work package in OpenProject, showing only finish date and a button to add a start date"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-018ce2752c67",
+   "project": "openproject",
+   "commit": "4749de69d2bf1ff98f58461c5fb7df233cafb86f",
+   "date": "2025-12-05",
+   "file": "docs/user-guide/meetings/recurring-meetings/README.md",
+   "kind": "modification",
+   "removed": [
+    "After creating a meeting series, you are redirected to the recurring meeting template."
+   ],
+   "added": [
+    "After creating a meeting series, you are redirected to the recurring meeting template, which will open in the draft mode by default."
+   ],
+   "suggestion": "admit",
+   "target_rule": "After creating a meeting series, the recurring meeting template opens in draft mode.",
+   "oracle_sketch": "Create a series: the redirected template page shows the draft state.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-6fb3a96cddc0",
+   "project": "openproject",
+   "commit": "8960910836edbbbc3688fa6334e0dab3f2382875",
+   "date": "2026-08-27",
+   "file": "docs/user-guide/projects/project-settings/project-wiki/README.md",
+   "kind": "modification",
+   "removed": [
+    "If project wikis are disabled by your OpenProject administrator for your instance, this page is not visible and the project wiki cannot be enabled."
+   ],
+   "added": [
+    "If project wikis are disabled globally by your OpenProject administrator, you cannot enable the wiki for an individual project.",
+    "The Project wiki settings page remains visible and informs you that project wikis must first be enabled globally in the administration settings."
+   ],
+   "suggestion": "admit",
+   "target_rule": "If wikis are disabled globally, the project wiki settings page stays visible and explains that the wiki must first be enabled globally.",
+   "oracle_sketch": "With global wiki off, open project wiki settings: page loads with the explanatory message and no enable control.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-4efba0098a79",
+   "project": "openproject",
+   "commit": "60be87235a19fc820646602f2e224db6bd28e3a6",
+   "date": "2026-08-26",
+   "file": "docs/user-guide/projects/project-settings/project-information/README.md",
+   "kind": "modification",
+   "removed": [
+    "Click the More (three dots) icon, which opens a dropdown menu with the following options: Copy a project Make a project public Archive a project Set a project as a template Delete a project"
+   ],
+   "added": [
+    "Add a subproject Duplicate a project Make a project public Set a project as a template Archive a project Delete a project"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-17b31565c57c",
+   "project": "openproject",
+   "commit": "b09683d8576f827834da9e3391a40cb807a0dc8c",
+   "date": "2025-12-23",
+   "file": "docs/getting-started/invite-members/README.md",
+   "kind": "modification",
+   "removed": [
+    "Here you can select the project, to which you want to invite new members and which roles they get."
+   ],
+   "added": [
+    "Here you can select the project, to which project you want to invite new members.",
+    "Select whether the permissions assigned to the new user should be based on an existing user role, group or a placeholder user permissions."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-cd9e6bd4cb8d",
+   "project": "openproject",
+   "commit": "2cbc9aa9e9339a0995094bfd5cd79941d10fc747",
+   "date": "2026-08-03",
+   "file": "docs/user-guide/wiki/README.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "To use the internal wiki, it must first be enabled on your OpenProject instance and then enabled for the project under the project settings ."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-6337ce108c4d",
+   "project": "openproject",
+   "commit": "784ed0fb52dd03fff2fad9f8688c5deeed6dc1a5",
+   "date": "2025-07-14",
+   "file": "docs/user-guide/projects/project-templates/README.md",
+   "kind": "modification",
+   "removed": [
+    "Please note : The option to set a project as template or to remove it from templates is only available for Administrators.  ! set-as-template"
+   ],
+   "added": [
+    "Icon to set a project as a template under project settings in OpenProject"
+   ],
+   "suggestion": "admit",
+   "target_rule": "Only administrators can set a project as a template or remove it from templates.",
+   "oracle_sketch": "As a non-admin project admin, the 'Set as template' action is absent.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-525ee72f54a4",
+   "project": "openproject",
+   "commit": "9c8b8ae85ddf6ae88489a45b7f36f4beba1e368d",
+   "date": "2025-09-25",
+   "file": "docs/user-guide/team-planner/README.md",
+   "kind": "deletion",
+   "removed": [
+    "!NOTE] Team planner is an Enterprise add-on and can only be used with Enterprise cloud or Enterprise on-premises .",
+    "An upgrade from the free community edition is easy and helps support OpenProject."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-49aaaf2e6630",
+   "project": "openproject",
+   "commit": "b82862c0dc557612d7757612af708b16eb82c84c",
+   "date": "2026-07-06",
+   "file": "docs/user-guide/projects/project-settings/backlogs-settings/README.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Depending on your permissions, some shared sprint fields may be read-only.",
+    "Project-specific fields, such as the sprint goal, can still be edited independently."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Shared sprint fields may be read-only for a project while project-specific fields such as the sprint goal remain editable.",
+   "oracle_sketch": "Without shared-sprint permission: shared fields are read-only, sprint goal saves.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-43f41ba5cae2",
+   "project": "openproject",
+   "commit": "2cbc9aa9e9339a0995094bfd5cd79941d10fc747",
+   "date": "2026-08-03",
+   "file": "docs/user-guide/wiki/README.md",
+   "kind": "modification",
+   "removed": [
+    "Instead of creating a new paragraph with Enter, you can also press SHIFT+Enter to create a line break without creating a new paragraph."
+   ],
+   "added": [
+    "see the WYSIWYG editor guide."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-e74586fb5c2f",
+   "project": "openproject",
+   "commit": "9c8b8ae85ddf6ae88489a45b7f36f4beba1e368d",
+   "date": "2025-09-25",
+   "file": "docs/user-guide/work-packages/share-work-packages/README.md",
+   "kind": "deletion",
+   "removed": [
+    "!NOTE] Sharing work packages with non-member is an Enterprise add-on and can only be used with Enterprise cloud or Enterprise on-premises .",
+    "An upgrade from the free community edition is easy and helps support OpenProject."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-2c13970217ea",
+   "project": "openproject",
+   "commit": "784ed0fb52dd03fff2fad9f8688c5deeed6dc1a5",
+   "date": "2025-07-14",
+   "file": "docs/user-guide/projects/README.md",
+   "kind": "deletion",
+   "removed": [
+    "Then, the project cannot be selected from the project selection anymore.",
+    "It is still available in the Project lists dashboard if you set the \"Active\" filter to \"off\" (move slider to the left).",
+    "You can un-archive it there, too, using the three dots at the right end of a row."
+   ],
+   "added": [],
+   "suggestion": "admit",
+   "target_rule": "An archived project cannot be selected in the project selector but appears in the project list with the Active filter off, where it can be unarchived.",
+   "oracle_sketch": "Archive a project: absent from selector; visible with Active off; unarchive restores it to the selector.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-181abb5f47be",
+   "project": "openproject",
+   "commit": "3738aba40ea8baa2aba8f4f6f744c61cc14d508e",
+   "date": "2026-09-16",
+   "file": "docs/user-guide/projects/project-settings/versions/README.md",
+   "kind": "deletion",
+   "removed": [
+    "Column in backlog : Select a column for this version in the backlogs view.",
+    "This is only necessary if you’re managing a Scrum backlog ."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-302720d6856b",
+   "project": "openproject",
+   "commit": "06284360f2206793cc6795b313f5491add50e411",
+   "date": "2025-03-18",
+   "file": "docs/user-guide/work-packages/set-change-dates/README.md",
+   "kind": "modification",
+   "removed": [
+    "When you set a start and a finish date, the duration is automatically derived.",
+    "For example, if the start date is set to *Wednesday, 12 October, 2022* and the finish date to *Friday, 14 October, 2022*, a duration of 3 days is derived."
+   ],
+   "added": [
+    "When switching from manual to automatic scheduling, a warning banner notifies you the dates are not determined by child work packages.",
+    "This allows automatic date setting based on exiting relations."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Setting start and finish dates automatically derives the duration (Wed 12 to Fri 14 gives 3 days).",
+   "oracle_sketch": "Enter the two dates: duration field shows 3 days.",
+   "numeric": true
+  },
+  {
+   "candidate_id": "rc-ca08cec6ec87",
+   "project": "openproject",
+   "commit": "6e504eea042fd29f048d549b8ecf699118600511",
+   "date": "2025-02-18",
+   "file": "docs/user-guide/meetings/one-time-meetings/README.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Form for adding agenda items to meetings sections in OpenProject  Sections will show the sum of all the durations of all containing items (or at least, those that have a duration specified).  !",
+    "Duration of a section in OpenProject meeting"
+   ],
+   "suggestion": "admit",
+   "target_rule": "A meeting section shows the sum of the durations of the agenda items it contains.",
+   "oracle_sketch": "Add items of 10 and 15 minutes to a section: section header shows 25 minutes.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-aa071f1c7804",
+   "project": "openproject",
+   "commit": "8362677476d528964673ac2a31f8697bea4ce1fb",
+   "date": "2026-05-12",
+   "file": "docs/user-guide/backlogs-scrum/README.md",
+   "kind": "modification",
+   "removed": [
+    "When you click the Start sprint within the Backlog, a dedicated sprint board is automatically created and you are forwarded to the active sprint board."
+   ],
+   "added": [
+    "Sprint boards replace the previous task boards used in earlier versions of the Backlogs module."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Starting a sprint creates a dedicated sprint board and forwards the user to it.",
+   "oracle_sketch": "Click Start: the page navigates to a new active sprint board.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-27e586be0e1e",
+   "project": "openproject",
+   "commit": "a2ab8355fd1acd23215a64e6cc62adcaf76086eb",
+   "date": "2026-07-31",
+   "file": "docs/user-guide/work-packages/exporting/README.md",
+   "kind": "modification",
+   "removed": [
+    "If you select Download Atom options, the extracted file will download automatically.",
+    "Atom Export includes a work package Title, Author, a link to the work package and work package activities."
+   ],
+   "added": [
+    "If you used page breaks in work package descriptions, contents will be split into separate pages accordingly."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-a9738bda21f1",
+   "project": "openproject",
+   "commit": "784ed0fb52dd03fff2fad9f8688c5deeed6dc1a5",
+   "date": "2025-07-14",
+   "file": "docs/user-guide/projects/README.md",
+   "kind": "modification",
+   "removed": [
+    "If you want to delete a project, navigate to the Project settings .",
+    "Click the button Delete project on the top right of the page."
+   ],
+   "added": [
+    "Set the default project Identifier ."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-facece157fa0",
+   "project": "openproject",
+   "commit": "06284360f2206793cc6795b313f5491add50e411",
+   "date": "2025-03-18",
+   "file": "docs/user-guide/work-packages/set-change-dates/README.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Apart from the default *Dates* tab, date picker also includes the following relations related tabs:"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-f6fa8435bb6c",
+   "project": "openproject",
+   "commit": "71579a79fc1d0344cbd3807df3ec7213f95b289f",
+   "date": "2025-06-17",
+   "file": "docs/user-guide/projects/project-settings/project-life-cycle/README.md",
+   "kind": "modification",
+   "removed": [
+    "!NOTE] Defining custom project phases is an Enterprise add-on."
+   ],
+   "added": [
+    "!NOTE] Defining custom project phases is an Enterprise add-on and can only be used with Enterprise cloud or Enterprise on-premises .",
+    "An upgrade from the free Community edition is easy and helps support OpenProject."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-e86f1e4a5a59",
+   "project": "openproject",
+   "commit": "1e86300b04e53c700e9ca1c4ed13c3a9decd8277",
+   "date": "2025-02-16",
+   "file": "docs/user-guide/work-packages/work-package-relations-hierarchies/README.md",
+   "kind": "modification",
+   "removed": [
+    "Work package relations displayed in the relations tab in OpenProject"
+   ],
+   "added": [
+    "Example of work package relations displayed under Relations tab for a user with limited permissions in OpenProject"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-e5caa2fca049",
+   "project": "openproject",
+   "commit": "2cbc9aa9e9339a0995094bfd5cd79941d10fc747",
+   "date": "2026-08-03",
+   "file": "docs/user-guide/wiki/README.md",
+   "kind": "modification",
+   "removed": [
+    "a wiki page: Wiki page]] a wiki page with separate link name: Wiki page|The text of the link]] a wiki page in the Sandbox project: Sandbox:Wiki page]]  a work package with ID12: #12 a work package with ID234: view#12 the default work package view: view:default  a meeting by ID/name: meeting#12, meeting:\"meetingname\"  a version by ID or name: version#3, version:\"Release 1.0.0\" a project by ID/name: project#12 , project:\"My project name\" an attachment by filename: attachment:filename.zip a user by id or login: user#4 , user:\"johndoe\" a forum message by ID: message#1218 a repository revision 43: r43 a commit by hash: commit:f30e13e4 a source file in the repository: source:\"some/file\""
+   ],
+   "added": [
+    "Wiki page]] Wiki page|Link text]] Project identifier:Wiki page]]"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-969f81480445",
+   "project": "openproject",
+   "commit": "003491c82ebd17247a3a81729090d177005b1d24",
+   "date": "2026-07-01",
+   "file": "docs/user-guide/documents/README.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Enter the work package ID or subject and it will automatically be linked, as shown below:  !",
+    "Document linked to an existing work package in OpenProject  !NOTE] The work package is displayed as a full-width card only when it is linked using a slash command on an empty line."
+   ],
+   "suggestion": "admit",
+   "target_rule": "A linked work package is displayed as a full-width card only when linked with a slash command on an empty line.",
+   "oracle_sketch": "Link via slash command on empty line: card; link inline mid-sentence: inline reference.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-795d48f2998e",
+   "project": "immich",
+   "commit": "a244d94ac814a0207d406efd4298d742870f06ca",
+   "date": "2026-01-25",
+   "file": "docs/docs/features/mobile-app.mdx",
+   "kind": "modification",
+   "removed": [
+    "More information on the Apple Support website"
+   ],
+   "added": [
+    ":::warning iCloud & Backups If, in addition to Immich, you rely on iCloud as a secondary backup (as part of your 3-2-1 backup strategy), you should instead use Optimize iPhone Storage in iCloud Photos ."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-afa7beacea83",
+   "project": "immich",
+   "commit": "977d6452f6635e35c6d353f7706dcfba46c2bdcf",
+   "date": "2025-07-10",
+   "file": "docs/docs/features/libraries.md",
+   "kind": "modification",
+   "removed": [
+    "You can enable this feature under Account Settings > Features > Folder View  The UI is currently only available for the web; mobile will come in a subsequent release."
+   ],
+   "added": [
+    "You can enable this feature under Account Settings > Features > Folders"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-62a2e5b28c74",
+   "project": "immich",
+   "commit": "a244d94ac814a0207d406efd4298d742870f06ca",
+   "date": "2026-01-25",
+   "file": "docs/docs/features/command-line-interface.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "You can also specify permissions for the key to limit its access."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-30dd8a71e2dc",
+   "project": "immich",
+   "commit": "14c3b99c0f97cf60dd7defc0e3293d53c7bc367b",
+   "date": "2025-03-17",
+   "file": "docs/docs/features/ml-hardware-acceleration.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "RKNN  You must have a supported Rockchip SoC: only RK3566, RK3568, RK3576 and RK3588 are supported at this moment.",
+    "Make sure you have the appropriate linux kernel driver installed This is usually pre-installed on the device vendor's Linux images RKNPU driver V0.9.8 or later must be available in the host server You may confirm this by running cat /sys/kernel/debug/rknpu/version to check the version Optional: Configure your .env file, see environment variables for RKNN specific settings In particular, setting MACHINE_LEARNING_RKNN_THREADS to 2 or 3 can _dramatically_ improve performance for RK3576 and RK3588 compared to the default of 1, at the expense of multiplying the amount of RAM each model uses by that amount."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-62b6bd877b22",
+   "project": "immich",
+   "commit": "b0098d6d238fbd22f90cb01d3aa7bf75287fc8f9",
+   "date": "2025-07-12",
+   "file": "docs/docs/guides/external-library.md",
+   "kind": "modification",
+   "removed": [
+    "Enter /usr/src/app/external as the path and click Add"
+   ],
+   "added": [
+    "Enter /home/user/photos1 as the path and click Add"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-c86728bbc029",
+   "project": "immich",
+   "commit": "eee793bfe4a2e48aea595ad7563bfaf038dd2cd5",
+   "date": "2025-10-08",
+   "file": "docs/docs/features/libraries.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    ":::info Currently an external library can only belong to a single user which is selected when the library is initially created. :::"
+   ],
+   "suggestion": "admit",
+   "target_rule": "An external library belongs to exactly one user, chosen when the library is created.",
+   "oracle_sketch": "Library creation form requires a single owner; the owner cannot be changed afterwards.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-6cce6effcb6d",
+   "project": "immich",
+   "commit": "be15a84f9bfd6b8d5376fc8d35042720ac41ca5d",
+   "date": "2025-10-31",
+   "file": "docs/docs/features/mobile-app.mdx",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    ":::info Android verification Below are the SHA-256 fingerprints for the certificates signing the android applications.",
+    "Playstore / Github releases: 86:C5:C4:55:DF:AF:49:85:92:3A:8F:35:AD:B3:1D:0C:9E:0B:95:7D:7F:94:C2:D2:AF:6A:24:38:AA:96:00:20 F-Droid releases: FA:8B:43:95:F4:A6:47:71:A0:53:D1:C7:57:73:5F:A2:30:13:74:F5:3D:58:0D:D1:75:AA:F7:A1:35:72:9C:BF  :::"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-5da3673f0cc3",
+   "project": "immich",
+   "commit": "a244d94ac814a0207d406efd4298d742870f06ca",
+   "date": "2026-01-25",
+   "file": "docs/docs/features/command-line-interface.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Specify permissions for the key"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-2b25fb947ed0",
+   "project": "immich",
+   "commit": "ebd644eedd6e128b57c60b9fc57f2afb2086f73c",
+   "date": "2025-07-26",
+   "file": "docs/docs/guides/database-queries.md",
+   "kind": "modification",
+   "removed": [
+    "SELECT \"assets\".\"type\", COUNT(*) FROM \"assets\" GROUP BY \"assets\".\"type\";"
+   ],
+   "added": [
+    "SELECT \"asset\".\"type\", COUNT(1) FROM \"asset\" GROUP BY \"asset\".\"type\";"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-ea177a389708",
+   "project": "immich",
+   "commit": "3af26ee94aed7a50ab2f6db9ec635852d7025076",
+   "date": "2025-03-06",
+   "file": "docs/docs/features/libraries.md",
+   "kind": "modification",
+   "removed": [
+    "/\\@eadir/ will exclude all files in any directory named @eadir"
+   ],
+   "added": [
+    "/\\@eaDir/ will exclude all files in any directory named @eaDir  :::info Internally, Immich uses the glob package to process exclusion patterns, and sometimes those patterns are translated into Postgres LIKE patterns .",
+    "The intention is to support basic folder exclusions but we recommend against advanced usage since those can't reliably be translated to the Postgres syntax.",
+    "Please refer to the glob documentation for a basic overview on glob patterns. :::"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-6f3595845f06",
+   "project": "immich",
+   "commit": "a244d94ac814a0207d406efd4298d742870f06ca",
+   "date": "2026-01-25",
+   "file": "docs/docs/guides/external-library.md",
+   "kind": "modification",
+   "removed": [
+    "Click the three-dots menu and select Edit Import Paths   Click Add path   Enter /home/user/photos1 as the path and click Add"
+   ],
+   "added": [
+    "You are now entering the library management page."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-5f9f73f73c3a",
+   "project": "immich",
+   "commit": "a244d94ac814a0207d406efd4298d742870f06ca",
+   "date": "2026-01-25",
+   "file": "docs/docs/features/mobile-app.mdx",
+   "kind": "deletion",
+   "removed": [
+    ":::warning iCloud & Backups If you rely on iCloud as a secondary backup (part of a 3-2-1 backup strategy), using the Free Up Space feature in Immich will remove the file from both your phone and iCloud."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-7304c0d6f2eb",
+   "project": "immich",
+   "commit": "a244d94ac814a0207d406efd4298d742870f06ca",
+   "date": "2026-01-25",
+   "file": "docs/docs/features/mobile-app.mdx",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Read-only/kid Mode  You can set the app to read-only mode to prevent accidental deletion of photos from your device, and only allow viewing photos on the timeline.",
+    "To toggle this feature, long-press the profile icon or go to Settings > Advanced > Read-only Mode ."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-717e928b9bb5",
+   "project": "immich",
+   "commit": "4bfef2460aefaf64382e9ac5ff24f90cb3870276",
+   "date": "2025-03-24",
+   "file": "docs/docs/features/searching.md",
+   "kind": "modification",
+   "removed": [
+    "Multilingual models] huggingface-multilingual-clip] are also available so users can search in their native language.",
+    "These models support over 100 languages; the nllb models in particular support 200. :::note Multilingual models are much slower and larger and perform slightly worse for English than English-only models.",
+    "For this reason, only use them if you actually intend to search in a language besides English."
+   ],
+   "added": [
+    "Once you've chosen a model, follow these steps:"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-3b809be2f15b",
+   "project": "immich",
+   "commit": "3da17da7b42c4f9371488d143dab82c7fe6f22cf",
+   "date": "2025-01-21",
+   "file": "docs/docs/guides/custom-locations.md",
+   "kind": "deletion",
+   "removed": [
+    "Thanks to Jrasm91 for writing the guide."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-4c2783a07007",
+   "project": "immich",
+   "commit": "a244d94ac814a0207d406efd4298d742870f06ca",
+   "date": "2026-01-25",
+   "file": "docs/docs/features/mobile-app.mdx",
+   "kind": "modification",
+   "removed": [
+    "When you use iCloud Photos and delete a photo or video on one device, it's also deleted on all other devices where you're signed in with the same Apple Account."
+   ],
+   "added": [
+    "Assets that are part of an iCloud Shared Album are automatically excluded from the cleanup scan because iCloud does not allow removing the items in Shared Album from the device."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-4d9988a32a44",
+   "project": "immich",
+   "commit": "d8ed7d7bb9d5a816ba55abda0123cfb543b04050",
+   "date": "2026-07-15",
+   "file": "docs/docs/features/command-line-interface.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "visibility Set the visibility of uploaded assets (choices: \"archive\", \"timeline\", \"hidden\", \"locked\", env: IMMICH_VISIBILITY)"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-eb37941484fc",
+   "project": "immich",
+   "commit": "14c3b99c0f97cf60dd7defc0e3293d53c7bc367b",
+   "date": "2025-03-17",
+   "file": "docs/docs/features/ml-hardware-acceleration.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Search latency isn't improved by ARM NN due to model compatibility issues preventing its use.",
+    "However, smart search jobs do make use of ARM NN."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-a212768c02fc",
+   "project": "immich",
+   "commit": "a244d94ac814a0207d406efd4298d742870f06ca",
+   "date": "2026-01-25",
+   "file": "docs/docs/features/mobile-app.mdx",
+   "kind": "modification",
+   "removed": [
+    "Shared Albums Assets that are part of an iCloud Shared Album are automatically excluded from the cleanup scan to ensure they remain viewable to others in the shared album."
+   ],
+   "added": [
+    "iCloud utilizes a two-way sync; this means deleting a photo, or using Free Up Space from your iPhone will also delete it from iCloud and all other devices (Mac, iPad) where you're signed in with the same Apple Account.",
+    "See Apple Support for more info."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-b6f382226c41",
+   "project": "immich",
+   "commit": "90a69e2ba63d4e535a1395547df47d30a683f5df",
+   "date": "2026-05-06",
+   "file": "docs/docs/features/searching.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Full path or folder  Use this mode when you know a folder name or part of the original asset path.",
+    "Example: for /John/Projects/3D_Printing/2026-07-01/IMG_0001.jpg, searches like Projects, 3D, Printing, or 2026 match the asset."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Full path or folder search matches any part of the original asset path.",
+   "oracle_sketch": "Search 'Projects' finds an asset whose path contains /Projects/.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-75ad44f31d65",
+   "project": "immich",
+   "commit": "a244d94ac814a0207d406efd4298d742870f06ca",
+   "date": "2026-01-25",
+   "file": "docs/docs/features/mobile-app.mdx",
+   "kind": "deletion",
+   "removed": [
+    "<img src={require('./img/mobile-upload-open-photo.webp').default} width=\"50%\" title=\"Upload button on local asset preview\" />"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-8f971ae2e417",
+   "project": "immich",
+   "commit": "14c3b99c0f97cf60dd7defc0e3293d53c7bc367b",
+   "date": "2025-03-17",
+   "file": "docs/docs/features/ml-hardware-acceleration.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "In particular, the MACHINE_LEARNING_ANN_FP16_TURBO can significantly improve performance at the cost of very slightly lower accuracy"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-1dcac848a404",
+   "project": "immich",
+   "commit": "b16cc496b2b5c152ebfc82be3a5a39e8db786d52",
+   "date": "2026-06-26",
+   "file": "docs/docs/guides/smtp-microsoft365.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "SMTP settings using Microsoft 365  This guide walks you through how to get the information you need to set up your Immich instance to send emails using Microsoft's SMTP server.",
+    "Create an app password  You will need to generate an app password to use your Microsoft email in Immich.",
+    "Depending on if you have a personal or business account, you can use https://go.microsoft.com/fwlink/?linkid=2274139 or https://myaccount.microsoft.com/securtiy-info respectively.",
+    "Entering the SMTP credential in Immich  Entering your credential in Immich's email notification settings at Administration -> Settings -> Notification Settings  Host: smtp-mail.outlook.com Port: 587 username: your mail address Password: app password you created earlier SMTPS: set it to disabled"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-ab9e0df7183d",
+   "project": "immich",
+   "commit": "3be803d0c0d5c8105697951ce045cc4e76bbe889",
+   "date": "2026-06-17",
+   "file": "docs/docs/features/mobile-app.mdx",
+   "kind": "modification",
+   "removed": [
+    "Playstore / Github releases:"
+   ],
+   "added": [
+    "Google Play releases: 5A:22:C1:83:47:54:05:F5:49:C4:EB:9F:B2:6C:2E:93:A3:EF:9C:57:66:15:0A:7A:F3:8C:8D:3F:E5:15:CC:D6 GitHub releases:"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-588f3988ebde",
+   "project": "immich",
+   "commit": "977d6452f6635e35c6d353f7706dcfba46c2bdcf",
+   "date": "2025-07-10",
+   "file": "docs/docs/features/libraries.md",
+   "kind": "modification",
+   "removed": [
+    "This feature - currently hidden in the config file - is considered experimental and for advanced users only."
+   ],
+   "added": [
+    "This feature is considered experimental and for advanced users only."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-0ec1ac8f66bd",
+   "project": "immich",
+   "commit": "fcd372238fac7db3908387a0b3b4c953179bb99e",
+   "date": "2025-01-03",
+   "file": "docs/docs/features/supported-formats.md",
+   "kind": "modification",
+   "removed": [
+    "MP2T | .mts .m2ts | :white_check_mark: | |"
+   ],
+   "added": [
+    "MP2T | .mts .m2ts .m2t | :white_check_mark: | |"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-869936e81f1c",
+   "project": "immich",
+   "commit": "02cd8da87141a66191a0febf8b388526f886b249",
+   "date": "2025-02-20",
+   "file": "docs/docs/guides/custom-locations.md",
+   "kind": "modification",
+   "removed": [
+    "In our .env file, we will define variables that will help us in the future when we want to move to a more advanced server"
+   ],
+   "added": [
+    "In our .env file, we will define the paths we want to use.",
+    "Note that you don't have to define all of these: UPLOAD_LOCATION will be the base folder that files are stored in by default, with the other paths acting as overrides."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-aa17ac8f81df",
+   "project": "immich",
+   "commit": "a244d94ac814a0207d406efd4298d742870f06ca",
+   "date": "2026-01-25",
+   "file": "docs/docs/features/mobile-app.mdx",
+   "kind": "modification",
+   "removed": [
+    "Go to Immich Settings > Advanced and enable \"Media Management Access\" ."
+   ],
+   "added": [
+    ":::info reclaim storage To use the reclaimed space right away, you must empty the system/gallery trash manually outside of Immich."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-c7d161c69d0d",
+   "project": "immich",
+   "commit": "2e5007adef106e55d7368726e9ec381449ddfe39",
+   "date": "2025-02-07",
+   "file": "docs/docs/features/ml-hardware-acceleration.md",
+   "kind": "modification",
+   "removed": [
+    "The server must have a discrete GPU, i.e.",
+    "Iris Xe or Arc.",
+    "Expect issues when attempting to use integrated graphics."
+   ],
+   "added": [
+    "Integrated GPUs are more likely to experience issues than discrete GPUs, especially for older processors or servers with low RAM."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-32c3c5181505",
+   "project": "immich",
+   "commit": "8723f585e071957dd00179310761249a86fa74e6",
+   "date": "2025-03-18",
+   "file": "docs/docs/features/libraries.md",
+   "kind": "modification",
+   "removed": [
+    "/mnt/media/videos2:/mnt/media/videos2 # the files in this folder can be deleted, as it does not end with :ro"
+   ],
+   "added": [
+    "/mnt/media/videos2:/mnt/media/videos2 # WARNING: Immich will be able to delete the files in this folder, as it does not end with :ro"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-0f453b1f0a55",
+   "project": "mealie",
+   "commit": "cbcd7f374414cc2039b7da009507650a2e085012",
+   "date": "2026-09-11",
+   "file": "docs/docs/documentation/getting-started/features.md",
+   "kind": "modification",
+   "removed": [
+    "You can set rules to restrict the pool of recipes based on the Tags and/or Categories of a recipe."
+   ],
+   "added": [
+    "You can set rules to restrict the pool of recipes based on the Tags and/or Categories of a recipe, or on its ingredients.",
+    "Ingredients can be matched by their Food Label as well, so a \"fish day\" only takes one rule instead of a list of every fish you cook with."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Meal plan rules can restrict recipes by ingredient, matching foods by their food label.",
+   "oracle_sketch": "Rule on label 'fish' selects a recipe containing salmon labelled fish and excludes others.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-106bac72c813",
+   "project": "mealie",
+   "commit": "05521f0e6f606edc0a6c02b86def34429f0f9a91",
+   "date": "2026-07-06",
+   "file": "docs/docs/documentation/getting-started/usage/permissions-and-public-access.md",
+   "kind": "modification",
+   "removed": [
+    "Access to Administrator tools Access to inviting other users Access to manage their group and group data"
+   ],
+   "added": [
+    "Permission | Allows |  Administrator | Access to administrator tools | Invite | Generating invitation links for other users | Manage group | Access to group management areas and settings | Organize group data | Creating, updating, deleting, and merging group data such as foods, tags, and categories |  The Manage group and Organize group data permissions are separate.",
+    "Users need Organize group data to add new foods, tags, or categories, including when creating missing ingredients during recipe parsing."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Creating foods, tags or categories requires the Organize group data permission, separate from Manage group.",
+   "oracle_sketch": "User with Manage group but not Organize group data cannot create a tag; error or missing control.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-402d4ac1a1bb",
+   "project": "mealie",
+   "commit": "af3057951d19a5ea54baca19b6997cf3156faa4d",
+   "date": "2025-05-27",
+   "file": "docs/docs/documentation/getting-started/authentication/oidc-v2.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "You might also want to set ALLOW_PASSWORD_LOGIN to false, to hide the username+password inputs, if you want to allow logins only via OIDC."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-457588859842",
+   "project": "mealie",
+   "commit": "b3ce0faf2617a54480e86e69d3eca3bd80c6affa",
+   "date": "2026-04-21",
+   "file": "docs/docs/documentation/getting-started/authentication/oidc-v2.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "If you are hosting Mealie behind a reverse proxy (nginx, Caddy, ...) to terminate TLS, make sure to start Mealie's Gunicorn server with --forwarded-allow-ips= , otherwise the X-Forwarded-* headers will be ignored and the generated OIDC redirect URI will use the wrong scheme (http instead of https).",
+    "This will lead to authentication errors with strict OIDC providers."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-4bf103d35b84",
+   "project": "mealie",
+   "commit": "4b67554b36a16f2f684ab9edd301321ad21173cd",
+   "date": "2025-09-23",
+   "file": "docs/docs/documentation/getting-started/usage/permissions-and-public-access.md",
+   "kind": "modification",
+   "removed": [
+    "The household must not be private, *and* the household setting for allowing users outside of your group to see your recipes must be enabled.",
+    "These can be toggled on the Household Settings page 2."
+   ],
+   "added": [
+    "The household must not be private, _and_ the household setting for allowing users outside of your group to see your recipes must be enabled.",
+    "These can be toggled on the Household Management page (navigate to Settings > Admin Settings > Households or append /admin/manage/households to your instance URL) 3."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-60c42d4dd323",
+   "project": "mealie",
+   "commit": "cf8f5fe2a2ab2e91c9c2087a0ecee65720d8a9e5",
+   "date": "2026-01-07",
+   "file": "docs/docs/documentation/getting-started/features.md",
+   "kind": "deletion",
+   "removed": [
+    "!!! tip You can toggle 'Food' on items so that if you add multiple of the same food / ingredient, Mealie will automatically combine them together.",
+    "Do this by editing an item in the Shopping List and clicking the 'Apple' icon.",
+    "If you then have recipes that contain \"1 | cup | cheese\" and \"2 | cup | cheese\" this would be combined to show \"3 cups of cheese.\""
+   ],
+   "added": [],
+   "suggestion": "admit",
+   "target_rule": "Shopping list items with the same food are combined: 1 cup cheese plus 2 cups cheese shows 3 cups.",
+   "oracle_sketch": "Add both items: list shows a single '3 cups cheese' entry.",
+   "numeric": true
+  },
+  {
+   "candidate_id": "rc-7abde340009d",
+   "project": "mealie",
+   "commit": "c929a03b574fbd81b148c22c22926a020e061fa4",
+   "date": "2025-09-21",
+   "file": "docs/docs/documentation/community-guide/import-recipe-bookmarklet.md",
+   "kind": "deletion",
+   "removed": [
+    "var use_keywords= \"&use_keywords=1\" // Optional - use keywords from recipe - update to \"\" if you don't want that var edity = \"&edit=1\" // Optional - keep in edit mode - update to \"\" if you don't want that"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-a9afcb0ccc98",
+   "project": "mealie",
+   "commit": "c13c0868aebe42c3a5a4b7e5b92c9d7198c302c9",
+   "date": "2025-05-21",
+   "file": "docs/docs/documentation/getting-started/authentication/oidc.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "If you are hosting Mealie behind a reverse proxy (nginx, Caddy, ...) to terminate TLS, make sure to start Mealie's Gunicorn server with --forwarded-allow-ips= , otherwise the X-Forwarded-* headers will be ignored and the generated OIDC redirect URI will use the wrong scheme (http instead of https).",
+    "This will lead to authentication errors with strict OIDC providers."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-b17805748b8b",
+   "project": "mealie",
+   "commit": "7d43c7c7a24fc9b80fa56021006f2456949bd8b5",
+   "date": "2025-09-24",
+   "file": "docs/docs/documentation/community-guide/n8n-backup-automation.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "See also n8n Docs ."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-bad8350dac46",
+   "project": "mealie",
+   "commit": "e1d0ffdc9d81fc6ab2be8ffdfe89ac58f72355e1",
+   "date": "2026-09-23",
+   "file": "docs/docs/documentation/getting-started/updating.md",
+   "kind": "modification",
+   "removed": [
+    "python /opt/mealie/lib64/python3.12/site-packages/mealie/scripts/reprocess_images.py --workers 8"
+   ],
+   "added": [
+    "python /opt/mealie/lib64/python3.14/site-packages/mealie/scripts/reprocess_images.py --workers 8"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-4c22dc2c4355",
+   "project": "mattermost",
+   "commit": "cdfabf45f87cfec6b823ed1d193791afa4c61f77",
+   "date": "2026-01-16",
+   "file": "source/end-user-guide/preferences/connect-multiple-workspaces.rst",
+   "kind": "modification",
+   "removed": [
+    ":alt: Edit server dialog showing display name, URL, and pre-authentication secret fields."
+   ],
+   "added": [
+    "Desktop only] To update an authentication secret, connect to the server.",
+    "If the secret has changed, you'll be prompted to enter the new one provided by your system admin."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-554bcd113361",
+   "project": "mattermost",
+   "commit": "73d7ca79e60e5706e1e7de1569b68e60affa85d1",
+   "date": "2026-03-16",
+   "file": "source/end-user-guide/collaborate/collaborate-within-channels.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "- Automatically translate channel messages into your preferred language."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-15ed48fe86b0",
+   "project": "mattermost",
+   "commit": "654a03b26b63cc1248cfdb209cfc55bb39dee662",
+   "date": "2025-12-16",
+   "file": "source/end-user-guide/collaborate/organize-conversations.rst",
+   "kind": "modification",
+   "removed": [
+    "System admins can of threaded discussions.   :alt: Organize conversations using threaded discussions."
+   ],
+   "added": [
+    "From Mattermost v7.0, threaded discussions are enabled by default for all new Mattermost deployments.",
+    "All Mattermost users can create new threads, unless the system admin has .",
+    "System admins can of threaded discussions."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-3fbc295441e2",
+   "project": "mattermost",
+   "commit": "dbfcaedd0e002510ef4614b1424a043ebf2eb12e",
+   "date": "2026-01-23",
+   "file": "source/end-user-guide/collaborate/invite-people.rst",
+   "kind": "modification",
+   "removed": [
+    "An invite link can be used by anyone and doesn’t change unless it’s re-generated by a system admin or team admin via Team Settings > Access > Invite Code ."
+   ],
+   "added": [
+    "When inviting guests, you must select at least one channel they can access.",
+    "Guests are limited to the channels you specify and cannot discover other channels.",
+    "An invite link can be used by anyone and doesn’t change unless it’s re-generated or revoked by a system admin or team admin via Team Settings > Access > Invite Code ."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Inviting guests requires selecting at least one channel; guests cannot discover other channels.",
+   "oracle_sketch": "Guest invite with no channel selected cannot be submitted.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-4da4940bc16c",
+   "project": "mattermost",
+   "commit": "7451869a150da69fb7f3e1b5adb501e7633bb0a8",
+   "date": "2026-06-16",
+   "file": "source/end-user-guide/collaborate/create-channels.rst",
+   "kind": "modification",
+   "removed": [
+    "If your system admin has enabled , you can assign the new channel to a new or existing channel category."
+   ],
+   "added": [
+    "When is enabled (the default from Mattermost v11.8), channel admins see a Default category (optional) field when creating or editing a channel.",
+    "You can select an existing category, type a new category name, or clear the default category from channel settings.",
+    "Members who join the channel see it under that category in their sidebar."
+   ],
+   "suggestion": "admit",
+   "target_rule": "A channel's default category places it under that category in the sidebar of members who join.",
+   "oracle_sketch": "Create channel with default category 'Ops'; joining member sees it under 'Ops'.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-497120247f13",
+   "project": "mattermost",
+   "commit": "747551c7d01f188f4d75664c1b7be12162647a73",
+   "date": "2026-01-23",
+   "file": "source/end-user-guide/workflow-automation/notifications-and-updates.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Requesting updates is only available in the web browser and desktop app.",
+    "This functionality is not available on mobile."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-fbc75725d8ad",
+   "project": "mattermost",
+   "commit": "dbfcaedd0e002510ef4614b1424a043ebf2eb12e",
+   "date": "2026-01-23",
+   "file": "source/end-user-guide/collaborate/invite-people.rst",
+   "kind": "modification",
+   "removed": [
+    ":alt: You can invite a user using their name. :scale: 30"
+   ],
+   "added": [
+    "Use magic link : Invite guests to log in without a password using a magic link when .",
+    "See the documentation for login details."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-f8034cb6dbf4",
+   "project": "mattermost",
+   "commit": "b236e8adc0563a0f171a7faef95d1afc6b784025",
+   "date": "2025-09-16",
+   "file": "source/end-user-guide/preferences/connect-multiple-workspaces.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Enter the server's Display Name.",
+    "Optionally toggle the Advanced Options section to enter a Pre-authentication secret .",
+    "This is an additional security measure that some organizations use to control access to the Mattermost server.",
+    "Your system admin can provide you with the Pre-authentication Secret value if required.   :alt: Mobile app server setup screen showing the optional pre-authentication secret field. :width: 300px  5."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-babbaaab4a5e",
+   "project": "mattermost",
+   "commit": "0c309a9a4a92aa0d9117200dc5e7233f4325beb8",
+   "date": "2026-05-19",
+   "file": "source/end-user-guide/collaborate/share-files-in-messages.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Restricted file attachments   If your administrator has configured attribute-based permission policies on your Mattermost instance, file uploads or downloads may be restricted based on your user attributes.",
+    "Restricted attachments appear in messages with the placeholder Files not available and the subtitle Access to files is restricted based on attributes .",
+    "If you expect to have access to a restricted file and don't, contact your Mattermost administrator.",
+    "For administrator-facing details, see ."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-9fe60b18a543",
+   "project": "mattermost",
+   "commit": "7451869a150da69fb7f3e1b5adb501e7633bb0a8",
+   "date": "2026-06-16",
+   "file": "source/end-user-guide/preferences/customize-your-channel-sidebar.rst",
+   "kind": "modification",
+   "removed": [
+    "If your system admin has enabled , you can assign channels to new or existing channel categories when and ."
+   ],
+   "added": [
+    "When is enabled (the default from Mattermost v11.8), you can assign channels to new or existing channel categories when and ."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-1981c9f2615a",
+   "project": "mattermost",
+   "commit": "67ec73b77d89c8c6aa3b87c9bee1b3f5e83bbb86",
+   "date": "2025-08-15",
+   "file": "source/end-user-guide/workflow-automation.rst",
+   "kind": "modification",
+   "removed": [
+    ":maxdepth: 1 :hidden: :titlesonly:  Learn about collaborative playbooks Work with collaborative playbooks Work with runs Work with tasks Work with notifications and updates Work with metrics and goals Share and collaborate Interact with collaborative playbooks  - Learn what collaborative playbooks are and how they're used. - Customize a playbook for successful runs. - Edit triggers and actions in an active run. - Work with tasks and the task inbox. - Keep track of all your active runs and tasks. - Unlock insights about the performance of collaborative workflows across organizations with workflow dashboards. - Reuse and share collaborative playbooks with your organization. - Interact with collaborative playbooks using slash commands and the REST API."
+   ],
+   "added": [
+    "- Learn what collaborative playbooks are and how they're used. - Customize a playbook for successful runs. - Edit triggers and actions in an active run. - Work with tasks and the task inbox. - Keep track of all your active runs and tasks. - Unlock insights about the performance of collaborative workflows across organizations with workflow dashboards. - Reuse and share collaborative playbooks with your organization. - Interact with collaborative playbooks using slash commands and the REST API."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-453ac25fb248",
+   "project": "mattermost",
+   "commit": "73d7ca79e60e5706e1e7de1569b68e60affa85d1",
+   "date": "2026-03-16",
+   "file": "source/end-user-guide/workflow-automation/work-with-tasks.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Rename tasks : Update a task's name to reflect evolving scope or priorities. (From Mattermost mobile v2.38.0) Add or edit task descriptions : Add context to a task or update an existing description. (From Mattermost mobile v2.38.0) Delete a task : This action cannot be undone. (From Mattermost mobile v2.37.0)"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-0284c8781546",
+   "project": "mattermost",
+   "commit": "5fb0a2b28590bf4617a1b8f24c9f2cd630ab60f1",
+   "date": "2026-02-06",
+   "file": "source/end-user-guide/workflow-automation/work-with-playbooks.rst",
+   "kind": "modification",
+   "removed": [
+    "You can start with the default checklist and edit it, or you can delete it and select + New checklist ."
+   ],
+   "added": [
+    "Playbook tasks consist of text rendered in Markdown (when present).",
+    "You can't run commands directly from a task in a playbook, but you can trigger and custom slash commands _, or outgoing webhooks, to run as part of the task action by starting the task with / ."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-dec744fb5dd7",
+   "project": "mattermost",
+   "commit": "0f6deac52617884a389ec6155af435e61480e84c",
+   "date": "2025-11-14",
+   "file": "source/end-user-guide/workflow-automation/work-with-runs.rst",
+   "kind": "modification",
+   "removed": [
+    "From Mattermost server v11.0 and mobile app v2.23.0, mobile users can and .",
+    "Mattermost v10.11 and mobile app v2.31.0 introduced a read-only mobile interface and .",
+    "Advanced playbook editing and management actions require the desktop or a web browser."
+   ],
+   "added": [
+    "From Mattermost server v11.0 and mobile app v2.34.0, mobile users can create and manage playbook runs for operational command at the edge."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-d3ff6cfc7487",
+   "project": "mattermost",
+   "commit": "0f6deac52617884a389ec6155af435e61480e84c",
+   "date": "2025-11-14",
+   "file": "source/end-user-guide/preferences/manage-your-mobile-notifications.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "From Mattermost mobile v2.34, the Mattermost Settings > Notifications screen alerts you when notifications are disabled by your device.",
+    "Follow the link in the notification to enable device-level notifications."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-03a505847a99",
+   "project": "mattermost",
+   "commit": "5fb0a2b28590bf4617a1b8f24c9f2cd630ab60f1",
+   "date": "2026-02-06",
+   "file": "source/end-user-guide/workflow-automation/share-and-collaborate.rst",
+   "kind": "modification",
+   "removed": [
+    "In the context of collaborative playbooks, members are users of Mattermost who are added to a playbook."
+   ],
+   "added": [
+    "From Playbooks v2.6.0, channel checklists use rather than playbook-specific permissions.",
+    "This means that users with appropriate channel permissions can create, manage, and interact with checklists directly within channels without requiring separate playbook access permissions."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-b6b9f39b947a",
+   "project": "mattermost",
+   "commit": "90981f442eb5591c0019c338372f20ea9694156f",
+   "date": "2026-01-23",
+   "file": "source/end-user-guide/collaborate/message-priority.rst",
+   "kind": "modification",
+   "removed": [
+    "From Mattermost v8.0, when you add an urgent priority label, and your message @mentions at least one other user, Mattermost Enterprise or Professional customers can enable persistent notifications which notify recipients at regular intervals and for a set amount of time until the recipient acknowledges, reacts, or replies to the message."
+   ],
+   "added": [
+    "From Mattermost v8.0, messages marked as urgent with a priority label and containing an @mention can trigger persistent notifications that repeat until the recipient acknowledges, reacts, or replies."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-1d0bc84b3ac4",
+   "project": "mattermost",
+   "commit": "6c4598422f04909d723949c261f82772340dd67b",
+   "date": "2026-02-16",
+   "file": "source/end-user-guide/collaborate/manage-channel-members.rst",
+   "kind": "modification",
+   "removed": [
+    "You can also @mention users to add them to a channel.",
+    "If they're not a channel member, Mattermost prompts you to add them."
+   ],
+   "added": [
+    "You can also to add them to a channel.",
+    "If they're not a channel member, Mattermost prompts you to add them.   :alt: If a user mentioned in a channel is not a member already, then Mattermost prompts to add the user. :scale: 40"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-4fa8e7483b1a",
+   "project": "mattermost",
+   "commit": "34180cef60dbe502477d4b0d353b07192edf24e2",
+   "date": "2025-08-20",
+   "file": "source/end-user-guide/preferences/manage-your-display-options.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "From Mattermost v10.10, you can also select Automatic to set your timezone automatically based on your computer's timezone settings.",
+    "This option is enabled by default."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-d576ca2188cf",
+   "project": "mattermost",
+   "commit": "73d7ca79e60e5706e1e7de1569b68e60affa85d1",
+   "date": "2026-03-16",
+   "file": "source/end-user-guide/workflow-automation/work-with-tasks.rst",
+   "kind": "deletion",
+   "removed": [
+    "Delete tasks   From Mattermost mobile v2.37.0, you can delete playbook tasks on mobile devices.",
+    "Tap the task, select Delete task , and confirm.",
+    "This action cannot be undone."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-bd0b2995febc",
+   "project": "mattermost",
+   "commit": "0f6deac52617884a389ec6155af435e61480e84c",
+   "date": "2025-11-14",
+   "file": "source/end-user-guide/workflow-automation/notifications-and-updates.rst",
+   "kind": "modification",
+   "removed": [
+    "If this is the first status update and the playbook has a defined default reminder timer, that timer will be pre-selected here.",
+    "If this is a subsequent status update, the last reminder timer will be pre-populated here."
+   ],
+   "added": [
+    "Optionally set a reminder to prompt for the next status update."
+   ],
+   "suggestion": "admit",
+   "target_rule": "The first status update preselects the playbook's default reminder; later updates prefill the last reminder used.",
+   "oracle_sketch": "First update dialog shows the default timer; after choosing 2h, the next update shows 2h.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-882709afd891",
+   "project": "mattermost",
+   "commit": "6c4598422f04909d723949c261f82772340dd67b",
+   "date": "2026-02-16",
+   "file": "source/end-user-guide/collaborate/manage-channel-members.rst",
+   "kind": "deletion",
+   "removed": [
+    ":alt: If a user mentioned in a channel is not a member already, then Mattermost prompts to add the user. :scale: 40"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-476f8413ae2e",
+   "project": "mattermost",
+   "commit": "ac56ddd2d08943a83490eddf6013b85b6926322b",
+   "date": "2026-08-11",
+   "file": "source/end-user-guide/collaborate/flag-messages.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "You can only quarantine messages posted in public or private channels.",
+    "The Quarantine for Review action isn't available in direct messages or group messages."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Messages can be quarantined only in public or private channels, not in direct or group messages.",
+   "oracle_sketch": "Message menu in a DM has no Quarantine for Review action; in a channel it does.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-62a1dff0b034",
+   "project": "mattermost",
+   "commit": "550dca0a6d943b7457728593682cba3a51283724",
+   "date": "2025-11-14",
+   "file": "source/end-user-guide/preferences/connect-multiple-workspaces.rst",
+   "kind": "deletion",
+   "removed": [
+    "You can't create and manage multiple server connections when using Mattermost in a web browser."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-aa2c82f86e08",
+   "project": "mattermost",
+   "commit": "840fc4b8f580d1c369945c827678a896b1389049",
+   "date": "2026-04-16",
+   "file": "source/end-user-guide/collaborate/organize-using-teams.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "If your system admin has enabled anonymous team and channel URLs (available in Mattermost Enterprise Advanced from v11.6.0), team creation becomes a single-step flow and you will not be prompted to choose a team URL.",
+    "The URL is assigned automatically."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-94800431b8a3",
+   "project": "mattermost",
+   "commit": "b236e8adc0563a0f171a7faef95d1afc6b784025",
+   "date": "2025-09-16",
+   "file": "source/end-user-guide/preferences/connect-multiple-workspaces.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Modify the server's display name or pre-authentication secret, and then tap Save .   :alt: Mobile app edit server screen showing display name fields. :width: 300px"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-e6b6580e8f87",
+   "project": "mattermost",
+   "commit": "e99701761d43792876f74c711ae981af77deb80d",
+   "date": "2026-01-19",
+   "file": "source/end-user-guide/access/access-your-workspace.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Magic link security depends on your email account security.",
+    "Never share your magic link with anyone else, as doing so would give that person full access to your account."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-1dfc555c9159",
+   "project": "mattermost",
+   "commit": "67ec73b77d89c8c6aa3b87c9bee1b3f5e83bbb86",
+   "date": "2025-08-15",
+   "file": "source/end-user-guide/workflow-automation.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    ":maxdepth: 1 :hidden: :titlesonly:  Learn about collaborative playbooks Work with collaborative playbooks Work with runs Work with tasks Work with notifications and updates Work with metrics and goals Share and collaborate Interact with collaborative playbooks"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-54a0e2c483c4",
+   "project": "mattermost",
+   "commit": "f4e5c0dcf6fac240ba30494ffaf3008cadb986b6",
+   "date": "2026-06-18",
+   "file": "source/end-user-guide/collaborate/join-leave-channels.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    ":scale: 30  Leave a public channel added by a membership policy   From Mattermost v11.8.0, when you leave a public channel you were added to by a membership policy, Mattermost asks you to confirm:  Choosing Leave channel removes you from the channel.",
+    "Choosing Mute instead keeps you in the channel and mutes its notifications.",
+    "If the channel is already muted, Mattermost shows Cancel and Leave channel instead of Mute instead ."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Leaving a policy-added public channel asks to confirm with Leave channel or Mute instead; if already muted, Cancel replaces Mute instead.",
+   "oracle_sketch": "Leave a muted policy channel: dialog shows Cancel and Leave channel only.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-96f99ea5b166",
+   "project": "mattermost",
+   "commit": "654a03b26b63cc1248cfdb209cfc55bb39dee662",
+   "date": "2025-12-16",
+   "file": "source/end-user-guide/collaborate/organize-conversations.rst",
+   "kind": "modification",
+   "removed": [
+    "When replying to a thread in a web browser or the desktop app, you can also select the reply count if a thread already exists, and you can select anywhere on a message in a channel in the center pane to view it or reply to it.",
+    "In channels, a dot next to the thread participants indicates there are unread replies.",
+    "You'll only see unreads for threads you're following."
+   ],
+   "added": [
+    "Open a thread by selecting the message or reply count."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Unread indicators appear only for threads the user follows.",
+   "oracle_sketch": "Reply in an unfollowed thread: no unread dot for the user.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-038d235c0367",
+   "project": "zammad",
+   "commit": "391f2807166435800b70cdbed43d31389b5a07bd",
+   "date": "2026-07-01",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "In a typical web environment today, you use a reverse proxy to deliver the static content of your application.",
+    "Only the \"expensive\" app required HTTP requests are forwarded to the application server."
+   ],
+   "added": [
+    "The following reverse proxies are supported in their currently maintained versions:"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-0486af7f9094",
+   "project": "zammad",
+   "commit": "48d7bd51c0a5adcec702caf0b81d4c4763123d9a",
+   "date": "2025-05-21",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "PostgreSQL 10+ MySQL 5.7+ / MariaDB 10.3+ (⚠️ deprecated with Zammad 7.0+)"
+   ],
+   "added": [
+    "If no PostgreSQL server could be detected, it will be installed automatically during the package installation."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-0fa74f56e2e2",
+   "project": "zammad",
+   "commit": "b16599bce37a8b294d720a10d1789a4be1440a66",
+   "date": "2026-09-23",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "\"Debian\", \"11, 12 & 13\""
+   ],
+   "added": [
+    "\"Debian\", \"12 & 13\""
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-0fb55e7c3e99",
+   "project": "zammad",
+   "commit": "0d44a930090caf9943499a52f895d627dcd9f0d7",
+   "date": "2025-05-13",
+   "file": "prerequisites/software.rst",
+   "kind": "deletion",
+   "removed": [
+    "2.5 Node.js ^^^^^^^^^^^  Node.js is required for asset compiling.",
+    "Package installations come pre-bundled with the correct NodeJS version.",
+    "A manual installation is *not required* unless you require NodeJS for other projects.",
+    "Node.js is only required on source code installations if you need to change any javascript or stylesheet files via rake assets:precompile .  .. csv-table:: Zammad/Node.js version compatibility :header: \"Zammad\", \"Node.js\" :widths: 20, 20  \"6.3+\", \"18.10+\" \"6.2\", \"18.0+\" \"5.2 - 6.1\", \"16.0+\" \"5.0 - 5.1\", \"10.0+\"  2.6 Reverse Proxy"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-13b610aa52a4",
+   "project": "zammad",
+   "commit": "acc41284b8b7b78d7e8e6d5cd3aca4874d7a9782",
+   "date": "2025-08-06",
+   "file": "prerequisites/software.rst",
+   "kind": "deletion",
+   "removed": [
+    "Microsoft Internet Explorer 11 ⚠️ Deprecated, will be removed with Zammad 7"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-1803a63def12",
+   "project": "zammad",
+   "commit": "59e8d1610a49b5261a5bb1fc8eb09312ec51eea1",
+   "date": "2025-11-27",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "\"Debian\", \"11 & 12\""
+   ],
+   "added": [
+    "\"Debian\", \"11, 12 & 13\""
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-1d4850d68c06",
+   "project": "zammad",
+   "commit": "b16599bce37a8b294d720a10d1789a4be1440a66",
+   "date": "2026-09-23",
+   "file": "prerequisites/software.rst",
+   "kind": "deletion",
+   "removed": [
+    "Debian 11 & 12"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-29f888657955",
+   "project": "zammad",
+   "commit": "2c7f4322937615cf6fab2486b92a049a312c757d",
+   "date": "2026-06-09",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "\"OpenSUSE / SLES\", \"Leap 15.x / 15\""
+   ],
+   "added": [
+    "\"OpenSUSE Leap / SLES\", \"15 & 16\""
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-2ec20310fa4b",
+   "project": "zammad",
+   "commit": "48d7bd51c0a5adcec702caf0b81d4c4763123d9a",
+   "date": "2025-05-21",
+   "file": "prerequisites/software.rst",
+   "kind": "deletion",
+   "removed": [
+    "For MySQL/MariaDB , the following configuration is required:  Use UTF-8 encoding - utf8mb4 for example will fail!",
+    "Set max_allowed_packet to a value larger than the default of 4 MB (64 MB+ recommended).",
+    "You may also want to consider the following settings for your MySQL server::  innodb_file_format = Barracuda innodb_file_per_table = on innodb_default_row_format = dynamic innodb_large_prefix = 1 innodb_file_format_max = Barracuda"
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-36223d62a978",
+   "project": "zammad",
+   "commit": "9bdefd0cecf43ba25f6c486419125ca42390ba3a",
+   "date": "2026-06-05",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "\"CentOS / RHEL\", \"9\""
+   ],
+   "added": [
+    "\"CentOS / RHEL\", \"9, 10\""
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-3a2d4130eeb1",
+   "project": "zammad",
+   "commit": "acc41284b8b7b78d7e8e6d5cd3aca4874d7a9782",
+   "date": "2025-08-06",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "PostgreSQL _ 10 or newer."
+   ],
+   "added": [
+    "PostgreSQL _ 13 or newer."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-3ee7bda5497a",
+   "project": "zammad",
+   "commit": "0d44a930090caf9943499a52f895d627dcd9f0d7",
+   "date": "2025-05-13",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "2.1 Ruby Programming Language ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+   ],
+   "added": [
+    "Docker and Kubernetes are shipping all dependencies and services by default!"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-4e4be3ba1318",
+   "project": "zammad",
+   "commit": "a94addbef5767c3d3656c6306e359358afb26b41",
+   "date": "2026-02-16",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "\"CentOS / RHEL\", \"8 & 9\""
+   ],
+   "added": [
+    "\"CentOS / RHEL\", \"9\""
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-57ceb5291339",
+   "project": "zammad",
+   "commit": "1067c7ed0f0ae14a7af3d163d142f1c7e9de52fd",
+   "date": "2025-05-09",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "Instead of storing Zammads cache files within your filesystem, you can also do so in Memcached _.",
+    "This can allow you to restrict the size of your cache directories to improve performance."
+   ],
+   "added": [
+    "In all other cases like deploying Zammad via containers (Docker or Kubernetes) or on separate cluster nodes, a Memcached _ service is required to store the cache and serve it to all Zammad instances.",
+    "The Docker and Kubernetes stacks already include this service."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-64f553b0a781",
+   "project": "zammad",
+   "commit": "d7200dfdd11c66f2e3687699bbc01401fd9dd780",
+   "date": "2026-05-19",
+   "file": "prerequisites/software.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    ".. group-tab:: Debian  Debian 13 .. code-block:: console  $ sudo apt install libimlib2t64  Debian 11 & 12 .. code-block:: console  $ sudo apt install libimlib2  .. group-tab:: openSUSE / SLES"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-79ff8726d665",
+   "project": "zammad",
+   "commit": "327a4aa3c9f3a927f18959d66e6eb0b6c632740e",
+   "date": "2026-06-25",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "\"7.0+\", \">= 7.8, < 10\" \"5.2 - 6.5\", \">= 7.8, < 9\" \"5.0 - 5.1\", \">= 7.8, < 8\" \"4.0-4.1\", \">= 6.5, <= 7.12\" \"3.4-3.6\", \">= 5.5, <= 7.9\" \"3.3\", \">= 2.4, <=7.6\" \"3.2\", \">= 2.4, <=7.5\" \"3.1\", \">= 2.4, <=7.4\" \"2.0-3.0\", \">= 2.4, <=5.6\"  An Elasticsearch plugin is required for version 7 or older to index the contents of email attachments: ingest-attachment .",
+    "Starting with Elasticsearch 8, it is included by default."
+   ],
+   "added": [
+    "\"7.2+\", \">= 8.11, < 10\" \"7.0 - 7.1\", \">= 7.8, < 10\" \"5.2 - 6.5\", \">= 7.8, < 9\" \"5.0 - 5.1\", \">= 7.8, < 8\" \"4.0-4.1\", \">= 6.5, <= 7.12\" \"3.4-3.6\", \">= 5.5, <= 7.9\" \"3.3\", \">= 2.4, <=7.6\" \"3.2\", \">= 2.4, <=7.5\" \"3.1\", \">= 2.4, <=7.4\" \"2.0-3.0\", \">= 2.4, <=5.6\""
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-94caeb55494b",
+   "project": "zammad",
+   "commit": "48d7bd51c0a5adcec702caf0b81d4c4763123d9a",
+   "date": "2025-05-21",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "Zammad will store all content in a database.",
+    "You can choose between the following database servers:"
+   ],
+   "added": [
+    "Zammad stores its content in a database.",
+    "The supported database system is PostgreSQL _ 10 or newer."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-992302707002",
+   "project": "zammad",
+   "commit": "391f2807166435800b70cdbed43d31389b5a07bd",
+   "date": "2026-07-01",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "PostgreSQL _ 13 or newer."
+   ],
+   "added": [
+    "PostgreSQL _ 15 or newer."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-b9ffc2765b91",
+   "project": "zammad",
+   "commit": "75ef4dc3a534162ffcf526df824d6e90750f4479",
+   "date": "2026-03-11",
+   "file": "prerequisites/software.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "We try to provide all current distributions that are supported by Packager.io _.",
+    "This means that we can't always provide support for your favorite system."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-bd0ef778e9c9",
+   "project": "zammad",
+   "commit": "9bdefd0cecf43ba25f6c486419125ca42390ba3a",
+   "date": "2026-06-05",
+   "file": "prerequisites/software.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "During the Zammad installation on those distros, it gets installed automatically as a dependency."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-c470fc385da8",
+   "project": "zammad",
+   "commit": "959440f0f9bd0e08315f2974605310d8a00a2bc8",
+   "date": "2026-09-01",
+   "file": "prerequisites/software.rst",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "On Debian/Ubuntu and CentOS/RHEL, the jemalloc memory allocator is installed automatically as dependency and preloaded by all Zammad Ruby processes.",
+    "On SLES it's not installed automatically; see for details."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-cb50bf41f841",
+   "project": "zammad",
+   "commit": "acc41284b8b7b78d7e8e6d5cd3aca4874d7a9782",
+   "date": "2025-08-06",
+   "file": "prerequisites/software.rst",
+   "kind": "deletion",
+   "removed": [
+    "Zammad 7 will no longer support Internet Explorer 11 environments.",
+    "Users using IE will be forced to use a different browser."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-d4bf143bb5da",
+   "project": "zammad",
+   "commit": "75ef4dc3a534162ffcf526df824d6e90750f4479",
+   "date": "2026-03-11",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "We try to provide all current distributions that are supported by Packager.io _.",
+    "This means that we can't always provide support for your favorite system."
+   ],
+   "added": [
+    "Upgrading your host operating system to a newer supported version?",
+    "Make sure to follow the installation guide for the new version and have a look at the host upgrade page, where you can find general steps how to do this."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-da8ab0db71c1",
+   "project": "zammad",
+   "commit": "c30b26225fca88b036fdc12baffc62a9b777b06e",
+   "date": "2025-11-06",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "The installation and configuration is out of scope of this documentation."
+   ],
+   "added": [
+    "It gets installed automatically (package) or is included in the stack (Docker Compose) with a working configuration.",
+    "However, the installation and configuration is out of scope of this documentation.",
+    "Available environment variables for standard and Sentinel setups are briefly mentioned in the page."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-f6222ea795f5",
+   "project": "zammad",
+   "commit": "391f2807166435800b70cdbed43d31389b5a07bd",
+   "date": "2026-07-01",
+   "file": "prerequisites/software.rst",
+   "kind": "modification",
+   "removed": [
+    "Zammad requires Redis 6 or newer."
+   ],
+   "added": [
+    "Zammad requires Redis 7 or newer."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-0acf49039e8e",
+   "project": "joplin",
+   "commit": "7f6bfe9c6e763554eec7570bbb6498535e48675d",
+   "date": "2025-10-28",
+   "file": "readme/apps/server/saml.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "API domain  Joplin Server supports using a separate domain for the API calls, using the API_BASE_URL env variable.",
+    "However this setup is not supported with SAML .",
+    "Both API and website must be under the same URL - essentially it means that both APP_BASE_URL and API_BASE_URL should be set to the same URL."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-1b3994a1d916",
+   "project": "joplin",
+   "commit": "60ba22b233aefc5990a3f8d6c24e4d6e69ee95ad",
+   "date": "2025-03-08",
+   "file": "readme/apps/use_cases/business.md",
+   "kind": "modification",
+   "removed": [
+    "Tips: In addition, by managing the rights of each user, you can define who can work on and view the various notes and notebooks."
+   ],
+   "added": [
+    "Tips : By managing user permissions, you can define who has access to view or edit specific notes and notebooks."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-363219a43bd6",
+   "project": "joplin",
+   "commit": "d22ebdb0a10cacef23157f63cc2dc4de1a1d0ac9",
+   "date": "2026-08-20",
+   "file": "readme/apps/sync/joplin_cloud.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Joplin Server Business  For organisations that prefer to host and manage their own data, Joplin Server Business provides a self-hosted alternative to Joplin Cloud.",
+    "It includes additional features for organisations and a commercial licence for Joplin Server.",
+    "You can try Joplin Server Business free for 14 days or purchase a licence directly ."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-47627c47756b",
+   "project": "joplin",
+   "commit": "ffeb5f887af9f0a678f89796fc9497a1044378f9",
+   "date": "2025-07-27",
+   "file": "readme/apps/sync/s3.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Cloudflare R2 URL: https:// .r2.cloudflarestorage.com (clicking on API > \"Use R2 with APIs\" in Cloudflare Dashboard will show you the correct URL) S3 Access Key & S3 Secret Key: Generate an API Token by going to Manage API tokens > \"Create Account API Token\".",
+    "Give the API Token Object Read & Write permissions.",
+    "Use the resulting Access Key ID and Secret Access Key as the S3 Access Key & S3 Secret Key in Joplin Region: auto Force Path Style: unchecked"
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-497515618e86",
+   "project": "joplin",
+   "commit": "4222caa4238f22077c227d960aceaabbe6e9dcf3",
+   "date": "2026-01-13",
+   "file": "readme/apps/share_notebook.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Video tutorial Watch this short video to learn how to share a notebook and manage share permissions:  !"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-529c41f65e42",
+   "project": "joplin",
+   "commit": "4e31f1918dae290a11520c5f707d5138aba6b0ce",
+   "date": "2026-01-12",
+   "file": "readme/apps/profiles.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Creating a reusable custom profile  You might want to create a custom profile that can be reused in other situations.",
+    "For example, when deploying the desktop application to multiple computers, you may want them all to start with the same predefined setup.",
+    "To do this, follow these steps:  Using the Joplin desktop application Delete your local profile , or rename it if you want to keep a backup Launch the application Configure it as required — for example, create default notes, install the necessary plugins, and adjust settings Once finished, the profile will contain all the required data and configuration Save this profile and use it when deploying the application to other machines"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-57dcfc5aa9ff",
+   "project": "joplin",
+   "commit": "f1246530a45d635042c3e9e606968a2540a105ef",
+   "date": "2026-08-20",
+   "file": "readme/apps/joplin_server_business.md",
+   "kind": "modification",
+   "removed": [
+    "Contact us for a quote!"
+   ],
+   "added": [
+    "Try Joplin Server Business free for 14 days, with no commitment.",
+    "Start your free trial or purchase a licence directly ."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-5fe173e588b6",
+   "project": "joplin",
+   "commit": "f1246530a45d635042c3e9e606968a2540a105ef",
+   "date": "2026-08-20",
+   "file": "readme/apps/joplin_server_business.md",
+   "kind": "modification",
+   "removed": [
+    "Contact us for a quote"
+   ],
+   "added": [
+    "Try Joplin Server Business free for 14 days, with no commitment.",
+    "Start your free trial or purchase a licence directly ."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-64fcdd99d702",
+   "project": "joplin",
+   "commit": "fed2438bc397052182f3ec73017f996561404549",
+   "date": "2025-11-29",
+   "file": "readme/apps/import_export.md",
+   "kind": "deletion",
+   "removed": [
+    "Note : As of October 2025, some users are reporting incomplete exports from OneNote Online .",
+    "Importing notebooks exported from the Windows desktop application may be more reliable."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-74a4dbe9ee2b",
+   "project": "joplin",
+   "commit": "b6eb73968090f742b6e9f2d98ea8e50eee4e58ed",
+   "date": "2026-07-28",
+   "file": "readme/apps/ai_mcp.md",
+   "kind": "deletion",
+   "removed": [
+    "The \"write\" tools default to off so you have to deliberately let an AI app modify your data."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-8de031797d8d",
+   "project": "joplin",
+   "commit": "7aeec923e3dff89be5c7bdfcb188c47267e5737f",
+   "date": "2025-02-19",
+   "file": "readme/apps/ocr.md",
+   "kind": "deletion",
+   "removed": [
+    "Scanning documents however is only available on the desktop app since this is a relatively resource-intensive process.",
+    "The mobile app will have access to that OCR data via sync."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-99c8237584eb",
+   "project": "joplin",
+   "commit": "0067ac126d612f020b05c17b9532b139b11eb691",
+   "date": "2025-08-01",
+   "file": "readme/apps/joplin_server_business.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Technical specifications  Software requirements  Operating System: Linux (Ubuntu 20.04 LTS recommended) or any OS supporting Docker Docker Engine: Version 20.10 or later Docker Compose: Version 1.29 or later (required if using PostgreSQL or multi-container setup) Database: SQLite (for testing/dev only) PostgreSQL 12+ (recommended for production) Reverse Proxy (optional): Apache 2.4+ or Nginx 1.18+ (for public HTTPS access)  Hardware requirements  CPU: 2 cores, 4 threads (Intel Xeon Platinum 8259CL @ 2.50 GHz) RAM: Minimum 4 GB, recommended 8 GB Storage: Minimum 50 GB SSD (faster storage preferred for database and content) Additional storage if using filesystem or S3 for note content Network: Reliable 1 Gbps Ethernet connection for syncing clients  These specs ensure stable operation of Joplin Server under moderate load with multiple concurrent users.",
+    "Higher specs may be required for large-scale deployments.",
+    "For a detailed technical documentation, please see the setup instructions ."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-ab3f95513b7f",
+   "project": "joplin",
+   "commit": "f82b0c7850118b96b12d5da3a40003f84901bbd2",
+   "date": "2026-09-09",
+   "file": "readme/apps/ai_chat.md",
+   "kind": "modification",
+   "removed": [
+    "Local providers (Ollama, LM Studio, or any other server running on localhost / 127.0.0.1 ) work with this switch off — nothing leaves your computer.",
+    "Remote providers (Joplin Cloud AI, Anthropic, OpenAI, anything not on localhost — including services on your local network) need this switch on."
+   ],
+   "added": [
+    "Private-network providers work with this switch off — your notes never leave your own network.",
+    "This covers Ollama, LM Studio, or any other OpenAI-compatible server reachable at: - localhost , 127.0.0.1 or ::1 - a private LAN address: 10.x.x.x , 172.16.x.x – 172.31.x.x , 192.168.x.x , 169.254.x.x , or an IPv6 unique-local ( fc00::/7 ) / link-local ( fe80::/10 ) address - a hostname ending in .localhost , .internal or .home.arpa Remote providers (Joplin Cloud AI, Anthropic, OpenAI, and any other public endpoint) need this switch on."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-dfe8fbe03d83",
+   "project": "joplin",
+   "commit": "b6eb73968090f742b6e9f2d98ea8e50eee4e58ed",
+   "date": "2026-07-28",
+   "file": "readme/apps/ai_mcp.md",
+   "kind": "modification",
+   "removed": [
+    "Go to the MCP section.",
+    "The read-only tools are pre-ticked; the write tools are not."
+   ],
+   "added": [
+    "Go to the AI section.",
+    "Open the Tools section."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-edfc8dfb5aaa",
+   "project": "joplin",
+   "commit": "60ba22b233aefc5990a3f8d6c24e4d6e69ee95ad",
+   "date": "2025-03-08",
+   "file": "readme/apps/use_cases/research.md",
+   "kind": "modification",
+   "removed": [
+    "Whenever you come across a web page that contains useful information for your research, use the Web Clipper to save it.",
+    "This could be a blog post, a news article, a research paper, or any other type of content."
+   ],
+   "added": [
+    "Save Pay-Per-View Content If you have temporary access to subscription-based content, use the Web Clipper to save articles or journals relevant to your work.",
+    "This ensures you can access the material even after your subscription expires."
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-ff8176833aae",
+   "project": "joplin",
+   "commit": "fc516d05b3c9564a54fd0fbb9a1886739190bba0",
+   "date": "2025-09-10",
+   "file": "readme/apps/rich_text_editor.md",
+   "kind": "modification",
+   "removed": [
+    "By default, the following patterns are replaced:"
+   ],
+   "added": [
+    "On desktop, the following patterns are replaced:"
+   ],
+   "suggestion": "exclude",
+   "reason": "not_web_interface"
+  },
+  {
+   "candidate_id": "rc-290b3ea47ca2",
+   "project": "wekan",
+   "commit": "9d60f7bf0df73306a3d74fb5bd53a327a48b3f2a",
+   "date": "2026-09-27",
+   "file": "docs/Features/ImportExport/Jira/Jira.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Status names are treated as literal text, including names such as constructor or proto .",
+    "Dependency references resolve only to issue keys present in the imported file; missing keys cannot resolve to JavaScript object properties."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-9c57cc2cca50",
+   "project": "wekan",
+   "commit": "cdc0722b15cd954d0eaccd235fe01f6b42537c74",
+   "date": "2026-09-23",
+   "file": "docs/Features/Editor/Multiline.md",
+   "kind": "modification",
+   "removed": [
+    "1 Card , 1 List or 1 Swimlane keeps the whole text as one title"
+   ],
+   "added": [
+    "1 Card , 1 List , 1 Swimlane or 1 Board keeps the whole text as one title"
+   ],
+   "suggestion": "admit",
+   "target_rule": "Pasting multiline text as one board title keeps the whole text as a single title.",
+   "oracle_sketch": "Paste three lines into the new board title with '1 Board': one board is created with the full text.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-62d03e2ebc03",
+   "project": "wekan",
+   "commit": "0da7d2d41efa2e2257e13b4d421ae3e8dae866bb",
+   "date": "2026-09-28",
+   "file": "docs/Features/Reports/History/History.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Field snapshots preserve nested Date values with millisecond values and explicit datePaths metadata inside the content.",
+    "This keeps date-valued custom fields as dates after JSON transport and restore, while ISO-looking text remains text.",
+    "Malformed paths or values are rejected instead of coercing data during restore.",
+    "Older rows without this metadata keep their original interpretation: dates already flattened to strings cannot safely be distinguished from actual text."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-024102998dd2",
+   "project": "wekan",
+   "commit": "7eb0d5ac506d7649da198d5af5f7b9215edf571e",
+   "date": "2026-08-17",
+   "file": "docs/Features/ImportExport/PDF/PDF.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "The attachment bullet list contains only files without a displayed preview.",
+    "An image with a successfully loaded preview is named once, in the caption above that image.",
+    "Non-image attachments and images whose preview could not be read remain in the list with their filename and size."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-458cc4cba31a",
+   "project": "wekan",
+   "commit": "8cbd8c5edc4b4c4cbf1250d5485b3937b712f692",
+   "date": "2026-09-27",
+   "file": "docs/Features/All-Boards/All-Boards.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Duplication starts a new activity history.",
+    "It does not copy the source board's old board or card activity events, and does not delete the source history.",
+    "Creating the copied board and its contents can produce new activity events.",
+    "This applies both to Duplicate Board and Duplicate Board — Without cards ; no separate remove-history option is required."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Duplicating a board starts a new activity history without copying the source board's activity.",
+   "oracle_sketch": "Duplicate a board with activity: the copy's activity shows only creation events.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-44f36dd60380",
+   "project": "wekan",
+   "commit": "fb52149e94dbee3c1f3118d45f73e44620234a52",
+   "date": "2026-08-17",
+   "file": "docs/Features/ImportExport/Excel/Excel.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "The attachment section lists every file in a six-column details table: row number, filename, human-readable size, media type, upload date/time and uploader.",
+    "Preview images use the available worksheet width three at a time in two-column cells, with only the filename below each image."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-4d0bf2ddfe7c",
+   "project": "wekan",
+   "commit": "5ef2adf6fbf06013fe581f45c05840d32783ffa4",
+   "date": "2026-07-11",
+   "file": "docs/Features/Emoji.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "rebuild-wekan.sh shows a two-level menu ( 1) Setup 2) Dev server 3) Tests 4) Docker 5) Tools 6) Quit ); pick a category number, then the item number inside it."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-88440629ecb6",
+   "project": "wekan",
+   "commit": "aebc7d9def56f00e5104e182cf7b97a3db82c1aa",
+   "date": "2026-08-17",
+   "file": "docs/Features/Board/Home.md",
+   "kind": "modification",
+   "removed": [
+    "Dropping a multi-selection sets the first of them, the same one the Multi-Selection sidebar's Home row sets, and then clears the selection so it cannot look as though all of them went somewhere."
+   ],
+   "added": [
+    "Dropping a multi-selection does not silently choose its first board.",
+    "It reports \"Please select only one board\", changes nothing and keeps the selection so it can be narrowed.",
+    "A one-board drag continues to set Home normally."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Dropping a multi-selection of boards on Home changes nothing, shows 'Please select only one board' and keeps the selection.",
+   "oracle_sketch": "Drag two selected boards to Home: message appears, Home unchanged, both still selected.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-3c2310cb7c0e",
+   "project": "wekan",
+   "commit": "1485251958aaa3372a010672b25cdc394949a549",
+   "date": "2026-08-25",
+   "file": "docs/Features/Login/LDAP.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "When the user base DN also contains LDAP groups, set LDAP_USER_SEARCH_FILTER to the directory's user class, for example (objectClass=user) for Active Directory or (objectClass=inetOrgPerson) for OpenLDAP.",
+    "WeKan also refuses known group object classes returned by an over-broad search, so they cannot be imported as user accounts."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-4041140f2b5d",
+   "project": "wekan",
+   "commit": "9be167742074966d6987e1ed3ded71ddf04864ef",
+   "date": "2026-08-17",
+   "file": "docs/Features/Page/Archive.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Dragging an archived multi-selection highlights only valid destinations in green: Remaining and every existing Workspace .",
+    "Home is neither highlighted nor accepted, because an archived board cannot be the board opened after login.",
+    "A Workspace drop restores each board and assigns it to that Workspace."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Dragging archived boards highlights only Remaining and existing Workspaces; Home is not accepted.",
+   "oracle_sketch": "Drag archived selection: Home not highlighted; drop on Home is refused.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-cb184033f884",
+   "project": "wekan",
+   "commit": "98359d778814a354eec1e95d0d75cc1965082897",
+   "date": "2026-09-28",
+   "file": "docs/Features/ImportExport/Sync.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Before switching, the shared migration routine rescans actual History and requires its head to match the stored head with no pending append.",
+    "A stale but structurally valid head cannot authorize migration."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-e4e02daa15d4",
+   "project": "wekan",
+   "commit": "4b05d4c517b0c908aeaec0bd3644d579c84c2a30",
+   "date": "2026-09-27",
+   "file": "docs/Features/ImportExport/Sync.md",
+   "kind": "modification",
+   "removed": [
+    "Duplicate external identities, archive/subtask conflicts and moved-card creation conflicts still require"
+   ],
+   "added": [
+    "Archive/subtask conflicts and moved-card creation conflicts still require"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-9e80d2258c48",
+   "project": "wekan",
+   "commit": "0885b9a10b596e22d4919b241bb06bbb097d0b55",
+   "date": "2026-08-17",
+   "file": "docs/Features/ImportExport/PDF/PDF.md",
+   "kind": "modification",
+   "removed": [
+    "custom fields, reads attachment images, and maps that data into the shared card document."
+   ],
+   "added": [
+    "custom fields and reads attachment images. models/lib/cardExportDocument.js maps those records into the shared card document.",
+    "Excel calls exactly the same adapter, so people, dates, checklist items, comments, attachment details, sizes, voting and poker cannot be mapped differently by the two formats."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-8b05adc7767e",
+   "project": "wekan",
+   "commit": "f0ea1601b3f6e2530501873efc5824d48ee79991",
+   "date": "2026-07-26",
+   "file": "docs/Features/Members/Members.md",
+   "kind": "modification",
+   "removed": [
+    "When the global admin setting boardMembersFromSameOrgOrTeamOnly is enabled, a user can only be added to a board if they share at least one Organization or Team with the inviter or with an active board member (site admins bypass this)."
+   ],
+   "added": [
+    "There is one admin checkbox per kind - boardMembersFromSameOrgOnly in Admin Panel / People / Organizations and boardMembersFromSameTeamOnly in / Teams - and when either is on, a user can only be added to a board if they share an enabled kind with the inviter or with an active board member (site admins bypass this)."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-899c4d2472ad",
+   "project": "wekan",
+   "commit": "15b2b6c5339979341d8237aa592ae37a5fd0607d",
+   "date": "2026-09-11",
+   "file": "docs/Features/Board/Card-Field-Display-Order.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Every row of either list reads the same way:  part | what it does |  checkbox | whether that side shows the field at all - the same board toggles as before ( allowsLabels , allowsLabelsOnMinicard , ...) | ▲ ▼ | move the field earlier or later on that side only | icon and name | the field, with the same icon and name the card uses for it |  The Show on Minicard list is in the board's minicard order and the Show on Card list in its card order.",
+    "They are independent: a field can be third on the minicard and last on the card.",
+    "What either list shows top to bottom is what that surface draws top to bottom."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-02eab8a68071",
+   "project": "wekan",
+   "commit": "eb527dd13fee74de89381cfd9b07e088c641eaaa",
+   "date": "2026-09-28",
+   "file": "docs/Features/Editor/RedStrings/RedStrings.md",
+   "kind": "modification",
+   "removed": [
+    "is-fixed-by . color is any CSS color (e.g. #eb144c ). icon is a"
+   ],
+   "added": [
+    "is-fixed-by , duplicates , is-duplicated-by . color is any CSS color (e.g. #eb144c ). icon is a"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_rule_change"
+  },
+  {
+   "candidate_id": "rc-4499c49794df",
+   "project": "wekan",
+   "commit": "c64d3454ac625f8c16d267decad88a9113417659",
+   "date": "2026-09-11",
+   "file": "docs/Features/Board/Board-View-Settings.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "REST API  The same settings over HTTP, for scripts and integrations: GET /api/boards/:boardId/boardViewSettings (board access) answers boardViewSettings , defaultPublicBoardView , defaultPrivateBoardView , boardViewOrder and keys in the normalised shape the menu renders with, and PUT /api/boards/:boardId/boardViewSettings (board admin) accepts any subset of the first four, through the same pure modifiers the popup applies ( boardViewSettingsRequest() in models/lib/boardViewSettings.js ): a default is always shown, hiding a side's default is a 400 , an unknown view key is a 400 , and the order is normalised.",
+    "Both are documented with curl examples in REST-API.md, Board Settings: Board View and in the generated OpenAPI spec ( get_board_view_settings , update_board_view_settings )."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-f3df2f6e5885",
+   "project": "wekan",
+   "commit": "b254b7d3afb112d2e72f36f3fc8eb7a4a998ae23",
+   "date": "2026-09-27",
+   "file": "docs/Features/ImportExport/Sync.md",
+   "kind": "modification",
+   "removed": [
+    "a changed title/description updates the existing card;"
+   ],
+   "added": [
+    "upstream title/description changes update the card when local text still matches the last synchronized source value; local-only text edits are retained;"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-671ffc7230ec",
+   "project": "wekan",
+   "commit": "c796fc6c6b79f2362bd03bea469ba3f3b00ee549",
+   "date": "2026-08-17",
+   "file": "docs/Features/ImportExport/Excel/Excel.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Excel stores text as Unicode, so the export preserves every language.",
+    "The .xlsx format used by ExcelJS cannot portably embed an OpenType font: it records a font family name and the spreadsheet application selects an installed font or fallback.",
+    "Bundling GNU Unifont therefore fixes portable PDF rendering but cannot force the same font into an Excel workbook.",
+    "Converting cells to pictures would make all glyphs visible but would destroy editing, searching, copying and accessibility, so WeKan keeps real Unicode cell text."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-ce5a7976dd3b",
+   "project": "wekan",
+   "commit": "829d2a6c741a69c0fbd1a6e9ae2dd80f377a33bd",
+   "date": "2026-09-06",
+   "file": "docs/Features/Filename/Filename.md",
+   "kind": "modification",
+   "removed": [
+    "file detection uses execFile (argv array, no shell), so a hostile filename cannot inject a command."
+   ],
+   "added": [
+    "file-type receives a generated temporary path, never the hostile display name.",
+    "Its result is a best-effort content hint, not malware validation.",
+    "The bounded libmagic fallback uses execFile (argv array, no shell), so a hostile filename cannot inject a command."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-6b29ef8b44d8",
+   "project": "wekan",
+   "commit": "5ed4268a61b19898c671b64b1ead786494f171b9",
+   "date": "2026-09-27",
+   "file": "docs/Features/Swimlanes/Swimlanes.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Insert above or below  Use the swimlane header + , or Swimlane Actions → Add Swimlane .",
+    "The existing popup offers Above selected swimlane and Below selected swimlane , with Below selected by default.",
+    "Multiple titles retain their order between the selected lane and its neighbor.",
+    "Board write permissions still apply."
+   ],
+   "suggestion": "admit",
+   "target_rule": "Adding a swimlane offers Above or Below the selected swimlane, with Below selected by default.",
+   "oracle_sketch": "Open Add Swimlane: Below is preselected; new lane appears below.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-91b217e36309",
+   "project": "wekan",
+   "commit": "5ef2adf6fbf06013fe581f45c05840d32783ffa4",
+   "date": "2026-07-11",
+   "file": "docs/Features/Emoji.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Dev server -> localhost:3000 ./rebuild-wekan.sh 2 # Dev server 1 # localhost:3000"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-90d29a54a512",
+   "project": "wekan",
+   "commit": "15b2b6c5339979341d8237aa592ae37a5fd0607d",
+   "date": "2026-09-11",
+   "file": "docs/Features/Board/Card-Field-Display-Order.md",
+   "kind": "modification",
+   "removed": [
+    "Reorder the major sections of an opened card - Labels, Dates, Members, Custom Fields, Description - instead of the historical fixed order (#4448).",
+    "Useful when a board relies mostly on Description or Custom Fields and wants that section to show up first, right under the card title."
+   ],
+   "added": [
+    "Choose what the opened card and the minicard show, and in what order - each of the two independently (#4448, #6688).",
+    "Useful when a board relies mostly on Description or Custom Fields and wants that section first, right under the card title, or wants the minicard to lead with its due date rather than its labels."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-57edf89f8e91",
+   "project": "wekan",
+   "commit": "eb527dd13fee74de89381cfd9b07e088c641eaaa",
+   "date": "2026-09-28",
+   "file": "docs/Features/Editor/RedStrings/RedStrings.md",
+   "kind": "modification",
+   "removed": [
+    "become blocks / is-blocked-by (by direction), other link types become"
+   ],
+   "added": [
+    "become blocks / is-blocked-by (by direction), standard Duplicate links become duplicates / is-duplicated-by , and other link types become"
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-b3da119985ac",
+   "project": "wekan",
+   "commit": "3151f8a815b03dde3428bfd827c750300d47e896",
+   "date": "2026-09-30",
+   "file": "docs/Features/Email/Reply-By-Email.md",
+   "kind": "modification",
+   "removed": [
+    "The is an HMAC-SHA256 of the card id, keyed by a server-only secret ( server/lib/inboundEmailReplyToken.js ).",
+    "It cannot be forged or guessed from the card id alone — the inbound webhook recomputes it and rejects the request if it does not match (constant-time comparison, crypto.timingSafeEqual )."
+   ],
+   "added": [
+    "is the last valid day (days since 1970-01-01, base 36), 30 days after sending by default. is an HMAC-SHA256 over the card id, the user id and the expiry, keyed by a server-only secret ( server/lib/inboundEmailReplyToken.js ).",
+    "None of the three can be changed without the webhook noticing (constant-time comparison, crypto.timingSafeEqual ), so two recipients of the same card hold different addresses and neither can reply as the other."
+   ],
+   "suggestion": "exclude",
+   "reason": "operations_or_configuration"
+  },
+  {
+   "candidate_id": "rc-24af6ddf152c",
+   "project": "wekan",
+   "commit": "9791993d59850a09f3b7efe109663c95ad74833c",
+   "date": "2026-07-25",
+   "file": "docs/Features/Reports/History/History.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "This page uses the shared Table Page design.",
+    "Layout, search, pagination, column spec, per-page data loading and RTL rules are defined there and are not repeated here.",
+    "Below is only what is specific to History: its store, its scopes, and restore/undo."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-de652e658b99",
+   "project": "wekan",
+   "commit": "a0c14a4c7f6ca19d4ed97d1f5a3bf660dbf11d3d",
+   "date": "2026-09-22",
+   "file": "docs/Features/Board/Starred.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "A logged-in reader can also star a public board they do not belong to .",
+    "That board appears in their Starred overview and header menu after a reload.",
+    "Only the starred public board is added to their board list; other public boards stay on the Public Boards page.",
+    "If the owner makes it private, the old star does not grant access or keep it in Starred."
+   ],
+   "suggestion": "admit",
+   "target_rule": "A logged-in reader can star a public board they do not belong to; it appears in Starred after reload, and stops appearing if the board becomes private.",
+   "oracle_sketch": "Star public board, reload: in Starred; owner makes it private: gone.",
+   "numeric": false
+  },
+  {
+   "candidate_id": "rc-59d96b056593",
+   "project": "wekan",
+   "commit": "e217f1215a0f99271f1f752f841fe412fb0c3339",
+   "date": "2026-09-23",
+   "file": "docs/Features/Date-Format.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Below the board Date popup’s Save button and horizontal rule, Show week of year (ISO 8601) toggles your existing week-number display preference immediately."
+   ],
+   "suggestion": "admit",
+   "target_rule": "The 'Show week of year (ISO 8601)' toggle in the board Date popup changes the week-number display immediately.",
+   "oracle_sketch": "Toggle on: week numbers appear without reload.",
+   "numeric": true
+  },
+  {
+   "candidate_id": "rc-6f280235750e",
+   "project": "wekan",
+   "commit": "80ccf100a77975242d5711b331de1f9ab143b98c",
+   "date": "2026-09-28",
+   "file": "docs/Features/ImportExport/Sync.md",
+   "kind": "addition",
+   "removed": [],
+   "added": [
+    "Sync text writes preserve empty strings and surrounding whitespace in both the card and its source baseline while retaining schema validation.",
+    "An empty source description therefore survives storage and does not cause a repeated baseline update on every run.",
+    "Older missing baselines are adopted only when the local text agrees with the source."
+   ],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  },
+  {
+   "candidate_id": "rc-ebff8e70d1d7",
+   "project": "wekan",
+   "commit": "8bf47d1a9ad2dabf56186ce7f069318a2aaff9ce",
+   "date": "2026-09-27",
+   "file": "docs/Features/All-Boards/All-Boards.md",
+   "kind": "deletion",
+   "removed": [
+    "Duplication starts a new activity history.",
+    "It does not copy the source board's old board or card activity events, and does not delete the source history.",
+    "Creating the copied board and its contents can produce new activity events.",
+    "This applies both to Duplicate Board and Duplicate Board — Without cards ; no separate remove-history option is required."
+   ],
+   "added": [],
+   "suggestion": "exclude",
+   "reason": "no_single_testable_rule"
+  }
+ ]
+}
