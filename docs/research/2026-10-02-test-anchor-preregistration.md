@@ -88,6 +88,15 @@ artifacts. This is not part of the H1/H2 confirmatory protocol.
 
 ## Commands
 
+One shot, from the repository root on the collection machine:
+
+```sh
+bash scripts/run_test_anchor.sh            # tester model defaults to gpt-6-astra
+```
+
+The script locates each private packet by matching its frozen receipt hash with
+the public summary, so no path is typed by hand. Step by step:
+
 ```sh
 python scripts/test_anchor_experiment.py controls --out RUN/controls
 python scripts/test_anchor_experiment.py prepare --out RUN/study --model MODEL \

@@ -332,6 +332,29 @@ def analyze(rows: list[dict]) -> dict:
     return summary
 
 
+# -------------------------------------------------------------------- locate
+
+PUBLIC_SUMMARIES = ROOT / "data/e2e-replications-20261001"
+CASES = ("realworld-favorites", "openproject-invalid-remaining", "paperless-duplicate-consumption")
+
+
+def locate(evidence_root: Path) -> dict[str, str]:
+    """Find each private packet whose frozen receipt matches the public summary hash."""
+    wanted = {}
+    for case in CASES:
+        summary = json.loads((PUBLIC_SUMMARIES / case / "summary.json").read_text())
+        wanted[summary["frozen_receipt_sha256"]] = case
+    found: dict[str, list[str]] = defaultdict(list)
+    for receipt in sorted(evidence_root.glob("*/frozen/receipt.json")):
+        case = wanted.get(sha256_file(receipt))
+        if case and (receipt.parent.parent / "results.json").is_file():
+            found[case].append(str(receipt.parent.parent))
+    missing = [case for case in CASES if len(found.get(case, [])) != 1]
+    if missing:
+        raise SystemExit(f"could not identify exactly one packet for: {', '.join(missing)}")
+    return {case: paths[0] for case, paths in found.items()}
+
+
 # --------------------------------------------------------------------- modes
 
 def prepare(out: Path, packets: dict[str, Path], model: str, executable: Path) -> dict:
@@ -457,10 +480,13 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--packet", action="append", required=True, metavar="CASE=PATH")
     p.add_argument("--model", required=True)
     p.add_argument("--executable", type=Path, default=Path("/opt/homebrew/bin/codex"))
+    sub.add_parser("locate").add_argument("--evidence-root", type=Path, required=True)
     for mode in ("controls", "generate", "execute", "summary"):
         sub.add_parser(mode).add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
-    if args.mode == "prepare":
+    if args.mode == "locate":
+        result = locate(args.evidence_root)
+    elif args.mode == "prepare":
         packets = dict(item.split("=", 1) for item in args.packet)
         result = prepare(args.out, {k: Path(v) for k, v in packets.items()}, args.model, args.executable)
     elif args.mode == "controls":

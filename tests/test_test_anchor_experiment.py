@@ -144,3 +144,25 @@ def test_controls_compare_observed_with_expected(tmp_path: Path) -> None:
     result = ta.run_controls(tmp_path / "controls", executor=fake)
     assert result["qualified"] is True
     assert "lost_rule" in result["observed"]
+
+
+def test_locate_matches_public_frozen_receipt(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    public = tmp_path / "public"
+    evidence = tmp_path / "evidence"
+    for index, case in enumerate(ta.CASES):
+        packet = evidence / f"{case}-packet"
+        (packet / "frozen").mkdir(parents=True)
+        (packet / "frozen/receipt.json").write_text(json.dumps({"n": index}))
+        (packet / "results.json").write_text("{}")
+        (public / case).mkdir(parents=True)
+        (public / case / "summary.json").write_text(json.dumps(
+            {"frozen_receipt_sha256": ta.sha256_file(packet / "frozen/receipt.json")}))
+    decoy = evidence / "unrelated"
+    (decoy / "frozen").mkdir(parents=True)
+    (decoy / "frozen/receipt.json").write_text("{}")
+    monkeypatch.setattr(ta, "PUBLIC_SUMMARIES", public)
+    found = ta.locate(evidence)
+    assert found == {case: str(evidence / f"{case}-packet") for case in ta.CASES}
+    (evidence / "realworld-favorites-packet/frozen/receipt.json").write_text("changed")
+    with pytest.raises(SystemExit):
+        ta.locate(evidence)
