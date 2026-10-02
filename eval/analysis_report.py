@@ -11,6 +11,7 @@ from eval.runner import run_eval
 from feature_plane import DeployableFeatureInput, extract_deployable_features
 from protocol.paired_stats import (
     clustered_bootstrap_ci,
+    paired_probability_of_superiority,
     summarize_binary_pairs,
     paired_permutation_pvalue,
 )
@@ -21,14 +22,41 @@ def _summary_metrics(metrics: dict[str, Any]) -> dict[str, Any]:
     return dict(metrics)
 
 
-def _ordinal_deltas(episodes: list[dict[str, Any]]) -> dict[str, list[float]]:
-    severity_scale = {"low": 0.0, "medium": 1.0, "high": 2.0}
-    grouped: dict[tuple[str, int], dict[str, float]] = {}
+_SEVERITY_SCALE = {"low": 0.0, "medium": 1.0, "high": 2.0}
+
+
+def _grouped_severities(episodes: list[dict[str, Any]]) -> dict[tuple[str, int], dict[str, Any]]:
+    grouped: dict[tuple[str, int], dict[str, Any]] = {}
     for episode in episodes:
         key = (str(episode["intent_id"]), int(episode.get("replication_id", 0)))
         raw = episode.get("degradation_severity", 0)
-        severity = float(raw) if isinstance(raw, (int, float)) else severity_scale.get(str(raw), 0.0)
-        grouped.setdefault(key, {})[str(episode["variant"])] = severity
+        severity = float(raw) if isinstance(raw, (int, float)) else _SEVERITY_SCALE.get(str(raw), 0.0)
+        slot = grouped.setdefault(key, {})
+        slot[str(episode["variant"])] = severity
+        slot["project_id"] = str(episode.get("project_id") or "")
+    return grouped
+
+
+def _superiority_rows(episodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Matched clean/smelly severities for the H1 primary estimand.
+
+    Synthetic fixtures may lack project identity; the intent then stands in as
+    its own cluster and the report says so through ``cluster_fallback``.
+    """
+    rows = []
+    for (intent_id, _replication), variants in sorted(_grouped_severities(episodes).items()):
+        if "clean" in variants and "smelly" in variants:
+            rows.append({
+                "intent_id": intent_id,
+                "project_id": variants["project_id"] or f"intent:{intent_id}",
+                "clean_severity": variants["clean"],
+                "defective_severity": variants["smelly"],
+            })
+    return rows
+
+
+def _ordinal_deltas(episodes: list[dict[str, Any]]) -> dict[str, list[float]]:
+    grouped = _grouped_severities(episodes)
     by_intent: dict[str, list[float]] = {}
     for (intent_id, _replication), variants in grouped.items():
         if "clean" in variants and "smelly" in variants:
@@ -84,6 +112,14 @@ def build_analysis_report(work_dir: Path) -> dict[str, Any]:
     ordinal_delta = sum(cluster_means) / len(cluster_means) if cluster_means else 0.0
     ordinal_ci = clustered_bootstrap_ci(ordinal_deltas)
     ordinal_p = paired_permutation_pvalue(ordinal_deltas)
+    superiority_rows = _superiority_rows(smell_blind_episodes)
+    superiority = paired_probability_of_superiority(superiority_rows) if superiority_rows else None
+    if superiority is not None:
+        fallback = any(row["project_id"].startswith("intent:") for row in superiority_rows)
+        superiority["cluster_fallback"] = fallback
+        if fallback:
+            # Intents standing in for projects overstate independence.
+            superiority["valid_for_inference"] = False
     provenance_pr_auc = _h2_pr_auc(smell_blind_episodes, family="provenance")
     deployable_pr_auc = _h2_pr_auc(smell_blind_episodes, family="static")
 
@@ -103,7 +139,9 @@ def build_analysis_report(work_dir: Path) -> dict[str, Any]:
         "observability_gate_passed": provenance_auroc >= operational_auroc,
         "paired_stats": paired_stats,
         "estimands": {
+            "H1.paired_probability_of_superiority": superiority,
             "H1.ordinal_delta": {
+                "role": "descriptive_secondary",
                 "value": ordinal_delta,
                 "ci95": {"low": ordinal_ci[0], "high": ordinal_ci[1]},
                 "paired_permutation_pvalue": ordinal_p,

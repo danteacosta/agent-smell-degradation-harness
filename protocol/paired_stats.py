@@ -120,6 +120,91 @@ def paired_permutation_pvalue(
     return (extreme + 1) / (draws + 1)
 
 
+def paired_probability_of_superiority(
+    pairs: Sequence[Mapping[str, Any]],
+    *,
+    n_boot: int = 2000,
+    n_perm: int = 5000,
+    seed: int = 0,
+) -> dict[str, Any]:
+    """H1 primary estimand: paired probability that the defective arm is worse.
+
+    Each row is one matched observation with ``intent_id``, ``project_id``,
+    ``clean_severity`` and ``defective_severity`` on the ordinal scale where a
+    larger value is worse (0 none ... 3 severe).  A pair scores 1 when the
+    defective variant is worse, 0.5 on a tie and 0 when it is better.
+
+    Replications are averaged within their intent first, so each source intent
+    has equal weight.  The estimate is the mean intent score; 0.5 means no
+    paired effect and values above 0.5 support H1.  The interval resamples
+    projects (cluster bootstrap), and the p-value flips the sign of each
+    intent's centered score, which is the exact randomization null for
+    exchangeable arm labels within an intent.  Fewer than two projects yields
+    no interval rather than a misleading one.
+    """
+
+    by_intent: dict[str, list[float]] = {}
+    project_of: dict[str, str] = {}
+    for row in pairs:
+        intent = str(row.get("intent_id", "")).strip()
+        project = str(row.get("project_id", "")).strip()
+        if not intent or not project:
+            raise ValueError("each pair requires intent_id and project_id")
+        if project_of.setdefault(intent, project) != project:
+            raise ValueError(f"intent {intent} appears in more than one project")
+        clean, defective = row.get("clean_severity"), row.get("defective_severity")
+        for value in (clean, defective):
+            if type(value) not in (int, float):
+                raise ValueError("severities must be numeric ordinal ratings")
+        if defective > clean:
+            score = 1.0
+        elif defective == clean:
+            score = 0.5
+        else:
+            score = 0.0
+        by_intent.setdefault(intent, []).append(score)
+
+    intents = sorted(by_intent)
+    intent_score = {key: sum(by_intent[key]) / len(by_intent[key]) for key in intents}
+    projects: dict[str, list[str]] = {}
+    for intent in intents:
+        projects.setdefault(project_of[intent], []).append(intent)
+    all_scores = [score for scores in by_intent.values() for score in scores]
+    estimate = sum(intent_score.values()) / len(intents) if intents else None
+
+    interval: dict[str, float | None] = {"low": None, "high": None}
+    if len(projects) >= 2:
+        rng = random.Random(seed)
+        project_ids = sorted(projects)
+        draws: list[float] = []
+        for _ in range(max(1, int(n_boot))):
+            sampled = [intent_score[i] for p in (rng.choice(project_ids) for _ in project_ids) for i in projects[p]]
+            draws.append(sum(sampled) / len(sampled))
+        draws.sort()
+        interval = {
+            "low": draws[max(0, int(0.025 * (len(draws) - 1)))],
+            "high": draws[min(len(draws) - 1, int(0.975 * (len(draws) - 1)))],
+        }
+
+    centered = {key: [intent_score[key] - 0.5] for key in intents}
+    return {
+        "estimand": "paired_probability_of_superiority/v1",
+        "direction": "values above 0.5 mean the defective variant is worse",
+        "estimate": estimate,
+        "ci95_project_cluster": interval,
+        "paired_randomization_pvalue": paired_permutation_pvalue(centered, n_perm=n_perm, seed=seed) if intents else None,
+        "n_pairs": len(all_scores),
+        "n_intents": len(intents),
+        "n_projects": len(projects),
+        "pair_outcomes": {
+            "defective_worse": sum(1 for s in all_scores if s == 1.0),
+            "tie": sum(1 for s in all_scores if s == 0.5),
+            "defective_better": sum(1 for s in all_scores if s == 0.0),
+        },
+        "valid_for_inference": len(projects) >= 2,
+    }
+
+
 def export_paired_stats(
     clean_pass_rate: float,
     smelly_pass_rate: float,
