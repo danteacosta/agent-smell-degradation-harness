@@ -1,0 +1,21 @@
+{
+  "schema_version": "screening-mapping-diagnostic/v1",
+  "reviewer": "assistant_post_collection_reading",
+  "changes_original_labels": false,
+  "unresolved_target_selection": [
+    "rc-de652e658b99",
+    "rc-afa7beacea83",
+    "rc-4041140f2b5d",
+    "rc-6337ce108c4d",
+    "rc-e594b40135ff",
+    "rc-bd0b2995febc",
+    "rc-4da4940bc16c"
+  ],
+  "underspecified_probe_questions": [
+    "rc-60c42d4dd323"
+  ],
+  "smell_labels_created": false,
+  "probe_scope_sensitivity": [
+    "rc-b6f382226c41"
+  ]
+}
