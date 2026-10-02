@@ -43,7 +43,7 @@ def compare(predictions, outcomes, *, max_fpr):
         if _finite(row['terminal_ms']) <= 0:
             raise ValueError('positive terminal time required')
         labels[row['episode_id']] = row
-    seen = set(); project_splits = {}; intent_projects = {}; samples = {'calibration': [], 'test': []}
+    seen = set(); project_splits = {}; project_names = {}; intent_projects = {}; samples = {'calibration': [], 'test': []}
     for row in predictions:
         if set(row) != {'episode_id', 'project_id', 'intent_id', 'run_id', 'replication_id', 'constraint_id', 'split', 'stages'}:
             raise ValueError('prediction field allowlist violated')
@@ -59,6 +59,8 @@ def compare(predictions, outcomes, *, max_fpr):
         split = row['split']; project = row['project_id'].strip().casefold()
         if split not in samples:
             raise ValueError('only calibration and test scores admitted')
+        if project_names.setdefault(project, row['project_id']) != row['project_id']:
+            raise ValueError('project aliases cannot create independent bootstrap clusters')
         if project_splits.setdefault(project, split) != split:
             raise ValueError('project crosses calibration/test split')
         if intent_projects.setdefault(row['intent_id'], project) != project:

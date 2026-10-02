@@ -65,3 +65,8 @@ def test_test_outcomes_do_not_change_fitted_operating_point():
         if row['episode_id'].startswith('test'):row['terminal_defect']=1-row['terminal_defect']
     after=compare(p,o,max_fpr=.05)
     for d in DETECTORS:assert before['detectors'][d]['policy']==after['detectors'][d]['policy']
+
+
+def test_project_aliases_within_test_cannot_inflate_bootstrap_clusters():
+    p,o=sample();p[3]['project_id']=' TEST-1 '
+    with pytest.raises(ValueError,match='bootstrap clusters'):compare(p,o,max_fpr=.05)
