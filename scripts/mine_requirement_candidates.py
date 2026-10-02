@@ -38,7 +38,16 @@ PROJECTS = {
     "zammad": {"paths": ["."], "exclude": ["admin", "api", "contributing", "appendix", "getting-started"]},
     "joplin": {"paths": ["readme/apps"], "exclude": []},
     "wekan": {"paths": ["docs/Features"], "exclude": ["translations", "admin-panel"]},
+    # Frame extension, screening round 2 (deviation recorded 2026-10-02): round 1
+    # admitted rules from seven projects and the plan needs eight.
+    "zulip": {"paths": ["help", "starlight_help/src/content/docs"], "exclude": ["changelog"]},
+    # functions.md is Grist's generated formula reference (signatures and search
+    # anchors), excluded like API references in other projects.
+    "grist": {"paths": ["help/en/docs"], "exclude": ["self-managed", "install", "api", "changelog", "newsletter",
+                                                     "functions.md"]},
 }
+ROUND_1_PROJECTS = ("kanboard", "paperless", "nextcloud", "realworld", "todomvc", "strictdoc", "openproject",
+                    "immich", "mealie", "mattermost", "zammad", "joplin", "wekan")
 DOC_EXT = (".md", ".mdx", ".rst", ".txt", ".adoc")
 # Installation, deployment and server administration describe operations, not
 # behavior a user can check in the product's interface.
@@ -162,9 +171,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--repos", type=Path, required=True, help="directory holding one clone per project")
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--projects", help="comma-separated subset of PROJECTS (default: round-1 projects)")
     args = parser.parse_args()
+    selected = args.projects.split(",") if args.projects else list(ROUND_1_PROJECTS)
+    unknown = set(selected) - set(PROJECTS)
+    if unknown:
+        parser.error(f"unknown projects: {sorted(unknown)}")
     rows = []
-    for project in PROJECTS:
+    for project in selected:
         repo = args.repos / project
         if not (repo / ".git").exists():
             print(f"skip {project}: no clone")
@@ -177,18 +191,22 @@ def main() -> None:
         row["candidate_id"] = "rc-" + hashlib.sha256(key.encode()).hexdigest()[:12]
     args.out.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows))
     print(f"total {len(rows)}")
-    screen = screening_sample(rows)
+    screen = screening_sample(rows, selected)
     args.out.with_name(args.out.stem + "-screening.jsonl").write_text(
         "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in screen))
     print(f"screening sample {len(screen)}")
 
 
-def screening_sample(rows: list[dict]) -> list[dict]:
-    """Seeded sample of at most SCREEN_CAP_PER_PROJECT candidates per project."""
+def screening_sample(rows: list[dict], projects=None) -> list[dict]:
+    """Seeded sample of at most SCREEN_CAP_PER_PROJECT candidates per project.
+
+    A fresh generator is seeded for each mining run, so a frame extension mined
+    with --projects draws its own sample without touching round 1.
+    """
     import random
     rng = random.Random(SCREEN_SEED)
     sample = []
-    for project in PROJECTS:
+    for project in (projects or ROUND_1_PROJECTS):
         pool = sorted((r for r in rows if r["project"] == project), key=lambda r: r["candidate_id"])
         sample.extend(pool if len(pool) <= SCREEN_CAP_PER_PROJECT else rng.sample(pool, SCREEN_CAP_PER_PROJECT))
     return sample

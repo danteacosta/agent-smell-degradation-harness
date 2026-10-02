@@ -202,6 +202,21 @@ Any change after registration is recorded with its date, reason and effect
 on the analysis. No change is made after the first confirmatory generation
 without an explicit deviation entry.
 
+**2026-10-02, frame extension (before registration).** The first screening
+round admitted rules from seven projects; section 3 requires eight, and every
+other round-1 project's frame was already fully screened. Two projects were
+added to the frame with the same window and filters: Zulip (help center) and
+Grist (help/en/docs). They were chosen as active open-source web applications
+whose user documentation lives in a public git repository; no screening or
+model outcome for them was seen before mining. Grist's generated formula
+reference (`functions.md`) is excluded like API references elsewhere. Penpot
+was considered and dropped because its user guide is written in `.njk`
+templates, outside the documentation extensions of the plan. The extension is
+`data/requirement-sampling/frame-ext-20261002.jsonl` (325 candidates) with its
+own seeded screening sample of 30 per project
+(`screening-ext-20261002.json`, no assistant pre-screen). The final selection
+runs once, after both rounds, with `scripts/select_requirements.py`.
+
 ## 8. Decisions still open before submission
 
 1. Primary outcome of H1: browser oracle (this draft) or acceptance-criteria

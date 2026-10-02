@@ -112,3 +112,4 @@ experiment evidence.
 - [Triagem por consenso de LLMs: 258 candidatos, 2 de outubro de 2026](2026-10-02-llm-screening-results.md). Dados públicos, recálculo, custódia e limitações dos mappings; não confirma smells ou H1/H2.
 
 - [Sonda de recuperação de regras: 69 candidatos e dois modelos, 2 de outubro de 2026](2026-10-02-memorization-probe-results.md). Luna 22/69 e Sol 31/69; dados públicos e verificação independente da projeção. Recuperação sem referência não demonstra contaminação e não confirma H1/H2.
+- [Triagem, rodada 2: extensão do frame para o oitavo projeto (Zulip, Grist), 2 de outubro de 2026](2026-10-02-screening-round-2.md). 60 candidatos prontos para o painel; desvio registrado no pré-registro.
