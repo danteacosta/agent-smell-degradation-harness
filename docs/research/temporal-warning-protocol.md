@@ -157,16 +157,21 @@ unseen data. Proposed scale: 12 NEW independently reviewed intents from six
 projects, clean/defective pairs, two distinct qualified providers, three runs per
 variant/provider: 144 planned episodes if all gates pass. This is an engineering
 and estimation pilot, not a sufficiently powered confirmatory H2 sample. Source
-selection is currently empty: no fresh requirement or human approval is fabricated.
+selection remains unfrozen: the proposed source pairs below are drafts, not admitted cases or fabricated approvals.
 
 Use the existing pinned sources as a search pool, not as admitted cases. Review
 prior run registries, near clones and exposure logs before assigning fresh IDs.
 Select on source eligibility and auditable constraints before observing generated
 outcomes; retain null cases and failed admissions. Record source/revision/license,
 constraint IDs, A/B-equivalence where a rewrite is used, single-condition deletion,
-reviewer identity and prior exposure. Two genuinely independent human reviewers
-must resolve mapping/manipulation disagreements before admission. LLM votes do not
-satisfy this gate. Never expose the complete counterpart or rubric to the generator.
+reviewer identity and prior exposure. This temporal candidate retains its original
+human-review admission fields. The user-approved exploratory screening workflow
+uses two LLM judges plus a third adjudicator (`scripts/run_llm_screening.sh`).
+Machine decisions may support exploratory selection, but must not be entered as
+human reviews or confirmatory approvals. The screening amendment retains a 20%
+human audit before confirmatory claims. A `no_go` from this temporal candidate
+applies only to its unfrozen collection, not to all exploratory collection. Never
+expose the complete counterpart or rubric to the generator.
 
 Assign all intents/variants/repeats and near-clone-connected projects together with
 `eval.splits`. Candidate allocation is 3 training / 1 calibration / 2 test projects;
@@ -197,8 +202,10 @@ as independent requirements or claim causal recovery without a cue intervention.
 
 Current dependencies: fresh corpus identities and reviews, exact split freeze,
 annotation rubric/annotators, two qualified providers, runtime/event adapter and
-budget authorization. This execution found neither Codex CLI nor Docker available;
-no new provider episode or empirical comparison was performed.
+budget authorization. During preparation of this candidate, neither Codex CLI nor
+Docker was available in that execution environment; no provider episode or empirical
+comparison was performed there. This is not a statement about the current Mac,
+where Codex and Docker have since supported the separate test-anchor study.
 
 ### Executable preparation and candidate source review (2026-10-02)
 
@@ -307,7 +314,7 @@ python -m eval.temporal_warning_readiness \
 A blocked candidate returns exit code 2 while preserving the report. Even
 when all prerequisites are declared, the result is `prerequisites_declared`,
 not scientific validation or launch authority. Review metadata and hashed
-qualification references require authenticity checks by an independent human;
+qualification references in this candidate require independent authenticity checks;
 this declarative check cannot prove independence or competence.
 
 For this candidate, freeze the feature definitions and comparable score policy
