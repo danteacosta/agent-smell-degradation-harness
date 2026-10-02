@@ -1,5 +1,7 @@
 # Research catalog
 
+- [2 October 2026: recovered public evidence](2026-10-02-recovered-public-evidence.md): three formerly private result rows, unchanged ordinal originals, separate scope diagnostic, and two remaining reproduction gaps.
+
 - [2 October 2026: test-anchor results](2026-10-02-test-anchor-results.md): 81 generated test suites, 180 original evaluations, a separate 180-pair origin diagnostic, and the remaining bounded-profile scope limitation.
 
 - [1 October 2026: blind historical source triage](2026-10-01-historical-blind-review-protocol.md): two model readings of all ten old/new changes, preserved disagreements, and a source-gated next collection.

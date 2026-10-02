@@ -1,0 +1,2884 @@
+{
+  "date": "2026-10-02",
+  "confirmatory_eligible": false,
+  "source_of_labels": "existing frozen analyses and outcomes; no new judgments",
+  "public_projection_policy": [
+    "Only relative source filenames and packet identifiers",
+    "No CLI capture, raw provider stream, credential, absolute personal or evidence directory path",
+    "Original and diagnostic ordinal tables remain separately auditable"
+  ],
+  "rows": [
+    {
+      "row_id": "constructed_demo",
+      "scope": "Constructed non-E2E examples; no population H1/H2 inference",
+      "custody": {
+        "packet_id": "codex-original-demo-20260914-v2",
+        "receipt_sha256": "ace728c1383ae120931b5c6ef17824a0d1d332f7046cab9f802aa0063fba25c9",
+        "receipt_files_verified": 78,
+        "sources": [
+          {
+            "file": "outcomes.json",
+            "sha256": "c7015380e31148dcf7e7efc3c46a140ff1512637d143d0734c080d05b653dd53"
+          },
+          {
+            "file": "analysis.json",
+            "sha256": "d12f34317413a224b634abb16a57ac9b26a0c1472f6da914d7ca603c73629f4e"
+          }
+        ]
+      },
+      "rows": [
+        {
+          "intent_id": "discount",
+          "constraint_id": "policy-discount",
+          "project_id": "original-demo",
+          "replication_id": "1",
+          "variant": "clean",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "09b8733580ceb03e1e44c9d9138901ff940c888ad685424cd82c157d429058c8",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[0]"
+          }
+        },
+        {
+          "intent_id": "discount",
+          "constraint_id": "policy-discount",
+          "project_id": "original-demo",
+          "replication_id": "1",
+          "variant": "defective",
+          "status": "failed",
+          "executor_status": "failed",
+          "oracle_sha256": "09b8733580ceb03e1e44c9d9138901ff940c888ad685424cd82c157d429058c8",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[1]"
+          }
+        },
+        {
+          "intent_id": "access",
+          "constraint_id": "policy-access",
+          "project_id": "original-demo",
+          "replication_id": "1",
+          "variant": "defective",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "00911b77628549bc8e936da87e1ebb0d2c9c1039e7aae0b04b862b9473c2e174",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[2]"
+          }
+        },
+        {
+          "intent_id": "token",
+          "constraint_id": "policy-token",
+          "project_id": "original-demo",
+          "replication_id": "1",
+          "variant": "clean",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "99bed968d547da1c0995062463e85addd3bab6a131abeb16db316f1202f55dec",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[3]"
+          }
+        },
+        {
+          "intent_id": "access",
+          "constraint_id": "policy-access",
+          "project_id": "original-demo",
+          "replication_id": "2",
+          "variant": "clean",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "00911b77628549bc8e936da87e1ebb0d2c9c1039e7aae0b04b862b9473c2e174",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[4]"
+          }
+        },
+        {
+          "intent_id": "discount",
+          "constraint_id": "policy-discount",
+          "project_id": "original-demo",
+          "replication_id": "3",
+          "variant": "clean",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "09b8733580ceb03e1e44c9d9138901ff940c888ad685424cd82c157d429058c8",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[5]"
+          }
+        },
+        {
+          "intent_id": "token",
+          "constraint_id": "policy-token",
+          "project_id": "original-demo",
+          "replication_id": "3",
+          "variant": "clean",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "99bed968d547da1c0995062463e85addd3bab6a131abeb16db316f1202f55dec",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[6]"
+          }
+        },
+        {
+          "intent_id": "access",
+          "constraint_id": "policy-access",
+          "project_id": "original-demo",
+          "replication_id": "2",
+          "variant": "defective",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "00911b77628549bc8e936da87e1ebb0d2c9c1039e7aae0b04b862b9473c2e174",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[7]"
+          }
+        },
+        {
+          "intent_id": "discount",
+          "constraint_id": "policy-discount",
+          "project_id": "original-demo",
+          "replication_id": "2",
+          "variant": "clean",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "09b8733580ceb03e1e44c9d9138901ff940c888ad685424cd82c157d429058c8",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[8]"
+          }
+        },
+        {
+          "intent_id": "access",
+          "constraint_id": "policy-access",
+          "project_id": "original-demo",
+          "replication_id": "3",
+          "variant": "clean",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "00911b77628549bc8e936da87e1ebb0d2c9c1039e7aae0b04b862b9473c2e174",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[9]"
+          }
+        },
+        {
+          "intent_id": "access",
+          "constraint_id": "policy-access",
+          "project_id": "original-demo",
+          "replication_id": "3",
+          "variant": "defective",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "00911b77628549bc8e936da87e1ebb0d2c9c1039e7aae0b04b862b9473c2e174",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[10]"
+          }
+        },
+        {
+          "intent_id": "token",
+          "constraint_id": "policy-token",
+          "project_id": "original-demo",
+          "replication_id": "3",
+          "variant": "defective",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "99bed968d547da1c0995062463e85addd3bab6a131abeb16db316f1202f55dec",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[11]"
+          }
+        },
+        {
+          "intent_id": "access",
+          "constraint_id": "policy-access",
+          "project_id": "original-demo",
+          "replication_id": "1",
+          "variant": "clean",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "00911b77628549bc8e936da87e1ebb0d2c9c1039e7aae0b04b862b9473c2e174",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[12]"
+          }
+        },
+        {
+          "intent_id": "token",
+          "constraint_id": "policy-token",
+          "project_id": "original-demo",
+          "replication_id": "2",
+          "variant": "defective",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "99bed968d547da1c0995062463e85addd3bab6a131abeb16db316f1202f55dec",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[13]"
+          }
+        },
+        {
+          "intent_id": "discount",
+          "constraint_id": "policy-discount",
+          "project_id": "original-demo",
+          "replication_id": "2",
+          "variant": "defective",
+          "status": "failed",
+          "executor_status": "failed",
+          "oracle_sha256": "09b8733580ceb03e1e44c9d9138901ff940c888ad685424cd82c157d429058c8",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[14]"
+          }
+        },
+        {
+          "intent_id": "discount",
+          "constraint_id": "policy-discount",
+          "project_id": "original-demo",
+          "replication_id": "3",
+          "variant": "defective",
+          "status": "failed",
+          "executor_status": "failed",
+          "oracle_sha256": "09b8733580ceb03e1e44c9d9138901ff940c888ad685424cd82c157d429058c8",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[15]"
+          }
+        },
+        {
+          "intent_id": "token",
+          "constraint_id": "policy-token",
+          "project_id": "original-demo",
+          "replication_id": "2",
+          "variant": "clean",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "99bed968d547da1c0995062463e85addd3bab6a131abeb16db316f1202f55dec",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[16]"
+          }
+        },
+        {
+          "intent_id": "token",
+          "constraint_id": "policy-token",
+          "project_id": "original-demo",
+          "replication_id": "1",
+          "variant": "defective",
+          "status": "passed",
+          "executor_status": "passed",
+          "oracle_sha256": "99bed968d547da1c0995062463e85addd3bab6a131abeb16db316f1202f55dec",
+          "source": {
+            "file": "outcomes.json",
+            "field": "[17]"
+          }
+        }
+      ],
+      "recalculation": "Count status per variant; verify unique intent_id/constraint_id/replication_id/variant and complete clean/defective pairs.",
+      "expected": {
+        "clean": {
+          "passed": 9
+        },
+        "defective": {
+          "passed": 6,
+          "failed": 3
+        },
+        "pairs": 9
+      }
+    },
+    {
+      "row_id": "kanboard_subtasks_minimal_context",
+      "scope": "18 new minimal-context journeys with LLM ordinal consensus; not strict replication of broad-source pilot and not invented binary-oracle labels.",
+      "custody": {
+        "packet_id": "kanboard-prospective-neutral-pilot-20260928-v3",
+        "receipt_sha256": "338e7fa758b00c2633426ac269c102de937fd331be702c4cc462bde0f97f08bd",
+        "receipt_files_verified": 779,
+        "sources": [
+          {
+            "file": "analysis.json",
+            "sha256": "5ef4b2b5ccde89e271ef0d96860d12806e2d450be37843757f926f7b76f3aa33"
+          },
+          {
+            "file": "frozen/manifest.json",
+            "sha256": "5bad736ee02c998c60fc468bf3cc7066f4d02ec173c924c0f2c23fc4d22ac485"
+          }
+        ]
+      },
+      "frozen_before_generation_sha256": "686af2323e4738aff7bbb45fc64f720d8d7012b7d514af5ef1f6d1ac143f3b16",
+      "selected_reference": "When you close a task, all incomplete subtasks will be changed to the status \"Done.\"",
+      "rows": [
+        {
+          "id": "fc3dc6b41c2538486c32504f",
+          "generation_id": "bfc10edaf7e16850e0ffd382",
+          "model": "gpt-5.6-sol",
+          "arm": "A",
+          "replication": 1,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 0,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            0,
+            0
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[0]"
+          }
+        },
+        {
+          "id": "f6ee89e68de48407f1337126",
+          "generation_id": "07b8731e61a63f1e56dca6aa",
+          "model": "gpt-5.6-luna",
+          "arm": "B",
+          "replication": 1,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 0,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            0,
+            0
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[1]"
+          }
+        },
+        {
+          "id": "01c8d898b21e705af56b0b5b",
+          "generation_id": "cc5ae1684c7b6620578aeddd",
+          "model": "gpt-5.6-sol",
+          "arm": "B",
+          "replication": 3,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 0,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            0,
+            0
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[2]"
+          }
+        },
+        {
+          "id": "6c2d607139053821820e3760",
+          "generation_id": "2d7920dc228b3f5b24efe22b",
+          "model": "gpt-5.6-luna",
+          "arm": "C",
+          "replication": 1,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 2,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            2,
+            2
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[3]"
+          }
+        },
+        {
+          "id": "62de31d287d6d72cf939e2b8",
+          "generation_id": "cc31bda79769f5dd66810f34",
+          "model": "gpt-5.6-sol",
+          "arm": "A",
+          "replication": 3,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 0,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            0,
+            0
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[4]"
+          }
+        },
+        {
+          "id": "da9f1f84f92844f71dc05c0a",
+          "generation_id": "74c3580fe30219c9e267c1cd",
+          "model": "gpt-5.6-sol",
+          "arm": "B",
+          "replication": 1,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 0,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            0,
+            0
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[5]"
+          }
+        },
+        {
+          "id": "9db062de9b1f99b176b0b829",
+          "generation_id": "9b7898cee8dd7ffeecc2288b",
+          "model": "gpt-5.6-luna",
+          "arm": "A",
+          "replication": 2,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 0,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            0,
+            0
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[6]"
+          }
+        },
+        {
+          "id": "dc9865228c80686d39c485b9",
+          "generation_id": "5e19cdac6f1951dac8c7efed",
+          "model": "gpt-5.6-luna",
+          "arm": "C",
+          "replication": 2,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 2,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            2,
+            2
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[7]"
+          }
+        },
+        {
+          "id": "9d4ec1353b52d15468eba3dd",
+          "generation_id": "5243acc49dd4c609f3b0ca60",
+          "model": "gpt-5.6-sol",
+          "arm": "B",
+          "replication": 2,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 0,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            0,
+            0
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[8]"
+          }
+        },
+        {
+          "id": "7bf7833b2c773b0837230a1d",
+          "generation_id": "eb75d67f161a396c136a68ae",
+          "model": "gpt-5.6-luna",
+          "arm": "B",
+          "replication": 3,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 0,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            0,
+            0
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[9]"
+          }
+        },
+        {
+          "id": "3fbe6fb1b5f8ee0067f7b593",
+          "generation_id": "b1709a17e7deecf7d113beec",
+          "model": "gpt-5.6-sol",
+          "arm": "C",
+          "replication": 2,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 2,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            2,
+            2
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[10]"
+          }
+        },
+        {
+          "id": "1651b48da21712262620616c",
+          "generation_id": "f9319925078ff44e40a3be8d",
+          "model": "gpt-5.6-luna",
+          "arm": "C",
+          "replication": 3,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 2,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            2,
+            2
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[11]"
+          }
+        },
+        {
+          "id": "93911704632db6190dec9104",
+          "generation_id": "c8f7868d21ec4dcea4f43008",
+          "model": "gpt-5.6-sol",
+          "arm": "C",
+          "replication": 3,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 2,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            2,
+            2
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[12]"
+          }
+        },
+        {
+          "id": "a4fe39c0731182b2ef8b3d29",
+          "generation_id": "6e8d57e6546ad4d0ccd0d65f",
+          "model": "gpt-5.6-sol",
+          "arm": "A",
+          "replication": 2,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 0,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            0,
+            0
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[13]"
+          }
+        },
+        {
+          "id": "93fb5052d33b174da3f1470f",
+          "generation_id": "1a4f6fb778a79e22b45e45a6",
+          "model": "gpt-5.6-luna",
+          "arm": "A",
+          "replication": 3,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 0,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            0,
+            0
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[14]"
+          }
+        },
+        {
+          "id": "d980b2543f513975d354a53c",
+          "generation_id": "5a7d6a9f19b602cd4122ad8f",
+          "model": "gpt-5.6-luna",
+          "arm": "A",
+          "replication": 1,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 0,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            0,
+            0
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[15]"
+          }
+        },
+        {
+          "id": "e96b1fa919626eff28f846bc",
+          "generation_id": "d07578fa7df0ce94db6db6d1",
+          "model": "gpt-5.6-sol",
+          "arm": "C",
+          "replication": 1,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 2,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            2,
+            2
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[16]"
+          }
+        },
+        {
+          "id": "b59802fb1d0f68b5106d0fdc",
+          "generation_id": "2591d3c997bcc5607ba33072",
+          "model": "gpt-5.6-luna",
+          "arm": "B",
+          "replication": 2,
+          "generation_status": "valid",
+          "browser_status": "complete",
+          "eligible": true,
+          "severity": 0,
+          "statuses": [
+            "valid",
+            "valid"
+          ],
+          "votes": [
+            0,
+            0
+          ],
+          "source": {
+            "file": "analysis.json",
+            "field": "rows[17]"
+          }
+        }
+      ],
+      "recalculation": "Count severity by arm, preserving browser_status, eligibility and unknown; pair A/C by model and replication.",
+      "expected": {
+        "positions": 18,
+        "A": {
+          "severity_0": 6
+        },
+        "B": {
+          "severity_0": 6
+        },
+        "C": {
+          "severity_2": 6
+        },
+        "A_C_pairs": 6,
+        "C_worse": 6
+      }
+    },
+    {
+      "row_id": "browser_ordinal_34",
+      "scope": "Retrospective LLM ordinal severity; preserve base and posthoc scope-corrected diagnostic separately.",
+      "base": {
+        "custody": {
+          "packet_id": "e2e-ordinal-audit-20260928-v5",
+          "receipt_sha256": "17472399e6bee4c6f8a91de6a21bfef9d0dda87e3a9de9fbacde03f15211650a",
+          "receipt_files_verified": 1688,
+          "sources": [
+            {
+              "file": "analysis.json",
+              "sha256": "c8ef20817a2281655e8e62c07cbeb4018132e1bc3e97456588d63a75a9abde72"
+            },
+            {
+              "file": "frozen/manifest.json",
+              "sha256": "970b7f3faf151703afc1bc29a84d001a4c4184c59b86dd44432c8037e5995729"
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "7b07cbfa4ad7e84c314f7bc9",
+            "case_id": "nextcloud-restore",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "successor-746bd228e6cb53d9ecd2ace9",
+            "original_html_sha256": "374f4f29e5ed211e4ef804d71c77b6f7b04b64a7b6294dad1f27013e6cff248a",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[0]",
+              "label_file": "analysis.json",
+              "label_field": "states.7b07cbfa4ad7e84c314f7bc9"
+            }
+          },
+          {
+            "id": "91dfdfde09dc46280291e862",
+            "case_id": "openproject-invalid-remaining",
+            "project_id": "openproject",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "openproject-invalid-047a1e9d563e0ebc98bd227e",
+            "original_html_sha256": "dffdc48d9bf7ab356e4872e979967a6dd9652a777c006318ee11cc47fc4e5ba6",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[1]",
+              "label_file": "analysis.json",
+              "label_field": "states.91dfdfde09dc46280291e862"
+            }
+          },
+          {
+            "id": "4ed10b735e9f8f36e33a8052",
+            "case_id": "paperless-drop-anywhere",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "successor-151a7e810fd7b8e5bb3ca9d7",
+            "original_html_sha256": "05b41b0a5b25c1e84b11defc949dd77df44a6fd525b6d5caba051f4bfbb70d31",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[2]",
+              "label_file": "analysis.json",
+              "label_field": "states.4ed10b735e9f8f36e33a8052"
+            }
+          },
+          {
+            "id": "016013143b476cee688d89c6",
+            "case_id": "realworld-article-author",
+            "project_id": "realworld",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "rw-7728629b1ec272f698eefb7b",
+            "original_html_sha256": "50585b43db01e1ff37f429efc4f243507586959ef8212c59f21da8597889fd6a",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[3]",
+              "label_file": "analysis.json",
+              "label_field": "states.016013143b476cee688d89c6"
+            }
+          },
+          {
+            "id": "e80475c0e0b54d902d7ba2a3",
+            "case_id": "paperless-nested-tags",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "paperless-nested-66368137bf4a577847cff031",
+            "original_html_sha256": "a1f0700d924559f8d49b00791ea6c14492d0d325a12e958f0378d74b0d870df2",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[4]",
+              "label_file": "analysis.json",
+              "label_field": "states.e80475c0e0b54d902d7ba2a3"
+            }
+          },
+          {
+            "id": "ff6863b298eb1100839a3fd6",
+            "case_id": "realworld-comment-author",
+            "project_id": "realworld",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "realworld-comment-v4-e35346f14eb3bc54035ed64a",
+            "original_html_sha256": "0ec0c5b58ef2038cba63a723a1ed1147755f4fa3a24c610911842ff09a00bca8",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[5]",
+              "label_file": "analysis.json",
+              "label_field": "states.ff6863b298eb1100839a3fd6"
+            }
+          },
+          {
+            "id": "39e94a63295db9812d940457",
+            "case_id": "openproject-invalid-remaining",
+            "project_id": "openproject",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "openproject-invalid-dc2c3c450edff5180357c4ce",
+            "original_html_sha256": "14d1e8b597d509dde6fff4cfbeed26f7443d0d3c566f6c6c3a5fec3755fb5456",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[6]",
+              "label_file": "analysis.json",
+              "label_field": "states.39e94a63295db9812d940457"
+            }
+          },
+          {
+            "id": "03d0e21caf80b161320c1206",
+            "case_id": "todomvc-clear-completed",
+            "project_id": "todomvc",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "todomvc-clear-41c84396a9220a28cb1c22df",
+            "original_html_sha256": "4000d0ab05f89eeca66e38f1257aea4823a4c37995e288ed9813cafee9f804e0",
+            "severity": 1,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[7]",
+              "label_file": "analysis.json",
+              "label_field": "states.03d0e21caf80b161320c1206"
+            }
+          },
+          {
+            "id": "7aecfb6420bafb8083c19ab5",
+            "case_id": "realworld-article-author",
+            "project_id": "realworld",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "rw-bd9b43f719398ea27a620a9f",
+            "original_html_sha256": "cf5e52b0e7b847df53fd1a02ce8c88cfd09112154ecbc973246f0c929d53bc13",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[8]",
+              "label_file": "analysis.json",
+              "label_field": "states.7aecfb6420bafb8083c19ab5"
+            }
+          },
+          {
+            "id": "c2cd9d2e66634d838af62ba3",
+            "case_id": "realworld-comment-author",
+            "project_id": "realworld",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "realworld-comment-v4-90bb01fe1735cc198baa8a8c",
+            "original_html_sha256": "9126e9df8367f68243a8389f6ce2581b39a71ef804fc0b8f60acd91a383d2543",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[9]",
+              "label_file": "analysis.json",
+              "label_field": "states.c2cd9d2e66634d838af62ba3"
+            }
+          },
+          {
+            "id": "ec86567c3b7680bdf72fd1e1",
+            "case_id": "nextcloud-restore-conflict",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "nextcloud-conflict-4ccdaa652527eea949e59760",
+            "original_html_sha256": "484e72f9e3b6a46b066d8d8f6b3ab5f21e539ee45454e0c0f0fa1d073c891bc0",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[10]",
+              "label_file": "analysis.json",
+              "label_field": "states.ec86567c3b7680bdf72fd1e1"
+            }
+          },
+          {
+            "id": "138376200da9a43767b7c1f1",
+            "case_id": "realworld-favorites",
+            "project_id": "realworld",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "realworld-favorites-84d017b4272e3ca14860a483",
+            "original_html_sha256": "0afb4369f47f0ab871164b958806f2a39b4a039e91213987a3505a440eed26fd",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[11]",
+              "label_file": "analysis.json",
+              "label_field": "states.138376200da9a43767b7c1f1"
+            }
+          },
+          {
+            "id": "c5648a8a124f047071b489b3",
+            "case_id": "kanboard-duplicate-title",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "secure-duplicate-836f25ebbee25fb86f943881",
+            "original_html_sha256": "4806dd59b0c67086f4f00869bb6238dec81a11ded3d09f48eb23ae6280ecf4d9",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[12]",
+              "label_file": "analysis.json",
+              "label_field": "states.c5648a8a124f047071b489b3"
+            }
+          },
+          {
+            "id": "d72d12fc3c86e6097889cec8",
+            "case_id": "paperless-drop-anywhere",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "successor-fab959c602c2e4c26356b88d",
+            "original_html_sha256": "cfaefd41bb688a97d20a7d0fc91d0190caae5739964355b751e97763750e67f5",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[13]",
+              "label_file": "analysis.json",
+              "label_field": "states.d72d12fc3c86e6097889cec8"
+            }
+          },
+          {
+            "id": "fc2e1033410e27d2dac94df0",
+            "case_id": "realworld-favorites",
+            "project_id": "realworld",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "realworld-favorites-350bce56ad539ec41c273d8f",
+            "original_html_sha256": "e3064ae7c145e5a6567f571b4f4a172a67a47ba9b1dac7fa8f0ca52034e88c66",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[14]",
+              "label_file": "analysis.json",
+              "label_field": "states.fc2e1033410e27d2dac94df0"
+            }
+          },
+          {
+            "id": "0169c042d79b98a996bae41b",
+            "case_id": "kanboard-duplicate-title",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "secure-duplicate-6deb5752080ecd649f233daf",
+            "original_html_sha256": "c5cc9ecc0277e0f5cc8f74f19435a5f157b84d2dfaff8c2e85635e9bbd6a1148",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[15]",
+              "label_file": "analysis.json",
+              "label_field": "states.0169c042d79b98a996bae41b"
+            }
+          },
+          {
+            "id": "3cf34b0165864f567f5efdb8",
+            "case_id": "todomvc-focus",
+            "project_id": "todomvc",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "code-4cd40c68b523f4f9652f",
+            "original_html_sha256": "5e9beea14c3908315972718e3a8bf102e260c5d299ab3a79d932aa0679188a63",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[16]",
+              "label_file": "analysis.json",
+              "label_field": "states.3cf34b0165864f567f5efdb8"
+            }
+          },
+          {
+            "id": "d8972d0d18101948c4a37b34",
+            "case_id": "nextcloud-restore",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "successor-c92fd66c37af00e999fb63cf",
+            "original_html_sha256": "715468ec75673864d3f2881997334ac0626a3f5762cc6a25d3eb5d810aee16b5",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[17]",
+              "label_file": "analysis.json",
+              "label_field": "states.d8972d0d18101948c4a37b34"
+            }
+          },
+          {
+            "id": "a7fcdce71ac37a9ce5fc89df",
+            "case_id": "openproject-work-copy",
+            "project_id": "openproject",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "successor-8d08fa4f77ae75c08fe5512d",
+            "original_html_sha256": "ff92cd4c44d6188d4816fd3b01e71db0354155fcba462ce6d1cac595a2f93454",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[18]",
+              "label_file": "analysis.json",
+              "label_field": "states.a7fcdce71ac37a9ce5fc89df"
+            }
+          },
+          {
+            "id": "c69bf81401c24ae1671cb1e4",
+            "case_id": "kanboard-duplicate-title",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "secure-duplicate-4db69418a3974ba21975f478",
+            "original_html_sha256": "dd3ce8e425e7e63571ba8350e12ae9ad5c60c7723cc8e0e1857710b6bd34a8ca",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[19]",
+              "label_file": "analysis.json",
+              "label_field": "states.c69bf81401c24ae1671cb1e4"
+            }
+          },
+          {
+            "id": "60316107e96496266b9af84e",
+            "case_id": "nextcloud-trash-transition",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "nextcloud-trash-dacc44d155d76173df24ccd1",
+            "original_html_sha256": "5ce0b868876e6cef2046a8c4a209796e4761377095b2bdd0c590f6055e76f08e",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[20]",
+              "label_file": "analysis.json",
+              "label_field": "states.60316107e96496266b9af84e"
+            }
+          },
+          {
+            "id": "257b747f1205cf11a4a29b7c",
+            "case_id": "realworld-article-author",
+            "project_id": "realworld",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "rw-e79a3dc4230b0ca7499df74f",
+            "original_html_sha256": "e3f07382595182f5b1cf6f5a7e11895496ab5c9ff89eb580e35a8d9eccb22fc5",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[21]",
+              "label_file": "analysis.json",
+              "label_field": "states.257b747f1205cf11a4a29b7c"
+            }
+          },
+          {
+            "id": "3de514a744c195cfdb564e61",
+            "case_id": "realworld-comment-author",
+            "project_id": "realworld",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "realworld-comment-v4-006e7f98e25e345aeb3f88c0",
+            "original_html_sha256": "9126e9df8367f68243a8389f6ce2581b39a71ef804fc0b8f60acd91a383d2543",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[22]",
+              "label_file": "analysis.json",
+              "label_field": "states.3de514a744c195cfdb564e61"
+            }
+          },
+          {
+            "id": "afb009e913c5daa3e00d2f72",
+            "case_id": "realworld-article-author",
+            "project_id": "realworld",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "rw-ca12bc4f0301275b4c1b657b",
+            "original_html_sha256": "958b7637887ce5b53598775839673a116514c89f05cc71b1f4c2a876c8476700",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[23]",
+              "label_file": "analysis.json",
+              "label_field": "states.afb009e913c5daa3e00d2f72"
+            }
+          },
+          {
+            "id": "0228db2dcd451b64c56bd241",
+            "case_id": "kanboard-subtasks",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "e2e-739448d74bede8bb280f25b3",
+            "original_html_sha256": "efa087b10073849986e9e9529eb6f33b3b22c116b21ae970e18fb610839dd4ae",
+            "severity": null,
+            "eligible": false,
+            "unknown_reason": "incomplete_saved_observations",
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[24]",
+              "label_file": "analysis.json",
+              "label_field": "states.0228db2dcd451b64c56bd241"
+            }
+          },
+          {
+            "id": "fec2c8289cdc315730e1cf43",
+            "case_id": "kanboard-closed-filter",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "kanboard-closed-601ca9c9e9804ff7884243af",
+            "original_html_sha256": "c1de6d96667a929093b9cae39806fc42341d59e4887e3f29dd3ce597d22f78c5",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[25]",
+              "label_file": "analysis.json",
+              "label_field": "states.fec2c8289cdc315730e1cf43"
+            }
+          },
+          {
+            "id": "918c9b50920b197ee841f2f5",
+            "case_id": "nextcloud-trash-transition",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "nextcloud-trash-c7091c9c9526741520a1bf94",
+            "original_html_sha256": "66b3ba2d84aebf08f5cc982e062a99d052c83a66c7dcafa87d35039eaed9fc9f",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[26]",
+              "label_file": "analysis.json",
+              "label_field": "states.918c9b50920b197ee841f2f5"
+            }
+          },
+          {
+            "id": "720babd98f58b578d284d088",
+            "case_id": "todomvc-focus",
+            "project_id": "todomvc",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "code-4a4ef2a298b0f80d0c3d",
+            "original_html_sha256": "7ed2ba7690122f43826ec4964715375c9bfa91bc926fff6165a4cf172f266746",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[27]",
+              "label_file": "analysis.json",
+              "label_field": "states.720babd98f58b578d284d088"
+            }
+          },
+          {
+            "id": "b5b828eba89027b2ddba795d",
+            "case_id": "kanboard-duplicate-title",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "secure-duplicate-018c54f63b8933b763f16bd8",
+            "original_html_sha256": "07b37a0f6c52b1b065b77389b033c14d1395872ade3dcb18b2e594863c144114",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[28]",
+              "label_file": "analysis.json",
+              "label_field": "states.b5b828eba89027b2ddba795d"
+            }
+          },
+          {
+            "id": "60ebd3230436d14df717a75d",
+            "case_id": "todomvc-focus",
+            "project_id": "todomvc",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "code-870e5eb570c82baeb162",
+            "original_html_sha256": "1eb317ec95abc28e3c61fad85e01b793a4d31220ea717d867344de20d91094ec",
+            "severity": 1,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[29]",
+              "label_file": "analysis.json",
+              "label_field": "states.60ebd3230436d14df717a75d"
+            }
+          },
+          {
+            "id": "62ab62a52e6482392c5111b5",
+            "case_id": "realworld-favorites",
+            "project_id": "realworld",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "realworld-favorites-c1552d4391fe257933e65713",
+            "original_html_sha256": "9aaf769c316db5ff6f50c84db8c2e7520110ccafd37bd2eeb89e2b7bcd5513dc",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[30]",
+              "label_file": "analysis.json",
+              "label_field": "states.62ab62a52e6482392c5111b5"
+            }
+          },
+          {
+            "id": "188e53761d4a11f67e8d4bdc",
+            "case_id": "openproject-remaining-derive",
+            "project_id": "openproject",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "remaining-ce6a55799ee3523a82700555",
+            "original_html_sha256": "ca1f23e6c7c0747cab186823de682e5db57854286ef0d2f17f793db9a19da43f",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[31]",
+              "label_file": "analysis.json",
+              "label_field": "states.188e53761d4a11f67e8d4bdc"
+            }
+          },
+          {
+            "id": "bc78c21b75da174bbf6fe94c",
+            "case_id": "todomvc-clear-completed",
+            "project_id": "todomvc",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "todomvc-clear-59c212b0872ff55f62e99767",
+            "original_html_sha256": "69e4901f4f5ad0e910af1b907f4c16dcb6d2f187abc8c8041591784f5ce963cf",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[32]",
+              "label_file": "analysis.json",
+              "label_field": "states.bc78c21b75da174bbf6fe94c"
+            }
+          },
+          {
+            "id": "5af4b4042333b6649bffeb69",
+            "case_id": "nextcloud-trash-transition",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "nextcloud-trash-6a222f989031bd334bbda41e",
+            "original_html_sha256": "66b3ba2d84aebf08f5cc982e062a99d052c83a66c7dcafa87d35039eaed9fc9f",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[33]",
+              "label_file": "analysis.json",
+              "label_field": "states.5af4b4042333b6649bffeb69"
+            }
+          },
+          {
+            "id": "0b95d07f6d706f4552313bdc",
+            "case_id": "realworld-favorites",
+            "project_id": "realworld",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "realworld-favorites-9c3376387a23120c9a5d0ce9",
+            "original_html_sha256": "1dada351c758722499d8a61f0a130a21b66e9da7bbf2b97cef4c1522db208803",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[34]",
+              "label_file": "analysis.json",
+              "label_field": "states.0b95d07f6d706f4552313bdc"
+            }
+          },
+          {
+            "id": "9cc6b423b30b80ec03fcf53f",
+            "case_id": "paperless-drop-anywhere",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "successor-e825d703fd08bf18a9fb012e",
+            "original_html_sha256": "cfaefd41bb688a97d20a7d0fc91d0190caae5739964355b751e97763750e67f5",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[35]",
+              "label_file": "analysis.json",
+              "label_field": "states.9cc6b423b30b80ec03fcf53f"
+            }
+          },
+          {
+            "id": "f587b3dbdb9e9181933a2fe6",
+            "case_id": "kanboard-closed-filter",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "kanboard-closed-16e70ebfbd0f2da2cdd64b80",
+            "original_html_sha256": "578c43cb3acc2c2514d126f786b8bb218a0eb7f7cec658f2ece0821236a288d7",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[36]",
+              "label_file": "analysis.json",
+              "label_field": "states.f587b3dbdb9e9181933a2fe6"
+            }
+          },
+          {
+            "id": "f931057e92f685aeac61d8d7",
+            "case_id": "paperless-duplicate-consumption",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "paperless-duplicate-bd982d6e0d1e7dcfa66eb1d8",
+            "original_html_sha256": "c3125ccad597761be9e688f73c6aebc4d6128d481bc6881f4abb0b55dbe0f227",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[37]",
+              "label_file": "analysis.json",
+              "label_field": "states.f931057e92f685aeac61d8d7"
+            }
+          },
+          {
+            "id": "15bd42fa96bbcda837110473",
+            "case_id": "paperless-nested-tags",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "paperless-nested-aef6a8806bbb29e458f1b1e4",
+            "original_html_sha256": "a368e65e63f9f71f90228c038a29649772c5a9e1bd60dc0266117979293b4b11",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[38]",
+              "label_file": "analysis.json",
+              "label_field": "states.15bd42fa96bbcda837110473"
+            }
+          },
+          {
+            "id": "f7c326671acac62899693e17",
+            "case_id": "openproject-remaining-derive",
+            "project_id": "openproject",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "remaining-25035d7fb5939f8ea8d30d71",
+            "original_html_sha256": "3c54341ee8309e27939d11f498269406f40c554aefad95b304550ded56190f6b",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[39]",
+              "label_file": "analysis.json",
+              "label_field": "states.f7c326671acac62899693e17"
+            }
+          },
+          {
+            "id": "2998912fc462c31a7deed1de",
+            "case_id": "openproject-invalid-remaining",
+            "project_id": "openproject",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "openproject-invalid-0d48f7d9f52fd6070b38e4f9",
+            "original_html_sha256": "244c50d445df63c347b93bc096dfaccb293ab801bd1325da394b72f6c61e8bc2",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[40]",
+              "label_file": "analysis.json",
+              "label_field": "states.2998912fc462c31a7deed1de"
+            }
+          },
+          {
+            "id": "bd5cbf6c489fb1b879796a8a",
+            "case_id": "paperless-nested-tags",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "paperless-nested-8765ade4bfb3afd0bdff4775",
+            "original_html_sha256": "54edd5336ebf4f1d15396a9081d8ac77f26a02d3d965c3085aeaf1e7f248234d",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[41]",
+              "label_file": "analysis.json",
+              "label_field": "states.bd5cbf6c489fb1b879796a8a"
+            }
+          },
+          {
+            "id": "31333f7d02f92c1a3f93e6e7",
+            "case_id": "nextcloud-restore-conflict",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "nextcloud-conflict-2e075e5b482bff06f94d49ea",
+            "original_html_sha256": "31b49989c845834f31814d408939ef8af26ee372284b803a8ff6b97be1e8b8a9",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[42]",
+              "label_file": "analysis.json",
+              "label_field": "states.31333f7d02f92c1a3f93e6e7"
+            }
+          },
+          {
+            "id": "cacf73371997c321b4c28a41",
+            "case_id": "nextcloud-restore-conflict",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "nextcloud-conflict-99f4fae84127272467dce66c",
+            "original_html_sha256": "92647640388b7402fea71c60e36d19510af39e773c3dbcc4bc15d2f71266f6fa",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[43]",
+              "label_file": "analysis.json",
+              "label_field": "states.cacf73371997c321b4c28a41"
+            }
+          },
+          {
+            "id": "b69ed5017f397c0435471eae",
+            "case_id": "paperless-duplicate-consumption",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "paperless-duplicate-8d4c9b0f068070b022376301",
+            "original_html_sha256": "e96470cfa84285e7c6f36fdb3675acda449cec2137652023731411d8b76308c4",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[44]",
+              "label_file": "analysis.json",
+              "label_field": "states.b69ed5017f397c0435471eae"
+            }
+          },
+          {
+            "id": "f20dc124f610224b6d54128a",
+            "case_id": "paperless-duplicate-consumption",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "paperless-duplicate-77ed8c7751c0ae84195255d0",
+            "original_html_sha256": "ad2efe7a8b19521aa20cf6232ec6f92497710a1ec24f369b7b5302cc1d62fedc",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[45]",
+              "label_file": "analysis.json",
+              "label_field": "states.f20dc124f610224b6d54128a"
+            }
+          },
+          {
+            "id": "d60e605e9f01d4bcecb1ed86",
+            "case_id": "kanboard-closed-filter",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "kanboard-closed-6fc8dd81b33fcf454fd1d931",
+            "original_html_sha256": "c1de6d96667a929093b9cae39806fc42341d59e4887e3f29dd3ce597d22f78c5",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[46]",
+              "label_file": "analysis.json",
+              "label_field": "states.d60e605e9f01d4bcecb1ed86"
+            }
+          },
+          {
+            "id": "f1b5798badae3d14f4b77549",
+            "case_id": "todomvc-focus",
+            "project_id": "todomvc",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "code-fc515771b1978dfd359d",
+            "original_html_sha256": "efa59e6a1fb2a04941773d3f644f4678f86b9b111228d2795b3b111af135d5c1",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[47]",
+              "label_file": "analysis.json",
+              "label_field": "states.f1b5798badae3d14f4b77549"
+            }
+          },
+          {
+            "id": "3409832746e7f16fa17d4432",
+            "case_id": "realworld-comment-author",
+            "project_id": "realworld",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "realworld-comment-v4-c3c2bd6cade882ed0ff4d04d",
+            "original_html_sha256": "0ec0c5b58ef2038cba63a723a1ed1147755f4fa3a24c610911842ff09a00bca8",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[48]",
+              "label_file": "analysis.json",
+              "label_field": "states.3409832746e7f16fa17d4432"
+            }
+          },
+          {
+            "id": "5b02ff73b204a154387b39aa",
+            "case_id": "realworld-article-author",
+            "project_id": "realworld",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "rw-98f02c78403ad96eba86d172",
+            "original_html_sha256": "9cba8874f376825989b726a5e4aab01abee8b63bf535e5b4cda03bafe5d68171",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[49]",
+              "label_file": "analysis.json",
+              "label_field": "states.5b02ff73b204a154387b39aa"
+            }
+          },
+          {
+            "id": "c34742ef49f47a8a928c7365",
+            "case_id": "nextcloud-restore",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "successor-fd94352f501612d8544bbd1b",
+            "original_html_sha256": "715468ec75673864d3f2881997334ac0626a3f5762cc6a25d3eb5d810aee16b5",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[50]",
+              "label_file": "analysis.json",
+              "label_field": "states.c34742ef49f47a8a928c7365"
+            }
+          },
+          {
+            "id": "bbab6dbe16a674db05dd45b2",
+            "case_id": "realworld-favorites",
+            "project_id": "realworld",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "realworld-favorites-7ed070ac02d5500877911421",
+            "original_html_sha256": "80417a234bb05015f24cb29181c2f2a6fca228a8c09d980c2793bfdb8bc7ab0c",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[51]",
+              "label_file": "analysis.json",
+              "label_field": "states.bbab6dbe16a674db05dd45b2"
+            }
+          },
+          {
+            "id": "6d1c8f52bd79dff8ccef160f",
+            "case_id": "nextcloud-restore-conflict",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "nextcloud-conflict-72383508bb9fd5abf3c92f21",
+            "original_html_sha256": "52de9a97ab0c1f3b2fe8e9941f19759f1768cebc7c794d18cb39bf6d1d2a8ab8",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[52]",
+              "label_file": "analysis.json",
+              "label_field": "states.6d1c8f52bd79dff8ccef160f"
+            }
+          },
+          {
+            "id": "37c2f7158cdcec8f5ae2d4be",
+            "case_id": "todomvc-clear-completed",
+            "project_id": "todomvc",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "todomvc-clear-8f745533e9494bc2cd0fd8b6",
+            "original_html_sha256": "bab5d7a85a6a967ebc8250738740c9a886ba05d0244cc3173b28e1854be85d98",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[53]",
+              "label_file": "analysis.json",
+              "label_field": "states.37c2f7158cdcec8f5ae2d4be"
+            }
+          },
+          {
+            "id": "f93cad8d221cc74c946860fd",
+            "case_id": "nextcloud-restore-conflict",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "nextcloud-conflict-1d393d29b77291051f855c95",
+            "original_html_sha256": "444894a43047f356979b84fbda65d0c965d976e81f9992269df0aeba0bc2b3ea",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[54]",
+              "label_file": "analysis.json",
+              "label_field": "states.f93cad8d221cc74c946860fd"
+            }
+          },
+          {
+            "id": "1669d93dcd8be3df4c4aab10",
+            "case_id": "openproject-work-copy",
+            "project_id": "openproject",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "successor-5fbe74ab1a149ab95c2d936e",
+            "original_html_sha256": "0ac848001541d7748540801f7310e8685b380ae320d3fc2fef5ce7a37de1a477",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[55]",
+              "label_file": "analysis.json",
+              "label_field": "states.1669d93dcd8be3df4c4aab10"
+            }
+          },
+          {
+            "id": "d7d32d960908c3c4a122b00c",
+            "case_id": "paperless-duplicate-consumption",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "paperless-duplicate-f18c77399cff798bf92762dd",
+            "original_html_sha256": "da4b077403dfa225cbed9779296e36defbeea73d146451aeeed1afadf43cbc81",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[56]",
+              "label_file": "analysis.json",
+              "label_field": "states.d7d32d960908c3c4a122b00c"
+            }
+          },
+          {
+            "id": "4c609c921a2ba76ff6a01dc1",
+            "case_id": "nextcloud-restore",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "successor-6f29733efad9a5bb8f80ee0d",
+            "original_html_sha256": "374f4f29e5ed211e4ef804d71c77b6f7b04b64a7b6294dad1f27013e6cff248a",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[57]",
+              "label_file": "analysis.json",
+              "label_field": "states.4c609c921a2ba76ff6a01dc1"
+            }
+          },
+          {
+            "id": "dc6e921d24ebe179c940917d",
+            "case_id": "openproject-remaining-derive",
+            "project_id": "openproject",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "remaining-25e482f558bd96d2f7219eed",
+            "original_html_sha256": "11ff493d2b703c45369e915d499eb85d3d8a51a3626f205c9e1de3ffa39676d7",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[58]",
+              "label_file": "analysis.json",
+              "label_field": "states.dc6e921d24ebe179c940917d"
+            }
+          },
+          {
+            "id": "2fa4a2cb8bd8ec3ae8998f37",
+            "case_id": "nextcloud-restore",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "successor-28b4bea675a07294c5941c74",
+            "original_html_sha256": "8d7f7356b5848f7b816e6be16df56e1da48c64bfee2355db8da52918e3e7f253",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[59]",
+              "label_file": "analysis.json",
+              "label_field": "states.2fa4a2cb8bd8ec3ae8998f37"
+            }
+          },
+          {
+            "id": "81aba4cb016c1649e0b0f57b",
+            "case_id": "nextcloud-trash-transition",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "nextcloud-trash-ad409c03d5ee3b7371c4ef7e",
+            "original_html_sha256": "b6bfa86c5ad49bdbe91147098dfff7496c49ceaf8fd6bb8e06b1a2edc726bce9",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[60]",
+              "label_file": "analysis.json",
+              "label_field": "states.81aba4cb016c1649e0b0f57b"
+            }
+          },
+          {
+            "id": "9471b9f365141b78901f4ccc",
+            "case_id": "kanboard-subtasks",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "e2e-917ac9df4e64bfc871d9987b",
+            "original_html_sha256": "a6fa2c83c3c91025aaa84b08199c385b0285aa6a4aaf151b35961d172d3dc5e6",
+            "severity": null,
+            "eligible": false,
+            "unknown_reason": "incomplete_saved_observations",
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[61]",
+              "label_file": "analysis.json",
+              "label_field": "states.9471b9f365141b78901f4ccc"
+            }
+          },
+          {
+            "id": "1e5f94ba22ddad1ad77417b6",
+            "case_id": "openproject-work-copy",
+            "project_id": "openproject",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "successor-29a205b7ddc711e2254e6eb5",
+            "original_html_sha256": "e2c3c41bf28dd9f4d415e7a7a2d37efd4af217bd4bbeed11c8a92995af930297",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[62]",
+              "label_file": "analysis.json",
+              "label_field": "states.1e5f94ba22ddad1ad77417b6"
+            }
+          },
+          {
+            "id": "eba602249e29d0140ed34e2a",
+            "case_id": "openproject-invalid-remaining",
+            "project_id": "openproject",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "openproject-invalid-e3e41f90222288e4927fdab3",
+            "original_html_sha256": "7822b9da0d537afc1a5180f849d31441e138dad44fdb2ad2f7fd2faf4593c0af",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[63]",
+              "label_file": "analysis.json",
+              "label_field": "states.eba602249e29d0140ed34e2a"
+            }
+          },
+          {
+            "id": "e6e3e82c981cc677ad5aab48",
+            "case_id": "todomvc-clear-completed",
+            "project_id": "todomvc",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "todomvc-clear-c8180d825bd074bc067b9fcb",
+            "original_html_sha256": "47bac7d8e332c8fbfe6ad3e01490ad9f2b326c5ee899626de610b13023026e45",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[64]",
+              "label_file": "analysis.json",
+              "label_field": "states.e6e3e82c981cc677ad5aab48"
+            }
+          },
+          {
+            "id": "d2b35566788e2d6644aec4b4",
+            "case_id": "paperless-nested-tags",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "paperless-nested-f854cecef2b502e877054320",
+            "original_html_sha256": "a368e65e63f9f71f90228c038a29649772c5a9e1bd60dc0266117979293b4b11",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[65]",
+              "label_file": "analysis.json",
+              "label_field": "states.d2b35566788e2d6644aec4b4"
+            }
+          },
+          {
+            "id": "bc63d71d428961aad7e41c20",
+            "case_id": "paperless-drop-anywhere",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "successor-68496e3fc25e66544679c0eb",
+            "original_html_sha256": "3b614dc3f114e086ef33257fe84315903afceba1c40d502f90b41cfd524e64cd",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[66]",
+              "label_file": "analysis.json",
+              "label_field": "states.bc63d71d428961aad7e41c20"
+            }
+          },
+          {
+            "id": "a939cc99c653e64fa8d0da21",
+            "case_id": "kanboard-duplicate-title",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "secure-duplicate-ea4dae9ee856c993c84f9720",
+            "original_html_sha256": "9607446e3eb76537b620cc13c9b046d0c2dcf82fe5553fc1d889b6d94bb1d98d",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[67]",
+              "label_file": "analysis.json",
+              "label_field": "states.a939cc99c653e64fa8d0da21"
+            }
+          },
+          {
+            "id": "b7c3c7f26c05926078505a64",
+            "case_id": "realworld-favorites",
+            "project_id": "realworld",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "realworld-favorites-1face25453ffc811ee5c0d1e",
+            "original_html_sha256": "44810011df46303d009ae36428f51f2bc087fb46257518b66c65c1e89e42167e",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[68]",
+              "label_file": "analysis.json",
+              "label_field": "states.b7c3c7f26c05926078505a64"
+            }
+          },
+          {
+            "id": "10baeabbcf3e5cd0141fc644",
+            "case_id": "paperless-drop-anywhere",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "successor-a6a51acb5209074d3707864c",
+            "original_html_sha256": "f0fa09fb6dea7d910b26b159d874d79082301a32338d01abd1f7aa028d9bddd6",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[69]",
+              "label_file": "analysis.json",
+              "label_field": "states.10baeabbcf3e5cd0141fc644"
+            }
+          },
+          {
+            "id": "1ab30d2c68ecfe49a4ee8d82",
+            "case_id": "openproject-work-copy",
+            "project_id": "openproject",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "successor-809f0f3f3dc83ec35321155e",
+            "original_html_sha256": "ed64e676e4bef6e906be35e3fd6a15f54b336d80724cceb0a86374c9e73da429",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[70]",
+              "label_file": "analysis.json",
+              "label_field": "states.1ab30d2c68ecfe49a4ee8d82"
+            }
+          },
+          {
+            "id": "11d5c7ba81081c213b645036",
+            "case_id": "realworld-comment-author",
+            "project_id": "realworld",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "realworld-comment-v4-ef63b1bd8a243f6f81982a87",
+            "original_html_sha256": "0ec0c5b58ef2038cba63a723a1ed1147755f4fa3a24c610911842ff09a00bca8",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[71]",
+              "label_file": "analysis.json",
+              "label_field": "states.11d5c7ba81081c213b645036"
+            }
+          },
+          {
+            "id": "bc901e1bb7b68469bda3befd",
+            "case_id": "kanboard-duplicate-title",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "secure-duplicate-860d5e850da8209b9a1b6d7b",
+            "original_html_sha256": "76366bef88a074247da981e5d77d296bec0e76e7f1a81a31adb0e370b00982b1",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[72]",
+              "label_file": "analysis.json",
+              "label_field": "states.bc901e1bb7b68469bda3befd"
+            }
+          },
+          {
+            "id": "8d23cb62640ced763e448cee",
+            "case_id": "paperless-duplicate-consumption",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "paperless-duplicate-2045d00ca07ca0266734bd11",
+            "original_html_sha256": "8227faf9af93acb346f4dd8fc48e28d475c0b9830aa935b20c356e275b7dfc93",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[73]",
+              "label_file": "analysis.json",
+              "label_field": "states.8d23cb62640ced763e448cee"
+            }
+          },
+          {
+            "id": "05bcd5418f212617639ff0c2",
+            "case_id": "paperless-drop-anywhere",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "successor-8d84d962234626df373cf13b",
+            "original_html_sha256": "cfaefd41bb688a97d20a7d0fc91d0190caae5739964355b751e97763750e67f5",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[74]",
+              "label_file": "analysis.json",
+              "label_field": "states.05bcd5418f212617639ff0c2"
+            }
+          },
+          {
+            "id": "7c716ff70875ede9355fb7c2",
+            "case_id": "nextcloud-trash-transition",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "nextcloud-trash-75b07710c9088d17069b9f83",
+            "original_html_sha256": "d52774baf6bda8bb10431a42aba1d6b7ee103db782b460a509c2db4686fba37f",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[75]",
+              "label_file": "analysis.json",
+              "label_field": "states.7c716ff70875ede9355fb7c2"
+            }
+          },
+          {
+            "id": "c3f9635a987df9b8aad8d29f",
+            "case_id": "nextcloud-trash-transition",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "nextcloud-trash-d05d54ce08877f1baf22fce1",
+            "original_html_sha256": "d5b1504bbbb59a5609e48de819f272a63e9ed683ecd2ec62393cbea90f44198c",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[76]",
+              "label_file": "analysis.json",
+              "label_field": "states.c3f9635a987df9b8aad8d29f"
+            }
+          },
+          {
+            "id": "f29f6b4c6cfb364569980438",
+            "case_id": "openproject-remaining-derive",
+            "project_id": "openproject",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "remaining-fae1e1e38b3657d243b1977b",
+            "original_html_sha256": "ed18bfe72995c76285886f4c2c3ea552db1b16ba3b25b6c54de38a007b30e9e3",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[77]",
+              "label_file": "analysis.json",
+              "label_field": "states.f29f6b4c6cfb364569980438"
+            }
+          },
+          {
+            "id": "365947cb267990cd28d1e156",
+            "case_id": "realworld-article-author",
+            "project_id": "realworld",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "rw-228a72c565e30a6c89312d20",
+            "original_html_sha256": "6e0576cb1fe10f8a5c4b76493e6a64cf376d4aafd78cd7460a2b9db7a3dc3ab3",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[78]",
+              "label_file": "analysis.json",
+              "label_field": "states.365947cb267990cd28d1e156"
+            }
+          },
+          {
+            "id": "f7b735f1e253fd201ff334e9",
+            "case_id": "kanboard-closed-filter",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "kanboard-closed-44a487b38ab1da3131fa216f",
+            "original_html_sha256": "f3ae206fa48c6da66c5892e4d4907f32a179d9435ee8a49bc23edd74b88d317d",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[79]",
+              "label_file": "analysis.json",
+              "label_field": "states.f7b735f1e253fd201ff334e9"
+            }
+          },
+          {
+            "id": "37bd181ff004e313315340ba",
+            "case_id": "kanboard-closed-filter",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "kanboard-closed-11717ed26f6eb0f21544b294",
+            "original_html_sha256": "6e3e1eec44dc11999d8bc93cd0c4b26a34a2881d15284480acee1c8eb82f838d",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[80]",
+              "label_file": "analysis.json",
+              "label_field": "states.37bd181ff004e313315340ba"
+            }
+          },
+          {
+            "id": "86ac2fe7e8fe4faf39427973",
+            "case_id": "openproject-work-copy",
+            "project_id": "openproject",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "successor-d0ab9ad2d205de4a87fd6fec",
+            "original_html_sha256": "cb0be3c8a380c59404c57e3bf6db45215a6fda04b06f52ec9c37802311ba6717",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[81]",
+              "label_file": "analysis.json",
+              "label_field": "states.86ac2fe7e8fe4faf39427973"
+            }
+          },
+          {
+            "id": "67f16fe9ae2f6302ab1039a7",
+            "case_id": "openproject-remaining-derive",
+            "project_id": "openproject",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "remaining-af4f341fd2e95f3ee7456bbe",
+            "original_html_sha256": "280c06dc3567a31de080de265de8145b2255d0f35f8d2ebc2142ddcebccd6504",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[82]",
+              "label_file": "analysis.json",
+              "label_field": "states.67f16fe9ae2f6302ab1039a7"
+            }
+          },
+          {
+            "id": "f88995ee1bb2f4615a882075",
+            "case_id": "kanboard-closed-filter",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "kanboard-closed-faafa80fa2a98b2fcc98fba6",
+            "original_html_sha256": "f3ae206fa48c6da66c5892e4d4907f32a179d9435ee8a49bc23edd74b88d317d",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[83]",
+              "label_file": "analysis.json",
+              "label_field": "states.f88995ee1bb2f4615a882075"
+            }
+          },
+          {
+            "id": "23933f6d4576ba8aec5c5883",
+            "case_id": "todomvc-clear-completed",
+            "project_id": "todomvc",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "todomvc-clear-2b36582e3848cd7a82fa233b",
+            "original_html_sha256": "4000d0ab05f89eeca66e38f1257aea4823a4c37995e288ed9813cafee9f804e0",
+            "severity": 1,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[84]",
+              "label_file": "analysis.json",
+              "label_field": "states.23933f6d4576ba8aec5c5883"
+            }
+          },
+          {
+            "id": "6723fdfc594778274c7027a0",
+            "case_id": "kanboard-subtasks",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "e2e-900818b6205deabcdf294d4f",
+            "original_html_sha256": "8f970d23a691d54b056d791eae2676ebbb3504f5e4b7eeca83f60fcb23fa83ca",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[85]",
+              "label_file": "analysis.json",
+              "label_field": "states.6723fdfc594778274c7027a0"
+            }
+          },
+          {
+            "id": "ee428d02775888a6c1d54692",
+            "case_id": "openproject-invalid-remaining",
+            "project_id": "openproject",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "openproject-invalid-2e61ac769b6481d96afcf16e",
+            "original_html_sha256": "14d1e8b597d509dde6fff4cfbeed26f7443d0d3c566f6c6c3a5fec3755fb5456",
+            "severity": 2,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[86]",
+              "label_file": "analysis.json",
+              "label_field": "states.ee428d02775888a6c1d54692"
+            }
+          },
+          {
+            "id": "4673ebbe6a10f3721ab0d347",
+            "case_id": "realworld-comment-author",
+            "project_id": "realworld",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "realworld-comment-v4-e40724571188aa48323c4170",
+            "original_html_sha256": "9126e9df8367f68243a8389f6ce2581b39a71ef804fc0b8f60acd91a383d2543",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[87]",
+              "label_file": "analysis.json",
+              "label_field": "states.4673ebbe6a10f3721ab0d347"
+            }
+          },
+          {
+            "id": "8e5572d6151cbbf1c6b294e2",
+            "case_id": "kanboard-subtasks",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "e2e-cc870c03b74f9929d0aa417c",
+            "original_html_sha256": "fbf8c6ae8d70c05c4ad9367783a3041eeb7e2b84ec11038502c6cb470545a227",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[88]",
+              "label_file": "analysis.json",
+              "label_field": "states.8e5572d6151cbbf1c6b294e2"
+            }
+          },
+          {
+            "id": "f70bf33afcb4e49749efe959",
+            "case_id": "kanboard-subtasks",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "e2e-f39e1dce21d8071c62b10843",
+            "original_html_sha256": "0b63dbb8b7c639afe5d6812e5597005bbdb27a10b7711faaa3c124004937cdc5",
+            "severity": null,
+            "eligible": false,
+            "unknown_reason": "incomplete_saved_observations",
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[89]",
+              "label_file": "analysis.json",
+              "label_field": "states.f70bf33afcb4e49749efe959"
+            }
+          },
+          {
+            "id": "d4aa9b2d51f83c8ac3e0b4d1",
+            "case_id": "openproject-work-copy",
+            "project_id": "openproject",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "successor-6f9013acc6bd288a370b8fc5",
+            "original_html_sha256": null,
+            "severity": null,
+            "eligible": false,
+            "unknown_reason": "missing_saved_artifact",
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[90]",
+              "label_file": "analysis.json",
+              "label_field": "states.d4aa9b2d51f83c8ac3e0b4d1"
+            }
+          },
+          {
+            "id": "2cdd2e184560f33843957ad4",
+            "case_id": "kanboard-subtasks",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "e2e-4709ff18aaa61e250fd3b285",
+            "original_html_sha256": "4ff8583ff3a2be0c56cb09e4e22d50dc278cb895edda0453817b31544338eee2",
+            "severity": null,
+            "eligible": false,
+            "unknown_reason": "incomplete_saved_observations",
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[91]",
+              "label_file": "analysis.json",
+              "label_field": "states.2cdd2e184560f33843957ad4"
+            }
+          },
+          {
+            "id": "7d6b7e3f1ffa6f0be36cfa41",
+            "case_id": "paperless-nested-tags",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "paperless-nested-b68aa38c8e70e9398fd2a4d3",
+            "original_html_sha256": "62638c952fd8f180c5167f4b2e85fac40d520fd310936bd084fb44e941de21bf",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[92]",
+              "label_file": "analysis.json",
+              "label_field": "states.7d6b7e3f1ffa6f0be36cfa41"
+            }
+          },
+          {
+            "id": "3b46e19b2f055bb3aeb75d58",
+            "case_id": "openproject-remaining-derive",
+            "project_id": "openproject",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "remaining-dee532e6758f1467788a8160",
+            "original_html_sha256": "f46380e049fa41c9f8ba1189d25c3e7b781ed50008960163507039b5737b1007",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[93]",
+              "label_file": "analysis.json",
+              "label_field": "states.3b46e19b2f055bb3aeb75d58"
+            }
+          },
+          {
+            "id": "60645a4886f751d6869c48ce",
+            "case_id": "paperless-nested-tags",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "paperless-nested-54b1227bd23e01796972355d",
+            "original_html_sha256": "41d19d5df68d0d47975efc2e5520cded7312e1adc4b732a724022e4935b56cd5",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[94]",
+              "label_file": "analysis.json",
+              "label_field": "states.60645a4886f751d6869c48ce"
+            }
+          },
+          {
+            "id": "4b67bb2556205fdb3cf0ea59",
+            "case_id": "todomvc-clear-completed",
+            "project_id": "todomvc",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "todomvc-clear-4d7901095ae86a9ff851a621",
+            "original_html_sha256": "56af208b041e1e04c652bc9e6bd2eb2d35477ce0cfc4154f5659aa69af427031",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[95]",
+              "label_file": "analysis.json",
+              "label_field": "states.4b67bb2556205fdb3cf0ea59"
+            }
+          },
+          {
+            "id": "db579be720728c2a1d3b8d8a",
+            "case_id": "todomvc-focus",
+            "project_id": "todomvc",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "code-ba3de7f8387223978c01",
+            "original_html_sha256": "5a5465fc89284134faca560bfc6a52a3f26275c448b15c93ca8276cec305905c",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[96]",
+              "label_file": "analysis.json",
+              "label_field": "states.db579be720728c2a1d3b8d8a"
+            }
+          },
+          {
+            "id": "ef44f575fb0dcb33c70e2644",
+            "case_id": "openproject-invalid-remaining",
+            "project_id": "openproject",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "openproject-invalid-1ee9ee77c4044d03fe29922c",
+            "original_html_sha256": "72ba40c9c0205abd708f109410b2e081771c00ece9e975d55aefbde2afec4c7b",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[97]",
+              "label_file": "analysis.json",
+              "label_field": "states.ef44f575fb0dcb33c70e2644"
+            }
+          },
+          {
+            "id": "edaf9e4ca97a2a79e2656c94",
+            "case_id": "nextcloud-restore",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "successor-b3a375c3746568b5140e479c",
+            "original_html_sha256": "715468ec75673864d3f2881997334ac0626a3f5762cc6a25d3eb5d810aee16b5",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[98]",
+              "label_file": "analysis.json",
+              "label_field": "states.edaf9e4ca97a2a79e2656c94"
+            }
+          },
+          {
+            "id": "34ca3abe3ff602963d69f94f",
+            "case_id": "nextcloud-restore-conflict",
+            "project_id": "nextcloud",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "nextcloud-conflict-5ea495318a66d6928f681765",
+            "original_html_sha256": "4aaa05c9cb4ad20a5b2d570aaddd3122828aa8f1fac62bbfcd878b61d03662af",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[99]",
+              "label_file": "analysis.json",
+              "label_field": "states.34ca3abe3ff602963d69f94f"
+            }
+          },
+          {
+            "id": "21a0f48c4eda3274948e14e5",
+            "case_id": "paperless-duplicate-consumption",
+            "project_id": "paperless-ngx",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "paperless-duplicate-103bb7258f384c6f43409af4",
+            "original_html_sha256": "c3125ccad597761be9e688f73c6aebc4d6128d481bc6881f4abb0b55dbe0f227",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[100]",
+              "label_file": "analysis.json",
+              "label_field": "states.21a0f48c4eda3274948e14e5"
+            }
+          },
+          {
+            "id": "6fbd317360a80894d29bc45d",
+            "case_id": "todomvc-focus",
+            "project_id": "todomvc",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "code-79ad63df57d3aede3ba4",
+            "original_html_sha256": "c8faf849de1bc14384092bbecc378d766731ec7e1c23296de6c44f5233940656",
+            "severity": 1,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[101]",
+              "label_file": "analysis.json",
+              "label_field": "states.6fbd317360a80894d29bc45d"
+            }
+          }
+        ],
+        "expected": {
+          "C_worse": 14,
+          "equal": 10,
+          "C_better": 1,
+          "unknown": 9
+        },
+        "planned_pairs": 34
+      },
+      "scope_correction": {
+        "custody": {
+          "packet_id": "kanboard-duplicate-ordinal-scope-correction-20260928-v1",
+          "receipt_sha256": "b276594635835e5085c85b80e8fe4fe067671b7003dcb0d3158250eba3057f92",
+          "receipt_files_verified": 100,
+          "sources": [
+            {
+              "file": "analysis.json",
+              "sha256": "ac4c269f5352f3ff1506d640c1c124d0282ef9ac5ca249539d4454b54afa99db"
+            },
+            {
+              "file": "frozen/manifest.json",
+              "sha256": "eb0dc4224d23a8d36f8becc481c5bb662ea63b9c2c8365077b40084894da4354"
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "f47a640960bf326fb9865151",
+            "case_id": "kanboard-duplicate-title",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-sol",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "secure-duplicate-018c54f63b8933b763f16bd8",
+            "original_html_sha256": "07b37a0f6c52b1b065b77389b033c14d1395872ade3dcb18b2e594863c144114",
+            "severity": null,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[0]",
+              "label_file": "analysis.json",
+              "label_field": "states.f47a640960bf326fb9865151"
+            }
+          },
+          {
+            "id": "bf8c62f53ee7b054c5ce5cef",
+            "case_id": "kanboard-duplicate-title",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-sol",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "secure-duplicate-836f25ebbee25fb86f943881",
+            "original_html_sha256": "4806dd59b0c67086f4f00869bb6238dec81a11ded3d09f48eb23ae6280ecf4d9",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[1]",
+              "label_file": "analysis.json",
+              "label_field": "states.bf8c62f53ee7b054c5ce5cef"
+            }
+          },
+          {
+            "id": "35cd3110f4cd1641294e874f",
+            "case_id": "kanboard-duplicate-title",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-luna",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "secure-duplicate-4db69418a3974ba21975f478",
+            "original_html_sha256": "dd3ce8e425e7e63571ba8350e12ae9ad5c60c7723cc8e0e1857710b6bd34a8ca",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[2]",
+              "label_file": "analysis.json",
+              "label_field": "states.35cd3110f4cd1641294e874f"
+            }
+          },
+          {
+            "id": "ffc021701777a6152f05c03d",
+            "case_id": "kanboard-duplicate-title",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-luna",
+            "arm": "B",
+            "replication": 1,
+            "source_slot": "secure-duplicate-6deb5752080ecd649f233daf",
+            "original_html_sha256": "c5cc9ecc0277e0f5cc8f74f19435a5f157b84d2dfaff8c2e85635e9bbd6a1148",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[3]",
+              "label_file": "analysis.json",
+              "label_field": "states.ffc021701777a6152f05c03d"
+            }
+          },
+          {
+            "id": "314a5b712fdd70c501226036",
+            "case_id": "kanboard-duplicate-title",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-luna",
+            "arm": "C",
+            "replication": 1,
+            "source_slot": "secure-duplicate-ea4dae9ee856c993c84f9720",
+            "original_html_sha256": "9607446e3eb76537b620cc13c9b046d0c2dcf82fe5553fc1d889b6d94bb1d98d",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[4]",
+              "label_file": "analysis.json",
+              "label_field": "states.314a5b712fdd70c501226036"
+            }
+          },
+          {
+            "id": "c4a14fecdda3ad0905f267c1",
+            "case_id": "kanboard-duplicate-title",
+            "project_id": "kanboard",
+            "model": "gpt-5.6-sol",
+            "arm": "A",
+            "replication": 1,
+            "source_slot": "secure-duplicate-860d5e850da8209b9a1b6d7b",
+            "original_html_sha256": "76366bef88a074247da981e5d77d296bec0e76e7f1a81a31adb0e370b00982b1",
+            "severity": 0,
+            "eligible": true,
+            "unknown_reason": null,
+            "source": {
+              "identity_file": "frozen/manifest.json",
+              "identity_field": "rows[5]",
+              "label_file": "analysis.json",
+              "label_field": "states.c4a14fecdda3ad0905f267c1"
+            }
+          }
+        ],
+        "expected": {
+          "C_worse": 0,
+          "equal": 2,
+          "C_better": 0,
+          "unknown": 0
+        },
+        "planned_pairs": 2
+      },
+      "replacement_keys": [
+        {
+          "case_id": "kanboard-duplicate-title",
+          "model": "gpt-5.6-sol"
+        },
+        {
+          "case_id": "kanboard-duplicate-title",
+          "model": "gpt-5.6-luna"
+        }
+      ],
+      "diagnostic_expected": {
+        "C_worse": 14,
+        "equal": 11,
+        "C_better": 1,
+        "unknown": 8
+      },
+      "recalculation": "Base and correction: group by case_id/model with A/C. Unknown if either severity null; otherwise compare numeric ordinal ranks. For diagnostic only replace two declared base pair cells using corrected rows for same case/model and verify identical original_html_sha256 per arm. Never overwrite base labels.",
+      "original_pairs_replaced": {
+        "equal": 1,
+        "unknown": 1
+      },
+      "new_pairs_inserted": {
+        "C_worse": 0,
+        "equal": 2,
+        "C_better": 0,
+        "unknown": 0
+      }
+    }
+  ],
+  "schema_version": "recovered-evidence-public/v1"
+}
