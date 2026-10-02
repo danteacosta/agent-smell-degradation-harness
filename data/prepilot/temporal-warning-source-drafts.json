@@ -1,0 +1,579 @@
+{
+  "schema_version": "temporal-warning-source-drafts/v1",
+  "status": "assistant_precollection_draft",
+  "selection_frozen": false,
+  "confirmatory_eligible": false,
+  "human_approvals": 0,
+  "collection_performed": false,
+  "created_on": "2026-10-02",
+  "limits": [
+    "Public, previously exposed projects; no claim of unseen projects or absence of pretraining contamination.",
+    "Sibling deletions reuse an excerpt and are not independent observations.",
+    "No rewrite-control in this two-arm engineering pilot; deletion length and phrasing remain confounds.",
+    "Proposed incompleteness mappings require independent human approval."
+  ],
+  "records": [
+    {
+      "intent_id": "prospective-sdoc-srs-151",
+      "project_id": "strictdoc",
+      "source": {
+        "url": "https://raw.githubusercontent.com/strictdoc-project/strictdoc/abf7be7daa2a25721a56980b5be15845336ea0b8/docs/strictdoc_21_l2_high_level_requirements.sdoc",
+        "revision": "abf7be7daa2a25721a56980b5be15845336ea0b8",
+        "license": "Apache-2.0",
+        "license_url": "https://raw.githubusercontent.com/strictdoc-project/strictdoc/abf7be7daa2a25721a56980b5be15845336ea0b8/LICENSE",
+        "path": "data/criteria-expansion/sources/strictdoc/docs__strictdoc_21_l2_high_level_requirements.sdoc",
+        "sha256": "de4b804342caac0211e5cabfa4dfb91b1e07ebe785bf34ef55de6c4ea60fc28f",
+        "license_path": "data/criteria-expansion/sources/strictdoc/LICENSE",
+        "license_sha256": "3392558ba768e0454ed2340433d5b9daf1ef32860368b9bf82b87a441fcd0438",
+        "notice_path": "data/criteria-expansion/sources/strictdoc/NOTICE",
+        "notice_sha256": "d929e44291248fbf463a8d22201bf958162dbbc2634c1d1eb230f41b6cf3b968",
+        "locator": "SDOC-SRS-151 STATEMENT",
+        "start_char": 3507,
+        "end_char": 3712
+      },
+      "variants": {
+        "clean": "StrictDoc's data model shall support configuring the document options:\n\n- Enable/disable MID\n- Markup choice, e.g., RST, HTML, etc.\n- Levels (automatic or manual)\n- Node style\n- Default presentation view.\n",
+        "defective": "StrictDoc's data model shall support configuring the document options:\n\n- Enable/disable MID\n- Markup choice, e.g., RST, HTML, etc.\n- Levels (automatic or manual)\n- Node style\n"
+      },
+      "manipulation": {
+        "type": "single_clause_omission",
+        "candidate_smell": "incompleteness",
+        "start": 176,
+        "end": 205,
+        "text": "- Default presentation view.\n",
+        "coordinate_system": "zero-based Unicode code points; end exclusive"
+      },
+      "target": {
+        "constraint_id": "prospective-sdoc-srs-151-c01",
+        "obligation": "The document configuration supports a default presentation view.",
+        "status": "assistant_proposed_not_a_scientific_label"
+      },
+      "review": {
+        "mapping": "pending_independent_human_review",
+        "manipulation": "pending_independent_human_review",
+        "rights": "pending",
+        "outcome_annotation": "not_collected"
+      },
+      "exposure": {
+        "projects_previously_used": true,
+        "upstream_public": true,
+        "pretraining_contamination": "unknown",
+        "freshness": "pending_bounded_registry_audit_and_independent_review"
+      }
+    },
+    {
+      "intent_id": "prospective-sdoc-srs-110",
+      "project_id": "strictdoc",
+      "source": {
+        "url": "https://raw.githubusercontent.com/strictdoc-project/strictdoc/abf7be7daa2a25721a56980b5be15845336ea0b8/docs/strictdoc_21_l2_high_level_requirements.sdoc",
+        "revision": "abf7be7daa2a25721a56980b5be15845336ea0b8",
+        "license": "Apache-2.0",
+        "license_url": "https://raw.githubusercontent.com/strictdoc-project/strictdoc/abf7be7daa2a25721a56980b5be15845336ea0b8/LICENSE",
+        "path": "data/criteria-expansion/sources/strictdoc/docs__strictdoc_21_l2_high_level_requirements.sdoc",
+        "sha256": "de4b804342caac0211e5cabfa4dfb91b1e07ebe785bf34ef55de6c4ea60fc28f",
+        "license_path": "data/criteria-expansion/sources/strictdoc/LICENSE",
+        "license_sha256": "3392558ba768e0454ed2340433d5b9daf1ef32860368b9bf82b87a441fcd0438",
+        "notice_path": "data/criteria-expansion/sources/strictdoc/NOTICE",
+        "notice_sha256": "d929e44291248fbf463a8d22201bf958162dbbc2634c1d1eb230f41b6cf3b968",
+        "locator": "SDOC-SRS-110 STATEMENT",
+        "start_char": 3134,
+        "end_char": 3289
+      },
+      "variants": {
+        "clean": "StrictDoc's data model shall support a Document metadata model including at\nleast:\n\n- UID\n- Document version\n- Document classification\n- Document authors.\n",
+        "defective": "StrictDoc's data model shall support a Document metadata model including at\nleast:\n\n- UID\n- Document version\n- Document authors.\n"
+      },
+      "manipulation": {
+        "type": "single_clause_omission",
+        "candidate_smell": "incompleteness",
+        "start": 109,
+        "end": 135,
+        "text": "- Document classification\n",
+        "coordinate_system": "zero-based Unicode code points; end exclusive"
+      },
+      "target": {
+        "constraint_id": "prospective-sdoc-srs-110-c01",
+        "obligation": "Document metadata supports document classification.",
+        "status": "assistant_proposed_not_a_scientific_label"
+      },
+      "review": {
+        "mapping": "pending_independent_human_review",
+        "manipulation": "pending_independent_human_review",
+        "rights": "pending",
+        "outcome_annotation": "not_collected"
+      },
+      "exposure": {
+        "projects_previously_used": true,
+        "upstream_public": true,
+        "pretraining_contamination": "unknown",
+        "freshness": "pending_bounded_registry_audit_and_independent_review"
+      }
+    },
+    {
+      "intent_id": "prospective-cass-srch-002",
+      "project_id": "CASS",
+      "source": {
+        "url": "https://raw.githubusercontent.com/cassproject/CASS/97fc0939ca3960504ce8b2f51749881543a4038c/REQUIREMENTS.md",
+        "revision": "97fc0939ca3960504ce8b2f51749881543a4038c",
+        "license": "Apache-2.0",
+        "license_url": "https://raw.githubusercontent.com/cassproject/CASS/97fc0939ca3960504ce8b2f51749881543a4038c/LICENSE",
+        "path": "data/criteria-expansion/sources/CASS/REQUIREMENTS.md",
+        "sha256": "937b1f4ffb35548c4cbb7332e212ae5d52331b9d1ed9c464c0773411421485ce",
+        "license_path": "data/criteria-expansion/sources/CASS/LICENSE",
+        "license_sha256": "7302489454b91cec7fb3afcec3b0a9f4b1abe18203c183ea37d78fd4b5da87dc",
+        "locator": "SRCH-002 requirement table text column",
+        "source_origin": "upstream_code_derived_SRS",
+        "start_char": 16646,
+        "end_char": 16762
+      },
+      "variants": {
+        "clean": "The system shall support pagination via `start` (offset, default 0) and `size` (count, max 10,000) query parameters.",
+        "defective": "The system shall support pagination via `start` (offset, default 0) and `size` (count) query parameters."
+      },
+      "manipulation": {
+        "type": "single_clause_omission",
+        "candidate_smell": "incompleteness",
+        "start": 85,
+        "end": 97,
+        "text": ", max 10,000",
+        "coordinate_system": "zero-based Unicode code points; end exclusive"
+      },
+      "target": {
+        "constraint_id": "prospective-cass-srch-002-c01",
+        "obligation": "The search size parameter admits at most 10,000 results.",
+        "status": "assistant_proposed_not_a_scientific_label"
+      },
+      "review": {
+        "mapping": "pending_independent_human_review",
+        "manipulation": "pending_independent_human_review",
+        "rights": "pending",
+        "outcome_annotation": "not_collected"
+      },
+      "exposure": {
+        "projects_previously_used": true,
+        "upstream_public": true,
+        "pretraining_contamination": "unknown",
+        "freshness": "pending_bounded_registry_audit_and_independent_review"
+      }
+    },
+    {
+      "intent_id": "prospective-cass-srch-006",
+      "project_id": "CASS",
+      "source": {
+        "url": "https://raw.githubusercontent.com/cassproject/CASS/97fc0939ca3960504ce8b2f51749881543a4038c/REQUIREMENTS.md",
+        "revision": "97fc0939ca3960504ce8b2f51749881543a4038c",
+        "license": "Apache-2.0",
+        "license_url": "https://raw.githubusercontent.com/cassproject/CASS/97fc0939ca3960504ce8b2f51749881543a4038c/LICENSE",
+        "path": "data/criteria-expansion/sources/CASS/REQUIREMENTS.md",
+        "sha256": "937b1f4ffb35548c4cbb7332e212ae5d52331b9d1ed9c464c0773411421485ce",
+        "license_path": "data/criteria-expansion/sources/CASS/LICENSE",
+        "license_sha256": "7302489454b91cec7fb3afcec3b0a9f4b1abe18203c183ea37d78fd4b5da87dc",
+        "locator": "SRCH-006 requirement table text column",
+        "source_origin": "upstream_code_derived_SRS",
+        "start_char": 17237,
+        "end_char": 17392
+      },
+      "variants": {
+        "clean": "The system shall filter search results through KBAC access control, excluding objects for which the requestor lacks read permission, before returning them.",
+        "defective": "The system shall filter search results through KBAC access control, before returning them."
+      },
+      "manipulation": {
+        "type": "single_clause_omission",
+        "candidate_smell": "incompleteness",
+        "start": 66,
+        "end": 131,
+        "text": ", excluding objects for which the requestor lacks read permission",
+        "coordinate_system": "zero-based Unicode code points; end exclusive"
+      },
+      "target": {
+        "constraint_id": "prospective-cass-srch-006-c01",
+        "obligation": "Search results exclude objects the requestor cannot read.",
+        "status": "assistant_proposed_not_a_scientific_label"
+      },
+      "review": {
+        "mapping": "pending_independent_human_review",
+        "manipulation": "pending_independent_human_review",
+        "rights": "pending",
+        "outcome_annotation": "not_collected"
+      },
+      "exposure": {
+        "projects_previously_used": true,
+        "upstream_public": true,
+        "pretraining_contamination": "unknown",
+        "freshness": "pending_bounded_registry_audit_and_independent_review"
+      }
+    },
+    {
+      "intent_id": "prospective-todomvc-counter",
+      "project_id": "todomvc",
+      "source": {
+        "url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/app-spec.md",
+        "revision": "ff43b02e59dfa604386bb382034b2cd07c2bcd8a",
+        "license": "MIT",
+        "license_url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/license.md",
+        "path": "data/criteria-expansion/sources/todomvc/app-spec.md",
+        "sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+        "license_path": "data/criteria-expansion/sources/todomvc/license.md",
+        "license_sha256": "32238c5c6759b589ea768661b6eb0fcb42449b74d57cdf09928743f2e1eb748d",
+        "locator": "### Counter",
+        "start_char": 4999,
+        "end_char": 5222
+      },
+      "variants": {
+        "clean": "Displays the number of active todos in a pluralized form. Make sure the number is wrapped by a `<strong>` tag. Also make sure to pluralize the `item` word correctly: `0 items`, `1 item`, `2 items`. Example: **2** items left",
+        "defective": "Displays the number of active todos in a pluralized form. Make sure the number is wrapped by a `<strong>` tag. Example: **2** items left"
+      },
+      "manipulation": {
+        "type": "single_clause_omission",
+        "candidate_smell": "incompleteness",
+        "start": 111,
+        "end": 198,
+        "text": "Also make sure to pluralize the `item` word correctly: `0 items`, `1 item`, `2 items`. ",
+        "coordinate_system": "zero-based Unicode code points; end exclusive"
+      },
+      "target": {
+        "constraint_id": "prospective-todomvc-counter-c01",
+        "obligation": "The counter uses item for one active todo and items for zero or multiple active todos.",
+        "status": "assistant_proposed_not_a_scientific_label"
+      },
+      "review": {
+        "mapping": "pending_independent_human_review",
+        "manipulation": "pending_independent_human_review",
+        "rights": "pending",
+        "outcome_annotation": "not_collected"
+      },
+      "exposure": {
+        "projects_previously_used": true,
+        "upstream_public": true,
+        "pretraining_contamination": "unknown",
+        "freshness": "pending_bounded_registry_audit_and_independent_review"
+      }
+    },
+    {
+      "intent_id": "prospective-todomvc-clear-completed-button",
+      "project_id": "todomvc",
+      "source": {
+        "url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/app-spec.md",
+        "revision": "ff43b02e59dfa604386bb382034b2cd07c2bcd8a",
+        "license": "MIT",
+        "license_url": "https://raw.githubusercontent.com/tastejs/todomvc/ff43b02e59dfa604386bb382034b2cd07c2bcd8a/license.md",
+        "path": "data/criteria-expansion/sources/todomvc/app-spec.md",
+        "sha256": "5bf3ac910c720533c9fb57708fc2a5e964ea6a4d59436d145c929b4059521094",
+        "license_path": "data/criteria-expansion/sources/todomvc/license.md",
+        "license_sha256": "32238c5c6759b589ea768661b6eb0fcb42449b74d57cdf09928743f2e1eb748d",
+        "locator": "### Clear completed button",
+        "start_char": 5252,
+        "end_char": 5341
+      },
+      "variants": {
+        "clean": "Removes completed todos when clicked. Should be hidden when there are no completed todos.",
+        "defective": "Removes completed todos when clicked."
+      },
+      "manipulation": {
+        "type": "single_clause_omission",
+        "candidate_smell": "incompleteness",
+        "start": 37,
+        "end": 89,
+        "text": " Should be hidden when there are no completed todos.",
+        "coordinate_system": "zero-based Unicode code points; end exclusive"
+      },
+      "target": {
+        "constraint_id": "prospective-todomvc-clear-completed-button-c01",
+        "obligation": "Hide the Clear completed button when no completed todos remain.",
+        "status": "assistant_proposed_not_a_scientific_label"
+      },
+      "review": {
+        "mapping": "pending_independent_human_review",
+        "manipulation": "pending_independent_human_review",
+        "rights": "pending",
+        "outcome_annotation": "not_collected"
+      },
+      "exposure": {
+        "projects_previously_used": true,
+        "upstream_public": true,
+        "pretraining_contamination": "unknown",
+        "freshness": "pending_bounded_registry_audit_and_independent_review"
+      }
+    },
+    {
+      "intent_id": "prospective-realworld-feed-articles",
+      "project_id": "realworld",
+      "source": {
+        "url": "https://raw.githubusercontent.com/realworld-apps/realworld/ebbcdeb8d55b42a3a613c787560498b8ef10003f/docs/src/content/docs/specifications/backend/endpoints.md",
+        "revision": "ebbcdeb8d55b42a3a613c787560498b8ef10003f",
+        "license": "MIT",
+        "license_url": "https://raw.githubusercontent.com/realworld-apps/realworld/ebbcdeb8d55b42a3a613c787560498b8ef10003f/LICENSE",
+        "path": "data/criteria-expansion/sources/realworld/docs__src__content__docs__specifications__backend__endpoints.md",
+        "sha256": "b1aecb6b88c7e7e75b3c7364abbbae4c911ee87bb2841ca486e36db16c6408e7",
+        "license_path": "data/criteria-expansion/sources/realworld/LICENSE",
+        "license_sha256": "a999311c4ccfecf18b7c7beb7a7a31682bb009839ab3827164fa2f8c333fc9dd",
+        "locator": "### Feed Articles",
+        "start_char": 2492,
+        "end_char": 2817
+      },
+      "variants": {
+        "clean": "`GET /api/articles/feed`\n\nCan also take `limit` and `offset` query parameters like [List Articles](/specifications/backend/endpoints#list-articles)\n\nAuthentication required, will return [multiple articles](/specifications/backend/api-response-format#multiple-articles) created by followed users, ordered by most recent first.",
+        "defective": "`GET /api/articles/feed`\n\nCan also take `limit` and `offset` query parameters like [List Articles](/specifications/backend/endpoints#list-articles)\n\nAuthentication required, will return [multiple articles](/specifications/backend/api-response-format#multiple-articles) created by followed users"
+      },
+      "manipulation": {
+        "type": "single_clause_omission",
+        "candidate_smell": "incompleteness",
+        "start": 294,
+        "end": 325,
+        "text": ", ordered by most recent first.",
+        "coordinate_system": "zero-based Unicode code points; end exclusive"
+      },
+      "target": {
+        "constraint_id": "prospective-realworld-feed-articles-c01",
+        "obligation": "The followed-user article feed is ordered newest first.",
+        "status": "assistant_proposed_not_a_scientific_label"
+      },
+      "review": {
+        "mapping": "pending_independent_human_review",
+        "manipulation": "pending_independent_human_review",
+        "rights": "pending",
+        "outcome_annotation": "not_collected"
+      },
+      "exposure": {
+        "projects_previously_used": true,
+        "upstream_public": true,
+        "pretraining_contamination": "unknown",
+        "freshness": "pending_bounded_registry_audit_and_independent_review"
+      }
+    },
+    {
+      "intent_id": "prospective-realworld-unfollow-user",
+      "project_id": "realworld",
+      "source": {
+        "url": "https://raw.githubusercontent.com/realworld-apps/realworld/ebbcdeb8d55b42a3a613c787560498b8ef10003f/docs/src/content/docs/specifications/backend/endpoints.md",
+        "revision": "ebbcdeb8d55b42a3a613c787560498b8ef10003f",
+        "license": "MIT",
+        "license_url": "https://raw.githubusercontent.com/realworld-apps/realworld/ebbcdeb8d55b42a3a613c787560498b8ef10003f/LICENSE",
+        "path": "data/criteria-expansion/sources/realworld/docs__src__content__docs__specifications__backend__endpoints.md",
+        "sha256": "b1aecb6b88c7e7e75b3c7364abbbae4c911ee87bb2841ca486e36db16c6408e7",
+        "license_path": "data/criteria-expansion/sources/realworld/LICENSE",
+        "license_sha256": "a999311c4ccfecf18b7c7beb7a7a31682bb009839ab3827164fa2f8c333fc9dd",
+        "locator": "### Unfollow user",
+        "start_char": 1739,
+        "end_char": 1912
+      },
+      "variants": {
+        "clean": "`DELETE /api/profiles/:username/follow`\n\nAuthentication required, returns a [Profile](/specifications/backend/api-response-format#profile)\n\nNo additional parameters required",
+        "defective": "`DELETE /api/profiles/:username/follow`\n\nAuthentication required, returns a [Profile](/specifications/backend/api-response-format#profile)\n\n"
+      },
+      "manipulation": {
+        "type": "single_clause_omission",
+        "candidate_smell": "incompleteness",
+        "start": 140,
+        "end": 173,
+        "text": "No additional parameters required",
+        "coordinate_system": "zero-based Unicode code points; end exclusive"
+      },
+      "target": {
+        "constraint_id": "prospective-realworld-unfollow-user-c01",
+        "obligation": "Unfollowing a user does not require extra parameters beyond the path and authentication.",
+        "status": "assistant_proposed_not_a_scientific_label"
+      },
+      "review": {
+        "mapping": "pending_independent_human_review",
+        "manipulation": "pending_independent_human_review",
+        "rights": "pending",
+        "outcome_annotation": "not_collected"
+      },
+      "exposure": {
+        "projects_previously_used": true,
+        "upstream_public": true,
+        "pretraining_contamination": "unknown",
+        "freshness": "pending_bounded_registry_audit_and_independent_review"
+      }
+    },
+    {
+      "intent_id": "prospective-kanboard-destination-membership",
+      "project_id": "kanboard",
+      "source": {
+        "blob_sha": "4f1eb3c75fb8cddb433851afbe4afa3b008930c8",
+        "locator": "Duplicate a task to another project",
+        "path": "data/e2e-six-projects/sources/kanboard/tasks.md",
+        "repository": "kanboard/documentation",
+        "revision": "4455fd04fb48ed42817fc99402d4c1fb3bde1c0d",
+        "sha256": "281c39c6e4c5a9c071d28bf01d08d2544929942977eeff4ae53ce0716510f081",
+        "upstream_path": "content/en/v1/user/tasks.md",
+        "license_path": "data/e2e-six-projects/sources/kanboard/LICENSE",
+        "license_sha256": "b14398501e47b08042d57b3ef7994cb2aab8d353a87d928a2395b7aea7c8ca2a",
+        "license": "MIT",
+        "start_char": 2515,
+        "end_char": 2823
+      },
+      "variants": {
+        "clean": "Only projects where you are a member will be shown in the dropdown.\n\nBefore copying the task, Kanboard will ask you to define the destination properties that are not common between the source and destination project.\n\nYou need to define:\n\n- The destination swimlane\n- The column\n- The category\n- The assignee",
+        "defective": "Before copying the task, Kanboard will ask you to define the destination properties that are not common between the source and destination project.\n\nYou need to define:\n\n- The destination swimlane\n- The column\n- The category\n- The assignee"
+      },
+      "manipulation": {
+        "type": "single_clause_omission",
+        "candidate_smell": "incompleteness",
+        "start": 0,
+        "end": 69,
+        "text": "Only projects where you are a member will be shown in the dropdown.\n\n",
+        "coordinate_system": "zero-based Unicode code points; end exclusive"
+      },
+      "target": {
+        "constraint_id": "prospective-kanboard-destination-membership-c01",
+        "obligation": "The destination project dropdown shows only projects of which the user is a member.",
+        "status": "assistant_proposed_not_a_scientific_label"
+      },
+      "review": {
+        "mapping": "pending_independent_human_review",
+        "manipulation": "pending_independent_human_review",
+        "rights": "pending",
+        "outcome_annotation": "not_collected"
+      },
+      "exposure": {
+        "projects_previously_used": true,
+        "upstream_public": true,
+        "pretraining_contamination": "unknown",
+        "freshness": "pending_bounded_registry_audit_and_independent_review"
+      }
+    },
+    {
+      "intent_id": "prospective-kanboard-destination-assignee",
+      "project_id": "kanboard",
+      "source": {
+        "blob_sha": "4f1eb3c75fb8cddb433851afbe4afa3b008930c8",
+        "locator": "Duplicate a task to another project",
+        "path": "data/e2e-six-projects/sources/kanboard/tasks.md",
+        "repository": "kanboard/documentation",
+        "revision": "4455fd04fb48ed42817fc99402d4c1fb3bde1c0d",
+        "sha256": "281c39c6e4c5a9c071d28bf01d08d2544929942977eeff4ae53ce0716510f081",
+        "upstream_path": "content/en/v1/user/tasks.md",
+        "license_path": "data/e2e-six-projects/sources/kanboard/LICENSE",
+        "license_sha256": "b14398501e47b08042d57b3ef7994cb2aab8d353a87d928a2395b7aea7c8ca2a",
+        "license": "MIT",
+        "start_char": 2515,
+        "end_char": 2823
+      },
+      "variants": {
+        "clean": "Only projects where you are a member will be shown in the dropdown.\n\nBefore copying the task, Kanboard will ask you to define the destination properties that are not common between the source and destination project.\n\nYou need to define:\n\n- The destination swimlane\n- The column\n- The category\n- The assignee",
+        "defective": "Only projects where you are a member will be shown in the dropdown.\n\nBefore copying the task, Kanboard will ask you to define the destination properties that are not common between the source and destination project.\n\nYou need to define:\n\n- The destination swimlane\n- The column\n- The category\n"
+      },
+      "manipulation": {
+        "type": "single_clause_omission",
+        "candidate_smell": "incompleteness",
+        "start": 294,
+        "end": 308,
+        "text": "- The assignee",
+        "coordinate_system": "zero-based Unicode code points; end exclusive"
+      },
+      "target": {
+        "constraint_id": "prospective-kanboard-destination-assignee-c01",
+        "obligation": "The destination assignee must be defined when duplicating into another project.",
+        "status": "assistant_proposed_not_a_scientific_label"
+      },
+      "review": {
+        "mapping": "pending_independent_human_review",
+        "manipulation": "pending_independent_human_review",
+        "rights": "pending",
+        "outcome_annotation": "not_collected"
+      },
+      "exposure": {
+        "projects_previously_used": true,
+        "upstream_public": true,
+        "pretraining_contamination": "unknown",
+        "freshness": "pending_bounded_registry_audit_and_independent_review"
+      }
+    },
+    {
+      "intent_id": "prospective-paperless-share-expiry",
+      "project_id": "paperless-ngx",
+      "source": {
+        "blob_sha": "12cdaa921cc4fad9edbad5e9bf6c4ea9279d9c6f",
+        "locator": "Share Links",
+        "path": "data/e2e-six-projects/sources/paperless-ngx/usage.md",
+        "repository": "paperless-ngx/paperless-ngx",
+        "revision": "4f777d7438378fe0b6dcc9f140a7eb469f9f0b0b",
+        "sha256": "78fc960ff99fb102d11e9db2830f9e879f4894822ff8f18684e972ffe04bd9dd",
+        "upstream_path": "docs/usage.md",
+        "license_path": "data/e2e-six-projects/sources/paperless-ngx/LICENSE",
+        "license_sha256": "d62f065830aa3739cc031156b9690805c7b2e811b4a178c8b4acd8725d561c94",
+        "license": "GPL-3.0",
+        "start_char": 20032,
+        "end_char": 20742
+      },
+      "variants": {
+        "clean": "- Share links do not require a user to login and thus link directly to a file or bundled download.\n- Links are unique and are of the form `{paperless-url}/share/{randomly-generated-slug}`.\n- Links can optionally have an expiration time set.\n- After a link expires or is deleted users will be redirected to the regular paperless-ngx login.\n- From the document detail screen you can create a share link for that single document.\n- From the bulk editor you can create a **share link bundle** for any selection. Paperless-ngx prepares a ZIP archive in the background and exposes a single share link. You can revisit the \"Manage share link bundles\" dialog to monitor progress, retry failed bundles, or delete links.",
+        "defective": "- Share links do not require a user to login and thus link directly to a file or bundled download.\n- Links are unique and are of the form `{paperless-url}/share/{randomly-generated-slug}`.\n- Links can optionally have an expiration time set.\n- From the document detail screen you can create a share link for that single document.\n- From the bulk editor you can create a **share link bundle** for any selection. Paperless-ngx prepares a ZIP archive in the background and exposes a single share link. You can revisit the \"Manage share link bundles\" dialog to monitor progress, retry failed bundles, or delete links."
+      },
+      "manipulation": {
+        "type": "single_clause_omission",
+        "candidate_smell": "incompleteness",
+        "start": 241,
+        "end": 339,
+        "text": "- After a link expires or is deleted users will be redirected to the regular paperless-ngx login.\n",
+        "coordinate_system": "zero-based Unicode code points; end exclusive"
+      },
+      "target": {
+        "constraint_id": "prospective-paperless-share-expiry-c01",
+        "obligation": "Expired or deleted share links redirect to the normal login.",
+        "status": "assistant_proposed_not_a_scientific_label"
+      },
+      "review": {
+        "mapping": "pending_independent_human_review",
+        "manipulation": "pending_independent_human_review",
+        "rights": "pending",
+        "outcome_annotation": "not_collected"
+      },
+      "exposure": {
+        "projects_previously_used": true,
+        "upstream_public": true,
+        "pretraining_contamination": "unknown",
+        "freshness": "pending_bounded_registry_audit_and_independent_review"
+      }
+    },
+    {
+      "intent_id": "prospective-paperless-share-no-login",
+      "project_id": "paperless-ngx",
+      "source": {
+        "blob_sha": "12cdaa921cc4fad9edbad5e9bf6c4ea9279d9c6f",
+        "locator": "Share Links",
+        "path": "data/e2e-six-projects/sources/paperless-ngx/usage.md",
+        "repository": "paperless-ngx/paperless-ngx",
+        "revision": "4f777d7438378fe0b6dcc9f140a7eb469f9f0b0b",
+        "sha256": "78fc960ff99fb102d11e9db2830f9e879f4894822ff8f18684e972ffe04bd9dd",
+        "upstream_path": "docs/usage.md",
+        "license_path": "data/e2e-six-projects/sources/paperless-ngx/LICENSE",
+        "license_sha256": "d62f065830aa3739cc031156b9690805c7b2e811b4a178c8b4acd8725d561c94",
+        "license": "GPL-3.0",
+        "start_char": 20032,
+        "end_char": 20742
+      },
+      "variants": {
+        "clean": "- Share links do not require a user to login and thus link directly to a file or bundled download.\n- Links are unique and are of the form `{paperless-url}/share/{randomly-generated-slug}`.\n- Links can optionally have an expiration time set.\n- After a link expires or is deleted users will be redirected to the regular paperless-ngx login.\n- From the document detail screen you can create a share link for that single document.\n- From the bulk editor you can create a **share link bundle** for any selection. Paperless-ngx prepares a ZIP archive in the background and exposes a single share link. You can revisit the \"Manage share link bundles\" dialog to monitor progress, retry failed bundles, or delete links.",
+        "defective": "- Links are unique and are of the form `{paperless-url}/share/{randomly-generated-slug}`.\n- Links can optionally have an expiration time set.\n- After a link expires or is deleted users will be redirected to the regular paperless-ngx login.\n- From the document detail screen you can create a share link for that single document.\n- From the bulk editor you can create a **share link bundle** for any selection. Paperless-ngx prepares a ZIP archive in the background and exposes a single share link. You can revisit the \"Manage share link bundles\" dialog to monitor progress, retry failed bundles, or delete links."
+      },
+      "manipulation": {
+        "type": "single_clause_omission",
+        "candidate_smell": "incompleteness",
+        "start": 0,
+        "end": 99,
+        "text": "- Share links do not require a user to login and thus link directly to a file or bundled download.\n",
+        "coordinate_system": "zero-based Unicode code points; end exclusive"
+      },
+      "target": {
+        "constraint_id": "prospective-paperless-share-no-login-c01",
+        "obligation": "An active public share link does not require login.",
+        "status": "assistant_proposed_not_a_scientific_label"
+      },
+      "review": {
+        "mapping": "pending_independent_human_review",
+        "manipulation": "pending_independent_human_review",
+        "rights": "pending",
+        "outcome_annotation": "not_collected"
+      },
+      "exposure": {
+        "projects_previously_used": true,
+        "upstream_public": true,
+        "pretraining_contamination": "unknown",
+        "freshness": "pending_bounded_registry_audit_and_independent_review"
+      }
+    }
+  ]
+}

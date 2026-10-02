@@ -199,3 +199,89 @@ Current dependencies: fresh corpus identities and reviews, exact split freeze,
 annotation rubric/annotators, two qualified providers, runtime/event adapter and
 budget authorization. This execution found neither Codex CLI nor Docker available;
 no new provider episode or empirical comparison was performed.
+
+### Executable preparation and candidate source review (2026-10-02)
+
+The source draft is now `data/prepilot/temporal-warning-source-drafts.json`:
+12 proposed intent pairs from six **previously exposed** public projects.
+Each clean input is an exact, hash-bound excerpt; its defective counterpart
+removes one recorded span. A proposed constraint ID and a testable obligation
+are recorded per pair. These are assistant-prepared materials, not reviewed
+scientific labels. The selection and project partition remain unfrozen.
+
+| Project | Candidate comparison | Removed condition |
+| --- | --- | --- |
+| StrictDoc | SDOC-SRS-151 / SDOC-SRS-110 | Default presentation view / document classification |
+| CASS | SRCH-002 / SRCH-006 | Maximum search size / exclusion of unreadable objects |
+| TodoMVC | Counter / Clear completed | Exact pluralization examples / hide button when no completed todos remain |
+| RealWorld | Feed Articles / Unfollow user | Newest-first ordering / no extra parameters |
+| Kanboard | Cross-project duplication, two omissions | Destination membership restriction / destination assignee |
+| Paperless-ngx | Public share links, two omissions | Expired/deleted link redirect / access without login |
+
+The bounded audit checks prior recorded input strings, not titles or outcomes.
+Its hashed inventory contains 898 JSON/JSONL files. It found no complete-clean
+input match after whitespace normalization. Paraphrases, overlapping clauses,
+previous private experiments, source familiarity and pretraining remain
+unresolved. In particular, TodoMVC retains “pluralized form” and an example;
+CASS retains “KBAC access control”. These cues may let a model reconstruct the
+removed condition. The independent manipulation review must decide whether
+each omission is suitable. Reject or revise candidates **before** generation,
+not after seeing which ones cause failures. Sibling omissions sharing an
+excerpt are related observations; keep them in the same project partition.
+This two-arm engineering pilot has no rewrite-control and cannot disentangle
+all length/phrasing effects. It does not amend the confirmatory corpus.
+
+Reproduce the source checks with:
+
+```sh
+python -m eval.temporal_cohort_candidate \
+  --candidate data/prepilot/temporal-warning-source-drafts.json \
+  --output /tmp/temporal-warning-exposure-audit.json
+```
+
+`runtime_prefix_features` now accepts typed runtime-native checkpoint
+observations and maps interpretation → T1, plan → T2, execution/tool → T3.
+It reads registered activity names and observation times only, without
+traversing semantic payloads. Already isolated prefixes are required; future,
+reconstructed and ambiguous-clock observations fail closed. Production clock
+behavior and the actual collector adapter still require qualification.
+
+The supplementary comparison runner accepts a prediction table and a
+**separate** outcome table. Predictions carry episode/project/intent/run/
+replication identities for joining and grouping, not as detector features.
+Each prediction has ordered T1–T3 observations with availability times and
+scores from B0, B3 and S-structure. Each outcome has episode ID, the predeclared target constraint ID, a resolved
+binary terminal label and terminal time. Prediction/outcome constraint IDs must
+match. This supplementary comparison analyzes one target per episode; it does
+not replace the primary per-constraint analysis or non-target diagnostics. Incomplete or mismatched cohorts,
+project overlap (including case/whitespace aliases), cross-project related
+intents and observations at/after T4 fail closed. Unresolved labels require
+resolution or an explicitly preregistered missing-label analysis; do not
+silently discard them to make the runner pass.
+
+```sh
+python -m eval.temporal_comparison_report \
+  --predictions /private/sealed-prefix-scores.json \
+  --outcomes /private/independent-outcomes.json \
+  --max-fpr 0.05 --output /private/temporal-comparison.json
+```
+
+The supplementary threshold is fitted to the **maximum prefix score per
+calibration episode**, implementing the policy “alert in any T1–T3 prefix”.
+This requires a comparable score scale across prefixes for each detector,
+fixed before calibration. Three independently budgeted checkpoint thresholds
+would not constrain the episode false-alarm rate. The output includes stage
+average precision, episode maximum-score average precision, test recall/FPR,
+first-alert stage, lead time separately identified for true/false positives,
+and B3-minus-B0 / B3-minus-S-structure deltas using the existing project
+bootstrap gates. The proposed two-test-project pilot remains descriptive.
+An empirical calibration bound is not a guarantee of held-out FPR.
+
+The runner does not train detectors or prove that supplied scores were sealed
+before T4. Freeze train-only models, score scaling, project/clone groups,
+input hashes, schedule and calibration policy separately. Verify the complete
+scheduled cohort and independent annotation lineage before running it.
+Score-file hashes in the report support custody, not proof of blinding or
+causal validity. Primary H2 B0/B3 definitions and the existing F1 threshold
+policy are unchanged. No provider-backed episodes were collected for this
+preparation, and no synthetic test fixture is experimental evidence.

@@ -69,3 +69,23 @@ def test_stage_order_cannot_move_backward_even_with_increasing_timestamps():
 def test_nonfinite_scores_cannot_calibrate(scores):
     with pytest.raises(ValueError, match='finite scores'):
         fit_fpr_threshold(scores, [0, 1], split='calibration', max_fpr=.05)
+
+
+def runtime_observation(checkpoint='interpretation.completed',payload=None,end='2026-10-02T00:00:01+00:00',provenance='runtime_native'):
+    from agents.checkpoints import CheckpointObservation
+    return CheckpointObservation(checkpoint,payload or {},'2026-10-02T00:00:00+00:00',end,provenance)
+
+
+def test_runtime_adapter_ignores_semantic_payload_without_traversing_it():
+    from eval.temporal_comparator import runtime_prefix_features
+    class ForbiddenPayload(dict):
+        def __iter__(self):raise AssertionError('semantic payload was read')
+        def items(self):raise AssertionError('semantic payload was read')
+    result=runtime_prefix_features([runtime_observation(payload=ForbiddenPayload(secret='terminal label'))],episode_started_at='2026-10-02T00:00:00+00:00',stage='T1',cutoff_ms=1000)
+    assert result['activity_counts']=={'interpretation.completed':1}
+
+
+@pytest.mark.parametrize('observation', [runtime_observation(checkpoint='artifact.completed'),runtime_observation(checkpoint='plan.completed'),runtime_observation(provenance='reconstructed'),runtime_observation(end='2026-10-02T00:00:01'),runtime_observation(end='2026-10-02T00:00:02+00:00')])
+def test_runtime_adapter_rejects_terminal_future_reconstructed_and_ambiguous_clocks(observation):
+    from eval.temporal_comparator import runtime_prefix_features
+    with pytest.raises(ValueError):runtime_prefix_features([observation],episode_started_at='2026-10-02T00:00:00+00:00',stage='T1',cutoff_ms=1000)

@@ -85,3 +85,35 @@ def fit_fpr_threshold(scores, labels, *, split, max_fpr):
         if fpr <= max_fpr and recall > best['recall']:
             best.update(threshold=threshold, recall=recall, fpr=fpr)
     return best
+
+
+def runtime_prefix_features(checkpoints, *, episode_started_at, stage, cutoff_ms):
+    """Normalize typed runtime observations; never inspect their semantic payload.
+
+    Supply only the already sealed prefix, not the full episode. Wall-clock
+    timestamps must have explicit UTC offsets; production clock qualification
+    remains a separate gate. No future event is silently filtered away.
+    """
+    from datetime import datetime
+    from agents.checkpoints import CheckpointObservation
+    def timestamp(value):
+        result = datetime.fromisoformat(value)
+        if result.tzinfo is None or result.utcoffset() is None:
+            raise ValueError('runtime timestamps require an explicit UTC offset')
+        return result
+    origin = timestamp(episode_started_at)
+    checkpoint_stages = {'interpretation.completed': 'T1', 'plan.completed': 'T2',
+                         'execution.started': 'T3', 'tool.completed': 'T3'}
+    events = []
+    for observation in checkpoints:
+        if not isinstance(observation, CheckpointObservation) or observation.provenance != 'runtime_native':
+            raise ValueError('typed runtime-native observations required')
+        if observation.checkpoint not in checkpoint_stages:
+            raise ValueError('unknown runtime checkpoint')
+        start, end = timestamp(observation.started_at), timestamp(observation.ended_at)
+        if start < origin or end < start:
+            raise ValueError('invalid runtime observation interval')
+        events.append({'stage': checkpoint_stages[observation.checkpoint],
+                       'available_ms': (end-origin).total_seconds()*1000,
+                       'activity': observation.checkpoint})
+    return structural_features(events, stage=stage, cutoff_ms=cutoff_ms)
