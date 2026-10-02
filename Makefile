@@ -1,9 +1,11 @@
-.PHONY: test test-fast eval simulate gate analysis experiment all dry-run thesis-analysis wedge-check prepilot prepilot-readiness freeze-candidate extension-clarification extension-dissertation discovery discovery-verify discovery-efficacy
+.PHONY: test test-fast reproduce eval simulate gate analysis experiment all dry-run thesis-analysis wedge-check prepilot prepilot-readiness freeze-candidate extension-clarification extension-dissertation discovery discovery-verify discovery-efficacy
 
 PYTHON ?= $(shell if [ -x .venv/bin/python ]; then echo .venv/bin/python; else echo python3; fi)
 
 test:
 	$(PYTHON) -m pytest -q
+reproduce:
+	$(PYTHON) scripts/reproduce_evidence.py --out docs/research/evidence-reproduction.md
 test-fast:
 	$(PYTHON) -m pytest -q -m "not slow"
 eval:
