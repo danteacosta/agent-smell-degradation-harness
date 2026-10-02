@@ -1,0 +1,21 @@
+{
+  "case": "realworld-comment-delete",
+  "intent_id": "realworld-comment-delete",
+  "project_id": "realworld",
+  "fixture": "eval/fixtures/realworld-comment-delete",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Data shapes: app.viewer() returns a string; comment.author.username is a string. Register app.onView. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Render the article comment's Delete action on the article page. Show its button only if the signed-in viewer is the comment's author.",
+    "B": "Render the article comment's Delete action on the article page. Show its button only when the signed-in viewer wrote that comment.",
+    "C": "Render the article comment's Delete action on the article page."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 3,
+  "seed": 2026100103,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "migrated_from": "scripts.realworld_comment_delete_replication"
+}
