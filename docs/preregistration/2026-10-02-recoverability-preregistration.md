@@ -89,11 +89,24 @@ fifteen documentation files, and exclusion of near-identical rewordings
    product.
 4. The rule is not one of the pilot cases.
 
+**Reviewers (interim decision, 2026-10-02).** Until human reviewers are
+available, screening and covariate coding are done by a panel of two
+language models, with a third breaking ties
+(`scripts/llm_screening_panel.py`). The panel sees only the project, file and
+changed sentences: never the assistant pre-screen, pilot status or any
+outcome. Each panel model must first reproduce the expected decision on six
+authored controls; any mismatch stops the run. Agreement between the two
+primary models is reported as Cohen's kappa. This is a recorded deviation
+from human review. It matters because earlier controls showed language-model
+judges missing every constructed deletion when rating acceptance criteria;
+screening is a different task, but a human audit of a random 20% of panel
+decisions is planned before any confirmatory claim.
+
 The first screening round (`data/requirement-sampling/screening-20261002.json`)
 covers 258 candidates from 12 projects; the assistant's pre-screen suggests 43
 for admission across 8 projects. The pre-screen is recorded as a suggestion
 only. Admission
-requires agreement of two human reviewers; a third resolves disagreements.
+requires agreement of the two primary reviewers; a third resolves disagreements.
 
 **Sample size.** At least 30 admitted requirements from at least 8 projects,
 with at most 6 per project so that no project dominates; when a project has
@@ -119,10 +132,11 @@ for the target rule returns pass, fail or unknown. Unknown covers browser
 errors, an incomplete journey or an interface the oracle cannot operate.
 
 **Measured outcome (secondary).** Whether the generated acceptance criteria
-contain the target rule, rated by two blind human reviewers.
+contain the target rule, rated by the blind reviewer panel.
 
-**Covariates for H1b**, coded for each requirement by two reviewers before
-generation, blind to outcomes:
+**Covariates for H1b**, coded for each requirement before generation, blind
+to outcomes, by the reviewer panel (`numeric` and `derived_state` by panel
+majority; `context_cue` once the scaffold exists; `memorized` by the probe):
 
 | Covariate | Coding rule |
 | --- | --- |
@@ -192,6 +206,6 @@ without an explicit deviation entry.
 
 1. Primary outcome of H1: browser oracle (this draft) or acceptance-criteria
    coverage.
-2. Names of the two reviewers and the adjudicator, and their time budget.
+2. Who performs the human audit of panel decisions, and when.
 3. Whether H2 is kept in this study or moved to future work.
 4. Whether a third coding model from another provider is affordable.
