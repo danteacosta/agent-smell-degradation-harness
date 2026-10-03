@@ -1,0 +1,350 @@
+{
+  "schema_version": "llm-screening-readonly-audit/20261002-v1",
+  "confirmatory_eligible": false,
+  "source_results_sha256": "efd715003c462e0af5cdc149f23ba98744a4bea051751eb6a2e5be85f800a4d6",
+  "source_manifest_sha256": "98e747aa02b1c383c3d4cb2ec42fa24172902aac6712a31eea5cf278aa329c56",
+  "primary_models": [
+    "gpt-6-astra",
+    "gpt-6-sol"
+  ],
+  "tiebreaker": "gpt-6-luna",
+  "controls_qualified": true,
+  "qualification_calls": 18,
+  "summary_recomputed": {
+    "candidates": 60,
+    "consensus": {
+      "admit": 30,
+      "exclude": 30
+    },
+    "routes": {
+      "agreement": 53,
+      "tiebreaker": 7
+    },
+    "admitted_by_project": {
+      "zulip": 19,
+      "grist": 11
+    },
+    "primary_kappa": 0.7661469933184855,
+    "primary_pairs_with_two_valid_votes": 60
+  },
+  "missing_or_invalid_votes": [],
+  "mechanical_pilot_exclusions": [],
+  "admitted_target_rule_text_disagreements": [
+    {
+      "candidate_id": "rc-c6aa48543d73",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When administrators require topics in channel messages, users cannot send channel messages to the “general chat” topic.",
+        "gpt-6-sol": "When an administrator requires topics in channel messages, the “general chat” topic is unavailable."
+      },
+      "stored_target_rule": "When administrators require topics in channel messages, users cannot send channel messages to the “general chat” topic.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-b49db6870ff5",
+      "project": "grist",
+      "target_rule_by_model": {
+        "gpt-6-astra": "After a user closes their document fork, visiting the document's Direct URL automatically redirects them to their saved fork.",
+        "gpt-6-sol": "When a user revisits the Direct URL after closing their document fork, Grist redirects them to their saved fork."
+      },
+      "stored_target_rule": "After a user closes their document fork, visiting the document's Direct URL automatically redirects them to their saved fork.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-24946f42bfc2",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A user may join a user group using its plus icon only if they have permission to join it.",
+        "gpt-6-sol": "A user can join a user group by clicking its plus icon only if they have permission to join it."
+      },
+      "stored_target_rule": "A user may join a user group using its plus icon only if they have permission to join it.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-3c572449f134",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Typing a user's name in the search box offers a suggestion for direct messages with that user.",
+        "gpt-6-sol": "Searching for `dm-including` followed by a user finds all one-to-one and group DM conversations that include that user."
+      },
+      "stored_target_rule": "Typing a user's name in the search box offers a suggestion for direct messages with that user.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-dfb84383fb89",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Any user can unsubscribe themselves from a channel they belong to.",
+        "gpt-6-sol": "A user can unsubscribe themselves from any channel."
+      },
+      "stored_target_rule": "Any user can unsubscribe themselves from a channel they belong to.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-62e9d69be36f",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A user with permission to administer a private channel must also subscribe to that channel before they can subscribe other users to it.",
+        "gpt-6-sol": "An administrator of a private channel must be subscribed to it before they can change its permissions."
+      },
+      "stored_target_rule": "A user with permission to administer a private channel must also subscribe to that channel before they can subscribe other users to it.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-bf86d02f63c9",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When Google blobs is selected, emoji released after 2017 must display in the modern Google style.",
+        "gpt-6-sol": "When the Google blobs emoji style is selected, emoji released after 2017 display in the modern Google style."
+      },
+      "stored_target_rule": "When Google blobs is selected, emoji released after 2017 must display in the modern Google style.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-ade633af9c14",
+      "project": "grist",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When suggestions are enabled, opening a document automatically opens a copy for both signed-in and signed-out users.",
+        "gpt-6-sol": "When suggestions are enabled, opening a document automatically opens a copy for editing, including for users who are not signed in."
+      },
+      "stored_target_rule": "When suggestions are enabled, opening a document automatically opens a copy for both signed-in and signed-out users.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-7b485b51412f",
+      "project": "grist",
+      "target_rule_by_model": {
+        "gpt-6-astra": "After a user selects 'Set default: Collapse' for a parent page, its nested pages must be collapsed when the document is reopened.",
+        "gpt-6-sol": "While a user drags a page to rearrange it, a green line shows where the page will be placed."
+      },
+      "stored_target_rule": "After a user selects 'Set default: Collapse' for a parent page, its nested pages must be collapsed when the document is reopened.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-4aac15b7b503",
+      "project": "grist",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Pressing Shift+F10 in the grid opens the context menu.",
+        "gpt-6-luna": "In the web interface, pressing the listed shortcut for the current cell opens its context menu."
+      },
+      "stored_target_rule": "Pressing Shift+F10 in the grid opens the context menu.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-3cd319371269",
+      "project": "grist",
+      "target_rule_by_model": {
+        "gpt-6-sol": "Users cannot enable On-Demand Tables in new Grist documents.",
+        "gpt-6-luna": "Existing Grist documents that use On-Demand Tables continue to function."
+      },
+      "stored_target_rule": "Users cannot enable On-Demand Tables in new Grist documents.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-f33b2bf870e9",
+      "project": "grist",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A team may have at most 10 billing managers.",
+        "gpt-6-sol": "A team on getgrist.com can have at most 10 billing managers."
+      },
+      "stored_target_rule": "A team may have at most 10 billing managers.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-c044ebec7fe1",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The user subscription typeahead must exclude users already subscribed to the target channel.",
+        "gpt-6-sol": "The channel subscription typeahead includes only users who are not already subscribed to that channel."
+      },
+      "stored_target_rule": "The user subscription typeahead must exclude users already subscribed to the target channel.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-c30a4162188a",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A message the user has permission to edit must display the pencil edit icon.",
+        "gpt-6-luna": "Users without permission to edit a message do not see the pencil icon for that message."
+      },
+      "stored_target_rule": "A message the user has permission to edit must display the pencil edit icon.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-277279fd03a4",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Only public or web-public channels can be selected as default channels for new users.",
+        "gpt-6-sol": "Only public or web-public channels can be added to an organization's default channels."
+      },
+      "stored_target_rule": "Only public or web-public channels can be selected as default channels for new users.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-c5ed01f3769c",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The button to generate a channel email address must be hidden when the user lacks permission to send messages to that channel.",
+        "gpt-6-sol": "The button to generate a channel email address is visible only to users who have permission to send messages to that channel."
+      },
+      "stored_target_rule": "The button to generate a channel email address must be hidden when the user lacks permission to send messages to that channel.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-362ff82e3812",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Users can configure whether automated notices are automatically marked as read.",
+        "gpt-6-sol": "A user's setting controls whether automated notices are automatically marked as read."
+      },
+      "stored_target_rule": "Users can configure whether automated notices are automatically marked as read.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-393307131fc8",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Enabling “Pin channel to top of left sidebar” in a channel’s Personal settings places that channel at the top of the left sidebar.",
+        "gpt-6-sol": "When a user turns on Pin channel to top of left sidebar for a channel, that channel appears at the top of the left sidebar."
+      },
+      "stored_target_rule": "Enabling “Pin channel to top of left sidebar” in a channel’s Personal settings places that channel at the top of the left sidebar.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-103dc930a420",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When a user accepts an invitation, their initial settings must match the defaults configured at acceptance time.",
+        "gpt-6-sol": "A user who accepts an invitation receives the default settings configured at the time of acceptance."
+      },
+      "stored_target_rule": "When a user accepts an invitation, their initial settings must match the defaults configured at acceptance time.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-1590080019fb",
+      "project": "grist",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Structure (S) permissions must not be available in table-level access rules.",
+        "gpt-6-sol": "Structure (S) permissions are unavailable at the table level."
+      },
+      "stored_target_rule": "Structure (S) permissions must not be available in table-level access rules.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-08dffa18a270",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Setting GIF picker to Disabled in Compose settings removes the GIF picker from the compose box.",
+        "gpt-6-sol": "When a user sets GIF picker to Disabled in Compose settings, the GIF picker disappears from the compose box."
+      },
+      "stored_target_rule": "Setting GIF picker to Disabled in Compose settings removes the GIF picker from the compose box.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-b7086f489030",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A channel's Moderation permissions must allow users to configure who can delete their own messages in that channel.",
+        "gpt-6-luna": "A channel's moderation settings determine who can delete any message in that channel and who can delete their own messages there."
+      },
+      "stored_target_rule": "A channel's Moderation permissions must allow users to configure who can delete their own messages in that channel.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-aac66a0af69a",
+      "project": "grist",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Clicking Restart at the bottom of the tutorial popup refreshes the page and discards unsaved changes.",
+        "gpt-6-sol": "Clicking Restart at the bottom of the tutorial popup refreshes the page."
+      },
+      "stored_target_rule": "Clicking Restart at the bottom of the tutorial popup refreshes the page and discards unsaved changes.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-4200f1dac6a9",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When a user pastes a URL matching a reverse-enabled linkifier into the compose box, it automatically becomes linked text corresponding to that linkifier.",
+        "gpt-6-sol": "When a user pastes a URL matching a configured reverse linkifier into the web compose box, Zulip automatically converts it to linked text."
+      },
+      "stored_target_rule": "When a user pastes a URL matching a reverse-enabled linkifier into the compose box, it automatically becomes linked text corresponding to that linkifier.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-adf56e244737",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Searching for channels:archived returns only messages the user received in archived channels.",
+        "gpt-6-sol": "Searching for channels:archived shows messages the user received in archived channels."
+      },
+      "stored_target_rule": "Searching for channels:archived returns only messages the user received in archived channels.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-f0b216964e6f",
+      "project": "grist",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Conditional formatting added under 'Row Style' must apply across the entire matching table row.",
+        "gpt-6-sol": "Conditional formatting added under Row Style applies across the entire row."
+      },
+      "stored_target_rule": "Conditional formatting added under 'Row Style' must apply across the entire matching table row.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-fd348eb33246",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-sol": "Conversations in a private channel are visible to users who have been granted access to that channel.",
+        "gpt-6-luna": "A private channel is visible only to users who have been specifically granted access."
+      },
+      "stored_target_rule": "Conversations in a private channel are visible to users who have been granted access to that channel.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-6be0f3992b4b",
+      "project": "grist",
+      "target_rule_by_model": {
+        "gpt-6-astra": "On every plan, a document's combined attachment and data storage must not exceed 1GB.",
+        "gpt-6-sol": "A document cannot exceed 1GB of combined attachments and data, regardless of plan."
+      },
+      "stored_target_rule": "On every plan, a document's combined attachment and data storage must not exceed 1GB.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-cb144c65d898",
+      "project": "zulip",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The channel settings screen must place the \"Who can subscribe anyone to this channel\" setting under \"Advanced configurations\".",
+        "gpt-6-sol": "The “Who can subscribe anyone to this channel” setting appears under Advanced configurations."
+      },
+      "stored_target_rule": "The channel settings screen must place the \"Who can subscribe anyone to this channel\" setting under \"Advanced configurations\".",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    },
+    {
+      "candidate_id": "rc-b0a9c3fd790a",
+      "project": "grist",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A screen reader must announce Markdown content beginning with '# ' as a heading rather than reading the hash symbol aloud.",
+        "gpt-6-sol": "In the web interface, a screen reader announces Markdown headings by their heading semantics rather than reading the Markdown # symbol."
+      },
+      "stored_target_rule": "A screen reader must announce Markdown content beginning with '# ' as a heading rather than reading the hash symbol aloud.",
+      "resolution": "pending_semantic_review_no_automatic_resolution"
+    }
+  ],
+  "row_mismatches": [],
+  "summary_mismatches": {},
+  "sampling_rule": {
+    "minimum_requirements": 30,
+    "minimum_projects": 8,
+    "maximum_per_project": 6,
+    "within_project_selection_seed": 2026100203,
+    "automatically_applied": false
+  },
+  "notes": [
+    "O relatório não atribui rótulos de smells.",
+    "Texto distinto não prova divergência semântica: revisar antes de congelar a regra-alvo.",
+    "Nenhuma evidência de H1/H2 é produzida pela triagem.",
+    "O teto é seis requisitos por projeto na seleção posterior; não seis admitidos no painel inteiro.",
+    "Este helper confere conteúdo e hashes das entradas lidas; não afirma validar a custódia completa do pacote."
+  ]
+}
