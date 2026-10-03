@@ -112,13 +112,16 @@ experiment evidence.
 - [Triagem por consenso de LLMs: 258 candidatos, 2 de outubro de 2026](2026-10-02-llm-screening-results.md). Dados públicos, recálculo, custódia e limitações dos mappings; não confirma smells ou H1/H2.
 
 - [Sonda de recuperação de regras: 69 candidatos e dois modelos, 2 de outubro de 2026](2026-10-02-memorization-probe-results.md). Luna 22/69 e Sol 31/69; dados públicos e verificação independente da projeção. Recuperação sem referência não demonstra contaminação e não confirma H1/H2.
-- [Seleção dos requisitos: procedimento congelado e decisões propostas, 2 de outubro de 2026](2026-10-02-selection-procedure.md). Ordem do sorteio com seed 2026100203, bloqueios, sete mappings e dois grupos de duplicação propostos; nenhuma seleção executada.
+- [Seleção dos requisitos: procedimento congelado e decisões propostas, 2 de outubro de 2026](2026-10-02-selection-procedure.md). Ordem do sorteio com seed 2026100203, bloqueios, sete mappings e dois grupos de duplicação originalmente propostos; seleção aprovada em 03/10 no registro da versão 2.
 - [Triagem, rodada 2: extensão do frame para o oitavo projeto (Zulip, Grist), 2 de outubro de 2026](2026-10-02-screening-round-2.md). 60 candidatos avaliados na rodada concluída em 3 de outubro; desvio registrado no pré-registro.
 
 - [Rodada 2: 30 novos elegíveis, nove projetos no conjunto, 3 de outubro de 2026](2026-10-03-screening-round2-results.md). 60 avaliados, 145 chamadas, zero falhas; seleção e confirmação de smells continuam pendentes.
 
-- [Casos da seleção, lote 1: Paperless, Immich e Mealie, 3 de outubro de 2026](2026-10-03-selection-cases-batch-1.md). Dez casos A/B/C com 73/73 controles qualificados no Docker congelado; revisão dos braços e decisões de seleção continuam pendentes.
+- [Casos da seleção, lote 1: Paperless, Immich e Mealie, 3 de outubro de 2026](2026-10-03-selection-cases-batch-1.md). Dez casos A/B/C com 73/73 controles qualificados no Docker congelado; qualificação original preservada; revisão dos braços continua pendente. Seleção aprovada em 03/10 e atualização `.ts` do Immich documentada separadamente.
 
 - [Revisão dos 30 mappings da rodada 2](2026-10-03-screening-round2-mapping-review.md): 15 questões pendentes identificadas sem consultar a sonda; não altera admissão nem aprova seleção.
 
 - [Sonda de recuperação da rodada 2](2026-10-03-memorization-probe-round2-results.md): 30 regras, Luna 8/30 e Sol 9/30; 180 respostas e 414 chamadas, sem falhas; não é evidência de contaminação ou efeito E2E.
+- [Decisões de seleção, versão 2: documentação no fim do frame](2026-10-03-selection-decisions-v2.md). Define "atual" como o snapshot de 2026-09-30, fecha as 15 pendências da rodada 2 e as de texto removido; prévia de 46 requisitos em nove projetos. Proposta, não aprovada.
+
+- [Seleção aprovada e snapshots revisados, 3 de outubro de 2026](2026-10-03-selection-decisions-v2.md): sorteio único de 46 requisitos em nove projetos, a partir de 82 unidades; revisão não cega explicitada e auditoria humana pendente.

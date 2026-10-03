@@ -1,0 +1,108 @@
+{
+  "schema_version": "current-doc-snapshot-verification/v1",
+  "reviewer": "Codex integration review; previously exposed to probe outcomes",
+  "verified_at": "2026-10-03T17:07:50.518281+00:00",
+  "method": "GitHub repository default_branch, then first commit returned for that branch with until=2026-09-30T23:59:59Z and per_page=1; compare exact SHA to the published snapshot. Does not revalidate document-presence counters.",
+  "current_doc_check_sha256": "9db9922c83d15f405390be373de3da5df3ef97654d0c3cb59ad89d242f5a8116",
+  "snapshots": [
+    {
+      "project": "grist",
+      "repository": "gristlabs/grist-help",
+      "default_branch": "master",
+      "frame_end": "2026-09-30T23:59:59Z",
+      "expected_sha": "b047726e327709d214e3b63222ee052de6399934",
+      "observed_sha": "b047726e327709d214e3b63222ee052de6399934",
+      "committed_at": "2026-09-30T16:39:51Z",
+      "matches": true,
+      "source_url": "https://github.com/gristlabs/grist-help/commit/b047726e327709d214e3b63222ee052de6399934"
+    },
+    {
+      "project": "immich",
+      "repository": "immich-app/immich",
+      "default_branch": "main",
+      "frame_end": "2026-09-30T23:59:59Z",
+      "expected_sha": "a3c8b359f2fdc47699f1530215a23fe8bd34c454",
+      "observed_sha": "a3c8b359f2fdc47699f1530215a23fe8bd34c454",
+      "committed_at": "2026-09-30T22:56:36Z",
+      "matches": true,
+      "source_url": "https://github.com/immich-app/immich/commit/a3c8b359f2fdc47699f1530215a23fe8bd34c454"
+    },
+    {
+      "project": "mattermost",
+      "repository": "mattermost/docs",
+      "default_branch": "master",
+      "frame_end": "2026-09-30T23:59:59Z",
+      "expected_sha": "bd09d959514c34e72a33c24663b5946682b656ec",
+      "observed_sha": "bd09d959514c34e72a33c24663b5946682b656ec",
+      "committed_at": "2026-09-17T08:36:29Z",
+      "matches": true,
+      "source_url": "https://github.com/mattermost/docs/commit/bd09d959514c34e72a33c24663b5946682b656ec"
+    },
+    {
+      "project": "mealie",
+      "repository": "mealie-recipes/mealie",
+      "default_branch": "mealie-next",
+      "frame_end": "2026-09-30T23:59:59Z",
+      "expected_sha": "7e03d041d7571e8b2a918140fcf9237f2d7a903d",
+      "observed_sha": "7e03d041d7571e8b2a918140fcf9237f2d7a903d",
+      "committed_at": "2026-09-30T16:43:44Z",
+      "matches": true,
+      "source_url": "https://github.com/mealie-recipes/mealie/commit/7e03d041d7571e8b2a918140fcf9237f2d7a903d"
+    },
+    {
+      "project": "nextcloud",
+      "repository": "nextcloud/documentation",
+      "default_branch": "master",
+      "frame_end": "2026-09-30T23:59:59Z",
+      "expected_sha": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+      "observed_sha": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+      "committed_at": "2026-09-30T12:44:58Z",
+      "matches": true,
+      "source_url": "https://github.com/nextcloud/documentation/commit/8d7403649929d9ddb1bd6a5a073d6869071db8c3"
+    },
+    {
+      "project": "openproject",
+      "repository": "opf/openproject",
+      "default_branch": "dev",
+      "frame_end": "2026-09-30T23:59:59Z",
+      "expected_sha": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+      "observed_sha": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+      "committed_at": "2026-09-30T21:48:14Z",
+      "matches": true,
+      "source_url": "https://github.com/opf/openproject/commit/66f582c19f87534703d2eaf92c5929d13d440cd9"
+    },
+    {
+      "project": "paperless",
+      "repository": "paperless-ngx/paperless-ngx",
+      "default_branch": "dev",
+      "frame_end": "2026-09-30T23:59:59Z",
+      "expected_sha": "d02c19a09e42b945df26f4964af722d65aa81bda",
+      "observed_sha": "d02c19a09e42b945df26f4964af722d65aa81bda",
+      "committed_at": "2026-09-30T15:03:04Z",
+      "matches": true,
+      "source_url": "https://github.com/paperless-ngx/paperless-ngx/commit/d02c19a09e42b945df26f4964af722d65aa81bda"
+    },
+    {
+      "project": "wekan",
+      "repository": "wekan/wekan",
+      "default_branch": "main",
+      "frame_end": "2026-09-30T23:59:59Z",
+      "expected_sha": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+      "observed_sha": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+      "committed_at": "2026-09-30T23:59:49Z",
+      "matches": true,
+      "source_url": "https://github.com/wekan/wekan/commit/38415f04caf9a3536fe8faaca0cda9b8aa38cf57"
+    },
+    {
+      "project": "zulip",
+      "repository": "zulip/zulip",
+      "default_branch": "main",
+      "frame_end": "2026-09-30T23:59:59Z",
+      "expected_sha": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+      "observed_sha": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+      "committed_at": "2026-09-30T08:15:22Z",
+      "matches": true,
+      "source_url": "https://github.com/zulip/zulip/commit/9778ffc23c3e83e321152a48ab32c1426e1bd941"
+    }
+  ]
+}

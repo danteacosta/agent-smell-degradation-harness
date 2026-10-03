@@ -1,0 +1,276 @@
+{
+  "schema_version": "pr150-manual-primary-source-review/v1",
+  "created_at_utc": "2026-10-03T17:08:38.783444+00:00",
+  "status": "source_review_only_no_approval_or_selection",
+  "reviewer": "Codex delegated scientific reviewer",
+  "blind": false,
+  "previously_exposed_to_probe_outcomes": true,
+  "probe_outcomes_consulted_for_this_review": false,
+  "decision_basis": "Pinned public GitHub documentation only; no probe or E2E outcomes opened or used in this task. Prior exposure prevents certification of genuine outcome blinding.",
+  "frame_end": "2026-09-30T23:59:59Z",
+  "fetch_method": "gh api repos/{repository}/contents/{path}?ref={snapshot_sha}; FAQ path found using recursive tree at same snapshot",
+  "retrieved_source_files": [
+    {
+      "project": "grist",
+      "repository": "gristlabs/grist-help",
+      "snapshot_sha": "b047726e327709d214e3b63222ee052de6399934",
+      "path": "help/en/docs/team-sharing.md",
+      "blob_sha": "83324ef4c80b6ef2a200cfa1a54d1d61b23876b3",
+      "text_sha256": "7e839bc57539b1433ef79fb13742eee6fe4bd70e1a043c9a4340bd8062bdca95",
+      "html_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/team-sharing.md",
+      "api_url": "https://api.github.com/repos/gristlabs/grist-help/contents/help/en/docs/team-sharing.md?ref=b047726e327709d214e3b63222ee052de6399934",
+      "git_blob_sha_recomputed": "83324ef4c80b6ef2a200cfa1a54d1d61b23876b3"
+    },
+    {
+      "project": "grist",
+      "repository": "gristlabs/grist-help",
+      "snapshot_sha": "b047726e327709d214e3b63222ee052de6399934",
+      "path": "help/en/docs/limits.md",
+      "blob_sha": "731e7c93504a0e97502019d9758692b29782093c",
+      "text_sha256": "133fe25737362446fa9a222e960bc194774460c47a8fe386dcbbb806e22cd661",
+      "html_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/limits.md",
+      "api_url": "https://api.github.com/repos/gristlabs/grist-help/contents/help/en/docs/limits.md?ref=b047726e327709d214e3b63222ee052de6399934",
+      "git_blob_sha_recomputed": "731e7c93504a0e97502019d9758692b29782093c"
+    },
+    {
+      "project": "grist",
+      "repository": "gristlabs/grist-help",
+      "snapshot_sha": "b047726e327709d214e3b63222ee052de6399934",
+      "path": "help/en/docs/FAQ.md",
+      "blob_sha": "d66a3c8f08b4fa4861f5b801a1aea63b0df61387",
+      "text_sha256": "fc6ebf5a407a45a4bd7a6a210c753ebd1e9ad766dc1804f294e6e01d717c80d9",
+      "html_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/FAQ.md",
+      "api_url": "https://api.github.com/repos/gristlabs/grist-help/contents/help/en/docs/FAQ.md?ref=b047726e327709d214e3b63222ee052de6399934",
+      "git_blob_sha_recomputed": "d66a3c8f08b4fa4861f5b801a1aea63b0df61387"
+    },
+    {
+      "project": "mattermost",
+      "repository": "mattermost/docs",
+      "snapshot_sha": "bd09d959514c34e72a33c24663b5946682b656ec",
+      "path": "source/end-user-guide/collaborate/manage-channel-members.rst",
+      "blob_sha": "9fc077178e32cfb8c02950ed36dc2f0ff9078aad",
+      "text_sha256": "86ba9fce15d2b5623cb688b9502e71d066139e7e3dd3441fdce5ad8c4e63f04e",
+      "html_url": "https://github.com/mattermost/docs/blob/bd09d959514c34e72a33c24663b5946682b656ec/source/end-user-guide/collaborate/manage-channel-members.rst",
+      "api_url": "https://api.github.com/repos/mattermost/docs/contents/source/end-user-guide/collaborate/manage-channel-members.rst?ref=bd09d959514c34e72a33c24663b5946682b656ec",
+      "git_blob_sha_recomputed": "9fc077178e32cfb8c02950ed36dc2f0ff9078aad"
+    },
+    {
+      "project": "grist",
+      "repository": "gristlabs/grist-help",
+      "snapshot_sha": "b047726e327709d214e3b63222ee052de6399934",
+      "path": "help/en/docs/document-settings.md",
+      "blob_sha": "ebbe859c050b93bcd73da8beac7c63ebade9f6ff",
+      "text_sha256": "4447904bf37830ca62117db12676360fc338fc173c6f9dd3500ee4d3b1a826e4",
+      "html_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/document-settings.md",
+      "api_url": "https://api.github.com/repos/gristlabs/grist-help/contents/help/en/docs/document-settings.md?ref=b047726e327709d214e3b63222ee052de6399934",
+      "git_blob_sha_recomputed": "ebbe859c050b93bcd73da8beac7c63ebade9f6ff"
+    },
+    {
+      "project": "openproject",
+      "repository": "opf/openproject",
+      "snapshot_sha": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+      "path": "docs/user-guide/work-packages/set-change-dates/README.md",
+      "blob_sha": "0d3b7bda85ba9384628ae413d3ad5ac5cc4e00ab",
+      "text_sha256": "2c66162fef84314b0872aaee548c3ea9841beaa781506f6af65e8badffec3e20",
+      "html_url": "https://github.com/opf/openproject/blob/66f582c19f87534703d2eaf92c5929d13d440cd9/docs/user-guide/work-packages/set-change-dates/README.md",
+      "api_url": "https://api.github.com/repos/opf/openproject/contents/docs/user-guide/work-packages/set-change-dates/README.md?ref=66f582c19f87534703d2eaf92c5929d13d440cd9",
+      "git_blob_sha_recomputed": "0d3b7bda85ba9384628ae413d3ad5ac5cc4e00ab"
+    }
+  ],
+  "checks": [
+    {
+      "candidate_id": "rc-882709afd891",
+      "finding": "The rule is present in ordinary prose as well as image ALT. The claim that it survives only as ALT is contradicted by this snapshot. The Mention users subsection is outside the indented Mobile tab; its prose is not explicitly web-only, and its illustration is mobile. Web-interface scope still needs interpretation; this review does not admit the candidate.",
+      "source_support": "present_in_prose_and_alt",
+      "evidence": [
+        {
+          "project": "mattermost",
+          "repository": "mattermost/docs",
+          "snapshot_sha": "bd09d959514c34e72a33c24663b5946682b656ec",
+          "path": "source/end-user-guide/collaborate/manage-channel-members.rst",
+          "blob_sha": "9fc077178e32cfb8c02950ed36dc2f0ff9078aad",
+          "text_sha256": "86ba9fce15d2b5623cb688b9502e71d066139e7e3dd3441fdce5ad8c4e63f04e",
+          "line_start": 17,
+          "line_end": 17,
+          "source_url": "https://github.com/mattermost/docs/blob/bd09d959514c34e72a33c24663b5946682b656ec/source/end-user-guide/collaborate/manage-channel-members.rst#L17"
+        },
+        {
+          "project": "mattermost",
+          "repository": "mattermost/docs",
+          "snapshot_sha": "bd09d959514c34e72a33c24663b5946682b656ec",
+          "path": "source/end-user-guide/collaborate/manage-channel-members.rst",
+          "blob_sha": "9fc077178e32cfb8c02950ed36dc2f0ff9078aad",
+          "text_sha256": "86ba9fce15d2b5623cb688b9502e71d066139e7e3dd3441fdce5ad8c4e63f04e",
+          "line_start": 33,
+          "line_end": 33,
+          "source_url": "https://github.com/mattermost/docs/blob/bd09d959514c34e72a33c24663b5946682b656ec/source/end-user-guide/collaborate/manage-channel-members.rst#L33"
+        },
+        {
+          "project": "mattermost",
+          "repository": "mattermost/docs",
+          "snapshot_sha": "bd09d959514c34e72a33c24663b5946682b656ec",
+          "path": "source/end-user-guide/collaborate/manage-channel-members.rst",
+          "blob_sha": "9fc077178e32cfb8c02950ed36dc2f0ff9078aad",
+          "text_sha256": "86ba9fce15d2b5623cb688b9502e71d066139e7e3dd3441fdce5ad8c4e63f04e",
+          "line_start": 61,
+          "line_end": 68,
+          "source_url": "https://github.com/mattermost/docs/blob/bd09d959514c34e72a33c24663b5946682b656ec/source/end-user-guide/collaborate/manage-channel-members.rst#L61-L68"
+        }
+      ]
+    },
+    {
+      "candidate_id": "rc-302720d6856b",
+      "finding": "The snapshot explicitly states that switching manual to automatic shows a warning that dates are now determined by predecessor or child work packages. This contradicts the frozen warning assertion that child work packages do not determine dates. No exclusion decision is made here.",
+      "source_support": "frozen_rule_contradicted_by_snapshot",
+      "evidence": [
+        {
+          "project": "openproject",
+          "repository": "opf/openproject",
+          "snapshot_sha": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+          "path": "docs/user-guide/work-packages/set-change-dates/README.md",
+          "blob_sha": "0d3b7bda85ba9384628ae413d3ad5ac5cc4e00ab",
+          "text_sha256": "2c66162fef84314b0872aaee548c3ea9841beaa781506f6af65e8badffec3e20",
+          "line_start": 89,
+          "line_end": 89,
+          "source_url": "https://github.com/opf/openproject/blob/66f582c19f87534703d2eaf92c5929d13d440cd9/docs/user-guide/work-packages/set-change-dates/README.md#L89"
+        },
+        {
+          "project": "openproject",
+          "repository": "opf/openproject",
+          "snapshot_sha": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+          "path": "docs/user-guide/work-packages/set-change-dates/README.md",
+          "blob_sha": "0d3b7bda85ba9384628ae413d3ad5ac5cc4e00ab",
+          "text_sha256": "2c66162fef84314b0872aaee548c3ea9841beaa781506f6af65e8badffec3e20",
+          "line_start": 114,
+          "line_end": 114,
+          "source_url": "https://github.com/opf/openproject/blob/66f582c19f87534703d2eaf92c5929d13d440cd9/docs/user-guide/work-packages/set-change-dates/README.md#L114"
+        },
+        {
+          "project": "openproject",
+          "repository": "opf/openproject",
+          "snapshot_sha": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+          "path": "docs/user-guide/work-packages/set-change-dates/README.md",
+          "blob_sha": "0d3b7bda85ba9384628ae413d3ad5ac5cc4e00ab",
+          "text_sha256": "2c66162fef84314b0872aaee548c3ea9841beaa781506f6af65e8badffec3e20",
+          "line_start": 127,
+          "line_end": 127,
+          "source_url": "https://github.com/opf/openproject/blob/66f582c19f87534703d2eaf92c5929d13d440cd9/docs/user-guide/work-packages/set-change-dates/README.md#L127"
+        }
+      ]
+    },
+    {
+      "candidate_id": "rc-f33b2bf870e9",
+      "finding": "The 10-billing-manager limit is literally present on Team Sharing / Billing Permissions, without the prior getgrist.com phrase in that sentence or page. This supports a snapshot-based arm A for the Billing Account UI; it does not prove uniform applicability to every deployment/edition beyond the page context. No mapping approval is made.",
+      "source_support": "literal_limit_present_on_billing_account_page",
+      "evidence": [
+        {
+          "project": "grist",
+          "repository": "gristlabs/grist-help",
+          "snapshot_sha": "b047726e327709d214e3b63222ee052de6399934",
+          "path": "help/en/docs/team-sharing.md",
+          "blob_sha": "83324ef4c80b6ef2a200cfa1a54d1d61b23876b3",
+          "text_sha256": "7e839bc57539b1433ef79fb13742eee6fe4bd70e1a043c9a4340bd8062bdca95",
+          "line_start": 5,
+          "line_end": 5,
+          "source_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/team-sharing.md#L5"
+        },
+        {
+          "project": "grist",
+          "repository": "gristlabs/grist-help",
+          "snapshot_sha": "b047726e327709d214e3b63222ee052de6399934",
+          "path": "help/en/docs/team-sharing.md",
+          "blob_sha": "83324ef4c80b6ef2a200cfa1a54d1d61b23876b3",
+          "text_sha256": "7e839bc57539b1433ef79fb13742eee6fe4bd70e1a043c9a4340bd8062bdca95",
+          "line_start": 43,
+          "line_end": 46,
+          "source_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/team-sharing.md#L43-L46"
+        }
+      ]
+    },
+    {
+      "candidate_id": "rc-6be0f3992b4b",
+      "finding": "The old combined 1GB sentence is literally present in FAQ.md, but that FAQ points to limits.md, which counts attachments separately from data, restricts 1GB to internal attachments, and allows larger external-attachment limits on paid plans. document-settings.md now points to the same limits page. The proposed rationale that the rule is simply moved/present does not resolve this contemporaneous source conflict. Before arm A/oracle freeze, document the chosen source, attachment mode and handling of contradictory guidance. A mechanism-neutral oracle alone cannot resolve the contradictory quantity/scope. No rule is approved, excluded or remapped here.",
+      "source_support": "present_but_conflicting_snapshot_guidance",
+      "evidence": [
+        {
+          "project": "grist",
+          "repository": "gristlabs/grist-help",
+          "snapshot_sha": "b047726e327709d214e3b63222ee052de6399934",
+          "path": "help/en/docs/FAQ.md",
+          "blob_sha": "d66a3c8f08b4fa4861f5b801a1aea63b0df61387",
+          "text_sha256": "fc6ebf5a407a45a4bd7a6a210c753ebd1e9ad766dc1804f294e6e01d717c80d9",
+          "line_start": 132,
+          "line_end": 134,
+          "source_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/FAQ.md#L132-L134"
+        },
+        {
+          "project": "grist",
+          "repository": "gristlabs/grist-help",
+          "snapshot_sha": "b047726e327709d214e3b63222ee052de6399934",
+          "path": "help/en/docs/limits.md",
+          "blob_sha": "731e7c93504a0e97502019d9758692b29782093c",
+          "text_sha256": "133fe25737362446fa9a222e960bc194774460c47a8fe386dcbbb806e22cd661",
+          "line_start": 46,
+          "line_end": 54,
+          "source_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/limits.md#L46-L54"
+        },
+        {
+          "project": "grist",
+          "repository": "gristlabs/grist-help",
+          "snapshot_sha": "b047726e327709d214e3b63222ee052de6399934",
+          "path": "help/en/docs/limits.md",
+          "blob_sha": "731e7c93504a0e97502019d9758692b29782093c",
+          "text_sha256": "133fe25737362446fa9a222e960bc194774460c47a8fe386dcbbb806e22cd661",
+          "line_start": 56,
+          "line_end": 62,
+          "source_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/limits.md#L56-L62"
+        },
+        {
+          "project": "grist",
+          "repository": "gristlabs/grist-help",
+          "snapshot_sha": "b047726e327709d214e3b63222ee052de6399934",
+          "path": "help/en/docs/document-settings.md",
+          "blob_sha": "ebbe859c050b93bcd73da8beac7c63ebade9f6ff",
+          "text_sha256": "4447904bf37830ca62117db12676360fc338fc173c6f9dd3500ee4d3b1a826e4",
+          "line_start": 86,
+          "line_end": 89,
+          "source_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/document-settings.md#L86-L89"
+        }
+      ]
+    }
+  ],
+  "required_documentation_corrections": [
+    "Do not describe rc-882709afd891 as only ALT: ordinary prose is present at line64.",
+    "Do not treat rc-6be0f3992b4b as an unambiguous universally preserved combined 1GB rule: FAQ and linked limits page conflict on aggregation and attachment scope."
+  ],
+  "remaining_limits": [
+    "No software behavior was executed; this is documentation evidence.",
+    "Snapshot branch/cutoff validation was supplied by snapshots.json, not repeated in this review.",
+    "Approval/selection and interpretation of source conflict remain outside this review."
+  ],
+  "hypothetical_arithmetic_only": {
+    "condition": "The existing proposed exclusions plus rc-6be0f3992b4b; this is not approval or selection.",
+    "panel_admitted": 99,
+    "excluded": 16,
+    "deduplicated": 1,
+    "units_before_cap": 82,
+    "by_project": {
+      "grist": 8,
+      "immich": 3,
+      "mattermost": 15,
+      "mealie": 2,
+      "nextcloud": 9,
+      "openproject": 15,
+      "paperless": 5,
+      "wekan": 11,
+      "zulip": 14
+    },
+    "sum_min_project_units_six": 46,
+    "projects": 9,
+    "random_draw_performed": false
+  },
+  "original_review_sha256": "580db96089ef8f206a1b4822c1b5aea39840e3396f856c8d9fd4876cb24e4438",
+  "original_snapshot_metadata_sha256": "5e10012cb744357aa4df4cdb615cf7389368acb0b62cb56cec704a3074742655",
+  "published_snapshot_verification": "data/requirement-selection/current-doc-snapshot-verification.json",
+  "published_snapshot_verification_sha256": "22dbf796a7d311b821017d3a4ffd6533d97b1b552f81fad2a719dd142b146bcd"
+}

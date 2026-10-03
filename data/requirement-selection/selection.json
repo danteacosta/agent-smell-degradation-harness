@@ -1,0 +1,462 @@
+{
+  "schema_version": "requirement-selection/v1",
+  "status": "selected",
+  "seed": 2026100203,
+  "cap_per_project": 6,
+  "shortfall": [],
+  "units_before_cap": 82,
+  "per_project_before_cap": {
+    "grist": 8,
+    "immich": 3,
+    "mattermost": 15,
+    "mealie": 2,
+    "nextcloud": 9,
+    "openproject": 15,
+    "paperless": 5,
+    "wekan": 11,
+    "zulip": 14
+  },
+  "selected": {
+    "grist": [
+      {
+        "candidate_id": "rc-4aac15b7b503",
+        "project": "grist",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Pressing Shift+F10 in the grid opens the context menu.",
+        "pass_observation": "The context menu appears after the user presses Shift+F10 in the grid.",
+        "fail_observation": "No context menu appears after the user presses Shift+F10 in the grid.",
+        "probe_question": "What appears when you press Shift+F10 in the grid?"
+      },
+      {
+        "candidate_id": "rc-7b485b51412f",
+        "project": "grist",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "After a user selects 'Set default: Collapse' for a parent page, its nested pages must be collapsed when the document is reopened.",
+        "pass_observation": "When the document is reopened, the parent page's nested pages are hidden in the page list.",
+        "fail_observation": "When the document is reopened, the parent page's nested pages are expanded in the page list.",
+        "probe_question": "How does selecting 'Set default: Collapse' affect the page list when the document is reopened?"
+      },
+      {
+        "candidate_id": "rc-aac66a0af69a",
+        "project": "grist",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Clicking Restart at the bottom of the tutorial popup refreshes the page and discards unsaved changes.",
+        "pass_observation": "After clicking Restart with an unsaved edit, the page reloads and the edit is absent.",
+        "fail_observation": "After clicking Restart with an unsaved edit, the edit remains.",
+        "probe_question": "What happens when you click Restart in the tutorial popup while you have unsaved edits?"
+      },
+      {
+        "candidate_id": "rc-ade633af9c14",
+        "project": "grist",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "When suggestions are enabled, opening a document automatically opens a copy for both signed-in and signed-out users.",
+        "pass_observation": "A user opening the document with suggestions enabled sees a copy, whether signed in or signed out.",
+        "fail_observation": "A user opening the document with suggestions enabled sees the original instead of a copy.",
+        "probe_question": "What does a user see when opening a document with suggestions enabled, and does sign-in status affect the result?"
+      },
+      {
+        "candidate_id": "rc-b49db6870ff5",
+        "project": "grist",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "After a user closes their document fork, visiting the document's Direct URL automatically redirects them to their saved fork.",
+        "pass_observation": "The user visits the Direct URL after closing their fork and sees their saved fork open automatically.",
+        "fail_observation": "The user visits the Direct URL after closing their fork and is not automatically taken to their saved fork.",
+        "probe_question": "What happens when a user visits the Direct URL after closing their document fork?"
+      },
+      {
+        "candidate_id": "rc-f33b2bf870e9",
+        "project": "grist",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "A team may have at most 10 billing managers.",
+        "pass_observation": "With 10 billing managers already assigned, the web interface prevents assigning an eleventh.",
+        "fail_observation": "The web interface allows an eleventh billing manager to be assigned.",
+        "probe_question": "What happens when a user tries to assign another billing manager to a team that already has 10?"
+      }
+    ],
+    "immich": [
+      {
+        "candidate_id": "rc-0ec1ac8f66bd",
+        "project": "immich",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "The web upload interface accepts MP2T video files with the .m2t extension.",
+        "pass_observation": "A valid .m2t MP2T video is accepted for upload.",
+        "fail_observation": "A valid .m2t MP2T video is rejected as an unsupported format.",
+        "probe_question": "What happens when a user uploads an MP2T video with the .m2t extension?"
+      },
+      {
+        "candidate_id": "rc-b6f382226c41",
+        "project": "immich",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "In Full path or folder search mode, a query matching part of an asset's original path must include that asset in the results.",
+        "pass_observation": "Searching for Printing in Full path or folder mode shows the asset whose original path is /John/Projects/3D_Printing/2026-07-01/IMG_0001.jpg.",
+        "fail_observation": "Searching for Printing in Full path or folder mode omits that asset from the results.",
+        "probe_question": "Which results appear when you search for Printing in Full path or folder mode?"
+      },
+      {
+        "candidate_id": "rc-c86728bbc029",
+        "project": "immich",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "When creating an external library, the web interface must allow assigning it to exactly one user.",
+        "pass_observation": "The library creation screen permits selecting one owner and does not permit assigning multiple owners.",
+        "fail_observation": "The library creation screen permits creating a library with multiple owners.",
+        "probe_question": "How does owner selection work when creating an external library?"
+      }
+    ],
+    "mattermost": [
+      {
+        "candidate_id": "rc-0284c8781546",
+        "project": "mattermost",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Playbook task text containing Markdown is displayed with Markdown formatting.",
+        "pass_observation": "A task containing **Review** displays Review in bold.",
+        "fail_observation": "A task containing **Review** displays the literal asterisks instead of bold formatting.",
+        "probe_question": "How does a playbook task display text containing Markdown syntax?"
+      },
+      {
+        "candidate_id": "rc-3fbc295441e2",
+        "project": "mattermost",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "When inviting a guest, the user must select at least one channel before the invitation can be submitted.",
+        "pass_observation": "With no channels selected, the guest invitation cannot be submitted.",
+        "fail_observation": "With no channels selected, the guest invitation is successfully submitted.",
+        "probe_question": "What happens when a user tries to invite a guest without selecting any channels?"
+      },
+      {
+        "candidate_id": "rc-4fa8e7483b1a",
+        "project": "mattermost",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "The timezone preference defaults to Automatic.",
+        "pass_observation": "A user with unchanged timezone preferences sees Automatic selected.",
+        "fail_observation": "A user with unchanged timezone preferences sees an option other than Automatic selected.",
+        "probe_question": "Which timezone option is selected before the user changes their preferences?"
+      },
+      {
+        "candidate_id": "rc-554bcd113361",
+        "project": "mattermost",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Channel messages are automatically translated into the user's preferred language.",
+        "pass_observation": "A channel message written in another language appears translated into the user's preferred language without a manual translation action.",
+        "fail_observation": "A channel message written in another language remains untranslated in the channel.",
+        "probe_question": "How does a channel message appear when its original language differs from your preferred language?"
+      },
+      {
+        "candidate_id": "rc-882709afd891",
+        "project": "mattermost",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "When a user mentions someone who is not a member of the channel, the web interface prompts them to add that person to the channel.",
+        "pass_observation": "After mentioning a nonmember, the user sees a prompt to add that person to the channel.",
+        "fail_observation": "After mentioning a nonmember, the user sees no prompt to add that person to the channel.",
+        "probe_question": "What happens in the interface when someone mentions a person who is not a member of the channel?"
+      },
+      {
+        "candidate_id": "rc-aa2c82f86e08",
+        "project": "mattermost",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "When anonymous team and channel URLs are enabled, the web team creation flow assigns the team URL automatically without prompting the user to choose it.",
+        "pass_observation": "The user creates a team without seeing a team URL prompt, and the created team has an assigned URL.",
+        "fail_observation": "The team creation flow prompts the user to choose a team URL despite anonymous team and channel URLs being enabled.",
+        "probe_question": "How does team creation handle the team URL when anonymous team and channel URLs are enabled?"
+      }
+    ],
+    "mealie": [
+      {
+        "candidate_id": "rc-0f453b1f0a55",
+        "project": "mealie",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "A recipe-pool rule using a Food Label includes only recipes with an ingredient bearing that label.",
+        "pass_observation": "With a fish Food Label rule applied, the recipe pool includes recipes with fish-labeled ingredients and excludes recipes without them.",
+        "fail_observation": "With a fish Food Label rule applied, the recipe pool includes a recipe with no fish-labeled ingredient.",
+        "probe_question": "How does applying a Food Label rule affect which recipes appear in the pool?"
+      },
+      {
+        "candidate_id": "rc-106bac72c813",
+        "project": "mealie",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "A user must have Organize group data permission to create a new food through the web interface.",
+        "pass_observation": "A user without Organize group data permission cannot create a new food.",
+        "fail_observation": "A user without Organize group data permission successfully creates a new food.",
+        "probe_question": "What happens when a user without Organize group data permission attempts to add a new food?"
+      }
+    ],
+    "nextcloud": [
+      {
+        "candidate_id": "rc-3d153b91ab4e",
+        "project": "nextcloud",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "A device password is accessible in the web interface only when it is created.",
+        "pass_observation": "The newly created device password is displayed during creation but cannot be revealed after leaving that view.",
+        "fail_observation": "The user can reveal an existing device password after leaving its creation view.",
+        "probe_question": "When can a user view a device password in the web interface?"
+      },
+      {
+        "candidate_id": "rc-946f02ef19b6",
+        "project": "nextcloud",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Using breakout rooms in a web call divides the call into smaller groups.",
+        "pass_observation": "The call shows participants assigned to separate breakout rooms.",
+        "fail_observation": "All participants remain in the original call after breakout rooms are created.",
+        "probe_question": "What happens to participants when breakout rooms are created during a call?"
+      },
+      {
+        "candidate_id": "rc-9d801a70d5d2",
+        "project": "nextcloud",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Deleting a folder under normal conditions moves it to the trash bin instead of permanently deleting it.",
+        "pass_observation": "The deleted folder appears in the trash bin.",
+        "fail_observation": "The deleted folder does not appear in the trash bin.",
+        "probe_question": "What happens to a folder after you delete it?"
+      },
+      {
+        "candidate_id": "rc-ab0227c1eb5b",
+        "project": "nextcloud",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "When Sort favorites up is enabled in Mail appearance settings, favorite messages appear in a separate section above the rest of the message list.",
+        "pass_observation": "Favorite messages appear in a separate section at the top, above non-favorite messages.",
+        "fail_observation": "Favorite messages remain mixed with non-favorite messages instead of appearing in a separate top section.",
+        "probe_question": "How does enabling Sort favorites up affect the message list?"
+      },
+      {
+        "candidate_id": "rc-c38fa60b1164",
+        "project": "nextcloud",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Confirming Delegate access makes the shared mail account appear in the selected delegate's account list marked as delegated.",
+        "pass_observation": "The selected delegate sees the shared account in their account list with a delegated marker.",
+        "fail_observation": "The shared account is missing from the delegate's account list or appears without a delegated marker.",
+        "probe_question": "What appears in the selected user's account list after account delegation is confirmed?"
+      },
+      {
+        "candidate_id": "rc-e594b40135ff",
+        "project": "nextcloud",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Creating a Calendar event with a Talk conversation as its location creates a conversation visible in the conversation list if none exists yet.",
+        "pass_observation": "The newly created conversation appears in the conversation list.",
+        "fail_observation": "No conversation appears in the conversation list after the event is created.",
+        "probe_question": "What appears in the conversation list after creating a Calendar event with a Talk location when no conversation exists yet?"
+      }
+    ],
+    "openproject": [
+      {
+        "candidate_id": "rc-02df56f00b58",
+        "project": "openproject",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "When automatic theme mode is selected, OpenProject must match the operating system’s contrast setting.",
+        "pass_observation": "With automatic theme mode selected, enabling the operating system’s high-contrast setting makes the web interface display increased contrast.",
+        "fail_observation": "With automatic theme mode selected, enabling the operating system’s high-contrast setting leaves the web interface at normal contrast.",
+        "probe_question": "How does the web interface respond to changes in the operating system’s contrast setting while automatic theme mode is selected?"
+      },
+      {
+        "candidate_id": "rc-1114153d4704",
+        "project": "openproject",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Changing the work package table configuration automatically updates the results displayed in the table.",
+        "pass_observation": "The table displays results matching the changed configuration without a manual refresh.",
+        "fail_observation": "The table retains the previous results until the user manually refreshes it.",
+        "probe_question": "What happens to the displayed results when the work package table configuration changes?"
+      },
+      {
+        "candidate_id": "rc-17b31565c57c",
+        "project": "openproject",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "When inviting a new member, the web interface must allow selecting an existing user role, group, or placeholder user's permissions as the basis for the new user's permissions.",
+        "pass_observation": "The invitation screen offers all three permission bases: existing user role, group, and placeholder user permissions.",
+        "fail_observation": "The invitation screen omits at least one of the three permission bases.",
+        "probe_question": "What options are available for determining a new member's permissions during invitation?"
+      },
+      {
+        "candidate_id": "rc-2c13970217ea",
+        "project": "openproject",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "An archived project must not appear as a selectable option in the project selector.",
+        "pass_observation": "The archived project is absent from the project selector's selectable options.",
+        "fail_observation": "The archived project remains selectable in the project selector.",
+        "probe_question": "How does archiving a project affect what appears in the project selector?"
+      },
+      {
+        "candidate_id": "rc-4efba0098a79",
+        "project": "openproject",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "The project's More (three dots) dropdown menu must include an \"Add a subproject\" option.",
+        "pass_observation": "The opened More dropdown displays \"Add a subproject\".",
+        "fail_observation": "The opened More dropdown does not display \"Add a subproject\".",
+        "probe_question": "What options appear when you open the project's More menu?"
+      },
+      {
+        "candidate_id": "rc-e436521e462d",
+        "project": "openproject",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "The project’s attachment visibility setting determines whether the attachments option appears in the Files tab of its work package detailed views.",
+        "pass_observation": "With attachment visibility disabled for the project, a work package’s Files tab does not show the attachments option.",
+        "fail_observation": "With attachment visibility disabled for the project, a work package’s Files tab still shows the attachments option.",
+        "probe_question": "How does changing the project’s attachment visibility setting affect a work package’s Files tab?"
+      }
+    ],
+    "paperless": [
+      {
+        "candidate_id": "rc-035e8af08cd7",
+        "project": "paperless",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "A user without User management permissions can edit their own profile through My Profile.",
+        "pass_observation": "The user can save a change to their own profile through My Profile despite lacking User management permissions.",
+        "fail_observation": "The user is prevented from editing their own profile through My Profile because they lack User management permissions.",
+        "probe_question": "What happens when a user without User management permissions tries to edit their own profile through My Profile?"
+      },
+      {
+        "candidate_id": "rc-086a9d210266",
+        "project": "paperless",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Adding a custom field to a document without specifying a value must preserve any existing value of that field on the document.",
+        "pass_observation": "The document still displays the custom field's original value after the field is added without a value.",
+        "fail_observation": "The document's existing custom field value is cleared or changed after the field is added without a value.",
+        "probe_question": "What happens to an existing custom field value when that field is added to the document without specifying a value?"
+      },
+      {
+        "candidate_id": "rc-806442660eb5",
+        "project": "paperless",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "A user may grant superuser status to another user only if the acting user is a superuser.",
+        "pass_observation": "A non-superuser cannot grant superuser status through the web interface.",
+        "fail_observation": "A non-superuser successfully grants superuser status to another user through the web interface.",
+        "probe_question": "What happens when a non-superuser tries to grant superuser status to another user?"
+      },
+      {
+        "candidate_id": "rc-84013890a131",
+        "project": "paperless",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Documents whose processed text is empty or contains only whitespace are skipped.",
+        "pass_observation": "A document with whitespace-only processed text is skipped in the web interface.",
+        "fail_observation": "A document with whitespace-only processed text is processed in the web interface.",
+        "probe_question": "What happens when a document's processed text contains only whitespace?"
+      },
+      {
+        "candidate_id": "rc-9e198862b86e",
+        "project": "paperless",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "The {{doc_title}} placeholder cannot be used in title assignment.",
+        "pass_observation": "The web interface prevents using {{doc_title}} in a title assignment.",
+        "fail_observation": "The web interface accepts {{doc_title}} and uses it in a title assignment.",
+        "probe_question": "What happens when a user attempts to use {{doc_title}} in a title assignment?"
+      }
+    ],
+    "wekan": [
+      {
+        "candidate_id": "rc-59d96b056593",
+        "project": "wekan",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Toggling “Show week of year (ISO 8601)” in the board Date popup immediately updates the week-number display without requiring Save.",
+        "pass_observation": "Week numbers appear or disappear immediately when the toggle changes, before Save is clicked.",
+        "fail_observation": "Week-number visibility remains unchanged until Save is clicked.",
+        "probe_question": "What happens to week-number visibility when you change “Show week of year (ISO 8601)” before clicking Save?"
+      },
+      {
+        "candidate_id": "rc-6b29ef8b44d8",
+        "project": "wekan",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "When the Add Swimlane popup opens, Below selected swimlane is selected by default.",
+        "pass_observation": "The popup opens with Below selected swimlane selected.",
+        "fail_observation": "The popup opens with Above selected swimlane selected or neither option selected.",
+        "probe_question": "Which placement option is initially selected when the Add Swimlane popup opens?"
+      },
+      {
+        "candidate_id": "rc-88440629ecb6",
+        "project": "wekan",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Dropping multiple selected boards onto Home must display \"Please select only one board\" while leaving Home and the selection unchanged.",
+        "pass_observation": "The message appears, Home remains unchanged, and all previously selected boards remain selected.",
+        "fail_observation": "Home switches to the first selected board instead of rejecting the drop and preserving the selection.",
+        "probe_question": "What happens when you drop multiple selected boards onto Home?"
+      },
+      {
+        "candidate_id": "rc-899c4d2472ad",
+        "project": "wekan",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Reordering a field in either display-order list changes its position on the corresponding card surface without changing its position on the other surface.",
+        "pass_observation": "Moving a field earlier in Show on Minicard moves it earlier on the minicard while its full-card position stays unchanged.",
+        "fail_observation": "Moving a field earlier in Show on Minicard leaves its minicard position unchanged or also changes its full-card position.",
+        "probe_question": "What happens to the minicard and full-card field order when a field is moved in Show on Minicard?"
+      },
+      {
+        "candidate_id": "rc-8b05adc7767e",
+        "project": "wekan",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "When either membership restriction is enabled, a non-admin inviter can add a user to a board only if that user shares an organization or team of an enabled kind with the inviter or an active board member.",
+        "pass_observation": "Adding a user who shares neither enabled membership kind is blocked in the board interface.",
+        "fail_observation": "Adding a user who shares neither enabled membership kind succeeds and the user appears as a board member.",
+        "probe_question": "How does adding a board member behave for users with different organization and team memberships when membership restrictions are enabled?"
+      },
+      {
+        "candidate_id": "rc-f3df2f6e5885",
+        "project": "wekan",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Synchronizing an upstream title or description change updates the corresponding card text only if it still matches the last synchronized source value, preserving locally edited text otherwise.",
+        "pass_observation": "After synchronization, unchanged local text reflects the upstream change, while locally edited text remains intact.",
+        "fail_observation": "After synchronization, locally edited text is overwritten or unchanged local text fails to reflect the upstream change.",
+        "probe_question": "What happens to a card’s title or description during synchronization when its upstream text changes, with and without local edits?"
+      }
+    ],
+    "zulip": [
+      {
+        "candidate_id": "rc-08dffa18a270",
+        "project": "zulip",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Setting GIF picker to Disabled in Compose settings removes the GIF picker from the compose box.",
+        "pass_observation": "The compose box does not show the GIF picker after it is disabled.",
+        "fail_observation": "The compose box still shows the GIF picker after it is disabled.",
+        "probe_question": "What appears in the compose box after changing the GIF picker setting to Disabled?"
+      },
+      {
+        "candidate_id": "rc-362ff82e3812",
+        "project": "zulip",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Users can configure whether automated notices are automatically marked as read.",
+        "pass_observation": "A web setting lets the user enable or disable automatically marking automated notices as read.",
+        "fail_observation": "The web interface provides no way to change whether automated notices are automatically marked as read.",
+        "probe_question": "What control does the user have over the read status of automated notices?"
+      },
+      {
+        "candidate_id": "rc-4200f1dac6a9",
+        "project": "zulip",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "When a user pastes a URL matching a reverse-enabled linkifier into the compose box, it automatically becomes linked text corresponding to that linkifier.",
+        "pass_observation": "The pasted URL appears as the corresponding linked text, such as #2468, linking to the original URL.",
+        "fail_observation": "The matching pasted URL remains a raw URL instead of becoming the corresponding linked text.",
+        "probe_question": "What appears in the compose box after pasting a URL matching a reverse-enabled linkifier?"
+      },
+      {
+        "candidate_id": "rc-c044ebec7fe1",
+        "project": "zulip",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "The user subscription typeahead must exclude users already subscribed to the target channel.",
+        "pass_observation": "The typeahead suggests matching users who are not subscribed and omits matching users already subscribed to the channel.",
+        "fail_observation": "The typeahead suggests a user who is already subscribed to the channel.",
+        "probe_question": "Which users appear in the subscription typeahead when matching users have different subscription statuses?"
+      },
+      {
+        "candidate_id": "rc-dfb84383fb89",
+        "project": "zulip",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Any user can unsubscribe themselves from a channel they belong to.",
+        "pass_observation": "A non-admin user unsubscribes from a channel and sees that they are no longer subscribed.",
+        "fail_observation": "A non-admin user is prevented from unsubscribing from a channel they belong to.",
+        "probe_question": "What happens when a non-admin user tries to unsubscribe themselves from a channel?"
+      },
+      {
+        "candidate_id": "rc-fd348eb33246",
+        "project": "zulip",
+        "rule_source": "frozen_first_admitting_vote",
+        "target_rule": "Conversations in a private channel are visible to users who have been granted access to that channel.",
+        "pass_observation": "A user granted access can see the channel's conversations.",
+        "fail_observation": "A user granted access cannot see the channel's conversations.",
+        "probe_question": "Who can see conversations in a private channel?"
+      }
+    ]
+  },
+  "selected_count": 46,
+  "inputs_sha256": {
+    "data/llm-screening-20261002/results.json": "95e2acc6bb9757b3584359e6c7919769d57456da30cd91592c504eb937628d9f",
+    "data/llm-screening-round2-20261003/results.json": "efd715003c462e0af5cdc149f23ba98744a4bea051751eb6a2e5be85f800a4d6",
+    "data/requirement-sampling/frame-20261002.jsonl": "0af2c94065fd84d701360e7d8929e802b8da210fb8691d4a97d2ba1a4a42c382",
+    "data/requirement-sampling/frame-ext-20261002.jsonl": "7fd13a18c4643e5f57314af47c7a742803f6c23f30c6444fa5b59989297e1488",
+    "data/requirement-selection/decisions-proposed.json": "3aa5be04c8c51dda39dc4999239df2521a744eb49873e1654983bb0fa0972e6f",
+    "scripts/select_requirements.py": "b02b1e4706b02bca6956dbb59018ee63af85075fa7e4b06b892d094b6e308def"
+  }
+}

@@ -1,25 +1,182 @@
 {
   "schema_version": "requirement-selection-decisions/v1",
-  "status": "proposed",
+  "status": "approved",
   "proposed_by": "assistant",
-  "approved_by": null,
+  "approved_by": "Dante Costa — explicit approval in Codex conversation, 2026-10-03",
   "probe_outcomes_consulted": false,
-  "principle": "Keep the frozen mechanism's rule (first admitting vote) unless it fails a validity check: V1, the rule is stated in the text that arm A will use; V2, the rule is a conditional behavior with an observable outcome, not only the presence or label of a control. A candidate whose admitting votes all fail is excluded. Keeping the frozen rule also keeps it aligned with the rule the probe asked about.",
+  "principle": "Arm A is the project's documentation at the frame end: the last default-branch commit at or before 2026-09-30T23:59:59Z (snapshots in current-doc-check.json). A candidate whose rule is not stated in that snapshot is excluded, whether its change added or removed the text. Otherwise keep the frozen mechanism's rule (first admitting vote) unless it fails V2 (only the presence, label or location of a control). Keeping the frozen rule keeps it aligned with the probe. Where a frozen rule is kept but its observation is only the presence of a setting, the oracle must test the setting's effect (oracle_requirement).",
   "mappings": {
-    "rc-de652e658b99": {"decision": "keep_frozen", "reason": "Frozen rule (star, reload, appears in Starred) comes from the added text and has an observable outcome. The alternative vote only states that starring is possible."},
-    "rc-afa7beacea83": {"decision": "exclude", "reason": "Frozen rule is a label rename (Folder View to Folders): fails V2. The other admitting vote (enabling shows the folder view) is not what the commit changed; the change carries no behavioral rule."},
-    "rc-4041140f2b5d": {"decision": "keep_frozen", "reason": "Frozen rule (only Remaining and Workspaces highlighted, Home not) matches the commit's intent ('Restrict Archive selection drop targets') and is a prohibition with an observable outcome."},
-    "rc-6337ce108c4d": {"decision": "exclude", "reason": "Frozen rule (administrators only) comes from the removed sentence, so it is not in the current documentation: fails V1. The other admitting vote states only that an icon exists: fails V2."},
-    "rc-e594b40135ff": {"decision": "keep_frozen", "reason": "Frozen rule (a conversation is created if none exists and appears in the list) is conditional and changes another entity; the alternative (link in event details) is also valid but has no condition."},
-    "rc-bd0b2995febc": {"decision": "keep_frozen", "reason": "Frozen rule (the reminder is optional) is the added text. The alternative (default timer preselected) comes from removed sentences: fails V1."},
-    "rc-4da4940bc16c": {"decision": "keep_frozen", "reason": "Frozen rule (admins see the Default category field when the feature is enabled) is conditional on the setting and role. The alternative (joining members see the channel under the category) is stronger but needs a second user; noted for the advisor."}
+    "rc-de652e658b99": {
+      "decision": "keep_frozen",
+      "reason": "Frozen rule (star, reload, appears in Starred) comes from the added text and has an observable outcome. The alternative vote only states that starring is possible."
+    },
+    "rc-afa7beacea83": {
+      "decision": "exclude",
+      "reason": "Frozen rule is a label rename (Folder View to Folders): fails V2. The other admitting vote (enabling shows the folder view) is not what the commit changed; the change carries no behavioral rule."
+    },
+    "rc-4041140f2b5d": {
+      "decision": "keep_frozen",
+      "reason": "Frozen rule (only Remaining and Workspaces highlighted, Home not) matches the commit's intent ('Restrict Archive selection drop targets') and is a prohibition with an observable outcome."
+    },
+    "rc-6337ce108c4d": {
+      "decision": "exclude",
+      "reason": "Frozen rule (administrators only) comes from the removed sentence, so it is not in the current documentation: fails V1. The other admitting vote states only that an icon exists: fails V2. The snapshot check agrees: neither sentence is present."
+    },
+    "rc-e594b40135ff": {
+      "decision": "keep_frozen",
+      "reason": "Frozen rule (a conversation is created if none exists and appears in the list) is conditional and changes another entity; the alternative (link in event details) is also valid but has no condition."
+    },
+    "rc-bd0b2995febc": {
+      "decision": "keep_frozen",
+      "reason": "Frozen rule (the reminder is optional) is the added text. The alternative (default timer preselected) comes from removed sentences: fails V1."
+    },
+    "rc-4da4940bc16c": {
+      "decision": "keep_frozen",
+      "reason": "Frozen rule (admins see the Default category field when the feature is enabled) is conditional on the setting and role. The alternative (joining members see the channel under the category) is stronger but needs a second user; noted for the advisor."
+    },
+    "rc-024102998dd2": {
+      "decision": "exclude",
+      "reason": "Not in the snapshot: the PDF attachment-list rule no longer appears in WeKan's documentation."
+    },
+    "rc-302720d6856b": {
+      "decision": "exclude",
+      "reason": "The snapshot now says the opposite: after switching to automatic scheduling, dates are determined by predecessor or child work packages."
+    },
+    "rc-458cc4cba31a": {
+      "decision": "exclude",
+      "reason": "Not in the snapshot: the activity-history sentences were removed on the same day (rc-ebff8e70d1d7)."
+    },
+    "rc-ebff8e70d1d7": {
+      "decision": "exclude",
+      "reason": "Removal of the same sentences; the rule is not in the snapshot."
+    },
+    "rc-60c42d4dd323": {
+      "decision": "exclude",
+      "reason": "Removed text; the cheese-combining rule is not in the snapshot."
+    },
+    "rc-d3faa64f9193": {
+      "decision": "exclude",
+      "reason": "Not in the snapshot: no Talk thread with title and description is documented at the frame end."
+    },
+    "rc-3c572449f134": {
+      "decision": "exclude",
+      "reason": "Removed text; neither the name-suggestion rule nor dm-including is in the snapshot's direct-messages page."
+    },
+    "rc-dfb84383fb89": {
+      "decision": "keep_frozen",
+      "reason": "Removed from this include but present in the snapshot elsewhere ('You can always unsubscribe from any channel'; channel permissions list 'unsubscribe themselves'). A uses the snapshot text."
+    },
+    "rc-62e9d69be36f": {
+      "decision": "exclude",
+      "reason": "Removed text; the subscriber requirement for private-channel administrators is not in the snapshot."
+    },
+    "rc-bf86d02f63c9": {
+      "decision": "exclude",
+      "reason": "Removed text; the Google blobs sentences are not in the snapshot."
+    },
+    "rc-7b485b51412f": {
+      "decision": "keep_frozen",
+      "reason": "Frozen rule (Set default: Collapse persists on reopen) is in the snapshot (page-widgets.md). The other vote (green line while dragging) is a different obligation; keeping the frozen one keeps probe alignment."
+    },
+    "rc-3cd319371269": {
+      "decision": "exclude",
+      "reason": "Not in the snapshot: the page now says only that On-Demand Tables are deprecated; 'no longer supported in new documents' was removed the same day (rc-37c8b91a246a)."
+    },
+    "rc-f33b2bf870e9": {
+      "decision": "keep_frozen",
+      "reason": "Present in the snapshot without the getgrist.com qualifier: 'You can add up to 10 billing managers on the Billing Account page'. A uses that text."
+    },
+    "rc-c30a4162188a": {
+      "decision": "exclude",
+      "reason": "Removed text; the pencil-icon permission sentence is not in the snapshot."
+    },
+    "rc-362ff82e3812": {
+      "decision": "keep_frozen",
+      "reason": "Present. The rule is configurability, so the oracle must change the setting and observe whether new notices are marked as read, not only find the control.",
+      "oracle_requirement": "functional effect of the setting"
+    },
+    "rc-1590080019fb": {
+      "decision": "exclude",
+      "reason": "Removed text. The snapshot says structure is a document-wide permission but no longer states that S is unavailable in table rules; the rule would be inferred, not stated."
+    },
+    "rc-b7086f489030": {
+      "decision": "keep_frozen",
+      "reason": "Present. The oracle must save 'Who can delete their own messages in this channel' and check that a user outside the allowed group cannot delete their own message there.",
+      "oracle_requirement": "functional effect of the setting"
+    },
+    "rc-aac66a0af69a": {
+      "decision": "keep_frozen",
+      "reason": "Present in the snapshot. The frozen rule includes the consequence (unsaved changes lost), which is what the oracle observes; the other vote drops it."
+    },
+    "rc-fd348eb33246": {
+      "decision": "keep_frozen",
+      "reason": "Present ('specifically granted access'). The frozen rule is the positive grant; the other vote adds exclusivity the text does not state."
+    },
+    "rc-6be0f3992b4b": {
+      "decision": "exclude",
+      "reason": "The frame-end FAQ states a combined attachments-plus-data 1GB limit, but its linked limits page counts attachments separately, limits internal attachments to 1GB and allows external attachments of 3GB/20GB on paid plans. This conflicts with the frozen rule. Exclude from this controlled-omission cohort rather than silently choose a source or scope. See current-doc-manual-source-review.json; exclusion remains proposed."
+    },
+    "rc-cb144c65d898": {
+      "decision": "exclude",
+      "reason": "Location of a control only (V2), and stale: the snapshot places the setting under Subscription permissions."
+    }
   },
   "duplicate_groups": [
-    {"candidates": ["rc-458cc4cba31a", "rc-ebff8e70d1d7"], "reason": "The same four sentences on activity history during board duplication, added and then removed in the same file on the same day."},
-    {"candidates": ["rc-899c4d2472ad", "rc-90d29a54a512"], "reason": "Same commit and file; both rules state that the opened-card and minicard field orders are independent."}
+    {
+      "candidates": [
+        "rc-458cc4cba31a",
+        "rc-ebff8e70d1d7"
+      ],
+      "reason": "The same four sentences on activity history during board duplication, added and then removed in the same file on the same day."
+    },
+    {
+      "candidates": [
+        "rc-899c4d2472ad",
+        "rc-90d29a54a512"
+      ],
+      "reason": "Same commit and file; both rules state that the opened-card and minicard field orders are independent."
+    }
   ],
   "open_questions_for_advisor": [
-    "Arm A is defined as the current documentation. Four admitted candidates are deletions (rc-882709afd891, rc-2c13970217ea, rc-ebff8e70d1d7, rc-60c42d4dd323) and others take their rule from removed sentences. Should arm A use the pre-commit text for these, or should rules absent from the current documentation be excluded?",
-    "rc-458cc4cba31a states a rule that a later commit removed on the same day; under a strict current-documentation reading it would also be excluded."
-  ]
+    "Approve the definition of current documentation as the frame-end snapshot (2026-09-30T23:59:59Z). It answers the earlier question about removed text: rules absent from the snapshot are excluded, rules moved elsewhere are kept with the snapshot text as arm A.",
+    "rc-882709afd891 is present in ordinary prose as well as image alt text. Keep provisionally; confirm that the documented add-user prompt applies to the browser journey, because the illustration is mobile. This is a web-scope question, not an alt-text-only question.",
+    "Batch-1 arm A texts follow the commit-time documentation. Under this definition they should be refreshed from the snapshot; the only rule-level change found is Immich MP2T, which now also lists .ts."
+  ],
+  "current_documentation": {
+    "frame_end": "2026-09-30T23:59:59Z",
+    "check": "data/requirement-selection/current-doc-check.json",
+    "method": "scripts/check_current_documentation.py (token match) plus a manual search of each snapshot for rules not matched verbatim"
+  },
+  "round_2_flags": [
+    "rc-3c572449f134",
+    "rc-dfb84383fb89",
+    "rc-62e9d69be36f",
+    "rc-bf86d02f63c9",
+    "rc-7b485b51412f",
+    "rc-3cd319371269",
+    "rc-f33b2bf870e9",
+    "rc-c30a4162188a",
+    "rc-362ff82e3812",
+    "rc-1590080019fb",
+    "rc-b7086f489030",
+    "rc-aac66a0af69a",
+    "rc-fd348eb33246",
+    "rc-6be0f3992b4b",
+    "rc-cb144c65d898"
+  ],
+  "integration_review": {
+    "blind": false,
+    "previously_exposed_to_probe_outcomes": true,
+    "probe_outcomes_consulted_for_this_review": false,
+    "approval_granted": false,
+    "source_review": "data/requirement-selection/current-doc-manual-source-review.json",
+    "note": "Original author probe_outcomes_consulted declaration is retained; integration review cannot certify outcome blinding."
+  },
+  "approval_scope": "Frame-end documentation, proposed mappings including exclusion of conflicting Grist combined 1GB rule, duplicate handling and one binding selection. Nonblind integration review disclosed; human audit remains required before confirmatory claims.",
+  "approval_evidence": {
+    "channel": "Codex request_user_input_async",
+    "question": "A proposta revisada está no PR #150: usar a documentação no corte de 30/09, excluir o limite conflitante de 1 GB do Grist e manter a revisão identificada como não cega. Você aprova essas decisões para executar a seleção uma única vez? A auditoria humana de 20% continua necessária antes de afirmações confirmatórias.",
+    "answer": "Aprovo a proposta revisada e autorizo a seleção",
+    "date": "2026-10-03"
+  }
 }
