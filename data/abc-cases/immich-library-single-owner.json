@@ -1,0 +1,26 @@
+{
+  "case": "immich-library-single-owner",
+  "intent_id": "immich-library-single-owner",
+  "project_id": "immich",
+  "candidate_id": "rc-c86728bbc029",
+  "source": {
+    "commit": "eee793bfe4",
+    "file": "docs/docs/features/libraries.md"
+  },
+  "fixture": "eval/fixtures/immich-library-single-owner",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onCreate to handle the visible Create library button. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement creating an external library. External libraries track assets stored in the filesystem outside of Immich. When the user clicks Create library, create it with app.createLibrary({name, owners}) using the entered name and the owner chosen in the Owner section. An external library can only belong to a single user, which is selected when the library is initially created.",
+    "B": "Clicking Create library makes a new external library (a library that tracks assets kept on the filesystem outside Immich) through app.createLibrary({name, owners}), with the typed name and the owner picked under Owner. Each external library belongs to exactly one user, chosen when the library is first created.",
+    "C": "Implement creating an external library. External libraries track assets stored in the filesystem outside of Immich. When the user clicks Create library, create it with app.createLibrary({name, owners}) using the entered name and the owner chosen in the Owner section."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100307,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

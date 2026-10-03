@@ -1,0 +1,24 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Upload videos</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Upload videos</h1><label>Choose files <input id="files" type="file" multiple></label><ul id="results" aria-label="Upload results"></ul></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let results=load({});
+function decide(name,status,reason){if(typeof name!=='string'||!(name in pending))throw new Error('unknown file');results[name]={status,reason:String(reason??'')};store(results);render()}
+let pending={};
+const app=Object.freeze({
+  onFiles:register,
+  accept(name){decide(name,'accepted','')},
+  reject(name,reason){decide(name,'rejected',reason||'Unsupported file type')}
+});
+function render(){const list=document.querySelector('#results');list.replaceChildren();
+  for(const [name,r] of Object.entries(results))list.append(el('li',{'data-name':name,'data-status':r.status},name+': '+r.status+(r.reason?' ('+r.reason+')':'')))}
+document.querySelector('#files').addEventListener('change',e=>{const files=[...e.target.files].map(f=>({name:f.name,size:f.size,type:f.type}));
+  for(const f of files)pending[f.name]=true;if(behavior)behavior(structuredClone(files))});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

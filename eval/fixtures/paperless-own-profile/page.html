@@ -1,0 +1,28 @@
+<!doctype html><html><head><meta charset="utf-8"><title>My Profile</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>My Profile</h1><p id="signed-in"></p><label>First name <input id="first-name"></label><label>Email <input id="email" type="email"></label><button id="save" type="button">Save</button><p id="message" role="status"></p><p id="stored"></p></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let profile=load(window.initialState.profile);
+const app=Object.freeze({
+  onSave:register,
+  profile(){return structuredClone(profile)},
+  permissions(){return structuredClone(window.initialState.permissions)},
+  saveProfile(change){if(typeof change!=='object'||change===null||typeof change.firstName!=='string'||typeof change.email!=='string')throw new Error('firstName and email required');
+    profile={...profile,firstName:change.firstName,email:change.email};store(profile);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){
+  document.querySelector('#signed-in').textContent='Signed in as '+profile.username;
+  const s=document.querySelector('#stored');s.dataset.username=profile.username;s.dataset.firstName=profile.firstName;s.dataset.email=profile.email;
+  s.textContent='Saved profile: '+profile.firstName+' <'+profile.email+'>';
+}
+document.querySelector('#first-name').value=profile.firstName;document.querySelector('#email').value=profile.email;
+document.querySelector('#save').addEventListener('click',()=>{if(behavior)behavior({firstName:document.querySelector('#first-name').value,email:document.querySelector('#email').value})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

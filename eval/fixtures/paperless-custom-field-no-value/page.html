@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Workflow assignment</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Workflow action</h1><p id="action"></p><button id="apply" type="button">Apply assignment</button><ul id="documents" aria-label="Documents"></ul></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let docs=load(window.initialState.documents);
+const app=Object.freeze({
+  onApply:register,
+  action(){return structuredClone(window.initialState.action)},
+  documents(){return structuredClone(docs)},
+  setCustomFields(id,fields){const doc=docs.find(d=>d.id===id);if(!doc)throw new Error('unknown document');
+    if(typeof fields!=='object'||fields===null||Array.isArray(fields)||!Object.values(fields).every(v=>v===null||typeof v==='string'))throw new Error('fields must map names to text or null');
+    doc.fields={...fields};store(docs);render()}
+});
+function render(){
+  const a=window.initialState.action;
+  document.querySelector('#action').textContent='Assignment: custom field '+a.field+(a.value===null?' (no value)':' with value '+a.value);
+  const list=document.querySelector('#documents');list.replaceChildren();
+  for(const d of docs){const li=el('li',{'data-id':d.id},d.title+': ');
+    for(const [name,value] of Object.entries(d.fields))li.append(el('span',{class:'field','data-name':name,'data-value':value??''},name+' = '+(value??'(empty)')+'; '));
+    list.append(li)}
+}
+document.querySelector('#apply').addEventListener('click',()=>{if(behavior)behavior(app.action(),app.documents())});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

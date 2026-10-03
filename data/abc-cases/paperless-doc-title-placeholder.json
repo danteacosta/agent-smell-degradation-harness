@@ -1,0 +1,26 @@
+{
+  "case": "paperless-doc-title-placeholder",
+  "intent_id": "paperless-doc-title-placeholder",
+  "project_id": "paperless-ngx",
+  "candidate_id": "rc-9e198862b86e",
+  "source": {
+    "commit": "63c0e2f72b",
+    "file": "docs/usage.md"
+  },
+  "fixture": "eval/fixtures/paperless-doc-title-placeholder",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onSave to handle the visible Save button. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement saving the title template of a workflow assignment. When the user clicks Save, store the entered template with app.saveTitleTemplate. Titles are Jinja templates and can use these placeholders: {{correspondent}} (assigned correspondent name), {{document_type}} (assigned document type name), {{owner_username}} (assigned owner username), {{added}}, {{added_year}}, {{added_month}}, {{added_day}} (added date parts), {{original_filename}} (original file name without extension), {{filename}} (current file name without extension) and {{doc_title}} (current document title, cannot be used in title assignment).",
+    "B": "Clicking Save stores the workflow assignment's title template through app.saveTitleTemplate. A title is a Jinja template whose available placeholders are {{correspondent}} (name of the assigned correspondent), {{document_type}} (name of the assigned document type), {{owner_username}} (user name of the assigned owner), {{added}}, {{added_year}}, {{added_month}} and {{added_day}} (parts of the added date), {{original_filename}} and {{filename}} (original and current file names without extension), and {{doc_title}}, the current title of the document, which is not allowed in a title assignment.",
+    "C": "Implement saving the title template of a workflow assignment. When the user clicks Save, store the entered template with app.saveTitleTemplate. Titles are Jinja templates and can use these placeholders: {{correspondent}} (assigned correspondent name), {{document_type}} (assigned document type name), {{owner_username}} (assigned owner username), {{added}}, {{added_year}}, {{added_month}}, {{added_day}} (added date parts), {{original_filename}} (original file name without extension), {{filename}} (current file name without extension) and {{doc_title}} (current document title)."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100305,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

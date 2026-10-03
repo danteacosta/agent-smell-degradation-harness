@@ -116,3 +116,5 @@ experiment evidence.
 - [Triagem, rodada 2: extensão do frame para o oitavo projeto (Zulip, Grist), 2 de outubro de 2026](2026-10-02-screening-round-2.md). 60 candidatos avaliados na rodada concluída em 3 de outubro; desvio registrado no pré-registro.
 
 - [Rodada 2: 30 novos elegíveis, nove projetos no conjunto, 3 de outubro de 2026](2026-10-03-screening-round2-results.md). 60 avaliados, 145 chamadas, zero falhas; seleção e confirmação de smells continuam pendentes.
+
+- [Casos da seleção, lote 1: Paperless, Immich e Mealie, 3 de outubro de 2026](2026-10-03-selection-cases-batch-1.md). Dez casos A/B/C com 73/73 controles qualificados no Docker congelado; revisão dos braços e decisões de seleção continuam pendentes.

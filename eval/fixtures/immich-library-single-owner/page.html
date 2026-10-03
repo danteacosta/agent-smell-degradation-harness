@@ -1,0 +1,27 @@
+<!doctype html><html><head><meta charset="utf-8"><title>External libraries</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>External libraries</h1><fieldset><legend>Owner</legend><div id="users"></div></fieldset><label>Name <input id="library-name"></label><button id="create" type="button">Create library</button><p id="message" role="status"></p><ul id="libraries" aria-label="Libraries"></ul></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let libraries=load([]);
+const users=window.initialState.users;
+const app=Object.freeze({
+  onCreate:register,
+  users(){return structuredClone(users)},
+  libraries(){return structuredClone(libraries)},
+  createLibrary(library){if(typeof library!=='object'||library===null||typeof library.name!=='string'||!Array.isArray(library.owners)||!library.owners.length||!library.owners.every(id=>users.some(u=>u.id===id)))throw new Error('name and known owners required');
+    libraries.push({name:library.name,owners:[...library.owners]});store(libraries);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){const list=document.querySelector('#libraries');list.replaceChildren();
+  for(const l of libraries)list.append(el('li',{'data-name':l.name,'data-owners':l.owners.join(',')},l.name+' — owner: '+l.owners.map(id=>users.find(u=>u.id===id).name).join(', ')))}
+const box=document.querySelector('#users');
+for(const u of users){const label=el('label');label.append(el('input',{type:'checkbox',name:'owner',value:u.id}),document.createTextNode(' '+u.name));box.append(label)}
+document.querySelector('#create').addEventListener('click',()=>{if(behavior)behavior({name:document.querySelector('#library-name').value,owners:[...document.querySelectorAll('input[name=owner]:checked')].map(b=>b.value)})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

@@ -1,0 +1,26 @@
+{
+  "case": "mealie-organize-food-permission",
+  "intent_id": "mealie-organize-food-permission",
+  "project_id": "mealie",
+  "candidate_id": "rc-106bac72c813",
+  "source": {
+    "commit": "05521f0e6f",
+    "file": "docs/docs/documentation/getting-started/usage/permissions-and-public-access.md"
+  },
+  "fixture": "eval/fixtures/mealie-organize-food-permission",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onAdd to handle the visible Add food button. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement adding a food on the Foods page. When the user clicks Add food, create it with app.createFood(name); the signed-in user and their permissions come from app.user(). Users can have these permissions: Administrator (access to administrator tools), Invite (generating invitation links for other users), Manage group (access to group management areas and settings) and Organize group data (creating, updating, deleting, and merging group data such as foods, tags, and categories). The Manage group and Organize group data permissions are separate. Users need Organize group data to add new foods, tags, or categories, including when creating missing ingredients during recipe parsing.",
+    "B": "Clicking Add food on the Foods page creates the food through app.createFood(name); app.user() gives the signed-in user and their permissions. The possible permissions are Administrator (administrator tools), Invite (making invitation links for others), Manage group (group management areas and settings) and Organize group data (creating, updating, deleting and merging group data like foods, tags and categories). Manage group and Organize group data are independent, and adding a new food, tag or category, also while creating missing ingredients in recipe parsing, requires Organize group data.",
+    "C": "Implement adding a food on the Foods page. When the user clicks Add food, create it with app.createFood(name); the signed-in user and their permissions come from app.user(). Users can have these permissions: Administrator (access to administrator tools), Invite (generating invitation links for other users), Manage group (access to group management areas and settings) and Organize group data (creating, updating, deleting, and merging group data such as foods, tags, and categories). The Manage group and Organize group data permissions are separate."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100309,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}
