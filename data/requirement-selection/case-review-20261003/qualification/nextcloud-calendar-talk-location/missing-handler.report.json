@@ -1,0 +1,8 @@
+{
+  "schema_version": "nextcloud-calendar-talk-location-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "b57d111f94d1505d444a86a2d36b158ab7e32777b59d2607b2cdbd6dff9ca48b",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

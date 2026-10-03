@@ -6,7 +6,7 @@
   "source": {
     "commit": "73d7ca79e6",
     "file": "source/end-user-guide/collaborate/collaborate-within-channels.rst",
-    "snapshot": "bd09d95951",
+    "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
     "snapshot_file": "source/end-user-guide/collaborate/autotranslate-messages.rst"
   },
   "fixture": "eval/fixtures/mattermost-channel-autotranslate",

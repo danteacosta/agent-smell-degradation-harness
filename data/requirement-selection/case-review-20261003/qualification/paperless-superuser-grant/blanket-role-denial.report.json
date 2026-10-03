@@ -1,0 +1,18 @@
+{
+  "schema_version": "paperless-superuser-grant-browser/v1",
+  "status": "complete",
+  "app_sha256": "e688bc147d16b738a485638ac798bd127f07191c8fc9cbaedc94bb7dda4d1534",
+  "assertions": {
+    "first_name_saved_1": false,
+    "non_superuser_cannot_grant_1": true,
+    "username_preserved_1": true,
+    "superuser_can_grant_2": true,
+    "first_name_saved_2": true,
+    "username_preserved_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

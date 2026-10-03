@@ -1,6 +1,6 @@
 """Zulip selection cases (six admitted rules; arm A from the starlight_help snapshot)."""
 
-SNAPSHOT = "9778ffc23c"
+SNAPSHOT = "9778ffc23c3e83e321152a48ab32c1426e1bd941"
 DOCS = "starlight_help/src/content/docs/"
 
 GIF_PICKER = {
@@ -166,15 +166,23 @@ document.querySelector('#topics').addEventListener('click',e=>{const b=e.target.
   const init=await msgs();
   if(JSON.stringify(init.map(m=>[m.id,m.read]))!==JSON.stringify(fixture.state.messages.map(m=>[String(m.id),String(m.read)])))throw new InterfaceError('messages missing or changed before acting');
   async function setOption(on){
-    const c=page.getByLabel(/mark resolved topic notices as read/i);
-    if(await c.count()!==1||!await c.isVisible()||!await c.isEnabled())return false;
+    const candidates=page.locator('#settings input[type=checkbox], #settings select:not(#read-on-scroll), #settings [role=switch], #settings button[aria-pressed]');
+    const visible=[];for(const c of await candidates.all())if(await c.isVisible())visible.push(c);
+    if(!visible.length)return false;
+    if(visible.length!==1)throw new InterfaceError('ambiguous notice setting controls');
+    const c=visible[0];if(!await c.isEnabled())return false;
     const kind=await c.evaluate(x=>x.tagName+':'+(x.type||''));
     if(kind==='INPUT:checkbox'){await c.setChecked(on);return true}
+    const role=await c.getAttribute('role');const pressed=await c.getAttribute('aria-pressed');
+    if(role==='switch'||pressed!==null){const attr=role==='switch'?'aria-checked':'aria-pressed';const current=await c.getAttribute(attr);
+      if(!['true','false'].includes(current))throw new InterfaceError('boolean setting state missing');
+      if((current==='true')!==on)await c.click();return (await c.getAttribute(attr))===String(on)}
     if(kind.startsWith('SELECT')){
       const opts=await c.locator('option').evaluateAll(os=>os.map(o=>[o.value,o.textContent.trim()]));
       const re=on?/^(always|yes|on|enabled?|true)$/i:/^(never|no|off|disabled?|false)$/i;
-      const o=opts.find(([v,t])=>re.test(t)||re.test(v));if(!o)return false;await c.selectOption(o[0]);return true}
-    return false}
+      const matches=opts.filter(([v,t])=>re.test(t)||re.test(v));if(matches.length!==1)throw new InterfaceError('unidentifiable boolean setting choice');
+      await c.selectOption(matches[0][0]);return true}
+    throw new InterfaceError('unsupported notice setting control')}
   const seen=new Set(init.map(m=>m.id));let readOk=true,unreadOk=true,posted=true,toggled=true;
   for(const [topic,on] of fixture.steps){
     const before=(await topics())[topic];
@@ -200,6 +208,8 @@ document.querySelector('#topics').addEventListener('click',e=>{const b=e.target.
     "non_target": ["notice_posted_for_each_change_1", "topic_state_toggled_1", "other_messages_unchanged_1",
                    "notice_posted_for_each_change_2", "topic_state_toggled_2", "other_messages_unchanged_2"],
     "controls": {
+        "accessible-switch": ("const box=el('button',{type:'button',role:'switch','aria-checked':String(app.setting('autoReadResolvedNotices')===true)},'Read topic events automatically');document.querySelector('#settings').append(box);box.addEventListener('click',()=>{const next=box.getAttribute('aria-checked')!=='true';box.setAttribute('aria-checked',String(next));app.saveSetting('autoReadResolvedNotices',next)});app.onResolve(t=>{const r=!t.resolved;app.setResolved(t.id,r);const id=app.sendNotice(t.id,'@'+app.user().name+' has marked this topic as '+(r?'resolved':'unresolved')+'.');if(app.setting('autoReadResolvedNotices')===true)app.markAsRead(id)});", "pass"),
+        "renamed-setting": ("const box=el('input',{type:'checkbox',id:'auto-read-resolved'});box.checked=app.setting('autoReadResolvedNotices')===true;const label=el('label');label.append(box,' Read topic status updates automatically');document.querySelector('#settings').append(label);box.addEventListener('change',()=>app.saveSetting('autoReadResolvedNotices',box.checked));app.onResolve(t=>{const r=!t.resolved;app.setResolved(t.id,r);const id=app.sendNotice(t.id,'@'+app.user().name+' has marked this topic as '+(r?'resolved':'unresolved')+'.');if(app.setting('autoReadResolvedNotices')===true)app.markAsRead(id)});", "pass"),
         "reference": ("const box=el('input',{type:'checkbox',id:'auto-read-resolved'});box.checked=app.setting('autoReadResolvedNotices')===true;const label=el('label');label.append(box,' Automatically mark resolved topic notices as read');document.querySelector('#settings').append(label);box.addEventListener('change',()=>app.saveSetting('autoReadResolvedNotices',box.checked));app.onResolve(t=>{const r=!t.resolved;app.setResolved(t.id,r);const id=app.sendNotice(t.id,'@'+app.user().name+' has marked this topic as '+(r?'resolved':'unresolved')+'.');if(app.setting('autoReadResolvedNotices')===true)app.markAsRead(id)});", "pass"),
         "alternative-select": ("var s=el('select',{id:'resolved-read'});[['always','Always'],['except_followed','Except for topics I follow'],['never','Never']].forEach(function(o){s.append(el('option',{value:o[0]},o[1]))});s.value=app.setting('resolvedNoticesRead')||'never';var l=el('label',{},'Automatically mark resolved topic notices as read ');l.append(s);document.querySelector('#settings').append(l);s.addEventListener('change',function(){app.saveSetting('resolvedNoticesRead',s.value)});app.onResolve(function(t){app.setResolved(t.id,!t.resolved);var id=app.sendNotice(t.id,'Topic '+(t.resolved?'unresolved':'resolved')+'.');if(app.setting('resolvedNoticesRead')==='always')app.markAsRead(id)});", "pass"),
         "target-mutant": ("app.onResolve(t=>{const r=!t.resolved;app.setResolved(t.id,r);app.sendNotice(t.id,'@'+app.user().name+' has marked this topic as '+(r?'resolved':'unresolved')+'.')});", "target_only_failure"),
@@ -271,7 +281,7 @@ document.querySelector('#send').addEventListener('click',()=>{if(behavior)behavi
             {"pattern": "#(?<id>[0-9]+)", "urlTemplate": "https://github.com/zulip/zulip/issues/{id}", "linkText": "#{id}"},
             {"pattern": "RT(?<id>[0-9]+)", "urlTemplate": "https://rt.example.org/Ticket/Display.html?id={id}", "linkText": None}]},
          "messages": [
-             {"typed": "Fixed in ", "paste": "https://github.com/zulip/zulip/issues/2468", "expect": "Fixed in #2468", "kind": "converted"},
+             {"typed": "Fixed in ", "paste": "https://github.com/zulip/zulip/issues/2468", "expect": "Fixed in #2468", "kind": "converted", "links": [["#2468", "https://github.com/zulip/zulip/issues/2468"]]},
              {"typed": "Ticket: ", "paste": "https://rt.example.org/Ticket/Display.html?id=77",
               "expect": "Ticket: https://rt.example.org/Ticket/Display.html?id=77", "kind": "unmatched"},
              {"typed": "See #1357 and RT42", "paste": None, "expect": "See #1357 and RT42", "kind": "typed",
@@ -283,8 +293,8 @@ document.querySelector('#send').addEventListener('click',()=>{if(behavior)behavi
              "urlTemplate": "https://github.com/{org}/{repo}/pull/{id}", "linkText": "{org}/{repo}#{id}"},
             {"pattern": "CASE-(?<id>[0-9]+)", "urlTemplate": "https://support.example.com/cases/{id}", "linkText": None}]},
          "messages": [
-             {"typed": "Merged as ", "paste": "https://github.com/django/django/pull/123", "expect": "Merged as django/django#123", "kind": "converted"},
-             {"typed": "Tracked in ", "paste": "https://github.com/zulip/zulip-flutter/issues/245", "expect": "Tracked in #F245", "kind": "converted"},
+             {"typed": "Merged as ", "paste": "https://github.com/django/django/pull/123", "expect": "Merged as django/django#123", "kind": "converted", "links": [["django/django#123", "https://github.com/django/django/pull/123"]]},
+             {"typed": "Tracked in ", "paste": "https://github.com/zulip/zulip-flutter/issues/245", "expect": "Tracked in #F245", "kind": "converted", "links": [["#F245", "https://github.com/zulip/zulip-flutter/issues/245"]]},
              {"typed": "Customer report: ", "paste": "https://support.example.com/cases/5150",
               "expect": "Customer report: https://support.example.com/cases/5150", "kind": "unmatched"},
              {"typed": "Duplicate of #F12, see CASE-9", "paste": None, "expect": "Duplicate of #F12, see CASE-9", "kind": "typed",
@@ -293,7 +303,7 @@ document.querySelector('#send').addEventListener('click',()=>{if(behavior)behavi
     ],
     "journey_js": r"""
   const n=index+1;
-  const read=()=>page.locator('#messages li').evaluateAll(ns=>ns.map(li=>({text:li.textContent,links:[...li.querySelectorAll('a')].map(a=>[a.textContent,a.dataset.href])})));
+  const read=()=>page.locator('#messages li').evaluateAll(ns=>ns.map(li=>({text:li.textContent,links:[...li.querySelectorAll('a')].map(a=>[a.textContent,a.getAttribute('href')])})));
   if((await read()).length!==0)throw new InterfaceError('messages present before sending');
   async function paste(text){
     await page.locator('#compose').evaluate((box,t)=>{box.focus();box.setSelectionRange(box.value.length,box.value.length);
@@ -301,15 +311,16 @@ document.querySelector('#send').addEventListener('click',()=>{if(behavior)behavi
       const event=new ClipboardEvent('paste',{clipboardData:data,bubbles:true,cancelable:true});
       if(box.dispatchEvent(event)){box.setRangeText(t,box.selectionStart,box.selectionEnd,'end');box.dispatchEvent(new InputEvent('input',{bubbles:true,inputType:'insertFromPaste',data:t}))}},text);
     await page.waitForTimeout(150)}
+  let immediate=true;
   for(const m of fixture.messages){
     await (await one(page,'#compose')).fill(m.typed);
-    if(m.paste)await paste(m.paste);
+    if(m.paste){await paste(m.paste);if(m.kind==='converted')immediate=immediate&&(await page.locator('#compose').inputValue())===m.expect;}
     await (await one(page,'#send')).click();await page.waitForTimeout(100);
   }
   await reload(page);
   const got=await read();const at=i=>got[i]||{text:null,links:[]};
   const idx=kind=>fixture.messages.map((m,i)=>m.kind===kind?i:-1).filter(i=>i>=0);
-  check(`pasted_url_converted_${n}`,idx('converted').every(i=>at(i).text===fixture.messages[i].expect));
+  check(`pasted_url_converted_${n}`,immediate&&idx('converted').every(i=>at(i).text===fixture.messages[i].expect&&JSON.stringify(at(i).links)===JSON.stringify(fixture.messages[i].links)));
   check(`unmatched_paste_kept_${n}`,idx('unmatched').every(i=>at(i).text===fixture.messages[i].expect));
   check(`typed_reference_linked_${n}`,idx('typed').every(i=>at(i).text===fixture.messages[i].expect&&JSON.stringify(at(i).links)===JSON.stringify(fixture.messages[i].links)));
   check(`one_message_per_send_${n}`,got.length===fixture.messages.length);
@@ -317,20 +328,20 @@ document.querySelector('#send').addEventListener('click',()=>{if(behavior)behavi
     "target": ["pasted_url_converted_1", "unmatched_paste_kept_1", "pasted_url_converted_2", "unmatched_paste_kept_2"],
     "non_target": ["typed_reference_linked_1", "one_message_per_send_1", "typed_reference_linked_2", "one_message_per_send_2"],
     "controls": {
+        "converted-text-without-link": ("let wasPaste=false;document.querySelector('#compose').addEventListener('paste',()=>{wasPaste=true});const LK=app.linkifiers();const esc=s=>s.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&');const fill=(t,g)=>t.replace(/\\{(\\w+)\\}/g,(_,k)=>g[k]);\nconst REV=LK.filter(l=>l.linkText).map(l=>{const names=[];const src='^'+l.urlTemplate.split(/(\\{\\w+\\})/).map(p=>{const m=/^\\{(\\w+)\\}$/.exec(p);if(m){names.push(m[1]);return '([^/?#&]+)'}return esc(p)}).join('')+'$';return {re:new RegExp(src),names,l}});\ndocument.querySelector('#compose').addEventListener('paste',e=>{const t=(e.clipboardData.getData('text/plain')||'').trim();for(const r of REV){const m=r.re.exec(t);if(m){e.preventDefault();const g={};r.names.forEach((k,i)=>g[k]=decodeURIComponent(m[i+1]));const box=e.target;box.setRangeText(fill(r.l.linkText,g),box.selectionStart,box.selectionEnd,'end');return}}});\napp.onSend(text=>{const parts=[];let i=0;const rules=LK.map(l=>({re:new RegExp(l.pattern,'g'),l}));while(i<text.length){let best=null;for(const r of rules){r.re.lastIndex=i;const m=r.re.exec(text);if(m&&m[0]&&(!best||m.index<best.m.index))best={m,l:r.l}}if(!best){parts.push({text:text.slice(i)});break}if(best.m.index>i)parts.push({text:text.slice(i,best.m.index)});const g={};for(const [k,v] of Object.entries(best.m.groups||{}))g[k]=encodeURIComponent(v);parts.push({text:best.m[0],href:fill(best.l.urlTemplate,g)});i=best.m.index+best.m[0].length}if(parts.length)app.sendMessage(wasPaste?parts.map(p=>({text:p.text})):parts);wasPaste=false});", "target_only_failure"),
         "reference": (r"""const LK=app.linkifiers();const esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');const fill=(t,g)=>t.replace(/\{(\w+)\}/g,(_,k)=>g[k]);
 const REV=LK.filter(l=>l.linkText).map(l=>{const names=[];const src='^'+l.urlTemplate.split(/(\{\w+\})/).map(p=>{const m=/^\{(\w+)\}$/.exec(p);if(m){names.push(m[1]);return '([^/?#&]+)'}return esc(p)}).join('')+'$';return {re:new RegExp(src),names,l}});
 document.querySelector('#compose').addEventListener('paste',e=>{const t=(e.clipboardData.getData('text/plain')||'').trim();for(const r of REV){const m=r.re.exec(t);if(m){e.preventDefault();const g={};r.names.forEach((k,i)=>g[k]=decodeURIComponent(m[i+1]));const box=e.target;box.setRangeText(fill(r.l.linkText,g),box.selectionStart,box.selectionEnd,'end');return}}});
 app.onSend(text=>{const parts=[];let i=0;const rules=LK.map(l=>({re:new RegExp(l.pattern,'g'),l}));while(i<text.length){let best=null;for(const r of rules){r.re.lastIndex=i;const m=r.re.exec(text);if(m&&m[0]&&(!best||m.index<best.m.index))best={m,l:r.l}}if(!best){parts.push({text:text.slice(i)});break}if(best.m.index>i)parts.push({text:text.slice(i,best.m.index)});const g={};for(const [k,v] of Object.entries(best.m.groups||{}))g[k]=encodeURIComponent(v);parts.push({text:best.m[0],href:fill(best.l.urlTemplate,g)});i=best.m.index+best.m[0].length}if(parts.length)app.sendMessage(parts)});""", "pass"),
         "convert-on-send": (r"""function linkify(text){var LK=app.linkifiers(),parts=[],i=0;while(i<text.length){var best=null,bl=null;LK.forEach(function(l){var re=new RegExp(l.pattern,'g');re.lastIndex=i;var m=re.exec(text);if(m&&m[0]&&(!best||m.index<best.index)){best=m;bl=l}});if(!best){parts.push({text:text.slice(i)});break}if(best.index>i)parts.push({text:text.slice(i,best.index)});parts.push({text:best[0],href:bl.urlTemplate.replace(/\{(\w+)\}/g,function(_,k){return encodeURIComponent(best.groups[k])})});i=best.index+best[0].length}return parts}
 function reverse(text){return text.replace(/https?:\/\/\S+/g,function(url){var out=url;app.linkifiers().some(function(l){if(!l.linkText)return false;var names=[];var src=l.urlTemplate.replace(/[.*+?^$()|[\]\\]/g,'\\$&').replace(/\{(\w+)\}/g,function(_,k){names.push(k);return '([^/?#&]+)'});var m=new RegExp('^'+src+'$').exec(url);if(!m)return false;out=l.linkText.replace(/\{(\w+)\}/g,function(_,k){return m[names.indexOf(k)+1]});return true});return out})}
-app.onSend(function(text){if(text.trim())app.sendMessage(linkify(reverse(text)))});""", "pass"),
+app.onSend(function(text){if(text.trim())app.sendMessage(linkify(reverse(text)))});""", "target_only_failure"),
         "input-event": (r"""const LK=app.linkifiers();function rev(url){for(const l of LK){if(!l.linkText)continue;const names=[];const src=l.urlTemplate.replace(/[.*+?^$()|[\]\\]/g,'\\$&').replace(/\{(\w+)\}/g,(_,k)=>{names.push(k);return '([^/?#&]+)'});const m=new RegExp('^'+src+'$').exec(url);if(m)return l.linkText.replace(/\{(\w+)\}/g,(_,k)=>m[names.indexOf(k)+1])}return null}
 document.querySelector('#compose').addEventListener('input',e=>{if(e.inputType!=='insertFromPaste')return;const box=e.target;box.value=box.value.replace(/https?:\/\/\S+/g,u=>rev(u)??u)});
 app.onSend(text=>{const parts=[];let rest=text;while(rest){let best=null;for(const l of LK){const m=new RegExp(l.pattern).exec(rest);if(m&&m[0]&&(!best||m.index<best.m.index))best={m,l}}if(!best){parts.push({text:rest});break}if(best.m.index)parts.push({text:rest.slice(0,best.m.index)});parts.push({text:best.m[0],href:best.l.urlTemplate.replace(/\{(\w+)\}/g,(_,k)=>encodeURIComponent(best.m.groups[k]))});rest=rest.slice(best.m.index+best.m[0].length)}app.sendMessage(parts)});""", "pass"),
         "target-mutant": (r"""const LK=app.linkifiers();app.onSend(text=>{const parts=[];let rest=text;while(rest){let best=null;for(const l of LK){const m=new RegExp(l.pattern).exec(rest);if(m&&m[0]&&(!best||m.index<best.m.index))best={m,l}}if(!best){parts.push({text:rest});break}if(best.m.index)parts.push({text:rest.slice(0,best.m.index)});parts.push({text:best.m[0],href:best.l.urlTemplate.replace(/\{(\w+)\}/g,(_,k)=>encodeURIComponent(best.m.groups[k]))});rest=rest.slice(best.m.index+best.m[0].length)}app.sendMessage(parts)});""", "target_only_failure"),
-        "non-target-mutant": (r"""const LK=app.linkifiers();function rev(url){for(const l of LK){if(!l.linkText)continue;const names=[];const src=l.urlTemplate.replace(/[.*+?^$()|[\]\\]/g,'\\$&').replace(/\{(\w+)\}/g,(_,k)=>{names.push(k);return '([^/?#&]+)'});const m=new RegExp('^'+src+'$').exec(url);if(m)return l.linkText.replace(/\{(\w+)\}/g,(_,k)=>m[names.indexOf(k)+1])}return null}
-document.querySelector('#compose').addEventListener('paste',e=>{const t=e.clipboardData.getData('text/plain').trim();const r=rev(t);if(r!==null){e.preventDefault();e.target.setRangeText(r,e.target.selectionStart,e.target.selectionEnd,'end')}});
-app.onSend(text=>app.sendMessage([{text}]));""", "non_target_only_failure"),
+        "unlinked-message-mutant": ("const LK=app.linkifiers();function rev(url){for(const l of LK){if(!l.linkText)continue;const names=[];const src=l.urlTemplate.replace(/[.*+?^$()|[\\]\\\\]/g,'\\\\$&').replace(/\\{(\\w+)\\}/g,(_,k)=>{names.push(k);return '([^/?#&]+)'});const m=new RegExp('^'+src+'$').exec(url);if(m)return l.linkText.replace(/\\{(\\w+)\\}/g,(_,k)=>m[names.indexOf(k)+1])}return null}\ndocument.querySelector('#compose').addEventListener('paste',e=>{const t=e.clipboardData.getData('text/plain').trim();const r=rev(t);if(r!==null){e.preventDefault();e.target.setRangeText(r,e.target.selectionStart,e.target.selectionEnd,'end')}});\napp.onSend(text=>app.sendMessage([{text}]));", "mixed_failure"),
+        "non-target-mutant": ("let wasPaste=false;document.querySelector('#compose').addEventListener('paste',()=>{wasPaste=true});const LK=app.linkifiers();const esc=s=>s.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&');const fill=(t,g)=>t.replace(/\\{(\\w+)\\}/g,(_,k)=>g[k]);\nconst REV=LK.filter(l=>l.linkText).map(l=>{const names=[];const src='^'+l.urlTemplate.split(/(\\{\\w+\\})/).map(p=>{const m=/^\\{(\\w+)\\}$/.exec(p);if(m){names.push(m[1]);return '([^/?#&]+)'}return esc(p)}).join('')+'$';return {re:new RegExp(src),names,l}});\ndocument.querySelector('#compose').addEventListener('paste',e=>{const t=(e.clipboardData.getData('text/plain')||'').trim();for(const r of REV){const m=r.re.exec(t);if(m){e.preventDefault();const g={};r.names.forEach((k,i)=>g[k]=decodeURIComponent(m[i+1]));const box=e.target;box.setRangeText(fill(r.l.linkText,g),box.selectionStart,box.selectionEnd,'end');return}}});\napp.onSend(text=>{const parts=[];let i=0;const rules=LK.map(l=>({re:new RegExp(l.pattern,'g'),l}));while(i<text.length){let best=null;for(const r of rules){r.re.lastIndex=i;const m=r.re.exec(text);if(m&&m[0]&&(!best||m.index<best.m.index))best={m,l:r.l}}if(!best){parts.push({text:text.slice(i)});break}if(best.m.index>i)parts.push({text:text.slice(i,best.m.index)});const g={};for(const [k,v] of Object.entries(best.m.groups||{}))g[k]=encodeURIComponent(v);parts.push({text:best.m[0],href:fill(best.l.urlTemplate,g)});i=best.m.index+best.m[0].length}if(parts.length)app.sendMessage(wasPaste?parts:parts.map(p=>({text:p.text})));wasPaste=false});", "non_target_only_failure"),
     },
     "arms": {
         "A": "Implement sending a message from the compose box. When the user clicks Send, send the composed text with "
@@ -340,7 +351,7 @@ app.onSend(text=>app.sendMessage([{text}]));""", "non_target_only_failure"),
              "tickets in third party issue trackers, like GitHub, Salesforce, Zendesk, and others. For instance, you "
              "can add a linkifier that automatically turns #2468 into a link to "
              "https://github.com/zulip/zulip/issues/2468. You can configure linkifiers to work in reverse as well: "
-             "when you paste a URL that matches the linkifier's urlTemplate into the compose box, Zulip will "
+             "when linkText is set and you paste a URL that matches the linkifier's urlTemplate into the compose box, Zulip will "
              "automatically convert it to linked text given by the linkifier's linkText (e.g., "
              "https://github.com/zulip/zulip/issues/2468 becomes #2468).",
         "B": "Clicking Send sends what was written in the compose box through app.sendMessage(parts), with parts being "
@@ -349,7 +360,7 @@ app.onSend(text=>app.sendMessage([{text}]));""", "non_target_only_failure"),
              "if unset). Linkifiers are a convenient way to mention issues or tickets kept in outside trackers such as "
              "GitHub, Salesforce or Zendesk: a linkifier can, for example, make #2468 a link to "
              "https://github.com/zulip/zulip/issues/2468 on its own. They also work the other way around: a URL "
-             "pasted into the compose box that matches a linkifier's urlTemplate is turned by Zulip into that "
+             "pasted into the compose box that matches a linkifier's urlTemplate, with linkText set, is turned by Zulip into that "
              "linkifier's linked text from linkText, so pasting https://github.com/zulip/zulip/issues/2468 gives #2468.",
         "C": "Implement sending a message from the compose box. When the user clicks Send, send the composed text with "
              "app.sendMessage(parts), where parts is a list of {text} and {text, href} pieces; the organization's "

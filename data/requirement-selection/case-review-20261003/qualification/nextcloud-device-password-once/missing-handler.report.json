@@ -1,0 +1,8 @@
+{
+  "schema_version": "nextcloud-device-password-once-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "f989ec4e332cf31e0c72148370439d3df408f695c8a3a8145175ba5212c79fe7",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

@@ -16,15 +16,23 @@ async function journey(page,fixture,index){
   const init=await msgs();
   if(JSON.stringify(init.map(m=>[m.id,m.read]))!==JSON.stringify(fixture.state.messages.map(m=>[String(m.id),String(m.read)])))throw new InterfaceError('messages missing or changed before acting');
   async function setOption(on){
-    const c=page.getByLabel(/mark resolved topic notices as read/i);
-    if(await c.count()!==1||!await c.isVisible()||!await c.isEnabled())return false;
+    const candidates=page.locator('#settings input[type=checkbox], #settings select:not(#read-on-scroll), #settings [role=switch], #settings button[aria-pressed]');
+    const visible=[];for(const c of await candidates.all())if(await c.isVisible())visible.push(c);
+    if(!visible.length)return false;
+    if(visible.length!==1)throw new InterfaceError('ambiguous notice setting controls');
+    const c=visible[0];if(!await c.isEnabled())return false;
     const kind=await c.evaluate(x=>x.tagName+':'+(x.type||''));
     if(kind==='INPUT:checkbox'){await c.setChecked(on);return true}
+    const role=await c.getAttribute('role');const pressed=await c.getAttribute('aria-pressed');
+    if(role==='switch'||pressed!==null){const attr=role==='switch'?'aria-checked':'aria-pressed';const current=await c.getAttribute(attr);
+      if(!['true','false'].includes(current))throw new InterfaceError('boolean setting state missing');
+      if((current==='true')!==on)await c.click();return (await c.getAttribute(attr))===String(on)}
     if(kind.startsWith('SELECT')){
       const opts=await c.locator('option').evaluateAll(os=>os.map(o=>[o.value,o.textContent.trim()]));
       const re=on?/^(always|yes|on|enabled?|true)$/i:/^(never|no|off|disabled?|false)$/i;
-      const o=opts.find(([v,t])=>re.test(t)||re.test(v));if(!o)return false;await c.selectOption(o[0]);return true}
-    return false}
+      const matches=opts.filter(([v,t])=>re.test(t)||re.test(v));if(matches.length!==1)throw new InterfaceError('unidentifiable boolean setting choice');
+      await c.selectOption(matches[0][0]);return true}
+    throw new InterfaceError('unsupported notice setting control')}
   const seen=new Set(init.map(m=>m.id));let readOk=true,unreadOk=true,posted=true,toggled=true;
   for(const [topic,on] of fixture.steps){
     const before=(await topics())[topic];

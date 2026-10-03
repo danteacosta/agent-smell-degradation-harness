@@ -1,6 +1,6 @@
 """Nextcloud selection cases (six selected rules; arm A text from the frame-end documentation snapshot)."""
 
-SNAPSHOT = "8d74036494"
+SNAPSHOT = "8d7403649929d9ddb1bd6a5a073d6869071db8c3"
 
 DEVICE_PASSWORD = {
     "case": "nextcloud-device-password-once",

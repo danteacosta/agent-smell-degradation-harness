@@ -1,0 +1,16 @@
+{
+  "schema_version": "paperless-doc-title-placeholder-browser/v1",
+  "status": "complete",
+  "app_sha256": "e61ebfdf59e569949d9615920e461b77545afc5fedf9ddcb50ed6efc8a47bfc6",
+  "assertions": {
+    "doc_title_not_saved_1": true,
+    "valid_template_saved_1": true,
+    "doc_title_not_saved_2": true,
+    "valid_template_saved_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

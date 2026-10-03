@@ -1,0 +1,21 @@
+{
+  "schema_version": "grist-suggestions-open-copy-browser/v1",
+  "status": "complete",
+  "app_sha256": "58bbb1d64f2bb90259eacac10d21fd8ffbab215181a6b52538fc8af3b7f4f941",
+  "assertions": {
+    "plain_document_opened_1": true,
+    "plain_edit_live_1": true,
+    "copy_opened_1": true,
+    "edit_in_copy_1": true,
+    "original_unchanged_1": true,
+    "plain_document_opened_2": true,
+    "copy_opened_2": true,
+    "edit_in_copy_2": true,
+    "original_unchanged_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

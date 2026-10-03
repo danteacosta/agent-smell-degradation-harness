@@ -6,7 +6,7 @@
   "source": {
     "commit": "a11cc9a46e",
     "file": "help/configure-automated-notices.md",
-    "snapshot": "9778ffc23c",
+    "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
     "snapshot_file": "starlight_help/src/content/docs/configure-automated-notices.mdx",
     "snapshot_context": [
       "starlight_help/src/content/include/_ConfigureResolvedNoticesMarkedAsRead.mdx"

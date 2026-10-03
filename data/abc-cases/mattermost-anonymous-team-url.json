@@ -6,7 +6,7 @@
   "source": {
     "commit": "840fc4b8f5",
     "file": "source/end-user-guide/collaborate/organize-using-teams.rst",
-    "snapshot": "bd09d95951",
+    "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
     "snapshot_file": "source/end-user-guide/collaborate/organize-using-teams.rst"
   },
   "fixture": "eval/fixtures/mattermost-anonymous-team-url",

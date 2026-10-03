@@ -1,0 +1,59 @@
+{
+  "schema_version": "paperless-ai-suggestions-blank-text-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 8,
+  "source_scaffold_sha256": "6eecccd3c1956958142713312a2fc6cbf67d5739930e18a6294b68b8ba68d4f2",
+  "runner_sha256": "7669eab570a380f1ab19c5691c82eab6eb6f942d6f24f6a5c2d607c01912ca17",
+  "qualifier_sha256": "8ed8f410a0825c655fe8cb4dbf753073f8ebb5135fb7a0399a2d99ec022690c3",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "9abdb971619469665baf96984050c47b358e6ee9d236a5f9d9e606d5cb5501d3"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "cf8886acc37e489739967ac79b1063812a7be81ba453be5d0b3840aa10c85a80"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "720b0522c7936abddc41e1b839f835f7320cba679c4db0028ff2df426a13ad75"
+    },
+    {
+      "mode": "empty-only-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "d47f6b12db45f14f5f23678a69a718c9bfa92506c5620bec2a5ebd95462a9e33"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "accee960d6f0fd9c9d3f1e14cbd88e0028f4cdf6e1aa5692a452b90b08d862fd"
+    },
+    {
+      "mode": "duplicate-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "f22df2e69d0468896420edd834953d424b9e7f97045acb5ad86ab4c9a83a0ca2"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "73ac9ce0846f5a43098fffa9fcae3d9b354badbb0862f925f947cfa57cafb839"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "77b1e484f8c9e02d45da1a3ab244a53ae79d6e5fb178f10c45bf413de032d11b"
+    }
+  ]
+}

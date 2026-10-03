@@ -6,7 +6,7 @@
   "source": {
     "commit": "5fb0a2b285",
     "file": "source/end-user-guide/workflow-automation/work-with-playbooks.rst",
-    "snapshot": "bd09d95951",
+    "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
     "snapshot_file": "source/end-user-guide/workflow-automation/work-with-playbooks.rst"
   },
   "fixture": "eval/fixtures/mattermost-playbook-task-markdown",

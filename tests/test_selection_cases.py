@@ -80,3 +80,24 @@ def test_mp2t_snapshot_preserves_ts_in_all_arms():
         extensions = set(re.findall(r'\.[a-z0-9]+', spec['arms'][arm]))
         assert '.ts' in extensions, arm
         assert ('.m2t' in extensions) == (arm != 'C')
+
+
+@pytest.mark.parametrize('spec', build_mod.SPECS[10:], ids=lambda s: s['case'])
+def test_new_case_source_matches_frame_end_snapshot(spec):
+    snapshots = json.loads((ROOT / 'data/requirement-selection/current-doc-check.json').read_text())['snapshots']
+    assert snapshots[spec['project_id']].startswith(spec['source']['snapshot'])
+
+
+def test_selection_cases_cover_exactly_the_frozen_selected_candidates():
+    selection = json.loads((ROOT / 'data/requirement-selection/selection.json').read_text())
+    selected = {row['candidate_id'] for rows in selection['selected'].values() for row in rows}
+    cases = [spec['candidate_id'] for spec in build_mod.SPECS]
+    assert len(cases) == len(set(cases))
+    assert set(cases) == selected
+
+
+def test_group_permission_basis_invites_a_user_instead_of_a_group():
+    spec = next(s for s in build_mod.SPECS if s['case'] == 'openproject-invite-permission-basis')
+    fixture = next(f for f in spec['fixtures'] if f['second']['kind'] == 'group')
+    principal = next(p for p in fixture['state']['principals'] if p['id'] == fixture['second']['id'])
+    assert principal['kind'] == 'user'

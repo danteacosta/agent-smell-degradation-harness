@@ -1,0 +1,53 @@
+{
+  "schema_version": "paperless-custom-field-no-value-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 7,
+  "source_scaffold_sha256": "4c2b4c7bff261b02d44e7ab7fec2b0a71c71bd6abdf923c55e71d8e47156d3f1",
+  "runner_sha256": "6909efe3c2ed4cabed32bb0c323e175ae5b88d5f3d55dcdfb80b25c6e6ec4523",
+  "qualifier_sha256": "64fc08796958a934c10ffa7f95f922c66dbd9b83f55b829d738aaf642982a237",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "ade1a7559fb89a043f689d6a84e8e467420f0f28e2045d78d5709e5afc1507a8"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "b46e520e779d694b8e041058df59d8a3d476f3f3989d9406838a70451f712bef"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "bee80826ca51da88d508ba9e3a228e42fd1b52751edb65e84cbc16d148f92d35"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "7d6bfbdb03ab187a7bf421689d7a05d55b37d20014f9f8e8a244fac855338d4c"
+    },
+    {
+      "mode": "drop-fields-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "3ebaceca7755f398618b69e8743a029835252850869185e4c58017a4647e5eef"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "26ff4f9a54b6d06a3c4038d81c9ea96c5a770015f9fb9ababd1e47ede362380f"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "4c3b22640af67614eb43a8101b5b7cdb34da32d245a5c549cf0bf3a266bca92e"
+    }
+  ]
+}

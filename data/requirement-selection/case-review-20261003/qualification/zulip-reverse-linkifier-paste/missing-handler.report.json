@@ -1,0 +1,8 @@
+{
+  "schema_version": "zulip-reverse-linkifier-paste-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "8983501516c0082c86469f83516c3bd05ba2c9aa9c886232d51436297285544e",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

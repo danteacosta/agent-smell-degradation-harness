@@ -1,0 +1,10 @@
+{
+  "schema_version": "mattermost-anonymous-team-url-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "17c8283a6bfeccf2bdab0d10d6a9d8a87c83fed63629975e1e37bf4b177886a2",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

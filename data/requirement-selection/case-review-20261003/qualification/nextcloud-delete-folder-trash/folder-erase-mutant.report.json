@@ -1,0 +1,20 @@
+{
+  "schema_version": "nextcloud-delete-folder-trash-browser/v1",
+  "status": "complete",
+  "app_sha256": "b016b60abc3bd71ea8f332188898b8613299939849b08cd548e300aad748bb66",
+  "assertions": {
+    "folder_removed_from_files_1": true,
+    "folder_in_trash_bin_1": false,
+    "restore_returns_item_1": true,
+    "delete_permanently_removes_1": true,
+    "folder_removed_from_files_2": true,
+    "folder_in_trash_bin_2": false,
+    "restore_returns_item_2": true,
+    "delete_permanently_removes_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

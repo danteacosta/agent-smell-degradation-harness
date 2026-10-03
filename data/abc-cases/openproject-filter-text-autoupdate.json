@@ -6,7 +6,7 @@
   "source": {
     "commit": "db54165614",
     "file": "docs/user-guide/work-packages/work-package-table-configuration/README.md",
-    "snapshot": "66f582c19f",
+    "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
     "snapshot_file": "docs/user-guide/work-packages/work-package-table-configuration/README.md"
   },
   "fixture": "eval/fixtures/openproject-filter-text-autoupdate",

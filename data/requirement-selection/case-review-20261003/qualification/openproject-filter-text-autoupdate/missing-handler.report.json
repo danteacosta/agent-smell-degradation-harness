@@ -1,0 +1,8 @@
+{
+  "schema_version": "openproject-filter-text-autoupdate-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "d3e47cdba1d24c2799042eee1fc182c4626f18a7fa9bec31329af6e0a60a26f5",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

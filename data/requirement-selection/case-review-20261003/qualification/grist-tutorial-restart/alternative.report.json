@@ -1,0 +1,20 @@
+{
+  "schema_version": "grist-tutorial-restart-browser/v1",
+  "status": "complete",
+  "app_sha256": "e67e7c5f57a9f0ea8e5e87e2dedf53e375d95a74b0753a622a49c325f9b407d9",
+  "assertions": {
+    "unsaved_edit_lost_1": true,
+    "page_refreshed_1": true,
+    "tutorial_restarted_1": true,
+    "other_rows_unchanged_1": true,
+    "unsaved_edit_lost_2": true,
+    "page_refreshed_2": true,
+    "tutorial_restarted_2": true,
+    "saved_edit_kept_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

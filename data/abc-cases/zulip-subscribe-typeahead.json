@@ -6,7 +6,7 @@
   "source": {
     "commit": "94c98c5749",
     "file": "help/include/subscribe-user-to-channel.md",
-    "snapshot": "9778ffc23c",
+    "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
     "snapshot_file": "starlight_help/src/content/include/_SubscribeUserToChannel.mdx"
   },
   "fixture": "eval/fixtures/zulip-subscribe-typeahead",

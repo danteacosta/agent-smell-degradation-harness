@@ -6,7 +6,7 @@
   "source": {
     "commit": "b254b7d3af",
     "file": "docs/Features/ImportExport/Sync.md",
-    "snapshot": "38415f04ca",
+    "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
     "snapshot_file": "docs/Features/ImportExport/Sync.md"
   },
   "fixture": "eval/fixtures/wekan-sync-local-edits",

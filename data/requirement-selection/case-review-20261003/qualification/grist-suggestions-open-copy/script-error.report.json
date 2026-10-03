@@ -1,0 +1,10 @@
+{
+  "schema_version": "grist-suggestions-open-copy-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "eda183e05e89395d4d02ca27fc8eee68f788a354d3df84a4440d45f47796103f",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

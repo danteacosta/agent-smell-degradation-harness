@@ -6,7 +6,7 @@
   "source": {
     "commit": "4af6f743b0",
     "file": "docs/user-guide/projects/project-settings/files/README.md",
-    "snapshot": "66f582c19f",
+    "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
     "snapshot_file": "docs/user-guide/projects/project-settings/files/README.md"
   },
   "fixture": "eval/fixtures/openproject-files-tab-attachments",

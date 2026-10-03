@@ -1,0 +1,8 @@
+{
+  "schema_version": "openproject-invite-permission-basis-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "68066c3781ddee95768d7673c62ca8d0900761e46efd00440e5fbcaa0a0e1b3c",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

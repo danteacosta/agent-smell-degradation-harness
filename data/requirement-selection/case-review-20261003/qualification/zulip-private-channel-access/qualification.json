@@ -1,0 +1,53 @@
+{
+  "schema_version": "zulip-private-channel-access-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 7,
+  "source_scaffold_sha256": "a5c94813245e6115e3b1364514151a19aea0d51d5209561b8c2bcea515a69200",
+  "runner_sha256": "819e802c2337b3d0f705adbc2b6c5a539bcb7a549abcebf408ef9b8c89545079",
+  "qualifier_sha256": "e7b1837c39e1739777b03d3a45ea28e61c23cb4875be532f0bc263500a158f03",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "44faff1bb5550642ee99194b35466dc085c5f91afec11918aca8eac50f2a1b09"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "98b26ef39368788635e2def20648afc121e86b511f141e632764933510983171"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "081a4eeec32a9c482e1caa560339ffa561aa354afb3b77dfeefaa5f2146a66fd"
+    },
+    {
+      "mode": "subscribed-only-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "c0ba14e7ac0a361c2a7f421adb91375720ed49e2260cfd4e32e12bc78712a091"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "6db4e46193231718e811185b3a06e696a5e094607dd4181715a7eb5f566a373a"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "03aefff49936db02bed9090b4b91751a112e90fa8197ae70f4066c2ce2757613"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "60f0f1755b54d3e2d2507d259c27b28dbe8ab7de5e0beabd4e9d023d15f6a8ec"
+    }
+  ]
+}

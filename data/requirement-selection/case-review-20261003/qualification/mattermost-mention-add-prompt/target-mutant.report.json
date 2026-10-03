@@ -1,0 +1,22 @@
+{
+  "schema_version": "mattermost-mention-add-prompt-browser/v1",
+  "status": "complete",
+  "app_sha256": "fe065728fe78abd6e3a84acafcc0d1bc0b4d9c3890f3168faf5807ff465e3571",
+  "assertions": {
+    "nonmember_prompted_not_added_1": false,
+    "member_not_prompted_1": true,
+    "prompt_adds_nonmember_1": false,
+    "message_posted_once_1": true,
+    "existing_members_kept_1": true,
+    "nonmember_prompted_not_added_2": false,
+    "member_not_prompted_2": true,
+    "prompt_adds_nonmember_2": false,
+    "message_posted_once_2": true,
+    "existing_members_kept_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

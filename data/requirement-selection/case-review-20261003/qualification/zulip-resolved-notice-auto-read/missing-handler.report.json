@@ -1,0 +1,8 @@
+{
+  "schema_version": "zulip-resolved-notice-auto-read-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "937c3a0db18c8db95341178c7838897e6fc31042bb91d9d7c5e34e311258096f",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

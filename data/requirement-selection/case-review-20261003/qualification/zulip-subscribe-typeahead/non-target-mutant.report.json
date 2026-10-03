@@ -1,0 +1,18 @@
+{
+  "schema_version": "zulip-subscribe-typeahead-browser/v1",
+  "status": "complete",
+  "app_sha256": "da7876889410896aa25a594874e9d02a332ea2bb160beb15f9b995f5c5e140ed",
+  "assertions": {
+    "subscribed_users_excluded_1": true,
+    "unsubscribed_matches_suggested_1": true,
+    "non_matching_users_excluded_1": false,
+    "subscribed_users_excluded_2": true,
+    "unsubscribed_matches_suggested_2": true,
+    "non_matching_users_excluded_2": false
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

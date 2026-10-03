@@ -6,7 +6,7 @@
   "source": {
     "commit": "f9dff2cff3",
     "file": "user_manual/files/deleted_file_management.rst",
-    "snapshot": "8d74036494",
+    "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
     "snapshot_file": "user_manual/files/deleted_file_management.rst"
   },
   "fixture": "eval/fixtures/nextcloud-delete-folder-trash",

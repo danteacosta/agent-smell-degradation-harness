@@ -1,0 +1,10 @@
+{
+  "schema_version": "zulip-private-channel-access-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "07f2001bb9381867523e0a5708a367815ff71f9f246f04e43de3215f3baae674",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

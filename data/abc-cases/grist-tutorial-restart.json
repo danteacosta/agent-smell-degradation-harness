@@ -6,7 +6,7 @@
   "source": {
     "commit": "4c173049c5",
     "file": "help/en/docs/document-tutorials.md",
-    "snapshot": "b047726e32",
+    "snapshot": "b047726e327709d214e3b63222ee052de6399934",
     "snapshot_file": "help/en/docs/document-tutorials.md"
   },
   "fixture": "eval/fixtures/grist-tutorial-restart",

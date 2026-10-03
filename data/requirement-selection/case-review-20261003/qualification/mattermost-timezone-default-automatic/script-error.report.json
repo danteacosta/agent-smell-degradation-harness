@@ -1,0 +1,10 @@
+{
+  "schema_version": "mattermost-timezone-default-automatic-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "02e0f312bbba4d7d0bc218897973216ffa8e52c5354b649624c34dee0b03805a",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

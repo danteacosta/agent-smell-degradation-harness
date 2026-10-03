@@ -6,7 +6,7 @@
   "source": {
     "commit": "a88e2fc1fb",
     "file": "user_manual/talk/call.rst",
-    "snapshot": "8d74036494",
+    "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
     "snapshot_file": "user_manual/talk/call.rst"
   },
   "fixture": "eval/fixtures/nextcloud-breakout-rooms",

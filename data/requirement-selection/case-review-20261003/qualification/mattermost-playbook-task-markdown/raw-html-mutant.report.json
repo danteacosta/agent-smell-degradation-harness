@@ -1,0 +1,18 @@
+{
+  "schema_version": "mattermost-playbook-task-markdown-browser/v1",
+  "status": "complete",
+  "app_sha256": "ba92215ae46c73280015bc6f917ae9b7a96f9d83d752cccb4d074cab1bacf171",
+  "assertions": {
+    "markdown_rendered_1": false,
+    "tasks_added_in_order_1": true,
+    "plain_task_shown_as_typed_1": true,
+    "markdown_rendered_2": false,
+    "tasks_added_in_order_2": true,
+    "plain_task_shown_as_typed_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

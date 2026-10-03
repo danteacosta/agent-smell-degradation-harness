@@ -1,0 +1,16 @@
+{
+  "schema_version": "paperless-own-profile-browser/v1",
+  "status": "complete",
+  "app_sha256": "ba6156231029e363ff3e433ecc7c1b3a6265ea3c76d26777198a3a90ba74eb26",
+  "assertions": {
+    "saved_without_user_permissions_1": true,
+    "username_unchanged_1": true,
+    "saved_with_user_permissions_2": true,
+    "username_unchanged_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

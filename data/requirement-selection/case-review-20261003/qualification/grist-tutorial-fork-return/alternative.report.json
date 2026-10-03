@@ -1,0 +1,18 @@
+{
+  "schema_version": "grist-tutorial-fork-return-browser/v1",
+  "status": "complete",
+  "app_sha256": "22ae4d9833e6395e3ba6f30b7f73a199be679b43ce98254ffea22e5ecdc77b39",
+  "assertions": {
+    "first_visit_opens_own_fork_1": true,
+    "returns_to_fork_1": true,
+    "default_mode_original_1": true,
+    "fork_url_opens_fork_2": true,
+    "returns_to_fork_2": true,
+    "default_mode_original_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

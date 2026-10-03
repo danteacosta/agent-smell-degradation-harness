@@ -1,0 +1,53 @@
+{
+  "schema_version": "wekan-sync-local-edits-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 7,
+  "source_scaffold_sha256": "2b87af0b11246285d1fa11665b8e8db6a1b1e09e1a3f4e0b9ce3fa5cb830a2c0",
+  "runner_sha256": "d16b14e94ae0166aa34a7ad83ae43143d5a2171e8f3f5a5c2311662401fb27f1",
+  "qualifier_sha256": "375f66323f6af93751a28a5fda95f425dd02a49160b188465d6569658068546d",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "8954083ae330c5c33f942498449b958fa2dded9795e8ea03cefdfc4734575318"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "2df5114519bb8ebdf3cefc656ce85f0a21637c40094239fe33c5d71dcea9271b"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "8dd81a3fa959f5cfae85c96b775910aeb54706fadb51024c6bb4d3aa7b416257"
+    },
+    {
+      "mode": "never-update-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "e45a7916b814fe9355050fc9fac81babb6ccb551d7a5b7ef24923043ee3470c0"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "214af25dea958bf80ce58ceada9b09fdd2b5a31ffe379ab370b83059abda1759"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "0dde0e85b9eb672450fed0a080acf5a4f85709d53f3f2675c0aad7eee982e4c6"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "d0b04c639b5153940f31ba51074970966d3f940bf6b6b4797b8766b013aed89c"
+    }
+  ]
+}

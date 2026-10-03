@@ -1,0 +1,53 @@
+{
+  "schema_version": "zulip-unsubscribe-self-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 7,
+  "source_scaffold_sha256": "3e966a224df17a744f41ed76b49573861982ea42272b3e90326c61ec336fcdc9",
+  "runner_sha256": "143f0616a80692162fe6e7cd205b5c39187113f0bc375193d2aa37beee8a7f49",
+  "qualifier_sha256": "55c59f4ed2895cce8a878a2f4f3c6d7584c9ed7dc13ca9ab69da37fd181141b1",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "5436ecb5ec69fa2556bf4cf744e6ba99c989e193b783e3029b5f4be9fb46ce01"
+    },
+    {
+      "mode": "hide-others",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "66d3e3ee5b4abcaa42d0efcd53870c7ce4159ed1a84acafdb5121d9ab40c2a3e"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "623506ea408dda5a8f875a55d855128f6dbd844927ea3ff05b54a7197009461f"
+    },
+    {
+      "mode": "symmetric-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "eadf675536b07a1b8ac76dbc32b782c37361305d26459dea92c9834d236db406"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "f00069beede255419ae59d05093918b3df9581a50841c1f7f8d1097aa97508ea"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "e3892efa45b671d7a9080966dae967836d9d074e14d6cd9ac8fe4e7d6bc4a1cc"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "f52fbf97792c8b54976f1129e9d15f1653a79e1a61760df802b21ea08e9f1bc0"
+    }
+  ]
+}

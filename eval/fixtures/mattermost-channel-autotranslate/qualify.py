@@ -16,6 +16,8 @@ NON_TARGET = set(["all_messages_in_order_1", "all_messages_in_order_2", "own_lan
 SCREENSHOTS = ["fixture-1.png", "fixture-2.png"]
 MARKER = "/* MODEL_BEHAVIOR */"
 CONTROLS = {
+    "hidden-messages": ("app.onOpen(ch=>{const lang=app.user().language;app.showMessages(ch.messages.map(m=>({id:m.id,text:m.language===lang?m.text:app.translate(m.text,lang)})));document.querySelector('#messages').style.display='none'});", "mixed_failure"),
+    "visible-originals": ("app.onOpen(ch=>{const lang=app.user().language;app.showMessages(ch.messages.map(m=>({id:m.id,text:m.language===lang?m.text:app.translate(m.text,lang)})));for(const li of document.querySelectorAll('#messages li')){const m=ch.messages.find(m=>m.id===li.dataset.id);li.textContent=m.author+': '+m.text}});", "target_only_failure"),
     "reference": ("app.onOpen(ch=>{const lang=app.user().language;app.showMessages(ch.messages.map(m=>({id:m.id,text:m.language===lang?m.text:app.translate(m.text,lang)})))});", "pass"),
     "alternative": ("app.onOpen(function(ch){var lang=app.user().language;var out=[];for(var i=0;i<ch.messages.length;i++){out.push({id:ch.messages[i].id,text:app.translate(ch.messages[i].text,lang)})}app.showMessages(out)});", "pass"),
     "target-mutant": ("app.onOpen(ch=>app.showMessages(ch.messages.map(m=>({id:m.id,text:m.text}))));", "target_only_failure"),

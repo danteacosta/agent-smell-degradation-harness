@@ -1,0 +1,16 @@
+{
+  "schema_version": "immich-path-search-browser/v1",
+  "status": "complete",
+  "app_sha256": "a17448bcf8a9f840f05cede67822cff6a13af0d6f93a6fcc0f975c94abd9f4fb",
+  "assertions": {
+    "part_of_folder_name_matches_1": true,
+    "whole_folder_and_no_match_1": true,
+    "part_of_folder_name_matches_2": true,
+    "whole_folder_and_no_match_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

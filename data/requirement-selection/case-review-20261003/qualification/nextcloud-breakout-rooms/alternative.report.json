@@ -1,0 +1,18 @@
+{
+  "schema_version": "nextcloud-breakout-rooms-browser/v1",
+  "status": "complete",
+  "app_sha256": "351dc5152caf18542b5065dd15c8b0793778141c7e293f7ebb6dbbca42e8b203",
+  "assertions": {
+    "requested_rooms_created_1": true,
+    "each_participant_in_one_room_1": true,
+    "rooms_are_smaller_groups_1": true,
+    "requested_rooms_created_2": true,
+    "each_participant_in_one_room_2": true,
+    "rooms_are_smaller_groups_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

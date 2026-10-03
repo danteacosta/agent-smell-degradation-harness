@@ -1,0 +1,20 @@
+{
+  "schema_version": "wekan-sync-local-edits-browser/v1",
+  "status": "complete",
+  "app_sha256": "5e97e99892d9c18b12a808902682076a41b097a126decc82b36ad19b960777fa",
+  "assertions": {
+    "unchanged_local_text_updated_1": true,
+    "local_edit_kept_1": true,
+    "new_item_created_1": false,
+    "missing_item_archived_1": false,
+    "unchanged_local_text_updated_2": true,
+    "local_edit_kept_2": true,
+    "new_item_created_2": false,
+    "missing_item_archived_2": false
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

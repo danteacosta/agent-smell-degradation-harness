@@ -1,6 +1,6 @@
 """Grist selection cases (six admitted Grist rules; arm A from the frame-end help snapshot)."""
 
-SNAPSHOT = "b047726e32"
+SNAPSHOT = "b047726e327709d214e3b63222ee052de6399934"
 
 CONTEXT_MENU = {
     "case": "grist-context-menu-shortcut",
@@ -58,13 +58,17 @@ document.querySelector('#grid').addEventListener('keydown',e=>{if(behavior)behav
     await (await one(page,`#grid td[data-row="${row}"][data-col="${col}"]`)).click();
     if((await menu()).kind!=='')throw new InterfaceError('menu still open after moving the cursor');
     await page.keyboard.press(key);
-    const m=await menu();check(name,m.kind===kind&&m.row===row&&m.col===col);
+    const m=await menu();const items=page.locator('#menu [role=menuitem]');
+    const visible=await page.locator('#menu').isVisible()&&await items.count()>0;
+    const itemsVisible=visible&&await items.evaluateAll(ns=>ns.every(x=>x.checkVisibility()));
+    check(name,itemsVisible&&m.kind===kind&&m.row===row&&m.col===col);
   }
 """,
     "target": ["shift_f10_opens_context_menu_1", "shift_f10_opens_context_menu_2"],
     "non_target": ["menu_key_opens_context_menu_1", "column_menu_shortcut_1", "row_menu_shortcut_1",
                    "column_menu_shortcut_2", "row_menu_shortcut_2", "menu_key_opens_context_menu_2"],
     "controls": {
+        "hidden-context-menu": ("app.onKey(e=>{if(!(e.key==='ContextMenu'||(e.key==='F10'&&e.shiftKey)))return;if(e.ctrlKey)app.openMenu('column');else if(e.altKey)app.openMenu('row');else{app.openMenu('context');if(e.key==='F10')document.querySelector('#menu').hidden=true}});", "target_only_failure"),
         "reference": ("app.onKey(e=>{if(!(e.key==='ContextMenu'||(e.key==='F10'&&e.shiftKey)))return;if(e.ctrlKey)app.openMenu('column');else if(e.altKey)app.openMenu('row');else app.openMenu('context')});", "pass"),
         "alternative": ("const SHORTCUTS={'ContextMenu':'context','Shift+F10':'context','Ctrl+ContextMenu':'column','Ctrl+Shift+F10':'column','Alt+ContextMenu':'row','Alt+Shift+F10':'row'};app.onKey(function(e){var name=(e.ctrlKey?'Ctrl+':'')+(e.altKey?'Alt+':'')+(e.shiftKey?'Shift+':'')+e.key;if(SHORTCUTS[name])app.openMenu(SHORTCUTS[name])});", "pass"),
         "target-mutant": ("app.onKey(e=>{const kind=e.ctrlKey?'column':e.altKey?'row':'context';if(e.key==='ContextMenu')app.openMenu(kind);else if(e.key==='F10'&&e.shiftKey&&kind!=='context')app.openMenu(kind)});", "target_only_failure"),
@@ -605,7 +609,8 @@ document.querySelector('#add').addEventListener('click',()=>{if(behavior)behavio
     "journey_js": r"""
   const n=index+1;const list=()=>page.locator('#managers li').evaluateAll(ns=>ns.map(x=>x.dataset.email));
   if(JSON.stringify(await list())!==JSON.stringify(fixture.state.managers))throw new InterfaceError('billing managers missing before adding');
-  async function add(email){await (await one(page,'#email')).fill(email);await (await one(page,'#add')).click();await reload(page)}
+  async function add(email){const field=await one(page,'#email');const button=await one(page,'#add');
+    if(await field.isEnabled()&&await button.isEnabled()){await field.fill(email);await button.click()}await reload(page)}
   for(const email of fixture.allowed)await add(email);
   const expected=[...fixture.state.managers,...fixture.allowed];
   check(`managers_added_${n}`,JSON.stringify(await list())===JSON.stringify(expected));
@@ -617,6 +622,7 @@ document.querySelector('#add').addEventListener('click',()=>{if(behavior)behavio
     "target": ["no_more_than_ten_1", "no_more_than_ten_2"],
     "non_target": ["managers_added_1", "managers_added_2", "existing_managers_kept_1", "existing_managers_kept_2"],
     "controls": {
+        "disabled-at-limit": ("document.querySelector('#add').disabled=app.managers().length>=10;app.onAdd(email=>{if(app.managers().length<10)app.addManager(email);document.querySelector('#add').disabled=app.managers().length>=10});", "pass"),
         "reference": ("app.onAdd(email=>{if(app.managers().length>=10){app.showMessage('You can add up to 10 billing managers.');return}app.addManager(email)});", "pass"),
         "alternative": ("app.onAdd(function(e){var m=app.managers();e=e.trim().toLowerCase();if(m.length<10&&m.indexOf(e)<0)app.addManager(e);else app.showMessage('Cannot add billing manager')});", "pass"),
         "target-mutant": ("app.onAdd(email=>app.addManager(email));", "target_only_failure"),

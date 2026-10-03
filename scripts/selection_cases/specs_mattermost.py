@@ -1,6 +1,6 @@
 """Mattermost selection cases (six admitted rules; arm A from the frame-end documentation snapshot)."""
 
-SNAPSHOT = "bd09d95951"
+SNAPSHOT = "bd09d959514c34e72a33c24663b5946682b656ec"
 
 PLAYBOOK_MARKDOWN = {
     "case": "mattermost-playbook-task-markdown",
@@ -315,16 +315,18 @@ document.querySelector('#open').addEventListener('click',()=>{if(behavior)behavi
   const n=index+1;const msgs=fixture.state.channel.messages;
   if(await page.locator('#messages li').count()!==0)throw new InterfaceError('messages shown before opening the channel');
   await (await one(page,'#open')).click();
-  const rows=await page.locator('#messages li').evaluateAll(ns=>ns.map(x=>[x.dataset.id,x.dataset.text]));
-  const shown=Object.fromEntries(rows);
-  check(`foreign_messages_translated_${n}`,Object.entries(fixture.foreign).every(([id,text])=>shown[id]===text));
-  check(`own_language_messages_unchanged_${n}`,fixture.own.every(id=>shown[id]===msgs.find(m=>m.id===id).text));
-  check(`all_messages_in_order_${n}`,JSON.stringify(rows.map(r=>r[0]))===JSON.stringify(msgs.map(m=>m.id)));
+  const rows=await page.locator('#messages li').evaluateAll(ns=>ns.map(x=>[x.dataset.id,x.innerText,x.checkVisibility()]));
+  const shown=Object.fromEntries(rows.map(([id,text,visible])=>[id,visible?text:null]));
+  check(`foreign_messages_translated_${n}`,Object.entries(fixture.foreign).every(([id,text])=>shown[id]===msgs.find(m=>m.id===id).author+': '+text));
+  check(`own_language_messages_unchanged_${n}`,fixture.own.every(id=>shown[id]===msgs.find(m=>m.id===id).author+': '+msgs.find(m=>m.id===id).text));
+  check(`all_messages_in_order_${n}`,rows.every(r=>r[2])&&JSON.stringify(rows.map(r=>r[0]))===JSON.stringify(msgs.map(m=>m.id)));
 """,
     "target": ["foreign_messages_translated_1", "foreign_messages_translated_2"],
     "non_target": ["own_language_messages_unchanged_1", "own_language_messages_unchanged_2",
                    "all_messages_in_order_1", "all_messages_in_order_2"],
     "controls": {
+        "hidden-messages": ("app.onOpen(ch=>{const lang=app.user().language;app.showMessages(ch.messages.map(m=>({id:m.id,text:m.language===lang?m.text:app.translate(m.text,lang)})));document.querySelector('#messages').style.display='none'});", "mixed_failure"),
+        "visible-originals": ("app.onOpen(ch=>{const lang=app.user().language;app.showMessages(ch.messages.map(m=>({id:m.id,text:m.language===lang?m.text:app.translate(m.text,lang)})));for(const li of document.querySelectorAll('#messages li')){const m=ch.messages.find(m=>m.id===li.dataset.id);li.textContent=m.author+': '+m.text}});", "target_only_failure"),
         "reference": ("app.onOpen(ch=>{const lang=app.user().language;app.showMessages(ch.messages.map(m=>({id:m.id,text:m.language===lang?m.text:app.translate(m.text,lang)})))});", "pass"),
         "alternative": ("app.onOpen(function(ch){var lang=app.user().language;var out=[];for(var i=0;i<ch.messages.length;i++){out.push({id:ch.messages[i].id,text:app.translate(ch.messages[i].text,lang)})}app.showMessages(out)});", "pass"),
         "target-mutant": ("app.onOpen(ch=>app.showMessages(ch.messages.map(m=>({id:m.id,text:m.text}))));", "target_only_failure"),

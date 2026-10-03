@@ -1,0 +1,53 @@
+{
+  "schema_version": "grist-tutorial-restart-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 7,
+  "source_scaffold_sha256": "9f77004aac95af02daa68eef62cd2e16bc20f04a45771ebb16b9bcb69ff38ada",
+  "runner_sha256": "9c525afddc86f9d7fe044d8fba527437d2a0efe3e9740e98d48f179b1002a942",
+  "qualifier_sha256": "2ffdb99da1747c7d822f11889115fd6e1cf45e670fddb78e9e85b1df850c1587",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "0d9c0a15dda8632bd0762299e425e5bc8918ff01da2b258c6837fcb7276c006f"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "aa694f707a18ffa13e2122d94d443abc5b4c253514e52f21f4bf6c464173e0d7"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "4bb2f4b91ed9d9d1c8014a6d87523e053df3681a21808ebb2d500ce54a5391ab"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "44129b7b1635e610a8cb6a8a4078fbaf348f7ee587745eea3c2db415e27c5aac"
+    },
+    {
+      "mode": "pristine-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "7f793626becbb9b18098b4ba606c6a87d24d088e3bda532e0b1cce0c29f5e83d"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "4b4064d972cda3c3fa594a8b9659ea1f94bf5f1f45fb2891865532b9c5c1e2f8"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "901abaccca677319f4ef3eebe745432e0bea7a9e81d61be606b6428f853c07f5"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": "grist-tutorial-fork-return-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "0e3a11b50f492a778f9b3b68650f00adb7d7fa6c8c6de435af5671c4a0af6559",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

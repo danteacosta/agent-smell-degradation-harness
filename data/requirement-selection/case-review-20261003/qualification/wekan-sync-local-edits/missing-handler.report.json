@@ -1,0 +1,8 @@
+{
+  "schema_version": "wekan-sync-local-edits-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "818213c7395208da847474f2481863b3b61aa0a079de056c1c1b3ba16af68c67",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

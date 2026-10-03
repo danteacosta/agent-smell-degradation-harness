@@ -1,0 +1,8 @@
+{
+  "schema_version": "paperless-doc-title-placeholder-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "8a5bc1ad68b2603eed0dfd403592604d8e14037dc965009e66d6ed4631229200",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

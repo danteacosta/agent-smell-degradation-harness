@@ -1,0 +1,8 @@
+{
+  "schema_version": "wekan-field-order-independent-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "bb9a929df74cfbeced4573c61f06af78856de68939fa8cfbef03aff48d71f0bf",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

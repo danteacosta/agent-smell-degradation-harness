@@ -1,0 +1,59 @@
+{
+  "schema_version": "zulip-gif-picker-disabled-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 8,
+  "source_scaffold_sha256": "eca72b79a8462746f5a524cdc964cd552a0786cad098217014822d3df023582f",
+  "runner_sha256": "e26970774a958fdcc364e828e88c19618776252d31c240cb23366b78322d202f",
+  "qualifier_sha256": "b5303cbeb83682bb317c5b53926fab83c4a081c09cc419fb1bddcd94a04b927a",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "10e1f89bcc8cd09d89d18a918549b7b977f973fe831a4fd022ade30ab198680b"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "9da579ab60f07489e9ad204292c5b2402cf1df28d02d8d759373d8de3faf5670"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "736d648a69e56d1106fbf96e6800667970726970a3ea061620291a1da61be53a"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "84129d3e89208ece5fccf23102075695cd3a35c96f5ce7548fb30b0cb1724e3d"
+    },
+    {
+      "mode": "always-remove-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "8690bf58be8faa74ab62e0deef1249173f1aed478aa573af726a2132fbe00ccb"
+    },
+    {
+      "mode": "clear-toolbar-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "1f726ccb1c51e3d7aec4380c7b12b27d07e1e66ac45da9bc05b9ffb5745be628"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "9e664e3903de4895061aea847bbac0c0545238f4e045ec85d99ecfc0c1df4aba"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "ef20f3c5f8d3b605ebd687321e3e9d3d0156950c8726ffcd6a26c51e5ec42ef4"
+    }
+  ]
+}

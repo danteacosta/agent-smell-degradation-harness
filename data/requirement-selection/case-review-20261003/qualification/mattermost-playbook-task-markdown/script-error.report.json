@@ -1,0 +1,10 @@
+{
+  "schema_version": "mattermost-playbook-task-markdown-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "46e1cb6c0b55189f38cc43d975bcac1205a72f6bbc1c33780bce41c058a3928e",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

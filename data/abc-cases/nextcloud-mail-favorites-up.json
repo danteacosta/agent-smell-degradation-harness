@@ -6,7 +6,7 @@
   "source": {
     "commit": "215c005b07",
     "file": "user_manual/groupware/mail.rst",
-    "snapshot": "8d74036494",
+    "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
     "snapshot_file": "user_manual/groupware/mail.rst"
   },
   "fixture": "eval/fixtures/nextcloud-mail-favorites-up",

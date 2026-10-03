@@ -13,11 +13,11 @@ async function journey(page,fixture,index){
   const n=index+1;const msgs=fixture.state.channel.messages;
   if(await page.locator('#messages li').count()!==0)throw new InterfaceError('messages shown before opening the channel');
   await (await one(page,'#open')).click();
-  const rows=await page.locator('#messages li').evaluateAll(ns=>ns.map(x=>[x.dataset.id,x.dataset.text]));
-  const shown=Object.fromEntries(rows);
-  check(`foreign_messages_translated_${n}`,Object.entries(fixture.foreign).every(([id,text])=>shown[id]===text));
-  check(`own_language_messages_unchanged_${n}`,fixture.own.every(id=>shown[id]===msgs.find(m=>m.id===id).text));
-  check(`all_messages_in_order_${n}`,JSON.stringify(rows.map(r=>r[0]))===JSON.stringify(msgs.map(m=>m.id)));
+  const rows=await page.locator('#messages li').evaluateAll(ns=>ns.map(x=>[x.dataset.id,x.innerText,x.checkVisibility()]));
+  const shown=Object.fromEntries(rows.map(([id,text,visible])=>[id,visible?text:null]));
+  check(`foreign_messages_translated_${n}`,Object.entries(fixture.foreign).every(([id,text])=>shown[id]===msgs.find(m=>m.id===id).author+': '+text));
+  check(`own_language_messages_unchanged_${n}`,fixture.own.every(id=>shown[id]===msgs.find(m=>m.id===id).author+': '+msgs.find(m=>m.id===id).text));
+  check(`all_messages_in_order_${n}`,rows.every(r=>r[2])&&JSON.stringify(rows.map(r=>r[0]))===JSON.stringify(msgs.map(m=>m.id)));
 }
 async function runFixture(browser,fixture,index){const context=await browser.newContext({viewport:{width:1000,height:760},timezoneId:'UTC',serviceWorkers:'block'});
   try{

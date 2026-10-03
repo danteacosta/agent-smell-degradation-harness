@@ -1,0 +1,18 @@
+{
+  "schema_version": "paperless-ai-suggestions-blank-text-browser/v1",
+  "status": "complete",
+  "app_sha256": "3a26594dc53e83b47f6f88076f1989cabd46573144cc8e208499d41b46e9186a",
+  "assertions": {
+    "blank_documents_skipped_1": true,
+    "text_documents_queued_once_1": true,
+    "documents_preserved_1": true,
+    "blank_documents_skipped_2": true,
+    "text_documents_queued_once_2": true,
+    "documents_preserved_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

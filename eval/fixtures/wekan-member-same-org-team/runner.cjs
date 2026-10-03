@@ -13,8 +13,8 @@ async function journey(page,fixture,index){
   const n=index+1;const initial=fixture.state.members.map(m=>m.userId);
   const read=()=>page.locator('#members li').evaluateAll(ns=>ns.map(x=>x.dataset.user));
   const attempts=[...fixture.blocked,...fixture.member_share,...fixture.inviter_share];
-  const options=await page.locator('#user option').evaluateAll(ns=>ns.map(x=>x.value));
-  if(JSON.stringify(await read())!==JSON.stringify(initial)||!attempts.every(id=>options.includes(id)))throw new InterfaceError('members or user choices missing');
+  if(JSON.stringify(await read())!==JSON.stringify(initial))throw new InterfaceError('members missing before adding');
+  await one(page,'#user');
   for(const id of attempts){await reload(page);const select=await one(page,'#user');
     if(!(await select.locator('option').evaluateAll(ns=>ns.map(x=>x.value))).includes(id))continue;
     await select.selectOption(id);await (await one(page,'#add')).click()}

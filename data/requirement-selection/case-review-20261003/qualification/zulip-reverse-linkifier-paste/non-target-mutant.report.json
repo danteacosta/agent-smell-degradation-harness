@@ -1,0 +1,20 @@
+{
+  "schema_version": "zulip-reverse-linkifier-paste-browser/v1",
+  "status": "complete",
+  "app_sha256": "f5e004e05a780631954cf3fa27866a6b1aa5c2dd0b8d3f1bf3b5d7444c6c364c",
+  "assertions": {
+    "pasted_url_converted_1": true,
+    "unmatched_paste_kept_1": true,
+    "typed_reference_linked_1": false,
+    "one_message_per_send_1": true,
+    "pasted_url_converted_2": true,
+    "unmatched_paste_kept_2": true,
+    "typed_reference_linked_2": false,
+    "one_message_per_send_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

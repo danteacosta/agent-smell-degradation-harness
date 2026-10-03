@@ -1,6 +1,6 @@
 """WeKan selection cases (six selected rules; arm A from the frame-end documentation snapshot)."""
 
-SNAPSHOT = "38415f04ca"
+SNAPSHOT = "38415f04caf9a3536fe8faaca0cda9b8aa38cf57"
 
 WEEK_TOGGLE = {
     "case": "wekan-week-number-immediate",
@@ -468,8 +468,8 @@ document.querySelector('#add').addEventListener('click',()=>{if(behavior)behavio
   const n=index+1;const initial=fixture.state.members.map(m=>m.userId);
   const read=()=>page.locator('#members li').evaluateAll(ns=>ns.map(x=>x.dataset.user));
   const attempts=[...fixture.blocked,...fixture.member_share,...fixture.inviter_share];
-  const options=await page.locator('#user option').evaluateAll(ns=>ns.map(x=>x.value));
-  if(JSON.stringify(await read())!==JSON.stringify(initial)||!attempts.every(id=>options.includes(id)))throw new InterfaceError('members or user choices missing');
+  if(JSON.stringify(await read())!==JSON.stringify(initial))throw new InterfaceError('members missing before adding');
+  await one(page,'#user');
   for(const id of attempts){await reload(page);const select=await one(page,'#user');
     if(!(await select.locator('option').evaluateAll(ns=>ns.map(x=>x.value))).includes(id))continue;
     await select.selectOption(id);await (await one(page,'#add')).click()}
@@ -483,6 +483,7 @@ document.querySelector('#add').addEventListener('click',()=>{if(behavior)behavio
                "active_member_share_added_1", "active_member_share_added_2"],
     "non_target": ["inviter_share_added_1", "inviter_share_added_2", "members_list_intact_1", "members_list_intact_2"],
     "controls": {
+        "filtered-users": ("app.onAdd(id=>{const s=app.settings();const users=app.users();const u=users.find(x=>x.id===id);if(!u)return;const kinds=[s.boardMembersFromSameOrgOnly&&'orgs',s.boardMembersFromSameTeamOnly&&'teams'].filter(Boolean);const actor=app.actor();if(!actor.isAdmin&&kinds.length){const peers=[actor.id,...app.members().filter(m=>m.isActive).map(m=>m.userId)].map(p=>users.find(x=>x.id===p)).filter(Boolean);if(!peers.some(p=>kinds.some(k=>p[k].some(g=>u[k].includes(g))))){app.showMessage('This user does not share an Organization or Team with the board.');return}}app.addMember(id)});const ss=app.settings(),uu=app.users(),aa=app.actor();const peers=[aa.id,...app.members().filter(m=>m.isActive).map(m=>m.userId)].map(id=>uu.find(u=>u.id===id));for(const o of document.querySelectorAll('#user option')){const u=uu.find(u=>u.id===o.value);if(u&&!aa.isAdmin&&(ss.boardMembersFromSameOrgOnly||ss.boardMembersFromSameTeamOnly)&&!peers.some(p=>(ss.boardMembersFromSameOrgOnly&&p.orgs.some(v=>u.orgs.includes(v)))||(ss.boardMembersFromSameTeamOnly&&p.teams.some(v=>u.teams.includes(v)))))o.remove()}", "pass"),
         "reference": ("app.onAdd(id=>{const s=app.settings();const users=app.users();const u=users.find(x=>x.id===id);if(!u)return;const kinds=[s.boardMembersFromSameOrgOnly&&'orgs',s.boardMembersFromSameTeamOnly&&'teams'].filter(Boolean);const actor=app.actor();if(!actor.isAdmin&&kinds.length){const peers=[actor.id,...app.members().filter(m=>m.isActive).map(m=>m.userId)].map(p=>users.find(x=>x.id===p)).filter(Boolean);if(!peers.some(p=>kinds.some(k=>p[k].some(g=>u[k].includes(g))))){app.showMessage('This user does not share an Organization or Team with the board.');return}}app.addMember(id)});", "pass"),
         "alternative": ("app.onAdd(function(id){var s=app.settings(),all=app.users(),me=app.actor();function get(x){return all.filter(function(u){return u.id===x})[0]}var u=get(id);if(!u)return;var ok=me.isAdmin||(!s.boardMembersFromSameOrgOnly&&!s.boardMembersFromSameTeamOnly);app.members().forEach(function(m){if(!m.isActive)return;var p=get(m.userId);if(s.boardMembersFromSameOrgOnly&&p.orgs.some(function(o){return u.orgs.indexOf(o)>=0}))ok=true;if(s.boardMembersFromSameTeamOnly&&p.teams.some(function(t){return u.teams.indexOf(t)>=0}))ok=true});if(ok)app.addMember(id);else app.showMessage('Not allowed')});", "pass"),
         "target-mutant": ("app.onAdd(id=>{if(id)app.addMember(id)});", "target_only_failure"),

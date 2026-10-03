@@ -1,0 +1,8 @@
+{
+  "schema_version": "mattermost-channel-autotranslate-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "864f7354379ea351b4a5ca8b27b2af93e1238ff38943ac89bb122aef4aaed5dd",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

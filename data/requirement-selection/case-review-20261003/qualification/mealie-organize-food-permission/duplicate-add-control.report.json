@@ -1,0 +1,8 @@
+{
+  "schema_version": "mealie-organize-food-permission-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "2d946a9efdca322a6c68e5ccdd3ede84552284811d72367358e5ea67a4771860",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: at most one Add food button required"
+}

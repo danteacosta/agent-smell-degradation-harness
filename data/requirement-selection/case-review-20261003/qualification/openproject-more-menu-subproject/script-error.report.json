@@ -1,0 +1,10 @@
+{
+  "schema_version": "openproject-more-menu-subproject-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "82f10a8f3d2a9783b2e7a4879194a5eabf545d0fce49ff8a9eda3136b6618daa",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

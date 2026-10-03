@@ -15,16 +15,16 @@ const app=Object.freeze({
   roles(){return structuredClone(S.roles)},
   principals(){return structuredClone(S.principals)},
   members(){return structuredClone(members)},
-  addMember(projectId,principalId,roleId){if(!known(S.projects,projectId)||!known(S.principals,principalId)||!known(S.roles,roleId))throw new Error('known project, principal and role required');
+  addMember(projectId,principalId,roleId,basis='user'){if(!known(S.projects,projectId)||!known(S.principals,principalId)||!known(S.roles,roleId))throw new Error('known project, principal and role required');
     if(members.some(m=>m.project===projectId&&m.principal===principalId)){app.showMessage('Already a member.');return}
-    const p=S.principals.find(x=>x.id===principalId);members.push({project:projectId,principal:principalId,kind:p.kind,name:p.name,email:'',role:roleId});store(members);render()},
-  inviteByEmail(projectId,email,roleId){if(!known(S.projects,projectId)||!known(S.roles,roleId)||typeof email!=='string'||!/^[^@\s]+@[^@\s]+$/.test(email))throw new Error('known project, email and role required');
-    members.push({project:projectId,principal:'',kind:'user',name:email,email,role:roleId});store(members);render()},
+    const p=S.principals.find(x=>x.id===principalId);members.push({project:projectId,principal:principalId,kind:p.kind,name:p.name,email:'',role:roleId,basis});store(members);render()},
+  inviteByEmail(projectId,email,roleId,basis='user'){if(!known(S.projects,projectId)||!known(S.roles,roleId)||typeof email!=='string'||!/^[^@\s]+@[^@\s]+$/.test(email))throw new Error('known project, email and role required');
+    members.push({project:projectId,principal:'',kind:'user',name:email,email,role:roleId,basis});store(members);render()},
   showMessage(text){document.querySelector('#message').textContent=String(text)}
 });
 function render(){const list=document.querySelector('#members');list.replaceChildren();
   for(const m of members){const project=S.projects.find(p=>p.id===m.project).name,role=S.roles.find(r=>r.id===m.role).name;
-    list.append(el('li',{'data-project':m.project,'data-principal':m.principal,'data-kind':m.kind,'data-email':m.email,'data-role':m.role},m.name+' — '+project+' ('+role+')'))}}
+    list.append(el('li',{'data-project':m.project,'data-principal':m.principal,'data-kind':m.kind,'data-email':m.email,'data-role':m.role,'data-basis':m.basis||m.kind},m.name+' — '+project+' ('+role+'; permission basis: '+(m.basis||m.kind)+')'))}}
 for(const p of S.projects)document.querySelector('#invite-project').append(el('option',{value:p.id},p.name));
 for(const r of S.roles)document.querySelector('#invite-role').append(el('option',{value:r.id},r.name));
 document.querySelector('#invite-project').value=S.current;

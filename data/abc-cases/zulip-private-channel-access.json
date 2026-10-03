@@ -6,7 +6,7 @@
   "source": {
     "commit": "befe49c293",
     "file": "help/channel-permissions.md",
-    "snapshot": "9778ffc23c",
+    "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
     "snapshot_file": "starlight_help/src/content/docs/channel-permissions.mdx"
   },
   "fixture": "eval/fixtures/zulip-private-channel-access",

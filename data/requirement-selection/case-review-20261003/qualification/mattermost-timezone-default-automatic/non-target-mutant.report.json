@@ -1,0 +1,18 @@
+{
+  "schema_version": "mattermost-timezone-default-automatic-browser/v1",
+  "status": "complete",
+  "app_sha256": "6fe97c19a618a54651f086cb1cca23fd69fc03d9770986d6f0691a45bc31d96f",
+  "assertions": {
+    "untouched_save_keeps_automatic_1": true,
+    "manual_timezone_saved_1": true,
+    "saved_choice_kept_on_reopen_1": false,
+    "untouched_save_keeps_automatic_2": true,
+    "manual_timezone_saved_2": true,
+    "saved_choice_kept_on_reopen_2": false
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "nextcloud-calendar-talk-location-browser/v1",
+  "status": "complete",
+  "app_sha256": "e8b0fe22c3a396408d5c30e6219bece024e8874d91244e6aaa865c1fa3983508",
+  "assertions": {
+    "existing_conversation_linked_1": false,
+    "existing_conversation_not_duplicated_1": false,
+    "new_conversation_created_1": true,
+    "events_saved_1": true,
+    "address_location_kept_2": true,
+    "new_conversation_created_2": true,
+    "events_saved_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

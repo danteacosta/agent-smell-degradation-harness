@@ -1,0 +1,20 @@
+{
+  "schema_version": "grist-context-menu-shortcut-browser/v1",
+  "status": "complete",
+  "app_sha256": "127ba0e0d367b96f532d24d583e505b8fb9db89cc7ed570203422a2b394617ab",
+  "assertions": {
+    "shift_f10_opens_context_menu_1": false,
+    "menu_key_opens_context_menu_1": true,
+    "column_menu_shortcut_1": true,
+    "row_menu_shortcut_1": true,
+    "column_menu_shortcut_2": true,
+    "shift_f10_opens_context_menu_2": false,
+    "row_menu_shortcut_2": true,
+    "menu_key_opens_context_menu_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

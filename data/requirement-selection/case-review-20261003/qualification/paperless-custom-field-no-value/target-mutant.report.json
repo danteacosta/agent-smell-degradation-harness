@@ -1,0 +1,18 @@
+{
+  "schema_version": "paperless-custom-field-no-value-browser/v1",
+  "status": "complete",
+  "app_sha256": "c4d78a8b36362989fcd6d260e07ec777c1d93a986d4252ed7600a0858f79d5b7",
+  "assertions": {
+    "existing_value_kept_1": false,
+    "field_added_empty_1": true,
+    "other_fields_kept_1": true,
+    "value_overwrites_2": true,
+    "value_added_2": true,
+    "other_fields_kept_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

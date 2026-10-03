@@ -1,0 +1,8 @@
+{
+  "schema_version": "mattermost-guest-invite-channel-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "51e120d3366529469d224ec23de3d192ca51c91a133c1f7193e3a9177175376e",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

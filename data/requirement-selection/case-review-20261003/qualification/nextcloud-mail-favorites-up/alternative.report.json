@@ -1,0 +1,20 @@
+{
+  "schema_version": "nextcloud-mail-favorites-up-browser/v1",
+  "status": "complete",
+  "app_sha256": "6c03295e14e65811b31dafc695a4a7cee5fd2b08e3edfed36221084a1e0c21c2",
+  "assertions": {
+    "favorites_in_top_section_1": true,
+    "order_without_favorites_up_1": true,
+    "every_message_listed_once_1": true,
+    "sort_order_kept_1": true,
+    "favorites_in_top_section_2": true,
+    "order_without_favorites_up_2": true,
+    "every_message_listed_once_2": true,
+    "sort_order_kept_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

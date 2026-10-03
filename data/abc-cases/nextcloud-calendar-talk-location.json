@@ -6,7 +6,7 @@
   "source": {
     "commit": "ce0623394e",
     "file": "user_manual/talk/advanced_features.rst",
-    "snapshot": "8d74036494",
+    "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
     "snapshot_file": "user_manual/talk/calendar_integration.rst"
   },
   "fixture": "eval/fixtures/nextcloud-calendar-talk-location",

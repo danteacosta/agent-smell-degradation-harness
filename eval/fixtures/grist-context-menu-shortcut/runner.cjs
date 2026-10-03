@@ -17,7 +17,10 @@ async function journey(page,fixture,index){
     await (await one(page,`#grid td[data-row="${row}"][data-col="${col}"]`)).click();
     if((await menu()).kind!=='')throw new InterfaceError('menu still open after moving the cursor');
     await page.keyboard.press(key);
-    const m=await menu();check(name,m.kind===kind&&m.row===row&&m.col===col);
+    const m=await menu();const items=page.locator('#menu [role=menuitem]');
+    const visible=await page.locator('#menu').isVisible()&&await items.count()>0;
+    const itemsVisible=visible&&await items.evaluateAll(ns=>ns.every(x=>x.checkVisibility()));
+    check(name,itemsVisible&&m.kind===kind&&m.row===row&&m.col===col);
   }
 }
 async function runFixture(browser,fixture,index){const context=await browser.newContext({viewport:{width:1000,height:760},timezoneId:'UTC',serviceWorkers:'block'});

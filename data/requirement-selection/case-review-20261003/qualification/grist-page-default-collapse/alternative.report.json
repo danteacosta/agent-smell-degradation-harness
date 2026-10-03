@@ -1,0 +1,18 @@
+{
+  "schema_version": "grist-page-default-collapse-browser/v1",
+  "status": "complete",
+  "app_sha256": "eff495fbee5105779816bddfd5298276551f7c6b78141b18a97f012669c83ba2",
+  "assertions": {
+    "nested_expanded_on_open_1": true,
+    "collapsed_on_reopen_1": true,
+    "other_pages_expanded_on_reopen_1": true,
+    "nested_expanded_on_open_2": true,
+    "collapsed_on_reopen_2": true,
+    "other_pages_expanded_on_reopen_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

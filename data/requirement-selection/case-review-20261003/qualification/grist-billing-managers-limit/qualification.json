@@ -1,0 +1,65 @@
+{
+  "schema_version": "grist-billing-managers-limit-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 9,
+  "source_scaffold_sha256": "d0c1c24b026145bb88d621d3e075433684b18998cdeadfac68befd68b675da38",
+  "runner_sha256": "6b3be043a41ce0ff878d1a95f574de821b774160dcd207a42292969d43658087",
+  "qualifier_sha256": "9e925b72d0c9e0ff6d66764a9594d758234b9d04ee093d30a1de73d6503158f0",
+  "cases": [
+    {
+      "mode": "disabled-at-limit",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "c8f2cad0aecb4c2ad933dc49eb62972833a5975399e633b4708598ce37e20e3d"
+    },
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "1baedaa28e19e204f6ddaa2d2bbbc2ea8d2ecd67b48dc958f57f808e1093e741"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "f420c2ee589b621576d1f20e0bca85c58e9bea46f513e0df0bac7cbabc359b81"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "e34ce7a603d95328535e972d286b8204dc44cd864e438a46bd7fe2e39efd60b3"
+    },
+    {
+      "mode": "off-by-one-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "0eaadda40baec35555b4843edd3518e1b17efebd481e4c7f08a6f8c3eadfdc1d"
+    },
+    {
+      "mode": "limit-nine-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "2b34db0bdac3e62f9a70dd7512cd233211503b7c2db7f8a3d342207275949a87"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "40625d3ecd3529a4072cb732ab0fb3a2df00a9078bd768ba50a9dce7d93251d2"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "9af099245bb55b5debe8a073853c7fe5f8f977ea026a96e0b3eb5d9666ecaea2"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "88a75de5b994acb2ab36363c702a485a6307e21af873d2c6f3c0d0789a5335ed"
+    }
+  ]
+}

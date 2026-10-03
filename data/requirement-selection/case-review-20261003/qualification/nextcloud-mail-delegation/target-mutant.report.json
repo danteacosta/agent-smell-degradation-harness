@@ -1,0 +1,21 @@
+{
+  "schema_version": "nextcloud-mail-delegation-browser/v1",
+  "status": "complete",
+  "app_sha256": "67107e6c7facb11467d8ba484b8aef4726bf0c0b1bc1253c2b5cd8edc4df2080",
+  "assertions": {
+    "delegate_sees_delegated_account_1": false,
+    "delegation_recorded_1": true,
+    "other_account_lists_unchanged_1": true,
+    "revoke_removes_delegate_1": true,
+    "delegate_sees_delegated_account_2": false,
+    "delegation_recorded_2": true,
+    "other_account_lists_unchanged_2": true,
+    "provisioned_not_delegated_2": true,
+    "revoke_removes_delegate_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

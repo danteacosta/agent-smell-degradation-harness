@@ -1,0 +1,20 @@
+{
+  "schema_version": "wekan-home-multi-drop-browser/v1",
+  "status": "complete",
+  "app_sha256": "b2956f8f0d4b151a63e28ae7535a00b337684337325f0641d78627572a5549b1",
+  "assertions": {
+    "multi_drop_changes_nothing_1": true,
+    "multi_drop_reports_1": false,
+    "multi_drop_keeps_selection_1": true,
+    "single_drop_sets_home_1": true,
+    "multi_drop_changes_nothing_2": true,
+    "multi_drop_reports_2": false,
+    "multi_drop_keeps_selection_2": true,
+    "single_drop_sets_home_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

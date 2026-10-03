@@ -1,0 +1,10 @@
+{
+  "schema_version": "zulip-resolved-notice-auto-read-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "68313b93b0a6912f7d32f2569c65f880ce022f7ac573e81a16727c874fab6715",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

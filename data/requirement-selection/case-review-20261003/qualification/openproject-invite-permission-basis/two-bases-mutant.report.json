@@ -1,0 +1,18 @@
+{
+  "schema_version": "openproject-invite-permission-basis-browser/v1",
+  "status": "complete",
+  "app_sha256": "9e96b7a0e23e49213603fc15ca88e1ca98631bced26804f39b5791d4fe1d6c68",
+  "assertions": {
+    "new_user_invited_by_email_1": true,
+    "group_basis_selectable_1": true,
+    "existing_members_kept_1": true,
+    "existing_user_added_2": true,
+    "placeholder_basis_selectable_2": false,
+    "existing_members_kept_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": "nextcloud-mail-favorites-up-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "cbfc9b57c91f9481795d85eed9d733fabb1975fd9d419fc1539b4ea7766a02cc",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

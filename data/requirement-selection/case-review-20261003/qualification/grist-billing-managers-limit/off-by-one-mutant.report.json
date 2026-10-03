@@ -1,0 +1,18 @@
+{
+  "schema_version": "grist-billing-managers-limit-browser/v1",
+  "status": "complete",
+  "app_sha256": "b1e1bcfa1dd8d58ab242320272cd3de946d3e85eb9c08dc8d9fecee9360bd4d4",
+  "assertions": {
+    "managers_added_1": true,
+    "no_more_than_ten_1": false,
+    "existing_managers_kept_1": true,
+    "managers_added_2": true,
+    "no_more_than_ten_2": false,
+    "existing_managers_kept_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

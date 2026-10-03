@@ -6,7 +6,7 @@
   "source": {
     "commit": "6c4598422f",
     "file": "source/end-user-guide/collaborate/manage-channel-members.rst",
-    "snapshot": "bd09d95951",
+    "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
     "snapshot_file": "source/end-user-guide/collaborate/manage-channel-members.rst"
   },
   "fixture": "eval/fixtures/mattermost-mention-add-prompt",

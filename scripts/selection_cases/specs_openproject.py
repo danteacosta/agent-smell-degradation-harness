@@ -1,6 +1,6 @@
 """OpenProject selection cases (six selected rules, arm A from the frame-end documentation snapshot)."""
 
-SNAPSHOT = "66f582c19f"
+SNAPSHOT = "66f582c19f87534703d2eaf92c5929d13d440cd9"
 
 AUTO_CONTRAST = {
     "case": "openproject-auto-theme-contrast",
@@ -203,16 +203,16 @@ const app=Object.freeze({
   roles(){return structuredClone(S.roles)},
   principals(){return structuredClone(S.principals)},
   members(){return structuredClone(members)},
-  addMember(projectId,principalId,roleId){if(!known(S.projects,projectId)||!known(S.principals,principalId)||!known(S.roles,roleId))throw new Error('known project, principal and role required');
+  addMember(projectId,principalId,roleId,basis='user'){if(!known(S.projects,projectId)||!known(S.principals,principalId)||!known(S.roles,roleId))throw new Error('known project, principal and role required');
     if(members.some(m=>m.project===projectId&&m.principal===principalId)){app.showMessage('Already a member.');return}
-    const p=S.principals.find(x=>x.id===principalId);members.push({project:projectId,principal:principalId,kind:p.kind,name:p.name,email:'',role:roleId});store(members);render()},
-  inviteByEmail(projectId,email,roleId){if(!known(S.projects,projectId)||!known(S.roles,roleId)||typeof email!=='string'||!/^[^@\s]+@[^@\s]+$/.test(email))throw new Error('known project, email and role required');
-    members.push({project:projectId,principal:'',kind:'user',name:email,email,role:roleId});store(members);render()},
+    const p=S.principals.find(x=>x.id===principalId);members.push({project:projectId,principal:principalId,kind:p.kind,name:p.name,email:'',role:roleId,basis});store(members);render()},
+  inviteByEmail(projectId,email,roleId,basis='user'){if(!known(S.projects,projectId)||!known(S.roles,roleId)||typeof email!=='string'||!/^[^@\s]+@[^@\s]+$/.test(email))throw new Error('known project, email and role required');
+    members.push({project:projectId,principal:'',kind:'user',name:email,email,role:roleId,basis});store(members);render()},
   showMessage(text){document.querySelector('#message').textContent=String(text)}
 });
 function render(){const list=document.querySelector('#members');list.replaceChildren();
   for(const m of members){const project=S.projects.find(p=>p.id===m.project).name,role=S.roles.find(r=>r.id===m.role).name;
-    list.append(el('li',{'data-project':m.project,'data-principal':m.principal,'data-kind':m.kind,'data-email':m.email,'data-role':m.role},m.name+' — '+project+' ('+role+')'))}}
+    list.append(el('li',{'data-project':m.project,'data-principal':m.principal,'data-kind':m.kind,'data-email':m.email,'data-role':m.role,'data-basis':m.basis||m.kind},m.name+' — '+project+' ('+role+'; permission basis: '+(m.basis||m.kind)+')'))}}
 for(const p of S.projects)document.querySelector('#invite-project').append(el('option',{value:p.id},p.name));
 for(const r of S.roles)document.querySelector('#invite-role').append(el('option',{value:r.id},r.name));
 document.querySelector('#invite-project').value=S.current;
@@ -226,7 +226,7 @@ document.querySelector('#invite-submit').addEventListener('click',()=>{if(behavi
                    "members": [{"project": "pr1", "principal": "u1", "kind": "user", "name": "Alice Wong",
                                 "email": "", "role": "r1"}]},
          "first": {"project": "pr2", "name": "new.person@example.org", "role": "r2"},
-         "second": {"kind": "group", "project": "pr1", "name": "Design team", "id": "g1", "role": "r1"}},
+         "second": {"kind": "group", "project": "pr1", "name": "Ben Ortiz", "id": "u2", "role": "r1"}},
         {"state": {"projects": [{"id": "pq1", "name": "Mobile app"}, {"id": "pq2", "name": "Office move"}],
                    "current": "pq2", "roles": [{"id": "s1", "name": "Project admin"}, {"id": "s2", "name": "Member"}],
                    "principals": INVITE_PRINCIPALS,
@@ -240,10 +240,13 @@ document.querySelector('#invite-submit').addEventListener('click',()=>{if(behavi
   const members=()=>page.locator('#members li').evaluateAll(ns=>ns.map(x=>({...x.dataset})));
   if((await members()).length!==fixture.state.members.length||await dlg.isVisible())throw new InterfaceError('members changed or dialog open before inviting');
   const KIND={user:/^\s*(an?\s+)?(existing\s+)?users?(\s+role)?\s*$/i,group:/^\s*(an?\s+)?groups?\b/i,placeholder_user:/placeholder/i};
-  async function choose(re){
+  async function choose(kind){
+    const re=KIND[kind];
+    const valueRadio=dlg.locator(`input[type=radio][value="${kind}"]`);
+    if(await valueRadio.count()===1&&await valueRadio.isVisible()&&await valueRadio.isEnabled()){await valueRadio.check();return true}
     const radio=dlg.getByRole('radio',{name:re});if(await radio.count()===1&&await radio.isVisible()){await radio.check();return true}
     for(const s of await dlg.locator('select').all()){const id=await s.getAttribute('id');if(id==='invite-project'||id==='invite-role'||!await s.isVisible())continue;
-      const hit=(await s.locator('option').evaluateAll(os=>os.map(o=>[o.value,o.textContent.trim()]))).filter(o=>re.test(o[1]));
+      const hit=(await s.locator('option').evaluateAll(os=>os.map(o=>[o.value,o.textContent.trim()]))).filter(o=>o[0]===kind||re.test(o[1]));
       if(hit.length===1){await s.selectOption(hit[0][0]);return true}}
     const tab=dlg.getByRole('tab',{name:re});if(await tab.count()===1&&await tab.isVisible()){await tab.click();return true}
     const button=dlg.getByRole('button',{name:re});if(await button.count()===1&&await button.isVisible()){await button.click();return true}
@@ -253,13 +256,13 @@ document.querySelector('#invite-submit').addEventListener('click',()=>{if(behavi
     await (await one(page,'#invite-name')).fill(step.name);
     await (await one(page,'#invite-role')).selectOption(step.role);
     await (await one(page,'#invite-submit')).click();await reload(page)}
-  const f=fixture.first;await (await one(page,'#open-invite')).click();await choose(KIND.user);await invite(f);
+  const f=fixture.first;await (await one(page,'#open-invite')).click();await choose('user');await invite(f);
   const after1=await members();
   if(n===1)check('new_user_invited_by_email_1',after1.some(m=>m.email===f.name&&m.kind==='user'&&m.project===f.project&&m.role===f.role));
   else check('existing_user_added_2',after1.some(m=>m.principal===f.id&&m.kind==='user'&&m.project===f.project&&m.role===f.role));
   const s=fixture.second;let added=false;
   await (await one(page,'#open-invite')).click();
-  if(await choose(KIND[s.kind])){await invite(s);added=(await members()).some(m=>m.principal===s.id&&m.kind===s.kind&&m.project===s.project&&m.role===s.role)}
+  if(await choose(s.kind)){await invite(s);added=(await members()).some(m=>m.principal===s.id&&m.kind===(s.kind==='group'?'user':s.kind)&&m.basis===s.kind&&m.project===s.project&&m.role===s.role)}
   check(n===1?'group_basis_selectable_1':'placeholder_basis_selectable_2',added);
   const final=await members();
   check(`existing_members_kept_${n}`,fixture.state.members.every(e=>final.some(m=>m.project===e.project&&m.principal===e.principal&&m.role===e.role)));
@@ -268,30 +271,35 @@ document.querySelector('#invite-submit').addEventListener('click',()=>{if(behavi
     "non_target": ["new_user_invited_by_email_1", "existing_user_added_2", "existing_members_kept_1",
                    "existing_members_kept_2"],
     "controls": {
-        "reference": ("const box=document.createElement('fieldset');box.append(el('legend',{},'Invite a'));for(const [v,l] of [['user','User'],['group','Group'],['placeholder_user','Placeholder user']]){const lab=el('label');const r=el('input',{type:'radio',name:'kind',value:v});r.checked=v==='user';lab.append(r,' '+l);box.append(lab)}document.querySelector('#invite-name').closest('label').before(box);app.onInvite(f=>{const kind=document.querySelector('input[name=kind]:checked').value;if(kind==='user'&&f.name.includes('@')){app.inviteByEmail(f.project,f.name,f.role);return}const p=app.principals().find(x=>x.kind===kind&&x.name===f.name);if(!p){app.showMessage('No '+kind+' named '+f.name);return}app.addMember(f.project,p.id,f.role)});", "pass"),
-        "alternative": ("var sel=document.createElement('select');sel.id='principal-type';[['user','User'],['group','Group'],['placeholder_user','Placeholder user']].forEach(function(o){var op=document.createElement('option');op.value=o[0];op.textContent=o[1];sel.appendChild(op)});var lab=document.createElement('label');lab.textContent='Permissions based on ';lab.appendChild(sel);document.querySelector('#invite-project').parentNode.after(lab);app.onInvite(function(f){var kind=sel.value;var p=app.principals().filter(function(x){return x.kind===kind&&x.name.toLowerCase()===f.name.toLowerCase()})[0];if(p)app.addMember(f.project,p.id,f.role);else if(kind==='user'&&/@/.test(f.name))app.inviteByEmail(f.project,f.name,f.role);else app.showMessage('Not found')});", "pass"),
+        "group-principal-mutant": ("const box=document.createElement('fieldset');box.append(el('legend',{},'Invite a'));for(const [v,l] of [['user','User'],['group','Group'],['placeholder_user','Placeholder user']]){const lab=el('label');const r=el('input',{type:'radio',name:'kind',value:v});r.checked=v==='user';lab.append(r,' '+l);box.append(lab)}document.querySelector('#invite-name').closest('label').before(box);app.onInvite(f=>{const kind=document.querySelector('input[name=kind]:checked').value;if(kind==='user'&&f.name.includes('@')){app.inviteByEmail(f.project,f.name,f.role);return}const p=app.principals().find(x=>x.kind===kind&&x.name===f.name);if(!p){app.showMessage('No '+kind+' named '+f.name);return}app.addMember(f.project,p.id,f.role)});", "target_only_failure"),
+        "renamed-bases": ("const box=document.createElement('fieldset');box.append(el('legend',{},'Invite a'));for(const [v,l] of [['user','User'],['group','Permission collective'],['placeholder_user','Reserved identity']]){const lab=el('label');const r=el('input',{type:'radio',name:'kind',value:v});r.checked=v==='user';lab.append(r,' '+l);box.append(lab)}document.querySelector('#invite-name').closest('label').before(box);app.onInvite(f=>{const kind=document.querySelector('input[name=kind]:checked').value;if((kind==='user'||kind==='group')&&f.name.includes('@')){app.inviteByEmail(f.project,f.name,f.role,kind);return}const p=app.principals().find(x=>x.kind===(kind==='group'?'user':kind)&&x.name===f.name);if(!p){app.showMessage('No '+kind+' named '+f.name);return}app.addMember(f.project,p.id,f.role,kind)});", "pass"),
+        "reference": ("const box=document.createElement('fieldset');box.append(el('legend',{},'Invite a'));for(const [v,l] of [['user','User'],['group','Group'],['placeholder_user','Placeholder user']]){const lab=el('label');const r=el('input',{type:'radio',name:'kind',value:v});r.checked=v==='user';lab.append(r,' '+l);box.append(lab)}document.querySelector('#invite-name').closest('label').before(box);app.onInvite(f=>{const kind=document.querySelector('input[name=kind]:checked').value;if((kind==='user'||kind==='group')&&f.name.includes('@')){app.inviteByEmail(f.project,f.name,f.role,kind);return}const p=app.principals().find(x=>x.kind===(kind==='group'?'user':kind)&&x.name===f.name);if(!p){app.showMessage('No '+kind+' named '+f.name);return}app.addMember(f.project,p.id,f.role,kind)});", "pass"),
+        "alternative": ("var sel=document.createElement('select');sel.id='principal-type';[['user','User'],['group','Group'],['placeholder_user','Placeholder user']].forEach(function(o){var op=document.createElement('option');op.value=o[0];op.textContent=o[1];sel.appendChild(op)});var lab=document.createElement('label');lab.textContent='Permissions based on ';lab.appendChild(sel);document.querySelector('#invite-project').parentNode.after(lab);app.onInvite(function(f){var kind=sel.value;var p=app.principals().filter(function(x){return x.kind===(kind==='group'?'user':kind)&&x.name.toLowerCase()===f.name.toLowerCase()})[0];if(p)app.addMember(f.project,p.id,f.role,kind);else if((kind==='user'||kind==='group')&&/@/.test(f.name))app.inviteByEmail(f.project,f.name,f.role,kind);else app.showMessage('Not found')});", "pass"),
         "target-mutant": ("app.onInvite(f=>{if(f.name.includes('@')){app.inviteByEmail(f.project,f.name,f.role);return}const p=app.principals().find(x=>x.kind==='user'&&x.name===f.name);if(p)app.addMember(f.project,p.id,f.role);else app.showMessage('User not found')});", "target_only_failure"),
-        "two-bases-mutant": ("const box=document.createElement('fieldset');for(const [v,l] of [['user','User'],['group','Group']]){const lab=el('label');const r=el('input',{type:'radio',name:'kind',value:v});r.checked=v==='user';lab.append(r,' '+l);box.append(lab)}document.querySelector('#invite-name').closest('label').before(box);app.onInvite(f=>{const kind=document.querySelector('input[name=kind]:checked').value;if(kind==='user'&&f.name.includes('@')){app.inviteByEmail(f.project,f.name,f.role);return}const p=app.principals().find(x=>x.kind===kind&&x.name===f.name);if(p)app.addMember(f.project,p.id,f.role)});", "target_only_failure"),
-        "non-target-mutant": ("const box=document.createElement('fieldset');for(const [v,l] of [['user','User'],['group','Group'],['placeholder_user','Placeholder user']]){const lab=el('label');const r=el('input',{type:'radio',name:'kind',value:v});r.checked=v==='user';lab.append(r,' '+l);box.append(lab)}document.querySelector('#invite-name').closest('label').before(box);app.onInvite(f=>{const kind=document.querySelector('input[name=kind]:checked').value;if(kind==='user')return;const p=app.principals().find(x=>x.kind===kind&&x.name===f.name);if(p)app.addMember(f.project,p.id,f.role)});", "non_target_only_failure"),
+        "two-bases-mutant": ("const box=document.createElement('fieldset');for(const [v,l] of [['user','User'],['group','Group']]){const lab=el('label');const r=el('input',{type:'radio',name:'kind',value:v});r.checked=v==='user';lab.append(r,' '+l);box.append(lab)}document.querySelector('#invite-name').closest('label').before(box);app.onInvite(f=>{const kind=document.querySelector('input[name=kind]:checked').value;if((kind==='user'||kind==='group')&&f.name.includes('@')){app.inviteByEmail(f.project,f.name,f.role,kind);return}const p=app.principals().find(x=>x.kind===(kind==='group'?'user':kind)&&x.name===f.name);if(p)app.addMember(f.project,p.id,f.role,kind)});", "target_only_failure"),
+        "non-target-mutant": ("const box=document.createElement('fieldset');for(const [v,l] of [['user','User'],['group','Group'],['placeholder_user','Placeholder user']]){const lab=el('label');const r=el('input',{type:'radio',name:'kind',value:v});r.checked=v==='user';lab.append(r,' '+l);box.append(lab)}document.querySelector('#invite-name').closest('label').before(box);app.onInvite(f=>{const kind=document.querySelector('input[name=kind]:checked').value;if(kind==='user')return;const p=app.principals().find(x=>x.kind===(kind==='group'?'user':kind)&&x.name===f.name);if(p)app.addMember(f.project,p.id,f.role,kind)});", "non_target_only_failure"),
     },
     "arms": {
         "A": "Implement the Invite user dialog. Once you click Invite user, a dialogue will open. Here you can select "
              "the project, to which project you want to invite new members. Select whether the permissions assigned "
              "to the new user should be based on an existing user role, group or a placeholder user permissions. "
+             "With User or Group, select an existing user or enter an email address for a new one; with "
+             "Placeholder user, enter the name of a placeholder user. "
              "Then enter the name of an existing principal (listed by app.principals()) or the email address of a new "
              "user, assign a role and click Invite: add an existing principal with app.addMember(projectId, "
-             "principalId, roleId) or invite a new user by email with app.inviteByEmail(projectId, email, roleId).",
+             "principalId, roleId, basis) or invite a new user by email with app.inviteByEmail(projectId, email, roleId, basis).",
         "B": "Clicking Invite user opens a dialog where the project that new members are invited to is picked, and "
              "where the user decides whether the new member's permissions come from an existing user role, from a "
-             "group, or from a placeholder user's permissions. Next comes the name of an existing principal (see "
+             "group, or from a placeholder user's permissions. User and Group accept an existing user or a new "
+             "user's email; Placeholder user accepts a placeholder's name. Next comes the name of an existing principal (see "
              "app.principals()) or a new user's email address, then a role, then a click on Invite; existing "
-             "principals are added through app.addMember(projectId, principalId, roleId) and new users are invited "
-             "by email through app.inviteByEmail(projectId, email, roleId).",
+             "principals are added through app.addMember(projectId, principalId, roleId, basis) and new users are invited "
+             "by email through app.inviteByEmail(projectId, email, roleId, basis).",
         "C": "Implement the Invite user dialog. Once you click Invite user, a dialogue will open. Here you can select "
              "the project, to which project you want to invite new members. "
              "Then enter the name of an existing principal (listed by app.principals()) or the email address of a new "
              "user, assign a role and click Invite: add an existing principal with app.addMember(projectId, "
-             "principalId, roleId) or invite a new user by email with app.inviteByEmail(projectId, email, roleId).",
+             "principalId, roleId, basis) or invite a new user by email with app.inviteByEmail(projectId, email, roleId, basis).",
     },
 }
 

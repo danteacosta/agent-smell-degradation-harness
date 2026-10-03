@@ -12,7 +12,8 @@ async function reload(page){await page.reload({waitUntil:'load',timeout:10000})}
 async function journey(page,fixture,index){
   const n=index+1;const list=()=>page.locator('#managers li').evaluateAll(ns=>ns.map(x=>x.dataset.email));
   if(JSON.stringify(await list())!==JSON.stringify(fixture.state.managers))throw new InterfaceError('billing managers missing before adding');
-  async function add(email){await (await one(page,'#email')).fill(email);await (await one(page,'#add')).click();await reload(page)}
+  async function add(email){const field=await one(page,'#email');const button=await one(page,'#add');
+    if(await field.isEnabled()&&await button.isEnabled()){await field.fill(email);await button.click()}await reload(page)}
   for(const email of fixture.allowed)await add(email);
   const expected=[...fixture.state.managers,...fixture.allowed];
   check(`managers_added_${n}`,JSON.stringify(await list())===JSON.stringify(expected));

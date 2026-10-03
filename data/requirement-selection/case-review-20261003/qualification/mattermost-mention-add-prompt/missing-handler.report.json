@@ -1,0 +1,8 @@
+{
+  "schema_version": "mattermost-mention-add-prompt-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "9032b8c036ce005427f6731a04a99ed46881858c322279e8c8b955aed59aa4c0",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

@@ -16,6 +16,7 @@ NON_TARGET = set(["existing_managers_kept_1", "existing_managers_kept_2", "manag
 SCREENSHOTS = ["fixture-1.png", "fixture-2.png"]
 MARKER = "/* MODEL_BEHAVIOR */"
 CONTROLS = {
+    "disabled-at-limit": ("document.querySelector('#add').disabled=app.managers().length>=10;app.onAdd(email=>{if(app.managers().length<10)app.addManager(email);document.querySelector('#add').disabled=app.managers().length>=10});", "pass"),
     "reference": ("app.onAdd(email=>{if(app.managers().length>=10){app.showMessage('You can add up to 10 billing managers.');return}app.addManager(email)});", "pass"),
     "alternative": ("app.onAdd(function(e){var m=app.managers();e=e.trim().toLowerCase();if(m.length<10&&m.indexOf(e)<0)app.addManager(e);else app.showMessage('Cannot add billing manager')});", "pass"),
     "target-mutant": ("app.onAdd(email=>app.addManager(email));", "target_only_failure"),

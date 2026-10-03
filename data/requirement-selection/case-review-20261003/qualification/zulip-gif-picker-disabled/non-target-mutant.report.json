@@ -1,0 +1,21 @@
+{
+  "schema_version": "zulip-gif-picker-disabled-browser/v1",
+  "status": "complete",
+  "app_sha256": "e5e38f11f4f77cc54f1f4aa81b7fa7cdccbbdc3cdab4f490dd701f4730cd8668",
+  "assertions": {
+    "rating_saved_1": false,
+    "picker_kept_when_rated_1": true,
+    "picker_removed_when_disabled_1": true,
+    "disabled_saved_1": false,
+    "other_buttons_kept_1": true,
+    "picker_removed_when_disabled_2": true,
+    "disabled_saved_2": false,
+    "other_buttons_kept_2": true,
+    "rating_saved_2": false
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

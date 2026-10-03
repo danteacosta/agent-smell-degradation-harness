@@ -6,7 +6,7 @@
   "source": {
     "commit": "a31cd65175",
     "file": "starlight_help/src/content/docs/animated-gifs.mdx",
-    "snapshot": "9778ffc23c",
+    "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
     "snapshot_file": "starlight_help/src/content/docs/animated-gifs.mdx"
   },
   "fixture": "eval/fixtures/zulip-gif-picker-disabled",

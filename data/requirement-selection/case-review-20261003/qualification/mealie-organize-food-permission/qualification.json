@@ -1,0 +1,77 @@
+{
+  "schema_version": "mealie-organize-food-permission-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 11,
+  "source_scaffold_sha256": "7c547d6f63ae0fb6382fa156f3a04ef32e97f7ef6625b57d1440a845d9d3dcd7",
+  "runner_sha256": "666830963527e241e05dedbe8a6358a7b1cf30d153e011db3943cb2b1443e3c2",
+  "qualifier_sha256": "75859c56eb17b9b0fe2c953094462df0bbd9aab8813ce9990fa8194c16dd8cd6",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "0a04358e7a5e566a116ec3ba8dfd8e7310b9b6e0f8a98cd98d6f4c420caf7ffe"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "ae9b543390a0ebe416f1f4ce5ad19f7cedfb215d5307658052e0bd3d0095ed61"
+    },
+    {
+      "mode": "disabled-add-control",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "bc50ee61d6e5c94a278fe167f273947cf61f22dada0c5fd76bb52bebbb88eece"
+    },
+    {
+      "mode": "hidden-add-control",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "bbaba22a11e9ed0cf3ef864660e4d5f6f725b0a766fd6b440f0b45ac12a456e6"
+    },
+    {
+      "mode": "removed-add-control",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "286230847d67c4e619841402e99b2fedd0969d913922cf8c18029d21bf524837"
+    },
+    {
+      "mode": "duplicate-add-control",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "cc4b991741103a4ec727134f7bbd13f41be077588304c73c30cac9cee58d9b26"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "8812287e9eacda1dfe7206cd70ab0374f93c648a07171763ab7101750af705ac"
+    },
+    {
+      "mode": "manage-group-mutant",
+      "expected": "mixed_failure",
+      "observed": "mixed_failure",
+      "report_sha256": "598e13369c75554a1fb3ecce8e536984f1be8dd432cdb34842706fb1e41a8b98"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "6ecfa31a9a409f1b0d11b26d43ea0d86d22e10dd14e8406fe61546d0ccb1db3a"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "8ab32e7c3788e3fd4c9ef313b765dc0463234ba1e433c23fc3577b065289bd37"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "b7b2a774a23002a7bfe2d7684b08e832834dd684edd2aa9577c859dfa15b5ed7"
+    }
+  ]
+}

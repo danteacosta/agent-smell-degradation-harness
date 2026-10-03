@@ -6,7 +6,7 @@
   "source": {
     "commit": "e217f1215a",
     "file": "docs/Features/Date-Format.md",
-    "snapshot": "38415f04ca",
+    "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
     "snapshot_file": "docs/Features/Right-Sidebar/Board-Settings/Date.md"
   },
   "fixture": "eval/fixtures/wekan-week-number-immediate",

@@ -16,6 +16,7 @@ NON_TARGET = set(["column_menu_shortcut_1", "column_menu_shortcut_2", "menu_key_
 SCREENSHOTS = ["fixture-1.png", "fixture-2.png"]
 MARKER = "/* MODEL_BEHAVIOR */"
 CONTROLS = {
+    "hidden-context-menu": ("app.onKey(e=>{if(!(e.key==='ContextMenu'||(e.key==='F10'&&e.shiftKey)))return;if(e.ctrlKey)app.openMenu('column');else if(e.altKey)app.openMenu('row');else{app.openMenu('context');if(e.key==='F10')document.querySelector('#menu').hidden=true}});", "target_only_failure"),
     "reference": ("app.onKey(e=>{if(!(e.key==='ContextMenu'||(e.key==='F10'&&e.shiftKey)))return;if(e.ctrlKey)app.openMenu('column');else if(e.altKey)app.openMenu('row');else app.openMenu('context')});", "pass"),
     "alternative": ("const SHORTCUTS={'ContextMenu':'context','Shift+F10':'context','Ctrl+ContextMenu':'column','Ctrl+Shift+F10':'column','Alt+ContextMenu':'row','Alt+Shift+F10':'row'};app.onKey(function(e){var name=(e.ctrlKey?'Ctrl+':'')+(e.altKey?'Alt+':'')+(e.shiftKey?'Shift+':'')+e.key;if(SHORTCUTS[name])app.openMenu(SHORTCUTS[name])});", "pass"),
     "target-mutant": ("app.onKey(e=>{const kind=e.ctrlKey?'column':e.altKey?'row':'context';if(e.key==='ContextMenu')app.openMenu(kind);else if(e.key==='F10'&&e.shiftKey&&kind!=='context')app.openMenu(kind)});", "target_only_failure"),

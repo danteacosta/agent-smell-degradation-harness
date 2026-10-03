@@ -1,0 +1,8 @@
+{
+  "schema_version": "paperless-superuser-grant-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "4f1308f9c240a2373c13188e7c0fa5ea6a975e9a5289dfbcc487a711bc32734e",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

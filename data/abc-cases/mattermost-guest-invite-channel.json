@@ -6,7 +6,7 @@
   "source": {
     "commit": "dbfcaedd0e",
     "file": "source/end-user-guide/collaborate/invite-people.rst",
-    "snapshot": "bd09d95951",
+    "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
     "snapshot_file": "source/end-user-guide/collaborate/invite-people.rst"
   },
   "fixture": "eval/fixtures/mattermost-guest-invite-channel",
