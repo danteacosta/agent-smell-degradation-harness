@@ -1,0 +1,8 @@
+{
+  "schema_version": "immich-m2t-upload-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "39313a73a9360a917dedb5474e8835f5b1ae17386fbe35870f46c801b456df95",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

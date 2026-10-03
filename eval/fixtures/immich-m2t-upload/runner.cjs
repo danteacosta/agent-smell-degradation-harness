@@ -2,7 +2,7 @@
 const fs=require('node:fs');const crypto=require('node:crypto');const {chromium}=require('playwright');
 const html=fs.readFileSync('/input/app.html');const URL='http://localhost/';
 const CSP="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'";
-const fixtures=[{"state": {}, "files": [["holiday.m2t", "application/octet-stream", true, true], ["clip.mov", "video/quicktime", false, true], ["notes.txt", "text/plain", false, false]]}, {"state": {}, "files": [["race.m2t", "application/octet-stream", true, true], ["match.mts", "video/mp2t", false, true], ["scan.pdf", "application/pdf", false, false]]}];
+const fixtures=[{"state": {}, "files": [["holiday.m2t", "application/octet-stream", true, true], ["clip.mov", "video/quicktime", false, true], ["transport.ts", "video/mp2t", false, true], ["notes.txt", "text/plain", false, false]]}, {"state": {}, "files": [["race.m2t", "application/octet-stream", true, true], ["match.mts", "video/mp2t", false, true], ["stream.ts", "video/mp2t", false, true], ["scan.pdf", "application/pdf", false, false]]}];
 const report={schema_version:'immich-m2t-upload-browser/v1',status:'browser_error',
   app_sha256:crypto.createHash('sha256').update(html).digest('hex'),assertions:{},console_errors:[]};
 class InterfaceError extends Error{}
