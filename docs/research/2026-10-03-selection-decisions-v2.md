@@ -1,6 +1,6 @@
 # Decisões de seleção, versão 2: documentação no fim do frame
 
-Status: proposta para aprovação. O autor original declara não ter consultado a sonda ao preparar a proposta. A revisão de integração pelo Codex ocorreu após exposição prévia a resultados da sonda; ela não constitui aprovação cega. Nenhuma seleção vinculante foi executada.
+Status: decisões aprovadas explicitamente por Dante Costa em 03/10/2026; seleção vinculante executada uma vez. O autor original declara não ter consultado a sonda ao preparar a proposta. A revisão de integração pelo Codex ocorreu após exposição prévia a resultados da sonda; ela não constitui aprovação cega. A aprovação ocorreu antes de abrir a lista sorteada. A auditoria humana continua pendente.
 
 ## A decisão que destrava as outras
 
@@ -59,11 +59,11 @@ A rodada 2 tem oito exclusões e sete permanências propostas. Duas permanência
 
 O [registro de fontes](../../data/requirement-selection/current-doc-manual-source-review.json) contém URLs fixadas, intervalos de linhas e hashes de seis arquivos. Os hashes Git e SHA-256 e os trechos foram conferidos novamente na integração. Mattermost documenta a regra em prosa, não apenas no texto alternativo; o escopo de navegador ainda precisa de confirmação. A FAQ do Grist conflita com a página de limites para a regra agregada de 1GB, portanto propomos excluir esse caso desta coleta de omissão. Isso não confirma uma categoria de smell na literatura. O limite de dez gestores de cobrança está presente no contexto da página Billing Account; não é evidência de aplicabilidade a todas as edições.
 
-## Capacidade não vinculante
+## Seleção vinculante após aprovação
 
-Com estas decisões: 82 unidades antes do teto (grist 8, immich 3, mattermost 15, mealie 2, nextcloud 9, openproject 15, paperless 5, wekan 11, zulip 14). Com o teto de seis por projeto, são 46 requisitos em nove projetos, e não há falta. A lista sorteada não foi publicada.
+A execução aprovada produziu 82 unidades antes do teto (grist 8, immich 3, mattermost 15, mealie 2, nextcloud 9, openproject 15, paperless 5, wekan 11, zulip 14). Com o teto de seis por projeto, são 46 requisitos em nove projetos, e não há falta. Foram selecionados 46 requisitos em nove projetos. [Lista congelada](../../data/requirement-selection/selection.json) e [recibo de execução](../../data/requirement-selection/selection-execution.json) preservam entradas, seed e hashes. Não houve prévia nem segundo sorteio.
 
-Comando da seleção, depois da aprovação (`status: approved`, `approved_by`):
+Comando usado nesta execução (não repetir para substituir a seleção publicada):
 
 ```sh
 python3 scripts/select_requirements.py select \

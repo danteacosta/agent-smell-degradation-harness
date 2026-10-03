@@ -1,0 +1,18 @@
+{
+  "schema_version": "requirement-selection-execution/v1",
+  "execution_date": "2026-10-03",
+  "binding_draws": 1,
+  "preview_draws": 0,
+  "seed": 2026100203,
+  "status": "selected",
+  "nonblind_review_disclosed": true,
+  "human_audit_pending": true,
+  "additional_inputs_sha256": {
+    "data/llm-screening-20261002/mapping-audit.json": "a07c69b8fe573d40c40a7c328b692575f0dacd1dd3c3506030d7b7a403c1aba6",
+    "data/requirement-selection/round2-mapping-audit.json": "3bb65efe452fd44e6b561ff63ea831f710f23b0e7b8440a1dd04af199021ba8b",
+    "data/requirement-selection/current-doc-check.json": "9db9922c83d15f405390be373de3da5df3ef97654d0c3cb59ad89d242f5a8116",
+    "data/requirement-selection/current-doc-snapshot-verification.json": "22dbf796a7d311b821017d3a4ffd6533d97b1b552f81fad2a719dd142b146bcd",
+    "data/requirement-selection/current-doc-manual-source-review.json": "910effb3e80cd2ee52567a85c196ce155c0378c9ff020aaa9b7bdbda5937b6fb",
+    "data/requirement-selection/selection.json": "7d00eb42b800a82c086c7b71861733a7b1840dbea6f79140f21cb0be826c64c1"
+  }
+}

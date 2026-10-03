@@ -1,8 +1,8 @@
 {
   "schema_version": "requirement-selection-decisions/v1",
-  "status": "proposed",
+  "status": "approved",
   "proposed_by": "assistant",
-  "approved_by": null,
+  "approved_by": "Dante Costa — explicit approval in Codex conversation, 2026-10-03",
   "probe_outcomes_consulted": false,
   "principle": "Arm A is the project's documentation at the frame end: the last default-branch commit at or before 2026-09-30T23:59:59Z (snapshots in current-doc-check.json). A candidate whose rule is not stated in that snapshot is excluded, whether its change added or removed the text. Otherwise keep the frozen mechanism's rule (first admitting vote) unless it fails V2 (only the presence, label or location of a control). Keeping the frozen rule keeps it aligned with the probe. Where a frozen rule is kept but its observation is only the presence of a setting, the oracle must test the setting's effect (oracle_requirement).",
   "mappings": {
@@ -171,5 +171,12 @@
     "approval_granted": false,
     "source_review": "data/requirement-selection/current-doc-manual-source-review.json",
     "note": "Original author probe_outcomes_consulted declaration is retained; integration review cannot certify outcome blinding."
+  },
+  "approval_scope": "Frame-end documentation, proposed mappings including exclusion of conflicting Grist combined 1GB rule, duplicate handling and one binding selection. Nonblind integration review disclosed; human audit remains required before confirmatory claims.",
+  "approval_evidence": {
+    "channel": "Codex request_user_input_async",
+    "question": "A proposta revisada está no PR #150: usar a documentação no corte de 30/09, excluir o limite conflitante de 1 GB do Grist e manter a revisão identificada como não cega. Você aprova essas decisões para executar a seleção uma única vez? A auditoria humana de 20% continua necessária antes de afirmações confirmatórias.",
+    "answer": "Aprovo a proposta revisada e autorizo a seleção",
+    "date": "2026-10-03"
   }
 }
