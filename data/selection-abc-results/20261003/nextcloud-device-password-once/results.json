@@ -1,0 +1,261 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "nextcloud-device-password-once",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "target_only_failure": 1,
+        "pass": 1
+      },
+      "C": {
+        "target_only_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "nextcloud-device-password-once-2a7d9d71a7121543d014844a",
+      "intent_id": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "e4744146e7a1f803efaa6705e88c0c3531a7f2910712173ba2c5d62a1d8accb6",
+        "screenshots": {
+          "fixture-1.png": "9670d2d32acb7f03d84556adb2fb2491d5c72f547e833ae0b08739705f5bcf0a",
+          "fixture-2.png": "2159a6f72099c0611b5bcc07a0a089735ce16374d2bc25966eb74601792d13b4"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-device-password-once-b9b9ea817630e3d0be125abe",
+      "intent_id": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "5bfe20edf3616b876082ddba0c00f74b49f8913027673c442cbf38346695773b",
+        "screenshots": {
+          "fixture-1.png": "a1920473c27918aa1ec9098da9c41239eb91104a8504e66b911561f40712c841",
+          "fixture-2.png": "3985ec65ad5962ed679c389eb96aba9835834cc62b8b6c07768ae93b4bdbe6bc"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-device-password-once-cffa3ffeb386c7c522c5f00d",
+      "intent_id": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "d81f51bd0c0301dbc2ee6bf04b71f1fbf8c2845b5076745dbabd97e07b3ae905",
+        "screenshots": {
+          "fixture-1.png": "9670d2d32acb7f03d84556adb2fb2491d5c72f547e833ae0b08739705f5bcf0a",
+          "fixture-2.png": "2159a6f72099c0611b5bcc07a0a089735ce16374d2bc25966eb74601792d13b4"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-device-password-once-4c37884f07cea94f3ce2f766",
+      "intent_id": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "71056500844c5f6d14196cd050885d0290f6654c360ff1c3b6f8745b75a51830",
+        "screenshots": {
+          "fixture-1.png": "9670d2d32acb7f03d84556adb2fb2491d5c72f547e833ae0b08739705f5bcf0a",
+          "fixture-2.png": "f70325d5260336fafe236f1099163b88fe3f220f5d0734583ace7c53ad5bcb4f"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-device-password-once-4a8343bc0679457031a19f96",
+      "intent_id": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "203f555e0f168b597872f2b1a356c432fb4a04fc471014193fa94463161b6c2c",
+        "screenshots": {
+          "fixture-1.png": "1cc845085dda6b0144c1384e35a53865584f2d9b1ca5c1f9f47c817d6856c255",
+          "fixture-2.png": "7e94af8a50afe38cff581f768e5d86b57657b4e400a54b2a4fadab46cd866358"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-device-password-once-aa4496d2c68c8dcb33dd13b0",
+      "intent_id": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "a51ae4896e8b4c0b2698b711ee54a957319e5b1e27396a4e3b8279f6faeb9872",
+        "screenshots": {
+          "fixture-1.png": "abcbe04b9c299a069980404a092e40587e0dc51615edd2a3c9489aa325355611",
+          "fixture-2.png": "4d52e7ddc4ad4ccf1f68e03af9d666c77a9de55dd49cb6de20b00448c5aedb73"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-device-password-once-ff971b7b03a00f7fb1fdbb5f",
+      "intent_id": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "678b55dee3dc699b8b497ede64accfd8701cf9c0a9af18589b92569f744f1853",
+        "screenshots": {
+          "fixture-1.png": "899ce2ae59c2c814529bdecd1ca31cdce624086649d3004940c6d10b580b3fe2",
+          "fixture-2.png": "69b6851c69f11c0df54da0b820a5cca132f9221800c79241318b1d8fc0067ab3"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-device-password-once-1cea1758813e90f3963f3143",
+      "intent_id": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "d42ce6a6ba15dd68a5623665a4958009ee73d03c7a57e292cdec021217583652",
+        "screenshots": {
+          "fixture-1.png": "7c16b6aa5644402a95cc4c506708e8f96e9ea4799eafe6b5f8ab13d862c21ff5",
+          "fixture-2.png": "1047640a62694568a164dcab074691fbc2d732589ed4c88bae0417c4f0f2e9ef"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-device-password-once-f55621aa3c227e5f344f1cca",
+      "intent_id": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ac7e6ccc75ddcbb5c6314957cea91912687f148d50e44409ad2ed573e2821f5d",
+        "screenshots": {
+          "fixture-1.png": "7c16b6aa5644402a95cc4c506708e8f96e9ea4799eafe6b5f8ab13d862c21ff5",
+          "fixture-2.png": "1047640a62694568a164dcab074691fbc2d732589ed4c88bae0417c4f0f2e9ef"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-device-password-once-08a3aec8d272d70d32ed72d3",
+      "intent_id": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ed29f9b73a2fe17628c492cfbc2a2b28be804328a637bc0011501dd423efb096",
+        "screenshots": {
+          "fixture-1.png": "ce7a769aef12e398638b76e860e1aae357fd01ec1829ef0f4796d905b7413489",
+          "fixture-2.png": "9f7afa4a388d7597b8ec54fc7e6d22b4904b6d0c86bd7623fc87f424a9d2cb8e"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-device-password-once-dffc397484cbfe42ed10800c",
+      "intent_id": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "890ed45763bf51356a0f361239cadb22b08dce6ca141163ca14faf56410d0a82",
+        "screenshots": {
+          "fixture-1.png": "a58b2951336643302d2cf9496471e3b28b71d6c47ba627defe2af24baf1e2e16",
+          "fixture-2.png": "48fd963a26a6b5c233eab3bf3d5cf540332ede327551f909eda697b647fd9236"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-device-password-once-99d8d0171d9f407f86d1570a",
+      "intent_id": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "a3634becef45b8bf726d025064aac37a04b5d72a6072d0fe36ded5c6fa3d12b1",
+        "screenshots": {
+          "fixture-1.png": "394835a50862fd974f28fdbec4b1ab18265454747d34f96f7a89eb012db6d825",
+          "fixture-2.png": "04d81319f0fd13484412b9b686fa7327fb7d36a1b2d0fbfd5185dbcb45082f72"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

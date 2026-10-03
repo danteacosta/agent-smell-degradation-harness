@@ -1,0 +1,17 @@
+{
+  "schema_version": "selected46-partial-publication/v1",
+  "case": "nextcloud-device-password-once",
+  "source_commit": "277d4f0981e4ac5f61234a96a801e42000402f2f",
+  "merged_commit": "1d34c5718e5496929c11b6bb6872211da5659dca",
+  "results_sha256": "ebe7640551f29269059b579fd1091eb22a17051b691cd4f9b453f248ed9746a4",
+  "original_receipt_sha256": "46a5b4649bbc3577ab782b8a929ffe471c7b4e035353effff5ce7bedc9ed2c55",
+  "frozen_receipt_sha256": "afb2230baab131c70c6a901fa7dee127b68f5498be0ce1080ef435542f5db760",
+  "planned_collection_slots": 552,
+  "published_case_slots": 12,
+  "confirmatory_eligible": false,
+  "synthetic_fixture_credentials": true,
+  "not_published": [
+    "provider stdout/stderr captures"
+  ],
+  "scope": "Synthetic browser page anchored to pinned open-source documentation; not the running upstream Nextcloud application."
+}

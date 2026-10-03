@@ -126,3 +126,5 @@ experiment evidence.
 
 - [Seleção aprovada e snapshots revisados, 3 de outubro de 2026](2026-10-03-selection-decisions-v2.md): sorteio único de 46 requisitos em nove projetos, a partir de 82 unidades; revisão não cega explicitada e auditoria humana pendente.
 - [Casos da seleção, lote 2: os 36 restantes, 3 de outubro de 2026](2026-10-03-selection-cases-batch-2.md). Os 46 requisitos selecionados agora têm caso A/B/C; 360/360 controles qualificados em Docker após revisão das fontes e correções dos oráculos; nenhuma geração nova nessa revisão.
+
+- [Coleta dos 46 requisitos: primeiro resultado E2E, 3 de outubro de 2026](2026-10-03-selected46-first-e2e-results.md). Nextcloud: 12 execuções, duas degradações A/C no Luna e dois empates em sucesso no Sol; coleta exploratória em andamento.
