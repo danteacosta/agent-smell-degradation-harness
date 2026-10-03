@@ -58,7 +58,16 @@ def git(repo: Path, *args: str) -> str:
 
 
 def snapshot_texts(repo: Path, project: str) -> tuple[str, list[str]]:
-    sha = git(repo, "rev-list", "-1", f"--before={FRAME_END}", "HEAD").strip()
+    try:
+        default_ref = git(repo, "symbolic-ref", "--quiet", "refs/remotes/origin/HEAD").strip()
+        git(repo, "rev-parse", "--verify", f"{default_ref}^{{commit}}")
+    except subprocess.CalledProcessError as exc:
+        raise ValueError(f"{project}: default branch identity is unavailable; refresh origin/HEAD") from exc
+    if not default_ref.startswith("refs/remotes/origin/"):
+        raise ValueError(f"{project}: default branch must identify an origin branch")
+    sha = git(repo, "rev-list", "-1", f"--before={FRAME_END}", default_ref).strip()
+    if not sha:
+        raise ValueError(f"{project}: no default-branch commit at or before the frame end")
     paths = PROJECTS[project]["paths"] + EXTRA_PATHS.get(project, [])
     files = [f for f in git(repo, "ls-tree", "-r", "--name-only", sha, "--", *paths).splitlines()
              if f.lower().endswith(DOC_EXT)]
@@ -68,13 +77,23 @@ def snapshot_texts(repo: Path, project: str) -> tuple[str, list[str]]:
     out = subprocess.run(["git", "-C", str(repo), "cat-file", "--batch"], input=batch.encode(),
                          capture_output=True, check=True).stdout
     pos = 0
-    while pos < len(out):
-        header_end = out.index(b"\n", pos)
+    for file in files:
+        header_end = out.find(b"\n", pos)
+        if header_end < 0:
+            raise ValueError(f"{project}: missing blob header for {file}")
         parts = out[pos:header_end].split()
-        size = int(parts[2]) if len(parts) == 3 else 0
-        body = out[header_end + 1:header_end + 1 + size].decode("utf-8", "replace")
+        if (len(parts) != 3 or parts[1] != b"blob"
+                or not re.fullmatch(rb"(?:[0-9a-f]{40}|[0-9a-f]{64})", parts[0]) or not parts[2].isdigit()):
+            raise ValueError(f"{project}: missing or invalid document blob for {file}")
+        size = int(parts[2])
+        body_start, body_end = header_end + 1, header_end + 1 + size
+        if body_end >= len(out) or out[body_end:body_end + 1] != b"\n":
+            raise ValueError(f"{project}: incomplete document blob for {file}")
+        body = out[body_start:body_end].decode("utf-8", "replace")
         found.append(norm(" ".join(clean(line) for line in body.splitlines())))
-        pos = header_end + 1 + size + 1
+        pos = body_end + 1
+    if pos != len(out):
+        raise ValueError(f"{project}: unexpected extra document blobs")
     return sha, found
 
 

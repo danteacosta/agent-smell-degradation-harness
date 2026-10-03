@@ -113,9 +113,8 @@
       "reason": "Present ('specifically granted access'). The frozen rule is the positive grant; the other vote adds exclusivity the text does not state."
     },
     "rc-6be0f3992b4b": {
-      "decision": "keep_frozen",
-      "reason": "Present in the snapshot (FAQ: 'Attachments plus data in a single document are limited to 1GB'; limits page). The text states a limit, not a mechanism, so the oracle must accept any behavior that keeps the document within 1GB.",
-      "oracle_requirement": "mechanism-neutral limit check"
+      "decision": "exclude",
+      "reason": "The frame-end FAQ states a combined attachments-plus-data 1GB limit, but its linked limits page counts attachments separately, limits internal attachments to 1GB and allows external attachments of 3GB/20GB on paid plans. This conflicts with the frozen rule. Exclude from this controlled-omission cohort rather than silently choose a source or scope. See current-doc-manual-source-review.json; exclusion remains proposed."
     },
     "rc-cb144c65d898": {
       "decision": "exclude",
@@ -140,7 +139,7 @@
   ],
   "open_questions_for_advisor": [
     "Approve the definition of current documentation as the frame-end snapshot (2026-09-30T23:59:59Z). It answers the earlier question about removed text: rules absent from the snapshot are excluded, rules moved elsewhere are kept with the snapshot text as arm A.",
-    "rc-882709afd891 survives only as image alt text in the snapshot ('If a user mentioned in a channel is not a member already, then Mattermost prompts to add the user'). Proposed: keep; exclude if alt text should not count as documentation.",
+    "rc-882709afd891 is present in ordinary prose as well as image alt text. Keep provisionally; confirm that the documented add-user prompt applies to the browser journey, because the illustration is mobile. This is a web-scope question, not an alt-text-only question.",
     "Batch-1 arm A texts follow the commit-time documentation. Under this definition they should be refreshed from the snapshot; the only rule-level change found is Immich MP2T, which now also lists .ts."
   ],
   "current_documentation": {
@@ -164,5 +163,13 @@
     "rc-fd348eb33246",
     "rc-6be0f3992b4b",
     "rc-cb144c65d898"
-  ]
+  ],
+  "integration_review": {
+    "blind": false,
+    "previously_exposed_to_probe_outcomes": true,
+    "probe_outcomes_consulted_for_this_review": false,
+    "approval_granted": false,
+    "source_review": "data/requirement-selection/current-doc-manual-source-review.json",
+    "note": "Original author probe_outcomes_consulted declaration is retained; integration review cannot certify outcome blinding."
+  }
 }
