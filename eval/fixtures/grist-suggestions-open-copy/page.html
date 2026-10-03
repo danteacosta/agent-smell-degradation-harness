@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Documents</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Documents</h1><p id="who"></p><ul id="docs" aria-label="Documents"></ul><section id="view" aria-label="Shown document"><h2 id="view-title"></h2><table id="grid"><tbody></tbody></table></section></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+const user=window.initialState.user;
+let s=load({docs:window.initialState.docs.map(d=>({...d,copyOf:null,owner:null})),shown:null,copies:0});
+function doc(id){const d=s.docs.find(d=>d.id===id);if(!d)throw new Error('unknown document');return d}
+const app=Object.freeze({
+  onDocument:register,
+  user(){return structuredClone(user)},
+  documents(){return structuredClone(s.docs)},
+  copy(id){const d=doc(id);s.copies+=1;const c={...structuredClone(d),id:d.id+'~copy'+s.copies,copyOf:d.id,owner:user?user.id:null};s.docs.push(c);store(s);render();return c.id},
+  show(id){doc(id);s.shown=id;store(s);render()},
+  setCell(docId,rowId,value){const r=doc(docId).rows.find(r=>r.id===rowId);if(!r)throw new Error('unknown row');r.value=String(value);store(s);render()}
+});
+function render(){
+  document.querySelector('#who').textContent=user?'Signed in as '+user.name:'Not signed in';
+  const list=document.querySelector('#docs');list.replaceChildren();
+  for(const d of s.docs.filter(d=>d.copyOf===null)){const li=el('li',{'data-id':d.id,'data-cells':JSON.stringify(Object.fromEntries(d.rows.map(r=>[r.id,r.value])))},d.name+(d.suggestions?' (suggestions enabled) ':' '));
+    li.append(el('button',{type:'button',class:'open'},'Open'));list.append(li)}
+  const v=document.querySelector('#view');const d=s.shown===null?null:doc(s.shown);
+  v.dataset.shown=d?d.id:'';v.dataset.copyOf=d&&d.copyOf?d.copyOf:'';
+  document.querySelector('#view-title').textContent=d?(d.copyOf?'Copy of '+doc(d.copyOf).name:d.name):'No document open';
+  const body=document.querySelector('#grid tbody');body.replaceChildren();
+  if(d)for(const r of d.rows){const input=el('input',{'data-row':r.id,'data-stored':r.value,'aria-label':r.label});input.value=r.value;const td=el('td');td.append(input);const tr=el('tr');tr.append(el('th',{},r.label),td);body.append(tr)}
+}
+document.querySelector('#docs').addEventListener('click',e=>{const b=e.target.closest('button.open');if(b&&behavior)behavior({type:'open',docId:b.closest('li').dataset.id})});
+document.querySelector('#grid').addEventListener('change',e=>{if(e.target.matches('input[data-row]')&&behavior)behavior({type:'edit',docId:s.shown,rowId:e.target.dataset.row,value:e.target.value})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

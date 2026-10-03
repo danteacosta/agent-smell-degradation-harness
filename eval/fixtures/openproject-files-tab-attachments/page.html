@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Work package</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><section aria-label="Project settings"><h2>Project settings › Files › Attachments</h2><label><input id="attachments-setting" type="checkbox"> Attachments</label><button id="save-settings" type="button">Save</button><p id="settings-state"></p></section><section aria-label="Work package"><h1 id="wp-title"></h1><button id="files-tab" type="button">Files</button><div id="files-panel"></div></section></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+const S=window.initialState;let settings=load(S.settings);let sections=[];
+const app=Object.freeze({
+  onFilesTab:register,
+  workPackage(){return structuredClone(S.workPackage)},
+  storages(){return structuredClone(S.storages)},
+  settings(){return structuredClone(settings)},
+  showFilesTab(list){if(!Array.isArray(list)||!list.every(s=>s==='attachments'||S.storages.some(x=>x.id===s)))throw new Error('sections must be attachments or storage ids');sections=[...list];render()}
+});
+function render(){document.querySelector('#wp-title').textContent='#'+S.workPackage.id+' '+S.workPackage.subject;
+  const st=document.querySelector('#settings-state');st.dataset.attachments=String(settings.attachments);st.textContent='Saved: '+(settings.attachments?'on':'off');
+  const panel=document.querySelector('#files-panel');panel.replaceChildren();
+  for(const s of sections){const box=el('div',{'data-section':s});
+    if(s==='attachments'){box.append(el('h3',{},'Attachments'));const ul=el('ul');for(const a of S.workPackage.attachments)ul.append(el('li',{},a));box.append(ul)}
+    else box.append(el('h3',{},S.storages.find(x=>x.id===s).name));
+    panel.append(box)}}
+document.querySelector('#attachments-setting').checked=settings.attachments;
+document.querySelector('#save-settings').addEventListener('click',()=>{settings={...settings,attachments:document.querySelector('#attachments-setting').checked};store(settings);render()});
+document.querySelector('#files-tab').addEventListener('click',()=>{if(behavior)behavior(app.workPackage())});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

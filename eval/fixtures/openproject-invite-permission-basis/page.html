@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Members</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Members</h1><button id="open-invite" type="button">Invite user</button><section id="invite" hidden aria-label="Invite user"><h2>Invite user</h2><label>Project <select id="invite-project"></select></label><label>Name or email <input id="invite-name"></label><label>Role <select id="invite-role"></select></label><button id="invite-submit" type="button">Invite</button><p id="message" role="status"></p></section><h2>Project members</h2><ul id="members" aria-label="Project members"></ul></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+const S=window.initialState;let members=load(S.members);
+const known=(list,id)=>list.some(x=>x.id===id);
+const app=Object.freeze({
+  onInvite:register,
+  projects(){return structuredClone(S.projects)},
+  roles(){return structuredClone(S.roles)},
+  principals(){return structuredClone(S.principals)},
+  members(){return structuredClone(members)},
+  addMember(projectId,principalId,roleId){if(!known(S.projects,projectId)||!known(S.principals,principalId)||!known(S.roles,roleId))throw new Error('known project, principal and role required');
+    if(members.some(m=>m.project===projectId&&m.principal===principalId)){app.showMessage('Already a member.');return}
+    const p=S.principals.find(x=>x.id===principalId);members.push({project:projectId,principal:principalId,kind:p.kind,name:p.name,email:'',role:roleId});store(members);render()},
+  inviteByEmail(projectId,email,roleId){if(!known(S.projects,projectId)||!known(S.roles,roleId)||typeof email!=='string'||!/^[^@\s]+@[^@\s]+$/.test(email))throw new Error('known project, email and role required');
+    members.push({project:projectId,principal:'',kind:'user',name:email,email,role:roleId});store(members);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){const list=document.querySelector('#members');list.replaceChildren();
+  for(const m of members){const project=S.projects.find(p=>p.id===m.project).name,role=S.roles.find(r=>r.id===m.role).name;
+    list.append(el('li',{'data-project':m.project,'data-principal':m.principal,'data-kind':m.kind,'data-email':m.email,'data-role':m.role},m.name+' — '+project+' ('+role+')'))}}
+for(const p of S.projects)document.querySelector('#invite-project').append(el('option',{value:p.id},p.name));
+for(const r of S.roles)document.querySelector('#invite-role').append(el('option',{value:r.id},r.name));
+document.querySelector('#invite-project').value=S.current;
+document.querySelector('#open-invite').addEventListener('click',()=>{document.querySelector('#invite').hidden=false});
+document.querySelector('#invite-submit').addEventListener('click',()=>{if(behavior)behavior({project:document.querySelector('#invite-project').value,name:document.querySelector('#invite-name').value.trim(),role:document.querySelector('#invite-role').value})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

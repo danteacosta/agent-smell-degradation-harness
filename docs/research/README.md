@@ -125,3 +125,4 @@ experiment evidence.
 - [Decisões de seleção, versão 2: documentação no fim do frame](2026-10-03-selection-decisions-v2.md). Define "atual" como o snapshot de 2026-09-30, fecha as 15 pendências da rodada 2 e as de texto removido; prévia de 46 requisitos em nove projetos. Proposta, não aprovada.
 
 - [Seleção aprovada e snapshots revisados, 3 de outubro de 2026](2026-10-03-selection-decisions-v2.md): sorteio único de 46 requisitos em nove projetos, a partir de 82 unidades; revisão não cega explicitada e auditoria humana pendente.
+- [Casos da seleção, lote 2: os 36 restantes, 3 de outubro de 2026](2026-10-03-selection-cases-batch-2.md). Os 46 requisitos selecionados agora têm caso A/B/C; 349/349 controles pré-qualificados localmente; pontos para revisão antes do congelamento.

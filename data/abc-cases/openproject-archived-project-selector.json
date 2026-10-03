@@ -1,0 +1,29 @@
+{
+  "case": "openproject-archived-project-selector",
+  "intent_id": "openproject-archived-project-selector",
+  "project_id": "openproject",
+  "candidate_id": "rc-2c13970217ea",
+  "source": {
+    "commit": "784ed0fb52",
+    "file": "docs/user-guide/projects/README.md",
+    "snapshot": "66f582c19f",
+    "snapshot_file": "docs/user-guide/projects/project-settings/project-information/README.md",
+    "snapshot_context_file": "docs/getting-started/projects/README.md"
+  },
+  "fixture": "eval/fixtures/openproject-archived-project-selector",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onProjectSearch to handle the visible All projects dropdown and its search field. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the project list of the All projects dropdown in the header. In order to open an existing project, click the All projects dropdown menu in the upper left corner of the header and select the project you want to open. You can also start typing in a project name to filter by the project's title. When the dropdown opens and whenever its search text changes, list the selectable projects from app.projects() with app.showOptions(ids). In order to archive a project, click the More (three dots) icon and select Archive project. Once archived, a project can no longer be selected from the project list accessible via header navigation.",
+    "B": "The All projects dropdown in the upper left corner of the header is how an existing project is opened: the user opens it and picks the project. Typing part of a project name filters the list by project title. Each time the dropdown opens or its search text changes, pass the selectable projects from app.projects() to app.showOptions(ids). A project is archived through the More (three dots) icon and Archive project, and from then on it cannot be chosen any more in the project list reached through the header navigation.",
+    "C": "Implement the project list of the All projects dropdown in the header. In order to open an existing project, click the All projects dropdown menu in the upper left corner of the header and select the project you want to open. You can also start typing in a project name to filter by the project's title. When the dropdown opens and whenever its search text changes, list the selectable projects from app.projects() with app.showOptions(ids). In order to archive a project, click the More (three dots) icon and select Archive project."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100332,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

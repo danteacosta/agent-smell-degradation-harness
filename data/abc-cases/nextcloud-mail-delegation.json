@@ -1,0 +1,28 @@
+{
+  "case": "nextcloud-mail-delegation",
+  "intent_id": "nextcloud-mail-delegation",
+  "project_id": "nextcloud",
+  "candidate_id": "rc-c38fa60b1164",
+  "source": {
+    "commit": "58b21da96d",
+    "file": "user_manual/groupware/mail.rst",
+    "snapshot": "8d74036494",
+    "snapshot_file": "user_manual/groupware/mail.rst"
+  },
+  "fixture": "eval/fixtures/nextcloud-mail-delegation",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onDelegation to handle the visible Delegate access and Revoke access buttons. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement native account delegation in Mail. Native account delegation lets you grant other Nextcloud users access to one of your mail accounts directly from the app, without any server-side alias configuration. A delegate can do everything the account owner can (send, receive, and delete mail on your behalf) except deleting the account or updating its authentication information. To delegate one of your accounts, click Delegate account on the account, click Add delegate in the Delegation dialog, choose the Nextcloud user in the Select a user field and confirm with Delegate access; app.onDelegation then receives {type: 'delegate', accountId, userId}, and the delegate is recorded with app.addDelegate(accountId, userId). The shared account then appears in the delegate's account list (app.accountList(userId) and app.setAccountList(userId, entries), entries being {accountId, tag}), marked as delegated. To remove access, open the Delegation dialog again, click Revoke next to the delegate and confirm with Revoke access; app.onDelegation then receives {type: 'revoke', accountId, userId}, and the delegate is removed with app.removeDelegate(accountId, userId). Provisioned accounts cannot be delegated.",
+    "B": "With native account delegation, the app itself lets you give other Nextcloud users access to one of your mail accounts, with no alias configuration on the server. Delegates may do anything the owner of the account may do, such as sending, receiving and deleting mail for you, apart from deleting the account or changing its authentication information. You delegate an account by clicking its Delegate account button, then Add delegate in the Delegation dialog, picking the Nextcloud user in Select a user and confirming with Delegate access; app.onDelegation receives {type: 'delegate', accountId, userId} and records the delegate through app.addDelegate(accountId, userId). After that the shared account is listed, marked as delegated, in the account list of the delegate (read with app.accountList(userId) and written with app.setAccountList(userId, entries), each entry being {accountId, tag}). Access is withdrawn by reopening the Delegation dialog, clicking Revoke beside the delegate and confirming with Revoke access; app.onDelegation receives {type: 'revoke', accountId, userId} and removes the delegate through app.removeDelegate(accountId, userId). A provisioned account cannot be delegated.",
+    "C": "Implement native account delegation in Mail. Native account delegation lets you grant other Nextcloud users access to one of your mail accounts directly from the app, without any server-side alias configuration. A delegate can do everything the account owner can (send, receive, and delete mail on your behalf) except deleting the account or updating its authentication information. To delegate one of your accounts, click Delegate account on the account, click Add delegate in the Delegation dialog, choose the Nextcloud user in the Select a user field and confirm with Delegate access; app.onDelegation then receives {type: 'delegate', accountId, userId}, and the delegate is recorded with app.addDelegate(accountId, userId). To remove access, open the Delegation dialog again, click Revoke next to the delegate and confirm with Revoke access; app.onDelegation then receives {type: 'revoke', accountId, userId}, and the delegate is removed with app.removeDelegate(accountId, userId). Provisioned accounts cannot be delegated."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100327,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

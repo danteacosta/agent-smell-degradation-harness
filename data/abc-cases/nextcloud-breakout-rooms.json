@@ -1,0 +1,28 @@
+{
+  "case": "nextcloud-breakout-rooms",
+  "intent_id": "nextcloud-breakout-rooms",
+  "project_id": "nextcloud",
+  "candidate_id": "rc-946f02ef19b6",
+  "source": {
+    "commit": "a88e2fc1fb",
+    "file": "user_manual/talk/call.rst",
+    "snapshot": "8d74036494",
+    "snapshot_file": "user_manual/talk/call.rst"
+  },
+  "fixture": "eval/fixtures/nextcloud-breakout-rooms",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onCreate to handle the visible Create breakout rooms button. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement Set up breakout rooms in a Talk call. The moderator enters the number of rooms and clicks Create breakout rooms; create the rooms with app.createBreakoutRooms(rooms), where each room is {name, participants} and participants is a list of participant ids from app.participants(). Breakout rooms allow you to divide a call into smaller groups for more focused discussions. Depending on your permissions and how your instance is configured, this option may not be available to you.",
+    "B": "In a Talk call, the moderator types how many rooms are wanted and clicks Create breakout rooms, which should create them through app.createBreakoutRooms(rooms); every room is {name, participants}, with participants given as ids taken from app.participants(). With breakout rooms a call is split into smaller groups so that discussions can be more focused. This option might not be offered to you, depending on your permissions and on the configuration of your instance.",
+    "C": "Implement Set up breakout rooms in a Talk call. The moderator enters the number of rooms and clicks Create breakout rooms; create the rooms with app.createBreakoutRooms(rooms), where each room is {name, participants} and participants is a list of participant ids from app.participants(). Depending on your permissions and how your instance is configured, this option may not be available to you."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100324,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

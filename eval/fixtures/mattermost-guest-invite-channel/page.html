@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Invite people</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Invite people to <span id="team"></span></h1><section aria-label="Invite as guest"><h2>Invite as guest</h2><label>Email <input id="guest-email" type="email"></label><fieldset><legend>Channels</legend><div id="channels"></div></fieldset><label>Custom message <input id="guest-message" size="50"></label><button id="invite" type="button">Invite</button><p id="message" role="status"></p></section><h2>Sent invitations</h2><ul id="invitations" aria-label="Sent invitations"></ul></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let invitations=load([]);
+const channels=window.initialState.channels;
+const app=Object.freeze({
+  onInvite:register,
+  channels(){return structuredClone(channels)},
+  invitations(){return structuredClone(invitations)},
+  inviteGuest(inv){if(typeof inv!=='object'||inv===null||typeof inv.email!=='string'||!inv.email.trim()||!Array.isArray(inv.channels)||!inv.channels.every(id=>channels.some(c=>c.id===id))||(inv.message!==undefined&&typeof inv.message!=='string'))throw new Error('email, known channel ids and optional message required');
+    invitations.push({email:inv.email.trim(),channels:[...inv.channels],message:inv.message??''});store(invitations);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){
+  document.querySelector('#team').textContent=window.initialState.team;
+  const list=document.querySelector('#invitations');list.replaceChildren();
+  for(const i of invitations)list.append(el('li',{'data-email':i.email,'data-channels':i.channels.join(',')},
+    i.email+' — '+(i.channels.map(id=>channels.find(c=>c.id===id).name).join(', ')||'no channels')))
+}
+const box=document.querySelector('#channels');
+for(const c of channels){const label=el('label');label.append(el('input',{type:'checkbox',name:'channel',value:c.id}),document.createTextNode(' '+c.name));box.append(label)}
+document.querySelector('#invite').addEventListener('click',()=>{if(behavior)behavior({email:document.querySelector('#guest-email').value,
+  channels:[...document.querySelectorAll('input[name=channel]:checked')].map(b=>b.value),message:document.querySelector('#guest-message').value})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

@@ -1,0 +1,28 @@
+{
+  "case": "openproject-invite-permission-basis",
+  "intent_id": "openproject-invite-permission-basis",
+  "project_id": "openproject",
+  "candidate_id": "rc-17b31565c57c",
+  "source": {
+    "commit": "b09683d857",
+    "file": "docs/getting-started/invite-members/README.md",
+    "snapshot": "66f582c19f",
+    "snapshot_file": "docs/getting-started/invite-members/README.md"
+  },
+  "fixture": "eval/fixtures/openproject-invite-permission-basis",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onInvite to handle the visible Invite button of the Invite user dialog. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the Invite user dialog. Once you click Invite user, a dialogue will open. Here you can select the project, to which project you want to invite new members. Select whether the permissions assigned to the new user should be based on an existing user role, group or a placeholder user permissions. Then enter the name of an existing principal (listed by app.principals()) or the email address of a new user, assign a role and click Invite: add an existing principal with app.addMember(projectId, principalId, roleId) or invite a new user by email with app.inviteByEmail(projectId, email, roleId).",
+    "B": "Clicking Invite user opens a dialog where the project that new members are invited to is picked, and where the user decides whether the new member's permissions come from an existing user role, from a group, or from a placeholder user's permissions. Next comes the name of an existing principal (see app.principals()) or a new user's email address, then a role, then a click on Invite; existing principals are added through app.addMember(projectId, principalId, roleId) and new users are invited by email through app.inviteByEmail(projectId, email, roleId).",
+    "C": "Implement the Invite user dialog. Once you click Invite user, a dialogue will open. Here you can select the project, to which project you want to invite new members. Then enter the name of an existing principal (listed by app.principals()) or the email address of a new user, assign a role and click Invite: add an existing principal with app.addMember(projectId, principalId, roleId) or invite a new user by email with app.inviteByEmail(projectId, email, roleId)."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100331,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

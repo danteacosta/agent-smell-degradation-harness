@@ -1,0 +1,28 @@
+{
+  "case": "openproject-auto-theme-contrast",
+  "intent_id": "openproject-auto-theme-contrast",
+  "project_id": "openproject",
+  "candidate_id": "rc-02df56f00b58",
+  "source": {
+    "commit": "5e64e38f60",
+    "file": "docs/user-guide/account-settings/README.md",
+    "snapshot": "66f582c19f",
+    "snapshot_file": "docs/user-guide/account-settings/interface/README.md"
+  },
+  "fixture": "eval/fixtures/openproject-auto-theme-contrast",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onUpdate to handle the visible Update look and feel button. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the Update look and feel button of the Interface settings. When the user clicks it, apply the color mode chosen in the Color mode dropdown with app.applyTheme(theme), where theme is light, light_high_contrast, dark or dark_high_contrast. You can increase the contrast by activating the Increase contrast setting, which will significantly increase the contrast. You can also select the Automatic option, which will match the color mode of your operating system (app.system() describes the operating system's display preferences). If this option is selected, OpenProject will automatically match your operating system's light or dark theme, including the system's contrast settings. If your operating system is set to high contrast mode, OpenProject will also automatically switch to the corresponding high contrast mode (light or dark).",
+    "B": "Clicking Update look and feel in the Interface settings applies the mode picked in the Color mode dropdown through app.applyTheme(theme), with theme being one of light, light_high_contrast, dark and dark_high_contrast. Turning on Increase contrast raises the contrast significantly. The Automatic option follows the color mode of the operating system (app.system() describes the operating system's display preferences): OpenProject then takes over the system's light or dark theme as well as its contrast setting, so when the operating system uses high contrast, OpenProject switches to the matching high contrast mode (light or dark).",
+    "C": "Implement the Update look and feel button of the Interface settings. When the user clicks it, apply the color mode chosen in the Color mode dropdown with app.applyTheme(theme), where theme is light, light_high_contrast, dark or dark_high_contrast. You can increase the contrast by activating the Increase contrast setting, which will significantly increase the contrast. You can also select the Automatic option, which will match the color mode of your operating system (app.system() describes the operating system's display preferences). If this option is selected, OpenProject will automatically match your operating system's light or dark theme."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100329,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

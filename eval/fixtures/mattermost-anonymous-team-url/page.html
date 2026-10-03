@@ -1,0 +1,27 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Create a team</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Create a team</h1><section id="name-step"><label>Team name <input id="team-name"></label><button id="next" type="button">Next</button></section><section id="url-step" hidden><h2>Team URL</h2><label>https://chat.example.com/<input id="team-url"></label><button id="finish" type="button">Finish</button></section><p id="message" role="status"></p><h2>Teams</h2><ul id="teams" aria-label="Teams"></ul></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let teams=load(window.initialState.teams);
+const app=Object.freeze({
+  onNext:register,
+  config(){return structuredClone(window.initialState.config)},
+  teams(){return structuredClone(teams)},
+  createTeam(team){if(typeof team!=='object'||team===null||typeof team.name!=='string'||team.name.trim().length<2||team.name.trim().length>64||typeof team.url!=='string'||!team.url)throw new Error('name of 2-64 characters and url required');
+    if(teams.some(t=>t.url===team.url))throw new Error('team URL already taken');
+    teams.push({name:team.name.trim(),url:team.url});store(teams);document.querySelector('#url-step').hidden=true;render()},
+  showUrlStep(url){if(typeof url!=='string')throw new Error('url text required');document.querySelector('#team-url').value=url;document.querySelector('#url-step').hidden=false},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){const list=document.querySelector('#teams');list.replaceChildren();
+  for(const t of teams)list.append(el('li',{'data-name':t.name,'data-url':t.url},t.name+' — https://chat.example.com/'+t.url+'/'))}
+document.querySelector('#next').addEventListener('click',()=>{if(behavior)behavior({name:document.querySelector('#team-name').value})});
+document.querySelector('#finish').addEventListener('click',()=>{try{app.createTeam({name:document.querySelector('#team-name').value,url:document.querySelector('#team-url').value})}catch(e){app.showMessage(e.message)}});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

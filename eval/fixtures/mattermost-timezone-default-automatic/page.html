@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Display settings</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Settings › Display</h1><section aria-label="Timezone"><h2>Timezone</h2><p id="current"></p><button id="edit" type="button">Edit</button><div id="editor" hidden><label><input id="automatic" type="checkbox"> Automatic</label><label>Timezone <select id="manual-timezone"></select></label><button id="save" type="button">Save</button></div></section></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let pref=load(window.initialState.timezone);
+const zones=window.initialState.zones;
+const app=Object.freeze({
+  onEdit:register,
+  zones(){return [...zones]},
+  computerTimezone(){return window.initialState.computerTimezone},
+  showEditor(values){if(typeof values!=='object'||values===null||typeof values.automatic!=='boolean'||typeof values.manualTimezone!=='string')throw new Error('automatic and manualTimezone required');
+    document.querySelector('#automatic').checked=values.automatic;document.querySelector('#manual-timezone').value=values.manualTimezone;document.querySelector('#editor').hidden=false}
+});
+function render(){const c=document.querySelector('#current');c.dataset.pref=JSON.stringify(pref);
+  c.textContent=pref===null?'—':pref.automatic?'Automatic ('+window.initialState.computerTimezone+')':(pref.manualTimezone||'—')}
+const select=document.querySelector('#manual-timezone');for(const z of zones)select.append(el('option',{value:z},z));
+document.querySelector('#edit').addEventListener('click',()=>{if(behavior)behavior(pref===null?null:structuredClone(pref))});
+document.querySelector('#save').addEventListener('click',()=>{pref={automatic:document.querySelector('#automatic').checked,manualTimezone:select.value};store(pref);document.querySelector('#editor').hidden=true;render()});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

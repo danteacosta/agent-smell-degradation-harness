@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Swimlanes</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Swimlanes</h1><ul id="swimlanes" aria-label="Swimlanes"></ul><section id="popup" aria-label="Add Swimlane" hidden><h2>Add Swimlane</h2><p id="anchor"></p><label><input id="placement-above" type="radio" name="placement" value="above"> Above selected swimlane</label><label><input id="placement-below" type="radio" name="placement" value="below"> Below selected swimlane</label><label>Title <textarea id="titles" rows="3"></textarea></label><button id="save" type="button">Save</button><p id="message" role="status"></p></section></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let lanes=load(window.initialState.swimlanes);
+let anchor=null;
+const app=Object.freeze({
+  onSave:register,
+  swimlanes(){return structuredClone(lanes)},
+  addSwimlanes(laneId,placement,titles){const i=lanes.findIndex(l=>l.id===laneId);if(i<0)throw new Error('unknown swimlane');
+    if(placement!=='above'&&placement!=='below')throw new Error('placement must be above or below');
+    if(!Array.isArray(titles)||!titles.length||!titles.every(t=>typeof t==='string'&&t.trim()))throw new Error('nonempty titles required');
+    const created=titles.map(t=>({id:'s'+Math.random().toString(36).slice(2,10),title:t.trim()}));
+    lanes.splice(placement==='above'?i:i+1,0,...created);store(lanes);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){const list=document.querySelector('#swimlanes');list.replaceChildren();
+  for(const l of lanes){const li=el('li',{'data-id':l.id,'data-title':l.title},l.title+' ');
+    li.append(el('button',{type:'button',class:'add-lane','data-for':l.id,'aria-label':'Add Swimlane'},'+'));list.append(li)}}
+document.querySelector('#swimlanes').addEventListener('click',e=>{const b=e.target.closest('.add-lane');if(!b)return;anchor=b.dataset.for;
+  document.querySelector('#anchor').textContent='Selected swimlane: '+lanes.find(l=>l.id===anchor).title;document.querySelector('#popup').hidden=false});
+document.querySelector('#save').addEventListener('click',()=>{const checked=document.querySelector('input[name=placement]:checked');
+  if(behavior)behavior({laneId:anchor,placement:checked?checked.value:null,text:document.querySelector('#titles').value})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

@@ -1,0 +1,28 @@
+{
+  "case": "wekan-member-same-org-team",
+  "intent_id": "wekan-member-same-org-team",
+  "project_id": "wekan",
+  "candidate_id": "rc-8b05adc7767e",
+  "source": {
+    "commit": "f0ea1601b3",
+    "file": "docs/Features/Members/Members.md",
+    "snapshot": "38415f04ca",
+    "snapshot_file": "docs/Features/Members/Members.md"
+  },
+  "fixture": "eval/fixtures/wekan-member-same-org-team",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onAdd to handle the visible Add button. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement adding a member from the board members sidebar. When the user picks a user and clicks Add, add them with app.addMember(userId). The signed-in inviter is app.actor(), the board's members and whether each is active are app.members(), every user's Organizations and Teams are in app.users(), and the admin settings are app.settings(). On multi-tenant instances you can require that a board's members share an Organization or a Team. There is one admin checkbox per kind (boardMembersFromSameOrgOnly in Admin Panel / People / Organizations and boardMembersFromSameTeamOnly in Admin Panel / People / Teams), and when either is on, a user can only be added to a board if they share an enabled kind with the inviter or with an active board member (site admins bypass this).",
+    "B": "In the board members sidebar, picking a user and clicking Add adds them through app.addMember(userId). app.actor() is the signed-in inviter, app.members() lists the board's members with whether each is active, app.users() gives each user's Organizations and Teams, and app.settings() holds the admin settings. Multi-tenant instances can demand that board members share an Organization or a Team, with a separate admin checkbox for each kind: boardMembersFromSameOrgOnly under Admin Panel / People / Organizations and boardMembersFromSameTeamOnly under Admin Panel / People / Teams. While either one is checked, a user may join a board only if they have an enabled kind in common with the inviter or with an active board member; site admins are exempt.",
+    "C": "Implement adding a member from the board members sidebar. When the user picks a user and clicks Add, add them with app.addMember(userId). The signed-in inviter is app.actor(), the board's members and whether each is active are app.members(), every user's Organizations and Teams are in app.users(), and the admin settings are app.settings(). On multi-tenant instances you can require that a board's members share an Organization or a Team. There is one admin checkbox per kind (boardMembersFromSameOrgOnly in Admin Panel / People / Organizations and boardMembersFromSameTeamOnly in Admin Panel / People / Teams)."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100339,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

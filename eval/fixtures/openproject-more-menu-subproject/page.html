@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Project information</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Project information: <span id="project"></span></h1><button id="more" type="button" aria-haspopup="menu" aria-expanded="false">More</button><ul id="more-menu" role="menu" hidden></ul><section id="new-project" hidden aria-label="New project"><h2>New project</h2><label>Name <input id="np-name"></label><label>Subproject of <select id="np-parent"></select></label><button id="np-create" type="button">Create</button></section><h2>Projects</h2><ul id="projects" aria-label="Projects"></ul></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let projects=load(window.initialState.projects);let menu=[];const currentId=window.initialState.current;
+const cur=()=>projects.find(p=>p.id===currentId);
+const flag=(key,value)=>{const p=cur();if(!p)throw new Error('project deleted');p[key]=value;store(projects);render()};
+function openForm(name,parent){const form=document.querySelector('#new-project');const sel=document.querySelector('#np-parent');sel.replaceChildren(el('option',{value:''},'(none)'));
+  for(const p of projects)sel.append(el('option',{value:p.id},p.name));sel.value=parent??'';document.querySelector('#np-name').value=name;form.hidden=false}
+const app=Object.freeze({
+  onMore:register,
+  project(){return structuredClone(cur()??null)},
+  projects(){return structuredClone(projects)},
+  showMenu(items){if(!Array.isArray(items)||!items.every(i=>i&&typeof i.label==='string'&&i.label.trim()&&typeof i.run==='function'))throw new Error('items need label and run');menu=items.map(i=>({label:i.label,run:i.run}));render()},
+  openProjectForm(options={}){const parent=options?.parent??null;if(parent!==null&&!projects.some(p=>p.id===parent))throw new Error('unknown parent');openForm('',parent)},
+  duplicateProject(){const p=cur();openForm('Copy of '+p.name,p.parent)},
+  makePublic(){flag('public',true)},
+  setTemplate(){flag('template',true)},
+  archive(){flag('archived',true)},
+  deleteProject(){projects=projects.filter(p=>p.id!==currentId);store(projects);render()}
+});
+function render(){const p=cur();document.querySelector('#project').textContent=p?p.name:'(deleted)';
+  const m=document.querySelector('#more-menu');m.replaceChildren();
+  menu.forEach((item,i)=>{const li=el('li',{role:'none'});li.append(el('button',{type:'button',role:'menuitem','data-index':i},item.label));m.append(li)});
+  const list=document.querySelector('#projects');list.replaceChildren();
+  for(const x of projects)list.append(el('li',{'data-id':x.id,'data-name':x.name,'data-parent':x.parent??'','data-public':String(!!x.public),'data-template':String(!!x.template),'data-archived':String(!!x.archived)},
+    x.name+(x.parent?' (subproject of '+projects.find(y=>y.id===x.parent)?.name+')':'')+(x.public?' · public':'')+(x.template?' · template':'')+(x.archived?' · archived':'')))}
+document.querySelector('#more').addEventListener('click',e=>{const m=document.querySelector('#more-menu');
+  if(m.hidden&&behavior)behavior(app.project());m.hidden=!m.hidden;e.target.setAttribute('aria-expanded',String(!m.hidden))});
+document.querySelector('#more-menu').addEventListener('click',e=>{const i=e.target.dataset?.index;if(i===undefined)return;document.querySelector('#more-menu').hidden=true;menu[Number(i)].run()});
+document.querySelector('#np-create').addEventListener('click',()=>{const name=document.querySelector('#np-name').value.trim();if(!name)return;
+  projects.push({id:'n'+(projects.length+1),name,parent:document.querySelector('#np-parent').value||null,public:false,template:false,archived:false});store(projects);
+  document.querySelector('#new-project').hidden=true;render()});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

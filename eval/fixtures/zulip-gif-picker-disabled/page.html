@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Organization settings</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Organization settings</h1><section aria-label="Compose settings"><h2>Compose settings</h2><label>GIF picker <select id="gif-picker"><option value="g">G (General audience)</option><option value="pg">PG (Parental guidance)</option><option value="pg13">PG-13 (Parental guidance - under 13)</option><option value="r">R (Restricted)</option><option value="disabled">Disabled</option></select></label><button id="save" type="button">Save changes</button><p id="message" role="status"></p></section><p id="stored"></p><section aria-label="Compose box"><h2>Compose box</h2><label>Message <textarea id="compose" rows="3" cols="60"></textarea></label><div id="compose-buttons"></div></section></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let state=load({settings:window.initialState.settings,composeButtons:window.initialState.composeButtons});
+const LABELS={formatting:'Formatting',emoji:'Add emoji',gif:'Add GIF',poll:'Add poll',video:'Add video call'};
+const RATINGS=['g','pg','pg13','r','disabled'];
+const app=Object.freeze({
+  onSave:register,
+  settings(){return structuredClone(state.settings)},
+  composeButtons(){return [...state.composeButtons]},
+  saveSettings(change){if(typeof change!=='object'||change===null||!RATINGS.includes(change.gifRating))throw new Error('gifRating must be one of '+RATINGS.join(', '));
+    state.settings={...state.settings,gifRating:change.gifRating};store(state);render()},
+  setComposeButtons(list){if(!Array.isArray(list)||!list.every(b=>b in LABELS)||new Set(list).size!==list.length)throw new Error('known compose buttons required');
+    state.composeButtons=[...list];store(state);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){
+  const s=document.querySelector('#stored');s.dataset.gifRating=state.settings.gifRating;
+  s.textContent='Saved GIF picker setting: '+document.querySelector('#gif-picker option[value="'+state.settings.gifRating+'"]').textContent;
+  const box=document.querySelector('#compose-buttons');box.replaceChildren();
+  for(const b of state.composeButtons)box.append(el('button',{type:'button','data-button':b},LABELS[b]));
+}
+document.querySelector('#gif-picker').value=state.settings.gifRating;
+document.querySelector('#save').addEventListener('click',()=>{if(behavior)behavior({gifRating:document.querySelector('#gif-picker').value})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Channels</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Channels</h1><p id="actor"></p><ul id="channels" aria-label="Channels"></ul><section id="conversation" aria-label="Conversations"><h2 id="conversation-title">No channel open</h2><ul id="topics" aria-label="Topics"></ul></section><p id="message" role="status"></p></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+const S=window.initialState;let open=null;
+const app=Object.freeze({
+  onOpen:register,
+  actor(){return structuredClone(S.actor)},
+  channels(){return S.channels.map(c=>({id:c.id,name:c.name,privacy:c.privacy,subscribers:[...c.subscribers]}))},
+  showConversations(channelId){if(!S.channels.some(c=>c.id===channelId))throw new Error('unknown channel');open=channelId;render()},
+  closeConversations(){open=null;render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){
+  document.querySelector('#actor').textContent='Signed in as '+S.actor.name+' ('+S.actor.role+')';
+  const list=document.querySelector('#channels');list.replaceChildren();
+  for(const c of S.channels){const li=el('li',{'data-id':c.id},(c.privacy==='private'?'🔒 ':'# ')+c.name+(c.subscribers.includes(S.actor.id)?' (subscribed) ':' '));
+    li.append(el('button',{type:'button','data-channel':c.id},'View conversations'));list.append(li)}
+  const box=document.querySelector('#conversation');box.dataset.channel=open??'';
+  const c=S.channels.find(x=>x.id===open);document.querySelector('#conversation-title').textContent=c?'Conversations in '+c.name:'No channel open';
+  const topics=document.querySelector('#topics');topics.replaceChildren();
+  if(c)for(const t of c.topics)topics.append(el('li',{'data-topic':t},t));
+}
+document.querySelector('#channels').addEventListener('click',e=>{const b=e.target.closest('button[data-channel]');if(b&&behavior)behavior(b.dataset.channel)});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

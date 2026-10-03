@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Channel settings</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Channel settings</h1><p id="actor"></p><h2 id="channel"></h2><section aria-label="Permissions"><h3>Subscription permissions</h3><ul id="permissions"></ul></section><section aria-label="Subscribers"><h3>Subscribers</h3><ul id="subscribers"></ul></section><p id="message" role="status"></p></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let state=load({subscribers:window.initialState.subscribers});
+const S=window.initialState;
+const app=Object.freeze({
+  onUnsubscribe:register,
+  actor(){return structuredClone(S.actor)},
+  channel(){return structuredClone(S.channel)},
+  users(){return structuredClone(S.users)},
+  subscribers(){return [...state.subscribers]},
+  unsubscribe(userId){if(!state.subscribers.includes(userId))throw new Error('not a subscriber');state.subscribers=state.subscribers.filter(id=>id!==userId);store(state);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){
+  const names=S.groupNames;
+  document.querySelector('#actor').textContent='Signed in as '+S.actor.name+' (groups: '+S.actor.groups.map(g=>names[g]).join(', ')+')';
+  document.querySelector('#channel').textContent=(S.channel.privacy==='private'?'🔒 ':'#')+S.channel.name;
+  const labels={administer:'Who can administer the channel',subscribeSelf:'Who can subscribe themselves',subscribeAnyone:'Who can subscribe anyone',unsubscribeAnyone:'Who can unsubscribe anyone'};
+  const perms=document.querySelector('#permissions');perms.replaceChildren();
+  for(const [k,label] of Object.entries(labels))perms.append(el('li',{},label+': '+S.channel.permissions[k].map(g=>names[g]).join(', ')));
+  const subs=document.querySelector('#subscribers');subs.replaceChildren();
+  for(const id of state.subscribers){const u=S.users.find(x=>x.id===id);const li=el('li',{'data-id':id},u.name+(id===S.actor.id?' (you) ':' '));
+    li.append(el('button',{type:'button','data-user':id},'Unsubscribe'));subs.append(li)}
+}
+document.querySelector('#subscribers').addEventListener('click',e=>{const b=e.target.closest('button[data-user]');if(b&&behavior)behavior(b.dataset.user)});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

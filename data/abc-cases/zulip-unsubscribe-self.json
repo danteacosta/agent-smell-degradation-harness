@@ -1,0 +1,31 @@
+{
+  "case": "zulip-unsubscribe-self",
+  "intent_id": "zulip-unsubscribe-self",
+  "project_id": "zulip",
+  "candidate_id": "rc-dfb84383fb89",
+  "source": {
+    "commit": "bde295806c",
+    "file": "help/include/unsubscribe-user-from-channel.md",
+    "snapshot": "9778ffc23c",
+    "snapshot_file": "starlight_help/src/content/docs/unsubscribe-from-a-channel.mdx",
+    "snapshot_context": [
+      "starlight_help/src/content/docs/channel-permissions.mdx"
+    ]
+  },
+  "fixture": "eval/fixtures/zulip-unsubscribe-self",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onUnsubscribe to handle the visible Unsubscribe buttons. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the Unsubscribe buttons in the channel's subscriber list. When the signed-in user clicks Unsubscribe next to a subscriber, remove that subscriber with app.unsubscribe(userId); app.actor() is the signed-in user with the groups they belong to, app.channel() gives the channel's permission settings (each listing the groups that hold it), and app.showMessage(text) shows a message. You can configure the following subscription permissions for each channel, regardless of its type: who can administer the channel, who can subscribe themselves, who can subscribe anyone, and who can unsubscribe anyone. You can always unsubscribe from any channel in Zulip. Unsubscribing from a channel removes conversations in that channel from your inbox, recent conversations, and left sidebar.",
+    "B": "Each subscriber in the channel's subscriber list has an Unsubscribe button; clicking it removes that subscriber through app.unsubscribe(userId). The signed-in user and the groups they are in come from app.actor(), the channel's permission settings (each one a list of the groups holding it) from app.channel(), and app.showMessage(text) displays a message. Whatever the channel's type, its subscription permissions are who can administer it, who can subscribe themselves, who can subscribe anyone and who can unsubscribe anyone. In Zulip you are always able to unsubscribe yourself from any channel, and doing so takes that channel's conversations out of your inbox, recent conversations and left sidebar.",
+    "C": "Implement the Unsubscribe buttons in the channel's subscriber list. When the signed-in user clicks Unsubscribe next to a subscriber, remove that subscriber with app.unsubscribe(userId); app.actor() is the signed-in user with the groups they belong to, app.channel() gives the channel's permission settings (each listing the groups that hold it), and app.showMessage(text) shows a message. You can configure the following subscription permissions for each channel, regardless of its type: who can administer the channel, who can subscribe themselves, who can subscribe anyone, and who can unsubscribe anyone. Unsubscribing from a channel removes conversations in that channel from your inbox, recent conversations, and left sidebar."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100345,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

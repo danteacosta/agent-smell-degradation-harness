@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Board members</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Board members</h1><p id="actor"></p><p id="settings"></p><ul id="members" aria-label="Members"></ul><label>Add member <select id="user"></select></label><button id="add" type="button">Add</button><p id="message" role="status"></p></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let members=load(window.initialState.members);
+const users=window.initialState.users;const actor=window.initialState.actor;const settings=window.initialState.settings;
+const app=Object.freeze({
+  onAdd:register,
+  actor(){return structuredClone(actor)},
+  settings(){return structuredClone(settings)},
+  users(){return structuredClone(users)},
+  members(){return structuredClone(members)},
+  addMember(userId){if(!users.some(u=>u.id===userId))throw new Error('unknown user');members.push({userId,isActive:true});store(members);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+const name=id=>users.find(u=>u.id===id).username;
+function render(){
+  document.querySelector('#actor').textContent='Signed in as '+name(actor.id)+(actor.isAdmin?' (site admin)':'');
+  document.querySelector('#settings').textContent='Admin Panel: boardMembersFromSameOrgOnly '+(settings.boardMembersFromSameOrgOnly?'on':'off')+', boardMembersFromSameTeamOnly '+(settings.boardMembersFromSameTeamOnly?'on':'off');
+  const list=document.querySelector('#members');list.replaceChildren();
+  for(const m of members)list.append(el('li',{'data-user':m.userId,'data-active':m.isActive},name(m.userId)+(m.isActive?'':' (inactive)')));
+  const select=document.querySelector('#user');select.replaceChildren();
+  for(const u of users)if(!members.some(m=>m.userId===u.id))select.append(el('option',{value:u.id},u.username))}
+document.querySelector('#add').addEventListener('click',()=>{if(behavior)behavior(document.querySelector('#user').value)});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

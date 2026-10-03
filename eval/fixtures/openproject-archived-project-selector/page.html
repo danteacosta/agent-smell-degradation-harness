@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Project information</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><header><button id="all-projects" type="button" aria-expanded="false">All projects</button><div id="project-menu" hidden><label>Search <input id="project-search"></label><ul id="project-options" aria-label="Projects"></ul></div></header><h1>Project information: <span id="current"></span></h1><button id="more" type="button" aria-expanded="false">More</button><div id="more-menu" hidden><button id="archive" type="button">Archive project</button></div></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let state=load({projects:window.initialState.projects,current:window.initialState.current});let options=[];
+const app=Object.freeze({
+  onProjectSearch:register,
+  projects(){return structuredClone(state.projects)},
+  showOptions(ids){if(!Array.isArray(ids)||!ids.every(id=>state.projects.some(p=>p.id===id)))throw new Error('project ids required');options=[...ids];render()}
+});
+function render(){const p=state.projects.find(x=>x.id===state.current);const c=document.querySelector('#current');
+  c.dataset.id=p.id;c.dataset.archived=String(p.archived);c.textContent=p.name+(p.archived?' (archived)':'');
+  const list=document.querySelector('#project-options');list.replaceChildren();
+  for(const id of options){const li=el('li');li.append(el('button',{type:'button','data-id':id},state.projects.find(x=>x.id===id).name));list.append(li)}}
+const menu=document.querySelector('#project-menu');
+document.querySelector('#all-projects').addEventListener('click',e=>{menu.hidden=!menu.hidden;e.target.setAttribute('aria-expanded',String(!menu.hidden));
+  if(!menu.hidden){document.querySelector('#project-search').value='';options=[];render();if(behavior)behavior('')}});
+document.querySelector('#project-search').addEventListener('input',e=>{if(behavior)behavior(e.target.value)});
+document.querySelector('#project-options').addEventListener('click',e=>{const id=e.target.dataset?.id;if(!id)return;state.current=id;store(state);menu.hidden=true;render()});
+document.querySelector('#more').addEventListener('click',()=>{const m=document.querySelector('#more-menu');m.hidden=!m.hidden});
+document.querySelector('#archive').addEventListener('click',()=>{state.projects.find(x=>x.id===state.current).archived=true;store(state);document.querySelector('#more-menu').hidden=true;render()});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

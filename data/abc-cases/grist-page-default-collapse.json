@@ -1,0 +1,28 @@
+{
+  "case": "grist-page-default-collapse",
+  "intent_id": "grist-page-default-collapse",
+  "project_id": "grist",
+  "candidate_id": "rc-7b485b51412f",
+  "source": {
+    "commit": "537c682145",
+    "file": "help/en/docs/page-widgets.md",
+    "snapshot": "b047726e32",
+    "snapshot_file": "help/en/docs/page-widgets.md"
+  },
+  "fixture": "eval/fixtures/grist-page-default-collapse",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onPages to handle the visible page list (document opening and the three-dot page menu). Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the page list. app.onPages(handler) receives {type: 'open'} when the document is opened and {type: 'menu', pageId} when the three-dot icon to the right of a page is clicked. app.pages() gives each page with its parent page (null at the top level); expand or collapse a parent page's nested pages with app.setExpanded(id, open), list the entries of the three-dot menu with app.showMenu([{label, run}]), and keep per-page settings across openings with app.savePageSetting(id, name, value) and app.pageSettings(id). By default, nested pages will be expanded when a document is opened. You can change the default state by clicking the three-dot icon to the right of the parent page and selecting 'Set default: Collapse'.",
+    "B": "The handler given to app.onPages gets {type: 'open'} when the document opens and {type: 'menu', pageId} when someone clicks the three-dot icon beside a page. Each page from app.pages() names its parent page (null for top-level pages); app.setExpanded(id, open) expands or collapses a parent's nested pages, app.showMenu([{label, run}]) sets the entries of the three-dot menu, and app.savePageSetting(id, name, value) with app.pageSettings(id) keeps per-page settings from one opening to the next. Opening a document shows nested pages expanded unless the default state was changed: the three-dot icon of a parent page offers 'Set default: Collapse', which changes that page's default state to collapsed.",
+    "C": "Implement the page list. app.onPages(handler) receives {type: 'open'} when the document is opened and {type: 'menu', pageId} when the three-dot icon to the right of a page is clicked. app.pages() gives each page with its parent page (null at the top level); expand or collapse a parent page's nested pages with app.setExpanded(id, open), list the entries of the three-dot menu with app.showMenu([{label, run}]), and keep per-page settings across openings with app.savePageSetting(id, name, value) and app.pageSettings(id). By default, nested pages will be expanded when a document is opened."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100312,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

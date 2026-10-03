@@ -1,0 +1,28 @@
+{
+  "case": "grist-tutorial-fork-return",
+  "intent_id": "grist-tutorial-fork-return",
+  "project_id": "grist",
+  "candidate_id": "rc-b49db6870ff5",
+  "source": {
+    "commit": "b5e6d897fc",
+    "file": "help/en/docs/document-tutorials.md",
+    "snapshot": "b047726e32",
+    "snapshot_file": "help/en/docs/document-tutorials.md"
+  },
+  "fixture": "eval/fixtures/grist-tutorial-fork-return",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onGo to handle the visible Go button of the address bar. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the address bar of this tutorial document. When the user clicks Go, open the entered address: app.show(id) shows the original document (id = <docID>) or a fork (id = <docID>~<forkID>~<userID>); app.forks() lists the existing forks with their docId and userId, app.user() is the signed-in user, and app.createFork(docID) creates a fork of the document for the signed-in user and returns its id. Direct URL: This is the main link to your document. The format is https://<teamsite>.getgrist.com/doc/<docID>. Default Mode: This link opens the original version of the document, letting the owner edit the tutorial directly, useful for updating tutorial content. To access default mode, append the Direct URL with /m/default. The format is https://<teamsite>.getgrist.com/doc/<docID>/m/default. Fork URL: This is a user's unique copy of the tutorial, automatically created when they open the Direct URL for the first time. Changes made here won't affect the original. The format is https://<teamsite>.getgrist.com/doc/<docID>~<forkID>~<userID>. If you close out of your fork of the document, you can always return to it by visiting the Direct URL; you will be redirected to your fork automatically.",
+    "B": "Clicking Go opens the address typed in the address bar. app.show(id) shows either the original document (id = <docID>) or a fork (id = <docID>~<forkID>~<userID>); app.forks() returns the existing forks with their docId and userId, app.user() returns the signed-in user, and app.createFork(docID) makes a new fork of the document for that user and returns its id. There are three kinds of address. The Direct URL, https://<teamsite>.getgrist.com/doc/<docID>, is the document's main link; a user who has closed their fork can always get back to it through the Direct URL, which redirects them to that fork automatically. Default Mode, the Direct URL followed by /m/default (https://<teamsite>.getgrist.com/doc/<docID>/m/default), opens the original version so that the owner can edit the tutorial itself, for example to update its content. The Fork URL, https://<teamsite>.getgrist.com/doc/<docID>~<forkID>~<userID>, is the user's own copy of the tutorial, created automatically the first time they open the Direct URL; changes there do not affect the original.",
+    "C": "Implement the address bar of this tutorial document. When the user clicks Go, open the entered address: app.show(id) shows the original document (id = <docID>) or a fork (id = <docID>~<forkID>~<userID>); app.forks() lists the existing forks with their docId and userId, app.user() is the signed-in user, and app.createFork(docID) creates a fork of the document for the signed-in user and returns its id. Direct URL: This is the main link to your document. The format is https://<teamsite>.getgrist.com/doc/<docID>. Default Mode: This link opens the original version of the document, letting the owner edit the tutorial directly, useful for updating tutorial content. To access default mode, append the Direct URL with /m/default. The format is https://<teamsite>.getgrist.com/doc/<docID>/m/default. Fork URL: This is a user's unique copy of the tutorial, automatically created when they open the Direct URL for the first time. Changes made here won't affect the original. The format is https://<teamsite>.getgrist.com/doc/<docID>~<forkID>~<userID>."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100315,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

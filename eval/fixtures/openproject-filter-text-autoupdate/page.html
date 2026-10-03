@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Work packages</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Work packages</h1><label>Filter by text <input id="filter-text" type="text"></label><table><thead><tr><th>ID</th><th>Subject</th></tr></thead><tbody id="rows"></tbody></table></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+const wps=window.initialState.workPackages;let shown=null;
+const app=Object.freeze({
+  onFilterText:register,
+  workPackages(){return structuredClone(wps)},
+  showWorkPackages(ids){if(!Array.isArray(ids)||!ids.every(id=>wps.some(w=>w.id===id)))throw new Error('work package ids required');shown=[...ids];render()}
+});
+function render(){const body=document.querySelector('#rows');body.replaceChildren();
+  for(const id of shown??wps.map(w=>w.id)){const w=wps.find(x=>x.id===id);const tr=el('tr',{'data-id':id});tr.append(el('td',{},'#'+id),el('td',{},w.subject));body.append(tr)}}
+document.querySelector('#filter-text').addEventListener('change',e=>{if(behavior)behavior(e.target.value)});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

@@ -1,0 +1,28 @@
+{
+  "case": "zulip-gif-picker-disabled",
+  "intent_id": "zulip-gif-picker-disabled",
+  "project_id": "zulip",
+  "candidate_id": "rc-08dffa18a270",
+  "source": {
+    "commit": "a31cd65175",
+    "file": "starlight_help/src/content/docs/animated-gifs.mdx",
+    "snapshot": "9778ffc23c",
+    "snapshot_file": "starlight_help/src/content/docs/animated-gifs.mdx"
+  },
+  "fixture": "eval/fixtures/zulip-gif-picker-disabled",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onSave to handle the visible Save changes button. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement saving the organization's Compose settings. When the user clicks Save changes, store the selected GIF picker setting with app.saveSettings({gifRating}); the buttons at the bottom of the compose box are listed by app.composeButtons() and changed with app.setComposeButtons(list). Users insert a GIF by clicking the add GIF button (gif) at the bottom of the compose box. You can configure the maximum rating of GIFs shown in the GIF picker, which by default is set to GIFs rated G (General audience): under Compose settings, select a rating for GIF picker. Disabling the GIF picker removes it from the compose box. To disable the GIF picker, under Compose settings, set GIF picker to Disabled.",
+    "B": "Clicking Save changes stores the GIF picker choice made under Compose settings through app.saveSettings({gifRating}). The buttons along the bottom of the compose box come from app.composeButtons() and are replaced with app.setComposeButtons(list); the add GIF button (gif) there is how users insert a GIF. Under Compose settings, GIF picker sets the highest rating of GIFs the picker shows, G (General audience) unless changed. Choosing Disabled for GIF picker turns the GIF picker off, and a disabled GIF picker is no longer part of the compose box.",
+    "C": "Implement saving the organization's Compose settings. When the user clicks Save changes, store the selected GIF picker setting with app.saveSettings({gifRating}); the buttons at the bottom of the compose box are listed by app.composeButtons() and changed with app.setComposeButtons(list). Users insert a GIF by clicking the add GIF button (gif) at the bottom of the compose box. You can configure the maximum rating of GIFs shown in the GIF picker, which by default is set to GIFs rated G (General audience): under Compose settings, select a rating for GIF picker. To disable the GIF picker, under Compose settings, set GIF picker to Disabled."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100341,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

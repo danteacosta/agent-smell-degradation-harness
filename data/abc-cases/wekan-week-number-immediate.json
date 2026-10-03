@@ -1,0 +1,28 @@
+{
+  "case": "wekan-week-number-immediate",
+  "intent_id": "wekan-week-number-immediate",
+  "project_id": "wekan",
+  "candidate_id": "rc-59d96b056593",
+  "source": {
+    "commit": "e217f1215a",
+    "file": "docs/Features/Date-Format.md",
+    "snapshot": "38415f04ca",
+    "snapshot_file": "docs/Features/Right-Sidebar/Board-Settings/Date.md"
+  },
+  "fixture": "eval/fixtures/wekan-week-number-immediate",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onChange to handle the visible Date popup controls. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the Board Settings / Date popup. Every change of a popup control and every click on Save calls the handler with the control's id and the popup's current values. The top of the popup shows whether the global Date Format is enabled and its saved value. Check the board override, choose a format, and Save (app.saveBoardDateFormat({enabled, format})). Unchecking it makes the board inherit the global setting. Below Save and the horizontal rule, Show week of year (ISO 8601) toggles your own week-number display (app.setShowWeekOfYear(on)) immediately; it does not set a format for everyone.",
+    "B": "In the Board Settings / Date popup, the handler is called with the control's id and the popup's current values whenever a popup control changes and whenever Save is clicked. The popup starts by showing whether the global Date Format is enabled, with its saved value. To give the board its own format, check the board override, pick a format and click Save (app.saveBoardDateFormat({enabled, format})); with the override unchecked, the board inherits the global setting. Under Save and the horizontal rule, Show week of year (ISO 8601) switches your own week-number display on or off at once (app.setShowWeekOfYear(on)), and it does not set a format for anyone else.",
+    "C": "Implement the Board Settings / Date popup. Every change of a popup control and every click on Save calls the handler with the control's id and the popup's current values. The top of the popup shows whether the global Date Format is enabled and its saved value. Check the board override, choose a format, and Save (app.saveBoardDateFormat({enabled, format})). Unchecking it makes the board inherit the global setting. Below Save and the horizontal rule, Show week of year (ISO 8601) toggles your own week-number display (app.setShowWeekOfYear(on)); it does not set a format for everyone."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100335,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

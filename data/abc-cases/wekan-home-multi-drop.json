@@ -1,0 +1,28 @@
+{
+  "case": "wekan-home-multi-drop",
+  "intent_id": "wekan-home-multi-drop",
+  "project_id": "wekan",
+  "candidate_id": "rc-88440629ecb6",
+  "source": {
+    "commit": "aebc7d9def",
+    "file": "docs/Features/Board/Home.md",
+    "snapshot": "38415f04ca",
+    "snapshot_file": "docs/Features/Board/Home.md"
+  },
+  "fixture": "eval/fixtures/wekan-home-multi-drop",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onDrop to handle the visible Drop on Home button. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement dropping boards on the Home row of All Boards. Ticking a board's checkbox adds it to the multi-selection; Drop on Home drops the selected boards on the Home row and calls the handler with their ids. Set Home with app.setHome(id); app.home(), app.selection(), app.clearSelection() and app.showMessage(text) are also available. Drop a board on the Home row and it becomes the board that opens after login. A drop replaces. Home holds one board, so dropping a board on it makes that board Home whatever was there before. It deliberately does not toggle. Dropping a multi-selection does not silently choose its first board. It reports \"Please select only one board\", changes nothing and keeps the selection so it can be narrowed. A one-board drag continues to set Home normally.",
+    "B": "On All Boards, ticking a board's checkbox puts it in the multi-selection, and Drop on Home drops the selected boards onto the Home row, passing their ids to the handler. app.setHome(id) sets Home, and app.home(), app.selection(), app.clearSelection() and app.showMessage(text) can be used too. A board dropped on the Home row becomes the one that opens after login. Because Home holds a single board, a drop replaces whichever board was Home before, and it never toggles. A dropped multi-selection does not quietly pick its first board: it shows \"Please select only one board\", leaves everything unchanged and keeps the selection so the user can narrow it. Dropping a single board still sets Home as usual.",
+    "C": "Implement dropping boards on the Home row of All Boards. Ticking a board's checkbox adds it to the multi-selection; Drop on Home drops the selected boards on the Home row and calls the handler with their ids. Set Home with app.setHome(id); app.home(), app.selection(), app.clearSelection() and app.showMessage(text) are also available. Drop a board on the Home row and it becomes the board that opens after login. A drop replaces. Home holds one board, so dropping a board on it makes that board Home whatever was there before. It deliberately does not toggle. A one-board drag continues to set Home normally."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100337,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

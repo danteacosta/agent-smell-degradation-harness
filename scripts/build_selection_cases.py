@@ -27,8 +27,15 @@ if str(ROOT) not in sys.path:
 from scripts.selection_cases import templates  # noqa: E402
 from scripts.selection_cases.specs_immich_mealie import CASES as IMMICH_MEALIE  # noqa: E402
 from scripts.selection_cases.specs_paperless import CASES as PAPERLESS  # noqa: E402
+from scripts.selection_cases.specs_grist import CASES as GRIST  # noqa: E402
+from scripts.selection_cases.specs_mattermost import CASES as MATTERMOST  # noqa: E402
+from scripts.selection_cases.specs_nextcloud import CASES as NEXTCLOUD  # noqa: E402
+from scripts.selection_cases.specs_openproject import CASES as OPENPROJECT  # noqa: E402
+from scripts.selection_cases.specs_wekan import CASES as WEKAN  # noqa: E402
+from scripts.selection_cases.specs_zulip import CASES as ZULIP  # noqa: E402
 
-SPECS = PAPERLESS + IMMICH_MEALIE
+# Batch 1 first and in its original order so that existing seeds do not change.
+SPECS = PAPERLESS + IMMICH_MEALIE + GRIST + MATTERMOST + NEXTCLOUD + OPENPROJECT + WEKAN + ZULIP
 IMAGE = "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400"
 MODELS = ["gpt-5.6-luna", "gpt-5.6-sol"]
 REPETITIONS = 2  # pre-registration: two repetitions per arm and model

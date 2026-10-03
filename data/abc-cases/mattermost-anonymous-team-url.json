@@ -1,0 +1,28 @@
+{
+  "case": "mattermost-anonymous-team-url",
+  "intent_id": "mattermost-anonymous-team-url",
+  "project_id": "mattermost",
+  "candidate_id": "rc-aa2c82f86e08",
+  "source": {
+    "commit": "840fc4b8f5",
+    "file": "source/end-user-guide/collaborate/organize-using-teams.rst",
+    "snapshot": "bd09d95951",
+    "snapshot_file": "source/end-user-guide/collaborate/organize-using-teams.rst"
+  },
+  "fixture": "eval/fixtures/mattermost-anonymous-team-url",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onNext to handle the visible Next button. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the Next button of Create a Team. When the user enters a team name and selects Next, handle the team URL: app.showUrlStep(suggestedUrl) shows the team URL step, whose Finish button creates the team with the URL the user chose, and app.createTeam({name, url}) creates a team. There are a few details and restrictions to consider when selecting a team name and team URL. If your system admin has enabled anonymous team and channel URLs (app.config().anonymousUrls), team creation becomes a single-step flow and you will not be prompted to choose a team URL. The URL is assigned automatically. If your system admin has not enabled anonymous URLs, you choose a team URL during team creation. The team URL is part of the web address that navigates to your team; it may contain only lowercase letters, numbers, and dashes, must start with a letter, cannot end in a dash, and must be 2 - 64 characters in length.",
+    "B": "The Next button of Create a Team deals with the team URL once the user has typed a team name: app.createTeam({name, url}) makes a team, and app.showUrlStep(suggestedUrl) opens the team URL step, where Finish creates the team with the URL the user picked. Team names and team URLs come with some details and restrictions. When the system admin has turned on anonymous team and channel URLs (app.config().anonymousUrls), creating a team takes a single step: nobody is asked to choose a team URL, because one is assigned automatically. Without anonymous URLs, the user picks the team URL while creating the team. The team URL is part of the web address of the team; it uses only lowercase letters, numbers and dashes, begins with a letter, does not end with a dash and is 2 - 64 characters long.",
+    "C": "Implement the Next button of Create a Team. When the user enters a team name and selects Next, handle the team URL: app.showUrlStep(suggestedUrl) shows the team URL step, whose Finish button creates the team with the URL the user chose, and app.createTeam({name, url}) creates a team. There are a few details and restrictions to consider when selecting a team name and team URL. If your system admin has not enabled anonymous URLs, you choose a team URL during team creation. The team URL is part of the web address that navigates to your team; it may contain only lowercase letters, numbers, and dashes, must start with a letter, cannot end in a dash, and must be 2 - 64 characters in length."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100322,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}
