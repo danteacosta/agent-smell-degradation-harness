@@ -1,7 +1,7 @@
 <!doctype html><html><head><meta charset="utf-8"><title>Meal planner rule</title>
 <style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
 <body><main><h1>Meal planner rule</h1><p id="rule"></p><button id="preview" type="button">Preview recipe pool</button><ul id="pool" aria-label="Recipe pool"></ul></main><script>
-const storageKey='mealie-planner-food-label';
+const storageKey='page-state';
 let behavior=null;
 function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
 function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}

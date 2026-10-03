@@ -14,6 +14,11 @@ async function journey(page,fixture,index){
   const initial=await stored();
   if(initial.superuser!=='false'||initial.username!==fixture.state.user.username)throw new InterfaceError('user missing or already superuser');
   await (await one(page,'#first-name')).fill(fixture.first_name);
+  if(fixture.kind==='non_superuser'){
+    await (await one(page,'#save')).click();await reload(page);
+    check('first_name_saved_1',(await stored()).firstName===fixture.first_name);
+    await (await one(page,'#first-name')).fill(fixture.first_name);
+  }
   const box=page.locator('#superuser');
   if(await box.count()===1&&await box.isVisible()&&await box.isEnabled())await box.check();
   await (await one(page,'#save')).click();await reload(page);

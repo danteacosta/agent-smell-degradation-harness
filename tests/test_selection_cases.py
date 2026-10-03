@@ -64,3 +64,10 @@ def test_controls_cover_every_outcome_class():
     for spec in build_mod.SPECS:
         expected = {e for _, e in spec["controls"].values()}
         assert {"pass", "target_only_failure", "non_target_only_failure"} <= expected, spec["case"]
+
+
+@pytest.mark.parametrize("name", NAMES)
+def test_model_prompt_does_not_disclose_the_research_case_identifier(name):
+    case = Case.load(name)
+    for arm in "ABC":
+        assert name not in case.prompt(arm), "research metadata must stay outside model-visible input"

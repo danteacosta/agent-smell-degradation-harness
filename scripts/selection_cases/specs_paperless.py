@@ -120,6 +120,11 @@ document.querySelector('#save').addEventListener('click',()=>{if(behavior)behavi
   const initial=await stored();
   if(initial.superuser!=='false'||initial.username!==fixture.state.user.username)throw new InterfaceError('user missing or already superuser');
   await (await one(page,'#first-name')).fill(fixture.first_name);
+  if(fixture.kind==='non_superuser'){
+    await (await one(page,'#save')).click();await reload(page);
+    check('first_name_saved_1',(await stored()).firstName===fixture.first_name);
+    await (await one(page,'#first-name')).fill(fixture.first_name);
+  }
   const box=page.locator('#superuser');
   if(await box.count()===1&&await box.isVisible()&&await box.isEnabled())await box.check();
   await (await one(page,'#save')).click();await reload(page);
@@ -134,12 +139,13 @@ document.querySelector('#save').addEventListener('click',()=>{if(behavior)behavi
   }
 """,
     "target": ["non_superuser_cannot_grant_1"],
-    "non_target": ["username_preserved_1", "superuser_can_grant_2", "first_name_saved_2", "username_preserved_2"],
+    "non_target": ["first_name_saved_1", "username_preserved_1", "superuser_can_grant_2", "first_name_saved_2", "username_preserved_2"],
     "controls": {
         "reference": ("app.onSave(form=>{if(form.superuser&&!app.user().superuser&&!app.actor().superuser){app.showMessage('Only a superuser can grant superuser status.');app.saveUser({firstName:form.firstName,superuser:false});return}app.saveUser(form)});", "pass"),
         "alternative": ("app.onSave(function(f){if(!app.actor().superuser)f.superuser=app.user().superuser;app.saveUser(f)});", "pass"),
         "disable-control": ("document.querySelector('#superuser').disabled=!app.actor().superuser;app.onSave(f=>app.saveUser(f));", "pass"),
         "target-mutant": ("app.onSave(form=>app.saveUser(form));", "target_only_failure"),
+        "blanket-role-denial": ("app.onSave(f=>{if(!app.actor().superuser)return;app.saveUser(f)});", "non_target_only_failure"),
         "non-target-mutant": ("app.onSave(()=>app.saveUser({firstName:app.user().firstName,superuser:false}));", "non_target_only_failure"),
     },
     "arms": {

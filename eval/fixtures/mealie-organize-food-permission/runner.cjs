@@ -12,7 +12,12 @@ async function reload(page){await page.reload({waitUntil:'load',timeout:10000})}
 async function journey(page,fixture,index){
   const n=index+1;const foods=()=>page.locator('#foods li').evaluateAll(ns=>ns.map(x=>x.dataset.food));
   if(JSON.stringify(await foods())!==JSON.stringify(fixture.state.foods))throw new InterfaceError('food list missing or changed');
-  await (await one(page,'#food-name')).fill(fixture.food);await (await one(page,'#add-food')).click();await reload(page);
+  const button=page.locator('#add-food');const buttonCount=await button.count();
+  if(buttonCount>1)throw new InterfaceError('at most one Add food button required');
+  const usable=buttonCount===1&&await button.isVisible()&&await button.isEnabled();
+  if(n===2&&!usable)throw new InterfaceError('one visible enabled Add food button required with permission');
+  if(usable){await (await one(page,'#food-name')).fill(fixture.food);await button.click()}
+  await reload(page);
   const after=await foods();
   if(n===1)check('food_not_created_without_organize_1',!after.includes(fixture.food));
   else check('food_created_with_organize_2',after.filter(f=>f===fixture.food).length===1);

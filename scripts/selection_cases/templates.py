@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 
 MARKER = "/* MODEL_BEHAVIOR */"
+STORAGE_KEY = "page-state"
 STYLE = ("body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}"
          "button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}"
          "li{margin:.3rem 0}[role=status]{min-height:1.2em}")
@@ -25,7 +26,7 @@ function el(tag,attrs={},text=''){const node=document.createElement(tag);for(con
 def page(spec: dict) -> str:
     return (f"<!doctype html><html><head><meta charset=\"utf-8\"><title>{spec['title']}</title>\n"
             f"<style>{STYLE}</style></head>\n<body><main>{spec['body']}</main><script>\n"
-            f"const storageKey='{spec['case']}';\n{PAGE_PRELUDE}\n{spec['state_js'].strip()}\n"
+            f"const storageKey='{STORAGE_KEY}';\n{PAGE_PRELUDE}\n{spec['state_js'].strip()}\n"
             f"render();\n{MARKER}\n</script></body></html>\n")
 
 

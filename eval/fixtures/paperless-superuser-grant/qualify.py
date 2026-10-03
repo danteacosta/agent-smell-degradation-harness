@@ -12,7 +12,7 @@ import uuid
 
 SCHEMA = "paperless-superuser-grant-browser/v1"
 TARGET = set(["non_superuser_cannot_grant_1"])
-NON_TARGET = set(["first_name_saved_2", "superuser_can_grant_2", "username_preserved_1", "username_preserved_2"])
+NON_TARGET = set(["first_name_saved_1", "first_name_saved_2", "superuser_can_grant_2", "username_preserved_1", "username_preserved_2"])
 SCREENSHOTS = ["fixture-1.png", "fixture-2.png"]
 MARKER = "/* MODEL_BEHAVIOR */"
 CONTROLS = {
@@ -20,6 +20,7 @@ CONTROLS = {
     "alternative": ("app.onSave(function(f){if(!app.actor().superuser)f.superuser=app.user().superuser;app.saveUser(f)});", "pass"),
     "disable-control": ("document.querySelector('#superuser').disabled=!app.actor().superuser;app.onSave(f=>app.saveUser(f));", "pass"),
     "target-mutant": ("app.onSave(form=>app.saveUser(form));", "target_only_failure"),
+    "blanket-role-denial": ("app.onSave(f=>{if(!app.actor().superuser)return;app.saveUser(f)});", "non_target_only_failure"),
     "non-target-mutant": ("app.onSave(()=>app.saveUser({firstName:app.user().firstName,superuser:false}));", "non_target_only_failure"),
     "missing-handler": ("", "interface_error"),
     "script-error": ("throw new Error('qualification control');", "browser_error"),

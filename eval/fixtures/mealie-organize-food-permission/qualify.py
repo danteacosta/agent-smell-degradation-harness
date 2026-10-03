@@ -18,6 +18,10 @@ MARKER = "/* MODEL_BEHAVIOR */"
 CONTROLS = {
     "reference": ("app.onAdd(name=>{if(!app.user().permissions.organizeGroupData){app.showMessage('You need the Organize group data permission to add foods.');return}app.createFood(name)});", "pass"),
     "alternative": ("app.onAdd(function(n){var p=app.user().permissions;if(p.organizeGroupData||p.administrator)app.createFood(n);else app.showMessage('Not allowed')});", "pass"),
+    "disabled-add-control": ("document.querySelector('#add-food').disabled=!app.user().permissions.organizeGroupData;app.onAdd(name=>{if(app.user().permissions.organizeGroupData)app.createFood(name)});", "pass"),
+    "hidden-add-control": ("document.querySelector('#add-food').hidden=!app.user().permissions.organizeGroupData;app.onAdd(name=>{if(app.user().permissions.organizeGroupData)app.createFood(name)});", "pass"),
+    "removed-add-control": ("if(!app.user().permissions.organizeGroupData)document.querySelector('#add-food').remove();app.onAdd(name=>{if(app.user().permissions.organizeGroupData)app.createFood(name)});", "pass"),
+    "duplicate-add-control": ("document.querySelector('#add-food').after(document.querySelector('#add-food').cloneNode(true));app.onAdd(name=>{if(app.user().permissions.organizeGroupData)app.createFood(name)});", "interface_error"),
     "target-mutant": ("app.onAdd(name=>app.createFood(name));", "target_only_failure"),
     "manage-group-mutant": ("app.onAdd(name=>{if(app.user().permissions.manageGroup)app.createFood(name)});", "mixed_failure"),
     "non-target-mutant": ("app.onAdd(()=>{});", "non_target_only_failure"),

@@ -251,7 +251,12 @@ document.querySelector('#add-food').addEventListener('click',()=>{if(behavior)be
     "journey_js": r"""
   const n=index+1;const foods=()=>page.locator('#foods li').evaluateAll(ns=>ns.map(x=>x.dataset.food));
   if(JSON.stringify(await foods())!==JSON.stringify(fixture.state.foods))throw new InterfaceError('food list missing or changed');
-  await (await one(page,'#food-name')).fill(fixture.food);await (await one(page,'#add-food')).click();await reload(page);
+  const button=page.locator('#add-food');const buttonCount=await button.count();
+  if(buttonCount>1)throw new InterfaceError('at most one Add food button required');
+  const usable=buttonCount===1&&await button.isVisible()&&await button.isEnabled();
+  if(n===2&&!usable)throw new InterfaceError('one visible enabled Add food button required with permission');
+  if(usable){await (await one(page,'#food-name')).fill(fixture.food);await button.click()}
+  await reload(page);
   const after=await foods();
   if(n===1)check('food_not_created_without_organize_1',!after.includes(fixture.food));
   else check('food_created_with_organize_2',after.filter(f=>f===fixture.food).length===1);
@@ -262,6 +267,10 @@ document.querySelector('#add-food').addEventListener('click',()=>{if(behavior)be
     "controls": {
         "reference": ("app.onAdd(name=>{if(!app.user().permissions.organizeGroupData){app.showMessage('You need the Organize group data permission to add foods.');return}app.createFood(name)});", "pass"),
         "alternative": ("app.onAdd(function(n){var p=app.user().permissions;if(p.organizeGroupData||p.administrator)app.createFood(n);else app.showMessage('Not allowed')});", "pass"),
+        "disabled-add-control": ("document.querySelector('#add-food').disabled=!app.user().permissions.organizeGroupData;app.onAdd(name=>{if(app.user().permissions.organizeGroupData)app.createFood(name)});", "pass"),
+        "hidden-add-control": ("document.querySelector('#add-food').hidden=!app.user().permissions.organizeGroupData;app.onAdd(name=>{if(app.user().permissions.organizeGroupData)app.createFood(name)});", "pass"),
+        "removed-add-control": ("if(!app.user().permissions.organizeGroupData)document.querySelector('#add-food').remove();app.onAdd(name=>{if(app.user().permissions.organizeGroupData)app.createFood(name)});", "pass"),
+        "duplicate-add-control": ("document.querySelector('#add-food').after(document.querySelector('#add-food').cloneNode(true));app.onAdd(name=>{if(app.user().permissions.organizeGroupData)app.createFood(name)});", "interface_error"),
         "target-mutant": ("app.onAdd(name=>app.createFood(name));", "target_only_failure"),
         "manage-group-mutant": ("app.onAdd(name=>{if(app.user().permissions.manageGroup)app.createFood(name)});", "mixed_failure"),
         "non-target-mutant": ("app.onAdd(()=>{});", "non_target_only_failure"),
