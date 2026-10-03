@@ -72,3 +72,25 @@ def test_single_project_reports_no_interval() -> None:
 def test_invalid_pairs_fail_closed(rows: list[dict]) -> None:
     with pytest.raises(ValueError):
         paired_probability_of_superiority(rows)
+
+
+@pytest.mark.parametrize("field", ["clean_severity", "defective_severity"])
+@pytest.mark.parametrize("value", [float("nan"), float("inf"), -float("inf"), -1, 4, 0.5, True, None])
+def test_out_of_rubric_rating_cannot_become_a_pair_outcome(field, value) -> None:
+    row = {**_row("a", "P1", 0, 1), field: value}
+    with pytest.raises(ValueError, match="ordinal ratings"):
+        paired_probability_of_superiority([row])
+
+
+@pytest.mark.parametrize("field", ["intent_id", "project_id"])
+@pytest.mark.parametrize("value", [None, 123, True, [], {}, "", "  "])
+def test_missing_or_nontext_identity_cannot_create_a_cluster(field, value) -> None:
+    row = {**_row("a", "P1", 0, 1), field: value}
+    with pytest.raises(ValueError, match="intent_id and project_id"):
+        paired_probability_of_superiority([row])
+
+
+def test_integer_valued_float_ratings_preserve_the_registered_scale() -> None:
+    result = paired_probability_of_superiority([_row("a", "P1", 0.0, 3.0)])
+    assert result["estimate"] == 1.0
+    assert result["pair_outcomes"]["defective_worse"] == 1
