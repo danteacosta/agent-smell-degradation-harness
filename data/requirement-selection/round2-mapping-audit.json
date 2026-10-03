@@ -1,0 +1,21 @@
+{
+  "schema_version": "screening-mapping-diagnostic/v1",
+  "source": "docs/research/2026-10-03-screening-round2-mapping-review.md",
+  "unresolved_target_selection": [
+    "rc-3c572449f134",
+    "rc-dfb84383fb89",
+    "rc-62e9d69be36f",
+    "rc-bf86d02f63c9",
+    "rc-7b485b51412f",
+    "rc-3cd319371269",
+    "rc-f33b2bf870e9",
+    "rc-c30a4162188a",
+    "rc-362ff82e3812",
+    "rc-1590080019fb",
+    "rc-b7086f489030",
+    "rc-aac66a0af69a",
+    "rc-fd348eb33246",
+    "rc-6be0f3992b4b",
+    "rc-cb144c65d898"
+  ]
+}

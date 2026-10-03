@@ -1,0 +1,1013 @@
+{
+  "schema_version": "current-doc-check/v1",
+  "frame_end": "2026-09-30T23:59:59Z",
+  "snapshots": {
+    "grist": "b047726e327709d214e3b63222ee052de6399934",
+    "immich": "a3c8b359f2fdc47699f1530215a23fe8bd34c454",
+    "mattermost": "bd09d959514c34e72a33c24663b5946682b656ec",
+    "mealie": "7e03d041d7571e8b2a918140fcf9237f2d7a903d",
+    "nextcloud": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+    "openproject": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+    "paperless": "d02c19a09e42b945df26f4964af722d65aa81bda",
+    "wekan": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+    "zulip": "9778ffc23c3e83e321152a48ab32c1426e1bd941"
+  },
+  "inputs_sha256": {
+    "data/llm-screening-20261002/results.json": "95e2acc6bb9757b3584359e6c7919769d57456da30cd91592c504eb937628d9f",
+    "data/llm-screening-round2-20261003/results.json": "efd715003c462e0af5cdc149f23ba98744a4bea051751eb6a2e5be85f800a4d6",
+    "data/requirement-sampling/frame-20261002.jsonl": "0af2c94065fd84d701360e7d8929e802b8da210fb8691d4a97d2ba1a4a42c382",
+    "data/requirement-sampling/frame-ext-20261002.jsonl": "7fd13a18c4643e5f57314af47c7a742803f6c23f30c6444fa5b59989297e1488"
+  },
+  "rows": [
+    {
+      "candidate_id": "rc-018ce2752c67",
+      "project": "openproject",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 1,
+      "removed_total": 1,
+      "target_rule": "After a user creates a meeting series, the recurring meeting template opens in draft mode by default."
+    },
+    {
+      "candidate_id": "rc-024102998dd2",
+      "project": "wekan",
+      "kind": "addition",
+      "added_present": 0,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "In a PDF viewed from the web interface, an attachment with a displayed preview does not appear in the attachment bullet list."
+    },
+    {
+      "candidate_id": "rc-0284c8781546",
+      "project": "mattermost",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "Playbook task text containing Markdown is displayed with Markdown formatting."
+    },
+    {
+      "candidate_id": "rc-02df56f00b58",
+      "project": "openproject",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 1,
+      "removed_total": 1,
+      "target_rule": "When automatic theme mode is selected, OpenProject must match the operating system’s contrast setting."
+    },
+    {
+      "candidate_id": "rc-035e8af08cd7",
+      "project": "paperless",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "A user without User management permissions can edit their own profile through My Profile."
+    },
+    {
+      "candidate_id": "rc-03a505847a99",
+      "project": "mattermost",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 1,
+      "removed_total": 1,
+      "target_rule": "A user with channel permission to create checklists can create a checklist in that channel without separate playbook access permissions."
+    },
+    {
+      "candidate_id": "rc-086a9d210266",
+      "project": "paperless",
+      "kind": "modification",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "Adding a custom field to a document without specifying a value must preserve any existing value of that field on the document."
+    },
+    {
+      "candidate_id": "rc-08dffa18a270",
+      "project": "zulip",
+      "kind": "modification",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "Setting GIF picker to Disabled in Compose settings removes the GIF picker from the compose box."
+    },
+    {
+      "candidate_id": "rc-0c831f7cb825",
+      "project": "openproject",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 2,
+      "removed_total": 2,
+      "target_rule": "The OpenProject date picker must display a yellow banner warning that manual scheduling will ignore existing relations."
+    },
+    {
+      "candidate_id": "rc-0dde4b87ef72",
+      "project": "nextcloud",
+      "kind": "addition",
+      "added_present": 1,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "When a chat poll is anonymous, participants cannot see who voted for each option."
+    },
+    {
+      "candidate_id": "rc-0ec1ac8f66bd",
+      "project": "immich",
+      "kind": "modification",
+      "added_present": 0,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "The web upload interface accepts MP2T video files with the .m2t extension."
+    },
+    {
+      "candidate_id": "rc-0f453b1f0a55",
+      "project": "mealie",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 1,
+      "removed_total": 1,
+      "target_rule": "A recipe-pool rule using a Food Label includes only recipes with an ingredient bearing that label."
+    },
+    {
+      "candidate_id": "rc-103dc930a420",
+      "project": "zulip",
+      "kind": "addition",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "When a user accepts an invitation, their initial settings must match the defaults configured at acceptance time."
+    },
+    {
+      "candidate_id": "rc-106bac72c813",
+      "project": "mealie",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "A user must have Organize group data permission to create a new food through the web interface."
+    },
+    {
+      "candidate_id": "rc-1114153d4704",
+      "project": "openproject",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "Changing the work package table configuration automatically updates the results displayed in the table."
+    },
+    {
+      "candidate_id": "rc-1590080019fb",
+      "project": "grist",
+      "kind": "deletion",
+      "added_present": 0,
+      "added_total": 0,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "Structure (S) permissions must not be available in table-level access rules."
+    },
+    {
+      "candidate_id": "rc-15ed48fe86b0",
+      "project": "mattermost",
+      "kind": "modification",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "In a new Mattermost deployment, users can create threads by default."
+    },
+    {
+      "candidate_id": "rc-16b088247c39",
+      "project": "nextcloud",
+      "kind": "addition",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Users can configure a default reminder for all events in a calendar through that calendar's settings."
+    },
+    {
+      "candidate_id": "rc-17b31565c57c",
+      "project": "openproject",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "When inviting a new member, the web interface must allow selecting an existing user role, group, or placeholder user's permissions as the basis for the new user's permissions."
+    },
+    {
+      "candidate_id": "rc-1986ea85580a",
+      "project": "openproject",
+      "kind": "addition",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "By default, newly created work packages display numerical IDs from a single instance-wide sequence, regardless of project."
+    },
+    {
+      "candidate_id": "rc-24946f42bfc2",
+      "project": "zulip",
+      "kind": "modification",
+      "added_present": 0,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "A user may join a user group using its plus icon only if they have permission to join it."
+    },
+    {
+      "candidate_id": "rc-276016ee58a0",
+      "project": "openproject",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 3,
+      "target_rule": "Users can set work package start and finish dates by typing into the corresponding date fields."
+    },
+    {
+      "candidate_id": "rc-277279fd03a4",
+      "project": "zulip",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 2,
+      "target_rule": "Only public or web-public channels can be selected as default channels for new users."
+    },
+    {
+      "candidate_id": "rc-27e586be0e1e",
+      "project": "openproject",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 2,
+      "target_rule": "When a work package description contains page breaks, the exported document splits its contents into separate pages at those breaks."
+    },
+    {
+      "candidate_id": "rc-290b3ea47ca2",
+      "project": "wekan",
+      "kind": "addition",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Jira import must preserve status names as literal text, including names such as constructor or proto."
+    },
+    {
+      "candidate_id": "rc-2c13970217ea",
+      "project": "openproject",
+      "kind": "deletion",
+      "added_present": 0,
+      "added_total": 0,
+      "removed_present": 0,
+      "removed_total": 3,
+      "target_rule": "An archived project must not appear as a selectable option in the project selector."
+    },
+    {
+      "candidate_id": "rc-302720d6856b",
+      "project": "openproject",
+      "kind": "modification",
+      "added_present": 0,
+      "added_total": 2,
+      "removed_present": 2,
+      "removed_total": 2,
+      "target_rule": "Switching a work package from manual to automatic scheduling displays a warning banner stating that its dates are not determined by child work packages."
+    },
+    {
+      "candidate_id": "rc-362ff82e3812",
+      "project": "zulip",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "Users can configure whether automated notices are automatically marked as read."
+    },
+    {
+      "candidate_id": "rc-393307131fc8",
+      "project": "zulip",
+      "kind": "addition",
+      "added_present": 1,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Enabling “Pin channel to top of left sidebar” in a channel’s Personal settings places that channel at the top of the left sidebar."
+    },
+    {
+      "candidate_id": "rc-3c572449f134",
+      "project": "zulip",
+      "kind": "deletion",
+      "added_present": 0,
+      "added_total": 0,
+      "removed_present": 2,
+      "removed_total": 4,
+      "target_rule": "Typing a user's name in the search box offers a suggestion for direct messages with that user."
+    },
+    {
+      "candidate_id": "rc-3cd319371269",
+      "project": "grist",
+      "kind": "modification",
+      "added_present": 0,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 2,
+      "target_rule": "Users cannot enable On-Demand Tables in new Grist documents."
+    },
+    {
+      "candidate_id": "rc-3d153b91ab4e",
+      "project": "nextcloud",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "A device password is accessible in the web interface only when it is created."
+    },
+    {
+      "candidate_id": "rc-3fbc295441e2",
+      "project": "mattermost",
+      "kind": "modification",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "When inviting a guest, the user must select at least one channel before the invitation can be submitted."
+    },
+    {
+      "candidate_id": "rc-4041140f2b5d",
+      "project": "wekan",
+      "kind": "addition",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "When dragging an archived multi-selection, the destinations highlighted in green must be exactly Remaining and all existing Workspaces."
+    },
+    {
+      "candidate_id": "rc-4200f1dac6a9",
+      "project": "zulip",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "When a user pastes a URL matching a reverse-enabled linkifier into the compose box, it automatically becomes linked text corresponding to that linkifier."
+    },
+    {
+      "candidate_id": "rc-458cc4cba31a",
+      "project": "wekan",
+      "kind": "addition",
+      "added_present": 0,
+      "added_total": 4,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Duplicating a board with either duplication option excludes the source board's existing board and card activity events from the duplicate's activity history."
+    },
+    {
+      "candidate_id": "rc-476f8413ae2e",
+      "project": "mattermost",
+      "kind": "addition",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "The Quarantine for Review action is available only for messages in public or private channels, not in direct or group messages."
+    },
+    {
+      "candidate_id": "rc-49aaaf2e6630",
+      "project": "openproject",
+      "kind": "addition",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "When shared sprint fields are read-only due to permissions, the project-specific sprint goal remains independently editable."
+    },
+    {
+      "candidate_id": "rc-4aac15b7b503",
+      "project": "grist",
+      "kind": "addition",
+      "added_present": 0,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Pressing Shift+F10 in the grid opens the context menu."
+    },
+    {
+      "candidate_id": "rc-4da4940bc16c",
+      "project": "mattermost",
+      "kind": "modification",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "When the feature is enabled, channel admins creating a channel see a field labeled “Default category (optional)”."
+    },
+    {
+      "candidate_id": "rc-4efba0098a79",
+      "project": "openproject",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "The project's More (three dots) dropdown menu must include an \"Add a subproject\" option."
+    },
+    {
+      "candidate_id": "rc-4fa8e7483b1a",
+      "project": "mattermost",
+      "kind": "addition",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "The timezone preference defaults to Automatic."
+    },
+    {
+      "candidate_id": "rc-54a0e2c483c4",
+      "project": "mattermost",
+      "kind": "addition",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "When leaving an already-muted public channel joined through a membership policy, the confirmation dialog shows Cancel and Leave channel instead of Mute instead."
+    },
+    {
+      "candidate_id": "rc-554bcd113361",
+      "project": "mattermost",
+      "kind": "addition",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Channel messages are automatically translated into the user's preferred language."
+    },
+    {
+      "candidate_id": "rc-57edf89f8e91",
+      "project": "wekan",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "Standard Duplicate links display as duplicates or is-duplicated-by according to their direction."
+    },
+    {
+      "candidate_id": "rc-59d96b056593",
+      "project": "wekan",
+      "kind": "addition",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Toggling “Show week of year (ISO 8601)” in the board Date popup immediately updates the week-number display without requiring Save."
+    },
+    {
+      "candidate_id": "rc-60c42d4dd323",
+      "project": "mealie",
+      "kind": "deletion",
+      "added_present": 0,
+      "added_total": 0,
+      "removed_present": 0,
+      "removed_total": 3,
+      "target_rule": "With Food enabled, shopping-list entries for 1 cup of cheese and 2 cups of cheese must combine into one entry showing 3 cups of cheese."
+    },
+    {
+      "candidate_id": "rc-62e9d69be36f",
+      "project": "zulip",
+      "kind": "deletion",
+      "added_present": 0,
+      "added_total": 0,
+      "removed_present": 0,
+      "removed_total": 4,
+      "target_rule": "A user with permission to administer a private channel must also subscribe to that channel before they can subscribe other users to it."
+    },
+    {
+      "candidate_id": "rc-6337ce108c4d",
+      "project": "openproject",
+      "kind": "modification",
+      "added_present": 0,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "Only administrators can see the options to set a project as a template or remove it from templates."
+    },
+    {
+      "candidate_id": "rc-6b29ef8b44d8",
+      "project": "wekan",
+      "kind": "addition",
+      "added_present": 4,
+      "added_total": 4,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "When the Add Swimlane popup opens, Below selected swimlane is selected by default."
+    },
+    {
+      "candidate_id": "rc-6be0f3992b4b",
+      "project": "grist",
+      "kind": "addition",
+      "added_present": 1,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "On every plan, a document's combined attachment and data storage must not exceed 1GB."
+    },
+    {
+      "candidate_id": "rc-6fb3a96cddc0",
+      "project": "openproject",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "When project wikis are disabled globally, the Project wiki settings page remains visible and displays a notice that wikis must first be enabled globally in administration settings."
+    },
+    {
+      "candidate_id": "rc-7b485b51412f",
+      "project": "grist",
+      "kind": "addition",
+      "added_present": 3,
+      "added_total": 4,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "After a user selects 'Set default: Collapse' for a parent page, its nested pages must be collapsed when the document is reopened."
+    },
+    {
+      "candidate_id": "rc-806442660eb5",
+      "project": "paperless",
+      "kind": "addition",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "A user may grant superuser status to another user only if the acting user is a superuser."
+    },
+    {
+      "candidate_id": "rc-84013890a131",
+      "project": "paperless",
+      "kind": "addition",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Documents whose processed text is empty or contains only whitespace are skipped."
+    },
+    {
+      "candidate_id": "rc-882709afd891",
+      "project": "mattermost",
+      "kind": "deletion",
+      "added_present": 0,
+      "added_total": 0,
+      "removed_present": 1,
+      "removed_total": 1,
+      "target_rule": "When a user mentions someone who is not a member of the channel, the web interface prompts them to add that person to the channel."
+    },
+    {
+      "candidate_id": "rc-88440629ecb6",
+      "project": "wekan",
+      "kind": "modification",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "Dropping multiple selected boards onto Home must display \"Please select only one board\" while leaving Home and the selection unchanged."
+    },
+    {
+      "candidate_id": "rc-899c4d2472ad",
+      "project": "wekan",
+      "kind": "addition",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Reordering a field in either display-order list changes its position on the corresponding card surface without changing its position on the other surface."
+    },
+    {
+      "candidate_id": "rc-8b05adc7767e",
+      "project": "wekan",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "When either membership restriction is enabled, a non-admin inviter can add a user to a board only if that user shares an organization or team of an enabled kind with the inviter or an active board member."
+    },
+    {
+      "candidate_id": "rc-90d29a54a512",
+      "project": "wekan",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 2,
+      "target_rule": "Changing the section display order for an opened card must not change the minicard's section display order."
+    },
+    {
+      "candidate_id": "rc-946f02ef19b6",
+      "project": "nextcloud",
+      "kind": "addition",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Using breakout rooms in a web call divides the call into smaller groups."
+    },
+    {
+      "candidate_id": "rc-969f81480445",
+      "project": "openproject",
+      "kind": "addition",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "A linked work package is displayed as a full-width card only when linked using a slash command on an empty line."
+    },
+    {
+      "candidate_id": "rc-9c57cc2cca50",
+      "project": "wekan",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "When the user selects the 1 Board option for multiline text, the whole text is kept as one board title."
+    },
+    {
+      "candidate_id": "rc-9d801a70d5d2",
+      "project": "nextcloud",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 2,
+      "target_rule": "Deleting a folder under normal conditions moves it to the trash bin instead of permanently deleting it."
+    },
+    {
+      "candidate_id": "rc-9e198862b86e",
+      "project": "paperless",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 1,
+      "removed_total": 1,
+      "target_rule": "The {{doc_title}} placeholder cannot be used in title assignment."
+    },
+    {
+      "candidate_id": "rc-aa2c82f86e08",
+      "project": "mattermost",
+      "kind": "addition",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "When anonymous team and channel URLs are enabled, the web team creation flow assigns the team URL automatically without prompting the user to choose it."
+    },
+    {
+      "candidate_id": "rc-aac66a0af69a",
+      "project": "grist",
+      "kind": "modification",
+      "added_present": 0,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 2,
+      "target_rule": "Clicking Restart at the bottom of the tutorial popup refreshes the page and discards unsaved changes."
+    },
+    {
+      "candidate_id": "rc-ab0227c1eb5b",
+      "project": "nextcloud",
+      "kind": "addition",
+      "added_present": 4,
+      "added_total": 4,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "When Sort favorites up is enabled in Mail appearance settings, favorite messages appear in a separate section above the rest of the message list."
+    },
+    {
+      "candidate_id": "rc-ade633af9c14",
+      "project": "grist",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "When suggestions are enabled, opening a document automatically opens a copy for both signed-in and signed-out users."
+    },
+    {
+      "candidate_id": "rc-adf56e244737",
+      "project": "zulip",
+      "kind": "addition",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Searching for channels:archived returns only messages the user received in archived channels."
+    },
+    {
+      "candidate_id": "rc-afa7beacea83",
+      "project": "immich",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "The folder feature toggle under Account Settings > Features is labeled \"Folders\"."
+    },
+    {
+      "candidate_id": "rc-b0a9c3fd790a",
+      "project": "grist",
+      "kind": "addition",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "A screen reader must announce Markdown content beginning with '# ' as a heading rather than reading the hash symbol aloud."
+    },
+    {
+      "candidate_id": "rc-b49db6870ff5",
+      "project": "grist",
+      "kind": "addition",
+      "added_present": 0,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "After a user closes their document fork, visiting the document's Direct URL automatically redirects them to their saved fork."
+    },
+    {
+      "candidate_id": "rc-b6b9f39b947a",
+      "project": "mattermost",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "A persistent notification for an urgent message containing an @mention stops repeating when its recipient acknowledges, reacts to, or replies to the message."
+    },
+    {
+      "candidate_id": "rc-b6f382226c41",
+      "project": "immich",
+      "kind": "addition",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "In Full path or folder search mode, a query matching part of an asset's original path must include that asset in the results."
+    },
+    {
+      "candidate_id": "rc-b7086f489030",
+      "project": "zulip",
+      "kind": "addition",
+      "added_present": 0,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "A channel's Moderation permissions must allow users to configure who can delete their own messages in that channel."
+    },
+    {
+      "candidate_id": "rc-babbaaab4a5e",
+      "project": "mattermost",
+      "kind": "addition",
+      "added_present": 4,
+      "added_total": 4,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Attachments restricted by attribute-based permissions must appear in messages with the placeholder \"Files not available\" and subtitle \"Access to files is restricted based on attributes\"."
+    },
+    {
+      "candidate_id": "rc-bd0b2995febc",
+      "project": "mattermost",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 2,
+      "removed_total": 2,
+      "target_rule": "Users can submit a status update without setting a reminder for the next status update."
+    },
+    {
+      "candidate_id": "rc-bf86d02f63c9",
+      "project": "zulip",
+      "kind": "deletion",
+      "added_present": 0,
+      "added_total": 0,
+      "removed_present": 0,
+      "removed_total": 2,
+      "target_rule": "When Google blobs is selected, emoji released after 2017 must display in the modern Google style."
+    },
+    {
+      "candidate_id": "rc-c044ebec7fe1",
+      "project": "zulip",
+      "kind": "addition",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "The user subscription typeahead must exclude users already subscribed to the target channel."
+    },
+    {
+      "candidate_id": "rc-c30a4162188a",
+      "project": "zulip",
+      "kind": "deletion",
+      "added_present": 0,
+      "added_total": 0,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "A message the user has permission to edit must display the pencil edit icon."
+    },
+    {
+      "candidate_id": "rc-c38fa60b1164",
+      "project": "nextcloud",
+      "kind": "addition",
+      "added_present": 4,
+      "added_total": 4,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Confirming Delegate access makes the shared mail account appear in the selected delegate's account list marked as delegated."
+    },
+    {
+      "candidate_id": "rc-c5ed01f3769c",
+      "project": "zulip",
+      "kind": "addition",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "The button to generate a channel email address must be hidden when the user lacks permission to send messages to that channel."
+    },
+    {
+      "candidate_id": "rc-c6aa48543d73",
+      "project": "zulip",
+      "kind": "modification",
+      "added_present": 0,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 2,
+      "target_rule": "When administrators require topics in channel messages, users cannot send channel messages to the “general chat” topic."
+    },
+    {
+      "candidate_id": "rc-c86728bbc029",
+      "project": "immich",
+      "kind": "addition",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "When creating an external library, the web interface must allow assigning it to exactly one user."
+    },
+    {
+      "candidate_id": "rc-ca08cec6ec87",
+      "project": "openproject",
+      "kind": "addition",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Each meeting agenda section must display the sum of the specified durations of its contained items."
+    },
+    {
+      "candidate_id": "rc-cb144c65d898",
+      "project": "zulip",
+      "kind": "modification",
+      "added_present": 0,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "The channel settings screen must place the \"Who can subscribe anyone to this channel\" setting under \"Advanced configurations\"."
+    },
+    {
+      "candidate_id": "rc-d3faa64f9193",
+      "project": "nextcloud",
+      "kind": "addition",
+      "added_present": 0,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "The web interface must allow a user to start a discussion thread with a title and description."
+    },
+    {
+      "candidate_id": "rc-d595b3b1510f",
+      "project": "nextcloud",
+      "kind": "addition",
+      "added_present": 2,
+      "added_total": 4,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "The conversation settings Meeting section must offer a CSV upload option for bulk inviting email participants."
+    },
+    {
+      "candidate_id": "rc-de652e658b99",
+      "project": "wekan",
+      "kind": "addition",
+      "added_present": 4,
+      "added_total": 4,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "After a logged-in reader stars a public board they do not belong to and reloads, that board appears in their Starred overview."
+    },
+    {
+      "candidate_id": "rc-dfb84383fb89",
+      "project": "zulip",
+      "kind": "deletion",
+      "added_present": 0,
+      "added_total": 0,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "Any user can unsubscribe themselves from a channel they belong to."
+    },
+    {
+      "candidate_id": "rc-e436521e462d",
+      "project": "openproject",
+      "kind": "addition",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "The project’s attachment visibility setting determines whether the attachments option appears in the Files tab of its work package detailed views."
+    },
+    {
+      "candidate_id": "rc-e594b40135ff",
+      "project": "nextcloud",
+      "kind": "addition",
+      "added_present": 1,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Creating a Calendar event with a Talk conversation as its location creates a conversation visible in the conversation list if none exists yet."
+    },
+    {
+      "candidate_id": "rc-ebff8e70d1d7",
+      "project": "wekan",
+      "kind": "deletion",
+      "added_present": 0,
+      "added_total": 0,
+      "removed_present": 0,
+      "removed_total": 4,
+      "target_rule": "Duplicating a board does not copy the source board's existing board or card activity events into the duplicate."
+    },
+    {
+      "candidate_id": "rc-f0b216964e6f",
+      "project": "grist",
+      "kind": "addition",
+      "added_present": 3,
+      "added_total": 3,
+      "removed_present": 0,
+      "removed_total": 0,
+      "target_rule": "Conditional formatting added under 'Row Style' must apply across the entire matching table row."
+    },
+    {
+      "candidate_id": "rc-f33b2bf870e9",
+      "project": "grist",
+      "kind": "deletion",
+      "added_present": 0,
+      "added_total": 0,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "A team may have at most 10 billing managers."
+    },
+    {
+      "candidate_id": "rc-f3df2f6e5885",
+      "project": "wekan",
+      "kind": "modification",
+      "added_present": 1,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "Synchronizing an upstream title or description change updates the corresponding card text only if it still matches the last synchronized source value, preserving locally edited text otherwise."
+    },
+    {
+      "candidate_id": "rc-fbc75725d8ad",
+      "project": "mattermost",
+      "kind": "modification",
+      "added_present": 2,
+      "added_total": 2,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "Guests using a magic login link can log in through the web interface without entering a password."
+    },
+    {
+      "candidate_id": "rc-fd348eb33246",
+      "project": "zulip",
+      "kind": "modification",
+      "added_present": 0,
+      "added_total": 1,
+      "removed_present": 0,
+      "removed_total": 1,
+      "target_rule": "Conversations in a private channel are visible to users who have been granted access to that channel."
+    }
+  ]
+}

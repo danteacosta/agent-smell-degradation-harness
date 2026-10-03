@@ -133,8 +133,10 @@ def test_audit_flags_shared_sentences_and_same_change():
 def test_repository_proposal_passes_checks_but_is_not_approved():
     root = sel.ROOT
     decisions = json.loads((root / "data/requirement-selection/decisions-proposed.json").read_text())
-    admitted = sel.load_admitted([root / "data/llm-screening-20261002/results.json"])
-    unresolved = json.loads((root / "data/llm-screening-20261002/mapping-audit.json").read_text())[
-        "unresolved_target_selection"]
+    admitted = sel.load_admitted([root / "data/llm-screening-20261002/results.json",
+                                  root / "data/llm-screening-round2-20261003/results.json"])
+    unresolved = [c for path in ("data/llm-screening-20261002/mapping-audit.json",
+                                 "data/requirement-selection/round2-mapping-audit.json")
+                  for c in json.loads((root / path).read_text())["unresolved_target_selection"]]
     assert sel.check_decisions(decisions, admitted, unresolved) == []
     assert decisions["status"] == "proposed" and decisions["approved_by"] is None

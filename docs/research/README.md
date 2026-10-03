@@ -122,3 +122,4 @@ experiment evidence.
 - [Revisão dos 30 mappings da rodada 2](2026-10-03-screening-round2-mapping-review.md): 15 questões pendentes identificadas sem consultar a sonda; não altera admissão nem aprova seleção.
 
 - [Sonda de recuperação da rodada 2](2026-10-03-memorization-probe-round2-results.md): 30 regras, Luna 8/30 e Sol 9/30; 180 respostas e 414 chamadas, sem falhas; não é evidência de contaminação ou efeito E2E.
+- [Decisões de seleção, versão 2: documentação no fim do frame](2026-10-03-selection-decisions-v2.md). Define "atual" como o snapshot de 2026-09-30, fecha as 15 pendências da rodada 2 e as de texto removido; prévia de 46 requisitos em nove projetos. Proposta, não aprovada.
