@@ -1,16 +1,18 @@
 """Immich and Mealie selection cases (projects with at most six admitted rules)."""
 
-VIDEO_LIST_A = ("3GPP (.3gp .3gpp), AVI (.avi), FLV (.flv), M4V (.m4v), MATROSKA (.mkv), MP2T (.mts .m2ts .m2t), "
+VIDEO_LIST_A = ("3GPP (.3gp .3gpp), AVI (.avi), FLV (.flv), M4V (.m4v), MATROSKA (.mkv), MP2T (.mts .m2ts .m2t .ts), "
                 "MP4 (.mp4 .insv), MPEG (.mpg .mpe .mpeg), QUICKTIME (.mov), WEBM (.webm), WMV (.wmv)")
-VIDEO_LIST_C = VIDEO_LIST_A.replace("MP2T (.mts .m2ts .m2t)", "MP2T (.mts .m2ts)")
+VIDEO_LIST_C = VIDEO_LIST_A.replace("MP2T (.mts .m2ts .m2t .ts)", "MP2T (.mts .m2ts .ts)")
 VIDEO_LIST_B = ("QUICKTIME (.mov), MP4 (.mp4 .insv), MATROSKA (.mkv), WEBM (.webm), AVI (.avi), WMV (.wmv), "
-                "FLV (.flv), M4V (.m4v), MPEG (.mpg .mpe .mpeg), 3GPP (.3gp .3gpp) and MP2T (.mts .m2ts .m2t)")
+                "FLV (.flv), M4V (.m4v), MPEG (.mpg .mpe .mpeg), 3GPP (.3gp .3gpp) and MP2T (.mts .m2ts .m2t .ts)")
 
 M2T = {
     "case": "immich-m2t-upload",
     "candidate_id": "rc-0ec1ac8f66bd",
     "project_id": "immich",
-    "source": {"commit": "fcd372238f", "file": "docs/docs/features/supported-formats.md"},
+    "source": {"commit": "fcd372238f", "file": "docs/docs/features/supported-formats.md",
+               "arm_a_snapshot_commit": "a3c8b359f2fdc47699f1530215a23fe8bd34c454",
+               "frame_end": "2026-09-30T23:59:59Z"},
     "title": "Upload videos",
     "register": "app.onFiles",
     "control": "file input",
@@ -33,9 +35,11 @@ document.querySelector('#files').addEventListener('change',e=>{const files=[...e
     "fixtures": [
         {"state": {}, "files": [["holiday.m2t", "application/octet-stream", True, True],
                                 ["clip.mov", "video/quicktime", False, True],
+                                ["transport.ts", "video/mp2t", False, True],
                                 ["notes.txt", "text/plain", False, False]]},
         {"state": {}, "files": [["race.m2t", "application/octet-stream", True, True],
                                 ["match.mts", "video/mp2t", False, True],
+                                ["stream.ts", "video/mp2t", False, True],
                                 ["scan.pdf", "application/pdf", False, False]]},
     ],
     "journey_js": r"""
@@ -55,9 +59,10 @@ document.querySelector('#files').addEventListener('change',e=>{const files=[...e
     "non_target": ["other_video_accepted_1", "other_video_accepted_2", "non_video_rejected_1", "non_video_rejected_2",
                    "each_file_decided_once_1", "each_file_decided_once_2"],
     "controls": {
-        "reference": ("const VIDEO=['.3gp','.3gpp','.avi','.flv','.m4v','.mkv','.mts','.m2ts','.m2t','.mp4','.insv','.mpg','.mpe','.mpeg','.mov','.webm','.wmv'];app.onFiles(files=>{for(const f of files){const ext=f.name.slice(f.name.lastIndexOf('.')).toLowerCase();if(VIDEO.includes(ext))app.accept(f.name);else app.reject(f.name,'Unsupported file type')}});", "pass"),
-        "alternative": ("app.onFiles(function(files){files.forEach(function(f){if(/\\.(3gpp?|avi|flv|m4v|mkv|mts|m2ts?|mp4|insv|mp(g|e|eg)|mov|webm|wmv)$/i.test(f.name))app.accept(f.name);else app.reject(f.name)})});", "pass"),
-        "target-mutant": ("const VIDEO=['.3gp','.3gpp','.avi','.flv','.m4v','.mkv','.mts','.m2ts','.mp4','.insv','.mpg','.mpe','.mpeg','.mov','.webm','.wmv'];app.onFiles(files=>{for(const f of files){const ext=f.name.slice(f.name.lastIndexOf('.')).toLowerCase();if(VIDEO.includes(ext))app.accept(f.name);else app.reject(f.name)}});", "target_only_failure"),
+        "ts-missing-mutant": ("const VIDEO=['.3gp','.3gpp','.avi','.flv','.m4v','.mkv','.mts','.m2ts','.m2t','.mp4','.insv','.mpg','.mpe','.mpeg','.mov','.webm','.wmv'];app.onFiles(files=>{for(const f of files){const ext=f.name.slice(f.name.lastIndexOf('.')).toLowerCase();if(VIDEO.includes(ext))app.accept(f.name);else app.reject(f.name,'Unsupported file type')}});", "non_target_only_failure"),
+        "reference": ("const VIDEO=['.3gp','.3gpp','.avi','.flv','.m4v','.mkv','.mts','.m2ts','.ts','.m2t','.mp4','.insv','.mpg','.mpe','.mpeg','.mov','.webm','.wmv'];app.onFiles(files=>{for(const f of files){const ext=f.name.slice(f.name.lastIndexOf('.')).toLowerCase();if(VIDEO.includes(ext))app.accept(f.name);else app.reject(f.name,'Unsupported file type')}});", "pass"),
+        "alternative": ("app.onFiles(function(files){files.forEach(function(f){if(/\\.(3gpp?|avi|flv|m4v|mkv|mts|m2ts?|ts|mp4|insv|mp(g|e|eg)|mov|webm|wmv)$/i.test(f.name))app.accept(f.name);else app.reject(f.name)})});", "pass"),
+        "target-mutant": ("const VIDEO=['.3gp','.3gpp','.avi','.flv','.m4v','.mkv','.mts','.m2ts','.ts','.mp4','.insv','.mpg','.mpe','.mpeg','.mov','.webm','.wmv'];app.onFiles(files=>{for(const f of files){const ext=f.name.slice(f.name.lastIndexOf('.')).toLowerCase();if(VIDEO.includes(ext))app.accept(f.name);else app.reject(f.name)}});", "target_only_failure"),
         "mime-mutant": ("app.onFiles(files=>files.forEach(f=>f.type.startsWith('video/')?app.accept(f.name):app.reject(f.name)));", "target_only_failure"),
         "non-target-mutant": ("app.onFiles(files=>files.forEach(f=>app.accept(f.name)));", "non_target_only_failure"),
     },

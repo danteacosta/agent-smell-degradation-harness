@@ -71,3 +71,12 @@ def test_model_prompt_does_not_disclose_the_research_case_identifier(name):
     case = Case.load(name)
     for arm in "ABC":
         assert name not in case.prompt(arm), "research metadata must stay outside model-visible input"
+
+
+def test_mp2t_snapshot_preserves_ts_in_all_arms():
+    import re
+    spec = next(s for s in build_mod.SPECS if s['case'] == 'immich-m2t-upload')
+    for arm in ('A', 'B', 'C'):
+        extensions = set(re.findall(r'\.[a-z0-9]+', spec['arms'][arm]))
+        assert '.ts' in extensions, arm
+        assert ('.m2t' in extensions) == (arm != 'C')
