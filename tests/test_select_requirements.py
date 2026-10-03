@@ -130,7 +130,7 @@ def test_audit_flags_shared_sentences_and_same_change():
     assert ("rc-a", "rc-c") not in pairs
 
 
-def test_repository_proposal_passes_checks_but_is_not_approved():
+def test_repository_selection_has_explicit_approval_and_bound_inputs():
     root = sel.ROOT
     decisions = json.loads((root / "data/requirement-selection/decisions-proposed.json").read_text())
     admitted = sel.load_admitted([root / "data/llm-screening-20261002/results.json",
@@ -139,4 +139,12 @@ def test_repository_proposal_passes_checks_but_is_not_approved():
                                  "data/requirement-selection/round2-mapping-audit.json")
                   for c in json.loads((root / path).read_text())["unresolved_target_selection"]]
     assert sel.check_decisions(decisions, admitted, unresolved) == []
-    assert decisions["status"] == "proposed" and decisions["approved_by"] is None
+    assert decisions["status"] == "approved" and decisions["approved_by"]
+    assert decisions["approval_evidence"]["answer"] == "Aprovo a proposta revisada e autorizo a seleção"
+    result = json.loads((root / "data/requirement-selection/selection.json").read_text())
+    receipt = json.loads((root / "data/requirement-selection/selection-execution.json").read_text())
+    assert result["status"] == "selected" and result["selected_count"] == 46
+    assert len(result["selected"]) == 9 and result["units_before_cap"] == 82
+    assert receipt["binding_draws"] == 1 and receipt["preview_draws"] == 0
+    for rel, digest in {**result["inputs_sha256"], **receipt["additional_inputs_sha256"]}.items():
+        assert sel.sha256_file(root / rel) == digest, rel
