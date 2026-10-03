@@ -502,3 +502,27 @@ Search/read date: 2026-10-02. Read the abstract, survey, method and limitations 
 | Source / status | Question, sample and method | Finding / limits | Thesis, experiment, product and action | Credibility |
 | --- | --- | --- | --- | --- |
 | Dror, Baumer, Shlomov and Reichart, *The Hitchhiker's Guide to Testing Statistical Significance in Natural Language Processing*, ACL 2018, peer-reviewed methods/opinion paper; [original](https://aclanthology.org/P18-1128/), DOI 10.18653/v1/P18-1128 | How should significance tests match NLP experiments? Test-selection protocol plus survey of 196 ACL and 37 TACL papers from 2017. | Testing was often omitted or underspecified. Section 5 identifies dependent observations as an unresolved complication. Predates LLM agents; does not solve our clustered design. | Thesis: preserve the sampling unit. Experiment: retain per-requirement nested repetitions in the [extended audit](2026-10-01-e2e-recoverability-audit.md), without pooled iid inference. Product: report sample provenance with comparisons. Action implemented: six-lot accounting and classification replay; no post-hoc test selection or protocol change. | 8/10: peer-reviewed, transparent survey and test assumptions; reproducible guidance, but indirect to agents and insufficient for our dependency structure. |
+
+## 2026-10-03 — Exchangeability and the existing H1 estimand
+
+Search/read date: 2026-10-03. Deduplicated by DOI/title. Read the abstract,
+theory, simulations, real-data example and discussion in the original article.
+
+| Source / status | Question, data and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | --- |
+| Winkler, Webster, Vidaurre, Nichols and Smith, *Multi-level block permutation*, NeuroImage 123 (2015), 253–268; peer-reviewed; DOI [10.1016/j.neuroimage.2015.05.092](https://doi.org/10.1016/j.neuroimage.2015.05.092); [full text](https://pmc.ncbi.nlm.nih.gov/articles/PMC4644991/) | Can permutation inference preserve hierarchical dependence? Nested exchangeability blocks, simulations including 36- and 27-observation structures, and a Human Connectome Project application. | Restricting rearrangements to preserve dependence controls false positives in evaluated settings; unrestricted rearrangements can inflate error. Assumptions and reduced permutation space affect validity/power. Neuroimaging GLMs, not requirement-loss outcomes. | Thesis/experiment: project bootstrap does not validate independent intent-level sign flips. Product: expose inference assumptions alongside comparisons. Action: clarify the existing estimand's Monte Carlo test assumptions; flag the exchangeability decision for prospective review. No retrospective p-value replacement. | 9/10: peer-reviewed theory, simulations, real-data demonstration and implementation; transparent and replicable, but indirect to our ordinal estimand. |
+
+Tension requiring a human decision: `paired_probability_of_superiority` averages
+repetitions within intent and bootstraps projects, but its p-value flips each
+intent independently. Before confirmatory use, justify independent arm
+exchangeability under the actual randomized design or preregister a dependence-
+preserving alternative. Two projects alone do not establish validity; the legacy
+`valid_for_inference` flag is only a project-count check.
+
+Implementation audit: a NaN rating previously entered the "defective better"
+branch, while infinities and out-of-scale values also produced scientific pair
+outcomes. Null IDs were converted to the text "None". The estimand now rejects
+nontext/empty identities and ratings outside its declared 0–3 categories, with
+regressions for both arms and identity fields. Integer-valued floats remain
+accepted. This input-contract repair preserves valid-input estimates and does
+not validate annotation, pairing upstream, missingness or the inference design.

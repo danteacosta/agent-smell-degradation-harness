@@ -138,24 +138,28 @@ def paired_probability_of_superiority(
     has equal weight.  The estimate is the mean intent score; 0.5 means no
     paired effect and values above 0.5 support H1.  The interval resamples
     projects (cluster bootstrap), and the p-value flips the sign of each
-    intent's centered score, which is the exact randomization null for
-    exchangeable arm labels within an intent.  Fewer than two projects yields
-    no interval rather than a misleading one.
+    intent's centered score. This is a Monte Carlo sign-flip test requiring
+    independently exchangeable arm labels across intents; project bootstrap
+    does not establish that assumption. Project-dependent intents require a
+    prospectively justified exchangeability scheme before confirmatory use.
+    See Winkler et al. (2015), doi:10.1016/j.neuroimage.2015.05.092.
+    Fewer than two projects yields no interval. The compatibility flag
+    ``valid_for_inference`` checks this count only, not scientific validity.
     """
 
     by_intent: dict[str, list[float]] = {}
     project_of: dict[str, str] = {}
     for row in pairs:
-        intent = str(row.get("intent_id", "")).strip()
-        project = str(row.get("project_id", "")).strip()
-        if not intent or not project:
-            raise ValueError("each pair requires intent_id and project_id")
+        intent, project = row.get("intent_id"), row.get("project_id")
+        if not all(isinstance(value, str) and value.strip() for value in (intent, project)):
+            raise ValueError("each pair requires nonempty text intent_id and project_id")
+        intent, project = intent.strip(), project.strip()
         if project_of.setdefault(intent, project) != project:
             raise ValueError(f"intent {intent} appears in more than one project")
         clean, defective = row.get("clean_severity"), row.get("defective_severity")
         for value in (clean, defective):
-            if type(value) not in (int, float):
-                raise ValueError("severities must be numeric ordinal ratings")
+            if type(value) not in (int, float) or value not in (0, 1, 2, 3):
+                raise ValueError("severities must be numeric ordinal ratings in {0, 1, 2, 3}")
         if defective > clean:
             score = 1.0
         elif defective == clean:
