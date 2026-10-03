@@ -120,3 +120,5 @@ experiment evidence.
 - [Casos da seleção, lote 1: Paperless, Immich e Mealie, 3 de outubro de 2026](2026-10-03-selection-cases-batch-1.md). Dez casos A/B/C com 73/73 controles qualificados no Docker congelado; revisão dos braços e decisões de seleção continuam pendentes.
 
 - [Revisão dos 30 mappings da rodada 2](2026-10-03-screening-round2-mapping-review.md): 15 questões pendentes identificadas sem consultar a sonda; não altera admissão nem aprova seleção.
+
+- [Sonda de recuperação da rodada 2](2026-10-03-memorization-probe-round2-results.md): 30 regras, Luna 8/30 e Sol 9/30; 180 respostas e 414 chamadas, sem falhas; não é evidência de contaminação ou efeito E2E.

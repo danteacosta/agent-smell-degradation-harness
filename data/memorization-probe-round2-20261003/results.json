@@ -1,0 +1,2080 @@
+{
+  "controls": [
+    {
+      "expected": "yes",
+      "id": "jc-yes-1",
+      "verdicts": {
+        "gpt-6-astra": "yes",
+        "gpt-6-sol": "yes"
+      }
+    },
+    {
+      "expected": "yes",
+      "id": "jc-yes-2",
+      "verdicts": {
+        "gpt-6-astra": "yes",
+        "gpt-6-sol": "yes"
+      }
+    },
+    {
+      "expected": "no",
+      "id": "jc-no-1",
+      "verdicts": {
+        "gpt-6-astra": "no",
+        "gpt-6-sol": "no"
+      }
+    },
+    {
+      "expected": "no",
+      "id": "jc-no-2",
+      "verdicts": {
+        "gpt-6-astra": "no",
+        "gpt-6-sol": "no"
+      }
+    }
+  ],
+  "rows": [
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-c6aa48543d73",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-c6aa48543d73",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-b49db6870ff5",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-b49db6870ff5",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-24946f42bfc2",
+      "coder": "gpt-5.6-luna",
+      "memorized": 1,
+      "project": "zulip",
+      "yes": 2
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        }
+      ],
+      "candidate_id": "rc-24946f42bfc2",
+      "coder": "gpt-5.6-sol",
+      "memorized": 1,
+      "project": "zulip",
+      "yes": 2
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-3c572449f134",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-3c572449f134",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        }
+      ],
+      "candidate_id": "rc-dfb84383fb89",
+      "coder": "gpt-5.6-luna",
+      "memorized": 1,
+      "project": "zulip",
+      "yes": 2
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        }
+      ],
+      "candidate_id": "rc-dfb84383fb89",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 1
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-62e9d69be36f",
+      "coder": "gpt-5.6-luna",
+      "memorized": 1,
+      "project": "zulip",
+      "yes": 2
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-62e9d69be36f",
+      "coder": "gpt-5.6-sol",
+      "memorized": 1,
+      "project": "zulip",
+      "yes": 2
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-bf86d02f63c9",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-bf86d02f63c9",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-ade633af9c14",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-ade633af9c14",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-7b485b51412f",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 1
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        }
+      ],
+      "candidate_id": "rc-7b485b51412f",
+      "coder": "gpt-5.6-sol",
+      "memorized": 1,
+      "project": "grist",
+      "yes": 2
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-4aac15b7b503",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        }
+      ],
+      "candidate_id": "rc-4aac15b7b503",
+      "coder": "gpt-5.6-sol",
+      "memorized": 1,
+      "project": "grist",
+      "yes": 2
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-3cd319371269",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-3cd319371269",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        }
+      ],
+      "candidate_id": "rc-f33b2bf870e9",
+      "coder": "gpt-5.6-luna",
+      "memorized": 1,
+      "project": "grist",
+      "yes": 2
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-f33b2bf870e9",
+      "coder": "gpt-5.6-sol",
+      "memorized": 1,
+      "project": "grist",
+      "yes": 2
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-c044ebec7fe1",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-c044ebec7fe1",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 1
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-c30a4162188a",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-c30a4162188a",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        }
+      ],
+      "candidate_id": "rc-277279fd03a4",
+      "coder": "gpt-5.6-luna",
+      "memorized": 1,
+      "project": "zulip",
+      "yes": 3
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        }
+      ],
+      "candidate_id": "rc-277279fd03a4",
+      "coder": "gpt-5.6-sol",
+      "memorized": 1,
+      "project": "zulip",
+      "yes": 3
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        }
+      ],
+      "candidate_id": "rc-c5ed01f3769c",
+      "coder": "gpt-5.6-luna",
+      "memorized": 1,
+      "project": "zulip",
+      "yes": 3
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-c5ed01f3769c",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-362ff82e3812",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-362ff82e3812",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-393307131fc8",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-393307131fc8",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-103dc930a420",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 1
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        }
+      ],
+      "candidate_id": "rc-103dc930a420",
+      "coder": "gpt-5.6-sol",
+      "memorized": 1,
+      "project": "zulip",
+      "yes": 2
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-1590080019fb",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-1590080019fb",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-08dffa18a270",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-08dffa18a270",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-b7086f489030",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-b7086f489030",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-aac66a0af69a",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-aac66a0af69a",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-4200f1dac6a9",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 1
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-4200f1dac6a9",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-adf56e244737",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-adf56e244737",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        }
+      ],
+      "candidate_id": "rc-f0b216964e6f",
+      "coder": "gpt-5.6-luna",
+      "memorized": 1,
+      "project": "grist",
+      "yes": 3
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        }
+      ],
+      "candidate_id": "rc-f0b216964e6f",
+      "coder": "gpt-5.6-sol",
+      "memorized": 1,
+      "project": "grist",
+      "yes": 3
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-fd348eb33246",
+      "coder": "gpt-5.6-luna",
+      "memorized": 1,
+      "project": "zulip",
+      "yes": 2
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "yes",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "yes",
+            "gpt-6-sol": "yes"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-fd348eb33246",
+      "coder": "gpt-5.6-sol",
+      "memorized": 1,
+      "project": "zulip",
+      "yes": 2
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-6be0f3992b4b",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-6be0f3992b4b",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-cb144c65d898",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-cb144c65d898",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "zulip",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-b0a9c3fd790a",
+      "coder": "gpt-5.6-luna",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    },
+    {
+      "answers": [
+        {
+          "rep": 1,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 2,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        },
+        {
+          "rep": 3,
+          "states_rule": "no",
+          "status": "ok",
+          "verdicts": {
+            "gpt-6-astra": "no"
+          }
+        }
+      ],
+      "candidate_id": "rc-b0a9c3fd790a",
+      "coder": "gpt-5.6-sol",
+      "memorized": 0,
+      "project": "grist",
+      "yes": 0
+    }
+  ],
+  "schema_version": "memorization-probe/v1-results",
+  "status": "complete",
+  "summary": {
+    "memorized_by_coder": {
+      "gpt-5.6-luna": {
+        "0": 22,
+        "1": 8
+      },
+      "gpt-5.6-sol": {
+        "0": 21,
+        "1": 9
+      }
+    },
+    "rules": 30,
+    "unjudged_answers": 0
+  }
+}
