@@ -112,3 +112,4 @@ experiment evidence.
 - [Triagem por consenso de LLMs: 258 candidatos, 2 de outubro de 2026](2026-10-02-llm-screening-results.md). Dados públicos, recálculo, custódia e limitações dos mappings; não confirma smells ou H1/H2.
 
 - [Sonda de recuperação de regras: 69 candidatos e dois modelos, 2 de outubro de 2026](2026-10-02-memorization-probe-results.md). Luna 22/69 e Sol 31/69; dados públicos e verificação independente da projeção. Recuperação sem referência não demonstra contaminação e não confirma H1/H2.
+- [Seleção dos requisitos: procedimento congelado e decisões propostas, 2 de outubro de 2026](2026-10-02-selection-procedure.md). Ordem do sorteio com seed 2026100203, bloqueios, sete mappings e dois grupos de duplicação propostos; nenhuma seleção executada.

@@ -1,0 +1,25 @@
+{
+  "schema_version": "requirement-selection-decisions/v1",
+  "status": "proposed",
+  "proposed_by": "assistant",
+  "approved_by": null,
+  "probe_outcomes_consulted": false,
+  "principle": "Keep the frozen mechanism's rule (first admitting vote) unless it fails a validity check: V1, the rule is stated in the text that arm A will use; V2, the rule is a conditional behavior with an observable outcome, not only the presence or label of a control. A candidate whose admitting votes all fail is excluded. Keeping the frozen rule also keeps it aligned with the rule the probe asked about.",
+  "mappings": {
+    "rc-de652e658b99": {"decision": "keep_frozen", "reason": "Frozen rule (star, reload, appears in Starred) comes from the added text and has an observable outcome. The alternative vote only states that starring is possible."},
+    "rc-afa7beacea83": {"decision": "exclude", "reason": "Frozen rule is a label rename (Folder View to Folders): fails V2. The other admitting vote (enabling shows the folder view) is not what the commit changed; the change carries no behavioral rule."},
+    "rc-4041140f2b5d": {"decision": "keep_frozen", "reason": "Frozen rule (only Remaining and Workspaces highlighted, Home not) matches the commit's intent ('Restrict Archive selection drop targets') and is a prohibition with an observable outcome."},
+    "rc-6337ce108c4d": {"decision": "exclude", "reason": "Frozen rule (administrators only) comes from the removed sentence, so it is not in the current documentation: fails V1. The other admitting vote states only that an icon exists: fails V2."},
+    "rc-e594b40135ff": {"decision": "keep_frozen", "reason": "Frozen rule (a conversation is created if none exists and appears in the list) is conditional and changes another entity; the alternative (link in event details) is also valid but has no condition."},
+    "rc-bd0b2995febc": {"decision": "keep_frozen", "reason": "Frozen rule (the reminder is optional) is the added text. The alternative (default timer preselected) comes from removed sentences: fails V1."},
+    "rc-4da4940bc16c": {"decision": "keep_frozen", "reason": "Frozen rule (admins see the Default category field when the feature is enabled) is conditional on the setting and role. The alternative (joining members see the channel under the category) is stronger but needs a second user; noted for the advisor."}
+  },
+  "duplicate_groups": [
+    {"candidates": ["rc-458cc4cba31a", "rc-ebff8e70d1d7"], "reason": "The same four sentences on activity history during board duplication, added and then removed in the same file on the same day."},
+    {"candidates": ["rc-899c4d2472ad", "rc-90d29a54a512"], "reason": "Same commit and file; both rules state that the opened-card and minicard field orders are independent."}
+  ],
+  "open_questions_for_advisor": [
+    "Arm A is defined as the current documentation. Four admitted candidates are deletions (rc-882709afd891, rc-2c13970217ea, rc-ebff8e70d1d7, rc-60c42d4dd323) and others take their rule from removed sentences. Should arm A use the pre-commit text for these, or should rules absent from the current documentation be excluded?",
+    "rc-458cc4cba31a states a rule that a later commit removed on the same day; under a strict current-documentation reading it would also be excluded."
+  ]
+}
