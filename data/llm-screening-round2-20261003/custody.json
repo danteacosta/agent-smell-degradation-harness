@@ -1,0 +1,17 @@
+{
+  "schema_version": "llm-screening-public-custody/v1",
+  "date": "2026-10-03",
+  "original_receipt_sha256": "67fc0eaee2a9d397e9fa68e6bd789637563a46fb9eb5d96ca2c1e0bba61e4b05",
+  "frozen_receipt_sha256": "6d9ca9e97bfd5890e1ffbb785b10cf3b726f20c1cded5fca4b5530f7110d093d",
+  "original_results_sha256": "efd715003c462e0af5cdc149f23ba98744a4bea051751eb6a2e5be85f800a4d6",
+  "original_inventory_files_verified": 941,
+  "calls": 145,
+  "retries": 0,
+  "confirmatory_eligible": false,
+  "scope": "Candidate eligibility screening; not smell confirmation or H1/H2 observations",
+  "private_material_excluded": [
+    "provider CLI captures",
+    "raw CLI streams",
+    "executable path"
+  ]
+}

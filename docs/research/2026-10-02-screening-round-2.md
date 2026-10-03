@@ -1,6 +1,6 @@
 # Triagem, rodada 2: extensão do frame para o oitavo projeto
 
-Status: pronta para rodar. Nenhuma chamada foi feita.
+Status: coleta concluída em 3 de outubro de 2026. Ver [resultados da rodada 2](2026-10-03-screening-round2-results.md).
 
 A rodada 1 admitiu regras de sete projetos; o pré-registro exige oito. Os outros cinco projetos da rodada 1 já tinham o frame inteiro triado, então uma nova amostra deles não muda a contagem. Por isso, o frame ganhou dois projetos, com a mesma janela (2025-01-01 a 2026-09-30) e os mesmos filtros. O desvio está registrado na seção 7 do pré-registro.
 
@@ -24,7 +24,7 @@ bash scripts/run_llm_screening_round2.sh
 bash scripts/run_memorization_probe.sh "$HOME/Documents/GitHub/.private-research-evidence/llm-screening-round2-<data>"
 ```
 
-São 6 chamadas de qualificação mais cerca de 125 de triagem. A sonda depende do número de admitidos (6 respostas por candidato, mais os julgamentos).
+São 18 chamadas de qualificação (seis controles para cada um dos três modelos), mais 120 votos primários e os desempates necessários. A sonda depende do número de admitidos (6 respostas por candidato, mais os julgamentos).
 
 ## Depois
 

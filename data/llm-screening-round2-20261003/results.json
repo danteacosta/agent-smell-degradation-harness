@@ -1,0 +1,2390 @@
+{
+  "controls": [
+    {
+      "decisions": {
+        "gpt-6-astra": "admit",
+        "gpt-6-luna": "admit",
+        "gpt-6-sol": "admit"
+      },
+      "expected": "admit",
+      "id": "ctl-pos-kanboard"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "admit",
+        "gpt-6-luna": "admit",
+        "gpt-6-sol": "admit"
+      },
+      "expected": "admit",
+      "id": "ctl-pos-openproject"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "admit",
+        "gpt-6-luna": "admit",
+        "gpt-6-sol": "admit"
+      },
+      "expected": "admit",
+      "id": "ctl-pos-shopping"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "exclude",
+        "gpt-6-luna": "exclude",
+        "gpt-6-sol": "exclude"
+      },
+      "expected": "exclude",
+      "id": "ctl-neg-install"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "exclude",
+        "gpt-6-luna": "exclude",
+        "gpt-6-sol": "exclude"
+      },
+      "expected": "exclude",
+      "id": "ctl-neg-format"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "exclude",
+        "gpt-6-luna": "exclude",
+        "gpt-6-sol": "exclude"
+      },
+      "expected": "exclude",
+      "id": "ctl-neg-cli"
+    }
+  ],
+  "rows": [
+    {
+      "candidate_id": "rc-c6aa48543d73",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "With topics required, a user successfully sends a channel message to \u201cgeneral chat\u201d.",
+      "numeric": false,
+      "pass_observation": "With topics required, the interface prevents sending a channel message to \u201cgeneral chat\u201d.",
+      "probe_question": "What happens when a user attempts to send a channel message to \u201cgeneral chat\u201d while topics are required?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "When administrators require topics in channel messages, users cannot send channel messages to the \u201cgeneral chat\u201d topic.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "With topics required, a user successfully sends a channel message to \u201cgeneral chat\u201d.",
+            "numeric": false,
+            "pass_observation": "With topics required, the interface prevents sending a channel message to \u201cgeneral chat\u201d.",
+            "probe_question": "What happens when a user attempts to send a channel message to \u201cgeneral chat\u201d while topics are required?",
+            "reason": "admit",
+            "target_rule": "When administrators require topics in channel messages, users cannot send channel messages to the \u201cgeneral chat\u201d topic."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": true,
+            "fail_observation": "After topics are required, the user can still select \u201cgeneral chat\u201d as a channel message topic.",
+            "numeric": false,
+            "pass_observation": "After topics are required, the user cannot select \u201cgeneral chat\u201d as a channel message topic.",
+            "probe_question": "What happens to the \u201cgeneral chat\u201d topic when an administrator requires topics in channel messages?",
+            "reason": "admit",
+            "target_rule": "When an administrator requires topics in channel messages, the \u201cgeneral chat\u201d topic is unavailable."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-5eeca5c59190",
+      "consensus": "exclude",
+      "project": "zulip",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "operations_or_configuration",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "operations_or_configuration",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-b49db6870ff5",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The user visits the Direct URL after closing their fork and is not automatically taken to their saved fork.",
+      "numeric": false,
+      "pass_observation": "The user visits the Direct URL after closing their fork and sees their saved fork open automatically.",
+      "probe_question": "What happens when a user visits the Direct URL after closing their document fork?",
+      "project": "grist",
+      "route": "agreement",
+      "target_rule": "After a user closes their document fork, visiting the document's Direct URL automatically redirects them to their saved fork.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The user visits the Direct URL after closing their fork and is not automatically taken to their saved fork.",
+            "numeric": false,
+            "pass_observation": "The user visits the Direct URL after closing their fork and sees their saved fork open automatically.",
+            "probe_question": "What happens when a user visits the Direct URL after closing their document fork?",
+            "reason": "admit",
+            "target_rule": "After a user closes their document fork, visiting the document's Direct URL automatically redirects them to their saved fork."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The original document opens instead of the saved fork.",
+            "numeric": false,
+            "pass_observation": "The saved fork opens.",
+            "probe_question": "What opens when you revisit the Direct URL after closing your document fork?",
+            "reason": "admit",
+            "target_rule": "When a user revisits the Direct URL after closing their document fork, Grist redirects them to their saved fork."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-be0ba3e1c391",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-24946f42bfc2",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "A user without permission joins the group through its plus icon.",
+      "numeric": false,
+      "pass_observation": "A user without permission cannot join the group through its plus icon.",
+      "probe_question": "How does joining a user group through its plus icon behave for users with different permissions?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "A user may join a user group using its plus icon only if they have permission to join it.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A user without permission joins the group through its plus icon.",
+            "numeric": false,
+            "pass_observation": "A user without permission cannot join the group through its plus icon.",
+            "probe_question": "How does joining a user group through its plus icon behave for users with different permissions?",
+            "reason": "admit",
+            "target_rule": "A user may join a user group using its plus icon only if they have permission to join it."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A user without permission clicks the plus icon and becomes a member of the group.",
+            "numeric": false,
+            "pass_observation": "A permitted user clicks the plus icon and becomes a member of the group; a user without permission does not.",
+            "probe_question": "What happens when a user clicks the plus icon beside a user group?",
+            "reason": "admit",
+            "target_rule": "A user can join a user group by clicking its plus icon only if they have permission to join it."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-3c572449f134",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The suggestions omit an option for direct messages with the named user.",
+      "numeric": false,
+      "pass_observation": "The suggestions include an option for direct messages with the named user.",
+      "probe_question": "What suggestions appear when you type a user's name in the search box?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "Typing a user's name in the search box offers a suggestion for direct messages with that user.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The suggestions omit an option for direct messages with the named user.",
+            "numeric": false,
+            "pass_observation": "The suggestions include an option for direct messages with the named user.",
+            "probe_question": "What suggestions appear when you type a user's name in the search box?",
+            "reason": "admit",
+            "target_rule": "Typing a user's name in the search box offers a suggestion for direct messages with that user."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A group DM conversation containing the specified user is missing from the results.",
+            "numeric": false,
+            "pass_observation": "The results include both one-to-one and group DM conversations containing the specified user.",
+            "probe_question": "Which conversations appear when you search for DMs including a particular user?",
+            "reason": "admit",
+            "target_rule": "Searching for `dm-including` followed by a user finds all one-to-one and group DM conversations that include that user."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-dfb84383fb89",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "A non-admin user is prevented from unsubscribing from a channel they belong to.",
+      "numeric": false,
+      "pass_observation": "A non-admin user unsubscribes from a channel and sees that they are no longer subscribed.",
+      "probe_question": "What happens when a non-admin user tries to unsubscribe themselves from a channel?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "Any user can unsubscribe themselves from a channel they belong to.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A non-admin user is prevented from unsubscribing from a channel they belong to.",
+            "numeric": false,
+            "pass_observation": "A non-admin user unsubscribes from a channel and sees that they are no longer subscribed.",
+            "probe_question": "What happens when a non-admin user tries to unsubscribe themselves from a channel?",
+            "reason": "admit",
+            "target_rule": "Any user can unsubscribe themselves from a channel they belong to."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The user selects Unsubscribe but remains subscribed to the channel.",
+            "numeric": false,
+            "pass_observation": "The user selects Unsubscribe and sees that they are no longer subscribed to the channel.",
+            "probe_question": "What happens when a user tries to unsubscribe from a channel?",
+            "reason": "admit",
+            "target_rule": "A user can unsubscribe themselves from any channel."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-a7050943445d",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-62e9d69be36f",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "An administrator who is not subscribed to the private channel successfully adds a subscriber through the web interface.",
+      "numeric": false,
+      "pass_observation": "An administrator who is not subscribed to the private channel cannot add subscribers through the web interface.",
+      "probe_question": "How does an administrator's subscription status affect adding users to a private channel?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "A user with permission to administer a private channel must also subscribe to that channel before they can subscribe other users to it.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": true,
+            "fail_observation": "An administrator who is not subscribed to the private channel successfully adds a subscriber through the web interface.",
+            "numeric": false,
+            "pass_observation": "An administrator who is not subscribed to the private channel cannot add subscribers through the web interface.",
+            "probe_question": "How does an administrator's subscription status affect adding users to a private channel?",
+            "reason": "admit",
+            "target_rule": "A user with permission to administer a private channel must also subscribe to that channel before they can subscribe other users to it."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "An administrator who is not subscribed can change the private channel's permissions.",
+            "numeric": false,
+            "pass_observation": "An administrator who is not subscribed cannot change the private channel's permissions.",
+            "probe_question": "What happens when an administrator who is not subscribed tries to change a private channel's permissions?",
+            "reason": "admit",
+            "target_rule": "An administrator of a private channel must be subscribed to it before they can change its permissions."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-386bb18a0cac",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": true,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "not_web_interface",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": true,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "not_web_interface",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-1cf532104bbf",
+      "consensus": "exclude",
+      "project": "zulip",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": true,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "operations_or_configuration",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": true,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "operations_or_configuration",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-a4cf0fdf0005",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "not_web_interface",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "not_web_interface",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-aab78fb9a2e8",
+      "consensus": "exclude",
+      "project": "zulip",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "operations_or_configuration",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "operations_or_configuration",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-8cebcf701d4c",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": true,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "not_web_interface",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-bf86d02f63c9",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "An emoji released after 2017 appears in blob style or fails to display while Google blobs is selected.",
+      "numeric": true,
+      "pass_observation": "An emoji released after 2017 appears in the modern Google style while Google blobs is selected.",
+      "probe_question": "How does an emoji released after 2017 appear when Google blobs is selected?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "When Google blobs is selected, emoji released after 2017 must display in the modern Google style.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "An emoji released after 2017 appears in blob style or fails to display while Google blobs is selected.",
+            "numeric": true,
+            "pass_observation": "An emoji released after 2017 appears in the modern Google style while Google blobs is selected.",
+            "probe_question": "How does an emoji released after 2017 appear when Google blobs is selected?",
+            "reason": "admit",
+            "target_rule": "When Google blobs is selected, emoji released after 2017 must display in the modern Google style."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A newer emoji appears in the blob style.",
+            "numeric": true,
+            "pass_observation": "A newer emoji appears in the modern Google style.",
+            "probe_question": "How does a newer emoji appear when the Google blobs style is selected?",
+            "reason": "admit",
+            "target_rule": "When the Google blobs emoji style is selected, emoji released after 2017 display in the modern Google style."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-858154112e93",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-ade633af9c14",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "A user opening the document with suggestions enabled sees the original instead of a copy.",
+      "numeric": false,
+      "pass_observation": "A user opening the document with suggestions enabled sees a copy, whether signed in or signed out.",
+      "probe_question": "What does a user see when opening a document with suggestions enabled, and does sign-in status affect the result?",
+      "project": "grist",
+      "route": "agreement",
+      "target_rule": "When suggestions are enabled, opening a document automatically opens a copy for both signed-in and signed-out users.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A user opening the document with suggestions enabled sees the original instead of a copy.",
+            "numeric": false,
+            "pass_observation": "A user opening the document with suggestions enabled sees a copy, whether signed in or signed out.",
+            "probe_question": "What does a user see when opening a document with suggestions enabled, and does sign-in status affect the result?",
+            "reason": "admit",
+            "target_rule": "When suggestions are enabled, opening a document automatically opens a copy for both signed-in and signed-out users."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The document opens as the original for editing instead of as a copy.",
+            "numeric": false,
+            "pass_observation": "The document opens as an editable copy while the original remains unchanged.",
+            "probe_question": "What opens when a user visits a document with suggestions enabled?",
+            "reason": "admit",
+            "target_rule": "When suggestions are enabled, opening a document automatically opens a copy for editing, including for users who are not signed in."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-7b485b51412f",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "When the document is reopened, the parent page's nested pages are expanded in the page list.",
+      "numeric": false,
+      "pass_observation": "When the document is reopened, the parent page's nested pages are hidden in the page list.",
+      "probe_question": "How does selecting 'Set default: Collapse' affect the page list when the document is reopened?",
+      "project": "grist",
+      "route": "agreement",
+      "target_rule": "After a user selects 'Set default: Collapse' for a parent page, its nested pages must be collapsed when the document is reopened.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "When the document is reopened, the parent page's nested pages are expanded in the page list.",
+            "numeric": false,
+            "pass_observation": "When the document is reopened, the parent page's nested pages are hidden in the page list.",
+            "probe_question": "How does selecting 'Set default: Collapse' affect the page list when the document is reopened?",
+            "reason": "admit",
+            "target_rule": "After a user selects 'Set default: Collapse' for a parent page, its nested pages must be collapsed when the document is reopened."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "No green line appears at the proposed page position during the drag.",
+            "numeric": false,
+            "pass_observation": "A green line appears at the proposed page position during the drag.",
+            "probe_question": "What does the interface show while you drag a page to a new position?",
+            "reason": "admit",
+            "target_rule": "While a user drags a page to rearrange it, a green line shows where the page will be placed."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-4aac15b7b503",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "No context menu appears after the user presses Shift+F10 in the grid.",
+      "numeric": false,
+      "pass_observation": "The context menu appears after the user presses Shift+F10 in the grid.",
+      "probe_question": "What appears when you press Shift+F10 in the grid?",
+      "project": "grist",
+      "route": "tiebreaker",
+      "target_rule": "Pressing Shift+F10 in the grid opens the context menu.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "No context menu appears after the user presses Shift+F10 in the grid.",
+            "numeric": false,
+            "pass_observation": "The context menu appears after the user presses Shift+F10 in the grid.",
+            "probe_question": "What appears when you press Shift+F10 in the grid?",
+            "reason": "admit",
+            "target_rule": "Pressing Shift+F10 in the grid opens the context menu."
+          }
+        },
+        "gpt-6-luna": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The current cell\u2019s context menu does not appear after the shortcut is pressed.",
+            "numeric": false,
+            "pass_observation": "The current cell\u2019s context menu appears after the shortcut is pressed.",
+            "probe_question": "What happens when you use the keyboard shortcut while a cell is selected?",
+            "reason": "admit",
+            "target_rule": "In the web interface, pressing the listed shortcut for the current cell opens its context menu."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_single_testable_rule",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-4bfaa75e39be",
+      "consensus": "exclude",
+      "project": "zulip",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "not_web_interface",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "not_web_interface",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-f98198804651",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "operations_or_configuration",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": true,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "operations_or_configuration",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-88a7b4b6057d",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "operations_or_configuration",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-3cd319371269",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "A user can enable On-Demand Tables in a new document.",
+      "numeric": false,
+      "pass_observation": "A new document offers no way to enable On-Demand Tables.",
+      "probe_question": "What happens when a user tries to enable On-Demand Tables in a new document?",
+      "project": "grist",
+      "route": "tiebreaker",
+      "target_rule": "Users cannot enable On-Demand Tables in new Grist documents.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_single_testable_rule",
+            "target_rule": null
+          }
+        },
+        "gpt-6-luna": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "An existing document with an On-Demand Table no longer works in the web interface.",
+            "numeric": false,
+            "pass_observation": "An existing document with an On-Demand Table continues to work in the web interface.",
+            "probe_question": "What happens to an existing document that uses an On-Demand Table?",
+            "reason": "admit",
+            "target_rule": "Existing Grist documents that use On-Demand Tables continue to function."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A user can enable On-Demand Tables in a new document.",
+            "numeric": false,
+            "pass_observation": "A new document offers no way to enable On-Demand Tables.",
+            "probe_question": "What happens when a user tries to enable On-Demand Tables in a new document?",
+            "reason": "admit",
+            "target_rule": "Users cannot enable On-Demand Tables in new Grist documents."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-5c261e7252c9",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-02dcc406ebf0",
+      "consensus": "exclude",
+      "project": "zulip",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "not_web_interface",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "not_web_interface",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-f33b2bf870e9",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The web interface allows an eleventh billing manager to be assigned.",
+      "numeric": true,
+      "pass_observation": "With 10 billing managers already assigned, the web interface prevents assigning an eleventh.",
+      "probe_question": "What happens when a user tries to assign another billing manager to a team that already has 10?",
+      "project": "grist",
+      "route": "agreement",
+      "target_rule": "A team may have at most 10 billing managers.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The web interface allows an eleventh billing manager to be assigned.",
+            "numeric": true,
+            "pass_observation": "With 10 billing managers already assigned, the web interface prevents assigning an eleventh.",
+            "probe_question": "What happens when a user tries to assign another billing manager to a team that already has 10?",
+            "reason": "admit",
+            "target_rule": "A team may have at most 10 billing managers."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The web interface allows an eleventh billing manager.",
+            "numeric": true,
+            "pass_observation": "The web interface prevents adding an eleventh billing manager.",
+            "probe_question": "What happens when a user tries to add another billing manager to a team that already has 10?",
+            "reason": "admit",
+            "target_rule": "A team on getgrist.com can have at most 10 billing managers."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-fdafd6cd311a",
+      "consensus": "exclude",
+      "project": "zulip",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-c044ebec7fe1",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The typeahead suggests a user who is already subscribed to the channel.",
+      "numeric": false,
+      "pass_observation": "The typeahead suggests matching users who are not subscribed and omits matching users already subscribed to the channel.",
+      "probe_question": "Which users appear in the subscription typeahead when matching users have different subscription statuses?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "The user subscription typeahead must exclude users already subscribed to the target channel.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The typeahead suggests a user who is already subscribed to the channel.",
+            "numeric": false,
+            "pass_observation": "The typeahead suggests matching users who are not subscribed and omits matching users already subscribed to the channel.",
+            "probe_question": "Which users appear in the subscription typeahead when matching users have different subscription statuses?",
+            "reason": "admit",
+            "target_rule": "The user subscription typeahead must exclude users already subscribed to the target channel."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A user already subscribed to the channel appears in the typeahead results.",
+            "numeric": false,
+            "pass_observation": "A user already subscribed to the channel does not appear in the typeahead results.",
+            "probe_question": "Which users appear in the typeahead when adding members to a channel?",
+            "reason": "admit",
+            "target_rule": "The channel subscription typeahead includes only users who are not already subscribed to that channel."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-37c8b91a246a",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-c30a4162188a",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The pencil edit icon is missing for a message the user may edit.",
+      "numeric": false,
+      "pass_observation": "The pencil edit icon is visible for a message the user may edit.",
+      "probe_question": "How does permission to edit a message affect the controls shown for it?",
+      "project": "zulip",
+      "route": "tiebreaker",
+      "target_rule": "A message the user has permission to edit must display the pencil edit icon.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The pencil edit icon is missing for a message the user may edit.",
+            "numeric": false,
+            "pass_observation": "The pencil edit icon is visible for a message the user may edit.",
+            "probe_question": "How does permission to edit a message affect the controls shown for it?",
+            "reason": "admit",
+            "target_rule": "A message the user has permission to edit must display the pencil edit icon."
+          }
+        },
+        "gpt-6-luna": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A user who lacks edit permission sees the pencil icon on the message.",
+            "numeric": false,
+            "pass_observation": "A user who lacks edit permission sees no pencil icon on the message.",
+            "probe_question": "What controls whether the pencil icon appears on a message?",
+            "reason": "admit",
+            "target_rule": "Users without permission to edit a message do not see the pencil icon for that message."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-277279fd03a4",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "A private channel can be selected and saved as a default channel.",
+      "numeric": false,
+      "pass_observation": "A private channel cannot be selected as a default channel.",
+      "probe_question": "What happens when an administrator tries to make a private channel a default channel for new users?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "Only public or web-public channels can be selected as default channels for new users.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A private channel can be selected and saved as a default channel.",
+            "numeric": false,
+            "pass_observation": "A private channel cannot be selected as a default channel.",
+            "probe_question": "What happens when an administrator tries to make a private channel a default channel for new users?",
+            "reason": "admit",
+            "target_rule": "Only public or web-public channels can be selected as default channels for new users."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The default-channel selector allows a private channel to be added.",
+            "numeric": false,
+            "pass_observation": "The default-channel selector allows a public channel to be added but does not allow a private channel to be added.",
+            "probe_question": "Which channels can an administrator add to the default channels?",
+            "reason": "admit",
+            "target_rule": "Only public or web-public channels can be added to an organization's default channels."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-c5ed01f3769c",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "A user without permission to send messages to the channel sees the button to generate an email address.",
+      "numeric": false,
+      "pass_observation": "A user without permission to send messages to the channel sees no button to generate an email address.",
+      "probe_question": "How does the email address generation button appear for users with different channel messaging permissions?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "The button to generate a channel email address must be hidden when the user lacks permission to send messages to that channel.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A user without permission to send messages to the channel sees the button to generate an email address.",
+            "numeric": false,
+            "pass_observation": "A user without permission to send messages to the channel sees no button to generate an email address.",
+            "probe_question": "How does the email address generation button appear for users with different channel messaging permissions?",
+            "reason": "admit",
+            "target_rule": "The button to generate a channel email address must be hidden when the user lacks permission to send messages to that channel."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A user without permission to send messages to the channel sees the button.",
+            "numeric": false,
+            "pass_observation": "A user without permission to send messages to the channel does not see the button.",
+            "probe_question": "When is the button to generate a channel email address visible?",
+            "reason": "admit",
+            "target_rule": "The button to generate a channel email address is visible only to users who have permission to send messages to that channel."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-5be222d0b56a",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_single_testable_rule",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-58ab86452c78",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "operations_or_configuration",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_single_testable_rule",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-362ff82e3812",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The web interface provides no way to change whether automated notices are automatically marked as read.",
+      "numeric": false,
+      "pass_observation": "A web setting lets the user enable or disable automatically marking automated notices as read.",
+      "probe_question": "What control does the user have over the read status of automated notices?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "Users can configure whether automated notices are automatically marked as read.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The web interface provides no way to change whether automated notices are automatically marked as read.",
+            "numeric": false,
+            "pass_observation": "A web setting lets the user enable or disable automatically marking automated notices as read.",
+            "probe_question": "What control does the user have over the read status of automated notices?",
+            "reason": "admit",
+            "target_rule": "Users can configure whether automated notices are automatically marked as read."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": true,
+            "fail_observation": "With the setting enabled, a new automated notice appears as unread.",
+            "numeric": false,
+            "pass_observation": "With the setting enabled, a new automated notice appears as read.",
+            "probe_question": "What happens to an automated notice's read status when the user changes this setting?",
+            "reason": "admit",
+            "target_rule": "A user's setting controls whether automated notices are automatically marked as read."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-a5965750d2b1",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "not_web_interface",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-393307131fc8",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "After enabling the toggle, the selected channel remains below unpinned channels in the left sidebar.",
+      "numeric": false,
+      "pass_observation": "After enabling the toggle, the selected channel appears at the top of the left sidebar.",
+      "probe_question": "What happens in the left sidebar when you enable the channel\u2019s pin toggle in Personal settings?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "Enabling \u201cPin channel to top of left sidebar\u201d in a channel\u2019s Personal settings places that channel at the top of the left sidebar.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "After enabling the toggle, the selected channel remains below unpinned channels in the left sidebar.",
+            "numeric": false,
+            "pass_observation": "After enabling the toggle, the selected channel appears at the top of the left sidebar.",
+            "probe_question": "What happens in the left sidebar when you enable the channel\u2019s pin toggle in Personal settings?",
+            "reason": "admit",
+            "target_rule": "Enabling \u201cPin channel to top of left sidebar\u201d in a channel\u2019s Personal settings places that channel at the top of the left sidebar."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The selected channel remains below other channels after the toggle is turned on.",
+            "numeric": false,
+            "pass_observation": "The selected channel appears at the top of the left sidebar after the toggle is turned on.",
+            "probe_question": "What happens in the left sidebar when a user turns on Pin channel to top of left sidebar for a channel?",
+            "reason": "admit",
+            "target_rule": "When a user turns on Pin channel to top of left sidebar for a channel, that channel appears at the top of the left sidebar."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-e5104ac58231",
+      "consensus": "exclude",
+      "project": "zulip",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-103dc930a420",
+      "consensus": "admit",
+      "derived_state": true,
+      "fail_observation": "After defaults change while an invitation is pending, the invited user accepts and sees the earlier defaults in their settings.",
+      "numeric": false,
+      "pass_observation": "After defaults change while an invitation is pending, the invited user accepts and sees the updated defaults in their settings.",
+      "probe_question": "Which initial settings does an invited user receive if the defaults change between invitation and acceptance?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "When a user accepts an invitation, their initial settings must match the defaults configured at acceptance time.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": true,
+            "fail_observation": "After defaults change while an invitation is pending, the invited user accepts and sees the earlier defaults in their settings.",
+            "numeric": false,
+            "pass_observation": "After defaults change while an invitation is pending, the invited user accepts and sees the updated defaults in their settings.",
+            "probe_question": "Which initial settings does an invited user receive if the defaults change between invitation and acceptance?",
+            "reason": "admit",
+            "target_rule": "When a user accepts an invitation, their initial settings must match the defaults configured at acceptance time."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": true,
+            "fail_observation": "The user accepts the earlier invitation but sees the defaults that were configured when it was sent.",
+            "numeric": false,
+            "pass_observation": "After defaults change, a newly invited user accepts an earlier invitation and sees the updated settings.",
+            "probe_question": "Which settings does a user see after accepting an invitation when the defaults changed since it was sent?",
+            "reason": "admit",
+            "target_rule": "A user who accepts an invitation receives the default settings configured at the time of acceptance."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-1590080019fb",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The table-level access rule editor allows selecting Structure (S) permission.",
+      "numeric": false,
+      "pass_observation": "The table-level access rule editor offers no selectable Structure (S) permission.",
+      "probe_question": "Which permissions can a user select when editing a table-level access rule?",
+      "project": "grist",
+      "route": "agreement",
+      "target_rule": "Structure (S) permissions must not be available in table-level access rules.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The table-level access rule editor allows selecting Structure (S) permission.",
+            "numeric": false,
+            "pass_observation": "The table-level access rule editor offers no selectable Structure (S) permission.",
+            "probe_question": "Which permissions can a user select when editing a table-level access rule?",
+            "reason": "admit",
+            "target_rule": "Structure (S) permissions must not be available in table-level access rules."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The table-level permissions screen offers a Structure (S) permission.",
+            "numeric": false,
+            "pass_observation": "The table-level permissions screen offers no Structure (S) permission.",
+            "probe_question": "Which permissions are available at the table level?",
+            "reason": "admit",
+            "target_rule": "Structure (S) permissions are unavailable at the table level."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-d6bd85b5701d",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-08dffa18a270",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The compose box still shows the GIF picker after it is disabled.",
+      "numeric": false,
+      "pass_observation": "The compose box does not show the GIF picker after it is disabled.",
+      "probe_question": "What appears in the compose box after changing the GIF picker setting to Disabled?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "Setting GIF picker to Disabled in Compose settings removes the GIF picker from the compose box.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The compose box still shows the GIF picker after it is disabled.",
+            "numeric": false,
+            "pass_observation": "The compose box does not show the GIF picker after it is disabled.",
+            "probe_question": "What appears in the compose box after changing the GIF picker setting to Disabled?",
+            "reason": "admit",
+            "target_rule": "Setting GIF picker to Disabled in Compose settings removes the GIF picker from the compose box."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "After setting GIF picker to Disabled, the GIF picker remains in the compose box.",
+            "numeric": false,
+            "pass_observation": "After setting GIF picker to Disabled, the compose box has no GIF picker.",
+            "probe_question": "What happens in the compose box after the GIF picker setting is changed to Disabled?",
+            "reason": "admit",
+            "target_rule": "When a user sets GIF picker to Disabled in Compose settings, the GIF picker disappears from the compose box."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-b7086f489030",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The channel's Moderation permissions provide no setting for who can delete their own messages in that channel.",
+      "numeric": false,
+      "pass_observation": "The channel's Moderation permissions show an editable setting labeled \"Who can delete their own messages in this channel\".",
+      "probe_question": "What controls are available for managing deletion of a user's own messages in a channel?",
+      "project": "zulip",
+      "route": "tiebreaker",
+      "target_rule": "A channel's Moderation permissions must allow users to configure who can delete their own messages in that channel.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The channel's Moderation permissions provide no setting for who can delete their own messages in that channel.",
+            "numeric": false,
+            "pass_observation": "The channel's Moderation permissions show an editable setting labeled \"Who can delete their own messages in this channel\".",
+            "probe_question": "What controls are available for managing deletion of a user's own messages in a channel?",
+            "reason": "admit",
+            "target_rule": "A channel's Moderation permissions must allow users to configure who can delete their own messages in that channel."
+          }
+        },
+        "gpt-6-luna": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": true,
+            "fail_observation": "A user without permission can delete a message, or a user with permission cannot delete one of the applicable kind.",
+            "numeric": false,
+            "pass_observation": "A user with permission can delete a message of the applicable kind, while a user without permission cannot.",
+            "probe_question": "How do channel moderation settings affect which messages a user can delete?",
+            "reason": "admit",
+            "target_rule": "A channel's moderation settings determine who can delete any message in that channel and who can delete their own messages there."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_single_testable_rule",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-14bd2c8d04d4",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "needs_multiple_systems",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-aac66a0af69a",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "After clicking Restart with an unsaved edit, the edit remains.",
+      "numeric": false,
+      "pass_observation": "After clicking Restart with an unsaved edit, the page reloads and the edit is absent.",
+      "probe_question": "What happens when you click Restart in the tutorial popup while you have unsaved edits?",
+      "project": "grist",
+      "route": "agreement",
+      "target_rule": "Clicking Restart at the bottom of the tutorial popup refreshes the page and discards unsaved changes.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "After clicking Restart with an unsaved edit, the edit remains.",
+            "numeric": false,
+            "pass_observation": "After clicking Restart with an unsaved edit, the page reloads and the edit is absent.",
+            "probe_question": "What happens when you click Restart in the tutorial popup while you have unsaved edits?",
+            "reason": "admit",
+            "target_rule": "Clicking Restart at the bottom of the tutorial popup refreshes the page and discards unsaved changes."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The page stays open without reloading after the user clicks Restart.",
+            "numeric": false,
+            "pass_observation": "The page reloads after the user clicks Restart.",
+            "probe_question": "What happens to the page when the user clicks Restart at the bottom of the tutorial popup?",
+            "reason": "admit",
+            "target_rule": "Clicking Restart at the bottom of the tutorial popup refreshes the page."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-d2cf65ad99d1",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "operations_or_configuration",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-456c25203f1e",
+      "consensus": "exclude",
+      "project": "zulip",
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-luna": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The channel\u2019s pinned position does not change when the setting is toggled.",
+            "numeric": false,
+            "pass_observation": "After enabling the setting, the channel appears at the top of the left sidebar; after disabling it, the channel is no longer pinned there.",
+            "probe_question": "What happens to a channel in the left sidebar when its personal pin setting is toggled?",
+            "reason": "admit",
+            "target_rule": "Toggling \u201cPin channel to top of left sidebar\u201d for a channel pins or unpins that channel at the top of the left sidebar."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-4200f1dac6a9",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The matching pasted URL remains a raw URL instead of becoming the corresponding linked text.",
+      "numeric": false,
+      "pass_observation": "The pasted URL appears as the corresponding linked text, such as #2468, linking to the original URL.",
+      "probe_question": "What appears in the compose box after pasting a URL matching a reverse-enabled linkifier?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "When a user pastes a URL matching a reverse-enabled linkifier into the compose box, it automatically becomes linked text corresponding to that linkifier.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The matching pasted URL remains a raw URL instead of becoming the corresponding linked text.",
+            "numeric": false,
+            "pass_observation": "The pasted URL appears as the corresponding linked text, such as #2468, linking to the original URL.",
+            "probe_question": "What appears in the compose box after pasting a URL matching a reverse-enabled linkifier?",
+            "reason": "admit",
+            "target_rule": "When a user pastes a URL matching a reverse-enabled linkifier into the compose box, it automatically becomes linked text corresponding to that linkifier."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "Pasting the same URL leaves the full URL unchanged in the compose box.",
+            "numeric": false,
+            "pass_observation": "Pasting a matching issue URL shows linked text such as #2468 in the compose box.",
+            "probe_question": "What appears in the compose box after a user pastes a URL that matches a configured linkifier?",
+            "reason": "admit",
+            "target_rule": "When a user pastes a URL matching a configured reverse linkifier into the web compose box, Zulip automatically converts it to linked text."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-56a8f7377226",
+      "consensus": "exclude",
+      "project": "zulip",
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-luna": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The user sees the setting only under \u201cAdvanced configurations.\u201d",
+            "numeric": false,
+            "pass_observation": "The user sees the setting under \u201cSubscription permissions.\u201d",
+            "probe_question": "Where does the web interface show the \u201cWho can subscribe anyone to\u201d setting?",
+            "reason": "admit",
+            "target_rule": "The \u201cWho can subscribe anyone to\u201d setting appears under \u201cSubscription permissions.\u201d"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-b6149bfbff03",
+      "consensus": "exclude",
+      "project": "zulip",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-86864e941b61",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "needs_multiple_systems",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "needs_multiple_systems",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-1eda610a62c0",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-adf56e244737",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The search results include a message from an active channel.",
+      "numeric": false,
+      "pass_observation": "With received messages in both active and archived channels, the search results show only those in archived channels.",
+      "probe_question": "What messages appear when you search for channels:archived?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "Searching for channels:archived returns only messages the user received in archived channels.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The search results include a message from an active channel.",
+            "numeric": false,
+            "pass_observation": "With received messages in both active and archived channels, the search results show only those in archived channels.",
+            "probe_question": "What messages appear when you search for channels:archived?",
+            "reason": "admit",
+            "target_rule": "Searching for channels:archived returns only messages the user received in archived channels."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "Search results omit that message.",
+            "numeric": false,
+            "pass_observation": "Search results include a message the user received in an archived channel.",
+            "probe_question": "What messages appear when a user searches for channels:archived?",
+            "reason": "admit",
+            "target_rule": "Searching for channels:archived shows messages the user received in archived channels."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-f0b216964e6f",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "Only some cells in a row matching the condition display the configured row styling.",
+      "numeric": false,
+      "pass_observation": "Every cell in a row matching the condition displays the configured row styling.",
+      "probe_question": "How does conditional formatting configured under 'Row Style' appear in a matching row?",
+      "project": "grist",
+      "route": "agreement",
+      "target_rule": "Conditional formatting added under 'Row Style' must apply across the entire matching table row.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "Only some cells in a row matching the condition display the configured row styling.",
+            "numeric": false,
+            "pass_observation": "Every cell in a row matching the condition displays the configured row styling.",
+            "probe_question": "How does conditional formatting configured under 'Row Style' appear in a matching row?",
+            "reason": "admit",
+            "target_rule": "Conditional formatting added under 'Row Style' must apply across the entire matching table row."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "Only some cells in a matching row show the conditional style.",
+            "numeric": false,
+            "pass_observation": "Every cell in a matching row shows the conditional style.",
+            "probe_question": "Which cells change appearance when conditional formatting is added under Row Style?",
+            "reason": "admit",
+            "target_rule": "Conditional formatting added under Row Style applies across the entire row."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-fd348eb33246",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "A user granted access cannot see the channel's conversations.",
+      "numeric": false,
+      "pass_observation": "A user granted access can see the channel's conversations.",
+      "probe_question": "Who can see conversations in a private channel?",
+      "project": "zulip",
+      "route": "tiebreaker",
+      "target_rule": "Conversations in a private channel are visible to users who have been granted access to that channel.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-luna": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A user without access can see the private channel, or a granted user cannot see it.",
+            "numeric": false,
+            "pass_observation": "A user granted access can see the private channel; a user without access cannot.",
+            "probe_question": "Who can see a private channel?",
+            "reason": "admit",
+            "target_rule": "A private channel is visible only to users who have been specifically granted access."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A user granted access cannot see the channel's conversations.",
+            "numeric": false,
+            "pass_observation": "A user granted access can see the channel's conversations.",
+            "probe_question": "Who can see conversations in a private channel?",
+            "reason": "admit",
+            "target_rule": "Conversations in a private channel are visible to users who have been granted access to that channel."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-6be0f3992b4b",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The web interface accepts an attachment upload that brings the document's combined attachment and data storage above 1GB.",
+      "numeric": true,
+      "pass_observation": "The web interface rejects an attachment upload that would bring the document's combined attachment and data storage above 1GB.",
+      "probe_question": "What happens when you upload an attachment to a document whose storage is nearly full?",
+      "project": "grist",
+      "route": "agreement",
+      "target_rule": "On every plan, a document's combined attachment and data storage must not exceed 1GB.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The web interface accepts an attachment upload that brings the document's combined attachment and data storage above 1GB.",
+            "numeric": true,
+            "pass_observation": "The web interface rejects an attachment upload that would bring the document's combined attachment and data storage above 1GB.",
+            "probe_question": "What happens when you upload an attachment to a document whose storage is nearly full?",
+            "reason": "admit",
+            "target_rule": "On every plan, a document's combined attachment and data storage must not exceed 1GB."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The web interface accepts the attachment and shows the document exceeding 1GB.",
+            "numeric": true,
+            "pass_observation": "When adding an attachment would take the document over 1GB, the web interface rejects it and the document remains within the limit.",
+            "probe_question": "What happens when an attachment would make a document larger than its allowed size?",
+            "reason": "admit",
+            "target_rule": "A document cannot exceed 1GB of combined attachments and data, regardless of plan."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-155dff698485",
+      "consensus": "exclude",
+      "project": "zulip",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-cb144c65d898",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The setting appears under \"Channel permissions\" instead of \"Advanced configurations\".",
+      "numeric": false,
+      "pass_observation": "The setting appears under \"Advanced configurations\".",
+      "probe_question": "Where on the channel settings screen can you find \"Who can subscribe anyone to this channel\"?",
+      "project": "zulip",
+      "route": "agreement",
+      "target_rule": "The channel settings screen must place the \"Who can subscribe anyone to this channel\" setting under \"Advanced configurations\".",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The setting appears under \"Channel permissions\" instead of \"Advanced configurations\".",
+            "numeric": false,
+            "pass_observation": "The setting appears under \"Advanced configurations\".",
+            "probe_question": "Where on the channel settings screen can you find \"Who can subscribe anyone to this channel\"?",
+            "reason": "admit",
+            "target_rule": "The channel settings screen must place the \"Who can subscribe anyone to this channel\" setting under \"Advanced configurations\"."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The setting appears only under Channel permissions.",
+            "numeric": false,
+            "pass_observation": "The user finds the setting under Advanced configurations.",
+            "probe_question": "Where does the channel settings screen show \u201cWho can subscribe anyone to this channel\u201d?",
+            "reason": "admit",
+            "target_rule": "The \u201cWho can subscribe anyone to this channel\u201d setting appears under Advanced configurations."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-e0c58afa0f63",
+      "consensus": "exclude",
+      "project": "grist",
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "exclude",
+            "derived_state": false,
+            "fail_observation": null,
+            "numeric": false,
+            "pass_observation": null,
+            "probe_question": null,
+            "reason": "no_rule_change",
+            "target_rule": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-b0a9c3fd790a",
+      "consensus": "admit",
+      "derived_state": false,
+      "fail_observation": "The screen reader reads the hash symbol aloud instead of announcing a heading.",
+      "numeric": false,
+      "pass_observation": "The screen reader announces '# Content title' as 'heading Content title'.",
+      "probe_question": "How does a screen reader announce Markdown content written as '# Content title'?",
+      "project": "grist",
+      "route": "agreement",
+      "target_rule": "A screen reader must announce Markdown content beginning with '# ' as a heading rather than reading the hash symbol aloud.",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "The screen reader reads the hash symbol aloud instead of announcing a heading.",
+            "numeric": false,
+            "pass_observation": "The screen reader announces '# Content title' as 'heading Content title'.",
+            "probe_question": "How does a screen reader announce Markdown content written as '# Content title'?",
+            "reason": "admit",
+            "target_rule": "A screen reader must announce Markdown content beginning with '# ' as a heading rather than reading the hash symbol aloud."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "decision": "admit",
+            "derived_state": false,
+            "fail_observation": "A screen reader reads the # symbol aloud for \u201c# Content title.\u201d",
+            "numeric": false,
+            "pass_observation": "A screen reader announces \u201cheading Content title\u201d for \u201c# Content title.\u201d",
+            "probe_question": "What does a screen reader announce when it encounters a Markdown heading?",
+            "reason": "admit",
+            "target_rule": "In the web interface, a screen reader announces Markdown headings by their heading semantics rather than reading the Markdown # symbol."
+          }
+        }
+      }
+    }
+  ],
+  "schema_version": "llm-screening-panel/v1-results",
+  "status": "complete",
+  "summary": {
+    "admitted_by_project": {
+      "grist": 11,
+      "zulip": 19
+    },
+    "candidates": 60,
+    "consensus": {
+      "admit": 30,
+      "exclude": 30
+    },
+    "primary_kappa": 0.7661469933184855,
+    "primary_pairs_with_two_valid_votes": 60,
+    "routes": {
+      "agreement": 53,
+      "tiebreaker": 7
+    }
+  }
+}
