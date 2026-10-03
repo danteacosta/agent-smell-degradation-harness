@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Security</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Security</h1><h2>Devices &amp; sessions</h2><ul id="devices" aria-label="Devices"></ul><label>App name <input id="app-name"></label><button id="create" type="button">Create new app password</button><section id="credentials" hidden aria-label="New app password"><p>Login name: <code id="login-name"></code></p><p>Password: <code id="password"></code></p><button id="close" type="button">Close</button></section><p id="message" role="status"></p></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let state=load({devices:window.initialState.devices,next:0});
+let shown=null;
+const app=Object.freeze({
+  onAction:register,
+  loginName(){return window.initialState.user},
+  devices(){return structuredClone(state.devices)},
+  createDevice(name){if(typeof name!=='string'||!name.trim())throw new Error('app name required');
+    const password=window.initialState.passwords[state.next];if(password===undefined)throw new Error('no password available');
+    state.next+=1;const id='dev'+state.next;state.devices.push({id,name:name.trim()});store(state);render();
+    return {id,loginName:window.initialState.user,password}},
+  showCredentials(loginName,password){shown={loginName:String(loginName),password:String(password)};render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){
+  const list=document.querySelector('#devices');list.replaceChildren();
+  for(const d of state.devices){const li=el('li',{'data-id':d.id,'data-name':d.name},d.name+' ');
+    li.append(el('button',{type:'button',class:'show','data-id':d.id},'Show password'));list.append(li)}
+  const c=document.querySelector('#credentials');c.hidden=!shown;c.dataset.password=shown?shown.password:'';
+  document.querySelector('#login-name').textContent=shown?shown.loginName:'';
+  document.querySelector('#password').textContent=shown?shown.password:'';
+}
+document.querySelector('#create').addEventListener('click',()=>{if(behavior)behavior({type:'create',name:document.querySelector('#app-name').value})});
+document.querySelector('#close').addEventListener('click',()=>{shown=null;render()});
+document.querySelector('#devices').addEventListener('click',e=>{const b=e.target.closest('button.show');if(b&&behavior)behavior({type:'show',id:b.dataset.id})});
+render();
+app.onAction(action=>{if(action.type==='create'){try{const credentials=app.createDevice(action.name);app.showCredentials(credentials.loginName,credentials.password);app.showMessage('New app password created. Enter it on the new client now.')}catch(error){app.showMessage(error.message)}}else if(action.type==='show'){app.showMessage('The password is only available when the app password is created.')}});
+</script></body></html>

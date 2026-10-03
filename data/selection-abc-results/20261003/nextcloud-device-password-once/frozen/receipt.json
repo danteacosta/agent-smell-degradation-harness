@@ -1,0 +1,21 @@
+{
+  "files": {
+    "manifest.json": "100d6e83fc95ef1d844140627480343ec430970d79289a0a483e25db24a54081",
+    "requests/nextcloud-device-password-once-08a3aec8d272d70d32ed72d3.json": "35e7644f9b3922886f5eec002d41030c2d2113baead89fcdf8b71c1831386fce",
+    "requests/nextcloud-device-password-once-1cea1758813e90f3963f3143.json": "f0ceb2570678a5f5b59bc7b39ae3b7fea978da712632ac2929e8b00c47f92c6e",
+    "requests/nextcloud-device-password-once-2a7d9d71a7121543d014844a.json": "35e7644f9b3922886f5eec002d41030c2d2113baead89fcdf8b71c1831386fce",
+    "requests/nextcloud-device-password-once-4a8343bc0679457031a19f96.json": "f0ceb2570678a5f5b59bc7b39ae3b7fea978da712632ac2929e8b00c47f92c6e",
+    "requests/nextcloud-device-password-once-4c37884f07cea94f3ce2f766.json": "058015280c6531a80a2eb323182de2380a76629c4c125fbc2ddd6159321f0760",
+    "requests/nextcloud-device-password-once-99d8d0171d9f407f86d1570a.json": "35e7644f9b3922886f5eec002d41030c2d2113baead89fcdf8b71c1831386fce",
+    "requests/nextcloud-device-password-once-aa4496d2c68c8dcb33dd13b0.json": "f0ceb2570678a5f5b59bc7b39ae3b7fea978da712632ac2929e8b00c47f92c6e",
+    "requests/nextcloud-device-password-once-b9b9ea817630e3d0be125abe.json": "058015280c6531a80a2eb323182de2380a76629c4c125fbc2ddd6159321f0760",
+    "requests/nextcloud-device-password-once-cffa3ffeb386c7c522c5f00d.json": "35e7644f9b3922886f5eec002d41030c2d2113baead89fcdf8b71c1831386fce",
+    "requests/nextcloud-device-password-once-dffc397484cbfe42ed10800c.json": "058015280c6531a80a2eb323182de2380a76629c4c125fbc2ddd6159321f0760",
+    "requests/nextcloud-device-password-once-f55621aa3c227e5f344f1cca.json": "f0ceb2570678a5f5b59bc7b39ae3b7fea978da712632ac2929e8b00c47f92c6e",
+    "requests/nextcloud-device-password-once-ff971b7b03a00f7fb1fdbb5f.json": "058015280c6531a80a2eb323182de2380a76629c4c125fbc2ddd6159321f0760",
+    "runtime/eval/fixtures/nextcloud-device-password-once/page.html": "3a8ac2181bd8afe2cfa8316a3dcb0cb158b5ba880655d754bf4b9e314d49ccf3",
+    "runtime/eval/fixtures/nextcloud-device-password-once/qualify.py": "1336b542e3fddb7d5eca5415d841bf6be8edbed916ec8156ee6288fea651f943",
+    "runtime/eval/fixtures/nextcloud-device-password-once/runner.cjs": "dd020bac9cd8367d56bcb57c54fee2e5f7c80506d0a32c1d05965a9d287e3844",
+    "runtime/scripts/abc_case.py": "eb67ed8ff4123d7e6e3f6ca3a786e8e9df178d25440cd3651511b3c1c3f95fbe"
+  }
+}
