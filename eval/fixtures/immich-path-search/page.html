@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Search</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Search</h1><p>Search type: Full path or folder</p><label>Query <input id="query"></label><button id="search" type="button">Search</button><ul id="results" aria-label="Results"></ul></main><script>
+const storageKey='immich-path-search';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let shown=[];
+const app=Object.freeze({
+  onSearch:register,
+  assets(){return structuredClone(window.initialState.assets)},
+  showResults(ids){if(!Array.isArray(ids)||!ids.every(id=>window.initialState.assets.some(a=>a.id===id)))throw new Error('asset ids required');shown=[...ids];render()}
+});
+function render(){const list=document.querySelector('#results');list.replaceChildren();
+  for(const id of shown){const a=window.initialState.assets.find(x=>x.id===id);list.append(el('li',{'data-id':id},a.originalPath))}}
+document.querySelector('#search').addEventListener('click',()=>{if(behavior)behavior(document.querySelector('#query').value)});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

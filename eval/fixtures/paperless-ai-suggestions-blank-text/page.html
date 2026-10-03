@@ -1,0 +1,25 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Workflow run</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Workflow run</h1><p id="workflow"></p><button id="run" type="button">Run action</button><ul id="documents" aria-label="Documents"></ul></main><script>
+const storageKey='paperless-ai-suggestions-blank-text';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let queued=load([]);
+const app=Object.freeze({
+  onRun:register,
+  documents(){return structuredClone(window.initialState.documents)},
+  queueSuggestions(id){if(!window.initialState.documents.some(d=>d.id===id))throw new Error('unknown document');queued.push(id);store(queued);render()}
+});
+function render(){
+  document.querySelector('#workflow').textContent='Action: '+window.initialState.workflow;
+  const list=document.querySelector('#documents');list.replaceChildren();
+  for(const d of window.initialState.documents){const n=queued.filter(id=>id===d.id).length;
+    list.append(el('li',{'data-id':d.id,'data-queued':n},d.title+(n?' — suggestions queued':' — not queued')))}
+}
+document.querySelector('#run').addEventListener('click',()=>{if(behavior)behavior(app.documents())});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

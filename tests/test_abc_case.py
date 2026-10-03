@@ -8,7 +8,10 @@ import pytest
 
 from scripts import abc_case
 
-CASES = sorted(p.stem for p in abc_case.CASES_DIR.glob("*.json"))
+# Only migrated configs have a legacy collector to compare with; new selection
+# cases are covered by tests/test_selection_cases.py.
+CASES = sorted(p.stem for p in abc_case.CASES_DIR.glob("*.json")
+               if "migrated_from" in json.loads(p.read_text()))
 
 
 @pytest.mark.parametrize("name", CASES)

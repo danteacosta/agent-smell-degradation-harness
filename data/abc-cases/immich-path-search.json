@@ -1,0 +1,26 @@
+{
+  "case": "immich-path-search",
+  "intent_id": "immich-path-search",
+  "project_id": "immich",
+  "candidate_id": "rc-b6f382226c41",
+  "source": {
+    "commit": "90a69e2ba6",
+    "file": "docs/docs/features/searching.md"
+  },
+  "fixture": "eval/fixtures/immich-path-search",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onSearch to handle the visible Search button. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the \"Full path or folder\" search mode. When the user clicks Search, show with app.showResults(ids) the assets that match the query, using each asset's original path from app.assets(). Use this mode when you know a folder name or part of the original asset path. Example: for /John/Projects/3D_Printing/2026-07-01/IMG_0001.jpg, searches like Projects, 3D, Printing, or 2026 match the asset.",
+    "B": "Clicking Search in \"Full path or folder\" mode lists, through app.showResults(ids), the assets whose original path (from app.assets()) matches the query. The mode is meant for when you remember a folder name or some piece of the original path: the asset at /John/Projects/3D_Printing/2026-07-01/IMG_0001.jpg is found by Projects, by 3D, by Printing and by 2026.",
+    "C": "Implement the \"Full path or folder\" search mode. When the user clicks Search, show with app.showResults(ids) the assets that match the query, using each asset's original path from app.assets(). Use this mode when you know a folder name or part of the original asset path."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100308,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

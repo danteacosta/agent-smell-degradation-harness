@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Workflow title assignment</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Workflow assignment</h1><label>Assign title <input id="title-template" size="60"></label><button id="save" type="button">Save</button><p id="message" role="status"></p><p>Saved title template: <code id="saved"></code></p></main><script>
+const storageKey='paperless-doc-title-placeholder';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let saved=load('');
+const app=Object.freeze({
+  onSave:register,
+  savedTemplate(){return saved},
+  saveTitleTemplate(text){if(typeof text!=='string')throw new Error('text required');saved=text;store(saved);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){const s=document.querySelector('#saved');s.dataset.template=saved;s.textContent=saved||'(none)'}
+document.querySelector('#save').addEventListener('click',()=>{if(behavior)behavior(document.querySelector('#title-template').value)});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

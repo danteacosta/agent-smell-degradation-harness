@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Users & Groups</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Users &amp; Groups</h1><p id="actor"></p><section aria-label="Edit user"><h2>Edit user <span id="username"></span></h2><label>First name <input id="first-name"></label><label><input id="superuser" type="checkbox"> Superuser status</label><button id="save" type="button">Save</button><p id="message" role="status"></p></section><p id="stored"></p></main><script>
+const storageKey='paperless-superuser-grant';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let user=load(window.initialState.user);
+const app=Object.freeze({
+  onSave:register,
+  actor(){return structuredClone(window.initialState.actor)},
+  user(){return structuredClone(user)},
+  saveUser(change){if(typeof change!=='object'||change===null||typeof change.firstName!=='string'||typeof change.superuser!=='boolean')throw new Error('firstName and superuser required');
+    user={...user,firstName:change.firstName,superuser:change.superuser};store(user);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){
+  const a=window.initialState.actor;
+  document.querySelector('#actor').textContent='Signed in as '+a.username+(a.superuser?' (superuser)':' (staff, can change users)');
+  document.querySelector('#username').textContent=user.username;
+  const stored=document.querySelector('#stored');stored.dataset.username=user.username;stored.dataset.firstName=user.firstName;stored.dataset.superuser=String(user.superuser);
+  stored.textContent='Stored: '+user.firstName+', superuser: '+(user.superuser?'yes':'no');
+}
+document.querySelector('#first-name').value=user.firstName;document.querySelector('#superuser').checked=user.superuser;
+document.querySelector('#save').addEventListener('click',()=>{if(behavior)behavior({firstName:document.querySelector('#first-name').value,superuser:document.querySelector('#superuser').checked})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>
