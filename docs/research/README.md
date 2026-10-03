@@ -113,5 +113,8 @@ experiment evidence.
 
 - [Sonda de recuperação de regras: 69 candidatos e dois modelos, 2 de outubro de 2026](2026-10-02-memorization-probe-results.md). Luna 22/69 e Sol 31/69; dados públicos e verificação independente da projeção. Recuperação sem referência não demonstra contaminação e não confirma H1/H2.
 - [Seleção dos requisitos: procedimento congelado e decisões propostas, 2 de outubro de 2026](2026-10-02-selection-procedure.md). Ordem do sorteio com seed 2026100203, bloqueios, sete mappings e dois grupos de duplicação propostos; nenhuma seleção executada.
-- [Triagem, rodada 2: extensão do frame para o oitavo projeto (Zulip, Grist), 2 de outubro de 2026](2026-10-02-screening-round-2.md). 60 candidatos prontos para o painel; desvio registrado no pré-registro.
-- [Casos da seleção, lote 1: Paperless, Immich e Mealie, 3 de outubro de 2026](2026-10-03-selection-cases-batch-1.md). Dez casos A/B/C com oráculos pré-qualificados localmente (68/68 controles); falta qualificação em Docker e revisão dos braços.
+- [Triagem, rodada 2: extensão do frame para o oitavo projeto (Zulip, Grist), 2 de outubro de 2026](2026-10-02-screening-round-2.md). 60 candidatos avaliados na rodada concluída em 3 de outubro; desvio registrado no pré-registro.
+
+- [Rodada 2: 30 novos elegíveis, nove projetos no conjunto, 3 de outubro de 2026](2026-10-03-screening-round2-results.md). 60 avaliados, 145 chamadas, zero falhas; seleção e confirmação de smells continuam pendentes.
+
+- [Casos da seleção, lote 1: Paperless, Immich e Mealie, 3 de outubro de 2026](2026-10-03-selection-cases-batch-1.md). Dez casos A/B/C com 73/73 controles qualificados no Docker congelado; revisão dos braços e decisões de seleção continuam pendentes.

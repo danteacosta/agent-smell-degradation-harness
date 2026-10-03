@@ -1,0 +1,713 @@
+{
+  "blinding": "panel sees project, file and changed sentences only; no pre-screen, pilot status or outcome",
+  "candidates": [
+    {
+      "added": [
+        "{!general-chat-intro.md!}  Administrators can require topics in channel messages to disable the “*general chat*” topic."
+      ],
+      "candidate_id": "rc-c6aa48543d73",
+      "file": "help/require-topics.md",
+      "project": "zulip",
+      "removed": [
+        "If a user sends a message without a topic, the message's topic is displayed as (no topic) .",
+        "Administrators can configure whether channel messages must have a specified topic."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-5eeca5c59190",
+      "file": "help/archive-a-channel.md",
+      "project": "zulip",
+      "removed": [
+        "!!! warn \"\"  Channels can be unarchived only by contacting support for organizations hosted on Zulip Cloud, or by your self-hosted server's administrator."
+      ]
+    },
+    {
+      "added": [
+        "If you close out of your fork of the document, you can always return to your fork by visiting the Direct URL — Grist will redirect you to your saved fork automatically."
+      ],
+      "candidate_id": "rc-b49db6870ff5",
+      "file": "help/en/docs/document-tutorials.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "lookupRecords : how we look up all rates for the given person and role, and sort them. .find.le : how we find look up the closest rate that applies to the current date. .Field : how we get the Hourly_Rate field"
+      ],
+      "candidate_id": "rc-be0ba3e1c391",
+      "file": "help/en/docs/examples/2020-09-payroll.md",
+      "project": "grist",
+      "removed": [
+        "lookupRecords : how we look up all rates for the given person and role. list comprehensions : how we filter for only those rates with an earlier Rate_Start . max function : how we choose the rate record with the latest Rate_Start . .Field : how we get the Hourly_Rate field"
+      ]
+    },
+    {
+      "added": [
+        "Click the plus (<img src=\"/static/images/help/desktop-web-plus-icon.svg\" alt=\"plus\" class=\"help-center-icon\"/>) icon to the left of a user group to join the group, if you have permission to do so."
+      ],
+      "candidate_id": "rc-24946f42bfc2",
+      "file": "help/user-groups.md",
+      "project": "zulip",
+      "removed": [
+        "Click the plus ( ) icon to the left of a user group to join the group."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-3c572449f134",
+      "file": "help/direct-messages.md",
+      "project": "zulip",
+      "removed": [
+        "Click the search (<i class=\"search_icon zulip-icon zulip-icon-search\"> ) icon in the top bar to open the search box .",
+        "Start typing a user's name.",
+        "You'll be able to select DMs with that user from the list of suggestions.",
+        "1. *(optional)* Continue to add users via the search box for a group DM conversation.  !!! tip \"\"  You can also type dm-including in the search box to find all 1:1 and group DM conversations that include a particular user."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-dfb84383fb89",
+      "file": "help/include/unsubscribe-user-from-channel.md",
+      "project": "zulip",
+      "removed": [
+        "{!admin-only.md!}  Anyone can always unsubscribe themselves from a channel ."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-a7050943445d",
+      "file": "help/en/docs/document-settings.md",
+      "project": "grist",
+      "removed": [
+        "Python Version: Allows you to switch the Python version used for formulas.",
+        "We recommend using Python 3, but be aware that changing this setting may affect existing formulas."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-62e9d69be36f",
+      "file": "help/configure-who-can-administer-a-channel.md",
+      "project": "zulip",
+      "removed": [
+        "If you have permission to administer a public or web-public channel, you can:  See and modify the channel's name and description .",
+        "Subscribe and unsubscribe users.",
+        "Modify the channel's permissions settings, including settings that control who can see messages in the channel (public vs. private, shared history vs. protected history).",
+        "For private channels, you additionally need to be a subscriber in order to subscribe users or change channel permissions."
+      ]
+    },
+    {
+      "added": [
+        "Free plans (both personal and team sites) are limited to 3,000 API calls per month, shared across all documents on the site."
+      ],
+      "candidate_id": "rc-386bb18a0cac",
+      "file": "help/en/docs/limits.md",
+      "project": "grist",
+      "removed": [
+        "Free plans are limited to 5,000 API calls per document per day."
+      ]
+    },
+    {
+      "added": [
+        "Setting it to 0 disables file uploads, and hides the UI for uploading files from the web and desktop apps."
+      ],
+      "candidate_id": "rc-1cf532104bbf",
+      "file": "help/share-and-upload-files.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "Notifications  You can enable email notifications for document changes by toggling the 'Changes' option.",
+        "Notifications for Comments can be enabled by selecting from the following options:  All comments : Receive a notification for every new comment.",
+        "Replies and mentions : Only receive a notification when someone replies to your comment or mentions you.",
+        "None : Turn off comment notifications entirely.  *! document-settings-notifications *"
+      ],
+      "candidate_id": "rc-a4cf0fdf0005",
+      "file": "help/en/docs/document-settings.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-aab78fb9a2e8",
+      "file": "help/scim.md",
+      "project": "zulip",
+      "removed": [
+        "Provisioning Groups is not yet implemented.",
+        "While Zulip's SCIM integration is generic, we've only fully documented the setup process with the Okta and Microsoft EntraID SCIM providers.",
+        "Zulip support is happy to help customers configure this integration with SCIM providers that do not yet have detailed self-service documentation on this page."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-8cebcf701d4c",
+      "file": "help/en/docs/limits.md",
+      "project": "grist",
+      "removed": [
+        "AppSumo | | 100GB |"
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-bf86d02f63c9",
+      "file": "starlight_help/src/content/docs/emoji-and-emoticons.mdx",
+      "project": "zulip",
+      "removed": [
+        "Google blobs is an old style of Google emoji that has not been maintained by Google since 2017, when they switched to a more modern style.",
+        "Zulip allows you to still use blob emoji, but any new emoji that have been released since 2017 will be displayed in the modern Google style."
+      ]
+    },
+    {
+      "added": [
+        "In our example, we want to bring in $Client.Contact to the *Projects* table.",
+        "There are two ways to do this."
+      ],
+      "candidate_id": "rc-858154112e93",
+      "file": "help/en/docs/col-refs.md",
+      "project": "grist",
+      "removed": [
+        "In our example, if you wanted to bring in $Client.Contact to the *Projects* table, you can just select the Contact column from the 'Add Referenced Columns' section and it will be automatically added to the *Projects* table:"
+      ]
+    },
+    {
+      "added": [
+        "With suggestions enabled, users (signed-in or not) automatically open a copy of a document.",
+        "They make edits to this copy without modifying the original, and then submit these suggestions to be reviewed by the document Owner prior to integration."
+      ],
+      "candidate_id": "rc-ade633af9c14",
+      "file": "help/en/docs/sharing.md",
+      "project": "grist",
+      "removed": [
+        "A user makes changes in a personal copy without modifying the original document, then submits these suggestions to be reviewed by the document owner prior to integration."
+      ]
+    },
+    {
+      "added": [
+        "Pages can be rearranged by clicking the two verticle bars to the right of the page name then dragging to a new position.",
+        "A green line will appear to show where the page will be placed.",
+        "A green box will appear to show when a page will be nested under another.  ! rearrange_pages * {: .screenshot-half }  By default, nested pages will be expanded when a document is opened.",
+        "You can change the default state by clicking the three-dot icon to the right of the parent page and selecting 'Set default: Collapse'.  ! page-set-default-state * {: .screenshot-half }"
+      ],
+      "candidate_id": "rc-7b485b51412f",
+      "file": "help/en/docs/page-widgets.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "*⌃* *Enter* , *↑* *F10* | *Menu* , *Shift* + *F10* | Open the context menu | *↑* *⌃* *Enter* , *⌃* *↑* *F10* | *Ctrl* + *Menu* , *Ctrl* +*Shift* + *F10* | Open the current column menu | *⌥* *⌃* *Enter* , *⌥* *↑* *F10* | *Alt* + *Menu* , *Alt* +*Shift* + *10* | Open the current row menu |"
+      ],
+      "candidate_id": "rc-4aac15b7b503",
+      "file": "help/en/docs/keyboard-shortcuts.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "Organization admins can always edit message topics and move topics between channels via the API."
+      ],
+      "candidate_id": "rc-4bfaa75e39be",
+      "file": "starlight_help/src/content/docs/restrict-moving-messages.mdx",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "!!! note \"Want to try the full edition?\" You can try the full edition of Grist free for 30 days.",
+        "Learn how to turn it on .",
+        "Individuals and small companies may qualify for a free activation key for the full edition.",
+        "See the activation key FAQ {:target=\"_blank\"}."
+      ],
+      "candidate_id": "rc-f98198804651",
+      "file": "help/en/docs/mcp.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-88a7b4b6057d",
+      "file": "help/en/docs/formulas.md",
+      "project": "grist",
+      "removed": [
+        "Grist documents may use Python 2 or Python 3, see our Python guide for details."
+      ]
+    },
+    {
+      "added": [
+        "!!! warning \"⚠️ Deprecated Feature\" On-Demand Tables have been deprecated and are no longer supported in new Grist documents.",
+        "Existing documents that use On-Demand Tables will continue to function."
+      ],
+      "candidate_id": "rc-3cd319371269",
+      "file": "help/en/docs/on-demand-tables.md",
+      "project": "grist",
+      "removed": [
+        "!!! warning \"On-demand tables are an experimental feature\" The design of on-demand tables may change.",
+        "For example, configuration options may be added, or aspects of the behavior of on-demand tables may be changed entirely."
+      ]
+    },
+    {
+      "added": [
+        "Personal sites cannot be upgraded.",
+        "Team sites, however, can be upgraded to one of our paid plans, which offer much higher limits."
+      ],
+      "candidate_id": "rc-5c261e7252c9",
+      "file": "help/en/docs/teams.md",
+      "project": "grist",
+      "removed": [
+        "While personal sites are only available with the Free plan, team sites may be upgraded to Pro or Business plans.",
+        "On paid plans, the limits are much higher."
+      ]
+    },
+    {
+      "added": [
+        "Share message content  {start_tabs}  {tab|mobile}  {!message-long-press-menu.md!}  1.",
+        "Tap Share , and choose the app to which you want to share message content.  {end_tabs}"
+      ],
+      "candidate_id": "rc-02dcc406ebf0",
+      "file": "help/view-the-markdown-source-of-a-message.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-f33b2bf870e9",
+      "file": "help/en/docs/team-sharing.md",
+      "project": "grist",
+      "removed": [
+        "!!! note You can have up to 10 billing managers in the version of Grist at getgrist.com ."
+      ]
+    },
+    {
+      "added": [
+        "{start_tabs}  {tab|desktop-web}  {settings_tab|organization-permissions}  1.",
+        "Under Other permissions , configure Who can manage plans and billing .  {!save-changes.md!}  {end_tabs}"
+      ],
+      "candidate_id": "rc-fdafd6cd311a",
+      "file": "help/include/configure-who-can-manage-plans.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "To subscribe users in bulk, you can copy members from an existing channel or user group .",
+        "The typeahead will only include users who aren't already subscribed to the channel.",
+        "Configure Send notification message to newly subscribed users as desired."
+      ],
+      "candidate_id": "rc-c044ebec7fe1",
+      "file": "help/include/subscribe-user-to-channel.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "On-Demand Tables have been deprecated due to lack of functionality and usability concerns."
+      ],
+      "candidate_id": "rc-37c8b91a246a",
+      "file": "help/en/docs/on-demand-tables.md",
+      "project": "grist",
+      "removed": [
+        "On-Demand Tables have been deprecated and are no longer supported in new Grist documents.",
+        "Existing documents that use On-Demand Tables will continue to function."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-c30a4162188a",
+      "file": "starlight_help/src/content/docs/edit-a-message.mdx",
+      "project": "zulip",
+      "removed": [
+        "If you do not see the pencil ( ) icon, you do not have permission to edit this message."
+      ]
+    },
+    {
+      "added": [
+        "You can configure a default set of channels that users will be subscribed to when they join your organization.",
+        "Default channels must be public or web-public ."
+      ],
+      "candidate_id": "rc-277279fd03a4",
+      "file": "help/set-default-channels-for-new-users.md",
+      "project": "zulip",
+      "removed": [
+        "When new users join a Zulip organization, they are subscribed to a default set of channels.",
+        "Organization administrators can add or remove channels from that default set."
+      ]
+    },
+    {
+      "added": [
+        "You will see the button to generate an email address only if you have permission to send messages to this channel."
+      ],
+      "candidate_id": "rc-c5ed01f3769c",
+      "file": "starlight_help/src/content/docs/message-a-channel-by-email.mdx",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "(This is the default setting.)"
+      ],
+      "candidate_id": "rc-5be222d0b56a",
+      "file": "help/en/docs/document-settings.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "This documentation refers to the legacy AI Formula Assistant, which is only available on the Community edition {:target=\"\\_blank\"}."
+      ],
+      "candidate_id": "rc-58ab86452c78",
+      "file": "help/en/docs/ai-assistant-legacy.md",
+      "project": "grist",
+      "removed": [
+        "This documentation refers to the legacy AI Formula Assistant, which is no longer actively supported."
+      ]
+    },
+    {
+      "added": [
+        "Users can configure whether these notices are automatically marked as read."
+      ],
+      "candidate_id": "rc-362ff82e3812",
+      "file": "help/configure-automated-notices.md",
+      "project": "zulip",
+      "removed": [
+        "These notices will be marked as unread only for users who had participated in the topic."
+      ]
+    },
+    {
+      "added": [
+        "documentCreated Triggered when a document is created.",
+        "Field | Type | Description |  docIdDigest | string | A hash of the id of the created document. | sourceDocIdDigest | string | A hash of the id of the source document, if the document was duplicated from an existing document. | isImport | boolean | Whether the document was created by import. | isSaved | boolean | Whether the document was saved to a workspace. | fileType | string | If the document was created by import, the file extension of the file that was imported. |"
+      ],
+      "candidate_id": "rc-a5965750d2b1",
+      "file": "help/en/docs/telemetry-limited.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "Select a channel.  {!select-channel-view-personal.md!}  1.",
+        "Under Personal settings , toggle Pin channel to top of left sidebar ."
+      ],
+      "candidate_id": "rc-393307131fc8",
+      "file": "help/pin-a-channel.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-e5104ac58231",
+      "file": "help/share-and-upload-files.md",
+      "project": "zulip",
+      "removed": [
+        "1. _(optional)_ Modify the link text as desired."
+      ]
+    },
+    {
+      "added": [
+        "Users will have the initial settings that are configured at the time when they accept the invitation, so there's no need to update or revoke invitations when you change default settings."
+      ],
+      "candidate_id": "rc-103dc930a420",
+      "file": "help/configure-default-new-user-settings.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-1590080019fb",
+      "file": "help/en/docs/access-rules.md",
+      "project": "grist",
+      "removed": [
+        "Structure ( S ) permissions are not available at the table level."
+      ]
+    },
+    {
+      "added": [
+        "!!! note \"Attachment Limits\" Attachment limits for all plans can be found here ."
+      ],
+      "candidate_id": "rc-d6bd85b5701d",
+      "file": "help/en/docs/document-settings.md",
+      "project": "grist",
+      "removed": [
+        "!!! note \"Internal Attachment Limits\" Attachments plus data in a single document are limited to 1GB on all plans."
+      ]
+    },
+    {
+      "added": [
+        "Under Compose settings , select a rating for GIF picker .",
+        "Disable the GIF picker    Disabling the GIF picker removes it from the compose box.",
+        "Under Compose settings , set GIF picker to Disabled ."
+      ],
+      "candidate_id": "rc-08dffa18a270",
+      "file": "starlight_help/src/content/docs/animated-gifs.mdx",
+      "project": "zulip",
+      "removed": [
+        "Under Compose settings , select a rating for GIF integration ."
+      ]
+    },
+    {
+      "added": [
+        "Configure who can delete messages in a specific channel  {start_tabs}  {tab|desktop-web}  {relative|channel|all}  1.",
+        "Select a channel.  {!select-channel-view-general-advanced.md!}  1.",
+        "Under Moderation permissions , configure Who can delete any message in this channel and Who can delete their own messages in this channel .  {!save-changes.md!}  {end_tabs}"
+      ],
+      "candidate_id": "rc-b7086f489030",
+      "file": "help/restrict-message-editing-and-deletion.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-14bd2c8d04d4",
+      "file": "help/en/docs/integrators.md",
+      "project": "grist",
+      "removed": [
+        "An email account is not a CRM in itself, but having a record of email interactions can be invaluable.",
+        "Join Jarek as he extends a basic spreadsheet-based CRM tracker with n8n AI automations to automatically summarize received emails and add them to a spreadsheet."
+      ]
+    },
+    {
+      "added": [
+        "⚠️ Important: Clicking 'Restart' at the bottom of the tutorial popup will refresh the page, causing any unsaved changes to be lost.",
+        "Be sure to save changes to the main document *prior* to clicking this.  *! review-option1 *"
+      ],
+      "candidate_id": "rc-aac66a0af69a",
+      "file": "help/en/docs/document-tutorials.md",
+      "project": "grist",
+      "removed": [
+        "⚠️ Important: Always replace the original before restarting the tutorial.",
+        "If you click Restart Tutorial first, any unsaved changes will be lost."
+      ]
+    },
+    {
+      "added": [
+        "Grist can store attachments either within a document, or externally in another location (for self-hosted installations, this is determined by the administrator)."
+      ],
+      "candidate_id": "rc-d2cf65ad99d1",
+      "file": "help/en/docs/document-settings.md",
+      "project": "grist",
+      "removed": [
+        "!!! warning \"External attachments are only available to self-hosters and Enterprise customers\" External attachments must be enabled by the administrator of your installation before they can be used.",
+        "Grist can store attachments either within a document, or externally in another location (determined by the administrator of your Grist installation)."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-456c25203f1e",
+      "file": "help/pin-a-channel.md",
+      "project": "zulip",
+      "removed": [
+        "Alternate method to pin or unpin a channel  {start_tabs}  {tab|desktop-web}  {relative|gear|channel-settings}  1.",
+        "Select a channel.  {!select-channel-view-personal.md!}  1.",
+        "Under Personal settings , toggle Pin channel to top of left sidebar .  {end_tabs}"
+      ]
+    },
+    {
+      "added": [
+        "You can configure linkifiers to work in reverse as well: when you paste a URL that matches the linkifier into the compose box, Zulip will automatically convert it to linked text (e.g., https://github.com/zulip/zulip/issues/2468 becomes #2468 ).",
+        "If a linkifier pattern (e.g., #2468 ) appears in the name of a topic, Zulip adds an Open ( ) button to the right of the topic in the message recipient bar that links to the appropriate URL."
+      ],
+      "candidate_id": "rc-4200f1dac6a9",
+      "file": "starlight_help/src/content/docs/add-a-custom-linkifier.mdx",
+      "project": "zulip",
+      "removed": [
+        "If the pattern appears in a topic, Zulip adds an Open ( ) button to the right of the topic in the message recipient bar that links to the appropriate URL."
+      ]
+    },
+    {
+      "added": [
+        "Under Subscription permissions , configure Who can subscribe anyone to"
+      ],
+      "candidate_id": "rc-56a8f7377226",
+      "file": "help/configure-who-can-invite-to-channels.md",
+      "project": "zulip",
+      "removed": [
+        "Under Advanced configurations , configure Who can subscribe anyone to"
+      ]
+    },
+    {
+      "added": [
+        "Related articles  Channel permissions User roles User groups Set default channels for new users Configure who can administer a channel"
+      ],
+      "candidate_id": "rc-b6149bfbff03",
+      "file": "help/channel-posting-policy.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "An email account is not a CRM in itself, but having a record of email interactions can be invaluable.",
+        "Join Jarek as he extends a basic spreadsheet-based CRM tracker with n8n AI automations to automatically summarize received emails and add them to a spreadsheet."
+      ],
+      "candidate_id": "rc-86864e941b61",
+      "file": "help/en/docs/integrators.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "for (let suffix of 1, 2]) { new Glider(document.querySelector( #glider${suffix} .glider ), { slidesToShow: 1, slidesToScroll: 1, dots: #glider${suffix} .dots , duration: 0, arrows: { prev: #glider${suffix} .glider-prev , next: #glider${suffix} .glider-next } }); }"
+      ],
+      "candidate_id": "rc-1eda610a62c0",
+      "file": "help/en/docs/lightweight-crm.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "channels:archived : Search the messages you received in archived channels ."
+      ],
+      "candidate_id": "rc-adf56e244737",
+      "file": "starlight_help/src/content/docs/search-for-messages.mdx",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "Customize row height : In the widget options panel, you can set a max row height which sets a maximum number of lines for multi-line text.",
+        "Additionally, you can choose to 'Expand all rows to this height' and set a consistent row height throughout your table.  ! max-row-height * {: .screenshot-half }  Add conditional styles : In the widget options panel, you can add conditional formatting for rows.",
+        "When added under 'Row Style', the conditional styling will apply across the entire row.  ! conditional-styling-rows * {: .screenshot-half }"
+      ],
+      "candidate_id": "rc-f0b216964e6f",
+      "file": "help/en/docs/widget-table.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "zulip-icon-lock\"> ) are for conversations that should be visible to users who are specifically granted access."
+      ],
+      "candidate_id": "rc-fd348eb33246",
+      "file": "help/channel-permissions.md",
+      "project": "zulip",
+      "removed": [
+        "zulip-icon-lock\"> ) are for conversations that should be accessible only to users who are specifically subscribed to the channel."
+      ]
+    },
+    {
+      "added": [
+        "!!! note \"Internal Attachment Limits\" Attachments plus data in a single document are limited to 1GB on all plans.",
+        "You can check your document's usage under Raw Data ."
+      ],
+      "candidate_id": "rc-6be0f3992b4b",
+      "file": "help/en/docs/document-settings.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "Example text to linkify: abdc123"
+      ],
+      "candidate_id": "rc-155dff698485",
+      "file": "starlight_help/src/content/docs/add-a-custom-linkifier.mdx",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "Under Advanced configurations , configure Who can subscribe anyone to this channel ."
+      ],
+      "candidate_id": "rc-cb144c65d898",
+      "file": "help/configure-who-can-invite-to-channels.md",
+      "project": "zulip",
+      "removed": [
+        "Under Channel permissions , configure Who can subscribe anyone to this channel ."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-e0c58afa0f63",
+      "file": "help/en/docs/lightweight-crm.md",
+      "project": "grist",
+      "removed": [
+        "for (let suffix of 1, 2]) { new Glider(document.querySelector( #glider${suffix} .glider ), { slidesToShow: 1, slidesToScroll: 1, dots: #glider${suffix} .dots , duration: 0, arrows: { prev: #glider${suffix} .glider-prev , next: #glider${suffix} .glider-next } }); }"
+      ]
+    },
+    {
+      "added": [
+        "Markdown content is vocalized by interpreting semantics instead of vocalizing the symbols.",
+        "For example, # Content title is vocalized as \"heading Content title\" instead of letting the screen reader vocalize the # ."
+      ],
+      "candidate_id": "rc-b0a9c3fd790a",
+      "file": "help/en/docs/accessibility.md",
+      "project": "grist",
+      "removed": []
+    }
+  ],
+  "controls": [
+    {
+      "added": [
+        "When you close a task, all its subtasks that are not done are automatically marked as done."
+      ],
+      "expected": "admit",
+      "file": "user/tasks.md",
+      "id": "ctl-pos-kanboard",
+      "project": "kanboard",
+      "removed": []
+    },
+    {
+      "added": [
+        "A Remaining work value greater than Work cannot be saved; the form shows an error."
+      ],
+      "expected": "admit",
+      "file": "user-guide/progress.md",
+      "id": "ctl-pos-openproject",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        "Checking an item moves it to the bottom of the shopping list under Done."
+      ],
+      "expected": "admit",
+      "file": "usage/shopping-list.md",
+      "id": "ctl-pos-shopping",
+      "project": "recipes",
+      "removed": []
+    },
+    {
+      "added": [
+        "PostgreSQL 15 or newer is required."
+      ],
+      "expected": "exclude",
+      "file": "admin/requirements.md",
+      "id": "ctl-neg-install",
+      "project": "tracker",
+      "removed": [
+        "PostgreSQL 13 or newer is required."
+      ]
+    },
+    {
+      "added": [
+        "Click **Save** to keep your changes."
+      ],
+      "expected": "exclude",
+      "file": "user/editor.md",
+      "id": "ctl-neg-format",
+      "project": "wiki",
+      "removed": [
+        "Click Save to keep your changes ."
+      ]
+    },
+    {
+      "added": [
+        "The upload command accepts --album to add uploaded files to an album."
+      ],
+      "expected": "exclude",
+      "file": "features/cli.md",
+      "id": "ctl-neg-cli",
+      "project": "photos",
+      "removed": []
+    }
+  ],
+  "models": [
+    "gpt-6-astra",
+    "gpt-6-sol"
+  ],
+  "retry_policy": "no_retry_no_repair",
+  "schema_version": "llm-screening-panel/v1",
+  "screening_file": "data/requirement-sampling/screening-ext-20261002.json",
+  "screening_sha256": "c18866299e07cd91707ff230c0b71ef3f9c14c9737311ef41a182ec3fe8565e8",
+  "script_sha256": "598fde0495c71b57a966b20062645e2d8fac3b145cc91c8405296a32d612ce98",
+  "seed": 2026100204,
+  "tiebreaker": "gpt-6-luna"
+}
