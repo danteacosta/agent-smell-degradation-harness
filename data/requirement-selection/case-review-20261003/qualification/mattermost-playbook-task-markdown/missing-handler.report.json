@@ -1,0 +1,8 @@
+{
+  "schema_version": "mattermost-playbook-task-markdown-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "8b4ff113bab94f69fd6d102f6a72510c44d69cb21fd405525201aa05d4064c8e",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

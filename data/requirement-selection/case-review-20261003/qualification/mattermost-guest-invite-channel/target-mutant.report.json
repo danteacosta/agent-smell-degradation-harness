@@ -1,0 +1,16 @@
+{
+  "schema_version": "mattermost-guest-invite-channel-browser/v1",
+  "status": "complete",
+  "app_sha256": "4f87cca915fa7c4c31f04a3e3c95f17a46924bc68aa61b4be049e37b1768460b",
+  "assertions": {
+    "no_invite_without_channel_1": false,
+    "invite_limited_to_selected_channels_1": true,
+    "no_invite_without_channel_2": false,
+    "invite_limited_to_selected_channels_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

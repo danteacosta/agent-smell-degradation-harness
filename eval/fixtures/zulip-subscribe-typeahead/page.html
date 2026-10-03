@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Channel settings</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Channel settings</h1><h2 id="channel"></h2><section aria-label="Subscribers"><h3>Subscribers</h3><ul id="subscribers"></ul></section><section aria-label="Add subscribers"><h3>Add subscribers</h3><label>Name or email <input id="add-subscriber" autocomplete="off"></label><ul id="typeahead" role="listbox" aria-label="Suggestions"></ul><button id="add" type="button">Add</button></section></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let state=load({subscribers:window.initialState.subscribers});
+const users=window.initialState.users;let suggestions=[];let selected=null;
+const app=Object.freeze({
+  onInput:register,
+  users(){return structuredClone(users)},
+  subscribers(){return [...state.subscribers]},
+  showSuggestions(ids){if(!Array.isArray(ids)||!ids.every(id=>users.some(u=>u.id===id)))throw new Error('user ids required');suggestions=[...ids];render()}
+});
+function render(){
+  document.querySelector('#channel').textContent='#'+window.initialState.channel;
+  const subs=document.querySelector('#subscribers');subs.replaceChildren();
+  for(const id of state.subscribers){const u=users.find(x=>x.id===id);subs.append(el('li',{'data-id':id},u.name+' <'+u.email+'>'))}
+  const list=document.querySelector('#typeahead');list.replaceChildren();
+  for(const id of suggestions){const u=users.find(x=>x.id===id);list.append(el('li',{'data-id':id,role:'option',tabindex:'0'},u.name+' <'+u.email+'>'))}
+}
+const input=document.querySelector('#add-subscriber');
+input.addEventListener('input',()=>{selected=null;if(behavior)behavior(input.value)});
+document.querySelector('#typeahead').addEventListener('click',e=>{const li=e.target.closest('li[data-id]');if(!li)return;selected=li.dataset.id;input.value=users.find(u=>u.id===selected).name;suggestions=[];render()});
+document.querySelector('#add').addEventListener('click',()=>{if(selected){state.subscribers.push(selected);store(state)}selected=null;input.value='';suggestions=[];render()});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

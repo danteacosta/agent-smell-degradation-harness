@@ -1,0 +1,28 @@
+{
+  "case": "wekan-swimlane-below-default",
+  "intent_id": "wekan-swimlane-below-default",
+  "project_id": "wekan",
+  "candidate_id": "rc-6b29ef8b44d8",
+  "source": {
+    "commit": "5ed4268a61",
+    "file": "docs/Features/Swimlanes/Swimlanes.md",
+    "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+    "snapshot_file": "docs/Features/Swimlanes/Swimlanes.md"
+  },
+  "fixture": "eval/fixtures/wekan-swimlane-below-default",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onSave to handle the visible Save button of the Add Swimlane popup. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement adding swimlanes. Use + beside a swimlane header to open Add Swimlane; when the user clicks Save, the handler receives the selected swimlane's id, the checked placement ('above', 'below' or null) and the entered text. Create one swimlane per nonempty line with app.addSwimlanes(laneId, placement, titles). The existing popup offers Above selected swimlane and Below selected swimlane, with Below selected by default. Multiple titles retain their order between the selected lane and its neighbor.",
+    "B": "The + beside a swimlane header opens Add Swimlane, and clicking Save passes the handler the selected swimlane's id, the checked placement ('above', 'below' or null) and the typed text. Every nonempty line becomes one swimlane, created through app.addSwimlanes(laneId, placement, titles). The popup lets the user pick Above selected swimlane or Below selected swimlane, and Below is the preselected choice. When several titles are entered, they keep their order between the selected lane and the neighboring one.",
+    "C": "Implement adding swimlanes. Use + beside a swimlane header to open Add Swimlane; when the user clicks Save, the handler receives the selected swimlane's id, the checked placement ('above', 'below' or null) and the entered text. Create one swimlane per nonempty line with app.addSwimlanes(laneId, placement, titles). The existing popup offers Above selected swimlane and Below selected swimlane. Multiple titles retain their order between the selected lane and its neighbor."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100336,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

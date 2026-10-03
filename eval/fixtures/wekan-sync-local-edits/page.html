@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Synced list</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Synced list</h1><p id="source"></p><button id="sync" type="button">Sync now</button><p id="message" role="status"></p><ul id="cards" aria-label="Cards"></ul></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let cards=load(window.initialState.cards);
+const TEXT=['title','description','sourceTitle','sourceDescription'];
+const app=Object.freeze({
+  onSync:register,
+  cards(){return structuredClone(cards)},
+  createCard(item){if(typeof item!=='object'||item===null||typeof item.externalId!=='string'||typeof item.title!=='string'||typeof item.description!=='string')throw new Error('externalId, title and description required');
+    if(cards.some(c=>c.externalId===item.externalId))throw new Error('card for this item exists');
+    cards.push({id:'c'+(cards.length+1),externalId:item.externalId,title:item.title,description:item.description,sourceTitle:item.title,sourceDescription:item.description,archived:false});store(cards);render()},
+  updateCard(id,changes){const c=cards.find(x=>x.id===id);if(!c)throw new Error('unknown card');
+    if(typeof changes!=='object'||changes===null||!Object.entries(changes).every(([k,v])=>TEXT.includes(k)&&typeof v==='string'))throw new Error('only text fields can change');
+    Object.assign(c,changes);store(cards);render()},
+  archiveCard(id){const c=cards.find(x=>x.id===id);if(!c)throw new Error('unknown card');c.archived=true;store(cards);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){document.querySelector('#source').textContent='Synced from '+window.initialState.tracker;
+  const list=document.querySelector('#cards');list.replaceChildren();
+  for(const c of cards)list.append(el('li',{'data-id':c.id,'data-external-id':c.externalId,'data-title':c.title,'data-description':c.description,'data-archived':c.archived},
+    (c.archived?'[archived] ':'')+c.externalId+' '+c.title+(c.description?' — '+c.description:'')))}
+document.querySelector('#sync').addEventListener('click',()=>{if(behavior)behavior(structuredClone(window.initialState.upstream))});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

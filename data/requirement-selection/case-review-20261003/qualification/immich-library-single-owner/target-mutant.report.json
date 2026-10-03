@@ -1,0 +1,16 @@
+{
+  "schema_version": "immich-library-single-owner-browser/v1",
+  "status": "complete",
+  "app_sha256": "39fa8fa68fb0725dcdf0c13cf57923e7f930bf4f939b5023a9c8fe1172ab10e5",
+  "assertions": {
+    "no_multi_owner_library_1": false,
+    "single_owner_library_created_1": true,
+    "no_multi_owner_library_2": false,
+    "single_owner_library_created_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

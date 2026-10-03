@@ -1,0 +1,8 @@
+{
+  "schema_version": "wekan-member-same-org-team-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "e726035604ac49ea27dbc734d914eabdaa1b1ea5b2495d3909248d4eb72e414d",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

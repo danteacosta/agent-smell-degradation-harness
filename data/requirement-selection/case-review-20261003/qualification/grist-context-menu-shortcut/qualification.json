@@ -1,0 +1,53 @@
+{
+  "schema_version": "grist-context-menu-shortcut-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 7,
+  "source_scaffold_sha256": "e4c3a0fe03167bb2194068821494eea8436569c230dc0d80ba5a5b1a87660825",
+  "runner_sha256": "0deb5cbd348c95d5eecbc974fa801d36c5e007f1e8e33112004f4355c95b4cfa",
+  "qualifier_sha256": "cd04f00d60501146e79b755f61ed4cf8ed3b76e09ae4ec206dabff26a60b2861",
+  "cases": [
+    {
+      "mode": "hidden-context-menu",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "242e6328f78b90c927820ff5273ed0a9c1599cf68a50df6272d2d73a310bf056"
+    },
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "53a747fc132a7b0a57ba6dbbef9ed71353954fbf69a06d4bf8d85d1501e80a83"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "edcfa7e124d5d10e8016025cd815a6b7f063273982069fddb2d339622e55cf24"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "aba4f466c86c95b8275e9f2c1e6d71596bd4affed1a2983bfcdc8e1158c339c3"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "702792969c365826b99d69a930023eab8de38bb9b932f6a357478b51f3038c26"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "d6b502ed4ceecb8e93f48329b6a3775bbd6f04be87c8aedcf67df36fe9890590"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "b5f8cf160ed88f9bda9dd75f49756741557d046bdd6d434b1fe2db0a9ff49e74"
+    }
+  ]
+}

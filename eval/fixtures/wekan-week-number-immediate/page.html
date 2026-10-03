@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Board Settings / Date</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Board Settings / Date</h1><section aria-label="Date"><p id="global"></p><label><input id="override" type="checkbox"> Board Date Format</label><label>Format <select id="format"><option value="YYYY-MM-DD">year-month-day</option><option value="DD-MM-YYYY">day-month-year</option><option value="MM-DD-YYYY">month-day-year</option></select></label><button id="save" type="button">Save</button><hr><label><input id="show-week" type="checkbox"> Show week of year (ISO 8601)</label></section><h2>Due dates</h2><ul id="dates" aria-label="Due dates"></ul></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let settings=load(window.initialState.settings);
+const global=window.initialState.global;
+const NAMES={'YYYY-MM-DD':'year-month-day','DD-MM-YYYY':'day-month-year','MM-DD-YYYY':'month-day-year'};
+function isoWeek(s){const d=new Date(s+'T00:00:00Z');d.setUTCDate(d.getUTCDate()-((d.getUTCDay()+6)%7)+3);const first=new Date(Date.UTC(d.getUTCFullYear(),0,4));
+  return 1+Math.round(((d-first)/86400000-3+((first.getUTCDay()+6)%7))/7)}
+function fmt(s,f){const [y,m,d]=s.split('-');return f.replace('YYYY',y).replace('MM',m).replace('DD',d)}
+function effective(){return settings.board.enabled?settings.board.format:global.enabled?global.format:'YYYY-MM-DD'}
+const app=Object.freeze({
+  onChange:register,
+  global(){return structuredClone(global)},
+  settings(){return structuredClone(settings)},
+  saveBoardDateFormat(v){if(typeof v!=='object'||v===null||typeof v.enabled!=='boolean'||!(v.format in NAMES))throw new Error('enabled and a known format required');
+    settings={...settings,board:{enabled:v.enabled,format:v.format}};store(settings);render()},
+  setShowWeekOfYear(on){if(typeof on!=='boolean')throw new Error('boolean required');settings={...settings,showWeek:on};store(settings);render()}
+});
+function render(){
+  document.querySelector('#global').textContent='Global Date Format: '+(global.enabled?'Enabled':'Disabled')+' ('+NAMES[global.format]+')';
+  const list=document.querySelector('#dates');list.replaceChildren();const f=effective();
+  for(const c of window.initialState.cards){const shown=fmt(c.due,f);const w=settings.showWeek?String(isoWeek(c.due)):'';
+    list.append(el('li',{'data-id':c.id,'data-date':shown,'data-week':w},c.title+' — due '+shown+(w?' (week '+w+')':'')))}
+}
+const form=()=>({override:document.querySelector('#override').checked,format:document.querySelector('#format').value,showWeek:document.querySelector('#show-week').checked});
+document.querySelector('#override').checked=settings.board.enabled;document.querySelector('#format').value=settings.board.format;
+document.querySelector('#show-week').checked=settings.showWeek;
+for(const id of ['override','format','show-week'])document.querySelector('#'+id).addEventListener('change',()=>{if(behavior)behavior(id,form())});
+document.querySelector('#save').addEventListener('click',()=>{if(behavior)behavior('save',form())});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

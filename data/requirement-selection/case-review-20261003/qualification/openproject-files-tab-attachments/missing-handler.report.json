@@ -1,0 +1,8 @@
+{
+  "schema_version": "openproject-files-tab-attachments-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "d5fa875dd49a7111e03f3326130fcc48bc60b9d93cf7878633bdfea3eaf95c10",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

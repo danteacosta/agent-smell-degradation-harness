@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Interface</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Interface</h1><section aria-label="Look and feel"><h2>Look and feel</h2><label>Color mode <select id="color-mode"><option value="light">Light</option><option value="dark">Dark</option><option value="auto">Automatic</option></select></label><label><input id="increase-contrast" type="checkbox"> Increase contrast</label><button id="update" type="button">Update look and feel</button><p id="message" role="status"></p></section><p id="applied"></p></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let prefs=load({mode:'light',increaseContrast:false,theme:'light'});
+const THEMES=['light','light_high_contrast','dark','dark_high_contrast'];
+const app=Object.freeze({
+  onUpdate:register,
+  system(){return structuredClone(window.initialState.system)},
+  preferences(){return {mode:prefs.mode,increaseContrast:prefs.increaseContrast}},
+  applyTheme(theme){if(!THEMES.includes(theme))throw new Error('unknown theme');prefs.theme=theme;store(prefs);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){const a=document.querySelector('#applied');a.dataset.theme=prefs.theme;a.textContent='Applied theme: '+prefs.theme.replaceAll('_',' ')}
+document.querySelector('#color-mode').value=prefs.mode;document.querySelector('#increase-contrast').checked=prefs.increaseContrast;
+document.querySelector('#update').addEventListener('click',()=>{prefs.mode=document.querySelector('#color-mode').value;
+  prefs.increaseContrast=document.querySelector('#increase-contrast').checked;store(prefs);
+  if(behavior)behavior({mode:prefs.mode,increaseContrast:prefs.increaseContrast})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

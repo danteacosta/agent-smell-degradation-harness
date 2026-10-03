@@ -1,0 +1,18 @@
+{
+  "schema_version": "wekan-week-number-immediate-browser/v1",
+  "status": "complete",
+  "app_sha256": "f66491569ed60c49af4345cd2beb6174a6e10c3ba3b02f6baee85995c04d8cf1",
+  "assertions": {
+    "week_toggle_applies_without_save_1": true,
+    "toggle_keeps_date_format_1": true,
+    "board_format_saved_1": false,
+    "week_toggle_applies_without_save_2": true,
+    "toggle_keeps_date_format_2": true,
+    "board_format_saved_2": false
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

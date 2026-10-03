@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Pages</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Raw data</h1><nav aria-label="Pages"><ul id="pages"></ul></nav><div id="page-menu" role="menu" hidden></div></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+const pages=window.initialState.pages;let settings=load({});const expanded={};let menuFor=null;let menuItems=[];
+function known(id){if(!pages.some(p=>p.id===id))throw new Error('unknown page')}
+const app=Object.freeze({
+  onPages:register,
+  pages(){return structuredClone(pages)},
+  pageSettings(id){known(id);return structuredClone(settings[id]||{})},
+  savePageSetting(id,name,value){known(id);if(typeof name!=='string'||!name)throw new Error('setting name required');settings[id]={...(settings[id]||{}),[name]:value};store(settings)},
+  setExpanded(id,open){known(id);expanded[id]=open===true;render()},
+  showMenu(items){if(!Array.isArray(items)||!items.every(i=>i&&typeof i.label==='string'&&typeof i.run==='function'))throw new Error('menu items need label and run');menuItems=items.slice();render()}
+});
+function render(){
+  const list=document.querySelector('#pages');list.replaceChildren();
+  for(const p of pages.filter(p=>p.parent===null)){
+    const kids=pages.filter(c=>c.parent===p.id);const open=expanded[p.id]===true;
+    const li=el('li',{'data-id':p.id,'data-expanded':String(open)});
+    if(kids.length)li.append(el('button',{type:'button',class:'toggle','aria-label':'Toggle '+p.name},open?'▾':'▸'));
+    li.append(document.createTextNode(' '+p.name+' '),el('button',{type:'button',class:'more','aria-label':'Page options for '+p.name},'⋮'));
+    if(kids.length&&open){const ul=el('ul');for(const c of kids)ul.append(el('li',{'data-id':c.id,'data-parent':p.id},c.name));li.append(ul)}
+    list.append(li)}
+  const menu=document.querySelector('#page-menu');menu.hidden=menuFor===null;menu.replaceChildren();
+  if(menuFor!==null)menuItems.forEach((item,i)=>menu.append(el('button',{type:'button',role:'menuitem','data-index':i},item.label)));
+}
+document.querySelector('#pages').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const id=b.closest('li').dataset.id;
+  if(b.classList.contains('toggle')){expanded[id]=expanded[id]!==true;render()}
+  else if(b.classList.contains('more')){menuFor=id;menuItems=[];render();if(behavior)behavior({type:'menu',pageId:id})}});
+document.querySelector('#page-menu').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const item=menuItems[Number(b.dataset.index)];menuFor=null;menuItems=[];render();if(item)item.run()});
+document.addEventListener('DOMContentLoaded',()=>{if(behavior)behavior({type:'open'})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

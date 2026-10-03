@@ -1,0 +1,8 @@
+{
+  "schema_version": "wekan-week-number-immediate-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "ace43c66f9a8493a47385ca9fc1f357af81ef0ddfc4d2c66d09bc8ce6d42d6de",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

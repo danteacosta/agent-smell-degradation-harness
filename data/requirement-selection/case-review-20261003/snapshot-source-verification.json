@@ -1,0 +1,597 @@
+{
+  "schema_version": "selection-case-source-verification/v1",
+  "date": "2026-10-03",
+  "method": "Primary GitHub contents API at full frozen snapshot SHA; decoded byte SHA-256 and Git blob SHA-1 verified. File availability is not semantic rule admission.",
+  "semantic_review_independent": false,
+  "cases": [
+    {
+      "case": "grist-context-menu-shortcut",
+      "candidate_id": "rc-4aac15b7b503",
+      "source": {
+        "status": "verified",
+        "repository": "gristlabs/grist-help",
+        "path": "help/en/docs/keyboard-shortcuts.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "blob_sha": "5bbe77dc15d86f4d1480951a5abbd57c19f6427b",
+        "text_sha256": "86cc8d8b60be4dfe60a8759a315ce945c4af68e639d161d5db0b005855109a31",
+        "source_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/keyboard-shortcuts.md",
+        "source_passage_lines": [
+          47,
+          48,
+          49
+        ]
+      },
+      "context_sources": []
+    },
+    {
+      "case": "grist-page-default-collapse",
+      "candidate_id": "rc-7b485b51412f",
+      "source": {
+        "status": "verified",
+        "repository": "gristlabs/grist-help",
+        "path": "help/en/docs/page-widgets.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "blob_sha": "1ef1a13fc6e8a9970f2e202780be968f28867098",
+        "text_sha256": "99039b778e4b38c33ea1293c989345afdafc1489a43d55bfb8c34df8e15262f7",
+        "source_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/page-widgets.md",
+        "source_passage_lines": [
+          36
+        ]
+      },
+      "context_sources": []
+    },
+    {
+      "case": "grist-tutorial-restart",
+      "candidate_id": "rc-aac66a0af69a",
+      "source": {
+        "status": "verified",
+        "repository": "gristlabs/grist-help",
+        "path": "help/en/docs/document-tutorials.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "blob_sha": "b50b896e318b82bdb686da0e0493c04df3b7f985",
+        "text_sha256": "58501a64356b4e6f078c581ad84c121d4239c4b541ec7a0545776c2c626eb43b",
+        "source_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/document-tutorials.md",
+        "source_passage_lines": [
+          87
+        ]
+      },
+      "context_sources": []
+    },
+    {
+      "case": "grist-suggestions-open-copy",
+      "candidate_id": "rc-ade633af9c14",
+      "source": {
+        "status": "verified",
+        "repository": "gristlabs/grist-help",
+        "path": "help/en/docs/sharing.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "blob_sha": "67f9a40ea0392a6f6cc22a10c64f7e15d70c112e",
+        "text_sha256": "767860a3a2f5581017b56c82b7a1e6b519689951978e3c6d4e75093e577011dd",
+        "source_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/sharing.md",
+        "source_passage_lines": [
+          148
+        ]
+      },
+      "context_sources": []
+    },
+    {
+      "case": "grist-tutorial-fork-return",
+      "candidate_id": "rc-b49db6870ff5",
+      "source": {
+        "status": "verified",
+        "repository": "gristlabs/grist-help",
+        "path": "help/en/docs/document-tutorials.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "blob_sha": "b50b896e318b82bdb686da0e0493c04df3b7f985",
+        "text_sha256": "58501a64356b4e6f078c581ad84c121d4239c4b541ec7a0545776c2c626eb43b",
+        "source_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/document-tutorials.md",
+        "source_passage_lines": [
+          45,
+          47,
+          67
+        ]
+      },
+      "context_sources": []
+    },
+    {
+      "case": "grist-billing-managers-limit",
+      "candidate_id": "rc-f33b2bf870e9",
+      "source": {
+        "status": "verified",
+        "repository": "gristlabs/grist-help",
+        "path": "help/en/docs/team-sharing.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "blob_sha": "83324ef4c80b6ef2a200cfa1a54d1d61b23876b3",
+        "text_sha256": "7e839bc57539b1433ef79fb13742eee6fe4bd70e1a043c9a4340bd8062bdca95",
+        "source_url": "https://github.com/gristlabs/grist-help/blob/b047726e327709d214e3b63222ee052de6399934/help/en/docs/team-sharing.md",
+        "source_passage_lines": [
+          45,
+          46
+        ]
+      },
+      "context_sources": []
+    },
+    {
+      "case": "mattermost-playbook-task-markdown",
+      "candidate_id": "rc-0284c8781546",
+      "source": {
+        "status": "verified",
+        "repository": "mattermost/docs",
+        "path": "source/end-user-guide/workflow-automation/work-with-playbooks.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "blob_sha": "c95c7dc717e0e280682e45867e3bd8c252f4df82",
+        "text_sha256": "eb4dcf97d606cef81a36a1e474806a466ab6ac2633114606a5aedfd3bf21cd16",
+        "source_url": "https://github.com/mattermost/docs/blob/bd09d959514c34e72a33c24663b5946682b656ec/source/end-user-guide/workflow-automation/work-with-playbooks.rst",
+        "source_passage_lines": [
+          60,
+          62
+        ]
+      },
+      "context_sources": []
+    },
+    {
+      "case": "mattermost-guest-invite-channel",
+      "candidate_id": "rc-3fbc295441e2",
+      "source": {
+        "status": "verified",
+        "repository": "mattermost/docs",
+        "path": "source/end-user-guide/collaborate/invite-people.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "blob_sha": "2d25dcc87274a5dbbe3f8e71ca60246d32ce7464",
+        "text_sha256": "c8a5f588e35d99066dff0641a95d3b7444545679ad1f1bc7b0ad6ed613e56100",
+        "source_url": "https://github.com/mattermost/docs/blob/bd09d959514c34e72a33c24663b5946682b656ec/source/end-user-guide/collaborate/invite-people.rst",
+        "source_passage_lines": [
+          52
+        ]
+      },
+      "context_sources": []
+    },
+    {
+      "case": "mattermost-timezone-default-automatic",
+      "candidate_id": "rc-4fa8e7483b1a",
+      "source": {
+        "status": "verified",
+        "repository": "mattermost/docs",
+        "path": "source/end-user-guide/preferences/manage-your-display-options.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "blob_sha": "32d6140ddf119c925819fc668d3cd70b42ac6237",
+        "text_sha256": "b86e7109109fc34f983416d9b7594304484867b7b0b8cc514846f45af417928a",
+        "source_url": "https://github.com/mattermost/docs/blob/bd09d959514c34e72a33c24663b5946682b656ec/source/end-user-guide/preferences/manage-your-display-options.rst",
+        "source_passage_lines": [
+          105,
+          107
+        ]
+      },
+      "context_sources": []
+    },
+    {
+      "case": "mattermost-channel-autotranslate",
+      "candidate_id": "rc-554bcd113361",
+      "source": {
+        "status": "verified",
+        "repository": "mattermost/docs",
+        "path": "source/end-user-guide/collaborate/autotranslate-messages.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "blob_sha": "137593445e5dd9087106e9efb42e157c3253a35c",
+        "text_sha256": "bed2f7b6a39cdf0601424f746251e72a7d96ffac2009d2cdd6fb4a79b660db7d",
+        "source_url": "https://github.com/mattermost/docs/blob/bd09d959514c34e72a33c24663b5946682b656ec/source/end-user-guide/collaborate/autotranslate-messages.rst",
+        "source_passage_lines": [
+          7,
+          12,
+          14,
+          15,
+          16,
+          17,
+          18
+        ]
+      },
+      "context_sources": []
+    },
+    {
+      "case": "mattermost-mention-add-prompt",
+      "candidate_id": "rc-882709afd891",
+      "source": {
+        "status": "verified",
+        "repository": "mattermost/docs",
+        "path": "source/end-user-guide/collaborate/manage-channel-members.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "blob_sha": "9fc077178e32cfb8c02950ed36dc2f0ff9078aad",
+        "text_sha256": "86ba9fce15d2b5623cb688b9502e71d066139e7e3dd3441fdce5ad8c4e63f04e",
+        "source_url": "https://github.com/mattermost/docs/blob/bd09d959514c34e72a33c24663b5946682b656ec/source/end-user-guide/collaborate/manage-channel-members.rst",
+        "source_passage_lines": [
+          64,
+          67
+        ]
+      },
+      "context_sources": []
+    },
+    {
+      "case": "mattermost-anonymous-team-url",
+      "candidate_id": "rc-aa2c82f86e08",
+      "source": {
+        "status": "verified",
+        "repository": "mattermost/docs",
+        "path": "source/end-user-guide/collaborate/organize-using-teams.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "blob_sha": "10c0eb39fc8598d0d227b3f5d163aa74247c825c",
+        "text_sha256": "2ec120188d3f4572b87b5f6d2a489807f8c005a81c770ecf27879cd1127d8ab5",
+        "source_url": "https://github.com/mattermost/docs/blob/bd09d959514c34e72a33c24663b5946682b656ec/source/end-user-guide/collaborate/organize-using-teams.rst",
+        "source_passage_lines": [
+          57,
+          71,
+          73,
+          74,
+          75,
+          76
+        ]
+      },
+      "context_sources": []
+    },
+    {
+      "case": "nextcloud-device-password-once",
+      "candidate_id": "rc-3d153b91ab4e",
+      "source": {
+        "status": "verified",
+        "repository": "nextcloud/documentation",
+        "path": "user_manual/session_management.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "blob_sha": "0ac9b753bb8d2c1ef2e88ab5c0f73fe966f3ee6c",
+        "text_sha256": "a934a42a383231966ff97c9ef04c06ab67c5b5e45e9155cf55e450cd34d97cc1",
+        "source_url": "https://github.com/nextcloud/documentation/blob/8d7403649929d9ddb1bd6a5a073d6869071db8c3/user_manual/session_management.rst"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "nextcloud-breakout-rooms",
+      "candidate_id": "rc-946f02ef19b6",
+      "source": {
+        "status": "verified",
+        "repository": "nextcloud/documentation",
+        "path": "user_manual/talk/call.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "blob_sha": "79326d464c272de617de3df7d241f5d7053b446b",
+        "text_sha256": "5869f35d6155725e58192147d0a0bd2d84d610f47c3594c3c01604dada7d3b60",
+        "source_url": "https://github.com/nextcloud/documentation/blob/8d7403649929d9ddb1bd6a5a073d6869071db8c3/user_manual/talk/call.rst"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "nextcloud-delete-folder-trash",
+      "candidate_id": "rc-9d801a70d5d2",
+      "source": {
+        "status": "verified",
+        "repository": "nextcloud/documentation",
+        "path": "user_manual/files/deleted_file_management.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "blob_sha": "2dd0da71dc2a848d6000579e329cd135d0691bea",
+        "text_sha256": "9e8218c16b5f8e558cb535834271e9a02fd27ac733c7f45bba0126f62e67106f",
+        "source_url": "https://github.com/nextcloud/documentation/blob/8d7403649929d9ddb1bd6a5a073d6869071db8c3/user_manual/files/deleted_file_management.rst"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "nextcloud-mail-favorites-up",
+      "candidate_id": "rc-ab0227c1eb5b",
+      "source": {
+        "status": "verified",
+        "repository": "nextcloud/documentation",
+        "path": "user_manual/groupware/mail.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "blob_sha": "c819d6c7448c60bc925eb244eed861cd70c6f719",
+        "text_sha256": "825911b90acde1431146644deb87e1ee4dfbe169fec442791e58a860d24a344d",
+        "source_url": "https://github.com/nextcloud/documentation/blob/8d7403649929d9ddb1bd6a5a073d6869071db8c3/user_manual/groupware/mail.rst"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "nextcloud-mail-delegation",
+      "candidate_id": "rc-c38fa60b1164",
+      "source": {
+        "status": "verified",
+        "repository": "nextcloud/documentation",
+        "path": "user_manual/groupware/mail.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "blob_sha": "c819d6c7448c60bc925eb244eed861cd70c6f719",
+        "text_sha256": "825911b90acde1431146644deb87e1ee4dfbe169fec442791e58a860d24a344d",
+        "source_url": "https://github.com/nextcloud/documentation/blob/8d7403649929d9ddb1bd6a5a073d6869071db8c3/user_manual/groupware/mail.rst"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "nextcloud-calendar-talk-location",
+      "candidate_id": "rc-e594b40135ff",
+      "source": {
+        "status": "verified",
+        "repository": "nextcloud/documentation",
+        "path": "user_manual/talk/calendar_integration.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "blob_sha": "fd8c0ffc3fd408edeea3856d0df97045c3af9dbe",
+        "text_sha256": "2075bf98f38376030ddb249f5fac64c7e4281c1bac970dc595fee52aa21af95b",
+        "source_url": "https://github.com/nextcloud/documentation/blob/8d7403649929d9ddb1bd6a5a073d6869071db8c3/user_manual/talk/calendar_integration.rst"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "openproject-auto-theme-contrast",
+      "candidate_id": "rc-02df56f00b58",
+      "source": {
+        "status": "verified",
+        "repository": "opf/openproject",
+        "path": "docs/user-guide/account-settings/interface/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "blob_sha": "bed07d7125afa593159c00f30ccbc5040e6f83fd",
+        "text_sha256": "91926272797d99227c8bbab3a24fb8797486533f10b3f1c6c45dab05ffeb0300",
+        "source_url": "https://github.com/opf/openproject/blob/66f582c19f87534703d2eaf92c5929d13d440cd9/docs/user-guide/account-settings/interface/README.md"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "openproject-filter-text-autoupdate",
+      "candidate_id": "rc-1114153d4704",
+      "source": {
+        "status": "verified",
+        "repository": "opf/openproject",
+        "path": "docs/user-guide/work-packages/work-package-table-configuration/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "blob_sha": "106ec7a8f9d76d296f9ec2cfcbb264bd614581f2",
+        "text_sha256": "dfa6d385894b5379c254e177ea8540191e530525a799e671de9ea4e847412181",
+        "source_url": "https://github.com/opf/openproject/blob/66f582c19f87534703d2eaf92c5929d13d440cd9/docs/user-guide/work-packages/work-package-table-configuration/README.md"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "openproject-invite-permission-basis",
+      "candidate_id": "rc-17b31565c57c",
+      "source": {
+        "status": "verified",
+        "repository": "opf/openproject",
+        "path": "docs/getting-started/invite-members/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "blob_sha": "3dee883decf979833f111e72c0a43105756605fd",
+        "text_sha256": "d9b6565031a9ff74b847a4ef8f1103f20cd7a9f2d04d102bac07d3cfca61836e",
+        "source_url": "https://github.com/opf/openproject/blob/66f582c19f87534703d2eaf92c5929d13d440cd9/docs/getting-started/invite-members/README.md"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "openproject-archived-project-selector",
+      "candidate_id": "rc-2c13970217ea",
+      "source": {
+        "status": "verified",
+        "repository": "opf/openproject",
+        "path": "docs/user-guide/projects/project-settings/project-information/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "blob_sha": "7cd642b40f04beb380d88dee887c179121f0b1b2",
+        "text_sha256": "9fd39b03b9ee5fd0eb68806aa1581632aa6cce645114911a91dfeb61362221da",
+        "source_url": "https://github.com/opf/openproject/blob/66f582c19f87534703d2eaf92c5929d13d440cd9/docs/user-guide/projects/project-settings/project-information/README.md"
+      },
+      "context_sources": [
+        {
+          "status": "verified",
+          "repository": "opf/openproject",
+          "path": "docs/getting-started/projects/README.md",
+          "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+          "blob_sha": "255632266f94c5bcabb8a89a16b034d656c09796",
+          "text_sha256": "96cd22772a7aff7dbaf459adc587173fb67a88c53e4be0794ce8a33b45d72948",
+          "source_url": "https://github.com/opf/openproject/blob/66f582c19f87534703d2eaf92c5929d13d440cd9/docs/getting-started/projects/README.md"
+        }
+      ]
+    },
+    {
+      "case": "openproject-more-menu-subproject",
+      "candidate_id": "rc-4efba0098a79",
+      "source": {
+        "status": "verified",
+        "repository": "opf/openproject",
+        "path": "docs/user-guide/projects/project-settings/project-information/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "blob_sha": "7cd642b40f04beb380d88dee887c179121f0b1b2",
+        "text_sha256": "9fd39b03b9ee5fd0eb68806aa1581632aa6cce645114911a91dfeb61362221da",
+        "source_url": "https://github.com/opf/openproject/blob/66f582c19f87534703d2eaf92c5929d13d440cd9/docs/user-guide/projects/project-settings/project-information/README.md"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "openproject-files-tab-attachments",
+      "candidate_id": "rc-e436521e462d",
+      "source": {
+        "status": "verified",
+        "repository": "opf/openproject",
+        "path": "docs/user-guide/projects/project-settings/files/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "blob_sha": "ccf7268e2028bf556c4a40748c2cc032c26695b4",
+        "text_sha256": "1c66884126616e2a17617ed08fce4a74199625d9abf2a15e01a101a0a9719f82",
+        "source_url": "https://github.com/opf/openproject/blob/66f582c19f87534703d2eaf92c5929d13d440cd9/docs/user-guide/projects/project-settings/files/README.md"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "wekan-week-number-immediate",
+      "candidate_id": "rc-59d96b056593",
+      "source": {
+        "status": "verified",
+        "repository": "wekan/wekan",
+        "path": "docs/Features/Right-Sidebar/Board-Settings/Date.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "blob_sha": "4d5ad9a6b60472b63ff29252818b89ea36699425",
+        "text_sha256": "ed5b7570159e0d25682a3c8df257db77a65fad663bb5465d3247eac199921504",
+        "source_url": "https://github.com/wekan/wekan/blob/38415f04caf9a3536fe8faaca0cda9b8aa38cf57/docs/Features/Right-Sidebar/Board-Settings/Date.md"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "wekan-swimlane-below-default",
+      "candidate_id": "rc-6b29ef8b44d8",
+      "source": {
+        "status": "verified",
+        "repository": "wekan/wekan",
+        "path": "docs/Features/Swimlanes/Swimlanes.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "blob_sha": "bcd8ce9aaee51099ad19de6fe57dfb573531dd43",
+        "text_sha256": "d4d809efebc83a13b96ae4927bd3746a4f107ec9844cd5d643e55a69670d04b4",
+        "source_url": "https://github.com/wekan/wekan/blob/38415f04caf9a3536fe8faaca0cda9b8aa38cf57/docs/Features/Swimlanes/Swimlanes.md"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "wekan-home-multi-drop",
+      "candidate_id": "rc-88440629ecb6",
+      "source": {
+        "status": "verified",
+        "repository": "wekan/wekan",
+        "path": "docs/Features/Board/Home.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "blob_sha": "870ee814f6abcb8adcde90f305a3588f80f5fd97",
+        "text_sha256": "20878a3b776752439fe18fe0ade16a4f76f22881a826b44fbebdbe9475579ac3",
+        "source_url": "https://github.com/wekan/wekan/blob/38415f04caf9a3536fe8faaca0cda9b8aa38cf57/docs/Features/Board/Home.md"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "wekan-field-order-independent",
+      "candidate_id": "rc-899c4d2472ad",
+      "source": {
+        "status": "verified",
+        "repository": "wekan/wekan",
+        "path": "docs/Features/Right-Sidebar/Board-Settings/Card.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "blob_sha": "defa6f0abfb128f00369271b146f84e1cebf0b5e",
+        "text_sha256": "c1e6bd13ccc052b541efab05c560622479a3c3026e856cf64449db9f635d99d4",
+        "source_url": "https://github.com/wekan/wekan/blob/38415f04caf9a3536fe8faaca0cda9b8aa38cf57/docs/Features/Right-Sidebar/Board-Settings/Card.md"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "wekan-member-same-org-team",
+      "candidate_id": "rc-8b05adc7767e",
+      "source": {
+        "status": "verified",
+        "repository": "wekan/wekan",
+        "path": "docs/Features/Members/Members.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "blob_sha": "fc07ad41da312425d68e6dd8db0809ff6d3a414b",
+        "text_sha256": "2d68dbd05dd43df9b3bfe4b6f5027716883f678cce9e73d33afc5b140c2bdde0",
+        "source_url": "https://github.com/wekan/wekan/blob/38415f04caf9a3536fe8faaca0cda9b8aa38cf57/docs/Features/Members/Members.md"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "wekan-sync-local-edits",
+      "candidate_id": "rc-f3df2f6e5885",
+      "source": {
+        "status": "verified",
+        "repository": "wekan/wekan",
+        "path": "docs/Features/ImportExport/Sync.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "blob_sha": "54d95e42c142a17c2f98d711888737dfa2d9879d",
+        "text_sha256": "0f2c5ae9e9f3252c7b49a8342850137ff7fc618551558dd02a10985843979a0f",
+        "source_url": "https://github.com/wekan/wekan/blob/38415f04caf9a3536fe8faaca0cda9b8aa38cf57/docs/Features/ImportExport/Sync.md"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "zulip-gif-picker-disabled",
+      "candidate_id": "rc-08dffa18a270",
+      "source": {
+        "status": "verified",
+        "repository": "zulip/zulip",
+        "path": "starlight_help/src/content/docs/animated-gifs.mdx",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "blob_sha": "3fcb0b0908235ef5a8ddca8129be5d34e07160c8",
+        "text_sha256": "6afffd5692d820973f5beb3262bde0b1a2089053a79eaf48507cb2e2f9fbbffc",
+        "source_url": "https://github.com/zulip/zulip/blob/9778ffc23c3e83e321152a48ab32c1426e1bd941/starlight_help/src/content/docs/animated-gifs.mdx"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "zulip-resolved-notice-auto-read",
+      "candidate_id": "rc-362ff82e3812",
+      "source": {
+        "status": "verified",
+        "repository": "zulip/zulip",
+        "path": "starlight_help/src/content/docs/configure-automated-notices.mdx",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "blob_sha": "474284243c833d6aa7ca43edae5291864a6b1e66",
+        "text_sha256": "8b983f35d5412bcb3e46863c09c8ffca0189d28f05766c23bf5de547589d66fe",
+        "source_url": "https://github.com/zulip/zulip/blob/9778ffc23c3e83e321152a48ab32c1426e1bd941/starlight_help/src/content/docs/configure-automated-notices.mdx"
+      },
+      "context_sources": [
+        {
+          "status": "verified",
+          "repository": "zulip/zulip",
+          "path": "starlight_help/src/content/include/_ConfigureResolvedNoticesMarkedAsRead.mdx",
+          "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+          "blob_sha": "2c2a7b2db83990b1684887bc4bf5fad4a91b1264",
+          "text_sha256": "c866541fcce00a5443aeedcade8acf650a804b7b3e108ef46cbb8901ea572a0b",
+          "source_url": "https://github.com/zulip/zulip/blob/9778ffc23c3e83e321152a48ab32c1426e1bd941/starlight_help/src/content/include/_ConfigureResolvedNoticesMarkedAsRead.mdx"
+        }
+      ]
+    },
+    {
+      "case": "zulip-reverse-linkifier-paste",
+      "candidate_id": "rc-4200f1dac6a9",
+      "source": {
+        "status": "verified",
+        "repository": "zulip/zulip",
+        "path": "starlight_help/src/content/docs/add-a-custom-linkifier.mdx",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "blob_sha": "3bd5c103443c75fe96c5c56321d45c66fdf61053",
+        "text_sha256": "d7b43d819c8ef550b04851d2ceb5611b7fde920b1d01aca12a3ae63a2c98a523",
+        "source_url": "https://github.com/zulip/zulip/blob/9778ffc23c3e83e321152a48ab32c1426e1bd941/starlight_help/src/content/docs/add-a-custom-linkifier.mdx"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "zulip-subscribe-typeahead",
+      "candidate_id": "rc-c044ebec7fe1",
+      "source": {
+        "status": "verified",
+        "repository": "zulip/zulip",
+        "path": "starlight_help/src/content/include/_SubscribeUserToChannel.mdx",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "blob_sha": "01ab277627b8d6192982e00cb6d606e5ff5bff4c",
+        "text_sha256": "ec1d76e4940bdf61784b0557cc44c20e996cdecc8999525cf9e39fda6ef5fedc",
+        "source_url": "https://github.com/zulip/zulip/blob/9778ffc23c3e83e321152a48ab32c1426e1bd941/starlight_help/src/content/include/_SubscribeUserToChannel.mdx"
+      },
+      "context_sources": []
+    },
+    {
+      "case": "zulip-unsubscribe-self",
+      "candidate_id": "rc-dfb84383fb89",
+      "source": {
+        "status": "verified",
+        "repository": "zulip/zulip",
+        "path": "starlight_help/src/content/docs/unsubscribe-from-a-channel.mdx",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "blob_sha": "e463497c65ae47913477570ab54f7dd1dc054598",
+        "text_sha256": "be9bda16ed5197740e2ca37ddda688dfca002c7cd38d568a538ae8360828bad3",
+        "source_url": "https://github.com/zulip/zulip/blob/9778ffc23c3e83e321152a48ab32c1426e1bd941/starlight_help/src/content/docs/unsubscribe-from-a-channel.mdx"
+      },
+      "context_sources": [
+        {
+          "status": "verified",
+          "repository": "zulip/zulip",
+          "path": "starlight_help/src/content/docs/channel-permissions.mdx",
+          "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+          "blob_sha": "1a2f778f7dec45b330912e6a126eda3f6e82c803",
+          "text_sha256": "c28f0d3d5902920a51d507ebaa5bba13db11a21cd1f82325f857d8b603f719d4",
+          "source_url": "https://github.com/zulip/zulip/blob/9778ffc23c3e83e321152a48ab32c1426e1bd941/starlight_help/src/content/docs/channel-permissions.mdx"
+        }
+      ]
+    },
+    {
+      "case": "zulip-private-channel-access",
+      "candidate_id": "rc-fd348eb33246",
+      "source": {
+        "status": "verified",
+        "repository": "zulip/zulip",
+        "path": "starlight_help/src/content/docs/channel-permissions.mdx",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "blob_sha": "1a2f778f7dec45b330912e6a126eda3f6e82c803",
+        "text_sha256": "c28f0d3d5902920a51d507ebaa5bba13db11a21cd1f82325f857d8b603f719d4",
+        "source_url": "https://github.com/zulip/zulip/blob/9778ffc23c3e83e321152a48ab32c1426e1bd941/starlight_help/src/content/docs/channel-permissions.mdx"
+      },
+      "context_sources": []
+    }
+  ]
+}

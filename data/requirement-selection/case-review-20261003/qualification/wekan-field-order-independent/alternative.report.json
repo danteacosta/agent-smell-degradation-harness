@@ -1,0 +1,20 @@
+{
+  "schema_version": "wekan-field-order-independent-browser/v1",
+  "status": "complete",
+  "app_sha256": "23b14c0bf78b510cff921bab3342768ac3c448486168a1a758ac2cf3a0de9f55",
+  "assertions": {
+    "minicard_move_applied_1": true,
+    "card_unchanged_by_minicard_move_1": true,
+    "card_move_applied_1": true,
+    "minicard_unchanged_by_card_move_1": true,
+    "minicard_move_applied_2": true,
+    "card_unchanged_by_minicard_move_2": true,
+    "card_move_applied_2": true,
+    "minicard_unchanged_by_card_move_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

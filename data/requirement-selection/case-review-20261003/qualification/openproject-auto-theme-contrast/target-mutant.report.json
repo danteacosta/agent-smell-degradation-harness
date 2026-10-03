@@ -1,0 +1,18 @@
+{
+  "schema_version": "openproject-auto-theme-contrast-browser/v1",
+  "status": "complete",
+  "app_sha256": "455f59b67762e8f63c4c77e0fdba06e862ed1fbf40cde83a67833e6eb6d57c0d",
+  "assertions": {
+    "manual_mode_applied_1": true,
+    "auto_follows_os_scheme_1": true,
+    "auto_follows_os_contrast_1": false,
+    "manual_mode_applied_2": true,
+    "auto_follows_os_scheme_2": true,
+    "auto_follows_os_contrast_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

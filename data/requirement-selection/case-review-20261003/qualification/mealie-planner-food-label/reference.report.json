@@ -1,0 +1,18 @@
+{
+  "schema_version": "mealie-planner-food-label-browser/v1",
+  "status": "complete",
+  "app_sha256": "506662d12ef24d9c7594766cc44a593a04f62e6de6ab0711a6769c9698f7693f",
+  "assertions": {
+    "food_label_matches_included_1": true,
+    "food_name_matches_included_1": true,
+    "non_matching_excluded_1": true,
+    "food_label_matches_included_2": true,
+    "food_name_matches_included_2": true,
+    "non_matching_excluded_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

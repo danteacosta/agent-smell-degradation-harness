@@ -1,0 +1,10 @@
+{
+  "schema_version": "openproject-files-tab-attachments-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "75ebe3d468d8096aa9fb1fffbecb616195d42aec433f2103fd2f90bbd76516ac",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

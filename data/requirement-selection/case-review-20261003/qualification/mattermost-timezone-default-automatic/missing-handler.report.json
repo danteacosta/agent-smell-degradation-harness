@@ -1,0 +1,8 @@
+{
+  "schema_version": "mattermost-timezone-default-automatic-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "5e3b0a49f3c5ccf26b41602449b91f4d0273b1f9098f5048d0f394711d767262",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

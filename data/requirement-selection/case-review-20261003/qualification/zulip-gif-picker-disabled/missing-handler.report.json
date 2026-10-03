@@ -1,0 +1,8 @@
+{
+  "schema_version": "zulip-gif-picker-disabled-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "3093c62e8dc12a647c805738dd31637f818ae2adac36aa12b984591c683257d2",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

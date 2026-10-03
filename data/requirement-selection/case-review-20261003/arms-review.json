@@ -1,0 +1,1107 @@
+{
+  "schema_version": "selection-case-arms-review/v1",
+  "reviewer": "Codex with delegated code reviewers",
+  "blind": false,
+  "previously_exposed_to_prior_probe_outcomes": true,
+  "new_generation_outcomes_available": false,
+  "human_audit_pending": true,
+  "cases": [
+    {
+      "case": "paperless-ai-suggestions-blank-text",
+      "candidate_id": "rc-84013890a131",
+      "project_id": "paperless-ngx",
+      "source": {
+        "commit": "937feb1bef",
+        "file": "docs/usage.md"
+      },
+      "arm_sha256": {
+        "A": "9015039844a6e90af7a6598e363cf2b11a9f2721617f16dbb202ec404cf1d60d",
+        "B": "0d142a8d2b33fbed9d91e0b258c07152eb2cc70989d745c54e219107500c08c6",
+        "C": "0919015097dd2c264088e84becaab35971c1e0e4ad4010960ee0f3d2e896c969"
+      },
+      "removed_span": " Documents whose processed text is empty or contains only whitespace are skipped.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "paperless-superuser-grant",
+      "candidate_id": "rc-806442660eb5",
+      "project_id": "paperless-ngx",
+      "source": {
+        "commit": "41bcc12cc2",
+        "file": "docs/usage.md"
+      },
+      "arm_sha256": {
+        "A": "bbe6f6033c5f2d4855b0c26da20c814254ae5332801a48d5117cbe8a1e0d7612",
+        "B": "7c3769d6832a1348696ae3ae3dda5dbdf3bc217d0e41b9050d82ce61e11688ef",
+        "C": "cc54747c4b002fe5cc8e89b931d13981c0474ba866a7891a83b4ad9decfa9dc6"
+      },
+      "removed_span": " Superuser status can only be granted by another superuser.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "paperless-custom-field-no-value",
+      "candidate_id": "rc-086a9d210266",
+      "project_id": "paperless-ngx",
+      "source": {
+        "commit": "855669ddf9",
+        "file": "docs/usage.md"
+      },
+      "arm_sha256": {
+        "A": "a6b9b3cef48e96f1b0f49d0e0ab9edd70aac75217533662f19dfab6421290ddd",
+        "B": "762b3d895310ac25f2b90bcaa203f3e6294810021053a9a471c89440f622488d",
+        "C": "287027fa0f1cf51ff501d0f9a5de8f7a289ee144fd7375c89cc2441dd2fd6993"
+      },
+      "removed_span": "no value is set, the field is only added to the document and any value it may already have is left untouched. If ",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "paperless-own-profile",
+      "candidate_id": "rc-035e8af08cd7",
+      "project_id": "paperless-ngx",
+      "source": {
+        "commit": "1ba6c31385",
+        "file": "docs/usage.md"
+      },
+      "arm_sha256": {
+        "A": "bd80ac76c9771943086e31359a22d0b1e063fa7e38ac10fef81952e918419fc2",
+        "B": "5ac796226c972c98c86353b22f0fd69a2629c59624d1c2d86d4ffc662c3e5523",
+        "C": "799adbc1d17007c5d6bfae2201e505beb9a30a5f27cd31c5baa2726c34008822"
+      },
+      "removed_span": " These permissions are not needed for users to edit their own profile via My Profile.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "paperless-doc-title-placeholder",
+      "candidate_id": "rc-9e198862b86e",
+      "project_id": "paperless-ngx",
+      "source": {
+        "commit": "63c0e2f72b",
+        "file": "docs/usage.md"
+      },
+      "arm_sha256": {
+        "A": "05dda7d82c5c4fb05b939ccd882bf5cff933a18ec03bde9db6b22c0d62650592",
+        "B": "33d5b1be8f2177b0e9511e9f43dfab9ec02824254f7cf8f1e7d3ab76f124baa0",
+        "C": "1e6e59addeb907a4e0ddbff6d253e03eff12047d5a35354f7cf7ac6f13568c36"
+      },
+      "removed_span": ", cannot be used in title assignment",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "immich-m2t-upload",
+      "candidate_id": "rc-0ec1ac8f66bd",
+      "project_id": "immich",
+      "source": {
+        "commit": "fcd372238f",
+        "file": "docs/docs/features/supported-formats.md",
+        "arm_a_snapshot_commit": "a3c8b359f2fdc47699f1530215a23fe8bd34c454",
+        "frame_end": "2026-09-30T23:59:59Z"
+      },
+      "arm_sha256": {
+        "A": "09ad82850c17f4983406554d2fb80ab1c918fb5365b18137996b20af3e2ba6f7",
+        "B": "09e46143ecb78a96cd666d6eb0bcac2a5bc1d9784cdf0cfb631add662acd46b7",
+        "C": "5bba17352f35d4cecfa8865b4680dbdabb8fccdd226a68348065fa89b3a28b71"
+      },
+      "removed_span": "m2t .",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "immich-library-single-owner",
+      "candidate_id": "rc-c86728bbc029",
+      "project_id": "immich",
+      "source": {
+        "commit": "eee793bfe4",
+        "file": "docs/docs/features/libraries.md"
+      },
+      "arm_sha256": {
+        "A": "0c1ce4d2445a7508a345ca916b9d83309163d4c3f69f43cfc45d4c1f79a9cb26",
+        "B": "c5377a393cdcfd17e20ae9c3780d78afe1979af8162c7669356cdeb2409a996d",
+        "C": "fc5204712ae00b3ba86790ba1365dca885d659ba8f37c52f569d13baa08dfe09"
+      },
+      "removed_span": " An external library can only belong to a single user, which is selected when the library is initially created.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "immich-path-search",
+      "candidate_id": "rc-b6f382226c41",
+      "project_id": "immich",
+      "source": {
+        "commit": "90a69e2ba6",
+        "file": "docs/docs/features/searching.md"
+      },
+      "arm_sha256": {
+        "A": "1a6841ac99cccac6b9bdf01e4d51d5b64f5ae07cb07f17c082990d6ccc229033",
+        "B": "9962117497336d7d804a397a4a7a67f71b5b817f6e6e63957bf3d395af4ba056",
+        "C": "fdf6e7ca9bd5e978fd9f864511100e4cda6363bf6db34847c9acd52d95179ddc"
+      },
+      "removed_span": " Example: for /John/Projects/3D_Printing/2026-07-01/IMG_0001.jpg, searches like Projects, 3D, Printing, or 2026 match the asset.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "mealie-organize-food-permission",
+      "candidate_id": "rc-106bac72c813",
+      "project_id": "mealie",
+      "source": {
+        "commit": "05521f0e6f",
+        "file": "docs/docs/documentation/getting-started/usage/permissions-and-public-access.md"
+      },
+      "arm_sha256": {
+        "A": "86f6ed89122aefe514d92dd320e74135afa0f03b34ec6ea2417223e068e68b4e",
+        "B": "9a0f41fe6a5a1148520b641a73417683ab5bfbed3a5cc4c5cd7df26e87af3a39",
+        "C": "ae4e8627be992944c1cc0b94e22924767034f19b3e6ea34614e6ca85fdb1eccb"
+      },
+      "removed_span": " Users need Organize group data to add new foods, tags, or categories, including when creating missing ingredients during recipe parsing.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "mealie-planner-food-label",
+      "candidate_id": "rc-0f453b1f0a55",
+      "project_id": "mealie",
+      "source": {
+        "commit": "cbcd7f3744",
+        "file": "docs/docs/documentation/getting-started/features.md"
+      },
+      "arm_sha256": {
+        "A": "3e794bbb703fb77f89aed3b0d5d0f5c0b28c2ee8784920d265af77c0e0e3d178",
+        "B": "78080f5c884e723b7d8033abc5a24b0c5c5b38b3cfd9c4ccda5955d74675859a",
+        "C": "313aa933ef23b17e02fabb6896ade64dd0ee49d72d95a8df6951d4ba99356ddc"
+      },
+      "removed_span": " Ingredients can be matched by their Food Label as well, so a \"fish day\" only takes one rule instead of a list of every fish you cook with.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "grist-context-menu-shortcut",
+      "candidate_id": "rc-4aac15b7b503",
+      "project_id": "grist",
+      "source": {
+        "commit": "bcdbeb35ac",
+        "file": "help/en/docs/keyboard-shortcuts.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "snapshot_file": "help/en/docs/keyboard-shortcuts.md"
+      },
+      "arm_sha256": {
+        "A": "2f6030f7f74d333d1fc675e6132b2007a9e218d8d876fe673ee34f01a8d6f791",
+        "B": "66e31defbdfc08e425aa392557aac8c571c6002faf6776bea83b4031ca03bd50",
+        "C": "dcc75fe422f50b21cb4b902d42e59c19cc375bf54ac4153d78c73439f8070f12"
+      },
+      "removed_span": " or Shift + F10",
+      "context_cue": {
+        "status": "present",
+        "reason": "neighboring Shift+F10 shortcuts"
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "grist-page-default-collapse",
+      "candidate_id": "rc-7b485b51412f",
+      "project_id": "grist",
+      "source": {
+        "commit": "537c682145",
+        "file": "help/en/docs/page-widgets.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "snapshot_file": "help/en/docs/page-widgets.md"
+      },
+      "arm_sha256": {
+        "A": "e2477a68fcdb814b85674aab0d9afe3438f65bfd004681e1baf8448119f872c5",
+        "B": "de654b18c0441064876a5b4a4f759844cd83d3636307c2ce52e9993b1a4ca884",
+        "C": "66fd08c239ed65c8964a351ef8ed660402e2861e3079649b1589755117a47d7d"
+      },
+      "removed_span": " You can change the default state by clicking the three-dot icon to the right of the parent page and selecting 'Set default: Collapse'.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "grist-tutorial-restart",
+      "candidate_id": "rc-aac66a0af69a",
+      "project_id": "grist",
+      "source": {
+        "commit": "4c173049c5",
+        "file": "help/en/docs/document-tutorials.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "snapshot_file": "help/en/docs/document-tutorials.md"
+      },
+      "arm_sha256": {
+        "A": "ddab062e088f47c6cdd5bd665d586342ee50c2462194e0f8af7378c15be8eaf4",
+        "B": "aab5e469f1e3ed7cca58e6a26cc487e83907352a9222b0179393d5451ea181d7",
+        "C": "069310a8ab1a2c33dc1c32c4eae98a121172d0738d717de2cf5ecb2f13e3f31e"
+      },
+      "removed_span": ", causing any unsaved changes to be lost",
+      "context_cue": {
+        "status": "present",
+        "reason": "save changes before clicking Restart"
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "grist-suggestions-open-copy",
+      "candidate_id": "rc-ade633af9c14",
+      "project_id": "grist",
+      "source": {
+        "commit": "af6962bf5b",
+        "file": "help/en/docs/sharing.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "snapshot_file": "help/en/docs/sharing.md"
+      },
+      "arm_sha256": {
+        "A": "b91e0e0f84542dd3206db68561dfa45a26a1d3914bcc28379b34e24d6ac2cd3b",
+        "B": "dc51e9eb6badd2583ff353069095c07c9ad80ef4591fa2b77134de5c7a0bb2df",
+        "C": "7f992421306d8b1bf48a3b5f07dd2d45bab39712f22d2c7d5b9ed0c1b4583bfa"
+      },
+      "removed_span": " enabled, users (signed-in or not) automatically open a copy of a document. With suggestions",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "grist-tutorial-fork-return",
+      "candidate_id": "rc-b49db6870ff5",
+      "project_id": "grist",
+      "source": {
+        "commit": "b5e6d897fc",
+        "file": "help/en/docs/document-tutorials.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "snapshot_file": "help/en/docs/document-tutorials.md"
+      },
+      "arm_sha256": {
+        "A": "01aa65daafded67e4929aa6f44290c727caef98d41653f48c4e9d8b5214af1e3",
+        "B": "e2a19c6ca83e24ea98ab7a4d826680ab82a79eff50acedbe3988bb328e0bb49b",
+        "C": "c902491a98f9ebddd626b442c05948c4a21157e6408d6c6be09517e96b1f22d9"
+      },
+      "removed_span": " If you close out of your fork of the document, you can always return to it by visiting the Direct URL; you will be redirected to your fork automatically.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "duplicate target wording pruned from localized A",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "grist-billing-managers-limit",
+      "candidate_id": "rc-f33b2bf870e9",
+      "project_id": "grist",
+      "source": {
+        "commit": "f896f91781",
+        "file": "help/en/docs/team-sharing.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "snapshot_file": "help/en/docs/team-sharing.md"
+      },
+      "arm_sha256": {
+        "A": "d786e93a23943d106cacdfcca8c4b4d92d0f1f3a02f9c917add89a668d12a558",
+        "B": "07479dd8a4b65790987b6fd5d03853906651a0f86a6497a81ae8a66adda0a576",
+        "C": "8a80c16e6e9a65a15d62c8da8bb5f9d0ff5d865b8ea2168d5cb1a0bc18e954dc"
+      },
+      "removed_span": "up to 10 ",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "mattermost-playbook-task-markdown",
+      "candidate_id": "rc-0284c8781546",
+      "project_id": "mattermost",
+      "source": {
+        "commit": "5fb0a2b285",
+        "file": "source/end-user-guide/workflow-automation/work-with-playbooks.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "snapshot_file": "source/end-user-guide/workflow-automation/work-with-playbooks.rst"
+      },
+      "arm_sha256": {
+        "A": "6127ef5707a6f6ff6bf84396a7e63b595e21cbac50736414f0f8a1da19600a88",
+        "B": "f0b07485d7977d1cfc82bb824265656e9be589b0158b44cb4b56ae279966dbaa",
+        "C": "eef8830e24395764098577cb4422c522916638d7a65bc52d6455ec72b631cbc1"
+      },
+      "removed_span": " Playbook tasks consist of text rendered in Markdown (when present).",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "duplicate target wording pruned from localized A",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "mattermost-guest-invite-channel",
+      "candidate_id": "rc-3fbc295441e2",
+      "project_id": "mattermost",
+      "source": {
+        "commit": "dbfcaedd0e",
+        "file": "source/end-user-guide/collaborate/invite-people.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "snapshot_file": "source/end-user-guide/collaborate/invite-people.rst"
+      },
+      "arm_sha256": {
+        "A": "83ab6a9c08a4d423daad5c9e715d5e8be1081776eb06b4d8f5815b6f45931fbc",
+        "B": "3eb7850e774d2e1a5227b580b98a6ea8319909bb06bfe9b1d79231eca9a44b3a",
+        "C": "09c7e6efd010b78599ad31964fc598dd1904ab16796c2f415ef77cb2cb259bde"
+      },
+      "removed_span": "When inviting guests, you must select at least one channel they can access. ",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "mattermost-timezone-default-automatic",
+      "candidate_id": "rc-4fa8e7483b1a",
+      "project_id": "mattermost",
+      "source": {
+        "commit": "34180cef60",
+        "file": "source/end-user-guide/preferences/manage-your-display-options.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "snapshot_file": "source/end-user-guide/preferences/manage-your-display-options.rst"
+      },
+      "arm_sha256": {
+        "A": "b52e7d01ae2ffd875c8943d313187177c68d497e51171e20f5d7607b08f811fe",
+        "B": "9d7be78b606136c5dc90b50fe9e36b3cf5c00bddc688fb8e2399d872d98636e1",
+        "C": "20b786e111890e85994237a1bb198ce8e35816a2865861272cc44d70cb4efe68"
+      },
+      "removed_span": " This option is enabled by default.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "mattermost-channel-autotranslate",
+      "candidate_id": "rc-554bcd113361",
+      "project_id": "mattermost",
+      "source": {
+        "commit": "73d7ca79e6",
+        "file": "source/end-user-guide/collaborate/collaborate-within-channels.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "snapshot_file": "source/end-user-guide/collaborate/autotranslate-messages.rst"
+      },
+      "arm_sha256": {
+        "A": "757f1539f2191495c28ccc6b5c36b162ff6900e4386a5c32bcbba78cee8a5921",
+        "B": "26c854d60efe6b575e0aaa90cc3ea93de16746ad4c0143872f91b02ee12f1448",
+        "C": "af1c39f5ba4cb1a0ea6d9af9e99bd3caeddfbc79ed4f90f79f20039cae43be70"
+      },
+      "removed_span": " This channel has auto-translation enabled: its messages are automatically translated into your preferred language and shown in place of the original text.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "mattermost-mention-add-prompt",
+      "candidate_id": "rc-882709afd891",
+      "project_id": "mattermost",
+      "source": {
+        "commit": "6c4598422f",
+        "file": "source/end-user-guide/collaborate/manage-channel-members.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "snapshot_file": "source/end-user-guide/collaborate/manage-channel-members.rst"
+      },
+      "arm_sha256": {
+        "A": "857f52eb64177265d1795468fa628c38004c911de13f1ca4640422fe6c954b35",
+        "B": "57b9f8716a6eb200d792f0b48c1bd90a4ab80602ac8d9a8e0b83a07c863ad24c",
+        "C": "e61957e88827db47385b2b45dcbb497889e9dd2aef66d1ee3ada07b67ebabc5d"
+      },
+      "removed_span": " If they're not a channel member, Mattermost prompts you to add them.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "mattermost-anonymous-team-url",
+      "candidate_id": "rc-aa2c82f86e08",
+      "project_id": "mattermost",
+      "source": {
+        "commit": "840fc4b8f5",
+        "file": "source/end-user-guide/collaborate/organize-using-teams.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "snapshot_file": "source/end-user-guide/collaborate/organize-using-teams.rst"
+      },
+      "arm_sha256": {
+        "A": "30d7fb15deacabcbcd388f6998f9cfe16ed36712e7bd3c40c7a1a42ddc24f286",
+        "B": "dadbfe5af3dff73a9e1fba666c90ad84bfca165d63df326e14d33f750ec61d49",
+        "C": "f5e914262d2a4101a88a931498c7920e847e67c17966b81488dc5bc0fe732341"
+      },
+      "removed_span": "enabled anonymous team and channel URLs (app.config().anonymousUrls), team creation becomes a single-step flow and you will not be prompted to choose a team URL. The URL is assigned automatically. If your system admin has ",
+      "context_cue": {
+        "status": "present",
+        "reason": "contrast when anonymous URLs are not enabled"
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "nextcloud-device-password-once",
+      "candidate_id": "rc-3d153b91ab4e",
+      "project_id": "nextcloud",
+      "source": {
+        "commit": "a806a064bc",
+        "file": "user_manual/session_management.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "snapshot_file": "user_manual/session_management.rst"
+      },
+      "arm_sha256": {
+        "A": "6d714407d60234b4b2b10db3d99514974a24fcfb2dd35e6c469f2ad83f809113",
+        "B": "2ce690c14413bc1a95dbc7e1f8b99d12206c4216d268f0ffc7494869566b49a1",
+        "C": "7ac97ec4898e58b3e4fd8cd8d19acafc44a456de443839e8475e701488120ea7"
+      },
+      "removed_span": "You only have access to the device password when creating it. ",
+      "context_cue": {
+        "status": "present",
+        "reason": "does not save the plain password"
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "nextcloud-breakout-rooms",
+      "candidate_id": "rc-946f02ef19b6",
+      "project_id": "nextcloud",
+      "source": {
+        "commit": "a88e2fc1fb",
+        "file": "user_manual/talk/call.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "snapshot_file": "user_manual/talk/call.rst"
+      },
+      "arm_sha256": {
+        "A": "c2cbd0b1a6607befa64fce07e0d8d80edc7dc79c778088b01c6598540a8fc187",
+        "B": "8094e208a47b2b05fbf9b2f8b8b57a6fdf64940ca15634b3455bc319d275dad4",
+        "C": "7bb26daa15d3a345dbbe6dd094347b1d13c7752dae9d50b75a0487065ff546e3"
+      },
+      "removed_span": "Breakout rooms allow you to divide a call into smaller groups for more focused discussions. ",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "nextcloud-delete-folder-trash",
+      "candidate_id": "rc-9d801a70d5d2",
+      "project_id": "nextcloud",
+      "source": {
+        "commit": "f9dff2cff3",
+        "file": "user_manual/files/deleted_file_management.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "snapshot_file": "user_manual/files/deleted_file_management.rst"
+      },
+      "arm_sha256": {
+        "A": "feac577bcd93e37f1e269d9e2661410f626fcc7fb56f30e59791f5d62710b85c",
+        "B": "d15b8e50f469ac3496ce781a5c02507841a1830ade6b832eee9b21a530cd1682",
+        "C": "c6f42add7f4a60597734d914e99d1de927123974a676b9580e8a3540d3a78274"
+      },
+      "removed_span": "When you delete a file or folder in Nextcloud, it is normally moved to the trash bin (app.moveToTrash) instead of being deleted immediately. This allows you to restore it later. ",
+      "context_cue": {
+        "status": "present",
+        "reason": "trash, restoring and permanent deletion described"
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "nextcloud-mail-favorites-up",
+      "candidate_id": "rc-ab0227c1eb5b",
+      "project_id": "nextcloud",
+      "source": {
+        "commit": "215c005b07",
+        "file": "user_manual/groupware/mail.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "snapshot_file": "user_manual/groupware/mail.rst"
+      },
+      "arm_sha256": {
+        "A": "6e859cdcc3b347e5f780fe79063ba43cb14c75950901272b11ca98e0b7800142",
+        "B": "9e32d47bd5c931b839ef942c591679a5a2c5d630aab1186939647cddacf76745",
+        "C": "31ac991a7a37a5bc123904292e4d93505e2d06f39d6cc57a5e2d02db318e3b48"
+      },
+      "removed_span": "his setting allows you to show messages set as favorite in a separate section on top of the message list. T",
+      "context_cue": {
+        "status": "present",
+        "reason": "Sort favorites up setting name"
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "nextcloud-mail-delegation",
+      "candidate_id": "rc-c38fa60b1164",
+      "project_id": "nextcloud",
+      "source": {
+        "commit": "58b21da96d",
+        "file": "user_manual/groupware/mail.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "snapshot_file": "user_manual/groupware/mail.rst"
+      },
+      "arm_sha256": {
+        "A": "411d93d1d15d0c46a2dae9c40b49059b7c5c1f4911345b7ef34619250fd8db62",
+        "B": "11901a363a80a4e24aeba9c88c3dc11c97e448e9eb43637480310bfd17d6aab5",
+        "C": "2ece77f68867b38cc49380cb05e65fc3ef25c9f55e8876f6cff3435f762f7042"
+      },
+      "removed_span": "he shared account then appears in the delegate's account list (app.accountList(userId) and app.setAccountList(userId, entries), entries being {accountId, tag}), marked as delegated. T",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "nextcloud-calendar-talk-location",
+      "candidate_id": "rc-e594b40135ff",
+      "project_id": "nextcloud",
+      "source": {
+        "commit": "ce0623394e",
+        "file": "user_manual/talk/advanced_features.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "snapshot_file": "user_manual/talk/calendar_integration.rst"
+      },
+      "arm_sha256": {
+        "A": "dcfeced7b638ffb01d2afdbf2e4185b2d12346e3886b87d0a3eed988c03778cb",
+        "B": "d537de288f8338b5bb1e8b9f12c986625be76d7e98c66ac3609ab3b72ea318be",
+        "C": "785b7c584b3844b39ee627beda085ab62bc86ea0b5b556d843c4c51a927e90ee"
+      },
+      "removed_span": "This will create a new conversation if one does not exist yet (app.createConversation(name) returns its token). ",
+      "context_cue": {
+        "status": "present",
+        "reason": "will also appear in the list of conversations"
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "openproject-auto-theme-contrast",
+      "candidate_id": "rc-02df56f00b58",
+      "project_id": "openproject",
+      "source": {
+        "commit": "5e64e38f60",
+        "file": "docs/user-guide/account-settings/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "snapshot_file": "docs/user-guide/account-settings/interface/README.md"
+      },
+      "arm_sha256": {
+        "A": "ac4761e7365efa75c91866fdfc443d7bb64abd606b4d180bfa9808426579db9d",
+        "B": "f39cef04e08e7832e8ad1508b3b105e0a608f8cbe5503f14fd4b99575102a76b",
+        "C": "eaa0cd0dababd98bb42445fc47c230a2dee0befeef3d26666c615cc8bf82731b"
+      },
+      "removed_span": ", including the system's contrast settings. If your operating system is set to high contrast mode, OpenProject will also automatically switch to the corresponding high contrast mode (light or dark)",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "duplicate target wording pruned from localized A",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "openproject-filter-text-autoupdate",
+      "candidate_id": "rc-1114153d4704",
+      "project_id": "openproject",
+      "source": {
+        "commit": "db54165614",
+        "file": "docs/user-guide/work-packages/work-package-table-configuration/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "snapshot_file": "docs/user-guide/work-packages/work-package-table-configuration/README.md"
+      },
+      "arm_sha256": {
+        "A": "cdae31be0f1acf1ca9d42105f5d0984c60539ffa99913b0962801b8494ae5377",
+        "B": "db267370336f5d47ef81c17b87c670e690101dbea3a41b0445644e9ca78c7199",
+        "C": "6092c6e55b1115fe7340dab507193d9b3cd64f83b3665efeeedd46018b9194dc"
+      },
+      "removed_span": "automatically update and ",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "openproject-invite-permission-basis",
+      "candidate_id": "rc-17b31565c57c",
+      "project_id": "openproject",
+      "source": {
+        "commit": "b09683d857",
+        "file": "docs/getting-started/invite-members/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "snapshot_file": "docs/getting-started/invite-members/README.md"
+      },
+      "arm_sha256": {
+        "A": "699d4013614e1d4b5abf66152a98659d80711475f5d77fa61ea9ed9ce0ae2547",
+        "B": "caed52794da244b6d67a9a5ada3b10f685df2a4088af6780475a36a3cbb0c97e",
+        "C": "3674f44756d901d7df03bbcbb5c470f150ae4593c6e7458c27f08b271cc44436"
+      },
+      "removed_span": "Select whether the permissions assigned to the new user should be based on an existing user role, group or a placeholder user permissions. With User or Group, select an existing user or enter an email address for a new one; with Placeholder user, enter the name of a placeholder user. ",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "openproject-archived-project-selector",
+      "candidate_id": "rc-2c13970217ea",
+      "project_id": "openproject",
+      "source": {
+        "commit": "784ed0fb52",
+        "file": "docs/user-guide/projects/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "snapshot_file": "docs/user-guide/projects/project-settings/project-information/README.md",
+        "snapshot_context_file": "docs/getting-started/projects/README.md"
+      },
+      "arm_sha256": {
+        "A": "029a64d1bb3f482e28bdd96244d7fe6d2dfbce90651c6ef82d1a32bc0d440261",
+        "B": "02177f9a326592ae57cd18992cf11cd311874b8d1f266398e00c7d4a425bb6de",
+        "C": "0092473a96fc475ea2aa7dd2809325907b16f9f7002440b222f63129fa96bf42"
+      },
+      "removed_span": " Once archived, a project can no longer be selected from the project list accessible via header navigation.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "openproject-more-menu-subproject",
+      "candidate_id": "rc-4efba0098a79",
+      "project_id": "openproject",
+      "source": {
+        "commit": "60be87235a",
+        "file": "docs/user-guide/projects/project-settings/project-information/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "snapshot_file": "docs/user-guide/projects/project-settings/project-information/README.md"
+      },
+      "arm_sha256": {
+        "A": "8a1ed2ab2d00746584b39d57d352f2578f3c773c49e94add14c78b3d04a03148",
+        "B": "c3aa100e353116a73015cea87faa47222acd0abe19831c4a0982e02ee0d9d5ef",
+        "C": "b6d3bd5057e48d27a50bc8b008a9b9625a9c311c829a64588a7f6efa5bef9884"
+      },
+      "removed_span": "Add a subproject (app.openProjectForm({parent: projectId})), ",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "openproject-files-tab-attachments",
+      "candidate_id": "rc-e436521e462d",
+      "project_id": "openproject",
+      "source": {
+        "commit": "4af6f743b0",
+        "file": "docs/user-guide/projects/project-settings/files/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "snapshot_file": "docs/user-guide/projects/project-settings/files/README.md"
+      },
+      "arm_sha256": {
+        "A": "6266613c8e19856dce86d0ad8b738a044f2116562082fe591e90ee5d6cce18d1",
+        "B": "16e6f71523589357db8e80a3e19ab92c9601753c26baccc884bb60044de21637",
+        "C": "27cc1af14423cc989fa5792570a9ae79dc155868a1ef68cec522b37b6ad9675e"
+      },
+      "removed_span": " To activate or de-activate the attachments being shown under Files tab in work packages, navigate to Project settings > Files and select the Attachments tab (saved in app.settings().attachments). Here you can decide whether the attachments option will be shown under Files tab of work packages detailed view for a specific project.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "wekan-week-number-immediate",
+      "candidate_id": "rc-59d96b056593",
+      "project_id": "wekan",
+      "source": {
+        "commit": "e217f1215a",
+        "file": "docs/Features/Date-Format.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "snapshot_file": "docs/Features/Right-Sidebar/Board-Settings/Date.md"
+      },
+      "arm_sha256": {
+        "A": "a910cb50005e39f3bcc34e03c40745b58e68909fa60107f56a379e6fe8ce5075",
+        "B": "46e4a22f0fbc9812498d4f6d572051759973052efc89a292f7ef75fa48a5cddd",
+        "C": "87c35252190b4d565fc34253783def30171d3a9f642b6c00cdbeb6c8a9267331"
+      },
+      "removed_span": " immediately",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "wekan-swimlane-below-default",
+      "candidate_id": "rc-6b29ef8b44d8",
+      "project_id": "wekan",
+      "source": {
+        "commit": "5ed4268a61",
+        "file": "docs/Features/Swimlanes/Swimlanes.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "snapshot_file": "docs/Features/Swimlanes/Swimlanes.md"
+      },
+      "arm_sha256": {
+        "A": "95c8ae1b9a06d5ee13b03e7991a630a05652ce0db903a8b55d69bc60b29d329b",
+        "B": "492a9129ce09c1281e5a6e3cd32ca9026e058e5ab981349d68b296e182d4c6ee",
+        "C": "06a5cf34be2092f9c3bb3d41bdfa54aec797b849375081b1f005704ec1b87b39"
+      },
+      "removed_span": ", with Below selected by default",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "wekan-home-multi-drop",
+      "candidate_id": "rc-88440629ecb6",
+      "project_id": "wekan",
+      "source": {
+        "commit": "aebc7d9def",
+        "file": "docs/Features/Board/Home.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "snapshot_file": "docs/Features/Board/Home.md"
+      },
+      "arm_sha256": {
+        "A": "fb1c2049d36ebcaeacf367705dc5bbbaab425bb97a73f11b785c0d6cb3c2fae3",
+        "B": "593b1f3026a07df2221e9751aeac21cdd33211506383a2b63fc85a58f0b3a61f",
+        "C": "9af24cbb221de646f3a68f1a5b1722742dd7921d0e91f9c30c325bb3de2e2cce"
+      },
+      "removed_span": "Dropping a multi-selection does not silently choose its first board. It reports \"Please select only one board\", changes nothing and keeps the selection so it can be narrowed. ",
+      "context_cue": {
+        "status": "present",
+        "reason": "one-board drag still sets Home"
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "wekan-field-order-independent",
+      "candidate_id": "rc-899c4d2472ad",
+      "project_id": "wekan",
+      "source": {
+        "commit": "15b2b6c533",
+        "file": "docs/Features/Board/Card-Field-Display-Order.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "snapshot_file": "docs/Features/Right-Sidebar/Board-Settings/Card.md",
+        "duplicate_of": [
+          "rc-90d29a54a512"
+        ]
+      },
+      "arm_sha256": {
+        "A": "cbd20c80b67e08d1310eeca90d6273346d78465858f07b07436b3bde678c434c",
+        "B": "163f20a1fa30ab2f2cb132096e6a76e9549669f063604abe1cecde9808d31700",
+        "C": "d897d8d3dc19f6f465dd615eb449ef40e05fd7d404d7105352aab53fe8c50d41"
+      },
+      "removed_span": " on that side only. They are independent: a field can be third on the minicard and last on the card",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "duplicate target wording pruned from localized A",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "wekan-member-same-org-team",
+      "candidate_id": "rc-8b05adc7767e",
+      "project_id": "wekan",
+      "source": {
+        "commit": "f0ea1601b3",
+        "file": "docs/Features/Members/Members.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "snapshot_file": "docs/Features/Members/Members.md"
+      },
+      "arm_sha256": {
+        "A": "b2dee1a0ea8094b1ac31d289dcb68955845964829162dfafc17ff44e606a58e4",
+        "B": "e042bd8619997ab489939de65d99d6fa4b8e5756a524edb6260e4a330e2c357d",
+        "C": "c1d483dd5952ac2ee232f9f96114794b82a67811480402ef7782d93f12d44879"
+      },
+      "removed_span": ", and when either is on, a user can only be added to a board if they share an enabled kind with the inviter or with an active board member (site admins bypass this)",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "wekan-sync-local-edits",
+      "candidate_id": "rc-f3df2f6e5885",
+      "project_id": "wekan",
+      "source": {
+        "commit": "b254b7d3af",
+        "file": "docs/Features/ImportExport/Sync.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "snapshot_file": "docs/Features/ImportExport/Sync.md"
+      },
+      "arm_sha256": {
+        "A": "c5180b3198b160a35f660747e5b6210c516f67aedd37378dab89dcaa5bed6efb",
+        "B": "550efa410269412d4746aafc6f84a901272cbc931cfe6e4a6f6ad5555eddf0c1",
+        "C": "c5e4a7c8cde93a4e1c3b29a79e8717c04e777ab5fe5ad53baabeb728e143fb9f"
+      },
+      "removed_span": "upstream title/description changes update the card when local text still matches the last synchronized source value; local-only text edits are retained; ",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "zulip-gif-picker-disabled",
+      "candidate_id": "rc-08dffa18a270",
+      "project_id": "zulip",
+      "source": {
+        "commit": "a31cd65175",
+        "file": "starlight_help/src/content/docs/animated-gifs.mdx",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "snapshot_file": "starlight_help/src/content/docs/animated-gifs.mdx"
+      },
+      "arm_sha256": {
+        "A": "0b4ec7cde57d233ef48faa29be47e429229d6b2c4268f4a8f26414c16715aa5d",
+        "B": "0d0d1eed9fe1a4e6bac0fc5c642a407823760259e67d7be0398c5696409abec0",
+        "C": "92623f70f1adce1964c0011d28fd1aa24a8bc3bfe7cdcdc1891ebe6c70bd7c0a"
+      },
+      "removed_span": "Disabling the GIF picker removes it from the compose box. ",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "zulip-resolved-notice-auto-read",
+      "candidate_id": "rc-362ff82e3812",
+      "project_id": "zulip",
+      "source": {
+        "commit": "a11cc9a46e",
+        "file": "help/configure-automated-notices.md",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "snapshot_file": "starlight_help/src/content/docs/configure-automated-notices.mdx",
+        "snapshot_context": [
+          "starlight_help/src/content/include/_ConfigureResolvedNoticesMarkedAsRead.mdx"
+        ]
+      },
+      "arm_sha256": {
+        "A": "d3759752e4c8814d16df3fa4a7a57282333950ae0196b5e3f066c3d951f487ed",
+        "B": "cb9a239262661c15afa667a8d7fa0e9dd884690d87830df0e8c4e929e7d3607b",
+        "C": "6cef4e07f99f0b36e37b1c97c122b561cc2f4fb0fc42618e9cb2d66499d9b2ab"
+      },
+      "removed_span": " Users can configure whether these notices are automatically marked as read, with an \"Automatically mark resolved topic notices as read\" setting that you add to the page's Settings section.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "zulip-reverse-linkifier-paste",
+      "candidate_id": "rc-4200f1dac6a9",
+      "project_id": "zulip",
+      "source": {
+        "commit": "3ca12e7224",
+        "file": "starlight_help/src/content/docs/add-a-custom-linkifier.mdx",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "snapshot_file": "starlight_help/src/content/docs/add-a-custom-linkifier.mdx"
+      },
+      "arm_sha256": {
+        "A": "9dc224a75b78fc0cfcc21f605a11c4e01631c97160c8480ef7a88b1cd9974e45",
+        "B": "91f1ea9bbee4c7d6d88faa2c0c33dece4a749e0df4e3ef4ce71c77359b4eabe1",
+        "C": "c857515c3e6a070a649ea0c9477c3f3ea594847895f3b3977f335309c8427f71"
+      },
+      "removed_span": " You can configure linkifiers to work in reverse as well: when linkText is set and you paste a URL that matches the linkifier's urlTemplate into the compose box, Zulip will automatically convert it to linked text given by the linkifier's linkText (e.g., https://github.com/zulip/zulip/issues/2468 becomes #2468).",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "zulip-subscribe-typeahead",
+      "candidate_id": "rc-c044ebec7fe1",
+      "project_id": "zulip",
+      "source": {
+        "commit": "94c98c5749",
+        "file": "help/include/subscribe-user-to-channel.md",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "snapshot_file": "starlight_help/src/content/include/_SubscribeUserToChannel.mdx"
+      },
+      "arm_sha256": {
+        "A": "53466c68555d3727aec23413f3999995fd21ddcefdd672ebe4f20f34f14d09cc",
+        "B": "48baddf817cb884bfa797eb9c9bb5c6c9522799a5705d4da37062a65167acbe9",
+        "C": "59aea79f7cd159f9ccb29bc8430a3d0ebbf8103cbadffd7ed1c9f93fe955e07e"
+      },
+      "removed_span": " The typeahead will only include users who aren't already subscribed to the channel.",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "zulip-unsubscribe-self",
+      "candidate_id": "rc-dfb84383fb89",
+      "project_id": "zulip",
+      "source": {
+        "commit": "bde295806c",
+        "file": "help/include/unsubscribe-user-from-channel.md",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "snapshot_file": "starlight_help/src/content/docs/unsubscribe-from-a-channel.mdx",
+        "snapshot_context": [
+          "starlight_help/src/content/docs/channel-permissions.mdx"
+        ]
+      },
+      "arm_sha256": {
+        "A": "cf4966184c445bba791dd8be24234bc790c4e752203a58d461fd732fcf7a115d",
+        "B": "cd2d72de08acc0802732029e3ce558a0c0f26dac3be73c2c81b1c7cff1e507e0",
+        "C": "6c862970d5f9ba94f290e3d58e6c361dcdca0a218715291c64b361a05081fe16"
+      },
+      "removed_span": "You can always unsubscribe from any channel in Zulip. ",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "localized requirement plus synthetic API instructions",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    },
+    {
+      "case": "zulip-private-channel-access",
+      "candidate_id": "rc-fd348eb33246",
+      "project_id": "zulip",
+      "source": {
+        "commit": "befe49c293",
+        "file": "help/channel-permissions.md",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "snapshot_file": "starlight_help/src/content/docs/channel-permissions.mdx"
+      },
+      "arm_sha256": {
+        "A": "10d8a939772244e05e8283face4868bc5a172507b2edcbf0cfc6fb36206b0b8e",
+        "B": "7a0c51f625eed9387a0452052b35bceb5772d36fd2d9c4a5fa02919436fddfa4",
+        "C": "07d844b200eb0c064c5eaf2335bfcf46c541c147e8d93e0d73d0351b55ce2181"
+      },
+      "removed_span": "rivate channels (indicated by a lock) are for conversations that should be visible to users who are specifically granted access. P",
+      "context_cue": {
+        "status": "not_independently_coded",
+        "reason": null
+      },
+      "source_adaptation": "duplicate target wording pruned from localized A",
+      "review_status": "reviewed_for_exploratory_collection",
+      "confirmatory_eligible": false
+    }
+  ],
+  "review_scope": "36 new cases reviewed against pinned primary documentation; 10 batch-1 artifacts preserved unchanged. Human audit and independently coded context cues remain pending."
+}

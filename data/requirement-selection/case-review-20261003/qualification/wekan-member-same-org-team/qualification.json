@@ -1,0 +1,83 @@
+{
+  "schema_version": "wekan-member-same-org-team-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 12,
+  "source_scaffold_sha256": "fc81778b1c8ff2bf4404a316f6a643eded0521a321e315d84c1d032a47ab70ea",
+  "runner_sha256": "3f0c12754e40f807b88dfdeb9a973dab7329c3d2e0b5fd57dbb3afc341492249",
+  "qualifier_sha256": "0f610df1ac2db5058b29ffdbd730431d959924eb4e8093d8818aa3cc4ec72433",
+  "cases": [
+    {
+      "mode": "filtered-users",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "91481b325c8c5234a3b00eec89ae64477663f1ce8ce316dec1c597b8db0c1b2c"
+    },
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "bd1047435153ee329fef067a3d468b0597b5671d792ec767c5a378fdd87464f6"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "fff3f9240c75ddb81d2f9d0cba0672f59ddc626d4875400c4f5fc7aff913a459"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "6785f23cf791488de7996f88ca4ce0d41d001da63e36a140ff8ad2828e0b2a34"
+    },
+    {
+      "mode": "any-kind-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "e3fcef75b10363f56fe099bb4aaca4e70490a220ae05f193d832dbfea9c93e2b"
+    },
+    {
+      "mode": "inviter-only-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "46978ed0063a6357972b2c0e157ea300171de8809f16060becd25829a758be84"
+    },
+    {
+      "mode": "inactive-counted-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "07b26e211d5ce50e9ac01e365f7e6986618cbe497c2b5f0640d578dffbc93aad"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "df2cf4437fa306bd5a4b13525760588eb83aa591bf7f84f811c370e4dcd680bd"
+    },
+    {
+      "mode": "duplicate-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "7cd0e15dcb1e3a01e6c2c12de3d2431ecee407de2a15bed3c60c76395bf5d0ce"
+    },
+    {
+      "mode": "never-add-mutant",
+      "expected": "mixed_failure",
+      "observed": "mixed_failure",
+      "report_sha256": "cea24bf4cc2139db66079dc5c56122c89bd7604a31f2e40be1d5f13ab268e07d"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "eeb4aceb6503a2ad78b9a87cd0c855097b9a188ea34fc42cd7fad78c454e2b56"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "c84916dd31526fa870b567a4742970e736b7f24517aa8bbbe5db31232f6a9077"
+    }
+  ]
+}

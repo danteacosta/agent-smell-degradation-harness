@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Compose</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Compose</h1><section aria-label="Linkifiers"><h2>Linkifiers</h2><table id="linkifiers"><thead><tr><th>Pattern</th><th>URL template</th></tr></thead><tbody></tbody></table></section><label>Message <textarea id="compose" rows="3" cols="70"></textarea></label><button id="send" type="button">Send</button><h2>Messages</h2><ul id="messages" aria-label="Messages"></ul></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let messages=load([]);
+const linkifiers=window.initialState.linkifiers;
+const app=Object.freeze({
+  onSend:register,
+  linkifiers(){return structuredClone(linkifiers)},
+  messages(){return structuredClone(messages)},
+  sendMessage(parts){if(!Array.isArray(parts)||!parts.length||!parts.every(p=>p&&typeof p.text==='string'&&(p.href===undefined||/^https?:\/\//.test(p.href))))throw new Error('parts must be {text} or {text, href} pieces');
+    messages.push(parts.map(p=>p.href===undefined?{text:p.text}:{text:p.text,href:p.href}));store(messages);document.querySelector('#compose').value='';render()}
+});
+function render(){
+  const body=document.querySelector('#linkifiers tbody');body.replaceChildren();
+  for(const l of linkifiers){const tr=el('tr');tr.append(el('td',{},l.pattern),el('td',{},l.urlTemplate));body.append(tr)}
+  const list=document.querySelector('#messages');list.replaceChildren();
+  for(const parts of messages){const li=el('li');
+    for(const p of parts)li.append(p.href===undefined?document.createTextNode(p.text):el('a',{href:p.href,'data-href':p.href},p.text));
+    list.append(li)}
+}
+document.querySelector('#send').addEventListener('click',()=>{if(behavior)behavior(document.querySelector('#compose').value)});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

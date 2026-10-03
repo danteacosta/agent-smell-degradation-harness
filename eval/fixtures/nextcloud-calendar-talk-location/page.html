@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Calendar and Talk</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Workspace</h1><section aria-label="Calendar"><h2>Calendar</h2><h3>New event</h3><label>Title <input id="event-title"></label><label>Start <input id="event-start" type="datetime-local"></label><fieldset><legend>Location</legend><label><input type="radio" name="location-type" value="address" checked> Address</label><label><input type="radio" name="location-type" value="talk"> Talk conversation</label><label>Location <input id="location" list="conversation-names"></label><datalist id="conversation-names"></datalist></fieldset><button id="save-event" type="button">Save</button><p id="message" role="status"></p><h3>Events</h3><ul id="events" aria-label="Events"></ul></section><section aria-label="Talk"><h2>Talk</h2><h3>Conversations</h3><ul id="conversations" aria-label="Conversations"></ul></section></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let state=load({conversations:window.initialState.conversations,events:[],next:0});
+const LINK='https://cloud.example.com/call/';
+const app=Object.freeze({
+  onSave:register,
+  conversations(){return structuredClone(state.conversations)},
+  createConversation(name){if(typeof name!=='string'||!name.trim())throw new Error('conversation name required');
+    state.next+=1;const token=window.initialState.tokenPrefix+state.next;state.conversations.push({token,name:name.trim()});store(state);render();return token},
+  conversationLink(token){if(!state.conversations.some(c=>c.token===token))throw new Error('unknown conversation');return LINK+token},
+  events(){return structuredClone(state.events)},
+  createEvent(ev){if(!ev||typeof ev.title!=='string'||!ev.title.trim()||typeof ev.start!=='string'||typeof ev.location!=='string')throw new Error('title, start and location required');
+    state.events.push({title:ev.title.trim(),start:ev.start,location:ev.location});store(state);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){
+  const dl=document.querySelector('#conversation-names');dl.replaceChildren();for(const c of state.conversations)dl.append(el('option',{value:c.name}));
+  const cl=document.querySelector('#conversations');cl.replaceChildren();for(const c of state.conversations)cl.append(el('li',{'data-token':c.token,'data-name':c.name},c.name));
+  const list=document.querySelector('#events');list.replaceChildren();
+  for(const e of state.events)list.append(el('li',{'data-title':e.title,'data-start':e.start,'data-location':e.location},e.title+' — '+e.start.replace('T',' ')+(e.location?' — '+e.location:'')));
+}
+document.querySelector('#save-event').addEventListener('click',()=>{if(behavior)behavior({title:document.querySelector('#event-title').value,start:document.querySelector('#event-start').value,
+  location:{type:document.querySelector('input[name=location-type]:checked').value,value:document.querySelector('#location').value}})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

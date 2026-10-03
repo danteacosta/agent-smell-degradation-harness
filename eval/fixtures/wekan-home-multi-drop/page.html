@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><title>All Boards</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>All Boards</h1><p id="home-row"></p><button id="drop-home" type="button">Drop on Home</button><p id="message" role="status"></p><ul id="boards" aria-label="Boards"></ul></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let home=load(window.initialState.home);
+let selected=[];
+const boards=window.initialState.boards;
+const app=Object.freeze({
+  onDrop:register,
+  boards(){return structuredClone(boards)},
+  home(){return home},
+  selection(){return [...selected]},
+  setHome(id){if(id!==null&&!boards.some(b=>b.id===id))throw new Error('unknown board');home=id;store(home);render()},
+  clearSelection(){selected=[];render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){const h=boards.find(b=>b.id===home);const row=document.querySelector('#home-row');
+  row.dataset.home=h?h.id:'';row.textContent='Home ('+(h?1:0)+')'+(h?': '+h.title:'');
+  const list=document.querySelector('#boards');list.replaceChildren();
+  for(const b of boards){const on=selected.includes(b.id);const li=el('li',{'data-id':b.id,'data-selected':on});
+    const box=el('input',{type:'checkbox',class:'select','aria-label':'Select '+b.title});box.checked=on;
+    li.append(box,document.createTextNode(' '+b.title));list.append(li)}}
+document.querySelector('#boards').addEventListener('change',e=>{if(!e.target.matches('input.select'))return;const id=e.target.closest('li').dataset.id;
+  selected=e.target.checked?[...selected.filter(x=>x!==id),id]:selected.filter(x=>x!==id);render()});
+document.querySelector('#drop-home').addEventListener('click',()=>{if(behavior)behavior([...selected])});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

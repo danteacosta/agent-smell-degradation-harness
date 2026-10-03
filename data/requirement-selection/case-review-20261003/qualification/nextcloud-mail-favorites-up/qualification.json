@@ -1,0 +1,59 @@
+{
+  "schema_version": "nextcloud-mail-favorites-up-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 8,
+  "source_scaffold_sha256": "2d6fa2c3eb1cdcb34f8570c800b8698964b73535052a0b1e02121b421c4bf919",
+  "runner_sha256": "490f5a25a08a6670cf9cca295365de6a5d3770803d1eea21c4fdc55b9ac52778",
+  "qualifier_sha256": "f84dc459167be92f9e46907e76857c36c3a35717be467e4a83f43b3c3e6734c3",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "a78919646387c5fc21ec8be6e48195c7550214b750c32283c006fcf86570a301"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "d97cfbd4b23e38f4b95e70b362663903206b5541ad5ee75c37389974cdf265b8"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "c1605fdfc79d9e4e529727e09a7121236bd1f1004b06b27bd9db7aa237e88045"
+    },
+    {
+      "mode": "inline-pin-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "2e63878ade5116ad28461586a73d5cab0ecdc6614f32ff040eee9cb21691b552"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "2c82db795cdeb4b4f1f3bd1dcc9aaf68de9bc92eac7b9f070960c8fa3ff61ce4"
+    },
+    {
+      "mode": "always-pinned-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "5c70ceb4026734d4adac41c368864b64033dd50d6c3f3655bcc079f63ffad00f"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "7d2fe303bdfc96c503057a0f70f1aa2c14d2156fe02c964b0826e3b635603abc"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "bbd6d7339f7df5e28bfa672e5e436e0919b6e67f74a57f70b668aec03987f0f6"
+    }
+  ]
+}

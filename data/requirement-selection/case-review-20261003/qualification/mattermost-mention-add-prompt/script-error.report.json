@@ -1,0 +1,10 @@
+{
+  "schema_version": "mattermost-mention-add-prompt-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "c241e880528abba4d1508dead3dabb552a9d9d2f22fb5259ab7a962ca1ef233f",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

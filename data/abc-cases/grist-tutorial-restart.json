@@ -1,0 +1,28 @@
+{
+  "case": "grist-tutorial-restart",
+  "intent_id": "grist-tutorial-restart",
+  "project_id": "grist",
+  "candidate_id": "rc-aac66a0af69a",
+  "source": {
+    "commit": "4c173049c5",
+    "file": "help/en/docs/document-tutorials.md",
+    "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+    "snapshot_file": "help/en/docs/document-tutorials.md"
+  },
+  "fixture": "eval/fixtures/grist-tutorial-restart",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onRestart to handle the visible Restart button at the bottom of the tutorial popup. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the Restart button of the tutorial popup. You work in your own fork of the tutorial document: edits in the grid change only the fork (app.forkRows(), app.setCell(id, value)), and clicking Replace original saves the fork's data to the main document (app.originalRows()). Restart starts the tutorial again from the first slide (app.setSlide(0)); app.refresh() refreshes the page. Clicking 'Restart' at the bottom of the tutorial popup will refresh the page, causing any unsaved changes to be lost. Be sure to save changes to the main document prior to clicking this.",
+    "B": "The tutorial popup has a Restart button at its bottom. The user works in a personal fork of the tutorial document: grid edits change only that fork (app.forkRows(), app.setCell(id, value)), while the Replace original button saves the fork's data into the main document (app.originalRows()). Restarting takes the tutorial back to its first slide (app.setSlide(0)) and refreshes the page, which app.refresh() does; any change not yet saved is lost when Restart is clicked, so changes should be saved to the main document before clicking it.",
+    "C": "Implement the Restart button of the tutorial popup. You work in your own fork of the tutorial document: edits in the grid change only the fork (app.forkRows(), app.setCell(id, value)), and clicking Replace original saves the fork's data to the main document (app.originalRows()). Restart starts the tutorial again from the first slide (app.setSlide(0)); app.refresh() refreshes the page. Clicking 'Restart' at the bottom of the tutorial popup will refresh the page. Be sure to save changes to the main document prior to clicking this."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100313,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

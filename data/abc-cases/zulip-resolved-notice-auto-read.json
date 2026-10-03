@@ -1,0 +1,31 @@
+{
+  "case": "zulip-resolved-notice-auto-read",
+  "intent_id": "zulip-resolved-notice-auto-read",
+  "project_id": "zulip",
+  "candidate_id": "rc-362ff82e3812",
+  "source": {
+    "commit": "a11cc9a46e",
+    "file": "help/configure-automated-notices.md",
+    "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+    "snapshot_file": "starlight_help/src/content/docs/configure-automated-notices.mdx",
+    "snapshot_context": [
+      "starlight_help/src/content/include/_ConfigureResolvedNoticesMarkedAsRead.mdx"
+    ]
+  },
+  "fixture": "eval/fixtures/zulip-resolved-notice-auto-read",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onResolve to handle the visible Resolve topic / Unresolve topic buttons. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement resolving topics. When the user clicks a topic's Resolve topic or Unresolve topic button, mark the topic as resolved or unresolved with app.setResolved(topicId, resolved). A notice is sent by Notification Bot when a topic is resolved or unresolved: post it with app.sendNotice(topicId, content), which returns the new message's id. Messages stay unread until app.markAsRead(id) is called; the signed-in user is app.user(), and user settings are read with app.setting(name) and stored with app.saveSetting(name, value). Users can configure whether these notices are automatically marked as read, with an \"Automatically mark resolved topic notices as read\" setting that you add to the page's Settings section.",
+    "B": "Every topic has a Resolve topic or Unresolve topic button, and clicking it changes the topic's state through app.setResolved(topicId, resolved). Whenever a topic is resolved or unresolved, Notification Bot posts a notice, created with app.sendNotice(topicId, content), which gives back the id of the new message. A message only becomes read through app.markAsRead(id); app.user() is the signed-in user, and app.setting(name) and app.saveSetting(name, value) read and store user settings. Each user decides whether these notices get marked as read automatically: add an \"Automatically mark resolved topic notices as read\" setting to the Settings section of the page for this choice.",
+    "C": "Implement resolving topics. When the user clicks a topic's Resolve topic or Unresolve topic button, mark the topic as resolved or unresolved with app.setResolved(topicId, resolved). A notice is sent by Notification Bot when a topic is resolved or unresolved: post it with app.sendNotice(topicId, content), which returns the new message's id. Messages stay unread until app.markAsRead(id) is called; the signed-in user is app.user(), and user settings are read with app.setting(name) and stored with app.saveSetting(name, value)."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100342,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

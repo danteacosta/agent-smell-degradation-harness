@@ -1,0 +1,10 @@
+{
+  "schema_version": "wekan-sync-local-edits-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "0a290d81782bea944f64c576ef63b265f0e9575bff002bc00d48f83f2efa36cd",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

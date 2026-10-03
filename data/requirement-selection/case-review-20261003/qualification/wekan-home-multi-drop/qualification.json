@@ -1,0 +1,65 @@
+{
+  "schema_version": "wekan-home-multi-drop-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 9,
+  "source_scaffold_sha256": "142d1ebcfe5cf3d9762baa26f123ece4a092d824b3bfcbfa6601b4458404876e",
+  "runner_sha256": "c44fc9913b4063cda98edbf4564906ac5a6fe3182ee9066225c6c9835d7ad72f",
+  "qualifier_sha256": "12a0ec5515d77c4b47544433fae3a1d5e7039203e62c13824a37fb2565f234e1",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "a4280be32750b86f7f09ab661b2bc3e565837bce8ffb18c8392e87dcdeba34f5"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "23e8122744d25486033d0900a2be790776555aba57345c8719409561441063f9"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "56bdc95217506b98515449e666735963b6eab990557257c4da77712b0dd88d49"
+    },
+    {
+      "mode": "first-keeps-selection-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "17c0ef2e04b70ea497ead9ee995878291d8d5b3a6dcb5f32b4da2cf5eb6c633b"
+    },
+    {
+      "mode": "silent-reject-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "3b2c6b66858bc20793c6d0f8a1f320212c6bc20907afab1fccb4d6650c047220"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "6a6ba85e5225fdf883f36b5b86051fb13260495e7e6f3e74274a1418a92376a6"
+    },
+    {
+      "mode": "toggle-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "16c05a4e0bea417e246d95c6df9e4ab644228cdbba67f5ac959180d9a090cbe0"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "8471c7ff693d12c44c08b208dbc1655de1ba8e0a47ca786f51dc5182f05c6e89"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "4a6783acd3343a240cdad1ee282d03ebb55d9a7ebb9b6df90cd169445da5f38b"
+    }
+  ]
+}

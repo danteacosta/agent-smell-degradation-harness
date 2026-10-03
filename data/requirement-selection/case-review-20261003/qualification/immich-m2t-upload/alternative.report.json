@@ -1,0 +1,20 @@
+{
+  "schema_version": "immich-m2t-upload-browser/v1",
+  "status": "complete",
+  "app_sha256": "b57089641f8edc9b57cc12431f4b9eeaa6253c0cb80aea0f2dfb138b0d88b8df",
+  "assertions": {
+    "m2t_accepted_1": true,
+    "other_video_accepted_1": true,
+    "non_video_rejected_1": true,
+    "each_file_decided_once_1": true,
+    "m2t_accepted_2": true,
+    "other_video_accepted_2": true,
+    "non_video_rejected_2": true,
+    "each_file_decided_once_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": "openproject-more-menu-subproject-browser/v1",
+  "status": "complete",
+  "app_sha256": "3b10e4f3965bf19aff74387abd6c46a8c8f6f9e5011c532552e818388ec2adac",
+  "assertions": {
+    "make_public_works_1": true,
+    "subproject_created_under_current_1": true,
+    "existing_projects_kept_1": true,
+    "set_template_works_2": true,
+    "subproject_created_under_current_2": true,
+    "existing_projects_kept_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

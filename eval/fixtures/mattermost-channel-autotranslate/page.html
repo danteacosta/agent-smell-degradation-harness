@@ -1,0 +1,28 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Channel</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Channels</h1><p id="signed-in"></p><button id="open" type="button">Open channel</button><h2 id="channel-name"></h2><ol id="messages" aria-label="Messages"></ol></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let shown=[];
+const app=Object.freeze({
+  onOpen:register,
+  user(){return structuredClone(window.initialState.user)},
+  channel(){return structuredClone(window.initialState.channel)},
+  translate(text,language){if(typeof text!=='string'||typeof language!=='string')throw new Error('text and language required');
+    const hit=window.initialState.translations.find(t=>t.text===text&&t.language===language);return hit?hit.translation:text},
+  showMessages(list){const msgs=window.initialState.channel.messages;
+    if(!Array.isArray(list)||!list.every(m=>m&&msgs.some(x=>x.id===m.id)&&typeof m.text==='string'))throw new Error('known message ids and text required');
+    shown=list.map(m=>({id:m.id,text:m.text}));render()}
+});
+function render(){const s=window.initialState;document.querySelector('#signed-in').textContent='Signed in as '+s.user.username;
+  document.querySelector('#channel-name').textContent=shown.length?'~'+s.channel.name:'';
+  const list=document.querySelector('#messages');list.replaceChildren();
+  for(const m of shown){const author=s.channel.messages.find(x=>x.id===m.id).author;list.append(el('li',{'data-id':m.id,'data-text':m.text},author+': '+m.text))}}
+document.querySelector('#open').addEventListener('click',()=>{if(behavior)behavior(app.channel())});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

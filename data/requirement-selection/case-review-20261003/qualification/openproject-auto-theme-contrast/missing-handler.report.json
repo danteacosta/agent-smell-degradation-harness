@@ -1,0 +1,8 @@
+{
+  "schema_version": "openproject-auto-theme-contrast-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "176fabec0f600d12f9d282981fca3b36305c872b2dcb9b99a3878c250a04310b",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

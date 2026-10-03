@@ -1,0 +1,28 @@
+{
+  "case": "grist-suggestions-open-copy",
+  "intent_id": "grist-suggestions-open-copy",
+  "project_id": "grist",
+  "candidate_id": "rc-ade633af9c14",
+  "source": {
+    "commit": "af6962bf5b",
+    "file": "help/en/docs/sharing.md",
+    "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+    "snapshot_file": "help/en/docs/sharing.md"
+  },
+  "fixture": "eval/fixtures/grist-suggestions-open-copy",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onDocument to handle the visible Open buttons and the cells of the shown document. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement opening and editing documents. app.onDocument(handler) receives {type: 'open', docId} when a document's Open button is clicked and {type: 'edit', docId, rowId, value} when a cell of the shown document is edited. app.documents() lists the documents and whether suggestions are enabled for each, app.user() is the signed-in user or null when signed out, app.copy(id) makes a copy of a document and returns its id, app.show(id) shows a document, and app.setCell(docId, rowId, value) changes a cell. Without suggestions, changes to data in a document are made in real time. With suggestions enabled, users (signed-in or not) automatically open a copy of a document. With suggestions, edits are made to a copy without modifying the original, and are then submitted as suggestions to be reviewed by the document Owner prior to integration (submitting is not part of this page).",
+    "B": "The handler registered with app.onDocument is called with {type: 'open', docId} when an Open button is clicked and with {type: 'edit', docId, rowId, value} when a cell of the shown document changes. app.documents() returns the documents, each saying whether it has suggestions enabled; app.user() is the signed-in user, or null for someone signed out; app.copy(id) copies a document and returns the copy's id; app.show(id) shows a document; app.setCell(docId, rowId, value) changes a cell. A document without suggestions takes data changes in real time. When a document has suggestions enabled, opening it automatically opens a copy instead, for signed-in and signed-out users alike, and edits go to that copy while the original stays unmodified; the edits are later submitted as suggestions for the document Owner to review before integration (submitting is not part of this page).",
+    "C": "Implement opening and editing documents. app.onDocument(handler) receives {type: 'open', docId} when a document's Open button is clicked and {type: 'edit', docId, rowId, value} when a cell of the shown document is edited. app.documents() lists the documents and whether suggestions are enabled for each, app.user() is the signed-in user or null when signed out, app.copy(id) makes a copy of a document and returns its id, app.show(id) shows a document, and app.setCell(docId, rowId, value) changes a cell. Without suggestions, changes to data in a document are made in real time. With suggestions, edits are made to a copy without modifying the original, and are then submitted as suggestions to be reviewed by the document Owner prior to integration (submitting is not part of this page)."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100314,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

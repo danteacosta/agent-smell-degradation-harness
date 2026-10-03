@@ -1,0 +1,34 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Lunch orders tutorial</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Lunch orders (your fork)</h1><table id="grid" aria-label="Orders"><tbody></tbody></table><button id="replace" type="button">Replace original</button><p id="message" role="status"></p><aside aria-label="Tutorial" style="border:1px solid #bbb;padding:1rem;margin-top:1rem"><p id="slide"></p><button id="prev" type="button">Previous</button> <button id="next" type="button">Next</button><footer style="margin-top:1rem"><button id="restart" type="button">Restart</button></footer></aside></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+const init=window.initialState;let s=load({slide:init.slide,fork:structuredClone(init.rows),original:structuredClone(init.rows)});
+function row(id){const r=s.fork.find(r=>r.id===id);if(!r)throw new Error('unknown row');return r}
+const app=Object.freeze({
+  onRestart:register,
+  slide(){return s.slide},
+  setSlide(i){if(!Number.isInteger(i)||i<0||i>=init.slides.length)throw new Error('no such slide');s.slide=i;store(s);render()},
+  forkRows(){return structuredClone(s.fork)},
+  originalRows(){return structuredClone(s.original)},
+  setCell(id,value){row(id).value=String(value);store(s);render()},
+  refresh(){location.reload()}
+});
+function render(){
+  const body=document.querySelector('#grid tbody');body.replaceChildren();
+  for(const r of s.fork){const input=el('input',{'data-row':r.id,'data-stored':r.value,'aria-label':r.label});input.value=r.value;
+    const td=el('td');td.append(input);const tr=el('tr');tr.append(el('th',{},r.label),td);body.append(tr)}
+  const sl=document.querySelector('#slide');sl.dataset.index=String(s.slide);sl.textContent='Slide '+(s.slide+1)+' of '+init.slides.length+': '+init.slides[s.slide];
+}
+document.querySelector('#grid').addEventListener('change',e=>{if(!e.target.matches('input[data-row]'))return;row(e.target.dataset.row).value=e.target.value;store(s);render()});
+document.querySelector('#replace').addEventListener('click',()=>{s.original=structuredClone(s.fork);store(s);document.querySelector('#message').textContent='Original replaced'});
+document.querySelector('#prev').addEventListener('click',()=>{if(s.slide>0){s.slide-=1;store(s);render()}});
+document.querySelector('#next').addEventListener('click',()=>{if(s.slide<init.slides.length-1){s.slide+=1;store(s);render()}});
+document.querySelector('#restart').addEventListener('click',()=>{if(behavior)behavior()});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

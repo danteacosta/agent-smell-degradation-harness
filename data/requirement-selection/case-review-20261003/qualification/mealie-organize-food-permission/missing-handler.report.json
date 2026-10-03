@@ -1,0 +1,8 @@
+{
+  "schema_version": "mealie-organize-food-permission-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "721792932c30a1275385715ee9e340b42a6ebf5bdbbadaf82cefe6a12431649e",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

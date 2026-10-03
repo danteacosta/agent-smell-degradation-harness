@@ -1,0 +1,8 @@
+{
+  "schema_version": "immich-path-search-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "cba5cb23325636cc2fbce81b3fd1e598593ce8cd521e66ade72a1d92cfd1c74c",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": "nextcloud-mail-delegation-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "306e4a07a006c659d4ab4915e0bc314d926471e7cc4e86efb85ee13a5755d7ce",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

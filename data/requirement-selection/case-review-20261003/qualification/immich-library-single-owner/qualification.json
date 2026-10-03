@@ -1,0 +1,53 @@
+{
+  "schema_version": "immich-library-single-owner-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 7,
+  "source_scaffold_sha256": "a5d1fbb7c3692db2a54aab30db71673abc7eb6b1bd7967e75895bd0bcb64ce14",
+  "runner_sha256": "4e8ded7ee901e41ed273bf9ee242a3ad4dd5c039be1c6d7384e40a5deb376b86",
+  "qualifier_sha256": "f9209e16457c761cdbe0ffee5da43b540ba195e3f66f4675c97793bfe3bc5c3b",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "b9be5c873e7ab2541d3156736a62a52cd79e79e69d3aa009668708186c1d8bc8"
+    },
+    {
+      "mode": "first-owner",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "8aad2a97400b10b91d29f25b8a99f66e726872e7cd81069cdbdae80f3a3b4d90"
+    },
+    {
+      "mode": "radio-like",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "e2ee30c30208df2d0599e3594e2ac00e8eae0af493d3c598bcf6682a4b9689a9"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "699c85549b2d788a0b262fab21bb51a133d7507a85ff25df4cf7a912b8e5b09c"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "9a41ee7c092d3172e4a5662b957ca8c3c5b3aa444c0fa80d684d6d5b040cd036"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "4ce9f7bb1eec397312c9fc6c4becf146457cda39e50ef08fffdf7187b541481f"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "fe0716fc911a1a75aba6ea1e585a42a0c502f707c9141af92446b5a89c13dd26"
+    }
+  ]
+}

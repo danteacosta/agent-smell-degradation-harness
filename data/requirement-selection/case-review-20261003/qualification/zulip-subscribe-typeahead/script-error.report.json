@@ -1,0 +1,10 @@
+{
+  "schema_version": "zulip-subscribe-typeahead-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "3cec90200c30e92cf798d673c803903cc86acd8a34fadfb2cc0f32d07e11c0bd",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

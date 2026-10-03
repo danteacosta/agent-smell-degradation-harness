@@ -1,0 +1,10 @@
+{
+  "schema_version": "zulip-unsubscribe-self-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "ca74b7183b42d124a6ec223454fb0faa59e21ca565f611592eebf767191e9699",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

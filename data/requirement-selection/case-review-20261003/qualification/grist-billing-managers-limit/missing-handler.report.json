@@ -1,0 +1,8 @@
+{
+  "schema_version": "grist-billing-managers-limit-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "31115b04687d99fe83567472fac5606fb7e61732707bf6431db27bb6cc71c535",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

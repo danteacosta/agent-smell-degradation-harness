@@ -1,0 +1,10 @@
+{
+  "schema_version": "paperless-custom-field-no-value-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "e32c006d4f99164b5b659a41ae11e5dfeb278ac8c201989d685bfff9931f4a87",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

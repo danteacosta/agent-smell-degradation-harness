@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Channel</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>~<span id="channel"></span></h1><p id="signed-in"></p><h2>Members</h2><ul id="members" aria-label="Members"></ul><ol id="posts" aria-label="Messages"></ol><ul id="notices" aria-label="Notices"></ul><label>Message <input id="message" size="60"></label><button id="send" type="button">Send</button></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let channel=load({members:window.initialState.members,posts:[]});
+let notices=[];
+const users=window.initialState.users;
+const app=Object.freeze({
+  onSend:register,
+  currentUser(){return window.initialState.currentUser},
+  members(){return [...channel.members]},
+  users(){return structuredClone(users)},
+  post(text){if(typeof text!=='string'||!text.trim())throw new Error('text required');channel.posts.push({author:window.initialState.currentUser,text});store(channel);render()},
+  addMembers(usernames){if(!Array.isArray(usernames)||!usernames.every(u=>users.some(x=>x.username===u)))throw new Error('known usernames required');
+    for(const u of usernames)if(!channel.members.includes(u))channel.members.push(u);store(channel);render()},
+  showNotice(text,action){if(typeof text!=='string'||!text)throw new Error('text required');
+    if(action!==undefined&&(typeof action!=='object'||action===null||typeof action.label!=='string'||typeof action.run!=='function'))throw new Error('action needs label and run');
+    notices.push({text,action});render()}
+});
+function render(){const s=window.initialState;document.querySelector('#channel').textContent=s.channel;
+  document.querySelector('#signed-in').textContent='Signed in as '+s.currentUser;
+  const members=document.querySelector('#members');members.replaceChildren();
+  for(const u of channel.members)members.append(el('li',{'data-username':u},u));
+  const posts=document.querySelector('#posts');posts.replaceChildren();
+  for(const p of channel.posts)posts.append(el('li',{'data-text':p.text},p.author+': '+p.text));
+  const list=document.querySelector('#notices');list.replaceChildren();
+  for(const notice of notices){const li=el('li');li.append(el('span',{},notice.text));
+    if(notice.action){const b=el('button',{type:'button'},notice.action.label);
+      b.addEventListener('click',()=>{notices=notices.filter(x=>x!==notice);render();notice.action.run()});li.append(document.createTextNode(' '),b)}
+    list.append(li)}}
+document.querySelector('#send').addEventListener('click',()=>{if(behavior)behavior(document.querySelector('#message').value)});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

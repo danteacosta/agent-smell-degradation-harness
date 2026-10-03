@@ -1,0 +1,8 @@
+{
+  "schema_version": "mattermost-anonymous-team-url-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "1a29a6642e80627dea9a626a0e0ac672af3e36da63790b3a22376be2df88b40f",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

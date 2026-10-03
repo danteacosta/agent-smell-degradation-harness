@@ -1,0 +1,8 @@
+{
+  "schema_version": "mealie-planner-food-label-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "b36b1a00bfa247a6f924d9156d4c298815f57252f80caf96a23baa6c25ae8477",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

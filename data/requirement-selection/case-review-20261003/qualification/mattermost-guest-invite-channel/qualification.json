@@ -1,0 +1,53 @@
+{
+  "schema_version": "mattermost-guest-invite-channel-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 7,
+  "source_scaffold_sha256": "4c14c7de56903b544981ad5b6c5204f69beab2842cc8dbcb5c2e02b7761180e0",
+  "runner_sha256": "8f9910379cc70c0e7b604ff169b0b64e6182059f2304035d1fe44ee104313a58",
+  "qualifier_sha256": "cf69c652153b9a973b99d653e47594c6f537138ba4ab790c863ffceb40858b3b",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "4a4215b11f6e3941225b0e6fb39f8aa4379523d9e3638fae114846de78226ef8"
+    },
+    {
+      "mode": "disable-control",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "f1241c6780b77b0ee3632c5c8a0b55ef81b1d800ac4af367e434558ac86018d7"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "5739c2ec308d145cbca496d75b3dfff74b018e52b8b48c77790f21d4d28dba6d"
+    },
+    {
+      "mode": "all-channels-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "a755bab05a8d646ac8307e3a76218fef7188484d0527cc2ebbb48059cfef4d09"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "feb49470431e9784f3e72265133ba25bd94311f58a3d020295764091fa5a2973"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "dec6078216836f5ef83175ca53c644f07839967c60f4d1c5dabbf34b2eae25a4"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "b8d94575fc2ac3a6c63294a53faff08ba756144c9a304f244ba09016ae49c788"
+    }
+  ]
+}

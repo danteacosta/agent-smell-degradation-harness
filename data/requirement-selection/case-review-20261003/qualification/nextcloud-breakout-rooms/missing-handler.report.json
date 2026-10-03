@@ -1,0 +1,8 @@
+{
+  "schema_version": "nextcloud-breakout-rooms-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "740e8b9ede7cf2eeee44dc1de20d1d79a25e914ceb64b41aeb59453552a14eac",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

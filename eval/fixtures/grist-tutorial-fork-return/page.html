@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Tutorial document</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Tutorial document</h1><p id="user"></p><label>Address <input id="address" size="70"></label><button id="go" type="button">Go</button> <button id="close" type="button">Close document</button><section id="view" aria-label="Shown document"><p id="view-url"></p><table id="grid"><tbody></tbody></table></section></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+const user=window.initialState.user;
+let s=load({docs:window.initialState.docs,forks:window.initialState.forks,shown:null,created:0});
+function find(id){const d=s.docs.find(d=>d.id===id)||s.forks.find(f=>f.id===id);if(!d)throw new Error('unknown document or fork');return d}
+const app=Object.freeze({
+  onGo:register,
+  user(){return structuredClone(user)},
+  documents(){return structuredClone(s.docs)},
+  forks(){return structuredClone(s.forks)},
+  createFork(docId){const d=s.docs.find(d=>d.id===docId);if(!d)throw new Error('unknown document');s.created+=1;
+    const forkId='n'+s.created+'Q7xK'+docId.length;const f={id:docId+'~'+forkId+'~'+user.id,docId,forkId,userId:user.id,rows:structuredClone(d.rows)};
+    s.forks.push(f);store(s);return f.id},
+  show(id){find(id);s.shown=id;store(s);render()}
+});
+function render(){
+  document.querySelector('#user').textContent='Signed in as '+user.name+' (user '+user.id+')';
+  const v=document.querySelector('#view');const d=s.shown===null?null:find(s.shown);
+  v.dataset.shown=d?d.id:'';v.dataset.doc=d?(d.docId||d.id):'';v.dataset.forkUser=d&&d.userId?d.userId:'';
+  document.querySelector('#view-url').textContent=d?'Showing https://docs.getgrist.com/doc/'+d.id+(d.docId?' (fork)':' (original)'):'No document open';
+  const body=document.querySelector('#grid tbody');body.replaceChildren();
+  if(d)for(const r of d.rows){const input=el('input',{'data-row':r.id,'data-stored':r.value,'aria-label':r.label});input.value=r.value;const td=el('td');td.append(input);const tr=el('tr');tr.append(el('th',{},r.label),td);body.append(tr)}
+}
+document.querySelector('#go').addEventListener('click',()=>{if(behavior)behavior(document.querySelector('#address').value)});
+document.querySelector('#close').addEventListener('click',()=>{s.shown=null;store(s);render()});
+document.querySelector('#grid').addEventListener('change',e=>{if(!e.target.matches('input[data-row]')||s.shown===null)return;const r=find(s.shown).rows.find(r=>r.id===e.target.dataset.row);r.value=e.target.value;store(s);render()});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

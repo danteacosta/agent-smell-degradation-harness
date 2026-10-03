@@ -1,0 +1,10 @@
+{
+  "schema_version": "openproject-filter-text-autoupdate-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "fef95555d5cd86cca6d94fc71918fe74b29785430e5cc5bd6652046c2b66bfc7",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

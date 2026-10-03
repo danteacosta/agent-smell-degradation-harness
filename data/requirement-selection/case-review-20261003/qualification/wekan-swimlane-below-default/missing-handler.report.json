@@ -1,0 +1,8 @@
+{
+  "schema_version": "wekan-swimlane-below-default-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "1b4c8e39680c16766222260b8ffffa6a197668c1dbb1b42c0efdf19eb71d7c12",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

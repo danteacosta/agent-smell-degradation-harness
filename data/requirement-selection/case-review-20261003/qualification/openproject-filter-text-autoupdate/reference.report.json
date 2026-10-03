@@ -1,0 +1,18 @@
+{
+  "schema_version": "openproject-filter-text-autoupdate-browser/v1",
+  "status": "complete",
+  "app_sha256": "e3f6400d72fdaa294c84150c36a32f347b01455d10596307f085aa57a2e53681",
+  "assertions": {
+    "results_update_while_typing_1": true,
+    "text_matches_subject_description_comments_1": true,
+    "empty_text_shows_all_1": true,
+    "results_update_while_typing_2": true,
+    "text_matches_subject_description_comments_2": true,
+    "empty_text_shows_all_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

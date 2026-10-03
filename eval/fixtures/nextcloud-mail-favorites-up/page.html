@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Mail</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Mail</h1><nav><button id="open-inbox" type="button">Inbox</button></nav><section aria-label="Mail settings"><h2>Mail settings</h2><h3>Sorting</h3><label>Sort order <select id="sort-order"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></label><h3>Appearance</h3><label><input id="favorites-up" type="checkbox"> Sort favorites up</label></section><section aria-label="Message list"><h2>Message list</h2><div id="list"></div></section></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let settings=load(window.initialState.settings);
+let opened=false,sections=[];
+const msgs=window.initialState.messages;
+const app=Object.freeze({
+  onOpen:register,
+  settings(){return structuredClone(settings)},
+  messages(){return structuredClone(msgs)},
+  showMessageList(list){if(!Array.isArray(list)||!list.every(s=>s&&Array.isArray(s.ids)&&s.ids.every(id=>msgs.some(m=>m.id===id))))throw new Error('sections of known message ids required');
+    sections=list.map(s=>({heading:String(s.heading??''),ids:[...s.ids]}));render()}
+});
+function render(){
+  document.querySelector('#sort-order').value=settings.sortOrder;document.querySelector('#favorites-up').checked=settings.sortFavoritesUp;
+  const box=document.querySelector('#list');box.replaceChildren();
+  for(const s of sections){const sec=el('section',{'data-ids':s.ids.join(',')});if(s.heading)sec.append(el('h3',{},s.heading));const ul=el('ul');
+    for(const id of s.ids){const m=msgs.find(x=>x.id===id);ul.append(el('li',{'data-id':id},(m.favorite?'Favorite · ':'')+m.from+': '+m.subject+' ('+m.date.slice(0,10)+')'))}
+    sec.append(ul);box.append(sec)}
+}
+function open(){opened=true;if(behavior)behavior(app.settings(),app.messages())}
+document.querySelector('#open-inbox').addEventListener('click',open);
+document.querySelector('#sort-order').addEventListener('change',e=>{settings={...settings,sortOrder:e.target.value};store(settings);if(opened)open()});
+document.querySelector('#favorites-up').addEventListener('change',e=>{settings={...settings,sortFavoritesUp:e.target.checked};store(settings);if(opened)open()});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

@@ -1,0 +1,18 @@
+{
+  "schema_version": "nextcloud-device-password-once-browser/v1",
+  "status": "complete",
+  "app_sha256": "be282af9f818efec125e5b157c1a6c7b031920d7401069d0a55ac34c64975490",
+  "assertions": {
+    "password_not_revealed_later_1": true,
+    "password_shown_at_creation_1": true,
+    "devices_listed_1": true,
+    "password_not_revealed_later_2": true,
+    "password_shown_at_creation_2": true,
+    "devices_listed_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

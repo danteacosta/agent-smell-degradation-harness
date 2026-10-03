@@ -1,0 +1,18 @@
+{
+  "schema_version": "mattermost-anonymous-team-url-browser/v1",
+  "status": "complete",
+  "app_sha256": "e5a52a9e18bb6e617a8fa6829c5d0f4c7203ca995d39cc297b4fdd93232e200f",
+  "assertions": {
+    "url_assigned_without_prompt_1": false,
+    "team_created_once_1": false,
+    "existing_teams_kept_1": true,
+    "url_step_shown_2": false,
+    "chosen_url_saved_2": false,
+    "existing_teams_kept_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

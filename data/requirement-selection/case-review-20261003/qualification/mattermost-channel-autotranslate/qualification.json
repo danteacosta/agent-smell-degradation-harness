@@ -1,0 +1,65 @@
+{
+  "schema_version": "mattermost-channel-autotranslate-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 9,
+  "source_scaffold_sha256": "d28d1f8db7438847c9b7463c5b5358aced793bff3d1f050447309b3f35164e2e",
+  "runner_sha256": "f7abd17c81e305be248a5e14a26681c3711cf9af8cce47de80d5a8e3e8b0b22b",
+  "qualifier_sha256": "c3f143207897f0102983cf2df4f4ac96cf1d24a703e830aa1b73a836aa8b5c7a",
+  "cases": [
+    {
+      "mode": "hidden-messages",
+      "expected": "mixed_failure",
+      "observed": "mixed_failure",
+      "report_sha256": "4e593bfc86e115005da465b98c8b4b187f5229e8071b3f351680a502cd4d93c1"
+    },
+    {
+      "mode": "visible-originals",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "b1176e79e273d31ace6ef44b363f65fc63adc13847960d8d267cb9a7d779c9d8"
+    },
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "c65f8d39240fc7f076e7fa0f3ddf02b9708297a7f8328aa19b72daa5e9dfd8c3"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "1b99c320890e1ab7e43b9f8ae55bcfa4da9eba9dcba7e29aeb3e556258239daa"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "5b2a0cf3541e4a0e9e7fdf99c04525e4f2f7bbe9b2adaa4faea908b7752ec322"
+    },
+    {
+      "mode": "english-only-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "72ff32e9a1d0a1fc28ae3245482fba878f6ee9ec83753ec132295673a2f2fc47"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "42864ccbf449c4782e6b8cbdd028541aae775ec621d8ca36e71c3591bcc00c27"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "311e1a3a7b30ed12f84f2860b2ecfc753232e32b3aafa489f8fe4c5139decb86"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "130134b852c02241a8aab196eb77faf95e7ecfab71821d70edb4b0168cc9b637"
+    }
+  ]
+}

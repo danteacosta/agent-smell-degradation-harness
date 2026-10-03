@@ -1,0 +1,56 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Mail accounts</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Mail</h1><p id="signed-in"></p><section aria-label="Your accounts"><h2>Your accounts</h2><ul id="accounts"></ul></section><section id="dialog" hidden aria-label="Delegation"><h2>Delegation: <span id="dialog-account"></span></h2><ul id="delegates" aria-label="Delegates"></ul><button id="add-delegate" type="button">Add delegate</button><div id="picker" hidden><label>Select a user <select id="user"></select></label><button id="delegate-access" type="button">Delegate access</button></div><div id="confirm" hidden><p id="confirm-text"></p><button id="revoke-access" type="button">Revoke access</button></div><button id="close-dialog" type="button">Close</button></section><section aria-label="Account lists"><h2>Account lists</h2><div id="account-lists"></div></section><p id="message" role="status"></p></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+const users=window.initialState.users,accounts=window.initialState.accounts,actor=window.initialState.actor;
+let state=load({delegations:[],lists:window.initialState.lists});
+let dialog=null,picking=false,pending=null;
+const known=(a,u)=>accounts.some(x=>x.id===a)&&users.some(x=>x.id===u);
+const app=Object.freeze({
+  onDelegation:register,
+  actor(){return structuredClone(users.find(u=>u.id===actor))},
+  users(){return structuredClone(users)},
+  accounts(){return structuredClone(accounts)},
+  delegates(accountId){return state.delegations.filter(d=>d.accountId===accountId).map(d=>d.userId)},
+  addDelegate(accountId,userId){if(!known(accountId,userId))throw new Error('unknown account or user');
+    if(!state.delegations.some(d=>d.accountId===accountId&&d.userId===userId))state.delegations.push({accountId,userId});store(state);render()},
+  removeDelegate(accountId,userId){state.delegations=state.delegations.filter(d=>!(d.accountId===accountId&&d.userId===userId));store(state);render()},
+  accountList(userId){return structuredClone(state.lists[userId]??[])},
+  setAccountList(userId,entries){if(!users.some(u=>u.id===userId)||!Array.isArray(entries)||!entries.every(e=>e&&accounts.some(a=>a.id===e.accountId)&&(e.tag===undefined||typeof e.tag==='string')))throw new Error('known user and entries {accountId, tag} required');
+    state.lists[userId]=entries.map(e=>({accountId:e.accountId,tag:e.tag??''}));store(state);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){
+  const name=id=>users.find(u=>u.id===id).name;
+  document.querySelector('#signed-in').textContent='Signed in as '+name(actor);
+  const al=document.querySelector('#accounts');al.replaceChildren();
+  for(const a of accounts.filter(a=>a.owner===actor)){const ds=app.delegates(a.id);
+    const li=el('li',{'data-id':a.id,'data-delegates':ds.join(',')},a.email+(a.provisioned?' (provisioned)':'')+(ds.length?' — delegates: '+ds.map(name).join(', '):'')+' ');
+    li.append(el('button',{type:'button',class:'delegate','data-id':a.id},'Delegate account'));al.append(li)}
+  document.querySelector('#dialog').hidden=!dialog;
+  const dl=document.querySelector('#delegates');dl.replaceChildren();
+  if(dialog){document.querySelector('#dialog-account').textContent=accounts.find(a=>a.id===dialog).email;
+    for(const u of app.delegates(dialog)){const li=el('li',{'data-user':u},name(u)+' ');li.append(el('button',{type:'button',class:'revoke','data-user':u},'Revoke'));dl.append(li)}}
+  document.querySelector('#picker').hidden=!picking;document.querySelector('#confirm').hidden=!pending;
+  document.querySelector('#confirm-text').textContent=pending?'Revoke access for '+name(pending)+'?':'';
+  const box=document.querySelector('#account-lists');box.replaceChildren();
+  for(const u of users){const sec=el('section',{'data-user':u.id});sec.append(el('h3',{},'Account list of '+u.name));const ul=el('ul');
+    for(const e of state.lists[u.id]??[])ul.append(el('li',{'data-account':e.accountId,'data-tag':e.tag},accounts.find(a=>a.id===e.accountId).email+(e.tag?' ('+e.tag+')':'')));
+    sec.append(ul);box.append(sec)}
+}
+const select=document.querySelector('#user');
+for(const u of users.filter(u=>u.id!==actor))select.append(el('option',{value:u.id},u.name));
+document.querySelector('#accounts').addEventListener('click',e=>{const b=e.target.closest('button.delegate');if(!b)return;dialog=b.dataset.id;picking=false;pending=null;render()});
+document.querySelector('#add-delegate').addEventListener('click',()=>{picking=true;pending=null;render()});
+document.querySelector('#delegate-access').addEventListener('click',()=>{const ev={type:'delegate',accountId:dialog,userId:select.value};picking=false;render();if(behavior)behavior(ev)});
+document.querySelector('#delegates').addEventListener('click',e=>{const b=e.target.closest('button.revoke');if(!b)return;pending=b.dataset.user;picking=false;render()});
+document.querySelector('#revoke-access').addEventListener('click',()=>{const ev={type:'revoke',accountId:dialog,userId:pending};pending=null;render();if(behavior)behavior(ev)});
+document.querySelector('#close-dialog').addEventListener('click',()=>{dialog=null;picking=false;pending=null;render()});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

@@ -1,0 +1,18 @@
+{
+  "schema_version": "mattermost-channel-autotranslate-browser/v1",
+  "status": "complete",
+  "app_sha256": "d840d87524aa25c8b2a24b89752a8fbaad376e941dd3346eae697c61325af48c",
+  "assertions": {
+    "foreign_messages_translated_1": true,
+    "own_language_messages_unchanged_1": true,
+    "all_messages_in_order_1": true,
+    "foreign_messages_translated_2": true,
+    "own_language_messages_unchanged_2": true,
+    "all_messages_in_order_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

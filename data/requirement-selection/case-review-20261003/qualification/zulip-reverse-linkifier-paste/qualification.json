@@ -1,0 +1,65 @@
+{
+  "schema_version": "zulip-reverse-linkifier-paste-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 9,
+  "source_scaffold_sha256": "26c39c5266ad9855102a699266d0894a937361927e1f71d9e1d9325045f90006",
+  "runner_sha256": "ff151693a42cc6819236a1c63784eeedccac12fa27f70897a458fe101568cdb9",
+  "qualifier_sha256": "0c601a190bfb8e0aa0cf852a54e668de3299a930515c69fe11c9e40731d6d019",
+  "cases": [
+    {
+      "mode": "converted-text-without-link",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "0ee1cb3c942d503e9e2ef46decaf2b87522ffd838096abd2371d1ef668c5051f"
+    },
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "fa6e9c680717493b15b05171f6fbcdde773c8d6f1e1d26f9c2a7ea16881f6479"
+    },
+    {
+      "mode": "convert-on-send",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "70807fa62029bfb004be9662bcb62e233011f79f0a766d23af6b9bc3e69e2bf8"
+    },
+    {
+      "mode": "input-event",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "dae5f3ab516bae0f59d8d76e16dc1bbed09d4ef4d9541023e6e2542f2d6275a2"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "f2bedb9d26e466b5fb6ee672202aa4be04a51a5b39d7e787ffef795a9e2e5bb9"
+    },
+    {
+      "mode": "unlinked-message-mutant",
+      "expected": "mixed_failure",
+      "observed": "mixed_failure",
+      "report_sha256": "fd7bcd36608558ba80a818899de4ee953215533d3da7a37b83bde24cf677a9ca"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "c5ecd2310d899492efc5d4a91375dcbfe2d78effd8584519d7d7c64bc89f4078"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "4696869f0bf0284112c6a5521f005838a18d66711818861e34f8410424be090d"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "b500c9e6bed0ab77575fc05b92a7a827bb20f97fe684289f0c82208fc584bafe"
+    }
+  ]
+}

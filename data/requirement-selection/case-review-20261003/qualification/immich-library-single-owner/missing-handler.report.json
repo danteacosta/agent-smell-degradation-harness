@@ -1,0 +1,8 @@
+{
+  "schema_version": "immich-library-single-owner-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "b781b7253d415c5e0f5ead11f71ecd01c9d05b3f2efe5821db458e4c7ad993f6",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

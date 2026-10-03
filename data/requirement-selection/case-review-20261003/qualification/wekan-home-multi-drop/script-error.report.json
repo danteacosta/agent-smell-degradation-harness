@@ -1,0 +1,10 @@
+{
+  "schema_version": "wekan-home-multi-drop-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "e8c47d99e3ed203e9e29608243d60056d31388e0aa23831de7e19c8e3a41b8fe",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

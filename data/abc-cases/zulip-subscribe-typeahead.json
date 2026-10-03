@@ -1,0 +1,28 @@
+{
+  "case": "zulip-subscribe-typeahead",
+  "intent_id": "zulip-subscribe-typeahead",
+  "project_id": "zulip",
+  "candidate_id": "rc-c044ebec7fe1",
+  "source": {
+    "commit": "94c98c5749",
+    "file": "help/include/subscribe-user-to-channel.md",
+    "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+    "snapshot_file": "starlight_help/src/content/include/_SubscribeUserToChannel.mdx"
+  },
+  "fixture": "eval/fixtures/zulip-subscribe-typeahead",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onInput to handle the visible Name or email field. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the Add subscribers typeahead in the channel settings. As the user types in the Name or email field, show the suggested users with app.showSuggestions(ids), using the users from app.users() and the channel's current subscribers from app.subscribers(); the user then picks a suggestion and clicks Add. Under Add subscribers, enter the user's name or email address, and the typeahead suggests the matching users. The typeahead will only include users who aren't already subscribed to the channel.",
+    "B": "In the channel settings, the Name or email field under Add subscribers has a typeahead: while the user types, list the suggested users through app.showSuggestions(ids), based on app.users() and on the channel's current subscribers from app.subscribers(), after which the user chooses a suggestion and clicks Add. Users are looked up by their name or email address, and anyone already subscribed to the channel is left out of the suggestions.",
+    "C": "Implement the Add subscribers typeahead in the channel settings. As the user types in the Name or email field, show the suggested users with app.showSuggestions(ids), using the users from app.users() and the channel's current subscribers from app.subscribers(); the user then picks a suggestion and clicks Add. Under Add subscribers, enter the user's name or email address, and the typeahead suggests the matching users."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100344,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

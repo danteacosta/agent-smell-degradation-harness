@@ -1,0 +1,8 @@
+{
+  "schema_version": "grist-suggestions-open-copy-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "5cdf8b8306c6f3c00f737212273b7734b79dbca63604f85f9d1fd4f624e3ab6e",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

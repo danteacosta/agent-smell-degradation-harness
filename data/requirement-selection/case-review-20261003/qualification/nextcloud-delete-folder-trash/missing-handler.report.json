@@ -1,0 +1,8 @@
+{
+  "schema_version": "nextcloud-delete-folder-trash-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "8270a3db98f3dfdcca55333f101610010f784fe1e82dab6bed86279e675bafef",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

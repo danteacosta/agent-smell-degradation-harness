@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Talk call</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Call: <span id="conversation"></span></h1><section aria-label="Participants"><h2>Participants</h2><ul id="participants"></ul></section><section aria-label="Set up breakout rooms"><h2>Set up breakout rooms</h2><label>Number of rooms <input id="room-count" type="number" min="1" value="1"></label><button id="create-rooms" type="button">Create breakout rooms</button><p id="message" role="status"></p></section><section aria-label="Breakout rooms"><h2>Breakout rooms</h2><ul id="rooms"></ul></section></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let rooms=load([]);
+const people=window.initialState.participants;
+const app=Object.freeze({
+  onCreate:register,
+  conversation(){return window.initialState.conversation},
+  participants(){return structuredClone(people)},
+  rooms(){return structuredClone(rooms)},
+  createBreakoutRooms(list){if(!Array.isArray(list)||!list.length||!list.every(r=>r&&typeof r.name==='string'&&r.name.trim()&&Array.isArray(r.participants)&&r.participants.every(id=>people.some(p=>p.id===id))))throw new Error('rooms need a name and known participant ids');
+    rooms=list.map(r=>({name:r.name.trim(),participants:[...r.participants]}));store(rooms);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){
+  document.querySelector('#conversation').textContent=window.initialState.conversation;
+  const pl=document.querySelector('#participants');pl.replaceChildren();
+  pl.append(el('li',{},window.initialState.moderator+' (you, moderator)'));
+  for(const p of people)pl.append(el('li',{'data-id':p.id},p.name));
+  const rl=document.querySelector('#rooms');rl.replaceChildren();
+  for(const r of rooms)rl.append(el('li',{'data-name':r.name,'data-participants':r.participants.join(',')},
+    r.name+': '+(r.participants.map(id=>people.find(p=>p.id===id).name).join(', ')||'no participants')));
+}
+document.querySelector('#create-rooms').addEventListener('click',()=>{if(behavior)behavior({count:Number(document.querySelector('#room-count').value)})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

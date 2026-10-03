@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Topics</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Topics</h1><section id="settings" aria-label="Settings"><h2>Settings</h2><label>Mark messages as read on scroll <select id="read-on-scroll"><option value="always">Always</option><option value="conversation">Only in conversation views</option><option value="never">Never</option></select></label></section><h2>Channel #support</h2><ul id="topics" aria-label="Topics"></ul><h2>Messages</h2><ul id="messages" aria-label="Messages"></ul><p id="message" role="status"></p></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let state=load(window.initialState);
+const app=Object.freeze({
+  onResolve:register,
+  user(){return structuredClone(state.user)},
+  topics(){return structuredClone(state.topics)},
+  messages(){return structuredClone(state.messages)},
+  setting(name){return name in state.settings?structuredClone(state.settings[name]):undefined},
+  saveSetting(name,value){if(typeof name!=='string'||!name)throw new Error('setting name required');state.settings[name]=structuredClone(value);store(state)},
+  setResolved(topicId,resolved){const t=state.topics.find(x=>x.id===topicId);if(!t||typeof resolved!=='boolean')throw new Error('known topic and boolean required');t.resolved=resolved;store(state);render()},
+  sendNotice(topicId,content){if(!state.topics.some(x=>x.id===topicId)||typeof content!=='string'||!content.trim())throw new Error('known topic and content required');
+    const id=Math.max(0,...state.messages.map(m=>m.id))+1;state.messages.push({id,topic:topicId,sender:'Notification Bot',content,read:false});store(state);render();return id},
+  markAsRead(id){const m=state.messages.find(x=>x.id===id);if(!m)throw new Error('unknown message');m.read=true;store(state);render()},
+  showMessage(text){document.querySelector('#message').textContent=String(text)}
+});
+function render(){
+  const topics=document.querySelector('#topics');topics.replaceChildren();
+  for(const t of state.topics){const li=el('li',{'data-id':t.id,'data-resolved':t.resolved},(t.resolved?'✔ ':'')+t.name+' ');
+    li.append(el('button',{type:'button','data-topic':t.id},t.resolved?'Unresolve topic':'Resolve topic'));topics.append(li)}
+  const list=document.querySelector('#messages');list.replaceChildren();
+  for(const m of state.messages){const t=state.topics.find(x=>x.id===m.topic);
+    list.append(el('li',{'data-id':m.id,'data-topic':m.topic,'data-sender':m.sender,'data-read':m.read},(m.read?'':'● ')+t.name+' — '+m.sender+': '+m.content))}
+}
+const scroll=document.querySelector('#read-on-scroll');scroll.value=state.settings.readOnScroll;
+scroll.addEventListener('change',()=>{state.settings.readOnScroll=scroll.value;store(state)});
+document.querySelector('#topics').addEventListener('click',e=>{const b=e.target.closest('button[data-topic]');if(b&&behavior)behavior(app.topics().find(t=>t.id===b.dataset.topic))});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

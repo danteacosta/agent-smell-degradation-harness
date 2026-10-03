@@ -1,0 +1,28 @@
+{
+  "case": "nextcloud-delete-folder-trash",
+  "intent_id": "nextcloud-delete-folder-trash",
+  "project_id": "nextcloud",
+  "candidate_id": "rc-9d801a70d5d2",
+  "source": {
+    "commit": "f9dff2cff3",
+    "file": "user_manual/files/deleted_file_management.rst",
+    "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+    "snapshot_file": "user_manual/files/deleted_file_management.rst"
+  },
+  "fixture": "eval/fixtures/nextcloud-delete-folder-trash",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onAction to handle the visible Delete, Restore and Delete permanently buttons. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement deleting in Files. Each item under All files has a Delete button, and each item under Deleted files has Restore and Delete permanently buttons; app.onAction handles all of them. When you delete a file or folder in Nextcloud, it is normally moved to the trash bin (app.moveToTrash) instead of being deleted immediately. This allows you to restore it later. Items in the trash bin are permanently deleted (app.erase) when you manually select Delete permanently, or when the Deleted Files app removes them according to the retention policy or to free space. Find your deleted files under Deleted files; from there, you can restore items (app.restore) or delete them permanently.",
+    "B": "app.onAction handles the Delete button of every item under All files and the Restore and Delete permanently buttons of every item under Deleted files. Deleting a file or a folder in Nextcloud does not normally remove it at once: it goes to the trash bin (app.moveToTrash), so that it can be restored later. Something in the trash bin is removed for good (app.erase) once you choose Delete permanently, or when the Deleted Files app clears it because of the retention policy or to make room. Deleted files lists what you deleted, and there you can restore an item (app.restore) or delete it permanently.",
+    "C": "Implement deleting in Files. Each item under All files has a Delete button, and each item under Deleted files has Restore and Delete permanently buttons; app.onAction handles all of them. Items in the trash bin are permanently deleted (app.erase) when you manually select Delete permanently, or when the Deleted Files app removes them according to the retention policy or to free space. Find your deleted files under Deleted files; from there, you can restore items (app.restore) or delete them permanently."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100325,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

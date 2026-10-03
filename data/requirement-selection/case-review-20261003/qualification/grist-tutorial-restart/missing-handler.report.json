@@ -1,0 +1,8 @@
+{
+  "schema_version": "grist-tutorial-restart-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "101b02c491b235033a1983c989279ad5365bc469def98efe93441bf7d88fd9f0",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": "grist-page-default-collapse-browser/v1",
+  "status": "browser_error",
+  "app_sha256": "67f3d5c9bd9f0c490fb50a74ee18e9a9d45b5ff55942dea2bc5ed8e3013e65e5",
+  "assertions": {},
+  "console_errors": [
+    "Error: qualification control"
+  ],
+  "error": "Error: behavior handler not registered"
+}

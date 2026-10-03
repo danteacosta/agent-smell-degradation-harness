@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Board Settings / Card</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Board Settings / Card</h1><h2>Card field order</h2><section aria-label="Show on Minicard"><h3>Show on Minicard</h3><ul id="minicard-list"></ul></section><section aria-label="Show on Card"><h3>Show on Card</h3><ul id="card-list"></ul></section><h2>Preview</h2><p>Minicard: <span id="minicard-preview"></span></p><p>Opened card: <span id="card-preview"></span></p></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+let orders=load(window.initialState.orders);
+const NAMES={dates:'Dates',cover:'Cover image',labels:'Labels',customFields:'Custom Fields',members:'Members',description:'Description'};
+const app=Object.freeze({
+  onMove:register,
+  orders(){return structuredClone(orders)},
+  saveOrders(next){const same=(a,b)=>Array.isArray(a)&&a.length===b.length&&[...a].sort().join()===[...b].sort().join();
+    if(typeof next!=='object'||next===null||!same(next.minicard,orders.minicard)||!same(next.card,orders.card))throw new Error('both orders must list the same fields');
+    orders={minicard:[...next.minicard],card:[...next.card]};store(orders);render()}
+});
+function render(){
+  for(const side of ['minicard','card']){const list=document.querySelector('#'+side+'-list');list.replaceChildren();
+    for(const key of orders[side]){const li=el('li',{'data-key':key});
+      li.append(el('button',{type:'button',class:'up','aria-label':'Move '+NAMES[key]+' up'},'▲'),el('button',{type:'button',class:'down','aria-label':'Move '+NAMES[key]+' down'},'▼'),document.createTextNode(' '+NAMES[key]));list.append(li)}
+    const preview=document.querySelector('#'+side+'-preview');preview.replaceChildren();
+    for(const key of orders[side])preview.append(el('span',{class:'field','data-key':key},NAMES[key]+' · '))}
+}
+for(const side of ['minicard','card'])document.querySelector('#'+side+'-list').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(behavior)behavior({side,key:b.closest('li').dataset.key,direction:b.classList.contains('up')?'up':'down'})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

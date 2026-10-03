@@ -1,0 +1,16 @@
+{
+  "schema_version": "mealie-organize-food-permission-browser/v1",
+  "status": "complete",
+  "app_sha256": "7da802ee9008200a3dc41f6b1b2869e176904877bd27198fc59658a530501d66",
+  "assertions": {
+    "food_not_created_without_organize_1": true,
+    "existing_foods_kept_1": true,
+    "food_created_with_organize_2": true,
+    "existing_foods_kept_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

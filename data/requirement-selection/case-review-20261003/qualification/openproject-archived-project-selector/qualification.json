@@ -1,0 +1,53 @@
+{
+  "schema_version": "openproject-archived-project-selector-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 7,
+  "source_scaffold_sha256": "58d75d0e4f024c83df21b2207ca695af3b2aee1c69338c735f18bbf020f08826",
+  "runner_sha256": "a9b8bd060be7e424b07fcbc16e2afb80a5d442c41d09b05b9dae4786db9dc132",
+  "qualifier_sha256": "832f0c804e143ec12bd5a936d5154e2d7a29bd34d466b3bd4da6002a0632dd9e",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "fdee5f92f9581e0aa7f2afb6220ac3a973ce24dd0f550d627e8f37af7a4f15c4"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "9ed06b014327d8ce2996531535d911e17189891290fe24d932a3ec81f828340b"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "344b6fc71714b5e5483c0d385f2909abc68232d451e8312f18781966940a93d0"
+    },
+    {
+      "mode": "archived-in-search",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "fb3fde446275652246b5262494ba05d81c6006a01117cf7566ec8a852e8ab84c"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "827fb2ae3abcac7828f8a356a34701b6d9f424db844973fd83a6073ee2b39e2a"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "e560b8d452f671e97720b2336fedaa3e6596a57698a0a6c7050e0ae0efb12c50"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "bfaac6fb40879a9d10e7d3d016090f9e96bc5aa115cff233015f781a5a3b4825"
+    }
+  ]
+}

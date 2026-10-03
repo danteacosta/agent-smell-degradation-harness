@@ -1,0 +1,53 @@
+{
+  "schema_version": "openproject-files-tab-attachments-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 7,
+  "source_scaffold_sha256": "67fbb66cf65585be8feb5e9c53f1e23dbd94a25e7caab49fcde6a2a2dc212e91",
+  "runner_sha256": "9fe57b82ceffc92c27a7a463ca584322cbed1f5c916ff1e6e1e495a8adad139b",
+  "qualifier_sha256": "0e90b7a47d47b8a89bd9db1e93844044cb57e73bf909d7adeb37d0ab5d8e40db",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "e48567a8b0c1eb50bb26442689a59a8019db0515b90d1332adfa0c77769346ce"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "be2a5ffa53fbc0f5be43a4f83d782a7788058b747dc45e1740c25868a1c8f904"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "2591a04c4182f797a02d526c3107c119c5a2d90e807ccca60d51aa9f5c739523"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "ac8c4c2f0a5d05b7af5186f1466a77f1cb68dc55f72e449c3c49c4d51965b16f"
+    },
+    {
+      "mode": "no-storages-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "3dc3aa34f824b599b954a900a558a9c3439bf7fc14923eb33c0be7effcd356d5"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "52d88c12068fbdc64d60bd45fb55c8f05e79a7cdbc91fa0185e0900cf6d88b2e"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "681b83300ab0f288ce13cd686832251982e6545a57b3a5cec35cf96cca15abb7"
+    }
+  ]
+}

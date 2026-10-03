@@ -1,0 +1,59 @@
+{
+  "schema_version": "openproject-auto-theme-contrast-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 8,
+  "source_scaffold_sha256": "c306ae32034d71b21710da39cc4ac29b17b155441c7eee8f6780086ee27fab0b",
+  "runner_sha256": "f842703a1a11543cfb7aa254fe7b83577ddfe8523bb482d25c15a0b57ae3fd02",
+  "qualifier_sha256": "ed606b6177e8afd57327fd04ab3fe550654c04d9cf857a611aeb73d19466f0a2",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "6132db12b19d82a00c2aa225dd4ca6b61b60273c103f470ece7c987bf27d58b5"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "83124ae9a22fa4c94fee6acecf264337d9ac6dbc4cedd99abe980e6e6380f0f3"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "f61258c9fbcaf83d9d659c894187d51a766c94d6514dae7fb0638bce343bfab1"
+    },
+    {
+      "mode": "always-high-in-auto",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "de68b6600c3cc760c5c94678827bf2df0364d67dfb59498b965f1549f593e46e"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "a864eb71dbbefd1f785ee5d7fd62e809f637f769b0f7e614202ef28e47645ca5"
+    },
+    {
+      "mode": "light-only-auto",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "ad9558ba6a486efffb0e82a97ac131dc0aa9449013e9353c45651c819245c39e"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "c7e7e42394982e9c157d8851c0471a7cfd5a3173a6aa6092b2887a604d479400"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "be62d0830d863970b8bc423f1f9785397e219626db375dfc52e0672827eee489"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "wekan-member-same-org-team-browser/v1",
+  "status": "complete",
+  "app_sha256": "5fa014296cc739467dfbb63b32cbafa8d070f88febd345f4d93518669ff33792",
+  "assertions": {
+    "unshared_users_blocked_1": true,
+    "active_member_share_added_1": false,
+    "inviter_share_added_1": false,
+    "members_list_intact_1": true,
+    "unshared_users_blocked_2": true,
+    "active_member_share_added_2": false,
+    "inviter_share_added_2": false,
+    "members_list_intact_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

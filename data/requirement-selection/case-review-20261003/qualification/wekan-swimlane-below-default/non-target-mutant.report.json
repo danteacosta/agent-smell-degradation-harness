@@ -1,0 +1,18 @@
+{
+  "schema_version": "wekan-swimlane-below-default-browser/v1",
+  "status": "complete",
+  "app_sha256": "808b3726524e1f5d605dab97dc94309b1aa8691c57e777f10ed39664cbdcddcc",
+  "assertions": {
+    "untouched_popup_inserts_below_1": true,
+    "chosen_placement_keeps_order_1": false,
+    "existing_lanes_kept_1": true,
+    "untouched_popup_inserts_below_2": true,
+    "chosen_placement_keeps_order_2": true,
+    "existing_lanes_kept_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

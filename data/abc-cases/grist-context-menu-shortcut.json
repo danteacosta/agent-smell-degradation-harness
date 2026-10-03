@@ -1,0 +1,28 @@
+{
+  "case": "grist-context-menu-shortcut",
+  "intent_id": "grist-context-menu-shortcut",
+  "project_id": "grist",
+  "candidate_id": "rc-4aac15b7b503",
+  "source": {
+    "commit": "bcdbeb35ac",
+    "file": "help/en/docs/keyboard-shortcuts.md",
+    "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+    "snapshot_file": "help/en/docs/keyboard-shortcuts.md"
+  },
+  "fixture": "eval/fixtures/grist-context-menu-shortcut",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onKey to handle the visible grid (key presses while the grid has focus). Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the grid's menu keyboard shortcuts (Windows key bindings). The handler receives each key press in the grid as {key, shiftKey, ctrlKey, altKey, metaKey}; open the matching menu for the cursor cell with app.openMenu(kind), where kind is 'context', 'column' or 'row'. Menu or Shift + F10: Open the context menu. Ctrl + Menu or Ctrl + Shift + F10: Open the current column menu. Alt + Menu or Alt + Shift + F10: Open the current row menu.",
+    "B": "Key presses in the grid reach the handler as {key, shiftKey, ctrlKey, altKey, metaKey}, and the Windows key bindings apply; each shortcut opens its menu for the cell under the cursor through app.openMenu(kind), with kind 'context', 'column' or 'row'. The current row menu opens with Alt + Shift + F10 or Alt + Menu, the current column menu with Ctrl + Shift + F10 or Ctrl + Menu, and the context menu with Shift + F10 or the Menu key.",
+    "C": "Implement the grid's menu keyboard shortcuts (Windows key bindings). The handler receives each key press in the grid as {key, shiftKey, ctrlKey, altKey, metaKey}; open the matching menu for the cursor cell with app.openMenu(kind), where kind is 'context', 'column' or 'row'. Menu: Open the context menu. Ctrl + Menu or Ctrl + Shift + F10: Open the current column menu. Alt + Menu or Alt + Shift + F10: Open the current row menu."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2026100311,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review"
+}

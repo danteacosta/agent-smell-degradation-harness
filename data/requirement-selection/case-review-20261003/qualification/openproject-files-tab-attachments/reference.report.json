@@ -1,0 +1,18 @@
+{
+  "schema_version": "openproject-files-tab-attachments-browser/v1",
+  "status": "complete",
+  "app_sha256": "7d496414e8973aa204a27766cd85c6c268ff325b48b47bd43c29e175042b5b12",
+  "assertions": {
+    "attachments_hidden_when_disabled_1": true,
+    "attachments_shown_when_enabled_1": true,
+    "storages_shown_1": true,
+    "attachments_hidden_when_disabled_2": true,
+    "attachments_shown_when_enabled_2": true,
+    "storages_shown_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

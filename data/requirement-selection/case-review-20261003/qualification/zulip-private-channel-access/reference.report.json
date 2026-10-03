@@ -1,0 +1,16 @@
+{
+  "schema_version": "zulip-private-channel-access-browser/v1",
+  "status": "complete",
+  "app_sha256": "dce88812ebe9b0c12d5bc47f58211900f3fee612ec6092de683d8e8461f158ba",
+  "assertions": {
+    "granted_user_sees_private_1": true,
+    "member_sees_unsubscribed_public_1": true,
+    "guest_kept_out_of_unsubscribed_public_2": true,
+    "granted_guest_sees_private_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

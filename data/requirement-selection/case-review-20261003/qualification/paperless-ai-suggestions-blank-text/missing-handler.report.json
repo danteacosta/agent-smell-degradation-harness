@@ -1,0 +1,8 @@
+{
+  "schema_version": "paperless-ai-suggestions-blank-text-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "89ffc9eb8f1b98c8914e043fb1f81bab3a2a92a96c49a7b3cb9df2a8da62f8ed",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

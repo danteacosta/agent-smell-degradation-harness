@@ -1,0 +1,18 @@
+{
+  "schema_version": "zulip-unsubscribe-self-browser/v1",
+  "status": "complete",
+  "app_sha256": "c61326e7b253989274fdb28ea6f991a8894e88cffb3ff65999eaf40a1252b9db",
+  "assertions": {
+    "self_unsubscribed_1": true,
+    "other_kept_without_permission_1": true,
+    "bystanders_kept_1": true,
+    "self_unsubscribed_2": true,
+    "other_unsubscribed_with_permission_2": true,
+    "bystanders_kept_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

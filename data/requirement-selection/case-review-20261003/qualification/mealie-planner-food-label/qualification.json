@@ -1,0 +1,47 @@
+{
+  "schema_version": "mealie-planner-food-label-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 6,
+  "source_scaffold_sha256": "10fa1f95122a8f3584f4843a97056c2df379f7591c26fd676588eda12e600520",
+  "runner_sha256": "1b557d2305818342d60acc7c40805b57e65f5e1acd0912d25a3e57833df59af9",
+  "qualifier_sha256": "869785b654b0e570198203b6b9cc8e2bf3426bf697c0c1beb617d50d59471281",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "d31e62f16b9ea958e4a17d3a59257a9dbfbe3feb875e850fe01f3b1186983459"
+    },
+    {
+      "mode": "case-insensitive",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "6cff7940d5808f01dcc61dfabfb66c51f7267850e755fa1a9a7587869164d1e9"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "48305e2dde07c10dcbfe407c21e84c082a37386c545b2b02e34191a48b59fab7"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "969320055e51f2eba78869fabd095992f9f3933428e3b6e57b04496507cc7769"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "c96d06aa7a07ef36f8f6377975cd43890668b350c4cb9a998de7867c22243dff"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "402e250cbe0a6d250e625eca4a4afb2a1bc9429db12f8232366bc4063414b378"
+    }
+  ]
+}

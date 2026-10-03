@@ -1,0 +1,22 @@
+{
+  "schema_version": "zulip-resolved-notice-auto-read-browser/v1",
+  "status": "complete",
+  "app_sha256": "a2fb5e5c2980ce3f169b9ac1bc7d8898f7204dcbdf7a5e1e6d3ab0aa64005ff4",
+  "assertions": {
+    "notice_read_when_enabled_1": true,
+    "notice_unread_when_disabled_1": true,
+    "notice_posted_for_each_change_1": true,
+    "topic_state_toggled_1": true,
+    "other_messages_unchanged_1": true,
+    "notice_read_when_enabled_2": true,
+    "notice_unread_when_disabled_2": true,
+    "notice_posted_for_each_change_2": true,
+    "topic_state_toggled_2": true,
+    "other_messages_unchanged_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

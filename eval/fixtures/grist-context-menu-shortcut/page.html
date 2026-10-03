@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Orders grid</title>
+<style>body{font:16px system-ui;max-width:850px;margin:2rem auto;padding:1rem}button,input,select{font:inherit;padding:.4rem}label{display:block;margin:.5rem 0}li{margin:.3rem 0}[role=status]{min-height:1.2em}</style></head>
+<body><main><h1>Orders</h1><table id="grid" tabindex="0" aria-label="Grid"><thead><tr></tr></thead><tbody></tbody></table><div id="menu" role="menu"></div></main><script>
+const storageKey='page-state';
+let behavior=null;
+function register(handler){if(typeof handler!=='function'||behavior)throw new Error('invalid handler');behavior=handler}
+function load(initial){const raw=localStorage.getItem(storageKey);if(raw===null){localStorage.setItem(storageKey,JSON.stringify(initial));return structuredClone(initial)}return JSON.parse(raw)}
+function store(value){localStorage.setItem(storageKey,JSON.stringify(value))}
+function el(tag,attrs={},text=''){const node=document.createElement(tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));if(text)node.textContent=text;return node}
+const grid=window.initialState.grid;let cursor={row:0,col:0};let menu=null;
+const ITEMS={context:['Cut','Copy','Paste','Insert row above','Insert row below','Delete row'],column:['Sort A-Z','Sort Z-A','Rename column','Hide column'],row:['Insert row above','Insert row below','Duplicate row','Delete row']};
+const app=Object.freeze({
+  onKey:register,
+  cursor(){return {rowId:grid.rows[cursor.row].id,colId:grid.columns[cursor.col]}},
+  openMenu(kind){if(!(kind in ITEMS))throw new Error('kind must be context, column or row');menu={kind,rowId:grid.rows[cursor.row].id,colId:grid.columns[cursor.col]};render()},
+  closeMenu(){menu=null;render()}
+});
+function render(){
+  document.querySelector('#grid thead tr').replaceChildren(el('th',{},'#'),...grid.columns.map(c=>el('th',{},c)));
+  const body=document.querySelector('#grid tbody');body.replaceChildren();
+  grid.rows.forEach((r,i)=>{const tr=el('tr');tr.append(el('th',{},String(i+1)));
+    grid.columns.forEach((c,j)=>{const attrs={'data-row':r.id,'data-col':c,'data-r':i,'data-c':j};if(i===cursor.row&&j===cursor.col)attrs.style='outline:2px solid #16b378';tr.append(el('td',attrs,String(r.cells[c])))});body.append(tr)});
+  const m=document.querySelector('#menu');m.hidden=!menu;m.dataset.kind=menu?menu.kind:'';m.dataset.row=menu?menu.rowId:'';m.dataset.col=menu?menu.colId:'';
+  m.replaceChildren(...(menu?ITEMS[menu.kind].map(t=>el('div',{role:'menuitem'},t)):[]));
+}
+document.querySelector('#grid').addEventListener('click',e=>{const td=e.target.closest('td');if(!td)return;cursor={row:Number(td.dataset.r),col:Number(td.dataset.c)};menu=null;render()});
+document.querySelector('#grid').addEventListener('keydown',e=>{if(behavior)behavior({key:e.key,shiftKey:e.shiftKey,ctrlKey:e.ctrlKey,altKey:e.altKey,metaKey:e.metaKey})});
+render();
+/* MODEL_BEHAVIOR */
+</script></body></html>

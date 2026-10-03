@@ -1,0 +1,22 @@
+{
+  "schema_version": "openproject-archived-project-selector-browser/v1",
+  "status": "complete",
+  "app_sha256": "0f576203d326cc8a1a3c5e90a81fc8abd94f3ee65d55f9bc8e0001cfed6e56cd",
+  "assertions": {
+    "archived_project_not_selectable_1": true,
+    "active_projects_selectable_1": true,
+    "archived_not_in_search_1": false,
+    "search_filters_by_title_1": true,
+    "option_opens_project_1": true,
+    "archived_project_not_selectable_2": true,
+    "active_projects_selectable_2": true,
+    "archived_not_in_search_2": false,
+    "search_filters_by_title_2": true,
+    "option_opens_project_2": true
+  },
+  "console_errors": [],
+  "screenshots": [
+    "fixture-1.png",
+    "fixture-2.png"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": "grist-context-menu-shortcut-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "47eea12178015a2fd9da9b5216694ebafbfc28dadae3bda91378dcc780585310",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

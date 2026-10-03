@@ -1,0 +1,8 @@
+{
+  "schema_version": "paperless-custom-field-no-value-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "b33b5349adc5ca13863771384ef7cf8c6ce8e19ee37a75b74d03ddd8b73d336e",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}

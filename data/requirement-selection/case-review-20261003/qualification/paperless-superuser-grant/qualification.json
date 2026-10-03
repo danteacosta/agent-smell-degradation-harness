@@ -1,0 +1,59 @@
+{
+  "schema_version": "paperless-superuser-grant-qualification/v1",
+  "qualified": true,
+  "image_id": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "controls": 8,
+  "source_scaffold_sha256": "3afb32f35302908165b7ff101a0309c9cc808c52a945fc478043fdff741857c5",
+  "runner_sha256": "f5e6e9caedfde569294acb007c1ab07fe3ce9614c9b50dfa26a9fc410c082c21",
+  "qualifier_sha256": "7b098e236fb5a71bcd770bfb4de93c30621b16ce2969ed05685325f9338d1549",
+  "cases": [
+    {
+      "mode": "reference",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "48aba77fc89452fd4155bd5c94909bfbf8fa19a4c4e4c0bb46b15237d1067884"
+    },
+    {
+      "mode": "alternative",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "938c871204052a2f364f33c16f979fdc08fcffa24f07a8536994f8afd40ec66d"
+    },
+    {
+      "mode": "disable-control",
+      "expected": "pass",
+      "observed": "pass",
+      "report_sha256": "efa2a4e8d1436f306d061cc152f9353ef403ac23fe7c60c000f9c263bd097a8e"
+    },
+    {
+      "mode": "target-mutant",
+      "expected": "target_only_failure",
+      "observed": "target_only_failure",
+      "report_sha256": "2663ec7fd3f82a6cdc18faf2f30f100db6e092296703f37deb6cf1d70d0018e1"
+    },
+    {
+      "mode": "blanket-role-denial",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "74ce18ac5ddb398ed3a97f477a959720b39674ac7b303e32b635dd15093077a5"
+    },
+    {
+      "mode": "non-target-mutant",
+      "expected": "non_target_only_failure",
+      "observed": "non_target_only_failure",
+      "report_sha256": "1242d63220f8579d0748dc2fb2c6cfb2c7ba8b1ac945d213c2c35d7d7058f82c"
+    },
+    {
+      "mode": "missing-handler",
+      "expected": "interface_error",
+      "observed": "interface_error",
+      "report_sha256": "ca42eaadca6e5d5abce10fb92817dcf293c29e088eae3aed8240feb5b2358e95"
+    },
+    {
+      "mode": "script-error",
+      "expected": "browser_error",
+      "observed": "browser_error",
+      "report_sha256": "15ab884170718eca7358f88833ed6691dea3c8dc502c01cf5df5551b779e755d"
+    }
+  ]
+}

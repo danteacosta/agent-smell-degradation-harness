@@ -1,0 +1,8 @@
+{
+  "schema_version": "openproject-archived-project-selector-browser/v1",
+  "status": "interface_error",
+  "app_sha256": "bdbdd555663d33cff2d12b01ef2bb50e12b9c422ea70fc174629165dd04806a0",
+  "assertions": {},
+  "console_errors": [],
+  "error": "Error: behavior handler not registered"
+}
