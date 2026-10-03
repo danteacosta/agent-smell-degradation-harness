@@ -1,0 +1,11 @@
+{
+  "planned_probe_calls": 180,
+  "planned_control_calls": 8,
+  "planned_judge_calls_maximum": 360,
+  "scheduled_calls_conditional": 414,
+  "observed_attempts": 414,
+  "missing_scheduled_calls": 0,
+  "missing_pairs": [],
+  "failed_calls": 0,
+  "second_judge_not_scheduled": 134
+}

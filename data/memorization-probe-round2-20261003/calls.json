@@ -1,0 +1,5078 @@
+[
+  {
+    "slot": "judge-controls/gpt-6-astra/jc-yes-1",
+    "model": "gpt-6-astra",
+    "kind": "judge_control",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "judge-controls/gpt-6-sol/jc-yes-1",
+    "model": "gpt-6-sol",
+    "kind": "judge_control",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "judge-controls/gpt-6-astra/jc-yes-2",
+    "model": "gpt-6-astra",
+    "kind": "judge_control",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "judge-controls/gpt-6-sol/jc-yes-2",
+    "model": "gpt-6-sol",
+    "kind": "judge_control",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "judge-controls/gpt-6-astra/jc-no-1",
+    "model": "gpt-6-astra",
+    "kind": "judge_control",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "judge-controls/gpt-6-sol/jc-no-1",
+    "model": "gpt-6-sol",
+    "kind": "judge_control",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "judge-controls/gpt-6-astra/jc-no-2",
+    "model": "gpt-6-astra",
+    "kind": "judge_control",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "judge-controls/gpt-6-sol/jc-no-2",
+    "model": "gpt-6-sol",
+    "kind": "judge_control",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c6aa48543d73/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "10f480449b1139781234a788122238c4bbf0505138fda8acb4f69832b44ace87",
+    "original_response_bytes": 147,
+    "original_response_characters": 147,
+    "answer_as_judged": "The message is not sent. Zulip prompts the user to provide a topic, because channel messages cannot be posted without one when topics are required."
+  },
+  {
+    "slot": "probes/rc-c6aa48543d73/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c6aa48543d73/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "b5371f4cae695bf98817a5c346e07706b1b587afa21a783767928088a1fae7c0",
+    "original_response_bytes": 131,
+    "original_response_characters": 131,
+    "answer_as_judged": "The message cannot be sent without a topic. Zulip prompts the user to enter a topic before allowing the channel message to be sent."
+  },
+  {
+    "slot": "probes/rc-c6aa48543d73/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c6aa48543d73/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "472da9c8bd94a8fcccbdcbe7682dc25a0831ccfea6ab82e962bafd470aeef7d3",
+    "original_response_bytes": 136,
+    "original_response_characters": 132,
+    "answer_as_judged": "The message is not sent because a topic is required. The user is prompted to specify a topic before they can post to “general chat.”"
+  },
+  {
+    "slot": "probes/rc-c6aa48543d73/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c6aa48543d73/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "1f52c7bcfda7b378fae09989263670c0e4dd9400886f4e55380060929895f0e0",
+    "original_response_bytes": 142,
+    "original_response_characters": 142,
+    "answer_as_judged": "The message is not sent. Zulip prompts the user to enter a topic because channel messages cannot have an empty topic when topics are required."
+  },
+  {
+    "slot": "probes/rc-c6aa48543d73/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c6aa48543d73/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "1dd8bf2ff17cdd2d4ba9e84c0b6efe8a28eeb8c0fc79198766a639eb03fb2c89",
+    "original_response_bytes": 101,
+    "original_response_characters": 99,
+    "answer_as_judged": "The message isn’t sent. Zulip prompts the user to enter a topic before sending the channel message."
+  },
+  {
+    "slot": "probes/rc-c6aa48543d73/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c6aa48543d73/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "916d7abf22fc1ddd846e016cc780f558f30faa6908709fc01fc35df07fbcc286",
+    "original_response_bytes": 102,
+    "original_response_characters": 102,
+    "answer_as_judged": "The message is not sent. Zulip prompts the user to enter a topic because channel messages require one."
+  },
+  {
+    "slot": "probes/rc-c6aa48543d73/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b49db6870ff5/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "a5826cc4fefaf6a0451bea416cf7eadbfb7eed0c17d473c97b96eb5688786bc4",
+    "original_response_bytes": 31,
+    "original_response_characters": 29,
+    "answer_as_judged": "I don’t know with confidence."
+  },
+  {
+    "slot": "probes/rc-b49db6870ff5/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b49db6870ff5/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "1d3cbae4fe74c16100e8dd35740d7ed64c7afccb32e09fc9d000871ed42ec569",
+    "original_response_bytes": 123,
+    "original_response_characters": 123,
+    "answer_as_judged": "After closing the fork, visiting its Direct URL redirects the user to the original document rather than reopening the fork."
+  },
+  {
+    "slot": "probes/rc-b49db6870ff5/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b49db6870ff5/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "a86c309be0b977930ba4a2dae37af9fdcfbd7d3cbdbe0b746a94d0a14f29d402",
+    "original_response_bytes": 61,
+    "original_response_characters": 59,
+    "answer_as_judged": "I don’t know the exact behavior of Grist in that situation."
+  },
+  {
+    "slot": "probes/rc-b49db6870ff5/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b49db6870ff5/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "9a24eee4e218e005f64f555122498fb4230702b722b4daed3333c03c9156830f",
+    "original_response_bytes": 123,
+    "original_response_characters": 123,
+    "answer_as_judged": "After the user closes their document fork, visiting its Direct URL opens the original document rather than the closed fork."
+  },
+  {
+    "slot": "probes/rc-b49db6870ff5/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b49db6870ff5/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "520089b622da98ddf3bb9eb39dab3955e32d6666823b2f41931aefce5a468061",
+    "original_response_bytes": 120,
+    "original_response_characters": 116,
+    "answer_as_judged": "The fork is deleted, so revisiting its direct URL shows a “document not found” error rather than reopening the fork."
+  },
+  {
+    "slot": "probes/rc-b49db6870ff5/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b49db6870ff5/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "5f39335b7c8fc988b5c939a25ab98f4dfe20364b6957c5bf87ac49a207a7a89b",
+    "original_response_bytes": 90,
+    "original_response_characters": 90,
+    "answer_as_judged": "The Direct URL redirects the user to the original document after the fork has been closed."
+  },
+  {
+    "slot": "probes/rc-b49db6870ff5/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "a5f17f35352b1e1521b7fad703f7687609f81b3f52f50abb55719205d20daa80",
+    "original_response_bytes": 312,
+    "original_response_characters": 312,
+    "answer_as_judged": "Users who are allowed to join the group are added immediately when they click its plus icon. Users without join permission cannot join through the icon; they are prompted to request access (or the action is unavailable), while administrators can join or add members according to their administrative permissions."
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-luna/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "c0a8e3ed8aa95edcbc8ba4ad3d7897a770ac95f5eaa7a5376eca8a1a76c643dd",
+    "original_response_bytes": 214,
+    "original_response_characters": 214,
+    "answer_as_judged": "Users who are permitted to join the group can click its plus icon to add themselves immediately. Organization administrators can join any user group, while users without join permission cannot use the icon to join."
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-luna/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "6e53e5fe21827ef37d3b57082af3def3645e5a251d844872b660e0232b377916",
+    "original_response_bytes": 186,
+    "original_response_characters": 186,
+    "answer_as_judged": "Clicking the plus icon immediately adds you to the user group. Ordinary users can do this only for groups they are permitted to join; organization administrators can join any user group."
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "7343d16e5fd4ee0a5e28f14073f63dae69f2dea817cb90b43e2ac579bf69ff2d",
+    "original_response_bytes": 250,
+    "original_response_characters": 244,
+    "answer_as_judged": "Clicking a user group’s plus icon joins you immediately if you’re allowed to manage that group’s membership. Otherwise, Zulip sends a membership request for approval; users without permission to join or request membership cannot use the action."
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "1ecc5fafbfb46155824808310a7fee99bd0461b8e9cd7770f740549b65ea1c51",
+    "original_response_bytes": 241,
+    "original_response_characters": 241,
+    "answer_as_judged": "Organization administrators and users allowed to manage the group can use the plus icon to add other members. Regular users who have permission to join can use it to add themselves; users without that permission cannot join through the icon."
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-sol/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "fa7d2dd29b266482278961aed80ff91db71e0a458dbf1f8123b1ef8684e5f0f3",
+    "original_response_bytes": 265,
+    "original_response_characters": 261,
+    "answer_as_judged": "Clicking a user group’s plus icon joins you immediately if you’re allowed to add yourself, either because the group is open to joining or you have permission to manage its members. Otherwise, the icon is disabled or unavailable; it does not send a join request."
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-24946f42bfc2/gpt-5.6-sol/rep3/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-3c572449f134/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "997b4d9c45d4758ec376d7a6c4005c9fcb5fae2b2eb9b80b57e7fe04ee11a669",
+    "original_response_bytes": 148,
+    "original_response_characters": 146,
+    "answer_as_judged": "It suggests matching users, letting you search for messages sent by that person. The suggestions typically show the user’s name and email address."
+  },
+  {
+    "slot": "probes/rc-3c572449f134/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-3c572449f134/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "4dc5279ced9e802682fff34831403205f5d9d35550ba7c1028e43c3f1586a681",
+    "original_response_bytes": 117,
+    "original_response_characters": 117,
+    "answer_as_judged": "Suggestions for matching users appear, typically offering searches for messages sent by that user or mentioning them."
+  },
+  {
+    "slot": "probes/rc-3c572449f134/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-3c572449f134/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "c5f6d76111b9b2cc7e311f47ece0a45078c5afc990a33ee0d404d56f1e15d152",
+    "original_response_bytes": 164,
+    "original_response_characters": 164,
+    "answer_as_judged": "It suggests matching users, showing their names and email addresses (often with avatars). Selecting one can help search for messages sent by or involving that user."
+  },
+  {
+    "slot": "probes/rc-3c572449f134/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-3c572449f134/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "e78f7e7561794383201114f5e3601d5c975f0891cf5be15317d9bd1e82a111d6",
+    "original_response_bytes": 157,
+    "original_response_characters": 157,
+    "answer_as_judged": "Zulip suggests searches for messages **sent by that user** (`sender:`) and **direct messages with that user** (`dm:`/`with:` depending on the Zulip version)."
+  },
+  {
+    "slot": "probes/rc-3c572449f134/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-3c572449f134/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "66ab30078e6d3270aee83ed2358e7e8daf0937e0b1ac98c4155dde135d8f3d87",
+    "original_response_bytes": 139,
+    "original_response_characters": 139,
+    "answer_as_judged": "Zulip suggests searching for messages sent by that user and direct messages with that user. It may also suggest messages that mention them."
+  },
+  {
+    "slot": "probes/rc-3c572449f134/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-3c572449f134/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "5db7adb9613d51c9b70fe67dbdabd2177086a8db90fd1968d339deae558013b0",
+    "original_response_bytes": 107,
+    "original_response_characters": 107,
+    "answer_as_judged": "Zulip suggests filters for messages sent by that user and private/direct messages exchanged with that user."
+  },
+  {
+    "slot": "probes/rc-3c572449f134/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "8c3afb1916eb550a4d5eb2b73821af7f77683691e5719e265fcec555f3a84daf",
+    "original_response_bytes": 145,
+    "original_response_characters": 145,
+    "answer_as_judged": "A non-admin user can unsubscribe themselves from a channel they are subscribed to. Admin privileges are only required to unsubscribe other users."
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-luna/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "5ff88dded6f7b84711cada46c713f109e59eaafd1eda1b00ddc9d861837fc7a6",
+    "original_response_bytes": 208,
+    "original_response_characters": 206,
+    "answer_as_judged": "A non-admin user can unsubscribe themselves from a channel they’re subscribed to. They will no longer receive its messages or see it in their subscribed-channel list, unless they are subscribed again later."
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "e4aa5448dc24393ed45afeb60084f272f66e4354eac310b017333881c3ce7c8e",
+    "original_response_bytes": 165,
+    "original_response_characters": 165,
+    "answer_as_judged": "A non-admin user can unsubscribe themselves from a channel, and they are removed from its subscribers. Admin privileges are only required to unsubscribe other users."
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-luna/rep3/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "e6fdf03157d56ab742763c3b17e98766f49872b722082d7eb9415c3bdabd7a75",
+    "original_response_bytes": 177,
+    "original_response_characters": 175,
+    "answer_as_judged": "A non-admin user can unsubscribe themselves from a channel they’re subscribed to. They cannot unsubscribe other users unless they have the required administrative permissions."
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-sol/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "486850606d54096e7cfece941b713f6fd25e2f85ac49ba324082d297a2fad830",
+    "original_response_bytes": 242,
+    "original_response_characters": 240,
+    "answer_as_judged": "A non-admin user can unsubscribe themselves from a channel. They are removed from its subscriber list and stop receiving its messages, though previously accessible message history may remain available depending on the channel’s permissions."
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "bc0d2940c96a6aba57720016c423a0ba07ac55df0f7a0c382548d77abd8ebc3c",
+    "original_response_bytes": 157,
+    "original_response_characters": 157,
+    "answer_as_judged": "A non-admin user can unsubscribe themselves from a channel; their subscription is removed. Admin privileges are not required to remove your own subscription."
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-dfb84383fb89/gpt-5.6-sol/rep3/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "5ed3b154730cc57b3266ccc1c2635adda3c516a090e7445a1d63d59ff8f297cc",
+    "original_response_bytes": 164,
+    "original_response_characters": 164,
+    "answer_as_judged": "An administrator must be subscribed to the private channel to add other users to it. Being an administrator alone does not allow an unsubscribed admin to add users."
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-luna/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "0d3235504fac0cc91f9d8293b8530d771c130293a371879336a3fa8c09b0699b",
+    "original_response_bytes": 210,
+    "original_response_characters": 210,
+    "answer_as_judged": "An administrator can add users to a private channel only if the administrator is subscribed to that channel. Their administrator status does not override the requirement that they belong to the private channel."
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-luna/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "ed2209739b4753f548b18ad675aeec80565b6fb52b2498743f1e4569b6ecef5b",
+    "original_response_bytes": 204,
+    "original_response_characters": 200,
+    "answer_as_judged": "An administrator can add users to a private channel regardless of whether the administrator is personally subscribed to it; the channel’s privacy and the administrator’s permissions govern the action."
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "5876f639ac197309d3b16dc6d44344fb999321a9c75ca3406fd1ffae8a250daa",
+    "original_response_bytes": 228,
+    "original_response_characters": 228,
+    "answer_as_judged": "An administrator can add users to a private channel only if the administrator is already subscribed to that channel. Administrative status alone does not grant access to or membership-management rights for every private channel."
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-sol/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "29fa8949ba4253a99bc2720466f66465976f08269b127db84b2985bff91991ef",
+    "original_response_bytes": 224,
+    "original_response_characters": 224,
+    "answer_as_judged": "An administrator can add users to a private channel only if the administrator is already subscribed to that channel. Admin status alone does not grant access to manage subscriptions for private channels they have not joined."
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-sol/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "43e3cfd45a17976fcecccb9da7de6fc7af983cda6431579310981f4e9ebf0218",
+    "original_response_bytes": 230,
+    "original_response_characters": 230,
+    "answer_as_judged": "An organization administrator can add users to a private channel even if the administrator is not subscribed to that channel. Doing so does not automatically subscribe the administrator or grant them access to its message history."
+  },
+  {
+    "slot": "probes/rc-62e9d69be36f/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-bf86d02f63c9/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "0ca2438e9f2de0672c95da88a15eb7c314ccdddc3d5d01d4e6a1a111bcf0a0a1",
+    "original_response_bytes": 137,
+    "original_response_characters": 137,
+    "answer_as_judged": "It appears as the standard Unicode emoji rather than a Google Blob, since the Google Blobs set only includes emoji released through 2017."
+  },
+  {
+    "slot": "probes/rc-bf86d02f63c9/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-bf86d02f63c9/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "46981c19c47dc6621144f5478dd43ff7fa9887e7cc563fc0887994a5dc22238c",
+    "original_response_bytes": 135,
+    "original_response_characters": 135,
+    "answer_as_judged": "When Google Blobs is selected, emojis released after 2017 appear in the standard Unicode emoji style rather than as Google Blob images."
+  },
+  {
+    "slot": "probes/rc-bf86d02f63c9/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-bf86d02f63c9/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "c3304778092e1456edbfaa7af37dafd65d3e6f4ec8d78672d0286dc4b09295c0",
+    "original_response_bytes": 131,
+    "original_response_characters": 129,
+    "answer_as_judged": "When Google blobs is selected, emojis released after 2017 appear in the browser’s native emoji style rather than as Google blobs."
+  },
+  {
+    "slot": "probes/rc-bf86d02f63c9/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-bf86d02f63c9/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "8e50363c03e01e801c53c56f5d5b2886af2a97a4bb8d63b6108cc5c85e396984",
+    "original_response_bytes": 116,
+    "original_response_characters": 114,
+    "answer_as_judged": "Emojis released after 2017 appear in Google’s modern, non-blob style, since the blob set was discontinued in 2017."
+  },
+  {
+    "slot": "probes/rc-bf86d02f63c9/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-bf86d02f63c9/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "a165036a62e9a0bcd6064148e2c8c7da2ebfaad05d3a8b531cfd20c517cee28d",
+    "original_response_bytes": 97,
+    "original_response_characters": 95,
+    "answer_as_judged": "It appears in Google’s modern emoji style, since Google stopped updating blob emoji after 2017."
+  },
+  {
+    "slot": "probes/rc-bf86d02f63c9/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-bf86d02f63c9/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "4537a41f99f44a4027a37deb0fd5383a2c31243b715318a77652509d35175ddc",
+    "original_response_bytes": 89,
+    "original_response_characters": 87,
+    "answer_as_judged": "Emoji released after 2017 appears in Google’s modern emoji style rather than as a blob."
+  },
+  {
+    "slot": "probes/rc-bf86d02f63c9/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-ade633af9c14/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "291354f1b7b527eeb2e4716086b1267dbf27ea3f710cb7b27e7d00eef307ac1d",
+    "original_response_bytes": 144,
+    "original_response_characters": 142,
+    "answer_as_judged": "I don’t know the exact behavior of Grist when suggestions are enabled, including whether the displayed result changes based on sign-in status."
+  },
+  {
+    "slot": "probes/rc-ade633af9c14/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-ade633af9c14/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "a061890b6a2a6420f8360d893ba52dd1492b5470d5adc74f508a968a7814c83e",
+    "original_response_bytes": 73,
+    "original_response_characters": 71,
+    "answer_as_judged": "I don’t know this behavior with enough confidence to answer accurately."
+  },
+  {
+    "slot": "probes/rc-ade633af9c14/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-ade633af9c14/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "1630a267d1f60e72bbee64a29446681c1187c2ebb19e875fda143eea0ede1cfd",
+    "original_response_bytes": 195,
+    "original_response_characters": 195,
+    "answer_as_judged": "The user sees the document in read-only mode with an option to suggest changes. Sign-in status does not change what is displayed; it only affects whether the user can submit or save a suggestion."
+  },
+  {
+    "slot": "probes/rc-ade633af9c14/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-ade633af9c14/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "4398fdc2b787f5bc4ae9165888a44e979a237d6511ee74e532a95d2756fd2ad5",
+    "original_response_bytes": 50,
+    "original_response_characters": 48,
+    "answer_as_judged": "I don’t know how Grist behaves in that scenario."
+  },
+  {
+    "slot": "probes/rc-ade633af9c14/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-ade633af9c14/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "c015b2d9d02a8784b0ca910f6094e2effe1d87f5f7aef2c8b87bfd9f2a50053b",
+    "original_response_bytes": 124,
+    "original_response_characters": 122,
+    "answer_as_judged": "I don’t know how Grist presents a document with suggestions enabled or whether the result differs based on sign-in status."
+  },
+  {
+    "slot": "probes/rc-ade633af9c14/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-ade633af9c14/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "8b29d9bb2928522e84c723fc56a991ff0c1464491c8ec8207931e003132de3e3",
+    "original_response_bytes": 134,
+    "original_response_characters": 132,
+    "answer_as_judged": "The user sees the document’s suggestions/comments panel open automatically. This happens whether the user is signed in or anonymous."
+  },
+  {
+    "slot": "probes/rc-ade633af9c14/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "bbc5c30de1db550794901e33ce921de89d8554d91146bfa79e3d68fabdd318a2",
+    "original_response_bytes": 109,
+    "original_response_characters": 109,
+    "answer_as_judged": "When the document is reopened, the page list starts collapsed by default. Users can still expand it manually."
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "1d71e2c411b77d8f5e7d7f25f7562e4126af7108c3866a916b4b6fa3dc2bb3b2",
+    "original_response_bytes": 172,
+    "original_response_characters": 168,
+    "answer_as_judged": "Selecting “Set default: Collapse” makes the page list start collapsed whenever the document is reopened. It affects the default display state, not the pages themselves."
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-luna/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "80513aaf03c947528906444f7a63ffbcca9bf3235c179e3078c88d4c25d0b1cd",
+    "original_response_bytes": 156,
+    "original_response_characters": 152,
+    "answer_as_judged": "Selecting “Set default: Collapse” makes the page list start collapsed whenever the document is reopened. Individual users can still expand it afterward."
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-luna/rep3/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "956bc9d3e01a4947c888c8e968e1f539730fe366e02dbba7122ef19f022b7bd3",
+    "original_response_bytes": 176,
+    "original_response_characters": 172,
+    "answer_as_judged": "Selecting **“Set default: Collapse”** makes the page list start in its collapsed state the next time the document is opened. Users can still expand it during their session."
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-sol/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "3cd81e2e2183637970c6cf875f99c4fa687d2c62269b7ff623abf6c031b03f0a",
+    "original_response_bytes": 136,
+    "original_response_characters": 136,
+    "answer_as_judged": "The page and its nested subpages are collapsed by default when the document is reopened, hiding the subpages until the page is expanded."
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "b492e5712310622ba732b200895abb1a0cfcb0152ae3a1b95ddbfca713410b47",
+    "original_response_bytes": 197,
+    "original_response_characters": 193,
+    "answer_as_judged": "Selecting **“Set default: Collapse”** makes the page list open in its collapsed state by default the next time the document is reopened. Users can still expand it manually during their session."
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-7b485b51412f/gpt-5.6-sol/rep3/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "7d8cf878607b674f43e206c25b27c4964905a01fbeee88dbaebb4afd20a63fad",
+    "original_response_bytes": 52,
+    "original_response_characters": 52,
+    "answer_as_judged": "A context menu appears for the selected cell or row."
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "f3fed4a26f7165fb720e16966590e6765ec4337fca2f586c3bc35ea637f7659a",
+    "original_response_bytes": 54,
+    "original_response_characters": 54,
+    "answer_as_judged": "A context menu appears for the selected cell or cells."
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "c18e4351a4394a1edeeb86f6b0335e236963927b8dd4ff31d44447bf15f2d9c3",
+    "original_response_bytes": 54,
+    "original_response_characters": 54,
+    "answer_as_judged": "A context menu appears for the selected cell or range."
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "006caa3a6f0860182b626c3a29c8f8ee8a524b6ad4e4152759639bd15747c22b",
+    "original_response_bytes": 99,
+    "original_response_characters": 97,
+    "answer_as_judged": "The grid’s context menu appears for the currently selected cell, equivalent to right-clicking it."
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "63066ec80b85d4f83ec0d38ac35c382d5e62ba09a9b306f984cf8eccb22220ac",
+    "original_response_bytes": 88,
+    "original_response_characters": 88,
+    "answer_as_judged": "Pressing Shift+F10 in the grid opens the context menu for the current cell or selection."
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-sol/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "63066ec80b85d4f83ec0d38ac35c382d5e62ba09a9b306f984cf8eccb22220ac",
+    "original_response_bytes": 88,
+    "original_response_characters": 88,
+    "answer_as_judged": "Pressing Shift+F10 in the grid opens the context menu for the current cell or selection."
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-4aac15b7b503/gpt-5.6-sol/rep3/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-3cd319371269/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "d03a94547d5fcf94c79f541d1a2ecf9ae204c8c31813be4c9777f98b7090091f",
+    "original_response_bytes": 252,
+    "original_response_characters": 252,
+    "answer_as_judged": "When a user enables On-Demand Tables in a new document, Grist creates the document with the feature enabled and displays an informational message explaining how on-demand tables work. No existing tables need to be converted because the document is new."
+  },
+  {
+    "slot": "probes/rc-3cd319371269/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-3cd319371269/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "14c4de211d557d96a42674c5a9b1946bacb0cc8c075673e58bebb110a8ba86c4",
+    "original_response_bytes": 59,
+    "original_response_characters": 57,
+    "answer_as_judged": "I don’t know with enough confidence to answer accurately."
+  },
+  {
+    "slot": "probes/rc-3cd319371269/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-3cd319371269/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "a5826cc4fefaf6a0451bea416cf7eadbfb7eed0c17d473c97b96eb5688786bc4",
+    "original_response_bytes": 31,
+    "original_response_characters": 29,
+    "answer_as_judged": "I don’t know with confidence."
+  },
+  {
+    "slot": "probes/rc-3cd319371269/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-3cd319371269/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "951ffc28186324475f685c47234a40b1d6ec020ee0d55ace05ec86e03b400bac",
+    "original_response_bytes": 155,
+    "original_response_characters": 155,
+    "answer_as_judged": "Grist shows a warning/confirmation dialog explaining that On-Demand Tables have limitations. If the user confirms, the feature is enabled for the document."
+  },
+  {
+    "slot": "probes/rc-3cd319371269/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-3cd319371269/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "4b4555f381bb9d08043e0869445243bdb0ba42d5506cfe812728a85cc4abbcaf",
+    "original_response_bytes": 152,
+    "original_response_characters": 152,
+    "answer_as_judged": "Grist warns that On-Demand Tables are an experimental feature and asks the user to confirm. If confirmed, the document reloads with the feature enabled."
+  },
+  {
+    "slot": "probes/rc-3cd319371269/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-3cd319371269/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "607328700b87486addbeec3997cb7b4d62b583d38b76f66a6391359e4d369929",
+    "original_response_bytes": 100,
+    "original_response_characters": 98,
+    "answer_as_judged": "I don’t know the exact current behavior when On-Demand Tables are enabled in a new Grist document."
+  },
+  {
+    "slot": "probes/rc-3cd319371269/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "015d2b15049e6eb6d3cb10591e49835a65e6b4379999b5a76b9437d51e1292a5",
+    "original_response_bytes": 15,
+    "original_response_characters": 13,
+    "answer_as_judged": "I don’t know."
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "ef33324d8b4ad92656406b71a476e619534d534b43a1f8e6ee4e0defc1f13e29",
+    "original_response_bytes": 151,
+    "original_response_characters": 151,
+    "answer_as_judged": "The assignment is rejected because a team can have at most 10 billing managers. The user must remove an existing billing manager before adding another."
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-luna/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "4ea91a1d9bfde38c214c8742d2b77230ff1ac7263777e3afc474225e7ba5e313",
+    "original_response_bytes": 135,
+    "original_response_characters": 135,
+    "answer_as_judged": "The assignment is rejected. Grist allows at most 10 billing managers per team, so the user receives an error instead of adding another."
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-luna/rep3/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "9185bae562de4c6696197d6bc6c96b00e19d29ad5a082be880522710321c43cb",
+    "original_response_bytes": 146,
+    "original_response_characters": 146,
+    "answer_as_judged": "The assignment is rejected because a team can have at most 10 billing managers. The user sees an error indicating that the limit has been reached."
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-sol/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "ff39e9488ee294c548fe501254857daaa6a5512498e517eb7bb43ee196d5e261",
+    "original_response_bytes": 157,
+    "original_response_characters": 157,
+    "answer_as_judged": "The assignment is rejected: Grist limits a team to 10 billing managers. The user remains unassigned and an error indicates that the maximum has been reached."
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-sol/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "abb0691d5c818b6ec2663fbe803b635603a8b4a33b9484cdb92fb6907184d938",
+    "original_response_bytes": 90,
+    "original_response_characters": 88,
+    "answer_as_judged": "I don’t know the exact behavior Grist exhibits when an 11th billing manager is assigned."
+  },
+  {
+    "slot": "probes/rc-f33b2bf870e9/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c044ebec7fe1/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "b913eb12d7735ef39c538e13d4154e11f6f9ab320985dbe4a33389f89efa7bb0",
+    "original_response_bytes": 210,
+    "original_response_characters": 210,
+    "answer_as_judged": "All matching active users appear in the subscription typeahead, regardless of whether they are currently subscribed. Their subscription status is shown so you can distinguish subscribed from unsubscribed users."
+  },
+  {
+    "slot": "probes/rc-c044ebec7fe1/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c044ebec7fe1/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "9c9aaf52c9ab3b4b7f3c54039fbd6a65aed32855b917bae1d2ea4c177a4133f4",
+    "original_response_bytes": 159,
+    "original_response_characters": 159,
+    "answer_as_judged": "Matching users appear regardless of their subscription status; subscribed users are shown as subscribed, while unsubscribed users can be selected to subscribe."
+  },
+  {
+    "slot": "probes/rc-c044ebec7fe1/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c044ebec7fe1/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "4a76ecf3c4a01307682a5873f14cae55df632819234b5e491f00db53a29f6a2b",
+    "original_response_bytes": 150,
+    "original_response_characters": 150,
+    "answer_as_judged": "Only active users appear in the subscription typeahead; deactivated or otherwise inactive users are excluded, regardless of whether their names match."
+  },
+  {
+    "slot": "probes/rc-c044ebec7fe1/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c044ebec7fe1/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "40f67d623892486f3060a42c43873b9888d5cefc1af55a9f7dac6f31e6321ab1",
+    "original_response_bytes": 176,
+    "original_response_characters": 176,
+    "answer_as_judged": "All matching active users appear, whether or not they are already subscribed. Existing subscribers are shown as selected/checked, while unsubscribed users are available to add."
+  },
+  {
+    "slot": "probes/rc-c044ebec7fe1/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c044ebec7fe1/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "4795ce1451d4ae31b47a2157bccedc9a72954cedd195dd325a15a5c43bade24d",
+    "original_response_bytes": 130,
+    "original_response_characters": 130,
+    "answer_as_judged": "The typeahead shows matching active users who are not already subscribed. Existing subscribers and deactivated users are excluded."
+  },
+  {
+    "slot": "probes/rc-c044ebec7fe1/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-c044ebec7fe1/gpt-5.6-sol/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-c044ebec7fe1/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "94d4cfff706e9184b851bb9b417dcc12dcb1ac44a899c2eaee3bf4009158c144",
+    "original_response_bytes": 159,
+    "original_response_characters": 159,
+    "answer_as_judged": "The typeahead shows matching active users whether or not they are already subscribed, with subscribed users indicated as such. Deactivated users do not appear."
+  },
+  {
+    "slot": "probes/rc-c044ebec7fe1/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c30a4162188a/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "3a6ccb48fd2d7183eaaadcfb5e80d928acc46c0e74bcb137317cdb6756afc009",
+    "original_response_bytes": 216,
+    "original_response_characters": 210,
+    "answer_as_judged": "If you have permission to edit a message, its message controls include an “Edit message” option. Without that permission, the edit control is hidden, while other controls you’re allowed to use remain available."
+  },
+  {
+    "slot": "probes/rc-c30a4162188a/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c30a4162188a/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "13b6cea4f67ec1271cc8188d0206d0d15d7394e9a2b8f6bfe3380ae898376c97",
+    "original_response_bytes": 183,
+    "original_response_characters": 179,
+    "answer_as_judged": "Users who can edit a message see the “Edit message” control for it. Users without edit permission do not see that control, though other permitted message actions remain available."
+  },
+  {
+    "slot": "probes/rc-c30a4162188a/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c30a4162188a/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "6c311e93ded24783d660b76614f45ded80f8c0eb4638e2c97e4f23010a1765ce",
+    "original_response_bytes": 221,
+    "original_response_characters": 217,
+    "answer_as_judged": "If you have permission to edit a Zulip message, its message actions include controls to edit—and typically delete—it. Without that permission, those controls are hidden, while other permitted actions remain available."
+  },
+  {
+    "slot": "probes/rc-c30a4162188a/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c30a4162188a/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "a7972f70cb95e94736bb384011c1510569ee345139a1f13f4d11df5e929ab399",
+    "original_response_bytes": 221,
+    "original_response_characters": 217,
+    "answer_as_judged": "If you have permission to edit a message, its actions menu includes an **Edit** control. If you lack permission—because of your role, message ownership, or the configured edit-time limit—the Edit control is not shown."
+  },
+  {
+    "slot": "probes/rc-c30a4162188a/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c30a4162188a/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "6893148343696cf1bfa3ddd70912ef76dce2f143afd81827524a9ae0a2bd72fa",
+    "original_response_bytes": 160,
+    "original_response_characters": 158,
+    "answer_as_judged": "If you have permission to edit a message, Zulip shows an **Edit** control in that message’s actions menu. If you lack permission, the edit control is omitted."
+  },
+  {
+    "slot": "probes/rc-c30a4162188a/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c30a4162188a/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "928ea596dfb94f574b15f88ecf62ebc3ed7d6a29b250a8ba4bf3f854c9aa41b3",
+    "original_response_bytes": 243,
+    "original_response_characters": 239,
+    "answer_as_judged": "The Edit control is shown only when you have permission to edit that message; otherwise, it is omitted from the message’s controls. Permissions may depend on whether you sent the message, your role, and the organization’s edit-time limits."
+  },
+  {
+    "slot": "probes/rc-c30a4162188a/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "fa8f35f37cb03ee58a8969b63421d093b39a7159f41b9d256e1c372e2484d40a",
+    "original_response_bytes": 192,
+    "original_response_characters": 192,
+    "answer_as_judged": "Zulip does not allow a private channel to be made a default channel for new users. The administrator is shown an error, since new users cannot be automatically subscribed to a private channel."
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-luna/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "2a5cfeb3b32b0d64b71fc1bcc60b95335b0c219f843e774b5602ad5ac49bca0b",
+    "original_response_bytes": 135,
+    "original_response_characters": 135,
+    "answer_as_judged": "A private channel cannot be made a default channel for new users. Zulip rejects the change and requires the channel to be public first."
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-luna/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "e3a437e5eb5dfac9351c06e4c2ed79df0252e22398eda2d7361a083385a8100b",
+    "original_response_bytes": 167,
+    "original_response_characters": 167,
+    "answer_as_judged": "Zulip does not allow a private channel to be made a default channel for new users. The administrator receives an error explaining that default channels must be public."
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-luna/rep3/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "654f0ae5e4b41740015d3ccacb5c093df94080ccf1c6c47ec827fdabddcb29ef",
+    "original_response_bytes": 182,
+    "original_response_characters": 182,
+    "answer_as_judged": "Zulip rejects the change: private channels cannot be made default channels for new users. The administrator must make the channel public before adding it to the default-channel list."
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-sol/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "2a78cc217bacae0cb727e3d56b111cbfc776d885c08c20a8f260f6756b6cc4bd",
+    "original_response_bytes": 161,
+    "original_response_characters": 161,
+    "answer_as_judged": "Zulip rejects the change: a private channel cannot be made a default channel for new users. The administrator sees an error, and the channel remains non-default."
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-sol/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "1c08c1f43e20b47e267b8492a6bf1fbb7e448ec7434272cdd2e9ba8420157867",
+    "original_response_bytes": 161,
+    "original_response_characters": 161,
+    "answer_as_judged": "Zulip rejects the change: private channels cannot be set as default channels for new users. The administrator sees an error, and the channel remains non-default."
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-277279fd03a4/gpt-5.6-sol/rep3/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "533335f51e0c2561aaca7330c1df414e6d7338339aa7863bfe08dc1d6ecb56fb",
+    "original_response_bytes": 138,
+    "original_response_characters": 134,
+    "answer_as_judged": "Users who can send messages to the channel see the “Generate email address” button. Users who can only view the channel do not see it."
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-luna/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "b0a0dc087349f0419185d1c83d5fa9f235381d89b6c4668d47f8dfe12a2c4ba6",
+    "original_response_bytes": 248,
+    "original_response_characters": 240,
+    "answer_as_judged": "The “Generate email address” button appears for users who are allowed to send messages to the channel. It is hidden for users who cannot send messages there, including members of channels where their messaging permission is set to “Nobody.”"
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-luna/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "2f8284512d19c1efe26c26346725529a3c92fccc0cd814576a83b4408f7aed2e",
+    "original_response_bytes": 174,
+    "original_response_characters": 174,
+    "answer_as_judged": "The email address generation button is shown only to users who are allowed to send messages to that channel. Users without channel-messaging permission do not see the button."
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-luna/rep3/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "e2bc11d7b535ada78d95e35f64c4b057e876ed5fd6438ad6866b354d445cb058",
+    "original_response_bytes": 212,
+    "original_response_characters": 212,
+    "answer_as_judged": "Users allowed to post in the channel see an enabled **Generate email address** button. Users without channel messaging permission see the button disabled, since emailing the channel would also constitute posting."
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "b962219ea50a5b9598c0968d9b5d192a609332d09383bec52529cc30e1139a23",
+    "original_response_bytes": 176,
+    "original_response_characters": 172,
+    "answer_as_judged": "Users permitted to send messages to the channel see an enabled “Generate email address” button. For users without channel messaging permission, the button appears disabled."
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "7e11d9e18f39c4d908fdfd690e44bb18e0cfd4313894a3deede0f7fc27a5ca5a",
+    "original_response_bytes": 168,
+    "original_response_characters": 164,
+    "answer_as_judged": "Users who have permission to post to the channel see an enabled “Generate email address” button. Users without channel messaging permission see the button disabled."
+  },
+  {
+    "slot": "probes/rc-c5ed01f3769c/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-362ff82e3812/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "05143f76c11bf6e5d5e0670e3d7dd8f8f20b07a0883a65f95dd2c9a7591dfe31",
+    "original_response_bytes": 150,
+    "original_response_characters": 150,
+    "answer_as_judged": "Users can mark automated notices as read or unread just like regular messages. There is no separate read-status control specific to automated notices."
+  },
+  {
+    "slot": "probes/rc-362ff82e3812/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-362ff82e3812/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "53d3f841893f3c94ee1e90fc1e3febdc3ec77afbf0afdd7f692f6ca829592a07",
+    "original_response_bytes": 174,
+    "original_response_characters": 172,
+    "answer_as_judged": "Users can manually mark automated notices as read or unread, just like regular messages. Their read status is otherwise governed by the user’s normal message-read settings."
+  },
+  {
+    "slot": "probes/rc-362ff82e3812/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-362ff82e3812/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "3cfc94dc521c637a5ac8198480b756ad0b0d0b9d4effb2c332c1848b1d3a1f92",
+    "original_response_bytes": 143,
+    "original_response_characters": 143,
+    "answer_as_judged": "Users can mark automated notices as read or unread, just like ordinary messages. Their read status is personal and does not affect other users."
+  },
+  {
+    "slot": "probes/rc-362ff82e3812/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-362ff82e3812/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "909de624bbb508845806f9c31873168c179c799d1ccbcb7d145b95d8cebce33e",
+    "original_response_bytes": 86,
+    "original_response_characters": 86,
+    "answer_as_judged": "Users can manually mark automated notices as read or unread, just like other messages."
+  },
+  {
+    "slot": "probes/rc-362ff82e3812/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-362ff82e3812/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "eda400360affac1a65026fcb8f9d9e7d363bb56fd04c1ba8a97aec36be5a26e9",
+    "original_response_bytes": 154,
+    "original_response_characters": 154,
+    "answer_as_judged": "Users can manually mark automated notices as read or unread, just like ordinary Zulip messages. Their read status is not permanently forced by the system."
+  },
+  {
+    "slot": "probes/rc-362ff82e3812/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-362ff82e3812/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "6aa615bb611f9ac124da5682b5c5a2fea0c005929bfa09b492c81eac5c008719",
+    "original_response_bytes": 156,
+    "original_response_characters": 150,
+    "answer_as_judged": "Users can manually mark automated notices as read or unread, just like regular Zulip messages. They can also use Zulip’s bulk “mark as read” controls."
+  },
+  {
+    "slot": "probes/rc-362ff82e3812/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-393307131fc8/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "f68d902e07b4bef56d5dc1a2266b4b9b922b0a3f6fc3eefdd6ed83939f2d89d0",
+    "original_response_bytes": 147,
+    "original_response_characters": 143,
+    "answer_as_judged": "The channel is pinned to the top of the left sidebar, in the “Pinned” section. It remains there for quick access regardless of recent activity."
+  },
+  {
+    "slot": "probes/rc-393307131fc8/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-393307131fc8/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "59f87666f02272eebdb6f27fbaf644f1803e1702f6efbb3a9996556dc31f5099",
+    "original_response_bytes": 140,
+    "original_response_characters": 140,
+    "answer_as_judged": "The channel is pinned to the top of the left sidebar, above unpinned channels. It remains visible there even when it has no unread messages."
+  },
+  {
+    "slot": "probes/rc-393307131fc8/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-393307131fc8/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "facc288402abdfc1656db80e6da9f73391bee562dc90a4bbc0929cfbce93783c",
+    "original_response_bytes": 149,
+    "original_response_characters": 149,
+    "answer_as_judged": "The channel is moved to the top of the left sidebar, in the pinned channels section. It remains there even when the sidebar is filtered or collapsed."
+  },
+  {
+    "slot": "probes/rc-393307131fc8/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-393307131fc8/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "b2b2e1fa2771c067de0aecf2beca3eb30c7691c86bf8bb18979f6d967835761a",
+    "original_response_bytes": 166,
+    "original_response_characters": 166,
+    "answer_as_judged": "The channel is pinned to the top of the Channels list in the left sidebar, above unpinned channels. It stays there for your account until you turn the pin toggle off."
+  },
+  {
+    "slot": "probes/rc-393307131fc8/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-393307131fc8/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "5d61fee8c17ebab164a72a03c5555dec3470a5e499d5c59e5fd11cd45f33633d",
+    "original_response_bytes": 150,
+    "original_response_characters": 150,
+    "answer_as_judged": "The channel moves to the top of the left sidebar, grouped with your other pinned channels for quicker access. This affects only your personal sidebar."
+  },
+  {
+    "slot": "probes/rc-393307131fc8/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-393307131fc8/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "9c21d723eeffdeccc90ea76861bf9cf4085c5741953b2154b2556f490fa30532",
+    "original_response_bytes": 178,
+    "original_response_characters": 178,
+    "answer_as_judged": "The channel stays visible near the top of the Channels section in the left sidebar, even when it has no unread messages. This pinning is personal and does not affect other users."
+  },
+  {
+    "slot": "probes/rc-393307131fc8/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "9652ff0fbe58d79891100c8dde5d18bf89b8cf00b5f496a2e8658c93e28dc272",
+    "original_response_bytes": 180,
+    "original_response_characters": 180,
+    "answer_as_judged": "The invited user receives the initial settings that were in effect when the invitation was sent. Changes to the defaults made before the user accepts do not affect that invitation."
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "aac9acc78fb8d9bb66da07ca0b12a9429cc75e6f207fff31f3873e987167f4b9",
+    "original_response_bytes": 90,
+    "original_response_characters": 90,
+    "answer_as_judged": "They receive the defaults in effect when they accept the invitation, not when it was sent."
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-luna/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "463a7649af311d852ebc2fb173e1d766cf33417113107e9b1ce64ecdfc018e33",
+    "original_response_bytes": 182,
+    "original_response_characters": 180,
+    "answer_as_judged": "The invited user receives the default settings that existed when the invitation was sent. Changes made between invitation and acceptance do not affect that user’s initial settings."
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "bd3be27cba24341606878a83eaee6653fec789f102fa383be511ff1e8b161361",
+    "original_response_bytes": 196,
+    "original_response_characters": 194,
+    "answer_as_judged": "The invited user receives the organization’s current default settings at the time they accept the invitation and create their account, not the defaults that existed when the invitation was sent."
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-sol/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "da0da90c3377d78bc1863d9488c039eace6bb6cdcee259a5ddccfcfaf20f94df",
+    "original_response_bytes": 224,
+    "original_response_characters": 220,
+    "answer_as_judged": "The invited user receives the organization’s default settings as they existed when the invitation was created. Later changes to those defaults before the invitation is accepted do not affect that user’s initial settings."
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "675bf367b47426cd79f3d272996b3dbadbf5f2dc58bc9a3d04596e0e7c857164",
+    "original_response_bytes": 204,
+    "original_response_characters": 202,
+    "answer_as_judged": "The invited user receives the organization’s defaults as they exist when the invitation is accepted, not when it was sent. Changes made between invitation and acceptance therefore apply to the new user."
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-103dc930a420/gpt-5.6-sol/rep3/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-1590080019fb/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "a57dbf1447461c3f76f41abe74d37b6fb2814fa5ac8e4a8f4369740eaabeb038",
+    "original_response_bytes": 158,
+    "original_response_characters": 158,
+    "answer_as_judged": "A user can select **Read, Add, Update, and Delete** permissions for a table-level access rule. Permissions can be combined to create the desired access level."
+  },
+  {
+    "slot": "probes/rc-1590080019fb/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-1590080019fb/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "cb0ee45d8359b8c800a59140eec4d2cab8d12a405bff86f50b5c658dba817ab0",
+    "original_response_bytes": 103,
+    "original_response_characters": 103,
+    "answer_as_judged": "A user can select Read, Add, Update, Delete, and Schema Edit permissions for a table-level access rule."
+  },
+  {
+    "slot": "probes/rc-1590080019fb/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-1590080019fb/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "14147d7997c2d81b27ec6fc6f104f0e6edddc363365c35f68282639c0b73a277",
+    "original_response_bytes": 126,
+    "original_response_characters": 126,
+    "answer_as_judged": "A user can select **No access**, **Read-only**, **Read and write**, or **Full access** when editing a table-level access rule."
+  },
+  {
+    "slot": "probes/rc-1590080019fb/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-1590080019fb/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "4e66378f93710e84187bb1d3ed5cc48d901fb32f78782b931fc2af2c97ceba4f",
+    "original_response_bytes": 163,
+    "original_response_characters": 163,
+    "answer_as_judged": "A user can set **Read, Update, Create, and Delete** permissions for a table-level access rule. Each permission can be allowed, denied, or left unchanged/inherited."
+  },
+  {
+    "slot": "probes/rc-1590080019fb/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-1590080019fb/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "de834fba5c2c11f2ace674dda03cedbe67a2e154fc73d5265a8893c42b602dea",
+    "original_response_bytes": 156,
+    "original_response_characters": 156,
+    "answer_as_judged": "A table-level access rule can control **Read, Update, Create, and Delete** permissions. Each can be set to **Allow**, **Deny**, or left unchanged/inherited."
+  },
+  {
+    "slot": "probes/rc-1590080019fb/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-1590080019fb/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "9f328838c3129ac3bcd68a1efdadae3fcfe5f540334cb0c7f875ed32c9baf70d",
+    "original_response_bytes": 113,
+    "original_response_characters": 113,
+    "answer_as_judged": "A user can allow or deny **Read, Update, Create, and Delete** permissions when editing a table-level access rule."
+  },
+  {
+    "slot": "probes/rc-1590080019fb/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-08dffa18a270/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "afe7f7e3bb393aff5dfa7b0fdd1bb5b55b36960da5c978919d20018b1b493b8b",
+    "original_response_bytes": 59,
+    "original_response_characters": 59,
+    "answer_as_judged": "The GIF picker button no longer appears in the compose box."
+  },
+  {
+    "slot": "probes/rc-08dffa18a270/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-08dffa18a270/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "2cfd56606f89efd7f8311d923dc0988f7858985c46dc31f5bb425ea5a805d84d",
+    "original_response_bytes": 54,
+    "original_response_characters": 54,
+    "answer_as_judged": "The GIF picker button disappears from the compose box."
+  },
+  {
+    "slot": "probes/rc-08dffa18a270/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-08dffa18a270/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "2cfd56606f89efd7f8311d923dc0988f7858985c46dc31f5bb425ea5a805d84d",
+    "original_response_bytes": 54,
+    "original_response_characters": 54,
+    "answer_as_judged": "The GIF picker button disappears from the compose box."
+  },
+  {
+    "slot": "probes/rc-08dffa18a270/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-08dffa18a270/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "862b20e675385b2ad9c698293ff23097aee244c747277b857b837cfdf6995c51",
+    "original_response_bytes": 57,
+    "original_response_characters": 55,
+    "answer_as_judged": "I don’t know the exact Zulip behavior for that setting."
+  },
+  {
+    "slot": "probes/rc-08dffa18a270/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-08dffa18a270/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "2cfd56606f89efd7f8311d923dc0988f7858985c46dc31f5bb425ea5a805d84d",
+    "original_response_bytes": 54,
+    "original_response_characters": 54,
+    "answer_as_judged": "The GIF picker button disappears from the compose box."
+  },
+  {
+    "slot": "probes/rc-08dffa18a270/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-08dffa18a270/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "2cfd56606f89efd7f8311d923dc0988f7858985c46dc31f5bb425ea5a805d84d",
+    "original_response_bytes": 54,
+    "original_response_characters": 54,
+    "answer_as_judged": "The GIF picker button disappears from the compose box."
+  },
+  {
+    "slot": "probes/rc-08dffa18a270/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b7086f489030/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "8a1cd8edc7a8d4569d438d71968707ac45c04f2d5b003707d1a9004b41b82b1f",
+    "original_response_bytes": 248,
+    "original_response_characters": 246,
+    "answer_as_judged": "Zulip administrators can control whether users may delete their own messages and can impose a time limit on that ability. Administrators and permitted moderators can delete messages from the channel regardless of the sender’s own-message setting."
+  },
+  {
+    "slot": "probes/rc-b7086f489030/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b7086f489030/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "b0502033f3e970c86d229e13342af8fb7b89c07dfc5e17645c2ca1b4fc563ae8",
+    "original_response_bytes": 285,
+    "original_response_characters": 285,
+    "answer_as_judged": "Zulip administrators can configure whether users may delete their own messages, with options ranging from never allowing it to allowing deletion only within a time limit (such as 1 day or 7 days) or at any time. This setting applies to messages the user has sent in channels (streams)."
+  },
+  {
+    "slot": "probes/rc-b7086f489030/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b7086f489030/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "81efd745f2fcd645bf500522cd9c24b817343db76a9916c805d24f06f7cfe61a",
+    "original_response_bytes": 294,
+    "original_response_characters": 290,
+    "answer_as_judged": "Zulip administrators can control whether users may delete their own messages, typically through the organization-level “allow users to delete their own messages” setting. Administrators can delete messages regardless, while message deletion can also be restricted by configured time limits."
+  },
+  {
+    "slot": "probes/rc-b7086f489030/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b7086f489030/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "9006a8d14615b9bb70a7c55da33939502aa5f20039f264a8e037154ee7e9dca2",
+    "original_response_bytes": 237,
+    "original_response_characters": 235,
+    "answer_as_judged": "Organization administrators can allow or disallow users from deleting their own messages and set a time limit for doing so. Separate permissions control which roles may delete any message, including other users’ messages, in a channel."
+  },
+  {
+    "slot": "probes/rc-b7086f489030/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b7086f489030/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "fb3c5c9ff60f32a3f758a869df279755bda8ea4de2a02209c00571ada4dc5fa8",
+    "original_response_bytes": 325,
+    "original_response_characters": 325,
+    "answer_as_judged": "Organization administrators can choose which roles may delete their own messages and set a time limit after sending during which deletion is allowed. Channel administrators may also be permitted to delete messages in channels they administer, while organization moderators and administrators can have broader deletion rights."
+  },
+  {
+    "slot": "probes/rc-b7086f489030/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b7086f489030/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "7eeaa96666edcf38f4cca3a5bef6319a9514900bc30d26f92b8c8a37b7b72698",
+    "original_response_bytes": 253,
+    "original_response_characters": 253,
+    "answer_as_judged": "Zulip organization administrators can control whether users may delete their own channel messages and set a time limit after sending during which deletion is allowed. Administrators can also grant selected roles broader permission to delete any message."
+  },
+  {
+    "slot": "probes/rc-b7086f489030/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-aac66a0af69a/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "51afbea6b5df8e56addc3419f1a6359ae72ba0104b9b66cb3d496447e6fede8f",
+    "original_response_bytes": 156,
+    "original_response_characters": 156,
+    "answer_as_judged": "Clicking **Restart** reloads the tutorial and discards any unsaved edits in the current tutorial document. A confirmation prompt appears before the restart."
+  },
+  {
+    "slot": "probes/rc-aac66a0af69a/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-aac66a0af69a/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "355cdc2f306f9ea63c5de640327c207bea0deb251042872bae32c91753a24f94",
+    "original_response_bytes": 148,
+    "original_response_characters": 148,
+    "answer_as_judged": "It restarts the tutorial and resets the tutorial document, discarding any unsaved edits. You may be prompted to confirm before the changes are lost."
+  },
+  {
+    "slot": "probes/rc-aac66a0af69a/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-aac66a0af69a/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "85114439deeaf97fb91b6092172f1e06c63ec3f60c3025c57166baa10ffcb7e1",
+    "original_response_bytes": 139,
+    "original_response_characters": 139,
+    "answer_as_judged": "It prompts you to confirm, warning that your unsaved edits will be lost. If you confirm, the tutorial restarts and the edits are discarded."
+  },
+  {
+    "slot": "probes/rc-aac66a0af69a/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-aac66a0af69a/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "d3cb37e250108ff3f806a036ad8f7aa3d6dca65f80d0c75f93e96acfd424ab87",
+    "original_response_bytes": 158,
+    "original_response_characters": 158,
+    "answer_as_judged": "Grist asks for confirmation that restarting will discard your unsaved edits. If you confirm, it resets the tutorial to the beginning and those edits are lost."
+  },
+  {
+    "slot": "probes/rc-aac66a0af69a/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-aac66a0af69a/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "32bfda7d7f4b69e0d22889a9771621e075d6d95c406bcae4be2d6ca3672f3e45",
+    "original_response_bytes": 144,
+    "original_response_characters": 144,
+    "answer_as_judged": "Grist warns that restarting will discard your unsaved edits and asks for confirmation. If you confirm, the tutorial resets to its initial state."
+  },
+  {
+    "slot": "probes/rc-aac66a0af69a/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-aac66a0af69a/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "52734de7d2bee24387e2c7641c1856eefc3c32611930dbea56ec8bf321c1ac62",
+    "original_response_bytes": 134,
+    "original_response_characters": 134,
+    "answer_as_judged": "Clicking **Restart** resets the tutorial document to its original state and starts the tutorial over. Any unsaved edits are discarded."
+  },
+  {
+    "slot": "probes/rc-aac66a0af69a/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-4200f1dac6a9/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "99e3c09085c826761d58f169cf0550992ddaac2f731ee96fbe6b6a1c02783d61",
+    "original_response_bytes": 152,
+    "original_response_characters": 150,
+    "answer_as_judged": "The URL is replaced in the compose box by the reverse linkifier’s configured replacement text, shown as a clickable Markdown link to the original URL."
+  },
+  {
+    "slot": "probes/rc-4200f1dac6a9/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-4200f1dac6a9/gpt-5.6-luna/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-4200f1dac6a9/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "21ed2712fd6b78405e77e36a8c3870e544e4ffb72af14250d7ff5f5bc9b9562b",
+    "original_response_bytes": 111,
+    "original_response_characters": 109,
+    "answer_as_judged": "The compose box shows the linkifier’s replacement text as a Markdown link, with the pasted URL as its target."
+  },
+  {
+    "slot": "probes/rc-4200f1dac6a9/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-4200f1dac6a9/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "bb95699689aebb28a5b8d4307df4756ce167454c086885b9d82280137387631b",
+    "original_response_bytes": 158,
+    "original_response_characters": 156,
+    "answer_as_judged": "The URL is replaced in the compose box by the reverse linkifier’s configured text, typically a concise identifier or label, which links to the original URL."
+  },
+  {
+    "slot": "probes/rc-4200f1dac6a9/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-4200f1dac6a9/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "debc7607e4378e2537b602d3e63c1f04df7ce841bdad6433ce39caccf79f232a",
+    "original_response_bytes": 136,
+    "original_response_characters": 134,
+    "answer_as_judged": "The URL is replaced in the compose box with the linkifier’s configured display text, formatted as a Markdown link to the original URL."
+  },
+  {
+    "slot": "probes/rc-4200f1dac6a9/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-4200f1dac6a9/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "4bf1b2649ac6551edd0b2dfaa69373a7cf29e6c68508cf7bb96b02cf1acafb7f",
+    "original_response_bytes": 107,
+    "original_response_characters": 105,
+    "answer_as_judged": "The pasted URL is replaced in the compose box with the linkifier’s shorter matching text, such as `#123`."
+  },
+  {
+    "slot": "probes/rc-4200f1dac6a9/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-4200f1dac6a9/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "c640f3970641a4fa1ae35b2b859c6658edfe2facfdc56d4246e15e374e187e04",
+    "original_response_bytes": 109,
+    "original_response_characters": 105,
+    "answer_as_judged": "The URL is replaced by the linkifier’s shorter matching text—for example, an issue URL may become `#123`."
+  },
+  {
+    "slot": "probes/rc-4200f1dac6a9/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-adf56e244737/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "c61dda66256ef3e24ec25d96f3bd371da0ca8ba0f55c4e9e233ece5be4aa229c",
+    "original_response_bytes": 95,
+    "original_response_characters": 95,
+    "answer_as_judged": "It shows messages sent in archived channels (streams), rather than messages in active channels."
+  },
+  {
+    "slot": "probes/rc-adf56e244737/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-adf56e244737/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "535196ea3e0ab2cb5b9fe6155bed270517a86c477903a41b0e8142bacf35f649",
+    "original_response_bytes": 132,
+    "original_response_characters": 132,
+    "answer_as_judged": "Searching `channels:archived` shows messages sent in archived channels, including messages from before those channels were archived."
+  },
+  {
+    "slot": "probes/rc-adf56e244737/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-adf56e244737/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "8740d1c6aa34cc27a626719ca31fb267b834346df9698e307821dc5d30fc7734",
+    "original_response_bytes": 44,
+    "original_response_characters": 44,
+    "answer_as_judged": "It shows messages sent in archived channels."
+  },
+  {
+    "slot": "probes/rc-adf56e244737/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-adf56e244737/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "4329ac01313687a4cfa90ac161ca7d7054628a01da806ec3eb4c48b424225cc4",
+    "original_response_bytes": 105,
+    "original_response_characters": 105,
+    "answer_as_judged": "It shows messages in channels that have been archived, limited to messages you have permission to access."
+  },
+  {
+    "slot": "probes/rc-adf56e244737/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-adf56e244737/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "136b74e75ced1b9d2af8d47f0d3d5bf794056ed8425200c230369f21278c6044",
+    "original_response_bytes": 86,
+    "original_response_characters": 86,
+    "answer_as_judged": "`channels:archived` shows messages from all archived channels that you have access to."
+  },
+  {
+    "slot": "probes/rc-adf56e244737/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-adf56e244737/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "c9666db2f6af415a9686bc93fea0c52c2c604fbd144309de18a7eb188a0fe78a",
+    "original_response_bytes": 74,
+    "original_response_characters": 74,
+    "answer_as_judged": "It shows messages in archived channels that you have permission to access."
+  },
+  {
+    "slot": "probes/rc-adf56e244737/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "11c89d9d25750589711d5e93244482e818d07709aefad6df563f4e97c8bdd2c6",
+    "original_response_bytes": 180,
+    "original_response_characters": 178,
+    "answer_as_judged": "It appears as a style applied to the entire matching row. Depending on the configured options, this can change the row’s background color, text color, or other row-level styling."
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-luna/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "26e2f21c231c32b39de751abb98230ca9b093e8e8764cd279da377c4c16b1fe6",
+    "original_response_bytes": 203,
+    "original_response_characters": 201,
+    "answer_as_judged": "It applies the configured formatting to the entire matching row, such as its background color, text color, or font style. The row’s appearance updates automatically whenever it satisfies the condition."
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-luna/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "28bffc31a53db25cd088d314ecc3e9e4785c9abf3a8c0dda534cfb75e6ca050f",
+    "original_response_bytes": 192,
+    "original_response_characters": 188,
+    "answer_as_judged": "Conditional formatting under “Row Style” applies the configured styling to the entire matching row. The row appears with the selected background, text color, or other row-level formatting."
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-luna/rep3/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "84d5aaef1e9f0eb50c5228af73add4dad2196c4f8d3866909f0dbd50de05ec25",
+    "original_response_bytes": 130,
+    "original_response_characters": 130,
+    "answer_as_judged": "It applies the chosen formatting across the entire matching row, rather than only to the cell whose value satisfies the condition."
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-sol/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "2240c207affec836083e8805779c6a00562c236647f4c9fc545ca5d63f7c088d",
+    "original_response_bytes": 124,
+    "original_response_characters": 120,
+    "answer_as_judged": "It applies the configured formatting—such as fill color or text styling—to the entire matching row across all its cells."
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-sol/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "8ccde1fd60627bb81b6e8b3f98c63b04436476ccf21e4927f98adce3a50262b7",
+    "original_response_bytes": 162,
+    "original_response_characters": 158,
+    "answer_as_judged": "When a row matches the condition, the configured formatting—such as background color, text color, bold, italic, or underline—is applied across the entire row."
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-f0b216964e6f/gpt-5.6-sol/rep3/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "6a6009fcf238356cc33645c7a7a6b205a7bf206fec94ed0aa04691df8f6e5eed",
+    "original_response_bytes": 147,
+    "original_response_characters": 147,
+    "answer_as_judged": "Only members subscribed to the private channel can see its conversations. Even organization administrators cannot see them unless they are members."
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-luna/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "a3cbe943ebc7a3cd1ad9714cb3113d3eed0d6d0f067b85c34a59c143aa3ff366",
+    "original_response_bytes": 178,
+    "original_response_characters": 176,
+    "answer_as_judged": "Only members of a private channel can see its conversations. Depending on Zulip’s configuration, organization administrators may also be able to access private-channel content."
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-luna/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "0900c1b689606cc643452351ba84e0c1a51a3cdce828f292e8e5c4b4cc1174c1",
+    "original_response_bytes": 113,
+    "original_response_characters": 113,
+    "answer_as_judged": "Conversations in a private channel are visible only to its members (subscribers) and organization administrators."
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "4b567dfb6f76f3fe9a5b78ccd8f753892c9a0238d964e6f8679a3ce06eeeb29a",
+    "original_response_bytes": 255,
+    "original_response_characters": 253,
+    "answer_as_judged": "Only users subscribed to a private channel can see its conversations. Organization administrators generally cannot view them unless they are subscribed, though they may be able to add themselves depending on the channel’s settings and their permissions."
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-sol/rep1/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "04c6b057dc262cd93e6c5990ac431a78b0d6c1a820cf45da653548e454ee99f5",
+    "original_response_bytes": 176,
+    "original_response_characters": 176,
+    "answer_as_judged": "Only users who are members of a private channel can see its conversations and message history. Organization administrators cannot see them unless they are added to the channel."
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-sol/rep2/judges/gpt-6-sol",
+    "model": "gpt-6-sol",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "0cfa8b73ba656a4b0ded37934e8b4d9f2330b47278cb60c8005477c0348343ae",
+    "original_response_bytes": 21,
+    "original_response_characters": 21,
+    "raw_response": "{\"states_rule\":\"yes\"}",
+    "raw_result": {
+      "verdict": "yes"
+    },
+    "verdict": "yes"
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "3925d0fbc1ef1a24be723b009f21d7dd5f49c671a00d07f42f9119df370ba144",
+    "original_response_bytes": 79,
+    "original_response_characters": 79,
+    "answer_as_judged": "Only users who are subscribed to the private channel can see its conversations."
+  },
+  {
+    "slot": "probes/rc-fd348eb33246/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-6be0f3992b4b/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "cb0b33bbbce56d66016b63683295bc43b9e18f26770b68d827e04f5557d22c07",
+    "original_response_bytes": 144,
+    "original_response_characters": 142,
+    "answer_as_judged": "The upload is rejected when it would exceed the document’s storage quota, and Grist displays an error rather than adding a partial attachment."
+  },
+  {
+    "slot": "probes/rc-6be0f3992b4b/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-6be0f3992b4b/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "a67841d39aa39e7823978bf5042cf4f7b2e1cb392776fe5e47d2070bae004dfb",
+    "original_response_bytes": 175,
+    "original_response_characters": 173,
+    "answer_as_judged": "The upload is rejected when the document’s storage quota is nearly full, and Grist displays an error indicating insufficient storage. No attachment is added to the document."
+  },
+  {
+    "slot": "probes/rc-6be0f3992b4b/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-6be0f3992b4b/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "9e6bb4c91d36d9364a4e946c51170ac9e86ee05ff1b069326350050a7e868ba2",
+    "original_response_bytes": 99,
+    "original_response_characters": 99,
+    "answer_as_judged": "The upload is rejected with a storage-limit error, and the attachment is not added to the document."
+  },
+  {
+    "slot": "probes/rc-6be0f3992b4b/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-6be0f3992b4b/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "636a2bfc9e9209aeebc946cb4065317f245bbf3befbd3a2a8994ef0fba423649",
+    "original_response_bytes": 218,
+    "original_response_characters": 214,
+    "answer_as_judged": "If the attachment would exceed the document’s storage limit, Grist rejects the upload and shows an error indicating there isn’t enough attachment storage. If it fits within the remaining space, the upload succeeds."
+  },
+  {
+    "slot": "probes/rc-6be0f3992b4b/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-6be0f3992b4b/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "4532f835a4d13e4ff52cc7ba14221a6964af85dfde2af6402e75a7fb6053775e",
+    "original_response_bytes": 210,
+    "original_response_characters": 208,
+    "answer_as_judged": "If the attachment would push the document over its storage limit, Grist rejects the upload and shows an error that there isn’t enough attachment space. Existing document data and attachments remain unchanged."
+  },
+  {
+    "slot": "probes/rc-6be0f3992b4b/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-6be0f3992b4b/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "ba2d608eea5ca3bd6bc56e756606415b62eeab874ac058c5eea87870936ed1f3",
+    "original_response_bytes": 202,
+    "original_response_characters": 198,
+    "answer_as_judged": "If the attachment would exceed the document’s storage limit, Grist rejects the upload and shows an error indicating there isn’t enough space. Existing document data and attachments remain unchanged."
+  },
+  {
+    "slot": "probes/rc-6be0f3992b4b/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-cb144c65d898/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "da83e58bad73b6b6c7d64b6069d5a198f35fbb03f636f5fb46c045f845011db7",
+    "original_response_bytes": 66,
+    "original_response_characters": 62,
+    "answer_as_judged": "It’s in the channel settings screen’s **Permissions** section."
+  },
+  {
+    "slot": "probes/rc-cb144c65d898/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-cb144c65d898/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "7d8e8b1ad2ccc30744cf7d02b3d2f838055373de4924b0167d62044dbe406312",
+    "original_response_bytes": 107,
+    "original_response_characters": 103,
+    "answer_as_judged": "It’s in the channel settings screen’s **Permissions** section, under the subscriber-management options."
+  },
+  {
+    "slot": "probes/rc-cb144c65d898/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-cb144c65d898/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "e0f5ab33c9985004e1a97ea3a74424a01bed9009d14fddf24e66a2ed67cd9d51",
+    "original_response_bytes": 121,
+    "original_response_characters": 117,
+    "answer_as_judged": "It’s in the channel settings screen’s **Permissions** section, alongside the other subscriber-management permissions."
+  },
+  {
+    "slot": "probes/rc-cb144c65d898/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-cb144c65d898/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "d9dd268ab2688ccbfd62773403671c8cd3dbfc5db3f6daf1f44620a3717b576c",
+    "original_response_bytes": 158,
+    "original_response_characters": 154,
+    "answer_as_judged": "In the channel settings, open the **Permissions** section; the “Who can subscribe anyone to this channel?” dropdown appears under **Channel permissions**."
+  },
+  {
+    "slot": "probes/rc-cb144c65d898/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-cb144c65d898/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "d79bc77b6152c0b4ddd5c6e2d90aac8a98fd264bb8d69648655d13d4793bdf80",
+    "original_response_bytes": 77,
+    "original_response_characters": 75,
+    "answer_as_judged": "It’s in the **Channel permissions** section of the channel settings screen."
+  },
+  {
+    "slot": "probes/rc-cb144c65d898/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-cb144c65d898/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "fa4d5a2d5753c4e14b46b12899ca3a4b7fb0b192d48d34f2356fbe1e56e97b34",
+    "original_response_bytes": 88,
+    "original_response_characters": 86,
+    "answer_as_judged": "In the channel settings screen, you’ll find it in the **Channel permissions** section."
+  },
+  {
+    "slot": "probes/rc-cb144c65d898/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b0a9c3fd790a/gpt-5.6-luna/rep1",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "e6c296aac5892ae58fbfe47aeba8f8e57004e3241d991b2293c756e8dfa1a3f3",
+    "original_response_bytes": 100,
+    "original_response_characters": 96,
+    "answer_as_judged": "A screen reader announces it as a level-one heading, typically “Content title, heading level 1.”"
+  },
+  {
+    "slot": "probes/rc-b0a9c3fd790a/gpt-5.6-luna/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b0a9c3fd790a/gpt-5.6-luna/rep2",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "481d76703b6b2f9cb1c394453ec17f1f93cef95eb57a651ca0c9e281e67fdee6",
+    "original_response_bytes": 133,
+    "original_response_characters": 129,
+    "answer_as_judged": "A screen reader announces it as a level-one heading, likely “heading level 1, Content title,” rather than reading the `#` symbol."
+  },
+  {
+    "slot": "probes/rc-b0a9c3fd790a/gpt-5.6-luna/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b0a9c3fd790a/gpt-5.6-luna/rep3",
+    "model": "gpt-5.6-luna",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "130d873b06ca3f3732ee5aeea8809d2bdc83ba5555180dd7a175f460ff984622",
+    "original_response_bytes": 116,
+    "original_response_characters": 112,
+    "answer_as_judged": "It is rendered as a level-one heading, so a screen reader typically announces: “Content title, heading level 1.”"
+  },
+  {
+    "slot": "probes/rc-b0a9c3fd790a/gpt-5.6-luna/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b0a9c3fd790a/gpt-5.6-sol/rep1",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "a55ac1dad0712d210fb358dd6a35b461bdd19e0ddb6f68774639317819f02027",
+    "original_response_bytes": 101,
+    "original_response_characters": 97,
+    "answer_as_judged": "It announces it as “Heading level 1, Content title” (wording may vary slightly by screen reader)."
+  },
+  {
+    "slot": "probes/rc-b0a9c3fd790a/gpt-5.6-sol/rep1/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b0a9c3fd790a/gpt-5.6-sol/rep2",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "d0928fdeda8a122c4ad684a1925600db580fd5a94f5fcd72ae952d2467c6e87c",
+    "original_response_bytes": 108,
+    "original_response_characters": 104,
+    "answer_as_judged": "A screen reader announces it as “Content title, heading level 1” (word order may vary by screen reader)."
+  },
+  {
+    "slot": "probes/rc-b0a9c3fd790a/gpt-5.6-sol/rep2/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  },
+  {
+    "slot": "probes/rc-b0a9c3fd790a/gpt-5.6-sol/rep3",
+    "model": "gpt-5.6-sol",
+    "kind": "probe",
+    "status": "ok",
+    "original_response_sha256": "1998a357614b66fc40ce1007e0684d320d808ac1d8e562a477a34d5777f18972",
+    "original_response_bytes": 69,
+    "original_response_characters": 65,
+    "answer_as_judged": "A screen reader announces it as “Content title, heading level 1.”"
+  },
+  {
+    "slot": "probes/rc-b0a9c3fd790a/gpt-5.6-sol/rep3/judges/gpt-6-astra",
+    "model": "gpt-6-astra",
+    "kind": "judge",
+    "status": "ok",
+    "original_response_sha256": "9aee6f8660e2d2a367396dbba789429d9eddd1022a043287b9d95903f3c86a44",
+    "original_response_bytes": 20,
+    "original_response_characters": 20,
+    "raw_response": "{\"states_rule\":\"no\"}",
+    "raw_result": {
+      "verdict": "no"
+    },
+    "verdict": "no"
+  }
+]

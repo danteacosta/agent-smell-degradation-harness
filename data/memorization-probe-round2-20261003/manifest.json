@@ -1,0 +1,223 @@
+{
+  "schema_version": "memorization-probe/v1",
+  "coders": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "judges": [
+    "gpt-6-astra",
+    "gpt-6-sol"
+  ],
+  "repetitions": 3,
+  "panel_results_sha256": "efd715003c462e0af5cdc149f23ba98744a4bea051751eb6a2e5be85f800a4d6",
+  "script_sha256": "c3fa8b84622b7a9dca8d2b32699dfd13d9493b69bf59aa298a71e1078f78bf1a",
+  "rules": [
+    {
+      "candidate_id": "rc-c6aa48543d73",
+      "project": "zulip",
+      "question": "What happens when a user attempts to send a channel message to “general chat” while topics are required?",
+      "rule": "When administrators require topics in channel messages, users cannot send channel messages to the “general chat” topic."
+    },
+    {
+      "candidate_id": "rc-b49db6870ff5",
+      "project": "grist",
+      "question": "What happens when a user visits the Direct URL after closing their document fork?",
+      "rule": "After a user closes their document fork, visiting the document's Direct URL automatically redirects them to their saved fork."
+    },
+    {
+      "candidate_id": "rc-24946f42bfc2",
+      "project": "zulip",
+      "question": "How does joining a user group through its plus icon behave for users with different permissions?",
+      "rule": "A user may join a user group using its plus icon only if they have permission to join it."
+    },
+    {
+      "candidate_id": "rc-3c572449f134",
+      "project": "zulip",
+      "question": "What suggestions appear when you type a user's name in the search box?",
+      "rule": "Typing a user's name in the search box offers a suggestion for direct messages with that user."
+    },
+    {
+      "candidate_id": "rc-dfb84383fb89",
+      "project": "zulip",
+      "question": "What happens when a non-admin user tries to unsubscribe themselves from a channel?",
+      "rule": "Any user can unsubscribe themselves from a channel they belong to."
+    },
+    {
+      "candidate_id": "rc-62e9d69be36f",
+      "project": "zulip",
+      "question": "How does an administrator's subscription status affect adding users to a private channel?",
+      "rule": "A user with permission to administer a private channel must also subscribe to that channel before they can subscribe other users to it."
+    },
+    {
+      "candidate_id": "rc-bf86d02f63c9",
+      "project": "zulip",
+      "question": "How does an emoji released after 2017 appear when Google blobs is selected?",
+      "rule": "When Google blobs is selected, emoji released after 2017 must display in the modern Google style."
+    },
+    {
+      "candidate_id": "rc-ade633af9c14",
+      "project": "grist",
+      "question": "What does a user see when opening a document with suggestions enabled, and does sign-in status affect the result?",
+      "rule": "When suggestions are enabled, opening a document automatically opens a copy for both signed-in and signed-out users."
+    },
+    {
+      "candidate_id": "rc-7b485b51412f",
+      "project": "grist",
+      "question": "How does selecting 'Set default: Collapse' affect the page list when the document is reopened?",
+      "rule": "After a user selects 'Set default: Collapse' for a parent page, its nested pages must be collapsed when the document is reopened."
+    },
+    {
+      "candidate_id": "rc-4aac15b7b503",
+      "project": "grist",
+      "question": "What appears when you press Shift+F10 in the grid?",
+      "rule": "Pressing Shift+F10 in the grid opens the context menu."
+    },
+    {
+      "candidate_id": "rc-3cd319371269",
+      "project": "grist",
+      "question": "What happens when a user tries to enable On-Demand Tables in a new document?",
+      "rule": "Users cannot enable On-Demand Tables in new Grist documents."
+    },
+    {
+      "candidate_id": "rc-f33b2bf870e9",
+      "project": "grist",
+      "question": "What happens when a user tries to assign another billing manager to a team that already has 10?",
+      "rule": "A team may have at most 10 billing managers."
+    },
+    {
+      "candidate_id": "rc-c044ebec7fe1",
+      "project": "zulip",
+      "question": "Which users appear in the subscription typeahead when matching users have different subscription statuses?",
+      "rule": "The user subscription typeahead must exclude users already subscribed to the target channel."
+    },
+    {
+      "candidate_id": "rc-c30a4162188a",
+      "project": "zulip",
+      "question": "How does permission to edit a message affect the controls shown for it?",
+      "rule": "A message the user has permission to edit must display the pencil edit icon."
+    },
+    {
+      "candidate_id": "rc-277279fd03a4",
+      "project": "zulip",
+      "question": "What happens when an administrator tries to make a private channel a default channel for new users?",
+      "rule": "Only public or web-public channels can be selected as default channels for new users."
+    },
+    {
+      "candidate_id": "rc-c5ed01f3769c",
+      "project": "zulip",
+      "question": "How does the email address generation button appear for users with different channel messaging permissions?",
+      "rule": "The button to generate a channel email address must be hidden when the user lacks permission to send messages to that channel."
+    },
+    {
+      "candidate_id": "rc-362ff82e3812",
+      "project": "zulip",
+      "question": "What control does the user have over the read status of automated notices?",
+      "rule": "Users can configure whether automated notices are automatically marked as read."
+    },
+    {
+      "candidate_id": "rc-393307131fc8",
+      "project": "zulip",
+      "question": "What happens in the left sidebar when you enable the channel’s pin toggle in Personal settings?",
+      "rule": "Enabling “Pin channel to top of left sidebar” in a channel’s Personal settings places that channel at the top of the left sidebar."
+    },
+    {
+      "candidate_id": "rc-103dc930a420",
+      "project": "zulip",
+      "question": "Which initial settings does an invited user receive if the defaults change between invitation and acceptance?",
+      "rule": "When a user accepts an invitation, their initial settings must match the defaults configured at acceptance time."
+    },
+    {
+      "candidate_id": "rc-1590080019fb",
+      "project": "grist",
+      "question": "Which permissions can a user select when editing a table-level access rule?",
+      "rule": "Structure (S) permissions must not be available in table-level access rules."
+    },
+    {
+      "candidate_id": "rc-08dffa18a270",
+      "project": "zulip",
+      "question": "What appears in the compose box after changing the GIF picker setting to Disabled?",
+      "rule": "Setting GIF picker to Disabled in Compose settings removes the GIF picker from the compose box."
+    },
+    {
+      "candidate_id": "rc-b7086f489030",
+      "project": "zulip",
+      "question": "What controls are available for managing deletion of a user's own messages in a channel?",
+      "rule": "A channel's Moderation permissions must allow users to configure who can delete their own messages in that channel."
+    },
+    {
+      "candidate_id": "rc-aac66a0af69a",
+      "project": "grist",
+      "question": "What happens when you click Restart in the tutorial popup while you have unsaved edits?",
+      "rule": "Clicking Restart at the bottom of the tutorial popup refreshes the page and discards unsaved changes."
+    },
+    {
+      "candidate_id": "rc-4200f1dac6a9",
+      "project": "zulip",
+      "question": "What appears in the compose box after pasting a URL matching a reverse-enabled linkifier?",
+      "rule": "When a user pastes a URL matching a reverse-enabled linkifier into the compose box, it automatically becomes linked text corresponding to that linkifier."
+    },
+    {
+      "candidate_id": "rc-adf56e244737",
+      "project": "zulip",
+      "question": "What messages appear when you search for channels:archived?",
+      "rule": "Searching for channels:archived returns only messages the user received in archived channels."
+    },
+    {
+      "candidate_id": "rc-f0b216964e6f",
+      "project": "grist",
+      "question": "How does conditional formatting configured under 'Row Style' appear in a matching row?",
+      "rule": "Conditional formatting added under 'Row Style' must apply across the entire matching table row."
+    },
+    {
+      "candidate_id": "rc-fd348eb33246",
+      "project": "zulip",
+      "question": "Who can see conversations in a private channel?",
+      "rule": "Conversations in a private channel are visible to users who have been granted access to that channel."
+    },
+    {
+      "candidate_id": "rc-6be0f3992b4b",
+      "project": "grist",
+      "question": "What happens when you upload an attachment to a document whose storage is nearly full?",
+      "rule": "On every plan, a document's combined attachment and data storage must not exceed 1GB."
+    },
+    {
+      "candidate_id": "rc-cb144c65d898",
+      "project": "zulip",
+      "question": "Where on the channel settings screen can you find \"Who can subscribe anyone to this channel\"?",
+      "rule": "The channel settings screen must place the \"Who can subscribe anyone to this channel\" setting under \"Advanced configurations\"."
+    },
+    {
+      "candidate_id": "rc-b0a9c3fd790a",
+      "project": "grist",
+      "question": "How does a screen reader announce Markdown content written as '# Content title'?",
+      "rule": "A screen reader must announce Markdown content beginning with '# ' as a heading rather than reading the hash symbol aloud."
+    }
+  ],
+  "judge_controls": [
+    {
+      "answer": "When you close a task, any subtasks that were still open or in progress are set to done.",
+      "expected": "yes",
+      "id": "jc-yes-1",
+      "rule": "Closing a task marks all of its unfinished subtasks as done."
+    },
+    {
+      "answer": "Duplicate foods are merged into one line and their quantities added, so 1 and 2 cups become 3 cups.",
+      "expected": "yes",
+      "id": "jc-yes-2",
+      "rule": "A shopping list combines items with the same food: 1 cup plus 2 cups of cheese shows 3 cups."
+    },
+    {
+      "answer": "Closing a task hides it from the board; its subtasks keep whatever status they had.",
+      "expected": "no",
+      "id": "jc-no-1",
+      "rule": "Closing a task marks all of its unfinished subtasks as done."
+    },
+    {
+      "answer": "I am not sure how templates work in this application.",
+      "expected": "no",
+      "id": "jc-no-2",
+      "rule": "Only administrators can set a project as a template."
+    }
+  ],
+  "retry_policy": "no_retry_no_repair"
+}
