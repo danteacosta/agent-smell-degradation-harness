@@ -526,3 +526,22 @@ nontext/empty identities and ratings outside its declared 0–3 categories, with
 regressions for both arms and identity fields. Integer-valued floats remain
 accepted. This input-contract repair preserves valid-input estimates and does
 not validate annotation, pairing upstream, missingness or the inference design.
+
+## 2026-10-03 — Requirement-traceability multi-agent generation (ISSTA 2026)
+
+Search/read date: 2026-10-03. Deduplicated by arXiv ID/title (absent from this
+matrix). Read the abstract, method, evaluation protocol, ablation and threats
+sections of the full text. Candidates seen in search snippets only and **not**
+matrix entries (no claim): arXiv 2604.21505 (ambiguity and function-level code
+generation), 2607.02949 (BeSpec), 2607.00711 (ClarifyCodeBench), 2609.00568
+(WiseSpec).
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | --- |
+| Chen et al., *TraceDev: A Traceability-Driven Multi-agent Framework for Requirement-to-Code Development*, Proc. ACM Softw. Eng. 3 (ISSTA), article ISSTA080, 2026; accepted at ISSTA 2026 per arXiv listing, arXiv [2607.18886](https://arxiv.org/abs/2607.18886) | Does a requirement-to-design-to-code traceability graph (five agents; Validator maintains the graph) improve generated code? Use cases from eTour (53) and SMOS (72); baselines ChatDev and MetaGPT; Gemini-2.5-Flash and DeepSeek-V3.2; ablation by agent removal; human evaluation of 20 sampled use cases. | Reports success 53.63% (eTour) and 56.82% (SMOS) with Gemini-2.5-Flash, far above the baselines; removing the Tester drops success to 13.9% while LOC is unchanged, so code volume is not correctness. Semantic coverage is judged by a DeepSeek-V3.2 LLM judge (3-vote majority) and tests are LLM-generated; no controlled requirement defect, no pre-artifact warning, and one judge family also generates in one setting. | Thesis: independent motivation that omitted entry conditions (their example: \"The agency has logged in\") are a recognised failure of requirement-to-code agents; it does not test H1 or H2. Experiment: confirms that traceability graphs are a design for prevention, not a measurement of loss before T4; the semantic-coverage metric is the judge-based outcome our protocol treats as advisory (see the judge-control results). Product: closest published design to a requirement-to-artifact lineage; a candidate comparator for positioning, not validation. Action: cite as related work only; no protocol change. Open question for the human: whether its traceability graph should be an ablation of the T1-T3 provenance features (B3) or remain background. | 7/10: peer-reviewed venue, transparent ablation and public datasets; LLM-judged coverage and generated tests, no controlled defect, and gains are against two weak baselines. Read from the full-text PDF. |
+
+OpenTelemetry GenAI conventions: the `open-telemetry/semantic-conventions-genai`
+repository exists (primary page checked 2026-10-03), but its README states no
+stability level; the "all Development, none Stable" statement remains from
+secondary reports. Pin a version in any exporter and re-verify on the primary
+registry before relying on it. No contradiction with a current decision.
