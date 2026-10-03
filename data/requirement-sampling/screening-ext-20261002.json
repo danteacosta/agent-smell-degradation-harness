@@ -1,0 +1,1330 @@
+{
+  "schema_version": "requirement-screening/v1",
+  "date": "2026-10-02",
+  "round": 2,
+  "screened_by": null,
+  "note": "Frame extension (zulip, grist). Seeded sample of at most 30 per project, seed 2026100202, fresh generator. No assistant pre-screen.",
+  "frame_source_commits": {
+    "zulip": "47d6b6977782bb975fa53e1e263cd7e324743463",
+    "grist": "b047726e327709d214e3b63222ee052de6399934"
+  },
+  "candidates": [
+    {
+      "project": "zulip",
+      "commit": "a31cd65175c5a219d83df9758829cb6f86cf24fa",
+      "date": "2026-03-25",
+      "subject": "help: Improve GIF picker documentation.",
+      "file": "starlight_help/src/content/docs/animated-gifs.mdx",
+      "removed": [
+        "Under Compose settings , select a rating for GIF integration ."
+      ],
+      "added": [
+        "Under Compose settings , select a rating for GIF picker .",
+        "Disable the GIF picker    Disabling the GIF picker removes it from the compose box.",
+        "Under Compose settings , set GIF picker to Disabled ."
+      ],
+      "cue_delta": [
+        "disabled"
+      ],
+      "strong_cue_delta": [
+        "disabled"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.467,
+      "candidate_id": "rc-08dffa18a270"
+    },
+    {
+      "project": "zulip",
+      "commit": "1e49b01d8014eecefe58e66ce52a75fd63de5e1f",
+      "date": "2025-08-28",
+      "subject": "help: Document that current defaults are used when invite is accepted.",
+      "file": "help/configure-default-new-user-settings.md",
+      "removed": [],
+      "added": [
+        "Users will have the initial settings that are configured at the time when they accept the invitation, so there's no need to update or revoke invitations when you change default settings."
+      ],
+      "cue_delta": [
+        "default",
+        "when"
+      ],
+      "strong_cue_delta": [
+        "default"
+      ],
+      "numbers_changed": false,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-103dc930a420"
+    },
+    {
+      "project": "zulip",
+      "commit": "7f68ccfa3d4023cd3b9b990392102aba8703b03e",
+      "date": "2025-08-04",
+      "subject": "help: Move alternate instructions into tabs.",
+      "file": "help/pin-a-channel.md",
+      "removed": [],
+      "added": [
+        "Select a channel.  {!select-channel-view-personal.md!}  1.",
+        "Under Personal settings , toggle Pin channel to top of left sidebar ."
+      ],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-393307131fc8"
+    },
+    {
+      "project": "zulip",
+      "commit": "e8ade79f93eb0719d83664752a0f283fa4ccf32e",
+      "date": "2025-03-10",
+      "subject": "help: Document configuration for who can manage billing.",
+      "file": "help/include/configure-who-can-manage-plans.md",
+      "removed": [],
+      "added": [
+        "{start_tabs}  {tab|desktop-web}  {settings_tab|organization-permissions}  1.",
+        "Under Other permissions , configure Who can manage plans and billing .  {!save-changes.md!}  {end_tabs}"
+      ],
+      "cue_delta": [
+        "permissions"
+      ],
+      "strong_cue_delta": [
+        "permissions"
+      ],
+      "numbers_changed": true,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-fdafd6cd311a"
+    },
+    {
+      "project": "zulip",
+      "commit": "befe49c293c7cc490d4dfb94b387411591d1f114",
+      "date": "2025-02-12",
+      "subject": "channel settings: Clarify channel permission settings.",
+      "file": "help/channel-permissions.md",
+      "removed": [
+        "zulip-icon-lock\"> ) are for conversations that should be accessible only to users who are specifically subscribed to the channel."
+      ],
+      "added": [
+        "zulip-icon-lock\"> ) are for conversations that should be visible to users who are specifically granted access."
+      ],
+      "cue_delta": [
+        "only",
+        "visible"
+      ],
+      "strong_cue_delta": [
+        "only"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.828,
+      "candidate_id": "rc-fd348eb33246"
+    },
+    {
+      "project": "zulip",
+      "commit": "254b0ff4774594694889f0aa2e20154b73f95ecb",
+      "date": "2025-08-08",
+      "subject": "scim: Add support for Groups.",
+      "file": "help/scim.md",
+      "removed": [
+        "Provisioning Groups is not yet implemented.",
+        "While Zulip's SCIM integration is generic, we've only fully documented the setup process with the Okta and Microsoft EntraID SCIM providers.",
+        "Zulip support is happy to help customers configure this integration with SCIM providers that do not yet have detailed self-service documentation on this page."
+      ],
+      "added": [],
+      "cue_delta": [
+        "only"
+      ],
+      "strong_cue_delta": [
+        "only"
+      ],
+      "numbers_changed": false,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-aab78fb9a2e8"
+    },
+    {
+      "project": "zulip",
+      "commit": "cb1731566eeaf678155e8ae3cd953a5230140810",
+      "date": "2025-03-17",
+      "subject": "help: Note permissions to join or leave a group.",
+      "file": "help/user-groups.md",
+      "removed": [
+        "Click the plus ( ) icon to the left of a user group to join the group."
+      ],
+      "added": [
+        "Click the plus (<img src=\"/static/images/help/desktop-web-plus-icon.svg\" alt=\"plus\" class=\"help-center-icon\"/>) icon to the left of a user group to join the group, if you have permission to do so."
+      ],
+      "cue_delta": [
+        "if",
+        "permission"
+      ],
+      "strong_cue_delta": [
+        "permission"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.526,
+      "candidate_id": "rc-24946f42bfc2"
+    },
+    {
+      "project": "zulip",
+      "commit": "65c44b863e1ad89c44081757584a42200e85f256",
+      "date": "2026-01-06",
+      "subject": "help: Add note about channel's generate email field visbility.",
+      "file": "starlight_help/src/content/docs/message-a-channel-by-email.mdx",
+      "removed": [],
+      "added": [
+        "You will see the button to generate an email address only if you have permission to send messages to this channel."
+      ],
+      "cue_delta": [
+        "if",
+        "only",
+        "permission"
+      ],
+      "strong_cue_delta": [
+        "only",
+        "permission"
+      ],
+      "numbers_changed": false,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-c5ed01f3769c"
+    },
+    {
+      "project": "zulip",
+      "commit": "e0bd534433951fd0e73fe0599630020723d4aa30",
+      "date": "2025-07-30",
+      "subject": "help: Move tip about changing uploaded file name into instructions.",
+      "file": "help/share-and-upload-files.md",
+      "removed": [
+        "1. _(optional)_ Modify the link text as desired."
+      ],
+      "added": [],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-e5104ac58231"
+    },
+    {
+      "project": "zulip",
+      "commit": "71da6f261c43e2ebe3ccaacf5e32acfd3ea78f5e",
+      "date": "2025-02-26",
+      "subject": "help: Document \"general chat\" topic.",
+      "file": "help/require-topics.md",
+      "removed": [
+        "If a user sends a message without a topic, the message's topic is displayed as (no topic) .",
+        "Administrators can configure whether channel messages must have a specified topic."
+      ],
+      "added": [
+        "{!general-chat-intro.md!}  Administrators can require topics in channel messages to disable the “*general chat*” topic."
+      ],
+      "cue_delta": [
+        "if",
+        "must"
+      ],
+      "strong_cue_delta": [
+        "must"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.396,
+      "candidate_id": "rc-c6aa48543d73"
+    },
+    {
+      "project": "zulip",
+      "commit": "eb088836a9b9c934fd9416f23d38749c53481f2a",
+      "date": "2025-05-18",
+      "subject": "help: Document UI for unarchiving a channel.",
+      "file": "help/archive-a-channel.md",
+      "removed": [
+        "!!! warn \"\"  Channels can be unarchived only by contacting support for organizations hosted on Zulip Cloud, or by your self-hosted server's administrator."
+      ],
+      "added": [],
+      "cue_delta": [
+        "only"
+      ],
+      "strong_cue_delta": [
+        "only"
+      ],
+      "numbers_changed": false,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-5eeca5c59190"
+    },
+    {
+      "project": "zulip",
+      "commit": "0c301102ca4ec594b4005b55e3772ba8191be8b5",
+      "date": "2026-03-22",
+      "subject": "help: Simplify instructions with DependsOnPermissions.",
+      "file": "starlight_help/src/content/docs/edit-a-message.mdx",
+      "removed": [
+        "If you do not see the pencil ( ) icon, you do not have permission to edit this message."
+      ],
+      "added": [],
+      "cue_delta": [
+        "if",
+        "permission"
+      ],
+      "strong_cue_delta": [
+        "permission"
+      ],
+      "numbers_changed": false,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-c30a4162188a"
+    },
+    {
+      "project": "zulip",
+      "commit": "d6af4acb35062c0c43569a8c2fe2b7e7062da7d7",
+      "date": "2025-07-29",
+      "subject": "help: Move DM search instructions into the section about searching.",
+      "file": "help/direct-messages.md",
+      "removed": [
+        "Click the search (<i class=\"search_icon zulip-icon zulip-icon-search\"> ) icon in the top bar to open the search box .",
+        "Start typing a user's name.",
+        "You'll be able to select DMs with that user from the list of suggestions.",
+        "1. *(optional)* Continue to add users via the search box for a group DM conversation.  !!! tip \"\"  You can also type dm-including in the search box to find all 1:1 and group DM conversations that include a particular user."
+      ],
+      "added": [],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-3c572449f134"
+    },
+    {
+      "project": "zulip",
+      "commit": "bd40497b1d1b279c841034349abe5bfca6525e02",
+      "date": "2025-07-10",
+      "subject": "help: Update article on viewing and sharing message content.",
+      "file": "help/view-the-markdown-source-of-a-message.md",
+      "removed": [],
+      "added": [
+        "Share message content  {start_tabs}  {tab|mobile}  {!message-long-press-menu.md!}  1.",
+        "Tap Share , and choose the app to which you want to share message content.  {end_tabs}"
+      ],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-02dcc406ebf0"
+    },
+    {
+      "project": "zulip",
+      "commit": "bde295806c9952f70a2b58317b58f7e31c59faf7",
+      "date": "2025-07-21",
+      "subject": "help: Update unsubscribe instructions and use them on unsubcribe page.",
+      "file": "help/include/unsubscribe-user-from-channel.md",
+      "removed": [
+        "{!admin-only.md!}  Anyone can always unsubscribe themselves from a channel ."
+      ],
+      "added": [],
+      "cue_delta": [
+        "only"
+      ],
+      "strong_cue_delta": [
+        "always",
+        "only"
+      ],
+      "numbers_changed": false,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-dfb84383fb89"
+    },
+    {
+      "project": "zulip",
+      "commit": "a11cc9a46e3f2eb077f4d271065944fc4a29786c",
+      "date": "2025-05-14",
+      "subject": "help: Document new setting for marking resolved topic notices as read.",
+      "file": "help/configure-automated-notices.md",
+      "removed": [
+        "These notices will be marked as unread only for users who had participated in the topic."
+      ],
+      "added": [
+        "Users can configure whether these notices are automatically marked as read."
+      ],
+      "cue_delta": [
+        "automatically",
+        "only"
+      ],
+      "strong_cue_delta": [
+        "automatically",
+        "only"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.405,
+      "candidate_id": "rc-362ff82e3812"
+    },
+    {
+      "project": "zulip",
+      "commit": "7f68ccfa3d4023cd3b9b990392102aba8703b03e",
+      "date": "2025-08-04",
+      "subject": "help: Move alternate instructions into tabs.",
+      "file": "help/pin-a-channel.md",
+      "removed": [
+        "Alternate method to pin or unpin a channel  {start_tabs}  {tab|desktop-web}  {relative|gear|channel-settings}  1.",
+        "Select a channel.  {!select-channel-view-personal.md!}  1.",
+        "Under Personal settings , toggle Pin channel to top of left sidebar .  {end_tabs}"
+      ],
+      "added": [],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-456c25203f1e"
+    },
+    {
+      "project": "zulip",
+      "commit": "11b90c66bf115d2dd4ccf7de89ab4030ee5cd5ae",
+      "date": "2026-04-14",
+      "subject": "search: Add `channels:archived` filter.",
+      "file": "starlight_help/src/content/docs/search-for-messages.mdx",
+      "removed": [],
+      "added": [
+        "channels:archived : Search the messages you received in archived channels ."
+      ],
+      "cue_delta": [
+        "archived"
+      ],
+      "strong_cue_delta": [
+        "archived"
+      ],
+      "numbers_changed": false,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-adf56e244737"
+    },
+    {
+      "project": "zulip",
+      "commit": "9586dd4f511d2594f7495d31301ad84670a6e480",
+      "date": "2025-01-07",
+      "subject": "help: Update related articles for channel management section.",
+      "file": "help/channel-posting-policy.md",
+      "removed": [],
+      "added": [
+        "Related articles  Channel permissions User roles User groups Set default channels for new users Configure who can administer a channel"
+      ],
+      "cue_delta": [
+        "default",
+        "permissions"
+      ],
+      "strong_cue_delta": [
+        "default",
+        "permissions"
+      ],
+      "numbers_changed": false,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-b6149bfbff03"
+    },
+    {
+      "project": "zulip",
+      "commit": "df98dd11ea0eb82f87804ed1bd452b5aa2aa8851",
+      "date": "2025-07-10",
+      "subject": "help: Update channel advanced configuration settings for new UI.",
+      "file": "help/configure-who-can-invite-to-channels.md",
+      "removed": [
+        "Under Advanced configurations , configure Who can subscribe anyone to"
+      ],
+      "added": [
+        "Under Subscription permissions , configure Who can subscribe anyone to"
+      ],
+      "cue_delta": [
+        "permissions"
+      ],
+      "strong_cue_delta": [
+        "permissions"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.777,
+      "candidate_id": "rc-56a8f7377226"
+    },
+    {
+      "project": "zulip",
+      "commit": "fdd04b56a73d779959eb8f170d65b8f32599c7c4",
+      "date": "2025-03-07",
+      "subject": "help and docs: Document how to disable file uploads on a server.",
+      "file": "help/share-and-upload-files.md",
+      "removed": [],
+      "added": [
+        "Setting it to 0 disables file uploads, and hides the UI for uploading files from the web and desktop apps."
+      ],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-1cf532104bbf"
+    },
+    {
+      "project": "zulip",
+      "commit": "8c409caa3ace4629ee5532ec52fecc32eec54ca2",
+      "date": "2025-01-22",
+      "subject": "help: Update default channels documentation.",
+      "file": "help/set-default-channels-for-new-users.md",
+      "removed": [
+        "When new users join a Zulip organization, they are subscribed to a default set of channels.",
+        "Organization administrators can add or remove channels from that default set."
+      ],
+      "added": [
+        "You can configure a default set of channels that users will be subscribed to when they join your organization.",
+        "Default channels must be public or web-public ."
+      ],
+      "cue_delta": [
+        "must"
+      ],
+      "strong_cue_delta": [
+        "must"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.41,
+      "candidate_id": "rc-277279fd03a4"
+    },
+    {
+      "project": "zulip",
+      "commit": "befe49c293c7cc490d4dfb94b387411591d1f114",
+      "date": "2025-02-12",
+      "subject": "channel settings: Clarify channel permission settings.",
+      "file": "help/configure-who-can-administer-a-channel.md",
+      "removed": [
+        "If you have permission to administer a public or web-public channel, you can:  See and modify the channel's name and description .",
+        "Subscribe and unsubscribe users.",
+        "Modify the channel's permissions settings, including settings that control who can see messages in the channel (public vs. private, shared history vs. protected history).",
+        "For private channels, you additionally need to be a subscriber in order to subscribe users or change channel permissions."
+      ],
+      "added": [],
+      "cue_delta": [
+        "if",
+        "permission",
+        "permissions"
+      ],
+      "strong_cue_delta": [
+        "permission",
+        "permissions"
+      ],
+      "numbers_changed": false,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-62e9d69be36f"
+    },
+    {
+      "project": "zulip",
+      "commit": "887e6e02830e7188859faffeb9b83107da442792",
+      "date": "2025-03-07",
+      "subject": "help: Fix incorrect settings section label.",
+      "file": "help/configure-who-can-invite-to-channels.md",
+      "removed": [
+        "Under Channel permissions , configure Who can subscribe anyone to this channel ."
+      ],
+      "added": [
+        "Under Advanced configurations , configure Who can subscribe anyone to this channel ."
+      ],
+      "cue_delta": [
+        "permissions"
+      ],
+      "strong_cue_delta": [
+        "permissions"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.841,
+      "candidate_id": "rc-cb144c65d898"
+    },
+    {
+      "project": "zulip",
+      "commit": "b742ab18f90d8a0320f6b14be311e0f351903eb6",
+      "date": "2025-10-01",
+      "subject": "emoji: Remove setting for deprecated Google blobs emoji set.",
+      "file": "starlight_help/src/content/docs/emoji-and-emoticons.mdx",
+      "removed": [
+        "Google blobs is an old style of Google emoji that has not been maintained by Google since 2017, when they switched to a more modern style.",
+        "Zulip allows you to still use blob emoji, but any new emoji that have been released since 2017 will be displayed in the modern Google style."
+      ],
+      "added": [],
+      "cue_delta": [
+        "when"
+      ],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-bf86d02f63c9"
+    },
+    {
+      "project": "zulip",
+      "commit": "3ca12e7224e7158d866f3d24f52ce877749fb742",
+      "date": "2026-03-03",
+      "subject": "docs: Add reverse linkifier related instructions.",
+      "file": "starlight_help/src/content/docs/add-a-custom-linkifier.mdx",
+      "removed": [
+        "If the pattern appears in a topic, Zulip adds an Open ( ) button to the right of the topic in the message recipient bar that links to the appropriate URL."
+      ],
+      "added": [
+        "You can configure linkifiers to work in reverse as well: when you paste a URL that matches the linkifier into the compose box, Zulip will automatically convert it to linked text (e.g., https://github.com/zulip/zulip/issues/2468 becomes #2468 ).",
+        "If a linkifier pattern (e.g., #2468 ) appears in the name of a topic, Zulip adds an Open ( ) button to the right of the topic in the message recipient bar that links to the appropriate URL."
+      ],
+      "cue_delta": [
+        "automatically",
+        "when"
+      ],
+      "strong_cue_delta": [
+        "automatically"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.439,
+      "candidate_id": "rc-4200f1dac6a9"
+    },
+    {
+      "project": "zulip",
+      "commit": "0dbb4dc2bb9f06d332170f72ac4477362d9803e3",
+      "date": "2026-03-03",
+      "subject": "linkifiers: Reorder \"Example text to linkify\" before \"Pattern\".",
+      "file": "starlight_help/src/content/docs/add-a-custom-linkifier.mdx",
+      "removed": [],
+      "added": [
+        "Example text to linkify: abdc123"
+      ],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-155dff698485"
+    },
+    {
+      "project": "zulip",
+      "commit": "94c98c574908e1bd5cc335a90bdb12915239f428",
+      "date": "2025-07-21",
+      "subject": "help: Update subscribe instructions and use them on subscribe users page.",
+      "file": "help/include/subscribe-user-to-channel.md",
+      "removed": [],
+      "added": [
+        "To subscribe users in bulk, you can copy members from an existing channel or user group .",
+        "The typeahead will only include users who aren't already subscribed to the channel.",
+        "Configure Send notification message to newly subscribed users as desired."
+      ],
+      "cue_delta": [
+        "only"
+      ],
+      "strong_cue_delta": [
+        "only"
+      ],
+      "numbers_changed": false,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-c044ebec7fe1"
+    },
+    {
+      "project": "zulip",
+      "commit": "854c7d4ea850422fdd6a4740ead856a28fded261",
+      "date": "2025-07-17",
+      "subject": "help: Update help center for new channel permissions.",
+      "file": "help/restrict-message-editing-and-deletion.md",
+      "removed": [],
+      "added": [
+        "Configure who can delete messages in a specific channel  {start_tabs}  {tab|desktop-web}  {relative|channel|all}  1.",
+        "Select a channel.  {!select-channel-view-general-advanced.md!}  1.",
+        "Under Moderation permissions , configure Who can delete any message in this channel and Who can delete their own messages in this channel .  {!save-changes.md!}  {end_tabs}"
+      ],
+      "cue_delta": [
+        "permissions"
+      ],
+      "strong_cue_delta": [
+        "permissions"
+      ],
+      "numbers_changed": true,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-b7086f489030"
+    },
+    {
+      "project": "zulip",
+      "commit": "0fae57fd089c39abaca88bace91bb252e29c8bf8",
+      "date": "2026-03-04",
+      "subject": "help: Add note that admins can always move messages using API.",
+      "file": "starlight_help/src/content/docs/restrict-moving-messages.mdx",
+      "removed": [],
+      "added": [
+        "Organization admins can always edit message topics and move topics between channels via the API."
+      ],
+      "cue_delta": [],
+      "strong_cue_delta": [
+        "always"
+      ],
+      "numbers_changed": false,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-4bfaa75e39be"
+    },
+    {
+      "project": "grist",
+      "commit": "230c424afd6ba202e3c996ffde253a06d5034846",
+      "date": "2026-03-25",
+      "subject": "Updating doc settings to include notifications",
+      "file": "help/en/docs/document-settings.md",
+      "removed": [
+        "Python Version: Allows you to switch the Python version used for formulas.",
+        "We recommend using Python 3, but be aware that changing this setting may affect existing formulas."
+      ],
+      "added": [],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-a7050943445d"
+    },
+    {
+      "project": "grist",
+      "commit": "007f40c2fecd99e67f7ed28f5495234c79048ee6",
+      "date": "2026-01-15",
+      "subject": "Update payroll tutorial to use the recommended 'ordered lookups' methods (#591)",
+      "file": "help/en/docs/examples/2020-09-payroll.md",
+      "removed": [
+        "lookupRecords : how we look up all rates for the given person and role. list comprehensions : how we filter for only those rates with an earlier Rate_Start . max function : how we choose the rate record with the latest Rate_Start . .Field : how we get the Hourly_Rate field"
+      ],
+      "added": [
+        "lookupRecords : how we look up all rates for the given person and role, and sort them. .find.le : how we find look up the closest rate that applies to the current date. .Field : how we get the Hourly_Rate field"
+      ],
+      "cue_delta": [
+        "only"
+      ],
+      "strong_cue_delta": [
+        "only"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.48,
+      "candidate_id": "rc-be0ba3e1c391"
+    },
+    {
+      "project": "grist",
+      "commit": "23586c686b87e072b3dbf343031e3e844fd31cfb",
+      "date": "2025-06-27",
+      "subject": "removing requirements disclaimer",
+      "file": "help/en/docs/document-settings.md",
+      "removed": [
+        "!!! warning \"External attachments are only available to self-hosters and Enterprise customers\" External attachments must be enabled by the administrator of your installation before they can be used.",
+        "Grist can store attachments either within a document, or externally in another location (determined by the administrator of your Grist installation)."
+      ],
+      "added": [
+        "Grist can store attachments either within a document, or externally in another location (for self-hosted installations, this is determined by the administrator)."
+      ],
+      "cue_delta": [
+        "before",
+        "enabled",
+        "must",
+        "only"
+      ],
+      "strong_cue_delta": [
+        "must",
+        "only"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.479,
+      "candidate_id": "rc-d2cf65ad99d1"
+    },
+    {
+      "project": "grist",
+      "commit": "b5e6d897fc1f0a8ef5194d5067766a950ca10650",
+      "date": "2025-06-02",
+      "subject": "more updates",
+      "file": "help/en/docs/document-tutorials.md",
+      "removed": [],
+      "added": [
+        "If you close out of your fork of the document, you can always return to your fork by visiting the Direct URL — Grist will redirect you to your saved fork automatically."
+      ],
+      "cue_delta": [
+        "automatically",
+        "if"
+      ],
+      "strong_cue_delta": [
+        "always",
+        "automatically"
+      ],
+      "numbers_changed": false,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-b49db6870ff5"
+    },
+    {
+      "project": "grist",
+      "commit": "7112b1767aac275712073fbcf91756d33f0c952a",
+      "date": "2025-05-05",
+      "subject": "adding deprecated note",
+      "file": "help/en/docs/on-demand-tables.md",
+      "removed": [
+        "!!! warning \"On-demand tables are an experimental feature\" The design of on-demand tables may change.",
+        "For example, configuration options may be added, or aspects of the behavior of on-demand tables may be changed entirely."
+      ],
+      "added": [
+        "!!! warning \"⚠️ Deprecated Feature\" On-Demand Tables have been deprecated and are no longer supported in new Grist documents.",
+        "Existing documents that use On-Demand Tables will continue to function."
+      ],
+      "cue_delta": [
+        "no longer"
+      ],
+      "strong_cue_delta": [
+        "no longer"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.382,
+      "candidate_id": "rc-3cd319371269"
+    },
+    {
+      "project": "grist",
+      "commit": "59f23c9c96756de6a7a2f6d2c24dc5a2a2de99f0",
+      "date": "2025-09-17",
+      "subject": "Add specifics as to what counts as a document change for notifications (#550)",
+      "file": "help/en/docs/document-settings.md",
+      "removed": [],
+      "added": [
+        "(This is the default setting.)"
+      ],
+      "cue_delta": [
+        "default"
+      ],
+      "strong_cue_delta": [
+        "default"
+      ],
+      "numbers_changed": false,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-5be222d0b56a"
+    },
+    {
+      "project": "grist",
+      "commit": "05e768aedf8188dcac618085686c55ce82b444e3",
+      "date": "2025-10-01",
+      "subject": "adding max row height (and row styling) to table customizations",
+      "file": "help/en/docs/widget-table.md",
+      "removed": [],
+      "added": [
+        "Customize row height : In the widget options panel, you can set a max row height which sets a maximum number of lines for multi-line text.",
+        "Additionally, you can choose to 'Expand all rows to this height' and set a consistent row height throughout your table.  ! max-row-height * {: .screenshot-half }  Add conditional styles : In the widget options panel, you can add conditional formatting for rows.",
+        "When added under 'Row Style', the conditional styling will apply across the entire row.  ! conditional-styling-rows * {: .screenshot-half }"
+      ],
+      "cue_delta": [
+        "maximum",
+        "when"
+      ],
+      "strong_cue_delta": [
+        "maximum"
+      ],
+      "numbers_changed": false,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-f0b216964e6f"
+    },
+    {
+      "project": "grist",
+      "commit": "537c682145f0450c16f780ac9ce7ff7834cce587",
+      "date": "2025-10-02",
+      "subject": "adding details on collapsing/expanding and rearranging page",
+      "file": "help/en/docs/page-widgets.md",
+      "removed": [],
+      "added": [
+        "Pages can be rearranged by clicking the two verticle bars to the right of the page name then dragging to a new position.",
+        "A green line will appear to show where the page will be placed.",
+        "A green box will appear to show when a page will be nested under another.  ! rearrange_pages * {: .screenshot-half }  By default, nested pages will be expanded when a document is opened.",
+        "You can change the default state by clicking the three-dot icon to the right of the parent page and selecting 'Set default: Collapse'.  ! page-set-default-state * {: .screenshot-half }"
+      ],
+      "cue_delta": [
+        "by default",
+        "default",
+        "when"
+      ],
+      "strong_cue_delta": [
+        "by default",
+        "default"
+      ],
+      "numbers_changed": false,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-7b485b51412f"
+    },
+    {
+      "project": "grist",
+      "commit": "d2b6ffe70691af734ee0b00e91e785407a5c5514",
+      "date": "2026-06-29",
+      "subject": "Add note about free trial and activation key for full edition of Grist (#661)",
+      "file": "help/en/docs/mcp.md",
+      "removed": [],
+      "added": [
+        "!!! note \"Want to try the full edition?\" You can try the full edition of Grist free for 30 days.",
+        "Learn how to turn it on .",
+        "Individuals and small companies may qualify for a free activation key for the full edition.",
+        "See the activation key FAQ {:target=\"_blank\"}."
+      ],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-f98198804651"
+    },
+    {
+      "project": "grist",
+      "commit": "61d9588fcffcdf6363562e56a5c3d9ea33345c3a",
+      "date": "2025-10-01",
+      "subject": "updating 'adding referenced columns' options",
+      "file": "help/en/docs/col-refs.md",
+      "removed": [
+        "In our example, if you wanted to bring in $Client.Contact to the *Projects* table, you can just select the Contact column from the 'Add Referenced Columns' section and it will be automatically added to the *Projects* table:"
+      ],
+      "added": [
+        "In our example, we want to bring in $Client.Contact to the *Projects* table.",
+        "There are two ways to do this."
+      ],
+      "cue_delta": [
+        "automatically",
+        "if"
+      ],
+      "strong_cue_delta": [
+        "automatically"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.558,
+      "candidate_id": "rc-858154112e93"
+    },
+    {
+      "project": "grist",
+      "commit": "10fe0a23d9f3ebc3dc8753221ed3e361fe8924c4",
+      "date": "2025-07-09",
+      "subject": "Adding attachment limits. fixing unrelated link too",
+      "file": "help/en/docs/document-settings.md",
+      "removed": [
+        "!!! note \"Internal Attachment Limits\" Attachments plus data in a single document are limited to 1GB on all plans."
+      ],
+      "added": [
+        "!!! note \"Attachment Limits\" Attachment limits for all plans can be found here ."
+      ],
+      "cue_delta": [
+        "limited"
+      ],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "modification",
+      "similarity": 0.601,
+      "candidate_id": "rc-d6bd85b5701d"
+    },
+    {
+      "project": "grist",
+      "commit": "2c6f45a679e387f5c61ca98d037ff88a574bd7f3",
+      "date": "2026-03-06",
+      "subject": "Update integrators.md",
+      "file": "help/en/docs/integrators.md",
+      "removed": [],
+      "added": [
+        "An email account is not a CRM in itself, but having a record of email interactions can be invaluable.",
+        "Join Jarek as he extends a basic spreadsheet-based CRM tracker with n8n AI automations to automatically summarize received emails and add them to a spreadsheet."
+      ],
+      "cue_delta": [
+        "automatically"
+      ],
+      "strong_cue_delta": [
+        "automatically"
+      ],
+      "numbers_changed": true,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-86864e941b61"
+    },
+    {
+      "project": "grist",
+      "commit": "a3b9c0e79d7bc418ffb5785921428a052e6461c2",
+      "date": "2025-07-02",
+      "subject": "Adding blue note box to External Attachments section",
+      "file": "help/en/docs/document-settings.md",
+      "removed": [],
+      "added": [
+        "!!! note \"Internal Attachment Limits\" Attachments plus data in a single document are limited to 1GB on all plans.",
+        "You can check your document's usage under Raw Data ."
+      ],
+      "cue_delta": [
+        "limited"
+      ],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-6be0f3992b4b"
+    },
+    {
+      "project": "grist",
+      "commit": "f896f91781476b4f77e114b3cded95e233bfc860",
+      "date": "2025-04-03",
+      "subject": "Removing blue 'note' boxes and incorporating text",
+      "file": "help/en/docs/team-sharing.md",
+      "removed": [
+        "!!! note You can have up to 10 billing managers in the version of Grist at getgrist.com ."
+      ],
+      "added": [],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-f33b2bf870e9"
+    },
+    {
+      "project": "grist",
+      "commit": "471566810b673fff638222ae86281b4dc8324683",
+      "date": "2025-04-25",
+      "subject": "legacy & pricing clarifications",
+      "file": "help/en/docs/ai-assistant-legacy.md",
+      "removed": [
+        "This documentation refers to the legacy AI Formula Assistant, which is no longer actively supported."
+      ],
+      "added": [
+        "This documentation refers to the legacy AI Formula Assistant, which is only available on the Community edition {:target=\"\\_blank\"}."
+      ],
+      "cue_delta": [
+        "no longer",
+        "only"
+      ],
+      "strong_cue_delta": [
+        "no longer",
+        "only"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.701,
+      "candidate_id": "rc-58ab86452c78"
+    },
+    {
+      "project": "grist",
+      "commit": "0670dec0d80da3eafb97e93078e978d913787a40",
+      "date": "2026-08-19",
+      "subject": "Updating api-limits documentation",
+      "file": "help/en/docs/limits.md",
+      "removed": [
+        "Free plans are limited to 5,000 API calls per document per day."
+      ],
+      "added": [
+        "Free plans (both personal and team sites) are limited to 3,000 API calls per month, shared across all documents on the site."
+      ],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "modification",
+      "similarity": 0.61,
+      "candidate_id": "rc-386bb18a0cac"
+    },
+    {
+      "project": "grist",
+      "commit": "837be4488d1ccab7bebea71ffb5ef37cee333507",
+      "date": "2025-11-29",
+      "subject": "Add back a carousel to Lightweight CRM tutorial, using a standalone carousel library glide.js, imported from CDN.",
+      "file": "help/en/docs/lightweight-crm.md",
+      "removed": [],
+      "added": [
+        "for (let suffix of 1, 2]) { new Glider(document.querySelector( #glider${suffix} .glider ), { slidesToShow: 1, slidesToScroll: 1, dots: #glider${suffix} .dots , duration: 0, arrows: { prev: #glider${suffix} .glider-prev , next: #glider${suffix} .glider-next } }); }"
+      ],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-1eda610a62c0"
+    },
+    {
+      "project": "grist",
+      "commit": "2bc477a605effabdb45a2dc28931dd6d9c8dd25d",
+      "date": "2025-09-10",
+      "subject": "Update telemetry and audit events (#548)",
+      "file": "help/en/docs/telemetry-limited.md",
+      "removed": [],
+      "added": [
+        "documentCreated Triggered when a document is created.",
+        "Field | Type | Description |  docIdDigest | string | A hash of the id of the created document. | sourceDocIdDigest | string | A hash of the id of the source document, if the document was duplicated from an existing document. | isImport | boolean | Whether the document was created by import. | isSaved | boolean | Whether the document was saved to a workspace. | fileType | string | If the document was created by import, the file extension of the file that was imported. |"
+      ],
+      "cue_delta": [
+        "duplicated",
+        "if",
+        "when"
+      ],
+      "strong_cue_delta": [
+        "duplicated"
+      ],
+      "numbers_changed": false,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-a5965750d2b1"
+    },
+    {
+      "project": "grist",
+      "commit": "4436beebb038b32128f9a924b24f9f63635ec755",
+      "date": "2026-01-28",
+      "subject": "Several updates to the Access Rules article (#597)",
+      "file": "help/en/docs/access-rules.md",
+      "removed": [
+        "Structure ( S ) permissions are not available at the table level."
+      ],
+      "added": [],
+      "cue_delta": [
+        "permissions"
+      ],
+      "strong_cue_delta": [
+        "permissions"
+      ],
+      "numbers_changed": false,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-1590080019fb"
+    },
+    {
+      "project": "grist",
+      "commit": "327aeef30117f1a63bb168e1d5e4adaa33bc0e4c",
+      "date": "2026-03-11",
+      "subject": "Fix carousels by switching to gliderjs throughout (#621)",
+      "file": "help/en/docs/lightweight-crm.md",
+      "removed": [
+        "for (let suffix of 1, 2]) { new Glider(document.querySelector( #glider${suffix} .glider ), { slidesToShow: 1, slidesToScroll: 1, dots: #glider${suffix} .dots , duration: 0, arrows: { prev: #glider${suffix} .glider-prev , next: #glider${suffix} .glider-next } }); }"
+      ],
+      "added": [],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-e0c58afa0f63"
+    },
+    {
+      "project": "grist",
+      "commit": "86df777926e2a2c7bc0932faa51700bae28921b3",
+      "date": "2026-05-18",
+      "subject": "screen reader mode docs: add the part about markdown",
+      "file": "help/en/docs/accessibility.md",
+      "removed": [],
+      "added": [
+        "Markdown content is vocalized by interpreting semantics instead of vocalizing the symbols.",
+        "For example, # Content title is vocalized as \"heading Content title\" instead of letting the screen reader vocalize the # ."
+      ],
+      "cue_delta": [
+        "instead"
+      ],
+      "strong_cue_delta": [
+        "instead"
+      ],
+      "numbers_changed": false,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-b0a9c3fd790a"
+    },
+    {
+      "project": "grist",
+      "commit": "4fcc9c2a2865e94212a179d4224370fc862e04f1",
+      "date": "2025-08-20",
+      "subject": "adding sections for comments and notifications",
+      "file": "help/en/docs/document-settings.md",
+      "removed": [],
+      "added": [
+        "Notifications  You can enable email notifications for document changes by toggling the 'Changes' option.",
+        "Notifications for Comments can be enabled by selecting from the following options:  All comments : Receive a notification for every new comment.",
+        "Replies and mentions : Only receive a notification when someone replies to your comment or mentions you.",
+        "None : Turn off comment notifications entirely.  *! document-settings-notifications *"
+      ],
+      "cue_delta": [
+        "enabled",
+        "only",
+        "when"
+      ],
+      "strong_cue_delta": [
+        "only"
+      ],
+      "numbers_changed": false,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-a4cf0fdf0005"
+    },
+    {
+      "project": "grist",
+      "commit": "d90be5cc0a0ee4105049de7055d1e18823ac2120",
+      "date": "2025-03-12",
+      "subject": "updating details on pricing and plans available",
+      "file": "help/en/docs/teams.md",
+      "removed": [
+        "While personal sites are only available with the Free plan, team sites may be upgraded to Pro or Business plans.",
+        "On paid plans, the limits are much higher."
+      ],
+      "added": [
+        "Personal sites cannot be upgraded.",
+        "Team sites, however, can be upgraded to one of our paid plans, which offer much higher limits."
+      ],
+      "cue_delta": [
+        "cannot",
+        "only"
+      ],
+      "strong_cue_delta": [
+        "cannot",
+        "only"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.585,
+      "candidate_id": "rc-5c261e7252c9"
+    },
+    {
+      "project": "grist",
+      "commit": "8fdbe88c55e539eb6c2dd64d106b761534aca868",
+      "date": "2025-06-27",
+      "subject": "update now that Python 2 is gone.",
+      "file": "help/en/docs/formulas.md",
+      "removed": [
+        "Grist documents may use Python 2 or Python 3, see our Python guide for details."
+      ],
+      "added": [],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-88a7b4b6057d"
+    },
+    {
+      "project": "grist",
+      "commit": "27baee45d2fe20047f8fab79c045ed02f6cc50cd",
+      "date": "2025-07-15",
+      "subject": "Update limits.md",
+      "file": "help/en/docs/limits.md",
+      "removed": [
+        "AppSumo | | 100GB |"
+      ],
+      "added": [],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-8cebcf701d4c"
+    },
+    {
+      "project": "grist",
+      "commit": "af6962bf5b4316f17a95e0e577c381e6ec1ddd9b",
+      "date": "2026-01-30",
+      "subject": "adding newsletter and small suggestions tweaks",
+      "file": "help/en/docs/sharing.md",
+      "removed": [
+        "A user makes changes in a personal copy without modifying the original document, then submits these suggestions to be reviewed by the document owner prior to integration."
+      ],
+      "added": [
+        "With suggestions enabled, users (signed-in or not) automatically open a copy of a document.",
+        "They make edits to this copy without modifying the original, and then submit these suggestions to be reviewed by the document Owner prior to integration."
+      ],
+      "cue_delta": [
+        "automatically",
+        "enabled"
+      ],
+      "strong_cue_delta": [
+        "automatically"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.578,
+      "candidate_id": "rc-ade633af9c14"
+    },
+    {
+      "project": "grist",
+      "commit": "bcdbeb35aca412455369ac498fee23bdc1009a63",
+      "date": "2026-05-29",
+      "subject": "keyboard shortcuts: add the context menu related shortcuts to the list",
+      "file": "help/en/docs/keyboard-shortcuts.md",
+      "removed": [],
+      "added": [
+        "*⌃* *Enter* , *↑* *F10* | *Menu* , *Shift* + *F10* | Open the context menu | *↑* *⌃* *Enter* , *⌃* *↑* *F10* | *Ctrl* + *Menu* , *Ctrl* +*Shift* + *F10* | Open the current column menu | *⌥* *⌃* *Enter* , *⌥* *↑* *F10* | *Alt* + *Menu* , *Alt* +*Shift* + *10* | Open the current row menu |"
+      ],
+      "cue_delta": [],
+      "strong_cue_delta": [],
+      "numbers_changed": true,
+      "kind": "addition",
+      "similarity": 0.0,
+      "candidate_id": "rc-4aac15b7b503"
+    },
+    {
+      "project": "grist",
+      "commit": "2c6f45a679e387f5c61ca98d037ff88a574bd7f3",
+      "date": "2026-03-06",
+      "subject": "Update integrators.md",
+      "file": "help/en/docs/integrators.md",
+      "removed": [
+        "An email account is not a CRM in itself, but having a record of email interactions can be invaluable.",
+        "Join Jarek as he extends a basic spreadsheet-based CRM tracker with n8n AI automations to automatically summarize received emails and add them to a spreadsheet."
+      ],
+      "added": [],
+      "cue_delta": [
+        "automatically"
+      ],
+      "strong_cue_delta": [
+        "automatically"
+      ],
+      "numbers_changed": true,
+      "kind": "deletion",
+      "similarity": 0.0,
+      "candidate_id": "rc-14bd2c8d04d4"
+    },
+    {
+      "project": "grist",
+      "commit": "4c173049c5eee0664b5e3fa754550e0d1c71fa2a",
+      "date": "2025-06-03",
+      "subject": "finishing initial draft",
+      "file": "help/en/docs/document-tutorials.md",
+      "removed": [
+        "⚠️ Important: Always replace the original before restarting the tutorial.",
+        "If you click Restart Tutorial first, any unsaved changes will be lost."
+      ],
+      "added": [
+        "⚠️ Important: Clicking 'Restart' at the bottom of the tutorial popup will refresh the page, causing any unsaved changes to be lost.",
+        "Be sure to save changes to the main document *prior* to clicking this.  *! review-option1 *"
+      ],
+      "cue_delta": [
+        "before",
+        "if"
+      ],
+      "strong_cue_delta": [
+        "always"
+      ],
+      "numbers_changed": true,
+      "kind": "modification",
+      "similarity": 0.158,
+      "candidate_id": "rc-aac66a0af69a"
+    },
+    {
+      "project": "grist",
+      "commit": "df41eb0a54eefdbf99ad66a87bc3dcf264613bf9",
+      "date": "2025-05-05",
+      "subject": "Updating language per Dmitry's slack suggestion. removing from link tree",
+      "file": "help/en/docs/on-demand-tables.md",
+      "removed": [
+        "On-Demand Tables have been deprecated and are no longer supported in new Grist documents.",
+        "Existing documents that use On-Demand Tables will continue to function."
+      ],
+      "added": [
+        "On-Demand Tables have been deprecated due to lack of functionality and usability concerns."
+      ],
+      "cue_delta": [
+        "no longer"
+      ],
+      "strong_cue_delta": [
+        "no longer"
+      ],
+      "numbers_changed": false,
+      "kind": "modification",
+      "similarity": 0.43,
+      "candidate_id": "rc-37c8b91a246a"
+    }
+  ]
+}

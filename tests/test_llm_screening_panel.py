@@ -112,3 +112,23 @@ def test_unqualified_tiebreaker_stops_before_candidates(tmp_path: Path, screenin
     assert not (out / "calls" / "m1" / "rc-a").exists()
     controls = json.loads((out / "controls.json").read_text())
     assert all(set(row["decisions"]) == {"m1", "m2", "m3"} for row in controls["rows"])
+
+
+def test_prepare_reads_a_given_round_two_sample(tmp_path: Path, screening: Path) -> None:
+    other = tmp_path / "round2.json"
+    data = json.loads(screening.read_text())
+    data["candidates"] = data["candidates"][:1]
+    other.write_text(json.dumps(data))
+    out = tmp_path / "run2"
+    assert panel.prepare(out, ["m1", "m2"], "m3", Path("/bin/sh"), other)["candidates"] == 1
+    manifest = json.loads((out / "frozen/manifest.json").read_text())
+    assert manifest["screening_file"].endswith("round2.json")
+
+
+def test_round_two_sample_is_disjoint_from_round_one() -> None:
+    root = Path(panel.ROOT)
+    one = {c["candidate_id"] for c in json.loads(panel.SCREENING.read_text())["candidates"]}
+    two = json.loads((root / "data/requirement-sampling/screening-ext-20261002.json").read_text())["candidates"]
+    assert two and not one & {c["candidate_id"] for c in two}
+    assert {c["project"] for c in two} == {"zulip", "grist"}
+    assert all("suggestion" not in c for c in two)

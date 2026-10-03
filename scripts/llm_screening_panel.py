@@ -107,10 +107,12 @@ def cohen_kappa(a: list[str], b: list[str]) -> float | None:
     return None if expected == 1 else (observed - expected) / (1 - expected)
 
 
-def prepare(out: Path, models: list[str], tiebreaker: str, executable: Path) -> dict:
+def prepare(out: Path, models: list[str], tiebreaker: str, executable: Path,
+            screening_path: Path | None = None) -> dict:
+    screening_path = screening_path or SCREENING
     if out.exists():
         raise FileExistsError("fresh output directory required")
-    screening = json.loads(SCREENING.read_text())
+    screening = json.loads(screening_path.read_text())
     blinded = [{k: c[k] for k in ("candidate_id", "project", "file", "removed", "added")}
                for c in screening["candidates"]]
     order = blinded[:]
@@ -122,7 +124,8 @@ def prepare(out: Path, models: list[str], tiebreaker: str, executable: Path) -> 
         put(out / "frozen/prompts" / f"{item['candidate_id']}.txt", candidate_prompt(item))
     manifest = {
         "schema_version": SCHEMA, "seed": SEED, "models": models, "tiebreaker": tiebreaker,
-        "executable": str(executable), "screening_sha256": sha256_file(SCREENING),
+        "executable": str(executable), "screening_sha256": sha256_file(screening_path),
+        "screening_file": str(screening_path.relative_to(ROOT) if screening_path.is_relative_to(ROOT) else screening_path),
         "script_sha256": sha256_file(Path(__file__)), "controls": CONTROLS,
         "candidates": order, "retry_policy": "no_retry_no_repair",
         "blinding": "panel sees project, file and changed sentences only; no pre-screen, pilot status or outcome",
@@ -235,12 +238,14 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--model", action="append", required=True, help="primary panel model; pass twice")
     p.add_argument("--tiebreaker", required=True)
     p.add_argument("--executable", type=Path, default=Path("/opt/homebrew/bin/codex"))
+    p.add_argument("--screening", type=Path, help="screening sample (default: round 1)")
     sub.add_parser("run").add_argument("--out", type=Path, required=True)
     args = parser.parse_args(argv)
     if args.mode == "prepare":
         if len(args.model) != 2 or args.tiebreaker in args.model:
             parser.error("two distinct primary models and a different tiebreaker are required")
-        result = prepare(args.out, args.model, args.tiebreaker, args.executable)
+        result = prepare(args.out, args.model, args.tiebreaker, args.executable,
+                         args.screening.resolve() if args.screening else None)
     else:
         result = run(args.out)
     print(json.dumps(result, indent=2))
