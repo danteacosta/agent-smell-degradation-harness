@@ -179,6 +179,13 @@ def covariates(configs: dict[str, dict]) -> dict[str, dict]:
     return out
 
 
+def _with_cue(covs: dict[str, dict], cues: dict[str, int]) -> dict[str, dict]:
+    for case, cov in covs.items():
+        if case in cues:
+            cov["context_cue"] = cues[case]
+    return covs
+
+
 def c_violation_by(runs: dict[str, list[dict]], covs: dict[str, dict]) -> dict:
     table = {}
     for name in ("numeric", "derived_state", "memorized", "context_cue"):
@@ -197,7 +204,18 @@ def c_violation_by(runs: dict[str, list[dict]], covs: dict[str, dict]) -> dict:
     return table
 
 
-def build(results_root: Path, cases_dir: Path = ROOT / "data/abc-cases", seed: int = 2026100401) -> dict:
+def load_context_cue(path: Path | None) -> dict[str, int]:
+    """case -> 0/1 from a complete context_cue panel results.json (scripts/context_cue_panel.py)."""
+    if path is None:
+        return {}
+    data = json.loads(path.read_text())
+    if data.get("status") != "complete":
+        raise ValueError(f"{path}: context_cue panel did not complete")
+    return {r["case"]: r["context_cue"] for r in data["rows"] if r.get("context_cue") in (0, 1)}
+
+
+def build(results_root: Path, cases_dir: Path = ROOT / "data/abc-cases", seed: int = 2026100401,
+          context_cue: Path | None = None) -> dict:
     configs = load_configs(cases_dir)
     runs = load_results(results_root, configs)
     counts = defaultdict(lambda: defaultdict(Counter))
@@ -226,7 +244,7 @@ def build(results_root: Path, cases_dir: Path = ROOT / "data/abc-cases", seed: i
         "per_case": per_case,
         "h1a_c_vs_a": h1,
         "wording_control_b_vs_a": b_control,
-        "h1b_c_violation_by_covariate": c_violation_by(runs, covariates(configs)),
+        "h1b_c_violation_by_covariate": c_violation_by(runs, _with_cue(covariates(configs), load_context_cue(context_cue))),
     }
 
 
@@ -299,8 +317,9 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--results", type=Path, required=True, help="folder with one sub-folder per finished case")
     parser.add_argument("--json", type=Path)
     parser.add_argument("--markdown", type=Path)
+    parser.add_argument("--context-cue", type=Path, help="results.json of scripts/context_cue_panel.py")
     args = parser.parse_args(argv)
-    report = build(args.results)
+    report = build(args.results, context_cue=args.context_cue)
     if args.json:
         args.json.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
     text = markdown(report)

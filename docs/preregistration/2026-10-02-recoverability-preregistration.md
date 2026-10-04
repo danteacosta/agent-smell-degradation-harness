@@ -217,6 +217,16 @@ own seeded screening sample of 30 per project
 (`screening-ext-20261002.json`, no assistant pre-screen). The final selection
 runs once, after both rounds, with `scripts/select_requirements.py`.
 
+**2026-10-04, context_cue coded after collection.** Section 4 asks for the
+covariates to be coded before generation. `context_cue` was not coded before
+the 46-case collection ran. It is now coded by a blind LLM panel
+(`scripts/context_cue_panel.py`): coders see only the omitted span (A minus C)
+and the exact arm-C prompt, never generated code, oracle results, probe
+answers or models; a "yes" must quote the prompt literally; four authored
+controls gate the run; kappa is reported. Because the coding happens after
+outcomes exist, H1b estimates that use context_cue are labelled accordingly,
+and a human audit of the codes is still required.
+
 ## 8. Decisions still open before submission
 
 1. Primary outcome of H1: browser oracle (this draft) or acceptance-criteria
