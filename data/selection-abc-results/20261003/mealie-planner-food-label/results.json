@@ -1,0 +1,260 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "mealie-planner-food-label",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "mixed_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "mixed_failure": 2
+      },
+      "C": {
+        "mixed_failure": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "mealie-planner-food-label-1256287fab56f025e829e5df",
+      "intent_id": "mealie-planner-food-label",
+      "project_id": "mealie",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "28e8c1588685c2b9c54eae72f04f98759fff0973581f41330f1eebbff64413b7",
+        "screenshots": {
+          "fixture-1.png": "c8eb26e6b358b761a63c39c051b3902e9a43ab502ea32344049aff1b33cb5c2a",
+          "fixture-2.png": "d67d154b2b1983dc321a9c18e835a9794173ce984759673f449ba059dea65067"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-planner-food-label-42ad48cb8ee3b68b354eba39",
+      "intent_id": "mealie-planner-food-label",
+      "project_id": "mealie",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "3ac66577af5a9f351e8f1b5e1784966ebbae95d385bf654080bb8feb36d3036c",
+        "screenshots": {
+          "fixture-1.png": "8a0ab2a05cf58fcd90e00763ca003248845ece5f3b99077411d2fe338fb7c9f8",
+          "fixture-2.png": "57d9f6c9af9d34f08553aa6054db810a7862a5725c75243a29111b578a1b4b18"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-planner-food-label-67f77ba564361dda09ba0c31",
+      "intent_id": "mealie-planner-food-label",
+      "project_id": "mealie",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "de966b35361d60ee16f03fe66ae0de2cb67d00be36ffedee1fc9bd87c5cfb388",
+        "screenshots": {
+          "fixture-1.png": "8a0ab2a05cf58fcd90e00763ca003248845ece5f3b99077411d2fe338fb7c9f8",
+          "fixture-2.png": "57d9f6c9af9d34f08553aa6054db810a7862a5725c75243a29111b578a1b4b18"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-planner-food-label-49a866c6eb74fc63b11f3780",
+      "intent_id": "mealie-planner-food-label",
+      "project_id": "mealie",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "712fa96184495c7fba5b89e67a75971943f8391e0e7303ce358064f4139b5c00",
+        "screenshots": {
+          "fixture-1.png": "8a0ab2a05cf58fcd90e00763ca003248845ece5f3b99077411d2fe338fb7c9f8",
+          "fixture-2.png": "57d9f6c9af9d34f08553aa6054db810a7862a5725c75243a29111b578a1b4b18"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-planner-food-label-c9bdad49cb15654bb63576c2",
+      "intent_id": "mealie-planner-food-label",
+      "project_id": "mealie",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "d0eb837cdc8cced070a66be0a753a95d884b36d163932c2cd2d685bcbd08a316",
+        "screenshots": {
+          "fixture-1.png": "c8eb26e6b358b761a63c39c051b3902e9a43ab502ea32344049aff1b33cb5c2a",
+          "fixture-2.png": "d67d154b2b1983dc321a9c18e835a9794173ce984759673f449ba059dea65067"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-planner-food-label-6e78d152cfc335aa6bd93255",
+      "intent_id": "mealie-planner-food-label",
+      "project_id": "mealie",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "b0661e6fcafb3a41c9aa01f99c311095937bfa579188653d31cf914c3aa9b5b7",
+        "screenshots": {
+          "fixture-1.png": "c8eb26e6b358b761a63c39c051b3902e9a43ab502ea32344049aff1b33cb5c2a",
+          "fixture-2.png": "d67d154b2b1983dc321a9c18e835a9794173ce984759673f449ba059dea65067"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-planner-food-label-3425888cd2852516ae49042f",
+      "intent_id": "mealie-planner-food-label",
+      "project_id": "mealie",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "7c7d5a67f997497b95a4657ffe3c6bce03bfaa4835cc0b3a1a3b5dfcdccadf7f",
+        "screenshots": {
+          "fixture-1.png": "c8eb26e6b358b761a63c39c051b3902e9a43ab502ea32344049aff1b33cb5c2a",
+          "fixture-2.png": "d67d154b2b1983dc321a9c18e835a9794173ce984759673f449ba059dea65067"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-planner-food-label-55ad4ee0e98a92974de45bf5",
+      "intent_id": "mealie-planner-food-label",
+      "project_id": "mealie",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "20d3835be1a8e6895f5be27d85ba87284349378c26f81e4272227a9c7dcef461",
+        "screenshots": {
+          "fixture-1.png": "8a0ab2a05cf58fcd90e00763ca003248845ece5f3b99077411d2fe338fb7c9f8",
+          "fixture-2.png": "57d9f6c9af9d34f08553aa6054db810a7862a5725c75243a29111b578a1b4b18"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-planner-food-label-783d729ebbd9970e6a66d01c",
+      "intent_id": "mealie-planner-food-label",
+      "project_id": "mealie",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "f16fccb68df3c81dd9b6c519c953991ae4b477ec27f1d1c10ecdbb996bcca215",
+        "screenshots": {
+          "fixture-1.png": "c8eb26e6b358b761a63c39c051b3902e9a43ab502ea32344049aff1b33cb5c2a",
+          "fixture-2.png": "d67d154b2b1983dc321a9c18e835a9794173ce984759673f449ba059dea65067"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-planner-food-label-2f62d9b8093b94eba0d71e18",
+      "intent_id": "mealie-planner-food-label",
+      "project_id": "mealie",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "7600b14b3483184cb508b5def96b75b37104a3599fb70c6910cc625bc4a2989b",
+        "screenshots": {
+          "fixture-1.png": "8a0ab2a05cf58fcd90e00763ca003248845ece5f3b99077411d2fe338fb7c9f8",
+          "fixture-2.png": "57d9f6c9af9d34f08553aa6054db810a7862a5725c75243a29111b578a1b4b18"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-planner-food-label-7c207337b2f6735ebeff73f6",
+      "intent_id": "mealie-planner-food-label",
+      "project_id": "mealie",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "c08f42679f5576c0bc228f7d82148334f918f62c6f5ce80da369f91ce82392cb",
+        "screenshots": {
+          "fixture-1.png": "c8eb26e6b358b761a63c39c051b3902e9a43ab502ea32344049aff1b33cb5c2a",
+          "fixture-2.png": "d67d154b2b1983dc321a9c18e835a9794173ce984759673f449ba059dea65067"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-planner-food-label-a561bdba879fc038c80a9c79",
+      "intent_id": "mealie-planner-food-label",
+      "project_id": "mealie",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "fbb0196884b1732312cb9e2e489d49ac9aaf06d7e9bff6ae6a5dd8d7b9569a14",
+        "screenshots": {
+          "fixture-1.png": "8a0ab2a05cf58fcd90e00763ca003248845ece5f3b99077411d2fe338fb7c9f8",
+          "fixture-2.png": "57d9f6c9af9d34f08553aa6054db810a7862a5725c75243a29111b578a1b4b18"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

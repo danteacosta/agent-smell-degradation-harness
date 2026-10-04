@@ -1,0 +1,260 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "immich-path-search",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "immich-path-search-508850802e752b70d751a1dd",
+      "intent_id": "immich-path-search",
+      "project_id": "immich",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "44ae691723cb01b803040cc1d1660fc715e0cee6766733319a3232c02990e42e",
+        "screenshots": {
+          "fixture-1.png": "50f6d2ad2c2dd0a6b521ac823d961807fc8348730f26d646440999c51b1249a7",
+          "fixture-2.png": "968799417b9ead84864bec0602eaba0a3d5c3168f78066a59f31ece94788f1ae"
+        }
+      }
+    },
+    {
+      "slot_id": "immich-path-search-34fd787e07399c25223cd796",
+      "intent_id": "immich-path-search",
+      "project_id": "immich",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "2f85bdbe49e89a8e0edb0ae8775056f1671b39cf54648bcb362679671bae7653",
+        "screenshots": {
+          "fixture-1.png": "50f6d2ad2c2dd0a6b521ac823d961807fc8348730f26d646440999c51b1249a7",
+          "fixture-2.png": "968799417b9ead84864bec0602eaba0a3d5c3168f78066a59f31ece94788f1ae"
+        }
+      }
+    },
+    {
+      "slot_id": "immich-path-search-9f0a39f71f52a646785843c1",
+      "intent_id": "immich-path-search",
+      "project_id": "immich",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "0d2a6b39b0bfa374d2128554cb38a56a758fa71833a1a98ecfbbc3c656acbe02",
+        "screenshots": {
+          "fixture-1.png": "50f6d2ad2c2dd0a6b521ac823d961807fc8348730f26d646440999c51b1249a7",
+          "fixture-2.png": "968799417b9ead84864bec0602eaba0a3d5c3168f78066a59f31ece94788f1ae"
+        }
+      }
+    },
+    {
+      "slot_id": "immich-path-search-8691aeb61e2c7d3f48036fc0",
+      "intent_id": "immich-path-search",
+      "project_id": "immich",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "b58f893ea695b652ee61ff87b64eab68f1cf64fb4d394f04ddd9856eb53d3509",
+        "screenshots": {
+          "fixture-1.png": "50f6d2ad2c2dd0a6b521ac823d961807fc8348730f26d646440999c51b1249a7",
+          "fixture-2.png": "968799417b9ead84864bec0602eaba0a3d5c3168f78066a59f31ece94788f1ae"
+        }
+      }
+    },
+    {
+      "slot_id": "immich-path-search-8a67c8a3f01a8dfd11e2e5cc",
+      "intent_id": "immich-path-search",
+      "project_id": "immich",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ae49d57cdf9ae890a0a21cf4dea3f34c3a298c2334ced35d46529dd4823cf3f3",
+        "screenshots": {
+          "fixture-1.png": "50f6d2ad2c2dd0a6b521ac823d961807fc8348730f26d646440999c51b1249a7",
+          "fixture-2.png": "968799417b9ead84864bec0602eaba0a3d5c3168f78066a59f31ece94788f1ae"
+        }
+      }
+    },
+    {
+      "slot_id": "immich-path-search-3a38592f5875f86a860acdeb",
+      "intent_id": "immich-path-search",
+      "project_id": "immich",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ae49d57cdf9ae890a0a21cf4dea3f34c3a298c2334ced35d46529dd4823cf3f3",
+        "screenshots": {
+          "fixture-1.png": "50f6d2ad2c2dd0a6b521ac823d961807fc8348730f26d646440999c51b1249a7",
+          "fixture-2.png": "968799417b9ead84864bec0602eaba0a3d5c3168f78066a59f31ece94788f1ae"
+        }
+      }
+    },
+    {
+      "slot_id": "immich-path-search-6e3313e866354f56a64728e0",
+      "intent_id": "immich-path-search",
+      "project_id": "immich",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "bb8a30ee43aa6472690a723eb8d0bb2dcbc0f7b31c611adab161ad3d1d61650c",
+        "screenshots": {
+          "fixture-1.png": "50f6d2ad2c2dd0a6b521ac823d961807fc8348730f26d646440999c51b1249a7",
+          "fixture-2.png": "968799417b9ead84864bec0602eaba0a3d5c3168f78066a59f31ece94788f1ae"
+        }
+      }
+    },
+    {
+      "slot_id": "immich-path-search-4229e2c96e79cd26c1bb797b",
+      "intent_id": "immich-path-search",
+      "project_id": "immich",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "f183fc3b7ac2cdbce154f648b31f8f772d598f7d7278836c078513a375c71564",
+        "screenshots": {
+          "fixture-1.png": "50f6d2ad2c2dd0a6b521ac823d961807fc8348730f26d646440999c51b1249a7",
+          "fixture-2.png": "968799417b9ead84864bec0602eaba0a3d5c3168f78066a59f31ece94788f1ae"
+        }
+      }
+    },
+    {
+      "slot_id": "immich-path-search-f6bd161fce058f8c9b9d97b4",
+      "intent_id": "immich-path-search",
+      "project_id": "immich",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "dafbc4938308e4dce1cb1265951cb3c8f9cf6fc2f8ea277f1070f6fb67cced7a",
+        "screenshots": {
+          "fixture-1.png": "50f6d2ad2c2dd0a6b521ac823d961807fc8348730f26d646440999c51b1249a7",
+          "fixture-2.png": "968799417b9ead84864bec0602eaba0a3d5c3168f78066a59f31ece94788f1ae"
+        }
+      }
+    },
+    {
+      "slot_id": "immich-path-search-cdd001814d3c02521621730b",
+      "intent_id": "immich-path-search",
+      "project_id": "immich",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "15faae2f5eaa3ba3b6f1dd08d456d91508caa174097d8f2e48c12f7a243d61e1",
+        "screenshots": {
+          "fixture-1.png": "50f6d2ad2c2dd0a6b521ac823d961807fc8348730f26d646440999c51b1249a7",
+          "fixture-2.png": "968799417b9ead84864bec0602eaba0a3d5c3168f78066a59f31ece94788f1ae"
+        }
+      }
+    },
+    {
+      "slot_id": "immich-path-search-32c15b16db9d91b83e5dde7b",
+      "intent_id": "immich-path-search",
+      "project_id": "immich",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ed6be61a6167b94f4d9a14f61b9ef2004bd0eaac8421ea19440026d2d39e3026",
+        "screenshots": {
+          "fixture-1.png": "50f6d2ad2c2dd0a6b521ac823d961807fc8348730f26d646440999c51b1249a7",
+          "fixture-2.png": "968799417b9ead84864bec0602eaba0a3d5c3168f78066a59f31ece94788f1ae"
+        }
+      }
+    },
+    {
+      "slot_id": "immich-path-search-4dc3914b6cea49b8a90edcbb",
+      "intent_id": "immich-path-search",
+      "project_id": "immich",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ed6be61a6167b94f4d9a14f61b9ef2004bd0eaac8421ea19440026d2d39e3026",
+        "screenshots": {
+          "fixture-1.png": "50f6d2ad2c2dd0a6b521ac823d961807fc8348730f26d646440999c51b1249a7",
+          "fixture-2.png": "968799417b9ead84864bec0602eaba0a3d5c3168f78066a59f31ece94788f1ae"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

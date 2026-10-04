@@ -1,0 +1,260 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "nextcloud-delete-folder-trash",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "nextcloud-delete-folder-trash-93686d0eae607daec852facc",
+      "intent_id": "nextcloud-delete-folder-trash",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "450a956952c12bafeba33cba8b86ecce50dd4bd89278c74aff305877e9c9203f",
+        "screenshots": {
+          "fixture-1.png": "413ca8f07607a0e62b809cc39899857b8b741d77990e5f4257ba0fbf07ea7553",
+          "fixture-2.png": "d86c0481e3a9ce51be052229b7096963469066e0ab232abb71c88b9f9bec9773"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-delete-folder-trash-050a6bf53eacf8a42e4f1d38",
+      "intent_id": "nextcloud-delete-folder-trash",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "533ef9a1de875d8004ba3919288e25340e6abdacc344ba9fa4d5f16f9dcf7be4",
+        "screenshots": {
+          "fixture-1.png": "413ca8f07607a0e62b809cc39899857b8b741d77990e5f4257ba0fbf07ea7553",
+          "fixture-2.png": "d86c0481e3a9ce51be052229b7096963469066e0ab232abb71c88b9f9bec9773"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-delete-folder-trash-1b36c6382b36bab0a5a91541",
+      "intent_id": "nextcloud-delete-folder-trash",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "450a956952c12bafeba33cba8b86ecce50dd4bd89278c74aff305877e9c9203f",
+        "screenshots": {
+          "fixture-1.png": "413ca8f07607a0e62b809cc39899857b8b741d77990e5f4257ba0fbf07ea7553",
+          "fixture-2.png": "d86c0481e3a9ce51be052229b7096963469066e0ab232abb71c88b9f9bec9773"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-delete-folder-trash-8b6e4046082cf170d8591035",
+      "intent_id": "nextcloud-delete-folder-trash",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "450a956952c12bafeba33cba8b86ecce50dd4bd89278c74aff305877e9c9203f",
+        "screenshots": {
+          "fixture-1.png": "413ca8f07607a0e62b809cc39899857b8b741d77990e5f4257ba0fbf07ea7553",
+          "fixture-2.png": "d86c0481e3a9ce51be052229b7096963469066e0ab232abb71c88b9f9bec9773"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-delete-folder-trash-ac3401f1d7e5f60e18bda0a8",
+      "intent_id": "nextcloud-delete-folder-trash",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "450a956952c12bafeba33cba8b86ecce50dd4bd89278c74aff305877e9c9203f",
+        "screenshots": {
+          "fixture-1.png": "413ca8f07607a0e62b809cc39899857b8b741d77990e5f4257ba0fbf07ea7553",
+          "fixture-2.png": "d86c0481e3a9ce51be052229b7096963469066e0ab232abb71c88b9f9bec9773"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-delete-folder-trash-72921be5eecf55650dafea04",
+      "intent_id": "nextcloud-delete-folder-trash",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "682bb2241b27a4f4f18d2ce7685ed69fa836a8adfccf123b9e25e34d527eeb0b",
+        "screenshots": {
+          "fixture-1.png": "413ca8f07607a0e62b809cc39899857b8b741d77990e5f4257ba0fbf07ea7553",
+          "fixture-2.png": "d86c0481e3a9ce51be052229b7096963469066e0ab232abb71c88b9f9bec9773"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-delete-folder-trash-3715ad86d01454538673cb07",
+      "intent_id": "nextcloud-delete-folder-trash",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "450a956952c12bafeba33cba8b86ecce50dd4bd89278c74aff305877e9c9203f",
+        "screenshots": {
+          "fixture-1.png": "413ca8f07607a0e62b809cc39899857b8b741d77990e5f4257ba0fbf07ea7553",
+          "fixture-2.png": "d86c0481e3a9ce51be052229b7096963469066e0ab232abb71c88b9f9bec9773"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-delete-folder-trash-23ff517c21aba1b75ec5d2da",
+      "intent_id": "nextcloud-delete-folder-trash",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "450a956952c12bafeba33cba8b86ecce50dd4bd89278c74aff305877e9c9203f",
+        "screenshots": {
+          "fixture-1.png": "413ca8f07607a0e62b809cc39899857b8b741d77990e5f4257ba0fbf07ea7553",
+          "fixture-2.png": "d86c0481e3a9ce51be052229b7096963469066e0ab232abb71c88b9f9bec9773"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-delete-folder-trash-a617a60d40463710b7f796f8",
+      "intent_id": "nextcloud-delete-folder-trash",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "450a956952c12bafeba33cba8b86ecce50dd4bd89278c74aff305877e9c9203f",
+        "screenshots": {
+          "fixture-1.png": "413ca8f07607a0e62b809cc39899857b8b741d77990e5f4257ba0fbf07ea7553",
+          "fixture-2.png": "d86c0481e3a9ce51be052229b7096963469066e0ab232abb71c88b9f9bec9773"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-delete-folder-trash-47c1cb5edc084ff855a7dc15",
+      "intent_id": "nextcloud-delete-folder-trash",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "450a956952c12bafeba33cba8b86ecce50dd4bd89278c74aff305877e9c9203f",
+        "screenshots": {
+          "fixture-1.png": "413ca8f07607a0e62b809cc39899857b8b741d77990e5f4257ba0fbf07ea7553",
+          "fixture-2.png": "d86c0481e3a9ce51be052229b7096963469066e0ab232abb71c88b9f9bec9773"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-delete-folder-trash-3289940d152b1ed37c81ee13",
+      "intent_id": "nextcloud-delete-folder-trash",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "533ef9a1de875d8004ba3919288e25340e6abdacc344ba9fa4d5f16f9dcf7be4",
+        "screenshots": {
+          "fixture-1.png": "413ca8f07607a0e62b809cc39899857b8b741d77990e5f4257ba0fbf07ea7553",
+          "fixture-2.png": "d86c0481e3a9ce51be052229b7096963469066e0ab232abb71c88b9f9bec9773"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-delete-folder-trash-d53115dd7e08648aeda0c8ed",
+      "intent_id": "nextcloud-delete-folder-trash",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "a504782e70a913deb872a7078be1a67a73c538e340a888527966ecf81be97c4a",
+        "screenshots": {
+          "fixture-1.png": "413ca8f07607a0e62b809cc39899857b8b741d77990e5f4257ba0fbf07ea7553",
+          "fixture-2.png": "d86c0481e3a9ce51be052229b7096963469066e0ab232abb71c88b9f9bec9773"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

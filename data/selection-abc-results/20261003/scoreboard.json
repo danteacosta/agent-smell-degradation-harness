@@ -1,0 +1,950 @@
+{
+  "schema_version": "selected46-report/v1",
+  "confirmatory_eligible": false,
+  "progress": {
+    "selected_cases": 46,
+    "finished_cases": 46,
+    "runs": 552,
+    "planned_runs": 552,
+    "projects_finished": [
+      "grist",
+      "immich",
+      "mattermost",
+      "mealie",
+      "nextcloud",
+      "openproject",
+      "paperless-ngx",
+      "wekan",
+      "zulip"
+    ]
+  },
+  "counts_by_model_and_arm": {
+    "gpt-5.6-luna": {
+      "A": {
+        "held": 74,
+        "violated": 14,
+        "unknown": 4
+      },
+      "B": {
+        "held": 74,
+        "violated": 13,
+        "unknown": 5
+      },
+      "C": {
+        "violated": 59,
+        "held": 29,
+        "unknown": 4
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "held": 81,
+        "unknown": 3,
+        "violated": 8
+      },
+      "B": {
+        "held": 79,
+        "violated": 11,
+        "unknown": 2
+      },
+      "C": {
+        "violated": 46,
+        "held": 44,
+        "unknown": 2
+      }
+    }
+  },
+  "per_case": {
+    "grist-billing-managers-limit": {
+      "project": "grist",
+      "candidate_id": "rc-f33b2bf870e9",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "grist-context-menu-shortcut": {
+      "project": "grist",
+      "candidate_id": "rc-4aac15b7b503",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 2,
+          "held": 2
+        }
+      }
+    },
+    "grist-page-default-collapse": {
+      "project": "grist",
+      "candidate_id": "rc-7b485b51412f",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "grist-suggestions-open-copy": {
+      "project": "grist",
+      "candidate_id": "rc-ade633af9c14",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 2,
+          "held": 2
+        }
+      }
+    },
+    "grist-tutorial-fork-return": {
+      "project": "grist",
+      "candidate_id": "rc-b49db6870ff5",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 4
+        }
+      }
+    },
+    "grist-tutorial-restart": {
+      "project": "grist",
+      "candidate_id": "rc-aac66a0af69a",
+      "arms": {
+        "A": {
+          "held": 2,
+          "violated": 2
+        },
+        "B": {
+          "violated": 2,
+          "held": 2
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "immich-library-single-owner": {
+      "project": "immich",
+      "candidate_id": "rc-c86728bbc029",
+      "arms": {
+        "A": {
+          "held": 3,
+          "violated": 1
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "immich-m2t-upload": {
+      "project": "immich",
+      "candidate_id": "rc-0ec1ac8f66bd",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "immich-path-search": {
+      "project": "immich",
+      "candidate_id": "rc-b6f382226c41",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 4
+        }
+      }
+    },
+    "mattermost-anonymous-team-url": {
+      "project": "mattermost",
+      "candidate_id": "rc-aa2c82f86e08",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 1,
+          "violated": 3
+        }
+      }
+    },
+    "mattermost-channel-autotranslate": {
+      "project": "mattermost",
+      "candidate_id": "rc-554bcd113361",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "violated": 1,
+          "held": 3
+        },
+        "C": {
+          "held": 4
+        }
+      }
+    },
+    "mattermost-guest-invite-channel": {
+      "project": "mattermost",
+      "candidate_id": "rc-3fbc295441e2",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "mattermost-mention-add-prompt": {
+      "project": "mattermost",
+      "candidate_id": "rc-882709afd891",
+      "arms": {
+        "A": {
+          "held": 3,
+          "violated": 1
+        },
+        "B": {
+          "violated": 1,
+          "held": 3
+        },
+        "C": {
+          "violated": 2,
+          "unknown": 1,
+          "held": 1
+        }
+      }
+    },
+    "mattermost-playbook-task-markdown": {
+      "project": "mattermost",
+      "candidate_id": "rc-0284c8781546",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "mattermost-timezone-default-automatic": {
+      "project": "mattermost",
+      "candidate_id": "rc-4fa8e7483b1a",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 4
+        }
+      }
+    },
+    "mealie-organize-food-permission": {
+      "project": "mealie",
+      "candidate_id": "rc-106bac72c813",
+      "arms": {
+        "A": {
+          "unknown": 2,
+          "held": 2
+        },
+        "B": {
+          "held": 2,
+          "unknown": 2
+        },
+        "C": {
+          "unknown": 2,
+          "held": 2
+        }
+      }
+    },
+    "mealie-planner-food-label": {
+      "project": "mealie",
+      "candidate_id": "rc-0f453b1f0a55",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 2,
+          "violated": 2
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "nextcloud-breakout-rooms": {
+      "project": "nextcloud",
+      "candidate_id": "rc-946f02ef19b6",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 4
+        }
+      }
+    },
+    "nextcloud-calendar-talk-location": {
+      "project": "nextcloud",
+      "candidate_id": "rc-e594b40135ff",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 3,
+          "unknown": 1
+        }
+      }
+    },
+    "nextcloud-delete-folder-trash": {
+      "project": "nextcloud",
+      "candidate_id": "rc-9d801a70d5d2",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 4
+        }
+      }
+    },
+    "nextcloud-device-password-once": {
+      "project": "nextcloud",
+      "candidate_id": "rc-3d153b91ab4e",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 3,
+          "violated": 1
+        },
+        "C": {
+          "violated": 2,
+          "held": 2
+        }
+      }
+    },
+    "nextcloud-mail-delegation": {
+      "project": "nextcloud",
+      "candidate_id": "rc-c38fa60b1164",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 3,
+          "held": 1
+        }
+      }
+    },
+    "nextcloud-mail-favorites-up": {
+      "project": "nextcloud",
+      "candidate_id": "rc-ab0227c1eb5b",
+      "arms": {
+        "A": {
+          "held": 3,
+          "violated": 1
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 3,
+          "held": 1
+        }
+      }
+    },
+    "openproject-archived-project-selector": {
+      "project": "openproject",
+      "candidate_id": "rc-2c13970217ea",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 3,
+          "unknown": 1
+        },
+        "C": {
+          "violated": 3,
+          "held": 1
+        }
+      }
+    },
+    "openproject-auto-theme-contrast": {
+      "project": "openproject",
+      "candidate_id": "rc-02df56f00b58",
+      "arms": {
+        "A": {
+          "unknown": 4
+        },
+        "B": {
+          "unknown": 1,
+          "violated": 3
+        },
+        "C": {
+          "violated": 3,
+          "unknown": 1
+        }
+      }
+    },
+    "openproject-files-tab-attachments": {
+      "project": "openproject",
+      "candidate_id": "rc-e436521e462d",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 4
+        }
+      }
+    },
+    "openproject-filter-text-autoupdate": {
+      "project": "openproject",
+      "candidate_id": "rc-1114153d4704",
+      "arms": {
+        "A": {
+          "violated": 3,
+          "unknown": 1
+        },
+        "B": {
+          "violated": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "openproject-invite-permission-basis": {
+      "project": "openproject",
+      "candidate_id": "rc-17b31565c57c",
+      "arms": {
+        "A": {
+          "violated": 4
+        },
+        "B": {
+          "violated": 2,
+          "unknown": 2
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "openproject-more-menu-subproject": {
+      "project": "openproject",
+      "candidate_id": "rc-4efba0098a79",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "paperless-ai-suggestions-blank-text": {
+      "project": "paperless-ngx",
+      "candidate_id": "rc-84013890a131",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "paperless-custom-field-no-value": {
+      "project": "paperless-ngx",
+      "candidate_id": "rc-086a9d210266",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 1,
+          "violated": 3
+        }
+      }
+    },
+    "paperless-doc-title-placeholder": {
+      "project": "paperless-ngx",
+      "candidate_id": "rc-9e198862b86e",
+      "arms": {
+        "A": {
+          "violated": 2,
+          "held": 2
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "paperless-own-profile": {
+      "project": "paperless-ngx",
+      "candidate_id": "rc-035e8af08cd7",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 4
+        }
+      }
+    },
+    "paperless-superuser-grant": {
+      "project": "paperless-ngx",
+      "candidate_id": "rc-806442660eb5",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "wekan-field-order-independent": {
+      "project": "wekan",
+      "candidate_id": "rc-899c4d2472ad",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "unknown": 1,
+          "held": 3
+        }
+      }
+    },
+    "wekan-home-multi-drop": {
+      "project": "wekan",
+      "candidate_id": "rc-88440629ecb6",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "wekan-member-same-org-team": {
+      "project": "wekan",
+      "candidate_id": "rc-8b05adc7767e",
+      "arms": {
+        "A": {
+          "violated": 4
+        },
+        "B": {
+          "violated": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "wekan-swimlane-below-default": {
+      "project": "wekan",
+      "candidate_id": "rc-6b29ef8b44d8",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "wekan-sync-local-edits": {
+      "project": "wekan",
+      "candidate_id": "rc-f3df2f6e5885",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 4
+        }
+      }
+    },
+    "wekan-week-number-immediate": {
+      "project": "wekan",
+      "candidate_id": "rc-59d96b056593",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 4
+        }
+      }
+    },
+    "zulip-gif-picker-disabled": {
+      "project": "zulip",
+      "candidate_id": "rc-08dffa18a270",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 4
+        }
+      }
+    },
+    "zulip-private-channel-access": {
+      "project": "zulip",
+      "candidate_id": "rc-fd348eb33246",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 2,
+          "violated": 2
+        }
+      }
+    },
+    "zulip-resolved-notice-auto-read": {
+      "project": "zulip",
+      "candidate_id": "rc-362ff82e3812",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "zulip-reverse-linkifier-paste": {
+      "project": "zulip",
+      "candidate_id": "rc-4200f1dac6a9",
+      "arms": {
+        "A": {
+          "violated": 4
+        },
+        "B": {
+          "violated": 4
+        },
+        "C": {
+          "violated": 4
+        }
+      }
+    },
+    "zulip-subscribe-typeahead": {
+      "project": "zulip",
+      "candidate_id": "rc-c044ebec7fe1",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "held": 4
+        },
+        "C": {
+          "held": 4
+        }
+      }
+    },
+    "zulip-unsubscribe-self": {
+      "project": "zulip",
+      "candidate_id": "rc-dfb84383fb89",
+      "arms": {
+        "A": {
+          "held": 4
+        },
+        "B": {
+          "unknown": 1,
+          "held": 3
+        },
+        "C": {
+          "violated": 1,
+          "held": 3
+        }
+      }
+    }
+  },
+  "h1a_c_vs_a": {
+    "drop": {
+      "estimand": "paired_probability_of_superiority/v1",
+      "direction": "values above 0.5 mean the defective variant is worse",
+      "estimate": 0.725378787878788,
+      "ci95_project_cluster": {
+        "low": 0.6811224489795918,
+        "high": 0.7763157894736842
+      },
+      "paired_randomization_pvalue": 0.0001999600079984003,
+      "n_pairs": 172,
+      "n_intents": 44,
+      "n_projects": 9,
+      "pair_outcomes": {
+        "defective_worse": 79,
+        "tie": 93,
+        "defective_better": 0
+      },
+      "valid_for_inference": true
+    },
+    "worst": {
+      "estimand": "paired_probability_of_superiority/v1",
+      "direction": "values above 0.5 mean the defective variant is worse",
+      "estimate": 0.7418478260869565,
+      "ci95_project_cluster": {
+        "low": null,
+        "high": null
+      },
+      "paired_randomization_pvalue": null,
+      "n_pairs": 184,
+      "n_intents": 46,
+      "n_projects": 9,
+      "pair_outcomes": {
+        "defective_worse": 89,
+        "tie": 95,
+        "defective_better": 0
+      },
+      "valid_for_inference": false,
+      "analysis_scope": "deterministic_sensitivity_bound",
+      "unknown_assignment": "worst"
+    },
+    "best": {
+      "estimand": "paired_probability_of_superiority/v1",
+      "direction": "values above 0.5 mean the defective variant is worse",
+      "estimate": 0.7065217391304348,
+      "ci95_project_cluster": {
+        "low": null,
+        "high": null
+      },
+      "paired_randomization_pvalue": null,
+      "n_pairs": 184,
+      "n_intents": 46,
+      "n_projects": 9,
+      "pair_outcomes": {
+        "defective_worse": 79,
+        "tie": 102,
+        "defective_better": 3
+      },
+      "valid_for_inference": false,
+      "analysis_scope": "deterministic_sensitivity_bound",
+      "unknown_assignment": "best"
+    }
+  },
+  "wording_control_b_vs_a": {
+    "drop": {
+      "estimand": "paired_probability_of_superiority/v1",
+      "direction": "values above 0.5 mean the defective variant is worse",
+      "estimate": 0.5,
+      "ci95_project_cluster": {
+        "low": 0.48333333333333334,
+        "high": 0.51875
+      },
+      "paired_randomization_pvalue": 1.0,
+      "n_pairs": 172,
+      "n_intents": 45,
+      "n_projects": 9,
+      "pair_outcomes": {
+        "defective_worse": 4,
+        "tie": 164,
+        "defective_better": 4
+      },
+      "valid_for_inference": true
+    },
+    "worst": {
+      "estimand": "paired_probability_of_superiority/v1",
+      "direction": "values above 0.5 mean the defective variant is worse",
+      "estimate": 0.5244565217391305,
+      "ci95_project_cluster": {
+        "low": null,
+        "high": null
+      },
+      "paired_randomization_pvalue": null,
+      "n_pairs": 184,
+      "n_intents": 46,
+      "n_projects": 9,
+      "pair_outcomes": {
+        "defective_worse": 13,
+        "tie": 167,
+        "defective_better": 4
+      },
+      "valid_for_inference": false,
+      "analysis_scope": "deterministic_sensitivity_bound",
+      "unknown_assignment": "worst"
+    },
+    "best": {
+      "estimand": "paired_probability_of_superiority/v1",
+      "direction": "values above 0.5 mean the defective variant is worse",
+      "estimate": 0.48641304347826086,
+      "ci95_project_cluster": {
+        "low": null,
+        "high": null
+      },
+      "paired_randomization_pvalue": null,
+      "n_pairs": 184,
+      "n_intents": 46,
+      "n_projects": 9,
+      "pair_outcomes": {
+        "defective_worse": 4,
+        "tie": 171,
+        "defective_better": 9
+      },
+      "valid_for_inference": false,
+      "analysis_scope": "deterministic_sensitivity_bound",
+      "unknown_assignment": "best"
+    }
+  },
+  "h1b_c_violation_by_covariate": {
+    "numeric": {
+      "0": {
+        "violated": 89,
+        "held": 73,
+        "unknown": 6
+      },
+      "1": {
+        "violated": 16
+      }
+    },
+    "derived_state": {
+      "0": {
+        "violated": 94,
+        "held": 60,
+        "unknown": 6
+      },
+      "1": {
+        "held": 13,
+        "violated": 11
+      }
+    },
+    "memorized": {
+      "0": {
+        "violated": 67,
+        "held": 37,
+        "unknown": 4
+      },
+      "1": {
+        "violated": 38,
+        "held": 36,
+        "unknown": 2
+      }
+    },
+    "context_cue": {
+      "not coded": {
+        "violated": 105,
+        "held": 73,
+        "unknown": 6
+      }
+    }
+  }
+}

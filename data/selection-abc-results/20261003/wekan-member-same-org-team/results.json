@@ -1,0 +1,261 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "wekan-member-same-org-team",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "target_only_failure": 1,
+        "mixed_failure": 1
+      },
+      "B": {
+        "mixed_failure": 2
+      },
+      "C": {
+        "mixed_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "mixed_failure": 2
+      },
+      "B": {
+        "mixed_failure": 2
+      },
+      "C": {
+        "mixed_failure": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "wekan-member-same-org-team-d92c4b758a0489728311d633",
+      "intent_id": "wekan-member-same-org-team",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "23504d5ebb9d70b7118d58a87f87315e9b105ce7ed88c2417a5ee3df88d09981",
+        "screenshots": {
+          "fixture-1.png": "720c6cc94c62f97b709fcee4476e129b14f23f2fcb921acb74c10ff957caf727",
+          "fixture-2.png": "152003c15cc9a7642168aae9dd8c7af11aee2d9844834c5f7cf4e8d0e2af8cca"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-member-same-org-team-f9ca12e77173a3282e330eb3",
+      "intent_id": "wekan-member-same-org-team",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "c58b0cb57b85714bdef8ddaec81cbc044db5348ed9375044dc22ff480b33367f",
+        "screenshots": {
+          "fixture-1.png": "720c6cc94c62f97b709fcee4476e129b14f23f2fcb921acb74c10ff957caf727",
+          "fixture-2.png": "140ba65d075ee87b2bf182da25a949488b9f8a330085a85aa1533f90c06e39da"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-member-same-org-team-e679dbbaab87331a1405590f",
+      "intent_id": "wekan-member-same-org-team",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "87bf5c6426a04d2bd0fa247e106fa7727e9cb41a3e833d309cd7927204333924",
+        "screenshots": {
+          "fixture-1.png": "720c6cc94c62f97b709fcee4476e129b14f23f2fcb921acb74c10ff957caf727",
+          "fixture-2.png": "152003c15cc9a7642168aae9dd8c7af11aee2d9844834c5f7cf4e8d0e2af8cca"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-member-same-org-team-f17e75cd9946832b0b934f7f",
+      "intent_id": "wekan-member-same-org-team",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "37176a8fafef5d91c67555d02e374056c31493b2c0159fef471b221e0d931399",
+        "screenshots": {
+          "fixture-1.png": "720c6cc94c62f97b709fcee4476e129b14f23f2fcb921acb74c10ff957caf727",
+          "fixture-2.png": "140ba65d075ee87b2bf182da25a949488b9f8a330085a85aa1533f90c06e39da"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-member-same-org-team-51d2ccc9c3dca12041f55e19",
+      "intent_id": "wekan-member-same-org-team",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "3aaa90817ed66ec3e41f9116659383ce6cdf7b3407373ba2727eec9b7feedc29",
+        "screenshots": {
+          "fixture-1.png": "720c6cc94c62f97b709fcee4476e129b14f23f2fcb921acb74c10ff957caf727",
+          "fixture-2.png": "140ba65d075ee87b2bf182da25a949488b9f8a330085a85aa1533f90c06e39da"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-member-same-org-team-0373e2ba3f8003d7a1905ce2",
+      "intent_id": "wekan-member-same-org-team",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "2a642c2a832d3e4e5dd5d201467a70b4e334dad6b169ed1a6faa6208e15abd8c",
+        "screenshots": {
+          "fixture-1.png": "720c6cc94c62f97b709fcee4476e129b14f23f2fcb921acb74c10ff957caf727",
+          "fixture-2.png": "140ba65d075ee87b2bf182da25a949488b9f8a330085a85aa1533f90c06e39da"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-member-same-org-team-ec235b58b1acced8d9d1dfff",
+      "intent_id": "wekan-member-same-org-team",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "95fd3a22751f463a71d4c1c035d57a82355aef90e4dad54e57ce707fe6e7344a",
+        "screenshots": {
+          "fixture-1.png": "720c6cc94c62f97b709fcee4476e129b14f23f2fcb921acb74c10ff957caf727",
+          "fixture-2.png": "140ba65d075ee87b2bf182da25a949488b9f8a330085a85aa1533f90c06e39da"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-member-same-org-team-6a6e56a82b3ebb24850e8099",
+      "intent_id": "wekan-member-same-org-team",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "3c300d61b97bd405c3df8ca9241c5802c6e2ea15605f4293bfcb2ccbe8cdda79",
+        "screenshots": {
+          "fixture-1.png": "720c6cc94c62f97b709fcee4476e129b14f23f2fcb921acb74c10ff957caf727",
+          "fixture-2.png": "152003c15cc9a7642168aae9dd8c7af11aee2d9844834c5f7cf4e8d0e2af8cca"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-member-same-org-team-8c0824fb89aca889f74fed05",
+      "intent_id": "wekan-member-same-org-team",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "32041407ffa1f1d8699efee454be5788f8226c626b217e0c13996b39c6483f85",
+        "screenshots": {
+          "fixture-1.png": "720c6cc94c62f97b709fcee4476e129b14f23f2fcb921acb74c10ff957caf727",
+          "fixture-2.png": "140ba65d075ee87b2bf182da25a949488b9f8a330085a85aa1533f90c06e39da"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-member-same-org-team-b036540bb286ed4eaf3c54a4",
+      "intent_id": "wekan-member-same-org-team",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "f21da2aad9e55e4a48c06a8b0d0cb0393b75f85e8ba595cb0b172f252421dcec",
+        "screenshots": {
+          "fixture-1.png": "720c6cc94c62f97b709fcee4476e129b14f23f2fcb921acb74c10ff957caf727",
+          "fixture-2.png": "140ba65d075ee87b2bf182da25a949488b9f8a330085a85aa1533f90c06e39da"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-member-same-org-team-3005d7220c223ce385ebda39",
+      "intent_id": "wekan-member-same-org-team",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "98208556359bc9d50c796fc093e2c8dc34d2b899bf64377d1efa92ef3985455b",
+        "screenshots": {
+          "fixture-1.png": "3c391fe44a85586e4c3c6691a45262abcc15bda3b5d1af387dea8a09ef62777f",
+          "fixture-2.png": "5fdfc6cda491e9a8795969075e292a4942d9e0f8a2bc0185317f5e7d58131d39"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-member-same-org-team-bb5d03399a2a137d3c98400b",
+      "intent_id": "wekan-member-same-org-team",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "e5a4f59247d42635fb4763743010360a54e3b65691c9fd074e12c09c04e5e1f9",
+        "screenshots": {
+          "fixture-1.png": "720c6cc94c62f97b709fcee4476e129b14f23f2fcb921acb74c10ff957caf727",
+          "fixture-2.png": "140ba65d075ee87b2bf182da25a949488b9f8a330085a85aa1533f90c06e39da"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

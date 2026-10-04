@@ -1,0 +1,260 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "mattermost-playbook-task-markdown",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "target_only_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "target_only_failure": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "mattermost-playbook-task-markdown-3c77db667d5376ecfe206874",
+      "intent_id": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "74a67c0ddebb544f5daba66686aa3fba73da263899372ab81bc63c20fc3d7161",
+        "screenshots": {
+          "fixture-1.png": "270e0c42a170902a959b15c89dce5037b943fc2e6d01479d1d05c5d664d74a21",
+          "fixture-2.png": "b36ccf0e845554ba0518d74a88c146ec09d94c84e0c8d7d15b0df571d2cf6872"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-playbook-task-markdown-f37737fc4142cb169a108227",
+      "intent_id": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "865fa10df593a4b37d944e2e10a5886fd266e565794038050bdd8d3558d0d6e7",
+        "screenshots": {
+          "fixture-1.png": "270e0c42a170902a959b15c89dce5037b943fc2e6d01479d1d05c5d664d74a21",
+          "fixture-2.png": "b36ccf0e845554ba0518d74a88c146ec09d94c84e0c8d7d15b0df571d2cf6872"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-playbook-task-markdown-4745dbf9db9742332c9b369b",
+      "intent_id": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "5e2cc5d4482e28232d73ab328fd19513f5b3905edb34a673e790d083646ad65b",
+        "screenshots": {
+          "fixture-1.png": "270e0c42a170902a959b15c89dce5037b943fc2e6d01479d1d05c5d664d74a21",
+          "fixture-2.png": "b36ccf0e845554ba0518d74a88c146ec09d94c84e0c8d7d15b0df571d2cf6872"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-playbook-task-markdown-005f83b262a6ade1cb9fa105",
+      "intent_id": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "064ded85a1721ca3567b94b810c273c16261782b8e4c3be08ea0a7444e33e82e",
+        "screenshots": {
+          "fixture-1.png": "270e0c42a170902a959b15c89dce5037b943fc2e6d01479d1d05c5d664d74a21",
+          "fixture-2.png": "b36ccf0e845554ba0518d74a88c146ec09d94c84e0c8d7d15b0df571d2cf6872"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-playbook-task-markdown-e461d44bbd323b9de134e8df",
+      "intent_id": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "9b831b6618799dfa5fc57ff24b6807d1ee72d9e51c54c4b43269ef995fa8c4e2",
+        "screenshots": {
+          "fixture-1.png": "2a52347d1f6bdf25aef2cabb0765bf23a998b9566dd53abf38ac00f9c87ca711",
+          "fixture-2.png": "5a128cb43057834ca50db56da78618e07789c9c00726c90db960f7432b126b68"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-playbook-task-markdown-09b208ac1866fdd7bae29f5a",
+      "intent_id": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "b917cc8bfe71c2fd60b45523583be871aff26c32b6811eeddc3addad9a625a78",
+        "screenshots": {
+          "fixture-1.png": "270e0c42a170902a959b15c89dce5037b943fc2e6d01479d1d05c5d664d74a21",
+          "fixture-2.png": "b36ccf0e845554ba0518d74a88c146ec09d94c84e0c8d7d15b0df571d2cf6872"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-playbook-task-markdown-7f40b589f2909e748f2b4d2b",
+      "intent_id": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "667c425a6d4287b497abd180112bc9579cb7ab7f8b0559d2cd21b70e6cdba9ea",
+        "screenshots": {
+          "fixture-1.png": "2a52347d1f6bdf25aef2cabb0765bf23a998b9566dd53abf38ac00f9c87ca711",
+          "fixture-2.png": "5a128cb43057834ca50db56da78618e07789c9c00726c90db960f7432b126b68"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-playbook-task-markdown-1e612bd34691e6d9e9545dba",
+      "intent_id": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "b6c6dba286efd769ee047780f9a84d399c74238867dca8e65c42836abbc47956",
+        "screenshots": {
+          "fixture-1.png": "2a52347d1f6bdf25aef2cabb0765bf23a998b9566dd53abf38ac00f9c87ca711",
+          "fixture-2.png": "5a128cb43057834ca50db56da78618e07789c9c00726c90db960f7432b126b68"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-playbook-task-markdown-089b16dbc7fe8d82cea530d9",
+      "intent_id": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "fda15fb69a0d4cb070f15f561816e75d5ba608a833efb2622ee6275160ac5615",
+        "screenshots": {
+          "fixture-1.png": "270e0c42a170902a959b15c89dce5037b943fc2e6d01479d1d05c5d664d74a21",
+          "fixture-2.png": "b36ccf0e845554ba0518d74a88c146ec09d94c84e0c8d7d15b0df571d2cf6872"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-playbook-task-markdown-bc7bbdf87f0c103e002cda12",
+      "intent_id": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "13604f66ce31c37f420a363410a2350e6d91e1a0f6456575add8385cdf49889a",
+        "screenshots": {
+          "fixture-1.png": "270e0c42a170902a959b15c89dce5037b943fc2e6d01479d1d05c5d664d74a21",
+          "fixture-2.png": "b36ccf0e845554ba0518d74a88c146ec09d94c84e0c8d7d15b0df571d2cf6872"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-playbook-task-markdown-f5cafc97f1143523e17e84af",
+      "intent_id": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "33f749b1c308aef276b9d66dd0ded5f7cf3e84d2dbf97a5a64025036dc90b52c",
+        "screenshots": {
+          "fixture-1.png": "270e0c42a170902a959b15c89dce5037b943fc2e6d01479d1d05c5d664d74a21",
+          "fixture-2.png": "b36ccf0e845554ba0518d74a88c146ec09d94c84e0c8d7d15b0df571d2cf6872"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-playbook-task-markdown-49332d90797985033b18ff93",
+      "intent_id": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "f61cb8e4f8496b7e3c2a31e5207508aeb90025734fe24931d3ffe2ea5684d203",
+        "screenshots": {
+          "fixture-1.png": "2a52347d1f6bdf25aef2cabb0765bf23a998b9566dd53abf38ac00f9c87ca711",
+          "fixture-2.png": "5a128cb43057834ca50db56da78618e07789c9c00726c90db960f7432b126b68"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

@@ -1,0 +1,261 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "nextcloud-calendar-talk-location",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "browser_error": 1,
+        "pass": 1
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "nextcloud-calendar-talk-location-5748b20a2507d1570e87a62b",
+      "intent_id": "nextcloud-calendar-talk-location",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "8ffe6b637fe5952215b50a806e0fa17f4284bfc6f61c06dc7e5512c3b5370608",
+        "screenshots": {
+          "fixture-1.png": "f2c8ca2c63b0b2b7070e59fb7cc5f0916f6d6a315e53e93afd9ebdbf22377644",
+          "fixture-2.png": "fd836148bb9a34eda8fab174d9bfa3703e29b5f7f8a153fb692af548fd5b40ed"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-calendar-talk-location-5e09bbeb18320c13595b6d8e",
+      "intent_id": "nextcloud-calendar-talk-location",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "19c69816de849e280e80f61b06c92bf459a401e7397945a00072782a8bab8a9d",
+        "screenshots": {
+          "fixture-1.png": "f2c8ca2c63b0b2b7070e59fb7cc5f0916f6d6a315e53e93afd9ebdbf22377644",
+          "fixture-2.png": "fd836148bb9a34eda8fab174d9bfa3703e29b5f7f8a153fb692af548fd5b40ed"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-calendar-talk-location-a1d5aab5c2e8f32f3365ffff",
+      "intent_id": "nextcloud-calendar-talk-location",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "19c69816de849e280e80f61b06c92bf459a401e7397945a00072782a8bab8a9d",
+        "screenshots": {
+          "fixture-1.png": "f2c8ca2c63b0b2b7070e59fb7cc5f0916f6d6a315e53e93afd9ebdbf22377644",
+          "fixture-2.png": "fd836148bb9a34eda8fab174d9bfa3703e29b5f7f8a153fb692af548fd5b40ed"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-calendar-talk-location-52316fd11bdb9ac2ece02c86",
+      "intent_id": "nextcloud-calendar-talk-location",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "a1044ebf95b764cb1bfef96c8bab2bfc395b4c6f389751ef53139225f21ec008",
+        "screenshots": {
+          "fixture-1.png": "f2c8ca2c63b0b2b7070e59fb7cc5f0916f6d6a315e53e93afd9ebdbf22377644",
+          "fixture-2.png": "fd836148bb9a34eda8fab174d9bfa3703e29b5f7f8a153fb692af548fd5b40ed"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-calendar-talk-location-c85822d4033ba88ca5a6e47a",
+      "intent_id": "nextcloud-calendar-talk-location",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "19c69816de849e280e80f61b06c92bf459a401e7397945a00072782a8bab8a9d",
+        "screenshots": {
+          "fixture-1.png": "f2c8ca2c63b0b2b7070e59fb7cc5f0916f6d6a315e53e93afd9ebdbf22377644",
+          "fixture-2.png": "fd836148bb9a34eda8fab174d9bfa3703e29b5f7f8a153fb692af548fd5b40ed"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-calendar-talk-location-0441e9e1f4c51d731dad73b6",
+      "intent_id": "nextcloud-calendar-talk-location",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "browser_error",
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 0,
+        "report_sha256": "7bcd7df65afed582fec4a86f62c3e315179008d055ff79eb099c5a45b90bf62c",
+        "screenshots": {
+          "fixture-1.png": "0da4f9b8d9454a6fa9637f6b3ce0da9718c8fefd71e4f525c54a428b9329406e",
+          "fixture-2.png": "2ff02e0367b3de04d96543d99c8d0414d0b8df8b67bfcd426d92da33cf62f02e"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-calendar-talk-location-9ee48e233e5d9ba6f43142ab",
+      "intent_id": "nextcloud-calendar-talk-location",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "969aebebbdace7e995fe6d0fc4c55e669f8b027228bb66f7646cd86634aaeafe",
+        "screenshots": {
+          "fixture-1.png": "f2c8ca2c63b0b2b7070e59fb7cc5f0916f6d6a315e53e93afd9ebdbf22377644",
+          "fixture-2.png": "fd836148bb9a34eda8fab174d9bfa3703e29b5f7f8a153fb692af548fd5b40ed"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-calendar-talk-location-a7ae7cd4f8a1776b5d026dd8",
+      "intent_id": "nextcloud-calendar-talk-location",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "08a5e3d23c61ac9a503b76efc27431eba14ad109fe9143c385c087a69cb29054",
+        "screenshots": {
+          "fixture-1.png": "f2c8ca2c63b0b2b7070e59fb7cc5f0916f6d6a315e53e93afd9ebdbf22377644",
+          "fixture-2.png": "fd836148bb9a34eda8fab174d9bfa3703e29b5f7f8a153fb692af548fd5b40ed"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-calendar-talk-location-7a72580ff60e517731e969c7",
+      "intent_id": "nextcloud-calendar-talk-location",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "a1044ebf95b764cb1bfef96c8bab2bfc395b4c6f389751ef53139225f21ec008",
+        "screenshots": {
+          "fixture-1.png": "f2c8ca2c63b0b2b7070e59fb7cc5f0916f6d6a315e53e93afd9ebdbf22377644",
+          "fixture-2.png": "fd836148bb9a34eda8fab174d9bfa3703e29b5f7f8a153fb692af548fd5b40ed"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-calendar-talk-location-b1daf91f934895dfefc5df32",
+      "intent_id": "nextcloud-calendar-talk-location",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "b8a7b282dcd14fb4000b3972f1ec033e1265acf5155a479673d27bcdd5056655",
+        "screenshots": {
+          "fixture-1.png": "f2c8ca2c63b0b2b7070e59fb7cc5f0916f6d6a315e53e93afd9ebdbf22377644",
+          "fixture-2.png": "fd836148bb9a34eda8fab174d9bfa3703e29b5f7f8a153fb692af548fd5b40ed"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-calendar-talk-location-54cde68c72352c7a3f69d41d",
+      "intent_id": "nextcloud-calendar-talk-location",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "19c69816de849e280e80f61b06c92bf459a401e7397945a00072782a8bab8a9d",
+        "screenshots": {
+          "fixture-1.png": "f2c8ca2c63b0b2b7070e59fb7cc5f0916f6d6a315e53e93afd9ebdbf22377644",
+          "fixture-2.png": "fd836148bb9a34eda8fab174d9bfa3703e29b5f7f8a153fb692af548fd5b40ed"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-calendar-talk-location-45a9600cea5725f2928b4ecd",
+      "intent_id": "nextcloud-calendar-talk-location",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "19c69816de849e280e80f61b06c92bf459a401e7397945a00072782a8bab8a9d",
+        "screenshots": {
+          "fixture-1.png": "f2c8ca2c63b0b2b7070e59fb7cc5f0916f6d6a315e53e93afd9ebdbf22377644",
+          "fixture-2.png": "fd836148bb9a34eda8fab174d9bfa3703e29b5f7f8a153fb692af548fd5b40ed"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

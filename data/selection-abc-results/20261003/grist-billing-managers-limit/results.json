@@ -1,0 +1,260 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "grist-billing-managers-limit",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "target_only_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "target_only_failure": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "grist-billing-managers-limit-cb0e903f19f8042ff274a73a",
+      "intent_id": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "b174f20b7e63dba66672d43f5d8e57aa78e6b5e5adc6121715bd0e9b5cb3676f",
+        "screenshots": {
+          "fixture-1.png": "d2eccecc204c3a7fed117793af434b60b11c993fe7e74839a82dc671651515c0",
+          "fixture-2.png": "b30af4e12ab8ae3bab269c405b1fff105ff94923d7a2c3ee3ee4e36d412de4ef"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-billing-managers-limit-5e54d4f44a89e782615a5cf0",
+      "intent_id": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "b174f20b7e63dba66672d43f5d8e57aa78e6b5e5adc6121715bd0e9b5cb3676f",
+        "screenshots": {
+          "fixture-1.png": "d2eccecc204c3a7fed117793af434b60b11c993fe7e74839a82dc671651515c0",
+          "fixture-2.png": "b30af4e12ab8ae3bab269c405b1fff105ff94923d7a2c3ee3ee4e36d412de4ef"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-billing-managers-limit-f58bb1741be7f0fea2e15b7c",
+      "intent_id": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "46ca365dbe7df4c3e70adee90db2baf80a2da7e19b808ab2326d0ee7175f5948",
+        "screenshots": {
+          "fixture-1.png": "f541fa566f677cd0ba8d953d2c8e76c4ff3eb026b2e590f4c77ece44e2cf32ac",
+          "fixture-2.png": "4ec60006cde85e300406f350f51bf6e294cbf9b0d952e95ddbb8dddba7fdbbc7"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-billing-managers-limit-7aa2c463a76a8110af15b4be",
+      "intent_id": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "b174f20b7e63dba66672d43f5d8e57aa78e6b5e5adc6121715bd0e9b5cb3676f",
+        "screenshots": {
+          "fixture-1.png": "d2eccecc204c3a7fed117793af434b60b11c993fe7e74839a82dc671651515c0",
+          "fixture-2.png": "b30af4e12ab8ae3bab269c405b1fff105ff94923d7a2c3ee3ee4e36d412de4ef"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-billing-managers-limit-a87a4994dde325495bd52ee1",
+      "intent_id": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "eb4c3d6183c98f0804ab5ee4016c4935aa862768d62ca135e7c74208e0557b5d",
+        "screenshots": {
+          "fixture-1.png": "f541fa566f677cd0ba8d953d2c8e76c4ff3eb026b2e590f4c77ece44e2cf32ac",
+          "fixture-2.png": "4ec60006cde85e300406f350f51bf6e294cbf9b0d952e95ddbb8dddba7fdbbc7"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-billing-managers-limit-3a13af0b54cd919e1d99e434",
+      "intent_id": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "87871d1d913d4a2880fb8270485b77762eea2a7e199b65e535727cdf06a85bbf",
+        "screenshots": {
+          "fixture-1.png": "f541fa566f677cd0ba8d953d2c8e76c4ff3eb026b2e590f4c77ece44e2cf32ac",
+          "fixture-2.png": "4ec60006cde85e300406f350f51bf6e294cbf9b0d952e95ddbb8dddba7fdbbc7"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-billing-managers-limit-682cdfdcc79eddc6882e38da",
+      "intent_id": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "8136ac64100d9e6116bf7b62df8fb0f6ef0aef6b741dc392745b3baf2fc0ccf0",
+        "screenshots": {
+          "fixture-1.png": "f541fa566f677cd0ba8d953d2c8e76c4ff3eb026b2e590f4c77ece44e2cf32ac",
+          "fixture-2.png": "4ec60006cde85e300406f350f51bf6e294cbf9b0d952e95ddbb8dddba7fdbbc7"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-billing-managers-limit-171ebe872713f8ee7ca5d883",
+      "intent_id": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "6ec94ba111806caa669f02b4520ff70d64fa26b802634e6e18c8627b0c9e7daf",
+        "screenshots": {
+          "fixture-1.png": "f541fa566f677cd0ba8d953d2c8e76c4ff3eb026b2e590f4c77ece44e2cf32ac",
+          "fixture-2.png": "4ec60006cde85e300406f350f51bf6e294cbf9b0d952e95ddbb8dddba7fdbbc7"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-billing-managers-limit-f8953dcf81c4bfc8a1e35000",
+      "intent_id": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "4f31794008a691ec05b17713ab361ea4d6854d860622b1335d3386ab47a88648",
+        "screenshots": {
+          "fixture-1.png": "f541fa566f677cd0ba8d953d2c8e76c4ff3eb026b2e590f4c77ece44e2cf32ac",
+          "fixture-2.png": "4ec60006cde85e300406f350f51bf6e294cbf9b0d952e95ddbb8dddba7fdbbc7"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-billing-managers-limit-215e3163a88a8179e14386bb",
+      "intent_id": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "b174f20b7e63dba66672d43f5d8e57aa78e6b5e5adc6121715bd0e9b5cb3676f",
+        "screenshots": {
+          "fixture-1.png": "d2eccecc204c3a7fed117793af434b60b11c993fe7e74839a82dc671651515c0",
+          "fixture-2.png": "b30af4e12ab8ae3bab269c405b1fff105ff94923d7a2c3ee3ee4e36d412de4ef"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-billing-managers-limit-8f6b67750a5f43ff750743cc",
+      "intent_id": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "87871d1d913d4a2880fb8270485b77762eea2a7e199b65e535727cdf06a85bbf",
+        "screenshots": {
+          "fixture-1.png": "f541fa566f677cd0ba8d953d2c8e76c4ff3eb026b2e590f4c77ece44e2cf32ac",
+          "fixture-2.png": "4ec60006cde85e300406f350f51bf6e294cbf9b0d952e95ddbb8dddba7fdbbc7"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-billing-managers-limit-383fcc285b7ad4e8057def89",
+      "intent_id": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "87871d1d913d4a2880fb8270485b77762eea2a7e199b65e535727cdf06a85bbf",
+        "screenshots": {
+          "fixture-1.png": "f541fa566f677cd0ba8d953d2c8e76c4ff3eb026b2e590f4c77ece44e2cf32ac",
+          "fixture-2.png": "4ec60006cde85e300406f350f51bf6e294cbf9b0d952e95ddbb8dddba7fdbbc7"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

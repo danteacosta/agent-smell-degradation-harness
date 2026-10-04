@@ -1,0 +1,260 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "wekan-swimlane-below-default",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "target_only_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "target_only_failure": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "wekan-swimlane-below-default-da12baf7b89dc95e01db460e",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "75efb9d463e1ccf1a8b3b3b1043f944fd011148b09674c50a25606b642645df8",
+        "screenshots": {
+          "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+          "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-4e73c3f32af85fd662992376",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "d89c810857c1f0a0aa995a8d0074bd6101f28e937cc4063ed62cac6664442e72",
+        "screenshots": {
+          "fixture-1.png": "f73e07306c1e649bda0ec17de658e2bb01cb4d6f564b7fe23cf49e74a990a690",
+          "fixture-2.png": "2094ae361905e99daf4a0d44aa33abb5aecaeb0a9b8d44d565e4a5f7be29f0ca"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-236568de134868e3817ad5c4",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "0280e14b49e9bc0f1562650b1c5496e33fca58c505dce1025d1c6df98363a0d9",
+        "screenshots": {
+          "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+          "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-7b48100383729c8791974e4d",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "a5673b0e1fa7a772e1ecb4ec6d792ea61f9ca0f599ea6c9c8a6f095f7d0bbb0d",
+        "screenshots": {
+          "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+          "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-b1136f7e8998a02ed8c396b6",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "c99497869131772932a83ccf14e0331bbc513667737d8bcaac3efcd0a60c214f",
+        "screenshots": {
+          "fixture-1.png": "f73e07306c1e649bda0ec17de658e2bb01cb4d6f564b7fe23cf49e74a990a690",
+          "fixture-2.png": "2094ae361905e99daf4a0d44aa33abb5aecaeb0a9b8d44d565e4a5f7be29f0ca"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-9ef0c77ba7712fae7f2c27bc",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "241eba69fa693926f751d8eb9892fb150801be0f1cc298a00c3d0faf62a266e2",
+        "screenshots": {
+          "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+          "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-70d13f19865899f8cd26ea1a",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "3481500127fdb2233bec606695d9126be19636faeb5134c1fdb100e0359172ce",
+        "screenshots": {
+          "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+          "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-486d96facb20edd09f645d17",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "3c81afc86487d7e272f8137115f32ed76f61db5f67b7d864d3bb68cb04dcf96e",
+        "screenshots": {
+          "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+          "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-6b873b7cb61662255df65db8",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "704e9312c4c3949ec7819c0c572537806bad7229cb53b60a9982bf631d8fabd8",
+        "screenshots": {
+          "fixture-1.png": "f73e07306c1e649bda0ec17de658e2bb01cb4d6f564b7fe23cf49e74a990a690",
+          "fixture-2.png": "2094ae361905e99daf4a0d44aa33abb5aecaeb0a9b8d44d565e4a5f7be29f0ca"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-caf89774354761575132b79e",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "597c12c0a794f213a12ccf096336cc04a80e66371dfb44a084487ca91e2d90e4",
+        "screenshots": {
+          "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+          "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-6281f4e1faebf4467a0e4cc0",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "6dfd7c05575999e39e18acd28bd014412ca0cdc31798ecfd574486dee3465adb",
+        "screenshots": {
+          "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+          "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-9535f9c19b55ee15a21ee064",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "c2d4ef64b799b3c6641ece8e71a3b203f9a1dcd9292b0ebb7c211e31858385a6",
+        "screenshots": {
+          "fixture-1.png": "f73e07306c1e649bda0ec17de658e2bb01cb4d6f564b7fe23cf49e74a990a690",
+          "fixture-2.png": "2094ae361905e99daf4a0d44aa33abb5aecaeb0a9b8d44d565e4a5f7be29f0ca"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

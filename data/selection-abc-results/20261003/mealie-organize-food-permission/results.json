@@ -1,0 +1,264 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "mealie-organize-food-permission",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "non_target_only_failure": 1,
+        "browser_error": 1
+      },
+      "B": {
+        "browser_error": 2
+      },
+      "C": {
+        "browser_error": 1,
+        "non_target_only_failure": 1
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "browser_error": 1,
+        "non_target_only_failure": 1
+      },
+      "B": {
+        "non_target_only_failure": 2
+      },
+      "C": {
+        "non_target_only_failure": 1,
+        "browser_error": 1
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "mealie-organize-food-permission-74f92c80f7805ae9c26f6db5",
+      "intent_id": "mealie-organize-food-permission",
+      "project_id": "mealie",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "non_target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "non_target_only_failure",
+        "returncode": 0,
+        "report_sha256": "7d5abd6dcaea13bebec628cc0f7bc6c6e5a3d479e37a5083d866400ed6fd9d1d",
+        "screenshots": {
+          "fixture-1.png": "8dec61fff14671be01a83d47f4025a10392fdebd9500693741a1c60ef69079d3",
+          "fixture-2.png": "ff96f1e111e4c3628639e0bb739a35038ddf68b197e2da31f6e29175a5d3579d"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-organize-food-permission-098420c39e2175c934c5d3ea",
+      "intent_id": "mealie-organize-food-permission",
+      "project_id": "mealie",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "browser_error",
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 0,
+        "report_sha256": "98bd5f7bf51b5fc44242d8b8492ae7ee2c1e0e669e76ee3ba5cdabc25c6369ba",
+        "screenshots": {
+          "fixture-1.png": "8dec61fff14671be01a83d47f4025a10392fdebd9500693741a1c60ef69079d3",
+          "fixture-2.png": "ff96f1e111e4c3628639e0bb739a35038ddf68b197e2da31f6e29175a5d3579d"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-organize-food-permission-09d8f464f23a503aec41e0e9",
+      "intent_id": "mealie-organize-food-permission",
+      "project_id": "mealie",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "non_target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "non_target_only_failure",
+        "returncode": 0,
+        "report_sha256": "0eef21bbb0d974397478fc173ee9d4a6f5a7ed1c429c924c099583e8b810844c",
+        "screenshots": {
+          "fixture-1.png": "8dec61fff14671be01a83d47f4025a10392fdebd9500693741a1c60ef69079d3",
+          "fixture-2.png": "ff96f1e111e4c3628639e0bb739a35038ddf68b197e2da31f6e29175a5d3579d"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-organize-food-permission-cc173ce98710957e758d9a8b",
+      "intent_id": "mealie-organize-food-permission",
+      "project_id": "mealie",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "browser_error",
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 0,
+        "report_sha256": "00a7f4d342dc02391ab6344685c7930bc82b2b6b2fbcb05dd72a8872e3b7b04d",
+        "screenshots": {
+          "fixture-1.png": "8dec61fff14671be01a83d47f4025a10392fdebd9500693741a1c60ef69079d3",
+          "fixture-2.png": "ff96f1e111e4c3628639e0bb739a35038ddf68b197e2da31f6e29175a5d3579d"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-organize-food-permission-5b5041d1621cf0d8ae70c071",
+      "intent_id": "mealie-organize-food-permission",
+      "project_id": "mealie",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "browser_error",
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 0,
+        "report_sha256": "9330afd9cb6ed1eb6a82eccba1e2fa9e06ddc95a549d336443a562e75809a707",
+        "screenshots": {
+          "fixture-1.png": "8dec61fff14671be01a83d47f4025a10392fdebd9500693741a1c60ef69079d3",
+          "fixture-2.png": "ff96f1e111e4c3628639e0bb739a35038ddf68b197e2da31f6e29175a5d3579d"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-organize-food-permission-963bd15907261627ebbd82c4",
+      "intent_id": "mealie-organize-food-permission",
+      "project_id": "mealie",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "browser_error",
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 0,
+        "report_sha256": "00a7f4d342dc02391ab6344685c7930bc82b2b6b2fbcb05dd72a8872e3b7b04d",
+        "screenshots": {
+          "fixture-1.png": "8dec61fff14671be01a83d47f4025a10392fdebd9500693741a1c60ef69079d3",
+          "fixture-2.png": "ff96f1e111e4c3628639e0bb739a35038ddf68b197e2da31f6e29175a5d3579d"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-organize-food-permission-3b5b70d8c2427f3b332123c9",
+      "intent_id": "mealie-organize-food-permission",
+      "project_id": "mealie",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "non_target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "non_target_only_failure",
+        "returncode": 0,
+        "report_sha256": "6db66de4c6a76b72f66ae2b19fa79537a69cacfc434e9f3d25bf10f66a35a1e3",
+        "screenshots": {
+          "fixture-1.png": "8dec61fff14671be01a83d47f4025a10392fdebd9500693741a1c60ef69079d3",
+          "fixture-2.png": "ff96f1e111e4c3628639e0bb739a35038ddf68b197e2da31f6e29175a5d3579d"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-organize-food-permission-4b4a5e246cd36d14dbcee214",
+      "intent_id": "mealie-organize-food-permission",
+      "project_id": "mealie",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "non_target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "non_target_only_failure",
+        "returncode": 0,
+        "report_sha256": "088308511ba18ed9b078a2359a1f77a37fdccc79d8b1c9fea8a0fec5cdd0411a",
+        "screenshots": {
+          "fixture-1.png": "8dec61fff14671be01a83d47f4025a10392fdebd9500693741a1c60ef69079d3",
+          "fixture-2.png": "ff96f1e111e4c3628639e0bb739a35038ddf68b197e2da31f6e29175a5d3579d"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-organize-food-permission-68763003e5df0b7d9ac6ab73",
+      "intent_id": "mealie-organize-food-permission",
+      "project_id": "mealie",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "non_target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "non_target_only_failure",
+        "returncode": 0,
+        "report_sha256": "15f8eb18fd27f7f102aa4fb39693ca5e7b2c1cbaed5fd523287f4a4ad368bc30",
+        "screenshots": {
+          "fixture-1.png": "8dec61fff14671be01a83d47f4025a10392fdebd9500693741a1c60ef69079d3",
+          "fixture-2.png": "ff96f1e111e4c3628639e0bb739a35038ddf68b197e2da31f6e29175a5d3579d"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-organize-food-permission-cf012624ce700003af669706",
+      "intent_id": "mealie-organize-food-permission",
+      "project_id": "mealie",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "browser_error",
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 0,
+        "report_sha256": "51c3b2963dd269428adce40826c42232755cef65efe7d5fc79972e5c55c1bf0d",
+        "screenshots": {
+          "fixture-1.png": "8dec61fff14671be01a83d47f4025a10392fdebd9500693741a1c60ef69079d3",
+          "fixture-2.png": "ff96f1e111e4c3628639e0bb739a35038ddf68b197e2da31f6e29175a5d3579d"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-organize-food-permission-4e5ad1c8868cb540f4e16eaa",
+      "intent_id": "mealie-organize-food-permission",
+      "project_id": "mealie",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "non_target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "non_target_only_failure",
+        "returncode": 0,
+        "report_sha256": "c3960722a3ffaca92ac60527b1616ef3395eca16f4f44537b403c0bea2ffae1b",
+        "screenshots": {
+          "fixture-1.png": "8dec61fff14671be01a83d47f4025a10392fdebd9500693741a1c60ef69079d3",
+          "fixture-2.png": "ff96f1e111e4c3628639e0bb739a35038ddf68b197e2da31f6e29175a5d3579d"
+        }
+      }
+    },
+    {
+      "slot_id": "mealie-organize-food-permission-c8552f398c937b10d28bba2f",
+      "intent_id": "mealie-organize-food-permission",
+      "project_id": "mealie",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "browser_error",
+      "generation_valid": true,
+      "execution": {
+        "category": "browser_error",
+        "returncode": 0,
+        "report_sha256": "e4f4be531fc4e7e11784060eb514205a033fc85e8fa6abe250247530a130657d",
+        "screenshots": {
+          "fixture-1.png": "8dec61fff14671be01a83d47f4025a10392fdebd9500693741a1c60ef69079d3",
+          "fixture-2.png": "ff96f1e111e4c3628639e0bb739a35038ddf68b197e2da31f6e29175a5d3579d"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}
