@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-02
+Last updated: 2026-10-04
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -545,3 +545,59 @@ repository exists (primary page checked 2026-10-03), but its README states no
 stability level; the "all Development, none Stable" statement remains from
 secondary reports. Pin a version in any exporter and re-verify on the primary
 registry before relying on it. No contradiction with a current decision.
+
+## 2026-10-04 — Under-specification: reversal risk, inference rate and ambiguity benchmarks
+
+Search/read date: 2026-10-04. Deduplicated by arXiv ID/title (none previously in
+this matrix; 2604.21505 and 2607.00711 were snippet-only candidates on
+2026-10-03 and are now read at abstract level). Akli et al. was audited in
+full text (method, results, and threats); the other four remain abstract-level
+reads and are listed in a separate pending-reading queue, outside the canonical
+matrix and without credibility scores or evidentiary recommendations. All five are
+arXiv preprints (not peer-reviewed as of this reading)
+and none are evidence for H1/H2.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Akli, Papadakis, Cordy, Le Traon, *When Prompt Under-Specification Improves Code Correctness*, arXiv [2604.24712](https://arxiv.org/abs/2604.24712), 2026 preprint (cs.SE), full text read 2026-10-04 | Do prompt wording/structure mutations always hurt code generation? 10 LLMs over HumanEval and 1,055 LiveCodeBench tasks; 3,651 GPT-5-mini-generated lexical-vagueness, under-specification, and syntax/format variants. Qwen2.5-Coder-32B judged all variants; three researchers reviewed a stratified sample of 100 (97% agreement with the judge on compliance, 86% on naturalness). Greedy Pass@1 plus pass→fail/fail→pass transitions; manual root-cause analysis of consistently improved tasks. | Under-specification changed Pass@1 by −11.8 points on HumanEval but −0.9 on LiveCodeBench; the LiveCodeBench fail→pass/pass→fail mean per-model ratio for under-specification was 0.89 (the 0.99 value belongs to lexical vagueness), so near-zero aggregate change concealed opposing transitions. Richer descriptions supplied redundant cues, while removing misleading lexical/constraint cues sometimes improved code. Threats: synthetic variants may not resemble developer defects (US naturalness was 0.61 on LiveCodeBench); HumanEval contamination; Python-only code-generation tasks, including HumanEval functions and LiveCodeBench competitive-programming tasks; greedy one-shot decoding hides stochastic variance; exploratory root-cause claims are not causal. | **Thesis:** supports recoverability/context redundancy and shows that the sign of an omission effect is not guaranteed. **Experiment:** report C-better-than-A as a reversal; retain B; code `context_cue` before outcomes; do not use the paper as an effect-size anchor because its task, mutation, and oracle differ. **Product:** it argues against generic “more specification is always safer” warnings; any product must show the lost condition and downstream evidence. | 7/10: broad multi-model sample, transition analysis, manual validation, explicit threats and a replication package, but still a non-peer-reviewed exploratory preprint with synthetic mutations and Python code-generation tasks. |
+
+### Pending full-text reading, outside the canonical matrix
+
+The following primary abstracts were checked on 2026-10-04. Their methods,
+results and limitations have not been reviewed in full. No credibility score,
+quantitative anchor or thesis/experiment recommendation is assigned here.
+
+| Candidate and primary version | Authors | Reading status |
+| --- | --- | --- |
+| [What Prompts Don't Say](https://arxiv.org/abs/2505.13360v3) | Chenyang Yang, Yike Shi, Qianou Ma, Michael Xieyang Liu, Christian Kästner, Tongshuang Wu | Abstract only; full-text review pending. |
+| [From Business Requirements to Test Assertions](https://arxiv.org/abs/2607.10277v1) | Ma and Eisty | Abstract only; full-text review pending. |
+| [Clarity Is Not Assumed (Orchid)](https://arxiv.org/abs/2604.21505v3) | Yang et al. | Abstract only; full-text review pending. |
+| [ClarifyCodeBench](https://arxiv.org/abs/2607.00711v2) | Fang et al. | Abstract only; full-text review pending. |
+
+**Source verification, 2026-10-04.** Review of [Akli et al.'s primary methods,
+results and threats](https://arxiv.org/html/2604.24712v1) corrected the mutation
+ratio: Table 4 and section 5.2 give 0.89 for under-specification, whereas 0.99
+belongs to lexical vagueness. The task description now distinguishes HumanEval
+functions from LiveCodeBench competitive-programming tasks. This review informs
+the reversal wording below, not the effect size of the selected46 study. The
+four abstract-only candidates remain outside the admitted matrix under its
+canonical reading policy.
+
+**Incorporation decisions (2026-10-04).**
+
+1. Akli et al. do not contradict H1a, but they show the omission effect can be
+   null or reversed. The pre-registration draft stated only the support
+   criterion (interval above 0.5). Added a sentence committing to report an
+   interval below 0.5 as a reversal. The decision to keep H1a one-directional
+   for the confirmatory claim remains with the advisor (new open decision 5).
+2. Akli et al. study code-generation benchmarks rather than browser journeys.
+   The paper does not validate this study's browser oracle, requirement-smell
+   mapping or pre-final warning. The four pending candidates must not support
+   a scientific gap claim until their full methods and limitations are reviewed.
+3. Korn et al. (AIRE'26, entry above) report unreliable LLM injection of
+   synthetic smells and omissions. The pre-registered LLM panel for A/B/C
+   validity plus the 20% human audit (open decision 2) is therefore a
+   necessary control, not an optional one.
+4. Proposal table note: Siddeeq et al. (SEET 2026) is now listed as accepted at
+   SEET 2026 (CCIS vol. 3126, Springer, per arXiv listing); the Drive proposal
+   labels it "preprint". Drive text was not edited (see run summary).

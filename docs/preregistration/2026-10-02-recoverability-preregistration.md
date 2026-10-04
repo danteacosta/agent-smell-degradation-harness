@@ -160,6 +160,10 @@ A pair scores 1 if C is worse than A, 0.5 on a tie and 0 if C is better;
 repetitions are averaged within the requirement. The 95% interval resamples
 projects; the p-value is a sign-flip randomization test with 5,000 draws.
 H1a is supported if the interval lies above 0.5.
+An interval entirely below 0.5 is reported as a reversal (omission
+improved the outcome), not as absence of an effect: under-specification can
+remove misleading cues and improve correctness on some benchmarks (Akli et al.,
+arXiv 2604.24712, preprint; see `docs/research/literature-matrix.md`).
 
 **B control.** The same estimand for B against A. A B-versus-A estimate whose
 interval excludes 0.5 is reported as a wording effect and limits the
@@ -227,6 +231,14 @@ controls gate the run; kappa is reported. Because the coding happens after
 outcomes exist, H1b estimates that use context_cue are labelled accordingly,
 and a human audit of the codes is still required.
 
+**2026-10-04, after the 46-case collection: reversal wording and decision 5.**
+The note that an H1a interval below 0.5 is reported as a reversal (section 5)
+and open decision 5 (one- or two-sided confirmatory claim) were added after
+the exploratory 46-case outcomes were known. The motivation is external
+(Akli et al., arXiv 2604.24712). The observed A/C comparisons contained no
+reversal, so the change does not favour H1, but it is post-collection and is
+recorded here rather than edited silently.
+
 ## 8. Decisions still open before submission
 
 1. Primary outcome of H1: browser oracle (this draft) or acceptance-criteria
@@ -234,3 +246,5 @@ and a human audit of the codes is still required.
 2. Who performs the human audit of panel decisions, and when.
 3. Whether H2 is kept in this study or moved to future work.
 4. Whether a third coding model from another provider is affordable.
+5. Whether the confirmatory H1a claim stays one-directional (interval above
+   0.5) or becomes two-sided, given that omission effects can reverse.
