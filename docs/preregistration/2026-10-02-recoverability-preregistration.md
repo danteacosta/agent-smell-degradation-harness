@@ -271,3 +271,5 @@ shortcut did not check.
 4. Whether a third coding model from another provider is affordable.
 5. Whether the confirmatory H1a claim stays one-directional (interval above
    0.5) or becomes two-sided, given that omission effects can reverse.
+
+**04/10 — qualificação histórica:** a primeira rodada parou com 15 controles tentados e zero casos codificados: Luna forneceu citação não contígua no controle `same`. Astra/Sol acertaram os cinco controles. Uma nova qualificação substitui somente o desempate por `gpt-6.1-sol`, mantendo textos e critérios; a rodada original é preservada. Não houve geração A/H.

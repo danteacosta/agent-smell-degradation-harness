@@ -96,3 +96,9 @@ bash scripts/run_historical_arm.sh collect    # A + H; publica em data/historica
 - a parada quando um controle falha;
 - os agendamentos das configs antigas, que ficam idênticos;
 - o pareamento A × H.
+
+## Qualificação de 04/10: primeira parada
+
+O painel com Astra/Sol e Luna como desempate tentou os 15 controles e parou antes de codificar qualquer caso. Astra e Sol acertaram os cinco controles; Luna produziu uma citação não contígua em `ctl-hist-same`, rejeitada pela regra literal já congelada. Não houve admissão nem geração A/H. SHA-256 do resultado privado: `0535804e8bf3d71f9aa13b0570d78828a52d644e3ac0ffc7e7006f361518b527`.
+
+A próxima qualificação mantém os textos, os cinco controles e o critério, substituindo apenas o desempatador por `gpt-6.1-sol`, distinto dos dois primários. A troca é exploratória e ocorre sem decisões dos 40 casos. A rodada anterior permanece preservada; não se reexecutam seus slots.
