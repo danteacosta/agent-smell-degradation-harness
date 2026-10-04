@@ -133,3 +133,14 @@ def test_published_packets_match_the_collection_progress_counts():
                     sev = rep.severity(category)
                     cell["held" if sev == 0 else "violated" if sev == 1 else "unknown"] += n
     assert report["counts_by_model_and_arm"] == {m: {a: dict(c) for a, c in arms.items()} for m, arms in expected.items()}
+
+
+def test_scoreboard_keeps_small_nonzero_randomization_pvalue_visible():
+    """A reader must not see a positive Monte Carlo p-value rounded to zero."""
+    import re
+    report = rep.build(rep.ROOT / 'data/selection-abc-results/20261003')
+    rendered = rep.markdown(report)
+    first_p = float(re.search(r'p=([0-9.eE+-]+)', rendered).group(1))
+    expected = report['h1a_c_vs_a']['drop']['paired_randomization_pvalue']
+    assert first_p > 0
+    assert first_p == pytest.approx(expected, rel=0.001)
