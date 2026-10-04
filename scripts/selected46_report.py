@@ -270,9 +270,11 @@ def markdown(report: dict) -> str:
             lines.append(f"| {model} | {arm} | {c.get('held', 0)} | {c.get('violated', 0)} | {c.get('unknown', 0)} |")
     lines += ["", "## Paired estimands", "",
               "Probability that the defective arm is worse than A, matched by requirement, model, and replication; "
-              "0.5 means no effect. Unknowns are excluded from the observed estimate and assigned against or in "
-              "favor of the hypothesis for the deterministic worst/best bounds.", "",
-              "| Comparison | Observed | Worst case | Best case |", "| --- | --- | --- | --- |"]
+              "0.5 means no effect. Unknowns are excluded from the observed estimate, assigned to maximize harm "
+              "in the defective arm for the worst-behavior bound, and assigned to minimize harm for the "
+              "best-behavior bound.", "",
+              "| Comparison | Observed | Worst behavior (maximum harm) | Best behavior (minimum harm) |",
+              "| --- | --- | --- | --- |"]
     for label, key in (("H1a: C vs A", "h1a_c_vs_a"), ("Control: B vs A", "wording_control_b_vs_a")):
         e = report[key]
         lines.append(f"| {label} | {_fmt(e['drop'])} | {_fmt_bound(e['worst'])} | {_fmt_bound(e['best'])} |")
