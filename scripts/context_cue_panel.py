@@ -10,7 +10,7 @@ probe answers or which model was used. A "yes" must quote the arm-C text; a
 quote that is not a literal substring of the prompt makes the vote invalid.
 
 Same governance as the screening panel: two primary models, a third breaks
-ties, every model must first reproduce four authored controls (any mismatch
+ties, every model must first reproduce five authored controls (any mismatch
 stops the run), calls happen once without retry, and Cohen's kappa of the two
 primary models is reported.
 
@@ -35,7 +35,7 @@ from scripts.abc_case import Case  # noqa: E402
 from scripts.llm_screening_panel import cohen_kappa  # noqa: E402
 from scripts.test_anchor_experiment import inventory, put, sha256_file  # noqa: E402
 
-SCHEMA = "context-cue-panel/v1"
+SCHEMA = "context-cue-panel/v2"
 SEED = 2026100402
 CASES_DIR = ROOT / "data/abc-cases"
 
@@ -47,6 +47,11 @@ Question: can the omitted rule, or an observable consequence of it, be inferred 
 Count other sentences of the requirement, labels or text on the page, element ids, field names, data
 values and API names in the TEXT. Do not count general knowledge about the product or common practice:
 only what the TEXT itself says or names.
+
+Answer "yes" only if the TEXT states or implies what the rule requires: its condition AND the behavior or
+outcome it demands (or forbids). It is NOT enough that the TEXT contains the elements, data or controls the
+rule is about: a list of subtasks does not imply what happens to them, and a date field does not imply how
+late items are shown. If the quoted passage would still be true of a page that violates the rule, answer "no".
 
 Answer with a single JSON object and nothing else:
 {"context_cue": "yes" or "no",
@@ -79,6 +84,10 @@ CONTROLS = [
     {"id": "ctl-cue-none", "expected": "no", "omitted": "Closing a task marks all of its unfinished subtasks as done.",
      "text": "Requirement:\nAdd a Close button to the task view. Clicking it closes the task.\n\nFrozen page:\n"
              "<section id=\"task\"><h1 id=\"title\"></h1><ul id=\"subtasks\"></ul><button id=\"close\">Close</button></section>"},
+    {"id": "ctl-cue-element-only", "expected": "no", "omitted": "Overdue tasks are shown in red in the task list.",
+     "text": "Requirement:\nShow the task list with each task's title and due date.\n\nFrozen page:\n"
+             "<ul id=\"tasks\"></ul><template id=\"row\"><li><span class=\"title\"></span> "
+             "<time class=\"due\"></time></li></template>"},
     {"id": "ctl-cue-knowledge-only", "expected": "no", "omitted": "Pasting a URL that matches a linkifier converts it to its linked text.",
      "text": "Requirement:\nImplement paste handling in the compose box using app.insertText(text).\n\nFrozen page:\n"
              "<textarea id=\"compose\"></textarea>"},

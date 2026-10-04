@@ -226,8 +226,12 @@ covariates to be coded before generation. `context_cue` was not coded before
 the 46-case collection ran. It is now coded by a blind LLM panel
 (`scripts/context_cue_panel.py`): coders see only the omitted span (A minus C)
 and the exact arm-C prompt, never generated code, oracle results, probe
-answers or models; a "yes" must quote the prompt literally; four authored
-controls gate the run; kappa is reported. Because the coding happens after
+answers or models; a "yes" must quote the prompt literally; authored
+controls gate the run; kappa is reported. The first run (v1, 2026-10-04) stopped at the controls: the tiebreaker
+coded a page that merely contained the rule's elements (a subtask list) as a cue.
+No case had been coded. v2 states the decision rule explicitly (the text must
+imply the rule's condition and required outcome, not only contain its
+elements) and adds a fifth control for that distinction. Because the coding happens after
 outcomes exist, H1b estimates that use context_cue are labelled accordingly,
 and a human audit of the codes is still required.
 

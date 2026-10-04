@@ -52,3 +52,9 @@ def test_run_with_fake_panel_and_report_integration(tmp_path):
     assert len(cues) == 46 and set(cues.values()) == {0}
     with pytest.raises(FileExistsError):
         panel.run(out, provider_factory=FakeProvider)
+
+
+def test_v2_controls_include_an_element_only_negative():
+    ids = {c["id"]: c["expected"] for c in panel.CONTROLS}
+    assert len(ids) == 5 and ids["ctl-cue-element-only"] == "no" and ids["ctl-cue-none"] == "no"
+    assert "condition AND the behavior" in panel.INSTRUCTIONS
