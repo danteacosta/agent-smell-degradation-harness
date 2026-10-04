@@ -144,3 +144,16 @@ def test_scoreboard_keeps_small_nonzero_randomization_pvalue_visible():
     expected = report['h1a_c_vs_a']['drop']['paired_randomization_pvalue']
     assert first_p > 0
     assert first_p == pytest.approx(expected, rel=0.001)
+
+
+def test_scoreboard_acknowledges_supplied_context_cue_codes(tmp_path):
+    """Supplied codes must not be described as entirely uncoded in the footer."""
+    report = rep.build(rep.ROOT / 'data/selection-abc-results/20261003')
+    codes = tmp_path / 'cue.json'
+    codes.write_text(json.dumps({'status': 'complete', 'rows': [
+        {'case': case, 'context_cue': 0} for case in report['per_case']
+    ]}))
+    coded = rep.build(rep.ROOT / 'data/selection-abc-results/20261003', context_cue=codes)
+    rendered = rep.markdown(coded)
+    assert 'Context-cue codes were supplied' in rendered
+    assert '`context_cue` remains not coded' not in rendered

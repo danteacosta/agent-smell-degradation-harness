@@ -1,0 +1,1113 @@
+{
+  "controls": [
+    {
+      "decisions": {
+        "gpt-6-astra": "yes",
+        "gpt-6-luna": "yes",
+        "gpt-6-sol": "yes"
+      },
+      "expected": "yes",
+      "id": "ctl-cue-restated"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "yes",
+        "gpt-6-luna": "yes",
+        "gpt-6-sol": "yes"
+      },
+      "expected": "yes",
+      "id": "ctl-cue-field-name"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "no",
+        "gpt-6-luna": "no",
+        "gpt-6-sol": "no"
+      },
+      "expected": "no",
+      "id": "ctl-cue-none"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "no",
+        "gpt-6-luna": "no",
+        "gpt-6-sol": "no"
+      },
+      "expected": "no",
+      "id": "ctl-cue-element-only"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "no",
+        "gpt-6-luna": "no",
+        "gpt-6-sol": "no"
+      },
+      "expected": "no",
+      "id": "ctl-cue-knowledge-only"
+    }
+  ],
+  "rows": [
+    {
+      "candidate_id": "rc-08dffa18a270",
+      "case": "zulip-gif-picker-disabled",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-59d96b056593",
+      "case": "wekan-week-number-immediate",
+      "context_cue": 0,
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "Unchecking it makes the board inherit the global setting."
+          }
+        },
+        "gpt-6-luna": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-8b05adc7767e",
+      "case": "wekan-member-same-org-team",
+      "context_cue": 0,
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "On multi-tenant instances you can require that a board's members share an Organization or a Team."
+          }
+        },
+        "gpt-6-luna": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-e594b40135ff",
+      "case": "nextcloud-calendar-talk-location",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-88440629ecb6",
+      "case": "wekan-home-multi-drop",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-086a9d210266",
+      "case": "paperless-custom-field-no-value",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-b6f382226c41",
+      "case": "immich-path-search",
+      "context_cue": 1,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "Use this mode when you know a folder name or part of the original asset path."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "show with app.showResults(ids) the assets that match the query, using each asset's original path from app.assets(). Use this mode when you know a folder name or part of the original asset path."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-554bcd113361",
+      "case": "mattermost-channel-autotranslate",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-882709afd891",
+      "case": "mattermost-mention-add-prompt",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-9d801a70d5d2",
+      "case": "nextcloud-delete-folder-trash",
+      "context_cue": 1,
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "Find your deleted files under Deleted files; from there, you can restore items (app.restore) or delete them permanently."
+          }
+        },
+        "gpt-6-luna": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "Each item under All files has a Delete button"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-4efba0098a79",
+      "case": "openproject-more-menu-subproject",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-7b485b51412f",
+      "case": "grist-page-default-collapse",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-035e8af08cd7",
+      "case": "paperless-own-profile",
+      "context_cue": 1,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "When the signed-in user clicks Save, store their edited first name and email with app.saveProfile."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "When the signed-in user clicks Save, store their edited first name and email with app.saveProfile."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-946f02ef19b6",
+      "case": "nextcloud-breakout-rooms",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-17b31565c57c",
+      "case": "openproject-invite-permission-basis",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-4fa8e7483b1a",
+      "case": "mattermost-timezone-default-automatic",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-f33b2bf870e9",
+      "case": "grist-billing-managers-limit",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-6b29ef8b44d8",
+      "case": "wekan-swimlane-below-default",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-c38fa60b1164",
+      "case": "nextcloud-mail-delegation",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-4200f1dac6a9",
+      "case": "zulip-reverse-linkifier-paste",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-0284c8781546",
+      "case": "mattermost-playbook-task-markdown",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-f3df2f6e5885",
+      "case": "wekan-sync-local-edits",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-fd348eb33246",
+      "case": "zulip-private-channel-access",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-106bac72c813",
+      "case": "mealie-organize-food-permission",
+      "context_cue": 1,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "Organize group data (creating, updating, deleting, and merging group data such as foods, tags, and categories)"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "Organize group data (creating, updating, deleting, and merging group data such as foods, tags, and categories)"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-4aac15b7b503",
+      "case": "grist-context-menu-shortcut",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-806442660eb5",
+      "case": "paperless-superuser-grant",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-1114153d4704",
+      "case": "openproject-filter-text-autoupdate",
+      "context_cue": 1,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "If you want to search for specific text in the subject, description, or comments of a work package, type your search term into the Filter by text field. The results will display in the work package table."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "If you want to search for specific text in the subject, description, or comments of a work package, type your search term into the Filter by text field. The results will display in the work package table."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-aa2c82f86e08",
+      "case": "mattermost-anonymous-team-url",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-2c13970217ea",
+      "case": "openproject-archived-project-selector",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-dfb84383fb89",
+      "case": "zulip-unsubscribe-self",
+      "context_cue": 1,
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "When the signed-in user clicks Unsubscribe next to a subscriber, remove that subscriber with app.unsubscribe(userId);"
+          }
+        },
+        "gpt-6-luna": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "You can configure the following subscription permissions for each channel, regardless of its type: who can administer the channel, who can subscribe themselves, who can subscribe anyone, and who can unsubscribe anyone."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-c86728bbc029",
+      "case": "immich-library-single-owner",
+      "context_cue": 1,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "When the user clicks Create library, create it with app.createLibrary({name, owners}) using the entered name and the owner chosen in the Owner section."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "When the user clicks Create library, create it with app.createLibrary({name, owners}) using the entered name and the owner chosen in the Owner section."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-02df56f00b58",
+      "case": "openproject-auto-theme-contrast",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-ade633af9c14",
+      "case": "grist-suggestions-open-copy",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-3d153b91ab4e",
+      "case": "nextcloud-device-password-once",
+      "context_cue": 1,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "Nextcloud does not save the plain password, so enter the password on the new client immediately."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "Nextcloud does not save the plain password, so enter the password on the new client immediately."
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-362ff82e3812",
+      "case": "zulip-resolved-notice-auto-read",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-e436521e462d",
+      "case": "openproject-files-tab-attachments",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-0f453b1f0a55",
+      "case": "mealie-planner-food-label",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-9e198862b86e",
+      "case": "paperless-doc-title-placeholder",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-0ec1ac8f66bd",
+      "case": "immich-m2t-upload",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-c044ebec7fe1",
+      "case": "zulip-subscribe-typeahead",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-b49db6870ff5",
+      "case": "grist-tutorial-fork-return",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-aac66a0af69a",
+      "case": "grist-tutorial-restart",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-84013890a131",
+      "case": "paperless-ai-suggestions-blank-text",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-899c4d2472ad",
+      "case": "wekan-field-order-independent",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-3fbc295441e2",
+      "case": "mattermost-guest-invite-channel",
+      "context_cue": 0,
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-ab0227c1eb5b",
+      "case": "nextcloud-mail-favorites-up",
+      "context_cue": 1,
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "Sort favorites up. To use it, visit mail settings, go to Appearance and enable sorting favorites up."
+          }
+        },
+        "gpt-6-luna": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "yes",
+            "quote": "Sort favorites up. To use it, visit mail settings, go to Appearance and enable sorting favorites up."
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "context_cue": "no",
+            "quote": null
+          }
+        }
+      }
+    }
+  ],
+  "schema_version": "context-cue-panel/v2-results",
+  "status": "complete",
+  "summary": {
+    "cases": 46,
+    "context_cue": {
+      "0": 37,
+      "1": 9
+    },
+    "primary_kappa": 0.6461538461538461,
+    "primary_pairs_with_two_valid_votes": 46,
+    "routes": {
+      "agreement": 41,
+      "tiebreaker": 5
+    }
+  }
+}
