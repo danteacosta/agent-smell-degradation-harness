@@ -1,0 +1,12 @@
+{
+  "source_commit": "eb22e12f152dc2d497b317fdb2be8f1318a2ddd6",
+  "image_id": "sha256:178b6958b1bc6e3e01ebf148d61432707d179448b6a508c69223261f81317c3f",
+  "new_model_calls": 0,
+  "files": {
+    "Dockerfile": "1ce65065bab541fd27a3da49c9348f81e1f1b0e9b6874ef186635a3d7881803f",
+    "validate.R": "72ae087d17e168321fabc77973d509aa15874651f95283f4adaeb1d0878450fd",
+    "design.csv": "6a17c5bb544251f2f6c6913a49218e9b4fba84ec581f3722aef1ba712ddc02f5",
+    "lme4-validation.json": "9921b3e7a9653ee07a9210cbbe39c238f223f76af8bde1d348067f893b8c009f"
+  },
+  "csv_normalization": "CRLF to LF after execution; parsed values unchanged"
+}

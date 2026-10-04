@@ -1,0 +1,91 @@
+{
+  "R": "R version 4.3.3 (2024-02-29)",
+  "lme4": "1.1.35.1",
+  "n": 178,
+  "full": {
+    "coefficients": {
+      "(Intercept)": 2.7782537157713882,
+      "context_cue": -4.6227560182610334,
+      "numeric": 24.891085875734291,
+      "derived_state": -5.085966568770627,
+      "memorized": -1.8974752286596241
+    },
+    "odds_ratios": {
+      "(Intercept)": 16.090897119211686,
+      "context_cue": 0.0098256789600975839,
+      "numeric": 64574528591.691551,
+      "derived_state": 0.006182907995388222,
+      "memorized": 0.1499467228976783
+    },
+    "logLik": -71.434118605706743,
+    "variance": [
+      {
+        "grp": "case",
+        "var1": "(Intercept)",
+        "var2": null,
+        "vcov": 22.642966736079895,
+        "sdcor": 4.7584626441824565
+      },
+      {
+        "grp": "project",
+        "var1": "(Intercept)",
+        "var2": null,
+        "vcov": 0,
+        "sdcor": 0
+      }
+    ],
+    "singular": true,
+    "convergence": {
+      "opt": 0,
+      "lme4": {
+        "messages": "boundary (singular) fit: see help('isSingular')"
+      }
+    },
+    "warnings": [],
+    "profile_warnings": [],
+    "profile": {},
+    "profile_error": "profiling detected new, lower deviance (deviance diff = 4.93e-05, tolerance = 1e-09)"
+  },
+  "without_numeric": {
+    "coefficients": {
+      "(Intercept)": 3.824330976438568,
+      "context_cue": -4.82281004339292,
+      "derived_state": -4.6220408585181767,
+      "memorized": -1.7953071900869368
+    },
+    "odds_ratios": {
+      "(Intercept)": 45.802147397924358,
+      "context_cue": 0.008044150936448417,
+      "derived_state": 0.0098327084034239183,
+      "memorized": 0.16607642747787224
+    },
+    "logLik": -76.378274107113029,
+    "variance": [
+      {
+        "grp": "case",
+        "var1": "(Intercept)",
+        "var2": null,
+        "vcov": 29.767999562437943,
+        "sdcor": 5.4560058250003678
+      },
+      {
+        "grp": "project",
+        "var1": "(Intercept)",
+        "var2": null,
+        "vcov": 0,
+        "sdcor": 0
+      }
+    ],
+    "singular": true,
+    "convergence": {
+      "opt": 0,
+      "lme4": {
+        "messages": "boundary (singular) fit: see help('isSingular')"
+      }
+    },
+    "warnings": [],
+    "profile_warnings": [],
+    "profile": {},
+    "profile_error": "profiling detected new, lower deviance (deviance diff = 0.00117, tolerance = 1e-09)"
+  }
+}
