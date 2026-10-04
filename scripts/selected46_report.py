@@ -60,8 +60,27 @@ def load_configs(cases_dir: Path) -> dict[str, dict]:
     for path in sorted(cases_dir.glob("*.json")):
         config = json.loads(path.read_text())
         if config.get("candidate_id"):
-            configs[config["case"]] = config
+            case = config.get("case")
+            if not isinstance(case, str) or not case.strip():
+                raise ValueError(f"{path}: selected case requires a nonempty text case id")
+            if case in configs:
+                raise ValueError(f"{case}: duplicate selected case config")
+            expected_keys(config)
+            configs[case] = config
     return configs
+
+
+def expected_keys(config: dict) -> set[tuple[str, int, str]]:
+    """Return the frozen model/replication/arm slots for one selected case."""
+    models = config.get("models")
+    repetitions = config.get("repetitions")
+    if (not isinstance(models, list) or not models
+            or any(not isinstance(model, str) or not model.strip() for model in models)
+            or len(set(models)) != len(models)):
+        raise ValueError(f"{config.get('case')}: models must be unique nonempty strings")
+    if type(repetitions) is not int or repetitions < 1:
+        raise ValueError(f"{config.get('case')}: repetitions must be a positive integer")
+    return {(model, rep, arm) for model in models for rep in range(1, repetitions + 1) for arm in ARMS}
 
 
 def load_results(results_root: Path, configs: dict[str, dict]) -> dict[str, list[dict]]:
@@ -73,7 +92,37 @@ def load_results(results_root: Path, configs: dict[str, dict]) -> dict[str, list
             raise ValueError(f"{path}: case {case!r} is not a selected case")
         if case in runs:
             raise ValueError(f"{case}: two result packets")
-        runs[case] = data["rows"]
+        if path.parent.name != case:
+            raise ValueError(f"{path}: packet folder does not match case {case!r}")
+        rows = data.get("rows")
+        if not isinstance(rows, list):
+            raise ValueError(f"{path}: rows must be a list")
+        expected = expected_keys(configs[case])
+        seen: set[tuple[str, int, str]] = set()
+        slot_ids: set[str] = set()
+        for index, row in enumerate(rows):
+            if not isinstance(row, dict):
+                raise ValueError(f"{path}: row {index} must be an object")
+            if row.get("intent_id") != configs[case].get("intent_id", case):
+                raise ValueError(f"{path}: row {index} has the wrong intent_id")
+            if row.get("project_id") != configs[case]["project_id"]:
+                raise ValueError(f"{path}: row {index} has the wrong project_id")
+            key = (row.get("model"), row.get("replication"), row.get("arm"))
+            if key not in expected:
+                raise ValueError(f"{path}: row {index} is outside the frozen design: {key!r}")
+            if key in seen:
+                raise ValueError(f"{path}: duplicate model/replication/arm slot: {key!r}")
+            slot_id = row.get("slot_id")
+            if not isinstance(slot_id, str) or not slot_id.strip() or slot_id in slot_ids:
+                raise ValueError(f"{path}: row {index} has a missing or duplicate slot_id")
+            seen.add(key)
+            slot_ids.add(slot_id)
+        if seen != expected:
+            missing = sorted(expected - seen)
+            raise ValueError(f"{path}: completed packet is missing frozen slots: {missing!r}")
+        if data.get("planned_slots") not in (None, len(expected)):
+            raise ValueError(f"{path}: planned_slots disagrees with the frozen case config")
+        runs[case] = rows
     return runs
 
 
@@ -81,9 +130,11 @@ def pairs(runs: dict[str, list[dict]], configs: dict[str, dict], clean: str, def
           unknown: str) -> list[dict]:
     """unknown: 'drop' (observed pairs), 'worst' or 'best'."""
     out = []
-    for case, rows in runs.items():
+    for case, config in configs.items():
+        rows = runs.get(case, [])
         by_key = {(r["model"], r["replication"], r["arm"]): r for r in rows}
-        for model, rep in sorted({(r["model"], r["replication"]) for r in rows}):
+        model_reps = sorted({(model, rep) for model, rep, _ in expected_keys(config)})
+        for model, rep in model_reps:
             c = severity(by_key.get((model, rep, clean), {}).get("category"))
             d = severity(by_key.get((model, rep, defective), {}).get("category"))
             if c is None or d is None:
@@ -98,10 +149,19 @@ def pairs(runs: dict[str, list[dict]], configs: dict[str, dict], clean: str, def
     return out
 
 
-def estimand(rows: list[dict], seed: int) -> dict:
+def estimand(rows: list[dict], seed: int, assignment: str | None = None) -> dict:
     if not rows:
         return {"estimate": None, "n_pairs": 0, "n_intents": 0, "n_projects": 0}
-    return paired_probability_of_superiority(rows, seed=seed)
+    result = paired_probability_of_superiority(rows, seed=seed)
+    if assignment is not None:
+        result.update({
+            "analysis_scope": "deterministic_sensitivity_bound",
+            "unknown_assignment": assignment,
+            "ci95_project_cluster": {"low": None, "high": None},
+            "paired_randomization_pvalue": None,
+            "valid_for_inference": False,
+        })
+    return result
 
 
 def covariates(configs: dict[str, dict]) -> dict[str, dict]:
@@ -130,7 +190,7 @@ def c_violation_by(runs: dict[str, list[dict]], covs: dict[str, dict]) -> dict:
                 value = covs[case][name]
                 if name == "memorized":
                     value = value.get(r["model"])
-                level = "não codificado" if value is None else str(int(bool(value)))
+                level = "not coded" if value is None else str(int(bool(value)))
                 sev = severity(r.get("category"))
                 cells[level]["violated" if sev == 1 else "held" if sev == 0 else "unknown"] += 1
         table[name] = {level: dict(c) for level, c in sorted(cells.items())}
@@ -151,13 +211,16 @@ def build(results_root: Path, cases_dir: Path = ROOT / "data/abc-cases", seed: i
             cell[r["arm"]][label] += 1
         per_case[case] = {"project": configs[case]["project_id"], "candidate_id": configs[case]["candidate_id"],
                           "arms": {a: dict(cell[a]) for a in ARMS}}
-    h1 = {mode: estimand(pairs(runs, configs, "A", "C", mode), seed) for mode in ("drop", "worst", "best")}
-    b_control = {mode: estimand(pairs(runs, configs, "A", "B", mode), seed) for mode in ("drop", "worst", "best")}
+    h1 = {mode: estimand(pairs(runs, configs, "A", "C", mode), seed,
+                         None if mode == "drop" else mode) for mode in ("drop", "worst", "best")}
+    b_control = {mode: estimand(pairs(runs, configs, "A", "B", mode), seed,
+                                None if mode == "drop" else mode) for mode in ("drop", "worst", "best")}
+    planned_runs = sum(len(expected_keys(config)) for config in configs.values())
     return {
         "schema_version": "selected46-report/v1",
         "confirmatory_eligible": False,
         "progress": {"selected_cases": len(configs), "finished_cases": len(runs),
-                     "runs": sum(len(r) for r in runs.values()),
+                     "runs": sum(len(r) for r in runs.values()), "planned_runs": planned_runs,
                      "projects_finished": sorted({configs[c]["project_id"] for c in runs})},
         "counts_by_model_and_arm": {m: {a: dict(counts[m][a]) for a in ARMS} for m in sorted(counts)},
         "per_case": per_case,
@@ -169,46 +232,63 @@ def build(results_root: Path, cases_dir: Path = ROOT / "data/abc-cases", seed: i
 
 def _fmt(est: dict) -> str:
     if est.get("estimate") is None:
-        return "sem pares"
+        return "no pairs"
     ci = est.get("ci95_project_cluster") or {}
     interval = (f"[{ci['low']:.2f}, {ci['high']:.2f}]" if ci.get("low") is not None
-                else "sem intervalo (menos de 2 projetos)")
+                else "no interval (<2 projects)")
     p = est.get("paired_randomization_pvalue")
-    return (f"{est['estimate']:.3f} {interval}, p={p:.3f}, {est['n_pairs']} pares, "
-            f"{est['n_intents']} requisitos, {est['n_projects']} projetos")
+    pair_word = "pair" if est["n_pairs"] == 1 else "pairs"
+    requirement_word = "requirement" if est["n_intents"] == 1 else "requirements"
+    project_word = "project" if est["n_projects"] == 1 else "projects"
+    return (f"{est['estimate']:.3f} {interval}, p={p:.3f}, {est['n_pairs']} {pair_word}, "
+            f"{est['n_intents']} {requirement_word}, {est['n_projects']} {project_word}")
+
+
+def _fmt_bound(est: dict) -> str:
+    if est.get("estimate") is None:
+        return "no pairs"
+    pair_word = "pair" if est["n_pairs"] == 1 else "pairs"
+    requirement_word = "requirement" if est["n_intents"] == 1 else "requirements"
+    project_word = "project" if est["n_projects"] == 1 else "projects"
+    return (f"{est['estimate']:.3f}, {est['n_pairs']} planned {pair_word}, "
+            f"{est['n_intents']} {requirement_word}, {est['n_projects']} {project_word}; no inference")
 
 
 def markdown(report: dict) -> str:
     pr = report["progress"]
-    lines = ["# Placar dos 46 requisitos selecionados", "",
-             f"Gerado por `scripts/selected46_report.py`. Exploratório (`confirmatory_eligible: false`).", "",
-             f"Requisitos concluídos: {pr['finished_cases']} de {pr['selected_cases']}; "
-             f"{pr['runs']} execuções; projetos com algum caso concluído: {', '.join(pr['projects_finished']) or '—'}.", "",
-             "## Regra-alvo por modelo e braço", "",
-             "| Modelo | Braço | Mantida | Violada | Desconhecido |", "| --- | --- | ---: | ---: | ---: |"]
+    lines = ["# Selected 46 requirements scoreboard", "",
+             "Generated by `scripts/selected46_report.py`. Exploratory "
+             "(`confirmatory_eligible: false`).", "",
+             f"Cases completed: {pr['finished_cases']} of {pr['selected_cases']}; "
+             f"{pr['runs']} of {pr['planned_runs']} runs; projects with any completed case: "
+             f"{', '.join(pr['projects_finished']) or '—'}.", "",
+             "## Target-rule outcome by model and arm", "",
+             "| Model | Arm | Held | Violated | Unknown |", "| --- | --- | ---: | ---: | ---: |"]
     for model, arms in report["counts_by_model_and_arm"].items():
         for arm in ARMS:
             c = arms.get(arm, {})
             lines.append(f"| {model} | {arm} | {c.get('held', 0)} | {c.get('violated', 0)} | {c.get('unknown', 0)} |")
-    lines += ["", "## Estimandos pareados", "",
-              "Probabilidade de o braço com defeito ser pior que A, por requisito, modelo e repetição; "
-              "0,5 = sem efeito. Desconhecidos: excluídos (observado), atribuídos contra (pior caso) ou a favor (melhor caso) da hipótese.", "",
-              "| Comparação | Observado | Pior caso | Melhor caso |", "| --- | --- | --- | --- |"]
-    for label, key in (("H1a: C vs A", "h1a_c_vs_a"), ("Controle: B vs A", "wording_control_b_vs_a")):
+    lines += ["", "## Paired estimands", "",
+              "Probability that the defective arm is worse than A, matched by requirement, model, and replication; "
+              "0.5 means no effect. Unknowns are excluded from the observed estimate and assigned against or in "
+              "favor of the hypothesis for the deterministic worst/best bounds.", "",
+              "| Comparison | Observed | Worst case | Best case |", "| --- | --- | --- | --- |"]
+    for label, key in (("H1a: C vs A", "h1a_c_vs_a"), ("Control: B vs A", "wording_control_b_vs_a")):
         e = report[key]
-        lines.append(f"| {label} | {_fmt(e['drop'])} | {_fmt(e['worst'])} | {_fmt(e['best'])} |")
-    lines += ["", "## Por requisito", "", "| Caso | Projeto | A mantida/violada/desc. | B | C |", "| --- | --- | --- | --- | --- |"]
+        lines.append(f"| {label} | {_fmt(e['drop'])} | {_fmt_bound(e['worst'])} | {_fmt_bound(e['best'])} |")
+    lines += ["", "## By requirement", "", "| Case | Project | A held/violated/unknown | B | C |", "| --- | --- | --- | --- | --- |"]
     for case, info in report["per_case"].items():
         cells = [f"{info['arms'][a].get('held', 0)}/{info['arms'][a].get('violated', 0)}/{info['arms'][a].get('unknown', 0)}"
                  for a in ARMS]
         lines.append(f"| {case} | {info['project']} | {cells[0]} | {cells[1]} | {cells[2]} |")
-    lines += ["", "## H1b, descritivo: violação em C por covariável", ""]
+    lines += ["", "## H1b, descriptive: C violations by covariate", ""]
     for name, levels in report["h1b_c_violation_by_covariate"].items():
-        parts = [f"{lvl}: {c.get('violated', 0)} violadas / {c.get('held', 0)} mantidas / {c.get('unknown', 0)} desc."
+        parts = [f"{lvl}: {c.get('violated', 0)} violated / {c.get('held', 0)} held / {c.get('unknown', 0)} unknown"
                  for lvl, c in levels.items()]
-        lines.append(f"- `{name}` — " + ("; ".join(parts) if parts else "sem dados"))
-    lines += ["", "Execuções repetidas do mesmo requisito não são independentes; o intervalo reamostra projetos. "
-              "`context_cue` aparece como não codificado até existir a codificação cega."]
+        lines.append(f"- `{name}` — " + ("; ".join(parts) if parts else "no data"))
+    lines += ["", "Repeated runs of the same requirement are not independent; the interval resamples projects. "
+              "Worst/best scenarios include every frozen slot not yet collected and are deterministic bounds, not "
+              "inferential tests or intervals. `context_cue` remains not coded until blind coding exists."]
     return "\n".join(lines) + "\n"
 
 
