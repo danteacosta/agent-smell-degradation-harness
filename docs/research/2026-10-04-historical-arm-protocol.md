@@ -4,7 +4,7 @@ Status: exploratório, pedido pelo orientador depois da coleta dos 46. Nenhuma c
 
 ## Pergunta
 
-Nos 46 requisitos, o texto que o projeto documentava **antes** do commit que escreveu a regra-alvo já produzia o defeito? A coleta dos 46 comparou A (documentação no fim da janela) com C (A menos a regra), e C é uma omissão construída. H é a contraparte natural: o mesmo pedido, com o trecho da regra na forma que a documentação tinha antes.
+Nos 46 requisitos, o texto que o projeto documentava **antes** do commit que escreveu a regra-alvo já produzia o defeito? A coleta dos 46 comparou A (documentação no fim da janela) com C (A menos a regra), e C é uma omissão construída. H é uma reconstrução controlada guiada pelo histórico: mantém o contexto moderno de A e altera o trecho da regra com base na documentação anterior. Não reproduz integralmente o requisito ou a documentação antiga. Quando H = C, as chamadas novas replicam a omissão construída em casos classificados pelo histórico; não demonstram o efeito do texto histórico integral.
 
 O piloto de setembro (10 requisitos, 60 pares) encontrou 11 melhoras com o texto corrigido, 44 empates, 5 desconhecidos e nenhuma piora. Este estudo repete a pergunta nos 46, com os oráculos e as páginas congeladas da coleta atual.
 
@@ -57,23 +57,24 @@ A decisão final é a dos dois primários quando concordam nas duas perguntas; n
 | `same` | não (sem diferença) | — |
 | `different` | não (mudança de comportamento, não de especificação) | — |
 | `absent` | sim | H = C |
-| `vaguer` | sim | A, com as frases que contêm a regra trocadas pela citação antiga literal; se a citação já sobrevive em C (≥ 90% dos termos), H = C |
+| `vaguer` | sim | A, com as frases que contêm a regra trocadas pela citação antiga literal; se a citação já aparece de forma contígua em C, normalizando somente espaços e caixa, H = C |
 
-`build` grava `data/historical-arm/admission.json` e uma config derivada por caso em `data/historical-arm/cases/`. A config derivada tem os braços A, B, C e H, `collect_arms: ["A", "H"]` e uma semente nova. O `build` se recusa a sobrescrever textos H já construídos, e a etapa 4 se recusa a rodar com `data/historical-arm/` fora do git.
+`build` grava `data/historical-arm/admission.json` e uma config derivada por caso em `data/historical-arm/cases/`. O painel vincula a classificação e as configs a hashes congelados; `build` recusa mudanças nos textos revisados e exige citações válidas. Os dois modelos primários devem ser distintos. A config derivada tem os braços A, B, C e H, `collect_arms: ["A", "H"]` e uma semente nova. O `build` se recusa a sobrescrever textos H já construídos, e a etapa 4 se recusa a rodar com `data/historical-arm/` fora do git.
 
 Limitações conhecidas:
+- o contexto moderno pode oferecer pistas que não existiam antes do commit; H não é o texto histórico integral;
 - quando H vem de uma citação antiga, perde as dicas de API que estavam no trecho da regra, como C;
 - a citação vem do codificador que decidiu, e não de uma escolha humana;
 - a regra pode estar descrita em outro arquivo da documentação antiga. A triagem só procura o texto acrescentado no commit, e a revisão vê apenas o trecho do arquivo alterado.
 
 ## Etapa 4: coleta A + H contemporânea (no Mac)
 
-Para cada caso admitido: 2 modelos × 2 repetições × 2 braços = 8 chamadas, no mesmo pacote. A é coletado de novo para que a comparação não misture datas, já que os modelos podem mudar entre a coleta de 3/10 e esta. As páginas congeladas, os oráculos e a imagem Docker são os da coleta dos 46.
+Para cada caso admitido: 2 modelos × 2 repetições × 2 braços = 8 chamadas, no mesmo pacote. A é coletado de novo para que a comparação não misture datas, já que os modelos podem mudar entre a coleta de 3/10 e esta. As páginas congeladas, os oráculos e a imagem Docker são os da coleta dos 46. Os pacotes ficam em `historical-arm-v1` e os resultados em `data/historical-arm-results/v1`, sem timestamp variável: reiniciar o comando não repete slots já tentados. Uma tentativa interrompida sem resultado final exige diagnóstico, sem retry automático.
 
 ## Análise
 
 - **Principal (exploratória):** probabilidade pareada de H ser pior que A, com pares por requisito × modelo × repetição, bootstrap por projeto e teste de inversão de sinais. É o mesmo estimador de H1a, com limites de pior e melhor caso para os desconhecidos.
-- **Separada por construção:** `absent` (réplica natural de C) e `vaguer` (o texto antigo efetivamente presente).
+- **Separada por construção:** `absent` (réplica de C selecionada pelo histórico) e `vaguer` (o texto antigo efetivamente presente).
 - **Diagnósticos:**
   - a violação em A agora contra A em 3/10, para medir deriva;
   - nos casos `absent`, a violação em H agora contra C em 3/10.
@@ -82,7 +83,7 @@ Para cada caso admitido: 2 modelos × 2 repetições × 2 braços = 8 chamadas, 
 
 ```bash
 bash scripts/run_historical_arm.sh panel      # revisão + build; depois commit de data/historical-arm/
-bash scripts/run_historical_arm.sh collect    # A + H; publica em data/historical-arm-results/<data>/
+bash scripts/run_historical_arm.sh collect    # A + H; publica em data/historical-arm-results/v1/
 ```
 
 ## Testes

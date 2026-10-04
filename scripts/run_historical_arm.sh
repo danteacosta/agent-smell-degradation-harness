@@ -9,7 +9,7 @@
 #   bash scripts/run_historical_arm.sh collect
 #       arms A and H for every admitted case (2 models x 2 repetitions x 2 arms),
 #       one packet per case, then copies each results.json to
-#       data/historical-arm-results/<date>/<case>/ and prints the H vs A estimate.
+#       data/historical-arm-results/v1/<case>/ and prints the H vs A estimate.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 EVIDENCE="${EVIDENCE_ROOT:-$HOME/Documents/GitHub/.private-research-evidence}"
@@ -43,16 +43,28 @@ collect)
   if [ -n "$(git status --porcelain data/historical-arm)" ]; then
     echo "commit data/historical-arm/ first (the H texts must be frozen in git)" >&2; exit 1
   fi
-  STAMP="$(date +%Y%m%d)"
-  OUT="data/historical-arm-results/$STAMP"
-  BASE="$EVIDENCE/historical-arm-$(date +%Y%m%d-%H%M%S)"
+  # Stable locations keep the same frozen slots from being attempted twice.
+  OUT="data/historical-arm-results/v1"
+  BASE="$EVIDENCE/historical-arm-v1"
   mkdir -p "$OUT"
   for cfg in data/historical-arm/cases/*.json; do
     name="$(basename "$cfg" .json)"
     if [ -e "$OUT/$name/results.json" ]; then echo "skip $name (published)"; continue; fi
     echo "== $name"
-    "$PY" scripts/abc_case.py prepare "$cfg" --packet "$BASE/$name"
-    "$PY" scripts/abc_case.py run --packet "$BASE/$name" || { echo "stopped at $name" >&2; exit 1; }
+    if [ -e "$BASE/$name/frozen/manifest.json" ]; then
+      "$PY" -c 'import json,sys; from pathlib import Path; expected=json.loads(Path(sys.argv[1]).read_text()); frozen=json.loads(Path(sys.argv[2]).read_text())["case"]; assert frozen == expected, "config drift since prepare"' "$cfg" "$BASE/$name/frozen/manifest.json"
+    fi
+    if [ -e "$BASE/$name/run-started.json" ]; then
+      if [ ! -e "$BASE/$name/results.json" ]; then
+        echo "stopped: $name was already attempted but has no final result; no automatic retry" >&2; exit 1
+      fi
+      echo "recover final result for $name without repeating calls"
+    else
+      if [ ! -e "$BASE/$name/frozen/manifest.json" ]; then
+        "$PY" scripts/abc_case.py prepare "$cfg" --packet "$BASE/$name"
+      fi
+      "$PY" scripts/abc_case.py run --packet "$BASE/$name" || { echo "stopped at $name" >&2; exit 1; }
+    fi
     mkdir -p "$OUT/$name"
     cp "$BASE/$name/results.json" "$OUT/$name/results.json"
   done

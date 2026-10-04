@@ -163,3 +163,85 @@ def test_analyse_pairs_a_and_h(tmp_path: Path):
                                             "A_then": {"violated": 0, "held": 1, "unknown": 0},
                                             "H_now": {"violated": 4, "held": 0, "unknown": 0},
                                             "C_then": {"violated": 1, "held": 0, "unknown": 0}}}
+
+
+def test_old_quote_with_different_meaning_is_not_discarded_by_token_overlap():
+    a = 'Open the page. Deleted files go to the bin. Deleted files do not go to the bin.'
+    c = 'Open the page. Deleted files do not go to the bin.'
+    h, how = ha.h_text(a, c, 'vaguer', 'Deleted files go to the bin')
+    assert how == 'vaguer_old_passage_spliced'
+    assert 'Deleted files go to the bin.' in h
+
+
+@pytest.mark.parametrize('vote', [
+    {'feature_documented': 'no', 'feature_quote': 'unverified text', 'rule_status': 'absent', 'rule_quote': None},
+    {'feature_documented': 'yes', 'feature_quote': 'Sign up', 'rule_status': 'absent', 'rule_quote': {'arbitrary': 'text'}},
+])
+def test_inactive_quotes_must_be_null(vote):
+    with pytest.raises(ValueError):
+        ha.parse_review(json.dumps(vote), 'Sign up')
+
+
+def test_duplicate_primary_models_are_rejected_before_freezing(tmp_path):
+    with pytest.raises(ValueError):
+        ha.prepare_panel(tmp_path / 'panel', CLASSIFICATION, ['m1', 'm1'], 'm3', Path('/bin/true'))
+
+
+def test_build_rejects_a_classification_changed_after_review(tmp_path):
+    classification = tmp_path / 'classification.json'
+    classification.write_bytes(CLASSIFICATION.read_bytes())
+    packet = tmp_path / 'panel'
+    ha.prepare_panel(packet, classification, ['m1', 'm2'], 'm3', Path('/bin/true'))
+    ha.run_panel(packet, provider_factory=FakeReviewer)
+    data = json.loads(classification.read_text())
+    next(r for r in data['rows'] if r['class'] == 'panel')['old_excerpt'] += '\nChanged after review.'
+    classification.write_text(json.dumps(data))
+    with pytest.raises(ValueError):
+        ha.build(classification, packet / 'results.json', tmp_path / 'cases')
+
+
+def test_sensitivity_bounds_include_not_yet_collected_cases(tmp_path):
+    cases = tmp_path / 'cases'; cases.mkdir()
+    config = {'models': ['m'], 'repetitions': 1, 'project_id': 'p',
+              'historical': {'construction': 'absent_h_equals_c'}}
+    for case in ('observed', 'missing'):
+        (cases / f'{case}.json').write_text(json.dumps(config))
+    result = tmp_path / 'results' / 'observed'; result.mkdir(parents=True)
+    (result / 'results.json').write_text(json.dumps({'rows': [
+        {'model': 'm', 'replication': 1, 'arm': 'A', 'category': 'pass'},
+        {'model': 'm', 'replication': 1, 'arm': 'H', 'category': 'target_only_failure'},
+    ]}))
+    report = ha.analyse(tmp_path / 'results', cases, previous_root=tmp_path / 'no-previous')
+    assert report['h_vs_a']['best']['n_pairs'] == 2
+    assert report['h_vs_a']['best']['estimate'] == 0.5
+    assert report['h_vs_a']['worst']['n_pairs'] == 2
+    assert report['h_vs_a']['worst']['paired_randomization_pvalue'] is None
+    assert report['h_vs_a']['best']['ci95_project_cluster'] == {'low': None, 'high': None}
+
+
+def test_build_rejects_case_config_changed_after_review(tmp_path):
+    packet = tmp_path / 'panel'
+    ha.prepare_panel(packet, CLASSIFICATION, ['m1', 'm2'], 'm3', Path('/bin/true'))
+    ha.run_panel(packet, provider_factory=FakeReviewer)
+    cases = tmp_path / 'source-cases'; cases.mkdir()
+    for path in ha.CASES_DIR.glob('*.json'):
+        (cases / path.name).write_bytes(path.read_bytes())
+    name = ha.panel_items(json.loads(CLASSIFICATION.read_text()))[0]['case']
+    path = cases / f'{name}.json'
+    config = json.loads(path.read_text()); config['instruction'] += ' Changed after review.'
+    path.write_text(json.dumps(config))
+    with pytest.raises(ValueError, match='config changed'):
+        ha.build(CLASSIFICATION, packet / 'results.json', tmp_path / 'built', cases_dir=cases)
+    assert not (tmp_path / 'built').exists()
+
+
+def test_build_revalidates_the_deciding_quote_against_the_reviewed_source(tmp_path):
+    packet = tmp_path / 'panel'
+    ha.prepare_panel(packet, CLASSIFICATION, ['m1', 'm2'], 'm3', Path('/bin/true'))
+    ha.run_panel(packet, provider_factory=FakeReviewer)
+    path = packet / 'results.json'; panel = json.loads(path.read_text())
+    panel['rows'][0]['final']['feature_quote'] = 'This sentence is not present in the historical source.'
+    path.write_text(json.dumps(panel))
+    with pytest.raises(ValueError, match='literal quote'):
+        ha.build(CLASSIFICATION, path, tmp_path / 'built')
+    assert not (tmp_path / 'built').exists()

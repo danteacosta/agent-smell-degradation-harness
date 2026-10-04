@@ -244,9 +244,12 @@ reversal, so the change does not favour H1, but it is post-collection and is
 recorded here rather than edited silently.
 
 **2026-10-04, exploratory historical arm H (added after the 46-case
-collection, at the advisor's request).** H is the requirement as the project
-documented it before the commit that wrote the target rule, with the rest of
-A unchanged. It is not part of the registered design. Eligibility and the H
+collection, at the advisor's request).** H is a source-guided controlled
+reconstruction of the target rule using pre-commit documentation, with the
+modern context of A unchanged. It is not the complete historical requirement
+and is not part of the registered design. Absent-rule cases repeat C in a
+historically selected subset; they do not identify the effect of the full
+historical text. Eligibility and the H
 texts are fixed before any H generation by `scripts/historical_arm.py`: a
 mechanical triage (deletions and moved text excluded) and a blind LLM review
 of the parent-commit excerpt (does the old text document the feature; is the

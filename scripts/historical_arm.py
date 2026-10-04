@@ -1,9 +1,9 @@
-"""Historical arm H: does the pre-commit requirement text produce the defect?
+"""Historical arm H: test a controlled reconstruction from pre-commit documentation.
 
 The 46-case collection compared the frame-end documentation (A) with a
-constructed omission (C). This study adds the natural counterpart: H is the
-requirement as the project documented it *before* the commit that introduced
-or changed the target rule, with everything else held equal to A.
+constructed omission (C). This study adds a source-guided controlled reconstruction: H changes the
+target rule using pre-commit documentation while retaining modern context
+from A. It is not the complete historical requirement text.
 
   classify       mechanical triage of the 46 cases from source texts only:
                  excluded_deletion (the old text held the rule), excluded_moved
@@ -273,6 +273,10 @@ def parse_review(raw: str, old: str) -> dict:
         raise ValueError("feature_documented must be yes or no")
     if vote.get("rule_status") not in STATUSES:
         raise ValueError(f"rule_status must be one of {STATUSES}")
+    if vote["feature_documented"] == "no" and vote.get("feature_quote") is not None:
+        raise ValueError("feature_documented=no requires feature_quote=null")
+    if vote["rule_status"] == "absent" and vote.get("rule_quote") is not None:
+        raise ValueError("rule_status=absent requires rule_quote=null")
     if vote["feature_documented"] == "yes" and not _in(vote.get("feature_quote"), old):
         raise ValueError("feature_documented=yes needs a literal quote from the old documentation")
     if vote["rule_status"] != "absent" and not _in(vote.get("rule_quote"), old):
@@ -291,10 +295,23 @@ def panel_items(classification: dict) -> list[dict]:
 
 
 def prepare_panel(out: Path, classification_path: Path, models: list[str], tiebreaker: str, executable: Path) -> dict:
+    if len(models) != 2 or len(set(models)) != 2 or tiebreaker in models:
+        raise ValueError("two distinct primary models and a different tiebreaker are required")
     if out.exists():
         raise FileExistsError("fresh output directory required")
     classification = json.loads(classification_path.read_text())
     items = panel_items(classification)
+    config_hashes = {}
+    for row in classification["rows"]:
+        if row["class"] != "panel":
+            continue
+        config_path = CASES_DIR / f"{row['case']}.json"
+        config = json.loads(config_path.read_text())
+        a, c = config["arms"]["A"], config["arms"]["C"]
+        start, end = omitted_span(a, c)
+        if c != row["requirement_without_rule"] or a[start:end] != row["c_span"]:
+            raise ValueError(f"{row['case']}: classification/config drift")
+        config_hashes[row["case"]] = sha256_file(config_path)
     order = items[:]
     random.Random(PANEL_SEED).shuffle(order)
     out.mkdir(mode=0o700, parents=True)
@@ -303,6 +320,7 @@ def prepare_panel(out: Path, classification_path: Path, models: list[str], tiebr
     manifest = {"schema_version": PANEL_SCHEMA, "seed": PANEL_SEED, "models": models, "tiebreaker": tiebreaker,
                 "executable": str(executable), "script_sha256": sha256_file(Path(__file__)),
                 "classification_sha256": sha256_file(classification_path),
+                "case_config_sha256": config_hashes,
                 "controls": PANEL_CONTROLS, "items": order, "retry_policy": "no_retry_no_repair",
                 "blinding": "coders see the requirement without the rule, the rule and the parent-commit excerpt; "
                             "no generated code, oracle results, arm outcomes or model names"}
@@ -380,7 +398,9 @@ def run_panel(out: Path, provider_factory=None) -> dict:
                                                 [r["votes"][models[1]]["vote"]["rule_status"] for r in both]),
                "primary_pairs_with_two_valid_votes": len(both)}
     result = {"schema_version": PANEL_SCHEMA + "-results", "status": "complete", "controls": controls,
-              "summary": summary, "rows": rows}
+              "summary": summary, "rows": rows,
+              "review_binding": {"classification_sha256": manifest["classification_sha256"],
+                                 "case_config_sha256": manifest["case_config_sha256"]}}
     put(out / "results.json", result)
     put(out / "receipt.json", {"files": inventory(out)})
     return summary
@@ -408,8 +428,7 @@ def h_text(a: str, c: str, status: str, quote: str | None) -> tuple[str, str]:
     if status == "absent":
         return c, "absent_h_equals_c"
     quote = " ".join(quote.split())
-    q = tokens(quote)
-    if q and len(q & tokens(c)) / len(q) >= COVERAGE:
+    if quote.casefold() in " ".join(c.split()).casefold():
         return c, "vaguer_passage_survives_in_c"
     start, end = omitted_span(a, c)
     xs, xe = sentence_bounds(a, start, end)
@@ -424,7 +443,21 @@ def build(classification_path: Path, panel_results: Path, out_dir: Path, cases_d
     panel = json.loads(panel_results.read_text())
     if panel.get("status") != "complete":
         raise ValueError("panel did not complete")
+    binding = panel.get("review_binding", {})
+    if binding.get("classification_sha256") != sha256_file(classification_path):
+        raise ValueError("classification changed since the frozen review")
+    expected = {r["case"] for r in classification["rows"] if r["class"] == "panel"}
     final = {r["case"]: r for r in panel["rows"]}
+    if len(final) != len(panel["rows"]) or set(final) != expected:
+        raise ValueError("review case inventory mismatch")
+    for row in classification["rows"]:
+        if row["case"] not in expected:
+            continue
+        if binding.get("case_config_sha256", {}).get(row["case"]) != sha256_file(cases_dir / f"{row['case']}.json"):
+            raise ValueError(f"{row['case']}: config changed since frozen review")
+        vote = final[row["case"]]["final"]
+        if vote is not None:
+            parse_review(json.dumps(vote), row["old_excerpt"])
     rows = []
     for r in classification["rows"]:
         entry = {"case": r["case"], "project": r["project"], "kind": r["kind"], "class": r["class"]}
@@ -476,10 +509,12 @@ def analyse(results_root: Path, configs_dir: Path, seed: int = 2026100404,
         rows, finished = [], 0
         for case, config in configs.items():
             path = results_root / case / "results.json"
-            if not path.exists():
-                continue
-            finished += 1
-            by = {(r["model"], r["replication"], r["arm"]): r for r in json.loads(path.read_text())["rows"]}
+            if path.exists():
+                finished += 1
+                observed = json.loads(path.read_text())["rows"]
+            else:
+                observed = []
+            by = {(r["model"], r["replication"], r["arm"]): r for r in observed}
             for model in config["models"]:
                 for rep in range(1, config["repetitions"] + 1):
                     a = severity(by.get((model, rep, "A"), {}).get("category"))
@@ -493,7 +528,9 @@ def analyse(results_root: Path, configs_dir: Path, seed: int = 2026100404,
                                  "replication": rep, "clean_severity": a, "defective_severity": h})
         est = paired_probability_of_superiority(rows, seed=seed) if rows else {"estimate": None}
         if mode != "drop":
-            est = {**est, "analysis_scope": "deterministic_sensitivity_bound", "valid_for_inference": False}
+            est = {**est, "analysis_scope": "deterministic_sensitivity_bound", "valid_for_inference": False,
+                   "ci95_project_cluster": {"low": None, "high": None},
+                   "paired_randomization_pvalue": None}
         out[mode] = est
     by_construction = {}
     for how in sorted({c["historical"]["construction"] for c in configs.values()}):
@@ -567,7 +604,7 @@ def main(argv: list[str] | None = None) -> None:
         for r in result["rows"]:
             print(f"{r['class']:<20} {r['case']:<42} cov={r['c_span_coverage_by_added']}")
     elif args.mode == "prepare-panel":
-        if len(args.model) != 2 or args.tiebreaker in args.model:
+        if len(args.model) != 2 or len(set(args.model)) != 2 or args.tiebreaker in args.model:
             parser.error("two distinct primary models and a different tiebreaker are required")
         print(json.dumps(prepare_panel(args.out, args.classification, args.model, args.tiebreaker,
                                        args.executable), indent=2))

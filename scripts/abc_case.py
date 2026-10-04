@@ -26,7 +26,7 @@ if str(ROOT) not in sys.path:
 
 CASES_DIR = ROOT / "data/abc-cases"
 ARMS = ("A", "B", "C")
-OPTIONAL_ARMS = ("H",)  # historical arm: the pre-commit text (scripts/historical_arm.py)
+OPTIONAL_ARMS = ("H",)  # historical arm: controlled reconstruction (scripts/historical_arm.py)
 REQUIRED = ("case", "intent_id", "project_id", "fixture", "marker", "instruction", "arms",
             "models", "repetitions", "seed", "image")
 
