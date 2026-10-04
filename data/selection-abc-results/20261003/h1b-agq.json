@@ -1,0 +1,157 @@
+{
+  "schema_version": "h1b-agq/v1",
+  "confirmatory_eligible": false,
+  "model": "logit P(violated) = b0 + covariates + u_requirement, u ~ N(0, sd^2); project intercept omitted (estimate 0, boundary); AGQ",
+  "full_model_other_terms": {
+    "label": "full model: supremum over beta_numeric (42 requirements without numeric runs)",
+    "n_runs": 162,
+    "n_requirements": 42,
+    "nodes": 100,
+    "loglik": -69.80347973293051,
+    "sd_requirement": 4.9031238673619715,
+    "intercept_log_odds": 2.2459634728365776,
+    "converged": true,
+    "terms": {
+      "context_cue": {
+        "log_odds": -3.4934844549911475,
+        "odds_ratio": 0.030394778202120536,
+        "ci95_log_odds": [
+          -10.068444399597057,
+          1.0897069235199268
+        ],
+        "ci95_odds_ratio": [
+          4.2396514699137096e-05,
+          2.9734025105105135
+        ],
+        "lower": "bracketed",
+        "upper": "bracketed",
+        "issues": []
+      },
+      "derived_state": {
+        "log_odds": -3.7604104212852327,
+        "odds_ratio": 0.023274186193001232,
+        "ci95_log_odds": [
+          -11.875656280956079,
+          1.9324314679006789
+        ],
+        "ci95_odds_ratio": [
+          6.957736994508217e-06,
+          6.906282246617978
+        ],
+        "lower": "bracketed",
+        "upper": "bracketed",
+        "issues": []
+      },
+      "memorized": {
+        "log_odds": -1.8402765055733163,
+        "odds_ratio": 0.15877351827412237,
+        "ci95_log_odds": [
+          -4.230565211123288,
+          0.03379226471376816
+        ],
+        "ci95_odds_ratio": [
+          0.014544167699449492,
+          1.0343697093203683
+        ],
+        "lower": "bracketed",
+        "upper": "bracketed",
+        "issues": []
+      }
+    }
+  },
+  "full_model_numeric": {
+    "lower_log_odds": 4.12678048587872,
+    "lower_odds_ratio": 61.978062133810184,
+    "upper": "unbounded (quasi-complete separation)",
+    "supremum_loglik": -69.80347973293051,
+    "grid": {
+      "-6.0": -6.738974765515323,
+      "-3.0": -4.723910038936552,
+      "0.0": -2.5675488524228456,
+      "2.0": -1.2004217469858673,
+      "4.0": -0.06174194198672467,
+      "6.0": 0.758960305347756,
+      "9.0": 1.462557112661429,
+      "13.0": 1.8187851361511207,
+      "20.0": 1.9181098522542754
+    }
+  },
+  "sensitivity_without_numeric": {
+    "label": "all 46 requirements, numeric term removed",
+    "n_runs": 178,
+    "n_requirements": 46,
+    "nodes": 100,
+    "loglik": -74.29175799570044,
+    "sd_requirement": 5.552809826634595,
+    "intercept_log_odds": 2.819098941888841,
+    "converged": true,
+    "terms": {
+      "context_cue": {
+        "log_odds": -3.212566356707476,
+        "odds_ratio": 0.0402531765913502,
+        "ci95_log_odds": [
+          -10.032769136708234,
+          1.7284660267422758
+        ],
+        "ci95_odds_ratio": [
+          4.393632476163445e-05,
+          5.632007929222544
+        ],
+        "lower": "bracketed",
+        "upper": "bracketed",
+        "issues": []
+      },
+      "derived_state": {
+        "log_odds": -3.0569377024206457,
+        "odds_ratio": 0.047031499368731536,
+        "ci95_log_odds": [
+          -10.98561973989528,
+          2.9870483567752135
+        ],
+        "ci95_odds_ratio": [
+          1.6943610787403544e-05,
+          19.827073590402282
+        ],
+        "lower": "bracketed",
+        "upper": "bracketed",
+        "issues": []
+      },
+      "memorized": {
+        "log_odds": -1.724080462047628,
+        "odds_ratio": 0.1783369640063036,
+        "ci95_log_odds": [
+          -4.139182277302645,
+          0.17168703459109685
+        ],
+        "ci95_odds_ratio": [
+          0.01593587730661473,
+          1.187306189294068
+        ],
+        "lower": "bracketed",
+        "upper": "bracketed",
+        "issues": []
+      }
+    }
+  },
+  "laplace_check": {
+    "nodes": 1,
+    "loglik": -71.4670141825633,
+    "sd_requirement": 4.480209477292201,
+    "log_odds": {
+      "context_cue": -4.074298100949073,
+      "derived_state": -4.474587950393833,
+      "memorized": -1.7773641503548392
+    }
+  },
+  "agq25_check": {
+    "nodes": 25,
+    "loglik": -69.80961169398125,
+    "sd_requirement": 4.901327159696824,
+    "intercept": 2.2433359139257347,
+    "log_odds": {
+      "context_cue": -3.488252898782698,
+      "derived_state": -3.7540246111207085,
+      "memorized": -1.8398983290410065
+    }
+  }
+}

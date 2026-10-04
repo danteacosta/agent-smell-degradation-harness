@@ -138,3 +138,4 @@ experiment evidence.
 - [Context_cue v2: resultados dos 46 requisitos](2026-10-04-context-cue-v2-results.md): 15/15 controles, nove com pista, 37 sem pista, kappa 0,646; 112 chamadas válidas. Codificação pós-coleta, sem alterar resultados E2E.
 
 - [Validação externa de H1b com lme4 (04/10/2026)](2026-10-04-h1b-lme4-validation.md): coeficientes reproduzidos; intervalos perfilados ainda não validados.
+- [H1b: intervalos com quadratura adaptativa e perfil verificado](2026-10-04-h1b-agq-intervals.md). AGQ-100, igual à integração direta; separação de `numeric` tratada de forma exata. Nenhuma covariável estimável exclui 1, inclusive `memorized` [0,015; 1,03]; `numeric` ≥ 62 (4 requisitos). Script R para conferir com `nAGQ = 25`.
