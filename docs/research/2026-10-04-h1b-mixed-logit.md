@@ -6,7 +6,9 @@ Status: exploratório. A coleta tem `confirmatory_eligible: false`, e `context_c
 
 Violação da regra-alvo em cada execução C avaliável, com efeitos fixos `context_cue`, `numeric`, `derived_state` e `memorized` (do modelo da execução), e interceptos aleatórios por projeto e por requisito. A estimação usa a aproximação de Laplace da verossimilhança marginal, como o padrão do `glmer`. Os odds ratios vêm com intervalos de 95% de verossimilhança perfilada, sem correção de multiplicidade. As execuções com desfecho desconhecido ficam de fora: são 178 execuções, 105 violadas, 46 requisitos, 9 projetos.
 
-## Resultado
+## Resultado original, com intervalos provisórios
+
+A [validação independente com lme4](2026-10-04-h1b-lme4-validation.md) reproduziu os coeficientes, mas falhou ao calcular os intervalos perfilados. Os intervalos abaixo preservam a saída original do #163; não estão validados para inferência. O estimador próprio também retorna `null` ao esgotar uma busca finita, o que, sozinho, não demonstra um limite infinito.
 
 | Termo | Odds ratio | IC 95% (perfil) | Observação |
 | --- | ---: | --- | --- |
@@ -26,7 +28,7 @@ Desvio-padrão dos interceptos: requisito 4,8 (logit); projeto ≈ 0. Na sensibi
   - regra numérica: 1,00, contra 0,54 (4 e 42 requisitos);
   - `memorized`: 0,51 contra 0,63 (38 e 54 células requisito × modelo).
 
-O ajuste pré-registrado não sustenta nenhum efeito de covariável com segurança. As direções observadas são compatíveis com H1b, mas este desenho, com 46 requisitos e desfechos quase binários por requisito, não tem poder para distinguir efeitos moderados. É o que o próprio pré-registro previa ("H1b is estimated, not powered for small effects").
+O ajuste pré-registrado não sustenta nenhum efeito de covariável com segurança. As direções de `context_cue` e `numeric` concordam com as previsões de H1b; a direção de `derived_state` é contrária à previsão de maior violação. Os intervalos originais são imprecisos e ainda não foram validados. Não foi feita análise de poder que sustente uma conclusão sobre efeitos moderados.
 
 ## Validação do ajuste
 
@@ -35,4 +37,4 @@ Os testes em `tests/test_h1b_mixed_logit.py` cobrem três pontos:
 - num efeito simulado, a estimativa é recuperada com intervalo de perfil que o cobre;
 - a separação é sinalizada em vez de estimada.
 
-`numpy` e `scipy` não estão no lock base, e os testes são pulados quando faltam. Não houve comparação com `lme4`, porque não há R neste ambiente. Vale repetir o ajuste com `glmer` antes de qualquer texto final.
+`numpy` e `scipy` não estão no lock base, e os testes são pulados quando faltam. A comparação posterior com `lme4` foi executada em Docker, com R 4.3.3 e lme4 1.1-35.1, sobre os mesmos 178 registros públicos. Os coeficientes concordaram, ambos os ajustes foram singulares no intercepto por projeto e os perfis falharam. Ver o relatório de validação separado; nenhum resultado experimental foi substituído.
