@@ -258,7 +258,7 @@ def _fmt(est: dict) -> str:
     pair_word = "pair" if est["n_pairs"] == 1 else "pairs"
     requirement_word = "requirement" if est["n_intents"] == 1 else "requirements"
     project_word = "project" if est["n_projects"] == 1 else "projects"
-    return (f"{est['estimate']:.3f} {interval}, p={p:.3f}, {est['n_pairs']} {pair_word}, "
+    return (f"{est['estimate']:.3f} {interval}, p={p:.3g}, {est['n_pairs']} {pair_word}, "
             f"{est['n_intents']} {requirement_word}, {est['n_projects']} {project_word}")
 
 
@@ -287,8 +287,8 @@ def markdown(report: dict) -> str:
             c = arms.get(arm, {})
             lines.append(f"| {model} | {arm} | {c.get('held', 0)} | {c.get('violated', 0)} | {c.get('unknown', 0)} |")
     lines += ["", "## Paired estimands", "",
-              "Probability that the defective arm is worse than A, matched by requirement, model, and replication; "
-              "0.5 means no effect. Unknowns are excluded from the observed estimate, assigned to maximize harm "
+              "Paired score: 1 for worse, 0.5 for a tie, and 0 for better, averaged within each requirement; "
+              "0.5 is neutral and does not establish equivalence. The score is not a failure percentage. Unknowns are excluded from the observed estimate, assigned to maximize harm "
               "in the defective arm for the worst-behavior bound, and assigned to minimize harm for the "
               "best-behavior bound.", "",
               "| Comparison | Observed | Worst behavior (maximum harm) | Best behavior (minimum harm) |",
@@ -307,6 +307,8 @@ def markdown(report: dict) -> str:
                  for lvl, c in levels.items()]
         lines.append(f"- `{name}` — " + ("; ".join(parts) if parts else "no data"))
     lines += ["", "Repeated runs of the same requirement are not independent; the interval resamples projects. "
+              "The sign-flip p-value additionally assumes exchangeable signs across requirements; "
+              "project bootstrap alone does not validate that assumption. "
               "Worst/best scenarios include every frozen slot not yet collected and are deterministic bounds, not "
               "inferential tests or intervals. `context_cue` remains not coded until blind coding exists."]
     return "\n".join(lines) + "\n"

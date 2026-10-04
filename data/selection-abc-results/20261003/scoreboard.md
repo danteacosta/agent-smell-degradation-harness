@@ -17,12 +17,12 @@ Cases completed: 46 of 46; 552 of 552 runs; projects with any completed case: gr
 
 ## Paired estimands
 
-Probability that the defective arm is worse than A, matched by requirement, model, and replication; 0.5 means no effect. Unknowns are excluded from the observed estimate, assigned to maximize harm in the defective arm for the worst-behavior bound, and assigned to minimize harm for the best-behavior bound.
+Paired score: 1 for worse, 0.5 for a tie, and 0 for better, averaged within each requirement; 0.5 is neutral and does not establish equivalence. The score is not a failure percentage. Unknowns are excluded from the observed estimate, assigned to maximize harm in the defective arm for the worst-behavior bound, and assigned to minimize harm for the best-behavior bound.
 
 | Comparison | Observed | Worst behavior (maximum harm) | Best behavior (minimum harm) |
 | --- | --- | --- | --- |
-| H1a: C vs A | 0.725 [0.68, 0.78], p=0.000, 172 pairs, 44 requirements, 9 projects | 0.742, 184 planned pairs, 46 requirements, 9 projects; no inference | 0.707, 184 planned pairs, 46 requirements, 9 projects; no inference |
-| Control: B vs A | 0.500 [0.48, 0.52], p=1.000, 172 pairs, 45 requirements, 9 projects | 0.524, 184 planned pairs, 46 requirements, 9 projects; no inference | 0.486, 184 planned pairs, 46 requirements, 9 projects; no inference |
+| H1a: C vs A | 0.725 [0.68, 0.78], p=0.0002, 172 pairs, 44 requirements, 9 projects | 0.742, 184 planned pairs, 46 requirements, 9 projects; no inference | 0.707, 184 planned pairs, 46 requirements, 9 projects; no inference |
+| Control: B vs A | 0.500 [0.48, 0.52], p=1, 172 pairs, 45 requirements, 9 projects | 0.524, 184 planned pairs, 46 requirements, 9 projects; no inference | 0.486, 184 planned pairs, 46 requirements, 9 projects; no inference |
 
 ## By requirement
 
@@ -82,4 +82,4 @@ Probability that the defective arm is worse than A, matched by requirement, mode
 - `memorized` — 0: 67 violated / 37 held / 4 unknown; 1: 38 violated / 36 held / 2 unknown
 - `context_cue` — not coded: 105 violated / 73 held / 6 unknown
 
-Repeated runs of the same requirement are not independent; the interval resamples projects. Worst/best scenarios include every frozen slot not yet collected and are deterministic bounds, not inferential tests or intervals. `context_cue` remains not coded until blind coding exists.
+Repeated runs of the same requirement are not independent; the interval resamples projects. The sign-flip p-value additionally assumes exchangeable signs across requirements; project bootstrap alone does not validate that assumption. Worst/best scenarios include every frozen slot not yet collected and are deterministic bounds, not inferential tests or intervals. `context_cue` remains not coded until blind coding exists.
