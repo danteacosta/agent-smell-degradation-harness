@@ -552,17 +552,36 @@ Search/read date: 2026-10-04. Deduplicated by arXiv ID/title (none previously in
 this matrix; 2604.21505 and 2607.00711 were snippet-only candidates on
 2026-10-03 and are now read at abstract level). Akli et al. was audited in
 full text (method, results, and threats); the other four remain abstract-level
-reads, so their results are not used as quantitative anchors. All five are
+reads and are listed in a separate pending-reading queue, outside the canonical
+matrix and without credibility scores or evidentiary recommendations. All five are
 arXiv preprints (not peer-reviewed as of this reading)
 and none are evidence for H1/H2.
 
 | Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
 | --- | --- | --- | --- | ---: |
-| Akli, Papadakis, Cordy, Le Traon, *When Prompt Under-Specification Improves Code Correctness*, arXiv [2604.24712](https://arxiv.org/abs/2604.24712), 2026 preprint (cs.SE), full text read 2026-10-04 | Do prompt wording/structure mutations always hurt code generation? 10 LLMs over HumanEval and 1,055 LiveCodeBench tasks; 3,651 GPT-5-mini-generated lexical-vagueness, under-specification, and syntax/format variants. Qwen2.5-Coder-32B judged all variants; three researchers reviewed a stratified sample of 100 (97% agreement with the judge on compliance, 86% on naturalness). Greedy Pass@1 plus pass→fail/fail→pass transitions; manual root-cause analysis of consistently improved tasks. | Under-specification changed Pass@1 by −11.8 points on HumanEval but −0.9 on LiveCodeBench; the LiveCodeBench fail→pass/pass→fail ratio was 0.99, so near-zero aggregate change concealed opposing transitions. Richer descriptions supplied redundant cues, while removing misleading lexical/constraint cues sometimes improved code. Threats: synthetic variants may not resemble developer defects (US naturalness was 0.61 on LiveCodeBench); HumanEval contamination; Python-only function tasks; greedy one-shot decoding hides stochastic variance; exploratory root-cause claims are not causal. | **Thesis:** supports recoverability/context redundancy and shows that the sign of an omission effect is not guaranteed. **Experiment:** report C-better-than-A as a reversal; retain B; code `context_cue` before outcomes; do not use the paper as an effect-size anchor because its task, mutation, and oracle differ. **Product:** it argues against generic “more specification is always safer” warnings; any product must show the lost condition and downstream evidence. | 7/10: broad multi-model sample, transition analysis, manual validation, explicit threats and a replication package, but still a non-peer-reviewed exploratory preprint with synthetic mutations and function-level Python tasks. |
-| Yang, Shi, Ma, Liu, Kästner, Wu, *What Prompts Don't Say*, arXiv [2505.13360](https://arxiv.org/abs/2505.13360), 2025 preprint, revised 2026-04 | How often do LLMs infer unspecified prompt requirements and how stable is that? Abstract-level reading. | Reports 41.1% of unspecified requirements inferred by default, but 2x higher regression across model/prompt changes (accuracy drops >20% in places). Specifying everything does not always fix it. | **Thesis:** independent support for the "context sometimes recovers the rule" premise behind H1b; also motivates model-version pinning. **Experiment:** pin and record model identifiers per run_id; report per-model recovery separately (already exploratory). **Product:** requirement-discovery/monitoring framing is adjacent to the diagnostic wedge; no claim. | 6/10: preprint from a recognised group, clear headline numbers, abstract-level reading only. |
-| Ma and Eisty, *From Business Requirements to Test Assertions*, arXiv [2607.10277](https://arxiv.org/abs/2607.10277), 2026-07-11 preprint | Can LLMs generate test oracles from business requirements alone? 10 Defects4J Lang bugs, 5 LLMs, requirements written manually from diffs. | Non-trivial generalization with large bug- and model-level variance; oracles tracked the requirement more than the actual behaviour; no linear link between requirement properties and accuracy. 10 bugs, Java unit level; authors call it a pilot. | **Thesis:** already cited in the Drive proposal gap table; row confirms its scope (unit-level Java, no controlled requirement defect). **Experiment:** supports requirement-anchored (not code-anchored) oracles, consistent with the test-anchor experiment; small N, so no effect-size anchor. **Product:** consistent with requirement-anchored verification, as hypothesis only. | 5/10: preprint, pilot of 10 bugs, reproducible pipeline described. |
-| Yang et al., *Clarity Is Not Assumed* (Orchid), arXiv [2604.21505](https://arxiv.org/abs/2604.21505), 2026-04, revised 2026-09 | How does ambiguity affect code generation? 1,304 function-level tasks, four ambiguity types (lexical, syntactic, semantic, vagueness). Abstract only. | Ambiguity degrades all evaluated LLMs, most for advanced models; divergent implementations for the same ambiguous requirement. Different manipulation (ambiguity, not omission of one testable condition) and function-level oracle. | **Thesis:** adjacent context for ambiguity smells; do not merge with omission results. **Experiment:** none now. **Product:** none. Context only. | 5/10: preprint, public benchmark, abstract only. |
-| Fang et al., *ClarifyCodeBench*, arXiv [2607.00711](https://arxiv.org/abs/2607.00711), 2026-07, revised 2026-08 | Can LLMs ask clarification questions for ambiguous requirements? Six LLMs, annotated ambiguity types. Abstract only. | Code-generation skill decouples from clarification skill; many simultaneous ambiguities degrade sharply. | **Thesis:** relevant only to optional RQ3 (clarification). **Experiment:** none. **Product:** context for a future clarification feature. | 5/10: preprint, public code, abstract only. |
+| Akli, Papadakis, Cordy, Le Traon, *When Prompt Under-Specification Improves Code Correctness*, arXiv [2604.24712](https://arxiv.org/abs/2604.24712), 2026 preprint (cs.SE), full text read 2026-10-04 | Do prompt wording/structure mutations always hurt code generation? 10 LLMs over HumanEval and 1,055 LiveCodeBench tasks; 3,651 GPT-5-mini-generated lexical-vagueness, under-specification, and syntax/format variants. Qwen2.5-Coder-32B judged all variants; three researchers reviewed a stratified sample of 100 (97% agreement with the judge on compliance, 86% on naturalness). Greedy Pass@1 plus pass→fail/fail→pass transitions; manual root-cause analysis of consistently improved tasks. | Under-specification changed Pass@1 by −11.8 points on HumanEval but −0.9 on LiveCodeBench; the LiveCodeBench fail→pass/pass→fail mean per-model ratio for under-specification was 0.89 (the 0.99 value belongs to lexical vagueness), so near-zero aggregate change concealed opposing transitions. Richer descriptions supplied redundant cues, while removing misleading lexical/constraint cues sometimes improved code. Threats: synthetic variants may not resemble developer defects (US naturalness was 0.61 on LiveCodeBench); HumanEval contamination; Python-only code-generation tasks, including HumanEval functions and LiveCodeBench competitive-programming tasks; greedy one-shot decoding hides stochastic variance; exploratory root-cause claims are not causal. | **Thesis:** supports recoverability/context redundancy and shows that the sign of an omission effect is not guaranteed. **Experiment:** report C-better-than-A as a reversal; retain B; code `context_cue` before outcomes; do not use the paper as an effect-size anchor because its task, mutation, and oracle differ. **Product:** it argues against generic “more specification is always safer” warnings; any product must show the lost condition and downstream evidence. | 7/10: broad multi-model sample, transition analysis, manual validation, explicit threats and a replication package, but still a non-peer-reviewed exploratory preprint with synthetic mutations and Python code-generation tasks. |
+
+### Pending full-text reading, outside the canonical matrix
+
+The following primary abstracts were checked on 2026-10-04. Their methods,
+results and limitations have not been reviewed in full. No credibility score,
+quantitative anchor or thesis/experiment recommendation is assigned here.
+
+| Candidate and primary version | Authors | Reading status |
+| --- | --- | --- |
+| [What Prompts Don't Say](https://arxiv.org/abs/2505.13360v3) | Chenyang Yang, Yike Shi, Qianou Ma, Michael Xieyang Liu, Christian Kästner, Tongshuang Wu | Abstract only; full-text review pending. |
+| [From Business Requirements to Test Assertions](https://arxiv.org/abs/2607.10277v1) | Ma and Eisty | Abstract only; full-text review pending. |
+| [Clarity Is Not Assumed (Orchid)](https://arxiv.org/abs/2604.21505v3) | Yang et al. | Abstract only; full-text review pending. |
+| [ClarifyCodeBench](https://arxiv.org/abs/2607.00711v2) | Fang et al. | Abstract only; full-text review pending. |
+
+**Source verification, 2026-10-04.** Review of [Akli et al.'s primary methods,
+results and threats](https://arxiv.org/html/2604.24712v1) corrected the mutation
+ratio: Table 4 and section 5.2 give 0.89 for under-specification, whereas 0.99
+belongs to lexical vagueness. The task description now distinguishes HumanEval
+functions from LiveCodeBench competitive-programming tasks. This review informs
+the reversal wording below, not the effect size of the selected46 study. The
+four abstract-only candidates remain outside the admitted matrix under its
+canonical reading policy.
 
 **Incorporation decisions (2026-10-04).**
 
@@ -571,9 +590,10 @@ and none are evidence for H1/H2.
    criterion (interval above 0.5). Added a sentence committing to report an
    interval below 0.5 as a reversal. The decision to keep H1a one-directional
    for the confirmatory claim remains with the advisor (new open decision 5).
-2. Yang et al. and Akli et al. are function-level or prompt-level; none uses a
-   browser oracle, so the gap claim in the proposal (controlled requirement
-   defect + executable UI oracle + pre-final warning) is not weakened by them.
+2. Akli et al. study code-generation benchmarks rather than browser journeys.
+   The paper does not validate this study's browser oracle, requirement-smell
+   mapping or pre-final warning. The four pending candidates must not support
+   a scientific gap claim until their full methods and limitations are reviewed.
 3. Korn et al. (AIRE'26, entry above) report unreliable LLM injection of
    synthetic smells and omissions. The pre-registered LLM panel for A/B/C
    validity plus the 20% human audit (open decision 2) is therefore a
