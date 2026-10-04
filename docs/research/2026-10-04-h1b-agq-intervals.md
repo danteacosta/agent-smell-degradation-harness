@@ -35,7 +35,7 @@ Todos os limites finitos foram obtidos com bracket verificado e sem nenhum aviso
 
 ## Como ler
 
-- Com a verossimilhança correta, **nenhuma das três covariáveis estimáveis tem intervalo que exclua 1**. O `memorized` [0,011; 0,98] do #163 era artefato da aproximação de Laplace; com integração adequada o intervalo vai a 1,03.
+- Com a verossimilhança correta, **nenhuma das três covariáveis estimáveis tem intervalo que exclua 1**. O intervalo de `memorized` [0,011; 0,98] do #163 muda para [0,015; 1,03] nesta análise de sensibilidade. A comparação muda também o tratamento do efeito de projeto e a otimização; ela não isola a causa dessa diferença.
 - `numeric`: o limite inferior de 62 é o único resultado com intervalo inteiramente acima de 1. Ele vem de 4 requisitos e de uma separação completa. Deve ser lido como "todas as regras numéricas da amostra falharam em C", não como uma estimativa de tamanho de efeito.
 - `derived_state` aponta contra a previsão de H1b, como você corrigiu no #164.
 - Os intervalos muito largos refletem 42 a 46 requisitos com desfechos quase binários por requisito. Não fiz análise de poder, então não afirmo nada sobre poder.
@@ -45,18 +45,19 @@ Todos os limites finitos foram obtidos com bracket verificado e sem nenhum aviso
 Feita por você com `validate_agq.R` (`glmer(..., (1 | case), nAGQ = 25)`, mesmo contêiner do #164), no modelo reduzido de 42 requisitos:
 
 - coeficientes reproduzidos; a log-verossimilhança difere da `agq25_check` deste script em 6×10⁻⁸;
-- perfis do lme4 convergiram: `context_cue` [0,000029; 2,98], `derived_state` [0,0000054; 6,94], `memorized` [0,014; 1,035]. Os três incluem 1, como aqui. As pequenas diferenças vêm de 25 nós contra 100.
+- perfis do lme4 convergiram: `context_cue` [0,000029; 2,98], `derived_state` [0,0000054; 6,94], `memorized` [0,014; 1,035]. Os três incluem 1, como aqui. As diferenças podem refletir o número de nós e detalhes numéricos ou de otimização; a concordância é aproximada, não identidade de todos os limites.
 
 Duas implementações independentes concordam, portanto, nos coeficientes e nos intervalos do modelo reduzido. O modelo pré-registrado, com intercepto de projeto, continua sem intervalos perfilados validados.
 
 ## Testes
 
-`tests/test_h1b_agq.py` cobre seis pontos:
+`tests/test_h1b_agq.py` cobre sete pontos:
 - a AGQ-100 coincide com a integração numérica direta, enquanto Laplace se afasta;
 - num efeito simulado, os dois limites do perfil têm bracket, cobrem o valor verdadeiro e caem exatamente no ponto de corte de χ²(1);
 - um termo separado recebe só o limite inferior;
 - um otimizador que declara sucesso sem chegar ao ótimo é marcado como não convergido, pelo gradiente;
 - um perfil cujos ajustes condicionais não convergem tem o limite recusado;
+- um perfil iniciado de um ajuste de referência não convergente é recusado antes da busca;
 - quando o máximo inicial é subótimo, a análise reajusta e recalcula os intervalos, que coincidem com os do ajuste correto.
 
 Os testes são pulados quando `numpy`/`scipy` não estão instalados.

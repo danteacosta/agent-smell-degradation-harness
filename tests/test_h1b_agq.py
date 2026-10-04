@@ -101,7 +101,7 @@ def test_profile_refuses_a_bound_from_non_converged_fits(monkeypatch):
 
 def test_intervals_are_recomputed_after_a_better_maximum_is_found(monkeypatch):
     rows = []
-    X, y, cl = _sim(11, k=40, beta=(0.5, -2.0), sd=1.0)
+    X, y, cl = _sim(11, k=40, beta=(0.5, -2.0), sd=2.0)  # keep the reference variance away from its boundary
     for x, yy, c in zip(X, y, cl):
         rows.append({"case": f"c{c}", "y": int(yy), "context_cue": int(x[1])})
     real_build = a.build
@@ -122,3 +122,15 @@ def test_intervals_are_recomputed_after_a_better_maximum_is_found(monkeypatch):
     assert out["loglik"] == pytest.approx(ref["loglik"], abs=1e-6)
     for got, want in zip(out["terms"]["context_cue"]["ci95_log_odds"], ref["terms"]["context_cue"]["ci95_log_odds"]):
         assert got == pytest.approx(want, abs=1e-3)
+
+
+def test_profile_refuses_a_non_converged_reference_fit():
+    class UnusedConditionalModel:
+        def fit(self, *args, **kwargs):
+            raise AssertionError('conditional fitting must not start from an invalid reference')
+
+    full = {"converged": False, "loglik": 0.0, "beta": np.array([0.0, 0.0]),
+            "theta": np.array([0.0, 0.0, 0.0]), "free": [0, 1]}
+    side = a.profile(UnusedConditionalModel(), full, 1, +1)
+    assert side["bound"] is None
+    assert side["status"].startswith("refused: reference fit did not converge")

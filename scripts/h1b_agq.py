@@ -7,8 +7,9 @@ profile failed because the search found a lower deviance than the fit. With
 about four runs per requirement and a requirement SD near 5, the Laplace
 approximation is also known to be poor. This script therefore:
 
-1. Drops the project intercept, whose estimate is exactly 0: at that boundary
-   the reduced model has the same maximised likelihood.
+1. Fixes the project variance at zero as an exploratory sensitivity analysis.
+   Its Laplace estimate is on the boundary, but this does not validate the
+   profile intervals of the pre-registered two-intercept model.
 2. Integrates the requirement intercept with adaptive Gauss-Hermite quadrature
    (default 100 nodes, where the log-likelihood agrees with direct numerical
    integration to 1e-5; lme4 allows at most nAGQ = 25, which is off by ~0.006 here).
@@ -151,6 +152,8 @@ def profile(model: AGQLogit, full: dict, j: int, direction: int) -> dict:
     beats the full fit, the best such point is returned in `better` so that
     the caller can refit and recompute every interval against the new maximum.
     """
+    if not full["converged"]:
+        return {"bound": None, "status": "refused: reference fit did not converge"}
     sup = full["loglik"]
     target = sup - CHI2_1_95 / 2
     center = float(full["beta"][j])
