@@ -1,0 +1,262 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "grist-suggestions-open-copy",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "target_only_failure": 1,
+        "pass": 1
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "target_only_failure": 1,
+        "pass": 1
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "grist-suggestions-open-copy-61d66a4c121521ffc84730cd",
+      "intent_id": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "e464de90a57673ad0c82d5733860549dcef85195c0de04d7b191ea3d9b410ad6",
+        "screenshots": {
+          "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+          "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-suggestions-open-copy-8644db081c212c38b5924f9e",
+      "intent_id": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "14a010835e957437326ebaccdbc942e8dae19c4337563803bc69cc0772c3bd85",
+        "screenshots": {
+          "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+          "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-suggestions-open-copy-88f16133dc799b1495141ce6",
+      "intent_id": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "c10f2441d024b23bbc5333ddb076a1c0ec9c79f2cc1165e43e43f14e9dd4aaa4",
+        "screenshots": {
+          "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+          "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-suggestions-open-copy-2b9918179d68f224a7d34008",
+      "intent_id": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "7a6de2ba7fa330bf6e15864e92205e62ba022340d97b2b4d3921475cf19bb904",
+        "screenshots": {
+          "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+          "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-suggestions-open-copy-4984ab032f7d227ac230405d",
+      "intent_id": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "9694c01a1a4758d6200fa7dc12897725f7804f1285715d7e0cfb3ede64509109",
+        "screenshots": {
+          "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+          "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-suggestions-open-copy-d48718f34754c9fa71a82ca8",
+      "intent_id": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ff98412b73b5a4f193e13ca7f1f9538815d75cbe4414b9ed38c4d4d07d67a2f0",
+        "screenshots": {
+          "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+          "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-suggestions-open-copy-32b9d71e12d7ad3f3f7cda2b",
+      "intent_id": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "4948be3fbd6edc4a2426fdef04a93ba3d8522d2ecc4cbc07f1145421e86b51e6",
+        "screenshots": {
+          "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+          "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-suggestions-open-copy-da4b0f8fa9ede8dca18a9643",
+      "intent_id": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "68ce1ca569e9601816bfd53d2538386530ec8e59bb99a4a2f3d0c7b30c859bfa",
+        "screenshots": {
+          "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+          "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-suggestions-open-copy-65f45e320e09658a58f22330",
+      "intent_id": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "0857cbe940f64479743541031f80b6fdb221e948e308e34483bc1cead1f385f3",
+        "screenshots": {
+          "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+          "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-suggestions-open-copy-a9b6ae27056783217c73fb36",
+      "intent_id": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "97b0e84165c85c6584417910a9d254b1ad5705b7d79933776b6196abbdb12659",
+        "screenshots": {
+          "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+          "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-suggestions-open-copy-ce606742d5a409dd614c5e3d",
+      "intent_id": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "8e507e5a3cdfe71b2b5afa32ae5d3d70b6b701c06da0952f7e9f04e704ba6eb0",
+        "screenshots": {
+          "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+          "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-suggestions-open-copy-89139a2081bdc0c07f2ba2dc",
+      "intent_id": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ff98412b73b5a4f193e13ca7f1f9538815d75cbe4414b9ed38c4d4d07d67a2f0",
+        "screenshots": {
+          "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+          "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

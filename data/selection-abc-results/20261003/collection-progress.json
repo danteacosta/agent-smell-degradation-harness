@@ -1,0 +1,1328 @@
+{
+  "completed_cases": 46,
+  "planned_cases": 46,
+  "all_cases_finished": true,
+  "confirmatory_eligible": false,
+  "cases": [
+    {
+      "case": "nextcloud-device-password-once",
+      "results_sha256": "ebe7640551f29269059b579fd1091eb22a17051b691cd4f9b453f248ed9746a4",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "target_only_failure": 1,
+            "pass": 1
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "grist-suggestions-open-copy",
+      "results_sha256": "865ba73f5477bc1521f8e07fa84458f547ac9b2b939acf51b7adb92dd784c398",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 1,
+            "pass": 1
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 1,
+            "pass": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "zulip-gif-picker-disabled",
+      "results_sha256": "5de8d450c94eadb039f8d911e358e5746330ffa45ec587714494647d05aa1c1d",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "nextcloud-breakout-rooms",
+      "results_sha256": "6aaa6659de7681dc71ef80e58ae5f7cbdebec85633caf9709274ff4de58f36c0",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "wekan-field-order-independent",
+      "results_sha256": "2ca0a08d68327fbaaa629fe314a06d85e938e382cfe32dabe1d15fcffba6fe31",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "invalid_output": 1,
+            "pass": 1
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "openproject-auto-theme-contrast",
+      "results_sha256": "3293ecc132c10cab698a281c92d183ea9915e6e49d7c25557d32351f41765186",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "browser_error": 2
+          },
+          "B": {
+            "mixed_failure": 2
+          },
+          "C": {
+            "mixed_failure": 1,
+            "target_only_failure": 1
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "browser_error": 2
+          },
+          "B": {
+            "browser_error": 1,
+            "mixed_failure": 1
+          },
+          "C": {
+            "browser_error": 1,
+            "mixed_failure": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "zulip-unsubscribe-self",
+      "results_sha256": "1601da03a533c20459823fce21b194a8c2dc16e46be03b484e1ff0c15acef724",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 1,
+            "pass": 1
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "browser_error": 1,
+            "pass": 1
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "grist-page-default-collapse",
+      "results_sha256": "40bf0eda65b7e75e4002572c67e045cb431ab1117aed4ab213b63271c1890c42",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "mealie-organize-food-permission",
+      "results_sha256": "e25ba6f2d5ee678fbf1d41b5157de0c872687a7276e8730697a64ea09b70e849",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "non_target_only_failure": 1,
+            "browser_error": 1
+          },
+          "B": {
+            "browser_error": 2
+          },
+          "C": {
+            "browser_error": 1,
+            "non_target_only_failure": 1
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "browser_error": 1,
+            "non_target_only_failure": 1
+          },
+          "B": {
+            "non_target_only_failure": 2
+          },
+          "C": {
+            "non_target_only_failure": 1,
+            "browser_error": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "paperless-custom-field-no-value",
+      "results_sha256": "a2e5ef9de020253a35baf57e61a134c032a9ddc68baa0f13cfaa17a199c5944e",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 1,
+            "target_only_failure": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "nextcloud-mail-delegation",
+      "results_sha256": "1a7b0e08f4051bdfc17488c549b115e8c8c6fb1b78eeda004d9b3de08f11aca1",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 1,
+            "pass": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "zulip-subscribe-typeahead",
+      "results_sha256": "b7079f42e642c311b54f1e7d24a1641eeb9e7ed4fa5687ebae9f7462830af078",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "grist-tutorial-fork-return",
+      "results_sha256": "52832d59ec1c2ffced358efd3a26cffe1e2c223592c5ca920ea74d38b97b8280",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "grist-context-menu-shortcut",
+      "results_sha256": "e0029c47478f4160b7ca716dd91fba57dc0c862c04b2a32f292bb559e4912842",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 1,
+            "non_target_only_failure": 1
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "mixed_failure": 1,
+            "target_only_failure": 1
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "non_target_only_failure": 1,
+            "pass": 1
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "immich-m2t-upload",
+      "results_sha256": "602d80b277b16cfb09ffc5a048fff7dd4b430ecf8ec0016246f6ee26f01073e1",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "zulip-resolved-notice-auto-read",
+      "results_sha256": "060add017adf0089c3c5b8c9236ea93a11a20ccf2226976c9441b12d550f4dae",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "nextcloud-calendar-talk-location",
+      "results_sha256": "c6e3982f097eb11c930d17d8042c5644a0fc91f88266815edd9634431abff174",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "browser_error": 1,
+            "pass": 1
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "openproject-filter-text-autoupdate",
+      "results_sha256": "668da3a20e05e7c2d6a2b7ce8a0731d623b152faa73aa1385523f4fad06f6d99",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "target_only_failure": 1,
+            "browser_error": 1
+          },
+          "B": {
+            "target_only_failure": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "target_only_failure": 2
+          },
+          "B": {
+            "target_only_failure": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "grist-billing-managers-limit",
+      "results_sha256": "af380d5a0766caa85e95fc06efe2264891c5c2f7425bbef45fa3f64351a11479",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "mattermost-guest-invite-channel",
+      "results_sha256": "a77d44e726751bf40d5c175cb6fb4bf2fc474bcd810506c0fecf47977325b33a",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "immich-path-search",
+      "results_sha256": "d2269360aef523c517d87006a597467fb40a61c1bb8de4ef875d1bfa72e5a3c6",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "zulip-reverse-linkifier-paste",
+      "results_sha256": "6fea8ab733882160855e050fe34d34a088fea66ab6a0bec94f2caf3c97ca05e7",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "target_only_failure": 2
+          },
+          "B": {
+            "target_only_failure": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "target_only_failure": 2
+          },
+          "B": {
+            "target_only_failure": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "openproject-more-menu-subproject",
+      "results_sha256": "64ae4b8bdf190a42a6b9af41457dc7f81513a2180a28e10026f78979f4091e02",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "mattermost-playbook-task-markdown",
+      "results_sha256": "7ea1f77a96b9928e7e50cc22b942232de7733793b8c92d80e2a914c7e58cbeeb",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "wekan-week-number-immediate",
+      "results_sha256": "9a3eb83fb5350afe3a821523a65d45d9cef9c05be7e8e0b37ae97f9d55d433c2",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "paperless-doc-title-placeholder",
+      "results_sha256": "d4311c63ddbee7a697b42b043c53678836af56e34c279da41909ecc8c84b0548",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "target_only_failure": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "wekan-home-multi-drop",
+      "results_sha256": "37aca5938655e130cb79e239e44dfcc6ab2dfcafcb6d54edf79bef0b2749359a",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "mattermost-mention-add-prompt",
+      "results_sha256": "0fd3b338a19058e320d283742556dcd5e4328d9625db23b7b50bd624840fa438",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "mixed_failure": 1,
+            "pass": 1
+          },
+          "B": {
+            "mixed_failure": 1,
+            "pass": 1
+          },
+          "C": {
+            "target_only_failure": 1,
+            "browser_error": 1
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 1,
+            "target_only_failure": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "wekan-swimlane-below-default",
+      "results_sha256": "8bd6ac51f4b5f913b3fcdad99b6b3a39b92653b131dfdb4b8866441628a2882e",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "nextcloud-mail-favorites-up",
+      "results_sha256": "c9f31456a19f9037075b9d613b2dd0cfb672bc5aa4bb81975e76aedde1e3d92b",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 1,
+            "mixed_failure": 1
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 1,
+            "target_only_failure": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "grist-tutorial-restart",
+      "results_sha256": "3e3fc67338628e27a5fbae454fc0c41b3728b318e56117fe63c174463ef00517",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "target_only_failure": 2
+          },
+          "B": {
+            "target_only_failure": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "openproject-invite-permission-basis",
+      "results_sha256": "afd9271d32d0a00509b1f0cb4a136bdba88a27c6b4ef471b90fe6bed6f9dfd6f",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "target_only_failure": 2
+          },
+          "B": {
+            "invalid_output": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "target_only_failure": 2
+          },
+          "B": {
+            "target_only_failure": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "zulip-private-channel-access",
+      "results_sha256": "7e57926d46aef8dc49236028c0d9765fefbf7f8ad37752a0b9f7abec918217b9",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "paperless-own-profile",
+      "results_sha256": "66f9d44eb231879690f106b3aceedea124a3ebf690382a6c286eb3cf44f0efff",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "mattermost-channel-autotranslate",
+      "results_sha256": "a26bad7b2e1b9548bc70fa282be88f5a4dbdea8b500bc8bf3713c3e24b49c41a",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "target_only_failure": 1,
+            "pass": 1
+          },
+          "C": {
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "wekan-member-same-org-team",
+      "results_sha256": "b58d6f7d35131a8a6be4f0473fe802924f08277f0751d09c856681c48831b31c",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "target_only_failure": 1,
+            "mixed_failure": 1
+          },
+          "B": {
+            "mixed_failure": 2
+          },
+          "C": {
+            "mixed_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "mixed_failure": 2
+          },
+          "B": {
+            "mixed_failure": 2
+          },
+          "C": {
+            "mixed_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "nextcloud-delete-folder-trash",
+      "results_sha256": "80c48ec302df3c39db1882c656af773f8658f1eae0e487aaf319d7b57af113c7",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "immich-library-single-owner",
+      "results_sha256": "e46b237b1f6982ede388c6bef9387a203da2dd540334d2e81943cdf711d69586",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "target_only_failure": 1,
+            "pass": 1
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "openproject-files-tab-attachments",
+      "results_sha256": "2b221e675d4fe053fa96d22a0692a90a59fc32342a36752803e071d6ae1bb61b",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "mattermost-timezone-default-automatic",
+      "results_sha256": "edc72c538a4e22f496a82ae7f420006c5d2b42de0ab389f1410f214e8c9b9205",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "openproject-archived-project-selector",
+      "results_sha256": "c8b9438be40150f18595a1bfae2e08e1a1b3bcf9aa9bc94d7aab64d05e87fb43",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 1,
+            "invalid_output": 1
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 1,
+            "target_only_failure": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "mealie-planner-food-label",
+      "results_sha256": "254e8cbc0db5d1da1ce56716243038f99793afc5de0912d4f4533153e5e8b504",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "mixed_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "mixed_failure": 2
+          },
+          "C": {
+            "mixed_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "mattermost-anonymous-team-url",
+      "results_sha256": "ed8cb00de992229504b7c85d4b8edb04483908e00e96c5ff985985f108f4e773",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 1,
+            "target_only_failure": 1
+          }
+        }
+      }
+    },
+    {
+      "case": "paperless-ai-suggestions-blank-text",
+      "results_sha256": "0b76619b8dd8e37a8c34e4ed2ad0cb1342e59989aa7cd8565263208bc1b1e610",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "wekan-sync-local-edits",
+      "results_sha256": "3d5b8b14b0311f4d1f44adcb02cec4d453336ae93017ea67d6b78a299fd41472",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "pass": 2
+          }
+        }
+      }
+    },
+    {
+      "case": "paperless-superuser-grant",
+      "results_sha256": "a7fb2bd597ddb6bf0553a1c90bacdb1ad57fa35ccc35fa983f1b5ed6b1bc1479",
+      "counts": {
+        "gpt-5.6-luna": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        },
+        "gpt-5.6-sol": {
+          "A": {
+            "pass": 2
+          },
+          "B": {
+            "pass": 2
+          },
+          "C": {
+            "target_only_failure": 2
+          }
+        }
+      }
+    }
+  ]
+}

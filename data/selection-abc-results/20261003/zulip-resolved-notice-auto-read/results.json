@@ -1,0 +1,260 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "zulip-resolved-notice-auto-read",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "target_only_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "target_only_failure": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "zulip-resolved-notice-auto-read-56fa0e67480982c9f7d39535",
+      "intent_id": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "0cd8f0196702a3e426510688415c425c10adc3aed513e65d5196232ba47e8b98",
+        "screenshots": {
+          "fixture-1.png": "3cef9a126673312f74ee99f2d10bfbf42203ffb66ef387f209f58a4c6f8ef43f",
+          "fixture-2.png": "ac3ba9044c7f0d2868a2d7f5dd17a11024f1e4276dcf7b7e6cd1218dd1b4fd5e"
+        }
+      }
+    },
+    {
+      "slot_id": "zulip-resolved-notice-auto-read-b6f84b05d2f45aac2599ae88",
+      "intent_id": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "1c48a7c1918434dda28d73c243c88a4171b1e82379429f24ebf43efeeca20c21",
+        "screenshots": {
+          "fixture-1.png": "57c3c34e8e1829ec38559a3ae96ed35de6f2771e66982a01dd71198bc6428956",
+          "fixture-2.png": "44f0bb8d7910a5b70ff1b97db21dc0d4f7cfb1713d731dd4690bb08f3696b068"
+        }
+      }
+    },
+    {
+      "slot_id": "zulip-resolved-notice-auto-read-3303c71c8bd77484d2e1d158",
+      "intent_id": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "d3dc9367612c108baf463347344286bef99c87134ad08920f2c9c3d2ddb08208",
+        "screenshots": {
+          "fixture-1.png": "9c1cdb078e9508847d33e58f1e0fd8943d1b5c9add31b5a86ea54a86ae2a7a4a",
+          "fixture-2.png": "202e10a0e973c3babeb52ce8b01167259e8005c8ae8683f5ae148a4c39b18ab8"
+        }
+      }
+    },
+    {
+      "slot_id": "zulip-resolved-notice-auto-read-9d50f94653f55df973af50eb",
+      "intent_id": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "6e112961c8b5908ab618ba80177a3a95bc98508ba35bc1723ee38b17cef4c8ea",
+        "screenshots": {
+          "fixture-1.png": "f5deb959f594253447ef7dbc6fab98d1f12ee3fe0d512181b467ea914164d077",
+          "fixture-2.png": "602b5853485d5f8b5dd0f0b7ad5c1aa126114110066ba0462a13c0e31ac19862"
+        }
+      }
+    },
+    {
+      "slot_id": "zulip-resolved-notice-auto-read-df6dacd2ba5a76ed943ee935",
+      "intent_id": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "bf1d015bd2ee6636ffb4ef3e3df7ae2b088318bc86d09e14127cfefac3db2faa",
+        "screenshots": {
+          "fixture-1.png": "9c1cdb078e9508847d33e58f1e0fd8943d1b5c9add31b5a86ea54a86ae2a7a4a",
+          "fixture-2.png": "202e10a0e973c3babeb52ce8b01167259e8005c8ae8683f5ae148a4c39b18ab8"
+        }
+      }
+    },
+    {
+      "slot_id": "zulip-resolved-notice-auto-read-b6859c0558273d9f9ae611e7",
+      "intent_id": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ebc20d946664d0ed3f1a6d2d43561c9e6ff3745a685bad3a721bfe959152303e",
+        "screenshots": {
+          "fixture-1.png": "06bb801324291ce8a6505abb85f67e1b6479b8ce904e3f03c0523e2dc1c9d684",
+          "fixture-2.png": "7fd59258f2dd9ec45ff3ea166f7f8942ab0bc717b9af0e842a8dfea84bc49f45"
+        }
+      }
+    },
+    {
+      "slot_id": "zulip-resolved-notice-auto-read-cafd57566f2a81f54e52bcc7",
+      "intent_id": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "09891546472fdc94fec87ec0963dae8cbcd7d7779491a7931201df421bfa2611",
+        "screenshots": {
+          "fixture-1.png": "8c52f485d6c16c3ad7db3292de687146215ea78dfd48997a3819e1f2573b9809",
+          "fixture-2.png": "6f745311e13f83e95de374f892f9fe2644a7779f664134796c8270cf730664d4"
+        }
+      }
+    },
+    {
+      "slot_id": "zulip-resolved-notice-auto-read-aab088df2d1da12c4be0c478",
+      "intent_id": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "156f7a2d020d5489e2e5b5de84e2d4c2037725f9e7503536c69b273b98c589c8",
+        "screenshots": {
+          "fixture-1.png": "0a9e19c89653e299da162e3e080370413e7c00d78445b3e5ed53d73ca28d270c",
+          "fixture-2.png": "0d28ce7d8eb1af377fa7280a7ae3b836d92efbd3f97a35240c092c95f177db93"
+        }
+      }
+    },
+    {
+      "slot_id": "zulip-resolved-notice-auto-read-8940d5a7ca88bb49d6280632",
+      "intent_id": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "433817d8f63e02985c1ddbef793557478537b75aa1d777e01943173ff33bfa56",
+        "screenshots": {
+          "fixture-1.png": "0f8e651f8fd2735bb67ceac3f45d867d4f4b123caff5d47bec2208f602fe9282",
+          "fixture-2.png": "050ca028a0103678f0f359b843cdbfb6f440735a4b144894fe88cf5e7e7163ba"
+        }
+      }
+    },
+    {
+      "slot_id": "zulip-resolved-notice-auto-read-d700cbc6f768457be11dc43e",
+      "intent_id": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "c23b39b035bcba73c8a427ae94925f080ca82130f8df4020ef947b148659c317",
+        "screenshots": {
+          "fixture-1.png": "250aa7abbe66c4800493056117d07161ac0d2805e4ac5d126e6900a61c451334",
+          "fixture-2.png": "a3d1fe67cee41baa0004c13733288e0c0bafdb0e10dc913b9b5d7d7f876d3b87"
+        }
+      }
+    },
+    {
+      "slot_id": "zulip-resolved-notice-auto-read-21077b7c999862a740486dbc",
+      "intent_id": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "3a0b4f0b42cd2dea1bf1a60b69aad6826e1ddfe1df2eafe085e8a27b4a97b437",
+        "screenshots": {
+          "fixture-1.png": "40cc9bcace45969a53941c43b007f2b1e604e729db0b0cf642b660c8e4a6a030",
+          "fixture-2.png": "214540f961a38305c02285e0433eebbe05724d2fe5ffa256cc60404f560dc340"
+        }
+      }
+    },
+    {
+      "slot_id": "zulip-resolved-notice-auto-read-7430485d6e279b1dbcbb42d5",
+      "intent_id": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "1f2af9abf3bac5cf0441ec838a5cb30ab7a513c1c1d930c8ca3038b93199a4d7",
+        "screenshots": {
+          "fixture-1.png": "06bb801324291ce8a6505abb85f67e1b6479b8ce904e3f03c0523e2dc1c9d684",
+          "fixture-2.png": "7fd59258f2dd9ec45ff3ea166f7f8942ab0bc717b9af0e842a8dfea84bc49f45"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

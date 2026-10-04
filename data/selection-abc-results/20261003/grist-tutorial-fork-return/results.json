@@ -1,0 +1,260 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "grist-tutorial-fork-return",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "grist-tutorial-fork-return-a186e8a62e25d8ffe488adb5",
+      "intent_id": "grist-tutorial-fork-return",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "eb1336fb986bb208dbd6057df4e6aa96b1a5b15318cc70cfee41e72dab53c027",
+        "screenshots": {
+          "fixture-1.png": "4075a51b4ed70bbbd9c505e9be82d22575c8bb8bd76fbd607e1022f6071f39a3",
+          "fixture-2.png": "68e1fd104767c9fbd01318303c875d5266755f6dac1f9e466cb58502c20a2003"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-tutorial-fork-return-9c9fa42cc88a7cae21ed8910",
+      "intent_id": "grist-tutorial-fork-return",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "3f24ed4282291409f018e351a92b757a56225048891cf1c8bdb21e25dc477b65",
+        "screenshots": {
+          "fixture-1.png": "4075a51b4ed70bbbd9c505e9be82d22575c8bb8bd76fbd607e1022f6071f39a3",
+          "fixture-2.png": "68e1fd104767c9fbd01318303c875d5266755f6dac1f9e466cb58502c20a2003"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-tutorial-fork-return-17b590c7665ef13b0e649b89",
+      "intent_id": "grist-tutorial-fork-return",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "24f14ea00de9847041b03b70b8d4f9d8a7fd1b13ce282f2cdf5eb1a2a1142c61",
+        "screenshots": {
+          "fixture-1.png": "4075a51b4ed70bbbd9c505e9be82d22575c8bb8bd76fbd607e1022f6071f39a3",
+          "fixture-2.png": "68e1fd104767c9fbd01318303c875d5266755f6dac1f9e466cb58502c20a2003"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-tutorial-fork-return-957b68d17a755dd57988f18d",
+      "intent_id": "grist-tutorial-fork-return",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "c70382b8ef1e62f9c12075a9717c7a90ca6ce8fafa825232e187b47e8eb0c83c",
+        "screenshots": {
+          "fixture-1.png": "4075a51b4ed70bbbd9c505e9be82d22575c8bb8bd76fbd607e1022f6071f39a3",
+          "fixture-2.png": "68e1fd104767c9fbd01318303c875d5266755f6dac1f9e466cb58502c20a2003"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-tutorial-fork-return-640198337e65acc6005d0d89",
+      "intent_id": "grist-tutorial-fork-return",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "f5173dbed3c0e90a414378b308cee88a77298077fdeebd8a1b3faddd55607ce2",
+        "screenshots": {
+          "fixture-1.png": "4075a51b4ed70bbbd9c505e9be82d22575c8bb8bd76fbd607e1022f6071f39a3",
+          "fixture-2.png": "68e1fd104767c9fbd01318303c875d5266755f6dac1f9e466cb58502c20a2003"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-tutorial-fork-return-f3d4edcb9ba96908842e0a1d",
+      "intent_id": "grist-tutorial-fork-return",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "2b2b702ad67da5402ec5c8547f5a43560c554e0384da3e3d5afb63cd2737c0d8",
+        "screenshots": {
+          "fixture-1.png": "4075a51b4ed70bbbd9c505e9be82d22575c8bb8bd76fbd607e1022f6071f39a3",
+          "fixture-2.png": "68e1fd104767c9fbd01318303c875d5266755f6dac1f9e466cb58502c20a2003"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-tutorial-fork-return-acabde108a89c724cef5cc3f",
+      "intent_id": "grist-tutorial-fork-return",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "66b80266dd72e9eb7a22f50e8ea0ee833a9f563c2f9bd3ff9d14ba414b4d1dc5",
+        "screenshots": {
+          "fixture-1.png": "4075a51b4ed70bbbd9c505e9be82d22575c8bb8bd76fbd607e1022f6071f39a3",
+          "fixture-2.png": "68e1fd104767c9fbd01318303c875d5266755f6dac1f9e466cb58502c20a2003"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-tutorial-fork-return-f91485dcd422a365ffcf3e2a",
+      "intent_id": "grist-tutorial-fork-return",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "52423b4c4f987c29dc9a5672d77ed59137ce34e901da25e162bc78ef0a14dc8f",
+        "screenshots": {
+          "fixture-1.png": "4075a51b4ed70bbbd9c505e9be82d22575c8bb8bd76fbd607e1022f6071f39a3",
+          "fixture-2.png": "68e1fd104767c9fbd01318303c875d5266755f6dac1f9e466cb58502c20a2003"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-tutorial-fork-return-22473a173312fa1f23968523",
+      "intent_id": "grist-tutorial-fork-return",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "3b1e217af787b70014a63b6dbab44395cae45b45e2a9dba710213a899297d36c",
+        "screenshots": {
+          "fixture-1.png": "4075a51b4ed70bbbd9c505e9be82d22575c8bb8bd76fbd607e1022f6071f39a3",
+          "fixture-2.png": "68e1fd104767c9fbd01318303c875d5266755f6dac1f9e466cb58502c20a2003"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-tutorial-fork-return-d00f396d9624b6fe882af45e",
+      "intent_id": "grist-tutorial-fork-return",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "1ec95092e210bff8e94b42ad944fa2224b7bc0f01e9432ae8afd6fb2621678bd",
+        "screenshots": {
+          "fixture-1.png": "4075a51b4ed70bbbd9c505e9be82d22575c8bb8bd76fbd607e1022f6071f39a3",
+          "fixture-2.png": "68e1fd104767c9fbd01318303c875d5266755f6dac1f9e466cb58502c20a2003"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-tutorial-fork-return-55f6bb84f01eba7ab51294be",
+      "intent_id": "grist-tutorial-fork-return",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "6b530dad1b4a8caa036834a42deab448b353127ae27894eead0613a0c69b99ea",
+        "screenshots": {
+          "fixture-1.png": "4075a51b4ed70bbbd9c505e9be82d22575c8bb8bd76fbd607e1022f6071f39a3",
+          "fixture-2.png": "68e1fd104767c9fbd01318303c875d5266755f6dac1f9e466cb58502c20a2003"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-tutorial-fork-return-d545d1bdccfb96b9f3c38c97",
+      "intent_id": "grist-tutorial-fork-return",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "f221e16b6051937ee5cc4f7f40f09b7a3680d998dc7f30ecf25d351961ccb752",
+        "screenshots": {
+          "fixture-1.png": "4075a51b4ed70bbbd9c505e9be82d22575c8bb8bd76fbd607e1022f6071f39a3",
+          "fixture-2.png": "68e1fd104767c9fbd01318303c875d5266755f6dac1f9e466cb58502c20a2003"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

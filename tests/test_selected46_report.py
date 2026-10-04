@@ -117,7 +117,19 @@ def test_unfinished_cases_are_included_in_collection_sensitivity_bounds(tmp_path
     assert report["h1a_c_vs_a"]["best"]["estimate"] == pytest.approx(0.5)
 
 
-def test_published_packet_matches_its_reported_counts():
-    report = rep.build(rep.ROOT / "data/selection-abc-results/20261003")
-    luna = report["counts_by_model_and_arm"]["gpt-5.6-luna"]
-    assert luna["C"].get("violated") == 2 and luna["A"].get("held") == 2
+def test_published_packets_match_the_collection_progress_counts():
+    import json
+    from collections import Counter
+    root = rep.ROOT / "data/selection-abc-results/20261003"
+    report = rep.build(root)
+    assert report["progress"]["finished_cases"] == 46 and report["progress"]["runs"] == 552
+    progress = json.loads((root / "collection-progress.json").read_text())
+    expected = {}
+    for case in progress["cases"]:
+        for model, arms in case["counts"].items():
+            for arm, categories in arms.items():
+                cell = expected.setdefault(model, {}).setdefault(arm, Counter())
+                for category, n in categories.items():
+                    sev = rep.severity(category)
+                    cell["held" if sev == 0 else "violated" if sev == 1 else "unknown"] += n
+    assert report["counts_by_model_and_arm"] == {m: {a: dict(c) for a, c in arms.items()} for m, arms in expected.items()}

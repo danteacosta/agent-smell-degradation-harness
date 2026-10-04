@@ -1,0 +1,261 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "paperless-custom-field-no-value",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "target_only_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 1,
+        "target_only_failure": 1
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "paperless-custom-field-no-value-83df0ec78da9deee807a946d",
+      "intent_id": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "30e7ceb0c22e8690281b55ab050886bc4cf37006aab26ddf50e94fe74e650dfe",
+        "screenshots": {
+          "fixture-1.png": "42008e85a46abb08b303de59fe96857552d760300e54eac5010b5af9465852f7",
+          "fixture-2.png": "acab8b9e7bc5f5bd9d8a37f84cb58d27457e39840f517a595b975f18da77a415"
+        }
+      }
+    },
+    {
+      "slot_id": "paperless-custom-field-no-value-3a4ac155e96affc05431380a",
+      "intent_id": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "b1eaeb1daee335bf19502dd9e0bc7557646aa1b7f3a65d682206e9f67abd9bdb",
+        "screenshots": {
+          "fixture-1.png": "42008e85a46abb08b303de59fe96857552d760300e54eac5010b5af9465852f7",
+          "fixture-2.png": "acab8b9e7bc5f5bd9d8a37f84cb58d27457e39840f517a595b975f18da77a415"
+        }
+      }
+    },
+    {
+      "slot_id": "paperless-custom-field-no-value-61f245e65d2c2bfa67e832c6",
+      "intent_id": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "b1eaeb1daee335bf19502dd9e0bc7557646aa1b7f3a65d682206e9f67abd9bdb",
+        "screenshots": {
+          "fixture-1.png": "42008e85a46abb08b303de59fe96857552d760300e54eac5010b5af9465852f7",
+          "fixture-2.png": "acab8b9e7bc5f5bd9d8a37f84cb58d27457e39840f517a595b975f18da77a415"
+        }
+      }
+    },
+    {
+      "slot_id": "paperless-custom-field-no-value-130142e55ee9a36ee5157825",
+      "intent_id": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "0e5f803ecc90899ea1dbe4b36616c34160c980b0225f0a78e172a57fdacc8f53",
+        "screenshots": {
+          "fixture-1.png": "42008e85a46abb08b303de59fe96857552d760300e54eac5010b5af9465852f7",
+          "fixture-2.png": "acab8b9e7bc5f5bd9d8a37f84cb58d27457e39840f517a595b975f18da77a415"
+        }
+      }
+    },
+    {
+      "slot_id": "paperless-custom-field-no-value-45ce25a42e986023a288c11f",
+      "intent_id": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "3054f8f95fe3856600c3b497ebbb2d6877af3c990d5b4f7e71614517356a0625",
+        "screenshots": {
+          "fixture-1.png": "a044d33f2589e33fe27fb6fd68714bab0d9ef3c41d351e82b9b86e13b31c740d",
+          "fixture-2.png": "acab8b9e7bc5f5bd9d8a37f84cb58d27457e39840f517a595b975f18da77a415"
+        }
+      }
+    },
+    {
+      "slot_id": "paperless-custom-field-no-value-aba03a1a8b8f9c088c5e241f",
+      "intent_id": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "adb271c97781383ad4f99cf1e60aa838994435960d2503c31220fae2c79984a5",
+        "screenshots": {
+          "fixture-1.png": "a044d33f2589e33fe27fb6fd68714bab0d9ef3c41d351e82b9b86e13b31c740d",
+          "fixture-2.png": "acab8b9e7bc5f5bd9d8a37f84cb58d27457e39840f517a595b975f18da77a415"
+        }
+      }
+    },
+    {
+      "slot_id": "paperless-custom-field-no-value-02a4d6a0ac9f3ee52428aac9",
+      "intent_id": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "b7386c30c96638083dec458b2830275162ce065eef03a80f8aaa156aab8c3fd4",
+        "screenshots": {
+          "fixture-1.png": "42008e85a46abb08b303de59fe96857552d760300e54eac5010b5af9465852f7",
+          "fixture-2.png": "acab8b9e7bc5f5bd9d8a37f84cb58d27457e39840f517a595b975f18da77a415"
+        }
+      }
+    },
+    {
+      "slot_id": "paperless-custom-field-no-value-e4ab226a00c72a1357f8bade",
+      "intent_id": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "0e5f803ecc90899ea1dbe4b36616c34160c980b0225f0a78e172a57fdacc8f53",
+        "screenshots": {
+          "fixture-1.png": "42008e85a46abb08b303de59fe96857552d760300e54eac5010b5af9465852f7",
+          "fixture-2.png": "acab8b9e7bc5f5bd9d8a37f84cb58d27457e39840f517a595b975f18da77a415"
+        }
+      }
+    },
+    {
+      "slot_id": "paperless-custom-field-no-value-c9d4e9872651a5112cddb821",
+      "intent_id": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "80a0e6988b8d77f94a46257a4faa73378946b337b10dc2ce7cdb65146ee82992",
+        "screenshots": {
+          "fixture-1.png": "42008e85a46abb08b303de59fe96857552d760300e54eac5010b5af9465852f7",
+          "fixture-2.png": "acab8b9e7bc5f5bd9d8a37f84cb58d27457e39840f517a595b975f18da77a415"
+        }
+      }
+    },
+    {
+      "slot_id": "paperless-custom-field-no-value-90558d36b43e22812b9ba8c8",
+      "intent_id": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "0e5f803ecc90899ea1dbe4b36616c34160c980b0225f0a78e172a57fdacc8f53",
+        "screenshots": {
+          "fixture-1.png": "42008e85a46abb08b303de59fe96857552d760300e54eac5010b5af9465852f7",
+          "fixture-2.png": "acab8b9e7bc5f5bd9d8a37f84cb58d27457e39840f517a595b975f18da77a415"
+        }
+      }
+    },
+    {
+      "slot_id": "paperless-custom-field-no-value-2886861d06a5246474bfcd55",
+      "intent_id": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "0e5f803ecc90899ea1dbe4b36616c34160c980b0225f0a78e172a57fdacc8f53",
+        "screenshots": {
+          "fixture-1.png": "42008e85a46abb08b303de59fe96857552d760300e54eac5010b5af9465852f7",
+          "fixture-2.png": "acab8b9e7bc5f5bd9d8a37f84cb58d27457e39840f517a595b975f18da77a415"
+        }
+      }
+    },
+    {
+      "slot_id": "paperless-custom-field-no-value-b5362a51560434598fb5faf4",
+      "intent_id": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "3054f8f95fe3856600c3b497ebbb2d6877af3c990d5b4f7e71614517356a0625",
+        "screenshots": {
+          "fixture-1.png": "a044d33f2589e33fe27fb6fd68714bab0d9ef3c41d351e82b9b86e13b31c740d",
+          "fixture-2.png": "acab8b9e7bc5f5bd9d8a37f84cb58d27457e39840f517a595b975f18da77a415"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

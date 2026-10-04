@@ -1,0 +1,262 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "nextcloud-mail-favorites-up",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 1,
+        "mixed_failure": 1
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "target_only_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 1,
+        "target_only_failure": 1
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "nextcloud-mail-favorites-up-211a45970c54aa8f859c797a",
+      "intent_id": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "917c1ca58a9f15e1cefe4aed59763a89fd5d8ebc2eda149e35a1cd4a715e9e34",
+        "screenshots": {
+          "fixture-1.png": "80feeae4e955d5a0b8c430527e37e471b441fb051ba00286812748bb106fd20f",
+          "fixture-2.png": "cb10382f2ba0207c1deebdd8a9a3a86b8ffac6665630eee6f961e55cee2c9649"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-mail-favorites-up-0d818b0b5f5801b75ef9f004",
+      "intent_id": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "811b7ab5c28725023985d0ea4660b6b2e1f85a0775ed25f71a52de628a805f5a",
+        "screenshots": {
+          "fixture-1.png": "44693002abe1c5b46ba7e97cd8d1f7b6946ade70d49a6f7e39d2ee0b679a22ba",
+          "fixture-2.png": "8925d623b2a2a69a91c4255f47910e77c641ebf564e0b62cb10e4674fb3e0db2"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-mail-favorites-up-ad60210cf425b4565dc06b48",
+      "intent_id": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "03df5ac7a97425fcd0b2697ffa26651b5ec2124996a979f6b40d3e4e385a5cfc",
+        "screenshots": {
+          "fixture-1.png": "47ca7a4088b8d7b296bb5f775d063ca82bdbbb5e7c572caabb11f90adc8d19fd",
+          "fixture-2.png": "3a246ed672972d34c03f8efdcd1b75507edde452117a9f5ff14d7cc08aee69a7"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-mail-favorites-up-3fd011687df59f7aff0882d1",
+      "intent_id": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "3ce0da310ccf4747dfef1605bdba35fbc54486fa61f506858d1cb59e9ac347aa",
+        "screenshots": {
+          "fixture-1.png": "6f129616f429d7ecdad3e3ff917feabbfdbf9980522f2b8ac077df1f761c03ae",
+          "fixture-2.png": "897cd6c665045a601ffe2603a3ce3472bc8c0f9ef375f1d3deeb682023db6a24"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-mail-favorites-up-3e6576109c3fee7f4a50a6a5",
+      "intent_id": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "2f7d631e50e78f4057b7b095ab2b23d00567a5acca749ac0c0f4baba34915dd1",
+        "screenshots": {
+          "fixture-1.png": "1902273bde6099b708e982d384d087fadb6333638d5458711ae6826dea0d0f08",
+          "fixture-2.png": "cdfe516614c9bd5aba6dac7b598e1667d676d8fc609d2b4295e96aa51e17b089"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-mail-favorites-up-5668a7ff1067be147ae2e7f2",
+      "intent_id": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "mixed_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "mixed_failure",
+        "returncode": 0,
+        "report_sha256": "246e20e0dfd08873c5c47d785e9da6891e0f44a82cdc496443c0d08874bcc262",
+        "screenshots": {
+          "fixture-1.png": "9d2fa7da728a4cf278a8fa143eb5696e8ebcb5faf9828778b4aafca91d69ad59",
+          "fixture-2.png": "02662399be35405f03b87eaba857af7871093b58c8d995ac284071a3ad622c2b"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-mail-favorites-up-143e4edc34eca0e0b6962618",
+      "intent_id": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "4a902ada7ca7434f5e5d596cab702b587660c69f490b3a3fcd8ad4651a56f10a",
+        "screenshots": {
+          "fixture-1.png": "44693002abe1c5b46ba7e97cd8d1f7b6946ade70d49a6f7e39d2ee0b679a22ba",
+          "fixture-2.png": "8925d623b2a2a69a91c4255f47910e77c641ebf564e0b62cb10e4674fb3e0db2"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-mail-favorites-up-ab0ecae27848dba42b8130d6",
+      "intent_id": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "5c152a460c2fe5b0af7f2fc8c7a59889be5c6f6272d0defb066ee32f296e55dd",
+        "screenshots": {
+          "fixture-1.png": "6f129616f429d7ecdad3e3ff917feabbfdbf9980522f2b8ac077df1f761c03ae",
+          "fixture-2.png": "897cd6c665045a601ffe2603a3ce3472bc8c0f9ef375f1d3deeb682023db6a24"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-mail-favorites-up-2fb83a4380aed2644a2bcf68",
+      "intent_id": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "1f8b0cf4b6c06e7d7cf3ef5ad34e9ce23e345e18480e09d161ac6f0bc01affe6",
+        "screenshots": {
+          "fixture-1.png": "40ad758b93a1428e3c8b1e259677c227c44e647f02987a799e567eac103a18b2",
+          "fixture-2.png": "66432fcb05a0bece4de694a5e8b76109b6872a3b525cca88d2d20f1fa6e9c9c5"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-mail-favorites-up-0543527cd1a1266c7d9cd65e",
+      "intent_id": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "8f7606615b0aaa1d659ebd1254908d01c8066df15042ef188d9b733e900241d1",
+        "screenshots": {
+          "fixture-1.png": "6f129616f429d7ecdad3e3ff917feabbfdbf9980522f2b8ac077df1f761c03ae",
+          "fixture-2.png": "897cd6c665045a601ffe2603a3ce3472bc8c0f9ef375f1d3deeb682023db6a24"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-mail-favorites-up-487397e9851d4eda9f8b7c2f",
+      "intent_id": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "59eacfc1c61ce56bd23a7fb4f7b1667411c6d7c893012d3ba8909d0abcb551df",
+        "screenshots": {
+          "fixture-1.png": "47ca7a4088b8d7b296bb5f775d063ca82bdbbb5e7c572caabb11f90adc8d19fd",
+          "fixture-2.png": "3a246ed672972d34c03f8efdcd1b75507edde452117a9f5ff14d7cc08aee69a7"
+        }
+      }
+    },
+    {
+      "slot_id": "nextcloud-mail-favorites-up-5a8f77951dd46ead580adb23",
+      "intent_id": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "bc164b15862d6bf0653ff6209c5e720f02cae18f2dd9f4f4e1f1a4d801ca9ed9",
+        "screenshots": {
+          "fixture-1.png": "6f129616f429d7ecdad3e3ff917feabbfdbf9980522f2b8ac077df1f761c03ae",
+          "fixture-2.png": "897cd6c665045a601ffe2603a3ce3472bc8c0f9ef375f1d3deeb682023db6a24"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

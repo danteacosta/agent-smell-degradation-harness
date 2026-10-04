@@ -1,0 +1,261 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "mattermost-anonymous-team-url",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "target_only_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 1,
+        "target_only_failure": 1
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "mattermost-anonymous-team-url-bc03ce736a7041e3f00f6b9a",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "6eea243e7e20288cb75b37359075497ea10de416695f65052da9f2d00ab3f390",
+        "screenshots": {
+          "fixture-1.png": "5c2c0b2d020c43a86e0afd9acaaf1797a15d59427839b99f757bfa24c6ab513a",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-0d753f90725d59d67c2c0058",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "14132384d0fc8bdc9283ffe8cda8cefa6de2ccc5319f1ef4a0e109f7870f5cc0",
+        "screenshots": {
+          "fixture-1.png": "188f7126aa4e533035f1563bd79e031b0334799a2dbe793cd088ef9f69e78c30",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-12d09a50db9d5d0182cb1379",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "1c3cfcf9f201374a95c28f1726f2868407a15c5b642677330eca3a10127bcbb2",
+        "screenshots": {
+          "fixture-1.png": "739d5507b145d65440cff5503630baaa4ab47fdc1f21d873fb522603e873a41e",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-a5ba3f9e11b4889f39be02f5",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "162e0438f8e6f72b917014b30b3c84d4bbdd54a75172a9dbc52233dda7beea78",
+        "screenshots": {
+          "fixture-1.png": "188f7126aa4e533035f1563bd79e031b0334799a2dbe793cd088ef9f69e78c30",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-e18e9d9f627d22f792c01faf",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "50cc19aedf0a8f8dcfe1c7150b6114f59863fc385f82b40fd8487877424699ce",
+        "screenshots": {
+          "fixture-1.png": "e0801a8779964cd9ab26c9d63914ebefc1914496dff3be485a8176b5295459c1",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-212e8b7bb7decee28eb74a2b",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "82d9e9a7cc6a5be588b540dedc1fc8717750be896f9587e9210aa301537437ce",
+        "screenshots": {
+          "fixture-1.png": "188f7126aa4e533035f1563bd79e031b0334799a2dbe793cd088ef9f69e78c30",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-5fb590d3d131c12fae88846d",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "545d9a84ee5d6992f4839d010f4d5e2592dfa0038c3811074f8162a40a29160e",
+        "screenshots": {
+          "fixture-1.png": "13e7593b281f71f283d53a58d03ef60376a9d1d4e611deee681ae312578c98a6",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-13e8f608df3eaa8703081c4b",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "b68dcbf18ccb1df72aa6f34ffe33356ea1c23f15cd7977d99ff18a4b49d46610",
+        "screenshots": {
+          "fixture-1.png": "13e7593b281f71f283d53a58d03ef60376a9d1d4e611deee681ae312578c98a6",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-146302b249cc95818cdd76cc",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "e9e271b3bb4754562618cff9dff27513e696316583b0caca904469ec810d0ae2",
+        "screenshots": {
+          "fixture-1.png": "58a8c916c0bd03bcfa6e4f41b0dd06ea2912c15e422c1a9679560f0ab90f70f7",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-adb371d9bb6df49153a1ab1a",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "5e24c4e81ef1c79ecb9816c11557ea29839e7eaa073b9526fd20675f2c7c5f41",
+        "screenshots": {
+          "fixture-1.png": "13e7593b281f71f283d53a58d03ef60376a9d1d4e611deee681ae312578c98a6",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-18d87aa85521f722e89b789a",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "818bd8acd37ca4e3ed491b716eb544e67d09a103bf0c22037928a880a3e5a2ba",
+        "screenshots": {
+          "fixture-1.png": "188f7126aa4e533035f1563bd79e031b0334799a2dbe793cd088ef9f69e78c30",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-452a3e268777d9e8b64b872c",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "4cb36e15b505ac69cde90ff3d2e7ef146a37653211ab69295c2064afd0f7f2a7",
+        "screenshots": {
+          "fixture-1.png": "188f7126aa4e533035f1563bd79e031b0334799a2dbe793cd088ef9f69e78c30",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

@@ -1,0 +1,260 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "wekan-week-number-immediate",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "wekan-week-number-immediate-40536f248193a389a298b119",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ea210a7d89ba4af3f78d453ef2f1e3ce16b9764cd07cbfc57013601cde3fc8cb",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-439757522cd5cb47399ce55e",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "a0c0c1cdc4a55bb7a6383b8a33cc8bb1b50ec723b5b041bec66b6b1211f0c73f",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-ebb8d2cc0edefba478fd30b0",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "80ce5b0e9415733141da7556b7067d8c5e372e2a3830b23c6e848ec6d3620744",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-71e7167d215659d84deb2f33",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ea210a7d89ba4af3f78d453ef2f1e3ce16b9764cd07cbfc57013601cde3fc8cb",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-3f4ae79e8e5fc6e1fba7336d",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "39638007eeee0c733a7dcf4ebdf31a63289366a8d97efc6382092ff9e3bfdc31",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-b546edda5e61d59a963234e9",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ea210a7d89ba4af3f78d453ef2f1e3ce16b9764cd07cbfc57013601cde3fc8cb",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-c57199f4cd0770db4385b1f5",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ea210a7d89ba4af3f78d453ef2f1e3ce16b9764cd07cbfc57013601cde3fc8cb",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-516405357a773fdf6d3c272a",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "a0c0c1cdc4a55bb7a6383b8a33cc8bb1b50ec723b5b041bec66b6b1211f0c73f",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-6326e9e3c9b9c122ed119bef",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ea210a7d89ba4af3f78d453ef2f1e3ce16b9764cd07cbfc57013601cde3fc8cb",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-16ea252b1707bdf2009527ca",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "f5abe54896e1bebe587e7a00d6862f08acd54c4f318d242a5068a29db0da205a",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-a77e2c54e1c31cfa0aca9600",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ea210a7d89ba4af3f78d453ef2f1e3ce16b9764cd07cbfc57013601cde3fc8cb",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-76552e6094cf83f3676d3e61",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "0ba7445e8493a4b166724ad2aa361aca0aa5818948e68253b3855823109d1a9b",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

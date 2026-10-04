@@ -1,0 +1,260 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "wekan-sync-local-edits",
+  "planned_slots": 12,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "B": {
+        "pass": 2
+      },
+      "C": {
+        "pass": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "wekan-sync-local-edits-77f259f10284368953bc56c8",
+      "intent_id": "wekan-sync-local-edits",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "c93a97cee4763ec186c92e7fe4e1df6fad1b41c191317f6ae17025a79fae3d57",
+        "screenshots": {
+          "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+          "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-sync-local-edits-fbee8366ea9d45e5eb312523",
+      "intent_id": "wekan-sync-local-edits",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "039e933e23da97d8d44d609599bd05fe156a30b0fda89ab5347e6571fea66ee4",
+        "screenshots": {
+          "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+          "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-sync-local-edits-70aefa78fffd9cdd590e26a3",
+      "intent_id": "wekan-sync-local-edits",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "f54b171f126a171483caa7716563d5247c8ec13d5b8d580548f37b70d53111a4",
+        "screenshots": {
+          "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+          "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-sync-local-edits-90c8c7bc4cad4bf1fb830574",
+      "intent_id": "wekan-sync-local-edits",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "6f398c0d8c3a64b8a5adc876fb4f9a77127da8765c4ab7f6ca36e7af69e97916",
+        "screenshots": {
+          "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+          "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-sync-local-edits-63a6fbaddf04747d810e43d0",
+      "intent_id": "wekan-sync-local-edits",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "705f6ab32314ce34f75d6158cb9f9a3d0df6743753daee771550daa2196d6207",
+        "screenshots": {
+          "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+          "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-sync-local-edits-5c4b473b625c32357fdb5d0e",
+      "intent_id": "wekan-sync-local-edits",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "6f398c0d8c3a64b8a5adc876fb4f9a77127da8765c4ab7f6ca36e7af69e97916",
+        "screenshots": {
+          "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+          "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-sync-local-edits-1883b2cc62882bac7da32888",
+      "intent_id": "wekan-sync-local-edits",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "57574ddf5087cd0a000142ccbe61ab503dc54ddb4cfc9c1c83d8fbe588e1080f",
+        "screenshots": {
+          "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+          "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-sync-local-edits-4aab58d65edd65c3e9691613",
+      "intent_id": "wekan-sync-local-edits",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "21b8784c51669eb88abac264fc2df762fa6a3acfb8ed6679d82b5bc4893aa276",
+        "screenshots": {
+          "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+          "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-sync-local-edits-30bad34f1b83cb38325ce090",
+      "intent_id": "wekan-sync-local-edits",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "f46d2af847ada306bfe311394f5a444ee3d4309557ab42dfbebaafa845219378",
+        "screenshots": {
+          "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+          "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-sync-local-edits-44d35b823d196daa8902998f",
+      "intent_id": "wekan-sync-local-edits",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ddf1399b52824ef19364479bd526144d0184872fd6cbad00a24364d836250985",
+        "screenshots": {
+          "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+          "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-sync-local-edits-5c800c03f0547274934c2942",
+      "intent_id": "wekan-sync-local-edits",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "C",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "db144e172efbfaf9d77fc629dad7aabbbf31283f3a1ae7b5fec710a80dc9c48b",
+        "screenshots": {
+          "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+          "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-sync-local-edits-ffc38e0d093e6714895cfdcb",
+      "intent_id": "wekan-sync-local-edits",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "B",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "83c4b713c8281c5c4e42ab53b79cf48961773563780f17f356b334a30d3697ba",
+        "screenshots": {
+          "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+          "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}
