@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-02
+Last updated: 2026-10-04
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -545,3 +545,39 @@ repository exists (primary page checked 2026-10-03), but its README states no
 stability level; the "all Development, none Stable" statement remains from
 secondary reports. Pin a version in any exporter and re-verify on the primary
 registry before relying on it. No contradiction with a current decision.
+
+## 2026-10-04 — Under-specification: reversal risk, inference rate and ambiguity benchmarks
+
+Search/read date: 2026-10-04. Deduplicated by arXiv ID/title (none previously in
+this matrix; 2604.21505 and 2607.00711 were snippet-only candidates on
+2026-10-03 and are now read at abstract level). Abstract-level reading was
+possible for all four; full-text method/threat sections were **not** read for
+rows marked "abstract only", so their results are not used as quantitative
+anchors. All four are arXiv preprints (not peer-reviewed as of this reading)
+and none are evidence for H1/H2.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Akli, Papadakis, Cordy, Le Traon, *When Prompt Under-Specification Improves Code Correctness*, arXiv [2604.24712](https://arxiv.org/abs/2604.24712), 2026 preprint (cs.SE) | Do prompt wording/structure mutations always hurt code generation? 10 LLMs; HumanEval (minimal spec) and LiveCodeBench (structurally richer). Abstract plus summary-level results only. | Under-specification mutations degraded HumanEval but had near-zero net effect on LiveCodeBench; some mutations *improved* correctness by removing misleading cues. Limitation stated by authors: prior evidence mostly comes from minimal-specification benchmarks. Function-level tasks, not UI/browser oracles. | **Thesis:** supports framing H1 as recoverability and shows the sign of the omission effect is not guaranteed. **Experiment:** H1a must treat C-better-than-A as a reportable reversal, not as "no effect" (action taken: prereg section 5 sentence); B control stays essential. **Product:** none. | 6/10: preprint, 10 models, two public benchmarks, but abstract-level reading and function-level scope. |
+| Yang, Shi, Ma, Liu, Kästner, Wu, *What Prompts Don't Say*, arXiv [2505.13360](https://arxiv.org/abs/2505.13360), 2025 preprint, revised 2026-04 | How often do LLMs infer unspecified prompt requirements and how stable is that? Abstract-level reading. | Reports 41.1% of unspecified requirements inferred by default, but 2x higher regression across model/prompt changes (accuracy drops >20% in places). Specifying everything does not always fix it. | **Thesis:** independent support for the "context sometimes recovers the rule" premise behind H1b; also motivates model-version pinning. **Experiment:** pin and record model identifiers per run_id; report per-model recovery separately (already exploratory). **Product:** requirement-discovery/monitoring framing is adjacent to the diagnostic wedge; no claim. | 6/10: preprint from a recognised group, clear headline numbers, abstract-level reading only. |
+| Ma and Eisty, *From Business Requirements to Test Assertions*, arXiv [2607.10277](https://arxiv.org/abs/2607.10277), 2026-07-11 preprint | Can LLMs generate test oracles from business requirements alone? 10 Defects4J Lang bugs, 5 LLMs, requirements written manually from diffs. | Non-trivial generalization with large bug- and model-level variance; oracles tracked the requirement more than the actual behaviour; no linear link between requirement properties and accuracy. 10 bugs, Java unit level; authors call it a pilot. | **Thesis:** already cited in the Drive proposal gap table; row confirms its scope (unit-level Java, no controlled requirement defect). **Experiment:** supports requirement-anchored (not code-anchored) oracles, consistent with the test-anchor experiment; small N, so no effect-size anchor. **Product:** consistent with requirement-anchored verification, as hypothesis only. | 5/10: preprint, pilot of 10 bugs, reproducible pipeline described. |
+| Yang et al., *Clarity Is Not Assumed* (Orchid), arXiv [2604.21505](https://arxiv.org/abs/2604.21505), 2026-04, revised 2026-09 | How does ambiguity affect code generation? 1,304 function-level tasks, four ambiguity types (lexical, syntactic, semantic, vagueness). Abstract only. | Ambiguity degrades all evaluated LLMs, most for advanced models; divergent implementations for the same ambiguous requirement. Different manipulation (ambiguity, not omission of one testable condition) and function-level oracle. | **Thesis:** adjacent context for ambiguity smells; do not merge with omission results. **Experiment:** none now. **Product:** none. Context only. | 5/10: preprint, public benchmark, abstract only. |
+| Fang et al., *ClarifyCodeBench*, arXiv [2607.00711](https://arxiv.org/abs/2607.00711), 2026-07, revised 2026-08 | Can LLMs ask clarification questions for ambiguous requirements? Six LLMs, annotated ambiguity types. Abstract only. | Code-generation skill decouples from clarification skill; many simultaneous ambiguities degrade sharply. | **Thesis:** relevant only to optional RQ3 (clarification). **Experiment:** none. **Product:** context for a future clarification feature. | 5/10: preprint, public code, abstract only. |
+
+**Incorporation decisions (2026-10-04).**
+
+1. Akli et al. do not contradict H1a, but they show the omission effect can be
+   null or reversed. The pre-registration draft stated only the support
+   criterion (interval above 0.5). Added a sentence committing to report an
+   interval below 0.5 as a reversal. The decision to keep H1a one-directional
+   for the confirmatory claim remains with the advisor (new open decision 5).
+2. Yang et al. and Akli et al. are function-level or prompt-level; none uses a
+   browser oracle, so the gap claim in the proposal (controlled requirement
+   defect + executable UI oracle + pre-final warning) is not weakened by them.
+3. Korn et al. (AIRE'26, entry above) report unreliable LLM injection of
+   synthetic smells and omissions. The pre-registered LLM panel for A/B/C
+   validity plus the 20% human audit (open decision 2) is therefore a
+   necessary control, not an optional one.
+4. Proposal table note: Siddeeq et al. (SEET 2026) is now listed as accepted at
+   SEET 2026 (CCIS vol. 3126, Springer, per arXiv listing); the Drive proposal
+   labels it "preprint". Drive text was not edited (see run summary).

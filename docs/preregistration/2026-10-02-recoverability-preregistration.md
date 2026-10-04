@@ -160,6 +160,10 @@ A pair scores 1 if C is worse than A, 0.5 on a tie and 0 if C is better;
 repetitions are averaged within the requirement. The 95% interval resamples
 projects; the p-value is a sign-flip randomization test with 5,000 draws.
 H1a is supported if the interval lies above 0.5.
+An interval entirely below 0.5 is reported as a reversal (omission
+improved the outcome), not as absence of an effect: under-specification can
+remove misleading cues and improve correctness on some benchmarks (Akli et al.,
+arXiv 2604.24712, preprint; see `docs/research/literature-matrix.md`).
 
 **B control.** The same estimand for B against A. A B-versus-A estimate whose
 interval excludes 0.5 is reported as a wording effect and limits the
@@ -224,3 +228,5 @@ runs once, after both rounds, with `scripts/select_requirements.py`.
 2. Who performs the human audit of panel decisions, and when.
 3. Whether H2 is kept in this study or moved to future work.
 4. Whether a third coding model from another provider is affordable.
+5. Whether the confirmatory H1a claim stays one-directional (interval above
+   0.5) or becomes two-sided, given that omission effects can reverse.
