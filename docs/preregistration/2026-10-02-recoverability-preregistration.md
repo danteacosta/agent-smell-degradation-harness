@@ -273,3 +273,5 @@ shortcut did not check.
    0.5) or becomes two-sided, given that omission effects can reverse.
 
 **04/10 — qualificação histórica:** a primeira rodada parou com 15 controles tentados e zero casos codificados: Luna forneceu citação não contígua no controle `same`. Astra/Sol acertaram os cinco controles. Uma nova qualificação substitui somente o desempate por `gpt-6.1-sol`, mantendo textos e critérios; a rodada original é preservada. Não houve geração A/H.
+
+**04/10 — disponibilidade do desempate:** `gpt-6.1-sol` foi recusado pelo CLI com a assinatura ChatGPT nos cinco controles; os dez controles dos primários foram válidos. Zero casos codificados. O catálogo local lista `gpt-5.6-terra`, escolhido para a próxima qualificação com os mesmos controles e critérios, mantendo separação dos modelos geradores. Ambas as rodadas rejeitadas são preservadas.
