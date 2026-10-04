@@ -1,0 +1,235 @@
+{
+  "schema_version": "h1b-mixed-logit/v1",
+  "confirmatory_eligible": false,
+  "model": "logit P(violated) = b0 + context_cue + numeric + derived_state + memorized + u_project + u_requirement; Laplace",
+  "separation": {
+    "context_cue": null,
+    "numeric": "level 1: all 16 runs violated",
+    "derived_state": null,
+    "memorized": null
+  },
+  "level_counts": {
+    "context_cue": {
+      "0": {
+        "violated": 91,
+        "held": 53
+      },
+      "1": {
+        "violated": 14,
+        "held": 20
+      }
+    },
+    "numeric": {
+      "0": {
+        "violated": 89,
+        "held": 73
+      },
+      "1": {
+        "violated": 16,
+        "held": 0
+      }
+    },
+    "derived_state": {
+      "0": {
+        "violated": 94,
+        "held": 60
+      },
+      "1": {
+        "violated": 11,
+        "held": 13
+      }
+    },
+    "memorized": {
+      "0": {
+        "violated": 67,
+        "held": 37
+      },
+      "1": {
+        "violated": 38,
+        "held": 36
+      }
+    }
+  },
+  "requirement_level": {
+    "context_cue": {
+      "0": {
+        "units": 37,
+        "mean_violation_share": 0.626,
+        "units_all_violated": 18,
+        "units_none_violated": 11
+      },
+      "1": {
+        "units": 9,
+        "mean_violation_share": 0.389,
+        "units_all_violated": 2,
+        "units_none_violated": 4
+      }
+    },
+    "numeric": {
+      "0": {
+        "units": 42,
+        "mean_violation_share": 0.54,
+        "units_all_violated": 16,
+        "units_none_violated": 15
+      },
+      "1": {
+        "units": 4,
+        "mean_violation_share": 1.0,
+        "units_all_violated": 4,
+        "units_none_violated": 0
+      }
+    },
+    "derived_state": {
+      "0": {
+        "units": 40,
+        "mean_violation_share": 0.598,
+        "units_all_violated": 18,
+        "units_none_violated": 12
+      },
+      "1": {
+        "units": 6,
+        "mean_violation_share": 0.458,
+        "units_all_violated": 2,
+        "units_none_violated": 3
+      }
+    },
+    "memorized": {
+      "0": {
+        "units": 54,
+        "mean_violation_share": 0.63,
+        "units_all_violated": 32,
+        "units_none_violated": 18
+      },
+      "1": {
+        "units": 38,
+        "mean_violation_share": 0.513,
+        "units_all_violated": 17,
+        "units_none_violated": 16
+      }
+    }
+  },
+  "prespecified": {
+    "n_runs": 178,
+    "n_violated": 105,
+    "n_requirements": 46,
+    "n_projects": 9,
+    "intercept_log_odds": 2.7796646322239282,
+    "sd_project": 0.0024787521766663585,
+    "sd_requirement": 4.76024938898485,
+    "loglik_laplace": -71.43400214804525,
+    "converged": true,
+    "terms": {
+      "context_cue": {
+        "log_odds": -4.625743242840261,
+        "odds_ratio": 0.009796371246555483,
+        "estimable": true,
+        "note": null,
+        "ci95_profile_log_odds": [
+          -18.400650151838068,
+          0.18030547640679476
+        ],
+        "ci95_profile_odds_ratio": [
+          1.0202325506201529e-08,
+          1.1975831406454063
+        ]
+      },
+      "numeric": {
+        "log_odds": null,
+        "odds_ratio": null,
+        "estimable": false,
+        "note": "no finite maximum-likelihood estimate (level 1: all 16 runs violated)",
+        "ci95_profile_log_odds": [
+          3.8547342881827644,
+          null
+        ],
+        "ci95_profile_odds_ratio": [
+          47.216069406729666,
+          null
+        ]
+      },
+      "derived_state": {
+        "log_odds": -5.089821148133469,
+        "odds_ratio": 0.006159121359017064,
+        "estimable": true,
+        "note": null,
+        "ci95_profile_log_odds": [
+          -20.22202210303592,
+          0.8800564346389033
+        ],
+        "ci95_profile_odds_ratio": [
+          1.650773116964342e-09,
+          2.411035768510845
+        ]
+      },
+      "memorized": {
+        "log_odds": -1.8979725307562714,
+        "odds_ratio": 0.14987217261653787,
+        "estimable": true,
+        "note": null,
+        "ci95_profile_log_odds": [
+          -4.532671381061068,
+          -0.02434369064096463
+        ],
+        "ci95_profile_odds_ratio": [
+          0.010751915211570559,
+          0.9759502271509765
+        ]
+      }
+    }
+  },
+  "sensitivity_without_numeric": {
+    "n_runs": 178,
+    "n_violated": 105,
+    "n_requirements": 46,
+    "n_projects": 9,
+    "intercept_log_odds": 3.840875758597757,
+    "sd_project": 0.0024787521766663585,
+    "sd_requirement": 5.4712822071403675,
+    "loglik_laplace": -76.37761037324859,
+    "converged": true,
+    "terms": {
+      "context_cue": {
+        "log_odds": -4.8477092038902265,
+        "odds_ratio": 0.007846331322426875,
+        "estimable": true,
+        "note": null,
+        "ci95_profile_log_odds": [
+          -21.140543430101562,
+          0.5408116361654068
+        ],
+        "ci95_profile_odds_ratio": [
+          6.588380056366971e-10,
+          1.7174002007798024
+        ]
+      },
+      "derived_state": {
+        "log_odds": -4.646946309809306,
+        "odds_ratio": 0.009590844727062424,
+        "estimable": true,
+        "note": null,
+        "ci95_profile_log_odds": [
+          -22.632022789956252,
+          1.8855167407413524
+        ],
+        "ci95_profile_odds_ratio": [
+          1.4826457192611552e-10,
+          6.5897587591911835
+        ]
+      },
+      "memorized": {
+        "log_odds": -1.798644135410987,
+        "odds_ratio": 0.16552316313958082,
+        "estimable": true,
+        "note": null,
+        "ci95_profile_log_odds": [
+          -4.4991899979916505,
+          0.12401297989840482
+        ],
+        "ci95_profile_odds_ratio": [
+          0.011117998493057585,
+          1.1320305645455335
+        ]
+      }
+    }
+  }
+}
