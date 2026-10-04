@@ -1,0 +1,15 @@
+{
+  "schema_version": "context-cue-panel/v2-public-provenance",
+  "source_commit": "879efbc0114c91c47da5a51ea8a358195b6d61ff",
+  "results_sha256": "feb1e99505b81fd4b72d65dfbc335cf37732ca45ab4165e048aa5e1ccb88fe83",
+  "frozen_manifest_sha256": "48e7131776b43abb22b0602e6df10cc4fb2362b47fd4c58d1d4d7a6f011a9173",
+  "frozen_receipt_sha256": "63b8d0ea294e8bb4b76c3009d78b068765835d78bd60a75b7395c77576808158",
+  "execution_receipt_sha256": "a9512e18d32b6695a0d0b7fc8758478884dc12e69fea9c75b29f7f430c107e84",
+  "calls_attempted": 112,
+  "calls_valid": 112,
+  "controls_calls": 15,
+  "primary_case_calls": 92,
+  "tiebreaker_case_calls": 5,
+  "retry_policy": "no_retry_no_repair",
+  "confirmatory_eligible": false
+}

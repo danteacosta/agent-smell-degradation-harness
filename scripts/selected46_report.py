@@ -306,11 +306,15 @@ def markdown(report: dict) -> str:
         parts = [f"{lvl}: {c.get('violated', 0)} violated / {c.get('held', 0)} held / {c.get('unknown', 0)} unknown"
                  for lvl, c in levels.items()]
         lines.append(f"- `{name}` — " + ("; ".join(parts) if parts else "no data"))
+    cue_levels = report["h1b_c_violation_by_covariate"].get("context_cue", {})
+    cue_note = ("Context-cue codes were supplied; any remaining missing codes are shown as not coded."
+                if any(level != "not coded" for level in cue_levels)
+                else "`context_cue` remains not coded until blind coding exists.")
     lines += ["", "Repeated runs of the same requirement are not independent; the interval resamples projects. "
               "The sign-flip p-value additionally assumes exchangeable signs across requirements; "
               "project bootstrap alone does not validate that assumption. "
               "Worst/best scenarios include every frozen slot not yet collected and are deterministic bounds, not "
-              "inferential tests or intervals. `context_cue` remains not coded until blind coding exists."]
+              "inferential tests or intervals. " + cue_note]
     return "\n".join(lines) + "\n"
 
 

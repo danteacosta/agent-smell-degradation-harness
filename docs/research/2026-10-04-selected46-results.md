@@ -68,9 +68,9 @@ Violação da regra em C por covariável, contando execuções; não há modelo 
 | `numeric` | 16 violadas / 0 mantidas | 89 / 73 |
 | `derived_state` | 11 / 13 | 94 / 60 |
 | `memorized` (do modelo da execução) | 38 / 36 | 67 / 37 |
-| `context_cue` | não codificado | — |
+| `context_cue` (v2, pós-coleta) | 14 violadas / 20 mantidas / 2 desconhecidas | 91 / 53 / 4 |
 
-A direção de `memorized` é a esperada: a regra recuperada sem contexto é violada menos vezes. A de `numeric` também: as regras numéricas foram violadas em todas as execuções C. `derived_state` vai na direção contrária à hipótese. São contagens de execuções repetidas, não de requisitos independentes. O modelo misto de H1b só deve ser ajustado depois da codificação de `context_cue` (`bash scripts/run_context_cue_panel.sh`). A tentativa de 04/10 parou nos controles: 11/12 votos esperados, com erro do Luna em `ctl-cue-none`; 12 chamadas e zero casos codificados. O pacote original foi preservado e não houve retry.
+A direção de `memorized` é a esperada: a regra recuperada sem contexto é violada menos vezes. A de `numeric` também: as regras numéricas foram violadas em todas as execuções C. `derived_state` vai na direção contrária à hipótese. São contagens de execuções repetidas, não de requisitos independentes. A v1 parou nos controles em 04/10: 11/12 votos esperados, com erro do Luna em `ctl-cue-none`; 12 chamadas e zero casos codificados. Seu pacote permanece preservado, sem retry. A v2 aprovada no #161 passou 15/15 controles e codificou os 46 casos: nove com pista e 37 sem pista. O [relatório da v2](2026-10-04-context-cue-v2-results.md) registra kappa, desempates e custódia. O modelo misto de H1b ainda não foi ajustado; as contagens são descritivas e os códigos foram produzidos pós-coleta.
 
 ## O que isto permite dizer
 
