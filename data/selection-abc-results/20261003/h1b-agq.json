@@ -1,7 +1,8 @@
 {
   "schema_version": "h1b-agq/v1",
   "confirmatory_eligible": false,
-  "model": "logit P(violated) = b0 + covariates + u_requirement, u ~ N(0, sd^2); project intercept omitted (estimate 0, boundary); AGQ",
+  "role": "sensitivity analysis: the project random intercept is fixed at 0 (its estimate in the pre-registered two-intercept fit is on the boundary). This does not validate the pre-registered model; it is the reduced model with an accurate likelihood.",
+  "model": "logit P(violated) = b0 + covariates + u_requirement, u ~ N(0, sd^2); AGQ",
   "full_model_other_terms": {
     "label": "full model: supremum over beta_numeric (42 requirements without numeric runs)",
     "n_runs": 162,
@@ -11,6 +12,8 @@
     "sd_requirement": 4.9031238673619715,
     "intercept_log_odds": 2.2459634728365776,
     "converged": true,
+    "grad_max_abs": 1.9610979506978762e-07,
+    "refits_after_profiling": 0,
     "terms": {
       "context_cue": {
         "log_odds": -3.4934844549911475,
@@ -24,8 +27,7 @@
           2.9734025105105135
         ],
         "lower": "bracketed",
-        "upper": "bracketed",
-        "issues": []
+        "upper": "bracketed"
       },
       "derived_state": {
         "log_odds": -3.7604104212852327,
@@ -39,8 +41,7 @@
           6.906282246617978
         ],
         "lower": "bracketed",
-        "upper": "bracketed",
-        "issues": []
+        "upper": "bracketed"
       },
       "memorized": {
         "log_odds": -1.8402765055733163,
@@ -54,14 +55,11 @@
           1.0343697093203683
         ],
         "lower": "bracketed",
-        "upper": "bracketed",
-        "issues": []
+        "upper": "bracketed"
       }
     }
   },
   "full_model_numeric": {
-    "lower_log_odds": 4.12678048587872,
-    "lower_odds_ratio": 61.978062133810184,
     "upper": "unbounded (quasi-complete separation)",
     "supremum_loglik": -69.80347973293051,
     "grid": {
@@ -74,7 +72,10 @@
       "9.0": 1.462557112661429,
       "13.0": 1.8187851361511207,
       "20.0": 1.9181098522542754
-    }
+    },
+    "lower_log_odds": 4.12678048587872,
+    "lower_odds_ratio": 61.978062133810184,
+    "status": "bracketed"
   },
   "sensitivity_without_numeric": {
     "label": "all 46 requirements, numeric term removed",
@@ -85,6 +86,8 @@
     "sd_requirement": 5.552809826634595,
     "intercept_log_odds": 2.819098941888841,
     "converged": true,
+    "grad_max_abs": 1.3450573987938694e-06,
+    "refits_after_profiling": 0,
     "terms": {
       "context_cue": {
         "log_odds": -3.212566356707476,
@@ -98,8 +101,7 @@
           5.632007929222544
         ],
         "lower": "bracketed",
-        "upper": "bracketed",
-        "issues": []
+        "upper": "bracketed"
       },
       "derived_state": {
         "log_odds": -3.0569377024206457,
@@ -113,8 +115,7 @@
           19.827073590402282
         ],
         "lower": "bracketed",
-        "upper": "bracketed",
-        "issues": []
+        "upper": "bracketed"
       },
       "memorized": {
         "log_odds": -1.724080462047628,
@@ -128,8 +129,7 @@
           1.187306189294068
         ],
         "lower": "bracketed",
-        "upper": "bracketed",
-        "issues": []
+        "upper": "bracketed"
       }
     }
   },

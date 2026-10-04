@@ -1,20 +1,22 @@
 # H1b: intervalos com quadratura adaptativa e perfil verificado
 
-Status: exploratório, sem novas gerações. Usa as mesmas 178 linhas do `design.csv` da validação lme4 (#164). Script: `scripts/h1b_agq.py`. Saída: `data/selection-abc-results/20261003/h1b-agq.json`.
+Status: exploratório, sem novas gerações. **Análise de sensibilidade**: o intercepto de projeto é fixado em 0. Isto não valida o modelo pré-registrado de dois interceptos; é o modelo reduzido com verossimilhança precisa. Usa as mesmas 178 linhas do `design.csv` da validação lme4 (#164). Script: `scripts/h1b_agq.py`. Saída: `data/selection-abc-results/20261003/h1b-agq.json`.
 
 ## Por que outro estimador
 
 A validação no lme4 reproduziu os coeficientes do #163, mas o perfil falhou nos dois modelos: a busca encontrou uma deviance menor que a do próprio ajuste. Três coisas tornam o modelo pré-registrado difícil de perfilar:
 
-1. **A variância de projeto fica na fronteira (0).** O ajuste é singular. Com essa variância em zero, o modelo sem o intercepto de projeto tem a mesma verossimilhança máxima, então o intercepto foi omitido.
+1. **A variância de projeto fica na fronteira (0).** O ajuste pré-registrado é singular. Fixar essa variância em zero dá a mesma verossimilhança máxima de Laplace, mas a escolha é uma análise de sensibilidade: com outra aproximação ou outros dados a variância poderia sair da fronteira, e os intervalos abaixo não substituem os do modelo pré-registrado.
 2. **Laplace é imprecisa aqui.** Há cerca de 4 execuções por requisito e o desvio-padrão do requisito fica perto de 5. Com os mesmos parâmetros, a log-verossimilhança de Laplace (1 nó) é −71,69, contra −69,80 na integração numérica direta. A quadratura de Gauss-Hermite adaptativa converge para esse valor: −69,8096 com 25 nós, que é o máximo do lme4, −69,8036 com 50 e −69,80348 com 100, igual à integração direta até 1e-5. O padrão adotado é 100 nós.
 3. **`numeric` tem separação.** O termo é constante dentro de cada requisito, e as 16 execuções dos 4 requisitos numéricos violaram a regra. Quando β_numeric → +∞, esses quatro requisitos contribuem com verossimilhança 1, qualquer que seja o resto. O supremo do modelo completo é, então, exatamente o ajuste nos outros 42 requisitos sem o termo `numeric`. Os perfis dos demais termos são calculados ali, e `numeric` recebe só o limite inferior.
 
-O perfil agora tem verificações explícitas:
-- cada ajuste condicional precisa convergir;
-- um ponto do perfil acima do ajuste dispara um novo ajuste;
-- um limite só é reportado com mudança de sinal confirmada (bracket);
-- um limite ausente é rotulado como "não alcançado até |Δlog OR| = 15" ou, para `numeric`, "ilimitado (separação)".
+Convergência e perfil (corrigidos depois da revisão do #165):
+- um ajuste só conta como convergido se o maior valor absoluto do gradiente numérico (diferenças centrais) for menor que 1e-3 e os parâmetros estiverem longe dos limites da busca; o sinal de sucesso do otimizador não entra na decisão;
+- um limite de perfil só é reportado se todos os ajustes condicionais usados para cercá-lo e localizá-lo convergiram, e se a mudança de sinal se confirma em torno da raiz; caso contrário, o limite fica nulo com o motivo "refused";
+- se algum ajuste condicional supera o ajuste completo, o modelo é reajustado a partir desse ponto e **todos** os intervalos são recalculados contra o novo máximo (até três vezes; depois disso, todos são recusados);
+- um limite não encontrado é rotulado como "busca esgotada até |Δlog OR| = 15, sem mostrar que é infinito"; só `numeric` é "ilimitado (separação)", por argumento analítico.
+
+Na saída final, os dois ajustes convergiram (gradiente máximo 2×10⁻⁷ e 1×10⁻⁶), nenhum reajuste foi necessário, e todos os limites finitos têm bracket confirmado.
 
 ## Resultado
 
@@ -40,20 +42,21 @@ Todos os limites finitos foram obtidos com bracket verificado e sem nenhum aviso
 
 ## Conferência no lme4
 
-`data/selection-abc-results/20261003/lme4-validation/validate_agq.R` ajusta o mesmo modelo reduzido com `glmer(..., (1 | case), nAGQ = 25)` e tenta o perfil. Para comparar, a saída traz `agq25_check`: com 25 nós, log-verossimilhança −69,8096 e log-odds −3,488 (`context_cue`), −3,754 (`derived_state`) e −1,840 (`memorized`). Com `nAGQ = 25`, o lme4 deve reproduzir esses valores. Os intervalos de 100 nós podem diferir um pouco dos de 25.
+Feita por você com `validate_agq.R` (`glmer(..., (1 | case), nAGQ = 25)`, mesmo contêiner do #164), no modelo reduzido de 42 requisitos:
 
-Comando, no mesmo contêiner da validação:
+- coeficientes reproduzidos; a log-verossimilhança difere da `agq25_check` deste script em 6×10⁻⁸;
+- perfis do lme4 convergiram: `context_cue` [0,000029; 2,98], `derived_state` [0,0000054; 6,94], `memorized` [0,014; 1,035]. Os três incluem 1, como aqui. As pequenas diferenças vêm de 25 nós contra 100.
 
-```sh
-docker run --rm --network none -v "$PWD/data/selection-abc-results/20261003/lme4-validation:/evidence" \
-  h1b-lme4-validation:20261004 Rscript /evidence/validate_agq.R
-```
+Duas implementações independentes concordam, portanto, nos coeficientes e nos intervalos do modelo reduzido. O modelo pré-registrado, com intercepto de projeto, continua sem intervalos perfilados validados.
 
 ## Testes
 
-`tests/test_h1b_agq.py` cobre três pontos:
+`tests/test_h1b_agq.py` cobre seis pontos:
 - a AGQ-100 coincide com a integração numérica direta, enquanto Laplace se afasta;
 - num efeito simulado, os dois limites do perfil têm bracket, cobrem o valor verdadeiro e caem exatamente no ponto de corte de χ²(1);
-- um termo separado recebe só o limite inferior.
+- um termo separado recebe só o limite inferior;
+- um otimizador que declara sucesso sem chegar ao ótimo é marcado como não convergido, pelo gradiente;
+- um perfil cujos ajustes condicionais não convergem tem o limite recusado;
+- quando o máximo inicial é subótimo, a análise reajusta e recalcula os intervalos, que coincidem com os do ajuste correto.
 
 Os testes são pulados quando `numpy`/`scipy` não estão instalados.

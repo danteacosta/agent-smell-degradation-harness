@@ -47,7 +47,7 @@ def test_profile_interval_is_bracketed_and_covers_a_simulated_effect():
     full = model.fit()
     lo = a.profile(model, full, 1, -1)
     hi = a.profile(model, full, 1, +1)
-    assert lo["status"] == hi["status"] == "bracketed" and not lo["issues"] and not hi["issues"]
+    assert lo["status"] == hi["status"] == "bracketed"
     assert lo["bound"] < -2.0 < hi["bound"]
     # the deviance at each bound is the chi-square cutoff
     for bound in (lo["bound"], hi["bound"]):
@@ -69,3 +69,56 @@ def test_separated_term_gets_only_a_lower_bound():
                              "memorized": int(rng.random() < 0.5)})
     out = a.numeric_lower_bound(rows, nodes=20)
     assert out["upper"].startswith("unbounded") and out["lower_log_odds"] is not None
+
+
+def test_converged_is_judged_by_the_gradient_not_by_optimiser_flags(monkeypatch):
+    X, y, cl = _sim(5, k=30, sd=1.0)
+    model = a.AGQLogit(X, y, cl, nodes=20)
+    real = a.minimize
+
+    def stalled(fun, x0, method=None, options=None):
+        res = real(fun, x0, method=method, options={**(options or {}), "maxiter": 1})
+        res.success = True  # an optimiser that claims success after one step
+        return res
+    monkeypatch.setattr(a, "minimize", stalled)
+    fit = model.fit()
+    assert fit["converged"] is False and fit["grad_max_abs"] > a.GRAD_TOL
+
+
+def test_profile_refuses_a_bound_from_non_converged_fits(monkeypatch):
+    X, y, cl = _sim(7, k=40, beta=(0.5, -2.0), sd=1.0)
+    model = a.AGQLogit(X, y, cl, nodes=20)
+    full = model.fit()
+    real_fit = model.fit
+
+    def flaky(fixed=None, starts=None):
+        res = real_fit(fixed, starts)
+        return {**res, "converged": False} if fixed else res
+    monkeypatch.setattr(model, "fit", flaky)
+    side = a.profile(model, full, 1, -1)
+    assert side["bound"] is None and side["status"].startswith("refused")
+
+
+def test_intervals_are_recomputed_after_a_better_maximum_is_found(monkeypatch):
+    rows = []
+    X, y, cl = _sim(11, k=40, beta=(0.5, -2.0), sd=1.0)
+    for x, yy, c in zip(X, y, cl):
+        rows.append({"case": f"c{c}", "y": int(yy), "context_cue": int(x[1])})
+    real_build = a.build
+
+    def worse_start(rows_, covariates, nodes):
+        model, full = real_build(rows_, covariates, nodes)
+        theta = full["theta"].copy()
+        theta[1] += 0.4  # a suboptimal "maximum" for the profiles to beat
+        beta = full["beta"].copy()
+        beta[1] = theta[1]
+        bad = {**full, "theta": theta, "beta": beta, "loglik": model.loglik(beta, full["log_sigma"])}
+        return model, bad
+    monkeypatch.setattr(a, "build", worse_start)
+    out = a.analyse(rows, ("context_cue",), 20, "test")
+    monkeypatch.setattr(a, "build", real_build)
+    ref = a.analyse(rows, ("context_cue",), 20, "ref")
+    assert out["refits_after_profiling"] >= 1
+    assert out["loglik"] == pytest.approx(ref["loglik"], abs=1e-6)
+    for got, want in zip(out["terms"]["context_cue"]["ci95_log_odds"], ref["terms"]["context_cue"]["ci95_log_odds"]):
+        assert got == pytest.approx(want, abs=1e-3)

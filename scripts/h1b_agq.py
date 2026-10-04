@@ -42,6 +42,7 @@ from scipy.special import expit, log_expit
 CHI2_1_95 = 3.841458820694124
 COVARIATES = ("context_cue", "numeric", "derived_state", "memorized")
 LIMIT = 15.0
+GRAD_TOL = 1e-3  # max |d(-loglik)/d theta| accepted as a converged optimum
 
 
 def load(path: Path) -> list[dict]:
@@ -124,38 +125,70 @@ class AGQLogit:
             if best is None or cand.fun < best.fun:
                 best = cand
         beta, ls = unpack(best.x)
-        grad_ok = bool(getattr(best, "success", False)) or best.fun <= min(res.fun, res2.fun) + 1e-9
+        grad = _gradient(objective, best.x)
+        grad_norm = float(np.max(np.abs(grad)))
+        interior = abs(ls) < 5.9 and bool(np.all(np.abs(beta) < 59))
         return {"beta": beta, "log_sigma": float(ls), "loglik": float(-best.fun), "theta": best.x,
-                "converged": grad_ok, "free": free}
+                "converged": bool(grad_norm < GRAD_TOL and interior), "grad_max_abs": grad_norm,
+                "interior": interior, "free": free}
 
 
-def profile(model: AGQLogit, full: dict, j: int, direction: int, sup: float | None = None) -> dict:
-    """One side of the 95% profile interval for coefficient j, with verification."""
-    sup = full["loglik"] if sup is None else sup
+def _gradient(f, x: np.ndarray, h: float = 1e-5) -> np.ndarray:
+    """Central-difference gradient; convergence is judged here, not by optimiser flags."""
+    g = np.zeros_like(x)
+    for i in range(len(x)):
+        e = np.zeros_like(x)
+        e[i] = h
+        g[i] = (f(x + e) - f(x - e)) / (2 * h)
+    return g
+
+
+def profile(model: AGQLogit, full: dict, j: int, direction: int) -> dict:
+    """One side of the 95% profile interval for coefficient j.
+
+    A bound is returned only if every conditional fit used to bracket and
+    locate it converged and none exceeded the full fit. If a conditional fit
+    beats the full fit, the best such point is returned in `better` so that
+    the caller can refit and recompute every interval against the new maximum.
+    """
+    sup = full["loglik"]
     target = sup - CHI2_1_95 / 2
     center = float(full["beta"][j])
     warm = [np.delete(full["theta"], full["free"].index(j))]
-    issues = []
+    state = {"nonconverged": [], "better": None}
 
     def value(c):
         res = model.fit({j: c}, starts=warm)
         if not res["converged"]:
-            issues.append(f"conditional fit at {c:.3f} did not report convergence")
-        if res["loglik"] > sup + 1e-6:
-            issues.append(f"profile point {c:.3f} exceeds the fit by {res['loglik'] - sup:.2e}")
+            state["nonconverged"].append(round(float(c), 4))
+        if res["loglik"] > sup + 1e-7 and (state["better"] is None or res["loglik"] > state["better"]["loglik"]):
+            state["better"] = {"loglik": res["loglik"], "theta": np.insert(res["theta"], j, c)}
         warm[0] = res["theta"]
         return res["loglik"] - target
+
+    def result(bound, status):
+        if state["better"] is not None:
+            return {"bound": None, "status": "a conditional fit exceeded the full fit; refit required",
+                    "better": state["better"]}
+        if state["nonconverged"]:
+            return {"bound": None, "status": "refused: conditional fit(s) did not converge at "
+                    + ", ".join(map(str, state["nonconverged"][:5]))}
+        return {"bound": bound, "status": status}
 
     prev, f_prev, step = center, CHI2_1_95 / 2, 0.25
     while abs(prev - center) < LIMIT:
         cur = prev + direction * step
         f_cur = value(cur)
+        if state["better"] is not None:
+            return result(None, "")
         if f_cur < 0 < f_prev:
             lo, hi = sorted((prev, cur))
             root = brentq(value, lo, hi, xtol=1e-5)
-            return {"bound": float(root), "status": "bracketed", "issues": issues}
+            if not (value(root - direction * 1e-3) > 0 > value(root + direction * 1e-3)):
+                return {"bound": None, "status": "refused: sign change not confirmed around the root"}
+            return result(float(root), "bracketed")
         prev, f_prev, step = cur, f_cur, min(step * 1.5, 2.0)
-    return {"bound": None, "status": f"not reached up to |log OR - estimate| = {LIMIT}", "issues": issues}
+    return result(None, f"not reached within |log OR - estimate| <= {LIMIT} (search exhausted, not shown infinite)")
 
 
 def build(rows: list[dict], covariates: tuple[str, ...], nodes: int) -> tuple[AGQLogit, dict]:
@@ -167,24 +200,39 @@ def build(rows: list[dict], covariates: tuple[str, ...], nodes: int) -> tuple[AG
     return model, model.fit()
 
 
-def analyse(rows: list[dict], covariates: tuple[str, ...], nodes: int, label: str) -> dict:
+def analyse(rows: list[dict], covariates: tuple[str, ...], nodes: int, label: str, max_refits: int = 3) -> dict:
     model, full = build(rows, covariates, nodes)
+    refits = 0
+    while True:
+        sides, better = {}, None
+        for j, name in enumerate(covariates, start=1):
+            for direction in (-1, +1):
+                side = profile(model, full, j, direction)
+                sides[(name, direction)] = side
+                if side.get("better") and (better is None or side["better"]["loglik"] > better["loglik"]):
+                    better = side["better"]
+        if better is None:
+            break
+        if refits == max_refits:
+            for key in sides:
+                sides[key] = {"bound": None, "status": f"refused: maximum still moving after {max_refits} refits"}
+            break
+        refit = model.fit(starts=[better["theta"], full["theta"]])
+        refits += 1
+        full = refit  # every interval is recomputed against the new maximum
     terms = {}
     for j, name in enumerate(covariates, start=1):
-        lo = profile(model, full, j, -1)
-        hi = profile(model, full, j, +1)
-        for side in (lo, hi):
-            if any("exceeds the fit" in i for i in side["issues"]):
-                full = model.fit(starts=[full["theta"]])  # refit once from the better region
+        lo, hi = sides[(name, -1)], sides[(name, +1)]
         b = float(full["beta"][j])
         terms[name] = {"log_odds": b, "odds_ratio": math.exp(b),
                        "ci95_log_odds": [lo["bound"], hi["bound"]],
                        "ci95_odds_ratio": [None if lo["bound"] is None else math.exp(lo["bound"]),
                                            None if hi["bound"] is None else math.exp(hi["bound"])],
-                       "lower": lo["status"], "upper": hi["status"], "issues": lo["issues"] + hi["issues"]}
+                       "lower": lo["status"], "upper": hi["status"]}
     return {"label": label, "n_runs": len(rows), "n_requirements": len({r['case'] for r in rows}),
             "nodes": nodes, "loglik": full["loglik"], "sd_requirement": math.exp(full["log_sigma"]),
-            "intercept_log_odds": float(full["beta"][0]), "converged": full["converged"], "terms": terms}
+            "intercept_log_odds": float(full["beta"][0]), "converged": full["converged"],
+            "grad_max_abs": full["grad_max_abs"], "refits_after_profiling": refits, "terms": terms}
 
 
 def numeric_lower_bound(rows: list[dict], nodes: int) -> dict:
@@ -192,27 +240,34 @@ def numeric_lower_bound(rows: list[dict], nodes: int) -> dict:
     others = tuple(c for c in COVARIATES if c != "numeric")
     reduced = [r for r in rows if r["numeric"] == 0]
     _, sup_fit = build(reduced, others, nodes)
+    if not sup_fit["converged"]:
+        return {"lower_log_odds": None, "status": "refused: supremum fit did not converge"}
     sup = sup_fit["loglik"]  # numeric requirements contribute log(1) = 0 in the limit
     model, _ = build(rows, COVARIATES, nodes)
     j = 1 + COVARIATES.index("numeric")
     target = sup - CHI2_1_95 / 2
-    warm = [None]
+    warm, problems = [None], []
 
     def value(c):
         res = model.fit({j: c}, starts=None if warm[0] is None else [warm[0]])
+        if not res["converged"]:
+            problems.append(f"non-converged conditional fit at {c:.3f}")
+        if res["loglik"] > sup + 1e-7:
+            problems.append(f"conditional fit at {c:.3f} exceeds the supremum")
         warm[0] = res["theta"]
         return res["loglik"] - target
 
     grid = [-6.0, -3.0, 0.0, 2.0, 4.0, 6.0, 9.0, 13.0, 20.0]
     vals = [value(c) for c in grid]
+    out = {"upper": "unbounded (quasi-complete separation)", "supremum_loglik": sup,
+           "grid": dict(zip(map(str, grid), vals))}
     for (a, fa), (b, fb) in zip(zip(grid, vals), zip(grid[1:], vals[1:])):
         if fa < 0 < fb:
             root = brentq(value, a, b, xtol=1e-5)
-            return {"lower_log_odds": float(root), "lower_odds_ratio": math.exp(root),
-                    "upper": "unbounded (quasi-complete separation)", "supremum_loglik": sup,
-                    "grid": dict(zip(map(str, grid), vals))}
-    return {"lower_log_odds": None, "upper": "unbounded (quasi-complete separation)",
-            "status": "profile did not cross the cutoff on the grid", "grid": dict(zip(map(str, grid), vals))}
+            if problems:
+                return {**out, "lower_log_odds": None, "status": "refused: " + "; ".join(problems[:5])}
+            return {**out, "lower_log_odds": float(root), "lower_odds_ratio": math.exp(root), "status": "bracketed"}
+    return {**out, "lower_log_odds": None, "status": "profile did not cross the cutoff on the grid"}
 
 
 def _laplace_check(rows: list[dict], covariates: tuple[str, ...]) -> dict:
@@ -234,7 +289,10 @@ def report(rows: list[dict], nodes: int = 100) -> dict:
     return {
         "schema_version": "h1b-agq/v1",
         "confirmatory_eligible": False,
-        "model": "logit P(violated) = b0 + covariates + u_requirement, u ~ N(0, sd^2); project intercept omitted (estimate 0, boundary); AGQ",
+        "role": ("sensitivity analysis: the project random intercept is fixed at 0 (its estimate in the "
+                 "pre-registered two-intercept fit is on the boundary). This does not validate the "
+                 "pre-registered model; it is the reduced model with an accurate likelihood."),
+        "model": "logit P(violated) = b0 + covariates + u_requirement, u ~ N(0, sd^2); AGQ",
         "full_model_other_terms": analyse([r for r in rows if r["numeric"] == 0], others, nodes,
                                           "full model: supremum over beta_numeric (42 requirements without numeric runs)"),
         "full_model_numeric": numeric_lower_bound(rows, nodes),
