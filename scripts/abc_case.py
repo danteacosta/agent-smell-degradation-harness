@@ -26,6 +26,7 @@ if str(ROOT) not in sys.path:
 
 CASES_DIR = ROOT / "data/abc-cases"
 ARMS = ("A", "B", "C")
+OPTIONAL_ARMS = ("H",)  # historical arm: controlled reconstruction (scripts/historical_arm.py)
 REQUIRED = ("case", "intent_id", "project_id", "fixture", "marker", "instruction", "arms",
             "models", "repetitions", "seed", "image")
 
@@ -35,8 +36,12 @@ class Case:
         missing = [k for k in REQUIRED if k not in config]
         if missing:
             raise ValueError(f"case config misses {missing}")
-        if set(config["arms"]) != set(ARMS):
-            raise ValueError("arms must be exactly A, B and C")
+        if not set(ARMS) <= set(config["arms"]) <= set(ARMS + OPTIONAL_ARMS):
+            raise ValueError("arms must be A, B and C, optionally with H")
+        collect = config.get("collect_arms", list(ARMS))
+        if not collect or len(set(collect)) != len(collect) or not set(collect) <= set(config["arms"]):
+            raise ValueError("collect_arms must be distinct arms of the case")
+        self.collect_arms = tuple(collect)
         self.config = config
         self.fixture = ROOT / config["fixture"]
         self.marker = config["marker"]
@@ -80,7 +85,7 @@ class Case:
         rows = []
         for model in self.config["models"]:
             for repetition in range(1, self.config["repetitions"] + 1):
-                for arm in ARMS:
+                for arm in self.collect_arms:
                     key = json.dumps([self.name, model, repetition, arm, self.config["seed"]])
                     rows.append({"slot_id": f"{self.name}-" + hashlib.sha256(key.encode()).hexdigest()[:24],
                                  "intent_id": self.config["intent_id"], "project_id": self.config["project_id"],
@@ -167,7 +172,7 @@ def run(packet: Path, provider_factory=None, executor=None) -> dict:
         row["category"] = result["category"]
         row["execution"] = result
     counts = {model: {arm: dict(Counter(r["category"] for r in rows if r["model"] == model and r["arm"] == arm))
-                      for arm in ARMS} for model in case.config["models"]}
+                      for arm in case.collect_arms} for model in case.config["models"]}
     results = {"schema_version": "abc-case-results/v1", "case": case.name, "planned_slots": len(rows),
                "counts": counts, "rows": rows, "confirmatory_eligible": False}
     put(packet / "results.json", results)
