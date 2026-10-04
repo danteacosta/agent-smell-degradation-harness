@@ -221,6 +221,14 @@ own seeded screening sample of 30 per project
 (`screening-ext-20261002.json`, no assistant pre-screen). The final selection
 runs once, after both rounds, with `scripts/select_requirements.py`.
 
+**2026-10-04, after the 46-case collection: reversal wording and decision 5.**
+The note that an H1a interval below 0.5 is reported as a reversal (section 5)
+and open decision 5 (one- or two-sided confirmatory claim) were added after
+the exploratory 46-case outcomes were known. The motivation is external
+(Akli et al., arXiv 2604.24712). The observed A/C comparisons contained no
+reversal, so the change does not favour H1, but it is post-collection and is
+recorded here rather than edited silently.
+
 ## 8. Decisions still open before submission
 
 1. Primary outcome of H1: browser oracle (this draft) or acceptance-criteria
