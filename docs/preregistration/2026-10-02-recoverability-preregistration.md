@@ -243,6 +243,22 @@ the exploratory 46-case outcomes were known. The motivation is external
 reversal, so the change does not favour H1, but it is post-collection and is
 recorded here rather than edited silently.
 
+**2026-10-04, exploratory historical arm H (added after the 46-case
+collection, at the advisor's request).** H is the requirement as the project
+documented it before the commit that wrote the target rule, with the rest of
+A unchanged. It is not part of the registered design. Eligibility and the H
+texts are fixed before any H generation by `scripts/historical_arm.py`: a
+mechanical triage (deletions and moved text excluded) and a blind LLM review
+of the parent-commit excerpt (does the old text document the feature; is the
+rule same, vaguer, absent or different), gated by authored controls. A and H
+are collected together in new packets so that the comparison is
+contemporaneous. Because the A/C outcomes were already known when the
+procedure was written, every H result is exploratory. A preliminary
+estimate computed during design from existing C runs (14 additions where H
+was taken to equal C) is not used: in 12 of them the rule is only part of the
+added text, and in some the whole feature was added with it, which that
+shortcut did not check.
+
 ## 8. Decisions still open before submission
 
 1. Primary outcome of H1: browser oracle (this draft) or acceptance-criteria

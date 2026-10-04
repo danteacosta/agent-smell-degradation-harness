@@ -1,0 +1,976 @@
+{
+  "schema_version": "historical-arm-classification/v2",
+  "coverage_threshold": 0.9,
+  "excerpt_context_lines": 25,
+  "outcomes_read": false,
+  "counts": {
+    "excluded_deletion": 4,
+    "panel": 40,
+    "excluded_moved": 2
+  },
+  "inputs_sha256": {
+    "data/requirement-sampling/frame-20261002.jsonl": "0af2c94065fd84d701360e7d8929e802b8da210fb8691d4a97d2ba1a4a42c382",
+    "data/requirement-sampling/frame-ext-20261002.jsonl": "7fd13a18c4643e5f57314af47c7a742803f6c23f30c6444fa5b59989297e1488",
+    "data/requirement-selection/selection.json": "7d00eb42b800a82c086c7b71861733a7b1840dbea6f79140f21cb0be826c64c1"
+  },
+  "rows": [
+    {
+      "case": "grist-billing-managers-limit",
+      "candidate_id": "rc-f33b2bf870e9",
+      "project": "grist",
+      "commit": "f896f91781476b4f77e114b3cded95e233bfc860",
+      "file": "help/en/docs/team-sharing.md",
+      "kind": "deletion",
+      "c_span": "up to 10 ",
+      "c_span_coverage_by_added": 0.0,
+      "removed": [
+        "!!! note You can have up to 10 billing managers in the version of Grist at getgrist.com ."
+      ],
+      "added": [],
+      "class": "excluded_deletion",
+      "reason": "the pre-commit text contained the rule; it is not an omission"
+    },
+    {
+      "case": "grist-context-menu-shortcut",
+      "candidate_id": "rc-4aac15b7b503",
+      "project": "grist",
+      "commit": "bcdbeb35aca412455369ac498fee23bdc1009a63",
+      "file": "help/en/docs/keyboard-shortcuts.md",
+      "kind": "addition",
+      "c_span": " or Shift + F10",
+      "c_span_coverage_by_added": 0.667,
+      "removed": [],
+      "added": [
+        "*⌃* *Enter* , *↑* *F10* | *Menu* , *Shift* + *F10* | Open the context menu | *↑* *⌃* *Enter* , *⌃* *↑* *F10* | *Ctrl* + *Menu* , *Ctrl* +*Shift* + *F10* | Open the current column menu | *⌥* *⌃* *Enter* , *⌥* *↑* *F10* | *Alt* + *Menu* , *Alt* +*Shift* + *10* | Open the current row menu |"
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "*⌘* *F* | *Ctrl* + *F* | Find |\n*⌘* *G* | *Ctrl* + *G* | Find next occurrence |\n*⌘* *⇧* *G* | *Ctrl* + *Shift* + *G* | Find previous occurrence |\nNavigation\nKey (Mac) | Key (Windows) | Description |\n*↓* | *↓* | Move downward to next record or field |\n*↑* | *↑* | Move upward to previous record or field |\n*→* | *→* | Move right to the next field |\n*←* | *←* | Move left to the previous field |\n*Tab* | *Tab* | Move to the next field, saving changes if editing a value |\n*⇧* *Tab* | *Shift* + *Tab* | Move to the previous field, saving changes if editing a value |\n*PageDown* | *PageDown* | Move down one page of records, or to next record in a card list |\n*PageUp* | *PageUp* | Move up one page of records, or to previous record in a card list |\n*⌘* *↑* | *Ctrl* + *↑* | Move up to the first record |\n*⌘* *↓* | *Ctrl* + *↓* | Move down to the last record |\n*Home* | *Home* | Move to the first field or the beginning of a row |\n*End* | *End* | Move to the last field or the end of a row |\n*⌥* *↓* | *Alt* + *↓* | Open next page |\n*⌥* *↑* | *Alt* + *↑* | Open previous page |\n*⌃* *O* | *Ctrl* + *O* | Focus next page panel or widget |\n*⌃* *⇧* *O* | *Ctrl* + *Shift* + *O* | Focus previous page panel or widget |\n*⌃* *⌥* *O* | *Ctrl* + *Alt* + *O* | Toggle creator panel keyboard focus |\n*Space* | *Space* | Show the record card widget of the selected record |\nSelection\nKey (Mac) | Key (Windows) | Description |\n*⇧* *↓* | *Shift* + *↓* | Adds the element below the cursor to the selected range |\n*⇧* *↑* | *Shift* + *↑* | Adds the element above the cursor to the selected range |\n*⇧* *→* | *Shift* + *→* | Adds the element to the right of the cursor to the selected range |\n*⇧* *←* | *Shift* + *←* | Adds the element to the left of the cursor to the selected range |\n*⌘* *⇧* *↓* | *Ctrl* + *Shift* + *↓* | Adds all elements below the cursor to the selected range |\n*⌘* *⇧* *↑* | *Ctrl* + *Shift* + *↑* | Adds all elements above the cursor to the selected range |\n*⌘* *⇧* *→* | *Ctrl* + *Shift* + *→* | Adds all elements to the right of the cursor to the selected range |\n*⌘* *⇧* *←* | *Ctrl* + *Shift* + *←* | Adds all elements to the left of the cursor to the selected range |\n*⌘* *A* | *Ctrl* + *A* | Selects all currently displayed cells |\n*⌘* *⇧* *A* | *Ctrl* + *Shift* + *A* | Copy anchor link |\nEditing\nKey (Mac) | Key (Windows) | Description |\n*Enter* , *F2* | *Enter* , *F2* | Start editing the currently-selected cell |\n*Enter* | *Enter* | Finish editing a cell, saving the value |\n*Enter* | *Enter* | Toggle the currently selected checkbox or switch cell |\n*Escape* | *Escape* | Discard changes to a cell value |\n*⌘* *C* | *Ctrl* + *C* | Copy current selection to clipboard |\n*⌘* *X* | *Ctrl* + *X* | Cut current selection to clipboard |\n*⌘* *V* | *Ctrl* + *V* | Paste clipboard contents at cursor |",
+      "requirement_without_rule": "Implement the grid's menu keyboard shortcuts (Windows key bindings). The handler receives each key press in the grid as {key, shiftKey, ctrlKey, altKey, metaKey}; open the matching menu for the cursor cell with app.openMenu(kind), where kind is 'context', 'column' or 'row'. Menu: Open the context menu. Ctrl + Menu or Ctrl + Shift + F10: Open the current column menu. Alt + Menu or Alt + Shift + F10: Open the current row menu."
+    },
+    {
+      "case": "grist-page-default-collapse",
+      "candidate_id": "rc-7b485b51412f",
+      "project": "grist",
+      "commit": "537c682145f0450c16f780ac9ce7ff7834cce587",
+      "file": "help/en/docs/page-widgets.md",
+      "kind": "addition",
+      "c_span": " You can change the default state by clicking the three-dot icon to the right of the parent page and selecting 'Set default: Collapse'.",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [],
+      "added": [
+        "Pages can be rearranged by clicking the two verticle bars to the right of the page name then dragging to a new position.",
+        "A green line will appear to show where the page will be placed.",
+        "A green box will appear to show when a page will be nested under another.  ! rearrange_pages * {: .screenshot-half }  By default, nested pages will be expanded when a document is opened.",
+        "You can change the default state by clicking the three-dot icon to the right of the parent page and selecting 'Set default: Collapse'.  ! page-set-default-state * {: .screenshot-half }"
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "title: Pages & widgets\nPages & widgets {: data-toc-label='' }\nUnlike traditional spreadsheets, in Grist you can create multiple views of the same data, and\ndisplay multiple data sets on one page. This allows you to create useful dashboards and custom\napplications tailored to your needs.\nPages\nIn Grist, you organize your document into 'pages'. These are listed in the left panel, with collapsible\ngroups. You may rearrange and group pages in the left panel by dragging them to suit your needs.\n! drag_pages *\n{: .screenshot-half }\nYou can rename, remove, or duplicate pages using the three-dots menu next to the page name in the list.\n! Renaming Pages Menu *\n{: .screenshot-half }\nRenaming the page does not edit data tables' names or widget titles. See changing widget below to learn how to edit table and widget names.\nDuplicating a page duplicates *views* of data and does not duplicate the data itself.\nRemoving a page does not delete data. When removing the last view of data, you will be asked if you want to delete only the view, but not the data itself; or if you want to delete both the page and the underlying data table(s). Learn more about your document's data in the raw data page .\n! Removing Pages *\nNote that pages can also be renamed by clicking the page name at the top of the screen.\n! Renaming Pages Breadcrumbs *\n{: .screenshot-half }\nUsing the opener icon ( )\nnear the top of the left panel, you can collapse the panel to show only the initials of each page,\nleaving more screen space to view your data.\nTo add a new page, use the 'Add New' button, and click 'Add Page'. At that point, you'll get to\nchoose the widget to include in the new page.\n!!! note \"Using emojis in page and widget names\"\nYou can add any emoji to a Page or Widget name. The keyboard shortcut to open the emoji keyboard is Windows Logo + . (period) on PC or Command + Control + Space on Mac. You can also copy/paste from an online source like Emojipedia .\nWhen a page name starts with an emoji, it will replace the page icon.\n! page-emoji-icon *\n{: .screenshot-half }\nWidgets\nA page contains sections, such as tables or charts, which we call 'widgets'. Each widget\nshows data from one table. A page may contain more than one widget, and you can arrange and\nlink them to create useful layouts.\nHere are the supported kinds of page widgets. The salient features of each one are described\non separate pages.\nTable : similar to the spreadsheet grid and a good way to see many records at once.\nCard : shows a single record in a form-like layout which you can customize.\nCard List : uses the same layout options as a card, displays a scrollable list of records.\nForm : allows you to collect data in an external form view which populates your data table upon submission.\nChart : plots data on a chart with support for several different chart types.\nCalendar : displays event data in a calendar view.\nCustom : inserts a custom webpage, optionally granting it access to the document's data.\n! page_widget_types\nThere is a special page called raw data that lists all data tables in your document and summarizes your document's usage statistics. Navigate to the raw data page by clicking on the 'Raw Data' link in the bottom left of the pages menu.\n! Raw Data in Menu\nWidget picker\nThe menu opened by the 'Add New' button has options 'Add Page' and 'Add Widget to Page'. In either\ncase, you'll see the 'widget picker' where you can choose your desired widget:\n! page_widget_picker *\nYou can select the type of widget and the table of data to show (or 'New Table' to create a new\ntable). The 'summary' icon ( )\nallows you to summarize data .\nWhen adding a widget to an _existing_ page, you'll also see a 'Select By' option, which allows\nlinking this widget to another one already on the page. This process is described in greater\ndetail in Linking widgets .\nOnce you've added widgets, they can be moved around and resized, as described in Custom\nLayouts .\nChanging a widget or its data\nIf you'd like to change a widget or the data it displays after it's added, you may do so. Click\nthe three-dots button on the top right of your widget, and select 'Widget options'. This opens the\nCreator Panel. Click on 'Change Widget'.",
+      "requirement_without_rule": "Implement the page list. app.onPages(handler) receives {type: 'open'} when the document is opened and {type: 'menu', pageId} when the three-dot icon to the right of a page is clicked. app.pages() gives each page with its parent page (null at the top level); expand or collapse a parent page's nested pages with app.setExpanded(id, open), list the entries of the three-dot menu with app.showMenu([{label, run}]), and keep per-page settings across openings with app.savePageSetting(id, name, value) and app.pageSettings(id). By default, nested pages will be expanded when a document is opened."
+    },
+    {
+      "case": "grist-suggestions-open-copy",
+      "candidate_id": "rc-ade633af9c14",
+      "project": "grist",
+      "commit": "af6962bf5b4316f17a95e0e577c381e6ec1ddd9b",
+      "file": "help/en/docs/sharing.md",
+      "kind": "modification",
+      "c_span": " enabled, users (signed-in or not) automatically open a copy of a document. With suggestions",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "A user makes changes in a personal copy without modifying the original document, then submits these suggestions to be reviewed by the document owner prior to integration."
+      ],
+      "added": [
+        "With suggestions enabled, users (signed-in or not) automatically open a copy of a document.",
+        "They make edits to this copy without modifying the original, and then submit these suggestions to be reviewed by the document Owner prior to integration."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "Comments in Grist allow you to collaborate directly on your data by attaching notes to specific cells in data tables. This makes it easy to ask questions, provide feedback, or share context right where the data lives. Note that only users with either 'Owner' or 'Editor' roles can leave comments, while 'Viewers' can only read comments.\nTo leave a comment, right-click on a cell then select 'Comment' from the dropdown menu.\n*! sharing-add-comment *\nYou can tag another user in your comment by typing @ followed by the user's name.\n*! sharing-tagging-comment *\n{: .screenshot-half }\nComments for a document can be viewed by clicking the 'Comments' icon at the upper-right of the page. This opens the panel on the right-hand side of the page. Click the three-dot icon at the top of the panel for filtering options.\n*! sharing-view-comments *\n{: .screenshot-half }\nEmail notifications for comments can be enabled under Document Settings .\nSuggestions\n!!! warning \"Note\"\nSuggestions are experimental and have many limitations in their current form. They are also subject to change and withdrawal.\nPreviously, making changes to data in a Grist document was either in real time, or done by copying a document and replacing the original with the new version. If you enable suggestions, you can now manage collaborative changes with a workflow similar to version control {:target=\"\\_blank\"} in computer science.\nA user makes changes in a personal copy without modifying the original document, then submits these suggestions to be reviewed by the document owner prior to integration. This workflow can be useful in more sensitive contexts, or for crowdsourcing data easily with additional quality control.\nLimitations\nIn their current experimental state, suggestions have the following limitations:\nThey only track changes to data (not structure, views, widgets, formulas, or other metadata).\nThey only work for documents without access rules.\nThey only work for documents without forms.\nThey need to be enabled on a per-document basis.\nEnabling suggestions\nTo enable suggestions, go to 'Document Settings' and check the toggle 'Enable suggestions'. Once this is enabled, all users (signed-in and guests) will be able to make suggestions.\nLeaving a Document\nNon-owners may look up their access details to a document by clicking on the share icon\n( ) on top right of the\nscreen and selecting \"Access Details.\"\n! Access Details\nFrom the access details pop up, you may click the trash icon to leave a document.\n! Access Details",
+      "requirement_without_rule": "Implement opening and editing documents. app.onDocument(handler) receives {type: 'open', docId} when a document's Open button is clicked and {type: 'edit', docId, rowId, value} when a cell of the shown document is edited. app.documents() lists the documents and whether suggestions are enabled for each, app.user() is the signed-in user or null when signed out, app.copy(id) makes a copy of a document and returns its id, app.show(id) shows a document, and app.setCell(docId, rowId, value) changes a cell. Without suggestions, changes to data in a document are made in real time. With suggestions, edits are made to a copy without modifying the original, and are then submitted as suggestions to be reviewed by the document Owner prior to integration (submitting is not part of this page)."
+    },
+    {
+      "case": "grist-tutorial-fork-return",
+      "candidate_id": "rc-b49db6870ff5",
+      "project": "grist",
+      "commit": "b5e6d897fc1f0a8ef5194d5067766a950ca10650",
+      "file": "help/en/docs/document-tutorials.md",
+      "kind": "addition",
+      "c_span": " If you close out of your fork of the document, you can always return to it by visiting the Direct URL; you will be redirected to your fork automatically.",
+      "c_span_coverage_by_added": 0.864,
+      "removed": [],
+      "added": [
+        "If you close out of your fork of the document, you can always return to your fork by visiting the Direct URL — Grist will redirect you to your saved fork automatically."
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "You can copy an anchor link to a cell by pressing *⌘* *⇧* *A* (Mac) or *Ctrl* + *Shift* + *A* (Windows) while the cell is selected. This option is also available via the row menu as \"Copy anchor link.\" The link will be placed in your clipboard, ready to paste into the Location Cell column.\n*! copy-anchor-link *\n{: .screenshot-half }\nUse *⌘* + *V* (Mac) or *Ctrl* + *V* (Windows) to paste the anchor link into the Location Cell column of your GristTutorial table. You'll want to delete everything prior to /p/ .\nFor example, if your anchor link is:\nhttps://templates.getgrist.com/keLK5sVeyfPk/Flashcards/p/8#a1.s21.r1.c39\n...delete everything except\n/p/8#a1.s21.r1.c39\n*! anchor-link-cell *\nTo place the document tour popup on a specific page, you can simply copy the end of the URL that contains the page number, /p/# , and paste this into the Location Cell column of your GristTutorial table.\n*! url-page *\n{: .screenshot-half }\n*! anchor-link-page *\nReviewing your document tour",
+      "requirement_without_rule": "Implement the address bar of this tutorial document. When the user clicks Go, open the entered address: app.show(id) shows the original document (id = <docID>) or a fork (id = <docID>~<forkID>~<userID>); app.forks() lists the existing forks with their docId and userId, app.user() is the signed-in user, and app.createFork(docID) creates a fork of the document for the signed-in user and returns its id. Direct URL: This is the main link to your document. The format is https://<teamsite>.getgrist.com/doc/<docID>. Default Mode: This link opens the original version of the document, letting the owner edit the tutorial directly, useful for updating tutorial content. To access default mode, append the Direct URL with /m/default. The format is https://<teamsite>.getgrist.com/doc/<docID>/m/default. Fork URL: This is a user's unique copy of the tutorial, automatically created when they open the Direct URL for the first time. Changes made here won't affect the original. The format is https://<teamsite>.getgrist.com/doc/<docID>~<forkID>~<userID>."
+    },
+    {
+      "case": "grist-tutorial-restart",
+      "candidate_id": "rc-aac66a0af69a",
+      "project": "grist",
+      "commit": "4c173049c5eee0664b5e3fa754550e0d1c71fa2a",
+      "file": "help/en/docs/document-tutorials.md",
+      "kind": "modification",
+      "c_span": ", causing any unsaved changes to be lost",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "⚠️ Important: Always replace the original before restarting the tutorial.",
+        "If you click Restart Tutorial first, any unsaved changes will be lost."
+      ],
+      "added": [
+        "⚠️ Important: Clicking 'Restart' at the bottom of the tutorial popup will refresh the page, causing any unsaved changes to be lost.",
+        "Be sure to save changes to the main document *prior* to clicking this.  *! review-option1 *"
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "Adding the GristDocTutorial table\nCreate a new table in your document by clicking the green 'Add New' button then 'Add Empty Table'. Name the new table GristDocTutorial .\n*! add-doc-tour-table *\nAdd the following columns to the GristDocTutorial table;\n1. slide_content: A text column that holds the Markdown content for each slide. You can embed images, videos, and links hosted externally.\n2. box_content: An optional text column that supports additional Markdown. If filled in, this content appears in a shaded box below the slide, useful for tips or extra context.\nSetting document type to 'Tutorial'\nUnder 'Document Settings', update 'Template mode' to 'Tutorial'.\n*! document-settings-document-type *\nAfter updating, your page will refresh and your document will open as a fork of the original. Meaning, any changes you make won't be saved to the original. You can easily override the original document by clicking the 'Share' icon then 'Replace original...'.\nOriginal vs forked document: understanding the URLs\nWhen working with document tutorials, there are three types of URLs you’ll encounter. Each serves a different purpose depending on whether you're editing the original document or accessing a user-specific fork.\n1. Direct URL: This is the main link to your document. Because the document is marked as a tutorial, visiting this URL automatically redirects users to their own fork. The format is https:// .getgrist.com/doc/ .\n2. Default Mode: This link opens the original version of the document, letting the owner edit the tutorial directly, useful for updating tutorial content. To access default mode, append the Direct URL with /m/default . The format is https:// .getgrist.com/doc/ /m/default .\n3. Fork URL: - This is user's unique copy of the tutorial, automatically created when they open the Direct URL for the first time. Changes made here won't affect the original. The format is https:// .getgrist.com/doc/ ~ ~\nExample\nIf your forked tutorial URL is:\nhttps://docs.getgrist.com/doc/woXtXUBmiN5T~1eYN9joCXkuVokCD1p3EYt~12345\nThen:\nThe Direct URL is:\nhttps://docs.getgrist.com/doc/woXtXUBmiN5T\nThe Default Mode URL is:\nhttps://docs.getgrist.com/doc/woXtXUBmiN5T/m/default\nIf you close out of your fork of the document, you can always return to your fork by visiting the Direct URL — Grist will redirect you to your saved fork automatically.\n!!! note \"Why is the GristDocTutorial visible?\"\nThe GristDocTutorial table is visible to you, the document owner, by default. It is automatically hidden from all other users when they view the tutorial.\nReviewing your document tour\nWhile building your document tutorial, it’s helpful to preview the slides and make edits quickly. There are two ways to do this.\nOption 1: Review and Edit in the Same Window\nYou can edit your fork and push changes back to the original document without opening a second window:\n1. If you're in default mode, remove /m/default from the URL to return to your fork of the document.\n2. Make any edits (e.g., update steps in the GristDocTutorial table).\n3. Click the Share icon and choose Replace original… to save your changes to the main document.\n4. Click Restart Tutorial to reload the tutorial with your updates.\n⚠️ Important: Always replace the original before restarting the tutorial. If you click Restart Tutorial first, any unsaved changes will be lost.\nOption 2: Work in Two Windows\nThis approach prevents accidental loss of changes:\n1. Open two browser windows.\n2. In one window, open the document in default mode (to edit the original).\n3. In the second window, open your fork by removing /m/default from the URL of the first window.\n4. After making any changes, be sure to click 'Restart Tutorial' in the tutorial window to see updates.\nThis setup allows you to make changes in one window and test the live tutorial in the other—without switching back and forth or risking unsaved changes.\n*! reviewing-doc-tour *\nSharing your document tour\nTo share your document tour, simply share your document. The document tutorial will start automatically when a user accesses the document. Because the fork is user-specific, their progress will be saved so they can close it and come back to it at another time. Unsaved forks are automatically deleted after 3o days if not accessed again. Only users with access to the original document can access the document tutorial. Learn more about sharing a document.\n*! tour-of-this-document *\n{: .screenshot-half }",
+      "requirement_without_rule": "Implement the Restart button of the tutorial popup. You work in your own fork of the tutorial document: edits in the grid change only the fork (app.forkRows(), app.setCell(id, value)), and clicking Replace original saves the fork's data to the main document (app.originalRows()). Restart starts the tutorial again from the first slide (app.setSlide(0)); app.refresh() refreshes the page. Clicking 'Restart' at the bottom of the tutorial popup will refresh the page. Be sure to save changes to the main document prior to clicking this."
+    },
+    {
+      "case": "immich-library-single-owner",
+      "candidate_id": "rc-c86728bbc029",
+      "project": "immich",
+      "commit": "eee793bfe4a2e48aea595ad7563bfaf038dd2cd5",
+      "file": "docs/docs/features/libraries.md",
+      "kind": "addition",
+      "c_span": " An external library can only belong to a single user, which is selected when the library is initially created.",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [],
+      "added": [
+        ":::info Currently an external library can only belong to a single user which is selected when the library is initially created. :::"
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "External Libraries\nExternal libraries track assets stored in the filesystem outside of Immich. When the external library is scanned, Immich will load videos and photos from disk and create the corresponding assets. These assets will then be shown in the main timeline, and they will look and behave like any other asset, including viewing on the map, adding to albums, etc. Later, if a file is modified outside of Immich, you need to scan the library for the changes to show up.\nIf an external asset is deleted from disk, Immich will move it to trash on rescan. To restore the asset, you need to restore the original file. After 30 days the file will be removed from trash, and any changes to metadata within Immich will be lost.\n:::caution\nIf you add metadata to an external asset in any way (i.e. add it to an album or edit the description), that metadata is only stored inside Immich and will not be persisted to the external asset file. If you move an asset to another location within the library all such metadata will be lost upon rescan. This is because the asset is considered a new asset after the move. This is a known issue and will be fixed in a future release.\n:::\n:::caution\nDue to aggressive caching it can take some time for a refreshed asset to appear correctly in the web view. You need to clear the cache in your browser to see the changes. This is a known issue and will be fixed in a future release. In Chrome, you need to open the developer console with F12, then reload the page with F5, and finally right click on the reload button and select \"Empty Cache and Hard Reload\".\n:::\nImport Paths\nExternal libraries use import paths to determine which files to scan. Each library can have multiple import paths so that files from different locations can be added to the same library. Import paths are scanned recursively, and if a file is in multiple import paths, it will only be added once. Each import file must be a readable directory that exists on the filesystem; the import path dialog will alert you of any paths that are not accessible.\nIf the import paths are edited in a way that an external file is no longer in any import path, it will be removed from the library in the same way a deleted file would. If the file is moved back to an import path, it will be added again as if it was a new file.\nTroubleshooting",
+      "requirement_without_rule": "Implement creating an external library. External libraries track assets stored in the filesystem outside of Immich. When the user clicks Create library, create it with app.createLibrary({name, owners}) using the entered name and the owner chosen in the Owner section."
+    },
+    {
+      "case": "immich-m2t-upload",
+      "candidate_id": "rc-0ec1ac8f66bd",
+      "project": "immich",
+      "commit": "fcd372238fac7db3908387a0b3b4c953179bb99e",
+      "file": "docs/docs/features/supported-formats.md",
+      "kind": "modification",
+      "c_span": "m2t .",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "MP2T | .mts .m2ts | :white_check_mark: | |"
+      ],
+      "added": [
+        "MP2T | .mts .m2ts .m2t | :white_check_mark: | |"
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": ":-------- | :---------------------------- | :----------------: | :-------------- |\nAVIF | .avif | :white_check_mark: | |\nBMP | .bmp | :white_check_mark: | |\nGIF | .gif | :white_check_mark: | |\nHEIC | .heic | :white_check_mark: | |\nHEIF | .heif | :white_check_mark: | |\nJPEG | .webp .jpg .jpe .insp | :white_check_mark: | |\nJPEG XL | .jxl | :white_check_mark: | |\nPNG | .webp | :white_check_mark: | |\nPSD | .psd | :white_check_mark: | Adobe Photoshop |\nRAW | .raw | :white_check_mark: | |\nRW2 | .rw2 | :white_check_mark: | |\nSVG | .svg | :white_check_mark: | |\nTIFF | .tif .tiff | :white_check_mark: | |\nWEBP | .webp | :white_check_mark: | |\nVideo formats\nFormat | Extension(s) | Supported? | Notes |\n:---------- | :-------------------- | :----------------: | :---- |\n3GPP | .3gp .3gpp | :white_check_mark: | |\nAVI | .avi | :white_check_mark: | |\nFLV | .flv | :white_check_mark: | |\nM4V | .m4v | :white_check_mark: | |\nMATROSKA | .mkv | :white_check_mark: | |\nMP2T | .mts .m2ts | :white_check_mark: | |\nMP4 | .mp4 .insv | :white_check_mark: | |\nMPEG | .mpg .mpe .mpeg | :white_check_mark: | |\nQUICKTIME | .mov | :white_check_mark: | |\nWEBM | .webm | :white_check_mark: | |\nWMV | .wmv | :white_check_mark: | |",
+      "requirement_without_rule": "Implement the video upload check. When the user selects files, accept each file whose extension is a supported video format with app.accept(name) and reject every other file as unsupported with app.reject(name, reason). Supported video formats and extensions: 3GPP (.3gp .3gpp), AVI (.avi), FLV (.flv), M4V (.m4v), MATROSKA (.mkv), MP2T (.mts .m2ts .ts), MP4 (.mp4 .insv), MPEG (.mpg .mpe .mpeg), QUICKTIME (.mov), WEBM (.webm), WMV (.wmv)."
+    },
+    {
+      "case": "immich-path-search",
+      "candidate_id": "rc-b6f382226c41",
+      "project": "immich",
+      "commit": "90a69e2ba63d4e535a1395547df47d30a683f5df",
+      "file": "docs/docs/features/searching.md",
+      "kind": "addition",
+      "c_span": " Example: for /John/Projects/3D_Printing/2026-07-01/IMG_0001.jpg, searches like Projects, 3D, Printing, or 2026 match the asset.",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [],
+      "added": [
+        "Full path or folder  Use this mode when you know a folder name or part of the original asset path.",
+        "Example: for /John/Projects/3D_Printing/2026-07-01/IMG_0001.jpg, searches like Projects, 3D, Printing, or 2026 match the asset."
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "import Tabs from '@theme/Tabs';\nimport TabItem from '@theme/TabItem';\nSearching\nImmich uses Postgres as its search database for both metadata and contextual CLIP search.\nContextual CLIP search is powered by the VectorChord extension, utilizing machine learning models like CLIP to provide relevant search results. This allows for freeform searches without requiring specific keywords in the image or video metadata.\nAdvanced Search Filters\nIn addition, Immich offers advanced search functionality, allowing you to find specific content using customizable search filters. These filters include location, one or more faces, specific albums, and more. You can try out the search filters on the Demo site .\nYou can search the following types of content:\nType | Description |\nPeople | Faces that are recognized in your photos/videos. |\nContextual | Content of the photos and videos. |\nFile name or extension | Full or partial file's name, or file's extension |\nDescription | Description added to assets. |\nOptical Character Recognition (OCR) | Text in images |\nLocations | Cities, states, and countries from reverse geocoding. |\nTags | Tags assigned or extracted from assets. |\nCamera | make, model and lens model |\nTime frame | Start and end date of a specific time bucket |\nMedia type | Image or video or both |\nDisplay options | In Archive, in Favorites or Not in any album |\nStar rating | User-assigned star rating |\nConfiguration\nNavigating to Administration > Settings > Machine Learning Settings > Smart Search will show the options available.\nCLIP models\nThe default search model is fast, but there are many other options that can provide better search results. The tradeoff of using these models is that they're slower and/or use more memory (both when indexing images with background Smart Search jobs and when searching).\nThe first step of choosing the right model for you is to know which languages your users will search in.\nIf your users will only search in English, then the CLIP] huggingface-clip] section is the first place to look. This is a curated list of the models that generally perform the best for their size class. The models here are ordered from higher to lower quality. This means that the top models will generally rank the most relevant results higher and have a higher capacity to understand descriptive, detailed, and/or niche queries. The models are also generally ordered from larger to smaller, so consider the impact on memory usage, job processing and search speed when deciding on one. The smaller models in this list are not too different in quality and many times faster.\nMultilingual models] huggingface-multilingual-clip] are also available so users can search in their native language. Use these models if you expect non-English searches to be common. They can be separated into two search patterns:\nnllb models expect the search query to be in the language specified in the user settings\nxlm and siglip2 models understand search text regardless of the current language setting\nnllb models tend to perform the best and are recommended when users primarily searches in their native, non-English language. xlm and siglip2 models are more flexible and are recommended for mixed language search, where the same user might search in different languages at different times.\nFor more details, check the tables below to see how they compare in memory usage, speed and quality by language.\nOnce you've chosen a model, follow these steps:\n1. Copy the name of the model (e.g. ViT-B-16-SigLIP webli )",
+      "requirement_without_rule": "Implement the \"Full path or folder\" search mode. When the user clicks Search, show with app.showResults(ids) the assets that match the query, using each asset's original path from app.assets(). Use this mode when you know a folder name or part of the original asset path."
+    },
+    {
+      "case": "mattermost-anonymous-team-url",
+      "candidate_id": "rc-aa2c82f86e08",
+      "project": "mattermost",
+      "commit": "840fc4b8f580d1c369945c827678a896b1389049",
+      "file": "source/end-user-guide/collaborate/organize-using-teams.rst",
+      "kind": "addition",
+      "c_span": "enabled anonymous team and channel URLs (app.config().anonymousUrls), team creation becomes a single-step flow and you will not be prompted to choose a team URL. The URL is assigned automatically. If your system admin has ",
+      "c_span_coverage_by_added": 0.906,
+      "removed": [],
+      "added": [
+        "If your system admin has enabled anonymous team and channel URLs (available in Mattermost Enterprise Advanced from v11.6.0), team creation becomes a single-step flow and you will not be prompted to choose a team URL.",
+        "The URL is assigned automatically."
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "Creating a shared team for all users, and using advanced permissions to control who can create channels and add members to the shared team, improves cross-team collaboration when using multiple teams. Additionally, an annoucement banner can be used to provide system-wide announcements.\nTeam sidebar\nIf you belong to more than one team, a team sidebar displays to the left of the channel sidebar. Drag teams to reorder them in the sidebar. You can also use keyboard shortcuts to navigate between teams.\n:alt: Navigating between teams in Mattermost.\nCreate a team\nYou can create a team using a web browser or the desktop app by selecting a team name, and then selecting Create a Team , unless your system admin has disabled your ability to do so.\n:alt: Create a new team by selecting the team name.\nTeam name and URL selection\nThere are a few details and restrictions to consider when selecting a team name and team URL.\nTeam name\n^^^^^^^^^\nThis is the display name of your team that appears in menus and headings.\nTeam names can contain any letters, numbers, or symbols.\nTeam names are case sensitive.\nTeam names must be 2 - 64 characters in length.\nTeam URL\n^^^^^^^^\nThe team URL is part of the web address that navigates to your team on the system domain, https://domain.com/teamurl/ .\nTeams may contain only lowercase letters, numbers, and dashes.\nTeams must start with a letter and cannot end in a dash.\nTeams must be 2 - 64 characters in length.\nTeam names cannot start with the following restricted words: admin , api , channel , claim , error , files , help , landing , login , mfa , oauth , plug , plugins , post , signup , or playbooks .\nJoin a team\nYou can join any open teams, or join any team you receive an invitation to join.",
+      "requirement_without_rule": "Implement the Next button of Create a Team. When the user enters a team name and selects Next, handle the team URL: app.showUrlStep(suggestedUrl) shows the team URL step, whose Finish button creates the team with the URL the user chose, and app.createTeam({name, url}) creates a team. There are a few details and restrictions to consider when selecting a team name and team URL. If your system admin has not enabled anonymous URLs, you choose a team URL during team creation. The team URL is part of the web address that navigates to your team; it may contain only lowercase letters, numbers, and dashes, must start with a letter, cannot end in a dash, and must be 2 - 64 characters in length."
+    },
+    {
+      "case": "mattermost-channel-autotranslate",
+      "candidate_id": "rc-554bcd113361",
+      "project": "mattermost",
+      "commit": "73d7ca79e60e5706e1e7de1569b68e60affa85d1",
+      "file": "source/end-user-guide/collaborate/collaborate-within-channels.rst",
+      "kind": "addition",
+      "c_span": " This channel has auto-translation enabled: its messages are automatically translated into your preferred language and shown in place of the original text.",
+      "c_span_coverage_by_added": 0.304,
+      "removed": [],
+      "added": [
+        "- Automatically translate channel messages into your preferred language."
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "The Town Square channel can't be or , and users can't this default channel. However, who are manually invited to Town Square can leave the channel.\nChannel sidebar\nIn the channel sidebar on the left, you'll find all of the the channels you're a member of as well as useful channel management tools. See the to learn about the types of channels available, how they work, and how to identify them in the channel sidebar. Learn how to create channels by visiting the documentation.\nAs your channel sidebar fills up with channels you've joined, you can organize your channels into categories based on how you work. See the documentation for details.\nLearn more\nLearn more about collaborating within Mattermost channels:\n:maxdepth: 1\n:hidden:\nChannel types\nChannel naming conventions\nCommunicate a channel's focus and scope\nCreate channels\nRename channels\nDisplay channel banners\nConvert public channels to private channels\nConvert group messages to private channels\nJoin and leave channels\nMake calls in Mattermost\nManage channel members\nBrowse channels\nNavigate between channels\nMark channels as favorites\nManage channel bookmarks\nMark channels as unread\nArchive and unarchive channels\n- Learn why channel names are important.\n- Learn how to communicate a channel's scope and focus.\n- Browse all available public channels you can join, and all channels you're a member of.\n- Learn how to start or stop being a channel member.\n- Learn how to start, join, and attend calls in Mattermost, as well as screen share.\n- Learn how to navigate between channels.\n- Create channels to organize discussion by topic, project, or focus.\n- Rename channels to make them more discoverable.\n- Display a fixed banner at the top of channels to warn users about the presence of classified or sensitive information.\n- Learn how to convert channel access and visibility.\n- Learn how to convert group messages to private channels.\n- Add and remove users from channels.\n- Mark commonly visited channels as favorites.\n- Manage quick access links or files pinned to the top of channels.\n- Mark channels unread to return to messages later.\n- Keep the number of available channels manageable.",
+      "requirement_without_rule": "Implement opening a channel. When the user selects Open channel, show all of the channel's messages, in their original order, with app.showMessages([{id, text}]). app.user().language is your preferred display language, each message in app.channel().messages has the language it was written in, and app.translate(text, language) returns the text translated into that language."
+    },
+    {
+      "case": "mattermost-guest-invite-channel",
+      "candidate_id": "rc-3fbc295441e2",
+      "project": "mattermost",
+      "commit": "dbfcaedd0e002510ef4614b1424a043ebf2eb12e",
+      "file": "source/end-user-guide/collaborate/invite-people.rst",
+      "kind": "modification",
+      "c_span": "When inviting guests, you must select at least one channel they can access. ",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "An invite link can be used by anyone and doesn’t change unless it’s re-generated by a system admin or team admin via Team Settings > Access > Invite Code ."
+      ],
+      "added": [
+        "When inviting guests, you must select at least one channel they can access.",
+        "Guests are limited to the channels you specify and cannot discover other channels.",
+        "An invite link can be used by anyone and doesn’t change unless it’s re-generated or revoked by a system admin or team admin via Team Settings > Access > Invite Code ."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": ":alt: You can invite a user using their email address.\n:scale: 30\n:alt: You can invite a user using their name.\n:scale: 30\nTap Share link to share an invitation link with others via apps on your mobile device.\n:alt: You can invite a user by sharing the invite link directly with them.\n:scale: 30\nCan't share invitation links? Contact your Mattermost system admin for assistance. An may be required for link-based invitations to work.\nAn invite link can be used by anyone and doesn’t change unless it’s re-generated by a system admin or team admin via Team Settings > Access > Invite Code .\nYour system admin must and configure for Mattermost to send email-based invitations.\nInvitation links sent by email expire after 48 hours and can only be used once.\nYour system admin can that haven't yet been accepted within the System Console.",
+      "requirement_without_rule": "Implement Invite as guest in the Invite People dialog. Invite a guest temporarily with limited workspace access: specify their email address, select the channels they can access, and optionally add a custom message. When the user selects Invite, send the invitation with app.inviteGuest({email, channels, message}). Guests are limited to the channels you specify and cannot discover other channels."
+    },
+    {
+      "case": "mattermost-mention-add-prompt",
+      "candidate_id": "rc-882709afd891",
+      "project": "mattermost",
+      "commit": "6c4598422f04909d723949c261f82772340dd67b",
+      "file": "source/end-user-guide/collaborate/manage-channel-members.rst",
+      "kind": "deletion",
+      "c_span": " If they're not a channel member, Mattermost prompts you to add them.",
+      "c_span_coverage_by_added": 0.0,
+      "removed": [
+        ":alt: If a user mentioned in a channel is not a member already, then Mattermost prompts to add the user. :scale: 40"
+      ],
+      "added": [],
+      "class": "excluded_deletion",
+      "reason": "the pre-commit text contained the rule; it is not an omission"
+    },
+    {
+      "case": "mattermost-playbook-task-markdown",
+      "candidate_id": "rc-0284c8781546",
+      "project": "mattermost",
+      "commit": "5fb0a2b28590bf4617a1b8f24c9f2cd630ab60f1",
+      "file": "source/end-user-guide/workflow-automation/work-with-playbooks.rst",
+      "kind": "modification",
+      "c_span": " Playbook tasks consist of text rendered in Markdown (when present).",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "You can start with the default checklist and edit it, or you can delete it and select + New checklist ."
+      ],
+      "added": [
+        "Playbook tasks consist of text rendered in Markdown (when present).",
+        "You can't run commands directly from a task in a playbook, but you can trigger and custom slash commands _, or outgoing webhooks, to run as part of the task action by starting the task with / ."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "1. Go to Product menu > Playbooks .\n2. Find the playbook you want to edit.\nOnly public playbooks and private playbooks that you're a member of are listed. System admins have unrestricted access to all playbooks on the team.\n3. Select the name of the playbook.\nTo edit the playbook directly select the actions menu next to the playbook name, then select Edit .\nTo access the playbook dashboard, select the hyperlinked playbook name.\n4. Select the Outline tab.\n5. Edit the text portions of the playbook inline. Use the left-hand menu to navigate to other parts of the playbook that you may want to edit.\nMake checklists\n1. In channels, select Toggle Playbook List from the Apps Bar.\n2. Select Blank Playbook , or use the built-in template.\n3. Name your playbook and provide a description.\n4. Select the Checklists tab.\nYou can start with the default checklist and edit it, or you can delete it and select + New checklist .\nWithin each checklist, select + New task to add tasks that are meant to be completed together.\nDrag and drop to reorganize checklists and tasks.\nAdd task descriptions to give additional context to members of the playbook. Descriptions support a limited form of Markdown, including text styling and hyperlinks.\n5. Choose Save .\nTasks in a playbook consists of text rendered in Markdown (when present). You can't run commands directly from a task in a playbook, but you can trigger and custom slash commands _, or outgoing webhooks, to run as part of the task action by starting the task with / .\nMultiple runs in a channel\nFrom Mattermost v7.7, you can choose to start each run in a new channel or re-use an already existing channel.\nHere are some scenarios why you might want to start each run in the same channel:\nShort, frequently-used processes benefit from being in the same channel - it keeps the process streamlined.\nTeams with multiple independent workflows, such as release teams, benefit from having them in one place.\nCutting down on the number of new channels created makes it easier to find run channels again.\nThe run name isn't linked to the channel's name so you can tell multiple workflows apart.\nWhen you're configuring your playbook:\nYou can link it to an existing channel so that each run starts in that channel.\nYou can choose that each time the playbook is run, it creates a new channel.\nTo access this setting, open the Playbooks tab. Select the playbook you want to edit, then select the Outline tab. Select Actions in the left-hand menu and make your selection under the When a run starts heading.\nWhen you start a run, your selection is the default but can be changed for each run. Additionally, it's also possible to move a started run to another channel, so you're not locked into whichever option you select.",
+      "requirement_without_rule": "Implement adding a task to a playbook checklist. To create a checklist in a playbook, go to the Tasks section and select Add a task to build out checklists in the playbook. When the user selects Add a task, add the entered task with app.addTask({text, html}), where text is the task as typed and html is the markup shown for it in the checklist."
+    },
+    {
+      "case": "mattermost-timezone-default-automatic",
+      "candidate_id": "rc-4fa8e7483b1a",
+      "project": "mattermost",
+      "commit": "34180cef60dbe502477d4b0d353b07192edf24e2",
+      "file": "source/end-user-guide/preferences/manage-your-display-options.rst",
+      "kind": "addition",
+      "c_span": " This option is enabled by default.",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [],
+      "added": [
+        "From Mattermost v10.10, you can also select Automatic to set your timezone automatically based on your computer's timezone settings.",
+        "This option is enabled by default."
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "This option isn't something you can set using the mobile app.\nShare last active time\nBy default, Mattermost shows when you were last online in your profile and in direct message channel headers, unless your system admin has .\nSelect Share last active time > Edit to show or hide when you were last online in Mattermost.\nThis option isn't something you can set using the mobile app.\nTimezone\nYou can customize the timezone used for timestamps in Mattermost and in email notifications.\nSelect Timezone > Edit to select your timezone.\nTap Timezone to set your timezone automatically based on your mobile device preference.\nWebsite link previews\nYou can control whether website link previews in Mattermost show a preview of the website content directly below the message.\nYour system admin must . It's disabled by default. Once enabled, only the first web link in a message creates a preview of the website.\nSelect Website Link Previews > Edit to show or hide website previews in messages.\nThis option isn't something you can set using the mobile app.\nDefault appearance of image previews",
+      "requirement_without_rule": "Implement the Timezone setting in Settings > Display. You can customize the timezone used for timestamps in Mattermost and in email notifications. Select Timezone > Edit to select your timezone: when the user selects Edit, open the editor with app.showEditor({automatic, manualTimezone}); the handler receives the user's saved timezone preference ({automatic, manualTimezone}, or null if they have never saved one), and Save stores the values shown in the editor. You can also select Automatic to set your timezone automatically based on your computer's timezone settings."
+    },
+    {
+      "case": "mealie-organize-food-permission",
+      "candidate_id": "rc-106bac72c813",
+      "project": "mealie",
+      "commit": "05521f0e6f606edc0a6c02b86def34429f0f9a91",
+      "file": "docs/docs/documentation/getting-started/usage/permissions-and-public-access.md",
+      "kind": "modification",
+      "c_span": " Users need Organize group data to add new foods, tags, or categories, including when creating missing ingredients during recipe parsing.",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "Access to Administrator tools Access to inviting other users Access to manage their group and group data"
+      ],
+      "added": [
+        "Permission | Allows |  Administrator | Access to administrator tools | Invite | Generating invitation links for other users | Manage group | Access to group management areas and settings | Organize group data | Creating, updating, deleting, and merging group data such as foods, tags, and categories |  The Manage group and Organize group data permissions are separate.",
+        "Users need Organize group data to add new foods, tags, or categories, including when creating missing ingredients during recipe parsing."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "Permissions and Public Access\nMealie provides various levels of user access and permissions. This includes:\nAuthentication and registration ( LDAP and OpenID Connect are both supported)\nCustomizable user permissions\nFine-tuned public access for non-users\nCustomizable User Permissions\nEach user can be configured to have varying levels of access. Some of these permissions include:\nAccess to Administrator tools\nAccess to inviting other users\nAccess to manage their group and group data\nAdministrators can configure these settings on the User Management page (navigate to Settings > Admin Settings > Users or append /admin/manage/users to your instance URL).\nUser Management Demo { .md-button .md-button--primary }\nPublic Recipe Access\nBy default, groups and households are set to private, meaning only logged-in users may access the group/household. In order for a recipe to be viewable by public (not logged-in) users, three criteria must be met:\n1. The group must not be private\n2. The household must not be private, _and_ the household setting for allowing users outside of your group to see your recipes must be enabled. These can be toggled on the Household Management page (navigate to Settings > Admin Settings > Households or append /admin/manage/households to your instance URL)\n3. The recipe must be set to public. This can be toggled for each recipe individually, or in bulk using the Recipe Data Management page\nAdditionally, if the group is not private, public users can view all public group data (public recipes, public cookbooks, etc.) from the home page ( e.g. the demo home page ).\nGroup Settings Demo { .md-button .md-button--primary }\nMore broadly, here are the rules for how recipe access is determined:\nPrivate links that are generated from the recipe page using the Share button bypass all group and recipe permissions\nPrivate groups block all access to recipes, including those that are public, except as noted above.\nPrivate households, similar to private groups, block all access to recipes, except as noted above.\nHouseholds with \"Allow users outside of your group to see your recipes\" disabled block all access to recipes, except as noted above.\nPrivate recipes block all access to the recipe from public links. This does not affect Private Links.",
+      "requirement_without_rule": "Implement adding a food on the Foods page. When the user clicks Add food, create it with app.createFood(name); the signed-in user and their permissions come from app.user(). Users can have these permissions: Administrator (access to administrator tools), Invite (generating invitation links for other users), Manage group (access to group management areas and settings) and Organize group data (creating, updating, deleting, and merging group data such as foods, tags, and categories). The Manage group and Organize group data permissions are separate."
+    },
+    {
+      "case": "mealie-planner-food-label",
+      "candidate_id": "rc-0f453b1f0a55",
+      "project": "mealie",
+      "commit": "cbcd7f374414cc2039b7da009507650a2e085012",
+      "file": "docs/docs/documentation/getting-started/features.md",
+      "kind": "modification",
+      "c_span": " Ingredients can be matched by their Food Label as well, so a \"fish day\" only takes one rule instead of a list of every fish you cook with.",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "You can set rules to restrict the pool of recipes based on the Tags and/or Categories of a recipe."
+      ],
+      "added": [
+        "You can set rules to restrict the pool of recipes based on the Tags and/or Categories of a recipe, or on its ingredients.",
+        "Ingredients can be matched by their Food Label as well, so a \"fish day\" only takes one rule instead of a list of every fish you cook with."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "Tools Demo { .md-button .md-button--primary }\nCookbooks\nMealie also has the concept of cookbooks. These can be created inside of a group and can use a cross section of Categories, Tags, and Tools to filter recipes and view them in one specific page. Cookbooks are a great way to keep a subset of recipes easily accessible to you. You can think of them as a saved search results page. While most examples are simple, you can use as many organizers to filter a cookbook as you'd like.\nExamples:\nMain Courses: This cookbooks has all the recipes that have the Dinner category\nPasta Sides: Recipes that have both the Side category and the Pasta tag\nDessert Breads: Recipes that have both the Bread category and the Dessert tag\nCookbooks Demo { .md-button .md-button--primary }\nMeal Planning\nMealie uses a calendar like view to help you plan your meals. It shows you the previous day and the next 6 days by default. You can toggle through the calendar by clicking the arrows on the top of the page. In editor mode, you can use the random recipe buttons or manually add an entry.\n!!! tip\nYou can also add a \"Note\" type entry to your meal-plan when you want to include something that might not have a specific recipes. This is great for leftovers, or for ordering out.\nMealplanner Demo { .md-button .md-button--primary }\nPlanner Rules\nThe meal planner has the concept of plan rules. These offer a flexible way to use your organizers to customize how a random recipe is inserted into your meal plan. You can set rules to restrict the pool of recipes based on the Tags and/or Categories of a recipe. Additionally, since meal plans have a Breakfast, Lunch, Dinner, and Snack labels, you can specifically set a rule to be active for a specific meal type or even a specific day of the week.\nPlanner Settings Demo { .md-button .md-button--primary }\nShopping Lists\nThe shopping lists feature is a great way to keep track of what you need to buy for your next meal. You can add items directly to the shopping list or link a recipe and all of it's ingredients to track meals during the week.\nManaging shopping lists can be done from the Sidebar > Shopping Lists.\nHere you will be able to:\nSee items already on the Shopping List\nSee linked recipes with ingredients\nToggling via the 'Pot' icon will show you the linked recipe, allowing you to click to access it.\nCheck off an item\nAdd / Change / Remove / Sort Items via the grid icon\nBe sure if you are modifying an ingredient to click the 'Save' icon.\nAdd / Change / Remove / Sort Labels\n'No Label' will always be on the top, others can be Reordered via the 'Reorder Labels' button\n!!! tip\nIf you accidentally checked off an item, you can uncheck it by expanding 'items checked' and unchecking it. This will add it back to the Shopping List.\n!!! tip\nYou can use Labels to categorize your ingredients. You may want to Label by Food Type (Frozen, Fresh, etc), by Store, Tool, Recipe, or more. Play around with this to see what works best for you.",
+      "requirement_without_rule": "Implement the recipe pool preview of a meal planner rule. When the user clicks Preview recipe pool, show with app.showPool(ids) the recipes from app.recipes() that the rule from app.rule() allows. Plan rules restrict the pool of recipes based on the Tags and/or Categories of a recipe, or on its ingredients."
+    },
+    {
+      "case": "nextcloud-breakout-rooms",
+      "candidate_id": "rc-946f02ef19b6",
+      "project": "nextcloud",
+      "commit": "a88e2fc1fb99c424aef8ba8333c6a6ce094c34e7",
+      "file": "user_manual/talk/call.rst",
+      "kind": "addition",
+      "c_span": "Breakout rooms allow you to divide a call into smaller groups for more focused discussions. ",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [],
+      "added": [
+        "Breakout rooms allow you to divide a call into smaller groups for more focused discussions.",
+        "Depending on your permissions and how your instance is configured, this option may not be available to you.",
+        "For more information, see ."
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "From the media settings dialog, you can also change the background of your video.\n:width: 500px\nAll these settings are also available as direct actions in the bottom bar.\n:width: 300px\nYou can change other settings in the Talk settings dialog.\n:width: 600px\nDownload call participants list\nYou can download the list of participants in a call from the ... menu in the top bar. This will download a CSV file with the names and email addresses of all participants in the call.\n:width: 400px\nThe table in the CSV file contains the following columns:\nName : The name of the participant.\nEmail : The email address of the participant.\nType : Indicates whether the participant is a registered user or a guest.\nIdentifier : Unique identifier for the participant.",
+      "requirement_without_rule": "Implement Set up breakout rooms in a Talk call. The moderator enters the number of rooms and clicks Create breakout rooms; create the rooms with app.createBreakoutRooms(rooms), where each room is {name, participants} and participants is a list of participant ids from app.participants(). Depending on your permissions and how your instance is configured, this option may not be available to you."
+    },
+    {
+      "case": "nextcloud-calendar-talk-location",
+      "candidate_id": "rc-e594b40135ff",
+      "project": "nextcloud",
+      "commit": "ce0623394e355a3599e48f7c011874ef21ebaf9f",
+      "file": "user_manual/talk/advanced_features.rst",
+      "kind": "addition",
+      "c_span": "This will create a new conversation if one does not exist yet (app.createConversation(name) returns its token). ",
+      "c_span_coverage_by_added": 0.667,
+      "removed": [],
+      "added": [
+        "Schedule from Calendar ^^^^^^^^^^^^^^^^^^^^^^  When creating a new event in Calendar, you can set a Talk conversation as event location.",
+        "This will create a new conversation if one does not exist yet.   :width: 600px  When the event is created, you will see a link to the conversation in the event details.",
+        "Conversation will also show up in the list of conversations (discoverable by Events filter).   :width: 300px  Like instant meetings, event conversations will be automatically deleted after configured period of inactivity (by default 28 days)."
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "Advanced Talk features\nNextcloud Talk has a number of advanced features users might find useful.\nMatterbridge\nMatterbridge integration in Nextcloud Talk makes it possible to create 'bridges' between Talk conversations and conversations on other chat services like MS Teams, Discord, Matrix and others. You can find a list of supported protocols on the Matterbridge github page. _\nA moderator can add a Matterbridge connection in the chat conversation settings.\n:width: 700px\nEach of the bridges has its own need in terms of configuration. Information for most is available on the Matterbridge wiki and can be accessed behind more information menu in the ... menu. You can also access the wiki directly. _\nLobby\nThe lobby feature allows you to show guests a waiting screen until the call starts. This is ideal for webinars with external participants, for example.\n[...]\n:width: 400px\n:width: 600px\nMeetings and events\nIf calendar events have a Talk conversation set as event location, you will see an information about upcoming events inside of this conversation.\nThat way you can stay informed about scheduled meetings or activities directly within your chat.\nIf Calendar app is enabled, you can click on an event to view details.\n:width: 400px\nIt is possible to schedule a meeting directly from a conversation. In the dialog, you can set meeting details such as title, date, time and description.\nYou can also choose to invite all participants including email guests, or select specific ones.\n:width: 400px\nBreakout rooms\nBreakout rooms allow you to divide a Nextcloud Talk call into smaller groups for more focused discussions. The moderator\nof the call can create multiple breakout rooms and assign participants to each room.\nConfigure breakout rooms\n^^^^^^^^^^^^^^^^^^^^^^^^\nTo create breakout rooms, you need to be a moderator in a group conversation. Click on the top-bar menu and click on\n\"Setup breakout rooms\".\n:width: 400px\nA dialog will open where you can specify the number of rooms you want to create and the participants assignment method.\nHere you'll be presented with 3 options:\nAutomatically assign participants : Talk will automatically assign participants to the rooms.\nManually assign participants : You'll go through a participants editor where you can assign participants to rooms.\nAllow participants choose : Participants will be able to join breakout rooms themselves.",
+      "requirement_without_rule": "Implement saving a new event in Calendar. When the user clicks Save, create the event with app.createEvent({title, start, location}). When creating a new event in Calendar, you can set a Talk conversation as event location (Location type Talk conversation, with the conversation name entered in Location); otherwise the location is the entered address. When the event is created, you will see a link to the conversation in the event details: the event location is app.conversationLink(token). The conversation will also appear in the list of conversations."
+    },
+    {
+      "case": "nextcloud-delete-folder-trash",
+      "candidate_id": "rc-9d801a70d5d2",
+      "project": "nextcloud",
+      "commit": "f9dff2cff30abeb81ad52fd1010023e5077f34e2",
+      "file": "user_manual/files/deleted_file_management.rst",
+      "kind": "modification",
+      "c_span": "When you delete a file or folder in Nextcloud, it is normally moved to the trash bin (app.moveToTrash) instead of being deleted immediately. This allows you to restore it later. ",
+      "c_span_coverage_by_added": 0.929,
+      "removed": [
+        "When you delete a file in Nextcloud, it is not immediately deleted permanently, only moved into the trash bin.",
+        "It is not permanently deleted until you manually delete it, or when the Deleted Files app deletes it to make room for new files."
+      ],
+      "added": [
+        "When you delete a file or folder in Nextcloud, it is normally moved to the trash bin instead of being deleted immediately.",
+        "This allows you to restore it later."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "Managing deleted files\nWhen you delete a file in Nextcloud, it is not immediately deleted permanently,\nonly moved into the trash bin. It is not permanently deleted until you manually\ndelete it, or when the Deleted Files app deletes it to make room for new files.\nFind your deleted files by clicking the Deleted files button on the Files\npage of the Nextcloud web interface. You can restore or permanently delete files from there.\nQuotas\nDeleted files are not counted against your storage quota. Only your personal\nfiles count against your quota, not files which were shared with you.\n(See to learn more about quotas.)\nWhat happens when shared files are deleted\nDeleting files gets a little complicated when they are shared files, as this\nscenario illustrates:\n1. User1 shares a folder \"test\" with User2 and User3\n2. User2 (the recipient) deletes a file/folder \"sub\" inside of \"test\"\n3. The folder \"sub\" will be moved to the trash bin of both User1 (owner) and\nUser2 (recipient)\n4. But User3 will not have a copy of \"sub\" in their trash bin\nWhen User1 deletes \"sub\" then it is moved to User1's trash bin. It is\n[...]\napp allocates a maximum of 50% of their currently available free space to\ndeleted files. If your deleted files exceed this limit, Nextcloud deletes the\noldest files (files with the oldest timestamps from when they were deleted)\nuntil it meets the memory usage limit again.\nNextcloud checks the age of deleted files every time new files are added to the\ndeleted files. By default, deleted files stay in the trash bin for 30 days. The\nNextcloud server administrator can adjust this value in the config.php file\nby setting the trashbin_retention_obligation value. Files older than the\ntrashbin_retention_obligation value will be deleted permanently.\nAdditionally, Nextcloud calculates the maximum available space every time a new\nfile is added. If the deleted files exceed the new maximum allowed space\nNextcloud will permanently delete those trashed files with the soonest expiration\nuntil the space limit is met again.\nto override the storage space management. See admin documentation _ for more details.",
+      "requirement_without_rule": "Implement deleting in Files. Each item under All files has a Delete button, and each item under Deleted files has Restore and Delete permanently buttons; app.onAction handles all of them. Items in the trash bin are permanently deleted (app.erase) when you manually select Delete permanently, or when the Deleted Files app removes them according to the retention policy or to free space. Find your deleted files under Deleted files; from there, you can restore items (app.restore) or delete them permanently."
+    },
+    {
+      "case": "nextcloud-device-password-once",
+      "candidate_id": "rc-3d153b91ab4e",
+      "project": "nextcloud",
+      "commit": "a806a064bc8adebbdaf8525c387543b55d4b00db",
+      "file": "user_manual/session_management.rst",
+      "kind": "modification",
+      "c_span": "You only have access to the device password when creating it. ",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "Nextcloud will not save the plain password, so it is recommended to enter the password on the new client immediately."
+      ],
+      "added": [
+        "You only have access to the device password when creating it.",
+        "Nextcloud does not save the plain password, so enter the password on the new client immediately."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": ".. _managing_devices:\nManaging devices\nIn the list of connected devices you see all the devices and clients you\ngenerated a device password for and their last activity:\n:alt: List of connected devices.\nYou can use the trash icon to disconnect any of the devices in the list.\nAt the bottom of the list you find a button to create a new device-specific\npassword. You can choose a name to identify the token later. The generated\npassword is used for configuring the new client. Ideally, generate individual\ntokens for every device you connect to your account, so you can disconnect\nthose individually if necessary:\n:alt: Adding a new device.\nNextcloud will not save the plain password, so it is recommended to\nenter the password on the new client immediately.\ndevice-specific passwords are the only way to configure clients. The\nserver will then deny connections from clients using your login password.\nDevice-specific passwords and password changes\nFor password changes in external user backends the device-specific passwords\nare marked as invalid and once a login of the user account with the main\npassword happens all device-specific passwords are updated and work again.",
+      "requirement_without_rule": "Implement the device passwords in the Security settings. The list of connected browsers and devices shows which browsers and devices have connected to the account recently. At the bottom of the list, you can create a new device-specific password: when the user clicks Create new app password, create it with app.createDevice(name) using the entered app name; the generated password is used for configuring the new client and is shown with app.showCredentials(loginName, password). Each device row also has a Show password button; both kinds of button are handled by app.onAction. Nextcloud does not save the plain password, so enter the password on the new client immediately."
+    },
+    {
+      "case": "nextcloud-mail-delegation",
+      "candidate_id": "rc-c38fa60b1164",
+      "project": "nextcloud",
+      "commit": "58b21da96daa240caabc74866c1f82cb51ebb375",
+      "file": "user_manual/groupware/mail.rst",
+      "kind": "addition",
+      "c_span": "he shared account then appears in the delegate's account list (app.accountList(userId) and app.setAccountList(userId, entries), entries being {accountId, tag}), marked as delegated. T",
+      "c_span_coverage_by_added": 0.609,
+      "removed": [],
+      "added": [
+        "Native account delegation ^^^^^^^^^^^^^^^^^^^^^^^^^    Native account delegation lets you grant other Nextcloud users access to one of your mail accounts directly from the app, without any server-side alias configuration.",
+        "A delegate can do everything the account owner can — send, receive, and delete mail on your behalf — except deleting the account or updating its authentication information.",
+        "To delegate one of your accounts:  1) Open the account's three-dot menu and select Delegate account 2) In the Delegation dialog, click Add delegate 3) Use the Select a user field to choose the Nextcloud user you want to grant access to 4) Confirm with Delegate access  The shared account then appears in the delegate's account list, marked as delegated.",
+        "To remove access:  1) Open the Delegate account dialog again 2) Click Revoke next to the delegate you want to remove 3) Confirm with Revoke access"
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "2) Go to Folder search\n3) Enable mail body search\nBy enabling it the main search box will now search in both subjects and mail bodies, and a separate *Body* option\nwill appear in advanced search.\nAccount delegation\nThe app allows account delegation so that one user can send emails from the address of another.\n1) The delegation has to be configured on the mail server by an admin\n2) Add the other email address as an alias for your own email account\n3) When sending an email, select the alias as sender\nAutomatic trash deletion\nThe Mail app can automatically delete messages in the trash folder after a certain number of days.\n1) Visit Account settings\n2) Go to Automatic trash deletion\n3) Enter the number of days after which messages should be deleted\nDisable trash retention by leaving the field empty or setting it to 0.\nCompose messages\n1. Click the New message button\n2. Start writing your message",
+      "requirement_without_rule": "Implement native account delegation in Mail. Native account delegation lets you grant other Nextcloud users access to one of your mail accounts directly from the app, without any server-side alias configuration. A delegate can do everything the account owner can (send, receive, and delete mail on your behalf) except deleting the account or updating its authentication information. To delegate one of your accounts, click Delegate account on the account, click Add delegate in the Delegation dialog, choose the Nextcloud user in the Select a user field and confirm with Delegate access; app.onDelegation then receives {type: 'delegate', accountId, userId}, and the delegate is recorded with app.addDelegate(accountId, userId). To remove access, open the Delegation dialog again, click Revoke next to the delegate and confirm with Revoke access; app.onDelegation then receives {type: 'revoke', accountId, userId}, and the delegate is removed with app.removeDelegate(accountId, userId). Provisioned accounts cannot be delegated."
+    },
+    {
+      "case": "nextcloud-mail-favorites-up",
+      "candidate_id": "rc-ab0227c1eb5b",
+      "project": "nextcloud",
+      "commit": "215c005b076f6166e21d851bdbabc690dcc792a3",
+      "file": "user_manual/groupware/mail.rst",
+      "kind": "addition",
+      "c_span": "his setting allows you to show messages set as favorite in a separate section on top of the message list. T",
+      "c_span_coverage_by_added": 0.905,
+      "removed": [],
+      "added": [
+        "Sort favorites up     This setting allows you to show messages set as favorite in a separate section on top of the message list.",
+        "Visit mail settings 2.",
+        "Go to *Appearance* 3.",
+        "Enable sorting favorites up"
+      ],
+      "added_present_in_parent": [
+        "Visit mail settings 2."
+      ],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "1. Visit mail settings\n2. Choose between *Threaded*, *Singleton*\nAdd a new mail account\n1. Enable mail app from the apps\n2. Click the mail icon on the header\n3. Fill up the login form (auto or manual)\nChange sort order\n1. Visit mail settings\n2. Go to *Sorting*\n3. You can choose *Oldest* or *Newest* mail first\n.. _mail-scheduled-messages:\nScheduled messages\n1. Click new message button on top left of your screen\n2. Click the (...) action menu on the modal composer\n3. Click *send later*\nPriority inbox\nPriority inbox has 2 section *Important* and *Others*.\nMessages will automatically be marked as important based on which messages you interacted with or marked as important. In the beginning you might have to manually change the importance to teach the system, but it will improve over time.\nThe automatic classification is optional. You can opt-out when setting up an account. The classification can also be turned on and off in the account settings at any time.\nAll inboxes\nAll messages from all the accounts you have logged in, will be shown here chronologically.",
+      "requirement_without_rule": "Implement the message list of the Mail inbox. When the user opens Inbox, or changes a mail setting while the list is open, app.onOpen is called with app.settings() and app.messages(); show the list with app.showMessageList(sections), where each section is {heading, ids} and is shown as its own block of the list. Change sort order: in the mail settings under Sorting you can choose Oldest or Newest mail first; this change applies across all your accounts and folders. Sort favorites up. To use it, visit mail settings, go to Appearance and enable sorting favorites up."
+    },
+    {
+      "case": "openproject-archived-project-selector",
+      "candidate_id": "rc-2c13970217ea",
+      "project": "openproject",
+      "commit": "784ed0fb52dd03fff2fad9f8688c5deeed6dc1a5",
+      "file": "docs/user-guide/projects/README.md",
+      "kind": "deletion",
+      "c_span": " Once archived, a project can no longer be selected from the project list accessible via header navigation.",
+      "c_span_coverage_by_added": 0.0,
+      "removed": [
+        "Then, the project cannot be selected from the project selection anymore.",
+        "It is still available in the Project lists dashboard if you set the \"Active\" filter to \"off\" (move slider to the left).",
+        "You can un-archive it there, too, using the three dots at the right end of a row."
+      ],
+      "added": [],
+      "class": "excluded_deletion",
+      "reason": "the pre-commit text contained the rule; it is not an omission"
+    },
+    {
+      "case": "openproject-auto-theme-contrast",
+      "candidate_id": "rc-02df56f00b58",
+      "project": "openproject",
+      "commit": "5e64e38f60a7893217b0da71fc0508bb59a9d9d5",
+      "file": "docs/user-guide/account-settings/README.md",
+      "kind": "modification",
+      "c_span": ", including the system's contrast settings. If your operating system is set to high contrast mode, OpenProject will also automatically switch to the corresponding high contrast mode (light or dark)",
+      "c_span_coverage_by_added": 0.87,
+      "removed": [
+        "If this option is selected, OpenProject will automatically match your operating system’s light or dark theme."
+      ],
+      "added": [
+        "If this option is selected, OpenProject will automatically match your operating system’s light or dark theme, including the system's contrast settings.",
+        "You will also see additional settings to force high-contrast when Light or Dark mode is selected — this would ensure that OpenProject always increases contrast in automatic mode, regardless of the system contrast settings."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "You can choose a time zone in which you work from the dropdown menu of the respective field.\nPressing the Save button will save your changes.\nInterface\nUnder the Interface section of project settings you can adjust the color mode, activate alerts and adjust backlog settings. Settings here are grouped into three sections: *Look and feel*, *Alerts* and *Backlogs module*.\nLook and feel\nIn the Look and feel section under Interface in your profile settings (accessible via the left-hand menu), you can select your preferred display color mode and adjust the order in which comments appear in the Activity list for work packages.\nYou can also disable keyboard shortcuts . This is useful if you rely on a screen reader or want to avoid triggering actions by accident.\nClick Update look and feel to save your changes.\n! \"Look and feel\" section under Interface settings in OpenProject account settings\nSelect the high contrast color mode\nIn the dropdown menu Color mode you can pick the color mode. The default setting is the Light mode . You can also select the Light high contrast mode , which will significantly increase the contrast and override the color theme of the OpenProject instance for you.\nThis mode is recommended for users with visuals impairment.\n! High contrast mode in OpenProject account settings\nSelect the dark mode\nIn the dropdown menu Color mode you can pick the color mode. The default setting is Light mode . You can also alternatively select Dark or Dark high contrast modes.\n!NOTE]\nCustom colors and themes are only supported in Light mode and changing color modes may override most or all custom configuration. Only some colors (accent and primary button color) are kept but adapted for appropriate contrast in certain modes like dark mode.\n! Dark mode in OpenProject account settings\nSelect automatic color mode\nIn the dropdown menu Color mode, you can now also select the Automatic option, which will match the color mode of your operating system .\n! Automatic color mode in OpenProject account settings\nIf this option is selected, OpenProject will automatically match your operating system’s light or dark theme.\nIf your operating system is set to high contrast mode, OpenProject will also automatically switch to the corresponding high contrast mode (light or dark).\n!NOTE]\nThis is a user-specific preference and only affects your own account.\nChange the order to display comments\nYou can select the order of the comments (for example of the comments for a work package which appear in the Activity tab). You can select the newest at the bottom or newest on top to display the comments.\nIf you choose newest on top, the latest comment will appear on top in the Activity list.\nDisable keyboard shortcuts\nIf you use a screen reader or want to avoid accidentally triggering an action with a shortcut, you can choose to disable default keyboard shortcuts by selecting the respective option.\nAlerts\nUnder Alerts section you can activate a warning if you are leaving a work package with unsaved changes .\nAdditionally, you can activate to auto-hide success notifications from the system. This (only) means that the green pop-up success notifications will be removed automatically after five seconds.\n! Alerts section under interface settings in OpenProject account settings\nBacklogs settings",
+      "requirement_without_rule": "Implement the Update look and feel button of the Interface settings. When the user clicks it, apply the color mode chosen in the Color mode dropdown with app.applyTheme(theme), where theme is light, light_high_contrast, dark or dark_high_contrast. You can increase the contrast by activating the Increase contrast setting, which will significantly increase the contrast. You can also select the Automatic option, which will match the color mode of your operating system (app.system() describes the operating system's display preferences). If this option is selected, OpenProject will automatically match your operating system's light or dark theme."
+    },
+    {
+      "case": "openproject-files-tab-attachments",
+      "candidate_id": "rc-e436521e462d",
+      "project": "openproject",
+      "commit": "4af6f743b0cb15a114e717afdf659692f8dc5577",
+      "file": "docs/user-guide/projects/project-settings/files/README.md",
+      "kind": "addition",
+      "c_span": " To activate or de-activate the attachments being shown under Files tab in work packages, navigate to Project settings > Files and select the Attachments tab (saved in app.settings().attachments). Here you can decide whether the attachments option will be shown under Files tab of work packages detailed view for a specific project.",
+      "c_span_coverage_by_added": 0.943,
+      "removed": [],
+      "added": [
+        "Show attachments in the work packages files tab  To activate or de-activate the attachments being shown under Files tab in work packages, navigate to *Project settings > Files* and select the *Attachments* tab.",
+        "Here you can decide whether the attachments option will be shown under *Files* tab of work packages detailed view for a specific project.  !",
+        "Show attachments in the work packages files tab in OpenProject  !NOTE] Please note that you need a *Manage files in project* permission to be able to activate or deactivate this work package attachment option."
+      ],
+      "added_present_in_parent": [
+        "Show attachments in the work packages files tab  To activate or de-activate the attachments being shown under Files tab in work packages, navigate to *Project settings > Files* and select the *Attachments* tab.",
+        "Here you can decide whether the attachments option will be shown under *Files* tab of work packages detailed view for a specific project.  !",
+        "Show attachments in the work packages files tab in OpenProject  !NOTE] Please note that you need a *Manage files in project* permission to be able to activate or deactivate this work package attachment option."
+      ],
+      "c_span_coverage_by_moved": 0.943,
+      "class": "excluded_moved",
+      "reason": "the added text already existed in the parent documentation (moved, not added)"
+    },
+    {
+      "case": "openproject-filter-text-autoupdate",
+      "candidate_id": "rc-1114153d4704",
+      "project": "openproject",
+      "commit": "db54165614946caf2436a5cb2d601c898412326b",
+      "file": "docs/user-guide/work-packages/work-package-table-configuration/README.md",
+      "kind": "modification",
+      "c_span": "automatically update and ",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "The results will be displayed accordingly in the work package table."
+      ],
+      "added": [
+        "The results will automatically update and display in the work package table."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "Work package table configuration\nTopic | Content |\nAdd or remove columns | How to add or remove columns in the work package table. |\nFilter work packages | How to filter in the work package table. |\nSort the work package table | How to sort within the work package table. |\nDisplay settings | Get to know the flat list, the hierarchy mode, the group by and the sum feature. |\nAttribute highlighting (Enterprise add-on) | How to highlight certain attributes in the work package table. |\nSave work package views | How to save a new work package view and how to change existing ones. |\nYou can configure the work package table view in OpenProject to display the information that you need in the table.\nYou can change the header in the table and add or remove columns, filter and group work packages or sort them according to specific criteria. Also, you can change between a flat list view, a hierarchy view and a grouped view.\nSave the view to have it available directly from your project menu. A work package view is the sum of all modifications you made to the default table (e.g. filters you set).\nTo open the work package table configuration, open the Settings icon with the three dots at the top right of the work package table.\n! configure-work-package-table\nAdd or remove columns in the work package table\nTo configure the view of the work package table and have different attributes displayed in the table you can add or remove columns in the work package table.\nFirst, open the work package table configuration .\nIn the pop-up window, choose the tab Columns .\nYou can add columns by typing the name of the attribute which you would like to add.\nYou can remove columns by clicking the x icon.\nYou order the attributes via drag and drop.\n! columns\n[...]\n!TIP]\nFiltering a work package table will temporarily change the default work package type and default status to the values used in the filters to make newly created work packages visible in the table.\nFilter operators\nDifferent attributes offer different filter criteria but most selection attributes like Assignee offer these:\nis (OR) : returns all work packages that match any one of the entered values\nis not : returns all work packages that do not match any of the entered values\nis not empty : returns all work packages for which the attribute has a value\nis empty : returns all work packages for which the attribute does not have a value\nMulti-select attributes also have one extra options:\nis (AND) : returns all work packages that match _all_ of the entered values.\nOther attributes like Status might offer additional criteria like _open_ or _closed_. Required attributes might only offer two options, _is (OR)_ and _is not_, since they cannot be empty.\nFilter by text\nIf you want to search for specific text in the subject, description or comments of a work package, type in the Filter by text the expression you want to filter for.\nThe results will be displayed accordingly in the work package table.\n! filter-text\nFilter for a work package's children\nIf you want to only show work package with specific parents (e.g. all work packages belonging to a specific phase of your project) you can use the filter \"Parent\". Enter all required work packages and press Enter. This will show the selected work package(s) and its/their children.\nIf you only select work packages without children, no work packages will be shown at all.\n! filter-for-parent-work-package\n[...]\nFilter for assignees or assigned groups\nThere are several options to filter for the assignee of a work package. You can choose one of these filters:\nAssignee: Filters for work packages where the specified user or group is set as Assignee\nAssignee or belonging group:\nWhen filtering for a single user: Work packages assigned to this user, and any group it belongs to\nWhen filtering for a group: Work packages assigned to this group, and any users within\nAssignee's group: Filters for work packages assigned to a user from this group\nAssignee's role: Filters for work packages assigned to users with the specified project role\n! assignee-or-assignee-group-filter\nFilter for attachment file name and content\nYou can run a full text search and filter and search not only headings and text contents but also file names or file contents of attached documents to work packages.\nUse the filter \"Attachment content\" or \"Attachment file name\" to filter attached documents in the work package table.\n! advanced-filter-work-package-table\nFor both the file name and the content, you can then differentiate the filtering with the \"contains\" and \"does not contain\" options for selected keywords and text passages. To do this, please enter the corresponding text in the field next to it.\n! advanced-filter-options\nIt will then display the corresponding work package with the attachment.\n! openproject-search-work-package-attachments\nSort the work package table\nAutomatic sorting of the work package table\nBy default, the work package table will be sorted by work package ID.\nThe ID is unique for a work package within OpenProject. It will be set automatically from the system. With the ID you can reference a specific work package in OpenProject.\nTo sort the work package table view, open the work package table configuration and select the tab Sort by . You can sort by up to three attributes, either ascending or descending.\n! work-package-table-configuration\nClicking the blue Apply button will save your changes and display the results accordingly in the table view.\n! sort-work-packages\n!NOTE]\nIf you have the hierarchy mode activated, all filtered table results will be augmented with their ancestors. Hierarchies can be expanded and collapsed.\nTherefore, the results may differ if you sort in a flat list or in a hierarchy mode.\nThe same filter applied in the hierarchy mode.\n! sort-hierarchy-mode\nManual sorting of the work package table\nYou can sort the work package table manually, using the icon with the three dots on the left of each work package to drag and drop it.\nMoving a work package will change its attributes, depending on the kind of table displayed, e.g. hierarchy changes or priority.\nTo keep the sorting it is necessary to save the work package view .\nPlease note: This has no effect on the \"All open\" view; you have to save your sorting with another name.\nFlat list, Hierarchy mode and Group by\nYou have three different options to display results in the work package table.\nA Flat list (default), which contains all work packages in a list no matter how their parent-child-relation is.\nA Hierarchy , which will display the filtered results within the parent-child-relation.\nGroup by will group the table according to a defined attribute.\nTo display the work package table you have to choose one of these options.\nTo switch between the different criteria, open the work package table configuration and open the tab Display settings . Choose how to display the work packages in the table and click the blue Apply button.\n! display-settings\nWhen you group the work package table by an attribute or by project a button to collapse groups shows up:\n! collapse-button\nUse it to quickly collapse or expand all groups at the same time. Find out here how to use this feature for a quick overview of several projects at once.\nDisplay sums in work package table\nTo display the sums of eligible work package attributes, go to the work package table configuration and click on the tab Display settings (see screenshot above). When you tick the box next to Display sums the sums of Work (earlier called Estimated time) and Remaining work (earlier called Remaining hours) as well as custom fields of the type Integer or Float will be displayed at the bottom of the work package table.\nIf you group the work package table, sums will be shown for each group.\nAttribute highlighting (Enterprise add-on)\nYou can highlight attributes in the work package table to emphasize the importance of certain attributes and have important topics at a glance.\nThe following attributes can be highlighted in the table:",
+      "requirement_without_rule": "Implement the Filter by text field of the work package table. The table shows the work packages passed to app.showWorkPackages(ids), in the order of app.workPackages(); an empty field shows all work packages. If you want to search for specific text in the subject, description, or comments of a work package, type your search term into the Filter by text field. The results will display in the work package table."
+    },
+    {
+      "case": "openproject-invite-permission-basis",
+      "candidate_id": "rc-17b31565c57c",
+      "project": "openproject",
+      "commit": "b09683d8576f827834da9e3391a40cb807a0dc8c",
+      "file": "docs/getting-started/invite-members/README.md",
+      "kind": "modification",
+      "c_span": "Select whether the permissions assigned to the new user should be based on an existing user role, group or a placeholder user permissions. With User or Group, select an existing user or enter an email address for a new one; with Placeholder user, enter the name of a placeholder user. ",
+      "c_span_coverage_by_added": 0.704,
+      "removed": [
+        "Here you can select the project, to which you want to invite new members and which roles they get."
+      ],
+      "added": [
+        "Here you can select the project, to which project you want to invite new members.",
+        "Select whether the permissions assigned to the new user should be based on an existing user role, group or a placeholder user permissions."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "Please note that you will have to click the new member's name or press the Enter key before clicking the Add button.\n! Search bar for user selection to invite project members in OpenProject\nInvite new members\nYou can also invite users who do not yet have an OpenProject account. There are different ways to do it.\nInvite in members module\nSelect the project for which you want to add members. In the project menu on the left, select the Members module.\nType in the email address of the new member. If OpenProject does not find an existing user, the Invite information will automatically be put before the email address. Press the Enter key or select the text \"Invite ...\". Assign a role to this new member and click the blue Add button.\nAn email invitation will be sent out to the user with a link to create an account for OpenProject.\n! invite new member via email in the members module\nInvite from header\nIn the header menu that is always present, you find a plus icon that allows you to create projects, work packages and invite users from wherever in the application you are.\n! Button to invite new users in the header navigation of OpenProject\nOnce you click the Invite user , a dialogue will open. Here you can select the project, to which you want to invite new members and which roles they get.\n! Pop up form to invite new user in OpenProject\nInvite within a work package\nWhen you are working in the work package table, you can also invite users from there. For example when you want to set an assignee for a work package that does not yet have access to OpenProject, you can select the Invite option from the drop down menu. The same applies to the column Accountable or the custom fields for your project.\n! Invite a user from a work package assignee field in OpenProject\nYou can now collaborate with your team in OpenProject. Newly invited users will be shown with a letter symbol next to their name.\n!IMPORTANT]",
+      "requirement_without_rule": "Implement the Invite user dialog. Once you click Invite user, a dialogue will open. Here you can select the project, to which project you want to invite new members. Then enter the name of an existing principal (listed by app.principals()) or the email address of a new user, assign a role and click Invite: add an existing principal with app.addMember(projectId, principalId, roleId, basis) or invite a new user by email with app.inviteByEmail(projectId, email, roleId, basis)."
+    },
+    {
+      "case": "openproject-more-menu-subproject",
+      "candidate_id": "rc-4efba0098a79",
+      "project": "openproject",
+      "commit": "60be87235a19fc820646602f2e224db6bd28e3a6",
+      "file": "docs/user-guide/projects/project-settings/project-information/README.md",
+      "kind": "modification",
+      "c_span": "Add a subproject (app.openProjectForm({parent: projectId})), ",
+      "c_span_coverage_by_added": 0.429,
+      "removed": [
+        "Click the More (three dots) icon, which opens a dropdown menu with the following options: Copy a project Make a project public Archive a project Set a project as a template Delete a project"
+      ],
+      "added": [
+        "Add a subproject Duplicate a project Make a project public Set a project as a template Archive a project Delete a project"
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "Edit project information\nTo edit your project information in OpenProject, select a project from the Select a project drop-down menu. Then navigate to _Project settings → Information_ in the project menu on the left.\nProject settings are grouped into three sections:\n1. Basic details . Here you can edit:\nProject name . The name will be displayed in the project list.\nAdd a project description .\n2. Project identifier . Here you can change project identifier .\n3. Project status . Here you can:\nSet a project status . The project status can be displayed in the project home . If you want to set additional or different status options you can create and use a project custom field .\nAdd a project status description . The status description will be shown on the project home page.\n4. Project relations , where you can select the parent project .\nSave your changes by clicking the Update button at the bottom of each respective section.\nFurther, in the top right corner you can:\n5. Add a subproject\n6. Click the More (three dots) icon, which opens a dropdown menu with the following options:\nCopy a project\nMake a project public\nArchive a project\nSet a project as a template\nDelete a project\n! project-information\n!NOTE]\nAfter 16.0 release, project attributes can be edited directly on the project overview page.\nCreate a subproject\nTo create a subproject for an existing project, navigate to _Project settings_ -> _Information_ and click on the green + Subproject button.\nThen follow the instructions to create a new project .\n! Form to create a subproject in OpenProject\nChange project identifier\nA project identifier is the part of the project name shown in the URL, e.g. /demo-project. To change the project identifier navigate to Project settings and click the Change identifier button in the respective section.\n! A form to change the project identifier in OpenProject\nYou will then see the form to change and save the new project identifier.\n!NOTE]\nWhen changing a project identifier, previous identifiers will remain valid. Requests to an old identifier will still resolve to the same project.\nRetired identifiers cannot be used by other projects. A project can, however, revert to a previously used identifier.\n!WARNING]\nKeep in mind that once a project identifier is changed, members of the project will have to relocate the project's repositories.\nExisting links using previous identifiers will continue to work.\nCopy a project\nYou can copy an existing project by navigating to the _Project settings -> Project information_. Click the More (three dots) icon in the upper right corner and select Copy from the dropdown menu.\n!NOTE]\nUsers who copy a project are assigned a New role for users that create projects in the copied project. Depending on your configuration, this role may grant additional permissions compared to their role in the source project.\n! Copy a project under project settings in OpenProject\n!NOTE]\nTo access the Copy action from Project settings , users must be able to open the project settings (typically through the Edit project permission). Alternatively, users can create a new project from a project template if template creation is available to them.\nUnder the Copy from project section you can select what additional project data and settings, such as versions, work package categories, attachments, project life cycle and project members should be copied as well.\nYou can copy existing boards (apart from the Subproject board) and the Project overview dashboards along with your project, too.\nSelect which modules and settings you want to copy and whether or not you want to notify users via email during copying.\n!IMPORTANT]\nBudgets cannot be copied, so they must be removed from the work package table beforehand. Alternatively, you can delete them in the Budget module and thus delete them from the work packages as well.\n!NOTE]\nThe File storages options only apply if the template project had a file storage with automatically managed folders activated.\nIf you select the File Storages: Project folders option, both the storage and the storage folders are copied into the new project if automatically managed project folders were selected for the original file storage. For storages with manually managed project folders setup the copied storage will be referencing the same folder as the original project.\nIf you de-select the File Storages: Project folders option, the storage is copied, but no specific folder is set up.\nIf you de-select the File Storages option, no storages are copied to the new project.\nGive the new project a name, identifier and select a parent project if needed.\nClick the Copy button to proceed.\n! Form to specify copying options when copying a project in OpenProject\nMake a project public\nIf you want to set a project to be public, navigate to the _Project settings -> Project information_. Click the More (three dots) icon in the upper right corner and select Make public .\n! Make a project public in OpenProject\nSetting a project to public will make it accessible to all people within your OpenProject instance.\n!IMPORTANT]\nIf your instance is accessible without authentication this option will make the project visible to the general public outside your instance.\nArchive a project\nIn order to archive a project, navigate to the _Project settings -> Project information_. Click the More (three dots) icon in the upper right corner and select Archive project .\n!NOTE]\nThis option is always available to instance and project administrators. It can also be activated for specific roles by enabling the _Archive project_ permission for that role via the Roles and permissions page in the administrator settings.\n! Archive a project under project settings in OpenProject\nOnce archived, a project can no longer be selected from the project list accessible via header navigation. It is still visible in the Project lists dashboard if you set the \"Active\" filter to \"off\" (move slider to the left). You can unarchive the project there, too, using the three dots at the right end of a row and clicking Unarchive .\n! An archived project shown in projects list in OpenProject\nYou can also archive a project directly on the project overview page.\nChange the project hierarchy\nTo change the project's hierarchy, navigate to the _Project settings -> Information_ and change the Subproject of in _Project relations_ section.\n! Project relations section under project settings in OpenProject\nDelete a project\nIf you want to delete a project, navigate to the Project settings . Click the button Delete project on the top right of the page.\n! delete a project\nYou can also delete a project via the projects overview list .\n!NOTE]\nDeleting projects is only available for System administrators.",
+      "requirement_without_rule": "Implement the More menu of the project information page. When the user clicks More, show the menu items for the current project app.project() with app.showMenu([{label, run}]). In the top-right corner, click the More (three dots) icon to open a menu with additional project actions: Duplicate a project (app.duplicateProject()), Make a project public (app.makePublic()), Set a project as a template (app.setTemplate()), Archive a project (app.archive()), Delete a project (app.deleteProject())."
+    },
+    {
+      "case": "paperless-ai-suggestions-blank-text",
+      "candidate_id": "rc-84013890a131",
+      "project": "paperless",
+      "commit": "937feb1befdbc5712a612e9be44a926b0b6fc84c",
+      "file": "docs/usage.md",
+      "kind": "addition",
+      "c_span": " Documents whose processed text is empty or contains only whitespace are skipped.",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [],
+      "added": [
+        "Documents whose processed text is empty or contains only whitespace are skipped."
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "The action takes no options, its presence is what enables remote OCR for a matching document.\nIf the remote engine is not configured, or does not support the document's file type, the document is\nprocessed locally instead and a warning is written to the log.\nApply AI Suggestions {#workflow-action-apply-ai-suggestions}\n\"Apply AI Suggestions\" actions ask the configured AI service for title and metadata suggestions,\nthe same as the AI suggestions shown on the document detail page, except applied automatically and in bulk.\nIt requires AI features to be enabled. You can specify:\nWhich suggestions to apply: title, tags, correspondent, document type, storage path and / or created\ndate. Suggestions for fields you did not select are discarded.\nWhether to create missing items. By default only tags, correspondents and document types that\nalready exist are assigned and any other suggestion is dropped. With this enabled, suggested items\nthat do not exist are created. Storage paths are never created.\nWhether to overwrite existing values. By default a field is only filled in if it is currently empty.\nNote that documents almost always already have a title and created date, so if you select those you\nwill usually want to enable this too. Tags are an exception: suggested tags are always added and\nnever replace the document's existing tags.\nThe action works with every trigger except Consumption Started , because suggestions are made from\nthe document's text, which does not exist until after the document has been processed.\nBecause the query to the AI service is slow, the action is queued and runs in the background rather\nthan as part of the workflow run itself. The document is updated once the suggestions come back.\n!!! warning\nEvery matching document results in a query to the AI service, which may incur costs and have privacy\nimplications. Queries can be slow, so a workflow matching a large number of documents can occupy the\ntask queue, and delay consumption of new documents, etc. Consider narrowing the trigger filters,\nrunning in small batches and / or increasing workers.\nWorkflow placeholders\nTitles and webhook payloads can be generated by workflows using Jinja templates .\nThis allows for complex logic to be used, including logical structures\nand filters .\nThe template is provided as a string.\nUsing Jinja2 Templates is also useful for Date localization in the title.\nThe available inputs differ depending on the type of workflow trigger.\nThis is because at the time of consumption (when the text is to be set), no automatic tags etc. have been\napplied. You can use the following placeholders in the template with any trigger type:\n{{correspondent}} : assigned correspondent name",
+      "requirement_without_rule": "Implement the run of the \"Apply AI Suggestions\" workflow action. When the user clicks Run action, ask the AI service for suggestions for each listed document by calling app.queueSuggestions(id); the action is queued and runs in the background. Suggestions are made from the document's processed text (its content)."
+    },
+    {
+      "case": "paperless-custom-field-no-value",
+      "candidate_id": "rc-086a9d210266",
+      "project": "paperless",
+      "commit": "855669ddf93e25fe5c45420781e191a7df63884d",
+      "file": "docs/usage.md",
+      "kind": "modification",
+      "c_span": "no value is set, the field is only added to the document and any value it may already have is left untouched. If ",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "Note that no value for the field will be set"
+      ],
+      "added": [
+        "Custom fields, optionally with a value.",
+        "If no value is set, the field is only added to the document and any value it may already have is left untouched.",
+        "If a value is set, it will overwrite an existing value of that field on the document."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "Any Tags: Filter for documents with any of the specified tags.\nAll Tags: Filter for documents with all of the specified tags.\nNo Tags: Filter for documents with none of the specified tags.\nDocument type: Filter documents with this document type.\nNot Document types: Filter documents without any of these document types.\nCorrespondent: Filter documents with this correspondent.\nNot Correspondents: Filter documents without any of these correspondents.\nStorage path: Filter documents with this storage path.\nNot Storage paths: Filter documents without any of these storage paths.\nCustom field query: Filter documents with a custom field query (the same as used for the document list filters).\nWorkflow Actions\nTypes {#workflow-action-types}\nThe following workflow action types are available:\nAssignment {#workflow-action-assignment}\n\"Assignment\" actions can assign:\nTitle, see workflow placeholders below\nTags, correspondent, document type and storage path\nDocument owner\nView and / or edit permissions to users or groups\nCustom fields. Note that no value for the field will be set\nRemoval {#workflow-action-removal}\n\"Removal\" actions can remove either all of or specific sets of the following:\nTags, correspondents, document types or storage paths\nDocument owner\nView and / or edit permissions\nCustom fields\nEmail {#workflow-action-email}\n\"Email\" actions can send documents via email. This action requires a mail server to be configured . You can specify:\nThe recipient email address(es) separated by commas\nThe subject and body of the email, which can include placeholders, see placeholders below\nWhether to include the document as an attachment\nWebhook {#workflow-action-webhook}\n\"Webhook\" actions send a POST request to a specified URL. You can specify:\nThe URL to send the request to\nThe request body as text or as key-value pairs, which can include placeholders, see placeholders below.\nEncoding for the request body, either JSON or form data",
+      "requirement_without_rule": "Implement the workflow \"Assignment\" action for custom fields. When the user clicks Apply assignment, assign the action's custom field to every listed document with app.setCustomFields, keeping the document's other fields. Custom fields can be assigned optionally with a value. If a value is set, it will overwrite an existing value of that field on the document."
+    },
+    {
+      "case": "paperless-doc-title-placeholder",
+      "candidate_id": "rc-9e198862b86e",
+      "project": "paperless",
+      "commit": "63c0e2f72b53ca2d38851930a4bcd1d5c8b52321",
+      "file": "docs/usage.md",
+      "kind": "modification",
+      "c_span": ", cannot be used in title assignment",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "{{doc_title}} : current document title"
+      ],
+      "added": [
+        "{{doc_title}} : current document title (cannot be used in title assignment)"
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "This allows for complex logic to be used to generate the title, including logical structures\nand filters .\nThe template is provided as a string.\nUsing Jinja2 Templates is also useful for Date localization in the title.\nThe available inputs differ depending on the type of workflow trigger.\nThis is because at the time of consumption (when the text is to be set), no automatic tags etc. have been\napplied. You can use the following placeholders in the template with any trigger type:\n{{correspondent}} : assigned correspondent name\n{{document_type}} : assigned document type name\n{{owner_username}} : assigned owner username\n{{added}} : added datetime\n{{added_year}} : added year\n{{added_year_short}} : added year\n{{added_month}} : added month\n{{added_month_name}} : added month name\n{{added_month_name_short}} : added month short name\n{{added_day}} : added day\n{{added_time}} : added time in HH:MM format\n{{original_filename}} : original file name without extension\n{{filename}} : current file name without extension\n{{doc_title}} : current document title\nThe following placeholders are only available for \"added\" or \"updated\" triggers\n{{created}} : created datetime\n{{created_year}} : created year\n{{created_year_short}} : created year\n{{created_month}} : created month\n{{created_month_name}} : created month name\n{created_month_name_short}} : created month short name\n{{created_day}} : created day\n{{created_time}} : created time in HH:MM format\n{{doc_url}} : URL to the document in the web UI. Requires the PAPERLESS_URL setting to be set.\n{{doc_id}} : Document ID\nExamples\njinja2\n{{ created | localize_date('MMMM', 'en_US') }}\n{{ added | localize_date('MMMM', 'de_DE') }}\n# codespell:ignore\nWorkflow permissions",
+      "requirement_without_rule": "Implement saving the title template of a workflow assignment. When the user clicks Save, store the entered template with app.saveTitleTemplate. Titles are Jinja templates and can use these placeholders: {{correspondent}} (assigned correspondent name), {{document_type}} (assigned document type name), {{owner_username}} (assigned owner username), {{added}}, {{added_year}}, {{added_month}}, {{added_day}} (added date parts), {{original_filename}} (original file name without extension), {{filename}} (current file name without extension) and {{doc_title}} (current document title)."
+    },
+    {
+      "case": "paperless-own-profile",
+      "candidate_id": "rc-035e8af08cd7",
+      "project": "paperless",
+      "commit": "1ba6c31385b078e26b7e8fff1b0eaaec8487c411",
+      "file": "docs/usage.md",
+      "kind": "modification",
+      "c_span": " These permissions are not needed for users to edit their own profile via My Profile.",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "User | Add, edit, delete or view Users. |"
+      ],
+      "added": [
+        "User | Add, edit, delete or view other user accounts via Settings > Users & Groups and /api/users/ .",
+        "These permissions are not needed for users to edit their own profile via \"My Profile\" or /api/profile/ . |"
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "as well as accessing the Django backend.\nDetailed Explanation of Global Permissions {#global-permissions}\nGlobal permissions define what areas of the app and API endpoints users can access. For example, they\ndetermine if a user can create, edit, delete or view _any_ documents, but individual documents themselves\nstill have \"object-level\" permissions.\nType | Details |\nAppConfig | _Change_ or higher permissions grants access to the \"Application Configuration\" area. |\nCorrespondent | Add, edit, delete or view Correspondents. |\nCustomField | Add, edit, delete or view Custom Fields. |\nDocument | Add, edit, delete or view Documents. |\nDocumentType | Add, edit, delete or view Document Types. |\nGroup | Add, edit, delete or view Groups. |\nMailAccount | Add, edit, delete or view Mail Accounts. |\nMailRule | Add, edit, delete or view Mail Rules. |\nNote | Add, edit, delete or view Notes. |\nPaperlessTask | View or dismiss (_Change_) File Tasks. |\nSavedView | Add, edit, delete or view Saved Views. |\nShareLink | Add, delete or view Share Links. |\nStoragePath | Add, edit, delete or view Storage Paths. |\nTag | Add, edit, delete or view Tags. |\nUISettings | Add, edit, delete or view the UI settings that are used by the web app. :warning: Users that will access the web UI must be granted at least _View_ permissions. |\nUser | Add, edit, delete or view Users. |\nWorkflow | Add, edit, delete or view Workflows. Note that Workflows are global; all users who can access workflows see the same set. Workflows have other permission implications — see Workflow permissions . |\nDetailed Explanation of Object Permissions {#object-permissions}\nType | Details |\nOwner | By default objects are only visible and editable by their owner. Only the object owner can grant permissions to other users or groups. Additionally, only document owners can create share links and add / remove custom fields. For backwards compatibility objects can have no owner which makes them visible to any user. |\nView | Confers the ability to view (not edit) a document, tag, etc. Users without 'view' (or higher) permissions will be shown _'Private'_ in place of the object name for example when viewing a document with a tag for which the user doesn't have permissions. |\nEdit | Confers the ability to edit (and view) a document, tag, etc. |\nPassword reset\nIn order to enable the password reset feature you will need to setup an SMTP backend, see\nPAPERLESS_EMAIL_HOST . If your installation does not have\nPAPERLESS_URL set, the reset link included in emails will use the server host.\nTwo-factor authentication\nUsers can enable two-factor authentication (2FA) for their accounts from the 'My Profile' dialog. Opening the dropdown reveals a QR code that can be scanned by a 2FA app (e.g. Google Authenticator) to generate a code. The code must then be entered in the dialog to enable 2FA. If the code is accepted and 2FA is enabled, the user will be shown a set of 10 recovery codes that can be used to login in the event that the 2FA device is lost or unavailable. These codes should be stored securely and cannot be retrieved again. Once enabled, users will be required to enter a code from their 2FA app when logging in.\nShould a user lose access to their 2FA device and all recovery codes, a superuser can disable 2FA for the user from the 'Users & Groups' management screen.\nWorkflows\n!!! note",
+      "requirement_without_rule": "Implement saving in the My Profile dialog. When the signed-in user clicks Save, store their edited first name and email with app.saveProfile. Permissions are listed by app.permissions(); the User permission allows adding, editing, deleting or viewing other user accounts via Settings > Users & Groups."
+    },
+    {
+      "case": "paperless-superuser-grant",
+      "candidate_id": "rc-806442660eb5",
+      "project": "paperless",
+      "commit": "41bcc12cc2ae01d99957518a9b88126e16bb7c71",
+      "file": "docs/usage.md",
+      "kind": "addition",
+      "c_span": " Superuser status can only be granted by another superuser.",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [],
+      "added": [
+        "Superuser status can only be granted by another superuser."
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "Permissions can be set using the new \"Permissions\" tab when editing documents, or bulk-applied\nin the UI by selecting documents and choosing the \"Permissions\" button.\nDefault permissions\nWorkflows provide advanced ways to control permissions.\nFor objects created via the web UI (tags, doc types, etc.) the default is to set the current user\nas owner and no extra permissions, but you can explicitly set these under Settings > Permissions.\nDocuments consumed via the consumption directory do not have an owner or additional permissions set by default, but again, can be controlled with Workflows .\nUsers and Groups\nPaperless-ngx supports editing users and groups via the 'frontend' UI, which can be found under\nSettings > Users & Groups, assuming the user has access. If a user is designated\nas a member of a group those permissions will be inherited and this is reflected in the UI. Explicit\npermissions can be granted to limit access to certain parts of the UI (and corresponding API endpoints).\n!!! tip\nBy default, new users are not granted any permissions, except those inherited from any group(s) of which they are a member.\nSuperusers\nSuperusers can access all parts of the front and backend application as well as any and all objects.\nAdmin Status\nAdmin status (Django 'staff status') grants access to viewing the paperless logs and the system status dialog\nas well as accessing the Django backend.\nDetailed Explanation of Global Permissions {#global-permissions}\nGlobal permissions define what areas of the app and API endpoints users can access. For example, they\ndetermine if a user can create, edit, delete or view _any_ documents, but individual documents themselves\nstill have \"object-level\" permissions.\nType | Details |\nAppConfig | _Change_ or higher permissions grants access to the \"Application Configuration\" area. |\nCorrespondent | Add, edit, delete or view Correspondents. |\nCustomField | Add, edit, delete or view Custom Fields. |\nDocument | Add, edit, delete or view Documents. |\nDocumentType | Add, edit, delete or view Document Types. |\nGroup | Add, edit, delete or view Groups. |\nMailAccount | Add, edit, delete or view Mail Accounts. |\nMailRule | Add, edit, delete or view Mail Rules. |\nNote | Add, edit, delete or view Notes. |\nPaperlessTask | View or dismiss (_Change_) File Tasks. |\nSavedView | Add, edit, delete or view Saved Views. |",
+      "requirement_without_rule": "Edit another user account in Users & Groups. When the signed-in user clicks Save, store the edited first name and superuser status with app.saveUser. Superusers can access all parts of the application and all objects."
+    },
+    {
+      "case": "wekan-field-order-independent",
+      "candidate_id": "rc-899c4d2472ad",
+      "project": "wekan",
+      "commit": "15b2b6c5339979341d8237aa592ae37a5fd0607d",
+      "file": "docs/Features/Board/Card-Field-Display-Order.md",
+      "kind": "addition",
+      "c_span": " on that side only. They are independent: a field can be third on the minicard and last on the card",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [],
+      "added": [
+        "Every row of either list reads the same way:  part | what it does |  checkbox | whether that side shows the field at all - the same board toggles as before ( allowsLabels , allowsLabelsOnMinicard , ...) | ▲ ▼ | move the field earlier or later on that side only | icon and name | the field, with the same icon and name the card uses for it |  The Show on Minicard list is in the board's minicard order and the Show on Card list in its card order.",
+        "They are independent: a field can be third on the minicard and last on the card.",
+        "What either list shows top to bottom is what that surface draws top to bottom."
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "Card field display order\nReorder the major sections of an opened card - Labels, Dates, Members,\nCustom Fields, Description - instead of the historical fixed order (#4448).\nUseful when a board relies mostly on Description or Custom Fields and wants\nthat section to show up first, right under the card title.\nWhere to find it\nBoard sidebar (hamburger menu) → Board Settings → Card , in the \"Card\nfield order\" list near the bottom of that panel.\n┌─ Sidebar ▾ ─────────────────┐\n│ Board Settings │\n│ Swimlane │\n│ List │\n│ ▸ Card <- here │\n└────────────────────────────────┘\n┌ Card Settings ───────────────────────┐\n│ ... │\n│ Card field order │\n│ ↑ ↓ Labels │\n│ ↑ ↓ Dates │\n│ ↑ ↓ Members │\n│ ↑ ↓ Custom Fields │\n│ ↑ ↓ Description │\n└──────────────────────────────────────────┘\nSteps to use it\n1. Open a board you are an admin of, click the sidebar's hamburger menu,\nthen Board Settings → Card .\n2. Scroll to Card field order , which lists the five reorderable\nsections: Labels, Dates, Members, Custom Fields, Description.\n3. Click the up / down arrow beside a section to move it earlier or\nlater - the top-most arrow is disabled on the first row and the\nbottom-most arrow is disabled on the last row.\n4. The change takes effect immediately on every card of this board; there is\nno separate save step.\n5. What information is needed: none beyond deciding the order - this is a\npure reordering control, not a text field.",
+      "requirement_without_rule": "Implement the arrows of Board Settings / Card, where you choose in what order the opened card and the minicard show their fields. Clicking ▲ or ▼ beside a field calls the handler with the list's side ('minicard' or 'card'), the field key and the direction ('up' or 'down'); read the orders with app.orders() and store new ones with app.saveOrders({minicard, card}). The Show on Minicard list is in the board's minicard order and the Show on Card list in its card order. ▲ ▼ move the field earlier or later. What either list shows top to bottom is what that surface draws top to bottom. The change takes effect immediately on every card of this board; there is no separate save step."
+    },
+    {
+      "case": "wekan-home-multi-drop",
+      "candidate_id": "rc-88440629ecb6",
+      "project": "wekan",
+      "commit": "aebc7d9def56f00e5104e182cf7b97a3db82c1aa",
+      "file": "docs/Features/Board/Home.md",
+      "kind": "modification",
+      "c_span": "Dropping a multi-selection does not silently choose its first board. It reports \"Please select only one board\", changes nothing and keeps the selection so it can be narrowed. ",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "Dropping a multi-selection sets the first of them, the same one the Multi-Selection sidebar's Home row sets, and then clears the selection so it cannot look as though all of them went somewhere."
+      ],
+      "added": [
+        "Dropping a multi-selection does not silently choose its first board.",
+        "It reports \"Please select only one board\", changes nothing and keeps the selection so it can be narrowed.",
+        "A one-board drag continues to set Home normally."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "start. The row is there whether or not a board is at it, because the place to\ndrop a board onto has to exist before there is anything in it.\nIts address is /allboards/home , the same shape as the other sections\n( All Boards URLs ).\nThere is no Add Board tile in Home. A board created here would not be the\nboard that opens after login, so the tile would promise something it cannot do.\nAn empty Home says what to drag instead of showing a blank pane.\nDragging\nDrop a board on the Home row and it becomes the board that opens after\nlogin. The row is one more place in a column a board icon can already be dragged\nonto — Remaining takes it out of a workspace, the Archive archives it, a\nworkspace files it — so the gesture is the one already in the reader's hand. The\nalternative is Multi-Selection, which is three clicks to set one board.\nA drop replaces . Home holds one board, so dropping a board on it makes that\nboard Home whatever was there before. It deliberately does *not* toggle: a drop\nthat sometimes sets and sometimes clears would depend on state the reader cannot\nsee while dragging — you would have to remember what was already at Home to know\nwhat your own drop was about to do. The Multi-Selection row still toggles,\nbecause there you clicked a board you can see the state of.\nDropping a multi-selection sets the first of them, the same one the\nMulti-Selection sidebar's Home row sets, and then clears the selection so it\ncannot look as though all of them went somewhere.\nTaking a board off Home — the launcher's Remove bar\nA board dragged out of Home may land in exactly one place : the Remove\ntarget, which appears while you drag it.\nThis is the gesture an Android launcher uses to take an app off the home screen.\nPick an icon up and a Remove bar appears at the top; drag the icon onto it and\nit turns red; let go and the shortcut is gone — while the app itself is still in\nthe drawer. Here the board is still in Remaining, or in its workspace, and has\nonly stopped being the board that opens after login.\nThe bar is drawn only while a board from Home is actually in the air . An\naffordance that appears when the gesture is possible explains itself; a trash\ncan sitting permanently under somebody's boards is a button nobody dares press.\nIt spans the width of the board area — it is a target, and a target you have to\naim at is a target you miss — and it is red only under the icon , because the\ncolour is the answer to \"what happens if I let go here\" rather than a standing\nwarning about a board nobody is touching.\nIt asks before doing , the way the drop on the Archive asks, and the question\nsays the board itself is not deleted: that is what a reader wants to know when a\ntrash can is under a board they care about.\nEvery other target refuses the drop. Remaining, Starred, Templates, the",
+      "requirement_without_rule": "Implement dropping boards on the Home row of All Boards. Ticking a board's checkbox adds it to the multi-selection; Drop on Home drops the selected boards on the Home row and calls the handler with their ids. Set Home with app.setHome(id); app.home(), app.selection(), app.clearSelection() and app.showMessage(text) are also available. Drop a board on the Home row and it becomes the board that opens after login. A drop replaces. Home holds one board, so dropping a board on it makes that board Home whatever was there before. It deliberately does not toggle. A one-board drag continues to set Home normally."
+    },
+    {
+      "case": "wekan-member-same-org-team",
+      "candidate_id": "rc-8b05adc7767e",
+      "project": "wekan",
+      "commit": "f0ea1601b3f6e2530501873efc5824d48ee79991",
+      "file": "docs/Features/Members/Members.md",
+      "kind": "modification",
+      "c_span": ", and when either is on, a user can only be added to a board if they share an enabled kind with the inviter or with an active board member (site admins bypass this)",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "When the global admin setting boardMembersFromSameOrgOrTeamOnly is enabled, a user can only be added to a board if they share at least one Organization or Team with the inviter or with an active board member (site admins bypass this)."
+      ],
+      "added": [
+        "There is one admin checkbox per kind - boardMembersFromSameOrgOnly in Admin Panel / People / Organizations and boardMembersFromSameTeamOnly in / Teams - and when either is on, a user can only be added to a board if they share an enabled kind with the inviter or with an active board member (site admins bypass this)."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "Admin — full control of the board.\nNormal — can edit cards.\nComment only — can only add comments, not edit cards.\n! Wekan permissions screenshot\nShare a board with an email Domain\nIn the board members sidebar there is a Domains tab. From it you can share a\nboard with a whole email domain (for example example.com ), so every user with\na verified email address on that domain becomes a member of the board. This is in\naddition to sharing with individual members, Organizations and Teams.\nNotify on assign\nWhen a user is added as a card member or assignee , they can be notified\ndirectly. This is controlled by the environment variable:\nNOTIFY_ON_ASSIGN (default true ) — when true , the user added as a card\nmember/assignee gets a direct notification. Set to false to disable these\nnotifications instance-wide. On Snap use notify-on-assign .\nRestrict board members to the same Organization or Team\nOn multi-tenant instances you can require that a board's members share an Organization\nor Team. When the global admin setting boardMembersFromSameOrgOrTeamOnly is enabled, a\nuser can only be added to a board if they share at least one Organization or Team with the\ninviter or with an active board member (site admins bypass this). See\nAdmin Panel .\nRelated\nAdding Users\nAdmin: Impersonate user\nAdmin Panel",
+      "requirement_without_rule": "Implement adding a member from the board members sidebar. When the user picks a user and clicks Add, add them with app.addMember(userId). The signed-in inviter is app.actor(), the board's members and whether each is active are app.members(), every user's Organizations and Teams are in app.users(), and the admin settings are app.settings(). On multi-tenant instances you can require that a board's members share an Organization or a Team. There is one admin checkbox per kind (boardMembersFromSameOrgOnly in Admin Panel / People / Organizations and boardMembersFromSameTeamOnly in Admin Panel / People / Teams)."
+    },
+    {
+      "case": "wekan-swimlane-below-default",
+      "candidate_id": "rc-6b29ef8b44d8",
+      "project": "wekan",
+      "commit": "5ed4268a61b19898c671b64b1ead786494f171b9",
+      "file": "docs/Features/Swimlanes/Swimlanes.md",
+      "kind": "addition",
+      "c_span": ", with Below selected by default",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [],
+      "added": [
+        "Insert above or below  Use the swimlane header + , or Swimlane Actions → Add Swimlane .",
+        "The existing popup offers Above selected swimlane and Below selected swimlane , with Below selected by default.",
+        "Multiple titles retain their order between the selected lane and its neighbor.",
+        "Board write permissions still apply."
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "Swimlanes divide a board into horizontal bands. Choose Swimlanes in the\nboard-view menu to work with them. Each card belongs to a list and a swimlane;\nlanes can contain their own lists as well as legacy shared lists.\nCreate and rename\nUse + beside a swimlane header to open Add Swimlane . Paste several lines\nand use Add to choose one multiline swimlane name or one swimlane per\nnonempty line. Save to create them in the pasted order. Click the name to rename\nit; the editor and displayed title preserve line breaks.\nSee multiline creation .\nArrange and manage\nUse the header drag handle where shown to reorder swimlanes. The caret\ncollapses/expands a lane, and its menu provides links/history, export/import and\npermitted move/copy/archive actions. Resize with the lane's resize handle when\nthe board administrator has not locked resizing.\nBoard Settings / Swimlane :\nresize locking and WIP Limit Groups\nLists : create a first list with the empty lane's +\nArchive and Delete",
+      "requirement_without_rule": "Implement adding swimlanes. Use + beside a swimlane header to open Add Swimlane; when the user clicks Save, the handler receives the selected swimlane's id, the checked placement ('above', 'below' or null) and the entered text. Create one swimlane per nonempty line with app.addSwimlanes(laneId, placement, titles). The existing popup offers Above selected swimlane and Below selected swimlane. Multiple titles retain their order between the selected lane and its neighbor."
+    },
+    {
+      "case": "wekan-sync-local-edits",
+      "candidate_id": "rc-f3df2f6e5885",
+      "project": "wekan",
+      "commit": "b254b7d3afb112d2e72f36f3fc8eb7a4a998ae23",
+      "file": "docs/Features/ImportExport/Sync.md",
+      "kind": "modification",
+      "c_span": "upstream title/description changes update the card when local text still matches the last synchronized source value; local-only text edits are retained; ",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "a changed title/description updates the existing card;"
+      ],
+      "added": [
+        "upstream title/description changes update the card when local text still matches the last synchronized source value; local-only text edits are retained;"
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "Big Picture Roadmap : Import/Export/Sync with WeKan\nList sync (implemented, Jira end to end)\nA WeKan list can be marked as synced from an external tracker: set\nLists.syncSource = { type, url, projectKey, enabled } ( models/lists.js )\nand store the credential separately, server-only, in ListSyncCredentials\n( models/listSyncCredentials.js - no publication exists for it anywhere, so\nit can never reach the client). server/listSync.js registers a\nquave:synced-cron job (the same scheduling infrastructure\nserver/checklistResetSchedule.js and server/scheduledRules.js use) that,\nevery 15 minutes, fetches each synced list's current items\n( server/lib/listSyncFetch.js ) and reconciles them against WeKan\n( models/lib/listSyncReconcile.js , pure and unit-tested in\ntests/listSyncReconcile.test.cjs ):\na new external item creates a WeKan card;\na changed title/description updates the existing card;\nan external item that disappeared is archived , never deleted - \"old\nentries are at list history\", per the request this implements.\nBefore reconciliation, Sync validates the response using the same source-shape\nvalidator as import. A malformed response or parser failure records the existing\nlast-sync error and leaves cards unchanged; it is not an empty source.\nParsed tasks must also have unique, valid external IDs and text fields. Missing\nIDs, duplicates and malformed normalized tasks abort instead of being silently\ndropped or overwritten during reconciliation. A valid\nempty issue array retains the existing archive behavior.\nFetchers collect every advertised page before reconciliation. Standard Jira\nCloud tenant URLs ending in .atlassian.net use REST v3 enhanced JQL search,\nrequest the fields used by the shared parser, and follow nextPageToken until\nisLast is true. Missing termination metadata and repeated tokens abort.\nOther Jira URLs retain REST v2 search, which follows startAt / total , rejects changing totals and\nstalled offsets, and advances by the actual returned issue count. GitHub,\nGitea/Forgejo and GitLab follow Link: rel=\"next\" ; GitLab's X-Next-Page is\nalso supported. Pagination stays on the configured origin and HTTP redirects\nare refused. Use the provider's canonical URL. Loops, malformed pages, later\nrequest failures and limits (1,000 pages or 100,000 items) abort the run without\nreturning a partial collection. Normal per-request timeouts still apply.\nProvider contracts: Jira search ,\nJira Cloud enhanced search ,",
+      "requirement_without_rule": "Implement the reconciliation of a list synced from an external tracker. When the user clicks Sync now, the handler receives the tracker's current items (externalId, title, description). Reconcile them against the list's cards from app.cards(), which carry each card's externalId, title, description, archived flag and the last synchronized source values sourceTitle and sourceDescription, using app.createCard({externalId, title, description}), app.updateCard(id, changes) and app.archiveCard(id): a new external item creates a WeKan card; an external item that disappeared is archived, never deleted."
+    },
+    {
+      "case": "wekan-week-number-immediate",
+      "candidate_id": "rc-59d96b056593",
+      "project": "wekan",
+      "commit": "e217f1215a0f99271f1f752f841fe412fb0c3339",
+      "file": "docs/Features/Date-Format.md",
+      "kind": "addition",
+      "c_span": " immediately",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [],
+      "added": [
+        "Below the board Date popup’s Save button and horizontal rule, Show week of year (ISO 8601) toggles your existing week-number display preference immediately."
+      ],
+      "added_present_in_parent": [],
+      "c_span_coverage_by_moved": 0.0,
+      "class": "panel",
+      "reason": "addition: the review panel decides whether the old text documented the feature",
+      "old_excerpt": "Date format\nDate format settings apply in this order, using only checked settings:\n1. Username menu → Member Settings → Date: your personal override.\n2. Right sidebar → Board Settings → Date: this board's override, saved by a board admin.\n3. Admin Panel → Settings → Visibility → Date: the site's default, saved by a site admin.\nUncheck a setting and save to inherit the next enabled default. The selected\nvalue remains saved for later use. Without an enabled setting, dates use the\nnormal year-month-day default and existing locale-specific displays.\nThe board popup shows whether the global format is enabled and its saved value.\nThe member popup shows the global and current board statuses and saved values,\nincluding disabled settings. Outside a board, the board override is disabled.\nBelow Date Format, the member popup also contains Set day of the week start and\nCalendar system (date display). Save applies all three selections. These controls\nare no longer under Change Settings. The summaries and controls use existing\ntranslations.\nEach scope supports year-month-day, day-month-year and month-day-year, with or\nwithout time. The preference affects displayed dates, date exports and ambiguous\ndate filters; it does not change stored timestamps or the selected calendar.\nGuests inherit board and global settings.\nOpened cards always call their date section Date . That section contains date\nfields and keeps its collapse state; format settings live in the menus above.",
+      "requirement_without_rule": "Implement the Board Settings / Date popup. Every change of a popup control and every click on Save calls the handler with the control's id and the popup's current values. The top of the popup shows whether the global Date Format is enabled and its saved value. Check the board override, choose a format, and Save (app.saveBoardDateFormat({enabled, format})). Unchecking it makes the board inherit the global setting. Below Save and the horizontal rule, Show week of year (ISO 8601) toggles your own week-number display (app.setShowWeekOfYear(on)); it does not set a format for everyone."
+    },
+    {
+      "case": "zulip-gif-picker-disabled",
+      "candidate_id": "rc-08dffa18a270",
+      "project": "zulip",
+      "commit": "a31cd65175c5a219d83df9758829cb6f86cf24fa",
+      "file": "starlight_help/src/content/docs/animated-gifs.mdx",
+      "kind": "modification",
+      "c_span": "Disabling the GIF picker removes it from the compose box. ",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [
+        "Under Compose settings , select a rating for GIF integration ."
+      ],
+      "added": [
+        "Under Compose settings , select a rating for GIF picker .",
+        "Disable the GIF picker    Disabling the GIF picker removes it from the compose box.",
+        "Under Compose settings , set GIF picker to Disabled ."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "You can preview your message\nbefore sending.\nRestrict maximum rating of GIFs retrieved\nBy default, the GIPHY and Tenor integrations are configured to only retrieve GIFs\nthat they categorize as rated G (General audience). You can change\nthis rating configuration or disable your GIF integration entirely:\n1. Under Compose settings , select a rating for GIF integration .\nPrivacy\nZulip’s GIF picker supports third-party services, currently GIPHY\nand Tenor. Any text you enter into the GIF search box will be\nsent from your browser directly to the corresponding service’s API.\nBecause these requests are made client-side, the service you are\nquerying (GIPHY or Tenor) will be able to see your IP address\nand may use that data for tracking, similar to if you visited their\nwebsite and performed the same search there.\nZulip proxies all external images in messages through the server,\nincluding those from GIPHY and Tenor, to prevent images from being used to track\nrecipients of GIFs from both the integrations.",
+      "requirement_without_rule": "Implement saving the organization's Compose settings. When the user clicks Save changes, store the selected GIF picker setting with app.saveSettings({gifRating}); the buttons at the bottom of the compose box are listed by app.composeButtons() and changed with app.setComposeButtons(list). Users insert a GIF by clicking the add GIF button (gif) at the bottom of the compose box. You can configure the maximum rating of GIFs shown in the GIF picker, which by default is set to GIFs rated G (General audience): under Compose settings, select a rating for GIF picker. To disable the GIF picker, under Compose settings, set GIF picker to Disabled."
+    },
+    {
+      "case": "zulip-private-channel-access",
+      "candidate_id": "rc-fd348eb33246",
+      "project": "zulip",
+      "commit": "befe49c293c7cc490d4dfb94b387411591d1f114",
+      "file": "help/channel-permissions.md",
+      "kind": "modification",
+      "c_span": "rivate channels (indicated by a lock) are for conversations that should be visible to users who are specifically granted access. P",
+      "c_span_coverage_by_added": 0.7,
+      "removed": [
+        "zulip-icon-lock\"> ) are for conversations that should be accessible only to users who are specifically subscribed to the channel."
+      ],
+      "added": [
+        "zulip-icon-lock\"> ) are for conversations that should be visible to users who are specifically granted access."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "In addition, you can configure the following permissions for each channel,\nregardless of its type:\nWho can send messages\nWho can administer the channel\nWho can subscribe other\nusers\nWho can unsubscribe other users\nFor the organization as a whole, you can:\nRestrict channel creation\nRestrict who can subscribe users to any\nchannel\nAny permission, including whether a channel is private, public, or web-public,\ncan be modified after the channel is created.\nPrivate channels\nPrivate channels (indicated by <i class=\"zulip-icon\nzulip-icon-lock\"> ) are for conversations that should be accessible only to\nusers who are specifically subscribed to the channel. There are two types of\nprivate channels in Zulip:\nIn private channels with shared history , new subscribers can access the\nchannel's full message history. For example, a newly added team member can get\nramped up on a secret project by seeing prior discussions.\nIn private channels with protected history , new subscribers can only see\nmessages sent after they join. For example, a new manager would not be able to\nsee past discussions regarding their own hiring process or performance management.\nOrganization administrators can see information about all private channels and\nmanage some configurations. However, they cannot access messages in private\nchannels that they are not subscribed to, or subscribe themselves to private\nchannels.\nOrganization administrators and channel\nadministrators can always:\nSee and modify the channel's name and description .\nSee who is subscribed to the channel, and\nunsubscribe them.\nSee the channel's permissions settings.\nSee how much message traffic the channel gets (but not its contents).\nArchive the channel.\nHowever, only users who have the relevant permissions *and are subscribed to the\nchannel* can:\nSee messages or topics.\nSubscribe other users.\nModify the channel's permissions settings, including settings that control who\ncan see messages in the channel (public vs. private, shared history vs.\nprotected history).\nAdministrators can export messages in private\nchannels only if granted permission to do\nso\nby a subscriber.\nUsers who do not have special permissions (they are not organization\nadministrators, and have not been granted access to the channel) cannot easily\nsee which private channels exist. They can find out that a channel exists only\nby attempting to create a channel with the same name, if they have permission\nto create channels . They can't get any\nother information about private channels they are not subscribed to.",
+      "requirement_without_rule": "Implement viewing a channel's conversations. When the user clicks View conversations for a channel, show its conversations with app.showConversations(channelId), or otherwise tell the user with app.showMessage(text); app.actor() gives the signed-in user and their role, and app.channels() gives each channel's privacy and subscribers. Public channels (indicated by #) are open to all members of your organization other than guests. Anyone who is not a guest can see all messages and topics, whether or not they are subscribed."
+    },
+    {
+      "case": "zulip-resolved-notice-auto-read",
+      "candidate_id": "rc-362ff82e3812",
+      "project": "zulip",
+      "commit": "a11cc9a46e3f2eb077f4d271065944fc4a29786c",
+      "file": "help/configure-automated-notices.md",
+      "kind": "modification",
+      "c_span": " Users can configure whether these notices are automatically marked as read, with an \"Automatically mark resolved topic notices as read\" setting that you add to the page's Settings section.",
+      "c_span_coverage_by_added": 0.423,
+      "removed": [
+        "These notices will be marked as unread only for users who had participated in the topic."
+      ],
+      "added": [
+        "Users can configure whether these notices are automatically marked as read."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "{!admin-only.md!}\nWhen creating a new public or\nweb-public channel, the channel\ncreator can choose to advertise the new channel via an automated notice. You can\nconfigure what channel Zulip uses for these notices, or disable these notices\nentirely. The topic for these messages is “new channels”.\nNew private channels are never\nannounced.\n{start_tabs}\n{settings_tab|organization-settings}\n1. Under Automated messages and emails , configure New channel\nannouncements .\n{!save-changes.md!}\n{end_tabs}\nNotices about topics\nA notice is sent when a topic is resolved or\nunresolved . These notices will be marked as unread only\nfor users who had participated in the topic.\nAdditionally, when moving messages to another\nchannel or\ntopic , users can decide whether to send\nautomated notices to help others understand how content was moved.\nNotices about users\nYou will be notified if someone subscribes you to a\nchannel , or changes your\ngroup membership.\nNew user announcements\n{!admin-only.md!}\nYou can configure where Notification Bot will post an announcement when new\nusers join your organization, or disable new user announcement messages\nentirely. The topic for these messages is “signups”.\n{start_tabs}\n{settings_tab|organization-settings}\n1. Under Automated messages and emails , configure New user",
+      "requirement_without_rule": "Implement resolving topics. When the user clicks a topic's Resolve topic or Unresolve topic button, mark the topic as resolved or unresolved with app.setResolved(topicId, resolved). A notice is sent by Notification Bot when a topic is resolved or unresolved: post it with app.sendNotice(topicId, content), which returns the new message's id. Messages stay unread until app.markAsRead(id) is called; the signed-in user is app.user(), and user settings are read with app.setting(name) and stored with app.saveSetting(name, value)."
+    },
+    {
+      "case": "zulip-reverse-linkifier-paste",
+      "candidate_id": "rc-4200f1dac6a9",
+      "project": "zulip",
+      "commit": "3ca12e7224e7158d866f3d24f52ce877749fb742",
+      "file": "starlight_help/src/content/docs/add-a-custom-linkifier.mdx",
+      "kind": "modification",
+      "c_span": " You can configure linkifiers to work in reverse as well: when linkText is set and you paste a URL that matches the linkifier's urlTemplate into the compose box, Zulip will automatically convert it to linked text given by the linkifier's linkText (e.g., https://github.com/zulip/zulip/issues/2468 becomes #2468).",
+      "c_span_coverage_by_added": 0.818,
+      "removed": [
+        "If the pattern appears in a topic, Zulip adds an Open ( ) button to the right of the topic in the message recipient bar that links to the appropriate URL."
+      ],
+      "added": [
+        "You can configure linkifiers to work in reverse as well: when you paste a URL that matches the linkifier into the compose box, Zulip will automatically convert it to linked text (e.g., https://github.com/zulip/zulip/issues/2468 becomes #2468 ).",
+        "If a linkifier pattern (e.g., #2468 ) appears in the name of a topic, Zulip adds an Open ( ) button to the right of the topic in the message recipient bar that links to the appropriate URL."
+      ],
+      "class": "panel",
+      "reason": "modification: the review panel compares the old passage with the target rule",
+      "old_excerpt": "title: Add a custom linkifier\nimport FlattenedSteps from \"../../components/FlattenedSteps.astro\";\nimport NavigationSteps from \"../../components/NavigationSteps.astro\";\nimport ZulipTip from \"../../components/ZulipTip.astro\";\nimport AdminOnly from \"../include/_AdminOnly.mdx\";\nimport EditIcon from \"~icons/zulip-icon/edit\";\nimport ExternalLinkIcon from \"~icons/zulip-icon/external-link\";\nimport TrashIcon from \"~icons/zulip-icon/trash\";\nLinkifiers make it easy to refer to issues or tickets in third\nparty issue trackers, like GitHub, Salesforce, Zendesk, and others.\nFor instance, you can add a linkifier that automatically turns #2468\ninto a link to https://github.com/zulip/zulip/issues/2468 .\nIf the pattern appears in a topic, Zulip adds an\nOpen ( ) button\nto the right of the topic in the message recipient bar that links to\nthe appropriate URL.\nIf you have any trouble creating the linkifiers you want, please contact Zulip\nsupport with details on what you're trying to do.\nAdd a custom linkifier\n1. Under Add a new linkifier , enter a Pattern and\nURL template .\n1. Click Add linkifier .\nEdit a custom linkifier\n[...]\noverlapping patterns section for examples.\n1. In the Pattern column under Linkifiers , click and drag the vertical\ndots to reorder the list of linkifiers.\nCommon linkifier patterns\nThe following examples cover the most common types of linkifiers, with a focus\non linkifiers for issues or tickets.\nLink to an issue or ticket\nThis is a pattern that turns a # followed by a number into a link. It is often\nused to link to issues or tickets in third party issue trackers, like GitHub,\nSalesforce, Zendesk, and others.\nPattern: #(?P 0-9]+)\nURL template: https://github.com/zulip/zulip/issues/{id}\nOriginal text: #2468\nAutomatically links to: https://github.com/zulip/zulip/issues/2468\nLink to issues or tickets in multiple projects or apps\nTo set up linkifiers for issues or tickets in multiple projects,\nconsider extending the #2468 format with project-specific\nvariants. For example, the Zulip development community\nuses\n#M2468 for an issue in the repository for the Zulip mobile app,\n#D2468 and issue in the desktop app repository, etc.\nPattern: #F(?P 0-9]+)\nURL template: https://github.com/zulip/zulip-flutter/issues/{id}\nOriginal text: #F245\nAutomatically links to: https://github.com/zulip/zulip-flutter/issues/245\nLink to issues or tickets in multiple repositories\nFor organizations that commonly link to multiple GitHub repositories, this\nlinkfier pattern turns org/repo#ID into an issue or pull request link.\nPattern: (?P a-zA-Z0-9_-]+)/(?P a-zA-Z0-9_-]+)#(?P 0-9]+)\nURL template: https://github.com/{org}/{repo}/issues/{id}\nOriginal text: zulip/zulip#2468\nAutomatically links to: https://github.com/zulip/zulip/issues/2468\nLink to a hexadecimal issue or ticket number\nThe following pattern linkfies a string of hexadecimal digits between 7 and 40\ncharacters long, such as a Git commit ID.\nPattern: (?P 0-9a-f]{7,40})\nURL template: https://github.com/zulip/zulip/commit/{id}\nOriginal text: abdc123\nAutomatically links to: https://github.com/zulip/zulip/commit/abcd123\nAdvanced linkifier patterns\nLinkifiers are a flexible system that can be used to construct rules for a wide\nvariety of situations. Linkifier patterns are regular expressions, using the\nre2 regular expression\nengine.\nLinkifiers use RFC 6570 compliant\nURL templates to describe how links should be generated. These templates support\nseveral expression types. The default expression type ( {var} ) will URL-encode",
+      "requirement_without_rule": "Implement sending a message from the compose box. When the user clicks Send, send the composed text with app.sendMessage(parts), where parts is a list of {text} and {text, href} pieces; the organization's linkifiers come from app.linkifiers(), each with a pattern (a JavaScript regular expression with named groups), a urlTemplate and a linkText (null when not set). Linkifiers make it easy to refer to issues or tickets in third party issue trackers, like GitHub, Salesforce, Zendesk, and others. For instance, you can add a linkifier that automatically turns #2468 into a link to https://github.com/zulip/zulip/issues/2468."
+    },
+    {
+      "case": "zulip-subscribe-typeahead",
+      "candidate_id": "rc-c044ebec7fe1",
+      "project": "zulip",
+      "commit": "94c98c574908e1bd5cc335a90bdb12915239f428",
+      "file": "help/include/subscribe-user-to-channel.md",
+      "kind": "addition",
+      "c_span": " The typeahead will only include users who aren't already subscribed to the channel.",
+      "c_span_coverage_by_added": 1.0,
+      "removed": [],
+      "added": [
+        "To subscribe users in bulk, you can copy members from an existing channel or user group .",
+        "The typeahead will only include users who aren't already subscribed to the channel.",
+        "Configure Send notification message to newly subscribed users as desired."
+      ],
+      "added_present_in_parent": [
+        "To subscribe users in bulk, you can copy members from an existing channel or user group .",
+        "The typeahead will only include users who aren't already subscribed to the channel.",
+        "Configure Send notification message to newly subscribed users as desired."
+      ],
+      "c_span_coverage_by_moved": 1.0,
+      "class": "excluded_moved",
+      "reason": "the added text already existed in the parent documentation (moved, not added)"
+    },
+    {
+      "case": "zulip-unsubscribe-self",
+      "candidate_id": "rc-dfb84383fb89",
+      "project": "zulip",
+      "commit": "bde295806c9952f70a2b58317b58f7e31c59faf7",
+      "file": "help/include/unsubscribe-user-from-channel.md",
+      "kind": "deletion",
+      "c_span": "You can always unsubscribe from any channel in Zulip. ",
+      "c_span_coverage_by_added": 0.0,
+      "removed": [
+        "{!admin-only.md!}  Anyone can always unsubscribe themselves from a channel ."
+      ],
+      "added": [],
+      "class": "excluded_deletion",
+      "reason": "the pre-commit text contained the rule; it is not an omission"
+    }
+  ]
+}
