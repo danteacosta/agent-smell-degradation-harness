@@ -1,0 +1,271 @@
+{
+  "schema_version": "screening-human-audit-design/v1",
+  "seed": 2026100505,
+  "fraction": 0.2,
+  "population": 365,
+  "sample": 73,
+  "estimator": "stratified ratio estimate: sum_h N_h * mean_h / sum_h N_h over answered strata",
+  "strata": [
+    {
+      "option": "reserve",
+      "project": "grist",
+      "panel_decision": "admit",
+      "population": 10,
+      "drawn": 2,
+      "inclusion_probability": 0.2,
+      "weight": 5.0
+    },
+    {
+      "option": "reserve",
+      "project": "grist",
+      "panel_decision": "exclude",
+      "population": 18,
+      "drawn": 4,
+      "inclusion_probability": 0.222222,
+      "weight": 4.5
+    },
+    {
+      "option": "reserve",
+      "project": "immich",
+      "panel_decision": "admit",
+      "population": 4,
+      "drawn": 1,
+      "inclusion_probability": 0.25,
+      "weight": 4.0
+    },
+    {
+      "option": "reserve",
+      "project": "immich",
+      "panel_decision": "exclude",
+      "population": 17,
+      "drawn": 3,
+      "inclusion_probability": 0.176471,
+      "weight": 5.666667
+    },
+    {
+      "option": "reserve",
+      "project": "mattermost",
+      "panel_decision": "admit",
+      "population": 11,
+      "drawn": 2,
+      "inclusion_probability": 0.181818,
+      "weight": 5.5
+    },
+    {
+      "option": "reserve",
+      "project": "mattermost",
+      "panel_decision": "exclude",
+      "population": 9,
+      "drawn": 2,
+      "inclusion_probability": 0.222222,
+      "weight": 4.5
+    },
+    {
+      "option": "reserve",
+      "project": "nextcloud",
+      "panel_decision": "admit",
+      "population": 6,
+      "drawn": 1,
+      "inclusion_probability": 0.166667,
+      "weight": 6.0
+    },
+    {
+      "option": "reserve",
+      "project": "nextcloud",
+      "panel_decision": "exclude",
+      "population": 24,
+      "drawn": 5,
+      "inclusion_probability": 0.208333,
+      "weight": 4.8
+    },
+    {
+      "option": "reserve",
+      "project": "openproject",
+      "panel_decision": "admit",
+      "population": 23,
+      "drawn": 4,
+      "inclusion_probability": 0.173913,
+      "weight": 5.75
+    },
+    {
+      "option": "reserve",
+      "project": "openproject",
+      "panel_decision": "exclude",
+      "population": 7,
+      "drawn": 1,
+      "inclusion_probability": 0.142857,
+      "weight": 7.0
+    },
+    {
+      "option": "reserve",
+      "project": "paperless",
+      "panel_decision": "admit",
+      "population": 3,
+      "drawn": 1,
+      "inclusion_probability": 0.333333,
+      "weight": 3.0
+    },
+    {
+      "option": "reserve",
+      "project": "paperless",
+      "panel_decision": "exclude",
+      "population": 9,
+      "drawn": 2,
+      "inclusion_probability": 0.222222,
+      "weight": 4.5
+    },
+    {
+      "option": "reserve",
+      "project": "wekan",
+      "panel_decision": "admit",
+      "population": 19,
+      "drawn": 4,
+      "inclusion_probability": 0.210526,
+      "weight": 4.75
+    },
+    {
+      "option": "reserve",
+      "project": "wekan",
+      "panel_decision": "exclude",
+      "population": 11,
+      "drawn": 2,
+      "inclusion_probability": 0.181818,
+      "weight": 5.5
+    },
+    {
+      "option": "reserve",
+      "project": "zulip",
+      "panel_decision": "admit",
+      "population": 19,
+      "drawn": 4,
+      "inclusion_probability": 0.210526,
+      "weight": 4.75
+    },
+    {
+      "option": "reserve",
+      "project": "zulip",
+      "panel_decision": "exclude",
+      "population": 10,
+      "drawn": 2,
+      "inclusion_probability": 0.2,
+      "weight": 5.0
+    },
+    {
+      "option": "w2024",
+      "project": "grist",
+      "panel_decision": "admit",
+      "population": 9,
+      "drawn": 2,
+      "inclusion_probability": 0.222222,
+      "weight": 4.5
+    },
+    {
+      "option": "w2024",
+      "project": "grist",
+      "panel_decision": "exclude",
+      "population": 13,
+      "drawn": 3,
+      "inclusion_probability": 0.230769,
+      "weight": 4.333333
+    },
+    {
+      "option": "w2024",
+      "project": "immich",
+      "panel_decision": "admit",
+      "population": 9,
+      "drawn": 2,
+      "inclusion_probability": 0.222222,
+      "weight": 4.5
+    },
+    {
+      "option": "w2024",
+      "project": "immich",
+      "panel_decision": "exclude",
+      "population": 21,
+      "drawn": 4,
+      "inclusion_probability": 0.190476,
+      "weight": 5.25
+    },
+    {
+      "option": "w2024",
+      "project": "mealie",
+      "panel_decision": "exclude",
+      "population": 11,
+      "drawn": 2,
+      "inclusion_probability": 0.181818,
+      "weight": 5.5
+    },
+    {
+      "option": "w2024",
+      "project": "nextcloud",
+      "panel_decision": "admit",
+      "population": 10,
+      "drawn": 2,
+      "inclusion_probability": 0.2,
+      "weight": 5.0
+    },
+    {
+      "option": "w2024",
+      "project": "nextcloud",
+      "panel_decision": "exclude",
+      "population": 2,
+      "drawn": 1,
+      "inclusion_probability": 0.5,
+      "weight": 2.0
+    },
+    {
+      "option": "w2024",
+      "project": "openproject",
+      "panel_decision": "admit",
+      "population": 22,
+      "drawn": 4,
+      "inclusion_probability": 0.181818,
+      "weight": 5.5
+    },
+    {
+      "option": "w2024",
+      "project": "openproject",
+      "panel_decision": "exclude",
+      "population": 8,
+      "drawn": 2,
+      "inclusion_probability": 0.25,
+      "weight": 4.0
+    },
+    {
+      "option": "w2024",
+      "project": "paperless",
+      "panel_decision": "admit",
+      "population": 7,
+      "drawn": 1,
+      "inclusion_probability": 0.142857,
+      "weight": 7.0
+    },
+    {
+      "option": "w2024",
+      "project": "paperless",
+      "panel_decision": "exclude",
+      "population": 23,
+      "drawn": 4,
+      "inclusion_probability": 0.173913,
+      "weight": 5.75
+    },
+    {
+      "option": "w2024",
+      "project": "zulip",
+      "panel_decision": "admit",
+      "population": 10,
+      "drawn": 2,
+      "inclusion_probability": 0.2,
+      "weight": 5.0
+    },
+    {
+      "option": "w2024",
+      "project": "zulip",
+      "panel_decision": "exclude",
+      "population": 20,
+      "drawn": 4,
+      "inclusion_probability": 0.2,
+      "weight": 5.0
+    }
+  ]
+}

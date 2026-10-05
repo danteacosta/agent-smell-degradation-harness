@@ -39,6 +39,12 @@ Para comparar com o painel:
 python3 scripts/screening_audit_sample.py score data/human-audit/screening-audit-sheet-20261005-<iniciais>.xlsx
 ```
 
-O comando informa concordância e kappa, separados por decisão do painel, e lista as divergências. Nos casos em que os dois admitiram, mostra lado a lado a regra escrita pela pessoa e a regra do painel, para ajudar na revisão de mapeamento.
+O comando informa:
+- concordância e kappa de Cohen por opção (reserva e 2024), sem ponderação;
+- dentro de cada decisão do painel, só a concordância, porque o rótulo do painel é constante ali e o kappa não informa nada;
+- a concordância estimada para as 365 decisões, ponderando cada resposta pelo inverso da probabilidade de inclusão do seu estrato. A tabela de estratos, com tamanhos, sorteados, probabilidades e pesos, está em `screening-audit-design-20261005.json`, sem IDs. O erro-padrão reportado é um limite inferior, porque estratos com um único item não têm variância interna;
+- as divergências e, quando os dois admitiram, a regra da pessoa ao lado da regra do painel, para ajudar na revisão de mapeamento.
+
+As probabilidades de inclusão variam de 0,14 a 0,50: a garantia de pelo menos um item por estrato sobre-representa os estratos pequenos. Por isso as médias sem ponderação descrevem só a amostra.
 
 A planilha leva cerca de 1 a 1,5 hora.
