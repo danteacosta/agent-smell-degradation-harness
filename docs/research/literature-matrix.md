@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-04
+Last updated: 2026-10-05
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -601,3 +601,15 @@ canonical reading policy.
 4. Proposal table note: Siddeeq et al. (SEET 2026) is now listed as accepted at
    SEET 2026 (CCIS vol. 3126, Springer, per arXiv listing); the Drive proposal
    labels it "preprint". Drive text was not edited (see run summary).
+
+## 2026-10-05 — Unspecified requirements: recovery is partial, conditional and unstable across model updates
+
+Search/read date: 2026-10-05. Deduplicated by arXiv ID (previously listed only in the
+pending-reading queue of 2026-10-04, abstract level). Full text read: setup,
+section 3 results, limitations. Orchid (arXiv 2604.21505) and ClarifyCodeBench
+(arXiv 2607.00711) were re-checked at abstract level only and remain in the pending
+queue; no entry or claim.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Yang, Shi, Ma, Liu, Kästner, Wu, [*What Prompts Don't Say: Understanding and Managing Underspecification in LLM Prompts*](https://arxiv.org/abs/2505.13360), arXiv preprint v3 (venue not stated in the PDF header), Carnegie Mellon | How do LLMs behave on requirements a prompt leaves out? Three tasks (code explanation, trip advice, product descriptions), 20 requirements per task (60 total, from existing prompts, LLM brainstorming and error analysis, kept if at least one of three annotators selected them), 240 synthetic prompts built by a cyclic design (each prompt states 10 consecutive requirements), models Llama-3.3-70B, gpt-4o-2024-08-06, o3-mini; per-requirement validators (scripts or LLM, 95.6% human agreement on a sample). | Unspecified requirements are satisfied less often (-22.6% mean accuracy, up to -93.1%), yet 41.1% are guessed at >=98% accuracy. Format requirements are guessed more (70.7%); conditional (corner-case) requirements less (22.9%). Across model updates, 22.9% of cases regress, and unspecified requirements regress about twice as often (5.9% regress by >20%). Limits stated by the authors: small requirement set (n=60), synthetic prompts, LLM validators with same-family bias. Additional limits for this project: requirements are LLM-elicited and not tied to repository documentation; no browser or executable-UI oracle; not peer-reviewed as read. | Thesis: independent support that omission effects are heterogeneous (matches the H1b recoverability framing), not support for the A/B/C effect size. Experiment: adds `conditional_rule` as a recorded exploratory descriptor and requires pinned, call-level model identifiers in the freeze receipt (pre-registration note 2026-10-05, advisor decision 6). Product: model-update drift on unspecified rules is a plausible reason to re-run requirement-anchored checks after provider changes; hypothesis only. Do not cite the 41.1% or 22.9% figures as expectations for this study. | 6 (detailed method and public code; preprint; small and synthetic; different task family) |
