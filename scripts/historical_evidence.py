@@ -98,7 +98,8 @@ def table(repos: Path | None) -> dict:
 
 
 def markdown(data: dict) -> str:
-    lines = ["# t1 (antes do commit) vs tn (documentação no fim da janela)", "",
+    lines = ["# Reconstrução histórica H (t1) vs referência A (tn)", "",
+             "t1 é o braço H reconstruído: C nos casos de regra ausente, ou C mais uma citação antiga nos casos mais vagos. Não é a documentação antiga integral. tn é A no corte de 30/09/2026, não necessariamente a versão imediatamente posterior ao commit. A comparação é exploratória.", "",
              f"{data['requirements_where_t1_and_tn_differ']} de {data['requirements']} requisitos deram resultado "
              "diferente entre t1 e tn em pelo menos um par modelo × repetição. Fonte: coleta congelada "
              "`data/historical-arm-results/v1`; sem novas chamadas.", "",
@@ -186,7 +187,10 @@ def gallery(data: dict) -> str:
             "@media (max-width:700px){.pair{grid-template-columns:1fr}}figure{margin:0}img{width:100%;border:1px "
             "solid var(--line);margin-bottom:6px}figcaption{font-weight:600;margin-bottom:4px}"
             ".missing{border:1px dashed var(--line);padding:24px;color:var(--muted);text-align:center}</style>"
-            "</head><body><h1>Requisito antigo (t1) vs atual (tn)</h1>"
+            "</head><body><h1>Reconstrução histórica H (t1) vs referência A (tn)</h1>"
+            "<p>t1 é H: C quando a regra estava ausente, ou C mais a citação antiga quando era mais vaga. "
+            "Não é a documentação antiga integral. tn é A no corte de 30/09/2026, não necessariamente "
+            "a versão imediatamente posterior ao commit. A comparação é exploratória.</p>"
             f"<p class='meta'>{data['requirements_where_t1_and_tn_differ']} de {data['requirements']} requisitos "
             "com resultado diferente. Coleta congelada, sem novas chamadas; exploratório.</p>"
             + "".join(parts) + "</body></html>")

@@ -1,4 +1,6 @@
-# t1 (antes do commit) vs tn (documentação no fim da janela)
+# Reconstrução histórica H (t1) vs referência A (tn)
+
+t1 é o braço H reconstruído: C nos casos de regra ausente, ou C mais uma citação antiga nos casos mais vagos. Não é a documentação antiga integral. tn é A no corte de 30/09/2026, não necessariamente a versão imediatamente posterior ao commit. A comparação é exploratória.
 
 8 de 17 requisitos deram resultado diferente entre t1 e tn em pelo menos um par modelo × repetição. Fonte: coleta congelada `data/historical-arm-results/v1`; sem novas chamadas.
 
