@@ -1,0 +1,1767 @@
+{
+  "schema_version": "historical-t1-tn/v1",
+  "confirmatory_eligible": false,
+  "requirements": 17,
+  "requirements_where_t1_and_tn_differ": 8,
+  "rows": [
+    {
+      "case": "grist-page-default-collapse",
+      "project": "grist",
+      "change": {
+        "commit": "537c682145f0450c16f780ac9ce7ff7834cce587",
+        "url": "https://github.com/gristlabs/grist-help/commit/537c682145f0450c16f780ac9ce7ff7834cce587",
+        "author": "Natalie Misasi",
+        "date": "2025-10-02",
+        "subject": "adding details on collapsing/expanding and rearranging page"
+      },
+      "file": "help/en/docs/page-widgets.md",
+      "t1_kind": "rule absent before the commit",
+      "t1_old_passage": null,
+      "omitted_rule": "You can change the default state by clicking the three-dot icon to the right of the parent page and selecting 'Set default: Collapse'.",
+      "t1": "Implement the page list. app.onPages(handler) receives {type: 'open'} when the document is opened and {type: 'menu', pageId} when the three-dot icon to the right of a page is clicked. app.pages() gives each page with its parent page (null at the top level); expand or collapse a parent page's nested pages with app.setExpanded(id, open), list the entries of the three-dot menu with app.showMenu([{label, run}]), and keep per-page settings across openings with app.savePageSetting(id, name, value) and app.pageSettings(id). By default, nested pages will be expanded when a document is opened.",
+      "tn": "Implement the page list. app.onPages(handler) receives {type: 'open'} when the document is opened and {type: 'menu', pageId} when the three-dot icon to the right of a page is clicked. app.pages() gives each page with its parent page (null at the top level); expand or collapse a parent page's nested pages with app.setExpanded(id, open), list the entries of the three-dot menu with app.showMenu([{label, run}]), and keep per-page settings across openings with app.savePageSetting(id, name, value) and app.pageSettings(id). By default, nested pages will be expanded when a document is opened. You can change the default state by clicking the three-dot icon to the right of the parent page and selecting 'Set default: Collapse'.",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "grist-page-default-collapse-d97ff5fe1edbbda4f5e4146e",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "df8e46b8f2b2c8694969b924cd5a11e2b437ef0ab27e522f3cce4fb15a56d781",
+              "fixture-2.png": "91093fecf6a42195fd4dfe2293d3e144901b86ca0dd7d7677dae38bc526ea426"
+            }
+          },
+          "t1": {
+            "slot_id": "grist-page-default-collapse-13eeac91b5d54ff029380d80",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "d8e97e7d23b00c4970bcd2cfb14425980c4ebe764e42e04fd18dbd158d826bb4",
+              "fixture-2.png": "ef00e29e2826152bc7233b2eb6f98ba18fa015629715bdf19839f99b15b1d639"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "grist-page-default-collapse-b8d6a8e0da202448da5a6f0b",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "df8e46b8f2b2c8694969b924cd5a11e2b437ef0ab27e522f3cce4fb15a56d781",
+              "fixture-2.png": "91093fecf6a42195fd4dfe2293d3e144901b86ca0dd7d7677dae38bc526ea426"
+            }
+          },
+          "t1": {
+            "slot_id": "grist-page-default-collapse-23962266a7bb4a8eb524703b",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "d8e97e7d23b00c4970bcd2cfb14425980c4ebe764e42e04fd18dbd158d826bb4",
+              "fixture-2.png": "ef00e29e2826152bc7233b2eb6f98ba18fa015629715bdf19839f99b15b1d639"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "grist-page-default-collapse-32db96a851ecb2eb069f68e1",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "df8e46b8f2b2c8694969b924cd5a11e2b437ef0ab27e522f3cce4fb15a56d781",
+              "fixture-2.png": "91093fecf6a42195fd4dfe2293d3e144901b86ca0dd7d7677dae38bc526ea426"
+            }
+          },
+          "t1": {
+            "slot_id": "grist-page-default-collapse-696eb2fe019610b489f5959b",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "d8e97e7d23b00c4970bcd2cfb14425980c4ebe764e42e04fd18dbd158d826bb4",
+              "fixture-2.png": "ef00e29e2826152bc7233b2eb6f98ba18fa015629715bdf19839f99b15b1d639"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "grist-page-default-collapse-d1aeddfbcd131e67682264c9",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "df8e46b8f2b2c8694969b924cd5a11e2b437ef0ab27e522f3cce4fb15a56d781",
+              "fixture-2.png": "91093fecf6a42195fd4dfe2293d3e144901b86ca0dd7d7677dae38bc526ea426"
+            }
+          },
+          "t1": {
+            "slot_id": "grist-page-default-collapse-b34d18ab5878ddfe0fff1917",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "d8e97e7d23b00c4970bcd2cfb14425980c4ebe764e42e04fd18dbd158d826bb4",
+              "fixture-2.png": "ef00e29e2826152bc7233b2eb6f98ba18fa015629715bdf19839f99b15b1d639"
+            }
+          }
+        }
+      ],
+      "differs": true
+    },
+    {
+      "case": "grist-suggestions-open-copy",
+      "project": "grist",
+      "change": {
+        "commit": "af6962bf5b4316f17a95e0e577c381e6ec1ddd9b",
+        "url": "https://github.com/gristlabs/grist-help/commit/af6962bf5b4316f17a95e0e577c381e6ec1ddd9b",
+        "author": "nbush",
+        "date": "2026-01-30",
+        "subject": "adding newsletter and small suggestions tweaks"
+      },
+      "file": "help/en/docs/sharing.md",
+      "t1_kind": "vaguer passage before the commit",
+      "t1_old_passage": "A user makes changes in a personal copy without modifying the original document, then submits these suggestions to be reviewed by the document owner prior to integration.",
+      "omitted_rule": "enabled, users (signed-in or not) automatically open a copy of a document. With suggestions",
+      "t1": "Implement opening and editing documents. app.onDocument(handler) receives {type: 'open', docId} when a document's Open button is clicked and {type: 'edit', docId, rowId, value} when a cell of the shown document is edited. app.documents() lists the documents and whether suggestions are enabled for each, app.user() is the signed-in user or null when signed out, app.copy(id) makes a copy of a document and returns its id, app.show(id) shows a document, and app.setCell(docId, rowId, value) changes a cell. Without suggestions, changes to data in a document are made in real time. With suggestions, edits are made to a copy without modifying the original, and are then submitted as suggestions to be reviewed by the document Owner prior to integration (submitting is not part of this page).\n\nA user makes changes in a personal copy without modifying the original document, then submits these suggestions to be reviewed by the document owner prior to integration.",
+      "tn": "Implement opening and editing documents. app.onDocument(handler) receives {type: 'open', docId} when a document's Open button is clicked and {type: 'edit', docId, rowId, value} when a cell of the shown document is edited. app.documents() lists the documents and whether suggestions are enabled for each, app.user() is the signed-in user or null when signed out, app.copy(id) makes a copy of a document and returns its id, app.show(id) shows a document, and app.setCell(docId, rowId, value) changes a cell. Without suggestions, changes to data in a document are made in real time. With suggestions enabled, users (signed-in or not) automatically open a copy of a document. With suggestions, edits are made to a copy without modifying the original, and are then submitted as suggestions to be reviewed by the document Owner prior to integration (submitting is not part of this page).",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "grist-suggestions-open-copy-f3f5b812b458bbd13884263d",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+              "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+            }
+          },
+          "t1": {
+            "slot_id": "grist-suggestions-open-copy-10804b6f81bc36bd1a1e47b3",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+              "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "grist-suggestions-open-copy-7abd9fda298c9fc86ea7897d",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+              "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+            }
+          },
+          "t1": {
+            "slot_id": "grist-suggestions-open-copy-bfaa62a22da938e6fbc067c1",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+              "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "grist-suggestions-open-copy-5f9e1d432c6c56d6a48a247a",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+              "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+            }
+          },
+          "t1": {
+            "slot_id": "grist-suggestions-open-copy-6a06461c54feb34462452639",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+              "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "grist-suggestions-open-copy-753176a7d8bd1e99e53611d6",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+              "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+            }
+          },
+          "t1": {
+            "slot_id": "grist-suggestions-open-copy-5ea7d595d049e61d94c8ddfc",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "28945de499b1689df3e058e28bb1c6e28b310ec603329d77ffcac3d4aba22df5",
+              "fixture-2.png": "a22ffa6e5492e0f112c974976728b148181a3c32aca1d7f1b6f59d1ef5d5bd9d"
+            }
+          }
+        }
+      ],
+      "differs": false
+    },
+    {
+      "case": "immich-library-single-owner",
+      "project": "immich",
+      "change": {
+        "commit": "eee793bfe4a2e48aea595ad7563bfaf038dd2cd5",
+        "url": "https://github.com/immich-app/immich/commit/eee793bfe4a2e48aea595ad7563bfaf038dd2cd5",
+        "author": "Jason Rasmussen",
+        "date": "2025-10-08",
+        "subject": "docs: add some external library notes (#22776)"
+      },
+      "file": "docs/docs/features/libraries.md",
+      "t1_kind": "rule absent before the commit",
+      "t1_old_passage": null,
+      "omitted_rule": "An external library can only belong to a single user, which is selected when the library is initially created.",
+      "t1": "Implement creating an external library. External libraries track assets stored in the filesystem outside of Immich. When the user clicks Create library, create it with app.createLibrary({name, owners}) using the entered name and the owner chosen in the Owner section.",
+      "tn": "Implement creating an external library. External libraries track assets stored in the filesystem outside of Immich. When the user clicks Create library, create it with app.createLibrary({name, owners}) using the entered name and the owner chosen in the Owner section. An external library can only belong to a single user, which is selected when the library is initially created.",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "immich-library-single-owner-537138457d4fd93d138b537c",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "13f082dd16d8d793c7d61d8c99892ab45ea4df04895c4459574d4b5ffb54df62",
+              "fixture-2.png": "e0268d22d924c941bb998c4ffeaf8800ac45de5abe9d31de824d4446c1bbbb43"
+            }
+          },
+          "t1": {
+            "slot_id": "immich-library-single-owner-356bfed828e0abffbace9e39",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "763d664c28194a76256d8935b66686651600cb4351a5072f2b00b9cd96411bcc",
+              "fixture-2.png": "1e11a65bbef08b6e6183eb0678b099f3057ea91a7ce7e9e4bbfbd64a9b96da07"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "immich-library-single-owner-e3c1eec56cb646c7356c9d17",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "86f709ac9d20a408d99d137f0f1ab2c09fd884b704e2fe19bf8a8a0adec612a8",
+              "fixture-2.png": "b31476d7963815b524d40c49146cfc94fe917203ee6eee0ae349d4bb4d2bd0cb"
+            }
+          },
+          "t1": {
+            "slot_id": "immich-library-single-owner-a6df31d561e775229d06e8ad",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "763d664c28194a76256d8935b66686651600cb4351a5072f2b00b9cd96411bcc",
+              "fixture-2.png": "1e11a65bbef08b6e6183eb0678b099f3057ea91a7ce7e9e4bbfbd64a9b96da07"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "immich-library-single-owner-ae11fcd304bf8b6d797acc62",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "13f082dd16d8d793c7d61d8c99892ab45ea4df04895c4459574d4b5ffb54df62",
+              "fixture-2.png": "e0268d22d924c941bb998c4ffeaf8800ac45de5abe9d31de824d4446c1bbbb43"
+            }
+          },
+          "t1": {
+            "slot_id": "immich-library-single-owner-4bfa94ab269d188022839963",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "763d664c28194a76256d8935b66686651600cb4351a5072f2b00b9cd96411bcc",
+              "fixture-2.png": "1e11a65bbef08b6e6183eb0678b099f3057ea91a7ce7e9e4bbfbd64a9b96da07"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "immich-library-single-owner-40f3e1b6ead4d35ececf97f8",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "13f082dd16d8d793c7d61d8c99892ab45ea4df04895c4459574d4b5ffb54df62",
+              "fixture-2.png": "e0268d22d924c941bb998c4ffeaf8800ac45de5abe9d31de824d4446c1bbbb43"
+            }
+          },
+          "t1": {
+            "slot_id": "immich-library-single-owner-54b5d9b6efcf38a70d975222",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "763d664c28194a76256d8935b66686651600cb4351a5072f2b00b9cd96411bcc",
+              "fixture-2.png": "1e11a65bbef08b6e6183eb0678b099f3057ea91a7ce7e9e4bbfbd64a9b96da07"
+            }
+          }
+        }
+      ],
+      "differs": true
+    },
+    {
+      "case": "immich-m2t-upload",
+      "project": "immich",
+      "change": {
+        "commit": "fcd372238fac7db3908387a0b3b4c953179bb99e",
+        "url": "https://github.com/immich-app/immich/commit/fcd372238fac7db3908387a0b3b4c953179bb99e",
+        "author": "Mert",
+        "date": "2025-01-03",
+        "subject": "chore(server): add support for .m2t (#15064)"
+      },
+      "file": "docs/docs/features/supported-formats.md",
+      "t1_kind": "rule absent before the commit",
+      "t1_old_passage": null,
+      "omitted_rule": "m2t .",
+      "t1": "Implement the video upload check. When the user selects files, accept each file whose extension is a supported video format with app.accept(name) and reject every other file as unsupported with app.reject(name, reason). Supported video formats and extensions: 3GPP (.3gp .3gpp), AVI (.avi), FLV (.flv), M4V (.m4v), MATROSKA (.mkv), MP2T (.mts .m2ts .ts), MP4 (.mp4 .insv), MPEG (.mpg .mpe .mpeg), QUICKTIME (.mov), WEBM (.webm), WMV (.wmv).",
+      "tn": "Implement the video upload check. When the user selects files, accept each file whose extension is a supported video format with app.accept(name) and reject every other file as unsupported with app.reject(name, reason). Supported video formats and extensions: 3GPP (.3gp .3gpp), AVI (.avi), FLV (.flv), M4V (.m4v), MATROSKA (.mkv), MP2T (.mts .m2ts .m2t .ts), MP4 (.mp4 .insv), MPEG (.mpg .mpe .mpeg), QUICKTIME (.mov), WEBM (.webm), WMV (.wmv).",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "immich-m2t-upload-bfde19ed858ddceaf58a0658",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "cc50fd9301736513f3e37a835ed32dfeed6880ec8ad84b7575c34e2b09f93a1d",
+              "fixture-2.png": "78ac530e5cfc6e00d1542ef31d38127fba3fcce585562ddb12a60c4bfce72347"
+            }
+          },
+          "t1": {
+            "slot_id": "immich-m2t-upload-49811aa2445d06feaf96fed9",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "cd076a1fc0ffdc3ea1c8adb05ea26510067d734109fd469844de9a54a9e1dced",
+              "fixture-2.png": "8b3c4c81d671447bb581532d7206b65aa34f20909971ae87609516da01800844"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "immich-m2t-upload-93710c4509c4ce754454204e",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "cc50fd9301736513f3e37a835ed32dfeed6880ec8ad84b7575c34e2b09f93a1d",
+              "fixture-2.png": "78ac530e5cfc6e00d1542ef31d38127fba3fcce585562ddb12a60c4bfce72347"
+            }
+          },
+          "t1": {
+            "slot_id": "immich-m2t-upload-0647ec95fc90a1f6c0f44a8d",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "cd076a1fc0ffdc3ea1c8adb05ea26510067d734109fd469844de9a54a9e1dced",
+              "fixture-2.png": "8b3c4c81d671447bb581532d7206b65aa34f20909971ae87609516da01800844"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "immich-m2t-upload-a637b922066f8773abbb819c",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "cc50fd9301736513f3e37a835ed32dfeed6880ec8ad84b7575c34e2b09f93a1d",
+              "fixture-2.png": "78ac530e5cfc6e00d1542ef31d38127fba3fcce585562ddb12a60c4bfce72347"
+            }
+          },
+          "t1": {
+            "slot_id": "immich-m2t-upload-2ee093858801ba7abdcf963d",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "cd076a1fc0ffdc3ea1c8adb05ea26510067d734109fd469844de9a54a9e1dced",
+              "fixture-2.png": "8b3c4c81d671447bb581532d7206b65aa34f20909971ae87609516da01800844"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "immich-m2t-upload-51b8b1647f233798eef3e9b7",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "cc50fd9301736513f3e37a835ed32dfeed6880ec8ad84b7575c34e2b09f93a1d",
+              "fixture-2.png": "78ac530e5cfc6e00d1542ef31d38127fba3fcce585562ddb12a60c4bfce72347"
+            }
+          },
+          "t1": {
+            "slot_id": "immich-m2t-upload-e69965feda5f97a6c44df0e7",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "cd076a1fc0ffdc3ea1c8adb05ea26510067d734109fd469844de9a54a9e1dced",
+              "fixture-2.png": "8b3c4c81d671447bb581532d7206b65aa34f20909971ae87609516da01800844"
+            }
+          }
+        }
+      ],
+      "differs": true
+    },
+    {
+      "case": "mattermost-anonymous-team-url",
+      "project": "mattermost",
+      "change": {
+        "commit": "840fc4b8f580d1c369945c827678a896b1389049",
+        "url": "https://github.com/mattermost/docs/commit/840fc4b8f580d1c369945c827678a896b1389049",
+        "author": "Combs7th",
+        "date": "2026-04-15",
+        "subject": "Add documentation for anonymous team and channel URLs (#8891)"
+      },
+      "file": "source/end-user-guide/collaborate/organize-using-teams.rst",
+      "t1_kind": "rule absent before the commit",
+      "t1_old_passage": null,
+      "omitted_rule": "enabled anonymous team and channel URLs (app.config().anonymousUrls), team creation becomes a single-step flow and you will not be prompted to choose a team URL. The URL is assigned automatically. If your system admin has",
+      "t1": "Implement the Next button of Create a Team. When the user enters a team name and selects Next, handle the team URL: app.showUrlStep(suggestedUrl) shows the team URL step, whose Finish button creates the team with the URL the user chose, and app.createTeam({name, url}) creates a team. There are a few details and restrictions to consider when selecting a team name and team URL. If your system admin has not enabled anonymous URLs, you choose a team URL during team creation. The team URL is part of the web address that navigates to your team; it may contain only lowercase letters, numbers, and dashes, must start with a letter, cannot end in a dash, and must be 2 - 64 characters in length.",
+      "tn": "Implement the Next button of Create a Team. When the user enters a team name and selects Next, handle the team URL: app.showUrlStep(suggestedUrl) shows the team URL step, whose Finish button creates the team with the URL the user chose, and app.createTeam({name, url}) creates a team. There are a few details and restrictions to consider when selecting a team name and team URL. If your system admin has enabled anonymous team and channel URLs (app.config().anonymousUrls), team creation becomes a single-step flow and you will not be prompted to choose a team URL. The URL is assigned automatically. If your system admin has not enabled anonymous URLs, you choose a team URL during team creation. The team URL is part of the web address that navigates to your team; it may contain only lowercase letters, numbers, and dashes, must start with a letter, cannot end in a dash, and must be 2 - 64 characters in length.",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "mattermost-anonymous-team-url-9e9537f48ad8c96cc53b7ecd",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "188f7126aa4e533035f1563bd79e031b0334799a2dbe793cd088ef9f69e78c30",
+              "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+            }
+          },
+          "t1": {
+            "slot_id": "mattermost-anonymous-team-url-e0766b3ae38b497f8758a270",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "13e7593b281f71f283d53a58d03ef60376a9d1d4e611deee681ae312578c98a6",
+              "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "mattermost-anonymous-team-url-edcda5cc5403b4296f31b04a",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "188f7126aa4e533035f1563bd79e031b0334799a2dbe793cd088ef9f69e78c30",
+              "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+            }
+          },
+          "t1": {
+            "slot_id": "mattermost-anonymous-team-url-bbe4f463eeebacc284906edd",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "13e7593b281f71f283d53a58d03ef60376a9d1d4e611deee681ae312578c98a6",
+              "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "mattermost-anonymous-team-url-6b11eba6000ecb8e9a8fc5ca",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "188f7126aa4e533035f1563bd79e031b0334799a2dbe793cd088ef9f69e78c30",
+              "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+            }
+          },
+          "t1": {
+            "slot_id": "mattermost-anonymous-team-url-a5247df7cd27cdfa580e8eb6",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "cd7da4578f7f5b508be9627ef75a787502b3d14e91086c80d2c15f058ef7e6a8",
+              "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "mattermost-anonymous-team-url-49979d3bd7652f62091538b0",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "34a60c2d618bfa930bc1922ab482e8daed79ed29a407e559333884f85ead9ca4",
+              "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+            }
+          },
+          "t1": {
+            "slot_id": "mattermost-anonymous-team-url-fccdeeea62718078a76f4221",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "13e7593b281f71f283d53a58d03ef60376a9d1d4e611deee681ae312578c98a6",
+              "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+            }
+          }
+        }
+      ],
+      "differs": true
+    },
+    {
+      "case": "mattermost-timezone-default-automatic",
+      "project": "mattermost",
+      "change": {
+        "commit": "34180cef60dbe502477d4b0d353b07192edf24e2",
+        "url": "https://github.com/mattermost/docs/commit/34180cef60dbe502477d4b0d353b07192edf24e2",
+        "author": "Carrie Warner (Mattermost)",
+        "date": "2025-08-20",
+        "subject": "Added auto-timezone option & removed unnecessary files from repo (#8318)"
+      },
+      "file": "source/end-user-guide/preferences/manage-your-display-options.rst",
+      "t1_kind": "rule absent before the commit",
+      "t1_old_passage": null,
+      "omitted_rule": "This option is enabled by default.",
+      "t1": "Implement the Timezone setting in Settings > Display. You can customize the timezone used for timestamps in Mattermost and in email notifications. Select Timezone > Edit to select your timezone: when the user selects Edit, open the editor with app.showEditor({automatic, manualTimezone}); the handler receives the user's saved timezone preference ({automatic, manualTimezone}, or null if they have never saved one), and Save stores the values shown in the editor. You can also select Automatic to set your timezone automatically based on your computer's timezone settings.",
+      "tn": "Implement the Timezone setting in Settings > Display. You can customize the timezone used for timestamps in Mattermost and in email notifications. Select Timezone > Edit to select your timezone: when the user selects Edit, open the editor with app.showEditor({automatic, manualTimezone}); the handler receives the user's saved timezone preference ({automatic, manualTimezone}, or null if they have never saved one), and Save stores the values shown in the editor. You can also select Automatic to set your timezone automatically based on your computer's timezone settings. This option is enabled by default.",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "mattermost-timezone-default-automatic-ef51947b444163c349062d51",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+              "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+            }
+          },
+          "t1": {
+            "slot_id": "mattermost-timezone-default-automatic-015869e51a038658c43579d4",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+              "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "mattermost-timezone-default-automatic-a4fddca3444446859f52aafc",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+              "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+            }
+          },
+          "t1": {
+            "slot_id": "mattermost-timezone-default-automatic-3645d9181e1b489d0cdccfe0",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+              "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "mattermost-timezone-default-automatic-75bb16af212d31c6fcf84e28",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+              "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+            }
+          },
+          "t1": {
+            "slot_id": "mattermost-timezone-default-automatic-4ebc8968b4e0d8315e2cdf38",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+              "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "mattermost-timezone-default-automatic-ba2e75df31d811c51bc945bf",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+              "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+            }
+          },
+          "t1": {
+            "slot_id": "mattermost-timezone-default-automatic-b04145606d6bf4b767c0e6cf",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+              "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+            }
+          }
+        }
+      ],
+      "differs": false
+    },
+    {
+      "case": "nextcloud-device-password-once",
+      "project": "nextcloud",
+      "change": {
+        "commit": "a806a064bc8adebbdaf8525c387543b55d4b00db",
+        "url": "https://github.com/nextcloud/documentation/commit/a806a064bc8adebbdaf8525c387543b55d4b00db",
+        "author": "copilot-swe-agent[bot]",
+        "date": "2026-05-04",
+        "subject": "docs: prose, syntax, and style-guide cleanup on six user_manual root files"
+      },
+      "file": "user_manual/session_management.rst",
+      "t1_kind": "vaguer passage before the commit",
+      "t1_old_passage": "Nextcloud will not save the plain password, so it is recommended to\nenter the password on the new client immediately.",
+      "omitted_rule": "You only have access to the device password when creating it.",
+      "t1": "Implement the device passwords in the Security settings. The list of connected browsers and devices shows which browsers and devices have connected to the account recently. At the bottom of the list, you can create a new device-specific password: when the user clicks Create new app password, create it with app.createDevice(name) using the entered app name; the generated password is used for configuring the new client and is shown with app.showCredentials(loginName, password). Each device row also has a Show password button; both kinds of button are handled by app.onAction. Nextcloud does not save the plain password, so enter the password on the new client immediately.\n\nNextcloud will not save the plain password, so it is recommended to enter the password on the new client immediately.",
+      "tn": "Implement the device passwords in the Security settings. The list of connected browsers and devices shows which browsers and devices have connected to the account recently. At the bottom of the list, you can create a new device-specific password: when the user clicks Create new app password, create it with app.createDevice(name) using the entered app name; the generated password is used for configuring the new client and is shown with app.showCredentials(loginName, password). Each device row also has a Show password button; both kinds of button are handled by app.onAction. You only have access to the device password when creating it. Nextcloud does not save the plain password, so enter the password on the new client immediately.",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "both_violated",
+          "tn": {
+            "slot_id": "nextcloud-device-password-once-2e8c0df1b22f54b58d3c77ec",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "77554f80878e3450e5c5fe4b0217a01be6018bca93da2b2663425e9cf33ed714",
+              "fixture-2.png": "c77a43aa90c7cde72a15f182d48373313860dc38b93ad88f2c59b0fbd366bc1f"
+            }
+          },
+          "t1": {
+            "slot_id": "nextcloud-device-password-once-4a30c80e312f7f666e042f24",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "9670d2d32acb7f03d84556adb2fb2491d5c72f547e833ae0b08739705f5bcf0a",
+              "fixture-2.png": "2159a6f72099c0611b5bcc07a0a089735ce16374d2bc25966eb74601792d13b4"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "nextcloud-device-password-once-a17a8abfa89cec319cd9993f",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "544d979fce18d96751a8b4b1d15551450167ad8f0c695268a40e0d32cfc98b2d",
+              "fixture-2.png": "ba3da3e29b305afa38907c2bc29a410ab9e3d06b03463822af33f1f3c5de6d7f"
+            }
+          },
+          "t1": {
+            "slot_id": "nextcloud-device-password-once-1c1e892230aaedc7c48c4226",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "3f9f8bfcfb1a860a0cccff87a7e8654f1bf50fc7cda29da696142f437cd9b91b",
+              "fixture-2.png": "810afbf83d6b3a7e0dc90989866a0e684a06466f6c768e53daa13f1a2278509e"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "nextcloud-device-password-once-cae22677c60b6754176b7864",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "abcbe04b9c299a069980404a092e40587e0dc51615edd2a3c9489aa325355611",
+              "fixture-2.png": "4d52e7ddc4ad4ccf1f68e03af9d666c77a9de55dd49cb6de20b00448c5aedb73"
+            }
+          },
+          "t1": {
+            "slot_id": "nextcloud-device-password-once-9932301b06807a44645b27d4",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "06f081ee6573dd02c5016a54a826c6fb9e5c12fe3a2625e8a6fce1e853a2f0e9",
+              "fixture-2.png": "c28b694b439b92166b2868e0d1b0904e7a66f60c4c76cc585fa3d2d9ec9d7786"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "nextcloud-device-password-once-c941a45c4f28c1ac08f81415",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "d402014d6090a16633028a7e9cc38e7ef03be187e50638477bc879a004a9d61f",
+              "fixture-2.png": "03a084e7d45a864d151b87e5decc48c69fa2f6fc216c6da56aaaa666129869f6"
+            }
+          },
+          "t1": {
+            "slot_id": "nextcloud-device-password-once-e23756c34b7552b4e99fb44e",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "ae6aec15e405435a7558a37b1bef96ba461da842ef09b9a12d49977ad284217a",
+              "fixture-2.png": "62d69c3eeb14111e1e8dfc9e1ca1b4469add8638a3ec18c819ab3d14b6e4082c"
+            }
+          }
+        }
+      ],
+      "differs": true
+    },
+    {
+      "case": "openproject-filter-text-autoupdate",
+      "project": "openproject",
+      "change": {
+        "commit": "db54165614946caf2436a5cb2d601c898412326b",
+        "url": "https://github.com/opf/openproject/commit/db54165614946caf2436a5cb2d601c898412326b",
+        "author": "Maya Berdygylyjova",
+        "date": "2025-04-11",
+        "subject": "[#62769] Add % Complete to work package table sums  https://community… (#18592)"
+      },
+      "file": "docs/user-guide/work-packages/work-package-table-configuration/README.md",
+      "t1_kind": "vaguer passage before the commit",
+      "t1_old_passage": "The results will be displayed accordingly in the work package table.",
+      "omitted_rule": "automatically update and",
+      "t1": "Implement the Filter by text field of the work package table. The table shows the work packages passed to app.showWorkPackages(ids), in the order of app.workPackages(); an empty field shows all work packages. If you want to search for specific text in the subject, description, or comments of a work package, type your search term into the Filter by text field. The results will display in the work package table.\n\nThe results will be displayed accordingly in the work package table.",
+      "tn": "Implement the Filter by text field of the work package table. The table shows the work packages passed to app.showWorkPackages(ids), in the order of app.workPackages(); an empty field shows all work packages. If you want to search for specific text in the subject, description, or comments of a work package, type your search term into the Filter by text field. The results will automatically update and display in the work package table.",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "both_violated",
+          "tn": {
+            "slot_id": "openproject-filter-text-autoupdate-647959583a2622a2e87b71a3",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+              "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+            }
+          },
+          "t1": {
+            "slot_id": "openproject-filter-text-autoupdate-61bd783a0fa2abf6a54c3ebb",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+              "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "both_violated",
+          "tn": {
+            "slot_id": "openproject-filter-text-autoupdate-90c2ae95a7a8a8df89422b37",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+              "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+            }
+          },
+          "t1": {
+            "slot_id": "openproject-filter-text-autoupdate-8bc5453fe77efa993c522566",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+              "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "both_violated",
+          "tn": {
+            "slot_id": "openproject-filter-text-autoupdate-77aec3e11a7085a299a7f666",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+              "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+            }
+          },
+          "t1": {
+            "slot_id": "openproject-filter-text-autoupdate-3b25a518a97b1a50ba79c85c",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+              "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "both_violated",
+          "tn": {
+            "slot_id": "openproject-filter-text-autoupdate-1192b95f943c97ee19026fb7",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+              "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+            }
+          },
+          "t1": {
+            "slot_id": "openproject-filter-text-autoupdate-fb0ea2c6cb6de9fb901f411c",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+              "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+            }
+          }
+        }
+      ],
+      "differs": false
+    },
+    {
+      "case": "openproject-invite-permission-basis",
+      "project": "openproject",
+      "change": {
+        "commit": "b09683d8576f827834da9e3391a40cb807a0dc8c",
+        "url": "https://github.com/opf/openproject/commit/b09683d8576f827834da9e3391a40cb807a0dc8c",
+        "author": "Maya Berdygylyjova",
+        "date": "2025-12-23",
+        "subject": "[#69533] Primerize user invitation flow  https://community.openprojec… (#21397)"
+      },
+      "file": "docs/getting-started/invite-members/README.md",
+      "t1_kind": "rule absent before the commit",
+      "t1_old_passage": null,
+      "omitted_rule": "Select whether the permissions assigned to the new user should be based on an existing user role, group or a placeholder user permissions. With User or Group, select an existing user or enter an email address for a new one; with Placeholder user, enter the name of a placeholder user.",
+      "t1": "Implement the Invite user dialog. Once you click Invite user, a dialogue will open. Here you can select the project, to which project you want to invite new members. Then enter the name of an existing principal (listed by app.principals()) or the email address of a new user, assign a role and click Invite: add an existing principal with app.addMember(projectId, principalId, roleId, basis) or invite a new user by email with app.inviteByEmail(projectId, email, roleId, basis).",
+      "tn": "Implement the Invite user dialog. Once you click Invite user, a dialogue will open. Here you can select the project, to which project you want to invite new members. Select whether the permissions assigned to the new user should be based on an existing user role, group or a placeholder user permissions. With User or Group, select an existing user or enter an email address for a new one; with Placeholder user, enter the name of a placeholder user. Then enter the name of an existing principal (listed by app.principals()) or the email address of a new user, assign a role and click Invite: add an existing principal with app.addMember(projectId, principalId, roleId, basis) or invite a new user by email with app.inviteByEmail(projectId, email, roleId, basis).",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "both_violated",
+          "tn": {
+            "slot_id": "openproject-invite-permission-basis-554e7887b03a37255cd01bd2",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "8849fd64382a2b00ef73b859bd8bee64a8c50046f85d8a49209dcba77609c64d",
+              "fixture-2.png": "7ac99c34be4ed423026415f79b45ba8744f716135ef881bd33e9ad4de20edfd9"
+            }
+          },
+          "t1": {
+            "slot_id": "openproject-invite-permission-basis-fdafc64c19b4fb36bac4e6ee",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "8849fd64382a2b00ef73b859bd8bee64a8c50046f85d8a49209dcba77609c64d",
+              "fixture-2.png": "7ac99c34be4ed423026415f79b45ba8744f716135ef881bd33e9ad4de20edfd9"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "unknown",
+          "tn": {
+            "slot_id": "openproject-invite-permission-basis-d4e12c5e0868d16639ac6bb6",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "8849fd64382a2b00ef73b859bd8bee64a8c50046f85d8a49209dcba77609c64d",
+              "fixture-2.png": "7ac99c34be4ed423026415f79b45ba8744f716135ef881bd33e9ad4de20edfd9"
+            }
+          },
+          "t1": {
+            "slot_id": "openproject-invite-permission-basis-3e611497056eca092776c065",
+            "category": "invalid_output",
+            "screenshots": {}
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "both_violated",
+          "tn": {
+            "slot_id": "openproject-invite-permission-basis-bcab47cda826918a28c8db49",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "3823f533de84e2845edcfe7ed498b022120b6e0b922fb29dfa35c6657163b215",
+              "fixture-2.png": "f0a8333ce96b92ab6b62b7d40b1e1781b79c144871277aed753c5bb316058ea1"
+            }
+          },
+          "t1": {
+            "slot_id": "openproject-invite-permission-basis-f81d75ab086aea189c7e0154",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "8849fd64382a2b00ef73b859bd8bee64a8c50046f85d8a49209dcba77609c64d",
+              "fixture-2.png": "7ac99c34be4ed423026415f79b45ba8744f716135ef881bd33e9ad4de20edfd9"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "unknown",
+          "tn": {
+            "slot_id": "openproject-invite-permission-basis-1db180020bed22a8b3c6ef71",
+            "category": "browser_error",
+            "screenshots": {}
+          },
+          "t1": {
+            "slot_id": "openproject-invite-permission-basis-fec7989cff5277843ba9f9d2",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "8849fd64382a2b00ef73b859bd8bee64a8c50046f85d8a49209dcba77609c64d",
+              "fixture-2.png": "7ac99c34be4ed423026415f79b45ba8744f716135ef881bd33e9ad4de20edfd9"
+            }
+          }
+        }
+      ],
+      "differs": false
+    },
+    {
+      "case": "paperless-doc-title-placeholder",
+      "project": "paperless-ngx",
+      "change": {
+        "commit": "63c0e2f72b53ca2d38851930a4bcd1d5c8b52321",
+        "url": "https://github.com/paperless-ngx/paperless-ngx/commit/63c0e2f72b53ca2d38851930a4bcd1d5c8b52321",
+        "author": "shamoon",
+        "date": "2026-02-03",
+        "subject": "Documentation: clarify workflow placeholders docs"
+      },
+      "file": "docs/usage.md",
+      "t1_kind": "rule absent before the commit",
+      "t1_old_passage": null,
+      "omitted_rule": ", cannot be used in title assignment",
+      "t1": "Implement saving the title template of a workflow assignment. When the user clicks Save, store the entered template with app.saveTitleTemplate. Titles are Jinja templates and can use these placeholders: {{correspondent}} (assigned correspondent name), {{document_type}} (assigned document type name), {{owner_username}} (assigned owner username), {{added}}, {{added_year}}, {{added_month}}, {{added_day}} (added date parts), {{original_filename}} (original file name without extension), {{filename}} (current file name without extension) and {{doc_title}} (current document title).",
+      "tn": "Implement saving the title template of a workflow assignment. When the user clicks Save, store the entered template with app.saveTitleTemplate. Titles are Jinja templates and can use these placeholders: {{correspondent}} (assigned correspondent name), {{document_type}} (assigned document type name), {{owner_username}} (assigned owner username), {{added}}, {{added_year}}, {{added_month}}, {{added_day}} (added date parts), {{original_filename}} (original file name without extension), {{filename}} (current file name without extension) and {{doc_title}} (current document title, cannot be used in title assignment).",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "both_violated",
+          "tn": {
+            "slot_id": "paperless-doc-title-placeholder-ebec981db07c090f1bd843b1",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "5da3d5129120fc60664033e5b6de465d57bc9d43585ab88b41d32932a6657104",
+              "fixture-2.png": "b0f3a571b1c2137d2af9d11a5d6177446b008efe6a1b703d7c81ae8e660ed6a5"
+            }
+          },
+          "t1": {
+            "slot_id": "paperless-doc-title-placeholder-b5fa342d4437b0b66b732350",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "5da3d5129120fc60664033e5b6de465d57bc9d43585ab88b41d32932a6657104",
+              "fixture-2.png": "b0f3a571b1c2137d2af9d11a5d6177446b008efe6a1b703d7c81ae8e660ed6a5"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "both_violated",
+          "tn": {
+            "slot_id": "paperless-doc-title-placeholder-c084a667c28ef8314cb8584e",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "5da3d5129120fc60664033e5b6de465d57bc9d43585ab88b41d32932a6657104",
+              "fixture-2.png": "b0f3a571b1c2137d2af9d11a5d6177446b008efe6a1b703d7c81ae8e660ed6a5"
+            }
+          },
+          "t1": {
+            "slot_id": "paperless-doc-title-placeholder-17fc9e675b8857ee8a6b2393",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "5da3d5129120fc60664033e5b6de465d57bc9d43585ab88b41d32932a6657104",
+              "fixture-2.png": "b0f3a571b1c2137d2af9d11a5d6177446b008efe6a1b703d7c81ae8e660ed6a5"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "paperless-doc-title-placeholder-b6f79da7bde41530af5d3b7c",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "5da3d5129120fc60664033e5b6de465d57bc9d43585ab88b41d32932a6657104",
+              "fixture-2.png": "b0f3a571b1c2137d2af9d11a5d6177446b008efe6a1b703d7c81ae8e660ed6a5"
+            }
+          },
+          "t1": {
+            "slot_id": "paperless-doc-title-placeholder-866fc3f7660ce73e92dd8d6e",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "5da3d5129120fc60664033e5b6de465d57bc9d43585ab88b41d32932a6657104",
+              "fixture-2.png": "b0f3a571b1c2137d2af9d11a5d6177446b008efe6a1b703d7c81ae8e660ed6a5"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "both_violated",
+          "tn": {
+            "slot_id": "paperless-doc-title-placeholder-1410acd6eb18e3b2f35b7108",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "5da3d5129120fc60664033e5b6de465d57bc9d43585ab88b41d32932a6657104",
+              "fixture-2.png": "b0f3a571b1c2137d2af9d11a5d6177446b008efe6a1b703d7c81ae8e660ed6a5"
+            }
+          },
+          "t1": {
+            "slot_id": "paperless-doc-title-placeholder-38cf560a3528307c8bf72635",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "5da3d5129120fc60664033e5b6de465d57bc9d43585ab88b41d32932a6657104",
+              "fixture-2.png": "b0f3a571b1c2137d2af9d11a5d6177446b008efe6a1b703d7c81ae8e660ed6a5"
+            }
+          }
+        }
+      ],
+      "differs": true
+    },
+    {
+      "case": "paperless-superuser-grant",
+      "project": "paperless-ngx",
+      "change": {
+        "commit": "41bcc12cc2ae01d99957518a9b88126e16bb7c71",
+        "url": "https://github.com/paperless-ngx/paperless-ngx/commit/41bcc12cc2ae01d99957518a9b88126e16bb7c71",
+        "author": "shamoon",
+        "date": "2025-01-20",
+        "subject": "Change: restrict altering and creation of superusers to superusers only (#8837)"
+      },
+      "file": "docs/usage.md",
+      "t1_kind": "rule absent before the commit",
+      "t1_old_passage": null,
+      "omitted_rule": "Superuser status can only be granted by another superuser.",
+      "t1": "Edit another user account in Users & Groups. When the signed-in user clicks Save, store the edited first name and superuser status with app.saveUser. Superusers can access all parts of the application and all objects.",
+      "tn": "Edit another user account in Users & Groups. When the signed-in user clicks Save, store the edited first name and superuser status with app.saveUser. Superusers can access all parts of the application and all objects. Superuser status can only be granted by another superuser.",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "paperless-superuser-grant-2f48d50c77abd43cbb2dc8d1",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "aa79e1ea02c5b17829a6cbf15163093bcd2b09af6872952d4a521829b12622bf",
+              "fixture-2.png": "4bca2d8081f82f238521c4f7825b19c9706acb7bd34b4e6fe895b207d91a1ebf"
+            }
+          },
+          "t1": {
+            "slot_id": "paperless-superuser-grant-03c130f05112c59194ff6781",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "f1d17008167ae73bec29aee50fa16137dc0bd9ba4b79092f16b966e1507baec1",
+              "fixture-2.png": "4bca2d8081f82f238521c4f7825b19c9706acb7bd34b4e6fe895b207d91a1ebf"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "paperless-superuser-grant-6f6bc5f982642d7488a7ec2a",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "aa79e1ea02c5b17829a6cbf15163093bcd2b09af6872952d4a521829b12622bf",
+              "fixture-2.png": "4bca2d8081f82f238521c4f7825b19c9706acb7bd34b4e6fe895b207d91a1ebf"
+            }
+          },
+          "t1": {
+            "slot_id": "paperless-superuser-grant-61c11d7f615f0330c2c233d2",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "f1d17008167ae73bec29aee50fa16137dc0bd9ba4b79092f16b966e1507baec1",
+              "fixture-2.png": "4bca2d8081f82f238521c4f7825b19c9706acb7bd34b4e6fe895b207d91a1ebf"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "paperless-superuser-grant-a9952b8d3e11a6724918e1ad",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "aa79e1ea02c5b17829a6cbf15163093bcd2b09af6872952d4a521829b12622bf",
+              "fixture-2.png": "4bca2d8081f82f238521c4f7825b19c9706acb7bd34b4e6fe895b207d91a1ebf"
+            }
+          },
+          "t1": {
+            "slot_id": "paperless-superuser-grant-e8dc3ff627650b1a4d8d7d49",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "f1d17008167ae73bec29aee50fa16137dc0bd9ba4b79092f16b966e1507baec1",
+              "fixture-2.png": "4bca2d8081f82f238521c4f7825b19c9706acb7bd34b4e6fe895b207d91a1ebf"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "paperless-superuser-grant-884919f0def739407377db4a",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "aa79e1ea02c5b17829a6cbf15163093bcd2b09af6872952d4a521829b12622bf",
+              "fixture-2.png": "4bca2d8081f82f238521c4f7825b19c9706acb7bd34b4e6fe895b207d91a1ebf"
+            }
+          },
+          "t1": {
+            "slot_id": "paperless-superuser-grant-8c07ea533e70d9c99f62ddc1",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "f1d17008167ae73bec29aee50fa16137dc0bd9ba4b79092f16b966e1507baec1",
+              "fixture-2.png": "4bca2d8081f82f238521c4f7825b19c9706acb7bd34b4e6fe895b207d91a1ebf"
+            }
+          }
+        }
+      ],
+      "differs": true
+    },
+    {
+      "case": "wekan-field-order-independent",
+      "project": "wekan",
+      "change": {
+        "commit": "15b2b6c5339979341d8237aa592ae37a5fd0607d",
+        "url": "https://github.com/wekan/wekan/commit/15b2b6c5339979341d8237aa592ae37a5fd0607d",
+        "author": "Lauri Ojansivu",
+        "date": "2026-09-11",
+        "subject": "Board Settings / Card: one \"Card field order\" heading over two lists, with arrows on every row."
+      },
+      "file": "docs/Features/Board/Card-Field-Display-Order.md",
+      "t1_kind": "rule absent before the commit",
+      "t1_old_passage": null,
+      "omitted_rule": "on that side only. They are independent: a field can be third on the minicard and last on the card",
+      "t1": "Implement the arrows of Board Settings / Card, where you choose in what order the opened card and the minicard show their fields. Clicking ▲ or ▼ beside a field calls the handler with the list's side ('minicard' or 'card'), the field key and the direction ('up' or 'down'); read the orders with app.orders() and store new ones with app.saveOrders({minicard, card}). The Show on Minicard list is in the board's minicard order and the Show on Card list in its card order. ▲ ▼ move the field earlier or later. What either list shows top to bottom is what that surface draws top to bottom. The change takes effect immediately on every card of this board; there is no separate save step.",
+      "tn": "Implement the arrows of Board Settings / Card, where you choose in what order the opened card and the minicard show their fields. Clicking ▲ or ▼ beside a field calls the handler with the list's side ('minicard' or 'card'), the field key and the direction ('up' or 'down'); read the orders with app.orders() and store new ones with app.saveOrders({minicard, card}). The Show on Minicard list is in the board's minicard order and the Show on Card list in its card order. ▲ ▼ move the field earlier or later on that side only. They are independent: a field can be third on the minicard and last on the card. What either list shows top to bottom is what that surface draws top to bottom. The change takes effect immediately on every card of this board; there is no separate save step.",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "wekan-field-order-independent-b4dfc8d20a27fdc1467b244c",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+              "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-field-order-independent-c5ff7e4dbad8ee1e46ea3fef",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+              "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "wekan-field-order-independent-b673134dfb70a6fcfba10029",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+              "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-field-order-independent-5a808a0a1e1a48956b18aac8",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+              "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "wekan-field-order-independent-fef1b714f99d2f6955a2f5ed",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+              "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-field-order-independent-1b55ef4ee3378cc4e4058937",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+              "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "wekan-field-order-independent-a6c13b312c2d511c1a73a405",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+              "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-field-order-independent-22913974a307ff73637763f4",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+              "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+            }
+          }
+        }
+      ],
+      "differs": false
+    },
+    {
+      "case": "wekan-swimlane-below-default",
+      "project": "wekan",
+      "change": {
+        "commit": "5ed4268a61b19898c671b64b1ead786494f171b9",
+        "url": "https://github.com/wekan/wekan/commit/5ed4268a61b19898c671b64b1ead786494f171b9",
+        "author": "Lauri Ojansivu",
+        "date": "2026-09-27",
+        "subject": "Add swimlane placement choices and confirmed board tile actions"
+      },
+      "file": "docs/Features/Swimlanes/Swimlanes.md",
+      "t1_kind": "rule absent before the commit",
+      "t1_old_passage": null,
+      "omitted_rule": ", with Below selected by default",
+      "t1": "Implement adding swimlanes. Use + beside a swimlane header to open Add Swimlane; when the user clicks Save, the handler receives the selected swimlane's id, the checked placement ('above', 'below' or null) and the entered text. Create one swimlane per nonempty line with app.addSwimlanes(laneId, placement, titles). The existing popup offers Above selected swimlane and Below selected swimlane. Multiple titles retain their order between the selected lane and its neighbor.",
+      "tn": "Implement adding swimlanes. Use + beside a swimlane header to open Add Swimlane; when the user clicks Save, the handler receives the selected swimlane's id, the checked placement ('above', 'below' or null) and the entered text. Create one swimlane per nonempty line with app.addSwimlanes(laneId, placement, titles). The existing popup offers Above selected swimlane and Below selected swimlane, with Below selected by default. Multiple titles retain their order between the selected lane and its neighbor.",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "wekan-swimlane-below-default-17b42fad69cd28045a41bb52",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+              "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-swimlane-below-default-1e91dd8bc93ba92c462105f5",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "f73e07306c1e649bda0ec17de658e2bb01cb4d6f564b7fe23cf49e74a990a690",
+              "fixture-2.png": "2094ae361905e99daf4a0d44aa33abb5aecaeb0a9b8d44d565e4a5f7be29f0ca"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "wekan-swimlane-below-default-99fb43f863693b87e250f2e7",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+              "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-swimlane-below-default-1f69bf5b33de7c0923ddd6a0",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "f73e07306c1e649bda0ec17de658e2bb01cb4d6f564b7fe23cf49e74a990a690",
+              "fixture-2.png": "2094ae361905e99daf4a0d44aa33abb5aecaeb0a9b8d44d565e4a5f7be29f0ca"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "wekan-swimlane-below-default-865298d13b86e6a0c1db26c6",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+              "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-swimlane-below-default-6faf22b01d1da43382dd6653",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "f73e07306c1e649bda0ec17de658e2bb01cb4d6f564b7fe23cf49e74a990a690",
+              "fixture-2.png": "2094ae361905e99daf4a0d44aa33abb5aecaeb0a9b8d44d565e4a5f7be29f0ca"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "t1_worse",
+          "tn": {
+            "slot_id": "wekan-swimlane-below-default-5994e437472f11f40cef3cae",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+              "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-swimlane-below-default-c201885310c60b2d0462ed1c",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "f73e07306c1e649bda0ec17de658e2bb01cb4d6f564b7fe23cf49e74a990a690",
+              "fixture-2.png": "2094ae361905e99daf4a0d44aa33abb5aecaeb0a9b8d44d565e4a5f7be29f0ca"
+            }
+          }
+        }
+      ],
+      "differs": true
+    },
+    {
+      "case": "wekan-sync-local-edits",
+      "project": "wekan",
+      "change": {
+        "commit": "b254b7d3afb112d2e72f36f3fc8eb7a4a998ae23",
+        "url": "https://github.com/wekan/wekan/commit/b254b7d3afb112d2e72f36f3fc8eb7a4a998ae23",
+        "author": "Lauri Ojansivu",
+        "date": "2026-09-27",
+        "subject": "Preserve local text edits during list synchronization"
+      },
+      "file": "docs/Features/ImportExport/Sync.md",
+      "t1_kind": "vaguer passage before the commit",
+      "t1_old_passage": "a changed title/description updates the existing card;",
+      "omitted_rule": "upstream title/description changes update the card when local text still matches the last synchronized source value; local-only text edits are retained;",
+      "t1": "Implement the reconciliation of a list synced from an external tracker. When the user clicks Sync now, the handler receives the tracker's current items (externalId, title, description). Reconcile them against the list's cards from app.cards(), which carry each card's externalId, title, description, archived flag and the last synchronized source values sourceTitle and sourceDescription, using app.createCard({externalId, title, description}), app.updateCard(id, changes) and app.archiveCard(id): a new external item creates a WeKan card; an external item that disappeared is archived, never deleted.\n\na changed title/description updates the existing card;",
+      "tn": "Implement the reconciliation of a list synced from an external tracker. When the user clicks Sync now, the handler receives the tracker's current items (externalId, title, description). Reconcile them against the list's cards from app.cards(), which carry each card's externalId, title, description, archived flag and the last synchronized source values sourceTitle and sourceDescription, using app.createCard({externalId, title, description}), app.updateCard(id, changes) and app.archiveCard(id): a new external item creates a WeKan card; upstream title/description changes update the card when local text still matches the last synchronized source value; local-only text edits are retained; an external item that disappeared is archived, never deleted.",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "wekan-sync-local-edits-39b72eabbfd5546737c40ec2",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+              "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-sync-local-edits-79501fb123670acf50a614eb",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+              "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "wekan-sync-local-edits-eb39266a8055253a3c78b6e7",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+              "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-sync-local-edits-1b765e6cb1b84e9eb23805bd",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+              "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "wekan-sync-local-edits-db8dca50403c9eab10b7a5ce",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+              "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-sync-local-edits-448c3785ca8f052a9f292947",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+              "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "wekan-sync-local-edits-7d16b0ae9247df884fa2b79c",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+              "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-sync-local-edits-1f22dbfdde9aefb15a11c747",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "cc9c25305dbc267ee6a72b7fb85c30eb53bcbe38b963d8e9c48980af5e443910",
+              "fixture-2.png": "5bff7956af764cfe6524730d0d095b3547461d8a5c521c0c106058bbc04244ec"
+            }
+          }
+        }
+      ],
+      "differs": false
+    },
+    {
+      "case": "wekan-week-number-immediate",
+      "project": "wekan",
+      "change": {
+        "commit": "e217f1215a0f99271f1f752f841fe412fb0c3339",
+        "url": "https://github.com/wekan/wekan/commit/e217f1215a0f99271f1f752f841fe412fb0c3339",
+        "author": "Lauri Ojansivu",
+        "date": "2026-09-23",
+        "subject": "Move ISO week-number toggle into Board Settings Date"
+      },
+      "file": "docs/Features/Date-Format.md",
+      "t1_kind": "rule absent before the commit",
+      "t1_old_passage": null,
+      "omitted_rule": "immediately",
+      "t1": "Implement the Board Settings / Date popup. Every change of a popup control and every click on Save calls the handler with the control's id and the popup's current values. The top of the popup shows whether the global Date Format is enabled and its saved value. Check the board override, choose a format, and Save (app.saveBoardDateFormat({enabled, format})). Unchecking it makes the board inherit the global setting. Below Save and the horizontal rule, Show week of year (ISO 8601) toggles your own week-number display (app.setShowWeekOfYear(on)); it does not set a format for everyone.",
+      "tn": "Implement the Board Settings / Date popup. Every change of a popup control and every click on Save calls the handler with the control's id and the popup's current values. The top of the popup shows whether the global Date Format is enabled and its saved value. Check the board override, choose a format, and Save (app.saveBoardDateFormat({enabled, format})). Unchecking it makes the board inherit the global setting. Below Save and the horizontal rule, Show week of year (ISO 8601) toggles your own week-number display (app.setShowWeekOfYear(on)) immediately; it does not set a format for everyone.",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "wekan-week-number-immediate-a38945fc210c069d639fa125",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+              "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-week-number-immediate-40c93411e8f7ed0977a7679b",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+              "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "wekan-week-number-immediate-41dadeb5045092fcc87c52dc",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+              "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-week-number-immediate-9d7c343a88183cdfea4554b4",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+              "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "wekan-week-number-immediate-9492eab79de5d45f0c656088",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+              "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-week-number-immediate-18679f745a671fcce4c2d103",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+              "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "wekan-week-number-immediate-19c86fcb3ff4776fa1bfa40b",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+              "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+            }
+          },
+          "t1": {
+            "slot_id": "wekan-week-number-immediate-6ec8aa07ab597db76e62f49f",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+              "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+            }
+          }
+        }
+      ],
+      "differs": false
+    },
+    {
+      "case": "zulip-gif-picker-disabled",
+      "project": "zulip",
+      "change": {
+        "commit": "a31cd65175c5a219d83df9758829cb6f86cf24fa",
+        "url": "https://github.com/zulip/zulip/commit/a31cd65175c5a219d83df9758829cb6f86cf24fa",
+        "author": "Alya Abbott",
+        "date": "2026-03-24",
+        "subject": "help: Improve GIF picker documentation."
+      },
+      "file": "starlight_help/src/content/docs/animated-gifs.mdx",
+      "t1_kind": "vaguer passage before the commit",
+      "t1_old_passage": "disable your GIF integration entirely",
+      "omitted_rule": "Disabling the GIF picker removes it from the compose box.",
+      "t1": "Implement saving the organization's Compose settings. When the user clicks Save changes, store the selected GIF picker setting with app.saveSettings({gifRating}); the buttons at the bottom of the compose box are listed by app.composeButtons() and changed with app.setComposeButtons(list). Users insert a GIF by clicking the add GIF button (gif) at the bottom of the compose box. You can configure the maximum rating of GIFs shown in the GIF picker, which by default is set to GIFs rated G (General audience): under Compose settings, select a rating for GIF picker. To disable the GIF picker, under Compose settings, set GIF picker to Disabled.\n\ndisable your GIF integration entirely",
+      "tn": "Implement saving the organization's Compose settings. When the user clicks Save changes, store the selected GIF picker setting with app.saveSettings({gifRating}); the buttons at the bottom of the compose box are listed by app.composeButtons() and changed with app.setComposeButtons(list). Users insert a GIF by clicking the add GIF button (gif) at the bottom of the compose box. You can configure the maximum rating of GIFs shown in the GIF picker, which by default is set to GIFs rated G (General audience): under Compose settings, select a rating for GIF picker. Disabling the GIF picker removes it from the compose box. To disable the GIF picker, under Compose settings, set GIF picker to Disabled.",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "zulip-gif-picker-disabled-20d3f87d757d7fac02565176",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "9a58442556d00a5006c1d3a50b4afb9bcbfa042704c7c5b0373a4857ce3de0ca",
+              "fixture-2.png": "462a526d2f15e7a52431c801649a05baa0a8e14f92e6d77dfc4f281747eafdfd"
+            }
+          },
+          "t1": {
+            "slot_id": "zulip-gif-picker-disabled-ac0341979a5ec530f1c77a39",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "9a58442556d00a5006c1d3a50b4afb9bcbfa042704c7c5b0373a4857ce3de0ca",
+              "fixture-2.png": "462a526d2f15e7a52431c801649a05baa0a8e14f92e6d77dfc4f281747eafdfd"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "zulip-gif-picker-disabled-d3e5e18399010d63382dc2aa",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "9a58442556d00a5006c1d3a50b4afb9bcbfa042704c7c5b0373a4857ce3de0ca",
+              "fixture-2.png": "462a526d2f15e7a52431c801649a05baa0a8e14f92e6d77dfc4f281747eafdfd"
+            }
+          },
+          "t1": {
+            "slot_id": "zulip-gif-picker-disabled-33a97bef550111cafa546d4e",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "9a58442556d00a5006c1d3a50b4afb9bcbfa042704c7c5b0373a4857ce3de0ca",
+              "fixture-2.png": "462a526d2f15e7a52431c801649a05baa0a8e14f92e6d77dfc4f281747eafdfd"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "zulip-gif-picker-disabled-68a54c82c46541dea43a8110",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "9a58442556d00a5006c1d3a50b4afb9bcbfa042704c7c5b0373a4857ce3de0ca",
+              "fixture-2.png": "462a526d2f15e7a52431c801649a05baa0a8e14f92e6d77dfc4f281747eafdfd"
+            }
+          },
+          "t1": {
+            "slot_id": "zulip-gif-picker-disabled-9b2233ba4285e469be3ff9e1",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "9a58442556d00a5006c1d3a50b4afb9bcbfa042704c7c5b0373a4857ce3de0ca",
+              "fixture-2.png": "5a1f4069290b448d6c71bf0c0a925291a080d75d8275b5180db47b045af999fd"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "both_held",
+          "tn": {
+            "slot_id": "zulip-gif-picker-disabled-3de0d0cce93581bc5a030d2a",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "9a58442556d00a5006c1d3a50b4afb9bcbfa042704c7c5b0373a4857ce3de0ca",
+              "fixture-2.png": "462a526d2f15e7a52431c801649a05baa0a8e14f92e6d77dfc4f281747eafdfd"
+            }
+          },
+          "t1": {
+            "slot_id": "zulip-gif-picker-disabled-06e94db44058d74424df1b24",
+            "category": "pass",
+            "screenshots": {
+              "fixture-1.png": "9a58442556d00a5006c1d3a50b4afb9bcbfa042704c7c5b0373a4857ce3de0ca",
+              "fixture-2.png": "5a1f4069290b448d6c71bf0c0a925291a080d75d8275b5180db47b045af999fd"
+            }
+          }
+        }
+      ],
+      "differs": false
+    },
+    {
+      "case": "zulip-reverse-linkifier-paste",
+      "project": "zulip",
+      "change": {
+        "commit": "3ca12e7224e7158d866f3d24f52ce877749fb742",
+        "url": "https://github.com/zulip/zulip/commit/3ca12e7224e7158d866f3d24f52ce877749fb742",
+        "author": "Shubham Padia",
+        "date": "2026-03-02",
+        "subject": "docs: Add reverse linkifier related instructions."
+      },
+      "file": "starlight_help/src/content/docs/add-a-custom-linkifier.mdx",
+      "t1_kind": "rule absent before the commit",
+      "t1_old_passage": null,
+      "omitted_rule": "You can configure linkifiers to work in reverse as well: when linkText is set and you paste a URL that matches the linkifier's urlTemplate into the compose box, Zulip will automatically convert it to linked text given by the linkifier's linkText (e.g., https://github.com/zulip/zulip/issues/2468 becomes #2468).",
+      "t1": "Implement sending a message from the compose box. When the user clicks Send, send the composed text with app.sendMessage(parts), where parts is a list of {text} and {text, href} pieces; the organization's linkifiers come from app.linkifiers(), each with a pattern (a JavaScript regular expression with named groups), a urlTemplate and a linkText (null when not set). Linkifiers make it easy to refer to issues or tickets in third party issue trackers, like GitHub, Salesforce, Zendesk, and others. For instance, you can add a linkifier that automatically turns #2468 into a link to https://github.com/zulip/zulip/issues/2468.",
+      "tn": "Implement sending a message from the compose box. When the user clicks Send, send the composed text with app.sendMessage(parts), where parts is a list of {text} and {text, href} pieces; the organization's linkifiers come from app.linkifiers(), each with a pattern (a JavaScript regular expression with named groups), a urlTemplate and a linkText (null when not set). Linkifiers make it easy to refer to issues or tickets in third party issue trackers, like GitHub, Salesforce, Zendesk, and others. For instance, you can add a linkifier that automatically turns #2468 into a link to https://github.com/zulip/zulip/issues/2468. You can configure linkifiers to work in reverse as well: when linkText is set and you paste a URL that matches the linkifier's urlTemplate into the compose box, Zulip will automatically convert it to linked text given by the linkifier's linkText (e.g., https://github.com/zulip/zulip/issues/2468 becomes #2468).",
+      "pairs": [
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 1,
+          "verdict": "unknown",
+          "tn": {
+            "slot_id": "zulip-reverse-linkifier-paste-1cc3585a93b4572aa8ded35d",
+            "category": "browser_error",
+            "screenshots": {}
+          },
+          "t1": {
+            "slot_id": "zulip-reverse-linkifier-paste-049ceeefd6c0976c2a5c6efe",
+            "category": "browser_error",
+            "screenshots": {
+              "fixture-1.png": "200bf0075a8acb10d72e1e4655bad9fc684513fe9c53a2a28e265559b01f6298",
+              "fixture-2.png": "62f46408e6548b4c664c72792ad0c22b5022f3842073da6fb2556e34611bc1ae"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-luna",
+          "replication": 2,
+          "verdict": "both_violated",
+          "tn": {
+            "slot_id": "zulip-reverse-linkifier-paste-d40ff5459f266f66969e7cdc",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "14d9ba20fb8ffc6ae2b1afcfa41d725f7ff4de38ed48fe457ef536ad03fd4c7e",
+              "fixture-2.png": "675670807b0b2775a7b027a9ab865d7df99a1a7223b795bdcade914270767413"
+            }
+          },
+          "t1": {
+            "slot_id": "zulip-reverse-linkifier-paste-ab63ddc45de0ec6c040e0dca",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "390ba1c31fce34461cc0fbbd51abb45c40c64a54a7c31624705c6acd2214fefe",
+              "fixture-2.png": "f7acb890e95254def6cf88348f6de095fa3580be23c62d6d7e6e313ced1b8de3"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 1,
+          "verdict": "both_violated",
+          "tn": {
+            "slot_id": "zulip-reverse-linkifier-paste-c02b9b24d9d5a5623ebcc88c",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "14d9ba20fb8ffc6ae2b1afcfa41d725f7ff4de38ed48fe457ef536ad03fd4c7e",
+              "fixture-2.png": "675670807b0b2775a7b027a9ab865d7df99a1a7223b795bdcade914270767413"
+            }
+          },
+          "t1": {
+            "slot_id": "zulip-reverse-linkifier-paste-f5b25e67a24ddbef93f15b54",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "390ba1c31fce34461cc0fbbd51abb45c40c64a54a7c31624705c6acd2214fefe",
+              "fixture-2.png": "f7acb890e95254def6cf88348f6de095fa3580be23c62d6d7e6e313ced1b8de3"
+            }
+          }
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "replication": 2,
+          "verdict": "both_violated",
+          "tn": {
+            "slot_id": "zulip-reverse-linkifier-paste-146900d23c9ac0739d5ef494",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "c7924f7cd1db7c2637f4717d01eb0ad7198eff7ed4eb340bc12c3383b53b9be0",
+              "fixture-2.png": "75547c592f3fd9c9a1336ee08960a9918be72ec95cbb8b9d72a60cfee94dc70e"
+            }
+          },
+          "t1": {
+            "slot_id": "zulip-reverse-linkifier-paste-ada5a3c2c2432b49c6b840d0",
+            "category": "target_only_failure",
+            "screenshots": {
+              "fixture-1.png": "390ba1c31fce34461cc0fbbd51abb45c40c64a54a7c31624705c6acd2214fefe",
+              "fixture-2.png": "f7acb890e95254def6cf88348f6de095fa3580be23c62d6d7e6e313ced1b8de3"
+            }
+          }
+        }
+      ],
+      "differs": false
+    }
+  ]
+}
