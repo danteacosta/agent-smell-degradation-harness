@@ -1,54 +1,112 @@
-# Tamanho da amostra confirmatória de H1a (simulação)
+# Confirmatory H1a sample-size simulation
 
-Status: planejamento, exploratório. Script: `scripts/confirmatory_power.py`. Saída: `data/confirmatory-planning/power.json` (semente 2026100501, 1.000 estudos simulados por célula, 1.000 reamostragens de bootstrap, 2.000 inversões de sinal). Nenhuma chamada de modelo.
+Status: exploratory planning, not a confirmatory result. Script:
+`scripts/confirmatory_power.py`. Output:
+`data/confirmatory-planning/power.json` (seed 2026100501). No model call is
+made by this analysis.
 
-## Como foi simulado
+## Simulation design
 
-Cada estudo simulado sorteia projetos com reposição entre os 9 da coleta dos 46. Dentro de cada projeto sorteado, sorteia requisitos com reposição, e cada requisito mantém todos os seus pares A/C observados (2 modelos × 2 repetições, sem os desconhecidos). Dos 46 requisitos, 44 têm pelo menos um par avaliável. O estudo é analisado com o mesmo estimador do pré-registro (`paired_probability_of_superiority`).
+Each simulated study resamples projects from the nine-project exploratory
+collection and then resamples requirements within each selected project. A
+requirement keeps all of its evaluable A/C pairs (two models and two
+replications). Forty-four of the 46 requirements have at least one evaluable
+pair. The point estimate and project-cluster percentile interval use the
+pre-registered `paired_probability_of_superiority` estimator.
 
-Dois ajustes evitam que a simulação fique otimista demais:
-- **Atenuação do efeito.** Cada par "C pior" vira empate com probabilidade q. q = 0 reproduz o efeito observado; q = 5/9 leva a cerca de 0,60; q = 0,8, a cerca de 0,55; q = 1 é a hipótese nula. Requisitos novos tendem a mostrar efeito menor que a amostra exploratória que motivou o estudo.
-- **Ruído com inversões.** Os 172 pares A/C exploratórios não têm nenhum "C melhor". Reamostrados sozinhos, nunca produzem inversão e qualquer desenho pareceria com poder total. Por isso cada par é sorteado de novo, como pior ou melhor com 50% de chance cada, com probabilidade 0,047. Esse valor é a discordância entre duas redações do mesmo requisito completo (B contra A: 4 piores e 4 melhores em 172 pares). O cenário de estresse usa o triplo, 0,14.
+Two perturbations reduce the optimism of resampling a dataset with no observed
+C-better-than-A pair:
 
-Regras de decisão (fração de estudos que as satisfazem):
-- **p:** valor p da inversão de sinais < 0,05;
-- **IC:** limite inferior do IC 95% por bootstrap de projetos > 0,5.
+- **Effect attenuation.** Each C-worse pair becomes a tie with probability
+  `q`. The grid represents the observed effect, effects around 0.60 and 0.55,
+  and the null.
+- **Symmetric reversals.** A pair is redrawn as worse or better with equal
+  probability at rates 0.047 and 0.14. The first rate is the observed B/A
+  wording discordance; the second is a stress scenario. This is a simple noise
+  model, not an estimate of the future reversal rate.
 
-## Resultado
+## Independence-unit correction
 
-Poder pela regra p (entre parênteses, pela regra IC). Ruído 0,047:
+The original draft used the estimator's requirement-level sign-flip p-value as
+one of two confirmatory gates. That test requires independently exchangeable
+requirement signs. Requirements from the same repository share a scaffold,
+oracle family, model calls, and project context, so project bootstrap does not
+make those signs independent.
 
-| Desenho (projetos × requisitos) | Requisitos | Efeito observado (≈0,74) | ≈0,61 | ≈0,55 | Nulo: taxa de falso positivo |
-| --- | ---: | --- | --- | --- | --- |
-| 4 × 4 | 16 | 0,98 (0,98) | 0,76 (0,86) | 0,29 (0,54) | 0,001 (0,03) |
-| 6 × 4 | 24 | 1,00 (1,00) | 0,95 (0,96) | 0,55 (0,73) | 0,006 (0,06) |
-| 8 × 3 | 24 | 1,00 (1,00) | 0,95 (0,97) | 0,56 (0,71) | 0,01 (0,05) |
-| 8 × 4 | 32 | 1,00 (1,00) | 0,99 (0,99) | 0,71 (0,80) | 0,01 (0,03) |
-| 9 × 4 | 36 | 1,00 (1,00) | 0,99 (1,00) | 0,81 (0,86) | 0,02 (0,04) |
-| 12 × 4 | 48 | 1,00 (1,00) | 1,00 (1,00) | 0,93 (0,95) | 0,02 (0,03) |
+Version 2 therefore reports two tests separately:
 
-Estresse, ruído 0,14:
+- `power_intent_p_below_05_optimistic`: the original requirement-level test,
+  retained only as a diagnostic;
+- `power_project_p_below_05`: an exact test that flips all centered
+  requirement scores in one project together and enumerates all `2^G` project
+  assignments.
 
-| Desenho | ≈0,72 | ≈0,60 | ≈0,54 | Nulo |
-| --- | --- | --- | --- | --- |
-| 6 × 4 | 0,99 (0,99) | 0,82 (0,86) | 0,31 (0,48) | 0,03 (0,07) |
-| 8 × 4 | 1,00 (1,00) | 0,91 (0,91) | 0,47 (0,57) | 0,03 (0,05) |
-| 9 × 4 | 1,00 (1,00) | 0,95 (0,95) | 0,50 (0,60) | 0,04 (0,05) |
-| 12 × 4 | 1,00 (1,00) | 1,00 (0,99) | 0,65 (0,70) | 0,04 (0,04) |
+The planning decision rule is now the conjunction of the exact project-level
+test and a project-cluster bootstrap lower bound above 0.5. This correction
+does not prove that the percentile interval has nominal 95% coverage with only
+8–9 projects. Cameron and Miller (2015) show that inference with few clusters
+is a finite-sample problem and recommend explicit small-cluster corrections;
+they also caution that pairs-cluster bootstrap may still over-reject. The
+current simulation must therefore be treated as a design sensitivity, not a
+sample-size certificate.
 
-## Como ler
+## Reading the output
 
-- **Se o efeito novo for parecido com o observado,** qualquer desenho com 6 ou mais projetos tem poder perto de 1. O tamanho só pesa se o efeito encolher.
-- **Para um efeito de cerca de 0,60:** 9 projetos × 4 requisitos (36 requisitos) dão 0,99, ou 0,95 no cenário de estresse. 8 × 4 dá 0,99, ou 0,91 no estresse.
-- **Para um efeito de cerca de 0,55,** nem 12 × 4 garante 0,80 no estresse. Para detectar um efeito tão pequeno seria preciso outro desenho, com mais repetições ou mais projetos.
-- **A regra IC sozinha erra demais com poucos projetos.** No nulo, ela aceita entre 3% e 7% dos estudos, quando o esperado para um limite unilateral de 95% seria 2,5%. Com 4 a 6 projetos, o bootstrap de clusters é anticonservador. A regra p ficou abaixo de 5% em todos os desenhos, mas o estimador avisa que a permutabilidade entre requisitos do mesmo projeto não está demonstrada. Isso pesa na decisão 5 em aberto e sugere exigir as duas regras juntas, com no mínimo 8 projetos, como já pede a seção 3 do pré-registro.
-- **Custo:** com A, B e C, cada requisito custa 12 chamadas; sem B, 8. O desenho 9 × 4 custa 432 chamadas com B ou 288 sem B, na mesma ordem das 552 da coleta dos 46.
+The regenerated JSON is the canonical table. For every design and effect
+scenario it reports:
 
-Recomendação para levar ao orientador: **9 projetos × 4 requisitos**, decisão pelas duas regras juntas, com o efeito mínimo de interesse declarado em 0,60. Abaixo disso, o estudo não tem poder e o pré-registro deve dizer isso.
+- the mean simulated estimate;
+- the project-cluster interval decision rate;
+- the optimistic requirement-level sign-flip rate;
+- the exact project-level sign-flip rate;
+- the rate at which both project-level conditions hold.
 
-## Limitações
+The regenerated grid materially changes the planning conclusion for an effect
+around 0.60:
 
-- A população reamostrada é a própria amostra exploratória: 9 projetos e desfechos quase de tudo ou nada por requisito. Se os requisitos novos forem mais heterogêneos, o poder cai.
-- Mais de 9 projetos são simulados repetindo projetos observados, então a variação entre projetos fica subestimada nas colunas de 12 projetos.
-- O ruído tem um único parâmetro (inversões simétricas) e não modela requisitos inteiros que se invertem.
-- A média simulada (≈0,74) é um pouco maior que a estimativa amostral (0,725). Isso acontece porque o sorteio em dois estágios dá peso igual aos projetos.
+| Design | Requirements | Calls with A/B/C | Project-level power, noise 0.047 | Project-level power, stress noise 0.14 |
+| --- | ---: | ---: | ---: | ---: |
+| 8 projects × 3 | 24 | 288 | 0.808 | 0.619 |
+| 8 projects × 4 | 32 | 384 | 0.917 | 0.756 |
+| 8 projects × 5 | 40 | 480 | 0.960 | 0.835 |
+| 8 projects × 6 | 48 | 576 | 0.976 | 0.907 |
+| 9 projects × 4 | 36 | 432 | 0.966 | 0.865 |
+
+The original requirement-level test had reported 0.949 power for 9×4 under
+stress, close to the interval rate. The corrected project-level decision gives
+0.865 and exposes the dependence that the original simulation hid. For an
+effect around 0.55, even 8×6 reaches only 0.441 under stress.
+
+The earlier recommendation of **9 projects × 4 requirements** is therefore
+withdrawn. It is also infeasible in either frame currently proposed in PR #170
+when used alone: the reserve frame has eight projects and the 2024 window has
+seven. If the reserve frame is selected and the minimum effect of interest is
+0.60, **8 projects × 5 requirements** is the smallest tested design above 0.80
+under the stress model. The 2024 frame cannot satisfy the pre-registered
+minimum of eight projects without being expanded or combined under a
+prospectively frozen rule.
+
+Applied retrospectively as a sensitivity only, the exact project-level
+sign-flip p-value for the exploratory 46-case result is 0.00390625 (44
+evaluable requirements, nine projects). This does not make that collection
+confirmatory: selection, human-audit, provider and pre-registration gates still
+apply.
+
+## Limitations
+
+- The resampling population is the exploratory sample itself. Its project and
+  requirement heterogeneity may not represent the confirmatory frame.
+- Designs with more than nine projects repeat observed projects and therefore
+  cannot reveal additional between-project heterogeneity.
+- The symmetric pair-noise model does not represent whole requirements or
+  projects reversing direction.
+- The project-level test has coarse resolution with few projects and assumes
+  project-level sign symmetry under the null.
+- Human manipulation/oracle audits, the model/provider freeze, and the final
+  sampling-frame decision remain prerequisites for confirmatory collection.
+
+## Reference
+
+A. Colin Cameron and Douglas L. Miller. *A Practitioner's Guide to
+Cluster-Robust Inference*. Journal of Human Resources 50(2), 317–372, 2015.
+https://doi.org/10.3368/jhr.50.2.317

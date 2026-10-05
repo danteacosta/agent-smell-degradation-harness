@@ -601,3 +601,19 @@ canonical reading policy.
 4. Proposal table note: Siddeeq et al. (SEET 2026) is now listed as accepted at
    SEET 2026 (CCIS vol. 3126, Springer, per arXiv listing); the Drive proposal
    labels it "preprint". Drive text was not edited (see run summary).
+
+## 2026-10-05 — Few-cluster inference for confirmatory planning
+
+Search/read date: 2026-10-05. Read the abstract, the few-cluster methods
+section, simulation discussion, and cautions in the full author manuscript.
+Deduplicated by DOI/title; the source was not previously in this matrix.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Cameron and Miller, *A Practitioner's Guide to Cluster-Robust Inference*, Journal of Human Resources 50(2), 317–372, 2015, DOI [10.3368/jhr.50.2.317](https://doi.org/10.3368/jhr.50.2.317); peer-reviewed methodological review | How should regression inference handle observations correlated within clusters, especially with few clusters? The paper develops the cluster-robust framework, reviews finite-cluster corrections, bootstrap variants and simulations, and illustrates the methods empirically. | Ignoring within-cluster dependence can make intervals too narrow and tests over-reject. "Few" can extend well beyond 20 clusters depending on balance and leverage. In the reviewed simulations, pairs-cluster bootstrap did not eliminate over-rejection; wild-cluster and bias-corrected methods improved size but were not universally exact. The methods and simulations concern regression estimators, not this thesis's probability-of-superiority statistic. | **Thesis:** supports treating `project_id`, not repeated requirements or runs, as the independence unit. **Experiment:** the PR #169 requirement-level sign-flip cannot be a confirmatory gate merely because its interval bootstraps projects. Add an exact project-level sign-flip sensitivity, retain the requirement-level result as optimistic only, and withdraw the 9×4 recommendation until the grid is regenerated and reconciled with the 8- or 7-project candidate frames. **Product:** no direct claim. | 9/10: peer-reviewed journal review with formal derivations, simulations, implementation guidance and explicit limitations; highly credible for clustered-inference cautions, but indirect for the custom ordinal estimand and very small project count here. |
+
+**Incorporation decision.** This source changes the planning gate, not the
+observed H1a estimate. The 46-case result remains exploratory. A project-level
+exact sign flip is now the nonparametric test used in the power sensitivity;
+the existing requirement-level p-value is explicitly diagnostic until a human
+methodological decision freezes the confirmatory analysis.
