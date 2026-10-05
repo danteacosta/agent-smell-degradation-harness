@@ -1,0 +1,2241 @@
+{
+  "blinding": "panel sees project, file and changed sentences only; no pre-screen, pilot status or outcome",
+  "candidates": [
+    {
+      "added": [
+        "For related metadata such as tags, correspondents, document types, and storage paths, object visibility and document assignment are intentionally distinct.",
+        "A user may still retain or submit a known object ID when editing a document even if that related object is displayed as _Private_ or omitted from search and selection results.",
+        "This allows documents to preserve existing assignments that the current user cannot necessarily inspect in detail."
+      ],
+      "candidate_id": "rc-5454c114f054",
+      "file": "docs/usage.md",
+      "project": "paperless",
+      "removed": []
+    },
+    {
+      "added": [
+        "If the davfs2 group doesn't exist after installing the package, you may need to create it yourself and, possibly, adjust the davfs config file to use the group after you've created it."
+      ],
+      "candidate_id": "rc-37f8084102a8",
+      "file": "user_manual/files/access_webdav.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        "For large queues, Immich processes deletion in batches for stability ( 2000 assets per batch on Android, 10000 per batch on iOS)."
+      ],
+      "candidate_id": "rc-00419e6fd34b",
+      "file": "docs/docs/features/mobile-app.mdx",
+      "project": "immich",
+      "removed": []
+    },
+    {
+      "added": [
+        ":width: 25px :class: desktop-status-icon"
+      ],
+      "candidate_id": "rc-a6208e175c1e",
+      "file": "user_manual/desktop/usage.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        ":width: 50% :align: center"
+      ],
+      "candidate_id": "rc-c34ba4d4b57d",
+      "file": "user_manual/desktop/usage.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        "SELECT \"user\".\"email\", \"asset\".\"type\", COUNT(1) FROM \"asset\" JOIN \"user\" ON \"asset\".\"ownerId\" = \"user\".\"id\" GROUP BY \"asset\".\"type\", \"user\".\"email\" ORDER BY \"user\".\"email\";"
+      ],
+      "candidate_id": "rc-192d3469dde4",
+      "file": "docs/docs/guides/database-queries.md",
+      "project": "immich",
+      "removed": [
+        "SELECT \"users\".\"email\", \"assets\".\"type\", COUNT(*) FROM \"assets\" JOIN \"users\" ON \"assets\".\"ownerId\" = \"users\".\"id\" GROUP BY \"assets\".\"type\", \"users\".\"email\" ORDER BY \"users\".\"email\";"
+      ]
+    },
+    {
+      "added": [
+        "!NOTE] Attribute highlighting is an Enterprise add-on and can only be used with Enterprise cloud or Enterprise on-premises .",
+        "An upgrade from the free community edition is easy and helps support OpenProject.",
+        "To activate attribute highlighting open the work package configuration table and select the Highlighting tab."
+      ],
+      "candidate_id": "rc-a3f7ac935b04",
+      "file": "docs/user-guide/work-packages/work-package-table-configuration/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        "Example text to linkify: #F245 Auto-convert pasted URLs matching the template to: #F{id}"
+      ],
+      "candidate_id": "rc-93684eef88e5",
+      "file": "starlight_help/src/content/docs/add-a-custom-linkifier.mdx",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "Enable Google Cast Support  Google Cast support is disabled by default.",
+        "The web UI uses Google-provided scripts and must retreive them from Google servers when the page loads.",
+        "This is a privacy concern for some and is thus opt-in.",
+        "You can enable Google Cast support through Account Settings > Features > Cast > Google Cast"
+      ],
+      "candidate_id": "rc-ce5830df6d68",
+      "file": "docs/docs/features/casting.md",
+      "project": "immich",
+      "removed": []
+    },
+    {
+      "added": [
+        "Everything above is covered by unit tests and source guards, and the whole of it has since been exercised against a running WeKan, which \u00a710 asks for.",
+        "What was actually done, in a browser: a card renamed through the UI recorded one row with the right group and both values; the card, list and swimlane menus each opened the table with their own scope reaching the template ( scope: 'swimlane' , the swimlane's own id, and so on); selecting the row and pressing Restore put the title back and left exactly two rows \u2014 the edit and the restore; search narrowed the table and showed *no results* for a term nothing matched; clicking a contributor's avatar filtered to that person; and with 32 rows the footer read *1 / 2*, the second page held the remaining seven in sequence, and the *next* arrow disabled itself there."
+      ],
+      "candidate_id": "rc-2e6f64b3d439",
+      "file": "docs/Features/Reports/History/History.md",
+      "project": "wekan",
+      "removed": [
+        "Everything above is covered by unit tests and source guards.",
+        "The card scope has since been exercised against a running WeKan, which \u00a710 asks for: a card renamed through the UI recorded one row with the right group and both values, the card menu's History entry opened the table on it, and selecting the row and pressing Restore put the title back and left exactly two rows \u2014 the edit and the restore."
+      ]
+    },
+    {
+      "added": [
+        "Your organization's URL The SAML Metadata URL value mentioned above."
+      ],
+      "candidate_id": "rc-2dbd70e589f2",
+      "file": "help/saml-authentication.md",
+      "project": "zulip",
+      "removed": [
+        "Your organization's URL 1.",
+        "The SAML Metadata URL value mentioned above."
+      ]
+    },
+    {
+      "added": [
+        "Click the checkmark (<img src=\"/static/images/help/desktop-web-check-icon.svg\" alt=\"checkmark\" class=\"help-center-icon\"/>) icon to the left of a user group to leave the group, if you have permission to do so."
+      ],
+      "candidate_id": "rc-bf541bee202d",
+      "file": "help/user-groups.md",
+      "project": "zulip",
+      "removed": [
+        "Click the checkmark ( ) icon to the left of a user group to leave the group."
+      ]
+    },
+    {
+      "added": [
+        "Zulip offers a range of font size options, from 12 to 20, to make the UI feel comfortable on any screen."
+      ],
+      "candidate_id": "rc-735a1571cf1f",
+      "file": "help/font-size.md",
+      "project": "zulip",
+      "removed": [
+        "Zulip offers a choice between a font size and line spacing option that is comfortable for most users, and a compact mode for users who prefer to see more content at once."
+      ]
+    },
+    {
+      "added": [
+        "However, there is a generous free tier suitable for personal use."
+      ],
+      "candidate_id": "rc-7cf76d30aad8",
+      "file": "docs/docs/guides/remote-access.md",
+      "project": "immich",
+      "removed": [
+        "However, there is a generous free tier that permits up to 3 users and up to 100 devices."
+      ]
+    },
+    {
+      "added": [
+        "Suggestions are requested automatically when you open a document that carries an inbox tag unless \"Automatically request suggestions for inbox documents\" under Settings > Documents is disabled."
+      ],
+      "candidate_id": "rc-1d8d1160bec7",
+      "file": "docs/advanced_usage.md",
+      "project": "paperless",
+      "removed": []
+    },
+    {
+      "added": [
+        "boardViewOrder | array of strings | the Board View menu's order, first to last; missing = the default order |"
+      ],
+      "candidate_id": "rc-2b2807dc31b3",
+      "file": "docs/Features/Board/Board-View-Settings.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "SELECT \"user\".\"email\", \"asset\".\"type\", COUNT(*) FROM \"asset\""
+      ],
+      "candidate_id": "rc-24ddff17d537",
+      "file": "docs/docs/guides/database-queries.md",
+      "project": "immich",
+      "removed": [
+        "SELECT \"user\".\"email\", \"asset\".\"type\", COUNT(1) FROM \"asset\""
+      ]
+    },
+    {
+      "added": [
+        "SELECT * FROM \"asset\" WHERE (NOT EXISTS (SELECT 1 FROM \"asset_file\" WHERE \"asset\".\"id\" = \"asset_file\".\"assetId\" AND \"asset_file\".\"type\" = 'thumbnail') OR NOT EXISTS (SELECT 1 FROM \"asset_file\" WHERE \"asset\".\"id\" = \"asset_file\".\"assetId\" AND \"asset_file\".\"type\" = 'preview')) AND \"asset\".\"visibility\" = 'timeline';"
+      ],
+      "candidate_id": "rc-aa8be880cb9a",
+      "file": "docs/docs/guides/database-queries.md",
+      "project": "immich",
+      "removed": [
+        "SELECT * FROM \"asset\" WHERE \"asset\".\"previewPath\" IS NULL OR \"asset\".\"thumbnailPath\" IS NULL;"
+      ]
+    },
+    {
+      "added": [
+        "Grist documents that use external attachments won't contain any attached files when downloaded.",
+        "The attached files can be downloaded separately and restored later ."
+      ],
+      "candidate_id": "rc-83c90b334edd",
+      "file": "help/en/docs/exports.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "All linkifiers automatically turn text matching the specified pattern into links.",
+        "You can also configure pasted links matching the URL template to automatically convert to linked text."
+      ],
+      "candidate_id": "rc-9fedd0fe2923",
+      "file": "starlight_help/src/content/docs/add-a-custom-linkifier.mdx",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-cefa6ba600ba",
+      "file": "docs/user-guide/gantt-chart/README.md",
+      "project": "openproject",
+      "removed": [
+        "!NOTE] Gantt chart PDF export is an Enterprise add-on and can only be used with Enterprise cloud or Enterprise on-premises .",
+        "An upgrade from the free Community edition is easy and helps support OpenProject."
+      ]
+    },
+    {
+      "added": [
+        "From Mattermost v11.8.0, if your organization uses membership policies, Browse Channels may include a Recommended filter.",
+        "Recommended channels are public channels your attributes match.",
+        "You can still browse and join public channels according to your organization's normal channel permissions."
+      ],
+      "candidate_id": "rc-b48d17a555c7",
+      "file": "source/end-user-guide/collaborate/browse-channels.rst",
+      "project": "mattermost",
+      "removed": []
+    },
+    {
+      "added": [
+        "Notes are included in the full-text index, but they are not searched by a plain, unqualified query.",
+        "Use the advanced search syntax to search by note author or content:"
+      ],
+      "candidate_id": "rc-7f3cf3824c40",
+      "file": "docs/usage.md",
+      "project": "paperless",
+      "removed": [
+        "Notes content is included in full-text search automatically.",
+        "To search by note author or content specifically:"
+      ]
+    },
+    {
+      "added": [
+        "Location Cell: Text column containing the anchor link of the target cell (e.g., /p/8#a1.s21.r1.c7). *! location-cell *"
+      ],
+      "candidate_id": "rc-4df0a288c583",
+      "file": "help/en/docs/document-tours.md",
+      "project": "grist",
+      "removed": [
+        "Location Cell: Text column containing the anchor link of the target cell (e.g., /p/3#a1.s3.r3.c3)."
+      ]
+    },
+    {
+      "added": [
+        "Languages are marked as 100% translated only if every string in the web, desktop, and mobile apps is translated, including administrative UI and all error messages that the API can return."
+      ],
+      "candidate_id": "rc-c2152329cbce",
+      "file": "help/change-your-language.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "When deleting a backlog bucket, all contained work packages are automatically moved to the bottom of the Inbox backlog."
+      ],
+      "candidate_id": "rc-3772df54e409",
+      "file": "docs/user-guide/backlogs-scrum/README.md",
+      "project": "openproject",
+      "removed": [
+        "When there are too many items in the Backlog, a Show more items link appears in the middle.",
+        "This compacts the middle section so that you always see the top and the bottom of the backlog."
+      ]
+    },
+    {
+      "added": [
+        "Accessible reordering (without drag-and-drop) \u2014 each minicard has visually hidden, keyboard-focusable \"Move card up\" / \"Move card down\" buttons, and each list header has \"Move list left\" / \"Move list right\" buttons, so screen-reader and keyboard users can reorder cards and lists without drag-and-drop."
+      ],
+      "candidate_id": "rc-9d76a681e043",
+      "file": "docs/Features/Accessibility/Accessibility.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "Chinese (Simplified), English, French, German, Italian, Japanese, Korean, Polish, Russian, Spanish and Turkish are additionally tested on XTD-10.",
+        "Chinese (Simplified) and English are additionally tested on Flickr30k.",
+        "The recall metrics are the average across all tested datasets."
+      ],
+      "candidate_id": "rc-3266b2e8964a",
+      "file": "docs/docs/features/searching.md",
+      "project": "immich",
+      "removed": []
+    },
+    {
+      "added": [
+        "Type | Details |  AppConfig | _Change_ or higher permissions grants access to the \"Application Configuration\" area. :warning: This is a trusted, admin-level permission.",
+        "Application configuration applies instance-wide and some settings, such as OCR arguments, are passed directly to the underlying processing tools. | Correspondent | Add, edit, delete or view Correspondents. | CustomField | Add, edit, delete or view Custom Fields. | Document | Add, edit, delete or view Documents. | DocumentType | Add, edit, delete or view Document Types. | Group | Add, edit, delete or view Groups. | GlobalStatistics | View aggregate object counts and statistics."
+      ],
+      "candidate_id": "rc-95f58b402c51",
+      "file": "docs/usage.md",
+      "project": "paperless",
+      "removed": [
+        "Type | Details |  AppConfig | _Change_ or higher permissions grants access to the \"Application Configuration\" area. | Correspondent | Add, edit, delete or view Correspondents. | CustomField | Add, edit, delete or view Custom Fields. | Document | Add, edit, delete or view Documents. | DocumentType | Add, edit, delete or view Document Types. | Group | Add, edit, delete or view Groups. | GlobalStatistics | View aggregate object counts and statistics."
+      ]
+    },
+    {
+      "added": [
+        "Choose Many Cards to create three cards, or 1 Card to keep a three-line title.",
+        "The same choice applies to lists, swimlanes and boards."
+      ],
+      "candidate_id": "rc-9fb1efff4685",
+      "file": "docs/Features/Editor/Multiline.md",
+      "project": "wekan",
+      "removed": [
+        "Choose 3 Cards to create three cards, or 1 Card to keep a three-line title.",
+        "The same choice applies to lists and swimlanes."
+      ]
+    },
+    {
+      "added": [
+        "7zip ( .7z ) files are not supported for file content search and are skipped during search indexing for security reasons.",
+        "Only standard ZIP files are supported when ZIP file search is enabled."
+      ],
+      "candidate_id": "rc-1e3a3f0cfec7",
+      "file": "source/end-user-guide/collaborate/search-for-messages.rst",
+      "project": "mattermost",
+      "removed": []
+    },
+    {
+      "added": [
+        "Recovery codes if you lose your second factor"
+      ],
+      "candidate_id": "rc-9d456c362575",
+      "file": "user_manual/user_2fa.rst",
+      "project": "nextcloud",
+      "removed": [
+        "Recovery codes in case you lost your 2nd factor"
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-e96a6b01d23f",
+      "file": "docs/user-guide/work-packages/work-package-relations-hierarchies/README.md",
+      "project": "openproject",
+      "removed": [
+        "Create new child - This option lets you create a new package and automatically adds it as a child to the current (parent) work package.",
+        "Child - This option allows you to add an existing work package as a child to the current (parent) work package."
+      ]
+    },
+    {
+      "added": [
+        "Due to technical limitations in macOS which are imposed by Apple, it is not possible to have the Finder integration for classic sync folders running in parallel to an enabled virtual files integration.",
+        "This means that item decorations and context menu options will be unavailable for classic sync folders while the file provider extension is enabled."
+      ],
+      "candidate_id": "rc-5438dc59bfff",
+      "file": "user_manual/desktop/macosvfs.rst",
+      "project": "nextcloud",
+      "removed": [
+        ":alt: macOS virtual files settings"
+      ]
+    },
+    {
+      "added": [
+        "Final cleanup has its own durable cleaning state in both normal imports and offline recovery.",
+        "The board checkpoint remains until private-plan removal is acknowledged; cleanup failures propagate instead of silently leaving an orphan plan."
+      ],
+      "candidate_id": "rc-fdfb015adbbc",
+      "file": "docs/Features/ImportExport/Scrum-Import-Recovery.md",
+      "project": "wekan",
+      "removed": [
+        "Final cleanup has its own durable cleaning state."
+      ]
+    },
+    {
+      "added": [
+        "!!! note \"Why is the GristDocTutorial visible?\" The GristDocTutorial table is visible to you, the document owner, by default.",
+        "It is automatically hidden from all other users when they view the tutorial."
+      ],
+      "candidate_id": "rc-b902db88d296",
+      "file": "help/en/docs/document-tutorials.md",
+      "project": "grist",
+      "removed": [
+        "To place the document tour popup on a specific page, you can simply copy the end of the URL that contains the page number, /p/# , and paste this into the Location Cell column of your GristTutorial table."
+      ]
+    },
+    {
+      "added": [
+        "!!! warning \"Note\" This documentation refers to the legacy AI Formula Assistant, which is no longer actively supported.",
+        "You can find the documentation for the current Assistant here ."
+      ],
+      "candidate_id": "rc-576d68b0fbce",
+      "file": "help/en/docs/ai-assistant-legacy.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "Users will be subscribed to the default channels configured at the time when they accept the invitation, so there's no need to update or revoke invitations when you change the default channels."
+      ],
+      "candidate_id": "rc-8f08f580bd62",
+      "file": "help/set-default-channels-for-new-users.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "ratedHelpCenterArticle Sent by HelpCenter when user clicks thumbs-up or thumbs-down  Field | Type | Description |  url | string | The URL of the visited page. | rating | string | Feedback from user (\"thumbsUp\" or \"thumbsDown\") | userId | number | The id of the user that triggered this event. | altSessionId | string | A random, session-based identifier for the user that triggered this event. |  documentCreated Triggered when a document is created.",
+        "Field | Type | Description |  docIdDigest | string | A hash of the id of the created document. | sourceDocIdDigest | string | A hash of the id of the source document, if the document was duplicated from an existing document. | isImport | boolean | Whether the document was created by import. | isSaved | boolean | Whether the document was saved to a workspace. | fileType | string | If the document was created by import, the file extension of the file that was imported. | userId | number | The id of the user that triggered this event. | altSessionId | string | A random, session-based identifier for the user that triggered this event. |"
+      ],
+      "candidate_id": "rc-75f17cf01f49",
+      "file": "help/en/docs/telemetry-full.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "The Playbooks mobile interface is read-only from Mattermost v10.11 and mobile app v2.31.0, and actions like starting runs or updating checklists aren\u2019t available through the mobile interface.",
+        "However, if you can use playbooks slash commands in a browser or the Mattermost desktop app, you can use them in the mobile app as well.",
+        "Slash commands are processed by the server-side Playbooks plugin, not the mobile app\u2019s interface, so they work via all Mattermost clients."
+      ],
+      "candidate_id": "rc-30acb0afc75f",
+      "file": "source/end-user-guide/workflow-automation/interact-with-playbooks.rst",
+      "project": "mattermost",
+      "removed": []
+    },
+    {
+      "added": [
+        "When is enabled (the default from Mattermost v11.8), channel admins can set a Default category (optional) for the channel.",
+        "You can select an existing category, type a new category name, or clear the default category.",
+        "Members who join the channel see it under that category in their sidebar."
+      ],
+      "candidate_id": "rc-fd56044a7f7d",
+      "file": "source/end-user-guide/collaborate/rename-channels.rst",
+      "project": "mattermost",
+      "removed": [
+        "If your system admin has enabled , you can assign the renamed channel to a new or existing channel category."
+      ]
+    },
+    {
+      "added": [
+        "Type the name of a participant in the conversation you're looking for in the Filter left sidebar box at the top of the left sidebar."
+      ],
+      "candidate_id": "rc-7b8051a15fe4",
+      "file": "starlight_help/src/content/docs/include/_FindDmConversationLeftSidebar.mdx",
+      "project": "zulip",
+      "removed": [
+        "DM conversations hidden under more conversations will be included in your search."
+      ]
+    },
+    {
+      "added": [
+        "You can search the following types of content:  Type | Description |  People | Faces that are recognized in your photos/videos. | Contextual | Content of the photos and videos. | File name or extension | Full or partial file's name, or file's extension | Description | Description added to assets. | Optical Character Recognition (OCR) | Text in images | Locations | Cities, states, and countries from reverse geocoding. | Tags | Tags assigned or extracted from assets. | Camera | make, model and lens model | Time frame | Start and end date of a specific time bucket | Media type | Image or video or both | Display options | In Archive, in Favorites or Not in any album | Start rating | User-assigned start rating |"
+      ],
+      "candidate_id": "rc-a4c32ff26e9b",
+      "file": "docs/docs/features/searching.md",
+      "project": "immich",
+      "removed": [
+        "The filters smart search allows you to search by include:  People Location Country State City Camera Make Model Date range File name or extension Media type Image (including live/motion photos) Video All Condition Not in any album Archived Favorited Rating     Some search examples:"
+      ]
+    },
+    {
+      "added": [
+        "The above variables also enable the use of other models (including self-hostable ones).",
+        "See these instructions for more information."
+      ],
+      "candidate_id": "rc-279fc273be00",
+      "file": "help/en/docs/ai-assistant-legacy.md",
+      "project": "grist",
+      "removed": [
+        "The above variables also enable the use of the LLaMA family of self-hostable models via llama2-cpp-python {:target=\"\\_blank\"}."
+      ]
+    },
+    {
+      "added": [
+        "From Mattermost v10.11 and mobile app v2.31.0, mobile users can view playbook run details in read-only mode.",
+        "While viewing and monitoring capabilities are available on mobile devices, and are supported on mobile, playbook editing and management actions require the desktop or a web browser."
+      ],
+      "candidate_id": "rc-669ce7a94951",
+      "file": "source/end-user-guide/workflow-automation/work-with-runs.rst",
+      "project": "mattermost",
+      "removed": []
+    },
+    {
+      "added": [
+        "Use native title bar (Linux only): From Mattermost Desktop v6.2.0, render the desktop app with your Linux desktop environment's native title bar and window controls instead of the custom Mattermost title bar.",
+        "Restart the desktop app to apply changes to this setting."
+      ],
+      "candidate_id": "rc-b65925d94c5f",
+      "file": "source/end-user-guide/preferences/customize-desktop-app-experience.rst",
+      "project": "mattermost",
+      "removed": []
+    },
+    {
+      "added": [
+        "Sprint field in work package tables  The Sprint property can also be used in work package tables.",
+        "You can:  display the Sprint column, sort by Sprint, group work packages by Sprint.  !NOTE] Viewing Sprint information in work package tables requires the appropriate project permissions."
+      ],
+      "candidate_id": "rc-cbbf9ddbaf96",
+      "file": "docs/user-guide/backlogs-scrum/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-078039ca938d",
+      "file": "docs/user-guide/work-packages/set-change-dates/README.md",
+      "project": "openproject",
+      "removed": [
+        "Setting only duration without start or finish dates is especially useful when you have a general estimation of how long different tasks or phases of a project will take, but do not have exact dates defined quite yet."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-b5da1b704d3c",
+      "file": "docs/docs/features/mobile-app.mdx",
+      "project": "immich",
+      "removed": [
+        "If the same asset is in more than one album it will only sync to the first album it's in, after that it won't sync again even if the user clicks sync albums manually.",
+        "To overcome this limitation, the files must be removed from the ignore list by App settings -> Advanced -> Duplicate Assets -> Clear  :::info Cleaning duplicate assets from the list will cause all the previously uploaded duplicate files to be re-uploaded, the files will not actually be uploaded and will be rejected on the server side (due to duplication) but will be synchronized to the album and at the end will be added to the ignore list again at the end of the synchronization. :::"
+      ]
+    },
+    {
+      "added": [
+        "Changes to a work package's backlog bucket are recorded in the work package Activity tab.",
+        "This allows you to see when a work package was moved into, out of or between backlog buckets.  !NOTE] Backlog bucket changes are only visible in the Activity tab if you have the required permissions to view sprint and backlog information."
+      ],
+      "candidate_id": "rc-162f961dd3ea",
+      "file": "docs/user-guide/backlogs-scrum/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        "Configure who can edit topics in a channel  {start_tabs}  {tab|desktop-web}  {relative|channel|all}  1.",
+        "Select a channel.  {!select-channel-view-general.md!}  1.",
+        "Under Channel permissions , configure Who can move messages inside this channel .  {!save-changes.md!}  {end_tabs}"
+      ],
+      "candidate_id": "rc-388acf10a8b3",
+      "file": "help/restrict-moving-messages.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-a4ff082e233b",
+      "file": "help/en/docs/document-tours.md",
+      "project": "grist",
+      "removed": [
+        "!!! note \"Navigating back to the GristDocTour table\" If you click away from your table, perhaps to obtain an anchor link, it is always accessible under Raw Data ."
+      ]
+    },
+    {
+      "added": [
+        ":widths: 30 23 23 24"
+      ],
+      "candidate_id": "rc-9c2955bf06d7",
+      "file": "user_manual/desktop/usage.rst",
+      "project": "nextcloud",
+      "removed": [
+        ":widths: 30 35 35"
+      ]
+    },
+    {
+      "added": [
+        "Instance administrators can also inspect reports across boards in Problems \u2192 Recovery , with status filters, literal board/list ID search and ten-row server pagination.",
+        "That view checks administrator permission before and after reading; it includes retained diagnostics for deleted lists and offers no replay or undo action."
+      ],
+      "candidate_id": "rc-0c390a762a77",
+      "file": "docs/Features/ImportExport/Sync.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "From Mattermost v11.1, Entry, Enterprise, and Enterprise Advanced customers can enable adaptive, conditional workflows responding in real time to changing mission or operational context.",
+        "Admins can define attributes such as severity, category, or linked ticket ID, and use those attributes to hide or show tasks depending on the values of these attributes which can be seen and modified during a playbook run.",
+        "Learn more about and ."
+      ],
+      "candidate_id": "rc-24343885fa1f",
+      "file": "source/end-user-guide/workflow-automation.rst",
+      "project": "mattermost",
+      "removed": [
+        "For instance, a playbook can be configured to automatically open a dedicated channel for an incident, send template messages or task checklists to that channel, update subscribers on status changes, and so on, all through configuration."
+      ]
+    },
+    {
+      "added": [
+        "Your data is not accessed by any AI system unless the Assistant is actively used on your documents."
+      ],
+      "candidate_id": "rc-428dc0cf866c",
+      "file": "help/en/docs/data-security.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "From Mattermost v11.5, archived private channels are identified with a distinct Archive Lock icon to visually differentiate them from archived public channels."
+      ],
+      "candidate_id": "rc-884307e5339e",
+      "file": "source/end-user-guide/collaborate/channel-types.rst",
+      "project": "mattermost",
+      "removed": []
+    },
+    {
+      "added": [
+        "Up to three previews share a row, matching the three two-column preview cells in Excel, and only the filename appears below each image.",
+        "A corrupt, unavailable or unsupported image cannot make the PDF export fail."
+      ],
+      "candidate_id": "rc-d5a4c6fc8b23",
+      "file": "docs/Features/ImportExport/PDF/PDF.md",
+      "project": "wekan",
+      "removed": [
+        "Up to three previews share a row; each has its filename and human-readable size above it, without a synthetic image: label.",
+        "A corrupt, unavailable or unsupported image remains named in the attachment list and cannot make the PDF export fail."
+      ]
+    },
+    {
+      "added": [
+        "Select the most recent rate that started on or before this row's Date. current_rate = rates.find.le($Date)"
+      ],
+      "candidate_id": "rc-3854404988dc",
+      "file": "help/en/docs/examples/2020-09-payroll.md",
+      "project": "grist",
+      "removed": [
+        "Pick out only those rates whose Rate_Start is on or before this row's Date. past_rates = r for r in rates if r.Rate_Start <= $Date]  Select the latest of past_rates, i.e. maximum by Rate_Start. current_rate = max(past_rates, key=lambda r: r.Rate_Start)"
+      ]
+    },
+    {
+      "added": [
+        "Node.js 22 or above"
+      ],
+      "candidate_id": "rc-3e28bcb46a5c",
+      "file": "docs/docs/features/command-line-interface.md",
+      "project": "immich",
+      "removed": [
+        "Node.js 20 or above"
+      ]
+    },
+    {
+      "added": [
+        "From Mattermost mobile v2.38.0, you can send burn-on-read messages from the mobile app.",
+        "Tap the Burn-on-read |burn-on-read-icon| icon in the message toolbar."
+      ],
+      "candidate_id": "rc-ccddda209152",
+      "file": "source/end-user-guide/collaborate/send-messages.rst",
+      "project": "mattermost",
+      "removed": [
+        "Users can receive and interact with burn-on-read messages, but can't send them using the mobile app."
+      ]
+    },
+    {
+      "added": [
+        ":width: 25px :class: desktop-status-icon"
+      ],
+      "candidate_id": "rc-3ee9f6ccb7f6",
+      "file": "user_manual/desktop/usage.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        "Duplicating widgets  You can duplicate any widget by clicking the three-dot icon at the upper-right of the widget and selecting 'Duplicate widget' from the dropdown menu.",
+        "You will be prompted to select which page you wish to duplicate the widget to.  !"
+      ],
+      "candidate_id": "rc-7683b179fc4f",
+      "file": "help/en/docs/page-widgets.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "Converted checklist subtasks include their current readable title.",
+        "Linked references use the same source-chain resolution as other relations; private, missing or deleted targets are omitted, and references are rechecked before sending.",
+        "Stored commands retain their source chains even when Details is off."
+      ],
+      "candidate_id": "rc-2cbf5f200f66",
+      "file": "docs/Features/Automation/Rules/Rules.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "Provided the server is healthy and backed up , assets removed by Free Up Space can always be accessed in the Immich app."
+      ],
+      "candidate_id": "rc-ca1b9e87d219",
+      "file": "docs/docs/features/mobile-app.mdx",
+      "project": "immich",
+      "removed": [
+        "iCloud Photos (iOS Users)  If you use iCloud Photos alongside Immich, it is vital to understand how deletion affects your data. iCloud utilizes a two-way sync; this means deleting a photo from your iPhone to free up space will also delete it from iCloud ."
+      ]
+    },
+    {
+      "added": [
+        "Learn how to access and work with playbooks on the go _ with the Mattermost mobile app."
+      ],
+      "candidate_id": "rc-add066d72aa7",
+      "file": "source/end-user-guide/workflow-automation/interact-with-playbooks.rst",
+      "project": "mattermost",
+      "removed": [
+        "From Mattermost v11.0 and mobile app v2.23.0, mobile users can and .",
+        "Mattermost v10.11 and mobile app v2.31.0 introduced a read-only mobile interface, with actions like starting runs or updating checklists only available through slash commands.",
+        "Advanced playbook editing and management actions require the desktop or a web browser."
+      ]
+    },
+    {
+      "added": [
+        "\u2502 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 \u2502 \u2502 Export \u2502 \u2502 Import \u2502 \u2502 Notifications \u2502 \u2502 Outgoing Webhooks \u2502 \u2502 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 \u2502 \u2502 Archived items \u2502 \u2502 Move Board to Archive \u2502"
+      ],
+      "candidate_id": "rc-a0948df2c538",
+      "file": "docs/Features/Board/Board-View-Settings.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "DM conversations hidden under more conversations will be included in your search."
+      ],
+      "candidate_id": "rc-50a056cbe126",
+      "file": "starlight_help/src/content/docs/include/_SearchNoteForDmConversations.mdx",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-7910ebcaa2e4",
+      "file": "docs/user-guide/work-packages/set-change-dates/README.md",
+      "project": "openproject",
+      "removed": [
+        "This warning banner is displayed when you enable manual scheduling on work packages that have follows/precedes or parent/child relations, which are now ignored and no longer limit which dates can be selected for this work package.",
+        "This also means that changes a manually scheduled work package no longer affect others, despite those existing relations."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-dde16e977e39",
+      "file": "docs/user-guide/project-overview/README.md",
+      "project": "openproject",
+      "removed": [
+        "To add a new widget:  1.",
+        "Choose the place where to add the new widget."
+      ]
+    },
+    {
+      "added": [
+        "Version 4 additionally captures the six Scrum card-field visibility flags for each source board.",
+        "Changing any flag stops a stored dispatch, preventing a previously visible Scrum value from surviving a later visibility restriction.",
+        "Earlier binding versions remain readable for pre-Scrum-content snapshots."
+      ],
+      "candidate_id": "rc-9e212b2ea677",
+      "file": "docs/Features/ImportExport/Sync.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "If your OpenProject instance uses project-based work package identifiers, the ID column displays the project-based identifier (for example, PROJ-123 ) instead of the numerical database ID.",
+        "Sorting by ID is performed first by project identifier and then by sequence number."
+      ],
+      "candidate_id": "rc-291afea9b884",
+      "file": "docs/user-guide/work-packages/work-package-table-configuration/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        "By default, new work packages start in single-date mode, with only the Finish date field active.",
+        "This makes it easy to quickly set a deadline for a task."
+      ],
+      "candidate_id": "rc-024a5a4d873a",
+      "file": "docs/user-guide/work-packages/set-change-dates/README.md",
+      "project": "openproject",
+      "removed": [
+        "A work package cannot have only one date *and* a duration; the other date is automatically derived.",
+        "This derived date can either be the start date or the finish date."
+      ]
+    },
+    {
+      "added": [
+        "Accessing your files    :maxdepth: 1  access_webgui access_webdav desktop_mobile_sync large_file_upload"
+      ],
+      "candidate_id": "rc-870a2e562ef2",
+      "file": "user_manual/files/accessing.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        "Send email calendar updates checkbox determines whether email calendar updates are enabled for the meeting series.",
+        "If activated, all participants will receive updated calendar invites informing them of the changes to this template or to individual occurrences of the meeting series.",
+        "If deactivated, no notifications will be sent per email.  !TIP] This checkbox is enabled by default.",
+        "You can activate or deactivate it at any point in the future by editing the template for the recurring meetings series."
+      ],
+      "candidate_id": "rc-0ac7d0d5071b",
+      "file": "docs/user-guide/meetings/recurring-meetings/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        "Creating work packages as meeting outcomes requires users to have both Manage outcomes and Create work packages permissions.",
+        "Agenda outcomes in work packages  Meeting agenda outcomes are also displayed in the Meetings tab of the linked work package in a read-only format.",
+        "They are marked with an Added as outcome label so that it is clear how the work package is connected to the meeting."
+      ],
+      "candidate_id": "rc-bdf97c0171ab",
+      "file": "docs/user-guide/meetings/one-time-meetings/README.md",
+      "project": "openproject",
+      "removed": [
+        "Outcomes are also displayed in the Meetings tab of a work package in a read-only format."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-c0f9d2c2dc28",
+      "file": "docs/user-guide/projects/project-lists/README.md",
+      "project": "openproject",
+      "removed": [
+        "!NOTE] Sharing project lists with users and groups is an Enterprise add-on and will only be displayed here for Enterprise on-premises and Enterprise cloud."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-dc3a1c006b52",
+      "file": "starlight_help/src/content/docs/delete-a-message.mdx",
+      "project": "zulip",
+      "removed": [
+        "If you do not see the Delete message option, you do not have permission to delete this message completely."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-ad27b7fbaa55",
+      "file": "docs/Features/Reports/Charts/Board-Report-Charts.md",
+      "project": "wekan",
+      "removed": [
+        "\u2502 Dashboard <- these 10 \u2502"
+      ]
+    },
+    {
+      "added": [
+        "Account creation and authentication Configure default new user settings Custom profile fields"
+      ],
+      "candidate_id": "rc-da07d33d9839",
+      "file": "help/include/sidebar_index.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "Screen sharing   You can click the monitor icon on your video stream to share your screen.",
+        "Depending on your browser, you will get the option to share a monitor, an application window or a single browser tab.",
+        "If video from your camera is also available, other participants will see it in a small presenter view next to the screen share.   :width: 700px  You can zoom in and out of the shared screen with the mouse wheel, double-click, or touchpad gestures."
+      ],
+      "candidate_id": "rc-1c56b05609ca",
+      "file": "user_manual/talk/call_screenshare.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        ":width: 25px :class: desktop-status-icon"
+      ],
+      "candidate_id": "rc-c26659642dcb",
+      "file": "user_manual/desktop/usage.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        ":::info Deprecated by Microsoft Microsoft has announced the deprecation of SMTP Basic Auth.",
+        "We no longer recommend using this setup method.",
+        "Alternate methods are available but not within the scope of the Immich docs. :::"
+      ],
+      "candidate_id": "rc-2388f42b2960",
+      "file": "docs/docs/guides/smtp-microsoft365.md",
+      "project": "immich",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-59c5fca4641b",
+      "file": "docs/administration.md",
+      "project": "paperless",
+      "removed": [
+        "Note that .zip files (as can be generated from the exporter) are not supported.",
+        "You must unzip them into the target directory first."
+      ]
+    },
+    {
+      "added": [
+        "Native sprint transfer preserves the lifecycle invariants of the server methods: start and close snapshots must match their lifecycle timestamps, planned sprints cannot contain started/completed history, and cancellation cannot precede start.",
+        "Contradictory state or snapshot data is rejected before import creates a board.",
+        "Cancellation before a sprint starts remains valid without a start snapshot.",
+        "External adapters must report unavailable historical data rather than fabricating native commitment or completion snapshots."
+      ],
+      "candidate_id": "rc-1bd8e41414ce",
+      "file": "docs/Features/Right-Sidebar/Board-Settings/Board-View/Scrum-Design.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "Restrict resolving topics  {!admin-only.md!}  Zulip lets you configure who can mark topics as resolved .",
+        "This permission can be granted to any combination of roles , groups , and individual users .  {start_tabs}  {tab|desktop-web}  {settings_tab|organization-permissions}  1.",
+        "Under Moving messages , configure Who can resolve topics .  {!save-changes.md!}  {end_tabs}  Related articles  Restrict moving messages Resolve a topic Rename a topic Move content to another topic Move content to another channel"
+      ],
+      "candidate_id": "rc-728a0376ae34",
+      "file": "help/restrict-resolving-topics.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "HTTP and HTTPS CONNECT proxies also share the total deadline, including the proxy handshake.",
+        "A deployment-wide connection limit remains pending."
+      ],
+      "candidate_id": "rc-b0bd52125ac5",
+      "file": "docs/Features/Email/Troubleshooting-Mail.md",
+      "project": "wekan",
+      "removed": [
+        "The ordinary Meteor MAIL_URL path still has only the phase and idle limits above; adding a total deadline while preserving its native mail plugins remains pending.",
+        "A deployment-wide connection limit also remains pending."
+      ]
+    },
+    {
+      "added": [
+        "You can reverse the order by prefixing the column name with \"-\".",
+        "If you want to sort by multiple columns, use a tuple of columns, for example, order_by=('Product', '-Date') ."
+      ],
+      "candidate_id": "rc-63d59c827674",
+      "file": "help/en/docs/formulas.md",
+      "project": "grist",
+      "removed": [
+        "If you want to sort by multiple columns, remember that you can create a hidden formula column that combines data in any way you like, and then sort by that."
+      ]
+    },
+    {
+      "added": [
+        "After adding a section, you can specify it further by adding agenda items or work packages to it."
+      ],
+      "candidate_id": "rc-68fb1380aa93",
+      "file": "docs/user-guide/meetings/one-time-meetings/README.md",
+      "project": "openproject",
+      "removed": [
+        "Sections will show the sum of all the duration of all containing items (or at least, those that have a duration specified)."
+      ]
+    },
+    {
+      "added": [
+        "Set the hours , days , weeks or months that will be planned for a user on this budget.",
+        "The system converts the entered duration to hours based on the number of hours defined per day in the system-wide settings.",
+        "For example, if your system settings is set to eight hours per work day, entering 6d 2h results in a total of 50h."
+      ],
+      "candidate_id": "rc-c67a8ed00ec3",
+      "file": "docs/user-guide/budgets/README.md",
+      "project": "openproject",
+      "removed": [
+        "Set the hours that will be planned for a user on this budget."
+      ]
+    },
+    {
+      "added": [
+        "Since this must be used on a date or datetime object, you must access the field directly, i.e. document.created ."
+      ],
+      "candidate_id": "rc-831b78cd1682",
+      "file": "docs/advanced_usage.md",
+      "project": "paperless",
+      "removed": []
+    },
+    {
+      "added": [
+        "Export time sheets  You can export reports for time entries in PDF format in the *Time and costs* module of your project.  !TIP]  Keep in mind that this report will only include time entries, but not the cost ones.",
+        "To prepare the export, first filter and set up the report according to your preferences and click the Export PDF timesheet button.  !NOTE]  Please note that \"Group by\" settings won't be applied to the exported file.  !",
+        "Settings for timesheet PDF export in OpenProject  A PDF file will be generated, containing the time entries specified by the report.  !",
+        "Timesheet PDF export in OpenProject"
+      ],
+      "candidate_id": "rc-e000645d289d",
+      "file": "docs/user-guide/time-and-costs/reporting/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        "Old orphan plans left by earlier versions without a checkpoint are not reclaimed by this command; it cannot infer the state of their original import."
+      ],
+      "candidate_id": "rc-0a403a9cf4fb",
+      "file": "docs/Features/ImportExport/Scrum-Import-Recovery.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "Click Add in the Folder section to specify a path for scanning and enter /home/user/photos1 as the path and click Add"
+      ],
+      "candidate_id": "rc-cb974c795984",
+      "file": "docs/docs/guides/external-library.md",
+      "project": "immich",
+      "removed": [
+        "Save the new path"
+      ]
+    },
+    {
+      "added": [
+        "This copies to your clipboard a permanent link to the message, displayed in the context of its conversation.",
+        "To preserve your reading status, messages won't be automatically marked as read when you view a conversation via a message link."
+      ],
+      "candidate_id": "rc-adc08ca7e80b",
+      "file": "help/link-to-a-message-or-conversation.md",
+      "project": "zulip",
+      "removed": [
+        "These links will still work even when the message is moved to another topic or channel , or if its topic is resolved .",
+        "Zulip uses the same permanent link syntax when quoting a message ."
+      ]
+    },
+    {
+      "added": [
+        "From Mattermost v11.5, archived private channels display a distinct Archive Lock icon to differentiate them from other archived channels."
+      ],
+      "candidate_id": "rc-3f16c456a738",
+      "file": "source/end-user-guide/collaborate/archive-unarchive-channels.rst",
+      "project": "mattermost",
+      "removed": []
+    },
+    {
+      "added": [
+        "Format | Extension(s) | Supported? | Notes | :---------- | :---------------------------- | :----------------: | :-------------- | AVIF | .avif | :white_check_mark: | | BMP | .bmp | :white_check_mark: | | GIF | .gif | :white_check_mark: | | HEIC | .heic | :white_check_mark: | | HEIF | .heif | :white_check_mark: | | JPEG 2000 | .jp2 | :white_check_mark: | | JPEG | .webp .jpg .jpe .insp | :white_check_mark: | | JPEG XL | .jxl | :white_check_mark: | | PNG | .webp | :white_check_mark: | | PSD | .psd | :white_check_mark: | Adobe Photoshop | RAW | .raw | :white_check_mark: | | RW2 | .rw2 | :white_check_mark: | | SVG | .svg | :white_check_mark: | | TIFF | .tif .tiff | :white_check_mark: | | WEBP | .webp | :white_check_mark: | |"
+      ],
+      "candidate_id": "rc-fe03188e209a",
+      "file": "docs/docs/features/supported-formats.md",
+      "project": "immich",
+      "removed": [
+        "Format | Extension(s) | Supported? | Notes | :-------- | :---------------------------- | :----------------: | :-------------- | AVIF | .avif | :white_check_mark: | | BMP | .bmp | :white_check_mark: | | GIF | .gif | :white_check_mark: | | HEIC | .heic | :white_check_mark: | | HEIF | .heif | :white_check_mark: | | JPEG | .webp .jpg .jpe .insp | :white_check_mark: | | JPEG XL | .jxl | :white_check_mark: | | PNG | .webp | :white_check_mark: | | PSD | .psd | :white_check_mark: | Adobe Photoshop | RAW | .raw | :white_check_mark: | | RW2 | .rw2 | :white_check_mark: | | SVG | .svg | :white_check_mark: | | TIFF | .tif .tiff | :white_check_mark: | | WEBP | .webp | :white_check_mark: | |"
+      ]
+    },
+    {
+      "added": [
+        "If this is the first status update and the playbook has a defined default reminder timer, that timer will be pre-selected here.",
+        "If this is a subsequent status update, the last reminder timer will be pre-populated here."
+      ],
+      "candidate_id": "rc-101b4e1b323d",
+      "file": "source/end-user-guide/workflow-automation/notifications-and-updates.rst",
+      "project": "mattermost",
+      "removed": [
+        "Select Post update to post your status update."
+      ]
+    },
+    {
+      "added": [
+        ":alt: Advanced options for large folders and external storage in the setup wizard"
+      ],
+      "candidate_id": "rc-58561a698b60",
+      "file": "user_manual/desktop/usage.rst",
+      "project": "nextcloud",
+      "removed": [
+        "Open Folder Choose What to Sync (This appears only when your file tree is collapsed, and expands the file tree) Pause Sync / Resume Sync Remove folder sync connection Availability (Only available if virtual files support is enabled) Enable virtual file support/Disable virtual file support"
+      ]
+    },
+    {
+      "added": [
+        "Grist Labs has no access to your servers or your data.",
+        "For self-hosted installations, Grist Labs is not a data processor under GDPR; it provides software and support only."
+      ],
+      "candidate_id": "rc-fa836df6e379",
+      "file": "help/en/docs/data-security.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "Depending on the download state of a folder or file, the context menu will offer to always keep an item downloaded or free up local disk space by evicting the local copy while not actually deleting the item.",
+        "This way, it stays available any time for download from the server."
+      ],
+      "candidate_id": "rc-f3262c0445f9",
+      "file": "user_manual/desktop/macosvfs.rst",
+      "project": "nextcloud",
+      "removed": [
+        "File sharing (if supported by server)"
+      ]
+    },
+    {
+      "added": [
+        "Integrations    :maxdepth: 1  files_integration calendar_integration call_from_anywhere"
+      ],
+      "candidate_id": "rc-c89261e0ef00",
+      "file": "user_manual/talk/integrations_index.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        "For security reasons, webhooks can be limited to specific ports and disallowed from connecting to local URLs.",
+        "See the relevant configuration settings to change this behavior.",
+        "If you are allowing non-admins to create workflows, you may want to adjust these settings to prevent abuse."
+      ],
+      "candidate_id": "rc-be4428711f2b",
+      "file": "docs/usage.md",
+      "project": "paperless",
+      "removed": []
+    },
+    {
+      "added": [
+        "Only the hour and minute dropdowns are visible; the combined time value is hidden internally for the existing save handlers.",
+        "Typing a date, colon or"
+      ],
+      "candidate_id": "rc-e5918014dac8",
+      "file": "docs/Features/Date/Calendar-Systems.md",
+      "project": "wekan",
+      "removed": [
+        "The existing time text field also remains available, but typing a date, colon or"
+      ]
+    },
+    {
+      "added": [
+        ":width: 25px :class: desktop-status-icon"
+      ],
+      "candidate_id": "rc-f5886809178d",
+      "file": "user_manual/desktop/usage.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        "Select automatic color mode  In the dropdown menu Color mode, you can now also select the Automatic option, which will match the color mode of your operating system .  !",
+        "Automatic color mode in OpenProject account settings  If this option is selected, OpenProject will automatically match your operating system\u2019s light or dark theme.",
+        "If your operating system is set to high contrast mode, OpenProject will also automatically switch to the corresponding high contrast mode (light or dark).  !NOTE] This is a user-specific preference and only affects your own account."
+      ],
+      "candidate_id": "rc-203ed3e39c08",
+      "file": "docs/user-guide/account-settings/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        "However, other rules can be added above them to restrict access in more granular ways, using the \"+\" button circled in the above screenshot.",
+        "Default rules in this section are used as the fallback for all tables."
+      ],
+      "candidate_id": "rc-eed9ff6597bf",
+      "file": "help/en/docs/access-rules.md",
+      "project": "grist",
+      "removed": [
+        "However, other rules can be added to restrict access in more granular ways."
+      ]
+    },
+    {
+      "added": [
+        "How many days a reply address stays valid, 1 to 365; default 30. | INBOUND_EMAIL_WEBHOOK_SECRET | Optional, recommended.",
+        "A second random value that only your provider knows: add it to the webhook URL as ?secret= (or send it as the X-WeKan-Inbound-Secret header).",
+        "With it set, a POST that does not carry it is refused before any token is read. |"
+      ],
+      "candidate_id": "rc-26db47af00c5",
+      "file": "docs/Features/Email/Reply-By-Email.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "Unsaved forks are automatically deleted after 30 days if not accessed again."
+      ],
+      "candidate_id": "rc-8cd20f4e6e70",
+      "file": "help/en/docs/document-tutorials.md",
+      "project": "grist",
+      "removed": [
+        "Unsaved forks are automatically deleted after 3o days if not accessed again."
+      ]
+    },
+    {
+      "added": [
+        "Deleted Files section of the Administrator Manual _."
+      ],
+      "candidate_id": "rc-74d87563fadf",
+      "file": "user_manual/files/deleted_file_management.rst",
+      "project": "nextcloud",
+      "removed": [
+        "section in the Administrator Manual."
+      ]
+    },
+    {
+      "added": [
+        "Deleting a Library  When deleting an external library, all assets inside are immediately deleted along with the library.",
+        "Note that while a library can take a long time to fully delete in the background, it is immediately removed from the library list.",
+        "If the deletion process is interrupted (for example, due to server restart), it will be cleaned up in the next nightly cron job.",
+        "The cleanup process can also be manually initiated by clicking the \"Scan All Libraries\" button in the library list."
+      ],
+      "candidate_id": "rc-d5c0887459b7",
+      "file": "docs/docs/features/libraries.md",
+      "project": "immich",
+      "removed": []
+    },
+    {
+      "added": [
+        "Date of last update | workPackageValue:1234:updatedAt | Description | workPackageValue:1234:description | Estimated time | workPackageValue:1234:estimatedTime | Finish date | workPackageValue:1234:dueDate | Parent work package | workPackageValue:1234:parent | Priority | workPackageValue:1234:priority | Project | workPackageValue:1234:project | Project phase | workPackageValue:1234:projectPhase | Remaining hours | workPackageValue:1234:remainingTime | Remaining work | workPackageValue:8415:remainingTime | Spent time | workPackageValue:1234:spentTime | Start date | workPackageValue:1234:startDate | Status | workPackageValue:1234:status | Subject / Title | workPackageValue:1234:subject | Version | workPackageValue:1234:version | Work | workPackageValue:8415:estimatedTime | Work package type | workPackageValue:1234:type |"
+      ],
+      "candidate_id": "rc-8d25a0d68985",
+      "file": "docs/user-guide/wysiwyg/README.md",
+      "project": "openproject",
+      "removed": [
+        "Date of last update | workPackageValue:1234:updatedAt | Description | workPackageValue:1234:description | Estimated time | workPackageValue:1234:estimatedTime | Finish date | workPackageValue:1234:dueDate | Parent work package | workPackageValue:1234:parent | Priority | workPackageValue:1234:priority | Project | workPackageValue:1234:project | Remaining hours | workPackageValue:1234:remainingTime | Remaining work | workPackageValue:8415:remainingTime | Spent time | workPackageValue:1234:spentTime | Start date | workPackageValue:1234:startDate | Status | workPackageValue:1234:status | Subject / Title | workPackageValue:1234:subject | Version | workPackageValue:1234:version | Work | workPackageValue:8415:estimatedTime | Work package type | workPackageValue:1234:type |"
+      ]
+    },
+    {
+      "added": [
+        "!!! note You can have up to 10 billing managers in the version of Grist at getgrist.com ."
+      ],
+      "candidate_id": "rc-fb5d066572be",
+      "file": "help/en/docs/team-sharing.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "!!! note \"Where did my GristDocTour table go?\" The GristDocTour table is hidden by default to keep the focus on your document's actual data.",
+        "Since it only controls the display of tooltips, it\u2019s treated more like metadata.",
+        "You can always access it under Raw Data ."
+      ],
+      "candidate_id": "rc-acb87192db54",
+      "file": "help/en/docs/document-tours.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "On private teams these rules are enforced: users who don't match can't join, and members who no longer match are removed at the next sync.",
+        "On public teams the rules are advisory \u2014 qualifying users are highlighted as recommended, but anyone can still join."
+      ],
+      "candidate_id": "rc-45d9c95d76b7",
+      "file": "source/end-user-guide/collaborate/team-settings.rst",
+      "project": "mattermost",
+      "removed": [
+        "The Invite Code is used as part of the URL in team invitation links.",
+        "Select Regenerate to create a new invitation link and invalidate any previous link."
+      ]
+    },
+    {
+      "added": [
+        "DELETE /api/boards/:boardId/attachments/:attachmentId , removeBoardBackground ) or gone ( permanentlyDeleteAttachmentFromFilesReport and its Files-report button).",
+        "The REST API restores with POST /api/boards/:boardId/attachments/:attachmentId/restore and lists what is restorable with GET /api/boards/:boardId/attachments/deleted , through the same attachments.softDelete / attachments.restore methods the card and the history use."
+      ],
+      "candidate_id": "rc-063bc98f2b6f",
+      "file": "docs/Features/Reports/History/History.md",
+      "project": "wekan",
+      "removed": [
+        "removeBoardBackground ) or gone ( permanentlyDeleteAttachmentFromFilesReport and its Files-report button)."
+      ]
+    },
+    {
+      "added": [
+        "Recommendation: If keeping chat history intact is important, exclude WhatsApp with Keep albums in Free Up Space and review the deletion list carefully.",
+        "You have to enable Album Sync for WhatsApp to show up in the list.",
+        "Alternatively, don't back up WhatsApp with Immich."
+      ],
+      "candidate_id": "rc-1a767c38ecbd",
+      "file": "docs/docs/features/mobile-app.mdx",
+      "project": "immich",
+      "removed": [
+        "Recommendation: If keeping chat history intact is important, please ensure you review the deletion list carefully or consider excluding WhatsApp folders from the backup if you intend to use this feature frequently. :::  :::info reclaim storage You must empty the system/gallery trash manually to reclaim storage. :::"
+      ]
+    },
+    {
+      "added": [
+        "Scan & Review: Before any files are removed, you are presented with a review screen to verify which items will be deleted and how much storage is reclamable.",
+        "Deletion: Confirmed items are moved to your device's native Trash/Recycle Bin."
+      ],
+      "candidate_id": "rc-a4c1546a2bdc",
+      "file": "docs/docs/features/mobile-app.mdx",
+      "project": "immich",
+      "removed": [
+        ":::info Android Permissions For the smoothest experience on Android, you should grant Immich special delete privileges.",
+        "Without this, you may be prompted to confirm deletion for every single image."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-602e753dea51",
+      "file": "starlight_help/src/content/docs/delete-a-message.mdx",
+      "project": "zulip",
+      "removed": [
+        "If you do not see the pencil ( ) icon, you do not have permission to delete the content of this message."
+      ]
+    },
+    {
+      "added": [
+        "duplicates | this card duplicates the target | this \u2192 target | is-duplicated-by | the target duplicates this card | target \u2192 this |"
+      ],
+      "candidate_id": "rc-c656479e3e94",
+      "file": "docs/Features/Editor/RedStrings/RedStrings.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "Zulip uses the time zone configured on your computer or mobile device for displaying dates and times, such as when a message was sent."
+      ],
+      "candidate_id": "rc-4a6233d1cda0",
+      "file": "help/change-your-timezone.md",
+      "project": "zulip",
+      "removed": [
+        "Zulip always uses your computer's time zone for displaying dates and timestamps (note that you need to reload Zulip after changing your computer's time zone for changes to take effect)."
+      ]
+    },
+    {
+      "added": [
+        "_Your_ data is stored locally on _your_ server and is never transmitted or shared in any way, unless you explicitly choose to do so."
+      ],
+      "candidate_id": "rc-46d841c330e4",
+      "file": "docs/index.md",
+      "project": "paperless",
+      "removed": [
+        "_Your_ data is stored locally on _your_ server and is never transmitted or shared in any way."
+      ]
+    },
+    {
+      "added": [
+        "1. *(optional)* Select the text you want to quote.",
+        "Your selection can be part of a message, or can span several messages."
+      ],
+      "candidate_id": "rc-1ce13d2e10ff",
+      "file": "starlight_help/src/content/docs/quote-or-forward-a-message.mdx",
+      "project": "zulip",
+      "removed": [
+        "1. *(optional)* To quote only part of a message, select the part that you want to quote."
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-783e30dcabca",
+      "file": "help/en/docs/register-as-consultant.md",
+      "project": "grist",
+      "removed": [
+        ".creg-form { line-height: initial; } .form-group .control-label { font-weight: normal; } .creg-button { margin: 24px 0; background-color: #11b683; border: none; color: white; } .creg-button:hover { background-color: #009058; border: none; color: white; } creg-submitted, #creg-error { display: none; margin-top: 40px; }"
+      ]
+    },
+    {
+      "added": [
+        "Drag a template board to share it  From All Boards / Templates you can drag a Template Board onto an Organization, Team or Domain to share it with that group (drag-to-share).",
+        "The Organizations and Teams offered as drop targets are only those whose per-org / per-team Shared Templates flag is enabled in Admin Panel \u2192 People \u2192 Organizations / Teams (see Admin Panel ); organizations and teams without that flag are not offered as drop targets."
+      ],
+      "candidate_id": "rc-aadac806de3f",
+      "file": "docs/Features/Templates.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "The popup fits its controls without nested scroll areas.",
+        "Drag its bottom-right resize corner to change width and height, or focus that handle with Tab and use arrow keys.",
+        "The handle cannot shrink it below its initial content height.",
+        "Its size is bounded by the viewport; on an unusually short window, the outer popup provides scrolling so controls remain reachable."
+      ],
+      "candidate_id": "rc-9cc0f672d7d7",
+      "file": "docs/Features/Date/Calendar-Systems.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "Meetings and events   If calendar events have a Talk conversation set as event location, you will see an information about upcoming events inside of this conversation.",
+        "That way you can stay informed about scheduled meetings or activities directly within your chat.",
+        "If Calendar app is enabled, you can click on an event to view details.   :width: 400px"
+      ],
+      "candidate_id": "rc-e7f82c4f4712",
+      "file": "user_manual/talk/advanced_features.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        "When you have permission to manage channel members, you can also leave a channel by going to View Info > Members > Manage and selecting your own name."
+      ],
+      "candidate_id": "rc-6f26687709d1",
+      "file": "source/end-user-guide/collaborate/manage-channel-members.rst",
+      "project": "mattermost",
+      "removed": []
+    },
+    {
+      "added": [
+        ":alt: Organize conversations using threaded discussions."
+      ],
+      "candidate_id": "rc-dd55f6666478",
+      "file": "source/end-user-guide/collaborate/organize-conversations.rst",
+      "project": "mattermost",
+      "removed": [
+        "From Mattermost v7.0, threaded discussions are enabled by default for all new Mattermost deployments.",
+        "All Mattermost users can create new threads, unless the system admin has ."
+      ]
+    },
+    {
+      "added": [
+        "!TIP]  To be able to add *Agenda meeting outcomes*, Manage outcomes permission needs to be granted under Roles and permissions in system administration."
+      ],
+      "candidate_id": "rc-11a2f31ed31b",
+      "file": "docs/user-guide/meetings/one-time-meetings/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        "You can configure who can add custom emoji.",
+        "This permission can be granted to any combination of roles , groups , and individual users ."
+      ],
+      "candidate_id": "rc-0f88fdef1c2c",
+      "file": "help/custom-emoji.md",
+      "project": "zulip",
+      "removed": [
+        "By default, anyone other than guests can add custom emoji to the organization.",
+        "However, you can restrict the ability to do so to specific roles ."
+      ]
+    },
+    {
+      "added": [
+        "Remove a wiki page from the project navigation  To remove a wiki page from the project navigation, open Configure menu item and select Do not show this wiki page in project navigation .",
+        "This is the default setting.",
+        "The wiki page remains available from the Wiki module but is no longer displayed as a separate menu item in the project navigation."
+      ],
+      "candidate_id": "rc-1095e63f2469",
+      "file": "docs/user-guide/wiki/wiki-navigation/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        "From Mattermost mobile v2.34, if your device has notifications disabled, a banner displays in the Mattermost mobile Settings > Notifications screen with a quick link to help you restore device-level notifications."
+      ],
+      "candidate_id": "rc-6720e713b4a8",
+      "file": "source/end-user-guide/preferences/troubleshoot-notifications.rst",
+      "project": "mattermost",
+      "removed": []
+    },
+    {
+      "added": [
+        "When you are part of a conversation and have permission to do so, you can start a call at any time by clicking Start call in the top bar.",
+        "When a call is already in progress, join it by clicking the green Join call button in the chat area or the top bar."
+      ],
+      "candidate_id": "rc-b771598178f0",
+      "file": "user_manual/talk/call.rst",
+      "project": "nextcloud",
+      "removed": [
+        "If somebody else has started a call already, the button will change in a green Join call button."
+      ]
+    },
+    {
+      "added": [
+        "News  Budgets  !TIP] If you do not see the budget widgets, make sure you have the required permissions, that the Budgets or Time and costs module is activated for the project, and that a budget already exists."
+      ],
+      "candidate_id": "rc-401d29bbf409",
+      "file": "docs/user-guide/project-home/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        "All files The default view, showing every file and folder you have access to."
+      ],
+      "candidate_id": "rc-36de908d5dbc",
+      "file": "user_manual/files/access_webgui.rst",
+      "project": "nextcloud",
+      "removed": [
+        ":alt: Viewing file tags."
+      ]
+    },
+    {
+      "added": [
+        "!NOTE] Only activities from projects that have the Activity module enabled will be shown."
+      ],
+      "candidate_id": "rc-42880bc93718",
+      "file": "docs/getting-started/my-activity/README.md",
+      "project": "openproject",
+      "removed": [
+        "Projects will show all projects you are a member of."
+      ]
+    },
+    {
+      "added": [
+        "Restrict board members to the same Organization or Team  On multi-tenant instances you can require that a board's members share an Organization or Team.",
+        "When the global admin setting boardMembersFromSameOrgOrTeamOnly is enabled, a user can only be added to a board if they share at least one Organization or Team with the inviter or with an active board member (site admins bypass this).",
+        "See Admin Panel ."
+      ],
+      "candidate_id": "rc-46b964a14e1f",
+      "file": "docs/Features/Members/Members.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "If your system admin has enabled anonymous team and channel URLs (available in Mattermost Enterprise Advanced from v11.6.0), channel URLs are assigned automatically and do not reflect the channel name."
+      ],
+      "candidate_id": "rc-060c0291c508",
+      "file": "source/end-user-guide/collaborate/rename-channels.rst",
+      "project": "mattermost",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-cf31aac02503",
+      "file": "help/change-your-email-address.md",
+      "project": "zulip",
+      "removed": [
+        "!!! warn \"\"  Note: If you are unable to click on the button with your email address, check that your organization allows email changes.",
+        "Follow the steps at prevent users from changing their names to view your organization's settings."
+      ]
+    },
+    {
+      "added": [
+        ":width: 50% :align: center"
+      ],
+      "candidate_id": "rc-f769e62e8064",
+      "file": "user_manual/desktop/usage.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        "!NOTE]  The date is set to the present day by default, while the start time is automatically rounded up to the next half-hour.",
+        "For example, if the current time is 10:09, the start time is set to 10:30."
+      ],
+      "candidate_id": "rc-9764bf26803a",
+      "file": "docs/user-guide/meetings/recurring-meetings/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        ":widths: 46 18 18 18"
+      ],
+      "candidate_id": "rc-03ad679d7409",
+      "file": "user_manual/desktop/usage.rst",
+      "project": "nextcloud",
+      "removed": [
+        ":widths: 30 23 23 24"
+      ]
+    },
+    {
+      "added": [
+        "Audit run on 2026-09-23 against local macOS ARM64 bundles and FerretDB.",
+        "The full baseline had 405 passes and 55 failures; see the detailed run results for every failing test."
+      ],
+      "candidate_id": "rc-d193c7645c52",
+      "file": "docs/Features/Menu-Implementation-Audit.md",
+      "project": "wekan",
+      "removed": [
+        "Audit started 2026-09-23 against the local macOS ARM64 bundle and FerretDB."
+      ]
+    },
+    {
+      "added": [
+        "The combined focused run passed all 33 Node test entries, including avatar routing, HTTP authentication and safe attachment responses."
+      ],
+      "candidate_id": "rc-fb52af65a874",
+      "file": "docs/Features/BoardViews/Title-Rendering.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "GitLab ( #2698 ) now meets the same contract as GitHub: every assignee, the author, creation and close dates, time spent, labels with details, milestone, iteration, issue type and confidentiality as tags, weight, time estimate and task completion as custom fields, embedded notes as comments (system notes skipped), embedded links as dependencies, and the group/project#iid reference and web URL at the end of the description.",
+        "A confidential issue is warned about, because on the board the board's visibility decides who reads it.",
+        "Epics, which are group-level, and comments that exist upstream but were not embedded are reported in unsupported .",
+        "List Sync still writes only title, description and time fields on existing cards; the others apply when a card is created."
+      ],
+      "candidate_id": "rc-ada4f0396a36",
+      "file": "docs/Features/ImportExport/Format-Coverage.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "SELECT \"asset\".\"type\", COUNT(*) FROM \"asset\" GROUP BY \"asset\".\"type\";"
+      ],
+      "candidate_id": "rc-1956d45fda87",
+      "file": "docs/docs/guides/database-queries.md",
+      "project": "immich",
+      "removed": [
+        "SELECT \"asset\".\"type\", COUNT(1) FROM \"asset\" GROUP BY \"asset\".\"type\";"
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-b55e2923ae96",
+      "file": "starlight_help/src/content/docs/import-from-microsoft-teams.mdx",
+      "project": "zulip",
+      "removed": [
+        "Messages from deleted users are not imported."
+      ]
+    },
+    {
+      "added": [
+        "added:yesterday modified:\"previous month\" created: 2005 to 2009] added: -1 week to now]"
+      ],
+      "candidate_id": "rc-8a9efd72136b",
+      "file": "docs/usage.md",
+      "project": "paperless",
+      "removed": [
+        "added:today modified:yesterday created:\"previous week\" added:\"previous month\" modified:\"this year\""
+      ]
+    },
+    {
+      "added": [
+        "!!! tip \"\"  To find recent conversations with no unread messages, use the recent conversations view instead."
+      ],
+      "candidate_id": "rc-7f2a2efa335f",
+      "file": "help/inbox.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "Parentheses can group comparisons, including nested groups, and need no spaces between the parentheses and their contents. not (or ! ) negates the next comparison or group: not(Points = 1 or Points = 2) .",
+        "Unlike Points != 2 , not Points = 2 also includes cards without a Points field because they do not match the positive comparison. and and or retain left-to-right evaluation; use parentheses to select a different grouping.",
+        "Incomplete expressions, unclosed quotes and unmatched parentheses are rejected.",
+        "Invalid rule expressions never execute an action; the sidebar keeps its last valid filter."
+      ],
+      "candidate_id": "rc-a27879aeab62",
+      "file": "docs/Features/Filter/README.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "volumes: /path/to/my/flowerconfig.py:/usr/src/paperless/src/paperless/flowerconfig.py:ro # (1)!"
+      ],
+      "candidate_id": "rc-c3254c126b5e",
+      "file": "docs/advanced_usage.md",
+      "project": "paperless",
+      "removed": [
+        "webserver: environment: PAPERLESS_ENABLE_FLOWER ports: 5555:5555 # (2)! ... volumes: /path/to/my/flowerconfig.py:/usr/src/paperless/src/paperless/flowerconfig.py:ro # (1)!"
+      ]
+    },
+    {
+      "added": [
+        "Compared to ARM NN, RKNPU has: Wider model support (including for search, which ARM NN does not accelerate) Less heat generation Very slightly lower accuracy (RKNPU always uses FP16, while ARM NN by default uses higher precision FP32 unless MACHINE_LEARNING_ANN_FP16_TURBO is enabled) Varying speed (tested on RK3588): If MACHINE_LEARNING_RKNN_THREADS is at the default of 1, RKNPU will have substantially lower throughput for ML jobs than ARM NN in most cases, but similar latency (such as when searching) If MACHINE_LEARNING_RKNN_THREADS is set to 3, it will be somewhat faster than ARM NN at FP32, but somewhat slower than ARM NN if MACHINE_LEARNING_ANN_FP16_TURBO is enabled When other tasks also use the GPU (like transcoding), RKNPU has a significant advantage over ARM NN as it uses the otherwise idle NPU instead of competing for GPU usage Lower RAM usage if MACHINE_LEARNING_RKNN_THREADS is at the default of 1, but significantly higher if greater than 1 (which is necessary for it to fully utilize the NPU and hence be comparable in speed to ARM NN)"
+      ],
+      "candidate_id": "rc-e0bab9dc0b1d",
+      "file": "docs/docs/features/ml-hardware-acceleration.md",
+      "project": "immich",
+      "removed": []
+    },
+    {
+      "added": [
+        "But Grist is a relatively complex web application, so there are a few specific things to know in order to use it in those cases."
+      ],
+      "candidate_id": "rc-4e90a0723ef9",
+      "file": "help/en/docs/accessibility.md",
+      "project": "grist",
+      "removed": [
+        "But Grist is a relatively complex web application, and you must know of a few specific things in order to use it in those cases."
+      ]
+    },
+    {
+      "added": [
+        "Hover over your profile picture on the right, and click the icon in the top right corner."
+      ],
+      "candidate_id": "rc-cf41dfd03913",
+      "file": "starlight_help/src/content/docs/change-your-profile-picture.mdx",
+      "project": "zulip",
+      "removed": [
+        "Under Profile picture , click on the (X) icon in the top right corner of the profile picture.",
+        "This will remove your current profile picture, reverting to the Gravatar default."
+      ]
+    },
+    {
+      "added": [
+        "Column rules lack the C create and D delete permissions, which should be handled in default table rules."
+      ],
+      "candidate_id": "rc-8825471d4bff",
+      "file": "help/en/docs/access-rules.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-059b810c6488",
+      "file": "help/en/docs/creating-doc.md",
+      "project": "grist",
+      "removed": [
+        "Document settings  While a document is open, you can access the document's settings from the user menu or from the Tools menu in the left-hand navigation panel.  ! document-settings {: .screenshot4}* {: .screenshot-half }  There you can find the document's ID for API use, as well as set the default timezone, locale, and currency for the document.  *! document-settings-details * {: .screenshot-half }"
+      ]
+    },
+    {
+      "added": [
+        "is:muted : Search muted messages. -is:muted : Search only unmuted messages.",
+        "By default, both muted and unmuted messages are included in keyword search results."
+      ],
+      "candidate_id": "rc-223ad456acae",
+      "file": "help/search-for-messages.md",
+      "project": "zulip",
+      "removed": [
+        "is:muted : Search messages in muted topics or muted channels . -is:muted : Search messages outside muted topics and muted channels ."
+      ]
+    },
+    {
+      "added": [
+        "From this dialog, you can create a share link or share with another Nextcloud user."
+      ],
+      "candidate_id": "rc-b1792efcea45",
+      "file": "user_manual/desktop/usage.rst",
+      "project": "nextcloud",
+      "removed": [
+        "The Nextcloud Client always excludes files containing characters that cannot be synchronized to other file systems."
+      ]
+    },
+    {
+      "added": [
+        "After you log out and log in again, you will see a prompt to enter the TOTP code in your browser.",
+        "If you have enabled more than one second factor, you will see a selection screen where you can choose which method to use for this login."
+      ],
+      "candidate_id": "rc-3ab821ce4aee",
+      "file": "user_manual/user_2fa.rst",
+      "project": "nextcloud",
+      "removed": [
+        "After you have logged out and need to log in again, you will see a request to enter the TOTP code in your browser.",
+        "If you enable not only the TOTP factor but another one, you will see a selection screen on which you can choose two-factor method for this login."
+      ]
+    },
+    {
+      "added": [
+        "Click the preview mode ( ) icon at the bottom of the compose box.",
+        "1. *(optional)* Click the exit preview mode (<i class=\"zulip-icon zulip-icon-edit\"> ) icon to edit your message."
+      ],
+      "candidate_id": "rc-051fd061fdec",
+      "file": "help/preview-your-message-before-sending.md",
+      "project": "zulip",
+      "removed": [
+        "Click the eye ( ) icon at the bottom of the compose box."
+      ]
+    },
+    {
+      "added": [
+        "Search public channels you haven't joined    :start-after: :nosearch:  From Mattermost v11.6, when your system admin , search results can include messages from public channels you haven't joined.",
+        "Results are scoped to teams you belong to, so you'll only see messages from public channels in your teams.",
+        "This setting doesn't affect private channels \u2014 you can only search private channels you're a member of."
+      ],
+      "candidate_id": "rc-d20deaef81d9",
+      "file": "source/end-user-guide/collaborate/search-for-messages.rst",
+      "project": "mattermost",
+      "removed": []
+    },
+    {
+      "added": [
+        "earliestDocCreatedAt | date | A timestamp of the earliest non-deleted document creation time. |"
+      ],
+      "candidate_id": "rc-f7793cf4712f",
+      "file": "help/en/docs/telemetry-limited.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "If the secure connection fails, check the server address and contact your server administrator.",
+        "The wizard may offer to connect without TLS or use a client certificate.",
+        "Use Use client certificate only if your server requires one."
+      ],
+      "candidate_id": "rc-f656c0591b99",
+      "file": "user_manual/desktop/usage.rst",
+      "project": "nextcloud",
+      "removed": [
+        ":alt: Status icon, gray circle and three horizontal white dots"
+      ]
+    },
+    {
+      "added": [
+        "These permissions can be granted to any combination of roles , groups , and individual users ."
+      ],
+      "candidate_id": "rc-636a588202ec",
+      "file": "help/restrict-message-editing-and-deletion.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "Quick setup  The Quick setup page is a guided walkthrough of the most common installation settings: server URL, sandboxing, authentication, backups, and install-wide permissions.",
+        "New installations land here automatically; existing ones can return any time to step through the same choices.",
+        "Learn more about first-run setup ."
+      ],
+      "candidate_id": "rc-a316241705b5",
+      "file": "help/en/docs/admin-panel.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "!NOTE] To access the Copy action from Project settings , users must be able to open the project settings (typically through the Edit project permission).",
+        "Alternatively, users can create a new project from a project template if template creation is available to them."
+      ],
+      "candidate_id": "rc-a7710a9927b1",
+      "file": "docs/user-guide/projects/project-settings/project-information/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        "Given their potentially far-reaching capabilities, including changing the permissions of existing documents, you may want to restrict access to workflows."
+      ],
+      "candidate_id": "rc-8b28ae985d4a",
+      "file": "docs/usage.md",
+      "project": "paperless",
+      "removed": [
+        "Given their potentially far-reaching capabilities, you may want to restrict access to workflows."
+      ]
+    },
+    {
+      "added": [
+        "With the introduction of the new automatic mode in OpenProject 15.4, there are two date modes in OpenProject, single-date and range mode."
+      ],
+      "candidate_id": "rc-846dfef67a9a",
+      "file": "docs/user-guide/work-packages/set-change-dates/README.md",
+      "project": "openproject",
+      "removed": [
+        "If the Working days only switch is on *, the finish date is automatically set to Monday, 17 October, 2022 (since Saturday and Sunday are not working days) If the Working days only switch is off *, the finish date is automatically set to Saturday, 15 October, 2022 (since all calendar days are included)"
+      ]
+    },
+    {
+      "added": [
+        "Setting document type to 'Tutorial'"
+      ],
+      "candidate_id": "rc-f4f712c99d92",
+      "file": "help/en/docs/document-tutorials.md",
+      "project": "grist",
+      "removed": [
+        "!!! note \"Where did my GristTutorial table go?\" The GristTutorial table is hidden by default to keep the focus on your document's actual data.",
+        "Since it only controls the display of tooltips, it\u2019s treated more like metadata.",
+        "You can always access it under Raw Data ."
+      ]
+    },
+    {
+      "added": [
+        "Of course, you can always write your own function to get the same information.",
+        "For example, you could use the WEEKDAY function, which behaves as it does in Excel, returning 1-7 for Sunday-Saturday.  !"
+      ],
+      "candidate_id": "rc-4c6f6a8e19d3",
+      "file": "help/en/docs/dates.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "Sharing settings and permissions for transferred files and folders will also be transferred to the new owner."
+      ],
+      "candidate_id": "rc-ccf39be5f0dc",
+      "file": "user_manual/files/transfer_ownership.rst",
+      "project": "nextcloud",
+      "removed": [
+        "Sharing ownerships of those transferred files/folders will also be transferred."
+      ]
+    },
+    {
+      "added": [
+        "undo covers any recorded change rather than positions only: every field of a card, list, swimlane, checklist, checklist item and comment that History.md \u00a73 names, plus moves and the list soft delete."
+      ],
+      "candidate_id": "rc-ccd86b3b1ba0",
+      "file": "docs/Features/Login/Undo/Undo.md",
+      "project": "wekan",
+      "removed": [
+        "undo covers any recorded change rather than positions only \u2014 today that means card description edits, card moves, list moves and list soft-delete/restore."
+      ]
+    },
+    {
+      "added": [
+        "immich upload --dry-run . | tail -n +6 | jq .newFiles ]"
+      ],
+      "candidate_id": "rc-0cb590c63cf1",
+      "file": "docs/docs/features/command-line-interface.md",
+      "project": "immich",
+      "removed": [
+        "immich upload --dry-run . | tail -n +4 | jq .newFiles ]"
+      ]
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-e8e549dc1e1d",
+      "file": "starlight_help/src/content/docs/mute-a-channel.mdx",
+      "project": "zulip",
+      "removed": [
+        "Alternate method to mute or unmute a channel       1.",
+        "Under Notification settings , toggle Mute channel ."
+      ]
+    },
+    {
+      "added": [
+        "All these settings are also available as direct actions in the bottom bar.   :width: 300px"
+      ],
+      "candidate_id": "rc-58242a22cef8",
+      "file": "user_manual/talk/talk_basics.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        "Access   Access playbooks using a web browser or the desktop app by selecting the product menu located in the top-left corner of the Mattermost interface and then selecting Playbooks .",
+        "From Mattermost v10.11 and mobile app v2.31.0, you can access playbooks from the mobile app in read-only mode. are supported in the mobile app, but actions like starting runs or updating checklists aren't available through the mobile interface."
+      ],
+      "candidate_id": "rc-ba9a29e58f53",
+      "file": "source/end-user-guide/workflow-automation.rst",
+      "project": "mattermost",
+      "removed": [
+        "Access playbooks by selecting the product menu located in the top-left corner of the Mattermost interface."
+      ]
+    },
+    {
+      "added": [
+        "!NOTE]  Rich text can be embedded using Macros , such as descriptions of other work packages.",
+        "This feature is supported as long as the embedding is not within table cells, or if it only contains basic text formatting."
+      ],
+      "candidate_id": "rc-816eefb10926",
+      "file": "docs/user-guide/work-packages/exporting/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-59893539aaa5",
+      "file": "help/en/docs/dates.md",
+      "project": "grist",
+      "removed": [
+        "One option is to use the WEEKDAY function, which behaves as it does in Excel, returning 1-7 for Sunday-Saturday."
+      ]
+    },
+    {
+      "added": [
+        "delete-duplicates Delete local assets that are duplicates (already exist on server) (env: IMMICH_DELETE_DUPLICATES)"
+      ],
+      "candidate_id": "rc-2257db2f65a1",
+      "file": "docs/docs/features/command-line-interface.md",
+      "project": "immich",
+      "removed": []
+    },
+    {
+      "added": [
+        "The free Community Edition is fully functional for many use cases.",
+        "The full version of Grist adds Enterprise features for organizations that need tighter security, compliance, and operational control, including audit logging with streaming to SIEM systems , admin controls for managing users and resources, cloud storage integration (Azure, S3), email notifications , and an AI assistant configurable with your own AI provider."
+      ],
+      "candidate_id": "rc-4da5e8f4a746",
+      "file": "help/en/docs/technical-docs.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "Deleted files and the trash bin"
+      ],
+      "candidate_id": "rc-ebd8ad6c83c3",
+      "file": "user_manual/files/quota.rst",
+      "project": "nextcloud",
+      "removed": [
+        "When version control is enabled, the older file versions are not counted against quotas."
+      ]
+    },
+    {
+      "added": [
+        "Additional flow analytics  At the bottom of the menu, after Pulse, open Aging WIP , Blocker Analysis , Monte Carlo Forecasts , Process Behavior (XmR) , or Work Item Size vs.",
+        "See Flow analytics for the data sources, controls, formulas, history requirements and export behavior.",
+        "These use the current board\u2019s existing data and extend universal History only where dependency timestamps were missing."
+      ],
+      "candidate_id": "rc-bcbd9fa6335c",
+      "file": "docs/Features/Reports/Charts/Board-Report-Charts.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "Enterprise | Custom | Custom |"
+      ],
+      "candidate_id": "rc-0cbe80aa70b0",
+      "file": "help/en/docs/limits.md",
+      "project": "grist",
+      "removed": [
+        "Enterprise | 100GB | 1TB (installation limit) |"
+      ]
+    },
+    {
+      "added": [
+        "Filter for descendants of a work package  To display all subordinate work packages (children, grandchildren, etc.) of a specific work package, use the Descendants of filter.",
+        "Enter one or more parent work package IDs into the filter field and press Enter.",
+        "This will display all descendant work packages across all hierarchy levels below the selected work package(s). if the selected work packages have no descendants, no results will be shown.  !NOTE] It is not currently possible to limit the filter to a specific level of hierarchy: i.e. only show \"grandchildren\".  !",
+        "Filter to include all descendants of a work package in a work package table in OpenProject"
+      ],
+      "candidate_id": "rc-82b1deb69b68",
+      "file": "docs/user-guide/work-packages/work-package-table-configuration/README.md",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        "Zulip lets you automatically mark as read notification bot notices indicating that someone resolved or unresolved a topic, or do so just for topics you don't follow.  {start_tabs}  {tab|desktop-web}  {settings_tab|notifications}  1.",
+        "Under Topic notifications , configure Automatically mark resolved topic notices as read .  {end_tabs}"
+      ],
+      "candidate_id": "rc-aaa02a591fc8",
+      "file": "help/include/configure-resolved-notices-marked-as-read.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [],
+      "candidate_id": "rc-43895f51b097",
+      "file": "help/restrict-bot-creation.md",
+      "project": "zulip",
+      "removed": [
+        "!!! warn \"\"  These settings only affect new bots.",
+        "Existing bots will not be deactivated."
+      ]
+    },
+    {
+      "added": [
+        "{{ created }} : The full date (ISO 8601 format, e.g.",
+        "2024-03-14 ) the document was created."
+      ],
+      "candidate_id": "rc-4961c4c3cefd",
+      "file": "docs/advanced_usage.md",
+      "project": "paperless",
+      "removed": [
+        "{{ created }} : The full date (ISO format) the document was created."
+      ]
+    },
+    {
+      "added": [
+        "Delete tasks   From Mattermost mobile v2.37.0, you can delete playbook tasks on mobile devices.",
+        "Tap the task, select Delete task , and confirm.",
+        "This action cannot be undone."
+      ],
+      "candidate_id": "rc-de5b40b550af",
+      "file": "source/end-user-guide/workflow-automation/work-with-tasks.rst",
+      "project": "mattermost",
+      "removed": []
+    },
+    {
+      "added": [
+        "Navigate to the project settings , click the More (three dots) icon in the upper right corner and select Set as template from the dropdown menu.",
+        "You can later remove the project from the template list at the same location."
+      ],
+      "candidate_id": "rc-00393574f5cc",
+      "file": "docs/user-guide/projects/project-templates/README.md",
+      "project": "openproject",
+      "removed": [
+        "Setting up a default project structure in the Gantt chart.",
+        "Creating your work package templates."
+      ]
+    },
+    {
+      "added": [
+        ":width: 25px :class: desktop-status-icon"
+      ],
+      "candidate_id": "rc-6a12c153b793",
+      "file": "user_manual/desktop/usage.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        ":alt: Screenshot of client settings for the file provider extension"
+      ],
+      "candidate_id": "rc-0ee7e35e422b",
+      "file": "user_manual/desktop/macosvfs.rst",
+      "project": "nextcloud",
+      "removed": [
+        "Any existing or newly-configured accounts will have virtual files automatically enabled.",
+        "On macOS, each account\u2019s virtual files live under their own domain, separate from any pre-existing classic sync folders.",
+        "These domains can be found listed under the \u201cLocations\u201d group in the Finder sidebar."
+      ]
+    },
+    {
+      "added": [
+        "Cross-board list moves, including lists created while moving a swimlane, preserve the workflow category when creating a destination list.",
+        "A reused destination list retains its own category and revision.",
+        "Newly created lists start revision 1; existing lists are not silently reclassified by incoming cards.",
+        "Sprint/release references on moved cards and swimlanes, their lifecycle coordination and History restoration still need integration."
+      ],
+      "candidate_id": "rc-915d20fde33f",
+      "file": "docs/Features/Right-Sidebar/Board-Settings/Board-View/Scrum-Design.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "Reactivate a user group  {start_tabs}  {tab|desktop-web}  {relative|group|all}  1.",
+        "Select Deactivated groups from the dropdown next to the Filter box above the list of groups.",
+        "Select a user group.",
+        "Click the Reactivate group ( ) button in the upper right corner of the user group settings panel.  {end_tabs}"
+      ],
+      "candidate_id": "rc-c3c03d745af5",
+      "file": "help/deactivate-a-user-group.md",
+      "project": "zulip",
+      "removed": []
+    },
+    {
+      "added": [
+        "Notifications and privacy   By default, Nextcloud Talk will notify you about:  New messages in private conversations; Replies to messages you sent; Messages mentioning you or group/team you are member of; Started calls in conversations you are part of.",
+        "You can change this behavior in the conversation settings.",
+        "Additionally, you can configure:  Important conversations : you will be always notificed about new messages, even if you are in \"Do Not Disturb\" mode; Sensitive conversations : content of messages will not be shown in the conversation list and obscured from notifications.   :width: 300px  To have more control over your privacy, you can also configure the visibility of your typing and read indicators in Talk settings :   :width: 400px"
+      ],
+      "candidate_id": "rc-4e36d9697d1c",
+      "file": "user_manual/talk/advanced_features.rst",
+      "project": "nextcloud",
+      "removed": []
+    },
+    {
+      "added": [
+        "Boards are created sequentially; the last board opens after the batch completes.",
+        "Each board uses the creation settings, including a selected workspace and the existing default-template or starred-board flow."
+      ],
+      "candidate_id": "rc-588bc5cd66e7",
+      "file": "docs/Features/Editor/Multiline.md",
+      "project": "wekan",
+      "removed": []
+    },
+    {
+      "added": [
+        "earliestDocCreatedAt | date | A timestamp of the earliest non-deleted document creation time. |  tutorialOpened Triggered when a tutorial is opened.",
+        "Field | Type | Description |  tutorialForkIdDigest | string | A hash of the tutorial fork id. | tutorialTrunkIdDigest | string | A hash of the tutorial trunk id. | lastSlideIndex | number | The 0-based index of the last tutorial slide the user had open. | numSlides | number | The total number of slides in the tutorial. | percentComplete | number | Percentage of tutorial completion. | userId | number | The id of the user that triggered this event. | altSessionId | string | A random, session-based identifier for the user that triggered this event. |"
+      ],
+      "candidate_id": "rc-8ebc8934355d",
+      "file": "help/en/docs/telemetry-full.md",
+      "project": "grist",
+      "removed": []
+    },
+    {
+      "added": [
+        "An empty Home says \"Drag only one board here to open it after login\" instead of showing a blank pane, making the one-board limit explicit before a drag starts."
+      ],
+      "candidate_id": "rc-0f37532a751e",
+      "file": "docs/Features/Board/Home.md",
+      "project": "wekan",
+      "removed": [
+        "An empty Home says what to drag instead of showing a blank pane."
+      ]
+    },
+    {
+      "added": [
+        "By default, the existing versions will be sorted by the _Name_, which is indicated by an arrow next to the column header.",
+        "To change the sorting order, click the name of the column you want to sort by."
+      ],
+      "candidate_id": "rc-bd961d809b57",
+      "file": "docs/user-guide/projects/project-settings/versions/README.md",
+      "project": "openproject",
+      "removed": [
+        "Per default, the existing versions will be sorted by the _Name_, which is indicated by an arrow next to the column header.",
+        "To change the sorting order, click the name of any column you wish to use for sorting instead."
+      ]
+    },
+    {
+      "added": [
+        "Automatic update-check interval (default: 10 hours)."
+      ],
+      "candidate_id": "rc-58ff334aaa9a",
+      "file": "user_manual/desktop/advanced_configuration.rst",
+      "project": "nextcloud",
+      "removed": [
+        "Automatic update-check interval (10 hours)."
+      ]
+    },
+    {
+      "added": [
+        "Your organization's URL From the SAML Signing Certificate section:"
+      ],
+      "candidate_id": "rc-b5fab86191c6",
+      "file": "help/saml-authentication.md",
+      "project": "zulip",
+      "removed": [
+        "Your organization's URL 1.",
+        "From the SAML Signing Certificate section:"
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "added": [
+        "When you close a task, all its subtasks that are not done are automatically marked as done."
+      ],
+      "expected": "admit",
+      "file": "user/tasks.md",
+      "id": "ctl-pos-kanboard",
+      "project": "kanboard",
+      "removed": []
+    },
+    {
+      "added": [
+        "A Remaining work value greater than Work cannot be saved; the form shows an error."
+      ],
+      "expected": "admit",
+      "file": "user-guide/progress.md",
+      "id": "ctl-pos-openproject",
+      "project": "openproject",
+      "removed": []
+    },
+    {
+      "added": [
+        "Checking an item moves it to the bottom of the shopping list under Done."
+      ],
+      "expected": "admit",
+      "file": "usage/shopping-list.md",
+      "id": "ctl-pos-shopping",
+      "project": "recipes",
+      "removed": []
+    },
+    {
+      "added": [
+        "PostgreSQL 15 or newer is required."
+      ],
+      "expected": "exclude",
+      "file": "admin/requirements.md",
+      "id": "ctl-neg-install",
+      "project": "tracker",
+      "removed": [
+        "PostgreSQL 13 or newer is required."
+      ]
+    },
+    {
+      "added": [
+        "Click **Save** to keep your changes."
+      ],
+      "expected": "exclude",
+      "file": "user/editor.md",
+      "id": "ctl-neg-format",
+      "project": "wiki",
+      "removed": [
+        "Click Save to keep your changes ."
+      ]
+    },
+    {
+      "added": [
+        "The upload command accepts --album to add uploaded files to an album."
+      ],
+      "expected": "exclude",
+      "file": "features/cli.md",
+      "id": "ctl-neg-cli",
+      "project": "photos",
+      "removed": []
+    }
+  ],
+  "models": [
+    "gpt-6-astra",
+    "gpt-6-sol"
+  ],
+  "retry_policy": "no_retry_no_repair",
+  "schema_version": "llm-screening-panel/v1",
+  "screening_file": "data/requirement-sampling/screening-confirmatory-reserve-20261005.json",
+  "screening_sha256": "f141d14745a44bae3b18bb4b8924290c274192affd480a8969584c859a9f4d6b",
+  "script_sha256": "598fde0495c71b57a966b20062645e2d8fac3b145cc91c8405296a32d612ce98",
+  "seed": 2026100204,
+  "tiebreaker": "gpt-6-luna"
+}

@@ -1,5 +1,8 @@
 # Agent Smell Degradation Harness
 
+**Research snapshot, 2026-10-05:** the [confirmatory-frame screening](docs/research/2026-10-05-confirmatory-screening-results.md) is complete: 367 candidates, 162 provisionally eligible, eight projects. These are screening decisions, not new E2E observations. Frame/design approval, independent mapping audit, frozen selection and qualified browser oracles remain pending. The [46-case A/B/C result](docs/research/2026-10-04-selected46-results.md) and [17-case historical result](docs/research/2026-10-05-historical-arm-results.md) remain separate exploratory evidence.
+
+
 **Research status:** the [historical E2E closure](docs/research/2026-09-30-natural-e2e-closure.md) preserves the latest ten-requirement pilot counts and unknown outcomes. The [literature-bound smell audit](docs/research/2026-09-30-literature-validated-smell-audit.md) separates candidate smell mappings from ordinary requirement changes. The [E2E evidence matrix](docs/thesis/e2e-evidence-matrix-20260925.md) covers the controlled omission series; the [thesis status review](docs/research/masters-state-review-20260922.md) records the formal H1/H2 limits. These are distinct exploratory results, not a pooled confirmatory estimate.
 
 The [context-recoverability audit](docs/research/2026-10-01-e2e-recoverability-audit.md) maps existing interventions to outcomes and remaining contextual cues, separates passing ties from failing ties, and provides reproducible public-packet accounting.

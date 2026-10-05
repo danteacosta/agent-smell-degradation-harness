@@ -1,0 +1,59 @@
+{
+  "qualified": true,
+  "rows": [
+    {
+      "decisions": {
+        "gpt-6-astra": "admit",
+        "gpt-6-luna": "admit",
+        "gpt-6-sol": "admit"
+      },
+      "expected": "admit",
+      "id": "ctl-pos-kanboard"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "admit",
+        "gpt-6-luna": "admit",
+        "gpt-6-sol": "admit"
+      },
+      "expected": "admit",
+      "id": "ctl-pos-openproject"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "admit",
+        "gpt-6-luna": "admit",
+        "gpt-6-sol": "admit"
+      },
+      "expected": "admit",
+      "id": "ctl-pos-shopping"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "exclude",
+        "gpt-6-luna": "exclude",
+        "gpt-6-sol": "exclude"
+      },
+      "expected": "exclude",
+      "id": "ctl-neg-install"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "exclude",
+        "gpt-6-luna": "exclude",
+        "gpt-6-sol": "exclude"
+      },
+      "expected": "exclude",
+      "id": "ctl-neg-format"
+    },
+    {
+      "decisions": {
+        "gpt-6-astra": "exclude",
+        "gpt-6-luna": "exclude",
+        "gpt-6-sol": "exclude"
+      },
+      "expected": "exclude",
+      "id": "ctl-neg-cli"
+    }
+  ]
+}

@@ -1,0 +1,1119 @@
+{
+  "admitted_target_rule_text_disagreements": [
+    {
+      "candidate_id": "rc-5454c114f054",
+      "project": "paperless",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Saving a document edit must preserve an existing related metadata assignment even when that object is displayed as Private to the user.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Saving a document edit must preserve an existing related metadata assignment even when that object is displayed as Private to the user.",
+        "gpt-6-sol": "When editing a document, a user can retain an assigned metadata object by its known ID even if that object appears as Private or is absent from search results."
+      }
+    },
+    {
+      "candidate_id": "rc-a3f7ac935b04",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Attribute highlighting in the work package table must be usable only in Enterprise cloud or Enterprise on-premises editions.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Attribute highlighting in the work package table must be usable only in Enterprise cloud or Enterprise on-premises editions.",
+        "gpt-6-luna": "Users can activate attribute highlighting from the Highlighting tab in the work package configuration table."
+      }
+    },
+    {
+      "candidate_id": "rc-ce5830df6d68",
+      "project": "immich",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Google Cast support is disabled by default in Account Settings > Features > Cast > Google Cast.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Google Cast support is disabled by default in Account Settings > Features > Cast > Google Cast.",
+        "gpt-6-sol": "Google Cast is disabled by default in Account Settings > Features > Cast."
+      }
+    },
+    {
+      "candidate_id": "rc-2e6f64b3d439",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The History table\u2019s next-page arrow must be disabled when the user reaches the final page.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The History table\u2019s next-page arrow must be disabled when the user reaches the final page.",
+        "gpt-6-sol": "The History table displays at most 25 rows per page."
+      }
+    },
+    {
+      "candidate_id": "rc-bf541bee202d",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A user without permission to leave a user group cannot leave it by clicking its checkmark icon.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A user without permission to leave a user group cannot leave it by clicking its checkmark icon.",
+        "gpt-6-sol": "A user can leave a user group by clicking its checkmark only if they have permission to leave it."
+      }
+    },
+    {
+      "candidate_id": "rc-735a1571cf1f",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The web interface must offer font size options spanning 12 through 20, inclusive.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The web interface must offer font size options spanning 12 through 20, inclusive.",
+        "gpt-6-sol": "The web interface offers font size options from 12 through 20."
+      }
+    },
+    {
+      "candidate_id": "rc-1d8d1160bec7",
+      "project": "paperless",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Opening a document with an inbox tag automatically requests suggestions when the Settings > Documents option \"Automatically request suggestions for inbox documents\" is enabled.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Opening a document with an inbox tag automatically requests suggestions when the Settings > Documents option \"Automatically request suggestions for inbox documents\" is enabled.",
+        "gpt-6-sol": "Opening a document with an inbox tag automatically requests suggestions when the setting is enabled, and does not when it is disabled."
+      }
+    },
+    {
+      "candidate_id": "rc-2b2807dc31b3",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The Board View menu displays its options in the first-to-last order specified by boardViewOrder.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The Board View menu displays its options in the first-to-last order specified by boardViewOrder.",
+        "gpt-6-sol": "The Board View menu displays views in the order specified by boardViewOrder, from first to last."
+      }
+    },
+    {
+      "candidate_id": "rc-83c90b334edd",
+      "project": "grist",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Downloading a Grist document that uses external attachments must produce a document containing no attached files.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Downloading a Grist document that uses external attachments must produce a document containing no attached files.",
+        "gpt-6-sol": "Downloading a Grist document that uses external attachments produces a file without the attached files."
+      }
+    },
+    {
+      "candidate_id": "rc-9fedd0fe2923",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When pasted-link conversion is enabled for a linkifier, pasting a URL matching its URL template automatically converts it to linked text.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When pasted-link conversion is enabled for a linkifier, pasting a URL matching its URL template automatically converts it to linked text.",
+        "gpt-6-sol": "When pasted-link conversion is enabled for a linkifier, pasting a URL that matches its URL template converts it to linked text."
+      }
+    },
+    {
+      "candidate_id": "rc-b48d17a555c7",
+      "project": "mattermost",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The Recommended filter in Browse Channels shows only public channels whose membership policy criteria match the user's attributes.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The Recommended filter in Browse Channels shows only public channels whose membership policy criteria match the user's attributes.",
+        "gpt-6-sol": "When membership policies are enabled, the Recommended filter shows public channels that match the user's attributes."
+      }
+    },
+    {
+      "candidate_id": "rc-7f3cf3824c40",
+      "project": "paperless",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A plain, unqualified search query must not return a document solely because its notes contain the query text.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A plain, unqualified search query must not return a document solely because its notes contain the query text.",
+        "gpt-6-sol": "A plain, unqualified search query does not match a document solely because the query appears in its notes."
+      }
+    },
+    {
+      "candidate_id": "rc-3772df54e409",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Deleting a backlog bucket automatically moves all its contained work packages to the bottom of the Inbox backlog.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Deleting a backlog bucket automatically moves all its contained work packages to the bottom of the Inbox backlog.",
+        "gpt-6-sol": "Deleting a backlog bucket moves all its contained work packages to the bottom of the Inbox backlog."
+      }
+    },
+    {
+      "candidate_id": "rc-9d76a681e043",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A keyboard user can move a minicard up one position by activating its keyboard-focusable \u201cMove card up\u201d button without drag-and-drop.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A keyboard user can move a minicard up one position by activating its keyboard-focusable \u201cMove card up\u201d button without drag-and-drop.",
+        "gpt-6-sol": "A keyboard user can move a card up using its keyboard-focusable Move card up button."
+      }
+    },
+    {
+      "candidate_id": "rc-9fb1efff4685",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When creating boards from multiline input, choosing the multiple-item option creates one board for each input line.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When creating boards from multiline input, choosing the multiple-item option creates one board for each input line.",
+        "gpt-6-sol": "When a user enters a three-line title while creating boards and chooses Many Cards, the web interface creates three boards."
+      }
+    },
+    {
+      "candidate_id": "rc-1e3a3f0cfec7",
+      "project": "mattermost",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "File content searches must not return a 7zip (.7z) archive based on text contained inside it.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "File content searches must not return a 7zip (.7z) archive based on text contained inside it.",
+        "gpt-6-sol": "Searching file contents does not return matches found only inside 7z files."
+      }
+    },
+    {
+      "candidate_id": "rc-e96a6b01d23f",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Using \u201cCreate new child\u201d from a work package must automatically make the newly created work package a child of that work package.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Using \u201cCreate new child\u201d from a work package must automatically make the newly created work package a child of that work package.",
+        "gpt-6-luna": "Creating a new child work package from the current work package automatically makes the new package its child."
+      }
+    },
+    {
+      "candidate_id": "rc-b902db88d296",
+      "project": "grist",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The GristDocTutorial table is automatically hidden from users other than the document owner when they view the tutorial.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The GristDocTutorial table is automatically hidden from users other than the document owner when they view the tutorial.",
+        "gpt-6-sol": "The GristDocTutorial table is visible to the document owner by default and hidden from other users viewing the tutorial."
+      }
+    },
+    {
+      "candidate_id": "rc-8f08f580bd62",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When a user accepts an invitation, they are subscribed to the default channels configured at acceptance time.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When a user accepts an invitation, they are subscribed to the default channels configured at acceptance time.",
+        "gpt-6-sol": "When an invited user accepts an invitation, they are subscribed to the default channels configured at that time."
+      }
+    },
+    {
+      "candidate_id": "rc-fd56044a7f7d",
+      "project": "mattermost",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When a member joins a channel with a default category set, the channel appears under that category in the member's sidebar.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When a member joins a channel with a default category set, the channel appears under that category in the member's sidebar.",
+        "gpt-6-sol": "When a channel admin sets a channel\u2019s Default category, members who join the channel see it under that category in their sidebar."
+      }
+    },
+    {
+      "candidate_id": "rc-7b8051a15fe4",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Entering a participant's name in the Filter left sidebar box shows matching DM conversations in the left sidebar.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Entering a participant's name in the Filter left sidebar box shows matching DM conversations in the left sidebar.",
+        "gpt-6-sol": "Searching the left sidebar includes DM conversations hidden under More conversations."
+      }
+    },
+    {
+      "candidate_id": "rc-a4c32ff26e9b",
+      "project": "immich",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Searching by asset description returns assets whose descriptions match the search text.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Searching by asset description returns assets whose descriptions match the search text.",
+        "gpt-6-sol": "Searching for text found in an image returns that image in the web interface."
+      }
+    },
+    {
+      "candidate_id": "rc-cbbf9ddbaf96",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Users with appropriate project permissions can group work packages by Sprint in work package tables.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Users with appropriate project permissions can group work packages by Sprint in work package tables.",
+        "gpt-6-sol": "A user with the appropriate project permissions can display the Sprint column in a work package table."
+      }
+    },
+    {
+      "candidate_id": "rc-162f961dd3ea",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "For a user with permission to view sprint and backlog information, moving a work package into, out of, or between backlog buckets must appear in that work package's Activity tab.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "For a user with permission to view sprint and backlog information, moving a work package into, out of, or between backlog buckets must appear in that work package's Activity tab.",
+        "gpt-6-sol": "When a user with permission to view sprint and backlog information moves a work package into, out of, or between backlog buckets, the work package Activity tab records the change."
+      }
+    },
+    {
+      "candidate_id": "rc-388acf10a8b3",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A channel's Channel permissions section must let users configure who can move messages inside that channel.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A channel's Channel permissions section must let users configure who can move messages inside that channel.",
+        "gpt-6-luna": "A channel\u2019s permissions let an administrator configure who can move messages within that channel."
+      }
+    },
+    {
+      "candidate_id": "rc-0c390a762a77",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The Problems \u2192 Recovery view displays at most ten reports per page.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The Problems \u2192 Recovery view displays at most ten reports per page.",
+        "gpt-6-sol": "The Problems \u2192 Recovery view displays reports in pages of ten rows."
+      }
+    },
+    {
+      "candidate_id": "rc-24343885fa1f",
+      "project": "mattermost",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "During a playbook run, a task's visibility must follow its configured condition on the current run attribute values.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "During a playbook run, a task's visibility must follow its configured condition on the current run attribute values.",
+        "gpt-6-sol": "During a playbook run, a task's visibility changes according to the current value of an attribute configured to control that task."
+      }
+    },
+    {
+      "candidate_id": "rc-884307e5339e",
+      "project": "mattermost",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Archived private channels display a distinct Archive Lock icon that differentiates them from archived public channels.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Archived private channels display a distinct Archive Lock icon that differentiates them from archived public channels.",
+        "gpt-6-sol": "Archived private channels display an Archive Lock icon that distinguishes them from archived public channels."
+      }
+    },
+    {
+      "candidate_id": "rc-7683b179fc4f",
+      "project": "grist",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Selecting 'Duplicate widget' from a widget's upper-right three-dot menu prompts the user to choose a destination page.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Selecting 'Duplicate widget' from a widget's upper-right three-dot menu prompts the user to choose a destination page.",
+        "gpt-6-sol": "Selecting \u201cDuplicate widget\u201d from a widget\u2019s three-dot menu prompts the user to choose a destination page."
+      }
+    },
+    {
+      "candidate_id": "rc-2cbf5f200f66",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A converted checklist subtask must include its current readable title.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A converted checklist subtask must include its current readable title.",
+        "gpt-6-sol": "A checklist subtask created by a conversion shows its current readable title."
+      }
+    },
+    {
+      "candidate_id": "rc-50a056cbe126",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Searching DM conversations must include matching conversations hidden under More conversations.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Searching DM conversations must include matching conversations hidden under More conversations.",
+        "gpt-6-sol": "Searching DM conversations includes conversations hidden under More conversations."
+      }
+    },
+    {
+      "candidate_id": "rc-7910ebcaa2e4",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Enabling manual scheduling on a work package with follows/precedes or parent/child relations displays a warning banner that those relations no longer constrain its selectable dates.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Enabling manual scheduling on a work package with follows/precedes or parent/child relations displays a warning banner that those relations no longer constrain its selectable dates.",
+        "gpt-6-sol": "Changing the dates of a manually scheduled work package does not change the dates of related work packages."
+      }
+    },
+    {
+      "candidate_id": "rc-9e212b2ea677",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Changing any Scrum card-field visibility flag stops the board\u2019s stored dispatch.",
+      "target_rule_by_model": {
+        "gpt-6-luna": "Changing a Scrum card-field visibility flag stops the stored dispatch so a previously visible Scrum value does not remain visible.",
+        "gpt-6-sol": "Changing any Scrum card-field visibility flag stops the board\u2019s stored dispatch."
+      }
+    },
+    {
+      "candidate_id": "rc-291afea9b884",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When project-based work package identifiers are enabled, sorting the ID column orders work packages first by project identifier and then by sequence number.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When project-based work package identifiers are enabled, sorting the ID column orders work packages first by project identifier and then by sequence number.",
+        "gpt-6-sol": "When project-based work package identifiers are enabled, the ID column shows each work package\u2019s project-based identifier instead of its numerical database ID."
+      }
+    },
+    {
+      "candidate_id": "rc-024a5a4d873a",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "New work packages default to single-date mode with only the Finish date field active.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "New work packages default to single-date mode with only the Finish date field active.",
+        "gpt-6-sol": "When creating a new work package, the date controls default to single-date mode with only the Finish date field active."
+      }
+    },
+    {
+      "candidate_id": "rc-0ac7d0d5071b",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The Send email calendar updates checkbox is checked by default when creating a recurring meeting series.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The Send email calendar updates checkbox is checked by default when creating a recurring meeting series.",
+        "gpt-6-sol": "The Send email calendar updates checkbox is enabled by default when creating a recurring meeting series."
+      }
+    },
+    {
+      "candidate_id": "rc-bdf97c0171ab",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A meeting agenda outcome displayed in the linked work package\u2019s Meetings tab must have an \u201cAdded as outcome\u201d label.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A meeting agenda outcome displayed in the linked work package\u2019s Meetings tab must have an \u201cAdded as outcome\u201d label.",
+        "gpt-6-sol": "When a work package is added as a meeting outcome, its Meetings tab shows the linked meeting outcome with an \u201cAdded as outcome\u201d label."
+      }
+    },
+    {
+      "candidate_id": "rc-dc3a1c006b52",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A user with permission to completely delete a message must see the Delete message option for that message.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A user with permission to completely delete a message must see the Delete message option for that message.",
+        "gpt-6-luna": "Users without permission to delete a message completely do not see the Delete message option."
+      }
+    },
+    {
+      "candidate_id": "rc-1c56b05609ca",
+      "project": "nextcloud",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A user viewing a shared screen can zoom in and out using the mouse wheel.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A user viewing a shared screen can zoom in and out using the mouse wheel.",
+        "gpt-6-sol": "Using the mouse wheel over a shared screen zooms the shared-screen view in or out."
+      }
+    },
+    {
+      "candidate_id": "rc-728a0376ae34",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The web organization permissions screen must allow administrators to grant topic-resolution permission to a combination of roles, groups, and individual users.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The web organization permissions screen must allow administrators to grant topic-resolution permission to a combination of roles, groups, and individual users.",
+        "gpt-6-sol": "In the web organization permissions screen, an administrator can grant the ability to resolve topics to any combination of roles, groups, and individual users."
+      }
+    },
+    {
+      "candidate_id": "rc-63d59c827674",
+      "project": "grist",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Prefixing a column name with \"-\" in a formula's order_by setting reverses the result order for that column.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Prefixing a column name with \"-\" in a formula's order_by setting reverses the result order for that column.",
+        "gpt-6-sol": "In a formula that sorts records, prefixing a column name with '-' reverses the sort order for that column."
+      }
+    },
+    {
+      "candidate_id": "rc-68fb1380aa93",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Each meeting agenda section must display the sum of the specified durations of its contained items.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Each meeting agenda section must display the sum of the specified durations of its contained items.",
+        "gpt-6-sol": "A meeting section displays the sum of the durations specified for its agenda items."
+      }
+    },
+    {
+      "candidate_id": "rc-c67a8ed00ec3",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When a user enters a planned budget duration of 6d 2h with eight hours configured per work day, the web interface converts it to 50h.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When a user enters a planned budget duration of 6d 2h with eight hours configured per work day, the web interface converts it to 50h.",
+        "gpt-6-sol": "When a user enters a planned budget duration in days and hours, the web interface converts it to hours using the configured hours per work day."
+      }
+    },
+    {
+      "candidate_id": "rc-e000645d289d",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A PDF timesheet exported from a Time and costs report contains the report\u2019s selected time entries but no cost entries.",
+      "target_rule_by_model": {
+        "gpt-6-luna": "The PDF timesheet export contains the time entries specified by the report\u2019s filters, but not cost entries, and does not apply the report\u2019s \u201cGroup by\u201d setting.",
+        "gpt-6-sol": "A PDF timesheet exported from a Time and costs report contains the report\u2019s selected time entries but no cost entries."
+      }
+    },
+    {
+      "candidate_id": "rc-adc08ca7e80b",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Viewing a conversation via a message link must not automatically mark its unread messages as read.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Viewing a conversation via a message link must not automatically mark its unread messages as read.",
+        "gpt-6-sol": "Opening a conversation through a message link does not automatically mark its messages as read."
+      }
+    },
+    {
+      "candidate_id": "rc-3f16c456a738",
+      "project": "mattermost",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Archived private channels display a distinct Archive Lock icon that differentiates them from other archived channels.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Archived private channels display a distinct Archive Lock icon that differentiates them from other archived channels.",
+        "gpt-6-sol": "Archived private channels display a distinct Archive Lock icon."
+      }
+    },
+    {
+      "candidate_id": "rc-fe03188e209a",
+      "project": "immich",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The web upload interface must accept valid JPEG 2000 files with the .jp2 extension.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The web upload interface must accept valid JPEG 2000 files with the .jp2 extension.",
+        "gpt-6-sol": "The web interface accepts JPEG 2000 images with the .jp2 extension."
+      }
+    },
+    {
+      "candidate_id": "rc-101b4e1b323d",
+      "project": "mattermost",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When composing a subsequent status update, the reminder timer must be pre-populated with the timer used for the previous status update.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When composing a subsequent status update, the reminder timer must be pre-populated with the timer used for the previous status update.",
+        "gpt-6-sol": "When composing a subsequent status update, the reminder timer is pre-populated with the timer used for the previous update."
+      }
+    },
+    {
+      "candidate_id": "rc-e5918014dac8",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The time editor must show hour and minute dropdowns while hiding the combined time text field.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The time editor must show hour and minute dropdowns while hiding the combined time text field.",
+        "gpt-6-sol": "The time picker shows hour and minute dropdowns without a visible time text field."
+      }
+    },
+    {
+      "candidate_id": "rc-203ed3e39c08",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When Automatic color mode is selected, the web interface must match the operating system\u2019s light, dark, high-contrast light, or high-contrast dark theme.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When Automatic color mode is selected, the web interface must match the operating system\u2019s light, dark, high-contrast light, or high-contrast dark theme.",
+        "gpt-6-sol": "When Automatic color mode is selected, the web interface matches the operating system\u2019s light or dark theme, including its corresponding high contrast mode."
+      }
+    },
+    {
+      "candidate_id": "rc-eed9ff6597bf",
+      "project": "grist",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Using the section's \"+\" button adds an access rule above the default rules.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Using the section's \"+\" button adds an access rule above the default rules.",
+        "gpt-6-sol": "Default access rules apply to every table when no more specific rule applies."
+      }
+    },
+    {
+      "candidate_id": "rc-d5c0887459b7",
+      "project": "immich",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Deleting an external library immediately removes it from the library list, even while background deletion continues.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Deleting an external library immediately removes it from the library list, even while background deletion continues.",
+        "gpt-6-sol": "When a user deletes an external library, it immediately disappears from the library list."
+      }
+    },
+    {
+      "candidate_id": "rc-8d25a0d68985",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The WYSIWYG work package value macro workPackageValue:1234:projectPhase displays the project phase of work package 1234.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The WYSIWYG work package value macro workPackageValue:1234:projectPhase displays the project phase of work package 1234.",
+        "gpt-6-sol": "In the web editor, a work package value macro for projectPhase displays that work package\u2019s project phase."
+      }
+    },
+    {
+      "candidate_id": "rc-fb5d066572be",
+      "project": "grist",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A team on getgrist.com may have at most 10 billing managers.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A team on getgrist.com may have at most 10 billing managers.",
+        "gpt-6-sol": "On getgrist.com, a team can have no more than 10 billing managers."
+      }
+    },
+    {
+      "candidate_id": "rc-acb87192db54",
+      "project": "grist",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The GristDocTour table must be hidden by default from the document's normal table navigation.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The GristDocTour table must be hidden by default from the document's normal table navigation.",
+        "gpt-6-sol": "The GristDocTour table is hidden from the default table view but remains accessible under Raw Data."
+      }
+    },
+    {
+      "candidate_id": "rc-45d9c95d76b7",
+      "project": "mattermost",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A user who does not match a public team's advisory rules can still join that team.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A user who does not match a public team's advisory rules can still join that team.",
+        "gpt-6-sol": "A user who does not match a public team's rules can still join the team."
+      }
+    },
+    {
+      "candidate_id": "rc-c656479e3e94",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When a card is linked to a target card using \u201cduplicates,\u201d the target card must show the reciprocal \u201cis-duplicated-by\u201d relation to the original card.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When a card is linked to a target card using \u201cduplicates,\u201d the target card must show the reciprocal \u201cis-duplicated-by\u201d relation to the original card.",
+        "gpt-6-sol": "When a user marks a card as duplicating a target card, the target card shows the inverse \u201cis duplicated by\u201d relationship to the first card."
+      }
+    },
+    {
+      "candidate_id": "rc-1ce13d2e10ff",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Users can quote selected text that spans several messages.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Users can quote selected text that spans several messages.",
+        "gpt-6-sol": "When a user selects text spanning several messages and quotes it, the quote includes the selected text from all those messages."
+      }
+    },
+    {
+      "candidate_id": "rc-aadac806de3f",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When dragging a template board from All Boards / Templates, an organization or team is offered as a drop target if and only if its Shared Templates flag is enabled.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When dragging a template board from All Boards / Templates, an organization or team is offered as a drop target if and only if its Shared Templates flag is enabled.",
+        "gpt-6-sol": "When a user drags a template board to share it, only organizations and teams with Shared Templates enabled appear as drop targets."
+      }
+    },
+    {
+      "candidate_id": "rc-9cc0f672d7d7",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Resizing the calendar popup using its resize handle must not reduce its height below its initial content height.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Resizing the calendar popup using its resize handle must not reduce its height below its initial content height.",
+        "gpt-6-sol": "The calendar popup cannot be resized shorter than its initial content height."
+      }
+    },
+    {
+      "candidate_id": "rc-e7f82c4f4712",
+      "project": "nextcloud",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A Talk conversation displays information about upcoming calendar events that have that conversation set as their location.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A Talk conversation displays information about upcoming calendar events that have that conversation set as their location.",
+        "gpt-6-sol": "When a calendar event has a Talk conversation set as its location, that conversation shows information about the upcoming event."
+      }
+    },
+    {
+      "candidate_id": "rc-6f26687709d1",
+      "project": "mattermost",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A user with permission to manage channel members can leave a channel by selecting their own name under View Info > Members > Manage.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A user with permission to manage channel members can leave a channel by selecting their own name under View Info > Members > Manage.",
+        "gpt-6-sol": "A user with permission to manage channel members can leave a channel by selecting their own name in View Info > Members > Manage."
+      }
+    },
+    {
+      "candidate_id": "rc-0f88fdef1c2c",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The custom emoji permission setting must allow roles, groups, and individual users to be granted permission together in one configuration.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The custom emoji permission setting must allow roles, groups, and individual users to be granted permission together in one configuration.",
+        "gpt-6-sol": "The web permission editor allows roles, groups, and individual users to be selected together as people who can add custom emoji."
+      }
+    },
+    {
+      "candidate_id": "rc-1095e63f2469",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Selecting \u201cDo not show this wiki page in project navigation\u201d removes the page\u2019s separate project navigation item while keeping the page available in the Wiki module.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Selecting \u201cDo not show this wiki page in project navigation\u201d removes the page\u2019s separate project navigation item while keeping the page available in the Wiki module.",
+        "gpt-6-sol": "When a user selects \u201cDo not show this wiki page in project navigation,\u201d the page remains available in the Wiki module but disappears from the project navigation."
+      }
+    },
+    {
+      "candidate_id": "rc-b771598178f0",
+      "project": "nextcloud",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When a conversation has a call in progress, the web interface must show a green Join call button in the chat area or top bar.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When a conversation has a call in progress, the web interface must show a green Join call button in the chat area or top bar.",
+        "gpt-6-sol": "When a call is already in progress, a green Join call button appears in the chat area or the top bar."
+      }
+    },
+    {
+      "candidate_id": "rc-401d29bbf409",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Budget widgets are visible on the project home page only if the user has the required permissions, either the Budgets or Time and costs module is activated, and a budget exists.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Budget widgets are visible on the project home page only if the user has the required permissions, either the Budgets or Time and costs module is activated, and a budget exists.",
+        "gpt-6-luna": "The project home page shows budget widgets when the user has the required permissions, the Budgets or Time and costs module is active for the project, and a budget exists."
+      }
+    },
+    {
+      "candidate_id": "rc-36de908d5dbc",
+      "project": "nextcloud",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The All files view must display every file and folder the user has access to.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The All files view must display every file and folder the user has access to.",
+        "gpt-6-sol": "The All files view shows every file and folder the user can access."
+      }
+    },
+    {
+      "candidate_id": "rc-42880bc93718",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The My Activity screen must show activities only from projects with the Activity module enabled.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The My Activity screen must show activities only from projects with the Activity module enabled.",
+        "gpt-6-sol": "My Activity shows activities only from projects with the Activity module enabled."
+      }
+    },
+    {
+      "candidate_id": "rc-46b964a14e1f",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When boardMembersFromSameOrgOrTeamOnly is enabled, a non-site-admin inviter may add a user to a board only if that user shares at least one Organization or Team with the inviter or an active board member.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When boardMembersFromSameOrgOrTeamOnly is enabled, a non-site-admin inviter may add a user to a board only if that user shares at least one Organization or Team with the inviter or an active board member.",
+        "gpt-6-sol": "When the board membership restriction is enabled, a non-admin can add a user to a board only if that user shares an Organization or Team with the inviter or an active board member."
+      }
+    },
+    {
+      "candidate_id": "rc-9764bf26803a",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "The recurring meeting's default start time is rounded up from the current time to the next half-hour.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "The recurring meeting's default start time is rounded up from the current time to the next half-hour.",
+        "gpt-6-sol": "When creating a recurring meeting, the start time defaults to the next half-hour after the current time."
+      }
+    },
+    {
+      "candidate_id": "rc-ada4f0396a36",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When importing a confidential GitLab issue, the web interface must warn that access to the resulting card is determined by the board's visibility.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When importing a confidential GitLab issue, the web interface must warn that access to the resulting card is determined by the board's visibility.",
+        "gpt-6-sol": "When a user imports a confidential GitLab issue, the web interface warns that the board's visibility determines who can read it."
+      }
+    },
+    {
+      "candidate_id": "rc-a27879aeab62",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When a user submits an invalid filter expression, the sidebar retains its last valid filter.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When a user submits an invalid filter expression, the sidebar retains its last valid filter.",
+        "gpt-6-sol": "When a user enters an invalid filter expression, the sidebar keeps its last valid filter."
+      }
+    },
+    {
+      "candidate_id": "rc-cf41dfd03913",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Hovering over the profile picture reveals a clickable icon in its top right corner.",
+      "target_rule_by_model": {
+        "gpt-6-luna": "Clicking the icon in the top-right corner of your profile picture removes it and displays the Gravatar default.",
+        "gpt-6-sol": "Hovering over the profile picture reveals a clickable icon in its top right corner."
+      }
+    },
+    {
+      "candidate_id": "rc-8825471d4bff",
+      "project": "grist",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Column access rules must not offer Create or Delete permissions.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Column access rules must not offer Create or Delete permissions.",
+        "gpt-6-sol": "In the web access-rules editor, column rules do not offer create or delete permissions."
+      }
+    },
+    {
+      "candidate_id": "rc-059b810c6488",
+      "project": "grist",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "While a document is open, users can access its document settings from the Tools menu in the left-hand navigation panel.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "While a document is open, users can access its document settings from the Tools menu in the left-hand navigation panel.",
+        "gpt-6-sol": "While a document is open, its settings are accessible from the Tools menu in the left navigation panel."
+      }
+    },
+    {
+      "candidate_id": "rc-223ad456acae",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Keyword searches without a mute filter include matching messages regardless of whether they are muted.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Keyword searches without a mute filter include matching messages regardless of whether they are muted.",
+        "gpt-6-sol": "By default, keyword search results include both muted and unmuted messages."
+      }
+    },
+    {
+      "candidate_id": "rc-051fd061fdec",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Clicking the exit preview mode icon returns the message compose box to an editable state.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Clicking the exit preview mode icon returns the message compose box to an editable state.",
+        "gpt-6-sol": "Clicking the exit preview mode icon returns the compose box to message editing."
+      }
+    },
+    {
+      "candidate_id": "rc-d20deaef81d9",
+      "project": "mattermost",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Search results for public channels the user has not joined must exclude messages from teams the user does not belong to.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Search results for public channels the user has not joined must exclude messages from teams the user does not belong to.",
+        "gpt-6-sol": "Search results from public channels include only messages from teams the user belongs to."
+      }
+    },
+    {
+      "candidate_id": "rc-636a588202ec",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Message editing and deletion permissions can be granted to a combination of roles, groups, and individual users.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Message editing and deletion permissions can be granted to a combination of roles, groups, and individual users.",
+        "gpt-6-sol": "In the web interface, message editing and deletion permissions can be granted to a combination of roles, groups, and individual users."
+      }
+    },
+    {
+      "candidate_id": "rc-a7710a9927b1",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Users who cannot open a project's settings must not be able to access the Copy action through those settings.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Users who cannot open a project's settings must not be able to access the Copy action through those settings.",
+        "gpt-6-sol": "A user can access the Copy action in Project settings only if they can open that project's settings."
+      }
+    },
+    {
+      "candidate_id": "rc-4c6f6a8e19d3",
+      "project": "grist",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "A WEEKDAY formula in a Grist cell must return integers 1 through 7 for dates falling on Sunday through Saturday, respectively.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "A WEEKDAY formula in a Grist cell must return integers 1 through 7 for dates falling on Sunday through Saturday, respectively.",
+        "gpt-6-sol": "In a web spreadsheet, WEEKDAY returns 1 for Sunday through 7 for Saturday."
+      }
+    },
+    {
+      "candidate_id": "rc-ccf39be5f0dc",
+      "project": "nextcloud",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Transferring a file or folder to a new owner must preserve its sharing settings and permissions.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Transferring a file or folder to a new owner must preserve its sharing settings and permissions.",
+        "gpt-6-sol": "When file or folder ownership is transferred, its sharing settings and permissions transfer to the new owner."
+      }
+    },
+    {
+      "candidate_id": "rc-ccd86b3b1ba0",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Undoing a recorded field edit on a card restores that field\u2019s previous value.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Undoing a recorded field edit on a card restores that field\u2019s previous value.",
+        "gpt-6-luna": "Undo restores every field of cards, lists, swimlanes, checklists, checklist items, and comments named in History.md \u00a73, as well as moves and list soft deletion."
+      }
+    },
+    {
+      "candidate_id": "rc-816eefb10926",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Work package exports must support macro-embedded rich text when it is outside table cells or contains only basic text formatting.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Work package exports must support macro-embedded rich text when it is outside table cells or contains only basic text formatting.",
+        "gpt-6-sol": "An exported work package displays rich text embedded through a macro when the embedding is outside a table cell or contains only basic text formatting."
+      }
+    },
+    {
+      "candidate_id": "rc-82b1deb69b68",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "After the user enters one or more parent work package IDs in the Descendants of filter and presses Enter, the table shows exactly their descendants across all hierarchy levels, with no results if none exist.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "After the user enters one or more parent work package IDs in the Descendants of filter and presses Enter, the table shows exactly their descendants across all hierarchy levels, with no results if none exist.",
+        "gpt-6-sol": "When a user enters a parent work package ID in the Descendants of filter, the table shows its descendants at every hierarchy level."
+      }
+    },
+    {
+      "candidate_id": "rc-aaa02a591fc8",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When Automatically mark resolved topic notices as read is enabled for all topics, notification bot notices that a topic was resolved or unresolved are automatically marked as read.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When Automatically mark resolved topic notices as read is enabled for all topics, notification bot notices that a topic was resolved or unresolved are automatically marked as read.",
+        "gpt-6-sol": "When automatic marking is enabled, notification bot notices about resolved or unresolved topics appear as read."
+      }
+    },
+    {
+      "candidate_id": "rc-43895f51b097",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Changing bot-creation restrictions must not deactivate existing bots.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Changing bot-creation restrictions must not deactivate existing bots.",
+        "gpt-6-sol": "Restricting bot creation does not deactivate existing bots."
+      }
+    },
+    {
+      "candidate_id": "rc-00393574f5cc",
+      "project": "openproject",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Selecting 'Set as template' from the More menu in project settings adds that project to the template list.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Selecting 'Set as template' from the More menu in project settings adds that project to the template list.",
+        "gpt-6-sol": "In project settings, a user can remove a project from the template list through the More menu at the location used to set it as a template."
+      }
+    },
+    {
+      "candidate_id": "rc-915d20fde33f",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When a cross-board list move creates a destination list, the destination list must preserve the source list's workflow category.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When a cross-board list move creates a destination list, the destination list must preserve the source list's workflow category.",
+        "gpt-6-sol": "When a user moves a list to another board and a destination list is created, the new list keeps the source list\u2019s workflow category."
+      }
+    },
+    {
+      "candidate_id": "rc-c3c03d745af5",
+      "project": "zulip",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "Clicking Reactivate group in a deactivated user group's settings panel restores that group to active status.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "Clicking Reactivate group in a deactivated user group's settings panel restores that group to active status.",
+        "gpt-6-sol": "The user group settings panel for a deactivated group offers a Reactivate group button."
+      }
+    },
+    {
+      "candidate_id": "rc-4e36d9697d1c",
+      "project": "nextcloud",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "When a conversation is marked sensitive, its message content must not appear in the conversation list.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "When a conversation is marked sensitive, its message content must not appear in the conversation list.",
+        "gpt-6-sol": "When a conversation is marked Important, a new message in it produces a notification even while Do Not Disturb is enabled."
+      }
+    },
+    {
+      "candidate_id": "rc-588bc5cd66e7",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "After a batch of boards is created, the web interface opens the last board in the batch.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "After a batch of boards is created, the web interface opens the last board in the batch.",
+        "gpt-6-sol": "After a batch of boards is created, the last board opens."
+      }
+    },
+    {
+      "candidate_id": "rc-0f37532a751e",
+      "project": "wekan",
+      "resolution": "pending_semantic_review_no_automatic_resolution",
+      "stored_target_rule": "An empty Home must display \"Drag only one board here to open it after login\" before a drag starts.",
+      "target_rule_by_model": {
+        "gpt-6-astra": "An empty Home must display \"Drag only one board here to open it after login\" before a drag starts.",
+        "gpt-6-sol": "When Home is empty, it displays a prompt telling users to drag only one board there to open it after login."
+      }
+    }
+  ],
+  "by_project": {
+    "grist": {
+      "candidates": 28,
+      "consensus": {
+        "admit": 10,
+        "exclude": 18
+      },
+      "primary_kappa": 0.851063829787234,
+      "primary_pairs_with_two_valid_votes": 28,
+      "routes": {
+        "agreement": 26,
+        "tiebreaker": 2
+      }
+    },
+    "immich": {
+      "candidates": 21,
+      "consensus": {
+        "admit": 4,
+        "exclude": 17
+      },
+      "primary_kappa": 0.8590604026845636,
+      "primary_pairs_with_two_valid_votes": 21,
+      "routes": {
+        "agreement": 20,
+        "tiebreaker": 1
+      }
+    },
+    "mattermost": {
+      "candidates": 20,
+      "consensus": {
+        "admit": 11,
+        "exclude": 9
+      },
+      "primary_kappa": 0.8979591836734693,
+      "primary_pairs_with_two_valid_votes": 20,
+      "routes": {
+        "agreement": 19,
+        "tiebreaker": 1
+      }
+    },
+    "nextcloud": {
+      "candidates": 30,
+      "consensus": {
+        "admit": 6,
+        "exclude": 24
+      },
+      "primary_kappa": 1.0,
+      "primary_pairs_with_two_valid_votes": 29,
+      "routes": {
+        "agreement": 29,
+        "tiebreaker": 1
+      }
+    },
+    "openproject": {
+      "candidates": 30,
+      "consensus": {
+        "admit": 23,
+        "exclude": 7
+      },
+      "primary_kappa": 0.6842105263157896,
+      "primary_pairs_with_two_valid_votes": 30,
+      "routes": {
+        "agreement": 26,
+        "tiebreaker": 4
+      }
+    },
+    "paperless": {
+      "candidates": 12,
+      "consensus": {
+        "admit": 3,
+        "exclude": 9
+      },
+      "primary_kappa": 1.0,
+      "primary_pairs_with_two_valid_votes": 12,
+      "routes": {
+        "agreement": 12
+      }
+    },
+    "wekan": {
+      "candidates": 30,
+      "consensus": {
+        "admit": 19,
+        "exclude": 11
+      },
+      "primary_kappa": 0.7841191066997518,
+      "primary_pairs_with_two_valid_votes": 29,
+      "routes": {
+        "agreement": 26,
+        "tiebreaker": 4
+      }
+    },
+    "zulip": {
+      "candidates": 30,
+      "consensus": {
+        "admit": 19,
+        "exclude": 10,
+        "unresolved": 1
+      },
+      "primary_kappa": 0.39999999999999986,
+      "primary_pairs_with_two_valid_votes": 30,
+      "routes": {
+        "agreement": 22,
+        "tiebreaker": 8
+      }
+    }
+  },
+  "confirmatory_eligible": true,
+  "controls_qualified": true,
+  "cross_cohort_duplicates": {
+    "admitted_exact_changed_text_duplicates": [],
+    "admitted_normalized_changed_text_duplicates": [],
+    "candidate_id_duplicates": [],
+    "exact_changed_text_duplicates": [],
+    "normalized_changed_text_duplicates": [],
+    "source_commit_file_duplicates": []
+  },
+  "frozen_receipt_verified": true,
+  "integrity_violations": [],
+  "mechanical_pilot_exclusions": [],
+  "missing_or_invalid_votes": [
+    {
+      "candidate_id": "rc-c2152329cbce",
+      "error": "decision or reason outside the allowed values",
+      "error_type": null,
+      "model": "gpt-6-luna",
+      "status": "invalid"
+    },
+    {
+      "candidate_id": "rc-c89261e0ef00",
+      "error": null,
+      "error_type": "RuntimeError",
+      "model": "gpt-6-sol",
+      "status": "call_failed"
+    },
+    {
+      "candidate_id": "rc-d5a4c6fc8b23",
+      "error": null,
+      "error_type": "RuntimeError",
+      "model": "gpt-6-sol",
+      "status": "call_failed"
+    }
+  ],
+  "notes": [
+    "Invalid and call_failed results are preserved; no retries or response repairs.",
+    "Target-rule text disagreements are pending semantic review, not confirmed semantic conflicts.",
+    "The stored admitted mapping follows the first admitting model in primary/tiebreaker order as specified by the frozen script."
+  ],
+  "original_receipt_verified": true,
+  "primary_models": [
+    "gpt-6-astra",
+    "gpt-6-sol"
+  ],
+  "public_sampling_source_sha256_matches_frozen": true,
+  "qualification_calls": 18,
+  "row_mismatches": [],
+  "sampling_rule": "Frozen preregistered confirmatory candidate cohort; eligibility screening only. No framework selection or probes before advisor authorization.",
+  "schema_version": "llm-screening-readonly-audit/20261005-v1",
+  "source_manifest_sha256": "2b68306ad9d71f8936c4c716f688a286d99c0126ab24e6a08d0ec30dc5d95e93",
+  "source_results_sha256": "271f2ad18dbd420181a2487b39dacd9b22e8ffb4992bee44825475dd4c45648f",
+  "summary_mismatches": [],
+  "summary_recomputed": {
+    "admitted_by_project": {
+      "grist": 10,
+      "immich": 4,
+      "mattermost": 11,
+      "nextcloud": 6,
+      "openproject": 23,
+      "paperless": 3,
+      "wekan": 19,
+      "zulip": 19
+    },
+    "candidates": 201,
+    "consensus": {
+      "admit": 95,
+      "exclude": 105,
+      "unresolved": 1
+    },
+    "primary_kappa": 0.8087989886219975,
+    "primary_pairs_with_two_valid_votes": 199,
+    "routes": {
+      "agreement": 180,
+      "tiebreaker": 21
+    }
+  },
+  "tiebreaker": "gpt-6-luna"
+}

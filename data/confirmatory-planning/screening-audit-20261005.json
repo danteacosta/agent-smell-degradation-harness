@@ -1,0 +1,326 @@
+{
+  "cohorts": {
+    "reserve": {
+      "by_project": {
+        "grist": {
+          "candidates": 28,
+          "consensus": {
+            "admit": 10,
+            "exclude": 18
+          },
+          "primary_kappa": 0.851063829787234,
+          "primary_pairs_with_two_valid_votes": 28,
+          "routes": {
+            "agreement": 26,
+            "tiebreaker": 2
+          }
+        },
+        "immich": {
+          "candidates": 21,
+          "consensus": {
+            "admit": 4,
+            "exclude": 17
+          },
+          "primary_kappa": 0.8590604026845636,
+          "primary_pairs_with_two_valid_votes": 21,
+          "routes": {
+            "agreement": 20,
+            "tiebreaker": 1
+          }
+        },
+        "mattermost": {
+          "candidates": 20,
+          "consensus": {
+            "admit": 11,
+            "exclude": 9
+          },
+          "primary_kappa": 0.8979591836734693,
+          "primary_pairs_with_two_valid_votes": 20,
+          "routes": {
+            "agreement": 19,
+            "tiebreaker": 1
+          }
+        },
+        "nextcloud": {
+          "candidates": 30,
+          "consensus": {
+            "admit": 6,
+            "exclude": 24
+          },
+          "primary_kappa": 1.0,
+          "primary_pairs_with_two_valid_votes": 29,
+          "routes": {
+            "agreement": 29,
+            "tiebreaker": 1
+          }
+        },
+        "openproject": {
+          "candidates": 30,
+          "consensus": {
+            "admit": 23,
+            "exclude": 7
+          },
+          "primary_kappa": 0.6842105263157896,
+          "primary_pairs_with_two_valid_votes": 30,
+          "routes": {
+            "agreement": 26,
+            "tiebreaker": 4
+          }
+        },
+        "paperless": {
+          "candidates": 12,
+          "consensus": {
+            "admit": 3,
+            "exclude": 9
+          },
+          "primary_kappa": 1.0,
+          "primary_pairs_with_two_valid_votes": 12,
+          "routes": {
+            "agreement": 12
+          }
+        },
+        "wekan": {
+          "candidates": 30,
+          "consensus": {
+            "admit": 19,
+            "exclude": 11
+          },
+          "primary_kappa": 0.7841191066997518,
+          "primary_pairs_with_two_valid_votes": 29,
+          "routes": {
+            "agreement": 26,
+            "tiebreaker": 4
+          }
+        },
+        "zulip": {
+          "candidates": 30,
+          "consensus": {
+            "admit": 19,
+            "exclude": 10,
+            "unresolved": 1
+          },
+          "primary_kappa": 0.39999999999999986,
+          "primary_pairs_with_two_valid_votes": 30,
+          "routes": {
+            "agreement": 22,
+            "tiebreaker": 8
+          }
+        }
+      },
+      "call_count": 441,
+      "call_statuses": {
+        "call_failed": 2,
+        "invalid": 1,
+        "ok": 438
+      },
+      "controls_qualified": true,
+      "frozen_receipt_valid": true,
+      "non_ok_calls_preserved": [
+        {
+          "candidate_id": "rc-c2152329cbce",
+          "error": "decision or reason outside the allowed values",
+          "error_type": null,
+          "model": "gpt-6-luna",
+          "status": "invalid"
+        },
+        {
+          "candidate_id": "rc-c89261e0ef00",
+          "error": null,
+          "error_type": "RuntimeError",
+          "model": "gpt-6-sol",
+          "status": "call_failed"
+        },
+        {
+          "candidate_id": "rc-d5a4c6fc8b23",
+          "error": null,
+          "error_type": "RuntimeError",
+          "model": "gpt-6-sol",
+          "status": "call_failed"
+        }
+      ],
+      "response_parse_checks": 438,
+      "run_receipt_valid": true,
+      "screening_source_hash_valid": true,
+      "summary": {
+        "admitted_by_project": {
+          "grist": 10,
+          "immich": 4,
+          "mattermost": 11,
+          "nextcloud": 6,
+          "openproject": 23,
+          "paperless": 3,
+          "wekan": 19,
+          "zulip": 19
+        },
+        "candidates": 201,
+        "consensus": {
+          "admit": 95,
+          "exclude": 105,
+          "unresolved": 1
+        },
+        "primary_kappa": 0.8087989886219975,
+        "primary_pairs_with_two_valid_votes": 199,
+        "routes": {
+          "agreement": 180,
+          "tiebreaker": 21
+        }
+      },
+      "violations": [],
+      "within_cohort_duplicate_ids": []
+    },
+    "w2024": {
+      "by_project": {
+        "grist": {
+          "candidates": 22,
+          "consensus": {
+            "admit": 9,
+            "exclude": 13
+          },
+          "primary_kappa": 0.7317073170731707,
+          "primary_pairs_with_two_valid_votes": 22,
+          "routes": {
+            "agreement": 19,
+            "tiebreaker": 3
+          }
+        },
+        "immich": {
+          "candidates": 30,
+          "consensus": {
+            "admit": 9,
+            "exclude": 21
+          },
+          "primary_kappa": 0.9230769230769231,
+          "primary_pairs_with_two_valid_votes": 30,
+          "routes": {
+            "agreement": 29,
+            "tiebreaker": 1
+          }
+        },
+        "mealie": {
+          "candidates": 11,
+          "consensus": {
+            "exclude": 11
+          },
+          "primary_kappa": null,
+          "primary_pairs_with_two_valid_votes": 11,
+          "routes": {
+            "agreement": 11
+          }
+        },
+        "nextcloud": {
+          "candidates": 13,
+          "consensus": {
+            "admit": 10,
+            "exclude": 2,
+            "unresolved": 1
+          },
+          "primary_kappa": 0.7547169811320756,
+          "primary_pairs_with_two_valid_votes": 13,
+          "routes": {
+            "agreement": 12,
+            "tiebreaker": 1
+          }
+        },
+        "openproject": {
+          "candidates": 30,
+          "consensus": {
+            "admit": 22,
+            "exclude": 8
+          },
+          "primary_kappa": 0.5051194539249145,
+          "primary_pairs_with_two_valid_votes": 29,
+          "routes": {
+            "agreement": 24,
+            "tiebreaker": 6
+          }
+        },
+        "paperless": {
+          "candidates": 30,
+          "consensus": {
+            "admit": 7,
+            "exclude": 23
+          },
+          "primary_kappa": 0.7540983606557378,
+          "primary_pairs_with_two_valid_votes": 30,
+          "routes": {
+            "agreement": 27,
+            "tiebreaker": 3
+          }
+        },
+        "zulip": {
+          "candidates": 30,
+          "consensus": {
+            "admit": 10,
+            "exclude": 20
+          },
+          "primary_kappa": 0.701492537313433,
+          "primary_pairs_with_two_valid_votes": 30,
+          "routes": {
+            "agreement": 26,
+            "tiebreaker": 4
+          }
+        }
+      },
+      "call_count": 368,
+      "call_statuses": {
+        "call_failed": 1,
+        "invalid": 1,
+        "ok": 366
+      },
+      "controls_qualified": true,
+      "frozen_receipt_valid": true,
+      "non_ok_calls_preserved": [
+        {
+          "candidate_id": "rc-0d048a905901",
+          "error": "reason must be 'admit' exactly when the decision is admit",
+          "error_type": null,
+          "model": "gpt-6-luna",
+          "status": "invalid"
+        },
+        {
+          "candidate_id": "rc-8671af4bfb51",
+          "error": null,
+          "error_type": "RuntimeError",
+          "model": "gpt-6-sol",
+          "status": "call_failed"
+        }
+      ],
+      "response_parse_checks": 366,
+      "run_receipt_valid": true,
+      "screening_source_hash_valid": true,
+      "summary": {
+        "admitted_by_project": {
+          "grist": 9,
+          "immich": 9,
+          "nextcloud": 10,
+          "openproject": 22,
+          "paperless": 7,
+          "zulip": 10
+        },
+        "candidates": 166,
+        "consensus": {
+          "admit": 67,
+          "exclude": 98,
+          "unresolved": 1
+        },
+        "primary_kappa": 0.7905935050391938,
+        "primary_pairs_with_two_valid_votes": 165,
+        "routes": {
+          "agreement": 148,
+          "tiebreaker": 18
+        }
+      },
+      "violations": [],
+      "within_cohort_duplicate_ids": []
+    }
+  },
+  "cross_cohort": {
+    "admitted_exact_changed_text_duplicates": [],
+    "admitted_normalized_changed_text_duplicates": [],
+    "candidate_id_duplicates": [],
+    "exact_changed_text_duplicates": [],
+    "normalized_changed_text_duplicates": [],
+    "source_commit_file_duplicates": []
+  },
+  "public_safe_shape": "Aggregated cohort counts, routes, primary agreement/kappa denominator, project aggregates, receipt validation booleans, and preserved invalid/call_failed counts. No raw provider answers, captures, local private paths, screening prompts, or frozen packet content."
+}
