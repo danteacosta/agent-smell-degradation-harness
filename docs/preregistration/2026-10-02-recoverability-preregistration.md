@@ -271,9 +271,34 @@ shortcut did not check.
 4. Whether a third coding model from another provider is affordable.
 5. Whether the confirmatory H1a claim stays one-directional (interval above
    0.5) or becomes two-sided, given that omission effects can reverse.
+6. Whether `conditional_rule` replaces one of the four H1b covariates or stays
+   exploratory (see the 2026-10-05 note at the end of this document).
 
-**04/10 — qualificação histórica:** a primeira rodada parou com 15 controles tentados e zero casos codificados: Luna forneceu citação não contígua no controle `same`. Astra/Sol acertaram os cinco controles. Uma nova qualificação substitui somente o desempate por `gpt-6.1-sol`, mantendo textos e critérios; a rodada original é preservada. Não houve geração A/H.
+**2026-10-04, historical qualification:** the first round stopped with 15 controls attempted and zero cases coded: Luna returned a non-contiguous quotation on the `same` control. Astra/Sol passed all five controls. A new qualification replaces only the tiebreaker with `gpt-6.1-sol`, keeping texts and criteria; the original round is preserved. No A/H generation took place.
 
-**04/10 — disponibilidade do desempate:** `gpt-6.1-sol` foi recusado pelo CLI com a assinatura ChatGPT nos cinco controles; os dez controles dos primários foram válidos. Zero casos codificados. O catálogo local lista `gpt-5.6-terra`, escolhido para a próxima qualificação com os mesmos controles e critérios, mantendo separação dos modelos geradores. Ambas as rodadas rejeitadas são preservadas.
+**2026-10-04, tiebreaker availability:** the CLI refused `gpt-6.1-sol` under the ChatGPT subscription on all five controls; the ten controls for the primary coders were valid. Zero cases coded. The local catalogue lists `gpt-5.6-terra`, chosen for the next qualification with the same controls and criteria, keeping it separate from the generating models. Both rejected rounds are preserved.
 
-**05/10 — construção histórica antes da geração:** revisão dos textos H identificou que ampliar o trecho removido para sentenças inteiras apagava APIs e regras não alvo. Antes de qualquer geração A/H, os seis `vaguer` passam uniformemente para C integral + citação antiga em parágrafo separado. Os votos da triagem são preservados. A posição e duplicação são limitações, e não se trata da documentação histórica integral.
+**2026-10-05, historical construction before generation:** review of the H texts found that widening the removed span to whole sentences deleted non-target APIs and rules. Before any A/H generation, the six `vaguer` cases are uniformly changed to full C plus the old quotation in a separate paragraph. The screening votes are preserved. Position and duplication are limitations, and this is not the full historical documentation.
+
+**2026-10-05, after the 46-case collection: conditional-rule descriptor and
+model-identifier pinning (source: Yang et al., arXiv 2505.13360).** Two
+additions, both recorded here because the exploratory outcomes were already
+known when they were written, and neither changes the four-covariate H1b model
+or the H1a estimator.
+
+1. `conditional_rule` is recorded for each requirement before generation, blind
+   to outcomes, with the same panel procedure as the other covariates: 1 if the
+   rule applies only under a stated condition or corner case (for example, "if
+   pending subtasks exist"); otherwise 0. It enters exploratory analysis only.
+   Yang et al. (prompt-level study, 60 requirements, three models, LLM-elicited
+   requirements outside browser journeys) report that conditional requirements
+   were guessed when unspecified far less often than average (22.9% vs 41.1%).
+   That result is a reason to record the descriptor, not evidence that it
+   predicts recovery here. Whether it should replace one of the four H1b
+   covariates is advisor decision 6.
+2. The frozen receipt must list the exact dated model identifiers and the
+   provider-reported identifiers returned per call, and no run may mix
+   identifiers within one arm. The same study reports regressions across
+   model updates concentrated on unspecified requirements (5.9% regress by
+   more than 20% when unspecified), so a silent provider-side update during
+   a multi-week collection could masquerade as a C-versus-A difference.
