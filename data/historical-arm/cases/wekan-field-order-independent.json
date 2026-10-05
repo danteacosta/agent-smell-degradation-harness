@@ -1,0 +1,43 @@
+{
+  "case": "wekan-field-order-independent",
+  "intent_id": "wekan-field-order-independent",
+  "project_id": "wekan",
+  "candidate_id": "rc-899c4d2472ad",
+  "source": {
+    "commit": "15b2b6c533",
+    "file": "docs/Features/Board/Card-Field-Display-Order.md",
+    "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+    "snapshot_file": "docs/Features/Right-Sidebar/Board-Settings/Card.md",
+    "duplicate_of": [
+      "rc-90d29a54a512"
+    ]
+  },
+  "fixture": "eval/fixtures/wekan-field-order-independent",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onMove to handle the visible arrow buttons. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the arrows of Board Settings / Card, where you choose in what order the opened card and the minicard show their fields. Clicking ▲ or ▼ beside a field calls the handler with the list's side ('minicard' or 'card'), the field key and the direction ('up' or 'down'); read the orders with app.orders() and store new ones with app.saveOrders({minicard, card}). The Show on Minicard list is in the board's minicard order and the Show on Card list in its card order. ▲ ▼ move the field earlier or later on that side only. They are independent: a field can be third on the minicard and last on the card. What either list shows top to bottom is what that surface draws top to bottom. The change takes effect immediately on every card of this board; there is no separate save step.",
+    "B": "Board Settings / Card is where you choose the order in which the opened card and the minicard show their fields; implement its arrows. A click on ▲ or ▼ next to a field calls the handler with the list's side ('minicard' or 'card'), the field key and the direction ('up' or 'down'); app.orders() gives the current orders and app.saveOrders({minicard, card}) stores new ones. Show on Minicard lists the fields in the board's minicard order, Show on Card in its card order, and the top-to-bottom order of each list is the order its surface draws. An arrow moves the field one place earlier or later in its own list only, since the two orders are independent of each other: a field may be third on the minicard and last on the card. Changes apply at once to every card of the board, with no separate save step.",
+    "C": "Implement the arrows of Board Settings / Card, where you choose in what order the opened card and the minicard show their fields. Clicking ▲ or ▼ beside a field calls the handler with the list's side ('minicard' or 'card'), the field key and the direction ('up' or 'down'); read the orders with app.orders() and store new ones with app.saveOrders({minicard, card}). The Show on Minicard list is in the board's minicard order and the Show on Card list in its card order. ▲ ▼ move the field earlier or later. What either list shows top to bottom is what that surface draws top to bottom. The change takes effect immediately on every card of this board; there is no separate save step.",
+    "H": "Implement the arrows of Board Settings / Card, where you choose in what order the opened card and the minicard show their fields. Clicking ▲ or ▼ beside a field calls the handler with the list's side ('minicard' or 'card'), the field key and the direction ('up' or 'down'); read the orders with app.orders() and store new ones with app.saveOrders({minicard, card}). The Show on Minicard list is in the board's minicard order and the Show on Card list in its card order. ▲ ▼ move the field earlier or later. What either list shows top to bottom is what that surface draws top to bottom. The change takes effect immediately on every card of this board; there is no separate save step."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2033100338,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review",
+  "collect_arms": [
+    "A",
+    "H"
+  ],
+  "historical": {
+    "construction": "absent_h_equals_c",
+    "rule_status": "absent",
+    "old_quote": null,
+    "commit": "15b2b6c5339979341d8237aa592ae37a5fd0607d",
+    "file": "docs/Features/Board/Card-Field-Display-Order.md"
+  }
+}

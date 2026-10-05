@@ -1,0 +1,40 @@
+{
+  "case": "mattermost-timezone-default-automatic",
+  "intent_id": "mattermost-timezone-default-automatic",
+  "project_id": "mattermost",
+  "candidate_id": "rc-4fa8e7483b1a",
+  "source": {
+    "commit": "34180cef60",
+    "file": "source/end-user-guide/preferences/manage-your-display-options.rst",
+    "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+    "snapshot_file": "source/end-user-guide/preferences/manage-your-display-options.rst"
+  },
+  "fixture": "eval/fixtures/mattermost-timezone-default-automatic",
+  "marker": "/* MODEL_BEHAVIOR */",
+  "instruction": "Implement only the requirement in the frozen browser page. Replace the single /* MODEL_BEHAVIOR */ marker with vanilla JavaScript statements using the provided app API. Register app.onEdit to handle the visible Edit button of the Timezone setting. Do not change any other byte of the page. Return only the complete HTML page.",
+  "arms": {
+    "A": "Implement the Timezone setting in Settings > Display. You can customize the timezone used for timestamps in Mattermost and in email notifications. Select Timezone > Edit to select your timezone: when the user selects Edit, open the editor with app.showEditor({automatic, manualTimezone}); the handler receives the user's saved timezone preference ({automatic, manualTimezone}, or null if they have never saved one), and Save stores the values shown in the editor. You can also select Automatic to set your timezone automatically based on your computer's timezone settings. This option is enabled by default.",
+    "B": "Under Settings > Display, the Timezone setting controls the timezone of timestamps in Mattermost and in email notifications. Timezone > Edit is where you pick it: Edit opens the editor through app.showEditor({automatic, manualTimezone}), the handler is given the saved timezone preference ({automatic, manualTimezone}, or null when none has ever been saved), and Save keeps whatever the editor shows. Another choice is Automatic, which takes the timezone from your computer's timezone settings; Automatic is turned on unless the user changes it.",
+    "C": "Implement the Timezone setting in Settings > Display. You can customize the timezone used for timestamps in Mattermost and in email notifications. Select Timezone > Edit to select your timezone: when the user selects Edit, open the editor with app.showEditor({automatic, manualTimezone}); the handler receives the user's saved timezone preference ({automatic, manualTimezone}, or null if they have never saved one), and Save stores the values shown in the editor. You can also select Automatic to set your timezone automatically based on your computer's timezone settings.",
+    "H": "Implement the Timezone setting in Settings > Display. You can customize the timezone used for timestamps in Mattermost and in email notifications. Select Timezone > Edit to select your timezone: when the user selects Edit, open the editor with app.showEditor({automatic, manualTimezone}); the handler receives the user's saved timezone preference ({automatic, manualTimezone}, or null if they have never saved one), and Save stores the values shown in the editor. You can also select Automatic to set your timezone automatically based on your computer's timezone settings."
+  },
+  "models": [
+    "gpt-5.6-luna",
+    "gpt-5.6-sol"
+  ],
+  "repetitions": 2,
+  "seed": 2033100319,
+  "image": "sha256:00d1265095773b7f8a12aa73e81d0bab75563cbd672dd0b5d91783ea1b6d4400",
+  "status": "draft_pending_qualification_and_arm_review",
+  "collect_arms": [
+    "A",
+    "H"
+  ],
+  "historical": {
+    "construction": "absent_h_equals_c",
+    "rule_status": "absent",
+    "old_quote": null,
+    "commit": "34180cef60dbe502477d4b0d353b07192edf24e2",
+    "file": "source/end-user-guide/preferences/manage-your-display-options.rst"
+  }
+}

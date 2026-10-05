@@ -1,0 +1,1537 @@
+{
+  "controls": [
+    {
+      "decisions": {
+        "gpt-5.6-terra": {
+          "feature_documented": "yes",
+          "rule_status": "same"
+        },
+        "gpt-6-astra": {
+          "feature_documented": "yes",
+          "rule_status": "same"
+        },
+        "gpt-6-sol": {
+          "feature_documented": "yes",
+          "rule_status": "same"
+        }
+      },
+      "expected": {
+        "feature_documented": "yes",
+        "rule_status": "same"
+      },
+      "id": "ctl-hist-same"
+    },
+    {
+      "decisions": {
+        "gpt-5.6-terra": {
+          "feature_documented": "yes",
+          "rule_status": "vaguer"
+        },
+        "gpt-6-astra": {
+          "feature_documented": "yes",
+          "rule_status": "vaguer"
+        },
+        "gpt-6-sol": {
+          "feature_documented": "yes",
+          "rule_status": "vaguer"
+        }
+      },
+      "expected": {
+        "feature_documented": "yes",
+        "rule_status": "vaguer"
+      },
+      "id": "ctl-hist-vaguer"
+    },
+    {
+      "decisions": {
+        "gpt-5.6-terra": {
+          "feature_documented": "yes",
+          "rule_status": "absent"
+        },
+        "gpt-6-astra": {
+          "feature_documented": "yes",
+          "rule_status": "absent"
+        },
+        "gpt-6-sol": {
+          "feature_documented": "yes",
+          "rule_status": "absent"
+        }
+      },
+      "expected": {
+        "feature_documented": "yes",
+        "rule_status": "absent"
+      },
+      "id": "ctl-hist-absent"
+    },
+    {
+      "decisions": {
+        "gpt-5.6-terra": {
+          "feature_documented": "yes",
+          "rule_status": "different"
+        },
+        "gpt-6-astra": {
+          "feature_documented": "yes",
+          "rule_status": "different"
+        },
+        "gpt-6-sol": {
+          "feature_documented": "yes",
+          "rule_status": "different"
+        }
+      },
+      "expected": {
+        "feature_documented": "yes",
+        "rule_status": "different"
+      },
+      "id": "ctl-hist-different"
+    },
+    {
+      "decisions": {
+        "gpt-5.6-terra": {
+          "feature_documented": "no",
+          "rule_status": "absent"
+        },
+        "gpt-6-astra": {
+          "feature_documented": "no",
+          "rule_status": "absent"
+        },
+        "gpt-6-sol": {
+          "feature_documented": "no",
+          "rule_status": "absent"
+        }
+      },
+      "expected": {
+        "feature_documented": "no",
+        "rule_status": "absent"
+      },
+      "id": "ctl-hist-undocumented"
+    }
+  ],
+  "review_binding": {
+    "case_config_sha256": {
+      "grist-context-menu-shortcut": "28b6f604c0a245745e3586ed9d6266b0aafbb6921973de2fdcca320d0389b01c",
+      "grist-page-default-collapse": "ba0ea321a5b651bfce19eef27359ab572adc1c819b91d05910341fcac0fd39f5",
+      "grist-suggestions-open-copy": "b44fdcdc43ec5e52bcc3c84127544f493232bc7e054a3f7b8db24f4f2e45caf4",
+      "grist-tutorial-fork-return": "19b04ca79c01e3c0d172726dc79201ba98f2bca4a3cb497e3899dd8b78126fca",
+      "grist-tutorial-restart": "174f80c73ca41dff27f0aefe1f31540a3f6ed7fe5a2fd9fbc266c1a9eeb2657f",
+      "immich-library-single-owner": "706e2e53932bca60422f776428b2fcc8a9473ce1f55ee9df9f97cf6cd2b633cb",
+      "immich-m2t-upload": "747e2edb11dd63a28c59bfba3fc55b1d848ab34fe20e76ff9978073c2f3b7a5a",
+      "immich-path-search": "4b55bf9c3103ccf44c9394f7852cd3000dcd565208d60556cb50eeefb05c540b",
+      "mattermost-anonymous-team-url": "1cce98f832e8dd662d3336fbbc017c29900c60ab5a0d5ac6cc4ef2ed6223d24e",
+      "mattermost-channel-autotranslate": "f4b9ae8982e76691f83dc3edca5e4baf36ca76ed2cbb8a32a87aec36f238b243",
+      "mattermost-guest-invite-channel": "86cdcd58c0fcf2a7b800913fd16f7d2a78a3ad32265c3f3fd009ad0c4598ef71",
+      "mattermost-playbook-task-markdown": "beb4bbf2c47fcd5f921a015421e25d65cecd19e8d818b053a9eb2e580ce528cf",
+      "mattermost-timezone-default-automatic": "d79a79f079c8f5b3352f4e3f16312d50db417413c86012dd643f0d5da183b857",
+      "mealie-organize-food-permission": "ce5f425d228dc2dce1510bde457732dad742df5d734bc2fde763bce6da16ec0b",
+      "mealie-planner-food-label": "686e3448d9f3f4bf46a6609da28bced1f72ca8b3c31c642578bbe77e015c3330",
+      "nextcloud-breakout-rooms": "f9329b464ce2ab7cd4b66d2bdb33516c145dc6fac11c992b4188aeda7a7d6ac9",
+      "nextcloud-calendar-talk-location": "df332bcc944ed9be89ff07350a8f52cd3d7d3081e210ef749c2ed1f8eead0d61",
+      "nextcloud-delete-folder-trash": "7294b43d554a71556f0783bc02dcb5bb56512d79d5ec21faffe9100f41734733",
+      "nextcloud-device-password-once": "9b549f05adf4d51215e2edae76ae7d3cf464cbaf3ec4f2bbf91abb71424650bb",
+      "nextcloud-mail-delegation": "3c4974c3d63060d7f6e2427441c062e2a3ab760a3d28ecd3b23b245c9d974834",
+      "nextcloud-mail-favorites-up": "eb177f552c9550acd147976d9b532687c0e9bc2ba80807dafcfbc49b5315dd56",
+      "openproject-auto-theme-contrast": "53120b69e758031387f70f758148d5575a968878ef486f7fc93219dc70bade52",
+      "openproject-filter-text-autoupdate": "908d752e52848334f20ef42db2112791d4cfcaf392005231cf77fb45360aad97",
+      "openproject-invite-permission-basis": "965feec946cf41a8821b0d567ff422783112341572814a8539e74d3d1afdf0a6",
+      "openproject-more-menu-subproject": "e5a61a40ca832bc4cdca541281f595648ef64de77299e4bcc7f54a8a4b2310dd",
+      "paperless-ai-suggestions-blank-text": "568cc45cac568b6d3627ea50aa5c42351240462d147ab4c13a1f8568887b4113",
+      "paperless-custom-field-no-value": "e685ccdbded86ebdf93bd24f334ae89cde6b1810217532ac2b407a174839ffec",
+      "paperless-doc-title-placeholder": "8d1165b6b98b3aa7bf26d20a3f3d010c6e619e9545a9ac10210d0a0ccb176493",
+      "paperless-own-profile": "aac00689f6ee250a49eed18e2f048bddfd9c1d72c812e5881fb0f742341e5315",
+      "paperless-superuser-grant": "263e26bd41388f44d13268702f431d8b4eb9df45fbaab1f4be927b12c8a33d7e",
+      "wekan-field-order-independent": "146a6cc66c6781de460cb9ed56814747d3e0ca822613da20020b22ef1e9c99a8",
+      "wekan-home-multi-drop": "992add0f1cd434fe94a5b990e1d7543782a025fa22f8ac51e2f329264571e838",
+      "wekan-member-same-org-team": "9da5184496244579f4677c73e8bd04ad572392f151bd0ab384a327ff95d429d1",
+      "wekan-swimlane-below-default": "7c52a79f3b33cf5d47eee3e60ce05ab91abd37924a51aa6610066ce3ac0a054d",
+      "wekan-sync-local-edits": "1444df762355753c2ec3c827f5bdf05122e62ea09e503ece91f99639da272e8f",
+      "wekan-week-number-immediate": "82603cc7633dbbd57b7ea049807ae05c420930debd18ad0c5254750f465efeb5",
+      "zulip-gif-picker-disabled": "f445bc28450dd7199f4688c16f59a8d927e7296d03d7ac66b804807d61dbce19",
+      "zulip-private-channel-access": "d46185d8ca7e104a5eacb0f5dfd98600ae3b99a8188022212c12972e39eef0dd",
+      "zulip-resolved-notice-auto-read": "ee91e9691f3f6f68ba08ecc475d4e231773526d8cf14fc3a57225798a744dbf4",
+      "zulip-reverse-linkifier-paste": "e6ae3fa45280c51e98ffc959a07ba0c9475bb46d8298803ef20b39b2e57f03c7"
+    },
+    "classification_sha256": "20563a206bdb617924ce897697beb715458ad03ba6b948ec882c5e26ca8ba993"
+  },
+  "rows": [
+    {
+      "candidate_id": "rc-aa2c82f86e08",
+      "case": "mattermost-anonymous-team-url",
+      "decided_by": "gpt-5.6-terra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "You can create a team using a web browser or the desktop app by selecting a team name, and then selecting Create a Team , unless your system admin has disabled your ability to do so.",
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-5.6-terra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "You can create a team using a web browser or the desktop app by selecting a team name, and then selecting Create a Team , unless your system admin has disabled your ability to do so.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "There are a few details and restrictions to consider when selecting a team name and team URL.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "There are a few details and restrictions to consider when selecting a team name and team URL.",
+            "rule_quote": "There are a few details and restrictions to consider when selecting a team name and team URL.",
+            "rule_status": "vaguer"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-84013890a131",
+      "case": "paperless-ai-suggestions-blank-text",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "\"Apply AI Suggestions\" actions ask the configured AI service for title and metadata suggestions,\nthe same as the AI suggestions shown on the document detail page, except applied automatically and in bulk.",
+        "rule_quote": "Every matching document results in a query to the AI service, which may incur costs and have privacy\nimplications.",
+        "rule_status": "different"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "\"Apply AI Suggestions\" actions ask the configured AI service for title and metadata suggestions,\nthe same as the AI suggestions shown on the document detail page, except applied automatically and in bulk.",
+            "rule_quote": "Every matching document results in a query to the AI service, which may incur costs and have privacy\nimplications.",
+            "rule_status": "different"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "\"Apply AI Suggestions\" actions ask the configured AI service for title and metadata suggestions,\nthe same as the AI suggestions shown on the document detail page, except applied automatically and in bulk.",
+            "rule_quote": "Every matching document results in a query to the AI service",
+            "rule_status": "different"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-4efba0098a79",
+      "case": "openproject-more-menu-subproject",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "6. Click the More (three dots) icon, which opens a dropdown menu with the following options:\nCopy a project\nMake a project public\nArchive a project\nSet a project as a template\nDelete a project",
+        "rule_quote": "To create a subproject for an existing project, navigate to _Project settings_ -> _Information_ and click on the green + Subproject button.",
+        "rule_status": "different"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "6. Click the More (three dots) icon, which opens a dropdown menu with the following options:\nCopy a project\nMake a project public\nArchive a project\nSet a project as a template\nDelete a project",
+            "rule_quote": "To create a subproject for an existing project, navigate to _Project settings_ -> _Information_ and click on the green + Subproject button.",
+            "rule_status": "different"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Click the More (three dots) icon, which opens a dropdown menu with the following options:\nCopy a project\nMake a project public\nArchive a project\nSet a project as a template\nDelete a project",
+            "rule_quote": "To create a subproject for an existing project, navigate to _Project settings_ -> _Information_ and click on the green + Subproject button.",
+            "rule_status": "different"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-aac66a0af69a",
+      "case": "grist-tutorial-restart",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "4. Click Restart Tutorial to reload the tutorial with your updates.",
+        "rule_quote": "If you click Restart Tutorial first, any unsaved changes will be lost.",
+        "rule_status": "same"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "4. Click Restart Tutorial to reload the tutorial with your updates.",
+            "rule_quote": "If you click Restart Tutorial first, any unsaved changes will be lost.",
+            "rule_status": "same"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "4. Click Restart Tutorial to reload the tutorial with your updates.",
+            "rule_quote": "If you click Restart Tutorial first, any unsaved changes will be lost.",
+            "rule_status": "same"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-3d153b91ab4e",
+      "case": "nextcloud-device-password-once",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "At the bottom of the list you find a button to create a new device-specific\npassword. You can choose a name to identify the token later. The generated\npassword is used for configuring the new client.",
+        "rule_quote": "Nextcloud will not save the plain password, so it is recommended to\nenter the password on the new client immediately.",
+        "rule_status": "vaguer"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "At the bottom of the list you find a button to create a new device-specific\npassword. You can choose a name to identify the token later. The generated\npassword is used for configuring the new client.",
+            "rule_quote": "Nextcloud will not save the plain password, so it is recommended to\nenter the password on the new client immediately.",
+            "rule_status": "vaguer"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "At the bottom of the list you find a button to create a new device-specific\npassword. You can choose a name to identify the token later. The generated\npassword is used for configuring the new client.",
+            "rule_quote": "Nextcloud will not save the plain password, so it is recommended to\nenter the password on the new client immediately.",
+            "rule_status": "vaguer"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-0f453b1f0a55",
+      "case": "mealie-planner-food-label",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "no",
+        "feature_quote": null,
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-88440629ecb6",
+      "case": "wekan-home-multi-drop",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "Drop a board on the Home row and it becomes the board that opens after\nlogin.",
+        "rule_quote": "Dropping a multi-selection sets the first of them, the same one the\nMulti-Selection sidebar's Home row sets, and then clears the selection so it\ncannot look as though all of them went somewhere.",
+        "rule_status": "different"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Drop a board on the Home row and it becomes the board that opens after\nlogin.",
+            "rule_quote": "Dropping a multi-selection sets the first of them, the same one the\nMulti-Selection sidebar's Home row sets, and then clears the selection so it\ncannot look as though all of them went somewhere.",
+            "rule_status": "different"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Drop a board on the Home row and it becomes the board that opens after\nlogin.",
+            "rule_quote": "Dropping a multi-selection sets the first of them, the same one the\nMulti-Selection sidebar's Home row sets, and then clears the selection so it\ncannot look as though all of them went somewhere.",
+            "rule_status": "different"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-4aac15b7b503",
+      "case": "grist-context-menu-shortcut",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "no",
+        "feature_quote": null,
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-02df56f00b58",
+      "case": "openproject-auto-theme-contrast",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "In the Look and feel section under Interface in your profile settings (accessible via the left-hand menu), you can select your preferred display color mode and adjust the order in which comments appear in the Activity list for work packages.\nYou can also disable keyboard shortcuts . This is useful if you rely on a screen reader or want to avoid triggering actions by accident.\nClick Update look and feel to save your changes.",
+        "rule_quote": "If your operating system is set to high contrast mode, OpenProject will also automatically switch to the corresponding high contrast mode (light or dark).",
+        "rule_status": "same"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "In the Look and feel section under Interface in your profile settings (accessible via the left-hand menu), you can select your preferred display color mode and adjust the order in which comments appear in the Activity list for work packages.\nYou can also disable keyboard shortcuts . This is useful if you rely on a screen reader or want to avoid triggering actions by accident.\nClick Update look and feel to save your changes.",
+            "rule_quote": "If your operating system is set to high contrast mode, OpenProject will also automatically switch to the corresponding high contrast mode (light or dark).",
+            "rule_status": "same"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Click Update look and feel to save your changes.",
+            "rule_quote": "If your operating system is set to high contrast mode, OpenProject will also automatically switch to the corresponding high contrast mode (light or dark).",
+            "rule_status": "same"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-c86728bbc029",
+      "case": "immich-library-single-owner",
+      "decided_by": "gpt-5.6-terra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "External libraries track assets stored in the filesystem outside of Immich.",
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-5.6-terra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "External libraries track assets stored in the filesystem outside of Immich.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "External libraries track assets stored in the filesystem outside of Immich. When the external library is scanned, Immich will load videos and photos from disk and create the corresponding assets.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-7b485b51412f",
+      "case": "grist-page-default-collapse",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "In Grist, you organize your document into 'pages'. These are listed in the left panel, with collapsible\ngroups. You may rearrange and group pages in the left panel by dragging them to suit your needs.",
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "In Grist, you organize your document into 'pages'. These are listed in the left panel, with collapsible\ngroups. You may rearrange and group pages in the left panel by dragging them to suit your needs.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "In Grist, you organize your document into 'pages'. These are listed in the left panel, with collapsible\ngroups. You may rearrange and group pages in the left panel by dragging them to suit your needs.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-6b29ef8b44d8",
+      "case": "wekan-swimlane-below-default",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "Use + beside a swimlane header to open Add Swimlane . Paste several lines\nand use Add to choose one multiline swimlane name or one swimlane per\nnonempty line. Save to create them in the pasted order.",
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Use + beside a swimlane header to open Add Swimlane . Paste several lines\nand use Add to choose one multiline swimlane name or one swimlane per\nnonempty line. Save to create them in the pasted order.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Use + beside a swimlane header to open Add Swimlane . Paste several lines\nand use Add to choose one multiline swimlane name or one swimlane per\nnonempty line. Save to create them in the pasted order.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-9d801a70d5d2",
+      "case": "nextcloud-delete-folder-trash",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "Find your deleted files by clicking the Deleted files button on the Files\npage of the Nextcloud web interface. You can restore or permanently delete files from there.",
+        "rule_quote": "When you delete a file in Nextcloud, it is not immediately deleted permanently,\nonly moved into the trash bin.",
+        "rule_status": "same"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Find your deleted files by clicking the Deleted files button on the Files\npage of the Nextcloud web interface. You can restore or permanently delete files from there.",
+            "rule_quote": "When you delete a file in Nextcloud, it is not immediately deleted permanently,\nonly moved into the trash bin.",
+            "rule_status": "same"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Find your deleted files by clicking the Deleted files button on the Files\npage of the Nextcloud web interface. You can restore or permanently delete files from there.",
+            "rule_quote": "When you delete a file in Nextcloud, it is not immediately deleted permanently,\nonly moved into the trash bin.",
+            "rule_status": "same"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-17b31565c57c",
+      "case": "openproject-invite-permission-basis",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "Once you click the Invite user , a dialogue will open. Here you can select the project, to which you want to invite new members and which roles they get.",
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Once you click the Invite user , a dialogue will open. Here you can select the project, to which you want to invite new members and which roles they get.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Once you click the Invite user , a dialogue will open. Here you can select the project, to which you want to invite new members and which roles they get.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-086a9d210266",
+      "case": "paperless-custom-field-no-value",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "\"Assignment\" actions can assign:\nTitle, see workflow placeholders below\nTags, correspondent, document type and storage path\nDocument owner\nView and / or edit permissions to users or groups\nCustom fields. Note that no value for the field will be set",
+        "rule_quote": "Custom fields. Note that no value for the field will be set",
+        "rule_status": "vaguer"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "\"Assignment\" actions can assign:\nTitle, see workflow placeholders below\nTags, correspondent, document type and storage path\nDocument owner\nView and / or edit permissions to users or groups\nCustom fields. Note that no value for the field will be set",
+            "rule_quote": "Custom fields. Note that no value for the field will be set",
+            "rule_status": "vaguer"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "\"Assignment\" actions can assign:\nTitle, see workflow placeholders below\nTags, correspondent, document type and storage path\nDocument owner\nView and / or edit permissions to users or groups\nCustom fields. Note that no value for the field will be set",
+            "rule_quote": "Custom fields. Note that no value for the field will be set",
+            "rule_status": "vaguer"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-ab0227c1eb5b",
+      "case": "nextcloud-mail-favorites-up",
+      "decided_by": "gpt-5.6-terra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "Change sort order\n1. Visit mail settings\n2. Go to *Sorting*\n3. You can choose *Oldest* or *Newest* mail first",
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-5.6-terra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Change sort order\n1. Visit mail settings\n2. Go to *Sorting*\n3. You can choose *Oldest* or *Newest* mail first",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Change sort order\n1. Visit mail settings\n2. Go to *Sorting*\n3. You can choose *Oldest* or *Newest* mail first",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-035e8af08cd7",
+      "case": "paperless-own-profile",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "no",
+        "feature_quote": null,
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-b6f382226c41",
+      "case": "immich-path-search",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "no",
+        "feature_quote": null,
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-899c4d2472ad",
+      "case": "wekan-field-order-independent",
+      "decided_by": "gpt-5.6-terra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "Click the up / down arrow beside a section to move it earlier or later",
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-5.6-terra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Click the up / down arrow beside a section to move it earlier or later",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "3. Click the up / down arrow beside a section to move it earlier or\nlater - the top-most arrow is disabled on the first row and the\nbottom-most arrow is disabled on the last row.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-0284c8781546",
+      "case": "mattermost-playbook-task-markdown",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "Within each checklist, select + New task to add tasks that are meant to be completed together.",
+        "rule_quote": "Tasks in a playbook consists of text rendered in Markdown (when present).",
+        "rule_status": "same"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Within each checklist, select + New task to add tasks that are meant to be completed together.",
+            "rule_quote": "Tasks in a playbook consists of text rendered in Markdown (when present).",
+            "rule_status": "same"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Within each checklist, select + New task to add tasks that are meant to be completed together.",
+            "rule_quote": "Tasks in a playbook consists of text rendered in Markdown (when present).",
+            "rule_status": "same"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-8b05adc7767e",
+      "case": "wekan-member-same-org-team",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "On multi-tenant instances you can require that a board's members share an Organization\nor Team. When the global admin setting boardMembersFromSameOrgOrTeamOnly is enabled, a\nuser can only be added to a board if they share at least one Organization or Team with the\ninviter or with an active board member (site admins bypass this).",
+        "rule_quote": "When the global admin setting boardMembersFromSameOrgOrTeamOnly is enabled, a\nuser can only be added to a board if they share at least one Organization or Team with the\ninviter or with an active board member (site admins bypass this).",
+        "rule_status": "different"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "On multi-tenant instances you can require that a board's members share an Organization\nor Team. When the global admin setting boardMembersFromSameOrgOrTeamOnly is enabled, a\nuser can only be added to a board if they share at least one Organization or Team with the\ninviter or with an active board member (site admins bypass this).",
+            "rule_quote": "When the global admin setting boardMembersFromSameOrgOrTeamOnly is enabled, a\nuser can only be added to a board if they share at least one Organization or Team with the\ninviter or with an active board member (site admins bypass this).",
+            "rule_status": "different"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "This is in\naddition to sharing with individual members, Organizations and Teams.",
+            "rule_quote": "When the global admin setting boardMembersFromSameOrgOrTeamOnly is enabled, a\nuser can only be added to a board if they share at least one Organization or Team with the\ninviter or with an active board member (site admins bypass this).",
+            "rule_status": "different"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-806442660eb5",
+      "case": "paperless-superuser-grant",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "Paperless-ngx supports editing users and groups via the 'frontend' UI, which can be found under\nSettings > Users & Groups, assuming the user has access.",
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Paperless-ngx supports editing users and groups via the 'frontend' UI, which can be found under\nSettings > Users & Groups, assuming the user has access.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Paperless-ngx supports editing users and groups via the 'frontend' UI, which can be found under\nSettings > Users & Groups, assuming the user has access.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-0ec1ac8f66bd",
+      "case": "immich-m2t-upload",
+      "decided_by": "gpt-5.6-terra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "Video formats\nFormat | Extension(s) | Supported? | Notes |",
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-5.6-terra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Video formats\nFormat | Extension(s) | Supported? | Notes |",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Video formats\nFormat | Extension(s) | Supported? | Notes |\n:---------- | :-------------------- | :----------------: | :---- |\n3GPP | .3gp .3gpp | :white_check_mark: | |\nAVI | .avi | :white_check_mark: | |\nFLV | .flv | :white_check_mark: | |\nM4V | .m4v | :white_check_mark: | |\nMATROSKA | .mkv | :white_check_mark: | |\nMP2T | .mts .m2ts | :white_check_mark: | |\nMP4 | .mp4 .insv | :white_check_mark: | |\nMPEG | .mpg .mpe .mpeg | :white_check_mark: | |\nQUICKTIME | .mov | :white_check_mark: | |\nWEBM | .webm | :white_check_mark: | |\nWMV | .wmv | :white_check_mark: | |",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Video formats\nFormat | Extension(s) | Supported? | Notes |",
+            "rule_quote": "MP2T | .mts .m2ts | :white_check_mark: | |",
+            "rule_status": "different"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-ade633af9c14",
+      "case": "grist-suggestions-open-copy",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "A user makes changes in a personal copy without modifying the original document, then submits these suggestions to be reviewed by the document owner prior to integration.",
+        "rule_quote": "A user makes changes in a personal copy without modifying the original document, then submits these suggestions to be reviewed by the document owner prior to integration.",
+        "rule_status": "vaguer"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "A user makes changes in a personal copy without modifying the original document, then submits these suggestions to be reviewed by the document owner prior to integration.",
+            "rule_quote": "A user makes changes in a personal copy without modifying the original document, then submits these suggestions to be reviewed by the document owner prior to integration.",
+            "rule_status": "vaguer"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "If you enable suggestions, you can now manage collaborative changes with a workflow similar to version control {:target=\"\\_blank\"} in computer science.\nA user makes changes in a personal copy without modifying the original document, then submits these suggestions to be reviewed by the document owner prior to integration.",
+            "rule_quote": "A user makes changes in a personal copy without modifying the original document",
+            "rule_status": "vaguer"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-c38fa60b1164",
+      "case": "nextcloud-mail-delegation",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "no",
+        "feature_quote": null,
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-362ff82e3812",
+      "case": "zulip-resolved-notice-auto-read",
+      "decided_by": "gpt-5.6-terra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "A notice is sent when a topic is resolved or\nunresolved .",
+        "rule_quote": "These notices will be marked as unread only\nfor users who had participated in the topic.",
+        "rule_status": "different"
+      },
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-5.6-terra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "A notice is sent when a topic is resolved or\nunresolved .",
+            "rule_quote": "These notices will be marked as unread only\nfor users who had participated in the topic.",
+            "rule_status": "different"
+          }
+        },
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "A notice is sent when a topic is resolved or\nunresolved .",
+            "rule_quote": "These notices will be marked as unread only\nfor users who had participated in the topic.",
+            "rule_status": "vaguer"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "A notice is sent when a topic is resolved or\nunresolved .",
+            "rule_quote": "These notices will be marked as unread only\nfor users who had participated in the topic.",
+            "rule_status": "different"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-3fbc295441e2",
+      "case": "mattermost-guest-invite-channel",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "no",
+        "feature_quote": null,
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-1114153d4704",
+      "case": "openproject-filter-text-autoupdate",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "If you want to search for specific text in the subject, description or comments of a work package, type in the Filter by text the expression you want to filter for.",
+        "rule_quote": "The results will be displayed accordingly in the work package table.",
+        "rule_status": "vaguer"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "If you want to search for specific text in the subject, description or comments of a work package, type in the Filter by text the expression you want to filter for.",
+            "rule_quote": "The results will be displayed accordingly in the work package table.",
+            "rule_status": "vaguer"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "If you want to search for specific text in the subject, description or comments of a work package, type in the Filter by text the expression you want to filter for.",
+            "rule_quote": "The results will be displayed accordingly in the work package table.",
+            "rule_status": "vaguer"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-fd348eb33246",
+      "case": "zulip-private-channel-access",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "In private channels with shared history , new subscribers can access the\nchannel's full message history.",
+        "rule_quote": "Private channels (indicated by <i class=\"zulip-icon\nzulip-icon-lock\"> ) are for conversations that should be accessible only to\nusers who are specifically subscribed to the channel.",
+        "rule_status": "same"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "In private channels with shared history , new subscribers can access the\nchannel's full message history.",
+            "rule_quote": "Private channels (indicated by <i class=\"zulip-icon\nzulip-icon-lock\"> ) are for conversations that should be accessible only to\nusers who are specifically subscribed to the channel.",
+            "rule_status": "same"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Private channels (indicated by <i class=\"zulip-icon\nzulip-icon-lock\"> ) are for conversations that should be accessible only to\nusers who are specifically subscribed to the channel.",
+            "rule_quote": "Private channels (indicated by <i class=\"zulip-icon\nzulip-icon-lock\"> ) are for conversations that should be accessible only to\nusers who are specifically subscribed to the channel.",
+            "rule_status": "same"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-f3df2f6e5885",
+      "case": "wekan-sync-local-edits",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "a new external item creates a WeKan card;\na changed title/description updates the existing card;\nan external item that disappeared is archived , never deleted",
+        "rule_quote": "a changed title/description updates the existing card;",
+        "rule_status": "vaguer"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "a new external item creates a WeKan card;\na changed title/description updates the existing card;\nan external item that disappeared is archived , never deleted",
+            "rule_quote": "a changed title/description updates the existing card;",
+            "rule_status": "vaguer"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "A WeKan list can be marked as synced from an external tracker: set\nLists.syncSource = { type, url, projectKey, enabled }",
+            "rule_quote": "a changed title/description updates the existing card;",
+            "rule_status": "vaguer"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-08dffa18a270",
+      "case": "zulip-gif-picker-disabled",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "By default, the GIPHY and Tenor integrations are configured to only retrieve GIFs\nthat they categorize as rated G (General audience). You can change\nthis rating configuration or disable your GIF integration entirely:\n1. Under Compose settings , select a rating for GIF integration .",
+        "rule_quote": "disable your GIF integration entirely",
+        "rule_status": "vaguer"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "By default, the GIPHY and Tenor integrations are configured to only retrieve GIFs\nthat they categorize as rated G (General audience). You can change\nthis rating configuration or disable your GIF integration entirely:\n1. Under Compose settings , select a rating for GIF integration .",
+            "rule_quote": "disable your GIF integration entirely",
+            "rule_status": "vaguer"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Zulip\u2019s GIF picker supports third-party services, currently GIPHY\nand Tenor. Any text you enter into the GIF search box will be\nsent from your browser directly to the corresponding service\u2019s API.",
+            "rule_quote": "You can change\nthis rating configuration or disable your GIF integration entirely:",
+            "rule_status": "vaguer"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-59d96b056593",
+      "case": "wekan-week-number-immediate",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "2. Right sidebar \u2192 Board Settings \u2192 Date: this board's override, saved by a board admin.",
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "2. Right sidebar \u2192 Board Settings \u2192 Date: this board's override, saved by a board admin.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "2. Right sidebar \u2192 Board Settings \u2192 Date: this board's override, saved by a board admin.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-9e198862b86e",
+      "case": "paperless-doc-title-placeholder",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "This allows for complex logic to be used to generate the title, including logical structures\nand filters .\nThe template is provided as a string.\nUsing Jinja2 Templates is also useful for Date localization in the title.",
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "This allows for complex logic to be used to generate the title, including logical structures\nand filters .\nThe template is provided as a string.\nUsing Jinja2 Templates is also useful for Date localization in the title.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "This allows for complex logic to be used to generate the title, including logical structures\nand filters .\nThe template is provided as a string.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-106bac72c813",
+      "case": "mealie-organize-food-permission",
+      "decided_by": "gpt-5.6-terra",
+      "final": {
+        "feature_documented": "no",
+        "feature_quote": null,
+        "rule_quote": "Access to manage their group and group data",
+        "rule_status": "vaguer"
+      },
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-5.6-terra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": "Access to manage their group and group data",
+            "rule_status": "vaguer"
+          }
+        },
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": "Access to manage their group and group data",
+            "rule_status": "vaguer"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-e594b40135ff",
+      "case": "nextcloud-calendar-talk-location",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "no",
+        "feature_quote": null,
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-b49db6870ff5",
+      "case": "grist-tutorial-fork-return",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "no",
+        "feature_quote": null,
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-4200f1dac6a9",
+      "case": "zulip-reverse-linkifier-paste",
+      "decided_by": "gpt-5.6-terra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "Linkifiers make it easy to refer to issues or tickets in third\nparty issue trackers, like GitHub, Salesforce, Zendesk, and others.",
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-5.6-terra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Linkifiers make it easy to refer to issues or tickets in third\nparty issue trackers, like GitHub, Salesforce, Zendesk, and others.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Linkifiers make it easy to refer to issues or tickets in third\nparty issue trackers, like GitHub, Salesforce, Zendesk, and others.\nFor instance, you can add a linkifier that automatically turns #2468\ninto a link to https://github.com/zulip/zulip/issues/2468 .",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-4fa8e7483b1a",
+      "case": "mattermost-timezone-default-automatic",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "yes",
+        "feature_quote": "You can customize the timezone used for timestamps in Mattermost and in email notifications.\nSelect Timezone > Edit to select your timezone.",
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "You can customize the timezone used for timestamps in Mattermost and in email notifications.\nSelect Timezone > Edit to select your timezone.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "You can customize the timezone used for timestamps in Mattermost and in email notifications.\nSelect Timezone > Edit to select your timezone.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-554bcd113361",
+      "case": "mattermost-channel-autotranslate",
+      "decided_by": "gpt-5.6-terra",
+      "final": {
+        "feature_documented": "no",
+        "feature_quote": null,
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "tiebreaker",
+      "votes": {
+        "gpt-5.6-terra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "yes",
+            "feature_quote": "Learn how to navigate between channels.",
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "rc-946f02ef19b6",
+      "case": "nextcloud-breakout-rooms",
+      "decided_by": "gpt-6-astra",
+      "final": {
+        "feature_documented": "no",
+        "feature_quote": null,
+        "rule_quote": null,
+        "rule_status": "absent"
+      },
+      "route": "agreement",
+      "votes": {
+        "gpt-6-astra": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        },
+        "gpt-6-sol": {
+          "status": "ok",
+          "vote": {
+            "feature_documented": "no",
+            "feature_quote": null,
+            "rule_quote": null,
+            "rule_status": "absent"
+          }
+        }
+      }
+    }
+  ],
+  "schema_version": "historical-review-panel/v1-results",
+  "status": "complete",
+  "summary": {
+    "cases": 40,
+    "decisions": {
+      "no/absent": 10,
+      "no/vaguer": 1,
+      "yes/absent": 13,
+      "yes/different": 5,
+      "yes/same": 5,
+      "yes/vaguer": 6
+    },
+    "kappa_feature_documented": 0.7109826589595376,
+    "kappa_rule_status": 0.8382204246713852,
+    "primary_pairs_with_two_valid_votes": 40,
+    "routes": {
+      "agreement": 31,
+      "tiebreaker": 9
+    }
+  }
+}
