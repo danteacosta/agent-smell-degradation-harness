@@ -9,7 +9,9 @@ Este arquivo é para colar no Codex, ou para o Dante seguir à mão. Ele cobre s
 - Evidência bruta dos provedores fica em `~/Documents/GitHub/.private-research-evidence`. No repositório entram só os arquivos públicos, como nos PRs anteriores.
 - Se um controle autorado falhar, o painel para sozinho. Não ajuste prompts nem controles para fazer passar: informe e pare.
 
-## Tarefa 1: triagem dos dois quadros candidatos (sem supervisão, cerca de 800 chamadas)
+## Tarefa 1 concluída: instruções históricas, não executar novamente
+
+As duas triagens e a consolidação pública terminaram em 05/10, com 809 chamadas preservadas. Consulte o [relatório final](2026-10-05-confirmatory-screening-results.md). O roteiro abaixo descreve a execução já realizada; não autoriza repetir chamadas.
 
 Prompt para o Codex:
 
@@ -24,7 +26,7 @@ Prompt para o Codex:
 
 ## Tarefa 2: depois da reunião, não agora
 
-A sonda de memorização e a construção dos casos E2E dependem do quadro escolhido e do desenho (9 × 4 recomendado). Elas ficam para depois da decisão do orientador e do registro. Antes disso, não rode `run_memorization_probe.sh`, `abc_case.py` nem `run_historical_arm.sh` sobre candidatos novos.
+A sonda de memorização e a construção dos casos E2E dependem do quadro escolhido e do desenho (o 9 × 4 anterior foi retirado; o planejamento corrigido considera 8 × 5 sob hipóteses explícitas). Elas ficam para depois da decisão do orientador e do registro. Antes disso, não rode `run_memorization_probe.sh`, `abc_case.py` nem `run_historical_arm.sh` sobre candidatos novos.
 
 ## O que o Claude já fez (sem modelo)
 

@@ -1,0 +1,19 @@
+{
+  "calls": 441,
+  "confirmatory_eligible": true,
+  "date": "2026-10-05",
+  "frozen_receipt_sha256": "ddae8db25cd46c60b3f999c13ec5ea1d836771205793b77b62b109f4cea77ab0",
+  "original_inventory_files_verified": 2856,
+  "original_receipt_sha256": "0bac86a7a386a01da6dd05368af1107f038e2b43b466668ba7f9a38b79936a65",
+  "original_results_sha256": "271f2ad18dbd420181a2487b39dacd9b22e8ffb4992bee44825475dd4c45648f",
+  "private_material_excluded": [
+    "provider CLI captures",
+    "raw CLI streams",
+    "raw response text files",
+    "executable path",
+    "local private evidence paths"
+  ],
+  "retries": 0,
+  "schema_version": "llm-screening-public-custody/v1",
+  "scope": "Candidate eligibility screening; not smell confirmation or H1/H2 observations"
+}

@@ -1,6 +1,6 @@
 # Quadro da coleta confirmatória: duas opções
 
-Status: preparação, sem chamadas de modelo. Nenhum dos candidatos abaixo foi visto por modelo nem usado em execução A/B/C. A escolha do quadro é uma decisão para a reunião com o orientador. A triagem das duas opções pode rodar antes dela, porque é cega e não gera código.
+Status original na preparação do quadro: sem chamadas de modelo. **Atualização de 05/10:** as duas triagens estão concluídas, conforme o [relatório](2026-10-05-confirmatory-screening-results.md); não houve geração A/B/C nova. A escolha do quadro é uma decisão para a reunião com o orientador. A triagem das duas opções pode rodar antes dela, porque é cega e não gera código.
 
 ## Opções
 
@@ -14,7 +14,7 @@ Status: preparação, sem chamadas de modelo. Nenhum dos candidatos abaixo foi v
 | A favor | mesma janela e mesmas regras; nada a justificar | requisitos mais antigos e independentes dos 46 |
 | Contra | mesmos projetos dos 46; mealie se esgotou; paperless tem só 12 | maior chance de os modelos terem visto o texto (a sonda de memorização mede isso); Mattermost e Wekan quase não têm commits nos caminhos registrados em 2024, porque a documentação mudou de lugar (Mattermost só a partir de 2025-07) |
 
-Pela simulação de amostra (`2026-10-05-confirmatory-sample-size.md`), o desenho recomendado é 9 projetos × 4 requisitos. Nenhuma opção sozinha chega a 9 projetos. Juntas, chegam a 9: as 8 da reserva mais mealie de 2024. Pelas taxas da triagem anterior (cerca de 27% admitidos) e pela perda até a seleção, paperless, immich e mealie podem não render 4 requisitos cada. Os números reais só saem da triagem.
+A recomendação original de 9 projetos × 4 requisitos foi retirada pelo [planejamento corrigido](2026-10-05-confirmatory-sample-size.md), que trata projetos como unidade de troca de sinais. O cenário de efeito próximo de 0,60 sugere 8 × 5 como sensibilidade, ainda sem aprovação metodológica. A triagem terminou com 95 admitidos provisórios na reserva e 67 em 2024. Mealie teve zero admitidos: as duas opções juntas cobrem oito projetos. A reserva sozinha tem só três candidatos admitidos no Paperless e quatro no Immich, insuficientes para 8 × 5; unir janelas também exige decisão prospectiva. Não há seleção ou coleta liberada por estes números.
 
 ## Arquivos
 
