@@ -1,0 +1,114 @@
+{
+  "schema_version": "historical-arm-cohort/v1",
+  "source_commit": "1200272a99849b03bfd8ade4b8f3b929f4d7ad22",
+  "qualification_sha256": "9c9443dbce54bf9d0f3bf49c1124cbc9b17645ba6791828a996bb6b6dabf6166",
+  "qualified_cases": 17,
+  "qualification_controls": 130,
+  "planned_slots": 136,
+  "retry_policy": "no_retry_no_resume_no_repair",
+  "confirmatory_eligible": false,
+  "cases": [
+    {
+      "case": "grist-page-default-collapse",
+      "planned_slots": 8,
+      "config_sha256": "e00929cc509e96d84269568bc89888d8c338fa77182bc1199223e334bfe816a6",
+      "frozen_receipt_sha256": "f4bcce9f148442c49a01c8abf62cc4f761165aba928558d05f28976737389afd"
+    },
+    {
+      "case": "grist-suggestions-open-copy",
+      "planned_slots": 8,
+      "config_sha256": "19ed3324c496b841b1c879e062a4bc3c9d06bb93ba8f4f51c99778848dca8664",
+      "frozen_receipt_sha256": "e3e556638df02b2902a37905d5ce2dd835e6d3a58530e2c51944b4919e2f03ea"
+    },
+    {
+      "case": "immich-library-single-owner",
+      "planned_slots": 8,
+      "config_sha256": "fa83b17065cc111965bea2fc74c8c6dce5eb96d7a3bafa05b6b0713862ca9466",
+      "frozen_receipt_sha256": "8495d1ae0702a1b76fee2af7482a8fd0f2eb658ad72ae88da041215af98af321"
+    },
+    {
+      "case": "immich-m2t-upload",
+      "planned_slots": 8,
+      "config_sha256": "8d7ec2f290b80b08eb24040c423b493ab9522dc80f9c7a516d88b9dc7de6cf8d",
+      "frozen_receipt_sha256": "7044a11afd3e5e8aec280081cbc81cd20c923a7b896c30686e3c8b85a4ab3dae"
+    },
+    {
+      "case": "mattermost-anonymous-team-url",
+      "planned_slots": 8,
+      "config_sha256": "3c4d996495acdf209d1bdf9d4d207fd1d39e042d745c0c92954a5f44399d5a32",
+      "frozen_receipt_sha256": "9ca16d5454929036c17c5691ee3e9d0738fa9682f9be852c1b940d7a444e7119"
+    },
+    {
+      "case": "mattermost-timezone-default-automatic",
+      "planned_slots": 8,
+      "config_sha256": "bf15572c6e8c424b936200cb52fc676d4670d161adda98f769709ca16fc5fe25",
+      "frozen_receipt_sha256": "c28bfb3a02cb41b240b0f4ac50898f606eb838f7f28ce6946b211dd7648aef73"
+    },
+    {
+      "case": "nextcloud-device-password-once",
+      "planned_slots": 8,
+      "config_sha256": "d015721de8b8ca7fd07d97372a5d0568f303178409c307d1f0d87cfea734dc7c",
+      "frozen_receipt_sha256": "f6e3ab5a3735ae8b23049be54c4715b35b093aeb49c767f34f86002b86b5f790"
+    },
+    {
+      "case": "openproject-filter-text-autoupdate",
+      "planned_slots": 8,
+      "config_sha256": "71ed40ace0e99ec8c944a6602a517b9dacc2a5caf84522715a0a511970dd92b0",
+      "frozen_receipt_sha256": "fb9176f153a28b0fae9456136a8798006d77512df250d70cfcf9dca781703839"
+    },
+    {
+      "case": "openproject-invite-permission-basis",
+      "planned_slots": 8,
+      "config_sha256": "7b5071f3d4f110dcd6bd90e38f223783a2996b7b697c316abf7b8c6cf9e086a3",
+      "frozen_receipt_sha256": "43a29264a99b535a4dd03356f48426c6d3582964d41f9d0cb64257847b56e711"
+    },
+    {
+      "case": "paperless-doc-title-placeholder",
+      "planned_slots": 8,
+      "config_sha256": "737781cbe49c91c1f5bc5e38274ade95d77afadd38fad9f8b290fc5272660777",
+      "frozen_receipt_sha256": "a88bfbaddb80f125168b320748286d33f8487255cbc71d0814a45707bfda2d07"
+    },
+    {
+      "case": "paperless-superuser-grant",
+      "planned_slots": 8,
+      "config_sha256": "d180f54c6466a953f2af34bb78294e1adac145cfbf755a20428ca512f3d7e666",
+      "frozen_receipt_sha256": "c5e9b091c1cb934f1cb57c5f2a026dcb926b9ab7e95a9fa3bac6a62b4ce44ada"
+    },
+    {
+      "case": "wekan-field-order-independent",
+      "planned_slots": 8,
+      "config_sha256": "eb2aa39dbd7afd5f6d77e5fd96dac32c2a65f4f5347c1ca5d3f9ff6942f78c87",
+      "frozen_receipt_sha256": "3a184a2f39ac3d4369c11a9b60e303ec93bbd730b2dbf2bf348eea1cad527a79"
+    },
+    {
+      "case": "wekan-swimlane-below-default",
+      "planned_slots": 8,
+      "config_sha256": "ede04b387146cd8637b038277c8a49837d00c7e01b2dc6458546742bf10a41ca",
+      "frozen_receipt_sha256": "a1d6b8b3586ddf7d4d1f6120ff35df7b92d89c1b9f8e1f2f6f9ce7cf3ac55bf9"
+    },
+    {
+      "case": "wekan-sync-local-edits",
+      "planned_slots": 8,
+      "config_sha256": "ec447704e240f535aaf98be1963ac20ceb6d196d943eecb7c18cb139043e64da",
+      "frozen_receipt_sha256": "1ad0deada266fe6a56497672d4a60ec483a4ea9c2e6fdb9b5e95892a8c3b261c"
+    },
+    {
+      "case": "wekan-week-number-immediate",
+      "planned_slots": 8,
+      "config_sha256": "b14bf4ec85d8a9d1c990d81a1658319dcb87283ed607818f7b09363f8f1cdcdd",
+      "frozen_receipt_sha256": "bac90c192e1ec941352a5fb1c21076d49fb12837f14b9c523623db5261a027c6"
+    },
+    {
+      "case": "zulip-gif-picker-disabled",
+      "planned_slots": 8,
+      "config_sha256": "e985fdc25b8212813f6b9bd35b92f411dc4207e0ce4877bc58aa1000e1f9900a",
+      "frozen_receipt_sha256": "b79c80d079182158b89d47088e2e3e7dad58305b103f30ce9d0d146238fa261e"
+    },
+    {
+      "case": "zulip-reverse-linkifier-paste",
+      "planned_slots": 8,
+      "config_sha256": "f349ff9be7583dce4a18865aad63877fff778168790cd0b89f9b3e362f4ba261",
+      "frozen_receipt_sha256": "8f525582145192f7e9978a6faa8e6b22cda7e87ff8d38fb3ce03eac31c015bae"
+    }
+  ]
+}

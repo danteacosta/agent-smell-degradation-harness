@@ -1,0 +1,178 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "grist-page-default-collapse",
+  "planned_slots": 8,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "H": {
+        "target_only_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "H": {
+        "target_only_failure": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "grist-page-default-collapse-13eeac91b5d54ff029380d80",
+      "intent_id": "grist-page-default-collapse",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "44c4894b070703ab65ae55fc16bbdbbef46c68f47b3405fa1e19bf06f640f1b3",
+        "screenshots": {
+          "fixture-1.png": "d8e97e7d23b00c4970bcd2cfb14425980c4ebe764e42e04fd18dbd158d826bb4",
+          "fixture-2.png": "ef00e29e2826152bc7233b2eb6f98ba18fa015629715bdf19839f99b15b1d639"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-page-default-collapse-b8d6a8e0da202448da5a6f0b",
+      "intent_id": "grist-page-default-collapse",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "1ca9b59d4b6ac5218005a996eca9762a39ba444f523d9ccafe13d43567a18c81",
+        "screenshots": {
+          "fixture-1.png": "df8e46b8f2b2c8694969b924cd5a11e2b437ef0ab27e522f3cce4fb15a56d781",
+          "fixture-2.png": "91093fecf6a42195fd4dfe2293d3e144901b86ca0dd7d7677dae38bc526ea426"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-page-default-collapse-d1aeddfbcd131e67682264c9",
+      "intent_id": "grist-page-default-collapse",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "fa664f0e5902cebac0ddaf52eb7418a30c9700f8821a66eadbee345e506975c1",
+        "screenshots": {
+          "fixture-1.png": "df8e46b8f2b2c8694969b924cd5a11e2b437ef0ab27e522f3cce4fb15a56d781",
+          "fixture-2.png": "91093fecf6a42195fd4dfe2293d3e144901b86ca0dd7d7677dae38bc526ea426"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-page-default-collapse-23962266a7bb4a8eb524703b",
+      "intent_id": "grist-page-default-collapse",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "7904bde11b4c260f652dcca0e36f07d1fe759c3bc14a81789e7ebf86871c9eef",
+        "screenshots": {
+          "fixture-1.png": "d8e97e7d23b00c4970bcd2cfb14425980c4ebe764e42e04fd18dbd158d826bb4",
+          "fixture-2.png": "ef00e29e2826152bc7233b2eb6f98ba18fa015629715bdf19839f99b15b1d639"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-page-default-collapse-b34d18ab5878ddfe0fff1917",
+      "intent_id": "grist-page-default-collapse",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "20f4a0cccce81264f5804a9659a772c322771a032722995409def6f5fa29d95e",
+        "screenshots": {
+          "fixture-1.png": "d8e97e7d23b00c4970bcd2cfb14425980c4ebe764e42e04fd18dbd158d826bb4",
+          "fixture-2.png": "ef00e29e2826152bc7233b2eb6f98ba18fa015629715bdf19839f99b15b1d639"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-page-default-collapse-696eb2fe019610b489f5959b",
+      "intent_id": "grist-page-default-collapse",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "623987d98ea558c2d4720640cd7ca96947807460e15dd5947525bb21d28b93e2",
+        "screenshots": {
+          "fixture-1.png": "d8e97e7d23b00c4970bcd2cfb14425980c4ebe764e42e04fd18dbd158d826bb4",
+          "fixture-2.png": "ef00e29e2826152bc7233b2eb6f98ba18fa015629715bdf19839f99b15b1d639"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-page-default-collapse-d97ff5fe1edbbda4f5e4146e",
+      "intent_id": "grist-page-default-collapse",
+      "project_id": "grist",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "86d1c8bed7162e45a44cc19813e07c8ef8c2445cfeda766cb0632245adb359e7",
+        "screenshots": {
+          "fixture-1.png": "df8e46b8f2b2c8694969b924cd5a11e2b437ef0ab27e522f3cce4fb15a56d781",
+          "fixture-2.png": "91093fecf6a42195fd4dfe2293d3e144901b86ca0dd7d7677dae38bc526ea426"
+        }
+      }
+    },
+    {
+      "slot_id": "grist-page-default-collapse-32db96a851ecb2eb069f68e1",
+      "intent_id": "grist-page-default-collapse",
+      "project_id": "grist",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "b01fde4502827ba04a69a31cf36af331272ff8d08ec48069129324fa320fc255",
+        "screenshots": {
+          "fixture-1.png": "df8e46b8f2b2c8694969b924cd5a11e2b437ef0ab27e522f3cce4fb15a56d781",
+          "fixture-2.png": "91093fecf6a42195fd4dfe2293d3e144901b86ca0dd7d7677dae38bc526ea426"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

@@ -1,0 +1,435 @@
+{
+  "schema_version": "historical-arm-report/v1",
+  "confirmatory_eligible": false,
+  "admitted_cases": 17,
+  "finished_cases": 17,
+  "h_vs_a": {
+    "drop": {
+      "estimand": "paired_probability_of_superiority/v1",
+      "direction": "values above 0.5 mean the defective variant is worse",
+      "estimate": 0.6838235294117647,
+      "ci95_project_cluster": {
+        "low": 0.5852272727272727,
+        "high": 0.8125
+      },
+      "paired_randomization_pvalue": 0.008598280343931213,
+      "n_pairs": 65,
+      "n_intents": 17,
+      "n_projects": 8,
+      "pair_outcomes": {
+        "defective_worse": 25,
+        "tie": 40,
+        "defective_better": 0
+      },
+      "valid_for_inference": true
+    },
+    "worst": {
+      "estimand": "paired_probability_of_superiority/v1",
+      "direction": "values above 0.5 mean the defective variant is worse",
+      "estimate": 0.6985294117647058,
+      "ci95_project_cluster": {
+        "low": null,
+        "high": null
+      },
+      "paired_randomization_pvalue": null,
+      "n_pairs": 68,
+      "n_intents": 17,
+      "n_projects": 8,
+      "pair_outcomes": {
+        "defective_worse": 27,
+        "tie": 41,
+        "defective_better": 0
+      },
+      "valid_for_inference": false,
+      "analysis_scope": "deterministic_sensitivity_bound"
+    },
+    "best": {
+      "estimand": "paired_probability_of_superiority/v1",
+      "direction": "values above 0.5 mean the defective variant is worse",
+      "estimate": 0.6691176470588235,
+      "ci95_project_cluster": {
+        "low": null,
+        "high": null
+      },
+      "paired_randomization_pvalue": null,
+      "n_pairs": 68,
+      "n_intents": 17,
+      "n_projects": 8,
+      "pair_outcomes": {
+        "defective_worse": 25,
+        "tie": 41,
+        "defective_better": 2
+      },
+      "valid_for_inference": false,
+      "analysis_scope": "deterministic_sensitivity_bound"
+    }
+  },
+  "h_vs_a_by_construction": {
+    "absent_h_equals_c": {
+      "cases": 12,
+      "estimand": "paired_probability_of_superiority/v1",
+      "direction": "values above 0.5 mean the defective variant is worse",
+      "estimate": 0.75,
+      "ci95_project_cluster": {
+        "low": 0.6363636363636364,
+        "high": 0.8854166666666666
+      },
+      "paired_randomization_pvalue": 0.016396720655868825,
+      "n_pairs": 45,
+      "n_intents": 12,
+      "n_projects": 7,
+      "pair_outcomes": {
+        "defective_worse": 24,
+        "tie": 21,
+        "defective_better": 0
+      },
+      "valid_for_inference": true
+    },
+    "vaguer_c_plus_old_passage": {
+      "cases": 5,
+      "estimand": "paired_probability_of_superiority/v1",
+      "direction": "values above 0.5 mean the defective variant is worse",
+      "estimate": 0.525,
+      "ci95_project_cluster": {
+        "low": 0.5,
+        "high": 0.575
+      },
+      "paired_randomization_pvalue": 1.0,
+      "n_pairs": 20,
+      "n_intents": 5,
+      "n_projects": 5,
+      "pair_outcomes": {
+        "defective_worse": 1,
+        "tie": 19,
+        "defective_better": 0
+      },
+      "valid_for_inference": true
+    }
+  },
+  "diagnostics": {
+    "grist-page-default-collapse": {
+      "A_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "H_now": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      },
+      "C_then": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      }
+    },
+    "grist-suggestions-open-copy": {
+      "A_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      }
+    },
+    "immich-library-single-owner": {
+      "A_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 1,
+        "held": 3,
+        "unknown": 0
+      },
+      "H_now": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      },
+      "C_then": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      }
+    },
+    "immich-m2t-upload": {
+      "A_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "H_now": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      },
+      "C_then": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      }
+    },
+    "mattermost-anonymous-team-url": {
+      "A_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "H_now": {
+        "violated": 3,
+        "held": 1,
+        "unknown": 0
+      },
+      "C_then": {
+        "violated": 3,
+        "held": 1,
+        "unknown": 0
+      }
+    },
+    "mattermost-timezone-default-automatic": {
+      "A_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "H_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "C_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      }
+    },
+    "nextcloud-device-password-once": {
+      "A_now": {
+        "violated": 1,
+        "held": 3,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      }
+    },
+    "openproject-filter-text-autoupdate": {
+      "A_now": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 3,
+        "held": 0,
+        "unknown": 1
+      }
+    },
+    "openproject-invite-permission-basis": {
+      "A_now": {
+        "violated": 3,
+        "held": 0,
+        "unknown": 1
+      },
+      "A_then": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      },
+      "H_now": {
+        "violated": 3,
+        "held": 0,
+        "unknown": 1
+      },
+      "C_then": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      }
+    },
+    "paperless-doc-title-placeholder": {
+      "A_now": {
+        "violated": 3,
+        "held": 1,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 2,
+        "held": 2,
+        "unknown": 0
+      },
+      "H_now": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      },
+      "C_then": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      }
+    },
+    "paperless-superuser-grant": {
+      "A_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "H_now": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      },
+      "C_then": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      }
+    },
+    "wekan-field-order-independent": {
+      "A_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "H_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "C_then": {
+        "violated": 0,
+        "held": 3,
+        "unknown": 1
+      }
+    },
+    "wekan-swimlane-below-default": {
+      "A_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "H_now": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      },
+      "C_then": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      }
+    },
+    "wekan-sync-local-edits": {
+      "A_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      }
+    },
+    "wekan-week-number-immediate": {
+      "A_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "H_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "C_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      }
+    },
+    "zulip-gif-picker-disabled": {
+      "A_now": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      },
+      "A_then": {
+        "violated": 0,
+        "held": 4,
+        "unknown": 0
+      }
+    },
+    "zulip-reverse-linkifier-paste": {
+      "A_now": {
+        "violated": 3,
+        "held": 0,
+        "unknown": 1
+      },
+      "A_then": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      },
+      "H_now": {
+        "violated": 3,
+        "held": 0,
+        "unknown": 1
+      },
+      "C_then": {
+        "violated": 4,
+        "held": 0,
+        "unknown": 0
+      }
+    }
+  }
+}

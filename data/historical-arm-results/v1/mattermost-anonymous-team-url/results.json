@@ -1,0 +1,179 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "mattermost-anonymous-team-url",
+  "planned_slots": 8,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "H": {
+        "target_only_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "H": {
+        "pass": 1,
+        "target_only_failure": 1
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "mattermost-anonymous-team-url-6b11eba6000ecb8e9a8fc5ca",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "a7fd10c1b233f9296d43b7ee22e7a8056304bbd7d6812b7dd2aff692643537f1",
+        "screenshots": {
+          "fixture-1.png": "188f7126aa4e533035f1563bd79e031b0334799a2dbe793cd088ef9f69e78c30",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-49979d3bd7652f62091538b0",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "5653b803f80a85fced41dc51af366fb5a317b4810206160981abc5bb7de0dbfb",
+        "screenshots": {
+          "fixture-1.png": "34a60c2d618bfa930bc1922ab482e8daed79ed29a407e559333884f85ead9ca4",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-edcda5cc5403b4296f31b04a",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "8bca7772f66f4da670e1b5a401c598954117e1636d9d508b8ea0beefe478d9b7",
+        "screenshots": {
+          "fixture-1.png": "188f7126aa4e533035f1563bd79e031b0334799a2dbe793cd088ef9f69e78c30",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-e0766b3ae38b497f8758a270",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "34e6762fdf0fdfc529ee43aa75979512196aa60456e685d88f310d50b2367f2f",
+        "screenshots": {
+          "fixture-1.png": "13e7593b281f71f283d53a58d03ef60376a9d1d4e611deee681ae312578c98a6",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-a5247df7cd27cdfa580e8eb6",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "H",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "b39a1ceb619fb80f505546eaa5cdf0ef5d18ea12e5ab8c36c2f207b744903067",
+        "screenshots": {
+          "fixture-1.png": "cd7da4578f7f5b508be9627ef75a787502b3d14e91086c80d2c15f058ef7e6a8",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-bbe4f463eeebacc284906edd",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "01195e98d5ef0fe7f5b2bdf7652d23a6c9b40924312fdf1f7ac9bfefa0f26e43",
+        "screenshots": {
+          "fixture-1.png": "13e7593b281f71f283d53a58d03ef60376a9d1d4e611deee681ae312578c98a6",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-fccdeeea62718078a76f4221",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "8f38a897eb7146c51f24f1bc6c794983b0fdf4961a04f0246750a99f1a9b4166",
+        "screenshots": {
+          "fixture-1.png": "13e7593b281f71f283d53a58d03ef60376a9d1d4e611deee681ae312578c98a6",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-anonymous-team-url-9e9537f48ad8c96cc53b7ecd",
+      "intent_id": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "6a49005d98717437e212face429e679abebafc25d2f4dbd16e0c9b5067139e90",
+        "screenshots": {
+          "fixture-1.png": "188f7126aa4e533035f1563bd79e031b0334799a2dbe793cd088ef9f69e78c30",
+          "fixture-2.png": "67ff6c1f0df01a6312d0a98e2f7b909dc57943d5a25d457f23a5149882c4ffaa"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

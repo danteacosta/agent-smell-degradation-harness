@@ -1,0 +1,32 @@
+{
+  "schema_version": "historical-arm-orchestration/v1",
+  "date": "2026-10-05",
+  "reason": "latency reduction; no E2E outcomes consulted",
+  "main_worker": "existing forward wrapper",
+  "additional_workers": [
+    [
+      "openproject-filter-text-autoupdate",
+      "openproject-invite-permission-basis",
+      "paperless-doc-title-placeholder",
+      "paperless-superuser-grant",
+      "wekan-field-order-independent"
+    ],
+    [
+      "wekan-swimlane-below-default",
+      "wekan-sync-local-edits",
+      "wekan-week-number-immediate",
+      "zulip-gif-picker-disabled",
+      "zulip-reverse-linkifier-paste"
+    ]
+  ],
+  "case_schedules_and_prompts_changed": false,
+  "retry": false,
+  "worker_reassignments": [
+    {
+      "event": "finished_worker0_assigned_last_unstarted_forward_case",
+      "case": "nextcloud-device-password-once",
+      "reason": "reduce idle time; fixed unstarted case, same frozen per-case schedule and inputs",
+      "maximum_concurrent_case_workers": 3
+    }
+  ]
+}
