@@ -18,7 +18,7 @@ Tudo vem da coleta congelada de 03/10 (`data/selection-abc-results/20261003`). O
 | Mutante confirmado | implementação do braço C com veredito `target_only_failure`: perdeu a regra e o oráculo comprovou | 81 |
 | Recuperada | implementação do braço C com veredito `pass`: o pedido omitia a regra, mas o agente a manteve | 17 |
 
-Ficam de fora as falhas mistas (`mixed_failure`, 11 em C), as falhas em A e os desconhecidos.
+Falhas mistas, falhas em A e desconhecidos não entram como mutantes confirmados. Nos 25 requisitos elegíveis, há também uma página C com falha mista e uma com erro de navegador: elas entram apenas como `unconfirmed` no escore ingênuo, que considera as 100 páginas C, sem mudar os 81 mutantes confirmados.
 
 **Elegibilidade (mecânica):** pelo menos uma implementação correta e um mutante confirmado. São **25 requisitos em 8 projetos**.
 
@@ -44,7 +44,7 @@ Cada suíte roda contra todas as implementações corretas, mutantes e recuperad
 - **Mutante morto:** uma suíte sólida dispara alarme nele (falha de asserção ou erro).
 - **Escore de mutação de uma suíte:** mutantes mortos ÷ mutantes confirmados do requisito.
 - **Escore do requisito para uma fonte:** a média das suas 2 suítes.
-- **Suítes inutilizáveis** (falha de geração, suíte inválida, erro do runner) contam como não sólidas e não matam nada (intenção de testar).
+- **Suítes inutilizáveis** (falha de geração, suíte inválida ou erro do runner em qualquer execução da suíte) contam como não sólidas e não matam nada (intenção de testar).
 
 ## 5. Hipóteses e decisão
 
@@ -63,7 +63,7 @@ Com 8 projetos, o menor p possível é 2/256 ≈ 0,0078.
 **Descritivas, sem decisão:**
 - **Fração de suítes sólidas por fonte.** Mede falsos alarmes contra implementações corretas.
 - **Alarmes em implementações recuperadas e em outras corretas.** Uma suíte sólida não deveria disparar nelas.
-- **Escore "ingênuo".** Trata todas as implementações de C como mutantes, sem confirmação do oráculo, e é comparado ao escore confirmado. Isso mostra quanto uma análise de mutação de especificação erraria se não verificasse que o mutante realmente viola a regra.
+- **Escore "ingênuo".** Trata todas as implementações de C como mutantes, sem confirmação do oráculo, e é comparado ao escore confirmado. As duas versões são reportadas com o mesmo peso por requisito e também como proporções agregadas, para não confundir mudança de rótulo com mudança de ponderação. Isso mostra quanto uma análise de mutação de especificação erraria se não verificasse que o mutante realmente viola a regra.
 - **Requisitos com todos os mutantes mortos e com nenhum morto,** por fonte.
 
 ## 6. O que este estudo não é
@@ -96,3 +96,9 @@ O script:
 6. copia para `data/mutation-adequacy/v1/` os resultados, os controles e o manifesto público, sem caminhos privados nem respostas brutas.
 
 Ele recusa rodar de novo se a pasta da evidência já existir.
+
+## 9. Verificações de integridade antes da geração
+
+Correções feitas na revisão antes de qualquer chamada: cada página deve coincidir com o recibo de coleta e com o hash da página no relatório do oráculo, cujo hash está no resultado publicado. O runtime verifica os dois scripts Python, o runner e a imagem contra o congelamento; a execução também verifica cada suíte contra o hash registrado na geração. O runner remove seu contêiner nomeado se o cliente Docker atingir o timeout. Os pacotes e resultados antigos não foram alterados; para reproduzir a versão antiga do script compartilhado, usa-se seu commit original.
+
+O plano continua com 150 chamadas; incluir os dois C não confirmados aumenta a execução de 1.134 para 1.146 pares suíte/página. Nenhuma dessas páginas é promovida a mutante confirmado.

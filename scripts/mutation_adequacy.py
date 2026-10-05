@@ -57,7 +57,7 @@ ALARMS = ("assertion_alarm", "error_alarm")
 # ---------------------------------------------------------------- eligibility
 
 def roles(rows: list[dict]) -> dict[str, list[str]]:
-    out = {"correct": [], "mutant": [], "recovered": []}
+    out = {"correct": [], "mutant": [], "recovered": [], "unconfirmed": []}
     for r in sorted(rows, key=lambda r: r["slot_id"]):
         if r["arm"] == "A" and r.get("category") == "pass":
             out["correct"].append(r["slot_id"])
@@ -65,6 +65,8 @@ def roles(rows: list[dict]) -> dict[str, list[str]]:
             out["mutant"].append(r["slot_id"])
         elif r["arm"] == "C" and r.get("category") == "pass":
             out["recovered"].append(r["slot_id"])
+        elif r["arm"] == "C":
+            out["unconfirmed"].append(r["slot_id"])
     return out
 
 
@@ -109,12 +111,26 @@ def plan(cases: list[dict], packets: dict[str, Path]) -> tuple[list[dict], list[
         config = json.loads((CASES_DIR / f"{c['case']}.json").read_text())
         scaffold = (ROOT / config["fixture"] / "page.html").read_text()
         packet = Path(packets[c["case"]])
+        published = json.loads((RESULTS_ROOT / c["case"] / "results.json").read_text())
+        if ta.sha256_file(packet / "results.json") != c["results_sha256"]:
+            raise ValueError("source results drift")
+        source_receipt = json.loads((packet / "receipt.json").read_text())["files"]
+        source_rows = {row["slot_id"]: row for row in published["rows"]}
         artifacts = {}
         for role, slots in c["roles"].items():
             for slot in slots:
                 path = packet / "artifacts" / slot / "app.html"
+                artifact_hash = ta.sha256_file(path)
+                if source_receipt.get(f"artifacts/{slot}/app.html") != artifact_hash:
+                    raise ValueError(f"source artifact drift: {slot}")
+                report_path = packet / "execution" / slot / "report.json"
+                expected_report = source_rows[slot].get("execution", {}).get("report_sha256")
+                if not expected_report or ta.sha256_file(report_path) != expected_report:
+                    raise ValueError(f"source oracle report drift: {slot}")
+                if json.loads(report_path.read_text()).get("app_sha256") != artifact_hash:
+                    raise ValueError(f"source artifact does not match oracle report: {slot}")
                 artifacts[slot] = {"role": role, "artifact_path": str(path.resolve()),
-                                   "artifact_sha256": ta.sha256_file(path)}
+                                   "artifact_sha256": artifact_hash}
         reference_code = Path(artifacts[c["reference"]]["artifact_path"]).read_text()
         texts = {"spec_complete": ta.tester_prompt("spec_only", config["arms"]["A"], scaffold),
                  "spec_incomplete": ta.tester_prompt("spec_only", config["arms"]["C"], scaffold),
@@ -161,6 +177,12 @@ def verify(out: Path) -> dict:
     if {k: v for k, v in ta.inventory(out / "frozen").items() if k != "receipt.json"} != receipt:
         raise ValueError("frozen packet drift")
     manifest = json.loads((out / "frozen/manifest.json").read_text())
+    if manifest["script_sha256"] != ta.sha256_file(Path(__file__)):
+        raise ValueError("study script drift since freeze")
+    if manifest["test_anchor_script_sha256"] != ta.sha256_file(Path(ta.__file__)):
+        raise ValueError("test-anchor script drift since freeze")
+    if manifest["image"] != ta.IMAGE:
+        raise ValueError("image drift since freeze")
     if manifest["runner_sha256"] != ta.sha256_file(ta.RUNNER):
         raise ValueError("runner drift since freeze")
     for case in manifest["cases"]:
@@ -214,6 +236,11 @@ def execute(out: Path, executor=ta.docker_execute) -> dict:
     manifest = verify(out)
     if (out / "execution-started.json").exists():
         raise FileExistsError("no resume or retry")
+    for call in manifest["schedule"]:
+        directory = out / "calls" / call["call_id"]
+        result = json.loads((directory / "result.json").read_text())
+        if result["status"] == "suite_ready" and ta.sha256_file(directory / "suite.cjs") != result["suite_sha256"]:
+            raise ValueError(f"suite drift since generation: {call['call_id']}")
     ta.put(out / "execution-started.json", {"generation_sha256": ta.sha256_file(out / "generation.json")})
     cases = {c["case"]: c for c in manifest["cases"]}
     rows = []
@@ -254,21 +281,24 @@ def suite_scores(rows: list[dict]) -> list[dict]:
     out = []
     for call_id, rs in sorted(by_suite.items()):
         ref = [r for r in rs if r["is_reference"]]
-        sound = len(ref) == 1 and ref[0]["verdict"] == "quiet"
+        unusable = any(r["verdict"] in ("generation_failed", "suite_invalid", "runner_error") for r in rs)
+        sound = not unusable and len(ref) == 1 and ref[0]["verdict"] == "quiet"
         alarm = {r["slot_id"]: r["verdict"] in ALARMS for r in rs}
         mutants = [r for r in rs if r["role"] == "mutant"]
         recovered = [r for r in rs if r["role"] == "recovered"]
         others = [r for r in rs if r["role"] == "correct" and not r["is_reference"]]
+        all_c = [r for r in rs if r["role"] in ("mutant", "recovered", "unconfirmed")]
         killed = sum(sound and alarm[r["slot_id"]] for r in mutants)
         out.append({
             "call_id": call_id, "case": rs[0]["case"], "project_id": rs[0]["project_id"], "source": rs[0]["source"],
             "sound": sound, "mutants": len(mutants), "killed": killed,
             "mutation_score": killed / len(mutants) if mutants else None,
-            "naive_mutants": len(mutants) + len(recovered),
-            "naive_killed": killed + sum(sound and alarm[r["slot_id"]] for r in recovered),
+            "naive_mutants": len(all_c),
+            "naive_killed": sum(sound and alarm[r["slot_id"]] for r in all_c),
+            "naive_mutation_score": sum(sound and alarm[r["slot_id"]] for r in all_c) / len(all_c) if all_c else None,
             "recovered": len(recovered), "recovered_alarms": sum(alarm[r["slot_id"]] for r in recovered),
             "correct_other": len(others), "correct_other_alarms": sum(alarm[r["slot_id"]] for r in others),
-            "unusable": all(r["verdict"] in ("generation_failed", "suite_invalid", "runner_error") for r in rs),
+            "unusable": unusable,
         })
     return out
 
@@ -329,11 +359,17 @@ def analyse(rows: list[dict]) -> dict:
     for source in SOURCES:
         ss = [s for s in suites if s["source"] == source]
         scores = [v for (c, p, s), v in req.items() if s == source]
+        naive_by_case: dict[str, list[float]] = defaultdict(list)
+        for suite in ss:
+            naive_by_case[suite["case"]].append(suite["naive_mutation_score"])
+        naive_scores = [sum(scores) / len(scores) for scores in naive_by_case.values()]
         by_source[source] = {
             "suites": len(ss), "sound": sum(s["sound"] for s in ss), "unusable": sum(s["unusable"] for s in ss),
             "mean_requirement_mutation_score": sum(scores) / len(scores) if scores else None,
             "requirements_all_mutants_killed": sum(v == 1 for v in scores),
             "requirements_no_mutant_killed": sum(v == 0 for v in scores),
+            "naive_mean_requirement_mutation_score": sum(naive_scores) / len(naive_scores) if naive_scores else None,
+            "confirmed_score_pooled": sum(s["killed"] for s in ss) / sum(s["mutants"] for s in ss) if ss else None,
             "naive_score_pooled": (sum(s["naive_killed"] for s in ss) / sum(s["naive_mutants"] for s in ss))
             if ss else None,
             "recovered_alarm_rate": (sum(s["recovered_alarms"] for s in ss) / sum(s["recovered"] for s in ss))

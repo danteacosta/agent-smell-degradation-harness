@@ -201,8 +201,9 @@ def docker_execute(artifact: Path, suite: Path, output: Path) -> dict:
     staging.mkdir(mode=0o700, parents=True)
     (staging / "app.html").write_bytes(artifact.read_bytes())
     (staging / "suite.cjs").write_bytes(suite.read_bytes())
+    container_name = "test-anchor-" + uuid.uuid4().hex
     command = [
-        "docker", "run", "--rm", "--init", "--name", "test-anchor-" + uuid.uuid4().hex,
+        "docker", "run", "--rm", "--init", "--name", container_name,
         "--network", "none", "--user", f"{os.getuid()}:{os.getgid()}", "--read-only",
         "--cap-drop", "ALL", "--security-opt", "no-new-privileges", "--pids-limit", "256",
         "--memory", "1g", "--cpus", "2", "--shm-size", "256m",
@@ -212,7 +213,12 @@ def docker_execute(artifact: Path, suite: Path, output: Path) -> dict:
         "--mount", f"type=bind,src={RUNNER.resolve()},dst=/runner.cjs,readonly",
         "--entrypoint", "node", IMAGE, "/runner.cjs",
     ]
-    result = subprocess.run(command, capture_output=True, timeout=300, check=False)
+    try:
+        result = subprocess.run(command, capture_output=True, timeout=300, check=False)
+    except subprocess.TimeoutExpired:
+        subprocess.run(["docker", "rm", "-f", container_name],
+                       capture_output=True, timeout=15, check=False)
+        raise
     (output / "stderr.txt").write_bytes(result.stderr[-20000:])
     report_path = output / "report.json"
     if not report_path.is_file():

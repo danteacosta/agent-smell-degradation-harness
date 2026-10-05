@@ -44,21 +44,32 @@ def test_project_sign_flip_is_exact_and_grouped():
     assert ma.project_sign_flip({}) is None
 
 
-def test_end_to_end_with_fakes(tmp_path: Path):
+def test_end_to_end_with_fakes(tmp_path: Path, monkeypatch):
     cases = ma.eligible_cases()[:3]
     evidence = tmp_path / "evidence"
     packets = {}
+    public = tmp_path / "public"
     for c in cases:
         packet = evidence / "abc" / c["case"]
         (packet / "frozen").mkdir(parents=True)
         (packet / "frozen/manifest.json").write_text("{}")
         src = ma.RESULTS_ROOT / c["case"] / "results.json"
-        (packet / "results.json").write_bytes(src.read_bytes())
+        source_results = json.loads(src.read_text())
+        by_slot = {r["slot_id"]: r for r in source_results["rows"]}
         for role, slots in c["roles"].items():
             for slot in slots:
                 (packet / "artifacts" / slot).mkdir(parents=True)
-                (packet / "artifacts" / slot / "app.html").write_text(f"<html>ROLE:{role}</html>")
+                artifact = packet / "artifacts" / slot / "app.html"
+                artifact.write_text(f"<html>ROLE:{role}</html>")
+                report = packet / "execution" / slot / "report.json"
+                ma.ta.put(report, {"app_sha256": ma.ta.sha256_file(artifact)})
+                by_slot[slot]["execution"] = {"report_sha256": ma.ta.sha256_file(report)}
+        ma.ta.put(packet / "results.json", source_results)
+        ma.ta.put(public / c["case"] / "results.json", source_results)
+        ma.ta.put(packet / "receipt.json", {"files": ma.ta.inventory(packet)})
+        c["results_sha256"] = ma.ta.sha256_file(packet / "results.json")
         packets[c["case"]] = str(packet)
+    monkeypatch.setattr(ma, "RESULTS_ROOT", public)
     found = ma.locate(evidence, cases)
     assert found == packets
 
@@ -70,7 +81,7 @@ def test_end_to_end_with_fakes(tmp_path: Path):
 
         def complete(self, request):
             knows_rule = any(text in request.prompt for text in complete.values())
-            return "```js\nmodule.exports = { tests: [] }; // " + ("KILL" if knows_rule else "SOFT") + "\n```"
+            return "```js\nmodule.exports = { tests: [{name: 'check', run: async () => {}}] }; // " + ("KILL" if knows_rule else "SOFT") + "\n```"
 
     def executor(artifact, suite, output):
         role = artifact.read_text().split("ROLE:")[1].split("<")[0]
