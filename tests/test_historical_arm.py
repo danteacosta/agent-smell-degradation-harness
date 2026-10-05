@@ -35,14 +35,13 @@ def test_sentence_bounds_and_h_text():
     c = "Open the page. You can restore it. Done."
     assert ha.h_text(a, c, "absent", None) == (c, "absent_h_equals_c")
     h, how = ha.h_text(a, c, "vaguer", "Deleted files go\nto the bin")
-    assert how == "vaguer_old_passage_spliced"
-    assert h == "Open the page. Deleted files go to the bin. You can restore it. Done."
-    # a span that cuts a sentence is widened to the whole sentence
+    assert how == "vaguer_c_plus_old_passage"
+    assert h == c + "\n\nDeleted files go to the bin"
+    # A partial-sentence deletion must not remove the surrounding context
     a2 = "Match the system theme, including contrast settings. Save."
     c2 = "Match the system theme. Save."
-    assert ha.sentence_bounds(a2, *ha.omitted_span(a2, c2)) == (0, len("Match the system theme, including contrast settings."))
     h2, how2 = ha.h_text(a2, c2, "vaguer", "OpenProject will match the system theme.")
-    assert how2 == "vaguer_old_passage_spliced" and h2 == "OpenProject will match the system theme. Save."
+    assert how2 == "vaguer_c_plus_old_passage" and h2 == c2 + "\n\nOpenProject will match the system theme."
     # an old passage that already survives in C gives H = C
     assert ha.h_text(a2, c2, "vaguer", "match the system theme") == (c2, "vaguer_passage_survives_in_c")
 
@@ -169,8 +168,8 @@ def test_old_quote_with_different_meaning_is_not_discarded_by_token_overlap():
     a = 'Open the page. Deleted files go to the bin. Deleted files do not go to the bin.'
     c = 'Open the page. Deleted files do not go to the bin.'
     h, how = ha.h_text(a, c, 'vaguer', 'Deleted files go to the bin')
-    assert how == 'vaguer_old_passage_spliced'
-    assert 'Deleted files go to the bin.' in h
+    assert how == 'vaguer_c_plus_old_passage'
+    assert 'Deleted files go to the bin' in h
 
 
 @pytest.mark.parametrize('vote', [
@@ -245,3 +244,12 @@ def test_build_revalidates_the_deciding_quote_against_the_reviewed_source(tmp_pa
     with pytest.raises(ValueError, match='literal quote'):
         ha.build(CLASSIFICATION, path, tmp_path / 'built')
     assert not (tmp_path / 'built').exists()
+
+@pytest.mark.parametrize('case', ['wekan-sync-local-edits', 'paperless-custom-field-no-value'])
+def test_vaguer_reconstruction_preserves_all_non_target_context(case):
+    config = json.loads((ha.CASES_DIR / f'{case}.json').read_text())
+    quote = ('a changed title/description updates the existing card;' if case.startswith('wekan')
+             else 'Custom fields. Note that no value for the field will be set')
+    h, _ = ha.h_text(config['arms']['A'], config['arms']['C'], 'vaguer', quote)
+    assert config['arms']['C'] in h
+    assert quote in h

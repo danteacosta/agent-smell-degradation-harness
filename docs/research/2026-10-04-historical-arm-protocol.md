@@ -57,7 +57,7 @@ A decisão final é a dos dois primários quando concordam nas duas perguntas; n
 | `same` | não (sem diferença) | — |
 | `different` | não (mudança de comportamento, não de especificação) | — |
 | `absent` | sim | H = C |
-| `vaguer` | sim | A, com as frases que contêm a regra trocadas pela citação antiga literal; se a citação já aparece de forma contígua em C, normalizando somente espaços e caixa, H = C |
+| `vaguer` | sim | C integral, seguido de um novo parágrafo com a citação antiga literal; se a citação já aparece de forma contígua em C, normalizando somente espaços e caixa, H = C |
 
 `build` grava `data/historical-arm/admission.json` e uma config derivada por caso em `data/historical-arm/cases/`. O painel vincula a classificação e as configs a hashes congelados; `build` recusa mudanças nos textos revisados e exige citações válidas. Os dois modelos primários devem ser distintos. A config derivada tem os braços A, B, C e H, `collect_arms: ["A", "H"]` e uma semente nova. O `build` se recusa a sobrescrever textos H já construídos, e a etapa 4 se recusa a rodar com `data/historical-arm/` fora do git.
 
@@ -104,3 +104,9 @@ O painel com Astra/Sol e Luna como desempate tentou os 15 controles e parou ante
 A próxima qualificação mantém os textos, os cinco controles e o critério, substituindo apenas o desempatador por `gpt-6.1-sol`, distinto dos dois primários. A troca é exploratória e ocorre sem decisões dos 40 casos. A rodada anterior permanece preservada; não se reexecutam seus slots.
 
 A segunda qualificação tentou 15 controles, com dez respostas válidas dos primários e cinco rejeições de API para `gpt-6.1-sol`: o modelo não é suportado nesta assinatura pelo CLI. Zero casos foram codificados. SHA-256 do resultado privado: `ce6d31af82953b38c814cdb2b571da2e6bd6bdde7822c16fb9162317764013da`. Depois de consultar o catálogo local do CLI, a próxima qualificação usa `gpt-5.6-terra` como desempate; esse modelo é listado pelo runtime e é distinto de Astra/Sol e dos geradores Luna/Sol 5.6 da coleta original. Textos, controles e critério permanecem idênticos.
+
+## Revisão dos H antes do congelamento
+
+A primeira construção dos seis `vaguer` ampliava a deleção para sentenças completas. A revisão independente encontrou perda de APIs e regras não alvo em WeKan e Paperless. Nenhuma geração A/H havia ocorrido. A construção passa uniformemente a **C + passagem histórica literal**, em parágrafo separado, preservando todo C byte a byte; não inclui nova instrução interpretativa. A posição da passagem e a duplicação de contexto são limitações da reconstrução. Os votos do painel permanecem intactos.
+
+Em 05/10, a revisão das fontes colocou Paperless `custom-field-no-value` e Nextcloud `mail-favorites-up` em quarentena. O painel original continua com 19 admitidos; o conjunto operativo tem 17 (12 absent, cinco vaguer) e 136 chamadas, conforme [relatório da admissão](2026-10-05-historical-panel-admission.md). A revisão é não cega e não substitui votos ou auditoria humana.

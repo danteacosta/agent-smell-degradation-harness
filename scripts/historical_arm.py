@@ -18,8 +18,7 @@ from A. It is not the complete historical requirement text.
 
 Admission (frozen before any H generation): the old documentation describes
 the feature of the requirement, and the target rule there is either absent
-or stated in a vaguer form. Absent: H is C. Vaguer: H is A with the sentences
-that carry the rule replaced by the old passage quoted verbatim; if the old
+or stated in a vaguer form. Absent: H is C. Vaguer: H retains all of C and appends the old passage quoted verbatim; if the old
 passage already survives in C, H is C. Same or different (a behavior change,
 not an underspecification) and undocumented features are excluded.
 
@@ -408,34 +407,17 @@ def run_panel(out: Path, provider_factory=None) -> dict:
 
 # ------------------------------------------------------------------ admission and H texts
 
-SENTENCE_BREAK = re.compile(r"(?<=[.!?])\s+(?=\S)")
 H_SEED_OFFSET = 7_000_000
 
 
-def sentence_bounds(a: str, start: int, end: int) -> tuple[int, int]:
-    """Widen [start, end) to whole sentences of A."""
-    while start < end and a[start].isspace():
-        start += 1
-    while end > start and a[end - 1].isspace():
-        end -= 1
-    starts = [0] + [m.end() for m in SENTENCE_BREAK.finditer(a)]
-    ends = [m.start() for m in SENTENCE_BREAK.finditer(a)] + [len(a)]
-    return max(s for s in starts if s <= start), min(e for e in ends if e >= end)
-
-
 def h_text(a: str, c: str, status: str, quote: str | None) -> tuple[str, str]:
-    """(H, construction). Absent: H is C. Vaguer: old passage in place of the rule's sentences."""
+    """(H, construction). Absent: H is C. Vaguer: preserve C and append the literal old passage."""
     if status == "absent":
         return c, "absent_h_equals_c"
     quote = " ".join(quote.split())
     if quote.casefold() in " ".join(c.split()).casefold():
         return c, "vaguer_passage_survives_in_c"
-    start, end = omitted_span(a, c)
-    xs, xe = sentence_bounds(a, start, end)
-    if quote[-1] not in ".!?":
-        quote += "."
-    h = (a[:xs] + quote + a[xe:]).strip()
-    return re.sub(r"[ \t]+", " ", h), "vaguer_old_passage_spliced"
+    return c + "\n\n" + quote, "vaguer_c_plus_old_passage"
 
 
 def build(classification_path: Path, panel_results: Path, out_dir: Path, cases_dir: Path = CASES_DIR) -> dict:

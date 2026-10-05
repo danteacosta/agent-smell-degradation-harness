@@ -141,3 +141,5 @@ experiment evidence.
 - [H1b: intervalos com quadratura adaptativa e perfil verificado](2026-10-04-h1b-agq-intervals.md). AGQ-100, igual à integração direta; separação de `numeric` tratada de forma exata. Sensibilidade com intercepto de projeto fixado em 0. Nenhuma covariável estimável exclui 1, inclusive `memorized` [0,015; 1,03]; `numeric` ≥ 62 (4 requisitos). Conferido com lme4 `nAGQ = 25`.
 
 - [Braço H: reconstrução controlada guiada pelo histórico](2026-10-04-historical-arm-protocol.md): 40 casos aguardam painel; mantém contexto moderno, não usa o texto histórico integral, e não produz evidência confirmatória.
+
+- [Triagem histórica: 17 casos operativos](2026-10-05-historical-panel-admission.md): painel concluído, duas quarentenas e textos H revisados antes da geração.
