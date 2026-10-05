@@ -18,5 +18,15 @@ for option in $OPTIONS; do
     --screening "$SAMPLE"
   echo "== $option: controls, then the panel (no retry)"
   "$PY" scripts/llm_screening_panel.py run --out "$RUN" | tee "$RUN.summary.json"
+  "$PY" - "$RUN/results.json" <<'PY'
+import json
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+status = json.loads(path.read_text()).get("status")
+if status != "complete":
+    sys.exit(f"Screening stopped: {status!r}; preserve {path} and do not retry.")
+PY
   echo "Done: $RUN/results.json"
 done
