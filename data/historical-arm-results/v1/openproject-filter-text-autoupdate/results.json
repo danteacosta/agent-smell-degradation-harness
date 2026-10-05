@@ -1,0 +1,178 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "openproject-filter-text-autoupdate",
+  "planned_slots": 8,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "target_only_failure": 2
+      },
+      "H": {
+        "target_only_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "target_only_failure": 2
+      },
+      "H": {
+        "target_only_failure": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "openproject-filter-text-autoupdate-647959583a2622a2e87b71a3",
+      "intent_id": "openproject-filter-text-autoupdate",
+      "project_id": "openproject",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "367fbe531571337063258b3830aa88d0ddbd2747b0e79f15dcf3e03fe1bf715f",
+        "screenshots": {
+          "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+          "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+        }
+      }
+    },
+    {
+      "slot_id": "openproject-filter-text-autoupdate-1192b95f943c97ee19026fb7",
+      "intent_id": "openproject-filter-text-autoupdate",
+      "project_id": "openproject",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "76c314f1f61cdde9c00c37100587aa021795dc7af2ac47e8beac984ef52191c7",
+        "screenshots": {
+          "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+          "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+        }
+      }
+    },
+    {
+      "slot_id": "openproject-filter-text-autoupdate-3b25a518a97b1a50ba79c85c",
+      "intent_id": "openproject-filter-text-autoupdate",
+      "project_id": "openproject",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "db1e7ca763755a2d65b79335a4b27064b5023ce107519efe9812ddaed9aa080b",
+        "screenshots": {
+          "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+          "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+        }
+      }
+    },
+    {
+      "slot_id": "openproject-filter-text-autoupdate-90c2ae95a7a8a8df89422b37",
+      "intent_id": "openproject-filter-text-autoupdate",
+      "project_id": "openproject",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "b4da3a2c16fef12de66c5b47db99e76f72671de535a944d5e254fe10f786e162",
+        "screenshots": {
+          "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+          "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+        }
+      }
+    },
+    {
+      "slot_id": "openproject-filter-text-autoupdate-77aec3e11a7085a299a7f666",
+      "intent_id": "openproject-filter-text-autoupdate",
+      "project_id": "openproject",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "ed474138c1bbc0416ca823c1d1042f80465b628141e82578fdfa01a1ba3248d7",
+        "screenshots": {
+          "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+          "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+        }
+      }
+    },
+    {
+      "slot_id": "openproject-filter-text-autoupdate-8bc5453fe77efa993c522566",
+      "intent_id": "openproject-filter-text-autoupdate",
+      "project_id": "openproject",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "0c7bd37852fdfa3eb3eba556b211cd7e748fab6bb8906f657899f8c751eb3d3c",
+        "screenshots": {
+          "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+          "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+        }
+      }
+    },
+    {
+      "slot_id": "openproject-filter-text-autoupdate-fb0ea2c6cb6de9fb901f411c",
+      "intent_id": "openproject-filter-text-autoupdate",
+      "project_id": "openproject",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "bf1fbf0c1ef1bd6273af18fe8c37af9a099fc07d6139d61ea8ca0707c3ec95f4",
+        "screenshots": {
+          "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+          "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+        }
+      }
+    },
+    {
+      "slot_id": "openproject-filter-text-autoupdate-61bd783a0fa2abf6a54c3ebb",
+      "intent_id": "openproject-filter-text-autoupdate",
+      "project_id": "openproject",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "0a4abdd721958a770ad2217652426c17f10e1c717a7c19fe6d90416291dbecaa",
+        "screenshots": {
+          "fixture-1.png": "9979e116054c1966c651c9cb3a39a9e672158cdf34e9962e51226615f96f5e88",
+          "fixture-2.png": "a68b4f3cea6bd5e0574f864e484db815e65fdf2ccd7f122ceff1a73288ac102f"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

@@ -129,7 +129,7 @@ experiment evidence.
 
 - [Coleta dos 46 requisitos: primeiro resultado E2E, 3 de outubro de 2026](2026-10-03-selected46-first-e2e-results.md). Nextcloud: 12 execuções, duas degradações A/C no Luna e dois empates em sucesso no Sol; coleta exploratória em andamento.
 - [Coleta dos 46 requisitos: resultado completo, 4 de outubro de 2026](2026-10-04-selected46-results.md). 552/552 execuções. H1a C vs A = 0,725 [0,68; 0,78] em 9 projetos, com 79 pioras, 93 empates e nenhuma melhora; controle B vs A = 0,500. Exploratório; oito casos com baixo cumprimento em A, auditados sem reclassificar resultados.
-- [H1b: regressão logística mista na coleta dos 46](2026-10-04-h1b-mixed-logit.md). Laplace com interceptos por projeto e requisito; coeficientes reproduzidos com lme4, mas intervalos perfilados provisórios e sem validação externa. `numeric` apresenta separação em quatro requisitos; `derived_state` aponta contra a previsão.
+- [H1b: regressão logística mista na coleta dos 46](2026-10-04-h1b-mixed-logit.md). Relatório original de Laplace, com intervalos posteriormente corrigidos pela análise AGQ abaixo; não usar a significância preliminar. `numeric` apresenta separação em quatro requisitos; `derived_state` aponta contra a previsão.
 - Automatic scoreboard for the selected 46: `python3 scripts/selected46_report.py --results data/selection-abc-results/<date> --markdown <output.md>`. It reports model/arm counts, H1a (C vs A), the B-vs-A wording control with observed and deterministic worst/best bounds, and descriptive H1b tables. During partial collection the bounds include every frozen slot not yet attempted and never receive an interval or p-value; an incomplete or duplicate published packet fails closed.
 - Codificação cega de `context_cue` para os 46 casos: `bash scripts/run_context_cue_panel.sh`, pelo menos 107 chamadas. Os codificadores veem só o trecho omitido e o prompt C, e todo "sim" exige citação literal. A v1 parou nos controles (0 casos codificados); a v2 explicita o critério e tem cinco controles. O placar aceita o resultado com `--context-cue`. Desvio registrado no pré-registro.
 
@@ -140,6 +140,8 @@ experiment evidence.
 - [Validação externa de H1b com lme4 (04/10/2026)](2026-10-04-h1b-lme4-validation.md): coeficientes reproduzidos; intervalos perfilados ainda não validados.
 - [H1b: intervalos com quadratura adaptativa e perfil verificado](2026-10-04-h1b-agq-intervals.md). AGQ-100, igual à integração direta; separação de `numeric` tratada de forma exata. Sensibilidade com intercepto de projeto fixado em 0. Nenhuma covariável estimável exclui 1, inclusive `memorized` [0,015; 1,03]; `numeric` ≥ 62 (4 requisitos). Conferido com lme4 `nAGQ = 25`.
 
-- [Braço H: reconstrução controlada guiada pelo histórico](2026-10-04-historical-arm-protocol.md): 40 casos aguardam painel; mantém contexto moderno, não usa o texto histórico integral, e não produz evidência confirmatória.
+- [Braço H: reconstrução controlada guiada pelo histórico](2026-10-04-historical-arm-protocol.md): 40 casos revisados, 17 operativos após duas quarentenas; mantém contexto moderno, não usa o texto histórico integral, e não produz evidência confirmatória.
 
 - [Triagem histórica: 17 casos operativos](2026-10-05-historical-panel-admission.md): painel concluído, duas quarentenas e textos H revisados antes da geração.
+
+- [Braço histórico H: coleta concluída](2026-10-05-historical-arm-results.md): 17 requisitos dos 46, oito projetos, 136 chamadas; 25 pioras, 27 empates em sucesso, 13 em falha e três pares não avaliáveis. Omissão construída e passagem antiga são analisadas separadamente; exploratório.

@@ -1,0 +1,367 @@
+{
+  "schema_version": "historical-arm-public-audit/v1",
+  "confirmatory_eligible": false,
+  "requirements": 17,
+  "projects": 8,
+  "planned_slots": 136,
+  "attempted_slots": 136,
+  "responses_saved": 136,
+  "rows": 136,
+  "evaluable_target_rows": 132,
+  "pair_counts": {
+    "degradation": 25,
+    "tie_success": 27,
+    "tie_failure": 13,
+    "unknown": 3
+  },
+  "by_construction": {
+    "absent_h_equals_c": {
+      "degradation": 24,
+      "tie_success": 13,
+      "tie_failure": 8,
+      "unknown": 3
+    },
+    "vaguer_c_plus_old_passage": {
+      "tie_success": 14,
+      "tie_failure": 5,
+      "degradation": 1
+    }
+  },
+  "by_model": {
+    "gpt-5.6-luna": {
+      "degradation": 13,
+      "tie_success": 12,
+      "tie_failure": 7,
+      "unknown": 2
+    },
+    "gpt-5.6-sol": {
+      "degradation": 12,
+      "tie_success": 15,
+      "tie_failure": 6,
+      "unknown": 1
+    }
+  },
+  "by_project": {
+    "grist": {
+      "degradation": 4,
+      "tie_success": 4
+    },
+    "immich": {
+      "degradation": 8
+    },
+    "mattermost": {
+      "degradation": 3,
+      "tie_success": 5
+    },
+    "nextcloud": {
+      "tie_failure": 1,
+      "degradation": 1,
+      "tie_success": 2
+    },
+    "openproject": {
+      "tie_failure": 6,
+      "unknown": 2
+    },
+    "paperless-ngx": {
+      "tie_failure": 3,
+      "degradation": 5
+    },
+    "wekan": {
+      "tie_success": 12,
+      "degradation": 4
+    },
+    "zulip": {
+      "tie_success": 4,
+      "unknown": 1,
+      "tie_failure": 3
+    }
+  },
+  "row_categories": {
+    "target_only_failure": 53,
+    "pass": 79,
+    "browser_error": 3,
+    "invalid_output": 1
+  },
+  "categories_by_arm": {
+    "H": {
+      "target_only_failure": 39,
+      "pass": 27,
+      "invalid_output": 1,
+      "browser_error": 1
+    },
+    "A": {
+      "pass": 52,
+      "target_only_failure": 14,
+      "browser_error": 2
+    }
+  },
+  "requirements_with_degradation": 8,
+  "projects_with_degradation": 6,
+  "verified_receipt_files": 1893,
+  "verified_screenshot_bindings": 266,
+  "cases": [
+    {
+      "case": "grist-page-default-collapse",
+      "project": "grist",
+      "construction": "absent_h_equals_c",
+      "pairs": {
+        "degradation": 4
+      }
+    },
+    {
+      "case": "grist-suggestions-open-copy",
+      "project": "grist",
+      "construction": "vaguer_c_plus_old_passage",
+      "pairs": {
+        "tie_success": 4
+      }
+    },
+    {
+      "case": "immich-library-single-owner",
+      "project": "immich",
+      "construction": "absent_h_equals_c",
+      "pairs": {
+        "degradation": 4
+      }
+    },
+    {
+      "case": "immich-m2t-upload",
+      "project": "immich",
+      "construction": "absent_h_equals_c",
+      "pairs": {
+        "degradation": 4
+      }
+    },
+    {
+      "case": "mattermost-anonymous-team-url",
+      "project": "mattermost",
+      "construction": "absent_h_equals_c",
+      "pairs": {
+        "degradation": 3,
+        "tie_success": 1
+      }
+    },
+    {
+      "case": "mattermost-timezone-default-automatic",
+      "project": "mattermost",
+      "construction": "absent_h_equals_c",
+      "pairs": {
+        "tie_success": 4
+      }
+    },
+    {
+      "case": "nextcloud-device-password-once",
+      "project": "nextcloud",
+      "construction": "vaguer_c_plus_old_passage",
+      "pairs": {
+        "tie_failure": 1,
+        "degradation": 1,
+        "tie_success": 2
+      }
+    },
+    {
+      "case": "openproject-filter-text-autoupdate",
+      "project": "openproject",
+      "construction": "vaguer_c_plus_old_passage",
+      "pairs": {
+        "tie_failure": 4
+      }
+    },
+    {
+      "case": "openproject-invite-permission-basis",
+      "project": "openproject",
+      "construction": "absent_h_equals_c",
+      "pairs": {
+        "tie_failure": 2,
+        "unknown": 2
+      }
+    },
+    {
+      "case": "paperless-doc-title-placeholder",
+      "project": "paperless-ngx",
+      "construction": "absent_h_equals_c",
+      "pairs": {
+        "tie_failure": 3,
+        "degradation": 1
+      }
+    },
+    {
+      "case": "paperless-superuser-grant",
+      "project": "paperless-ngx",
+      "construction": "absent_h_equals_c",
+      "pairs": {
+        "degradation": 4
+      }
+    },
+    {
+      "case": "wekan-field-order-independent",
+      "project": "wekan",
+      "construction": "absent_h_equals_c",
+      "pairs": {
+        "tie_success": 4
+      }
+    },
+    {
+      "case": "wekan-swimlane-below-default",
+      "project": "wekan",
+      "construction": "absent_h_equals_c",
+      "pairs": {
+        "degradation": 4
+      }
+    },
+    {
+      "case": "wekan-sync-local-edits",
+      "project": "wekan",
+      "construction": "vaguer_c_plus_old_passage",
+      "pairs": {
+        "tie_success": 4
+      }
+    },
+    {
+      "case": "wekan-week-number-immediate",
+      "project": "wekan",
+      "construction": "absent_h_equals_c",
+      "pairs": {
+        "tie_success": 4
+      }
+    },
+    {
+      "case": "zulip-gif-picker-disabled",
+      "project": "zulip",
+      "construction": "vaguer_c_plus_old_passage",
+      "pairs": {
+        "tie_success": 4
+      }
+    },
+    {
+      "case": "zulip-reverse-linkifier-paste",
+      "project": "zulip",
+      "construction": "absent_h_equals_c",
+      "pairs": {
+        "unknown": 1,
+        "tie_failure": 3
+      }
+    }
+  ],
+  "receipts": [
+    {
+      "case": "grist-page-default-collapse",
+      "results_sha256": "c01ff915758d5b3a1a80dcb6fe7109e2fb1daab65e280e9e2ef2c623404cf191",
+      "private_receipt_sha256": "74b20d8cedf87255f00799e883b414fa72216b4fa61be9ea57dcc2d5648537f2",
+      "frozen_receipt_sha256": "f4bcce9f148442c49a01c8abf62cc4f761165aba928558d05f28976737389afd",
+      "verified_files": 112
+    },
+    {
+      "case": "grist-suggestions-open-copy",
+      "results_sha256": "15302d7462dfc23ae089b2b192c73b4fc3a56b110e7c8f65b08109bf5ac4da0e",
+      "private_receipt_sha256": "e514175038650ef3b60de0d1cc3b83b1993ce9c4007fe481fe7cdbdb8000398d",
+      "frozen_receipt_sha256": "e3e556638df02b2902a37905d5ce2dd835e6d3a58530e2c51944b4919e2f03ea",
+      "verified_files": 112
+    },
+    {
+      "case": "immich-library-single-owner",
+      "results_sha256": "2584b444d0dfe28806f70efd7ec8d32a46a94e194f974eccb8258562d71b79ab",
+      "private_receipt_sha256": "9ecc45937cdbd116ad06ec3c037020f67d44f0085bb9a45d2932143447b00e7d",
+      "frozen_receipt_sha256": "8495d1ae0702a1b76fee2af7482a8fd0f2eb658ad72ae88da041215af98af321",
+      "verified_files": 112
+    },
+    {
+      "case": "immich-m2t-upload",
+      "results_sha256": "11d337f5e8299ef97018a6ee1f9471ca790ae31962bd6d83289b3ec1d30c1931",
+      "private_receipt_sha256": "2c982aabc7cf4ec6aee5e4aaa5cca5bf7cba09b690e647abbb781f5c506e44ba",
+      "frozen_receipt_sha256": "7044a11afd3e5e8aec280081cbc81cd20c923a7b896c30686e3c8b85a4ab3dae",
+      "verified_files": 112
+    },
+    {
+      "case": "mattermost-anonymous-team-url",
+      "results_sha256": "7bb9f50f1f635ccfcac08571287d3393769d81fe5b64425c25827280c2f6c27d",
+      "private_receipt_sha256": "df72309d00fbb8b3c220e68fe4ae5a1f3a4a87d7e2e5871cf251c7bbdfdd130a",
+      "frozen_receipt_sha256": "9ca16d5454929036c17c5691ee3e9d0738fa9682f9be852c1b940d7a444e7119",
+      "verified_files": 112
+    },
+    {
+      "case": "mattermost-timezone-default-automatic",
+      "results_sha256": "890959bbd2007e10654ed425613ed3359cb0d00ae4940a29f83bd0480c569b27",
+      "private_receipt_sha256": "e98b2dc864a7f2fd9756fe9c391e22cb61df581f694e8f2457dc75ff2bb35778",
+      "frozen_receipt_sha256": "c28bfb3a02cb41b240b0f4ac50898f606eb838f7f28ce6946b211dd7648aef73",
+      "verified_files": 112
+    },
+    {
+      "case": "nextcloud-device-password-once",
+      "results_sha256": "7226cbe7fad0ec36a8eca6abc8d11d16401bc1cdd33ba747e760befbb43172fd",
+      "private_receipt_sha256": "e7e223f3e53b4bde23d0e27ec3e565b0c80b76f609d3eb576d2c3afe927fb44d",
+      "frozen_receipt_sha256": "f6e3ab5a3735ae8b23049be54c4715b35b093aeb49c767f34f86002b86b5f790",
+      "verified_files": 112
+    },
+    {
+      "case": "openproject-filter-text-autoupdate",
+      "results_sha256": "b58c9ffdd4161110d745021386299a4906ea2984fad8f37de66183225c766d97",
+      "private_receipt_sha256": "2ec9a9ab75c1af541ef776d7ff72337112efce9e9474a08fa81a0a60b04beaff",
+      "frozen_receipt_sha256": "fb9176f153a28b0fae9456136a8798006d77512df250d70cfcf9dca781703839",
+      "verified_files": 112
+    },
+    {
+      "case": "openproject-invite-permission-basis",
+      "results_sha256": "98c74c9a3c1efce5d8d81f1f26b201cf4f41718b6b28ad89ec7fc8be0f5272ee",
+      "private_receipt_sha256": "9a39470508383a0cfc7dbea339b90f374a539ef3343deb7b4501c21dbfc66489",
+      "frozen_receipt_sha256": "43a29264a99b535a4dd03356f48426c6d3582964d41f9d0cb64257847b56e711",
+      "verified_files": 103
+    },
+    {
+      "case": "paperless-doc-title-placeholder",
+      "results_sha256": "6b1f8c0633d38e9782d4604c30e260c53bde8ff19437004345683b901e332d17",
+      "private_receipt_sha256": "ab92af527b0f23b962bcfba78fa8b3380cf70a3d8faaae79faf30a0a7b376db4",
+      "frozen_receipt_sha256": "a88bfbaddb80f125168b320748286d33f8487255cbc71d0814a45707bfda2d07",
+      "verified_files": 112
+    },
+    {
+      "case": "paperless-superuser-grant",
+      "results_sha256": "8a911c60fec5870d7065f1a3bbf4e40f35b0f52971f8d395aaabf7cd177e6fde",
+      "private_receipt_sha256": "b3295cd2a4c4151bb817d43e5a6557412e3a0d4dd201c81f46d8ed3db3399f50",
+      "frozen_receipt_sha256": "c5e9b091c1cb934f1cb57c5f2a026dcb926b9ab7e95a9fa3bac6a62b4ce44ada",
+      "verified_files": 112
+    },
+    {
+      "case": "wekan-field-order-independent",
+      "results_sha256": "43b54c1fa6c5a7157c9ec5198067820affcd7ba538d6da50b36d0dfad3e33c3a",
+      "private_receipt_sha256": "e265e7be6f9acedf95b150ded06d42a8a884b96cae6f7ff93ada0ef6036db5d7",
+      "frozen_receipt_sha256": "3a184a2f39ac3d4369c11a9b60e303ec93bbd730b2dbf2bf348eea1cad527a79",
+      "verified_files": 112
+    },
+    {
+      "case": "wekan-swimlane-below-default",
+      "results_sha256": "eb7d0fab649596bd34998bcbf98b00f9bb99cfef41586d847ed0e232d1e9edef",
+      "private_receipt_sha256": "a499a209881fa367a864fa199894a1b3ecba999ae1ffef2d58739a5e1fc5ed20",
+      "frozen_receipt_sha256": "a1d6b8b3586ddf7d4d1f6120ff35df7b92d89c1b9f8e1f2f6f9ce7cf3ac55bf9",
+      "verified_files": 112
+    },
+    {
+      "case": "wekan-sync-local-edits",
+      "results_sha256": "16e37b51cf5f02ee3123d70118ea18e4be310b569813f4a01316b150a6a9eaf9",
+      "private_receipt_sha256": "31e5c10d979be1a2e32812ca6257c5c6da6aedb34312ed85b40d6dc8ade9a80f",
+      "frozen_receipt_sha256": "1ad0deada266fe6a56497672d4a60ec483a4ea9c2e6fdb9b5e95892a8c3b261c",
+      "verified_files": 112
+    },
+    {
+      "case": "wekan-week-number-immediate",
+      "results_sha256": "a86938249851109355d45468cd36f0f2637c65d2dacd63881ec65955f17ef4cb",
+      "private_receipt_sha256": "0728a8e1fa9aa12c7aaac68f3669a72f3ed1b17cbc33e6a520c3f9da3ca19ccf",
+      "frozen_receipt_sha256": "bac90c192e1ec941352a5fb1c21076d49fb12837f14b9c523623db5261a027c6",
+      "verified_files": 112
+    },
+    {
+      "case": "zulip-gif-picker-disabled",
+      "results_sha256": "872120bea3a489552215a857c86bfd87792e7cee37b1a4fb67535ca9b8c10e53",
+      "private_receipt_sha256": "ea02538b8b2da1cc03acc24b38b6a0ef615a196af2fd57b08f74f4f4cdc3e3e3",
+      "frozen_receipt_sha256": "b79c80d079182158b89d47088e2e3e7dad58305b103f30ce9d0d146238fa261e",
+      "verified_files": 112
+    },
+    {
+      "case": "zulip-reverse-linkifier-paste",
+      "results_sha256": "aa1567476a039c64d5acf3bb64490449cae84e6ed693e96032eca43e412b8fc6",
+      "private_receipt_sha256": "1ca1b886efe33378f13f58a00d73a74af9e6c87b73233886726682f747fc3554",
+      "frozen_receipt_sha256": "8f525582145192f7e9978a6faa8e6b22cda7e87ff8d38fb3ce03eac31c015bae",
+      "verified_files": 110
+    }
+  ]
+}

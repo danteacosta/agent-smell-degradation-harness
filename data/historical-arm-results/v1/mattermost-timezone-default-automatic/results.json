@@ -1,0 +1,178 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "mattermost-timezone-default-automatic",
+  "planned_slots": 8,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "H": {
+        "pass": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "H": {
+        "pass": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "mattermost-timezone-default-automatic-4ebc8968b4e0d8315e2cdf38",
+      "intent_id": "mattermost-timezone-default-automatic",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "H",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "cde1058aac5aa4371770cdbc8284b046896ec1602e40b89a0a725d279ab37e42",
+        "screenshots": {
+          "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+          "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-timezone-default-automatic-b04145606d6bf4b767c0e6cf",
+      "intent_id": "mattermost-timezone-default-automatic",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "H",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "59a55277ac71a2cc4895fa20db56b5ab42eb05b39dfdaab5c20da0b4dfd28d9a",
+        "screenshots": {
+          "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+          "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-timezone-default-automatic-ba2e75df31d811c51bc945bf",
+      "intent_id": "mattermost-timezone-default-automatic",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "0ef039438c27db47cee7e615b76cca549baad5a9c9498bfb859997965e7b65e6",
+        "screenshots": {
+          "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+          "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-timezone-default-automatic-75bb16af212d31c6fcf84e28",
+      "intent_id": "mattermost-timezone-default-automatic",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "eaf1b2faf30b098e4afe2ae7c8333097add7c060d7a5c85816d7f076958a38a9",
+        "screenshots": {
+          "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+          "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-timezone-default-automatic-a4fddca3444446859f52aafc",
+      "intent_id": "mattermost-timezone-default-automatic",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "bb58e98ac101c8d3d9141734ab5941211c018f068698c52d286d97b58903a7f4",
+        "screenshots": {
+          "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+          "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-timezone-default-automatic-015869e51a038658c43579d4",
+      "intent_id": "mattermost-timezone-default-automatic",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "H",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "9eb533b02f7c4008c7553b92b50c144a96544be350bc819e0e016a07d67d4f19",
+        "screenshots": {
+          "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+          "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-timezone-default-automatic-3645d9181e1b489d0cdccfe0",
+      "intent_id": "mattermost-timezone-default-automatic",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "H",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "9eb533b02f7c4008c7553b92b50c144a96544be350bc819e0e016a07d67d4f19",
+        "screenshots": {
+          "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+          "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+        }
+      }
+    },
+    {
+      "slot_id": "mattermost-timezone-default-automatic-ef51947b444163c349062d51",
+      "intent_id": "mattermost-timezone-default-automatic",
+      "project_id": "mattermost",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "57e0b172b7b5e9e7655809e22567e215e2f9a2bd968f96d739a6231312079717",
+        "screenshots": {
+          "fixture-1.png": "aa6d458432df636854c1167d17c8f70ce20a0b29f2d2bc2e5f67ad3d3ac577e9",
+          "fixture-2.png": "70e68b9d20ad053af79cc056a21140f480c581c5f478a588aa88d7067778586b"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

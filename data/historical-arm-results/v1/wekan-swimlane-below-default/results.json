@@ -1,0 +1,178 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "wekan-swimlane-below-default",
+  "planned_slots": 8,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "H": {
+        "target_only_failure": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "H": {
+        "target_only_failure": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "wekan-swimlane-below-default-6faf22b01d1da43382dd6653",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "623d9792e5cb3641fcf951a89a5d175c3b095fcd40ab1c572ae0cc35c963c1f0",
+        "screenshots": {
+          "fixture-1.png": "f73e07306c1e649bda0ec17de658e2bb01cb4d6f564b7fe23cf49e74a990a690",
+          "fixture-2.png": "2094ae361905e99daf4a0d44aa33abb5aecaeb0a9b8d44d565e4a5f7be29f0ca"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-99fb43f863693b87e250f2e7",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "a4ad7dbcbfc68364ef5f2ebb08751c71dbfdc240b4769d6c2612a9cc8c000657",
+        "screenshots": {
+          "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+          "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-1f69bf5b33de7c0923ddd6a0",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "18507793abea317535cf1388d4855fea96bf73388da596eba9424f3837ee74b3",
+        "screenshots": {
+          "fixture-1.png": "f73e07306c1e649bda0ec17de658e2bb01cb4d6f564b7fe23cf49e74a990a690",
+          "fixture-2.png": "2094ae361905e99daf4a0d44aa33abb5aecaeb0a9b8d44d565e4a5f7be29f0ca"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-865298d13b86e6a0c1db26c6",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "3676653b74a9935e7381a89ecc6de2232a1c8f753c434ab4009178ba4b13900e",
+        "screenshots": {
+          "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+          "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-1e91dd8bc93ba92c462105f5",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "39c614ff09422f0afb75bfa01c3d42244d75be379fdbe7e1a0c46845a3ec24c9",
+        "screenshots": {
+          "fixture-1.png": "f73e07306c1e649bda0ec17de658e2bb01cb4d6f564b7fe23cf49e74a990a690",
+          "fixture-2.png": "2094ae361905e99daf4a0d44aa33abb5aecaeb0a9b8d44d565e4a5f7be29f0ca"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-c201885310c60b2d0462ed1c",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "H",
+      "category": "target_only_failure",
+      "generation_valid": true,
+      "execution": {
+        "category": "target_only_failure",
+        "returncode": 0,
+        "report_sha256": "623d9792e5cb3641fcf951a89a5d175c3b095fcd40ab1c572ae0cc35c963c1f0",
+        "screenshots": {
+          "fixture-1.png": "f73e07306c1e649bda0ec17de658e2bb01cb4d6f564b7fe23cf49e74a990a690",
+          "fixture-2.png": "2094ae361905e99daf4a0d44aa33abb5aecaeb0a9b8d44d565e4a5f7be29f0ca"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-17b42fad69cd28045a41bb52",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ae658ebe14a5107fb15c33b7d581b08a9f7b90345f66eec03d3471edab3fff80",
+        "screenshots": {
+          "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+          "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-swimlane-below-default-5994e437472f11f40cef3cae",
+      "intent_id": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "240488d0da1ff31e732543d28ee745467c1699ac06cd9fcfc537a9915a9a83fc",
+        "screenshots": {
+          "fixture-1.png": "16f6e7cac781f68d0237e1582d05dc35e39826baac6f10cd8082b7a23d25378c",
+          "fixture-2.png": "e61a39ba701f26b40f4115474083a2bf62d7b2f1c05f0c27b472290aec589f65"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

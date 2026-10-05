@@ -1,0 +1,178 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "wekan-field-order-independent",
+  "planned_slots": 8,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "H": {
+        "pass": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "H": {
+        "pass": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "wekan-field-order-independent-b4dfc8d20a27fdc1467b244c",
+      "intent_id": "wekan-field-order-independent",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "2c378acfe9416ee6dbd5004fd9ec5b6a268b9de0d2ff4aee325d8f0083abac9e",
+        "screenshots": {
+          "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+          "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-field-order-independent-a6c13b312c2d511c1a73a405",
+      "intent_id": "wekan-field-order-independent",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "a2131430f467a5313fa33cbf7b2ac6f67d3a22afa19fd3794fb14bf78e492cfd",
+        "screenshots": {
+          "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+          "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-field-order-independent-b673134dfb70a6fcfba10029",
+      "intent_id": "wekan-field-order-independent",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "95b262ff9f0c0b870a8f39c83f7aec4e8991e9cd0a992b76b6256174d9abe47f",
+        "screenshots": {
+          "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+          "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-field-order-independent-1b55ef4ee3378cc4e4058937",
+      "intent_id": "wekan-field-order-independent",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "H",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "b0c9b1a611782b0e9a6bafdf1eb92cf5534501efceb89bf3055796ae9c863295",
+        "screenshots": {
+          "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+          "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-field-order-independent-22913974a307ff73637763f4",
+      "intent_id": "wekan-field-order-independent",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "H",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ab75fbd83a10ae0dd7309cf2f652db36367d21e5dabc6c197c83d249fa1f381e",
+        "screenshots": {
+          "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+          "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-field-order-independent-5a808a0a1e1a48956b18aac8",
+      "intent_id": "wekan-field-order-independent",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "H",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "95b262ff9f0c0b870a8f39c83f7aec4e8991e9cd0a992b76b6256174d9abe47f",
+        "screenshots": {
+          "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+          "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-field-order-independent-c5ff7e4dbad8ee1e46ea3fef",
+      "intent_id": "wekan-field-order-independent",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "H",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "5de849707982534dd0575f48ea4fdc8fc2f00a18d35a1611031df01cbccf4d3c",
+        "screenshots": {
+          "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+          "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-field-order-independent-fef1b714f99d2f6955a2f5ed",
+      "intent_id": "wekan-field-order-independent",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "b0c9b1a611782b0e9a6bafdf1eb92cf5534501efceb89bf3055796ae9c863295",
+        "screenshots": {
+          "fixture-1.png": "50d31d8411d1f189612377923f38b9000b9ff01f2796f080f724d07a8ca34dc7",
+          "fixture-2.png": "fec69db1e0add1b9741f6b07fe2e66e948b5d2d1a34dd9edcba76aadc8fa183b"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}

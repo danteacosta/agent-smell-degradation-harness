@@ -1,0 +1,178 @@
+{
+  "schema_version": "abc-case-results/v1",
+  "case": "wekan-week-number-immediate",
+  "planned_slots": 8,
+  "counts": {
+    "gpt-5.6-luna": {
+      "A": {
+        "pass": 2
+      },
+      "H": {
+        "pass": 2
+      }
+    },
+    "gpt-5.6-sol": {
+      "A": {
+        "pass": 2
+      },
+      "H": {
+        "pass": 2
+      }
+    }
+  },
+  "rows": [
+    {
+      "slot_id": "wekan-week-number-immediate-6ec8aa07ab597db76e62f49f",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "H",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ea210a7d89ba4af3f78d453ef2f1e3ce16b9764cd07cbfc57013601cde3fc8cb",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-9d7c343a88183cdfea4554b4",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "H",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "01cb2ea0d5330f166e54fb2ed093f93033e61e6c313f87761238ead2d9621b64",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-40c93411e8f7ed0977a7679b",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "H",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ea210a7d89ba4af3f78d453ef2f1e3ce16b9764cd07cbfc57013601cde3fc8cb",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-41dadeb5045092fcc87c52dc",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "a0c0c1cdc4a55bb7a6383b8a33cc8bb1b50ec723b5b041bec66b6b1211f0c73f",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-19c86fcb3ff4776fa1bfa40b",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 2,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ea210a7d89ba4af3f78d453ef2f1e3ce16b9764cd07cbfc57013601cde3fc8cb",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-18679f745a671fcce4c2d103",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "H",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ea210a7d89ba4af3f78d453ef2f1e3ce16b9764cd07cbfc57013601cde3fc8cb",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-9492eab79de5d45f0c656088",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-sol",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "ea210a7d89ba4af3f78d453ef2f1e3ce16b9764cd07cbfc57013601cde3fc8cb",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    },
+    {
+      "slot_id": "wekan-week-number-immediate-a38945fc210c069d639fa125",
+      "intent_id": "wekan-week-number-immediate",
+      "project_id": "wekan",
+      "model": "gpt-5.6-luna",
+      "replication": 1,
+      "arm": "A",
+      "category": "pass",
+      "generation_valid": true,
+      "execution": {
+        "category": "pass",
+        "returncode": 0,
+        "report_sha256": "b55513538db95b65b1e1d7217c2200de66b6cb7c308104ff9bf9588f1625b94b",
+        "screenshots": {
+          "fixture-1.png": "8419101ea34181f73118053068cb79fc71e55690325f5a96ce07ee288028191d",
+          "fixture-2.png": "5297c1d8ee893e072a3f7747457a8f532a155e8af767e48799fde5df50bee009"
+        }
+      }
+    }
+  ],
+  "confirmatory_eligible": false
+}
