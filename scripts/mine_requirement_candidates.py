@@ -91,8 +91,8 @@ def git(repo: Path, *args: str) -> str:
                           errors="replace", check=True).stdout
 
 
-def commits(repo: Path, paths: list[str]) -> list[dict]:
-    out = git(repo, "log", "--no-merges", f"--since={SINCE}", f"--until={UNTIL}",
+def commits(repo: Path, paths: list[str], since: str = SINCE, until: str = UNTIL) -> list[dict]:
+    out = git(repo, "log", "--no-merges", f"--since={since}", f"--until={until}",
               "--format=%x1e%H%x1f%cs%x1f%s", "-p", "--unified=0", "--no-color", "--", *paths)
     records = []
     for chunk in out.split("\x1e")[1:]:
@@ -123,10 +123,10 @@ def hunks(diff: str):
         yield current_file, removed, added
 
 
-def candidates(project: str, repo: Path) -> list[dict]:
+def candidates(project: str, repo: Path, since: str = SINCE, until: str = UNTIL) -> list[dict]:
     spec = PROJECTS[project]
     found = []
-    for commit in commits(repo, spec["paths"]):
+    for commit in commits(repo, spec["paths"], since, until):
         doc_files = {p for p, _, _ in hunks(commit["diff"]) if p.lower().endswith(DOC_EXT)}
         if len(doc_files) > MAX_DOC_FILES_PER_COMMIT:
             continue
@@ -172,6 +172,9 @@ def main() -> None:
     parser.add_argument("--repos", type=Path, required=True, help="directory holding one clone per project")
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--projects", help="comma-separated subset of PROJECTS (default: round-1 projects)")
+    parser.add_argument("--since", default=SINCE, help=f"window start (default {SINCE})")
+    parser.add_argument("--until", default=UNTIL, help=f"window end (default {UNTIL})")
+    parser.add_argument("--id-salt", default="", help="salt for candidate ids of a new frame (keeps ids distinct)")
     args = parser.parse_args()
     selected = args.projects.split(",") if args.projects else list(ROUND_1_PROJECTS)
     unknown = set(selected) - set(PROJECTS)
@@ -183,11 +186,11 @@ def main() -> None:
         if not (repo / ".git").exists():
             print(f"skip {project}: no clone")
             continue
-        found = candidates(project, repo)
+        found = candidates(project, repo, args.since, args.until)
         print(f"{project}: {len(found)} candidates")
         rows.extend(found)
     for index, row in enumerate(rows):
-        key = f"{row['project']}:{row['commit']}:{row['file']}:{index}"
+        key = f"{args.id_salt}{row['project']}:{row['commit']}:{row['file']}:{index}"
         row["candidate_id"] = "rc-" + hashlib.sha256(key.encode()).hexdigest()[:12]
     args.out.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows))
     print(f"total {len(rows)}")

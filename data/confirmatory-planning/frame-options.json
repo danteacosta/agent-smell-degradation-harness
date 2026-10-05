@@ -1,0 +1,48 @@
+{
+  "reserve": {
+    "frame_candidates": {
+      "grist": 28,
+      "immich": 21,
+      "mattermost": 20,
+      "nextcloud": 104,
+      "openproject": 174,
+      "paperless": 12,
+      "wekan": 97,
+      "zulip": 237
+    },
+    "screening_sample": {
+      "grist": 28,
+      "immich": 21,
+      "mattermost": 20,
+      "nextcloud": 30,
+      "openproject": 30,
+      "paperless": 12,
+      "wekan": 30,
+      "zulip": 30
+    },
+    "screening_total": 201,
+    "file": "data/requirement-sampling/screening-confirmatory-reserve-20261005.json"
+  },
+  "w2024": {
+    "frame_candidates": {
+      "grist": 22,
+      "immich": 43,
+      "mealie": 11,
+      "nextcloud": 13,
+      "openproject": 81,
+      "paperless": 40,
+      "zulip": 167
+    },
+    "screening_sample": {
+      "grist": 22,
+      "immich": 30,
+      "mealie": 11,
+      "nextcloud": 13,
+      "openproject": 30,
+      "paperless": 30,
+      "zulip": 30
+    },
+    "screening_total": 166,
+    "file": "data/requirement-sampling/screening-confirmatory-w2024-20261005.json"
+  }
+}
