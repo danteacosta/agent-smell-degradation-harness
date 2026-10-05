@@ -19,6 +19,6 @@ Atende à decisão 2 da seção 8 do pré-registro: quem audita as decisões dos
 python3 scripts/human_audit_sheet.py score data/human-audit/audit-sheet-20261005-<iniciais>.xlsx
 ```
 
-O comando informa concordância, kappa e a lista de divergências. Na aba `historico`, informa também se cada divergência muda a admissão do caso. A comparação é com a decisão final do painel, antes da quarentena humana de dois casos feita no #167.
+O comando informa concordância, kappa e a lista de divergências. Respostas fora das listas e afirmações positivas sem citação literal são recusadas com o identificador do caso e a coluna a corrigir; linhas em branco não entram no cálculo. Na aba `historico`, informa também se cada divergência muda a admissão do caso. A comparação é com a decisão final do painel, antes da quarentena humana de dois casos feita no #167.
 
 A planilha toma cerca de 2 a 3 horas. Se for preciso cortar, a aba `historico` é a que mais pesa: dela depende quais casos entraram no braço H.

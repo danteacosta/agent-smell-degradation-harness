@@ -138,7 +138,23 @@ def score(sheet_path: Path) -> dict:
     yes = {"sim": "yes", "não": "no", "nao": "no"}
     cue_panel = {r["case"]: ("yes" if r["context_cue"] == 1 else "no" if r["context_cue"] == 0 else None)
                  for r in json.loads(CUE_RESULTS.read_text())["rows"]}
-    human = {k: yes.get(str(v.get("context_cue") or "").strip().lower()) for k, v in answers("context_cue").items()}
+    def label(case, row, field, choices):
+        value = str(row.get(field) or "").strip().lower()
+        if value and value not in choices:
+            raise ValueError(f"{case}: invalid {field}: {value!r}")
+        return choices.get(value)
+
+    def require_quote(case, row, field, text):
+        quote = " ".join(str(row.get(field) or "").split())
+        if not quote or quote not in " ".join(text.split()):
+            raise ValueError(f"{case}: {field} requires a literal quote from the supplied text")
+
+    cue_source = {item["id"]: item for item in cue_items()}
+    human = {}
+    for k, v in answers("context_cue").items():
+        human[k] = label(k, v, "context_cue", yes)
+        if human[k] == "yes":
+            require_quote(k, v, "citacao", cue_source[k]["texto"])
     pairs = [(human[k], cue_panel[k]) for k in sorted(human) if human[k] and cue_panel.get(k)]
     out = {"context_cue": {
         "answered": len(pairs), "of": len(cue_panel),
@@ -150,11 +166,17 @@ def score(sheet_path: Path) -> dict:
     final = {r["case"]: r["final"] for r in json.loads(HIST_RESULTS.read_text())["rows"]}
     hist = answers("historico")
     rows = []
+    hist_source = {item["id"]: item for item in hist_items()}
+    statuses = {value: value for value in ("same", "vaguer", "absent", "different")}
     for k, v in sorted(hist.items()):
-        f = yes.get(str(v.get("funcionalidade_documentada") or "").strip().lower())
-        s = str(v.get("status_da_regra") or "").strip().lower() or None
+        f = label(k, v, "funcionalidade_documentada", yes)
+        s = label(k, v, "status_da_regra", statuses)
         p = final.get(k)
         if f and s and p:
+            if f == "yes":
+                require_quote(k, v, "citacao_funcionalidade", hist_source[k]["old_documentation"])
+            if s != "absent":
+                require_quote(k, v, "citacao_regra", hist_source[k]["old_documentation"])
             rows.append((k, f, s, p["feature_documented"], p["rule_status"]))
 
     def admitted(f, s):
