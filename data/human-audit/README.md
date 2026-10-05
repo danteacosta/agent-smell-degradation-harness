@@ -48,3 +48,5 @@ O comando informa:
 As probabilidades de inclusão variam de 0,14 a 0,50: a garantia de pelo menos um item por estrato sobre-representa os estratos pequenos. Por isso as médias sem ponderação descrevem só a amostra.
 
 A planilha leva cerca de 1 a 1,5 hora.
+
+O scorer recusa IDs fora dos 73 itens da amostra congelada e IDs repetidos, inclusive em linhas sem resposta, antes de calcular qualquer métrica. Uma planilha parcialmente preenchida continua válida; respostas ausentes não contam como decisões.

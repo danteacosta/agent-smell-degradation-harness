@@ -223,11 +223,19 @@ def score(sheet_path: Path) -> dict:
     panel = {it["candidate_id"]: it for it in load_options()}
     rows = list(load_workbook(sheet_path, read_only=True)["triagem"].iter_rows(values_only=True))
     header = list(rows[0])
+    frozen_ids = set(json.loads(MANIFEST.read_text())["candidate_ids"])
+    seen_ids = set()
     answered, bad = [], []
     for r in rows[1:]:
         rec = dict(zip(header, r))
         if not rec.get("id"):
             continue
+        candidate_id = rec["id"]
+        if candidate_id not in frozen_ids:
+            raise ValueError(f"candidate {candidate_id!r} outside frozen audit sample")
+        if candidate_id in seen_ids:
+            raise ValueError(f"duplicate audit candidate: {candidate_id!r}")
+        seen_ids.add(candidate_id)
         decision = str(rec.get("decisao") or "").strip().lower()
         reason = str(rec.get("motivo") or "").strip()
         if not decision:
