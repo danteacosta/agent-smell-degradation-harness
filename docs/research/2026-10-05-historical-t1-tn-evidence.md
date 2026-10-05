@@ -17,9 +17,11 @@ Deu diferença em **8 de 17 requisitos**: 25 pares em que t1 violou a regra e tn
 
 O piloto de setembro (10 requisitos, texto antigo contra corrigido, com prints em `data/e2e-decontamination-20260929/`) foi a primeira versão dessa comparação.
 
-## Falta: os prints
+## Prints publicados e reprodução
 
-Os prints do oráculo estão nos pacotes privados do Mac. O repositório só tem os hashes deles, dentro de `results.json`. Instrução para o Codex:
+Em 05/10/2026, foram copiados os 100 prints dos 25 pares que diferem (duas fixtures por braço), com todos os hashes SHA-256 conferidos e nenhum arquivo faltante. A galeria contém os 100 prints nos 25 pares de 8 requisitos. A revisão visual encontrou apenas cenários sintéticos, sem dados pessoais reais identificados; os nomes de exemplo vêm das fixtures congeladas. Não houve novas chamadas às LLMs nem alteração dos resultados.
+
+Os originais permanecem nos pacotes privados do Mac. Para reproduzir:
 
 > No repositório agent-smell-degradation-harness, na branch `study/historical-t1-tn-evidence`:
 > 1. Rode `python3 scripts/historical_evidence.py screenshots --packets "$HOME/Documents/GitHub/.private-research-evidence/historical-arm-v1"`. O comando copia só os prints dos 25 pares em que t1 e tn diferem e confere cada um contra o sha256 registrado. Se `missing` não vier vazio, informe e não substitua nenhum arquivo.
