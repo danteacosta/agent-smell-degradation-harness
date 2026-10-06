@@ -43,7 +43,23 @@ As taxas abaixo são descritivas agregadas de pares suíte/página, incluindo su
 | Incompleta | 36/132 (27,3%) | 10/34 (29,4%) |
 | Incompleta + código | 79/132 (59,8%) | 21/34 (61,8%) |
 
-O braço com código teve mais alarmes sobre implementações que o oráculo classificou como corretas, limitando sua utilidade prática. A própria fonte completa também não foi livre de falsos alarmes.
+### Discriminação entre as suítes aprovadas na referência
+
+Condicionar às suítes utilizáveis que passaram na referência separa a capacidade de detectar perdas dos alarmes gerados por suítes já inadequadas nessa referência. Os denominadores mudam por fonte; esta análise descritiva posterior não substitui os escores de intenção de testar nem as decisões MA1/MA2.
+
+| Fonte | Alarmes em mutantes confirmados | Falsos alarmes nas outras A corretas | Falsos alarmes nas C recuperadas |
+| --- | ---: | ---: | ---: |
+| Completa | 137/139 (98,6%) | 3/112 (2,7%) | 3/29 (10,3%) |
+| Incompleta | 10/109 (9,2%) | 1/90 (1,1%) | 1/23 (4,3%) |
+| Incompleta + código | 100/113 (88,5%) | 46/99 (46,5%) | 18/31 (58,1%) |
+
+Mesmo após passar na referência, as suítes do pedido incompleto raramente detectam a perda; elas também raramente rejeitam as páginas corretas. Isso é compatível com testes que herdam a omissão, não com ruído generalizado. A fonte completa discrimina melhor neste conjunto. A fonte com código mantém muitos alarmes falsos. Sobreajuste a detalhes da referência é uma explicação possível, mas as contagens não demonstram que ela rejeite toda implementação diferente ou exija uma cópia; isso depende de auditar os testes e suas falhas.
+
+### Limitação do braço com código
+
+A implementação entregue ao testador em `code_incomplete` era a referência **correta**, que já cumpria a regra omitida. Assim, o comportamento e o código podiam oferecer ao testador informação ausente do pedido. Esse braço representa geração de uma suíte de regressão a partir de uma versão correta. Ele não representa a revisão do código de um PR que perdeu a regra, cenário avaliado no piloto anterior. A comparação secundária inconclusiva não permite concluir sobre esse cenário de revisão. Rotular o braço como equivalente a um revisor de PR defeituoso seria incorreto.
+
+Um estudo novo deverá congelar prospectivamente o braço pedido incompleto + código do próprio mutante e sua avaliação antes de gerar suítes. A replicação com um testador de outro provedor também fica como trabalho futuro; nenhuma dessas chamadas foi feita nesta análise.
 
 Na execução real, a fonte completa teve 158 alarmes de asserção e 43 de erro; a incompleta, 36 e 58; a fonte com código, 217 e 25. Esses números incluem todos os papéis de página. O protocolo aceita ambos os tipos para uma detecção elegível; não se deve interpretar toda detecção como uma asserção que identificou especificamente a regra-alvo.
 
@@ -57,7 +73,7 @@ A análise ingênua trata todas as 100 páginas C como mutantes, inclusive as 17
 | Incompleta | 0,060 | 0,075 | 0,062 | 0,075 |
 | Incompleta + código | 0,665 | 0,610 | 0,617 | 0,610 |
 
-Ignorar a confirmação altera tanto o denominador quanto as páginas cujos alarmes contam. O escore ingênuo pode diminuir ou aumentar: na fonte incompleta ele aumentou. Portanto, um escore baixo sem oráculo não basta para culpar a suíte por deixar passar defeitos.
+Ignorar a confirmação altera tanto o denominador quanto as páginas cujos alarmes contam. Na fonte completa, a queda de 0,840 para 0,720 corresponde a 12 pontos percentuais nesta amostra: a análise ingênua também cobra detecção de páginas recuperadas e não confirmadas. O escore ingênuo pode diminuir ou aumentar: na fonte incompleta ele aumentou. Portanto, um escore baixo sem oráculo não basta para culpar a suíte por deixar passar defeitos.
 
 ## Limites e próximo passo
 
