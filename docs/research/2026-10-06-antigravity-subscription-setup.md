@@ -41,6 +41,10 @@ Nenhum resultado científico foi coletado. Sem merge, seleção ou aprovação h
 
 O catálogo Antigravity também retornou `claude-sonnet-4-6` e `claude-opus-4-6-thinking`. Trocar apenas o modelo nesse CLI não resolve o problema de ferramentas; não foram feitas chamadas a esses modelos. O adapter Gemini não foi ampliado para aceitar essa troca silenciosamente.
 
-Claude Code direto tem controle oficial `--tools ""`, configuração MCP estrita e sessões sem persistência. Contudo, ele não está instalado neste Mac, e a inspeção não encontrou cache de credenciais em arquivo. Não foi presumido que a assinatura Google dê acesso ao Claude Code direto: esse produto precisa de autenticação e entitlement próprios. A escolha entre os dois caminhos foi perguntada ao usuário antes de instalar outro produto ou gastar por API.
+Claude Code direto tem controle oficial `--tools ""`, configuração MCP estrita e sessões sem persistência. Na inspeção inicial, ele ainda não estava instalado neste Mac; o setup posterior está registrado abaixo. Não foi presumido que a assinatura Google dê acesso ao Claude Code direto: esse produto precisa de autenticação e entitlement próprios. A escolha entre os dois caminhos foi perguntada ao usuário antes de instalar outro produto ou gastar por API.
 
 Fontes primárias: [CLI Claude Code](https://code.claude.com/docs/en/cli-reference), [autenticação](https://code.claude.com/docs/en/authentication) e [configuração de modelos](https://code.claude.com/docs/en/model-config), consultadas em 06/10/2026. A documentação é uma possibilidade de desenho, não prova de acesso local.
+
+## Caminho posterior escolhido
+
+Depois deste diagnóstico, o usuário confirmou também Claude Pro/Max. O Claude Code foi instalado e Sonnet/Opus foram qualificados diretamente por essa assinatura: [setup Claude](2026-10-06-claude-subscription-setup.md). Isso não remove o bloqueio de ferramentas do CLI Antigravity.
