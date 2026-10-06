@@ -147,3 +147,5 @@ experiment evidence.
 - [Braço histórico H: coleta concluída](2026-10-05-historical-arm-results.md): 17 requisitos dos 46, oito projetos, 136 chamadas; 25 pioras, 27 empates em sucesso, 13 em falha e três pares não avaliáveis. Omissão construída e passagem antiga são analisadas separadamente; exploratório.
 
 - [Triagem das opções confirmatórias, 5 de outubro de 2026](2026-10-05-confirmatory-screening-results.md): 367 candidatos, 162 admitidos provisoriamente em oito projetos, dois sem decisão; recibos auditados, seleção e novos E2Es pendentes.
+
+- [Claude shared-omission replication: generation complete, Docker evaluation unavailable](2026-10-06-claude-shared-omission-e2e-results.md). 300 unique calls, 297 saved suites, no browser verdicts; this is an execution failure, not a null effect.
