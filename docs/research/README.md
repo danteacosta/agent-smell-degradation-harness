@@ -153,3 +153,5 @@ experiment evidence.
 - [Claude Pro: setup Sonnet/Opus e qualificação técnica](2026-10-06-claude-subscription-setup.md).
 
 - [Replicação Claude de omissão compartilhada: protocolo e parada de quota](2026-10-06-claude-shared-omission-protocol.md).
+
+- [Emenda autorizada: consumir janela de cinco horas e preservar reserva semanal](2026-10-06-claude-quota-amendment.md).
