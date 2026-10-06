@@ -1,5 +1,7 @@
 # Research catalog
 
+- [6 October 2026: Antigravity subscription setup](2026-10-06-antigravity-subscription-setup.md): installed account CLI, two public technical smokes, failed tool isolation and a guard that blocks unqualified research calls.
+
 - [2 October 2026: recovered public evidence](2026-10-02-recovered-public-evidence.md): three formerly private result rows, unchanged ordinal originals, separate scope diagnostic, and two remaining reproduction gaps.
 
 - [2 October 2026: test-anchor results](2026-10-02-test-anchor-results.md): 81 generated test suites, 180 original evaluations, a separate 180-pair origin diagnostic, and the remaining bounded-profile scope limitation.
