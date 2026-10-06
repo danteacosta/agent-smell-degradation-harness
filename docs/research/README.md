@@ -1,5 +1,7 @@
 # Research catalog
 
+- [6 October 2026: second-provider feasibility](2026-10-06-second-provider-feasibility.md): Google subscription versus API, measured frozen prompt sizes, prospective budgets, adapter gaps and offline memorization smoke.
+
 - [2 October 2026: recovered public evidence](2026-10-02-recovered-public-evidence.md): three formerly private result rows, unchanged ordinal originals, separate scope diagnostic, and two remaining reproduction gaps.
 
 - [2 October 2026: test-anchor results](2026-10-02-test-anchor-results.md): 81 generated test suites, 180 original evaluations, a separate 180-pair origin diagnostic, and the remaining bounded-profile scope limitation.
