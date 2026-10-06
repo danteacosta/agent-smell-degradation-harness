@@ -59,6 +59,24 @@ Cada fonte tem 50 pares previstos sobre os 25 mutantes selecionados. Quietude si
 
 Esses passes indevidos demonstram falsa segurança operacional no recorte avaliado: o teste passa apesar da perda confirmada. Não medem confiança subjetiva do agente/usuário, nem prevalência populacional. Não foram calculados intervalos independentes sobre os 50 pares, pois compartilham requisitos e projetos.
 
+## Veredito na referência correta × veredito no mutante mostrado
+
+Esta tabela descritiva mantém as 50 suítes previstas por fonte, inclusive as não elegíveis. O mutante mostrado é identificado por `selected_mutants` no manifesto público; a referência é a linha com `is_reference`. Os valores foram recalculados somente desses dois arquivos públicos. “Alarme” reúne asserção e erro; a linha seguinte separa o padrão por asserção.
+
+| Veredito na referência × no mutante mostrado | Completa | Incompleta | Incompleta + código |
+| --- | ---: | ---: | ---: |
+| Quieta × quieto | 0 | 35 | 17 |
+| Quieta × alarme | 38 | 4 | 2 |
+| Alarme × quieto | 0 | 4 | 24 |
+| ↳ Por asserção na referência | 0 | 0 | 23 |
+| Alarme × alarme | 11 | 7 | 6 |
+| Falha de geração, sem vereditos executados | 1 | 0 | 1 |
+| Total de suítes (sem somar a sublinha) | 50 | 50 | 50 |
+
+Os quatro casos de alarme na referência e quietude no mutante da fonte incompleta foram erros de execução; com código, um dos 24 também foi erro. Falha de geração não é quietude nem alarme.
+
+23 das 50 suítes com código reprovaram por asserção a referência correta e aprovaram o mutante mostrado; nenhuma suíte da fonte incompleta teve esse padrão por asserção. O padrão é compatível com testes que fixam o comportamento do código mostrado, mas só a auditoria dos testes pode dizer se a asserção trata da obrigação-alvo.
+
 ## Escores sem confirmação e limites
 
 Com peso igual por requisito, tratar todas as C como mutantes produz 0,625 em vez de 0,760 na fonte completa, 0,090 em vez de 0,100 na incompleta e 0,045 em vez de 0,040 com código mutante. Com ponderação agregada por pares, os valores confirmado/ingênuo são 0,728/0,625, 0,080/0,090 e 0,037/0,045. As páginas recuperadas e não confirmadas alteram os denominadores e os alarmes contados; não se deve atribuir as diferenças somente à capacidade da suíte.
