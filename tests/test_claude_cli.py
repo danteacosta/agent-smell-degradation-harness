@@ -8,7 +8,7 @@ from agents.claude_cli import ClaudeCLIProvider
 MODEL = 'claude-sonnet-4-6'
 
 
-def cli(tmp_path, *, auth='claude.ai', tools=None, model=MODEL, tool_call=False, delay=0):
+def cli(tmp_path, *, auth='claude.ai', tools=None, model=MODEL, tool_call=False, delay=0, telemetry=False):
     path = tmp_path / 'claude-fake'
     events = [
         {'type': 'system', 'subtype': 'init', 'model': model, 'tools': tools or [], 'mcp_servers': []},
@@ -16,6 +16,8 @@ def cli(tmp_path, *, auth='claude.ai', tools=None, model=MODEL, tool_call=False,
         {'type': 'result', 'subtype': 'success', 'is_error': False, 'result': 'answer', 'num_turns': 1,
          'usage': {'input_tokens': 10, 'output_tokens': 3}, 'modelUsage': {model: {}}},
     ]
+    if telemetry:
+        events.insert(1,{'type':'system','subtype':'thinking_tokens','estimated_tokens':50,'estimated_tokens_delta':50})
     if tool_call:
         events[1]['message']['content'] = [{'type': 'tool_use', 'name': 'Read'}]
     path.write_text(f'''#!{sys.executable}

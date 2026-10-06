@@ -155,3 +155,5 @@ experiment evidence.
 - [Replicação Claude de omissão compartilhada: protocolo e parada de quota](2026-10-06-claude-shared-omission-protocol.md).
 
 - [Emenda autorizada: consumir janela de cinco horas e preservar reserva semanal](2026-10-06-claude-quota-amendment.md).
+
+- [Parser Claude V2: recusa de telemetria e continuação sem repetir tentativas](2026-10-06-claude-parser-telemetry-fix.md).
