@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import argparse
-from collections import Counter
+from collections import Counter, defaultdict
 import hashlib
 import json
 from pathlib import Path
@@ -16,23 +16,35 @@ from scripts import mutation_adequacy as ma
 
 SEED = 2026100508
 SCHEMA = 'shared-omission-e2e/v1'
+SOURCES = ('spec_complete', 'spec_incomplete', 'code_complete', 'code_incomplete')
 
 
-def transform_plan(calls: list[dict], records: list[dict], incomplete: dict[str, str]) -> tuple[list[dict], dict]:
-    """Freeze a seeded confirmed mutant per case and contemporaneous prompt sources."""
+def transform_plan(
+    calls: list[dict],
+    records: list[dict],
+    complete: dict[str, str],
+    incomplete: dict[str, str],
+) -> tuple[list[dict], dict]:
+    """Freeze a seeded mutant and a two-by-two specification/code design."""
     selected = {r['case']: random.Random(f'{SEED}:{r["case"]}').choice(sorted(r['roles']['mutant']))
                 for r in records}
     by_case = {r['case']: r for r in records}
     transformed = []
     for original in calls:
-        call = dict(original)
-        call['call_id'] = 'so-' + hashlib.sha256(json.dumps(
-            [call['case'], call['source'], call['suite_index'], SEED]).encode()).hexdigest()[:20]
-        if call['source'] == 'code_incomplete':
-            case = by_case[call['case']]
-            code = Path(case['artifacts'][selected[call['case']]]['artifact_path']).read_text()
-            call['prompt'] = ma.ta.tester_prompt('code_request', incomplete[call['case']], code)
-        transformed.append(call)
+        variants = [(original['source'], None)]
+        if original['source'] == 'code_incomplete':
+            variants = [('code_complete', complete[original['case']]),
+                        ('code_incomplete', incomplete[original['case']])]
+        for source, requirement in variants:
+            call = dict(original)
+            call['source'] = source
+            call['call_id'] = 'so-' + hashlib.sha256(json.dumps(
+                [call['case'], source, call['suite_index'], SEED]).encode()).hexdigest()[:20]
+            if requirement is not None:
+                case = by_case[call['case']]
+                code = Path(case['artifacts'][selected[call['case']]]['artifact_path']).read_text()
+                call['prompt'] = ma.ta.tester_prompt('code_request', requirement, code)
+            transformed.append(call)
     random.Random(SEED).shuffle(transformed)
     return transformed, selected
 
@@ -48,15 +60,18 @@ def prepare(out: Path, packets: dict[str, Path], model: str, executable: Path) -
     if set(packets) != {c['case'] for c in cases}:
         raise ValueError('packets must cover exactly the eligible cases')
     calls, records = ma.plan(cases, packets)
-    incomplete = {c['case']: json.loads((ma.CASES_DIR / f'{c["case"]}.json').read_text())['arms']['C'] for c in cases}
-    calls, selected = transform_plan(calls, records, incomplete)
+    requirements = {c['case']: json.loads((ma.CASES_DIR / f'{c["case"]}.json').read_text())['arms']
+                    for c in cases}
+    complete = {case: arms['A'] for case, arms in requirements.items()}
+    incomplete = {case: arms['C'] for case, arms in requirements.items()}
+    calls, selected = transform_plan(calls, records, complete, incomplete)
     out.mkdir(mode=0o700, parents=True)
     ma.ta.put(out / 'frozen/controls.json', controls)
     for call in calls:
         ma.ta.put(out / 'frozen/prompts' / f'{call["call_id"]}.txt', call['prompt'])
     manifest = {
         'schema_version': SCHEMA, 'seed': SEED, 'model': model, 'executable': str(executable),
-        'image': ma.ta.IMAGE, 'sources': ma.SOURCES, 'suites_per_source': 2,
+        'image': ma.ta.IMAGE, 'sources': SOURCES, 'suites_per_source': 2,
         'runner_sha256': ma.ta.sha256_file(ma.ta.RUNNER),
         'script_sha256': ma.ta.sha256_file(Path(ma.__file__)),
         'test_anchor_script_sha256': ma.ta.sha256_file(Path(ma.ta.__file__)),
@@ -98,7 +113,7 @@ def analyse_selected(rows: list[dict], manifest: dict) -> dict:
     """Count quiet outcomes on the selected confirmed defect, with explicit eligibility."""
     sound = {s['call_id'] for s in ma.suite_scores(rows) if s['sound']}
     result = {}
-    for source in ma.SOURCES:
+    for source in SOURCES:
         selected = [r for r in rows if r['source'] == source and
                     r['slot_id'] == manifest['selected_mutants'][r['case']]]
         eligible = [r for r in selected if r['call_id'] in sound]
@@ -117,6 +132,109 @@ def analyse_selected(rows: list[dict], manifest: dict) -> dict:
     return result
 
 
+def interaction(req: dict[tuple, float]) -> dict:
+    """Difference in completeness effects with mutant code versus scaffold."""
+    diffs: dict[str, list[float]] = defaultdict(list)
+    by_case: dict[str, dict[str, float]] = defaultdict(dict)
+    projects = {}
+    for (case, project, source), score in req.items():
+        projects[case] = project
+        by_case[case][source] = score
+    for case, scores in by_case.items():
+        if set(SOURCES) <= set(scores):
+            scaffold = scores['spec_complete'] - scores['spec_incomplete']
+            code = scores['code_complete'] - scores['code_incomplete']
+            diffs[projects[case]].append(code - scaffold)
+    values = [value for project in diffs.values() for value in project]
+    return {
+        'comparison': '(code_complete - code_incomplete) - (spec_complete - spec_incomplete)',
+        'requirements': len(values),
+        'projects': len(diffs),
+        'mean_difference': sum(values) / len(values) if values else None,
+        'ci95_project_bootstrap': ma.project_bootstrap(diffs),
+        'p_exact_project_sign_flip': ma.project_sign_flip(diffs),
+        'status': 'exploratory_no_decision_gate',
+    }
+
+
+def analyse(rows: list[dict]) -> dict:
+    """Analyse the four-arm design with equal requirement weighting."""
+    suites = ma.suite_scores(rows)
+    req = ma.requirement_scores(suites)
+    by_source = {}
+    for source in SOURCES:
+        source_suites = [suite for suite in suites if suite['source'] == source]
+        scores = [value for (_, _, arm), value in req.items() if arm == source]
+        by_source[source] = {
+            'suites': len(source_suites),
+            'sound': sum(suite['sound'] for suite in source_suites),
+            'unusable': sum(suite['unusable'] for suite in source_suites),
+            'mean_requirement_mutation_score': sum(scores) / len(scores) if scores else None,
+            'requirements_all_mutants_killed': sum(value == 1 for value in scores),
+            'requirements_no_mutant_killed': sum(value == 0 for value in scores),
+        }
+    return {
+        'by_source': by_source,
+        'primary': ma.paired(req, 'code_complete', 'code_incomplete'),
+        'scaffold_replication': ma.paired(req, 'spec_complete', 'spec_incomplete'),
+        'mutant_code_effect_with_complete_requirement': ma.paired(req, 'spec_complete', 'code_complete'),
+        'mutant_code_effect_with_incomplete_requirement': ma.paired(req, 'spec_incomplete', 'code_incomplete'),
+        'factorial_interaction': interaction(req),
+        'suites': suites,
+    }
+
+
+def finalize(out: Path, rows: list[dict]) -> dict:
+    """Write the four-arm result and its self-excluding receipt exactly once."""
+    results = {'schema_version': SCHEMA + '-results', 'rows': rows,
+               'analysis': analyse(rows), 'confirmatory_eligible': False}
+    ma.ta.put(out / 'results.json', results)
+    files = {path: digest for path, digest in ma.ta.inventory(out).items()
+             if path != 'receipt.json'}
+    ma.ta.put(out / 'receipt.json', {'files': files})
+    return results['analysis']
+
+
+def execute(out: Path, executor=ma.ta.docker_execute) -> dict:
+    """Execute the frozen four-arm schedule without an intermediate result."""
+    manifest = verify(out)
+    if (out / 'execution-started.json').exists():
+        raise FileExistsError('no resume or retry')
+    for call in manifest['schedule']:
+        directory = out / 'calls' / call['call_id']
+        result = json.loads((directory / 'result.json').read_text())
+        if (result['status'] == 'suite_ready'
+                and ma.ta.sha256_file(directory / 'suite.cjs') != result['suite_sha256']):
+            raise ValueError(f"suite drift since generation: {call['call_id']}")
+    ma.ta.put(out / 'execution-started.json', {
+        'generation_sha256': ma.ta.sha256_file(out / 'generation.json')})
+    cases = {case['case']: case for case in manifest['cases']}
+    rows = []
+    for call in manifest['schedule']:
+        directory = out / 'calls' / call['call_id']
+        result = json.loads((directory / 'result.json').read_text())
+        case = cases[call['case']]
+        for slot in call['targets']:
+            artifact = case['artifacts'][slot]
+            row = {'call_id': call['call_id'], 'case': call['case'],
+                   'project_id': call['project_id'], 'source': call['source'],
+                   'suite_index': call['suite_index'], 'slot_id': slot,
+                   'role': artifact['role'], 'is_reference': slot == case['reference']}
+            if result['status'] != 'suite_ready':
+                row['verdict'] = result['status']
+            else:
+                try:
+                    report = executor(Path(artifact['artifact_path']), directory / 'suite.cjs',
+                                      out / 'execution' / call['call_id'] / slot)
+                except Exception as error:
+                    report = {'status': 'runner_error',
+                              'error': f'{type(error).__name__}: {error}'[:500]}
+                row['verdict'] = ma.ta.classify(report)
+            rows.append(row)
+        print(json.dumps({'phase': 'execution', 'call': call['call_id']}), flush=True)
+    return finalize(out, rows)
+
+
 def publish(out: Path, public: Path) -> dict:
     """Export structured outcomes only, without prompts, pages or private paths."""
     manifest = verify(out)
@@ -124,7 +242,7 @@ def publish(out: Path, public: Path) -> dict:
     receipt = json.loads((out / 'receipt.json').read_text())['files']
     if {k:v for k,v in ma.ta.inventory(out).items() if k != 'receipt.json'} != receipt:
         raise ValueError('collection packet drift')
-    if ma.analyse(data['rows']) != data['analysis']:
+    if analyse(data['rows']) != data['analysis']:
         raise ValueError('analysis mismatch')
     data['schema_version'] = SCHEMA + '-results'
     data['selected_mutant_analysis'] = analyse_selected(data['rows'], manifest)
@@ -155,7 +273,7 @@ def main() -> None:
         if args.mode == 'generate':
             result = ma.generate(args.out)
         elif args.mode == 'execute':
-            result = {k:v for k,v in ma.execute(args.out).items() if k != 'suites'}
+            result = {k:v for k,v in execute(args.out).items() if k != 'suites'}
         else:
             result = publish(args.out, args.public)
     print(json.dumps(result, indent=2), flush=True)

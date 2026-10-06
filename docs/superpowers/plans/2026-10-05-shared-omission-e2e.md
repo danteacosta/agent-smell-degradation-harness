@@ -1,14 +1,27 @@
-# Plano da extensão E2E
+# Shared-omission E2E extension plan
 
-Contrato e desenho aprovados pelo escopo escolhido pelo pesquisador: ver docs/preregistration/2026-10-05-shared-omission-e2e.md.
+Scientific contract: see
+`docs/preregistration/2026-10-05-shared-omission-e2e.md`.
 
-Arquitetura: adaptador novo reutiliza custódia, provedor, Docker e análise de mutation_adequacy sem editar seus arquivos congelados. O adaptador substitui somente o código recebido pelo testador, reidentifica e ordena as novas chamadas e vincula seu próprio hash ao manifesto. A variação isolada é a fonte de código. Não introduzir framework de experimentos.
+The adapter reuses the frozen custody, provider, Docker runner and
+mutation-adequacy machinery without editing the completed PR #180 artifacts.
+It selects one confirmed mutant per requirement and creates a 2×2 design:
+complete/incomplete requirement × scaffold/mutant-code context. The two code
+arms receive the same mutant.
 
-- [ ] Regressão mínima: seleção determinística entre mutantes; prompt de código usa página mutante; não usa a correta.
-- [ ] Implementar scripts/shared_omission_e2e.py com preparo, verificação, geração, execução e resumo público separado.
-- [ ] Verificar alterações de script e preservação de schedule/páginas; executar regressões anteriores e smoke offline com recibos reais, sem chamadas.
-- [ ] Revisão de segurança, SOLID, código e protocolo; commit/publicação antes de modelos.
-- [ ] Qualificar Docker e congelar pacote novo; iniciar uma única coleta, mantendo o Mac acordado e monitorando até concluir.
-- [ ] Conferir recibos/resultado e abrir PR separado de resultados, sem merge.
+- [x] Add regressions for deterministic mutant selection, identical code
+  context, distinct complete/incomplete prompts and the four-arm primary
+  contrast.
+- [x] Implement preparation, verification, generation, execution and separate
+  public summary in `scripts/shared_omission_e2e.py`.
+- [ ] Run all focused and inherited tests, compilation and diff checks without
+  model calls.
+- [ ] Review security, custody and the scientific contract; publish the
+  protocol before any generation.
+- [ ] Qualify Docker, freeze a fresh packet and execute exactly one collection
+  only after human authorization of the 200-call budget.
+- [ ] Reconcile receipts and results, then open a separate result PR without
+  automatic merge.
 
-Verificação: pytest tests/test_shared_omission_e2e.py tests/test_mutation_adequacy.py tests/test_mutation_adequacy_integrity.py; py_compile; git diff --check; controles Docker. Falhar fechado em drift, pacotes ausentes ou controles inválidos. Sem API-key fallback e sem retry.
+Fail closed on drift, missing packets, an unqualified control or a code arm
+that does not use the selected mutant. No API-key fallback, retry or repair.
