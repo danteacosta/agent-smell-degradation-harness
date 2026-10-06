@@ -1,9 +1,13 @@
-# E2E extension: shared omission and the mutant's own code
+# Proposed factorial successor: shared omission and mutant-code context
 
-Status: prospective protocol for new test suites, registered after the results
-of PR #180 were known. This extension is exploratory for the thesis and cannot
-confirm H1 or test H2. The researcher selected the E2E extension before a
-separate tool-using-agent environment.
+Status: unexecuted factorial-successor proposal in PR #183. The completed
+three-arm study in PR #184 used PR #181 at frozen commit
+`eec5110c4353dc5da3c6dc29f36be23bd2b090e9`; its collection had already started
+before PR #183 was opened. This proposal did not govern that collection and
+must not replace its protocol or analysis retrospectively. No four-arm packet
+has been frozen or executed. Human approval must consider the now-known
+results of both PR #180 and PR #184 before a fresh successor is registered.
+The proposed successor remains exploratory and cannot confirm H1 or test H2.
 
 ## Scientific contract
 
@@ -27,7 +31,7 @@ arms:
 | `code_complete` | complete | selected confirmed mutant |
 | `code_incomplete` | incomplete | the same selected confirmed mutant |
 
-Two suites are generated per source and requirement: 25 × 4 × 2 = **200 new
+The proposed fresh collection would generate two suites per source and requirement: 25 × 4 × 2 = **200 new
 calls** to `gpt-6-astra`, contemporaneously, without retry or repair. The call
 order is shuffled with seed 2026100508. Earlier calls and failures are neither
 reused nor replaced. The complete/incomplete code comparison therefore changes
@@ -48,7 +52,7 @@ loss. Local support requires both a 4,000-draw project bootstrap interval with
 lower bound above zero and a two-sided exact project sign-flip p-value below
 0.05.
 
-**Registered secondary comparisons.**
+**Proposed secondary comparisons.**
 
 - `spec_complete - spec_incomplete`: contemporaneous replication of MA1
   without implementation code;

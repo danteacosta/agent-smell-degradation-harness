@@ -1,6 +1,8 @@
 # Shared-omission extension: feasibility and design audit
 
-Reviewed on 2026-10-06. No new model call was made in this audit.
+Reviewed on 2026-10-06. No model call was made by this audit. Separately,
+the three-arm collection in PR #184 had already started before the audit's
+factorial proposal was opened. This note does not revise that frozen study.
 
 ## External evidence
 
@@ -33,13 +35,30 @@ incomplete request + defective code. That comparison changed requirement
 completeness and implementation context together. Doc2OracLL makes this
 confounding material: code can independently anchor the generated oracle.
 
-The corrected extension therefore uses a 2×2 design. Both code conditions see
+PR #184 completed the original three-arm design: scores were 0.760 for
+complete requirement plus scaffold, 0.100 for incomplete requirement plus
+scaffold, and 0.040 for incomplete requirement plus mutant code. The first
+contrast holds scaffold constant; the complete-scaffold versus incomplete-code
+contrast changes both factors. These results remain exploratory and are
+preserved under the original protocol.
+
+The proposed, unexecuted successor in PR #183 would use a 2×2 design. Both code conditions see
 the same seeded confirmed mutant; only the requirement changes. Both scaffold
 conditions are regenerated in the same batch. The primary contrast is complete
 versus incomplete requirement while mutant code is held constant. Code-context
 effects and the factorial interaction are reported separately.
 
-This costs 200 calls rather than 150, but removes a larger interpretability risk
-before collection. It does not change H1/H2, reuse old calls, generate new
-implementations or convert this selected exploratory sample into confirmatory
-evidence.
+The proposal is for 200 fresh calls and 1,528 planned suite/page pairs,
+not a 50-call top-up to the completed 150-call study. It requires a separate
+human decision, fresh freeze and result packet. It does not change H1/H2,
+reuse old calls, generate new implementations or convert the selected sample
+into confirmatory evidence. The proposal is informed by known results.
+
+## Correction to the execution claim
+
+The original audit incorrectly described an inevitable overwrite failure in
+the frozen three-arm adapter. That code delegates once to `ma.execute`;
+the claim is not supported by that implementation and is withdrawn.
+Single-write four-arm finalization was needed while developing the factorial
+adaptation, not evidence that the original collector was broken. The completed
+PR #184 study and its frozen scripts, receipts and results are unchanged.
