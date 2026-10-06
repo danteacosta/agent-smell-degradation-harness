@@ -1,19 +1,64 @@
-# Extensão de omissão compartilhada: viabilidade
+# Shared-omission extension: feasibility and design audit
 
-Consulta em 05/10/2026 motivada pelo texto fornecido pelo pesquisador. Nenhuma nova chamada de modelo foi realizada. Há dois escopos possíveis: complementar a adequação E2E com código do próprio mutante, ou criar um experimento novo com agentes que usam ferramentas e policies. A escolha foi solicitada ao pesquisador antes de executar coleta dependente dela.
+Reviewed on 2026-10-06. No model call was made by this audit. Separately,
+the three-arm collection in PR #184 had already started before the audit's
+factorial proposal was opened. This note does not revise that frozen study.
 
-## Evidência externa verificada
+## External evidence
 
-**Tzafrir Rehan, Test-Driven AI Agent Definition (TDAD), arXiv:2603.08806**, submetido em 09/03/2026. Tipo: preprint, fonte primária. [Registro e abstract](https://arxiv.org/abs/2603.08806), [artefato indicado pelo autor](https://github.com/f-labs-io/tdad-paper-code). O abstract descreve geração de testes de especificações comportamentais, compilação de prompts e mutação semântica desses prompts. Isso impede apresentar mutation testing de evals de agentes como novidade genérica. Não foi feita reprodução do benchmark nem revisão completa de licença e dependências do artefato.
+**Hossain, Taylor and Dwyer, Doc2OracLL: Investigating the Impact of
+Documentation on LLM-Based Test Oracle Generation, PACMSE/FSE 2025, DOI
+[10.1145/3729354](https://doi.org/10.1145/3729354).** Peer-reviewed primary
+study. The authors fine-tuned ten models, ablated Javadoc components and tested
+unseen bug detection on 374 Defects4J samples. Documentation usually improved
+oracle accuracy; the description and `@return` content contributed most.
+Documentation-only oracles detected 68 bugs in their comparison and could
+match or outperform contexts containing the method under test. The authors
+explicitly warn that a faulty implementation can anchor an oracle to observed
+rather than intended behavior. Limits include Java/Javadoc tasks, fine-tuned
+models, exact-match training metrics and author-coded qualitative categories.
 
-**Soneya Binta Hossain, Raygan Taylor e Matthew Dwyer, Doc2OracLL: Investigating the Impact of Documentation on LLM-Based Test Oracle Generation**, PACMSE 2(FSE), 2025, DOI 10.1145/3729354. Tipo: artigo científico publicado, fonte primária. [Texto da ACM](https://doi.org/10.1145/3729354). O estudo aborda documentação para geração de oráculos. A introdução apresenta o risco de incorporar comportamento defeituoso da implementação ao oráculo, atribuindo o problema a pesquisa anterior. O texto introdutório verificado não basta para alegar que Doc2OracLL demonstrou causalmente esse mecanismo em seu experimento. Não foram verificados os demais trabalhos mencionados no texto fornecido, nem a alegação de ausência de estudos semelhantes.
+**Tzafrir Rehan, Test-Driven AI Agent Definition (TDAD), arXiv:2603.08806.**
+Preprint. The abstract describes tests compiled from behavioral specifications
+and semantic prompt mutation. It prevents a generic novelty claim for mutation
+testing of agent evals. The benchmark and its license have not been reproduced.
 
-## Encaixe no experimento existente
+## Consequence for the existing experiment
 
-O [resultado de adequação](2026-10-05-mutation-adequacy-results.md) compara testes gerados de requisito completo ou incompleto em 25 requisitos de oito projetos, com páginas já classificadas por oráculos. O braço com código recebeu uma página A correta, e não o mutante. Logo, não representa testar um PR defeituoso com sua própria descrição incompleta.
+PR #180 showed that tests generated from complete requirements detect confirmed
+losses much more often than tests generated from incomplete requests. Its code
+arm received a correct implementation, so it measured regression-test
+generation from a known-good version rather than review of a defective PR.
 
-Uma extensão pequena pode selecionar, por regra e semente previamente congeladas, um mutante confirmado por requisito e gerar duas suítes a partir do pedido incompleto mais esse código. Seriam 50 chamadas adicionais. Reutilizar os controles e os alvos é viável, mas a comparação com braços coletados antes permanece exploratória e sujeita a diferença temporal. Uma comparação contemporânea das três fontes exigiria 150 chamadas novas, em lote separado e sem substituir o #180. Estes tamanhos são propostas, não coleta iniciada nem poder calculado.
+The first version of PR #181 compared complete requirement + scaffold against
+incomplete request + defective code. That comparison changed requirement
+completeness and implementation context together. Doc2OracLL makes this
+confounding material: code can independently anchor the generated oracle.
 
-A avaliação deve verificar quietude numa referência correta e alarmes nos mutantes e nas demais páginas corretas, preservando falhas de geração. Deve reportar tanto intenção de testar quanto discriminação condicionada, com pesos explícitos e agrupamento por projeto. A seleção prévia de páginas defeituosas não permite estimar a frequência geral de falsa confiança na população.
+PR #184 completed the original three-arm design: scores were 0.760 for
+complete requirement plus scaffold, 0.100 for incomplete requirement plus
+scaffold, and 0.040 for incomplete requirement plus mutant code. The first
+contrast holds scaffold constant; the complete-scaffold versus incomplete-code
+contrast changes both factors. These results remain exploratory and are
+preserved under the original protocol.
 
-O escopo de agentes com ferramentas exigiria policies públicas com licença verificável, obrigações independentes, executor isolado e oráculos de ações/estado. Os números dos E2Es não podem ser apresentados como resultados desse novo domínio. Nenhum desses elementos foi congelado ou coletado nesta consulta.
+The proposed, unexecuted successor in PR #183 would use a 2×2 design. Both code conditions see
+the same seeded confirmed mutant; only the requirement changes. Both scaffold
+conditions are regenerated in the same batch. The primary contrast is complete
+versus incomplete requirement while mutant code is held constant. Code-context
+effects and the factorial interaction are reported separately.
+
+The proposal is for 200 fresh calls and 1,528 planned suite/page pairs,
+not a 50-call top-up to the completed 150-call study. It requires a separate
+human decision, fresh freeze and result packet. It does not change H1/H2,
+reuse old calls, generate new implementations or convert the selected sample
+into confirmatory evidence. The proposal is informed by known results.
+
+## Correction to the execution claim
+
+The original audit incorrectly described an inevitable overwrite failure in
+the frozen three-arm adapter. That code delegates once to `ma.execute`;
+the claim is not supported by that implementation and is withdrawn.
+Single-write four-arm finalization was needed while developing the factorial
+adaptation, not evidence that the original collector was broken. The completed
+PR #184 study and its frozen scripts, receipts and results are unchanged.

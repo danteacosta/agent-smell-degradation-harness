@@ -10,18 +10,101 @@ def test_code_prompt_uses_confirmed_mutant_not_correct_reference(tmp_path):
                 'artifacts': {'a1': {'artifact_path': str(correct)}, 'c1': {'artifact_path': str(mutant)}}}]
     calls = [{'case': 'sample', 'source': source, 'suite_index': k, 'prompt': 'old', 'targets': ['a1','c1']}
              for source in study.ma.SOURCES for k in (1,2)]
-    prompts = {'sample': 'INCOMPLETE_REQUEST'}
-    transformed, selected = study.transform_plan(calls, records, prompts)
+    complete = {'sample': 'COMPLETE_REQUIREMENT'}
+    incomplete = {'sample': 'INCOMPLETE_REQUEST'}
+    transformed, selected = study.transform_plan(calls, records, complete, incomplete)
     assert selected == {'sample': 'c1'}
-    assert len({c['call_id'] for c in transformed}) == 6
+    assert len({c['call_id'] for c in transformed}) == 8
     for call in transformed:
-        if call['source'] == 'code_incomplete':
+        if call['source'] in ('code_complete', 'code_incomplete'):
             assert 'MUTANT_IMPLEMENTATION' in call['prompt']
             assert 'CORRECT_REFERENCE_SECRET' not in call['prompt']
-            assert 'INCOMPLETE_REQUEST' in call['prompt']
+            expected = complete['sample'] if call['source'] == 'code_complete' else incomplete['sample']
+            assert expected in call['prompt']
         else:
             assert call['prompt'] == 'old'
-    assert study.transform_plan(calls, records, prompts) == (transformed, selected)
+    assert study.transform_plan(calls, records, complete, incomplete) == (transformed, selected)
+
+
+def test_primary_holds_mutant_code_constant_and_interaction_is_explicit():
+    def rows(call, source, mutant_verdict):
+        return [
+            dict(call_id=call, case='sample', project_id='p', source=source, suite_index=1,
+                 slot_id='a', role='correct', verdict='quiet', is_reference=True),
+            dict(call_id=call, case='sample', project_id='p', source=source, suite_index=1,
+                 slot_id='c', role='mutant', verdict=mutant_verdict, is_reference=False),
+        ]
+    data = []
+    data += rows('sc', 'spec_complete', 'assertion_alarm')
+    data += rows('si', 'spec_incomplete', 'quiet')
+    data += rows('cc', 'code_complete', 'assertion_alarm')
+    data += rows('ci', 'code_incomplete', 'quiet')
+    result = study.analyse(data)
+    assert result['primary']['comparison'] == 'code_complete - code_incomplete'
+    assert result['primary']['mean_difference'] == 1
+    assert result['scaffold_replication']['mean_difference'] == 1
+    assert result['factorial_interaction']['mean_difference'] == 0
+    assert result['factorial_interaction']['status'] == 'exploratory_no_decision_gate'
+
+
+def test_finalize_writes_four_arm_analysis_once_and_receipt_excludes_itself(tmp_path):
+    rows = []
+    for source, verdict in [('spec_complete', 'assertion_alarm'), ('spec_incomplete', 'quiet'),
+                            ('code_complete', 'assertion_alarm'), ('code_incomplete', 'quiet')]:
+        rows.extend([
+            dict(call_id=source, case='sample', project_id='p', source=source, suite_index=1,
+                 slot_id='a', role='correct', verdict='quiet', is_reference=True),
+            dict(call_id=source, case='sample', project_id='p', source=source, suite_index=1,
+                 slot_id='c', role='mutant', verdict=verdict, is_reference=False),
+        ])
+
+    result = study.finalize(tmp_path, rows)
+    saved = __import__('json').loads((tmp_path / 'results.json').read_text())
+    receipt = __import__('json').loads((tmp_path / 'receipt.json').read_text())['files']
+    assert result == saved['analysis'] and result['primary']['mean_difference'] == 1
+    assert 'receipt.json' not in receipt
+    assert receipt == {path: digest for path, digest in study.ma.ta.inventory(tmp_path).items()
+                       if path != 'receipt.json'}
+    import pytest
+    with pytest.raises(FileExistsError):
+        study.finalize(tmp_path, rows)
+
+
+def test_execute_emits_all_four_sources_without_intermediate_overwrite(tmp_path, monkeypatch):
+    artifacts = {}
+    for slot, role in [('a', 'correct'), ('c', 'mutant')]:
+        path = tmp_path / 'artifacts' / slot / 'app.html'
+        study.ma.ta.put(path, f'<html>{role}</html>')
+        artifacts[slot] = {'role': role, 'artifact_path': str(path)}
+    schedule = []
+    for source in study.SOURCES:
+        call_id = f'call-{source}'
+        directory = tmp_path / 'calls' / call_id
+        suite = f'module.exports = {{source: "{source}"}};\n'
+        study.ma.ta.put(directory / 'suite.cjs', suite)
+        study.ma.ta.put(directory / 'result.json', {
+            'status': 'suite_ready', 'suite_sha256': study.ma.ta.sha256_file(directory / 'suite.cjs')})
+        schedule.append({'call_id': call_id, 'case': 'sample', 'project_id': 'p',
+                         'source': source, 'suite_index': 1, 'targets': ['a', 'c']})
+    study.ma.ta.put(tmp_path / 'generation.json', {'suite_ready': 4})
+    manifest = {'schedule': schedule, 'cases': [{'case': 'sample', 'reference': 'a',
+                                                 'artifacts': artifacts}]}
+    monkeypatch.setattr(study, 'verify', lambda out: manifest)
+
+    def executor(artifact, suite, output):
+        mutant = 'mutant' in artifact.read_text()
+        complete = 'complete' in suite.read_text() and 'incomplete' not in suite.read_text()
+        return {'status': 'complete', 'tests': [
+            {'outcome': 'assertion_failure' if mutant and complete else 'pass'}]}
+
+    result = study.execute(tmp_path, executor=executor)
+    saved = __import__('json').loads((tmp_path / 'results.json').read_text())
+    assert len(saved['rows']) == 8
+    assert set(saved['analysis']['by_source']) == set(study.SOURCES)
+    assert result['primary']['comparison'] == 'code_complete - code_incomplete'
+    import pytest
+    with pytest.raises(FileExistsError, match='no resume'):
+        study.execute(tmp_path, executor=executor)
 
 
 def test_quiet_mutant_outcome_is_separate_from_reference_eligibility():

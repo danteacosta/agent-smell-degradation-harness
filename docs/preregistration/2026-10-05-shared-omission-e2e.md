@@ -1,25 +1,105 @@
-# Extensão E2E: omissão compartilhada e código do próprio mutante
+# Proposed factorial successor: shared omission and mutant-code context
 
-Status: protocolo prospectivo para novas suítes, após conhecimento do #180. Exploratório para a tese, sem confirmação de H1/H2. Autorização: pesquisador escolheu E2Es primeiro, sem implementar agentes com ferramentas.
+Status: unexecuted factorial-successor proposal in PR #183. The completed
+three-arm study in PR #184 used PR #181 at frozen commit
+`eec5110c4353dc5da3c6dc29f36be23bd2b090e9`; its collection had already started
+before PR #183 was opened. This proposal did not govern that collection and
+must not replace its protocol or analysis retrospectively. No four-arm packet
+has been frozen or executed. Human approval must consider the now-known
+results of both PR #180 and PR #184 before a fresh successor is registered.
+The proposed successor remains exploratory and cannot confirm H1 or test H2.
 
-## Contrato científico
+## Scientific contract
 
-São os mesmos 25 requisitos elegíveis em oito projetos e as mesmas 191 páginas do estudo de adequação, vinculadas aos resultados e recibos anteriores. Nenhuma implementação nova. Por requisito, selecionar um mutante confirmado entre os 81 com `Random("2026100508:<case>")` sobre IDs ordenados, sem examinar quais testes o mataram no #180. A referência correta anterior é mantida. A escolha do mutante é metadado privado e público, nunca label no prompt.
+The study reuses the same 25 eligible requirements from eight projects and the
+same 191 pages as the mutation-adequacy study. It generates no new
+implementation. For each requirement, it selects one oracle-confirmed mutant
+from the 81 available mutants by applying
+`Random("2026100508:<case>")` to sorted slot IDs. Selection does not inspect
+which suites killed the mutant in PR #180. The prior correct reference is
+preserved. The selected slot is metadata and never appears as a label in a
+prompt.
 
-Coletar contemporaneamente duas suítes de cada fonte: requisito completo + scaffold; pedido incompleto + scaffold; pedido incompleto + código do mutante selecionado. São 150 chamadas novas do gpt-6-astra, sem retry/reparo, ordem sorteada com semente 2026100508, 1.146 pares planejados. As chamadas e falhas anteriores não são reaproveitadas nem substituídas. A chave legada `code_incomplete` é explicitamente rotulada no manifesto como código mutante, não referência correta.
+The experiment is a 2×2 design. It crosses requirement completeness with code
+context while keeping the selected defective implementation fixed in both code
+arms:
 
-## Desfechos e decisão
+| Source | Requirement | Implementation context |
+| --- | --- | --- |
+| `spec_complete` | complete | scaffold without feature code |
+| `spec_incomplete` | incomplete | scaffold without feature code |
+| `code_complete` | complete | selected confirmed mutant |
+| `code_incomplete` | incomplete | the same selected confirmed mutant |
 
-Preservar o estimador do estudo anterior: média de duas suítes por requisito, depois peso igual por requisito. Suíte utilizável e quieta na referência correta é elegível para matar um mutante. Falhas permanecem com zero no denominador. MA1 completa menos incompleta é principal; MA2 completa menos incompleta com código mutante é secundária. Suporte local exige conjuntamente bootstrap de projetos (4.000) com limite inferior acima de zero e teste bilateral exato de sinais por projeto p<0,05. Não remover projetos/requisitos ou mudar desfechos após resultados. MA2 não pode substituir MA1 se esta não sustentar a previsão.
+The proposed fresh collection would generate two suites per source and requirement: 25 × 4 × 2 = **200 new
+calls** to `gpt-6-astra`, contemporaneously, without retry or repair. The call
+order is shuffled with seed 2026100508. Earlier calls and failures are neither
+reused nor replaced. The complete/incomplete code comparison therefore changes
+only the requirement text; it no longer conflates omission with the presence of
+code.
 
-Descritivo adicional: para o mutante selecionado, contar quietude observada da suíte e quietude entre suítes elegíveis. Esta é falsa segurança operacional perante perda já confirmada, não frequência populacional de falsa confiança nem prova psicológica de confiança. Relatar denominadores, erros/asserções, geração falha e taxas condicionadas e incondicionais de alarmes em outras A corretas e C recuperadas. Repetições não são unidades independentes.
+## Outcomes and decisions
 
-## Custódia e aceitação
+The estimand is preserved: average the two suites within each requirement, then
+weight requirements equally. A suite can kill a mutant only if it is usable and
+quiet on the frozen correct reference. Generation and runner failures stay in
+the denominator with score zero.
 
-Given páginas vinculadas aos hashes publicados, When preparo o novo pacote, Then todos os prompts, papéis, selecionados e hashes de scripts/runner/imagem são congelados antes das chamadas. Mudança de código, página ou prompt deve impedir geração/execução. Given pacote já iniciado, When tento repetir, Then a execução é recusada. Given falha de geração, Then nenhum retry e nenhum sucesso fictício. Given mutante confirmado, Then o código enviado ao braço de código corresponde a esse mutante e nunca à referência correta. O teste de regressão deve comprovar essa fronteira.
+**Primary comparison.** `code_complete - code_incomplete`. This holds the
+selected defective implementation constant and asks whether omitting the rule
+from the requirement makes generated tests less able to expose that known
+loss. Local support requires both a 4,000-draw project bootstrap interval with
+lower bound above zero and a two-sided exact project sign-flip p-value below
+0.05.
 
-Os três controles de navegador devem qualificar o runtime antes de qualquer chamada. Verificar 150 tentativas, relatórios reais versus placeholders e integridade ao terminar. Publicar somente resultados estruturados, manifesto sem caminhos e relatório, sem respostas/páginas privadas.
+**Proposed secondary comparisons.**
 
-## Limites e ferramentas futuras
+- `spec_complete - spec_incomplete`: contemporaneous replication of MA1
+  without implementation code;
+- `spec_complete - code_complete`: whether showing defective code reduces
+  mutation detection even when the complete rule is visible;
+- `spec_incomplete - code_incomplete`: the corresponding contrast under the
+  incomplete requirement.
 
-Seleção baseada em perdas conhecidas, oito projetos, um testador do mesmo provedor, duas suítes por fonte e scaffold simplificado permanecem limitações. O #180 continua separado. Para ferramentas, apenas registrar um desenho futuro: policies públicas/licenciadas, obrigações congeladas, ações/estado independentes e contraste entre evals completos/incompletos; não implementar ou executar esse domínio agora.
+The difference-in-differences between the completeness effects with code and
+with scaffold is reported as exploratory, with no decision gate. No secondary
+comparison can replace a failed primary result.
+
+For the selected mutant, report quiet outcomes both unconditionally and among
+suites eligible after the correct-reference check. This is operational false
+security against a confirmed loss, not a population rate or a psychological
+claim about confidence. Also report denominators, assertion/error alarms,
+generation failures, and conditional and unconditional alarms on other correct
+and recovered pages. Repetitions and page executions are not independent
+units.
+
+## Custody and acceptance
+
+- Every page remains bound to its prior public hash and private receipt.
+- Prompts, page roles, selected mutants, scripts, runner and image are frozen
+  before the first call.
+- Script, page or prompt drift blocks generation or execution.
+- A started packet cannot be resumed, retried or repaired.
+- A generation failure remains a zero in its planned position.
+- Both code arms receive the exact same selected confirmed mutant; neither
+  receives the correct reference as implementation context.
+- Regression tests must prove the 2×2 boundary and the primary comparison.
+
+The three authored browser controls must qualify the runtime before any model
+call. Final verification must reconcile 200 attempts, 1,528 planned
+suite/page pairs, real reports versus placeholders, and the complete receipt.
+Only structured results and a path-free public manifest may be published;
+prompts, pages and raw responses remain private.
+
+## Limits and future work
+
+The cases were selected from known losses; there are only eight projects, one
+tester from the same provider, two suites per source and a simplified scaffold.
+The four-arm experiment isolates two prompt factors within this selected set,
+but it does not estimate defect prevalence or confirm the thesis. PR #180
+remains a separate completed study.
+
+A future tool-using-agent study would require licensed public policies,
+independently frozen obligations, isolated actions/state and complete versus
+incomplete evals. No result from this browser study may be presented as evidence
+for that domain.
