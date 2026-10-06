@@ -151,3 +151,5 @@ experiment evidence.
 - [Triagem das opções confirmatórias, 5 de outubro de 2026](2026-10-05-confirmatory-screening-results.md): 367 candidatos, 162 admitidos provisoriamente em oito projetos, dois sem decisão; recibos auditados, seleção e novos E2Es pendentes.
 
 - [Claude Pro: setup Sonnet/Opus e qualificação técnica](2026-10-06-claude-subscription-setup.md).
+
+- [Replicação Claude de omissão compartilhada: protocolo e parada de quota](2026-10-06-claude-shared-omission-protocol.md).
