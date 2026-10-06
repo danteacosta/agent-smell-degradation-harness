@@ -157,3 +157,5 @@ experiment evidence.
 - [Emenda autorizada: consumir janela de cinco horas e preservar reserva semanal](2026-10-06-claude-quota-amendment.md).
 
 - [Parser Claude V2: recusa de telemetria e continuação sem repetir tentativas](2026-10-06-claude-parser-telemetry-fix.md).
+
+- [Aviso de quota Claude e continuação após reset](2026-10-06-claude-quota-warning-and-reset.md).
