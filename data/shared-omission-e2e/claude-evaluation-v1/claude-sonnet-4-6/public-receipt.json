@@ -1,0 +1,9 @@
+{
+  "files": {
+    "descriptive-accounting.json": "dab2418cee812212873ce55f4d993229dc75e6ca01c544c897f6599c2bdb7bc8",
+    "frozen-manifest-public.json": "d02ec67dbde6f7db96f5127418de0fea918f043dcce5fa44529ebcc216b11f2f",
+    "results.json": "370190c33249f3e3b3d06cdbc3c5b25551730359a9564d8360d0c3bdb9882291"
+  },
+  "original_collection_receipt_sha256": "da80192557d03f66495a982940d5d88977031584125b1674bb88e587fcb36a2a",
+  "private_evaluation_receipt_sha256": "6d63cd692e9c8a43af1eda73f381ab01aac9453b9e1be47e0574cc628309383b"
+}
