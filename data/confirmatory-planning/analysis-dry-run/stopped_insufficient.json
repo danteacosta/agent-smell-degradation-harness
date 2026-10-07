@@ -1,0 +1,6 @@
+{
+  "schema_version": "confirmatory-h1a-analysis/v1",
+  "status": "stopped_insufficient",
+  "note": "selection did not complete; the stop rule forbids estimation",
+  "h1a": null
+}
