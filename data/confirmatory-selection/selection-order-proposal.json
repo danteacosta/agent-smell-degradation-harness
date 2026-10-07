@@ -1,0 +1,1533 @@
+{
+  "schema_version": "confirmatory-selection-order/v1",
+  "status": "proposal_not_approved",
+  "seed": 2026100506,
+  "target_per_project": 5,
+  "priority": [
+    "reserve",
+    "w2024"
+  ],
+  "shuffle": "per project and option: candidates sorted by id, then random.Random(f'{seed}:{project}:{option}').shuffle",
+  "allowed_exclusion_reasons": {
+    "duplicate_semantic": "states the same rule as an earlier-ranked candidate (name it in duplicate_of)",
+    "overlaps_exploratory": "states the same rule as one of the 46 exploratory cases, the 17 historical cases or a pilot case (name it in duplicate_of)",
+    "mapping_invalid": "the panel's target rule is not what the documentation change states",
+    "not_constructible": "no self-contained page can exercise the rule with one passing and one failing observation",
+    "oracle_not_qualified": "the oracle fails its authored qualification controls (correct and incorrect pages)",
+    "human_audit_exclude": "the blind human audit (20% sample) excluded it; applies only to audited candidates"
+  },
+  "inputs_sha256": {
+    "data/llm-screening-confirmatory-reserve-20261005/results.json": "271f2ad18dbd420181a2487b39dacd9b22e8ffb4992bee44825475dd4c45648f",
+    "data/requirement-sampling/screening-confirmatory-reserve-20261005.json": "f141d14745a44bae3b18bb4b8924290c274192affd480a8969584c859a9f4d6b",
+    "data/llm-screening-confirmatory-w2024-20261005/results.json": "de00694436b51ed911005fa870cecc79e6bc0d500abfef01b233891a12368db0",
+    "data/requirement-sampling/screening-confirmatory-w2024-20261005.json": "1862d1bc6617a00c0996253a630fb13916c979841fde77d18ea2e1df00b6a3c6"
+  },
+  "projects": {
+    "grist": {
+      "reserve": 10,
+      "w2024": 9,
+      "order": [
+        {
+          "candidate_id": "rc-7683b179fc4f",
+          "option": "reserve",
+          "commit": "17cf5865772513b92f2161ca25d2826378229ca0",
+          "date": "2025-07-29",
+          "file": "help/en/docs/page-widgets.md",
+          "panel_target_rule": "Selecting 'Duplicate widget' from a widget's upper-right three-dot menu prompts the user to choose a destination page.",
+          "rank": 1
+        },
+        {
+          "candidate_id": "rc-63d59c827674",
+          "option": "reserve",
+          "commit": "d0fb6226cff05e04d915893414b169f8529e0bc6",
+          "date": "2025-03-02",
+          "file": "help/en/docs/formulas.md",
+          "panel_target_rule": "Prefixing a column name with \"-\" in a formula's order_by setting reverses the result order for that column.",
+          "rank": 2
+        },
+        {
+          "candidate_id": "rc-fb5d066572be",
+          "option": "reserve",
+          "commit": "fc6528550366302e9276cf295f439d5d7c3dd526",
+          "date": "2025-03-03",
+          "file": "help/en/docs/team-sharing.md",
+          "panel_target_rule": "A team on getgrist.com may have at most 10 billing managers.",
+          "rank": 3
+        },
+        {
+          "candidate_id": "rc-8825471d4bff",
+          "option": "reserve",
+          "commit": "4436beebb038b32128f9a924b24f9f63635ec755",
+          "date": "2026-01-28",
+          "file": "help/en/docs/access-rules.md",
+          "panel_target_rule": "Column access rules must not offer Create or Delete permissions.",
+          "rank": 4
+        },
+        {
+          "candidate_id": "rc-83c90b334edd",
+          "option": "reserve",
+          "commit": "7f1892bd9d3218d95d4ab1c55b92e906214b3a35",
+          "date": "2025-05-13",
+          "file": "help/en/docs/exports.md",
+          "panel_target_rule": "Downloading a Grist document that uses external attachments must produce a document containing no attached files.",
+          "rank": 5
+        },
+        {
+          "candidate_id": "rc-eed9ff6597bf",
+          "option": "reserve",
+          "commit": "4436beebb038b32128f9a924b24f9f63635ec755",
+          "date": "2026-01-28",
+          "file": "help/en/docs/access-rules.md",
+          "panel_target_rule": "Using the section's \"+\" button adds an access rule above the default rules.",
+          "rank": 6
+        },
+        {
+          "candidate_id": "rc-4c6f6a8e19d3",
+          "option": "reserve",
+          "commit": "fb632cca4cc93f4caf588137bd2006c7498a1b42",
+          "date": "2025-10-28",
+          "file": "help/en/docs/dates.md",
+          "panel_target_rule": "A WEEKDAY formula in a Grist cell must return integers 1 through 7 for dates falling on Sunday through Saturday, respectively.",
+          "rank": 7
+        },
+        {
+          "candidate_id": "rc-b902db88d296",
+          "option": "reserve",
+          "commit": "b5e6d897fc1f0a8ef5194d5067766a950ca10650",
+          "date": "2025-06-02",
+          "file": "help/en/docs/document-tutorials.md",
+          "panel_target_rule": "The GristDocTutorial table is automatically hidden from users other than the document owner when they view the tutorial.",
+          "rank": 8
+        },
+        {
+          "candidate_id": "rc-acb87192db54",
+          "option": "reserve",
+          "commit": "a5083361e11aba367891bc99b8ec09f59c6615e4",
+          "date": "2025-05-13",
+          "file": "help/en/docs/document-tours.md",
+          "panel_target_rule": "The GristDocTour table must be hidden by default from the document's normal table navigation.",
+          "rank": 9
+        },
+        {
+          "candidate_id": "rc-059b810c6488",
+          "option": "reserve",
+          "commit": "7d93a47a386749450fae7a246f3496a88ff1617e",
+          "date": "2025-02-11",
+          "file": "help/en/docs/creating-doc.md",
+          "panel_target_rule": "While a document is open, users can access its document settings from the Tools menu in the left-hand navigation panel.",
+          "rank": 10
+        },
+        {
+          "candidate_id": "rc-2288bd98dc33",
+          "option": "w2024",
+          "commit": "640e3c1ba115254813f9da525cacb5672584b38c",
+          "date": "2024-06-17",
+          "file": "help/en/docs/record-cards.md",
+          "panel_target_rule": "A newly added card widget uses the saved record-card layout as its default layout.",
+          "rank": 11
+        },
+        {
+          "candidate_id": "rc-197e324cc00c",
+          "option": "w2024",
+          "commit": "7de215a44d08021cb0d27fd024ca9225b740c5f3",
+          "date": "2024-10-29",
+          "file": "help/en/docs/col-refs.md",
+          "panel_target_rule": "Formula columns must not support two-way references.",
+          "rank": 12
+        },
+        {
+          "candidate_id": "rc-621f2f928e45",
+          "option": "w2024",
+          "commit": "6e8f974762a64f8e98b8f380399770d070a3acf3",
+          "date": "2024-06-13",
+          "file": "help/en/docs/access-rules.md",
+          "panel_target_rule": "Selecting Add Table-wide Rule adds an access rule that is not limited to specific columns.",
+          "rank": 13
+        },
+        {
+          "candidate_id": "rc-4ede7e6185c5",
+          "option": "w2024",
+          "commit": "0ba7b0fda2d6e26d5b7fd8b26377ffc1d69b7c2f",
+          "date": "2024-06-17",
+          "file": "help/en/docs/teams.md",
+          "panel_target_rule": "Deleting a team site from Billing Summary must also remove all documents belonging to that site.",
+          "rank": 14
+        },
+        {
+          "candidate_id": "rc-c6c3a064ab20",
+          "option": "w2024",
+          "commit": "f8d53b64e7e9b7a3afae5a315db026b6f6c41675",
+          "date": "2024-10-28",
+          "file": "help/en/docs/widget-custom.md",
+          "panel_target_rule": "A custom widget linked through 'Select By' to a selector widget on the same page must show only data related to the selected record.",
+          "rank": 15
+        },
+        {
+          "candidate_id": "rc-3ae57dab7eec",
+          "option": "w2024",
+          "commit": "97284437ee0580b37ff4f42706df4365e07ad0fa",
+          "date": "2024-09-18",
+          "file": "help/en/docs/col-types.md",
+          "panel_target_rule": "Selecting Markdown as a text column's cell format renders Markdown syntax as rich text in its cells.",
+          "rank": 16
+        },
+        {
+          "candidate_id": "rc-276ad850e6ac",
+          "option": "w2024",
+          "commit": "6d20c6f106a3366ad20aa5212fbfc0c798ab4a99",
+          "date": "2024-06-17",
+          "file": "help/en/docs/record-cards.md",
+          "panel_target_rule": "New card widgets added to pages use the saved record-card layout as their default layout.",
+          "rank": 17
+        },
+        {
+          "candidate_id": "rc-ed0b61d6253f",
+          "option": "w2024",
+          "commit": "d4010373371cdb4d897bfdb0cb746342be48e538",
+          "date": "2024-06-17",
+          "file": "help/en/docs/teams.md",
+          "panel_target_rule": "Deleting a team site through Billing Summary removes all documents belonging to that site.",
+          "rank": 18
+        },
+        {
+          "candidate_id": "rc-9bfea936e2f4",
+          "option": "w2024",
+          "commit": "d77f951546d8438686ac27d52a39d56f2f39c442",
+          "date": "2024-11-05",
+          "file": "help/en/docs/widget-form.md",
+          "panel_target_rule": "A newly created column is hidden by default in existing table widgets within the document.",
+          "rank": 19
+        }
+      ]
+    },
+    "immich": {
+      "reserve": 4,
+      "w2024": 9,
+      "order": [
+        {
+          "candidate_id": "rc-ce5830df6d68",
+          "option": "reserve",
+          "commit": "78224961d16e0900790ccb962819b177ead54ca9",
+          "date": "2025-05-28",
+          "file": "docs/docs/features/casting.md",
+          "panel_target_rule": "Google Cast support is disabled by default in Account Settings > Features > Cast > Google Cast.",
+          "rank": 1
+        },
+        {
+          "candidate_id": "rc-fe03188e209a",
+          "option": "reserve",
+          "commit": "cc0cbd705edf6ec09e9b54d85b81658ff2cc52a7",
+          "date": "2025-01-28",
+          "file": "docs/docs/features/supported-formats.md",
+          "panel_target_rule": "The web upload interface must accept valid JPEG 2000 files with the .jp2 extension.",
+          "rank": 2
+        },
+        {
+          "candidate_id": "rc-a4c32ff26e9b",
+          "option": "reserve",
+          "commit": "a244d94ac814a0207d406efd4298d742870f06ca",
+          "date": "2026-01-25",
+          "file": "docs/docs/features/searching.md",
+          "panel_target_rule": "Searching by asset description returns assets whose descriptions match the search text.",
+          "rank": 3
+        },
+        {
+          "candidate_id": "rc-d5c0887459b7",
+          "option": "reserve",
+          "commit": "96dc4a77a0fdc89bfae69e5bc11e56395784706b",
+          "date": "2026-02-23",
+          "file": "docs/docs/features/libraries.md",
+          "panel_target_rule": "Deleting an external library immediately removes it from the library list, even while background deletion continues.",
+          "rank": 4
+        },
+        {
+          "candidate_id": "rc-394025207258",
+          "option": "w2024",
+          "commit": "a5a27594b876dcb1397d848bad15f8586178c10c",
+          "date": "2024-03-07",
+          "file": "docs/docs/features/libraries.md",
+          "panel_target_rule": "A library's owner cannot be changed after the library is created.",
+          "rank": 5
+        },
+        {
+          "candidate_id": "rc-428e6358e496",
+          "option": "w2024",
+          "commit": "cc1235d4aa4c9bd91812984602021194827597f5",
+          "date": "2024-07-14",
+          "file": "docs/docs/features/smart-search.md",
+          "panel_target_rule": "A single Smart Search on the web must return no more than 5,000 results.",
+          "rank": 6
+        },
+        {
+          "candidate_id": "rc-0882baf0e4e8",
+          "option": "w2024",
+          "commit": "a5a27594b876dcb1397d848bad15f8586178c10c",
+          "date": "2024-03-07",
+          "file": "docs/docs/features/libraries.md",
+          "panel_target_rule": "An administrator can access library management through Administration → Libraries.",
+          "rank": 7
+        },
+        {
+          "candidate_id": "rc-118d2b760bcd",
+          "option": "w2024",
+          "commit": "d4146e3e6d0d463200a223ec3983e6545cbb85d7",
+          "date": "2024-01-18",
+          "file": "docs/docs/features/search.md",
+          "panel_target_rule": "Search results exclude archived photos by default.",
+          "rank": 8
+        },
+        {
+          "candidate_id": "rc-5d00abfb4e7e",
+          "option": "w2024",
+          "commit": "3682e76deefc87d8c1ed73d4fca77f897923bd94",
+          "date": "2024-04-02",
+          "file": "docs/docs/features/supported-formats.md",
+          "panel_target_rule": "The web upload interface must accept a valid JPEG XL image with a .jxl extension.",
+          "rank": 9
+        },
+        {
+          "candidate_id": "rc-80d654e3fc69",
+          "option": "w2024",
+          "commit": "b2f2be34855d7c70fc699d4504d72b037df44e0b",
+          "date": "2024-09-25",
+          "file": "docs/docs/features/libraries.md",
+          "panel_target_rule": "The \"Remove offline files\" button removes assets marked as offline from the library.",
+          "rank": 10
+        },
+        {
+          "candidate_id": "rc-4bb45d5b22d5",
+          "option": "w2024",
+          "commit": "2d03d7c373ba5a9a061d3fa6681fa3c49e43ba4b",
+          "date": "2024-04-08",
+          "file": "docs/docs/features/partner-sharing.md",
+          "panel_target_rule": "Sharing your library with a partner does not grant you access to their assets unless they also share with you.",
+          "rank": 11
+        },
+        {
+          "candidate_id": "rc-6b9d4ddc0bab",
+          "option": "w2024",
+          "commit": "96e97278d3764c59140814acf67d10c2706029fe",
+          "date": "2024-10-29",
+          "file": "docs/docs/features/libraries.md",
+          "panel_target_rule": "When Folders is enabled in User Settings, the web interface lets users browse photos and videos by folder.",
+          "rank": 12
+        },
+        {
+          "candidate_id": "rc-8221e4c0968c",
+          "option": "w2024",
+          "commit": "2d03d7c373ba5a9a061d3fa6681fa3c49e43ba4b",
+          "date": "2024-04-08",
+          "file": "docs/docs/features/partner-sharing.md",
+          "panel_target_rule": "A user viewing a partner-shared asset can see its GPS metadata when present.",
+          "rank": 13
+        }
+      ]
+    },
+    "mattermost": {
+      "reserve": 11,
+      "w2024": 0,
+      "order": [
+        {
+          "candidate_id": "rc-24343885fa1f",
+          "option": "reserve",
+          "commit": "0f6deac52617884a389ec6155af435e61480e84c",
+          "date": "2025-11-14",
+          "file": "source/end-user-guide/workflow-automation.rst",
+          "panel_target_rule": "During a playbook run, a task's visibility must follow its configured condition on the current run attribute values.",
+          "rank": 1
+        },
+        {
+          "candidate_id": "rc-6f26687709d1",
+          "option": "reserve",
+          "commit": "6c4598422f04909d723949c261f82772340dd67b",
+          "date": "2026-02-16",
+          "file": "source/end-user-guide/collaborate/manage-channel-members.rst",
+          "panel_target_rule": "A user with permission to manage channel members can leave a channel by selecting their own name under View Info > Members > Manage.",
+          "rank": 2
+        },
+        {
+          "candidate_id": "rc-45d9c95d76b7",
+          "option": "reserve",
+          "commit": "8b116ca3f021ac2b2c8891cde98ae9c051b40cc5",
+          "date": "2026-08-19",
+          "file": "source/end-user-guide/collaborate/team-settings.rst",
+          "panel_target_rule": "A user who does not match a public team's advisory rules can still join that team.",
+          "rank": 3
+        },
+        {
+          "candidate_id": "rc-3f16c456a738",
+          "option": "reserve",
+          "commit": "73d7ca79e60e5706e1e7de1569b68e60affa85d1",
+          "date": "2026-03-16",
+          "file": "source/end-user-guide/collaborate/archive-unarchive-channels.rst",
+          "panel_target_rule": "Archived private channels display a distinct Archive Lock icon that differentiates them from other archived channels.",
+          "rank": 4
+        },
+        {
+          "candidate_id": "rc-d20deaef81d9",
+          "option": "reserve",
+          "commit": "d3bebad17b83da47a56059f0564bef5f1f989c40",
+          "date": "2026-03-25",
+          "file": "source/end-user-guide/collaborate/search-for-messages.rst",
+          "panel_target_rule": "Search results for public channels the user has not joined must exclude messages from teams the user does not belong to.",
+          "rank": 5
+        },
+        {
+          "candidate_id": "rc-101b4e1b323d",
+          "option": "reserve",
+          "commit": "0f6deac52617884a389ec6155af435e61480e84c",
+          "date": "2025-11-14",
+          "file": "source/end-user-guide/workflow-automation/notifications-and-updates.rst",
+          "panel_target_rule": "When composing a subsequent status update, the reminder timer must be pre-populated with the timer used for the previous status update.",
+          "rank": 6
+        },
+        {
+          "candidate_id": "rc-884307e5339e",
+          "option": "reserve",
+          "commit": "73d7ca79e60e5706e1e7de1569b68e60affa85d1",
+          "date": "2026-03-16",
+          "file": "source/end-user-guide/collaborate/channel-types.rst",
+          "panel_target_rule": "Archived private channels display a distinct Archive Lock icon that differentiates them from archived public channels.",
+          "rank": 7
+        },
+        {
+          "candidate_id": "rc-ba9a29e58f53",
+          "option": "reserve",
+          "commit": "67ec73b77d89c8c6aa3b87c9bee1b3f5e83bbb86",
+          "date": "2025-08-15",
+          "file": "source/end-user-guide/workflow-automation.rst",
+          "panel_target_rule": "In the web interface, selecting Playbooks from the top-left product menu opens Playbooks.",
+          "rank": 8
+        },
+        {
+          "candidate_id": "rc-1e3a3f0cfec7",
+          "option": "reserve",
+          "commit": "fff3298d4a9240d9b09ff860322a1157840d9315",
+          "date": "2026-04-16",
+          "file": "source/end-user-guide/collaborate/search-for-messages.rst",
+          "panel_target_rule": "File content searches must not return a 7zip (.7z) archive based on text contained inside it.",
+          "rank": 9
+        },
+        {
+          "candidate_id": "rc-b48d17a555c7",
+          "option": "reserve",
+          "commit": "f4e5c0dcf6fac240ba30494ffaf3008cadb986b6",
+          "date": "2026-06-18",
+          "file": "source/end-user-guide/collaborate/browse-channels.rst",
+          "panel_target_rule": "The Recommended filter in Browse Channels shows only public channels whose membership policy criteria match the user's attributes.",
+          "rank": 10
+        },
+        {
+          "candidate_id": "rc-fd56044a7f7d",
+          "option": "reserve",
+          "commit": "7451869a150da69fb7f3e1b5adb501e7633bb0a8",
+          "date": "2026-06-16",
+          "file": "source/end-user-guide/collaborate/rename-channels.rst",
+          "panel_target_rule": "When a member joins a channel with a default category set, the channel appears under that category in the member's sidebar.",
+          "rank": 11
+        }
+      ]
+    },
+    "nextcloud": {
+      "reserve": 6,
+      "w2024": 10,
+      "order": [
+        {
+          "candidate_id": "rc-4e36d9697d1c",
+          "option": "reserve",
+          "commit": "ce0623394e355a3599e48f7c011874ef21ebaf9f",
+          "date": "2025-10-02",
+          "file": "user_manual/talk/advanced_features.rst",
+          "panel_target_rule": "When a conversation is marked sensitive, its message content must not appear in the conversation list.",
+          "rank": 1
+        },
+        {
+          "candidate_id": "rc-36de908d5dbc",
+          "option": "reserve",
+          "commit": "de6dd9a20d03c597c1cdf12174ab94e9e1f33737",
+          "date": "2026-05-05",
+          "file": "user_manual/files/access_webgui.rst",
+          "panel_target_rule": "The All files view must display every file and folder the user has access to.",
+          "rank": 2
+        },
+        {
+          "candidate_id": "rc-e7f82c4f4712",
+          "option": "reserve",
+          "commit": "efa85ac3a1c31da17778791132a42e761c488adb",
+          "date": "2025-09-30",
+          "file": "user_manual/talk/advanced_features.rst",
+          "panel_target_rule": "A Talk conversation displays information about upcoming calendar events that have that conversation set as their location.",
+          "rank": 3
+        },
+        {
+          "candidate_id": "rc-ccf39be5f0dc",
+          "option": "reserve",
+          "commit": "cb686c01fd73112e8baad6dee2f6f0706e255a46",
+          "date": "2026-05-04",
+          "file": "user_manual/files/transfer_ownership.rst",
+          "panel_target_rule": "Transferring a file or folder to a new owner must preserve its sharing settings and permissions.",
+          "rank": 4
+        },
+        {
+          "candidate_id": "rc-1c56b05609ca",
+          "option": "reserve",
+          "commit": "d1b3673915ba26053ad067ee985ba3e0090c899b",
+          "date": "2026-04-01",
+          "file": "user_manual/talk/call_screenshare.rst",
+          "panel_target_rule": "A user viewing a shared screen can zoom in and out using the mouse wheel.",
+          "rank": 5
+        },
+        {
+          "candidate_id": "rc-b771598178f0",
+          "option": "reserve",
+          "commit": "a88e2fc1fb99c424aef8ba8333c6a6ce094c34e7",
+          "date": "2026-04-16",
+          "file": "user_manual/talk/call.rst",
+          "panel_target_rule": "When a conversation has a call in progress, the web interface must show a green Join call button in the chat area or top bar.",
+          "rank": 6
+        },
+        {
+          "candidate_id": "rc-6f7ec944d977",
+          "option": "w2024",
+          "commit": "708a27011c9988d9ab014e66307b46232a5402a0",
+          "date": "2024-04-22",
+          "file": "user_manual/groupware/calendar.rst",
+          "panel_target_rule": "After attendees are added to an event, clicking Find a time opens the Free / Busy modal showing each attendee's busy times.",
+          "rank": 7
+        },
+        {
+          "candidate_id": "rc-435897ca4ec7",
+          "option": "w2024",
+          "commit": "b7d75ba5d2d80f49ebe9cb7e5f6ef4d823aec7d2",
+          "date": "2024-05-10",
+          "file": "user_manual/talk/talk_basics.rst",
+          "panel_target_rule": "Users can edit sent messages and file-share captions only within 6 hours of sending.",
+          "rank": 8
+        },
+        {
+          "candidate_id": "rc-ccc0692cd1e9",
+          "option": "w2024",
+          "commit": "b7d75ba5d2d80f49ebe9cb7e5f6ef4d823aec7d2",
+          "date": "2024-05-10",
+          "file": "user_manual/talk/talk_basics.rst",
+          "panel_target_rule": "Messages sent while silent mode is enabled must not generate notifications for other conversation participants.",
+          "rank": 9
+        },
+        {
+          "candidate_id": "rc-1aa9d7513552",
+          "option": "w2024",
+          "commit": "a26ea1d6fd5ac84da1682d4471ed0211aba14960",
+          "date": "2024-04-05",
+          "file": "user_manual/groupware/mail.rst",
+          "panel_target_rule": "The Mail web interface supports summarizing a message thread containing at least 3 messages.",
+          "rank": 10
+        },
+        {
+          "candidate_id": "rc-9c9677589cb1",
+          "option": "w2024",
+          "commit": "eccca3fe0710f6dbebb579eaa87d639511fb54c1",
+          "date": "2024-07-24",
+          "file": "user_manual/groupware/mail.rst",
+          "panel_target_rule": "The mailbox search shortcut matches emails by subject, recipient (to), or sender (from) by default.",
+          "rank": 11
+        },
+        {
+          "candidate_id": "rc-7d4638eac8fa",
+          "option": "w2024",
+          "commit": "5490f08e348d07267831135ab3b2ba665d19e352",
+          "date": "2024-04-30",
+          "file": "user_manual/groupware/calendar.rst",
+          "panel_target_rule": "A calendar embedded using its public link must be read-only.",
+          "rank": 12
+        },
+        {
+          "candidate_id": "rc-e27b9edb8a98",
+          "option": "w2024",
+          "commit": "ec11238db11b73e3aa146810b63665c3e1901f47",
+          "date": "2024-08-07",
+          "file": "user_manual/groupware/calendar.rst",
+          "panel_target_rule": "When a calendar's \"Never show me as busy (set calendar to transparent)\" checkbox is checked, its events must not mark the user as busy in Free/Busy results, regardless of individual event settings.",
+          "rank": 13
+        },
+        {
+          "candidate_id": "rc-571033ca091d",
+          "option": "w2024",
+          "commit": "514e651714badab13daeec1a14cffb7568df43fb",
+          "date": "2024-02-11",
+          "file": "user_manual/talk/talk_basics.rst",
+          "panel_target_rule": "The message expiration selector in Conversation settings → Moderation offers exactly 1 hour, 8 hours, 1 day, 1 week, 4 weeks, and never.",
+          "rank": 14
+        },
+        {
+          "candidate_id": "rc-d1b7c2e5d355",
+          "option": "w2024",
+          "commit": "5c879b63901b49456d490669b87b9d5dd65631c8",
+          "date": "2024-11-08",
+          "file": "user_manual/groupware/mail.rst",
+          "panel_target_rule": "Selecting a contact from the @ mention list in a message automatically adds that contact as a recipient.",
+          "rank": 15
+        },
+        {
+          "candidate_id": "rc-6e1ec2b76c0d",
+          "option": "w2024",
+          "commit": "5e6a69ebb3c19b507fe06ccb3fe409216df21150",
+          "date": "2024-03-12",
+          "file": "user_manual/talk/talk_basics.rst",
+          "panel_target_rule": "Hovering over a message and clicking its reminder icon opens a submenu for choosing a reminder time.",
+          "rank": 16
+        }
+      ]
+    },
+    "openproject": {
+      "reserve": 23,
+      "w2024": 22,
+      "order": [
+        {
+          "candidate_id": "rc-bdf97c0171ab",
+          "option": "reserve",
+          "commit": "82bba415bb4a0f6e5973d8ec103e9ad112c80970",
+          "date": "2026-02-06",
+          "file": "docs/user-guide/meetings/one-time-meetings/README.md",
+          "panel_target_rule": "A meeting agenda outcome displayed in the linked work package’s Meetings tab must have an “Added as outcome” label.",
+          "rank": 1
+        },
+        {
+          "candidate_id": "rc-291afea9b884",
+          "option": "reserve",
+          "commit": "5b08b3bc68f6e445a25f79da12eb84b3ac57d73c",
+          "date": "2026-06-03",
+          "file": "docs/user-guide/work-packages/work-package-table-configuration/README.md",
+          "panel_target_rule": "When project-based work package identifiers are enabled, sorting the ID column orders work packages first by project identifier and then by sequence number.",
+          "rank": 2
+        },
+        {
+          "candidate_id": "rc-a7710a9927b1",
+          "option": "reserve",
+          "commit": "85edf7c7d71de056cbb836b9a648eee146103c96",
+          "date": "2026-07-13",
+          "file": "docs/user-guide/projects/project-settings/project-information/README.md",
+          "panel_target_rule": "Users who cannot open a project's settings must not be able to access the Copy action through those settings.",
+          "rank": 3
+        },
+        {
+          "candidate_id": "rc-401d29bbf409",
+          "option": "reserve",
+          "commit": "6c6339c9cff5ee52bb5531b3655520088f94f9eb",
+          "date": "2026-03-10",
+          "file": "docs/user-guide/project-home/README.md",
+          "panel_target_rule": "Budget widgets are visible on the project home page only if the user has the required permissions, either the Budgets or Time and costs module is activated, and a budget exists.",
+          "rank": 4
+        },
+        {
+          "candidate_id": "rc-82b1deb69b68",
+          "option": "reserve",
+          "commit": "db54165614946caf2436a5cb2d601c898412326b",
+          "date": "2025-04-11",
+          "file": "docs/user-guide/work-packages/work-package-table-configuration/README.md",
+          "panel_target_rule": "After the user enters one or more parent work package IDs in the Descendants of filter and presses Enter, the table shows exactly their descendants across all hierarchy levels, with no results if none exist.",
+          "rank": 5
+        },
+        {
+          "candidate_id": "rc-42880bc93718",
+          "option": "reserve",
+          "commit": "503a2ae86a5f1998e915ebe420f6a0cc389886ec",
+          "date": "2025-07-12",
+          "file": "docs/getting-started/my-activity/README.md",
+          "panel_target_rule": "The My Activity screen must show activities only from projects with the Activity module enabled.",
+          "rank": 6
+        },
+        {
+          "candidate_id": "rc-c67a8ed00ec3",
+          "option": "reserve",
+          "commit": "51e2fdfa49500e91b2a76e64fd08d0487f578437",
+          "date": "2026-09-16",
+          "file": "docs/user-guide/budgets/README.md",
+          "panel_target_rule": "When a user enters a planned budget duration of 6d 2h with eight hours configured per work day, the web interface converts it to 50h.",
+          "rank": 7
+        },
+        {
+          "candidate_id": "rc-3772df54e409",
+          "option": "reserve",
+          "commit": "8362677476d528964673ac2a31f8697bea4ce1fb",
+          "date": "2026-05-12",
+          "file": "docs/user-guide/backlogs-scrum/README.md",
+          "panel_target_rule": "Deleting a backlog bucket automatically moves all its contained work packages to the bottom of the Inbox backlog.",
+          "rank": 8
+        },
+        {
+          "candidate_id": "rc-8d25a0d68985",
+          "option": "reserve",
+          "commit": "41dd3c1e5dfc7c0a87cf26615285997eed15c46e",
+          "date": "2025-06-04",
+          "file": "docs/user-guide/wysiwyg/README.md",
+          "panel_target_rule": "The WYSIWYG work package value macro workPackageValue:1234:projectPhase displays the project phase of work package 1234.",
+          "rank": 9
+        },
+        {
+          "candidate_id": "rc-e96a6b01d23f",
+          "option": "reserve",
+          "commit": "1e953b613b8b5f8a32b5e3b736d322603b5e6ef2",
+          "date": "2025-07-11",
+          "file": "docs/user-guide/work-packages/work-package-relations-hierarchies/README.md",
+          "panel_target_rule": "Using “Create new child” from a work package must automatically make the newly created work package a child of that work package.",
+          "rank": 10
+        },
+        {
+          "candidate_id": "rc-024a5a4d873a",
+          "option": "reserve",
+          "commit": "06284360f2206793cc6795b313f5491add50e411",
+          "date": "2025-03-18",
+          "file": "docs/user-guide/work-packages/set-change-dates/README.md",
+          "panel_target_rule": "New work packages default to single-date mode with only the Finish date field active.",
+          "rank": 11
+        },
+        {
+          "candidate_id": "rc-68fb1380aa93",
+          "option": "reserve",
+          "commit": "6e504eea042fd29f048d549b8ecf699118600511",
+          "date": "2025-02-18",
+          "file": "docs/user-guide/meetings/one-time-meetings/README.md",
+          "panel_target_rule": "Each meeting agenda section must display the sum of the specified durations of its contained items.",
+          "rank": 12
+        },
+        {
+          "candidate_id": "rc-0ac7d0d5071b",
+          "option": "reserve",
+          "commit": "ed0d7d44bfb3dfa42d268c364563539f84f59835",
+          "date": "2025-08-11",
+          "file": "docs/user-guide/meetings/recurring-meetings/README.md",
+          "panel_target_rule": "The Send email calendar updates checkbox is checked by default when creating a recurring meeting series.",
+          "rank": 13
+        },
+        {
+          "candidate_id": "rc-7910ebcaa2e4",
+          "option": "reserve",
+          "commit": "06284360f2206793cc6795b313f5491add50e411",
+          "date": "2025-03-18",
+          "file": "docs/user-guide/work-packages/set-change-dates/README.md",
+          "panel_target_rule": "Enabling manual scheduling on a work package with follows/precedes or parent/child relations displays a warning banner that those relations no longer constrain its selectable dates.",
+          "rank": 14
+        },
+        {
+          "candidate_id": "rc-cbbf9ddbaf96",
+          "option": "reserve",
+          "commit": "8362677476d528964673ac2a31f8697bea4ce1fb",
+          "date": "2026-05-12",
+          "file": "docs/user-guide/backlogs-scrum/README.md",
+          "panel_target_rule": "Users with appropriate project permissions can group work packages by Sprint in work package tables.",
+          "rank": 15
+        },
+        {
+          "candidate_id": "rc-a3f7ac935b04",
+          "option": "reserve",
+          "commit": "db54165614946caf2436a5cb2d601c898412326b",
+          "date": "2025-04-11",
+          "file": "docs/user-guide/work-packages/work-package-table-configuration/README.md",
+          "panel_target_rule": "Attribute highlighting in the work package table must be usable only in Enterprise cloud or Enterprise on-premises editions.",
+          "rank": 16
+        },
+        {
+          "candidate_id": "rc-203ed3e39c08",
+          "option": "reserve",
+          "commit": "838962ba1e179779063313effd68886ed7066aca",
+          "date": "2025-09-09",
+          "file": "docs/user-guide/account-settings/README.md",
+          "panel_target_rule": "When Automatic color mode is selected, the web interface must match the operating system’s light, dark, high-contrast light, or high-contrast dark theme.",
+          "rank": 17
+        },
+        {
+          "candidate_id": "rc-816eefb10926",
+          "option": "reserve",
+          "commit": "c0f63f32b7a67e867877c32bcd7b6f5333e08fe6",
+          "date": "2025-10-28",
+          "file": "docs/user-guide/work-packages/exporting/README.md",
+          "panel_target_rule": "Work package exports must support macro-embedded rich text when it is outside table cells or contains only basic text formatting.",
+          "rank": 18
+        },
+        {
+          "candidate_id": "rc-1095e63f2469",
+          "option": "reserve",
+          "commit": "2cbc9aa9e9339a0995094bfd5cd79941d10fc747",
+          "date": "2026-08-03",
+          "file": "docs/user-guide/wiki/wiki-navigation/README.md",
+          "panel_target_rule": "Selecting “Do not show this wiki page in project navigation” removes the page’s separate project navigation item while keeping the page available in the Wiki module.",
+          "rank": 19
+        },
+        {
+          "candidate_id": "rc-162f961dd3ea",
+          "option": "reserve",
+          "commit": "ddf10c4129b01d1f4c5fc8fcfded3f939b606d59",
+          "date": "2026-08-24",
+          "file": "docs/user-guide/backlogs-scrum/README.md",
+          "panel_target_rule": "For a user with permission to view sprint and backlog information, moving a work package into, out of, or between backlog buckets must appear in that work package's Activity tab.",
+          "rank": 20
+        },
+        {
+          "candidate_id": "rc-9764bf26803a",
+          "option": "reserve",
+          "commit": "d8dbfd8ffe0b0cec6af28b280319a9a71fd1259c",
+          "date": "2026-09-15",
+          "file": "docs/user-guide/meetings/recurring-meetings/README.md",
+          "panel_target_rule": "The recurring meeting's default start time is rounded up from the current time to the next half-hour.",
+          "rank": 21
+        },
+        {
+          "candidate_id": "rc-00393574f5cc",
+          "option": "reserve",
+          "commit": "784ed0fb52dd03fff2fad9f8688c5deeed6dc1a5",
+          "date": "2025-07-14",
+          "file": "docs/user-guide/projects/project-templates/README.md",
+          "panel_target_rule": "Selecting 'Set as template' from the More menu in project settings adds that project to the template list.",
+          "rank": 22
+        },
+        {
+          "candidate_id": "rc-e000645d289d",
+          "option": "reserve",
+          "commit": "cdd867d1e1cdc52f3dfe5a9f18302e613d94484c",
+          "date": "2025-01-14",
+          "file": "docs/user-guide/time-and-costs/reporting/README.md",
+          "panel_target_rule": "A PDF timesheet exported from a Time and costs report contains the report’s selected time entries but no cost entries.",
+          "rank": 23
+        },
+        {
+          "candidate_id": "rc-8d23ad43a171",
+          "option": "w2024",
+          "commit": "cf4ba0572bfc6bd2651702e22882526fb85619a6",
+          "date": "2024-05-16",
+          "file": "docs/user-guide/project-overview/README.md",
+          "panel_target_rule": "Hovering around existing widgets on the project overview must reveal a + icon for adding a widget.",
+          "rank": 24
+        },
+        {
+          "candidate_id": "rc-1d4ff1980c48",
+          "option": "w2024",
+          "commit": "0a7c99e47e891fc4472e3e7aade6f7b7b6ed5a75",
+          "date": "2024-04-23",
+          "file": "docs/user-guide/time-and-costs/progress-tracking/README.md",
+          "panel_target_rule": "When a user edits a work package's Work value, the interface previews the updated Remaining work before the changes are saved.",
+          "rank": 25
+        },
+        {
+          "candidate_id": "rc-c923e7489aa4",
+          "option": "w2024",
+          "commit": "cdccfcd487d3a51cc1cb1c1b0544813d9655f10a",
+          "date": "2024-09-10",
+          "file": "docs/user-guide/projects/project-lists/README.md",
+          "panel_target_rule": "The project list automatically filters by project name as the user types in the search bar.",
+          "rank": 26
+        },
+        {
+          "candidate_id": "rc-acd75e7897aa",
+          "option": "w2024",
+          "commit": "5e5cb6443b2969b9ad30413bd65f084d169d2180",
+          "date": "2024-05-17",
+          "file": "docs/user-guide/meetings/dynamic-meetings/README.md",
+          "panel_target_rule": "Copying a closed meeting must create a new meeting with open status.",
+          "rank": 27
+        },
+        {
+          "candidate_id": "rc-f5d7d52fcc50",
+          "option": "w2024",
+          "commit": "7890c6427cfb45c0554bc61bb73f545b7444a1cb",
+          "date": "2024-06-17",
+          "file": "docs/user-guide/time-and-costs/progress-tracking/README.md",
+          "panel_target_rule": "With the default eight-hour day setting, entering \"6 days\" in the Work field must represent 48 hours of work.",
+          "rank": 28
+        },
+        {
+          "candidate_id": "rc-c8cda107b88e",
+          "option": "w2024",
+          "commit": "0a7c99e47e891fc4472e3e7aade6f7b7b6ed5a75",
+          "date": "2024-04-23",
+          "file": "docs/user-guide/time-and-costs/progress-tracking/README.md",
+          "panel_target_rule": "Changing a work package's status updates its displayed % Complete to the fixed value associated with the selected status.",
+          "rank": 29
+        },
+        {
+          "candidate_id": "rc-eaa729cd0b00",
+          "option": "w2024",
+          "commit": "e8e9ae810cef2f290c6fd15c81285f3103d008fd",
+          "date": "2024-02-08",
+          "file": "docs/user-guide/gantt-chart/README.md",
+          "panel_target_rule": "Opening the Gantt charts module initially displays all open work packages and excludes non-open work packages.",
+          "rank": 30
+        },
+        {
+          "candidate_id": "rc-29c2f64a4fac",
+          "option": "w2024",
+          "commit": "9a2dc6a41fe8e832313a43d9174912defe9812d0",
+          "date": "2024-02-12",
+          "file": "docs/user-guide/projects/project-settings/file-storages/README.md",
+          "panel_target_rule": "The project file storage settings offer the “New folder with automatically managed permissions” option only if the administrator has configured that storage with automatically managed folders.",
+          "rank": 31
+        },
+        {
+          "candidate_id": "rc-31369f35c97b",
+          "option": "w2024",
+          "commit": "24670419792586b8aade9cc048c28ef623cc0aac",
+          "date": "2024-11-12",
+          "file": "docs/user-guide/account-settings/README.md",
+          "panel_target_rule": "Account settings must not display a 'Hide my email' checkbox in OpenProject 15.0 and later.",
+          "rank": 32
+        },
+        {
+          "candidate_id": "rc-e97fc4a37795",
+          "option": "w2024",
+          "commit": "60e524ef9852654b57d07629d6ec144d8fe62cfa",
+          "date": "2024-02-12",
+          "file": "docs/user-guide/home/global-modules/README.md",
+          "panel_target_rule": "For a user without administrator rights, the Active projects view must show the same projects as the My projects view.",
+          "rank": 33
+        },
+        {
+          "candidate_id": "rc-cd16a63f386c",
+          "option": "w2024",
+          "commit": "2beb411e5e53b65509cb874782c8925658e76cfb",
+          "date": "2024-08-28",
+          "file": "docs/user-guide/wysiwyg/README.md",
+          "panel_target_rule": "An embedded work package or project macro must display an error when the current user lacks permission to view the referenced resource.",
+          "rank": 34
+        },
+        {
+          "candidate_id": "rc-68935d37b009",
+          "option": "w2024",
+          "commit": "d63f5681005f1765fa8203c11ee3db0b9263976e",
+          "date": "2024-10-08",
+          "file": "docs/user-guide/time-and-costs/progress-tracking/README.md",
+          "panel_target_rule": "A work package can display a value for % Complete only when both Work and Remaining work are set.",
+          "rank": 35
+        },
+        {
+          "candidate_id": "rc-7e01dd7a1efb",
+          "option": "w2024",
+          "commit": "e08d9dad3a49582cc7cc4da896d12bd313314c19",
+          "date": "2024-08-05",
+          "file": "docs/user-guide/project-overview/README.md",
+          "panel_target_rule": "Project attribute editing icons are visible only to users with the Edit project attributes permission.",
+          "rank": 36
+        },
+        {
+          "candidate_id": "rc-ce40d694d599",
+          "option": "w2024",
+          "commit": "88ac83a7a0e2c3a2963defb284c48447a6e39c67",
+          "date": "2024-04-23",
+          "file": "docs/user-guide/members/README.md",
+          "panel_target_rule": "The Groups filter is visible only if at least one group has been added to the project.",
+          "rank": 37
+        },
+        {
+          "candidate_id": "rc-95294b148650",
+          "option": "w2024",
+          "commit": "029a059ca373ec02a3707d720c684ad2ac76fbdc",
+          "date": "2024-05-29",
+          "file": "docs/getting-started/my-page/README.md",
+          "panel_target_rule": "Hovering over a widget insertion location above, below, or between existing widgets on My Page must reveal a + icon at that location.",
+          "rank": 38
+        },
+        {
+          "candidate_id": "rc-923115f7e555",
+          "option": "w2024",
+          "commit": "81d4d25cc7de037ef1ee49b4691595133624fad8",
+          "date": "2024-09-09",
+          "file": "docs/user-guide/work-packages/duplicate-move-delete/README.md",
+          "panel_target_rule": "The work package table context menu labels the copying action “Duplicate a work package” instead of “Copy a work package”.",
+          "rank": 39
+        },
+        {
+          "candidate_id": "rc-8671af4bfb51",
+          "option": "w2024",
+          "commit": "0a7c99e47e891fc4472e3e7aade6f7b7b6ed5a75",
+          "date": "2024-04-23",
+          "file": "docs/user-guide/time-and-costs/progress-tracking/README.md",
+          "panel_target_rule": "When a work package's status changes, its % Complete automatically updates to the percentage assigned to the new status.",
+          "rank": 40
+        },
+        {
+          "candidate_id": "rc-e1415d932cd4",
+          "option": "w2024",
+          "commit": "2beb411e5e53b65509cb874782c8925658e76cfb",
+          "date": "2024-08-28",
+          "file": "docs/user-guide/wysiwyg/README.md",
+          "panel_target_rule": "A workPackageLabel:1234:status macro renders the translated Status label and its corresponding help text when that help text exists.",
+          "rank": 41
+        },
+        {
+          "candidate_id": "rc-10f15dd2070f",
+          "option": "w2024",
+          "commit": "0a7c99e47e891fc4472e3e7aade6f7b7b6ed5a75",
+          "date": "2024-04-23",
+          "file": "docs/user-guide/time-and-costs/progress-tracking/README.md",
+          "panel_target_rule": "When Remaining work exceeds Work, saving that Remaining work value must be blocked with an error message.",
+          "rank": 42
+        },
+        {
+          "candidate_id": "rc-aa5985e92718",
+          "option": "w2024",
+          "commit": "60d9f70d2590142f878307c5d9c4d21a8bc562aa",
+          "date": "2024-06-07",
+          "file": "docs/user-guide/meetings/dynamic-meetings/README.md",
+          "panel_target_rule": "The meeting creation form must have the option to invite participants by email enabled by default.",
+          "rank": 43
+        },
+        {
+          "candidate_id": "rc-8c8baa59dfdb",
+          "option": "w2024",
+          "commit": "e08d9dad3a49582cc7cc4da896d12bd313314c19",
+          "date": "2024-08-05",
+          "file": "docs/user-guide/projects/project-settings/project-attributes/README.md",
+          "panel_target_rule": "A user who is not a project administrator but whose role has the Select project attributes permission can enable and disable project attributes in the web interface.",
+          "rank": 44
+        },
+        {
+          "candidate_id": "rc-8909badddf61",
+          "option": "w2024",
+          "commit": "548ea7d0594b0b8963cc31af82489c523fb9a80e",
+          "date": "2024-12-04",
+          "file": "docs/user-guide/projects/project-lists/README.md",
+          "panel_target_rule": "Activating Zen mode from the project list’s three-dot menu hides both the header and the sidebar.",
+          "rank": 45
+        }
+      ]
+    },
+    "paperless": {
+      "reserve": 3,
+      "w2024": 7,
+      "order": [
+        {
+          "candidate_id": "rc-1d8d1160bec7",
+          "option": "reserve",
+          "commit": "f197d09b3e287d93f73ea40028046ff0f36930bb",
+          "date": "2026-09-07",
+          "file": "docs/advanced_usage.md",
+          "panel_target_rule": "Opening a document with an inbox tag automatically requests suggestions when the Settings > Documents option \"Automatically request suggestions for inbox documents\" is enabled.",
+          "rank": 1
+        },
+        {
+          "candidate_id": "rc-7f3cf3824c40",
+          "option": "reserve",
+          "commit": "b5662325420136d7c92cd6e2248e073876e65c91",
+          "date": "2026-07-23",
+          "file": "docs/usage.md",
+          "panel_target_rule": "A plain, unqualified search query must not return a document solely because its notes contain the query text.",
+          "rank": 2
+        },
+        {
+          "candidate_id": "rc-5454c114f054",
+          "option": "reserve",
+          "commit": "1e01ce42c0c1831d2be61a3b1882471b5a47e348",
+          "date": "2026-04-14",
+          "file": "docs/usage.md",
+          "panel_target_rule": "Saving a document edit must preserve an existing related metadata assignment even when that object is displayed as Private to the user.",
+          "rank": 3
+        },
+        {
+          "candidate_id": "rc-f13ee81b6afb",
+          "option": "w2024",
+          "commit": "3b6ce16f1c3103675efdac1404ec6e361d813ed3",
+          "date": "2024-01-03",
+          "file": "docs/usage.md",
+          "panel_target_rule": "The workflow action type selector offers exactly one action type, Assignment.",
+          "rank": 4
+        },
+        {
+          "candidate_id": "rc-5ddd30a6859f",
+          "option": "w2024",
+          "commit": "c6e7d06bb7049367f015dc3b124bb0a3bcabcc22",
+          "date": "2024-05-02",
+          "file": "docs/usage.md",
+          "panel_target_rule": "The hotkey help dialog shows only shortcuts available in the user's current area of Paperless-ngx.",
+          "rank": 5
+        },
+        {
+          "candidate_id": "rc-f991d99dfc08",
+          "option": "w2024",
+          "commit": "c6e7d06bb7049367f015dc3b124bb0a3bcabcc22",
+          "date": "2024-05-02",
+          "file": "docs/usage.md",
+          "panel_target_rule": "When advanced search inclusion is enabled, global search includes available document-index results if it finds fewer than 3 document results.",
+          "rank": 6
+        },
+        {
+          "candidate_id": "rc-4090dac2ba9e",
+          "option": "w2024",
+          "commit": "05b1ff9738201cafd7dea2cba4d9e5395b1e33da",
+          "date": "2024-04-23",
+          "file": "docs/usage.md",
+          "panel_target_rule": "Document changes made by workflows display \"System\" as the actor in the document's History tab.",
+          "rank": 7
+        },
+        {
+          "candidate_id": "rc-9ea1c0d14048",
+          "option": "w2024",
+          "commit": "4af8070450b0aa08b15b6c4ad7e795d364385447",
+          "date": "2024-03-25",
+          "file": "docs/usage.md",
+          "panel_target_rule": "The web interface must prevent users from rotating non-PDF documents.",
+          "rank": 8
+        },
+        {
+          "candidate_id": "rc-b42dd868dcd7",
+          "option": "w2024",
+          "commit": "bf11dc8d1bcbb1eb41a013ab5b67fbe2e5e712d3",
+          "date": "2024-02-27",
+          "file": "docs/usage.md",
+          "panel_target_rule": "A monetary custom field in the web interface must display an ISO 4217 currency code and a number with exactly two decimal places.",
+          "rank": 9
+        },
+        {
+          "candidate_id": "rc-5fb8fdc621e7",
+          "option": "w2024",
+          "commit": "3b6ce16f1c3103675efdac1404ec6e361d813ed3",
+          "date": "2024-01-03",
+          "file": "docs/usage.md",
+          "panel_target_rule": "All users with application permission to edit workflows must see the same set of workflows.",
+          "rank": 10
+        }
+      ]
+    },
+    "wekan": {
+      "reserve": 19,
+      "w2024": 0,
+      "order": [
+        {
+          "candidate_id": "rc-e5918014dac8",
+          "option": "reserve",
+          "commit": "236676ff53c58baaef0ff9484b727445400c6b79",
+          "date": "2026-09-12",
+          "file": "docs/Features/Date/Calendar-Systems.md",
+          "panel_target_rule": "The time editor must show hour and minute dropdowns while hiding the combined time text field.",
+          "rank": 1
+        },
+        {
+          "candidate_id": "rc-9fb1efff4685",
+          "option": "reserve",
+          "commit": "cdc0722b15cd954d0eaccd235fe01f6b42537c74",
+          "date": "2026-09-23",
+          "file": "docs/Features/Editor/Multiline.md",
+          "panel_target_rule": "When creating boards from multiline input, choosing the multiple-item option creates one board for each input line.",
+          "rank": 2
+        },
+        {
+          "candidate_id": "rc-915d20fde33f",
+          "option": "reserve",
+          "commit": "50a6e92e873fcf07b5eb464baf2a751428022926",
+          "date": "2026-09-27",
+          "file": "docs/Features/Right-Sidebar/Board-Settings/Board-View/Scrum-Design.md",
+          "panel_target_rule": "When a cross-board list move creates a destination list, the destination list must preserve the source list's workflow category.",
+          "rank": 3
+        },
+        {
+          "candidate_id": "rc-2e6f64b3d439",
+          "option": "reserve",
+          "commit": "77dd5f253979ce7fc5226150e5ef63a847d68b7f",
+          "date": "2026-09-05",
+          "file": "docs/Features/Reports/History/History.md",
+          "panel_target_rule": "The History table’s next-page arrow must be disabled when the user reaches the final page.",
+          "rank": 4
+        },
+        {
+          "candidate_id": "rc-2b2807dc31b3",
+          "option": "reserve",
+          "commit": "82646e4bc0f891ed044bdc5c6cf910cd8dd4a4ea",
+          "date": "2026-09-11",
+          "file": "docs/Features/Board/Board-View-Settings.md",
+          "panel_target_rule": "The Board View menu displays its options in the first-to-last order specified by boardViewOrder.",
+          "rank": 5
+        },
+        {
+          "candidate_id": "rc-c656479e3e94",
+          "option": "reserve",
+          "commit": "eb527dd13fee74de89381cfd9b07e088c641eaaa",
+          "date": "2026-09-28",
+          "file": "docs/Features/Editor/RedStrings/RedStrings.md",
+          "panel_target_rule": "When a card is linked to a target card using “duplicates,” the target card must show the reciprocal “is-duplicated-by” relation to the original card.",
+          "rank": 6
+        },
+        {
+          "candidate_id": "rc-2cbf5f200f66",
+          "option": "reserve",
+          "commit": "2a632445b2f4e6a89f569c5c2186e5d79e05445b",
+          "date": "2026-09-28",
+          "file": "docs/Features/Automation/Rules/Rules.md",
+          "panel_target_rule": "A converted checklist subtask must include its current readable title.",
+          "rank": 7
+        },
+        {
+          "candidate_id": "rc-9e212b2ea677",
+          "option": "reserve",
+          "commit": "d99641d8ed40b1f7fc7c5b8b49f67123fc33087f",
+          "date": "2026-09-28",
+          "file": "docs/Features/ImportExport/Sync.md",
+          "panel_target_rule": "Changing any Scrum card-field visibility flag stops the board’s stored dispatch.",
+          "rank": 8
+        },
+        {
+          "candidate_id": "rc-9d76a681e043",
+          "option": "reserve",
+          "commit": "f0bce67a3bf301c21ded3eb97e84a3be0010290f",
+          "date": "2026-06-15",
+          "file": "docs/Features/Accessibility/Accessibility.md",
+          "panel_target_rule": "A keyboard user can move a minicard up one position by activating its keyboard-focusable “Move card up” button without drag-and-drop.",
+          "rank": 9
+        },
+        {
+          "candidate_id": "rc-ada4f0396a36",
+          "option": "reserve",
+          "commit": "d71bab65b379a979e40aa8c55daadaf71bd8abf5",
+          "date": "2026-09-30",
+          "file": "docs/Features/ImportExport/Format-Coverage.md",
+          "panel_target_rule": "When importing a confidential GitLab issue, the web interface must warn that access to the resulting card is determined by the board's visibility.",
+          "rank": 10
+        },
+        {
+          "candidate_id": "rc-0c390a762a77",
+          "option": "reserve",
+          "commit": "6a4e5e29a862c02f3c9843c4d6a5ed6cfa5708c6",
+          "date": "2026-09-28",
+          "file": "docs/Features/ImportExport/Sync.md",
+          "panel_target_rule": "The Problems → Recovery view displays at most ten reports per page.",
+          "rank": 11
+        },
+        {
+          "candidate_id": "rc-d5a4c6fc8b23",
+          "option": "reserve",
+          "commit": "fb52149e94dbee3c1f3118d45f73e44620234a52",
+          "date": "2026-08-17",
+          "file": "docs/Features/ImportExport/PDF/PDF.md",
+          "panel_target_rule": "Each image preview in the PDF export displays only its filename below the image.",
+          "rank": 12
+        },
+        {
+          "candidate_id": "rc-aadac806de3f",
+          "option": "reserve",
+          "commit": "84678d3492b39f72b19128fe258d9e6f61cc893d",
+          "date": "2026-06-19",
+          "file": "docs/Features/Templates.md",
+          "panel_target_rule": "When dragging a template board from All Boards / Templates, an organization or team is offered as a drop target if and only if its Shared Templates flag is enabled.",
+          "rank": 13
+        },
+        {
+          "candidate_id": "rc-588bc5cd66e7",
+          "option": "reserve",
+          "commit": "cdc0722b15cd954d0eaccd235fe01f6b42537c74",
+          "date": "2026-09-23",
+          "file": "docs/Features/Editor/Multiline.md",
+          "panel_target_rule": "After a batch of boards is created, the web interface opens the last board in the batch.",
+          "rank": 14
+        },
+        {
+          "candidate_id": "rc-0f37532a751e",
+          "option": "reserve",
+          "commit": "74c3873563a775d53e97d31220146032dcaca13f",
+          "date": "2026-08-17",
+          "file": "docs/Features/Board/Home.md",
+          "panel_target_rule": "An empty Home must display \"Drag only one board here to open it after login\" before a drag starts.",
+          "rank": 15
+        },
+        {
+          "candidate_id": "rc-9cc0f672d7d7",
+          "option": "reserve",
+          "commit": "398d5f42d41f6c0cc49f425ea1703fa4a2d059fc",
+          "date": "2026-09-12",
+          "file": "docs/Features/Date/Calendar-Systems.md",
+          "panel_target_rule": "Resizing the calendar popup using its resize handle must not reduce its height below its initial content height.",
+          "rank": 16
+        },
+        {
+          "candidate_id": "rc-46b964a14e1f",
+          "option": "reserve",
+          "commit": "d33d8370c0df5f58bed72f22eeb93451d4e73d87",
+          "date": "2026-06-20",
+          "file": "docs/Features/Members/Members.md",
+          "panel_target_rule": "When boardMembersFromSameOrgOrTeamOnly is enabled, a non-site-admin inviter may add a user to a board only if that user shares at least one Organization or Team with the inviter or an active board member.",
+          "rank": 17
+        },
+        {
+          "candidate_id": "rc-ccd86b3b1ba0",
+          "option": "reserve",
+          "commit": "1fe46c60442233b59d01da1b4b2a32fe50d66d64",
+          "date": "2026-09-04",
+          "file": "docs/Features/Login/Undo/Undo.md",
+          "panel_target_rule": "Undoing a recorded field edit on a card restores that field’s previous value.",
+          "rank": 18
+        },
+        {
+          "candidate_id": "rc-a27879aeab62",
+          "option": "reserve",
+          "commit": "2d0dea9126c2074ff58b37a2e236c65de7189efe",
+          "date": "2026-09-28",
+          "file": "docs/Features/Filter/README.md",
+          "panel_target_rule": "When a user submits an invalid filter expression, the sidebar retains its last valid filter.",
+          "rank": 19
+        }
+      ]
+    },
+    "zulip": {
+      "reserve": 19,
+      "w2024": 10,
+      "order": [
+        {
+          "candidate_id": "rc-0f88fdef1c2c",
+          "option": "reserve",
+          "commit": "50ff629ac5e2efb69afd75378f44a02ea6003ffc",
+          "date": "2025-01-28",
+          "file": "help/custom-emoji.md",
+          "panel_target_rule": "The custom emoji permission setting must allow roles, groups, and individual users to be granted permission together in one configuration.",
+          "rank": 1
+        },
+        {
+          "candidate_id": "rc-50a056cbe126",
+          "option": "reserve",
+          "commit": "6a81aba20e04b322f0df3e2673cd7f0d8a0c30ed",
+          "date": "2025-09-04",
+          "file": "starlight_help/src/content/docs/include/_SearchNoteForDmConversations.mdx",
+          "panel_target_rule": "Searching DM conversations must include matching conversations hidden under More conversations.",
+          "rank": 2
+        },
+        {
+          "candidate_id": "rc-cf41dfd03913",
+          "option": "reserve",
+          "commit": "aa0406a07ad137d7e69bba563dfb066171825626",
+          "date": "2025-11-04",
+          "file": "starlight_help/src/content/docs/change-your-profile-picture.mdx",
+          "panel_target_rule": "Hovering over the profile picture reveals a clickable icon in its top right corner.",
+          "rank": 3
+        },
+        {
+          "candidate_id": "rc-c3c03d745af5",
+          "option": "reserve",
+          "commit": "ef8f23aa058d3403bff559da99599614e824af28",
+          "date": "2025-05-18",
+          "file": "help/deactivate-a-user-group.md",
+          "panel_target_rule": "Clicking Reactivate group in a deactivated user group's settings panel restores that group to active status.",
+          "rank": 4
+        },
+        {
+          "candidate_id": "rc-223ad456acae",
+          "option": "reserve",
+          "commit": "7a1b66d12ffe509b97fe96f08d5dc2f06b50c4ed",
+          "date": "2025-03-12",
+          "file": "help/search-for-messages.md",
+          "panel_target_rule": "Keyword searches without a mute filter include matching messages regardless of whether they are muted.",
+          "rank": 5
+        },
+        {
+          "candidate_id": "rc-636a588202ec",
+          "option": "reserve",
+          "commit": "50ff629ac5e2efb69afd75378f44a02ea6003ffc",
+          "date": "2025-01-28",
+          "file": "help/restrict-message-editing-and-deletion.md",
+          "panel_target_rule": "Message editing and deletion permissions can be granted to a combination of roles, groups, and individual users.",
+          "rank": 6
+        },
+        {
+          "candidate_id": "rc-051fd061fdec",
+          "option": "reserve",
+          "commit": "fdb35f2f8134bae510946c3f276b8cebc52ea6f0",
+          "date": "2025-07-18",
+          "file": "help/preview-your-message-before-sending.md",
+          "panel_target_rule": "Clicking the exit preview mode icon returns the message compose box to an editable state.",
+          "rank": 7
+        },
+        {
+          "candidate_id": "rc-7b8051a15fe4",
+          "option": "reserve",
+          "commit": "6a81aba20e04b322f0df3e2673cd7f0d8a0c30ed",
+          "date": "2025-09-04",
+          "file": "starlight_help/src/content/docs/include/_FindDmConversationLeftSidebar.mdx",
+          "panel_target_rule": "Entering a participant's name in the Filter left sidebar box shows matching DM conversations in the left sidebar.",
+          "rank": 8
+        },
+        {
+          "candidate_id": "rc-8f08f580bd62",
+          "option": "reserve",
+          "commit": "1e49b01d8014eecefe58e66ce52a75fd63de5e1f",
+          "date": "2025-08-28",
+          "file": "help/set-default-channels-for-new-users.md",
+          "panel_target_rule": "When a user accepts an invitation, they are subscribed to the default channels configured at acceptance time.",
+          "rank": 9
+        },
+        {
+          "candidate_id": "rc-9fedd0fe2923",
+          "option": "reserve",
+          "commit": "3ca12e7224e7158d866f3d24f52ce877749fb742",
+          "date": "2026-03-03",
+          "file": "starlight_help/src/content/docs/add-a-custom-linkifier.mdx",
+          "panel_target_rule": "When pasted-link conversion is enabled for a linkifier, pasting a URL matching its URL template automatically converts it to linked text.",
+          "rank": 10
+        },
+        {
+          "candidate_id": "rc-aaa02a591fc8",
+          "option": "reserve",
+          "commit": "622729f4446a181d5c6667f9756385beeb5d03b4",
+          "date": "2025-07-30",
+          "file": "help/include/configure-resolved-notices-marked-as-read.md",
+          "panel_target_rule": "When Automatically mark resolved topic notices as read is enabled for all topics, notification bot notices that a topic was resolved or unresolved are automatically marked as read.",
+          "rank": 11
+        },
+        {
+          "candidate_id": "rc-1ce13d2e10ff",
+          "option": "reserve",
+          "commit": "61b0b9a0bc8a42584fd2c83c41fadf1aaecf921f",
+          "date": "2026-08-20",
+          "file": "starlight_help/src/content/docs/quote-or-forward-a-message.mdx",
+          "panel_target_rule": "Users can quote selected text that spans several messages.",
+          "rank": 12
+        },
+        {
+          "candidate_id": "rc-bf541bee202d",
+          "option": "reserve",
+          "commit": "cb1731566eeaf678155e8ae3cd953a5230140810",
+          "date": "2025-03-17",
+          "file": "help/user-groups.md",
+          "panel_target_rule": "A user without permission to leave a user group cannot leave it by clicking its checkmark icon.",
+          "rank": 13
+        },
+        {
+          "candidate_id": "rc-388acf10a8b3",
+          "option": "reserve",
+          "commit": "aa0f1711c70a33f94fdc0739eadb9950b5a0b724",
+          "date": "2025-06-24",
+          "file": "help/restrict-moving-messages.md",
+          "panel_target_rule": "A channel's Channel permissions section must let users configure who can move messages inside that channel.",
+          "rank": 14
+        },
+        {
+          "candidate_id": "rc-43895f51b097",
+          "option": "reserve",
+          "commit": "4c50e83542ab87d440c5805812a18a025352a544",
+          "date": "2025-01-30",
+          "file": "help/restrict-bot-creation.md",
+          "panel_target_rule": "Changing bot-creation restrictions must not deactivate existing bots.",
+          "rank": 15
+        },
+        {
+          "candidate_id": "rc-dc3a1c006b52",
+          "option": "reserve",
+          "commit": "0c301102ca4ec594b4005b55e3772ba8191be8b5",
+          "date": "2026-03-22",
+          "file": "starlight_help/src/content/docs/delete-a-message.mdx",
+          "panel_target_rule": "A user with permission to completely delete a message must see the Delete message option for that message.",
+          "rank": 16
+        },
+        {
+          "candidate_id": "rc-728a0376ae34",
+          "option": "reserve",
+          "commit": "6cd45bac7a12015bc4d171ed2f15c931f26cf024",
+          "date": "2025-03-13",
+          "file": "help/restrict-resolving-topics.md",
+          "panel_target_rule": "The web organization permissions screen must allow administrators to grant topic-resolution permission to a combination of roles, groups, and individual users.",
+          "rank": 17
+        },
+        {
+          "candidate_id": "rc-735a1571cf1f",
+          "option": "reserve",
+          "commit": "cd131c48405adf0d2a5dc946fadb92d2dde60cd6",
+          "date": "2025-03-12",
+          "file": "help/font-size.md",
+          "panel_target_rule": "The web interface must offer font size options spanning 12 through 20, inclusive.",
+          "rank": 18
+        },
+        {
+          "candidate_id": "rc-adc08ca7e80b",
+          "option": "reserve",
+          "commit": "5ee97a48a69f90654d7e7e94787554345b69858c",
+          "date": "2025-02-14",
+          "file": "help/link-to-a-message-or-conversation.md",
+          "panel_target_rule": "Viewing a conversation via a message link must not automatically mark its unread messages as read.",
+          "rank": 19
+        },
+        {
+          "candidate_id": "rc-d18debaf19bd",
+          "option": "w2024",
+          "commit": "9caf8b8b2be1bd429b4f639133b0f4fd7ab2ed04",
+          "date": "2024-06-13",
+          "file": "help/zulip-cloud-billing.md",
+          "panel_target_rule": "Paying by invoice requires an annual plan.",
+          "rank": 20
+        },
+        {
+          "candidate_id": "rc-2e18b70e91ec",
+          "option": "w2024",
+          "commit": "6264d59ea750c9a53a355339e99a5527e4b167af",
+          "date": "2024-10-29",
+          "file": "help/manage-user-groups.md",
+          "panel_target_rule": "A user who can add members to a group must be able to join that group.",
+          "rank": 21
+        },
+        {
+          "candidate_id": "rc-d335d100d1b8",
+          "option": "w2024",
+          "commit": "e75940e9850b558b462efe11da0e3e8c7f933993",
+          "date": "2024-07-08",
+          "file": "help/restrict-direct-messages.md",
+          "panel_target_rule": "A direct message can be sent only if the conversation includes at least one user authorized to authorize it, whether the sender or another participant.",
+          "rank": 22
+        },
+        {
+          "candidate_id": "rc-7a354cdcdc51",
+          "option": "w2024",
+          "commit": "0d3da99037efb8267ccc3aa08e6ecac356eb127a",
+          "date": "2024-04-16",
+          "file": "help/typing-notifications.md",
+          "panel_target_rule": "Disabling “Show when other users are typing” hides typing notifications from other users in the web interface.",
+          "rank": 23
+        },
+        {
+          "candidate_id": "rc-b73cf91371d7",
+          "option": "w2024",
+          "commit": "7aa90440ed6352722d660c1c3f1f3fec7b87dc2c",
+          "date": "2024-04-23",
+          "file": "help/view-and-edit-your-message-drafts.md",
+          "panel_target_rule": "When a user starts composing to a conversation, its most recently edited draft automatically appears in the compose box.",
+          "rank": 24
+        },
+        {
+          "candidate_id": "rc-779b337ef5a5",
+          "option": "w2024",
+          "commit": "1166bc001e70c74d0cf2b2a35183da96421ae3a7",
+          "date": "2024-12-30",
+          "file": "help/deactivate-your-organization.md",
+          "panel_target_rule": "The organization deactivation screen must let the user select when the organization's data will be permanently deleted.",
+          "rank": 25
+        },
+        {
+          "candidate_id": "rc-557db87e1b08",
+          "option": "w2024",
+          "commit": "d76ba001686fb42cbf3d6295fef7b0ecb1b903b9",
+          "date": "2024-03-12",
+          "file": "help/configure-notification-bot.md",
+          "panel_target_rule": "Only administrators can configure where Notification Bot posts new-user announcements or disable those announcements.",
+          "rank": 26
+        },
+        {
+          "candidate_id": "rc-784203a33ea1",
+          "option": "w2024",
+          "commit": "9caf8b8b2be1bd429b4f639133b0f4fd7ab2ed04",
+          "date": "2024-06-13",
+          "file": "help/zulip-cloud-billing.md",
+          "panel_target_rule": "When paying by invoice, only manual license management is available.",
+          "rank": 27
+        },
+        {
+          "candidate_id": "rc-3eacb20abf97",
+          "option": "w2024",
+          "commit": "b9314562a7bdf3afb234604468435d70a4375109",
+          "date": "2024-11-05",
+          "file": "help/link-to-a-message-or-conversation.md",
+          "panel_target_rule": "Pasting a message link into the Zulip web message composer automatically formats the link.",
+          "rank": 28
+        },
+        {
+          "candidate_id": "rc-c4bbfe497b8c",
+          "option": "w2024",
+          "commit": "8cae09abd6fc0c38b7211f2574f84887669a60eb",
+          "date": "2024-04-01",
+          "file": "help/generate-integration-url.md",
+          "panel_target_rule": "Selecting “Filter events that will trigger notifications?” allows the user to choose which supported events should trigger notifications.",
+          "rank": 29
+        }
+      ]
+    }
+  }
+}
