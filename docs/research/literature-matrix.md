@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-05
+Last updated: 2026-10-06
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -629,3 +629,24 @@ queue; no entry or claim.
 | Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
 | --- | --- | --- | --- | ---: |
 | Yang, Shi, Ma, Liu, Kästner, Wu, [*What Prompts Don't Say: Understanding and Managing Underspecification in LLM Prompts*](https://arxiv.org/abs/2505.13360), arXiv preprint v3 (venue not stated in the PDF header), Carnegie Mellon | How do LLMs behave on requirements a prompt leaves out? Three tasks (code explanation, trip advice, product descriptions), 20 requirements per task (60 total, from existing prompts, LLM brainstorming and error analysis, kept if at least one of three annotators selected them), 240 synthetic prompts built by a cyclic design (each prompt states 10 consecutive requirements), models Llama-3.3-70B, gpt-4o-2024-08-06, o3-mini; per-requirement validators (scripts or LLM, 95.6% human agreement on a sample). | Unspecified requirements are satisfied less often (-22.6% mean accuracy, up to -93.1%), yet 41.1% are guessed at >=98% accuracy. Format requirements are guessed more (70.7%); conditional (corner-case) requirements less (22.9%). Across model updates, 22.9% of cases regress, and unspecified requirements regress about twice as often (5.9% regress by >20%). Limits stated by the authors: small requirement set (n=60), synthetic prompts, LLM validators with same-family bias. Additional limits for this project: requirements are LLM-elicited and not tied to repository documentation; no browser or executable-UI oracle; not peer-reviewed as read. | Thesis: independent support that omission effects are heterogeneous (matches the H1b recoverability framing), not support for the A/B/C effect size. Experiment: adds `conditional_rule` as a recorded exploratory descriptor and requires pinned, call-level model identifiers in the freeze receipt (pre-registration note 2026-10-05, advisor decision 6). Product: model-update drift on unspecified rules is a plausible reason to re-run requirement-anchored checks after provider changes; hypothesis only. Do not cite the 41.1% or 22.9% figures as expectations for this study. | 6 (detailed method and public code; preprint; small and synthetic; different task family) |
+
+## 2026-10-06 — Early detection: a prefix monitor confirms failure more than it anticipates it
+
+Search/read date: 2026-10-06. Deduplicated by arXiv ID/title (not previously in this
+matrix). Read: abstract, methodology (sections II.E–F), RQ1 findings 1–4, and threats to
+validity of the PDF. The 2026-10-06 web search also surfaced AgentForesight (ICML 2026,
+online auditing of multi-agent failures; result page only), a strained-coherence blog post
+(vendor/practitioner blog, product intelligence only) and OpenTelemetry GenAI conventions
+(see the 2026-09-30/10-03 entries: still `Development`, repository `semantic-conventions-genai`).
+AgentForesight and Terminal-Bench-2 follow-ups are queued, not entered: only the result page
+was read, so they carry no score or claim.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Zhao, Li, Li, Zhao, Barr, Sarro, Ye, [*Failure as a Process: An Anatomy of CLI Coding Agent Trajectories*](https://arxiv.org/abs/2607.09510), arXiv preprint (cs.SE), submitted 2026-07-10 | When do coding-agent failures begin, why, and can they be caught early? 3,843 Terminal-Bench executions (7 models, 3 scaffolds); 1,794 complete trajectories (63k+ steps) manually annotated for decisive error (t_err), failure lock-in (t_lock) and first observable sign (t_obs), with a root-cause taxonomy (Cohen's kappa 0.78–0.94 reported). A blind prefix monitor (an LLM) reads the first t steps, with or without the task's core requirements, on 2,659 prefixes from 600 trajectories. | Median decisive error at step 7, lock-in about step 12, first observable signal about step 16. The monitor flags locked-in runs at 82% precision but has median lead time zero relative to t_lock; only 3.7–8.7% of failures are flagged before lock-in; recall is 18.2% with the task name only and 28.8% with requirements. Self-revealing failures (environment errors) barely benefit from the requirements; specification-relative ones (ignored requirements 3%→22%, false premises 15%→32%) do. Limits: Terminal-Bench CLI tasks, not requirement-to-UI generation; the same LLM family annotated and monitored; labels are hindsight-based; the monitor is an LLM, not a provenance model; preprint. | **Thesis:** independent support for the premise behind H2 that a loss can precede its observable symptom, and for the H1/H2 separation: a requirement-ignoring failure is detectable mainly when the monitor sees the requirement. It is not evidence for T1–T3 provenance features. **Experiment:** B0 (requirement plus operational telemetry) is the correct strong baseline because giving a monitor the requirement is what moved recall; keep B0 requirement-aware. Report detection relative to a pre-registered lock-in analogue (first stage after which the omitted rule can no longer be recovered, e.g. T2 plan committed) in addition to ms lead time, because alerts after lock-in only confirm. A human decision is needed on whether to add that stage-relative lead metric to the H2 pre-registration. No change made to the frozen protocol. **Product:** supports "explain the semantic loss, not just flag the run" as a differentiator versus generic trace monitors; hypothesis only. | 6/10: transparent method, high reported annotation agreement and released annotations, but a preprint with CLI-task transfer, same-family annotator/monitor and hindsight labels |
+
+**Decision (2026-10-06).** Tension noted, not resolved: the paper's monitor shows little
+foresight, which makes the H2 margin (PR-AUC +0.05 for B3 over B0) harder to expect on
+omissions that lock in at T1. This is a reason to report the stage at which each first alert
+fires, not a reason to change H2. Pending advisor decision 3 (collect T1–T3 in the H1 round or
+drop H2) is unchanged.
