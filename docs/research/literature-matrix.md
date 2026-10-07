@@ -651,6 +651,30 @@ omissions that lock in at T1. This is a reason to report the stage at which each
 fires, not a reason to change H2. Pending advisor decision 3 (collect T1–T3 in the H1 round or
 drop H2) is unchanged.
 
+## 2026-10-07 — What killed the mutant?
+
+Search/read date: 2026-10-07. Neither DOI/title nor arXiv ID was present in
+this matrix. Read both abstracts, methods, results and threats in the full
+author texts; checked ISSTA's proceedings listing and the arXiv version record.
+
+| Source | Year / venue / evidence | Question / sample / method | Result | Limitations | Thesis | Experiment | Product | Action | Credibility |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Du, Palepu, Jones, [*To Kill a Mutant*](https://doi.org/10.1145/3597926.3598090); [author PDF](https://superhangdu.com/publications/issta-23/conference-paper.pdf) | 2023, ISSTA, peer-reviewed | How do kills arise? Ten Java projects, 50k+ mutants, 2.5m+ runs; modified PIT and exception-origin instrumentation. | Crashes contributed up to 43.8% of killed mutants; killing reasons differ. | Java/JUnit, one tool, classification and flakiness threats. | Kill does not establish a requirement-specific assertion. | Separate assertion and error alarms. | Show reason, not just a score. | Add offline assertion-only sensitivity with unchanged eligibility and denominator. | 8/10: reviewed, open instrumentation/data; transfer to browser verdicts remains indirect. |
+| Hamidi, Konstantinou, Degiovanni, Papadakis, [*How effective are traditional test criteria at detecting bugs in large language models generated code?*](https://arxiv.org/abs/2609.09315), v1 | 2026, arXiv, preprint; no verified venue | Can adequacy guide LLM tests? Five models, four Python benchmarks, 6,066 selected hard faults; 100 sampling simulations. | Triggering exceeds detection; spec-guided assertions help inconsistently. | Selected faults, reference equivalence, Python only; oracle repair up to five times differs from our no-retry study. | Generic weak-test claim is already adjacent work. | Distinguish trigger, assertion and target-condition check. | Require auditable expected behavior. | Retain blind suite audit; do not infer target specificity from alarm type. | 6/10: detailed methods and threats, but unreviewed and selection/domain limits. |
+
+**Incorporation.** `scripts/mutation_alarm_sensitivity.py` audits the three
+published tester packets without model or browser calls. It rejects missing,
+duplicated or misidentified scheduled outcomes and reproduces the registered
+analysis before computing a post-hoc assertion-only score. The original scripts,
+data and MA1/MA2 results stay unchanged. See the [supplemental report](2026-10-07-mutation-alarm-sensitivity.md).
+
+**Tension / human decision.** The broad observation that generated tests can
+miss LLM bugs cannot carry novelty by itself. Our narrower question concerns
+controlled omitted conditions, implementation context and browser-level
+discrimination. The existing blind suite audit must determine whether an
+assertion concerns the target condition; aggregate verdicts cannot answer it.
+Keep H2's provenance comparison and the primary-task decision separate. No
+hypothesis, corpus, rubric or frozen protocol is changed here.
 ## 2026-10-07 — Prohibition constraints decay with context; naming collision with "omission"
 
 Search/read date: 2026-10-07. Deduplicated by arXiv ID/title. Read: abstract, design
