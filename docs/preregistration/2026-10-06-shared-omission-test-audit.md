@@ -59,6 +59,14 @@ As definições literais estão em `CODES` no script e na aba de instruções. S
 - `palpite_fonte`;
 - `comentario`.
 
+## Calibração (acrescentada em 06/10, antes de abrir qualquer suíte)
+
+Antes da auditoria, os dois codificadores fazem uma calibração com 6 suítes de outro testador, o Claude Opus 4.6 (#190): 3 do grupo P e 3 do grupo R. Elas são sorteadas com semente 2026100612, só a partir dos dados públicos (`calibration-frame.json`).
+
+- Cada codificador codifica as 6 suítes sozinho. Depois os dois discutem as divergências, só sobre o significado das categorias. A conversa não pode antecipar itens da auditoria.
+- As suítes de calibração não entram no resultado, e o livro de códigos não muda depois dela. Se a discussão mostrar uma categoria ambígua, a ambiguidade e a decisão tomada são registradas antes de abrir a planilha da auditoria.
+- Os itens ficam numerados C001–C006, numa planilha separada (`calibration-sheet`). Uma eventual auditoria posterior das suítes do Opus 4.6 exclui esses seis.
+
 ## Codificação e adjudicação
 
 1. Dois codificadores humanos, sem acesso às respostas um do outro. O primeiro é o autor; o segundo é alguém indicado pelo orientador. Modelos não codificam.

@@ -136,3 +136,34 @@ def test_sheet_refuses_private_results_that_differ(tmp_path):
     (study / "results.json").write_text(json.dumps(data))
     with pytest.raises(ValueError, match="differ"):
         audit.build_sheet(study, tmp_path / "audit", frame)
+
+
+def test_calibration_frame_is_seeded_and_balanced():
+    results, manifest = published()
+    first = audit.calibration_frame(results, manifest, "gpt-6-astra")
+    assert first == audit.calibration_frame(results, manifest, "gpt-6-astra")
+    assert [i["group"] for i in first["items"]] == ["P"] * 3 + ["R"] * 3
+    assert first["scored"] is False
+
+
+def test_committed_calibration_frame_matches_opus_run():
+    path = audit.ROOT / "data/shared-omission-e2e/claude-evaluation-v1/claude-opus-4-6"
+    if not (path / "results.json").exists():
+        pytest.skip("Opus 4.6 results not on this branch yet (PR #190)")
+    committed = json.loads((audit.AUDIT / "calibration-frame.json").read_text())
+    rebuilt = audit.calibration_frame(json.loads((path / "results.json").read_text()),
+                                      json.loads((path / "frozen-manifest-public.json").read_text()),
+                                      "claude-opus-4-6")
+    assert rebuilt == committed
+
+
+def test_calibration_sheet_uses_its_own_ids(tmp_path):
+    pytest.importorskip("openpyxl")
+    results, manifest = published()
+    cal = audit.calibration_frame(results, manifest, "gpt-6-astra")
+    study = fake_study(tmp_path, {"items": cal["items"]})
+    built = audit.build_sheet(study, tmp_path / "cal", cal, prefix="C", stem="calibracao")
+    assert built["items"] == 6
+    assert (tmp_path / "cal" / "calibracao-codificador_a.xlsx").exists()
+    key = json.loads((tmp_path / "cal" / "chave-privada.json").read_text())
+    assert all(i["item_id"].startswith("C") for i in key["items"])
