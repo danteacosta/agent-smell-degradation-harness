@@ -159,3 +159,4 @@ experiment evidence.
 - [Parser Claude V2: recusa de telemetria e continuação sem repetir tentativas](2026-10-06-claude-parser-telemetry-fix.md).
 
 - [Aviso de quota Claude e continuação após reset](2026-10-06-claude-quota-warning-and-reset.md).
+- [Extensão de omissão compartilhada: viabilidade e fontes verificadas](2026-10-05-shared-omission-extension-feasibility.md): TDAD, Doc2OracLL e limites de novidade; [protocolo E2E](../preregistration/2026-10-05-shared-omission-e2e.md) prospectivo para testes que recebem código mutante.
