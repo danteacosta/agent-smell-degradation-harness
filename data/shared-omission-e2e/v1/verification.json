@@ -1,0 +1,59 @@
+{
+  "integrity": "passed",
+  "analysis_regeneration": "identical",
+  "selected_mutant_analysis_regeneration": "identical",
+  "calls": 150,
+  "generation_status": {
+    "suite_ready": 148,
+    "generation_failed": 2
+  },
+  "planned_rows": 1146,
+  "actual_reports": 1130,
+  "placeholders": 16,
+  "receipt_files": 5723,
+  "frozen_receipt_sha256": "0cf150f6ed9a2354b96b8009348d52e56ef5018a3051ab11fb89b2652cf24b40",
+  "collection_receipt_sha256": "2151914b74866222ba40ced4f162a38b1da48328812c0bdf6fffba8985946407",
+  "by_source": {
+    "spec_complete": {
+      "verdicts": {
+        "error_alarm": 35,
+        "quiet": 157,
+        "assertion_alarm": 182,
+        "generation_failed": 8
+      },
+      "kills": 118,
+      "mutant_tests": 162,
+      "recovered_alarms": 7,
+      "recovered_tests": 34,
+      "correct_other_alarms": 37,
+      "correct_other_tests": 132
+    },
+    "spec_incomplete": {
+      "verdicts": {
+        "error_alarm": 55,
+        "quiet": 302,
+        "assertion_alarm": 25
+      },
+      "kills": 13,
+      "mutant_tests": 162,
+      "recovered_alarms": 6,
+      "recovered_tests": 34,
+      "correct_other_alarms": 26,
+      "correct_other_tests": 132
+    },
+    "code_incomplete": {
+      "verdicts": {
+        "quiet": 183,
+        "assertion_alarm": 181,
+        "generation_failed": 8,
+        "error_alarm": 10
+      },
+      "kills": 6,
+      "mutant_tests": 162,
+      "recovered_alarms": 25,
+      "recovered_tests": 34,
+      "correct_other_alarms": 74,
+      "correct_other_tests": 132
+    }
+  }
+}
