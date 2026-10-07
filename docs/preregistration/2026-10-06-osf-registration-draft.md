@@ -92,7 +92,7 @@ The minimum expected use of the 2024 window is 3 of 40 requirements. Later exclu
 
 **Indices / covariates.**
 - **Coded before generation, blind to outcomes:** `context_cue`, `numeric`, `derived_state`, `memorized`.
-- **Recorded, exploratory only:** `conditional_rule`, `domain_convention` and the frame window.
+- **Recorded, exploratory only:** `conditional_rule`, `domain_convention`, `rule_polarity` (`required_behavior` or `prohibition`, coded blind before generation; see the 2026-10-07 literature-matrix entry on Gamage 2026) and the frame window.
 
 ## Analysis plan
 
@@ -118,7 +118,7 @@ The minimum expected use of the 2024 window is 3 of 40 requirements. Later exclu
 **Exploratory analysis.**
 - Per model and leave one project out.
 - Per frame window, plus the sensitivity without 2024, which does not keep the design or its power.
-- `conditional_rule` and `domain_convention`.
+- `conditional_rule`, `domain_convention` and `rule_polarity`.
 - Acceptance-criteria coverage.
 
 ## Other
