@@ -70,3 +70,5 @@ The confirmatory outcome table is label-plane data. Each constraint receives a h
 ## Non-claims
 
 The project does not claim that every requirement defect is detectable, that a product gate replaces tests or review, or that a local curated seed is representative of all software requirements. Results are valid only for the declared task, defect families, provider configuration, labels, and split protocol.
+
+The [07/10 interview and market drafts](product-market-kit-20261007.md) use the completed 5.5 results to refine the coding-team hypothesis. Reference-based loss detection is a promise to validate, not a demonstrated capability of the current replay gate.
