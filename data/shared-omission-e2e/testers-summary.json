@@ -1,0 +1,240 @@
+{
+  "schema_version": "shared-omission-testers-summary/v1",
+  "exploratory": true,
+  "rule": "Every evaluated tester run published under data/shared-omission-e2e is listed here and reported. A run whose evaluation failed is listed with status failed_evaluation and its reason, and is excluded from the summary. No run is dropped or chosen after its results are known; testers are reported separately and never pooled.",
+  "evaluated_runs": 3,
+  "excluded_runs": [
+    {
+      "tester": "claude-sonnet-4-6",
+      "status": "failed_evaluation",
+      "reason": "Docker unavailable; no browser reports (PR #189). Superseded by the offline evaluation of the same saved suites.",
+      "pr": 189
+    },
+    {
+      "tester": "claude-opus-4-6",
+      "status": "failed_evaluation",
+      "reason": "Docker unavailable; no browser reports (PR #189). Superseded by the offline evaluation of the same saved suites.",
+      "pr": 189
+    }
+  ],
+  "requirements": 25,
+  "testers": [
+    {
+      "tester": "gpt-6-astra",
+      "provider": "OpenAI",
+      "pr": 184,
+      "score": {
+        "spec_complete": 0.76,
+        "spec_incomplete": 0.1,
+        "code_incomplete": 0.04
+      },
+      "sound_suites": {
+        "spec_complete": 38,
+        "spec_incomplete": 39,
+        "code_incomplete": 19
+      },
+      "MA1_complete_minus_incomplete": {
+        "mean_difference": 0.66,
+        "ci95_project_bootstrap": [
+          0.5,
+          0.8
+        ],
+        "p_exact_project_sign_flip": 0.0078125,
+        "requirements_higher_lower_tied": [
+          20,
+          0,
+          5
+        ]
+      },
+      "MA2_complete_minus_incomplete_code": {
+        "mean_difference": 0.72,
+        "ci95_project_bootstrap": [
+          0.587,
+          0.8276
+        ],
+        "p_exact_project_sign_flip": 0.0078125,
+        "requirements_higher_lower_tied": [
+          20,
+          0,
+          5
+        ]
+      },
+      "reference_assertion_and_shown_mutant_quiet": {
+        "spec_complete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 0
+        },
+        "spec_incomplete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 0
+        },
+        "code_incomplete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 23
+        }
+      },
+      "sound_suite_detection_of_confirmed_mutants": {
+        "spec_complete": {
+          "alarms": 118,
+          "pairs": 118
+        },
+        "spec_incomplete": {
+          "alarms": 13,
+          "pairs": 123
+        },
+        "code_incomplete": {
+          "alarms": 6,
+          "pairs": 66
+        }
+      }
+    },
+    {
+      "tester": "claude-sonnet-4-6",
+      "provider": "Anthropic",
+      "pr": 190,
+      "score": {
+        "spec_complete": 0.4,
+        "spec_incomplete": 0.05,
+        "code_incomplete": 0.0
+      },
+      "sound_suites": {
+        "spec_complete": 26,
+        "spec_incomplete": 22,
+        "code_incomplete": 17
+      },
+      "MA1_complete_minus_incomplete": {
+        "mean_difference": 0.35,
+        "ci95_project_bootstrap": [
+          0.2235,
+          0.4747
+        ],
+        "p_exact_project_sign_flip": 0.0078125,
+        "requirements_higher_lower_tied": [
+          14,
+          0,
+          11
+        ]
+      },
+      "MA2_complete_minus_incomplete_code": {
+        "mean_difference": 0.4,
+        "ci95_project_bootstrap": [
+          0.2917,
+          0.5
+        ],
+        "p_exact_project_sign_flip": 0.0078125,
+        "requirements_higher_lower_tied": [
+          14,
+          0,
+          11
+        ]
+      },
+      "reference_assertion_and_shown_mutant_quiet": {
+        "spec_complete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 4
+        },
+        "spec_incomplete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 5
+        },
+        "code_incomplete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 27
+        }
+      },
+      "sound_suite_detection_of_confirmed_mutants": {
+        "spec_complete": {
+          "alarms": 66,
+          "pairs": 87
+        },
+        "spec_incomplete": {
+          "alarms": 9,
+          "pairs": 74
+        },
+        "code_incomplete": {
+          "alarms": 0,
+          "pairs": 57
+        }
+      }
+    },
+    {
+      "tester": "claude-opus-4-6",
+      "provider": "Anthropic",
+      "pr": 190,
+      "score": {
+        "spec_complete": 0.8,
+        "spec_incomplete": 0.085,
+        "code_incomplete": 0.0
+      },
+      "sound_suites": {
+        "spec_complete": 46,
+        "spec_incomplete": 33,
+        "code_incomplete": 15
+      },
+      "MA1_complete_minus_incomplete": {
+        "mean_difference": 0.715,
+        "ci95_project_bootstrap": [
+          0.5598,
+          0.875
+        ],
+        "p_exact_project_sign_flip": 0.0078125,
+        "requirements_higher_lower_tied": [
+          20,
+          0,
+          5
+        ]
+      },
+      "MA2_complete_minus_incomplete_code": {
+        "mean_difference": 0.8,
+        "ci95_project_bootstrap": [
+          0.6957,
+          0.9091
+        ],
+        "p_exact_project_sign_flip": 0.0078125,
+        "requirements_higher_lower_tied": [
+          21,
+          0,
+          4
+        ]
+      },
+      "reference_assertion_and_shown_mutant_quiet": {
+        "spec_complete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 1
+        },
+        "spec_incomplete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 11
+        },
+        "code_incomplete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 28
+        }
+      },
+      "sound_suite_detection_of_confirmed_mutants": {
+        "spec_complete": {
+          "alarms": 132,
+          "pairs": 149
+        },
+        "spec_incomplete": {
+          "alarms": 13,
+          "pairs": 110
+        },
+        "code_incomplete": {
+          "alarms": 0,
+          "pairs": 51
+        }
+      }
+    }
+  ],
+  "requirements_complete_higher_in_k_of_n_testers": {
+    "n_testers": 3,
+    "distribution": {
+      "0": 0,
+      "1": 5,
+      "2": 11,
+      "3": 9
+    }
+  },
+  "note": "Testers share pages, requirements and implementations; within a provider they may share model families. The table is descriptive; no test is computed across testers."
+}

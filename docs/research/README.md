@@ -1,5 +1,8 @@
 # Research catalog
 
+- [6 October 2026: second-provider feasibility](2026-10-06-second-provider-feasibility.md): Google subscription versus API, measured frozen prompt sizes, prospective budgets, adapter gaps and offline memorization smoke.
+- [6 October 2026: Antigravity subscription setup](2026-10-06-antigravity-subscription-setup.md): installed account CLI, two public technical smokes, failed tool isolation and a guard that blocks unqualified research calls.
+
 - [2 October 2026: recovered public evidence](2026-10-02-recovered-public-evidence.md): three formerly private result rows, unchanged ordinal originals, separate scope diagnostic, and two remaining reproduction gaps.
 
 - [2 October 2026: test-anchor results](2026-10-02-test-anchor-results.md): 81 generated test suites, 180 original evaluations, a separate 180-pair origin diagnostic, and the remaining bounded-profile scope limitation.
@@ -149,3 +152,18 @@ experiment evidence.
 - [Triagem das opções confirmatórias, 5 de outubro de 2026](2026-10-05-confirmatory-screening-results.md): 367 candidatos, 162 admitidos provisoriamente em oito projetos, dois sem decisão; recibos auditados, seleção e novos E2Es pendentes.
 
 - [Comparação do grupo histórico vaguer com Orchid](2026-10-05-orchid-comparison-note.md): diferenças de intervenção e limites da interpretação.
+- [Claude shared-omission E2Es after Docker recovery](2026-10-06-claude-shared-omission-e2e-evaluated.md): Sonnet and Opus reported separately; 2,263 browser reports, seven runner errors, original failed evaluation preserved. Exploratory, no new generation calls.
+- [Claude shared-omission replication: generation complete, Docker evaluation unavailable](2026-10-06-claude-shared-omission-e2e-results.md). 300 unique calls, 297 saved suites, no browser verdicts; this is an execution failure, not a null effect.
+- [Claude Pro: setup Sonnet/Opus e qualificação técnica](2026-10-06-claude-subscription-setup.md).
+
+- [Replicação Claude de omissão compartilhada: protocolo e parada de quota](2026-10-06-claude-shared-omission-protocol.md).
+
+- [Emenda autorizada: consumir janela de cinco horas e preservar reserva semanal](2026-10-06-claude-quota-amendment.md).
+
+- [Parser Claude V2: recusa de telemetria e continuação sem repetir tentativas](2026-10-06-claude-parser-telemetry-fix.md).
+
+- [Aviso de quota Claude e continuação após reset](2026-10-06-claude-quota-warning-and-reset.md).
+- [Extensão de omissão compartilhada: viabilidade e fontes verificadas](2026-10-05-shared-omission-extension-feasibility.md): TDAD, Doc2OracLL e limites de novidade; [protocolo E2E](../preregistration/2026-10-05-shared-omission-e2e.md) prospectivo para testes que recebem código mutante.
+
+- [Sonnet 5.5: resultados exploratórios de omissão compartilhada](2026-10-07-claude-sonnet-5-5-shared-omission-results.md)
+- [Replicação Claude 5.5: protocolo prospectivo](../preregistration/2026-10-06-claude55-shared-omission.md): mesmos prompts e mutantes, pacote novo e limites de cota preservados.

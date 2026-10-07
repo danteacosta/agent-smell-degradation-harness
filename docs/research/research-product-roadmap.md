@@ -192,3 +192,7 @@ if the study finds limits on autonomous semantic evaluation.
 ## 12-source pilot delivery
 
 The exploratory expansion is finalized with 216 generation attempts and a protocol-stopped, incomplete judge phase. See [audited results](criteria-expansion-results-20260921.md). Any further collection requires a separately frozen successor protocol; the original packet must not be resumed or replaced. Human validation and broader sampling remain necessary for confirmatory claims.
+
+## Completed 5.5 replication and product interviews
+
+Separate results PRs [#195](https://github.com/danteacosta/agent-smell-degradation-harness/pull/195) and [#196](https://github.com/danteacosta/agent-smell-degradation-harness/pull/196) preserve the exploratory boundary and operational deviations. The [market kit](../product-market-kit-20261007.md) translates these findings into interview hypotheses, not validated product utility. Human calibration, H1/H2 and the unlaunched factorial proposal #183 remain pending.

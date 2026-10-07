@@ -262,6 +262,14 @@ was taken to equal C) is not used: in 12 of them the rule is only part of the
 added text, and in some the whole feature was added with it, which that
 shortcut did not check.
 
+**2026-10-05, new exploratory study: mutation adequacy of generated test
+suites.** Registered separately in
+`2026-10-05-mutation-adequacy-preregistration.md` before any suite is
+generated. It reuses the frozen A and C implementations of the 46-case
+collection and their oracle verdicts (25 eligible requirements, 8 projects);
+only the tester suites and their execution are new. It does not change H1a,
+H1b or the confirmatory plan.
+
 ## 8. Decisions still open before submission
 
 1. Primary outcome of H1: browser oracle (this draft) or acceptance-criteria

@@ -1,0 +1,13 @@
+# Continuação após recusa de telemetria
+
+O lote parou na tentativa 77, com 76 suítes prontas e 223 slots não tentados. A resposta Sonnet terminou com `success`, um turno e modelo esperado, mas o parser antigo recusou dois eventos `system/thinking_tokens`, com contagens 50 e 177. Esses eventos estimam tokens de raciocínio, não executam ferramentas. A classificação original `generation_failed` é preservada: não se sobrescreve a resposta nem se repete essa tentativa.
+
+O usuário autorizou corrigir e continuar em 06/10/2026. Novo adapter `agents/claude_cli_v2.py` é snapshot separado, mantendo os arquivos congelados anteriores intactos. A whitelist aceita somente type/subtype, estimated_tokens, estimated_tokens_delta e identificadores de sessão; contagens inteiras não negativas, limitadas e cumulativas. Campos adicionais, atividades system desconhecidas, ferramentas, MCP, troca de modelo ou terminal inválido continuam recusados. Não expõe conteúdo de raciocínio em documentação pública.
+
+Contrato: dado evento de telemetria válido entre init e resposta, retornar a mesma conclusão textual; dado payload de ferramenta, subtype desconhecido ou contagem inválida, recusar. Testes começaram vermelhos e incluem subprocesso fake ponta a ponta. Diagnóstico offline da tentativa 77 passa na V2, mas não altera seu status científico.
+
+`scripts/claude_parser_continuation.py` cria outra visão privada por cópia e inventário vinculados, registra a autorização e os hashes do adapter e scripts. Verifica toda a cadeia anterior, inclusive o módulo de política de quota importado. Só permite exatamente a recusa conhecida; mantém todos os resultados anteriores e exclui cada slot já tentado. Novo marcador impede restart. Snapshot de quota deve ter menos de 15 minutos antes da primeira nova tentativa; usa qualificação pública para atualizar o saldo, sem revelar credenciais.
+
+A emenda anterior permanece: janela de cinco horas pode chegar a zero; outras janelas preservam 30% restante. Quota inválida/ausente, uso extra, limite remoto ou outro erro interrompem sem retry. Não habilita API nem créditos extras. A chamada em andamento pode cruzar o limiar. Resultados por modelo permanecem exploratórios, e a tentativa recusada gera placeholder não avaliável; não se vende geração ausente como defeito do requisito.
+
+Verificação pré-lançamento: 62 testes passaram, compilação e diff check aprovados. Revisões de contrato e segurança encontraram um vínculo ausente ao script da política de quota; corrigido para revalidar `previous.verify(out)` antes de continuar. Nenhum ajuste no prompt, modelo, oráculo, fonte de código ou seleção do mutante.

@@ -33,6 +33,16 @@ intervals; a synthetic fixture result is never counted as customer evidence.
 4. Review the anonymized aggregate with the team; export accepted failure
    cases into the versioned registry only with permission.
 
-The first external pilot should use Phoenix, Langfuse, or Braintrust exports
-through the SDK-free normalization boundary in `replay.integrations`; vendor
-credentials remain outside the replay process.
+The primary interview hypothesis is now teams using coding agents whose tickets
+may omit obligations from a written specification. The
+[07/10 market kit and interview draft](product-market-kit-20261007.md) records the
+5.5 comparison and the proposed reference-based audit, whose utility remains
+unvalidated. Measure confirmed loss detection and false alarms separately per
+rule, including correct and recovered implementations.
+
+Conversational agents following an external policy remain a second market
+hypothesis by analogy, without direct evidence from the coding-test battery.
+A trace-export pilot could use Phoenix, Langfuse, or Braintrust through the
+SDK-free normalization boundary in `replay.integrations`; vendor credentials
+remain outside the replay process. This possibility does not establish its
+commercial priority.
