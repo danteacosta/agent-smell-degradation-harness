@@ -2,7 +2,7 @@
   "schema_version": "shared-omission-testers-summary/v1",
   "exploratory": true,
   "rule": "Every evaluated tester run published under data/shared-omission-e2e is listed here and reported. A run whose evaluation failed is listed with status failed_evaluation and its reason, and is excluded from the summary. No run is dropped or chosen after its results are known; testers are reported separately and never pooled.",
-  "evaluated_runs": 3,
+  "evaluated_runs": 5,
   "excluded_runs": [
     {
       "tester": "claude-sonnet-4-6",
@@ -225,15 +225,155 @@
           "pairs": 51
         }
       }
+    },
+    {
+      "tester": "claude-sonnet-5-5",
+      "provider": "Anthropic",
+      "pr": 195,
+      "score": {
+        "spec_complete": 0.86,
+        "spec_incomplete": 0.17,
+        "code_incomplete": 0.06
+      },
+      "sound_suites": {
+        "spec_complete": 46,
+        "spec_incomplete": 40,
+        "code_incomplete": 21
+      },
+      "MA1_complete_minus_incomplete": {
+        "mean_difference": 0.69,
+        "ci95_project_bootstrap": [
+          0.5667,
+          0.8571
+        ],
+        "p_exact_project_sign_flip": 0.0078125,
+        "requirements_higher_lower_tied": [
+          20,
+          1,
+          4
+        ]
+      },
+      "MA2_complete_minus_incomplete_code": {
+        "mean_difference": 0.8,
+        "ci95_project_bootstrap": [
+          0.6552,
+          0.963
+        ],
+        "p_exact_project_sign_flip": 0.0078125,
+        "requirements_higher_lower_tied": [
+          22,
+          0,
+          3
+        ]
+      },
+      "reference_assertion_and_shown_mutant_quiet": {
+        "spec_complete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 1
+        },
+        "spec_incomplete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 8
+        },
+        "code_incomplete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 24
+        }
+      },
+      "sound_suite_detection_of_confirmed_mutants": {
+        "spec_complete": {
+          "alarms": 140,
+          "pairs": 148
+        },
+        "spec_incomplete": {
+          "alarms": 22,
+          "pairs": 124
+        },
+        "code_incomplete": {
+          "alarms": 10,
+          "pairs": 70
+        }
+      }
+    },
+    {
+      "tester": "claude-opus-5-5",
+      "provider": "Anthropic",
+      "pr": 196,
+      "score": {
+        "spec_complete": 0.94,
+        "spec_incomplete": 0.2633,
+        "code_incomplete": 0.1767
+      },
+      "sound_suites": {
+        "spec_complete": 49,
+        "spec_incomplete": 38,
+        "code_incomplete": 33
+      },
+      "MA1_complete_minus_incomplete": {
+        "mean_difference": 0.6767,
+        "ci95_project_bootstrap": [
+          0.5805,
+          0.7895
+        ],
+        "p_exact_project_sign_flip": 0.0078125,
+        "requirements_higher_lower_tied": [
+          20,
+          0,
+          5
+        ]
+      },
+      "MA2_complete_minus_incomplete_code": {
+        "mean_difference": 0.7633,
+        "ci95_project_bootstrap": [
+          0.6282,
+          0.8826
+        ],
+        "p_exact_project_sign_flip": 0.0078125,
+        "requirements_higher_lower_tied": [
+          21,
+          0,
+          4
+        ]
+      },
+      "reference_assertion_and_shown_mutant_quiet": {
+        "spec_complete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 0
+        },
+        "spec_incomplete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 4
+        },
+        "code_incomplete": {
+          "suites": 50,
+          "reference_assertion_and_shown_quiet": 10
+        }
+      },
+      "sound_suite_detection_of_confirmed_mutants": {
+        "spec_complete": {
+          "alarms": 154,
+          "pairs": 158
+        },
+        "spec_incomplete": {
+          "alarms": 36,
+          "pairs": 119
+        },
+        "code_incomplete": {
+          "alarms": 23,
+          "pairs": 100
+        }
+      }
     }
   ],
   "requirements_complete_higher_in_k_of_n_testers": {
-    "n_testers": 3,
+    "n_testers": 5,
     "distribution": {
       "0": 0,
-      "1": 5,
-      "2": 11,
-      "3": 9
+      "1": 1,
+      "2": 2,
+      "3": 7,
+      "4": 7,
+      "5": 8
     }
   },
   "note": "Testers share pages, requirements and implementations; within a provider they may share model families. The table is descriptive; no test is computed across testers."

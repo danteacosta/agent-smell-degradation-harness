@@ -41,6 +41,24 @@
       "results": "data/shared-omission-e2e/claude-evaluation-v1/claude-opus-4-6/results.json",
       "manifest": "data/shared-omission-e2e/claude-evaluation-v1/claude-opus-4-6/frozen-manifest-public.json",
       "pr": 190
+    },
+    {
+      "tester": "claude-sonnet-5-5",
+      "provider": "Anthropic",
+      "status": "evaluated",
+      "reason": "Docker evaluation completed: 1138 browser reports; eight generation-failure placeholders retain the single StreamSuspended failure without retry.",
+      "results": "data/shared-omission-e2e/claude55-v1/claude-sonnet-5-5/results.json",
+      "manifest": "data/shared-omission-e2e/claude55-v1/claude-sonnet-5-5/frozen-manifest-public.json",
+      "pr": 195
+    },
+    {
+      "tester": "claude-opus-5-5",
+      "provider": "Anthropic",
+      "status": "evaluated",
+      "reason": "Docker evaluation completed: all 1146 planned pairs have browser reports; no generation-failure placeholders.",
+      "results": "data/shared-omission-e2e/claude55-v1/claude-opus-5-5/results.json",
+      "manifest": "data/shared-omission-e2e/claude55-v1/claude-opus-5-5/frozen-manifest-public.json",
+      "pr": 196
     }
   ]
 }
