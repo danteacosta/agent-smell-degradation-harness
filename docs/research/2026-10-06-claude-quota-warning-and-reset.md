@@ -1,0 +1,11 @@
+# Aviso de quota e retorno após reset
+
+Autorização de 06/10/2026: corrigir `allowed_warning`, consumir a janela de cinco horas até o limite e agendar retorno depois do reset; manter a reserva de 30% nas outras janelas. O aviso é um status permissivo observado no CLI, com quota válida e `isUsingOverage:false`, não uma autorização de uso extra. A interpretação nova aceita apenas `allowed` e `allowed_warning`; status bloqueado só pode ser lido para registrar o reset e nunca permite chamada.
+
+Os 98 slots tentados anteriores (97 suites prontas, uma recusa preservada) ficam intactos, sem retry. Novo pacote importa e vincula seus hashes e completa somente os 202 slots ainda não tentados. Prompts, fontes, oráculos e modelos não mudam. Novo script V3 preserva hashes por etapa e exige o mesmo CLI antes de cada tentativa; cadeias anteriores permanecem verificáveis, sem alterar scripts congelados.
+
+BDD: com aviso e saldo positivo de cinco horas, usar a mesma regra de capacidade; com cota semanal em 30%, estado desconhecido ou uso extra, parar. Depois de esgotamento real de cinco horas, registrar horário fornecido e permitir etapa nova só após reset mais 60 segundos e recibo novo de quota, nunca repetindo slots anteriores. Paradas de outra causa não autorizam retorno automático. Slot tentado com falha continua no conjunto de tentativas e não volta à fila. Marcador de processo exclusivo impede etapas concorrentes.
+
+A geração é seguida pelos E2Es somente após os 300 slots com resultado registrado. A auditoria posterior distingue suites prontas, inválidas, falhas e não tentados. O caso antes recusado continua placeholder no resultado original; o diagnóstico não o transforma em suite admitida. Etapas de limite/parser e espera por reset são desvios operacionais descritos no relatório exploratório.
+
+O monitor nesta conversa registra o reset observado e agenda a continuação autorizada depois dele. Não usa API keys nem extra usage. Se reset mudar, obedece ao recibo mais recente, sem calcular quota por tokens ou iniciar antes do horário. Testes de estados warning/rejected/unknown/overage, integridade, versões anteriores e parser; compilação e revisão de privacidade/contrato antes de lançar.

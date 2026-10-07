@@ -1,5 +1,7 @@
 # Research catalog
 
+- [6 October 2026: Antigravity subscription setup](2026-10-06-antigravity-subscription-setup.md): installed account CLI, two public technical smokes, failed tool isolation and a guard that blocks unqualified research calls.
+
 - [2 October 2026: recovered public evidence](2026-10-02-recovered-public-evidence.md): three formerly private result rows, unchanged ordinal originals, separate scope diagnostic, and two remaining reproduction gaps.
 
 - [2 October 2026: test-anchor results](2026-10-02-test-anchor-results.md): 81 generated test suites, 180 original evaluations, a separate 180-pair origin diagnostic, and the remaining bounded-profile scope limitation.
@@ -148,4 +150,13 @@ experiment evidence.
 
 - [Triagem das opções confirmatórias, 5 de outubro de 2026](2026-10-05-confirmatory-screening-results.md): 367 candidatos, 162 admitidos provisoriamente em oito projetos, dois sem decisão; recibos auditados, seleção e novos E2Es pendentes.
 
+- [Claude Pro: setup Sonnet/Opus e qualificação técnica](2026-10-06-claude-subscription-setup.md).
+
+- [Replicação Claude de omissão compartilhada: protocolo e parada de quota](2026-10-06-claude-shared-omission-protocol.md).
+
+- [Emenda autorizada: consumir janela de cinco horas e preservar reserva semanal](2026-10-06-claude-quota-amendment.md).
+
+- [Parser Claude V2: recusa de telemetria e continuação sem repetir tentativas](2026-10-06-claude-parser-telemetry-fix.md).
+
+- [Aviso de quota Claude e continuação após reset](2026-10-06-claude-quota-warning-and-reset.md).
 - [Extensão de omissão compartilhada: viabilidade e fontes verificadas](2026-10-05-shared-omission-extension-feasibility.md): TDAD, Doc2OracLL e limites de novidade; [protocolo E2E](../preregistration/2026-10-05-shared-omission-e2e.md) prospectivo para testes que recebem código mutante.
