@@ -1,0 +1,165 @@
+{
+  "browser_reports": 0,
+  "docker_launch_attempts": 2270,
+  "evaluation_status": "not_evaluable",
+  "generation_failed": 3,
+  "generation_failure_placeholders": 22,
+  "models": {
+    "claude-opus-4-6": {
+      "attempted": 150,
+      "browser_reports": 0,
+      "by_source": {
+        "code_incomplete": {
+          "conditional_false_alarm_rate": null,
+          "eligible_selected_pairs": 0,
+          "generation_failed": 1,
+          "ma_score": null,
+          "selected_mutant_verdicts": {
+            "generation_failed": 1,
+            "runner_error": 49
+          },
+          "slots": 50,
+          "suite_ready": 49,
+          "unconditional_false_alarm_rate": null,
+          "verdicts": {
+            "generation_failed": 8,
+            "runner_error": 374
+          }
+        },
+        "spec_complete": {
+          "conditional_false_alarm_rate": null,
+          "eligible_selected_pairs": 0,
+          "generation_failed": 0,
+          "ma_score": null,
+          "selected_mutant_verdicts": {
+            "runner_error": 50
+          },
+          "slots": 50,
+          "suite_ready": 50,
+          "unconditional_false_alarm_rate": null,
+          "verdicts": {
+            "runner_error": 382
+          }
+        },
+        "spec_incomplete": {
+          "conditional_false_alarm_rate": null,
+          "eligible_selected_pairs": 0,
+          "generation_failed": 0,
+          "ma_score": null,
+          "selected_mutant_verdicts": {
+            "runner_error": 50
+          },
+          "slots": 50,
+          "suite_ready": 50,
+          "unconditional_false_alarm_rate": null,
+          "verdicts": {
+            "runner_error": 382
+          }
+        }
+      },
+      "docker_launch_attempts": 1138,
+      "generation_failed": 1,
+      "planned_pairs": 1146,
+      "row_verdicts": {
+        "generation_failed": 8,
+        "runner_error": 1138
+      },
+      "suite_ready": 149
+    },
+    "claude-sonnet-4-6": {
+      "attempted": 150,
+      "browser_reports": 0,
+      "by_source": {
+        "code_incomplete": {
+          "conditional_false_alarm_rate": null,
+          "eligible_selected_pairs": 0,
+          "generation_failed": 0,
+          "ma_score": null,
+          "selected_mutant_verdicts": {
+            "runner_error": 50
+          },
+          "slots": 50,
+          "suite_ready": 50,
+          "unconditional_false_alarm_rate": null,
+          "verdicts": {
+            "runner_error": 382
+          }
+        },
+        "spec_complete": {
+          "conditional_false_alarm_rate": null,
+          "eligible_selected_pairs": 0,
+          "generation_failed": 1,
+          "ma_score": null,
+          "selected_mutant_verdicts": {
+            "generation_failed": 1,
+            "runner_error": 49
+          },
+          "slots": 50,
+          "suite_ready": 49,
+          "unconditional_false_alarm_rate": null,
+          "verdicts": {
+            "generation_failed": 8,
+            "runner_error": 374
+          }
+        },
+        "spec_incomplete": {
+          "conditional_false_alarm_rate": null,
+          "eligible_selected_pairs": 0,
+          "generation_failed": 1,
+          "ma_score": null,
+          "selected_mutant_verdicts": {
+            "generation_failed": 1,
+            "runner_error": 49
+          },
+          "slots": 50,
+          "suite_ready": 49,
+          "unconditional_false_alarm_rate": null,
+          "verdicts": {
+            "generation_failed": 6,
+            "runner_error": 376
+          }
+        }
+      },
+      "docker_launch_attempts": 1132,
+      "generation_failed": 2,
+      "planned_pairs": 1146,
+      "row_verdicts": {
+        "generation_failed": 14,
+        "runner_error": 1132
+      },
+      "suite_ready": 148
+    }
+  },
+  "planned_pairs": 2292,
+  "planned_slots": 300,
+  "quota_remaining_percent": {
+    "five_hour": 77,
+    "seven_day": 84
+  },
+  "retry_count": 0,
+  "segments": [
+    {
+      "attempted": 112,
+      "reason": "Claude exited 1; no retry",
+      "reset_at": 1791307800,
+      "resume_after_reset": true,
+      "segment": "000"
+    },
+    {
+      "attempted": 255,
+      "reason": "Claude exited 1; no retry",
+      "reset_at": 1791325800,
+      "resume_after_reset": true,
+      "segment": "001"
+    },
+    {
+      "attempted": null,
+      "reason": null,
+      "reset_at": null,
+      "resume_after_reset": null,
+      "segment": "002"
+    }
+  ],
+  "suite_ready": 297,
+  "unique_attempted_slots": 300
+}
