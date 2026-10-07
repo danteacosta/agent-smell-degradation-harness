@@ -1,5 +1,6 @@
 # Research catalog
 
+- [6 October 2026: second-provider feasibility](2026-10-06-second-provider-feasibility.md): Google subscription versus API, measured frozen prompt sizes, prospective budgets, adapter gaps and offline memorization smoke.
 - [6 October 2026: Antigravity subscription setup](2026-10-06-antigravity-subscription-setup.md): installed account CLI, two public technical smokes, failed tool isolation and a guard that blocks unqualified research calls.
 
 - [2 October 2026: recovered public evidence](2026-10-02-recovered-public-evidence.md): three formerly private result rows, unchanged ordinal originals, separate scope diagnostic, and two remaining reproduction gaps.
