@@ -165,3 +165,4 @@ experiment evidence.
 - [Extensão de omissão compartilhada: viabilidade e fontes verificadas](2026-10-05-shared-omission-extension-feasibility.md): TDAD, Doc2OracLL e limites de novidade; [protocolo E2E](../preregistration/2026-10-05-shared-omission-e2e.md) prospectivo para testes que recebem código mutante.
 
 - [Opus 5.5: resultados exploratórios de omissão compartilhada](2026-10-07-claude-opus-5-5-shared-omission-results.md)
+- [Replicação Claude 5.5: protocolo prospectivo](../preregistration/2026-10-06-claude55-shared-omission.md): mesmos prompts e mutantes, pacote novo e limites de cota preservados.
