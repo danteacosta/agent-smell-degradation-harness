@@ -23,6 +23,25 @@ No new model calls occurred in this stage. The original 300 distinct generation 
 
 All seven runner errors belong to one Opus incomplete-request suite for `zulip-unsubscribe-self`. No browser report exists for those pairs; captured stderr is empty, so the retained evidence does not establish their specific cause. They remain unusable, and none was rerun. A completed orchestration does not imply every pair was evaluable.
 
+## Desvios operacionais
+
+All times below are on 6 October 2026, America/Maceio (UTC−03). T0 is the protocol commit `e946c0b`, published at 10:11:20, before generation began at 10:11:42. Commit times identify publication of an amendment; launch times identify the subsequent execution. These amendments occurred after the original freeze and are operational deviations, not changes to the scientific contrasts.
+
+| Time (relative to T0) | Amendment or execution | Previously attempted slots carried forward | Outcome |
+| --- | --- | ---: | --- |
+| 10:31:29 (+20m09s) | `2c376d1`: authorized consumption of the five-hour window to zero, preserving 30% in every other exposed window | 74 | The original stage had stopped at 10:30:38 at its original 30% five-hour reserve. |
+| 10:31:47 (+20m27s) | First quota continuation launched | 74 | Stopped at 77 attempts at 10:32:26 because the adapter rejected unexpected system telemetry; that failed attempt was preserved. |
+| 10:48:36 (+37m16s) | `82bc5da`: adapter V2 accepted bounded `thinking_tokens` telemetry | — | Versioned parser amendment; it did not reclassify the previously rejected response. |
+| 10:48:58 (+37m38s) | V2 continuation launched | 77 | Stopped at 98 attempts at 10:54:56 because subscription quota status `allowed_warning` was not accepted. |
+| 11:07:49 (+56m29s) | `b53eb9e`: V3 accepted `allowed_warning` with valid quota, and journaled continuations after reset | — | Five-hour reserve remained zero; other windows retained their 30% reserve. API/extra usage remained disallowed. |
+| 11:08:14 (+56m54s) | V3 segment 000 launched | 98 | Stopped at 112 attempts at 11:11:31 on five-hour exhaustion: 110 ready suites, 2 preserved failures. |
+| 14:32:18 (+4h20m58s) | Segment 001 launched after the 14:30 reset and a new quota qualification | 112 | Stopped at 255 attempts at 15:10:26 on five-hour exhaustion: 252 ready suites, 3 preserved failures. |
+| 19:31:50 (+9h20m30s) | Segment 002 launched after the 19:30 reset and a new quota qualification | 255 | Generation completed at 19:43:48 with 300 unique attempts: 297 ready suites and 3 preserved failures. |
+
+The carried-forward counts are cumulative, not additional calls. Quota qualifications were separate public setup probes, not research slots. Every continuation excluded all previously attempted slots, including failures. Receipt/hash verification confirmed that imported evidence, frozen prompts, selected mutants and schedules were preserved; no already-attempted slot was replaced. The analysis scripts `scripts/mutation_adequacy.py` and `scripts/shared_omission_e2e.py` did not change between `e946c0b` and `b53eb9e`. Versioned adapter/quota wrappers changed as listed above. The later Docker evaluation was a separate authorized offline stage and made no model calls.
+
+These results concern **Sonnet 4.6 and Opus 4.6**, the explicitly requested IDs in this frozen collection. The choice did not establish that they were the current Claude releases. A replication with Sonnet 5.5 and Opus 5.5 must be frozen and reported separately; it cannot replace or relabel these outcomes.
+
 ## MA1 and MA2
 
 MA1 compares complete requirements with incomplete requests; MA2 compares complete requirements with incomplete requests plus the selected mutant's code. The analysis uses the frozen estimator, equal weight per requirement, bootstrap resampling of projects and an exact two-sided sign-flip test that swaps signs by project.
@@ -79,7 +98,7 @@ Each row represents 50 planned suites. Alarm includes assertion and test-executi
 | Opus | Incomplete | 4 | 29 | 5 | 11 | 0 | 1 |
 | Opus | Incomplete + code | 0 | 15 | 3 | 31 | 1 | 0 |
 
-Of the code-source suites, 27/50 for Sonnet and 28/50 for Opus rejected the correct reference by assertion while accepting the shown mutant. The corresponding assertion counts in the incomplete-only source were 5/50 and 11/50, respectively. This pattern is compatible with tests fixing the behavior of the code they were shown, but only an audit of the suites can establish whether each assertion concerns the target obligation. It is not proof of that mechanism by itself.
+Of the code-source suites, 27/50 for Sonnet and 28/50 for Opus rejected the correct reference by assertion while accepting the shown mutant. The pattern of a correct reference rejected by assertion and a shown mutant accepted also appears in the incomplete source (Sonnet 5/50, Opus 11/50); it is not exclusive to the code source. This pattern is compatible with tests fixing the behavior of the code they were shown, but only an audit of the suites can establish whether each assertion concerns the target obligation. It is not proof of that mechanism by itself.
 
 The selected mutant was quiet in 47/50 planned Sonnet code-source pairs and 46/50 Opus pairs (one Opus generation failure). Among sound suites, selected-mutant quietude was 17/17 and 15/15. Complete-source selected-mutant quietude was 10/50 and 7/50 overall, or 6/26 and 6/46 among sound suites. Incomplete-only quietude was 26/50 and 40/50 overall, or 20/22 and 29/33 among sound suites.
 
