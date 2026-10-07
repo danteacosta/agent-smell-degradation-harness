@@ -149,3 +149,4 @@ experiment evidence.
 - [Triagem das opções confirmatórias, 5 de outubro de 2026](2026-10-05-confirmatory-screening-results.md): 367 candidatos, 162 admitidos provisoriamente em oito projetos, dois sem decisão; recibos auditados, seleção e novos E2Es pendentes.
 
 - [Claude shared-omission replication: generation complete, Docker evaluation unavailable](2026-10-06-claude-shared-omission-e2e-results.md). 300 unique calls, 297 saved suites, no browser verdicts; this is an execution failure, not a null effect.
+- [Extensão de omissão compartilhada: viabilidade e fontes verificadas](2026-10-05-shared-omission-extension-feasibility.md): TDAD, Doc2OracLL e limites de novidade; [protocolo E2E](../preregistration/2026-10-05-shared-omission-e2e.md) prospectivo para testes que recebem código mutante.
