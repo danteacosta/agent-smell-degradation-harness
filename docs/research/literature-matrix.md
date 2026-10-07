@@ -675,3 +675,18 @@ discrimination. The existing blind suite audit must determine whether an
 assertion concerns the target condition; aggregate verdicts cannot answer it.
 Keep H2's provenance comparison and the primary-task decision separate. No
 hypothesis, corpus, rubric or frozen protocol is changed here.
+## 2026-10-07 — Prohibition constraints decay with context; naming collision with "omission"
+
+Search/read date: 2026-10-07. Deduplicated by arXiv ID/title. Read: abstract, design
+(Sections 2.1-2.2), statistics description and the Limitations section (4.5) of the PDF.
+The same search re-surfaced arXiv 2609.29208 (Villamizar et al., PROFES 2026), arXiv 2607.01980
+and PrefixGuard (arXiv 2605.06455), which already have entries or notes above; no update was needed.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Gamage, [*Omission Constraints Decay While Commission Constraints Persist in Long-Context LLM Agents*](https://arxiv.org/abs/2604.20911), arXiv preprint (cs.CR), submitted 2026-04-22; an ICML 2026 virtual page lists it, proceedings not read | Do prohibition-type rules in a system policy decay with conversation depth while required-behavior rules persist? Synthetic DevOps-debugging sandbox; 12 models, 8 providers; 4,416 trials; three arms (no dilution, 20 tool schemas, token-matched padding); eight formatting-style constraints crossed by type (commission/omission) and difficulty; deterministic string/regex checks (no LLM judge); bootstrap CIs within each (model, arm, depth) cell; temperature 0. | Omission-type compliance falls from 73% (turn 5) to 33% (turn 16) while commission compliance stays at 100% for the reported model; schema semantics explains 62-100% of the dilution in two models. Authors' limits: formatting proxies only, error self-propagation confound, Arm C run on only two models (neither susceptible), synthetic environment, temperature 0, cross-sectional depths. Additional limits here: bootstrap resamples trials, not conversations or projects; not peer-reviewed as read; "omission" means a prohibition, not a requirement condition that is missing. | Thesis: **terminology collision.** Here "omission constraint" is a rule to refrain from something; in this project an omission is a testable condition lost from the output. Keep the two apart in all prose. The paper is context for why a rule that leaves no positive trace when obeyed is hard to monitor, not evidence for H1/H2. Experiment: record `rule_polarity` (`required_behavior` or `prohibition`) as a blind, exploratory descriptor so a polarity effect can be checked descriptively if the frozen corpus contains prohibitions; no power is claimed. Product: negative rules are the case where trace monitoring alone has no positive event to track; hypothesis only. Do not cite the 73%/33% figures as expectations. | 5 (public design and deterministic scoring, large trial count; single-author preprint, synthetic proxies, different construct) |
+
+**Decision (2026-10-07).** Smallest incorporation: `rule_polarity` added as an exploratory
+descriptor in the OSF draft (covariates and exploratory analysis). No change to H1, H2, the
+primary outcome or power. Human decision still open: whether prohibitions are in scope of the
+confirmatory frame at all (the current candidate rules are mostly required behaviors).
