@@ -10,7 +10,7 @@ Status: descritivo e exploratório. O script e a regra de inclusão foram escrit
 - Os testadores não são agregados entre si, e não se calcula teste entre eles. Eles compartilham páginas, requisitos e implementações e, dentro de um provedor, podem compartilhar família de modelo.
 - O script recusa uma rodada com requisitos, páginas ou mutantes mostrados diferentes da primeira. Também recusa a rodada se a análise publicada não coincidir com a recomputação congelada.
 
-## Estado com três testadores
+## Estado original com três testadores (06/10)
 
 | Testador | Provedor | Completo | Incompleto | Incompleto + código | MA1 [IC por projeto] | Suítes válidas (completo / incompleto / código) | Reprova a referência e aprova o mutante mostrado (completo / incompleto / código) |
 | --- | --- | ---: | ---: | ---: | --- | --- | --- |
@@ -26,3 +26,14 @@ O p exato por projeto foi 0,0078 em todas as comparações MA1. Por requisito, o
 2. Acrescentar a entrada ao registro, com status `evaluated` ou `failed_evaluation` e o motivo.
 3. Rodar `python3 scripts/shared_omission_testers.py` e commitar o `testers-summary.json` regenerado.
 4. O teste `tests/test_shared_omission_testers.py` confere que todas as rodadas avaliadas do registro aparecem no resumo.
+
+## Atualização em 07/10: cinco testadores avaliados
+
+As rodadas 5.5 entraram após a conclusão da geração e avaliação Docker. Sonnet preserva uma falha StreamSuspended de geração sem retry, com oito placeholders e 1.138 relatórios reais; Opus tem 1.146 relatórios reais. Ambos têm status `evaluated`: a falha de geração não foi uma falha da avaliação Docker. Os desvios operacionais estão nos [resultados Sonnet #195](https://github.com/danteacosta/agent-smell-degradation-harness/pull/195) e [Opus #196](https://github.com/danteacosta/agent-smell-degradation-harness/pull/196).
+
+| Testador | Completo | Incompleto | Incompleto + código | MA1 [IC por projeto] | Suítes válidas (completo / incompleto / código) | Reprova referência e aprova mutante mostrado (completo / incompleto / código) |
+| --- | ---: | ---: | ---: | --- | --- | --- |
+| claude-sonnet-5-5 | 0.86 | 0.17 | 0.06 | 0.69 [0.5667; 0.8571] | 46 / 40 / 21 | 1 / 8 / 24 |
+| claude-opus-5-5 | 0.94 | 0.2633 | 0.1767 | 0.6767 [0.5805; 0.7895] | 49 / 38 / 33 | 0 / 4 / 10 |
+
+O p exato por projeto de MA1 continua 0,0078125 em cada testador 5.5. No resumo com cinco testadores, a referência completa supera o pedido incompleto em todos os cinco para 8/25 requisitos, em quatro para 7/25, em três para 7/25, em dois para 2/25 e em um para 1/25. Esses números descrevem medidas repetidas no mesmo conjunto, não cinco replicações independentes. A tabela original acima fica preservada como estado de 06/10. H1/H2 e auditoria humana seguem pendentes. Nenhuma chamada de modelo ou repetição de navegador foi feita para atualizar o registro.
