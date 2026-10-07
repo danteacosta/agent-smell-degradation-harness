@@ -1,0 +1,14 @@
+{
+  "expected": {
+    "broken_save": "assertion_alarm",
+    "keeps_rule": "quiet",
+    "lost_rule": "assertion_alarm"
+  },
+  "observed": {
+    "broken_save": "assertion_alarm",
+    "keeps_rule": "quiet",
+    "lost_rule": "assertion_alarm"
+  },
+  "qualified": true,
+  "runner_sha256": "bcf284411cfab28290570151b87dedb09e1165c1ee78eec222fadc5cad68e95e"
+}
