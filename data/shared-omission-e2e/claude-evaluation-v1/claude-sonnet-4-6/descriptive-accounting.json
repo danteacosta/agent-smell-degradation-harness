@@ -1,0 +1,223 @@
+{
+  "browser_reports": 1132,
+  "by_source": {
+    "code_incomplete": {
+      "assertion_reference_alarm_selected_mutant_quiet": 27,
+      "discrimination": {
+        "correct": {
+          "alarms": 83,
+          "conditional_alarms": 0,
+          "conditional_pairs": 45,
+          "conditional_rate": 0.0,
+          "observed_pairs": 132,
+          "planned_pairs": 132,
+          "rate_observed": 0.6287878787878788,
+          "rate_per_planned": 0.6287878787878788
+        },
+        "mutant": {
+          "alarms": 38,
+          "conditional_alarms": 0,
+          "conditional_pairs": 57,
+          "conditional_rate": 0.0,
+          "observed_pairs": 162,
+          "planned_pairs": 162,
+          "rate_observed": 0.2345679012345679,
+          "rate_per_planned": 0.2345679012345679
+        },
+        "recovered": {
+          "alarms": 25,
+          "conditional_alarms": 0,
+          "conditional_pairs": 9,
+          "conditional_rate": 0.0,
+          "observed_pairs": 34,
+          "planned_pairs": 34,
+          "rate_observed": 0.7352941176470589,
+          "rate_per_planned": 0.7352941176470589
+        }
+      },
+      "reference_selected_mutant_table": {
+        "alarm__alarm": 3,
+        "alarm__quiet": 30,
+        "quiet__quiet": 17
+      },
+      "selected_mutant": {
+        "conditional_discrimination": {
+          "correct": {
+            "alarms": 0,
+            "pairs": 45,
+            "rate": 0.0
+          },
+          "mutant": {
+            "alarms": 0,
+            "pairs": 57,
+            "rate": 0.0
+          },
+          "recovered": {
+            "alarms": 0,
+            "pairs": 9,
+            "rate": 0.0
+          }
+        },
+        "eligible_pairs": 17,
+        "eligible_quiet": 17,
+        "planned_selected_pairs": 50,
+        "quiet": 47,
+        "verdicts": {
+          "assertion_alarm": 3,
+          "quiet": 47
+        }
+      }
+    },
+    "spec_complete": {
+      "assertion_reference_alarm_selected_mutant_quiet": 4,
+      "discrimination": {
+        "correct": {
+          "alarms": 67,
+          "conditional_alarms": 6,
+          "conditional_pairs": 68,
+          "conditional_rate": 0.08823529411764706,
+          "observed_pairs": 129,
+          "planned_pairs": 132,
+          "rate_observed": 0.5193798449612403,
+          "rate_per_planned": 0.5075757575757576
+        },
+        "mutant": {
+          "alarms": 128,
+          "conditional_alarms": 66,
+          "conditional_pairs": 87,
+          "conditional_rate": 0.7586206896551724,
+          "observed_pairs": 161,
+          "planned_pairs": 162,
+          "rate_observed": 0.7950310559006211,
+          "rate_per_planned": 0.7901234567901234
+        },
+        "recovered": {
+          "alarms": 17,
+          "conditional_alarms": 0,
+          "conditional_pairs": 14,
+          "conditional_rate": 0.0,
+          "observed_pairs": 31,
+          "planned_pairs": 34,
+          "rate_observed": 0.5483870967741935,
+          "rate_per_planned": 0.5
+        }
+      },
+      "reference_selected_mutant_table": {
+        "alarm__alarm": 19,
+        "alarm__quiet": 4,
+        "generation_failed__generation_failed": 1,
+        "quiet__alarm": 20,
+        "quiet__quiet": 6
+      },
+      "selected_mutant": {
+        "conditional_discrimination": {
+          "correct": {
+            "alarms": 6,
+            "pairs": 68,
+            "rate": 0.08823529411764706
+          },
+          "mutant": {
+            "alarms": 66,
+            "pairs": 87,
+            "rate": 0.7586206896551724
+          },
+          "recovered": {
+            "alarms": 0,
+            "pairs": 14,
+            "rate": 0.0
+          }
+        },
+        "eligible_pairs": 26,
+        "eligible_quiet": 6,
+        "planned_selected_pairs": 50,
+        "quiet": 10,
+        "verdicts": {
+          "assertion_alarm": 26,
+          "error_alarm": 13,
+          "generation_failed": 1,
+          "quiet": 10
+        }
+      }
+    },
+    "spec_incomplete": {
+      "assertion_reference_alarm_selected_mutant_quiet": 5,
+      "discrimination": {
+        "correct": {
+          "alarms": 74,
+          "conditional_alarms": 3,
+          "conditional_pairs": 60,
+          "conditional_rate": 0.05,
+          "observed_pairs": 131,
+          "planned_pairs": 132,
+          "rate_observed": 0.5648854961832062,
+          "rate_per_planned": 0.5606060606060606
+        },
+        "mutant": {
+          "alarms": 71,
+          "conditional_alarms": 9,
+          "conditional_pairs": 74,
+          "conditional_rate": 0.12162162162162163,
+          "observed_pairs": 161,
+          "planned_pairs": 162,
+          "rate_observed": 0.4409937888198758,
+          "rate_per_planned": 0.4382716049382716
+        },
+        "recovered": {
+          "alarms": 19,
+          "conditional_alarms": 0,
+          "conditional_pairs": 13,
+          "conditional_rate": 0.0,
+          "observed_pairs": 32,
+          "planned_pairs": 34,
+          "rate_observed": 0.59375,
+          "rate_per_planned": 0.5588235294117647
+        }
+      },
+      "reference_selected_mutant_table": {
+        "alarm__alarm": 21,
+        "alarm__quiet": 6,
+        "generation_failed__generation_failed": 1,
+        "quiet__alarm": 2,
+        "quiet__quiet": 20
+      },
+      "selected_mutant": {
+        "conditional_discrimination": {
+          "correct": {
+            "alarms": 3,
+            "pairs": 60,
+            "rate": 0.05
+          },
+          "mutant": {
+            "alarms": 9,
+            "pairs": 74,
+            "rate": 0.12162162162162163
+          },
+          "recovered": {
+            "alarms": 0,
+            "pairs": 13,
+            "rate": 0.0
+          }
+        },
+        "eligible_pairs": 22,
+        "eligible_quiet": 20,
+        "planned_selected_pairs": 50,
+        "quiet": 26,
+        "verdicts": {
+          "assertion_alarm": 12,
+          "error_alarm": 11,
+          "generation_failed": 1,
+          "quiet": 26
+        }
+      }
+    }
+  },
+  "planned_pairs": 1146,
+  "ready_suites": 148,
+  "row_verdicts": {
+    "assertion_alarm": 406,
+    "error_alarm": 210,
+    "generation_failed": 14,
+    "quiet": 516
+  },
+  "slots": 150
+}
