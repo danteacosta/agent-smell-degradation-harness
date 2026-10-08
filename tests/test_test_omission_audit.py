@@ -116,6 +116,7 @@ def test_sheet_and_score_end_to_end(tmp_path):
 
 @pytest.mark.parametrize("source_group,target_group", [("P", "R"), ("R", "P")])
 def test_score_rejects_adjudicated_item_moved_to_another_group(tmp_path, source_group, target_group):
+    pytest.importorskip("openpyxl")
     from openpyxl import load_workbook
 
     frame = json.loads((audit.AUDIT / "audit-frame.json").read_text())
