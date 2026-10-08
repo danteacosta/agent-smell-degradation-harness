@@ -3,13 +3,53 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 from pathlib import Path
 import subprocess
 import sys
+import time
 import uuid
 
 from agents.tau2_subscription import PINNED_TAU2, PROTOCOL, SubscriptionBridge, install, quota_gate
+
+
+def refresh_claude_quota(path, capture, aliases):
+    """Refresh only Claude routes from the latest official captured CLI event."""
+    capture, path = Path(capture), Path(path)
+    try:
+        sampled = capture.stat().st_mtime
+        if not 0 <= time.time() - sampled <= 60:
+            raise ValueError("stale capture")
+        events = [json.loads(line) for line in capture.read_text().splitlines() if line.strip()]
+        info = [e['rate_limit_info'] for e in events if e.get('type') == 'rate_limit_event'][-1]
+        if info['status'] not in ('allowed', 'allowed_warning') or info['isUsingOverage'] is not False:
+            raise ValueError("subscription quota unavailable")
+        windows = []
+        for name, window in info['unifiedWindows'].items():
+            utilization, reset = window['utilization'], window['resetsAt']
+            if (type(utilization) not in (int, float) or not math.isfinite(utilization)
+                or not 0 <= utilization <= 1 or type(reset) not in (int, float)
+                or not math.isfinite(reset) or reset <= time.time()):
+                raise ValueError("invalid public quota window")
+            windows.append({'name': 'weekly' if name == 'seven_day' else name,
+                            'remaining_percent': (1-utilization)*100, 'reset_at': reset})
+        if not windows or 'weekly' not in {w['name'] for w in windows}:
+            raise ValueError("weekly quota missing")
+        snapshot = json.loads(path.read_text())
+        for alias in aliases:
+            if alias not in snapshot['routes']:
+                raise ValueError("missing quota route")
+            snapshot['routes'][alias] = {'sampled_at':sampled, 'status':info['status'],
+                                        'extra_usage':False, 'windows':windows}
+        temporary = path.with_name(path.name + '.' + uuid.uuid4().hex)
+        try:
+            write_private(temporary, snapshot)
+            temporary.replace(path)
+        finally:
+            temporary.unlink(missing_ok=True)
+    except (OSError, ValueError, KeyError, TypeError, IndexError, AttributeError) as exc:
+        raise RuntimeError("public Claude quota unavailable; no next call") from exc
 
 
 def preflight(checkout):
@@ -23,16 +63,22 @@ def preflight(checkout):
 
 class TurnTransport:
     """Fresh official provider and private evidence directory for every turn."""
-    def __init__(self, provider_class, *, executable, model, out, timeout):
+    def __init__(self, provider_class, *, executable, model, out, timeout,
+                 quota_path=None, quota_aliases=()):
         self.provider_class, self.executable, self.model = provider_class, executable, model
         self.out, self.timeout = Path(out), timeout
         self.last_call_metadata = {}
+        self.quota_path, self.quota_aliases = quota_path, quota_aliases
 
     def complete(self, request):
+        evidence = self.out/uuid.uuid4().hex
         provider = self.provider_class(executable=self.executable,model=self.model,
-            timeout_seconds=self.timeout,evidence_directory=self.out/uuid.uuid4().hex)
+            timeout_seconds=self.timeout,evidence_directory=evidence)
         answer = provider.complete(request)
         self.last_call_metadata = provider.last_call_metadata
+        if self.quota_path is not None:
+            refresh_claude_quota(self.quota_path, evidence/'stdout.jsonl', self.quota_aliases)
+            write_private(evidence/'quota-after.json', json.loads(Path(self.quota_path).read_text()))
         return answer
 
 
@@ -53,6 +99,8 @@ def main(argv=None):
     ap.add_argument("--agent-model"); ap.add_argument("--user-model")
     ap.add_argument("--claude-executable"); ap.add_argument("--codex-executable")
     ap.add_argument("--quota",type=Path); ap.add_argument("--out",type=Path)
+    ap.add_argument("--refresh-claude-quota",action="store_true",
+                    help="refresh Claude routes after each call from official CLI events")
     ap.add_argument("--max-calls",type=int); ap.add_argument("--timeout",type=float,default=120)
     ap.add_argument("--agent-windows",help="all public quota window names, comma separated")
     ap.add_argument("--user-windows",help="all public quota window names, comma separated")
@@ -82,13 +130,17 @@ def main(argv=None):
         ap.error("raw evidence must be outside the repository checkout")
     out.mkdir(mode=0o700,parents=True,exist_ok=False)
     routes={}
+    claude_aliases=[f'subscription-{role}' for role in ('agent','user')
+                   if getattr(args,role+'_provider') == 'claude']
     for role in ("agent","user"):
         backend=getattr(args,role+"_provider")
         executable=getattr(args,backend+"_executable")
         if not executable: ap.error("explicit official CLI executable required")
         routes["subscription-"+role]=TurnTransport(
             ClaudeCLIProvider if backend=="claude" else CodexCLIProvider,
-            executable=executable,model=getattr(args,role+"_model"),out=out,timeout=args.timeout)
+            executable=executable,model=getattr(args,role+"_model"),out=out,timeout=args.timeout,
+            quota_path=args.quota if args.refresh_claude_quota and backend=='claude' else None,
+            quota_aliases=claude_aliases)
     expected={f"subscription-{role}":getattr(args,role+"_windows").split(",")
               for role in ("agent","user")}
     bridge=SubscriptionBridge(routes,before_call=quota_gate(args.quota,
@@ -101,6 +153,7 @@ def main(argv=None):
     write_private(out/"started.json",{"protocol":PROTOCOL,"tau2_commit":PINNED_TAU2,
         "task_id":args.task_id,"config":config.model_dump(mode="json"),
         "requested_models":{"agent":args.agent_model,"user":args.user_model},
+        "refresh_claude_quota":args.refresh_claude_quota,
         "confirmatory_eligible":False})
     try:
         tasks=get_tasks("airline",task_ids=[args.task_id])
