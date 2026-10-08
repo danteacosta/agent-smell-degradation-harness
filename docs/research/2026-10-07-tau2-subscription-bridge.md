@@ -1,6 +1,6 @@
 # τ²-bench com assinaturas Claude e ChatGPT
 
-Estado: adaptador exploratório, validado localmente com respostas de replay. Nenhuma chamada de modelo ou simulação real foi executada. Não está qualificado para coleta.
+Estado: adaptador exploratório, validado no runtime fixado do τ²-bench com replay e uma chamada técnica pela assinatura ChatGPT. Nenhuma coleta do estudo foi executada. Claude e atualização automática de quota continuam pendentes; não está qualificado para coleta.
 
 O ponto de integração é a função de completion de [llm_utils.py no commit fixado](https://github.com/sierra-research/tau2-bench/blob/4ce7c0397c1eb65c9bbe59aeacfe1ca44a1cd699/src/tau2/utils/llm_utils.py). O wrapper substitui essa função somente durante um processo sequencial. As páginas de dados e o avaliador continuam no τ²-bench; o código upstream não é editado.
 
@@ -10,7 +10,7 @@ Agente e usuário podem usar Claude ou Codex independentemente, com identificado
 
 ## Uso
 
-Em um ambiente Python 3.12 ou 3.13 com as dependências do τ²-bench fixado instaladas:
+Em um ambiente Python 3.12 (versão verificada: 3.12.14) com as dependências do τ²-bench fixado instaladas:
 
 ```sh
 python -m scripts.tau2_subscription --tau2 /CAMINHO/tau2-bench --data /PASTA_PRIVADA/variantes/A
@@ -40,9 +40,9 @@ Antes da execução, ainda são necessárias revisão humana do inventário, def
 }
 ```
 
-O arquivo real precisa incluir subscription-user também e eventuais janelas por modelo. Os nomes devem coincidir com a lista declarada nos argumentos. Sem atualização pública confiável, o wrapper para; não assumir que um arquivo antigo continua válido. A amostra não pode ter mais de 60 segundos. Antes de cada chamada, exige cinco horas com saldo positivo e mais de 30% nas demais janelas, sem uso extra. --max-calls inclui os turnos dos dois participantes; não é quantidade de simulações.
+O arquivo real precisa incluir subscription-user também e eventuais janelas por modelo. Os nomes devem coincidir com a lista declarada nos argumentos. Sem atualização pública confiável, o wrapper para; não assumir que um arquivo antigo continua válido. A amostra não pode ter mais de 60 segundos. Antes de cada chamada, exige saldo positivo na janela de cinco horas quando ela é exposta e mais de 30% em todas as demais janelas expostas, incluindo a semanal, sem uso extra. --max-calls inclui os turnos dos dois participantes; não é quantidade de simulações.
 
-A reserva é um limiar de parada antes da chamada, não garantia de saldo depois dela: o CLI não permite limitar tokens de saída e a telemetria pode atrasar. Esse limite precisa entrar na decisão de orçamento. Não houve qualificação da rotina externa de atualização nem consumo de quota neste desenvolvimento.
+A reserva é um limiar de parada antes da chamada, não garantia de saldo depois dela: o CLI não permite limitar tokens de saída e a telemetria pode atrasar. Esse limite precisa entrar na decisão de orçamento. A rotina externa de atualização não foi qualificada. A sondagem técnica Codex consumiu uma chamada, separada da análise do estudo.
 
 ## Limites do método
 
@@ -52,4 +52,10 @@ Timeout, saída inválida ou falha do provedor deixam recibo e param sem nova ch
 
 ## Verificação
 
-Testes locais cobrem histórico/ferramentas, resposta inválida, ausência de fallback, limite de chamadas, quota desatualizada/incompleta, restauração do hook e checkout com drift. Um teste adicional em tests/test_tau2_subscription_native.py usa o τ² e LiteLLM reais quando TAU2_CHECKOUT está configurado, ainda com transporte replay e sem chamada de modelo. Esse teste foi deixado explícito; não confundir testes da interface com qualificação end-to-end.
+Em 07/10/2026, 38 testes passaram, sem skips, com o checkout fixado 4ce7c0397c1eb65c9bbe59aeacfe1ca44a1cd699. Os testes nativos usaram τ²-bench 1.0.1, LiteLLM 1.82.6 e Python 3.12.14: conversão de ferramentas/uso/custo e uma tarefa airline com replay, execução real de ferramenta no ambiente e avaliação ALL. A tarefa mecânica não é um resultado científico nem demonstra sucesso na tarefa do benchmark. O preflight confirmou o commit e zero chamadas.
+
+Uma sondagem separada por Codex CLI 0.157.0, modelo solicitado gpt-6-astra, retornou a ferramenta sintética esperada em uma única chamada por assinatura ChatGPT: 16.515 tokens de entrada, 26 de saída, 10,81 segundos e custo USD null. O snapshot do modelo não foi exposto. A telemetria pública disponível expunha apenas a janela semanal, com 93% restante; o gate foi corrigido e testado para exigir exatamente as janelas expostas, sem inventar a de cinco horas.
+
+Claude CLI 2.1.285 confirmou autenticação claude.ai Pro. O comando oficial /usage falhou ao carregar o saldo. Nenhuma chamada de modelo Claude foi feita e não houve retry ou fallback. A compatibilidade ao vivo desse provedor permanece pendente.
+
+O upstream importa dependências de voz mesmo no modo texto. O ambiente recebeu essas dependências, exceto PyAudio (exige PortAudio de sistema e não foi necessário para estes testes), sem editar o upstream. Há um aviso de depreciação de audioop; Python 3.13 não foi validado. Evidências e respostas da sondagem ficam privadas.
