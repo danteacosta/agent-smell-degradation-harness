@@ -1,6 +1,6 @@
 # τ²-bench com assinaturas Claude e ChatGPT
 
-Estado: adaptador exploratório, validado com replay, sondagens de um turno por ChatGPT e Claude e uma tarefa completa ao vivo com Sonnet 5.5 nos dois papéis. Nenhuma coleta do estudo foi executada. A atualização automática de quota e a orquestração em lote continuam pendentes; não está qualificado para coleta.
+Estado: adaptador exploratório, validado com replay, sondagens de um turno por ChatGPT e Claude e uma tarefa completa ao vivo com Sonnet 5.5 nos dois papéis. Nenhuma coleta do estudo foi executada. A atualização automática de quota Claude foi verificada em três turnos; a estabilidade do envelope JSON e a orquestração em lote continuam pendentes. Não está qualificado para coleta.
 
 O ponto de integração é a função de completion de [llm_utils.py no commit fixado](https://github.com/sierra-research/tau2-bench/blob/4ce7c0397c1eb65c9bbe59aeacfe1ca44a1cd699/src/tau2/utils/llm_utils.py). O wrapper substitui essa função somente durante um processo sequencial. As páginas de dados e o avaliador continuam no τ²-bench; o código upstream não é editado.
 
@@ -22,7 +22,7 @@ Antes da execução, ainda são necessárias revisão humana do inventário, def
 
 ## Quota e orçamento
 
---quota aponta para um JSON privado atualizado externamente com telemetria pública oficial. Ele NÃO descobre quota sozinho. Nunca preencher por estimativa, remover janelas expostas ou consultar credenciais/endpoints privados. Exemplo de formato (valores meramente ilustrativos):
+--quota aponta para um JSON privado com telemetria pública oficial. Sem --refresh-claude-quota, ele precisa ser atualizado externamente. Com a opção, o runner atualiza as rotas Claude a partir dos rate_limit_event capturados pelo CLI depois de cada chamada; a primeira chamada ainda exige uma amostra oficial recente. Nunca preencher por estimativa, remover janelas expostas ou consultar credenciais/endpoints privados. Exemplo de formato (valores meramente ilustrativos):
 
 ```json
 {
@@ -89,3 +89,16 @@ Uma nova qualificação exclusiva da tarefa airline 0, fora da análise do estud
 Os recibos somam 12 tokens de entrada sem cache, 28.696 de criação de cache, 1.119 de leitura de cache e 1.044 de saída. A soma das latências dos seis processos de modelo foi 24,23 segundos, excluindo importação, espera por quota e avaliação. Custo USD permanece null. As observações públicas antes dos turnos mostraram 94–95% restante na sessão e 99% na semana; ao final, 94% e 99%, sem uso extra. O mostrador percentual arredondado não permite estimar consumo exato por tarefa.
 
 A atualização de quota foi supervisionada pela interface oficial, não automática: antes de cada turno o harness aguardava uma amostra posterior ao pedido daquele turno, e o gate original exigia idade máxima de 60 segundos e todas as janelas expostas. Ainda falta qualificar atualização automática confiável e orquestração antes de qualquer lote. Os resultados e dados brutos ficam privados. Esta é evidência de viabilidade técnica em uma tarefa, não resultado científico de adequação da suíte.
+
+
+## Atualização automática de quota Claude em 08/10/2026
+
+A opção explícita --refresh-claude-quota lê o último rate_limit_event do stdout oficial, aceita allowed/allowed_warning sem uso extra e preserva todas as unifiedWindows, inclusive janelas por modelo. seven_day é normalizada para weekly. A data de leitura é o mtime da captura original; o parser não renova essa data ao reler um arquivo antigo. Capturas com mais de 60 segundos, percentuais inválidos, status bloqueado, uso extra ou eventos ausentes provocam parada. O gate seguinte mantém os mesmos limiares e exige correspondência com todas as janelas declaradas.
+
+A atualização é atômica, com arquivo de modo 0600, e afeta somente aliases Claude da execução sequencial. Cada rota guarda sampled_at próprio; atualizar Claude não renova o saldo Codex. A captura quota-after.json de cada turno fica privada. Rotas Codex continuam exigindo atualização externa. O runner não adquire o saldo inicial sozinho, não agenda resets e não inicia lotes.
+
+Os dois testes novos falharam antes da implementação. Após a correção e a cobertura de integração do transporte, 43 testes passaram sem skips; git diff --check passou. A revisão de limites confirmou ausência de credenciais/endpoints privados, preservação de janelas extras e isolamento da data das rotas. Nenhuma política experimental foi alterada.
+
+Uma qualificação técnica adicional usou Sonnet 5.5 nos dois papéis, política A, orçamento de 20 chamadas e uma única amostra inicial da UI oficial. Depois disso, não houve atualização manual entre turnos: três chamadas produziram três capturas de quota com 94% restante na sessão e 99% na semana, sem uso extra. Duas respostas passaram no envelope; a terceira foi texto puro, sem JSON, e o parser parou com JSONDecodeError. Não houve retry, resultado concluído ou avaliação dessa tentativa. Isso valida o caminho de atualização nos três turnos observados, mas expõe uma limitação de formato que impede liberar lotes. A tarefa anterior com quota supervisionada completou; as duas tentativas permanecem separadas e fora da análise científica.
+
+Próximo passo técnico: avaliar saída estruturada pelo CLI oficial, com contrato e testes próprios, sem aceitar texto arbitrário como uma ação nem usar chamadas de reparo automáticas. Ainda é necessário qualificar tarefas com ações de escrita e outros caminhos de avaliação antes de ampliar o uso.
