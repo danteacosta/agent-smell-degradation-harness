@@ -11,7 +11,7 @@ import sys
 import time
 import uuid
 
-from agents.tau2_subscription import PINNED_TAU2, PROTOCOL, SubscriptionBridge, install, quota_gate
+from agents.tau2_subscription import PINNED_TAU2, PROTOCOL, STRUCTURED_PROTOCOL, SubscriptionBridge, install, quota_gate
 
 
 def refresh_claude_quota(path, capture, aliases):
@@ -99,6 +99,8 @@ def main(argv=None):
     ap.add_argument("--agent-model"); ap.add_argument("--user-model")
     ap.add_argument("--claude-executable"); ap.add_argument("--codex-executable")
     ap.add_argument("--quota",type=Path); ap.add_argument("--out",type=Path)
+    ap.add_argument("--claude-structured-output",action="store_true",
+                    help="opt in to the separately versioned single-generation Claude formatter")
     ap.add_argument("--refresh-claude-quota",action="store_true",
                     help="refresh Claude routes after each call from official CLI events")
     ap.add_argument("--max-calls",type=int); ap.add_argument("--timeout",type=float,default=120)
@@ -106,13 +108,14 @@ def main(argv=None):
     ap.add_argument("--user-windows",help="all public quota window names, comma separated")
     ap.add_argument("--seed",type=int,default=2026100701)
     args=ap.parse_args(argv)
+    protocol=STRUCTURED_PROTOCOL if args.claude_structured_output else PROTOCOL
     preflight(args.tau2)
     data=args.data.resolve(strict=True)
     if not (data/"tau2/domains/airline/policy.md").is_file():
         ap.error("build-generated variant data root required")
     if not args.execute:
         print(json.dumps({"status":"offline_preflight_ok","tau2_commit":PINNED_TAU2,
-                          "protocol":PROTOCOL,"model_calls":0}))
+                          "protocol":protocol,"model_calls":0}))
         return
     for name in ("task_id","agent_provider","user_provider","agent_model","user_model",
                  "quota","out","max_calls","agent_windows","user_windows"):
@@ -124,11 +127,13 @@ def main(argv=None):
     from tau2.data_model.simulation import TextRunConfig
     from tau2.run import get_tasks, run_single_task
     from agents.claude_cli_v2 import ClaudeCLIProvider
+    from agents.claude_cli_tau2 import ClaudeStructuredCLIProvider
     from agents.codex_cli import CodexCLIProvider
     out=args.out.resolve()
     if out.is_relative_to(Path(__file__).resolve().parents[1]):
         ap.error("raw evidence must be outside the repository checkout")
     out.mkdir(mode=0o700,parents=True,exist_ok=False)
+    claude_provider=ClaudeStructuredCLIProvider if args.claude_structured_output else ClaudeCLIProvider
     routes={}
     claude_aliases=[f'subscription-{role}' for role in ('agent','user')
                    if getattr(args,role+'_provider') == 'claude']
@@ -137,23 +142,24 @@ def main(argv=None):
         executable=getattr(args,backend+"_executable")
         if not executable: ap.error("explicit official CLI executable required")
         routes["subscription-"+role]=TurnTransport(
-            ClaudeCLIProvider if backend=="claude" else CodexCLIProvider,
+            claude_provider if backend=="claude" else CodexCLIProvider,
             executable=executable,model=getattr(args,role+"_model"),out=out,timeout=args.timeout,
             quota_path=args.quota if args.refresh_claude_quota and backend=='claude' else None,
             quota_aliases=claude_aliases)
     expected={f"subscription-{role}":getattr(args,role+"_windows").split(",")
               for role in ("agent","user")}
     bridge=SubscriptionBridge(routes,before_call=quota_gate(args.quota,
-        expected_windows=expected),max_calls=args.max_calls)
+        expected_windows=expected),max_calls=args.max_calls,protocol=protocol)
     config=TextRunConfig(domain="airline",agent="llm_agent",user="user_simulator",
         llm_agent="subscription-agent",llm_user="subscription-user",
         llm_args_agent={"num_retries":0},llm_args_user={"num_retries":0},
         num_trials=1,max_concurrency=1,max_retries=0,auto_resume=False,
         auto_review=False,hallucination_retries=0,seed=args.seed)
-    write_private(out/"started.json",{"protocol":PROTOCOL,"tau2_commit":PINNED_TAU2,
+    write_private(out/"started.json",{"protocol":protocol,"tau2_commit":PINNED_TAU2,
         "task_id":args.task_id,"config":config.model_dump(mode="json"),
         "requested_models":{"agent":args.agent_model,"user":args.user_model},
         "refresh_claude_quota":args.refresh_claude_quota,
+        "claude_structured_output":args.claude_structured_output,
         "confirmatory_eligible":False})
     try:
         tasks=get_tasks("airline",task_ids=[args.task_id])
