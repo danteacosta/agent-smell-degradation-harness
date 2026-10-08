@@ -1,6 +1,6 @@
 # Adequação de uma suíte de avaliação existente à política escrita do agente (τ²-bench, airline) — rascunho
 
-**Estado:** rascunho, não registrado. Nenhuma chamada de modelo foi feita. A execução depende da reunião com o orientador, da revisão humana do inventário de regras e da qualificação do transporte escolhido (seção 7). É um estudo exploratório separado da coleta confirmatória 8 × 5 e não altera nenhum protocolo congelado.
+**Estado:** rascunho, não registrado. Nenhuma coleta do estudo foi feita; uma sondagem técnica Codex, separada da análise, foi executada. A execução depende da reunião com o orientador, da revisão humana do inventário de regras e da qualificação do transporte escolhido (seção 7). É um estudo exploratório separado da coleta confirmatória 8 × 5 e não altera nenhum protocolo congelado.
 
 ## 1. Pergunta
 
@@ -24,7 +24,7 @@ O estudo mede **cobertura regra por regra de uma suíte pronta**. Não gera test
 - **Controles Byy:** cinco reescritas com o mesmo sentido (como o braço B), para estimar quanto o ruído da simulação passa pela regra de confirmação.
 - `scripts/policy_adequacy.py validate` confere hash, texto e não sobreposição. `build` gera as 70 raízes. `plan` gera a ordem sorteada (semente 2026100701).
 
-**Antes de qualquer chamada:** Dante revisa o inventário. A revisão confirma três coisas:
+**Antes de qualquer chamada do estudo:** Dante revisa o inventário. A revisão confirma três coisas:
 
 1. cada trecho é uma regra só;
 2. cada inversão viola a regra sem mudar outras;
@@ -70,7 +70,7 @@ Mudanças nessa revisão são registradas, e o arquivo passa a `frozen` com hash
 
 ## 7. Viabilidade e custo (a decidir)
 
-- O caminho upstream chama modelos via LiteLLM e requer chave de API. A alternativa local em `scripts/tau2_subscription.py` conecta os CLIs oficiais de Claude e Codex por assinatura, sem fallback para API. O adaptador foi testado offline; a compatibilidade com o runtime completo e a sondagem real ainda precisam de qualificação. Veja [protocolo e limitações](../research/2026-10-07-tau2-subscription-bridge.md).
+- O caminho upstream chama modelos via LiteLLM e requer chave de API. A alternativa local em `scripts/tau2_subscription.py` conecta os CLIs oficiais de Claude e Codex por assinatura, sem fallback para API. O adaptador passou na integração com o runtime fixado usando replay e numa chamada técnica Codex; Claude e atualização automática de quota ainda precisam de qualificação. Veja [protocolo e limitações](../research/2026-10-07-tau2-subscription-bridge.md).
 - Na assinatura, semente e temperatura não são controláveis e o envelope de ferramentas é serializado em texto. As quotas precisam de atualização externa a partir de telemetria pública oficial; o wrapper para com amostra velha, janela ausente ou reserva atingida. A reserva é um limiar antes da chamada, sem garantia de saldo após uma chamada sem teto de tokens.
 - O custo por simulação não é conhecido. Antes da etapa 1, uma sondagem de viabilidade roda A em 5 tarefas para medir tokens e tempo. Essas execuções ficam fora da análise.
 - Escala total: cerca de 2.050 simulações na etapa 1, mais confirmações; 1.600 na etapa 2.
