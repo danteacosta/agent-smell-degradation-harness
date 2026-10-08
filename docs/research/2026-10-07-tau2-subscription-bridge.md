@@ -1,6 +1,6 @@
 # τ²-bench com assinaturas Claude e ChatGPT
 
-Estado: adaptador exploratório, validado com replay, sondagens de um turno por ChatGPT e Claude e uma tarefa completa ao vivo com Sonnet 5.5 nos dois papéis. Nenhuma coleta do estudo foi executada. A atualização automática de quota Claude foi verificada em três turnos; a estabilidade do envelope JSON e a orquestração em lote continuam pendentes. Não está qualificado para coleta.
+Estado: adaptador exploratório, validado com replay, sondagens de um turno por ChatGPT e Claude e uma tarefa completa ao vivo com Sonnet 5.5 nos dois papéis. Nenhuma coleta do estudo foi executada. A atualização automática de quota Claude foi verificada em três turnos. Um transporte estruturado opt-in passou na sondagem sintética, mas três qualificações separadas de tarefa completa pararam; a estabilidade do protocolo e a orquestração em lote continuam pendentes. Não está qualificado para coleta.
 
 O ponto de integração é a função de completion de [llm_utils.py no commit fixado](https://github.com/sierra-research/tau2-bench/blob/4ce7c0397c1eb65c9bbe59aeacfe1ca44a1cd699/src/tau2/utils/llm_utils.py). O wrapper substitui essa função somente durante um processo sequencial. As páginas de dados e o avaliador continuam no τ²-bench; o código upstream não é editado.
 
@@ -109,3 +109,28 @@ Próximo passo técnico: avaliar saída estruturada pelo CLI oficial, com contra
 O help do Claude CLI 2.1.285 expõe --json-schema. A [documentação oficial de saída estruturada da Anthropic](https://code.claude.com/docs/en/agent-sdk/structured-outputs), consultada em 08/10/2026, descreve a validação com novas solicitações ao modelo quando o schema não é satisfeito e o erro error_max_structured_output_retries. Também declara que success sem structured_output deve ser tratado como falha. Essa documentação é do Agent SDK; a equivalência exata e os limites do CLI instalado ainda exigem qualificação própria.
 
 Portanto, --json-schema não foi adicionado como correção automática ao transporte de uma tentativa. Antes de adotá-lo, é necessário demonstrar que nenhuma nova geração de reparo ocorre, conferir o número de turnos e a superfície de ferramentas no stream e manter a rejeição de fallback e saída ausente. O contrato atual recusa blocos de ação nativa, exige tools vazio e um único turno; liberar genericamente StructuredOutput violaria esse contrato. Nenhuma chamada de modelo foi feita nesta investigação. Os scripts de coleta e os resultados anteriores permanecem preservados.
+
+
+## Transporte estruturado opt-in e limites observados em 08/10/2026
+
+A preparação adiciona --claude-structured-output, que seleciona ClaudeStructuredCLIProvider e o protocolo tau2-subscription-json/v3-claude-structured. O provider ClaudeCLIProvider e os scripts congelados anteriores permanecem intactos. Sem a opção, o comportamento v2 continua igual. Agente e usuário mantêm rotas explícitas; o opt-in não altera o transporte Codex.
+
+O novo processo usa --json-schema, --tools vazio, --allowedTools StructuredOutput e --max-turns 1. MAX_STRUCTURED_OUTPUT_RETRIES=1 permite a primeira validação de formato; os limites de retry do transporte permanecem zero. Uma sondagem com o limite de formato zero parou antes de entregar saída estruturada. Na sondagem sintética seguinte, o CLI entregou a saída esperada com uma única identidade de mensagem/requisição e uma validação local. O resultado num_turns=2 inclui essa validação; não basta contar eventos assistant como gerações, pois pensamento, texto e ferramenta podem aparecer como fragmentos da mesma mensagem.
+
+O parser exige uma única identidade não vazia de mensagem/requisição, um único StructuredOutput, resultado de validação local correspondente e bem-sucedido, saída final idêntica e ordem verificável dos eventos. Ferramentas de ambiente, outras capacidades, outra geração, drift de modelo, erros e saída ausente causam parada. A validação congelada continua verificando o stream normalizado. Isso verifica o transcript observado; não demonstra que todos os comportamentos internos do CLI equivalem ao SDK.
+
+Somente no protocolo v3, content vazio é normalizado para null quando há uma lista não vazia de chamadas de ferramentas. Ferramentas desconhecidas, argumentos inválidos, violações de tool_choice e respostas totalmente vazias continuam sendo rejeitados. O protocolo é registrado no preflight, started.json e recibos.
+
+Três qualificações técnicas separadas usaram a tarefa airline 0, política A e Sonnet 5.5 nos dois papéis, fora da análise científica:
+
+| Tentativa estruturada | Chamadas | Resultado preservado |
+| --- | ---: | --- |
+| Primeira | 2 | Uma resposta válida; o turno de ferramenta devolveu content vazio e foi rejeitado pelo contrato anterior. |
+| Segunda | 3 | Dois turnos válidos; o parser anterior rejeitou três fragmentos da mesma mensagem como se fossem gerações distintas. |
+| Terceira | 2 | Um turno válido; o agente tentou executar uma ferramenta do benchmark como ferramenta nativa do CLI. O CLI recusou a ferramenta indisponível e encerrou com error_max_turns, sem structured_output. |
+
+As duas primeiras falhas motivaram correções de contrato reproduzidas por testes antes da implementação. Seus recibos originais continuam marcados como falha. A terceira expõe uma limitação de integração: apresentar schemas em texto pode levar o modelo a emitir uma ação nativa, mesmo com a superfície permitida limitada ao formatter. Não foram liberadas ferramentas adicionais, aumentado o orçamento de turnos ou feitas chamadas de reparo para concluir a tentativa. Nenhuma dessas três tentativas gerou avaliação ou resultado de tarefa completo. A tarefa v2 anterior, concluída com seis chamadas e quota supervisionada, permanece separada.
+
+A verificação final passou em 83 testes, sem skips, no runtime Python 3.12.14 e checkout τ² fixado. A cobertura inclui geração pelo τ² real, execução de ferramenta no ambiente com transporte simulado, ida e volta de resultado da ferramenta, atualização de quota oficial, limite de reserva, protocolo selecionado, falhas do processo, timeout e rejeição de ferramentas/gerações adicionais. git diff --check e compilação Python passaram. A revisão de segurança, SOLID e clareza corrigiu gaps de preflight, autenticação malformada, isolamento de quota e ordem dos fragmentos. A integração simulada verifica contratos; não substitui a qualificação ao vivo.
+
+O adaptador segue em rascunho e não qualificado para coleta em lote. Permanecem pendentes uma tarefa completa confiável no modo estruturado, tarefas com escrita, outros modelos/caminhos de avaliação, sondagem de viabilidade e orquestração. Dante informou que o inventário e o desenho com Márcio ainda não foram aprovados e autorizou continuar somente a preparação. Nenhuma coleta de adequação da suíte foi iniciada.
