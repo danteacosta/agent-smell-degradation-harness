@@ -83,6 +83,11 @@ class SubscriptionTests(unittest.TestCase):
                 "windows":[{"name":"five_hour","remaining_percent":40,"reset_at":2000},
                            {"name":"weekly","remaining_percent":31,"reset_at":3000}]}}}
             file.write_text(json.dumps(snapshot)); gate("sub")
+            weekly_only={"sampled_at":990,"routes":{"sub":{"status":"allowed","extra_usage":False,
+                "windows":[{"name":"weekly","remaining_percent":93,"reset_at":3000}]}}}
+            file.write_text(json.dumps(weekly_only))
+            quota_gate(file,expected_windows={"sub":["weekly"]},now=lambda:1000)("sub")
+            file.write_text(json.dumps(snapshot))
             strict=quota_gate(file,expected_windows={"sub":["five_hour","weekly","model_weekly"]},
                               now=lambda:1000)
             with self.assertRaises(RuntimeError): strict("sub")
