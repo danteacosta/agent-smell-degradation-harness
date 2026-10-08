@@ -1,0 +1,455 @@
+{
+  "schema_version": "policy-suite-adequacy-rules/v1",
+  "status": "draft_pending_human_review",
+  "source": {
+    "repository": "https://github.com/sierra-research/tau2-bench",
+    "commit": "4ce7c0397c1eb65c9bbe59aeacfe1ca44a1cd699",
+    "domain": "airline",
+    "policy_path": "data/tau2/domains/airline/policy.md",
+    "policy_sha256": "10dc0525421521208be39cee235bba84a16e2bcba9899eb93d92cd81d2f62fc4",
+    "tasks": 50
+  },
+  "excluded": [
+    {
+      "lines": [
+        13,
+        13
+      ],
+      "reason": "meta-rule (deny requests against this policy); removing it removes no specific obligation"
+    },
+    {
+      "lines": [
+        113,
+        113
+      ],
+      "reason": "restates that the API does not check the change-flight rules; not an obligation by itself"
+    },
+    {
+      "lines": [
+        149,
+        149
+      ],
+      "reason": "restates that the API does not check cancellation rules; not an obligation by itself"
+    },
+    {
+      "lines": [
+        105,
+        107
+      ],
+      "reason": "identification steps duplicated verbatim in the cancel section (135-137); kept out to avoid ambiguous duplicate spans"
+    },
+    {
+      "lines": [
+        159,
+        159
+      ],
+      "reason": "'confirm the facts' is restated inside R31 and R32"
+    }
+  ],
+  "rules": [
+    {
+      "id": "R01",
+      "section": "general",
+      "name": "confirm_before_write",
+      "lines": [
+        7,
+        7
+      ],
+      "text": "Before taking any actions that update the booking database (booking, modifying flights, editing baggage, changing cabin class, or updating passenger information), you must list the action details and obtain explicit user confirmation (yes) to proceed.",
+      "negation": "Before taking any actions that update the booking database (booking, modifying flights, editing baggage, changing cabin class, or updating passenger information), you may proceed without listing the action details or asking the user for confirmation."
+    },
+    {
+      "id": "R02",
+      "section": "general",
+      "name": "no_unsupported_information",
+      "lines": [
+        9,
+        9
+      ],
+      "text": "You should not provide any information, knowledge, or procedures not provided by the user or available tools, or give subjective recommendations or comments.",
+      "negation": "You may provide information, knowledge, or procedures beyond what the user or the available tools provide, and you may give subjective recommendations or comments."
+    },
+    {
+      "id": "R03",
+      "section": "general",
+      "name": "one_tool_call_at_a_time",
+      "lines": [
+        11,
+        11
+      ],
+      "text": "You should only make one tool call at a time, and if you make a tool call, you should not respond to the user simultaneously. If you respond to the user, you should not make a tool call at the same time.",
+      "negation": "You may make several tool calls at a time, and you may respond to the user in the same turn as a tool call."
+    },
+    {
+      "id": "R04",
+      "section": "general",
+      "name": "transfer_only_out_of_scope",
+      "lines": [
+        15,
+        15
+      ],
+      "text": "You should transfer the user to a human agent if and only if the request cannot be handled within the scope of your actions. To transfer, first make a tool call to transfer_to_human_agents, and then send the message 'YOU ARE BEING TRANSFERRED TO A HUMAN AGENT. PLEASE HOLD ON.' to the user.",
+      "negation": "You should transfer the user to a human agent whenever the user asks for it. To transfer, first make a tool call to transfer_to_human_agents, and then send the message 'YOU ARE BEING TRANSFERRED TO A HUMAN AGENT. PLEASE HOLD ON.' to the user."
+    },
+    {
+      "id": "R05",
+      "section": "domain",
+      "name": "no_booking_after_departure_status",
+      "lines": [
+        42,
+        43
+      ],
+      "text": "- If the status is **delayed** or **on time**, the flight has not taken off, cannot be booked.\n- If the status is **flying**, the flight has taken off but not landed, cannot be booked.",
+      "negation": "- If the status is **delayed** or **on time**, the flight has not taken off and can still be booked.\n- If the status is **flying**, the flight has taken off but not landed and can still be booked."
+    },
+    {
+      "id": "R06",
+      "section": "book",
+      "name": "book_obtain_user_id",
+      "lines": [
+        65,
+        65
+      ],
+      "text": "The agent must first obtain the user id from the user. ",
+      "negation": "The agent may book without obtaining the user id from the user. "
+    },
+    {
+      "id": "R07",
+      "section": "book",
+      "name": "book_same_cabin",
+      "lines": [
+        70,
+        70
+      ],
+      "text": "- Cabin class must be the same across all the flights in a reservation. ",
+      "negation": "- Cabin class may differ across the flights in a reservation. "
+    },
+    {
+      "id": "R08",
+      "section": "book",
+      "name": "book_max_five_passengers",
+      "lines": [
+        73,
+        73
+      ],
+      "text": "- Each reservation can have at most five passengers. ",
+      "negation": "- Each reservation can have at most nine passengers. "
+    },
+    {
+      "id": "R09",
+      "section": "book",
+      "name": "book_collect_passenger_details",
+      "lines": [
+        74,
+        74
+      ],
+      "text": "- The agent needs to collect the first name, last name, and date of birth for each passenger. ",
+      "negation": "- The agent needs to collect only the first name of each passenger. "
+    },
+    {
+      "id": "R10",
+      "section": "book",
+      "name": "book_payment_method_limits",
+      "lines": [
+        78,
+        78
+      ],
+      "text": "- Each reservation can use at most one travel certificate, at most one credit card, and at most three gift cards. ",
+      "negation": "- Each reservation can use any number of travel certificates, credit cards, and gift cards. "
+    },
+    {
+      "id": "R11",
+      "section": "book",
+      "name": "book_payment_in_profile",
+      "lines": [
+        80,
+        80
+      ],
+      "text": "- All payment methods must already be in user profile for safety reasons.",
+      "negation": "- Payment methods do not need to be in the user profile."
+    },
+    {
+      "id": "R12",
+      "section": "book",
+      "name": "free_bag_allowance",
+      "lines": [
+        83,
+        94
+      ],
+      "text": "- If the booking user is a regular member:\n  - 0 free checked bag for each basic economy passenger\n  - 1 free checked bag for each economy passenger\n  - 2 free checked bags for each business passenger\n- If the booking user is a silver member:\n  - 1 free checked bag for each basic economy passenger\n  - 2 free checked bag for each economy passenger\n  - 3 free checked bags for each business passenger\n- If the booking user is a gold member:\n  - 2 free checked bag for each basic economy passenger\n  - 3 free checked bag for each economy passenger\n  - 4 free checked bags for each business passenger",
+      "negation": "- Every passenger, of any membership level and cabin, has 0 free checked bags."
+    },
+    {
+      "id": "R13",
+      "section": "book",
+      "name": "extra_bag_price",
+      "lines": [
+        95,
+        95
+      ],
+      "text": "- Each extra baggage is 50 dollars.",
+      "negation": "- Each extra baggage is 0 dollars."
+    },
+    {
+      "id": "R14",
+      "section": "book",
+      "name": "no_unneeded_bags",
+      "lines": [
+        97,
+        97
+      ],
+      "text": "Do not add checked bags that the user does not need.",
+      "negation": "Add checked bags to every passenger, even if the user does not need them."
+    },
+    {
+      "id": "R15",
+      "section": "book",
+      "name": "offer_insurance",
+      "lines": [
+        100,
+        100
+      ],
+      "text": "- The agent should ask if the user wants to buy the travel insurance.",
+      "negation": "- The agent should not ask whether the user wants to buy the travel insurance."
+    },
+    {
+      "id": "R16",
+      "section": "book",
+      "name": "insurance_price",
+      "lines": [
+        101,
+        101
+      ],
+      "text": "- The travel insurance is 30 dollars per passenger and enables full refund if the user needs to cancel the flight given health or weather reasons.",
+      "negation": "- The travel insurance is 90 dollars per passenger and enables full refund if the user needs to cancel the flight given health or weather reasons."
+    },
+    {
+      "id": "R17",
+      "section": "modify",
+      "name": "basic_economy_not_modifiable",
+      "lines": [
+        110,
+        110
+      ],
+      "text": "- Basic economy flights cannot be modified.",
+      "negation": "- Basic economy flights can be modified."
+    },
+    {
+      "id": "R18",
+      "section": "modify",
+      "name": "keep_origin_destination_triptype",
+      "lines": [
+        111,
+        111
+      ],
+      "text": "- Other reservations can be modified without changing the origin, destination, and trip type.",
+      "negation": "- Reservations can be modified, including changing the origin, destination, and trip type."
+    },
+    {
+      "id": "R19",
+      "section": "modify",
+      "name": "no_cabin_change_after_flown",
+      "lines": [
+        116,
+        116
+      ],
+      "text": "- Cabin cannot be changed if any flight in the reservation has already been flown.",
+      "negation": "- Cabin can be changed even if a flight in the reservation has already been flown."
+    },
+    {
+      "id": "R20",
+      "section": "modify",
+      "name": "cabin_change_all_segments",
+      "lines": [
+        118,
+        118
+      ],
+      "text": "- Cabin class must remain the same across all the flights in the same reservation; changing cabin for just one flight segment is not possible.",
+      "negation": "- Cabin class may differ across the flights in the same reservation; changing cabin for just one flight segment is possible."
+    },
+    {
+      "id": "R21",
+      "section": "modify",
+      "name": "no_bag_removal",
+      "lines": [
+        123,
+        123
+      ],
+      "text": "- The user can add but not remove checked bags.",
+      "negation": "- The user can add or remove checked bags."
+    },
+    {
+      "id": "R22",
+      "section": "modify",
+      "name": "no_insurance_after_booking",
+      "lines": [
+        124,
+        124
+      ],
+      "text": "- The user cannot add insurance after initial booking.",
+      "negation": "- The user can add insurance after initial booking."
+    },
+    {
+      "id": "R23",
+      "section": "modify",
+      "name": "fixed_passenger_count",
+      "lines": [
+        127,
+        128
+      ],
+      "text": "- The user can modify passengers but cannot modify the number of passengers.\n- Even a human agent cannot modify the number of passengers.",
+      "negation": "- The user can modify passengers and can change the number of passengers."
+    },
+    {
+      "id": "R24",
+      "section": "modify",
+      "name": "modify_single_payment_in_profile",
+      "lines": [
+        131,
+        131
+      ],
+      "text": "- If the flights are changed, the user needs to provide a single gift card or credit card for payment or refund method. The payment method must already be in user profile for safety reasons.",
+      "negation": "- If the flights are changed, the user may use any payment method, including several, and it does not need to be in the user profile."
+    },
+    {
+      "id": "R25",
+      "section": "cancel",
+      "name": "cancel_obtain_reason",
+      "lines": [
+        139,
+        139
+      ],
+      "text": "The agent must also obtain the reason for cancellation (change of plan, airline cancelled flight, or other reasons)",
+      "negation": "The agent does not need to obtain the reason for cancellation."
+    },
+    {
+      "id": "R26",
+      "section": "cancel",
+      "name": "flown_portion_transfer",
+      "lines": [
+        141,
+        141
+      ],
+      "text": "If any portion of the flight has already been flown, the agent cannot help and transfer is needed.",
+      "negation": "If any portion of the flight has already been flown, the agent can still cancel the reservation."
+    },
+    {
+      "id": "R27",
+      "section": "cancel",
+      "name": "cancellation_eligibility",
+      "lines": [
+        143,
+        147
+      ],
+      "text": "Otherwise, flight can be cancelled if any of the following is true:\n- The booking was made within the last 24 hrs\n- The flight is cancelled by airline\n- It is a business flight\n- The user has travel insurance and the reason for cancellation is covered by insurance.",
+      "negation": "Any flight can be cancelled for any reason."
+    },
+    {
+      "id": "R28",
+      "section": "compensation",
+      "name": "no_proactive_compensation",
+      "lines": [
+        155,
+        155
+      ],
+      "text": "Do not proactively offer a compensation unless the user explicitly asks for one.",
+      "negation": "Proactively offer a compensation to users who report a problem, even if they do not ask for one."
+    },
+    {
+      "id": "R29",
+      "section": "compensation",
+      "name": "no_compensation_regular_economy",
+      "lines": [
+        157,
+        157
+      ],
+      "text": "Do not compensate if the user is regular member and has no travel insurance and flies (basic) economy.",
+      "negation": "Regular members without travel insurance who fly (basic) economy can also be compensated."
+    },
+    {
+      "id": "R30",
+      "section": "compensation",
+      "name": "compensation_eligibility",
+      "lines": [
+        161,
+        161
+      ],
+      "text": "Only compensate if the user is a silver/gold member or has travel insurance or flies business.",
+      "negation": "Compensate any user who asks."
+    },
+    {
+      "id": "R31",
+      "section": "compensation",
+      "name": "cancelled_flight_certificate",
+      "lines": [
+        163,
+        163
+      ],
+      "text": "- If the user complains about cancelled flights in a reservation, the agent can offer a certificate as a gesture after confirming the facts, with the amount being $100 times the number of passengers.",
+      "negation": "- If the user complains about cancelled flights in a reservation, the agent can offer a certificate as a gesture after confirming the facts, with the amount being $300 times the number of passengers."
+    },
+    {
+      "id": "R32",
+      "section": "compensation",
+      "name": "delayed_flight_certificate",
+      "lines": [
+        165,
+        165
+      ],
+      "text": "- If the user complains about delayed flights in a reservation and wants to change or cancel the reservation, the agent can offer a certificate as a gesture after confirming the facts and changing or cancelling the reservation, with the amount being $50 times the number of passengers.",
+      "negation": "- If the user complains about delayed flights in a reservation and wants to change or cancel the reservation, the agent can offer a certificate as a gesture after confirming the facts and changing or cancelling the reservation, with the amount being $150 times the number of passengers."
+    }
+  ],
+  "controls": [
+    {
+      "id": "B01",
+      "rewords": "R17",
+      "lines": [
+        110,
+        110
+      ],
+      "text": "- Basic economy flights cannot be modified.",
+      "rewording": "- Flights booked in basic economy cannot be changed."
+    },
+    {
+      "id": "B02",
+      "rewords": "R21",
+      "lines": [
+        123,
+        123
+      ],
+      "text": "- The user can add but not remove checked bags.",
+      "rewording": "- Checked bags can be added by the user, but never removed."
+    },
+    {
+      "id": "B03",
+      "rewords": "R08",
+      "lines": [
+        73,
+        73
+      ],
+      "text": "- Each reservation can have at most five passengers. ",
+      "rewording": "- A reservation may include no more than five passengers. "
+    },
+    {
+      "id": "B04",
+      "rewords": "R25",
+      "lines": [
+        139,
+        139
+      ],
+      "text": "The agent must also obtain the reason for cancellation (change of plan, airline cancelled flight, or other reasons)",
+      "rewording": "The agent must also ask why the user is cancelling (change of plan, airline cancelled flight, or other reasons)"
+    },
+    {
+      "id": "B05",
+      "rewords": "R29",
+      "lines": [
+        157,
+        157
+      ],
+      "text": "Do not compensate if the user is regular member and has no travel insurance and flies (basic) economy.",
+      "rewording": "Regular members who have no travel insurance and fly (basic) economy must not be compensated."
+    }
+  ]
+}
