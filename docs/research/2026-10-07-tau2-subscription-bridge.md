@@ -1,6 +1,6 @@
 # τ²-bench com assinaturas Claude e ChatGPT
 
-Estado: adaptador exploratório, validado no runtime fixado do τ²-bench com replay e uma chamada técnica pela assinatura ChatGPT. Nenhuma coleta do estudo foi executada. Claude e atualização automática de quota continuam pendentes; não está qualificado para coleta.
+Estado: adaptador exploratório, validado no runtime fixado do τ²-bench com replay e uma chamada técnica por cada assinatura, ChatGPT e Claude. Nenhuma coleta do estudo foi executada. Uma tarefa completa com modelos ao vivo e a atualização de quota por turno continuam pendentes; não está qualificado para coleta.
 
 O ponto de integração é a função de completion de [llm_utils.py no commit fixado](https://github.com/sierra-research/tau2-bench/blob/4ce7c0397c1eb65c9bbe59aeacfe1ca44a1cd699/src/tau2/utils/llm_utils.py). O wrapper substitui essa função somente durante um processo sequencial. As páginas de dados e o avaliador continuam no τ²-bench; o código upstream não é editado.
 
@@ -56,7 +56,9 @@ Em 07/10/2026, 38 testes passaram, sem skips, com o checkout fixado 4ce7c0397c1e
 
 Uma sondagem separada por Codex CLI 0.157.0, modelo solicitado gpt-6-astra, retornou a ferramenta sintética esperada em uma única chamada por assinatura ChatGPT: 16.515 tokens de entrada, 26 de saída, 10,81 segundos e custo USD null. O snapshot do modelo não foi exposto. A telemetria pública disponível expunha apenas a janela semanal, com 93% restante; o gate foi corrigido e testado para exigir exatamente as janelas expostas, sem inventar a de cinco horas.
 
-Claude CLI 2.1.285 confirmou autenticação claude.ai Pro. O comando oficial /usage falhou ao carregar o saldo. Nenhuma chamada de modelo Claude foi feita e não houve retry ou fallback. A compatibilidade ao vivo desse provedor permanece pendente.
+Em 08/10/2026, a sondagem local por Claude CLI 2.1.285, modelo solicitado e retornado claude-sonnet-5-5, devolveu a ferramenta sintética esperada através de ClaudeCLIProvider e do generate real do τ² em uma única chamada pela assinatura normal. O recibo registra 2 tokens de entrada sem cache, 755 tokens de criação de cache, 45 de saída, 2,07 segundos e custo USD null. O envelope e os argumentos da ferramenta passaram na verificação; as ferramentas nativas do CLI estavam desabilitadas. Isso qualifica um turno do transporte, não uma tarefa completa nem o estudo. Antes dessa chamada, a UI oficial indicava 73% restante na sessão e 61% na semana, sem uso extra; esses valores são históricos e não autorizam chamadas futuras.
+
+A tentativa de continuar a qualificação de tarefa completa em 08/10 não iniciou chamadas: o controle do Safari foi interrompido ao consultar a quota atual. O saldo antigo não foi renovado por estimativa. A próxima execução depende de leituras oficiais recentes em todos os turnos, mantendo o gate de 60 segundos e a reserva nas demais janelas. Não houve retry de modelo ou fallback para API.
 
 O upstream importa dependências de voz mesmo no modo texto. O ambiente recebeu essas dependências, exceto PyAudio (exige PortAudio de sistema e não foi necessário para estes testes), sem editar o upstream. Há um aviso de depreciação de audioop; Python 3.13 não foi validado. Evidências e respostas da sondagem ficam privadas.
 
