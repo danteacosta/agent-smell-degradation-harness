@@ -14,7 +14,7 @@ import uuid
 
 from agents.providers import ProviderRequest
 
-PROTOCOL = "tau2-subscription-json/v1"
+PROTOCOL = "tau2-subscription-json/v2"
 PINNED_TAU2 = "4ce7c0397c1eb65c9bbe59aeacfe1ca44a1cd699"
 INSTRUCTION = (
     "Simulate the next assistant turn of the supplied conversation. Apply its "
@@ -65,12 +65,15 @@ def quota_gate(path: Path, *, expected_windows, now=time.time, max_age=60):
 
 
 def parse_reply(raw, schemas, tool_choice):
+    """Normalize null tools on text turns; keep tool-choice checks intact."""
     reply = json.loads(raw)
     if not isinstance(reply, dict) or set(reply) != {"content", "tool_calls"}:
         raise ValueError("exact content/tool_calls object required")
     content, calls = reply["content"], reply["tool_calls"]
     if content is not None and (not isinstance(content, str) or not content.strip()):
         raise ValueError("nonempty text or null required")
+    if calls is None and content is not None:
+        calls = []
     if not isinstance(calls, list) or (content is None and not calls):
         raise ValueError("content or tool call required")
     names = {s["function"]["name"] for s in schemas}
