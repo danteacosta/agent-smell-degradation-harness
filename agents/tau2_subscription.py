@@ -48,7 +48,7 @@ def quota_gate(path: Path, *, expected_windows, now=time.time, max_age=60):
             names = [w["name"] for w in windows]
             if (not windows or len(names) != len(set(names))
                 or set(names) != set(expected_windows[alias])
-                or "five_hour" not in names or "weekly" not in names):
+                or "weekly" not in names):
                 raise ValueError("all exposed windows required")
             for window in windows:
                 remaining, reset = window["remaining_percent"], window["reset_at"]
