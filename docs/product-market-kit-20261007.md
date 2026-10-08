@@ -20,13 +20,27 @@ Adequação de mutação confirmada, com peso igual por requisito; um mutante s�
 | Sonnet 5.5, estudo #195 | 0,860 | 0,170 | 0,060 |
 | Opus 5.5, estudo #196 | 0,940 | 0,263 | 0,177 |
 
-Fontes: [Astra #184](https://github.com/danteacosta/agent-smell-degradation-harness/pull/184), [4.6 #190](https://github.com/danteacosta/agent-smell-degradation-harness/pull/190), [Sonnet 5.5 #195](https://github.com/danteacosta/agent-smell-degradation-harness/pull/195) e [Opus 5.5 #196](https://github.com/danteacosta/agent-smell-degradation-harness/pull/196). Os resultados 5.5 ainda estão em PRs separados, sem merge. Cada modelo recebeu 150 slots; Sonnet 5.5 preserva uma falha de geração, sem repetir a tentativa. Os relatórios registram a interrupção de conexão e a continuação autorizada dos slots não tentados.
+Fontes: [Astra #184](https://github.com/danteacosta/agent-smell-degradation-harness/pull/184), [4.6 #190](https://github.com/danteacosta/agent-smell-degradation-harness/pull/190), [Sonnet 5.5 #195](https://github.com/danteacosta/agent-smell-degradation-harness/pull/195) e [Opus 5.5 #196](https://github.com/danteacosta/agent-smell-degradation-harness/pull/196). Os resultados 5.5 foram integrados ao `main` e entram no [resumo entre testadores](research/2026-10-06-shared-omission-testers-summary.md). Cada modelo recebeu 150 slots; Sonnet 5.5 preserva uma falha de geração, sem repetir a tentativa. Os relatórios registram a interrupção de conexão e a continuação autorizada dos slots não tentados.
 
 Os 5.5 repetiram a diferença entre referência completa e pedido incompleto neste desenho, mas seus escores com código foram maiores que os de 4.6. No braço com código, a combinação “alarme de asserção na referência correta e quietude no mutante mostrado” ocorreu em 24/50 suítes Sonnet 5.5 e 10/50 Opus 5.5. Isso descreve esses testadores e contextos; não permite dizer universalmente que trocar de modelo não resolve.
 
 São estudos exploratórios sobre os mesmos 25 requisitos de oito projetos, com páginas e mutantes reutilizados e um provedor gerando código. Repetições e modelos não acrescentam projetos independentes. Não são uma avaliação de produto em PRs reais, um ranking de modelos, nem confirmação de H1/H2. A auditoria humana continua pendente.
 
-A afirmação sustentada é que **testes escritos a partir de um pedido incompleto podem herdar a omissão**. Ler o requisito completo junto com código defeituoso não foi avaliado neste braço de 25 requisitos. O diagnóstico de três requisitos/11 falhas não comprova o resgate pela ferramenta proposta; essa lacuna pertence à [proposta fatorial #183](https://github.com/danteacosta/agent-smell-degradation-harness/pull/183), que permanece aberta e não foi lançada.
+A afirmação sustentada é que **testes escritos a partir de um pedido incompleto podem herdar a omissão**. Ler o requisito completo junto com código defeituoso não foi avaliado neste braço de 25 requisitos. O diagnóstico de três requisitos/11 falhas não comprova o resgate pela ferramenta proposta. Haeri e Ghelichi (2026) já mediram, em funções Python, que a especificação mantém a detecção mesmo com exposição ao código (apêndice E: 24/24); a [proposta fatorial #183](https://github.com/danteacosta/agent-smell-degradation-harness/pull/183) só se justifica se acrescentar o cenário de navegador ou uma instrução explícita de casos-limite, e permanece aberta e não lançada.
+
+## Antecedentes e diferenciação
+
+A ideia de ancorar testes numa especificação completa não é nova nem é diferencial. [Haeri e Ghelichi (2026)](https://arxiv.org/html/2607.06636v1), de um banco, mostram em funções Python que testes ancorados numa lista de regras corrigem mais código do que testes ancorados no ticket (+38 pontos), que retirar regras da especificação derruba a detecção (30/30 para 6/30) e que ver o código não fecha a diferença. Nos estudos deste repositório, a linha de testes replica e estende esse resultado para jornadas de navegador sobre obrigações de projetos.
+
+O mercado também já oferece partes vizinhas, segundo uma busca de 07/10/2026 nas páginas públicas dos fornecedores, sem teste das ferramentas:
+
+| Abordagem | Exemplo | O que não faz |
+| --- | --- | --- |
+| Política → gerar testes novos | [Giskard](https://www.giskard.ai/products/llm-evaluation) | não mede se a suíte existente cobre cada regra |
+| Regulação → controles e evidências | Credo AI (pacotes de políticas) | é documental; não verifica se um teste pegaria a falha |
+| Mutação de suítes de avaliação | [Muteval](https://dev.to/ashwin_ugale_102f2abc9cec/mutation-testing-but-for-llm-evals-early-experiment-would-love-feedback-2bl6), open source | degrada o sistema sem usar a política como referência |
+
+O espaço que não encontramos ocupado é **auditar, regra por regra, se a suíte que a equipe já usa perceberia a perda de cada obrigação escrita**: retirar a regra da referência dada ao agente (o braço C), rodar a suíte existente e registrar quais perdas passam despercebidas. O risco é ser uma funcionalidade que fornecedores maiores acrescentam rapidamente, e não um produto. Nada disso foi testado com clientes.
 
 ## Post de mercado — rascunho, não publicado
 
@@ -53,7 +67,8 @@ Começar pelo processo atual, antes de apresentar a proposta. Pedir casos própr
 5. Qual foi o custo em horas, atraso, incidente ou suporte? Quantos episódios semelhantes ocorreram no último mês ou trimestre?
 6. Qual solução já usam? O que funciona e o que exige trabalho manual? Onde um novo alerta atrapalharia?
 7. Quem revisaria o alerta, quem adotaria a ferramenta e quem aprovaria ou pagaria? Qual orçamento ou ferramenta concorreria por esse gasto?
-8. Após descrever a promessa a validar: faria sentido um piloto em modo de observação? Que resultado mínimo justificaria continuar, e que taxa de alertas errados seria inaceitável?
+8. A suíte de testes ou de avaliação que vocês usam hoje foi escrita a partir de quê? Alguém já verificou quais regras da política ela não cobre?
+9. Após descrever a promessa a validar: faria sentido um piloto em modo de observação? Que resultado mínimo justificaria continuar, e que taxa de alertas errados seria inaceitável?
 
 Registrar frequência com janela e denominador, custo observado separadamente de estimativas, usuário separadamente de comprador e relatos negativos junto dos positivos. Não chamar erro de construção de teste “flaky”: instabilidade exige repetição própria, ausente desta bateria.
 
