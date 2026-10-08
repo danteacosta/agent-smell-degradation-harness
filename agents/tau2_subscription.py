@@ -15,6 +15,7 @@ import uuid
 from agents.providers import ProviderRequest
 
 PROTOCOL = "tau2-subscription-json/v2"
+STRUCTURED_PROTOCOL = "tau2-subscription-json/v3-claude-structured"
 PINNED_TAU2 = "4ce7c0397c1eb65c9bbe59aeacfe1ca44a1cd699"
 INSTRUCTION = (
     "Simulate the next assistant turn of the supplied conversation. Apply its "
@@ -64,12 +65,14 @@ def quota_gate(path: Path, *, expected_windows, now=time.time, max_age=60):
     return check
 
 
-def parse_reply(raw, schemas, tool_choice):
+def parse_reply(raw, schemas, tool_choice, *, empty_tool_content=False):
     """Normalize null tools on text turns; keep tool-choice checks intact."""
     reply = json.loads(raw)
     if not isinstance(reply, dict) or set(reply) != {"content", "tool_calls"}:
         raise ValueError("exact content/tool_calls object required")
     content, calls = reply["content"], reply["tool_calls"]
+    if empty_tool_content and content == "" and isinstance(calls,list) and calls:
+        content = None
     if content is not None and (not isinstance(content, str) or not content.strip()):
         raise ValueError("nonempty text or null required")
     if calls is None and content is not None:
@@ -96,9 +99,12 @@ def parse_reply(raw, schemas, tool_choice):
 
 class SubscriptionBridge:
     """One serialized process, explicit budget and per-turn quota gate."""
-    def __init__(self, routes, *, before_call, max_calls):
+    def __init__(self, routes, *, before_call, max_calls, protocol=PROTOCOL):
         if not routes or type(max_calls) is not int or max_calls <= 0 or not callable(before_call):
             raise ValueError("routes, quota gate and positive call budget required")
+        if protocol not in (PROTOCOL, STRUCTURED_PROTOCOL):
+            raise ValueError("registered transport protocol required")
+        self.protocol = protocol
         self.routes = dict(routes)
         self.before_call, self.max_calls = before_call, max_calls
         self.receipts = []
@@ -120,7 +126,7 @@ class SubscriptionBridge:
         if len(prompt.encode()) > 100_000:
             raise ValueError("serialized context exceeds transport bound; no truncation")
         self.before_call(model)
-        receipt = {"route":model,"protocol":PROTOCOL,"status":"started",
+        receipt = {"route":model,"protocol":self.protocol,"status":"started",
                    "cost_usd":None,"adapter_attempts":1,"confirmatory_eligible":False,
                    "unenforced":{k:kwargs[k] for k in ("seed","temperature") if k in kwargs}}
         self.receipts.append(receipt)
@@ -128,7 +134,8 @@ class SubscriptionBridge:
         try:
             raw = provider.complete(ProviderRequest(prompt=prompt,pair={},variant="tau2",
                                                    task_family="policy_adequacy"))
-            message = parse_reply(raw, schemas, tool_choice)
+            message = parse_reply(raw, schemas, tool_choice,
+                empty_tool_content=self.protocol==STRUCTURED_PROTOCOL)
             metadata = dict(provider.last_call_metadata)
             usage = metadata.get("usage", {})
             if any(type(usage.get(k)) is not int or usage[k] < 0
