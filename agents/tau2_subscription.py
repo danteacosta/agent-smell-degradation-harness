@@ -35,13 +35,13 @@ def quota_gate(path: Path, *, expected_windows, now=time.time, max_age=60):
     def check(alias):
         try:
             snapshot = json.loads(Path(path).read_text())
-            sampled = snapshot["sampled_at"]
+            route = snapshot["routes"][alias]
+            sampled = route.get("sampled_at", snapshot["sampled_at"])
             if type(sampled) not in (int, float) or not math.isfinite(sampled):
                 raise ValueError("invalid sampling time")
             age = now() - sampled
             if not 0 <= age <= max_age:
                 raise ValueError("stale quota")
-            route = snapshot["routes"][alias]
             if route["status"] not in ("allowed", "allowed_warning") or route["extra_usage"] is not False:
                 raise ValueError("subscription capacity unavailable")
             windows = route["windows"]
