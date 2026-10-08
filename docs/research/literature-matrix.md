@@ -690,3 +690,14 @@ and PrefixGuard (arXiv 2605.06455), which already have entries or notes above; n
 descriptor in the OSF draft (covariates and exploratory analysis). No change to H1, H2, the
 primary outcome or power. Human decision still open: whether prohibitions are in scope of the
 confirmatory frame at all (the current candidate rules are mostly required behaviors).
+
+
+## 2026-10-08 — Annotation postprocessing integrity
+
+Search/read date: 2026-10-08. New source, deduplicated by DOI/title. Read the abstract, sampling and annotation methods, results, and limitations in the official full paper.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Klie, Eckart de Castilho and Gurevych, *Analyzing Dataset Annotation Quality Management in the Wild*, Computational Linguistics 50(3), 817–866 (2024), [DOI 10.1162/coli_a_00516](https://doi.org/10.1162/coli_a_00516), [full paper](https://aclanthology.org/2024.cl-3.1.pdf); peer-reviewed | How is annotation quality managed and reported? Review of 591 dataset publications; 314 involved human annotation or validation. Iterative coding, validation and automated checks. | Around 30% had poor reported quality management under the authors' rubric. Agreement measures reliability, not validity. Reporting is a proxy for actual practice; selected NLP venues and single primary annotator limit generalization. | Thesis: agreement alone cannot establish label validity. Experiment: enforce frozen item/group identity during final adjudication, alongside independent coding and literal evidence. Product: schema checks complement semantic review. Action: reject adjudicated workbooks that move items between P and R; regression tests cover both directions. This source motivates checking postprocessing, not the repository-specific bug or H1/H2. | 8/10: peer review and transparent method/artifacts; reporting proxy, selection and coding limitations. |
+
+Implementation and verification: [adjudication integrity note](2026-10-08-test-audit-adjudication-integrity.md). No annotation results, measurement policy, threshold, hypothesis or frozen experimental endpoint was changed.

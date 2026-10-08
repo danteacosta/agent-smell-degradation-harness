@@ -359,6 +359,8 @@ def score(key: dict, suites: dict[str, str], coder_a: Path, coder_b: Path, adjud
         final = read_labels(adjudicated, suites)
         if set(final) != set(expected) or any(final[i]["label"] is None for i in final):
             raise ValueError("adjudicated workbook must label every item")
+        if any(final[i]["group"] != expected[i]["group"] for i in final):
+            raise ValueError("adjudicated workbook: item placed in the wrong group")
         table: dict[str, dict] = {}
         for group in ("P", "R"):
             for source in SOURCES:
