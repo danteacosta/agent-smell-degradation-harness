@@ -131,3 +131,38 @@ class SubscriptionTests(unittest.TestCase):
         self.assertEqual(module.get_response_cost({}),9)
 
 if __name__ == "__main__": unittest.main()
+
+def test_structured_protocol_is_explicit_in_receipts_and_does_not_relabel_default():
+    from agents.tau2_subscription import SubscriptionBridge, PROTOCOL, STRUCTURED_PROTOCOL
+    for protocol in (PROTOCOL, STRUCTURED_PROTOCOL):
+        transport=Transport('{"content":"hello","tool_calls":[]}')
+        bridge=SubscriptionBridge({'route':transport},before_call=lambda _:None,max_calls=1,protocol=protocol)
+        bridge.complete(model='route',messages=[])
+        assert bridge.receipts[0]['protocol']==protocol
+        assert bridge.receipts[0]['status']=='completed'
+
+def test_structured_tool_only_turn_accepts_empty_content_without_changing_v2():
+    import pytest
+    from agents.tau2_subscription import STRUCTURED_PROTOCOL,PROTOCOL
+    raw='{"content":"","tool_calls":[{"name":"lookup","arguments":{"id":"x"}}]}'
+    for protocol in (PROTOCOL,STRUCTURED_PROTOCOL):
+        transport=Transport(raw)
+        bridge=SubscriptionBridge({'sub':transport},before_call=lambda _:None,max_calls=1,protocol=protocol)
+        if protocol==PROTOCOL:
+            with pytest.raises(ValueError): bridge.complete(model='sub',messages=[],tools=[TOOL])
+        else:
+            result=bridge.complete(model='sub',messages=[],tools=[TOOL],tool_choice='required')
+            assert result['choices'][0]['message']['content'] is None
+            assert result['choices'][0]['finish_reason']=='tool_calls'
+        assert len(transport.requests)==1
+
+
+def test_structured_empty_content_cannot_hide_empty_or_invalid_tool_turns():
+    import pytest
+    from agents.tau2_subscription import STRUCTURED_PROTOCOL
+    for calls in ([],None,[{'name':'unavailable','arguments':{}}],[{'name':'lookup','arguments':'bad'}]):
+        transport=Transport(json.dumps({'content':'','tool_calls':calls}))
+        bridge=SubscriptionBridge({'sub':transport},before_call=lambda _:None,max_calls=1,protocol=STRUCTURED_PROTOCOL)
+        with pytest.raises(ValueError): bridge.complete(model='sub',messages=[],tools=[TOOL])
+        assert len(transport.requests)==1
+        assert bridge.receipts[0]['status']=='failed'
