@@ -34,7 +34,11 @@ def verify_trace_continuity(
     seen: set[str] = set()
     previous_id: str | None = None
     count = 0
-    for line_no, line in enumerate(data.decode("utf-8", "replace").splitlines(), 1):
+    try:
+        text = data.decode("utf-8")
+    except UnicodeDecodeError:
+        return ["trace is not valid UTF-8"]
+    for line_no, line in enumerate(text.splitlines(), 1):
         if not line.strip():
             continue
         try:
@@ -46,10 +50,14 @@ def verify_trace_continuity(
             problems.append(f"line {line_no}: record is not an object")
             continue
         event_id = record.get("event_id")
+        if not isinstance(event_id, str) or not event_id.strip():
+            problems.append(f"line {line_no}: nonempty string event_id required")
+            count += 1
+            continue
         if event_id in seen:
             problems.append(f"line {line_no}: duplicate event_id {event_id}")
         seen.add(event_id)
-        if record.get("sequence_number") != count:
+        if type(record.get("sequence_number")) is not int or record.get("sequence_number") != count:
             problems.append(
                 f"line {line_no}: sequence_number {record.get('sequence_number')!r}, expected {count}"
             )
