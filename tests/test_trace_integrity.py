@@ -43,3 +43,24 @@ def test_emptied_or_missing_trace_is_detected_with_receipt(tmp_path):
     assert verify_trace_continuity(path, receipt=receipt)
     path.unlink()
     assert verify_trace_continuity(path, receipt=receipt) == ["trace file is missing"]
+
+
+def test_invalid_event_ids_are_reported_instead_of_accepted_or_crashing(tmp_path):
+    import json
+    for event_id in (None, '', [], {}, 7):
+        path = tmp_path / 'bad.jsonl'
+        path.write_text(json.dumps({'event_id': event_id, 'sequence_number': 0,
+                                    'parent_event_id': None}) + '\n')
+        assert verify_trace_continuity(path)
+
+
+def test_boolean_sequence_number_is_rejected(tmp_path):
+    path = tmp_path / 'bad.jsonl'
+    path.write_text('{"event_id":"a","sequence_number":false,"parent_event_id":null}\n')
+    assert verify_trace_continuity(path)
+
+
+def test_invalid_utf8_is_reported(tmp_path):
+    path = tmp_path / 'bad.jsonl'
+    path.write_bytes(b'{"event_id":"\xff","sequence_number":0,"parent_event_id":null}\n')
+    assert verify_trace_continuity(path)
