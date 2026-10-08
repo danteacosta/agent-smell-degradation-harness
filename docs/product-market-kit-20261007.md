@@ -26,7 +26,7 @@ Os 5.5 repetiram a diferença entre referência completa e pedido incompleto nes
 
 São estudos exploratórios sobre os mesmos 25 requisitos de oito projetos, com páginas e mutantes reutilizados e um provedor gerando código. Repetições e modelos não acrescentam projetos independentes. Não são uma avaliação de produto em PRs reais, um ranking de modelos, nem confirmação de H1/H2. A auditoria humana continua pendente.
 
-A afirmação sustentada é que **testes escritos a partir de um pedido incompleto podem herdar a omissão**. Ler o requisito completo junto com código defeituoso não foi avaliado neste braço de 25 requisitos. O diagnóstico de três requisitos/11 falhas não comprova o resgate pela ferramenta proposta. Haeri e Ghelichi (2026) já mediram, em funções Python, que a especificação mantém a detecção mesmo com exposição ao código (apêndice E: 24/24); a [proposta fatorial #183](https://github.com/danteacosta/agent-smell-degradation-harness/pull/183) só se justifica se acrescentar o cenário de navegador ou uma instrução explícita de casos-limite, e permanece aberta e não lançada.
+A afirmação sustentada é que **testes escritos a partir de um pedido incompleto podem herdar a omissão**. Ler o requisito completo junto com código defeituoso não foi avaliado neste braço de 25 requisitos. O diagnóstico de três requisitos/11 falhas não comprova o resgate pela ferramenta proposta. Haeri e Ghelichi (2026) já mediram, em funções Python, que a especificação mantém a detecção mesmo com exposição ao código (apêndice E: 24/24); a [proposta fatorial #183](https://github.com/danteacosta/agent-smell-degradation-harness/pull/183) precisa justificar uma questão específica do cenário de navegador ou da interação entre fonte, exposição ao código e instrução de casos-limite. A instrução mais forte também aparece nos antecedentes; acrescentá-la, por si só, não estabelece novidade. A proposta permanece aberta e não lançada.
 
 ## Antecedentes e diferenciação
 
@@ -34,13 +34,13 @@ A ideia de ancorar testes numa especificação completa não é nova nem é dife
 
 O mercado também já oferece partes vizinhas, segundo uma busca de 07/10/2026 nas páginas públicas dos fornecedores, sem teste das ferramentas:
 
-| Abordagem | Exemplo | O que não faz |
+| Abordagem | Exemplo | Limite da consulta pública |
 | --- | --- | --- |
-| Política → gerar testes novos | [Giskard](https://www.giskard.ai/products/llm-evaluation) | não mede se a suíte existente cobre cada regra |
-| Regulação → controles e evidências | Credo AI (pacotes de políticas) | é documental; não verifica se um teste pegaria a falha |
-| Mutação de suítes de avaliação | [Muteval](https://dev.to/ashwin_ugale_102f2abc9cec/mutation-testing-but-for-llm-evals-early-experiment-would-love-feedback-2bl6), open source | degrada o sistema sem usar a política como referência |
+| Política → gerar testes novos | [Giskard](https://www.giskard.ai/products/llm-evaluation) | não identificamos, na página consultada, auditoria por regra da suíte existente; isso não comprova ausência da função |
+| Regulação → controles e evidências | Credo AI (pacotes de políticas) | o levantamento não estabeleceu se o produto verifica detecção de violações por testes existentes; comparação funcional pendente |
+| Mutação de suítes de avaliação | [Muteval](https://dev.to/ashwin_ugale_102f2abc9cec/mutation-testing-but-for-llm-evals-early-experiment-would-love-feedback-2bl6), open source | o relato consultado não estabeleceu vínculo por obrigação de política; comparação funcional pendente |
 
-O espaço que não encontramos ocupado é **auditar, regra por regra, se a suíte que a equipe já usa perceberia a perda de cada obrigação escrita**: retirar a regra da referência dada ao agente (o braço C), rodar a suíte existente e registrar quais perdas passam despercebidas. O risco é ser uma funcionalidade que fornecedores maiores acrescentam rapidamente, e não um produto. Nada disso foi testado com clientes.
+A hipótese de diferenciação a verificar é **auditar, regra por regra, se a suíte que a equipe já usa perceberia a perda de cada obrigação escrita**. A busca pública não demonstra um espaço desocupado. Retirar a regra do pedido (braço C) não garante uma violação: um oráculo independente precisa confirmar a perda no comportamento antes de medir sua detecção pela suíte existente. Implementações corretas ou recuperadas servem de controle para medir falsos alarmes; casos incertos e erros de construção são registrados separadamente. O risco é ser uma funcionalidade que fornecedores maiores acrescentam rapidamente, e não um produto. Nada disso foi testado com clientes.
 
 ## Post de mercado — rascunho, não publicado
 
