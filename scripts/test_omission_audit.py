@@ -119,7 +119,7 @@ INSTRUCTIONS = [
 
 # ---------------------------------------------------------------- frame (public)
 
-def frame(results: dict, manifest: dict) -> dict:
+def frame(results: dict, manifest: dict, expected: dict | None = EXPECTED) -> dict:
     """Audit population from public outcomes only; deterministic, no suite opened."""
     selected = manifest["selected_mutants"]
     suites: dict[str, dict] = defaultdict(dict)
@@ -146,7 +146,7 @@ def frame(results: dict, manifest: dict) -> dict:
                       "shown_mutant_verdict": s["shown_mutant"], "reference_slot": s["reference_slot"],
                       "shown_mutant_slot": s["shown_mutant_slot"]})
     counts = {g: dict(Counter(i["source"] for i in items if i["group"] == g)) for g in ("P", "R")}
-    if counts != EXPECTED:
+    if expected is not None and counts != expected:
         raise ValueError(f"audit frame drift: {counts}")
     return {"schema_version": "shared-omission-test-audit-frame/v1", "seed": SEED,
             "results_sha256": sha256_text(json.dumps(results["rows"], sort_keys=True)),
@@ -175,11 +175,11 @@ def mark_rule(a: str, c: str) -> str:
     return a[:prefix] + "[[" + a[prefix:len(a) - suffix] + "]]" + a[len(a) - suffix:]
 
 
-def blind_order(items: list[dict], seed: int = SEED) -> list[dict]:
+def blind_order(items: list[dict], seed: int = SEED, prefix: str = "T") -> list[dict]:
     """Mix sources, then number T001...; the key maps ids back to call ids."""
     order = sorted(items, key=lambda i: i["call_id"])
     random.Random(seed).shuffle(order)
-    return [{**item, "item_id": f"T{n:03d}"} for n, item in enumerate(order, start=1)]
+    return [{**item, "item_id": f"{prefix}{n:03d}"} for n, item in enumerate(order, start=1)]
 
 
 # ---------------------------------------------------------------- sheet (private)
@@ -217,14 +217,14 @@ def check_private(study: Path, audit_frame: dict) -> None:
         raise ValueError("private results differ from the published rows the frame was built from")
 
 
-def build_sheet(study: Path, out: Path, audit_frame: dict) -> dict:
+def build_sheet(study: Path, out: Path, audit_frame: dict, prefix: str = "T", stem: str = "auditoria-testes") -> dict:
     from openpyxl import Workbook
     from openpyxl.styles import Alignment, Font, PatternFill
     from openpyxl.worksheet.datavalidation import DataValidation
     if out.exists():
         raise FileExistsError(f"{out} exists; the audit sheet is built once")
     check_private(study, audit_frame)
-    items = blind_order(audit_frame["items"])
+    items = blind_order(audit_frame["items"], audit_frame.get("seed", SEED), prefix)
     out.mkdir(mode=0o700, parents=True)
     (out / "itens").mkdir()
     materials = {}
@@ -279,7 +279,7 @@ def build_sheet(study: Path, out: Path, audit_frame: dict) -> dict:
         return wb
 
     for coder in CODERS:
-        workbook(coder).save(out / f"auditoria-testes-{coder}.xlsx")
+        workbook(coder).save(out / f"{stem}-{coder}.xlsx")
     key = {"schema_version": "shared-omission-test-audit-key/v1", "seed": SEED,
            "items": [{k: item[k] for k in ("item_id", "call_id", "case", "project_id", "source", "group")}
                      for item in items],
@@ -393,6 +393,33 @@ def suites_from_dir(audit_dir: Path, key: dict) -> dict[str, str]:
     return out
 
 
+# ---------------------------------------------------------------- calibration
+
+CALIBRATION_SEED = 2026100612
+CALIBRATION_PER_GROUP = 3
+
+
+def calibration_frame(results: dict, manifest: dict, tester: str,
+                      per_group: int = CALIBRATION_PER_GROUP, seed: int = CALIBRATION_SEED) -> dict:
+    """Practice items from another tester's suites: never part of the audit frame, never scored.
+
+    Same group definitions as the audit; a seeded sample of `per_group` suites per group.
+    Both coders code them and discuss before opening the audit sheet. Any later audit of
+    this tester's suites must exclude these call ids.
+    """
+    full = frame(results, manifest, expected=None)
+    rng = random.Random(seed)
+    chosen = []
+    for group in ("P", "R"):
+        pool = sorted((i for i in full["items"] if i["group"] == group), key=lambda i: i["call_id"])
+        if len(pool) < per_group:
+            raise ValueError(f"calibration group {group} has only {len(pool)} suites")
+        chosen += rng.sample(pool, per_group)
+    return {"schema_version": "shared-omission-test-audit-calibration/v1", "tester": tester, "seed": seed,
+            "results_sha256": full["results_sha256"], "items": chosen, "scored": False,
+            "confirmatory_eligible": False}
+
+
 # ---------------------------------------------------------------- cli
 
 def main(argv: list[str] | None = None) -> None:
@@ -404,6 +431,15 @@ def main(argv: list[str] | None = None) -> None:
     s.add_argument("--study", type=Path, required=True, help="private study directory (…/shared-omission-e2e-v1/study)")
     s.add_argument("--out", type=Path, required=True, help="new private directory for the workbooks")
     s.add_argument("--frame", type=Path, default=AUDIT / "audit-frame.json")
+    k = sub.add_parser("calibration-frame")
+    k.add_argument("--results", type=Path, required=True)
+    k.add_argument("--manifest", type=Path, required=True)
+    k.add_argument("--tester", required=True)
+    k.add_argument("--out", type=Path, default=AUDIT / "calibration-frame.json")
+    q = sub.add_parser("calibration-sheet")
+    q.add_argument("--study", type=Path, required=True, help="private study directory of that tester")
+    q.add_argument("--out", type=Path, required=True)
+    q.add_argument("--frame", type=Path, default=AUDIT / "calibration-frame.json")
     c = sub.add_parser("score")
     c.add_argument("--audit-dir", type=Path, required=True)
     c.add_argument("--coder-a", type=Path, required=True)
@@ -417,6 +453,14 @@ def main(argv: list[str] | None = None) -> None:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(json.dumps(result, indent=2) + "\n")
         print(json.dumps(result["counts"]))
+    elif args.mode == "calibration-frame":
+        result = calibration_frame(json.loads(args.results.read_text()), json.loads(args.manifest.read_text()),
+                                   args.tester)
+        args.out.write_text(json.dumps(result, indent=2) + "\n")
+        print(json.dumps({g: sum(i["group"] == g for i in result["items"]) for g in "PR"}))
+    elif args.mode == "calibration-sheet":
+        print(json.dumps(build_sheet(args.study, args.out, json.loads(args.frame.read_text()),
+                                     prefix="C", stem="calibracao"), indent=2))
     elif args.mode == "sheet":
         print(json.dumps(build_sheet(args.study, args.out, json.loads(args.frame.read_text())), indent=2))
     else:
