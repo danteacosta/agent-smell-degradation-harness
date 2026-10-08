@@ -47,8 +47,26 @@ class SubscriptionTests(unittest.TestCase):
             with self.assertRaises(ValueError): bridge.complete(messages=[],**args)
         self.assertEqual(transport.requests,[])
 
+    def test_text_response_with_null_tools_needs_no_additional_call(self):
+        bridge, transport = self.bridge('{"content":"What is the cancellation reason?","tool_calls":null}')
+        reply = bridge.complete(model="sub", messages=[], tools=[TOOL])
+        message = reply["choices"][0]["message"]
+        self.assertEqual(message["content"], "What is the cancellation reason?")
+        self.assertIsNone(message["tool_calls"])
+        self.assertEqual(reply["choices"][0]["finish_reason"], "stop")
+        self.assertEqual(len(transport.requests), 1)
+
+    def test_null_tools_cannot_satisfy_required_or_named_tool_choice(self):
+        for choice in ("required", {"function": {"name": "lookup"}}):
+            bridge, transport = self.bridge('{"content":"A question","tool_calls":null}')
+            with self.assertRaisesRegex(ValueError, "tool choice violated"):
+                bridge.complete(model="sub", messages=[], tools=[TOOL], tool_choice=choice)
+            self.assertEqual(len(transport.requests), 1)
+
     def test_invalid_outputs_stop_without_retry(self):
         for answer in ["not JSON",'{"content":null,"tool_calls":[]}',
+            '{"content":null,"tool_calls":null}',
+            '{"content":"x","tool_calls":{}}',
             '{"content":null,"tool_calls":[{"name":"shell","arguments":{}}]}',
             '{"content":"x","tool_calls":[],"extra":1}']:
             bridge, transport = self.bridge(answer)
