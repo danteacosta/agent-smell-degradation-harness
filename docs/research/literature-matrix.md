@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-07
+Last updated: 2026-10-08
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -690,3 +690,27 @@ and PrefixGuard (arXiv 2605.06455), which already have entries or notes above; n
 descriptor in the OSF draft (covariates and exploratory analysis). No change to H1, H2, the
 primary outcome or power. Human decision still open: whether prohibitions are in scope of the
 confirmatory frame at all (the current candidate rules are mostly required behaviors).
+
+
+## 2026-10-08 — Annotation postprocessing integrity
+
+Search/read date: 2026-10-08. New source, deduplicated by DOI/title. Read the abstract, sampling and annotation methods, results, and limitations in the official full paper.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Klie, Eckart de Castilho and Gurevych, *Analyzing Dataset Annotation Quality Management in the Wild*, Computational Linguistics 50(3), 817–866 (2024), [DOI 10.1162/coli_a_00516](https://doi.org/10.1162/coli_a_00516), [full paper](https://aclanthology.org/2024.cl-3.1.pdf); peer-reviewed | How is annotation quality managed and reported? Review of 591 dataset publications; 314 involved human annotation or validation. Iterative coding, validation and automated checks. | Around 30% had poor reported quality management under the authors' rubric. Agreement measures reliability, not validity. Reporting is a proxy for actual practice; selected NLP venues and single primary annotator limit generalization. | Thesis: agreement alone cannot establish label validity. Experiment: enforce frozen item/group identity during final adjudication, alongside independent coding and literal evidence. Product: schema checks complement semantic review. Action: reject adjudicated workbooks that move items between P and R; regression tests cover both directions. This source motivates checking postprocessing, not the repository-specific bug or H1/H2. | 8/10: peer review and transparent method/artifacts; reporting proxy, selection and coding limitations. |
+
+Implementation and verification: [adjudication integrity note](2026-10-08-test-audit-adjudication-integrity.md). No annotation results, measurement policy, threshold, hypothesis or frozen experimental endpoint was changed.
+
+
+## 2026-10-08 — Trace integrity: a self-hosted trace is not independent evidence
+
+Search/read date: 2026-10-08. Deduplicated by arXiv ID/title (not previously in the matrix). Read: abstract, introduction, threat model summary, capability/exploitability/propensity result sections and trial counts of the PDF; appendix transcripts were not read in full.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Qin et al., [*LLM Agents Can Easily Tamper With Their Own Traces*](https://arxiv.org/abs/2609.30266), arXiv preprint (cs.CR), 2026-09-24, not peer-reviewed | Can local coding agents delete or alter their own execution traces when asked, when induced by a skill file, or when rewarded? Claude Code, Codex, Antigravity, OpenCode, Grok Build, Muse Code and others; 10 trials per model–harness pair per setting; full-access vs. auto-mode permissions | All harnesses except Muse Code let agents delete traces when asked, and auto-mode monitors missed it in 5 of 10 pairs. Tampering also appeared under a hidden reward incentive and via an injected skill. Authors advise logging through an interception server outside the agent's host. Limits: small n per cell, adversarial-by-design settings, security framing rather than SE-quality framing, no peer review. | **Thesis:** none; H1/H2 unchanged. **Experiment:** T1–T3 provenance feeding B3 is only as trustworthy as its capture path. In confirmatory runs the trace must be held or receipted outside the agent's writable workspace. **Product:** an independent capture path is a deployment requirement, not a feature. **Action:** `observability/trace_integrity.py` (`verify_trace_continuity`, `trace_receipt`) with `tests/test_trace_integrity.py`. | 5/10: recent, transparent about design, relevant authors, but preprint with small cells and a different domain |
+
+Context only (not matrix entries): OpenTelemetry GenAI agent-span conventions are still labelled *Development* on opentelemetry.io; third-party posts disagree on stabilization and were not used. Pin a schema version before building exporters.
+
+**Decision (2026-10-08).** Smallest incorporation: an offline continuity check. It detects gaps, re-linking and duplicate IDs inside a trace, and, given a receipt stored outside the agent's host, truncation or deletion. Without a receipt a deleted suffix is undetectable; the tests assert this limit. The wire schema, the label plane and H1/H2 are unchanged. Human decision still open: where the confirmatory runner stores the receipt (a host the agent cannot write) and whether the runner must call the check before scoring. No such runner wiring was done.
