@@ -3,6 +3,7 @@ import json
 import os
 import time
 import unittest
+import pytest
 from pathlib import Path
 from unittest.mock import patch
 from scripts.tau2_subscription import preflight, TurnTransport
@@ -108,3 +109,65 @@ class RunnerTests(unittest.TestCase):
             self.assertEqual(len(list(Path(d).iterdir())),2)
 
 if __name__ == "__main__": unittest.main()
+
+def test_preflight_records_the_selected_structured_protocol(tmp_path, capsys):
+    root=tmp_path/'tau2'; root.mkdir()
+    data=tmp_path/'data'; (data/'tau2/domains/airline').mkdir(parents=True)
+    (data/'tau2/domains/airline/policy.md').write_text('policy')
+    with patch.object(runner,'preflight'):
+        runner.main(['--tau2',str(root),'--data',str(data),'--claude-structured-output'])
+    assert json.loads(capsys.readouterr().out)['protocol']=='tau2-subscription-json/v3-claude-structured'
+
+def test_latest_blocked_quota_event_cannot_reuse_earlier_allowed_event(tmp_path):
+    quota=tmp_path/'quota.json';capture=tmp_path/'stdout.jsonl'
+    original='{"sampled_at":1,"routes":{"sub":{}}}';quota.write_text(original)
+    allowed={'type':'rate_limit_event','rate_limit_info':{'status':'allowed','isUsingOverage':False,
+        'unifiedWindows':{'seven_day':{'utilization':.1,'resetsAt':time.time()+3600}}}}
+    blocked=json.loads(json.dumps(allowed));blocked['rate_limit_info']['status']='rejected'
+    capture.write_text(json.dumps(allowed)+'\n'+json.dumps(blocked)+'\n')
+    with pytest.raises(RuntimeError): runner.refresh_claude_quota(quota,capture,['sub'])
+    assert quota.read_text()==original
+
+
+def test_stale_or_future_route_cannot_borrow_fresh_global_timestamp(tmp_path):
+    import pytest
+    quota=tmp_path/'quota.json';now=time.time()
+    for sampled in (now-120,now+120):
+        quota.write_text(json.dumps({'sampled_at':now,'routes':{'sub':{'sampled_at':sampled,
+            'status':'allowed','extra_usage':False,'windows':[{'name':'weekly','remaining_percent':90,'reset_at':now+3600}]}}}))
+        with pytest.raises(RuntimeError): quota_gate(quota,expected_windows={'sub':['weekly']})('sub')
+
+@pytest.mark.skipif(not os.environ.get('TAU2_CHECKOUT'),reason='pinned tau2 runtime required')
+@pytest.mark.parametrize('structured',[False,True])
+def test_runner_opt_in_selects_claude_transport_and_preserves_codex(tmp_path,monkeypatch,structured):
+    import sys
+    from contextlib import contextmanager
+    from types import SimpleNamespace
+    from agents.claude_cli_v2 import ClaudeCLIProvider
+    from agents.claude_cli_tau2 import ClaudeStructuredCLIProvider
+    from agents.codex_cli import CodexCLIProvider
+    from agents.tau2_subscription import PROTOCOL,STRUCTURED_PROTOCOL
+    root=Path(os.environ['TAU2_CHECKOUT']);sys.path.insert(0,str(root/'src'))
+    from tau2 import run as native
+    data=tmp_path/'data';(data/'tau2/domains/airline').mkdir(parents=True)
+    (data/'tau2/domains/airline/policy.md').write_text('policy')
+    out=tmp_path/'out';captured=[]
+    @contextmanager
+    def capture_install(bridge): captured.append(bridge);yield
+    monkeypatch.setattr(runner,'install',capture_install)
+    monkeypatch.setattr(native,'get_tasks',lambda *a,**kw:[object()])
+    monkeypatch.setattr(native,'run_single_task',lambda *a,**kw:SimpleNamespace(model_dump=lambda **kw:{'fixture':True}))
+    args=['--tau2',str(root),'--data',str(data),'--execute','--task-id','0',
+        '--agent-provider','claude','--agent-model','claude-sonnet-5-5','--user-provider','codex',
+        '--user-model','gpt-6-astra','--claude-executable','unused','--codex-executable','unused',
+        '--quota',str(tmp_path/'quota.json'),'--out',str(out),'--max-calls','4',
+        '--agent-windows','five_hour,weekly','--user-windows','weekly']
+    if structured: args.append('--claude-structured-output')
+    runner.main(args)
+    assert captured[0].routes['subscription-agent'].provider_class is (ClaudeStructuredCLIProvider if structured else ClaudeCLIProvider)
+    assert captured[0].routes['subscription-user'].provider_class is CodexCLIProvider
+    started=json.loads((out/'started.json').read_text())
+    assert started['protocol']==(STRUCTURED_PROTOCOL if structured else PROTOCOL)
+    assert started['claude_structured_output'] is structured
+    assert out.stat().st_mode & 0o777==0o700
+    assert all(p.stat().st_mode & 0o777==0o600 for p in out.iterdir())
