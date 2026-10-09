@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-08
+Last updated: 2026-10-09
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -571,7 +571,7 @@ quantitative anchor or thesis/experiment recommendation is assigned here.
 | --- | --- | --- |
 | [What Prompts Don't Say](https://arxiv.org/abs/2505.13360v3) | Chenyang Yang, Yike Shi, Qianou Ma, Michael Xieyang Liu, Christian Kästner, Tongshuang Wu | Abstract only; full-text review pending. |
 | [From Business Requirements to Test Assertions](https://arxiv.org/abs/2607.10277v1) | Ma and Eisty | Abstract only; full-text review pending. |
-| [Clarity Is Not Assumed (Orchid)](https://arxiv.org/abs/2604.21505v3) | Yang et al. | Abstract only; full-text review pending. |
+| [Clarity Is Not Assumed (Orchid)](https://arxiv.org/abs/2604.21505v3) | Yang et al. | Read in full on 2026-10-09; see the 2026-10-09 entry at the end of this file. |
 | [ClarifyCodeBench](https://arxiv.org/abs/2607.00711v2) | Fang et al. | Abstract only; full-text review pending. |
 
 **Source verification, 2026-10-04.** Review of [Akli et al.'s primary methods,
@@ -714,3 +714,11 @@ Search/read date: 2026-10-08. Deduplicated by arXiv ID/title (not previously in 
 Context only (not matrix entries): OpenTelemetry GenAI agent-span conventions are still labelled *Development* on opentelemetry.io; third-party posts disagree on stabilization and were not used. Pin a schema version before building exporters.
 
 **Decision (2026-10-08).** Smallest incorporation: an offline continuity check. It detects gaps, re-linking and duplicate IDs inside a trace, and, given a receipt stored outside the agent's host, truncation or deletion. Without a receipt a deleted suffix is undetectable; the tests assert this limit. The wire schema, the label plane and H1/H2 are unchanged. Human decision still open: where the confirmatory runner stores the receipt (a host the agent cannot write) and whether the runner must call the check before scoring. No such runner wiring was done.
+
+## 2026-10-09 — Injected ambiguity degrades function-level generation, but omission is not covered
+
+Search/read date: 2026-10-09. Deduplicated by arXiv ID (previously abstract-only in the pending queue). Read: abstract, ambiguity injection and validation pipeline, evaluation setup, RQ1–RQ3 results, limitations (last ~8.5k characters of the HTML not read). TraceDev (ISSTA 2026) was re-checked and is already entered above; the 2026-10-09 search also surfaced THEMIS (arXiv 2609.14913), a provenance/trace survey (arXiv 2606.04990), AgentLTL (arXiv 2607.02599), ProvenanceGuard (arXiv 2607.01236) and TraceCaps (ICSE-NIER 2026) at result-page level only: not entries, no claim.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Yang, Xie, Yang, Hu, Huang, Zhang, Miao, Su, Wan, Pu, [*Clarity Is Not Assumed: Understanding LLM-Based Code Generation under Ambiguous Requirements (Orchid)*](https://arxiv.org/abs/2604.21505), arXiv preprint v3 (cs.SE; submitted 2026-04-23, revised 2026-09-27), not peer-reviewed as read | How does requirement ambiguity (lexical, syntactic, semantic, vagueness) affect function-level code generation? An LLM pipeline (DeepSeek-V3 injection, judge and explanation agents) rewrites HumanEval+/BigCodeBench requirements; humans curated all 1,312 variants of Orchid-HEval and Orchid-BCB (>246 person-hours) while the 3,904-variant Orchid-BCB-Expand was not curated; six models, Pass@k from n=5 samples, paired against the original requirement. | Mean Pass@1 drop 7.22 points (16.25% relative), up to 32.35 points (GPT-4, semantic, BCB-Expand); drops are uneven (Claude-3.5 31.10 points syntactic vs 2.44 semantic on HEval; DeepSeek-R1 at most about 4 points). Multi-model implementation conflict rises (HEval 30.60% to 36.45%). Models detect ambiguity in only 24.7–43.7% of cases and localize it in 11–14%. Limits: function-level only, one ambiguity per variant, single-run tables without significance tests, generator/judge/evaluated-model overlap (DeepSeek-V3, GPT-4), uncurated Expand subset, text/table disagreement for CodeLlama conflict rates, no incompleteness or omission category (left to future work), no browser or repository-level oracle. | **Thesis:** adjacent context on ambiguity (a smell family), not evidence on omission of a testable condition; it strengthens the narrow statement that omission/incompleteness is outside this benchmark and does not contradict H1a. **Experiment:** reinforces the existing generator/judge-overlap sensitivity and the need to keep the 20% human audit; the uneven per-model drops support reporting effects by model and by rule type rather than only pooled. **Product:** the low detection and localization rates motivate a requirement-anchored check that does not rely on the model noticing the gap; hypothesis only. **Action:** comparison note translated to English and corrected (docs/research/2026-10-05-orchid-comparison-note.md); no protocol, label or hypothesis change; wording of the cited figures should stay "reported by Orchid", never an expectation for this study. | 6 (public benchmark, human curation of the core subsets, large model set; preprint; single-run tables, overlap and no significance tests) |
