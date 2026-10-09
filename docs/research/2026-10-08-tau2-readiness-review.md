@@ -2,6 +2,9 @@
 
 Estado em 08/10/2026: preparação autorizada; inventário e desenho com Márcio ainda pendentes. Nenhuma coleta científica foi iniciada. Esta revisão propõe contratos para corrigir o rascunho antes do congelamento; não aprova o inventário, não muda os operadores e não autoriza execução.
 
+Atualização de 09/10: a aprovação humana foi confirmada no chat e os três erros
+de análise foram corrigidos. O estado atual está no [registro de execução](2026-10-09-tau2-execution-readiness.md); esta revisão preserva o diagnóstico anterior.
+
 ## O que está verificado
 
 O [PR #202](https://github.com/danteacosta/agent-smell-degradation-harness/pull/202) tem 83 testes locais aprovados e três verificações de CI aprovadas no commit 1db366e7300aac6ab4215dd6957168207c28da27. A tarefa v2 supervisionada completou; as três qualificações v3 não completaram. O transporte estruturado segue experimental. O [registro técnico](2026-10-07-tau2-subscription-bridge.md) preserva os resultados separados.

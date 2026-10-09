@@ -70,7 +70,8 @@ def test_plan_is_seeded_and_staged():
 
 
 def rows(variant, task, rewards):
-    return [{"variant": variant, "task_id": task, "reward": r} for r in rewards]
+    return [{"variant": variant, "task_id": task, "trial": t, "reward": r}
+            for t, r in enumerate(rewards, 1)]
 
 
 def test_analysis_classes_and_confirmation():
@@ -103,7 +104,8 @@ def test_unconfirmed_failures_are_pending_and_listed_for_reruns():
     data += rows("N02", "t1", [1]) + rows("D02", "t1", [1]) + rows("B01", "t1", [1])
     res = pa.analyse(inv, data, tasks)
     assert {p["id"]: p["class"] for p in res["per_rule"]}["R01"] == "incomplete"
-    assert pa.candidates(inv, data, tasks) == [{"variant": "N01", "task_id": "t1", "reruns": pa.CONFIRM_RERUNS}]
+    assert pa.candidates(inv, data, tasks) == [{"variant": "N01", "task_id": "t1",
+        "reruns": pa.CONFIRM_RERUNS, "trials": [2, 3]}]
 
 
 def test_baseline_must_be_complete():
@@ -116,14 +118,110 @@ def test_read_tau2_results(tmp_path):
     f.write_text(json.dumps({"simulations": [
         {"task_id": 3, "trial": 0, "reward_info": {"reward": 1.0}, "termination_reason": "user_stop"},
         {"task_id": "4", "trial": 0, "reward_info": None, "termination_reason": "max_steps"}]}))
-    r = pa.read_tau2_results(f, "N01")
-    assert r[0] == {"variant": "N01", "task_id": "3", "reward": 1.0, "termination_reason": "user_stop"}
+    r = pa.read_tau2_results(f, "N01", trial=1)
+    assert r[0] == {"variant": "N01", "task_id": "3", "trial": 1, "reward": 1.0, "termination_reason": "user_stop"}
     assert not pa.passed(r[1])
+
+
+def test_absent_rewards_never_confirm_a_detection_or_request_technical_retries():
+    data = rows("A", "t1", [1, 1, 1, 1])
+    data += rows("N01", "t1", [None, None, None]) + rows("D01", "t1", [None, None, None])
+    result = pa.analyse(toy(), data, ["t1"])
+    rule = result["per_rule"][0]
+    assert rule["class"] == "incomplete"
+    assert rule["negation"]["confirmed_tasks"] == []
+    assert rule["negation"]["technical_failure_tasks"] == ["t1"]
+    assert pa.candidates(toy(), data, ["t1"]) == []
+
+
+def test_never_attempted_variants_are_not_confirmation_candidates():
+    data = rows("A", "t1", [1, 1, 1, 1])
+    assert pa.candidates(toy(), data, ["t1"]) == []
+    result = pa.analyse(toy(), data, ["t1"])
+    assert result["per_rule"][0]["negation"]["missing_initial_tasks"] == ["t1"]
+
+
+def test_confirmation_lists_only_remaining_unattempted_slots():
+    data = rows("A", "t1", [1, 1, 1, 1]) + rows("N01", "t1", [0, None])
+    assert pa.candidates(toy(), data, ["t1"]) == [{"variant": "N01",
+        "task_id": "t1", "reruns": 1, "trials": [3]}]
+    assert pa.analyse(toy(), data, ["t1"])["per_rule"][0]["class"] == "incomplete"
+
+
+def test_zero_eligible_tasks_does_not_conclude_uncovered():
+    result = pa.analyse(toy(), rows("A", "t1", [0, 0, 0, 0]), ["t1"])
+    assert result["classes"] == {"not_estimable": 2}
+    assert result["eligible_tasks"] == result["control_task_pairs"] == 0
+
+
+def test_technical_baseline_is_explicitly_unresolved():
+    result = pa.analyse(toy(), rows("A", "t1", [1, 1, 1, None]), ["t1"])
+    assert result["baseline_unresolved_tasks"] == ["t1"]
+    assert result["eligible_tasks"] == 0
+
+
+def test_duplicate_or_missing_trial_identity_is_rejected():
+    data = rows("A", "t1", [1, 1, 1, 1])
+    with pytest.raises(ValueError, match="duplicate"):
+        pa.analyse(toy(), data + [data[0]], ["t1"])
+    del data[0]["trial"]
+    with pytest.raises(ValueError, match="trial"):
+        pa.analyse(toy(), data, ["t1"])
+
+
+@pytest.mark.parametrize("reward", [True, "0", float("nan"), float("inf"), -1, 2])
+def test_invalid_reward_is_rejected_instead_of_becoming_a_failure(reward):
+    with pytest.raises(ValueError, match="reward"):
+        pa.analyse(toy(), rows("A", "t1", [1, 1, 1, reward]), ["t1"])
+
+
+def test_analysis_and_candidates_do_not_depend_on_file_order():
+    data = rows("A", "t1", [1, 1, 1, 1]) + rows("N01", "t1", [0, 1, 0])
+    assert pa.analyse(toy(), data, ["t1"]) == pa.analyse(toy(), list(reversed(data)), ["t1"])
+    assert pa.candidates(toy(), data, ["t1"]) == pa.candidates(toy(), list(reversed(data)), ["t1"])
+
+
+@pytest.mark.parametrize("updates", [
+    {"trial": True}, {"trial": 0}, {"trial": 5},
+    {"variant": "unknown"}, {"task_id": "unknown"},
+])
+def test_unknown_or_invalid_slot_is_rejected(updates):
+    data = rows("A", "t1", [1, 1, 1, 1])
+    data[0].update(updates)
+    with pytest.raises(ValueError, match="slot|trial"):
+        pa.analyse(toy(), data, ["t1"])
+
+
+def test_two_failures_do_not_confirm_before_third_outcome():
+    data = rows("A", "t1", [1, 1, 1, 1]) + rows("N01", "t1", [0, 0])
+    result = pa.analyse(toy(), data, ["t1"])
+    assert result["per_rule"][0]["negation"]["confirmed_tasks"] == []
+    assert pa.candidates(toy(), data, ["t1"])[0]["trials"] == [3]
+
+
+def test_confirmation_without_initial_slot_is_rejected():
+    data = rows("A", "t1", [1, 1, 1, 1])
+    data.append({"variant": "N01", "task_id": "t1", "trial": 2, "reward": 0})
+    with pytest.raises(ValueError, match="initial"):
+        pa.analyse(toy(), data, ["t1"])
+
+
+@pytest.mark.parametrize("tasks", [[], ["t1", "t1"]])
+def test_invalid_task_denominator_is_rejected(tasks):
+    with pytest.raises(ValueError, match="tasks"):
+        pa.analyse(toy(), [], tasks)
+
+
+@pytest.mark.parametrize("variant", ["N01", "D01", "B01"])
+def test_each_operator_maps_pending_confirmation_to_its_own_slots(variant):
+    data = rows("A", "t1", [1, 1, 1, 1]) + rows(variant, "t1", [0, 1])
+    assert pa.candidates(toy(), data, ["t1"]) == [
+        {"variant": variant, "task_id": "t1", "reruns": 1, "trials": [3]}]
 
 
 def test_committed_inventory_is_well_formed():
     inv = pa.load_rules()
-    assert inv["status"] == "draft_pending_human_review"
+    assert inv["status"] == "frozen"
     assert len(inv["rules"]) == 32 and len(inv["controls"]) == 5
     starts = [r["lines"][0] for r in inv["rules"]]
     assert starts == sorted(starts)

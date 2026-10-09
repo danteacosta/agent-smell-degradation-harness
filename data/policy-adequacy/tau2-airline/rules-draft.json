@@ -1,6 +1,6 @@
 {
   "schema_version": "policy-suite-adequacy-rules/v1",
-  "status": "draft_pending_human_review",
+  "status": "frozen",
   "source": {
     "repository": "https://github.com/sierra-research/tau2-bench",
     "commit": "4ce7c0397c1eb65c9bbe59aeacfe1ca44a1cd699",
@@ -451,5 +451,13 @@
       "text": "Do not compensate if the user is regular member and has no travel insurance and flies (basic) economy.",
       "rewording": "Regular members who have no travel insurance and fly (basic) economy must not be compensated."
     }
-  ]
+  ],
+  "approval": {
+    "date": "2026-10-09",
+    "inventory": "Dante confirmed review and approval of 32 rules, inversions and five rewrites",
+    "design": "Dante confirmed design approval with Marcio",
+    "requested_agent_model": "gpt-6-astra",
+    "requested_user_model": "gpt-6-astra",
+    "scope": "exploratory subscription execution; Claude deferred"
+  }
 }

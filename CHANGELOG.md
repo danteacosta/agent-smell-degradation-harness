@@ -4,6 +4,8 @@
 
 ### Changed
 
+- Tau2 policy analysis now keeps missing and technical outcomes unresolved, rejects duplicate trial slots, and schedules only unattempted confirmations after a valid initial failure. Empty eligibility is reported as not estimable.
+
 - H2 project-bootstrap inference now fails closed whenever project-label support can produce a one-class resample, and the confirmatory gate verifies v3 precision-simulation accounting.
 - Research documentation now records that the 220-intent/36-project H2 plan failed v3 diagnostic regeneration, distinguishes the unfrozen 288/36 central-scenario grid point from an approved confirmatory design, and identifies the remaining latent-score-to-ΔPR-AUC calibration gap.
 - The prospective E2E pool now distinguishes 11 previously unexecuted obligations from the TodoMVC persistence bridge replication, which remains in the 216-position ceiling but no longer counts as new requirement diversity.

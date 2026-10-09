@@ -1,6 +1,15 @@
 # Adequação de uma suíte de avaliação existente à política escrita do agente (τ²-bench, airline) — rascunho
 
-**Estado:** rascunho, não registrado. Nenhuma coleta do estudo foi feita; uma sondagem técnica Codex, separada da análise, foi executada. A execução depende da reunião com o orientador, da revisão humana do inventário de regras e da qualificação do transporte escolhido (seção 7). É um estudo exploratório separado da coleta confirmatória 8 × 5 e não altera nenhum protocolo congelado.
+**Estado:** rascunho, não registrado. Na elaboração inicial, nenhuma coleta do estudo tinha sido feita; uma sondagem técnica Codex, separada da análise, foi executada. A execução depende da reunião com o orientador, da revisão humana do inventário de regras e da qualificação do transporte escolhido (seção 7). É um estudo exploratório separado da coleta confirmatória 8 × 5 e não altera nenhum protocolo congelado.
+
+
+**Atualização de execução, 09/10/2026:** Dante confirmou a revisão do inventário
+(32 regras, inversões e cinco reescritas) e a aprovação do desenho com Márcio.
+Fixou GPT-6 Astra no agente e no usuário, com Claude adiado. O inventário passa a
+`frozen`; o texto das regras e variantes permanece igual. O transporte Codex
+completou cinco tarefas técnicas com avaliação upstream, separadas da coleta.
+Esta aprovação não transforma o estudo exploratório em confirmatório nem
+constitui registro na OSF. Veja [contrato de execução atualizado](../research/2026-10-09-tau2-execution-readiness.md).
 
 ## 1. Pergunta
 
@@ -42,15 +51,23 @@ Mudanças nessa revisão são registradas, e o arquivo passa a `frozen` com hash
 
 ## 5. Análise (fixada antes dos resultados)
 
-- **Tarefa elegível:** passa em pelo menos 3 das 4 execuções de A. Só tarefas elegíveis podem detectar algo.
-- **Detecção confirmada** de uma variante numa tarefa: falha na primeira execução e em pelo menos 2 das 3 execuções (a primeira e as duas repetições).
+- **Tarefa elegível:** tem quatro recompensas válidas e passa em pelo menos 3 das 4 execuções de A. Resultado técnico ausente torna a tarefa não resolvida. Só tarefas elegíveis podem detectar algo.
+- **Detecção confirmada** de uma variante numa tarefa, somente com três recompensas válidas: falha na primeira execução e em pelo menos 2 das 3 execuções (a primeira e as duas repetições).
 - **Regra coberta** sob um operador: pelo menos uma tarefa confirma a detecção.
 - **Classes por regra:**
   - `omission_detected`: a inversão e a retirada são detectadas;
   - `covered_but_omission_silent`: só a inversão é detectada; o agente provavelmente recupera a regra sem tê-la no texto, ou a retirada não muda o comportamento;
   - `omission_detected_violation_not`: só a retirada é detectada (esperado como raro);
   - `uncovered`: nenhuma tarefa detecta a violação explícita;
-  - `incomplete`: há confirmações pendentes.
+  - `incomplete`: há slots iniciais ausentes, falhas técnicas ou confirmações pendentes;
+  - `not_estimable`: nenhuma tarefa é elegível.
+
+Os nomes das classes descrevem sensibilidade da recompensa aos operadores.
+`uncovered` não prova uma violação observada da regra. A inspeção das trajetórias
+continua necessária para separar oportunidade, violação e resposta do avaliador.
+Cada resultado usa identidade variante/tarefa/tentativa. A análise v2 rejeita
+duplicatas e não depende da ordem dos arquivos. Apenas uma falha inicial válida
+abre confirmações; uma tentativa técnica falhada nunca é repetida.
 - **Ruído:** detecções confirmadas nos controles B, sobre pares controle × tarefa elegível.
 - **Relato:** contagens por classe e por seção da política, sempre com os denominadores. Não há teste de hipótese: as regras não são uma amostra, e o estudo descreve uma suíte específica.
 
@@ -68,14 +85,14 @@ Mudanças nessa revisão são registradas, e o arquivo passa a `frozen` com hash
   - a inversão é um mutante mais forte que uma omissão real;
   - Cao (2026) mostra lacunas na política que podem confundir o que conta como violação.
 
-## 7. Viabilidade e custo (a decidir)
+## 7. Viabilidade e custo (proposta inicial de 07/10, atualizada em 09/10)
 
-- O caminho upstream chama modelos via LiteLLM e requer chave de API. A alternativa local em `scripts/tau2_subscription.py` conecta os CLIs oficiais de Claude e Codex por assinatura, sem fallback para API. O adaptador passou na integração com o runtime fixado usando replay e numa chamada técnica Codex; Claude e atualização automática de quota ainda precisam de qualificação. Veja [protocolo e limitações](../research/2026-10-07-tau2-subscription-bridge.md).
+- O caminho upstream chama modelos via LiteLLM e requer chave de API. A alternativa local em `scripts/tau2_subscription.py` conecta os CLIs oficiais de Claude e Codex por assinatura, sem fallback para API. O adaptador passou na integração com o runtime fixado usando replay e numa chamada técnica Codex; Em 09/10, Codex completou cinco tarefas técnicas e a consulta automática de quota pública foi validada; Claude foi adiado. Veja [protocolo e limitações](../research/2026-10-07-tau2-subscription-bridge.md).
 - Na assinatura, semente e temperatura não são controláveis e o envelope de ferramentas é serializado em texto. As quotas precisam de atualização externa a partir de telemetria pública oficial; o wrapper para com amostra velha, janela ausente ou reserva atingida. A reserva é um limiar antes da chamada, sem garantia de saldo após uma chamada sem teto de tokens.
 - O custo por simulação não é conhecido. Antes da etapa 1, uma sondagem de viabilidade roda A em 5 tarefas para medir tokens e tempo. Essas execuções ficam fora da análise.
 - Escala total: cerca de 2.050 simulações na etapa 1, mais confirmações; 1.600 na etapa 2.
 - **Decisões em aberto:**
-  - quais modelos usar para o agente e para o usuário;
+  - modelos resolvidos em 09/10: GPT-6 Astra em ambos os papéis, por escolha de Dante;
   - qual orçamento;
   - se a etapa 2 entra;
   - se o estudo vira capítulo, apêndice ou trabalho futuro.
