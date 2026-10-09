@@ -30,6 +30,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import random
@@ -153,13 +154,13 @@ def plan(inv: dict, seed: int = SEED) -> list[dict]:
     return order
 
 
-def read_tau2_results(path: Path, variant: str) -> list[dict]:
+def read_tau2_results(path: Path, variant: str, *, trial: int) -> list[dict]:
     data = json.loads(Path(path).read_text())
     rows = []
     for sim in data["simulations"]:
         info = sim.get("reward_info") or {}
         rows.append({"variant": variant, "task_id": str(sim["task_id"]),
-                     "reward": info.get("reward"), "termination_reason": sim.get("termination_reason")})
+                     "trial": trial, "reward": info.get("reward"), "termination_reason": sim.get("termination_reason")})
     return rows
 
 
@@ -168,30 +169,69 @@ def passed(row: dict) -> bool:
 
 
 def analyse(inv: dict, rows: list[dict], tasks: list[str]) -> dict:
+    if not tasks or len(tasks) != len(set(tasks)):
+        raise ValueError("tasks must be nonempty and unique")
+    valid_variants = {"A"} | {
+        op + r["id"][1:] for r in inv["rules"] for op in ("N", "D")
+    } | {c["id"] for c in inv["controls"]}
     by = {}
-    for r in rows:
-        by.setdefault((r["variant"], r["task_id"]), []).append(r)
-    base = {t: sum(passed(r) for r in by.get(("A", t), [])) for t in tasks}
-    n_base = {t: len(by.get(("A", t), [])) for t in tasks}
-    if any(n != BASELINE_TRIALS for n in n_base.values()):
+    for row in rows:
+        variant, task = row["variant"], row["task_id"]
+        if variant not in valid_variants or task not in tasks:
+            raise ValueError("unknown variant/task slot")
+        trial = row.get("trial")
+        limit = BASELINE_TRIALS if variant == "A" else 1 + CONFIRM_RERUNS
+        if type(trial) is not int or not 1 <= trial <= limit:
+            raise ValueError("invalid or missing trial identity")
+        reward = row.get("reward")
+        if reward is not None and (
+            type(reward) not in (int, float) or not math.isfinite(reward)
+            or not 0 <= reward <= 1
+        ):
+            raise ValueError("reward must be absent or a finite number in [0, 1]")
+        runs = by.setdefault((variant, task), {})
+        if trial in runs:
+            raise ValueError("duplicate variant/task/trial slot")
+        runs[trial] = row
+    for (variant, task), runs in by.items():
+        if variant != "A" and 1 not in runs:
+            raise ValueError("confirmation requires an initial slot")
+    if any(set(by.get(("A", t), {})) != set(range(1, BASELINE_TRIALS + 1)) for t in tasks):
         raise ValueError("every task needs exactly BASELINE_TRIALS baseline runs")
-    eligible = sorted(t for t in tasks if base[t] >= ELIGIBLE_PASSES)
+    unresolved = sorted(t for t in tasks if any(
+        r.get("reward") is None for r in by[("A", t)].values()))
+    eligible = sorted(t for t in tasks if t not in unresolved and sum(
+        passed(r) for r in by[("A", t)].values()) >= ELIGIBLE_PASSES)
 
     def status(variant: str, task: str) -> str:
-        runs = by.get((variant, task), [])
-        if not runs:
+        runs = by.get((variant, task), {})
+        if 1 not in runs:
             return "missing"
-        if passed(runs[0]):
+        if any(r.get("reward") is None for r in runs.values()):
+            return "technical_failure"
+        if passed(runs[1]):
             return "pass"
         if len(runs) < 1 + CONFIRM_RERUNS:
             return "unconfirmed"
-        fails = sum(not passed(r) for r in runs[:1 + CONFIRM_RERUNS])
+        fails = sum(not passed(r) for r in runs.values())
         return "confirmed" if fails >= CONFIRM_FAILS else "not_confirmed"
 
     def summary(variant: str) -> dict:
         st = {t: status(variant, t) for t in eligible}
+        confirmations = []
+        for task in eligible:
+            runs = by.get((variant, task), {})
+            initial = runs.get(1)
+            if initial is not None and initial.get("reward") is not None and not passed(initial):
+                remaining = [t for t in range(2, 2 + CONFIRM_RERUNS) if t not in runs]
+                if remaining:
+                    confirmations.append({"task_id": task, "trials": remaining})
         return {"confirmed_tasks": sorted(t for t, s in st.items() if s == "confirmed"),
-                "pending": sorted(t for t, s in st.items() if s in ("unconfirmed", "missing"))}
+                "pending": sorted(t for t, s in st.items() if s in (
+                    "unconfirmed", "missing", "technical_failure")),
+                "missing_initial_tasks": sorted(t for t, s in st.items() if s == "missing"),
+                "technical_failure_tasks": sorted(t for t, s in st.items() if s == "technical_failure"),
+                "confirmation_pending": confirmations}
 
     per_rule = []
     for r in inv["rules"]:
@@ -199,7 +239,9 @@ def analyse(inv: dict, rows: list[dict], tasks: list[str]) -> dict:
         d, g = summary("D" + n), summary("N" + n)
         covered_n = bool(g["confirmed_tasks"])
         covered_d = bool(d["confirmed_tasks"])
-        if g["pending"] or d["pending"]:
+        if not eligible:
+            cls = "not_estimable"
+        elif g["pending"] or d["pending"]:
             cls = "incomplete"
         elif covered_n and covered_d:
             cls = "omission_detected"
@@ -216,7 +258,8 @@ def analyse(inv: dict, rows: list[dict], tasks: list[str]) -> dict:
     classes = {}
     for p in per_rule:
         classes[p["class"]] = classes.get(p["class"], 0) + 1
-    return {"schema_version": "policy-suite-adequacy-analysis/v1", "exploratory": True,
+    return {"schema_version": "policy-suite-adequacy-analysis/v2", "exploratory": True,
+            "baseline_unresolved_tasks": unresolved,
             "tasks": len(tasks), "eligible_tasks": len(eligible),
             "rules": len(per_rule), "classes": classes,
             "covered_under_negation": sum(bool(p["negation"]["confirmed_tasks"]) for p in per_rule),
@@ -230,12 +273,13 @@ def candidates(inv: dict, rows: list[dict], tasks: list[str]) -> list[dict]:
     """Eligible (variant, task) pairs that failed once and still need confirmation re-runs."""
     result = analyse(inv, rows, tasks)
     out = []
-    for p in result["per_rule"]:
-        for op, key in (("D", "deletion"), ("N", "negation")):
-            out += [{"variant": op + p["id"][1:], "task_id": t, "reruns": CONFIRM_RERUNS}
-                    for t in p[key]["pending"]]
-    for c in result["controls"]:
-        out += [{"variant": c["id"], "task_id": t, "reruns": CONFIRM_RERUNS} for t in c["pending"]]
+    summaries = [(op + p["id"][1:], p[key]) for p in result["per_rule"]
+                 for op, key in (("D", "deletion"), ("N", "negation"))]
+    summaries += [(c["id"], c) for c in result["controls"]]
+    for variant, summary in summaries:
+        for item in summary["confirmation_pending"]:
+            out.append({"variant": variant, "task_id": item["task_id"],
+                        "reruns": len(item["trials"]), "trials": item["trials"]})
     return out
 
 
