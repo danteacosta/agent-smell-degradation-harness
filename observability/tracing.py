@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import uuid
 from datetime import datetime, timezone
@@ -23,6 +24,7 @@ class ProvenanceRecorder:
         self._episode_identity = episode_identity
         self._arp_context = arp_context or episode_identity or {}
         self._sequence = 0
+        self._emitted_digest = hashlib.sha256()
         self._last_event_id: str | None = None
         self._last_ended_at: str | None = None
         self._wire_version = wire_version
@@ -32,7 +34,7 @@ class ProvenanceRecorder:
         if wire_version == "3.0.0" and not profile:
             raise ValueError("ARP 3.0 traces require a profile")
         self._path.parent.mkdir(parents=True, exist_ok=True)
-        self._file: TextIO = self._path.open("a", encoding="utf-8")
+        self._file: TextIO = self._path.open("a", encoding="utf-8", newline="\n")
 
     def operational(
         self,
@@ -148,7 +150,9 @@ class ProvenanceRecorder:
             if self._episode_identity is not None:
                 record["episode_identity"] = self._episode_identity
             record["source_refs"] = source_refs
-        self._file.write(json.dumps(record) + "\n")
+        encoded_record = json.dumps(record) + "\n"
+        self._file.write(encoded_record)
+        self._emitted_digest.update(encoded_record.encode("utf-8"))
         self._sequence += 1
         self._last_event_id = record["event_id"]
         self._last_ended_at = ended_at
@@ -160,3 +164,9 @@ class ProvenanceRecorder:
     def close(self) -> None:
         self._file.flush()
         self._file.close()
+
+    def receipt(self) -> dict[str, Any]:
+        """Snapshot emitted bytes, not a reread of the file; local, not authenticated custody."""
+        if not self._file.closed:
+            self._file.flush()
+        return {"event_count": self._sequence, "sha256": self._emitted_digest.hexdigest()}
