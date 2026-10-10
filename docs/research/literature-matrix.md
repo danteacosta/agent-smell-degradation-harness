@@ -714,3 +714,46 @@ Search/read date: 2026-10-08. Deduplicated by arXiv ID/title (not previously in 
 Context only (not matrix entries): OpenTelemetry GenAI agent-span conventions are still labelled *Development* on opentelemetry.io; third-party posts disagree on stabilization and were not used. Pin a schema version before building exporters.
 
 **Decision (2026-10-08).** Smallest incorporation: an offline continuity check. It detects gaps, re-linking and duplicate IDs inside a trace, and, given a receipt stored outside the agent's host, truncation or deletion. Without a receipt a deleted suffix is undetectable; the tests assert this limit. The wire schema, the label plane and H1/H2 are unchanged. Human decision still open: where the confirmatory runner stores the receipt (a host the agent cannot write) and whether the runner must call the check before scoring. No such runner wiring was done.
+
+
+## 2026-10-10 — Qualification controls for obligation-level evidence diagnostics
+
+Search/read date: 2026-10-10. Deduplicated by arXiv ID and title. Read abstract,
+Sections II–VI, tables and the fresh-source sensitivity analyses in the full
+[author HTML](https://arxiv.org/html/2610.08675v1).
+
+| Source / evidence | Question, sample and method | Result and limitations | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Xu et al., *Same-Number Citation Swaps: Stress-Testing Jev as a Financial Evidence Judge*, arXiv:2610.08675v1, 2026-10-06; preprint, peer review not verified | Does probabilistic source verification add value beyond deterministic number matching? 192 natural traces on 96 FinQA questions; same-number pointer swaps with equivalent-fact controls; separate 36-page constructed follow-up and one non-author reviewer. | Strong natural-record discrimination coexists with wrong-role acceptance and valid-evidence rejection. Explicit headers change both. Natural labels were unblinded assistant judgments; follow-up has no inter-human agreement, selected single-operation tasks and privately retained inspection artifacts. | Thesis: no H1/H2 evidence. Experiment: a verifier must distinguish substantive loss from harmless evidence changes. Product: qualification requires a strong deterministic baseline and valid-alternative retention. Action: use the paired qualification checklist below before evaluating an obligation-level evidence classifier; no paid run authorized by this entry. | 5/10: detailed controls and sensitivity reporting; unreviewed, narrow constructed sample, annotation uncertainty and incomplete public reproducibility. |
+
+**Blocker before:** an aggregate detection score alone does not show whether a
+future adequacy diagnostic recognizes the intended obligation or merely reacts
+to changed evidence. **Action:** specify two complementary control families and
+a matched baseline comparison. **After:** the following qualification plan is
+reviewable but unexecuted. It neither adds empirical results nor changes the
+frozen thesis protocol, B0/B3, corpus, rubric or endpoints.
+
+| Qualification family | Synthetic example, not study data | Expected decision | What is held fixed |
+| --- | --- | --- | --- |
+| Wrong obligation, matching surface value | A rule requires refunds within 30 days; the cited check asserts 30-day password expiry. | Evidence does not establish refund protection. | Number, assertion result and evidence format; only obligation binding changes. |
+| Valid alternative evidence | Two independently reviewed browser journeys both establish the same refund deadline, using different locators or assertion wording. | Both may establish protection. | Obligation and externally verified behavior; representation changes. |
+| Boundary / insufficient evidence | A check proves a refund action exists but never tests its deadline. | Insufficient evidence; do not infer coverage. | Reference policy and available evidence; no invented execution. |
+
+Before collection, freeze source revision, project_id, constraint_id, pair_id,
+reviewed expected decision, evidence pointers and development/calibration/test
+project assignments. Review both the manipulation and each valid alternative
+independently; unresolved cases remain unresolved. Synthetic examples qualify
+the instrument only and never enter confirmatory labels.
+
+Compare a deterministic obligation-ID / evidence-pointer baseline with the
+proposed semantic verifier on identical packets. Report wrong-binding rejection,
+valid-alternative retention, abstention and missing evidence separately, with
+scheduled denominators and project-level uncertainty. Select thresholds only
+on calibration projects; preserve all fixed thresholds in evaluation. If the
+baseline performs equally well, report no demonstrated incremental value.
+Accuracy, latency and cost are separate readouts; improving a component does
+not establish a release-workflow benefit.
+
+**Next human dependency:** approve the product-only qualification target and
+arrange independent review of real obligation/evidence pairs. Existing human
+annotation and prospective H1/H2 collection gates remain unchanged.
