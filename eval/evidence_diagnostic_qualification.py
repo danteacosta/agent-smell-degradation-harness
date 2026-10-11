@@ -1,0 +1,103 @@
+"""Offline qualification of obligation-level evidence diagnostics.
+
+This module evaluates already frozen decisions.  It does not fit thresholds,
+call a provider, or create scientific labels.  Expected decisions belong to
+the label plane and must never be exposed to a detector under evaluation.
+"""
+from __future__ import annotations
+
+import math
+
+
+FAMILIES = {
+    "wrong_binding": "reject",
+    "valid_alternative": "support",
+    "insufficient_evidence": "abstain",
+}
+DECISIONS = frozenset(FAMILIES.values())
+
+
+def _rate(correct: int, total: int) -> float:
+    return correct / total
+
+
+def assess_evidence_diagnostic(packet: dict) -> dict:
+    """Validate a frozen packet and score its evaluation-project decisions."""
+    if not isinstance(packet, dict) or packet.get("schema_version") != "evidence-diagnostic-qualification/v1":
+        raise ValueError("wrong evidence qualification schema")
+    split = packet.get("project_split")
+    if not isinstance(split, dict) or not split:
+        raise ValueError("project split required")
+    if not all(isinstance(k, str) and k and v in {"development", "calibration", "evaluation"}
+               for k, v in split.items()):
+        raise ValueError("invalid project split")
+    threshold = packet.get("diagnostic_threshold")
+    if (type(threshold) not in (int, float) or not math.isfinite(threshold)
+            or not 0 <= threshold <= 1
+            or packet.get("threshold_selected_on") != "calibration"):
+        raise ValueError("diagnostic threshold must be frozen on calibration projects")
+
+    records = packet.get("records")
+    if not isinstance(records, list) or not records:
+        raise ValueError("records required")
+    seen: set[str] = set()
+    evaluation = []
+    for row in records:
+        if not isinstance(row, dict):
+            raise ValueError("record must be an object")
+        required = ("record_id", "project_id", "constraint_id", "family",
+                    "expected_decision", "diagnostic_decision", "baseline_decision")
+        if any(not isinstance(row.get(key), str) or not row[key] for key in required):
+            raise ValueError("record identity and decisions must be non-empty strings")
+        if row["record_id"] in seen:
+            raise ValueError("duplicate record_id")
+        seen.add(row["record_id"])
+        if row["project_id"] not in split:
+            raise ValueError("record project absent from frozen split")
+        family = row["family"]
+        if family not in FAMILIES or row["expected_decision"] != FAMILIES[family]:
+            raise ValueError("family and expected decision disagree")
+        if row["diagnostic_decision"] not in DECISIONS or row["baseline_decision"] not in DECISIONS:
+            raise ValueError("invalid detector decision")
+        if split[row["project_id"]] == "evaluation":
+            evaluation.append(row)
+
+    if not evaluation or {row["family"] for row in evaluation} != set(FAMILIES):
+        raise ValueError("evaluation projects must contain every qualification family")
+
+    systems = {}
+    for key in ("baseline_decision", "diagnostic_decision"):
+        by_family = {}
+        total_correct = 0
+        for family, expected in FAMILIES.items():
+            subset = [row for row in evaluation if row["family"] == family]
+            correct = sum(row[key] == expected for row in subset)
+            total_correct += correct
+            by_family[family] = {"correct": correct, "total": len(subset), "rate": _rate(correct, len(subset))}
+        systems[key.removesuffix("_decision")] = {
+            "scheduled_denominator": len(evaluation),
+            "strict_correct": total_correct,
+            "strict_accuracy": _rate(total_correct, len(evaluation)),
+            "by_family": by_family,
+        }
+
+    diagnostic = systems["diagnostic"]
+    baseline = systems["baseline"]
+    return {
+        "schema_version": "evidence-diagnostic-qualification-report/v1",
+        "confirmatory_eligible": False,
+        "evaluation_projects": sorted({row["project_id"] for row in evaluation}),
+        "systems": systems,
+        "diagnostic_minus_baseline": {
+            "strict_accuracy": diagnostic["strict_accuracy"] - baseline["strict_accuracy"],
+            **{
+                family: diagnostic["by_family"][family]["rate"] - baseline["by_family"][family]["rate"]
+                for family in FAMILIES
+            },
+        },
+        "limitations": [
+            "This report qualifies a product diagnostic; it does not test H1 or H2.",
+            "Expected decisions require independent semantic review.",
+            "A positive delta on authored controls does not establish field utility.",
+        ],
+    }

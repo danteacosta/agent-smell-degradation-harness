@@ -714,3 +714,26 @@ Search/read date: 2026-10-08. Deduplicated by arXiv ID/title (not previously in 
 Context only (not matrix entries): OpenTelemetry GenAI agent-span conventions are still labelled *Development* on opentelemetry.io; third-party posts disagree on stabilization and were not used. Pin a schema version before building exporters.
 
 **Decision (2026-10-08).** Smallest incorporation: an offline continuity check. It detects gaps, re-linking and duplicate IDs inside a trace, and, given a receipt stored outside the agent's host, truncation or deletion. Without a receipt a deleted suffix is undetectable; the tests assert this limit. The wire schema, the label plane and H1/H2 are unchanged. Human decision still open: where the confirmatory runner stores the receipt (a host the agent cannot write) and whether the runner must call the check before scoring. No such runner wiring was done.
+
+## 2026-10-11 — Task-specific qualification for RE diagnostics
+
+Search/read date: 2026-10-11. Deduplicated by arXiv ID/title. Read the abstract,
+both study designs, datasets, metrics, results, cross-study discussion and threats
+in the full author text.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Dąbrowski et al., [*Large Language Models for Requirements Engineering: A Cross-Task Empirical Evaluation*](https://arxiv.org/abs/2608.21531), arXiv preprint, 2026 | How does LLM performance vary across five RE activities? Study I evaluates five small open models on 1,278 NFR reviews and 512 request-type reviews, with three runs and human assessment of generated specifications. Study II evaluates two frontier models once per configuration on Rust goals, issues and Zulip discussions; a second evaluator reviews 10% of cases. | Performance is task-dependent: reported best F1 is 0.55 for NFR classification and 0.74 for request type; traceability P@5 varies by model, artefact relation and prompt. The industrial study has no exhaustive ground truth, one ecosystem, one run per configuration and only partial double review. The advertised replication package remains pending acceptance. | Thesis: adjacent evidence only; it does not measure condition loss or T1–T3 warnings. Experiment: do not transfer a model ranking, prompt or threshold across tasks. Product: qualify the exact decision and preserve human verification. Action: add an offline, project-separated qualification evaluator that reports wrong-binding rejection, valid-alternative retention and insufficient-evidence abstention separately against a deterministic baseline. | 6/10: detailed multi-task preprint and sizeable classification sets, but peer review is unverified, industrial evidence is exploratory and replication materials are not yet public. |
+
+**Concrete incorporation.** `eval/evidence_diagnostic_qualification.py` now
+validates a frozen product-qualification packet and scores only evaluation
+projects. It requires a threshold selected on calibration projects, preserves
+the scheduled denominator and reports all three semantic control families for
+both a baseline and candidate diagnostic. It rejects missing families, duplicate
+records, split drift, non-finite thresholds and inconsistent expected decisions.
+The evaluator consumes frozen decisions only: labels remain in the post-hoc
+label plane and are not detector features.
+
+This is product-instrument qualification, not new H1/H2 evidence. Synthetic
+unit-test controls do not estimate field utility. Independent semantic review,
+real obligation/evidence pairs and a frozen product target remain human gates.
