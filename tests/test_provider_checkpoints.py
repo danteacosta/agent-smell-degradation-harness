@@ -135,6 +135,27 @@ def test_confirmatory_run_records_provider_checkpoints_without_experiment_metada
     ] * 2
 
 
+def test_confirmatory_run_rejects_trace_tampering_before_metrics(tmp_path):
+    traces = tmp_path / "traces"
+
+    class TamperingCheckpointAgent(_CheckpointAgent):
+        def execute_with_checkpoints(self, pair, *, variant, task_family):
+            next(traces.glob("*.jsonl")).write_bytes(b"forged evidence\n")
+            return super().execute_with_checkpoints(
+                pair, variant=variant, task_family=task_family
+            )
+
+    output = tmp_path / "metrics.json"
+    with pytest.raises(ValueError, match="trace integrity"):
+        run_eval_with_agent(
+            TamperingCheckpointAgent(), pairs=[_pair()],
+            task_adapters=(AcceptanceCriteriaAdapter(),), confirmatory=True,
+            split="test", source_revision="test-revision",
+            output_path=output, traces_dir=traces,
+        )
+    assert not output.exists()
+
+
 def test_confirmatory_run_rejects_agents_without_provider_checkpoints(tmp_path):
     class ArtifactOnly:
         def generate(self, pair, variant, task_family):
