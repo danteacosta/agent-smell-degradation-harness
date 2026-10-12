@@ -1,5 +1,6 @@
 from observability.trace_integrity import trace_receipt, verify_trace_continuity
 from observability.tracing import ProvenanceRecorder
+import pytest
 
 
 def _trace(tmp_path, n=4, wire_version="2.0.5", profile=None):
@@ -64,3 +65,23 @@ def test_invalid_utf8_is_reported(tmp_path):
     path = tmp_path / 'bad.jsonl'
     path.write_bytes(b'{"event_id":"\xff","sequence_number":0,"parent_event_id":null}\n')
     assert verify_trace_continuity(path)
+
+
+@pytest.mark.parametrize("count", [True, 1.0, "1", -1, None])
+def test_receipt_count_requires_a_nonnegative_integer(tmp_path, count):
+    path = _trace(tmp_path, n=1)
+    receipt = {**trace_receipt(path), "event_count": count}
+    assert "receipt event_count must be a nonnegative integer" in verify_trace_continuity(path, receipt=receipt)
+
+
+@pytest.mark.parametrize("receipt", [[], "receipt", 7])
+def test_nonobject_receipt_is_reported_without_crashing(tmp_path, receipt):
+    path = _trace(tmp_path)
+    assert verify_trace_continuity(path, receipt=receipt) == ["receipt must be an object"]
+
+
+@pytest.mark.parametrize("digest", [None, [], "", "g" * 64, "a" * 63])
+def test_receipt_digest_requires_sha256_hex(tmp_path, digest):
+    path = _trace(tmp_path)
+    receipt = {**trace_receipt(path), "sha256": digest}
+    assert "receipt sha256 must be 64 lowercase hexadecimal characters" in verify_trace_continuity(path, receipt=receipt)
