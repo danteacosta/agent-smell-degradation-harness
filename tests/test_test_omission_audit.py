@@ -114,6 +114,33 @@ def test_sheet_and_score_end_to_end(tmp_path):
     assert result["blinding_source_guesses"] == {"unknown": 208}
 
 
+@pytest.mark.parametrize("source_group,target_group", [("P", "R"), ("R", "P")])
+def test_score_rejects_adjudicated_item_moved_to_another_group(tmp_path, source_group, target_group):
+    pytest.importorskip("openpyxl")
+    from openpyxl import load_workbook
+
+    frame = json.loads((audit.AUDIT / "audit-frame.json").read_text())
+    out = tmp_path / "audit"
+    audit.build_sheet(fake_study(tmp_path, frame), out, frame)
+    labels = {"P": "assercao_insuficiente", "R": "exige_violacao_da_regra"}
+    template = out / "auditoria-testes-codificador_a.xlsx"
+    fill(template, tmp_path / "a.xlsx", lambda g, i: labels[g])
+    fill(template, tmp_path / "final.xlsx", lambda g, i: labels[g])
+    wb = load_workbook(tmp_path / "final.xlsx")
+    source, target = wb[audit.SHEETS[source_group]], wb[audit.SHEETS[target_group]]
+    header = [cell.value for cell in source[1]]
+    values = [cell.value for cell in source[2]]
+    values[header.index("categoria")] = labels[target_group]
+    source.delete_rows(2)
+    row_by_header = dict(zip(header, values))
+    target.append([row_by_header.get(cell.value) for cell in target[1]])
+    wb.save(tmp_path / "final.xlsx")
+    key = json.loads((out / "chave-privada.json").read_text())
+    with pytest.raises(ValueError, match="adjudicated.*wrong group"):
+        audit.score(key, audit.suites_from_dir(out, key), tmp_path / "a.xlsx",
+                    tmp_path / "a.xlsx", tmp_path / "final.xlsx")
+
+
 def test_score_requires_literal_quote(tmp_path):
     pytest.importorskip("openpyxl")
     frame = json.loads((audit.AUDIT / "audit-frame.json").read_text())
