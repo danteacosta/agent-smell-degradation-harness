@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-08
+Last updated: 2026-10-12
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -715,6 +715,82 @@ Context only (not matrix entries): OpenTelemetry GenAI agent-span conventions ar
 
 **Decision (2026-10-08).** Smallest incorporation: an offline continuity check. It detects gaps, re-linking and duplicate IDs inside a trace, and, given a receipt stored outside the agent's host, truncation or deletion. Without a receipt a deleted suffix is undetectable; the tests assert this limit. The wire schema, the label plane and H1/H2 are unchanged. Human decision still open: where the confirmatory runner stores the receipt (a host the agent cannot write) and whether the runner must call the check before scoring. No such runner wiring was done.
 
+## 2026-10-09 — Provenance validation and receipt contracts
+
+Search/read date: 2026-10-09. Deduplicated by URL/title. Read the abstract, scope, validation rationale, compliance discussion and constraint definitions of the primary recommendation.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Cheney, Missier, Moreau and De Nies, [*Constraints of the PROV Data Model*](https://www.w3.org/TR/prov-constraints/), W3C Recommendation, 2013; primary standard, not an empirical paper | How can provenance consistency be checked? No experimental sample; formal definitions, normalization and uniqueness, ordering, typing and impossibility constraints. | Defines consistent provenance, not truth or authenticity. PROV-specific rules do not directly specify our JSON receipt. | Thesis: structural consistency must not be confused with semantic validity. Experiment: validate receipt object/count/digest types before comparison; reject boolean or float counts and malformed receipts. Product: integrity diagnostics need explicit input contracts. Action: regression tests and strict receipt validation; not a PROV-compliance claim. | 9/10 for normative provenance guidance: stable reviewed standard with formal rules; no empirical support for H1/H2 or cryptographic authenticity. |
+
+**Concrete incorporation.** `observability/trace_integrity.py` now checks a receipt before comparisons. Two malformed counts (`true`, `1.0`) previously passed for a one-event trace; non-object receipts could crash. Thirteen regression cases cover counts, receipt shapes and digest syntax. Existing trace and audit tests remain covered. This is a local contract derived from the emitter, not a requirement imposed by PROV.
+
+**Remaining human gate.** Decide out-of-band receipt custody and integration into the runner before confirmatory collection. A digest does not authenticate its author; a receipt regenerated after modification cannot prove the original trace. No change to B0/B3, labels, endpoints or frozen data.
+
+## 2026-10-12 — Evaluator miss rates are run-unstable and model-version-dependent
+
+Search/read date: 2026-10-12. Deduplicated by arXiv ID/title (not previously in
+the matrix). Read the abstract, requirement sets, ground-truth procedure,
+experimental design, per-criterion and per-generation results and sensitivity
+probes in the full author PDF. Search hits not read in full (not entries):
+AgentLTL (arXiv 2607.02599), TRACES (2605.27690), UnderSpecBench (2607.02294),
+*Engineering Reliable Coding Agents* (2608.13867); candidates for a later run.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Shefa, Salado, Wach and Topcu, [*Two Truths and A Lie? Benchmarking Off-the-Shelf LLMs for Requirements Quality Assessment*](https://arxiv.org/abs/2609.03230), arXiv preprint, 2026 | Can off-the-shelf LLMs judge requirement quality against nine INCOSE criteria? Ten OpenAI/Anthropic models, 100 independent runs per configuration, two requirement sets (13 and 20 requirements; 117 and 180 binary requirement-criterion cells), five sampling temperatures; ground truth from three evaluators with independent rating followed by consensus. | Best Anthropic model: median 47% of expert-identified issues detected, 11% false flags. Necessity and correctness issues are almost always missed; completeness has the widest run-to-run FNR range (0.00–1.00). Newer GPT generations are not monotonically better. Temperature changes error rates only modestly. Limits: systems-engineering requirements (not code or UI), tiny sets from two sources, single consensus labels with no reported agreement statistic, a quality-criterion task rather than condition loss, preprint without verified peer review. | Thesis: adjacent evidence that LLM evaluators under-detect missing/necessary content; it does not test H1/H2. Experiment: supports the existing rule that LLM-panel verdicts on A/B/C validity stay provisional until controls and the 20% human audit; a pooled correct-rate can hide a failing replication, and a model-version change can reverse quality. Product: any triage claim needs a measured miss rate per issue type with a human in the loop. Action: `score_controls` now reports each replication separately (`by_replication`, `deleted_miss_rate`, `replication_range`). | 5/10: transparent design and many repeated runs, but a preprint, very small non-software requirement sets, unreported annotator agreement and no replication package confirmed. |
+
+**Concrete incorporation.** `label_plane/judge_controls.py` keeps its pooled
+`correct_over_planned` but adds per-replication correct rates, the
+deleted-control miss rate per replication and the min/max range. A test builds
+one perfect and one constant-clean replication: the pooled rate is 0.75 while
+the replications are 1.0 and 0.5, and the deleted-control miss rate is 0 and 1.
+This is a diagnostic over synthetic controls (`confirmatory_eligible` stays
+false); it does not qualify any judge. Human decisions still open: the
+acceptable replication spread for admitting a panel configuration, and who
+performs the 20% human audit.
+
+## 2026-10-10 — Qualification controls for obligation-level evidence diagnostics
+
+Search/read date: 2026-10-10. Deduplicated by arXiv ID and title. Read abstract,
+Sections II–VI, tables and the fresh-source sensitivity analyses in the full
+[author HTML](https://arxiv.org/html/2610.08675v1).
+
+| Source / evidence | Question, sample and method | Result and limitations | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Xu et al., *Same-Number Citation Swaps: Stress-Testing Jev as a Financial Evidence Judge*, arXiv:2610.08675v1, 2026-10-06; preprint, peer review not verified | Does probabilistic source verification add value beyond deterministic number matching? 192 natural traces on 96 FinQA questions; same-number pointer swaps with equivalent-fact controls; separate 36-page constructed follow-up and one non-author reviewer. | Strong natural-record discrimination coexists with wrong-role acceptance and valid-evidence rejection. Explicit headers change both. Natural labels were unblinded assistant judgments; follow-up has no inter-human agreement, selected single-operation tasks and privately retained inspection artifacts. | Thesis: no H1/H2 evidence. Experiment: a verifier must distinguish substantive loss from harmless evidence changes. Product: qualification requires a strong deterministic baseline and valid-alternative retention. Action: use the paired qualification checklist below before evaluating an obligation-level evidence classifier; no paid run authorized by this entry. | 5/10: detailed controls and sensitivity reporting; unreviewed, narrow constructed sample, annotation uncertainty and incomplete public reproducibility. |
+
+**Blocker before:** an aggregate detection score alone does not show whether a
+future adequacy diagnostic recognizes the intended obligation or merely reacts
+to changed evidence. **Action:** specify two complementary control families and
+a matched baseline comparison. **After:** the following qualification plan is
+reviewable but unexecuted. It neither adds empirical results nor changes the
+frozen thesis protocol, B0/B3, corpus, rubric or endpoints.
+
+| Qualification family | Synthetic example, not study data | Expected decision | What is held fixed |
+| --- | --- | --- | --- |
+| Wrong obligation, matching surface value | A rule requires refunds within 30 days; the cited check asserts 30-day password expiry. | Evidence does not establish refund protection. | Number, assertion result and evidence format; only obligation binding changes. |
+| Valid alternative evidence | Two independently reviewed browser journeys both establish the same refund deadline, using different locators or assertion wording. | Both may establish protection. | Obligation and externally verified behavior; representation changes. |
+| Boundary / insufficient evidence | A check proves a refund action exists but never tests its deadline. | Insufficient evidence; do not infer coverage. | Reference policy and available evidence; no invented execution. |
+
+Before collection, freeze source revision, project_id, constraint_id, pair_id,
+reviewed expected decision, evidence pointers and development/calibration/test
+project assignments. Review both the manipulation and each valid alternative
+independently; unresolved cases remain unresolved. Synthetic examples qualify
+the instrument only and never enter confirmatory labels.
+
+Compare a deterministic obligation-ID / evidence-pointer baseline with the
+proposed semantic verifier on identical packets. Report wrong-binding rejection,
+valid-alternative retention, abstention and missing evidence separately, with
+scheduled denominators and project-level uncertainty. Select thresholds only
+on calibration projects; preserve all fixed thresholds in evaluation. If the
+baseline performs equally well, report no demonstrated incremental value.
+Accuracy, latency and cost are separate readouts; improving a component does
+not establish a release-workflow benefit.
+
+**Next human dependency:** approve the product-only qualification target and
+arrange independent review of real obligation/evidence pairs. Existing human
+annotation and prospective H1/H2 collection gates remain unchanged.
 
 ## 2026-10-11 — Requirement-derived test oracles: a ten-bug pilot, and why unknowns stay in denominators
 
