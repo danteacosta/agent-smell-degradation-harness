@@ -7,6 +7,7 @@ the label plane and must never be exposed to a detector under evaluation.
 from __future__ import annotations
 
 import math
+import re
 
 
 FAMILIES = {
@@ -15,6 +16,7 @@ FAMILIES = {
     "insufficient_evidence": "abstain",
 }
 DECISIONS = frozenset(FAMILIES.values())
+SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 
 def _rate(correct: int, total: int) -> float:
@@ -37,6 +39,21 @@ def assess_evidence_diagnostic(packet: dict) -> dict:
             or packet.get("threshold_selected_on") != "calibration"):
         raise ValueError("diagnostic threshold must be frozen on calibration projects")
 
+    review = packet.get("label_review")
+    if not isinstance(review, dict):
+        raise ValueError("label review manifest required")
+    reviewers = review.get("reviewer_ids")
+    if (not isinstance(reviewers, list) or len(reviewers) < 2
+            or any(not isinstance(value, str) or not value for value in reviewers)
+            or len(set(reviewers)) != len(reviewers)):
+        raise ValueError("at least two distinct label reviewers required")
+    if (review.get("predictions_hidden_during_review") is not True
+            or review.get("completed_before_scoring") is not True):
+        raise ValueError("label review must be blind and frozen before scoring")
+    for key in ("rubric_sha256", "frozen_labels_sha256"):
+        if not isinstance(review.get(key), str) or not SHA256.fullmatch(review[key]):
+            raise ValueError(f"valid {key} required")
+
     records = packet.get("records")
     if not isinstance(records, list) or not records:
         raise ValueError("records required")
@@ -45,7 +62,7 @@ def assess_evidence_diagnostic(packet: dict) -> dict:
     for row in records:
         if not isinstance(row, dict):
             raise ValueError("record must be an object")
-        required = ("record_id", "project_id", "constraint_id", "family",
+        required = ("record_id", "pair_id", "project_id", "constraint_id", "family",
                     "expected_decision", "diagnostic_decision", "baseline_decision")
         if any(not isinstance(row.get(key), str) or not row[key] for key in required):
             raise ValueError("record identity and decisions must be non-empty strings")
@@ -64,6 +81,16 @@ def assess_evidence_diagnostic(packet: dict) -> dict:
 
     if not evaluation or {row["family"] for row in evaluation} != set(FAMILIES):
         raise ValueError("evaluation projects must contain every qualification family")
+
+    pair_projects: dict[str, set[str]] = {}
+    pair_constraints: dict[str, set[str]] = {}
+    for row in records:
+        pair_projects.setdefault(row["pair_id"], set()).add(row["project_id"])
+        pair_constraints.setdefault(row["pair_id"], set()).add(row["constraint_id"])
+    if any(len(projects) != 1 for projects in pair_projects.values()):
+        raise ValueError("pair_id must not cross projects")
+    if any(len(constraints) != 1 for constraints in pair_constraints.values()):
+        raise ValueError("pair_id must identify one frozen constraint")
 
     systems = {}
     for key in ("baseline_decision", "diagnostic_decision"):
@@ -87,6 +114,13 @@ def assess_evidence_diagnostic(packet: dict) -> dict:
         "schema_version": "evidence-diagnostic-qualification-report/v1",
         "confirmatory_eligible": False,
         "evaluation_projects": sorted({row["project_id"] for row in evaluation}),
+        "label_review": {
+            "reviewer_count": len(reviewers),
+            "predictions_hidden_during_review": True,
+            "completed_before_scoring": True,
+            "rubric_sha256": review["rubric_sha256"],
+            "frozen_labels_sha256": review["frozen_labels_sha256"],
+        },
         "systems": systems,
         "diagnostic_minus_baseline": {
             "strict_accuracy": diagnostic["strict_accuracy"] - baseline["strict_accuracy"],
@@ -97,7 +131,7 @@ def assess_evidence_diagnostic(packet: dict) -> dict:
         },
         "limitations": [
             "This report qualifies a product diagnostic; it does not test H1 or H2.",
-            "Expected decisions require independent semantic review.",
+            "The manifest records independent blind review but cannot prove reviewer independence.",
             "A positive delta on authored controls does not establish field utility.",
         ],
     }

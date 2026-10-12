@@ -737,3 +737,23 @@ label plane and are not detector features.
 This is product-instrument qualification, not new H1/H2 evidence. Synthetic
 unit-test controls do not estimate field utility. Independent semantic review,
 real obligation/evidence pairs and a frozen product target remain human gates.
+
+## 2026-10-12 — Compliance validation needs auditable human control
+
+Search/read date: 2026-10-12. Deduplicated by arXiv ID/title. Read the full
+HTML manuscript: research design, interview and survey samples, results,
+derived minimum requirements and limitations. A related paper by the same
+first author appears in the RE 2026 Doctoral Symposium proceedings; this does
+not establish peer review of the survey manuscript itself.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Lai et al., [*From Obligation to Specification: A Survey on Validating EU AI Act Requirements in Requirements Engineering*](https://arxiv.org/abs/2607.21608), arXiv preprint, 2026 | How do practitioners validate AI Act requirements, and what should an agentic assistant provide? Ten expert interviews (five industry, five academia) followed by a 15-person survey; qualitative coding plus descriptive statistics. | Work was largely manual and fragmented; respondents preferred a human-in-the-loop assistant with citations, audit logs, guardrails, access control, uncertainty and explicit missing-evidence handling. Reported willingness to pilot and expected time/coverage gains are intentions, not observed product outcomes. Limits include convenience sampling, self-report and social-desirability bias, a small mainly German sample, and no inferential statistics or field validation. | Thesis: no H1/H2 evidence. Experiment: reinforces that frozen labels and detector outputs need a visible separation. Product: compliance is a plausible discovery niche, but buyer demand and effectiveness remain unvalidated. Action: require a blind-review manifest with two distinct reviewers, frozen rubric/label hashes, and pair identity that cannot cross projects or constraints in the offline product-qualification packet. | 6/10: full methods and candid limitations, directly relevant to the workflow; exploratory preprint with a very small convenience sample and no measured product impact. |
+
+**Concrete incorporation.** `eval/evidence_diagnostic_qualification.py` now
+fails closed unless expected decisions were frozen before scoring, predictions
+were hidden from at least two distinct reviewers, and the rubric and label set
+have SHA-256 receipts. Every record has a `pair_id`; a pair cannot silently
+cross a project or constraint. This makes the review claim auditable as a
+recorded contract, but it cannot prove that reviewers were genuinely
+independent. Real reviewers and real policy/evidence pairs remain human gates.
