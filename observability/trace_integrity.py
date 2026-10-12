@@ -22,8 +22,8 @@ def trace_receipt(path: Path | str) -> dict[str, Any]:
     }
 
 
-def verify_trace_continuity(
-    path: Path | str, *, receipt: dict[str, Any] | None = None
+def _verify_trace_data(
+    data: bytes, *, receipt: dict[str, Any] | None = None
 ) -> list[str]:
     """Return a list of integrity problems; an empty list means none were found."""
     problems: list[str] = []
@@ -39,10 +39,6 @@ def verify_trace_continuity(
             problems.append("receipt sha256 must be 64 lowercase hexadecimal characters")
         if problems:
             return problems
-    try:
-        data = Path(path).read_bytes()
-    except FileNotFoundError:
-        return ["trace file is missing"]
     seen: set[str] = set()
     previous_id: str | None = None
     count = 0
@@ -83,3 +79,28 @@ def verify_trace_continuity(
         if hashlib.sha256(data).hexdigest() != receipt.get("sha256"):
             problems.append("SHA-256 differs from receipt")
     return problems
+
+
+def verify_trace_continuity(
+    path: Path | str, *, receipt: dict[str, Any] | None = None
+) -> list[str]:
+    """Check one snapshot of the trace against an optional independently held receipt."""
+    try:
+        data = Path(path).read_bytes()
+    except FileNotFoundError:
+        return ["trace file is missing"]
+    return _verify_trace_data(data, receipt=receipt)
+
+
+def read_verified_trace(path: Path | str, *, receipt: dict[str, Any]) -> list[dict[str, Any]]:
+    """Return exactly the verified byte snapshot; refuse missing or altered evidence."""
+    if receipt is None:
+        raise ValueError("trace integrity check failed: receipt is required")
+    try:
+        data = Path(path).read_bytes()
+    except OSError as exc:
+        raise ValueError("trace integrity check failed: trace cannot be read") from exc
+    problems = _verify_trace_data(data, receipt=receipt)
+    if problems:
+        raise ValueError("trace integrity check failed: " + "; ".join(problems))
+    return [json.loads(line) for line in data.decode("utf-8").splitlines() if line.strip()]
