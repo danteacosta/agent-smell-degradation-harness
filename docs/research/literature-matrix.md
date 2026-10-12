@@ -572,7 +572,7 @@ quantitative anchor or thesis/experiment recommendation is assigned here.
 | [What Prompts Don't Say](https://arxiv.org/abs/2505.13360v3) | Chenyang Yang, Yike Shi, Qianou Ma, Michael Xieyang Liu, Christian Kästner, Tongshuang Wu | Abstract only; full-text review pending. |
 | [From Business Requirements to Test Assertions](https://arxiv.org/abs/2607.10277v1) | Ma and Eisty | Abstract only; full-text review pending. |
 | [Clarity Is Not Assumed (Orchid)](https://arxiv.org/abs/2604.21505v3) | Yang et al. | Relevant full-text sections read on 2026-10-09; see the 2026-10-09 entry at the end of this file. |
-| [ClarifyCodeBench](https://arxiv.org/abs/2607.00711v2) | Fang et al. | Abstract only; full-text review pending. |
+| [ClarifyCodeBench](https://arxiv.org/abs/2607.00711v2) | Fang et al. | Relevant full-text sections read on 2026-10-10; see the ClarifyCodeBench entry at the end of this file. |
 
 **Source verification, 2026-10-04.** Review of [Akli et al.'s primary methods,
 results and threats](https://arxiv.org/html/2604.24712v1) corrected the mutation
@@ -858,3 +858,24 @@ have SHA-256 receipts. Every record has a `pair_id`; a pair cannot silently
 cross a project or constraint. This makes the review claim auditable as a
 recorded contract, but it cannot prove that reviewers were genuinely
 independent. Real reviewers and real policy/evidence pairs remain human gates.
+
+## 2026-10-10 — Deletion-only underspecification and clarification (ClarifyCodeBench)
+
+Search/read date: 2026-10-10. Deduplicated by arXiv ID: 2607.00711 was previously
+an abstract-level row in the pending queue (2026-10-04, re-checked 2026-10-05); this
+entry records the full-text reading (benchmark construction, annotation, simulator,
+metrics, results, limitations) of [v2](https://arxiv.org/html/2607.00711v2). Searches
+the same day for other incompleteness studies returned only already-listed or
+adjacent items (Orchid 2604.21505, What Prompts Don't Say); two items surfaced
+(arXiv 2507.20439, 2511.05874) at snippet level only and are not entries. The
+OpenTelemetry GenAI repository README states no stability level or release; the
+existing "Development, pin a schema version" note stands.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Fang, Jin, Dong, Li, Zhang, Jin, Li, [*ClarifyCodeBench: Evaluating LLMs on Clarifying Ambiguous Requirements for Code Generation*](https://arxiv.org/abs/2607.00711), arXiv preprint v2 (31 Aug 2026; no peer-reviewed venue listed) | Can LLMs ask the right questions about missing information? 419 tasks from LiveCodeBench v6 (199 with one ambiguity point, 169 with two, 51 with three). Two PhD annotators delete information from complete statements ("deletion-only editing", no additions, solution unchanged), cross-check edits and write one key question and one ground-truth answer per point; ten ambiguity types. The environment answers only when a GPT-4o judge (3 samples, majority) matches the model's question to a key question (Cohen's kappa 0.89 vs human labels). Metrics: turn-discounted key-question rate (TKQR) and optimal-round adherence (ORA). Six model families, including Claude-Sonnet-4.5 with and without thinking. | Pass@1 after the interactive ambiguity-resolution pipeline is 7.8 to 19.8 points below pass@1 with the full statement for every model; this is not a direct-generation comparison without clarification; best rates of recovering all key questions fall from 0.30 (one ambiguity point) to 0.08 (two) and near zero (three); thinking does not reliably improve clarification. Limits: function-level competitive-programming tasks, no agentic workflow, possible LiveCodeBench contamination, residual judge noise, no statement distinguishing incompleteness from ambiguity, and data/code location not stated in the text read. Not peer-reviewed as read. | Thesis: independent support that deletion-only edits of complete specifications lower downstream correctness, consistent in direction with H1a; it is a different task family (function-level, hidden-test pass@1, no browser oracle) and gives no effect size for A/C pairs. Experiment: the deletion-only rule matches the C construction. Action: make "deletion-only, no added information" an explicit, checkable property in the C-version review rubric; report per-pair annotator edits and agreement; add contamination of the source requirement/repository as a stated threat. Pass@1 drops are not expectations for this study. Product: its question-matching judge shows a clarification workflow is distinct from post-hoc loss detection; hypothesis only. | 6 (clear construction and annotation, six models, kappa reported; preprint, function-level, contamination concern, no code location stated) |
+
+**Decision needed from Dante (not applied):** whether the C-version review rubric
+should require a recorded "deletion-only" attestation per pair. This entry changes no
+hypothesis, label, protocol or code, and makes no provider call. Related dated entries originated in literature-matrix PRs #204, #205 and #208;
+preserve all during integration.
