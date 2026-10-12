@@ -53,6 +53,18 @@ class JudgeControlsTests(unittest.TestCase):
                               "abstained": 1, "correct": 8}.items():
             self.assertEqual(score[key], expected)
 
+    def test_pooled_rate_does_not_hide_a_failing_replication(self):
+        good, bad = records(), records(True)
+        for row in good:
+            row["replication_id"] = 0
+        for row in bad:
+            row["replication_id"] = 1
+        score = score_controls(good + bad, [CONFIG], 2)["configurations"][CONFIG]
+        self.assertEqual(score["correct_over_planned"], 0.75)
+        self.assertEqual([r["correct_over_planned"] for r in score["by_replication"]], [1, 0.5])
+        self.assertEqual([r["deleted_miss_rate"] for r in score["by_replication"]], [0, 1])
+        self.assertEqual(score["replication_range"], {"min": 0.5, "max": 1})
+
     def test_empty_results_are_not_perfect_robustness(self):
         score = score_controls([], [CONFIG], 1)["configurations"][CONFIG]
         self.assertEqual(score["missing"], 12)

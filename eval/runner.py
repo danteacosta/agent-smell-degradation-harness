@@ -18,6 +18,7 @@ from eval.metrics import aggregate_metrics
 from eval.provider_manifest import ProviderRunMetadata, summarize_provider_runs
 from mitigation.pipeline import prepare_requirement
 from observability.tracing import ProvenanceRecorder
+from observability.trace_integrity import read_verified_trace
 from protocol.arp3 import write_confirmatory_manifest
 from observability.semantic_lint import validate_events
 from pairs.loader import load_all_pairs
@@ -212,6 +213,11 @@ def _run_episode(
         {"episode_id": episode_id, "artifact_field_count": len(artifact)},
         tier="A",
     )
+    try:
+        read_verified_trace(trace_path, receipt=rec.receipt())
+    except ValueError:
+        rec.close()
+        raise
     task_evaluation = task_adapter.evaluate(
         intent_id=intent_id,
         artifact=artifact,
@@ -256,11 +262,7 @@ def _run_episode(
             tier="B",
         )
     rec.close()
-    trace_events = [
-        json.loads(line)
-        for line in trace_path.read_text(encoding="utf-8").splitlines()
-        if line.strip()
-    ]
+    trace_events = read_verified_trace(trace_path, receipt=rec.receipt())
     manifest_path: Path | None = None
     if confirmatory:
         if split is None or source_revision is None:
@@ -306,6 +308,7 @@ def _run_episode(
         "oracle_passed": task_evaluation.passed,
         "semantic_label": semantic_label,
         "provenance_path": str(trace_path),
+        "trace_receipt": rec.receipt(),
         "arp_manifest_path": str(manifest_path) if manifest_path is not None else None,
         "has_semantic_provenance": has_semantic_provenance,
         "semantic_lint": {
@@ -498,6 +501,10 @@ def run_eval_with_agent(
             episode["traceability_valid"] = validation["traceability"]
             episode["has_semantic_provenance"] = validation["traceability"]
 
+    # A later episode/validator may alter an earlier file. Recheck all receipts
+    # before publishing metrics; these receipts remain same-host runner memory.
+    for episode in episodes:
+        read_verified_trace(episode["provenance_path"], receipt=episode["trace_receipt"])
     metrics = aggregate_metrics(episodes)
     provider_name = str(getattr(agent, "provider", "deterministic-stub"))
     mode = str(

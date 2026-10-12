@@ -151,7 +151,7 @@ experiment evidence.
 
 - [Triagem das opções confirmatórias, 5 de outubro de 2026](2026-10-05-confirmatory-screening-results.md): 367 candidatos, 162 admitidos provisoriamente em oito projetos, dois sem decisão; recibos auditados, seleção e novos E2Es pendentes.
 
-- [Comparison of the historical "vaguer" group with Orchid](2026-10-05-orchid-comparison-note.md): intervention differences and limits of the interpretation; revised 2026-10-09 after a full-text reading.
+- [Comparison of the historical "vaguer" group with Orchid](2026-10-05-orchid-comparison-note.md): intervention differences and limits of the interpretation; revised 2026-10-12 with factual corrections to the relevant full-text reading of 2026-10-09.
 - [Claude shared-omission E2Es after Docker recovery](2026-10-06-claude-shared-omission-e2e-evaluated.md): Sonnet and Opus reported separately; 2,263 browser reports, seven runner errors, original failed evaluation preserved. Exploratory, no new generation calls.
 - [Claude shared-omission replication: generation complete, Docker evaluation unavailable](2026-10-06-claude-shared-omission-e2e-results.md). 300 unique calls, 297 saved suites, no browser verdicts; this is an execution failure, not a null effect.
 - [Claude Pro: setup Sonnet/Opus e qualificação técnica](2026-10-06-claude-subscription-setup.md).

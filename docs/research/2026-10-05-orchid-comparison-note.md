@@ -1,10 +1,10 @@
 # Comparing the historical "vaguer" group with Orchid
 
-Revised 2026-10-09 (English translation of the 2026-10-05 note, with the full-text reading added). The comparison discusses design differences; the results do not establish a direct contradiction.
+Revised 2026-10-12 (English translation of the 2026-10-05 note, incorporating the relevant full-text reading of 2026-10-09 and factual corrections verified on 2026-10-12). The comparison discusses design differences; the results do not establish a direct contradiction.
 
-In the five historical requirements classified as "vaguer", 20 A/H pairs showed worse behaviour. H keeps the whole of C and adds the old passage verbatim in another paragraph. This keeps the modern context controlled but changes the position of the passage and may repeat information. The subset was chosen after the A/C results were known, and repetitions of one requirement are not independent units. The exploratory result shows little degradation in this slice; it does not show that vagueness has no effect in general.
+In the five historical requirements classified as "vaguer", one of the 20 A/H pairs showed worse behaviour. H keeps the whole of C and adds the old passage verbatim in another paragraph. This keeps the modern context controlled but changes the position of the passage and may repeat information. The subset was chosen after the A/C results were known, and repetitions of one requirement are not independent units. The exploratory result shows little degradation in this slice; it does not show that vagueness has no effect in general.
 
-[Orchid / Clarity Is Not Assumed](https://arxiv.org/abs/2604.21505) (Yang et al., arXiv preprint v3, 2026-09-27; not peer-reviewed as read) studies function-level tasks with injected ambiguity: 1,312 curated variants (Orchid-HEval and Orchid-BCB) plus 3,904 uncurated variants (Orchid-BCB-Expand); the abstract cites 1,304 tasks, a discrepancy left unresolved here. Its criterion requires at least two plausible interpretations that lead to functionally different implementations. It reports a mean Pass@1 drop of 7.22 points (16.25% relative) from single-run tables, with no significance testing.
+[Orchid / Clarity Is Not Assumed](https://arxiv.org/abs/2604.21505) (Yang et al., author manuscript v3, 2026-09-27; its header identifies ASE 2026 proceedings and DOI [10.1145/3832783.3834403](https://doi.org/10.1145/3832783.3834403), without independent verification of peer-review history here) studies function-level tasks with injected ambiguity: 1,312 curated variants (Orchid-HEval and Orchid-BCB) plus 3,904 uncurated variants (Orchid-BCB-Expand). These are 5,216 ambiguous variants of 1,304 source tasks, with four ambiguity types per task; task and variant counts are different units. Its criterion requires at least two plausible interpretations that lead to functionally different implementations. It reports a mean Pass@1 drop of 7.22 points (16.25% relative) from single-run tables, with no significance testing.
 
 What the full-text reading adds (2026-10-09):
 
@@ -12,7 +12,7 @@ What the full-text reading adds (2026-10-09):
 - DeepSeek-V3 generated and judged the ambiguous variants and is also an evaluated model; GPT-4 is both an evaluated model and the recognition judge. This is the generator/judge overlap this project already treats as a threat (matrix entry 2026-09-22).
 - Treatment, context and unit of analysis differ from the historical reconstruction with scaffold used here: one injected ambiguity per function-level task versus a browser oracle over a multi-paragraph project documentation page.
 
-Suggested wording for the defense and dissertation: "The five-case historical group showed little degradation. Orchid found degradation in its injected-ambiguity design, which does not include omission of a testable condition. The studies use different interventions, contexts and units; these elements must be compared before attributing the difference to the smell type."
+Suggested wording for the defense and dissertation: "The five-case historical group showed little degradation. Orchid found degradation in its injected-ambiguity design, which does not separately evaluate omission of a testable condition. The studies use different interventions, contexts and units; these elements must be compared before attributing the difference to the smell type."
 
 The design and construction of H are in the [historical arm protocol](2026-10-04-historical-arm-protocol.md); counts are in the [results report](2026-10-05-historical-arm-results.md).
 
