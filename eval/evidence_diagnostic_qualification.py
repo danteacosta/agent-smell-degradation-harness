@@ -6,6 +6,8 @@ the label plane and must never be exposed to a detector under evaluation.
 """
 from __future__ import annotations
 
+import hashlib
+import json
 import math
 import re
 
@@ -17,6 +19,7 @@ FAMILIES = {
 }
 DECISIONS = frozenset(FAMILIES.values())
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
+LABEL_FIELDS = ("record_id", "pair_id", "project_id", "constraint_id", "family", "expected_decision")
 
 
 def _rate(correct: int, total: int) -> float:
@@ -54,6 +57,24 @@ def assess_evidence_diagnostic(packet: dict) -> dict:
         if not isinstance(review.get(key), str) or not SHA256.fullmatch(review[key]):
             raise ValueError(f"valid {key} required")
 
+    frozen_labels = packet.get("frozen_labels")
+    if not isinstance(frozen_labels, list) or not frozen_labels:
+        raise ValueError("frozen label inventory required")
+    scheduled = {}
+    for label in frozen_labels:
+        if (not isinstance(label, dict) or set(label) != set(LABEL_FIELDS)
+                or any(not isinstance(label[key], str) or not label[key] for key in LABEL_FIELDS)):
+            raise ValueError("invalid frozen label identity")
+        if label["record_id"] in scheduled:
+            raise ValueError("duplicate frozen record_id")
+        scheduled[label["record_id"]] = label
+    canonical_labels = json.dumps(
+        {"project_split": split, "labels": frozen_labels},
+        sort_keys=True, separators=(",", ":"), ensure_ascii=True,
+    ).encode("utf-8")
+    if hashlib.sha256(canonical_labels).hexdigest() != review["frozen_labels_sha256"]:
+        raise ValueError("frozen label inventory does not match its SHA-256 receipt")
+
     records = packet.get("records")
     if not isinstance(records, list) or not records:
         raise ValueError("records required")
@@ -68,6 +89,9 @@ def assess_evidence_diagnostic(packet: dict) -> dict:
             raise ValueError("record identity and decisions must be non-empty strings")
         if row["record_id"] in seen:
             raise ValueError("duplicate record_id")
+        label = {key: row[key] for key in LABEL_FIELDS}
+        if scheduled.get(row["record_id"]) != label:
+            raise ValueError("record differs from frozen label identity")
         seen.add(row["record_id"])
         if row["project_id"] not in split:
             raise ValueError("record project absent from frozen split")
@@ -78,6 +102,9 @@ def assess_evidence_diagnostic(packet: dict) -> dict:
             raise ValueError("invalid detector decision")
         if split[row["project_id"]] == "evaluation":
             evaluation.append(row)
+
+    if seen != set(scheduled):
+        raise ValueError("results do not exactly cover the frozen label inventory")
 
     if not evaluation or {row["family"] for row in evaluation} != set(FAMILIES):
         raise ValueError("evaluation projects must contain every qualification family")
@@ -133,5 +160,6 @@ def assess_evidence_diagnostic(packet: dict) -> dict:
             "This report qualifies a product diagnostic; it does not test H1 or H2.",
             "The manifest records independent blind review but cannot prove reviewer independence.",
             "A positive delta on authored controls does not establish field utility.",
+            "The receipt binds supplied labels; external custody must establish who froze it and when.",
         ],
     }

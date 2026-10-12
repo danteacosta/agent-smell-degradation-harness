@@ -733,6 +733,12 @@ both a baseline and candidate diagnostic. It rejects missing families, duplicate
 records, split drift, non-finite thresholds and inconsistent expected decisions.
 The evaluator consumes frozen decisions only: labels remain in the post-hoc
 label plane and are not detector features.
+The separate frozen-label inventory is checked against its canonical SHA-256
+receipt together with the project split, and results must cover exactly those
+identities and expected decisions.
+Deleting a failed record, adding an unplanned record, or changing a label fails
+closed before scoring. The [packet contract](evidence-diagnostic-qualification.md)
+defines the digest encoding and the external-custody limitation.
 
 This is product-instrument qualification, not new H1/H2 evidence. Synthetic
 unit-test controls do not estimate field utility. Independent semantic review,
