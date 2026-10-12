@@ -15,6 +15,11 @@ The [Paperless barcode A/B/C pilot](docs/research/2026-10-01-paperless-barcode-a
 
 **Product scope:** advisory constraint diagnostics for coding agents. Given a specification and a live trace, show which condition may have lost traceability, at which checkpoint, and with what evidence. Automatic semantic approval, defect prevention and product usefulness have not been validated. Deterministic policy checks remain separate from the confirmatory thesis protocol.
 
+The [local trace integrity gate](docs/research/2026-10-09-local-trace-emission-gate.md)
+checks emitted bytes before task evaluation and metric publication. Its receipts
+remain on the runner host; independent custody and authenticated authorship are
+not established.
+
 **Current evidence boundary:** without human calibration, semantic judgments are
 advisory diagnostics, not validated approval or blocking decisions. Deterministic
 contract failures remain distinct. The [annotation-free evaluation track](docs/research/annotation-free-evaluation.md)
