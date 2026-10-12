@@ -1,0 +1,509 @@
+{
+  "assertion_score_by_requirement": [
+    {
+      "case": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "grist-context-menu-shortcut",
+      "project_id": "grist",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "grist-context-menu-shortcut",
+      "project_id": "grist",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "grist-context-menu-shortcut",
+      "project_id": "grist",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "grist-page-default-collapse",
+      "project_id": "grist",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "grist-page-default-collapse",
+      "project_id": "grist",
+      "score": 0.5,
+      "source": "spec_complete"
+    },
+    {
+      "case": "grist-page-default-collapse",
+      "project_id": "grist",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "score": 0.5,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "grist-tutorial-restart",
+      "project_id": "grist",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "grist-tutorial-restart",
+      "project_id": "grist",
+      "score": 0.5,
+      "source": "spec_complete"
+    },
+    {
+      "case": "grist-tutorial-restart",
+      "project_id": "grist",
+      "score": 0.25,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "immich-library-single-owner",
+      "project_id": "immich",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "immich-library-single-owner",
+      "project_id": "immich",
+      "score": 0.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "immich-library-single-owner",
+      "project_id": "immich",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "immich-m2t-upload",
+      "project_id": "immich",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "immich-m2t-upload",
+      "project_id": "immich",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "immich-m2t-upload",
+      "project_id": "immich",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "mattermost-guest-invite-channel",
+      "project_id": "mattermost",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "mattermost-guest-invite-channel",
+      "project_id": "mattermost",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "mattermost-guest-invite-channel",
+      "project_id": "mattermost",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "mattermost-mention-add-prompt",
+      "project_id": "mattermost",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "mattermost-mention-add-prompt",
+      "project_id": "mattermost",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "mattermost-mention-add-prompt",
+      "project_id": "mattermost",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "score": 0.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "nextcloud-mail-delegation",
+      "project_id": "nextcloud",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "nextcloud-mail-delegation",
+      "project_id": "nextcloud",
+      "score": 0.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "nextcloud-mail-delegation",
+      "project_id": "nextcloud",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "score": 1.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "openproject-archived-project-selector",
+      "project_id": "openproject",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "openproject-archived-project-selector",
+      "project_id": "openproject",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "openproject-archived-project-selector",
+      "project_id": "openproject",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "openproject-more-menu-subproject",
+      "project_id": "openproject",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "openproject-more-menu-subproject",
+      "project_id": "openproject",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "openproject-more-menu-subproject",
+      "project_id": "openproject",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "paperless-ai-suggestions-blank-text",
+      "project_id": "paperless-ngx",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "paperless-ai-suggestions-blank-text",
+      "project_id": "paperless-ngx",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "paperless-ai-suggestions-blank-text",
+      "project_id": "paperless-ngx",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "paperless-doc-title-placeholder",
+      "project_id": "paperless-ngx",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "paperless-doc-title-placeholder",
+      "project_id": "paperless-ngx",
+      "score": 0.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "paperless-doc-title-placeholder",
+      "project_id": "paperless-ngx",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "paperless-superuser-grant",
+      "project_id": "paperless-ngx",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "paperless-superuser-grant",
+      "project_id": "paperless-ngx",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "paperless-superuser-grant",
+      "project_id": "paperless-ngx",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "wekan-home-multi-drop",
+      "project_id": "wekan",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "wekan-home-multi-drop",
+      "project_id": "wekan",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "wekan-home-multi-drop",
+      "project_id": "wekan",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "zulip-private-channel-access",
+      "project_id": "zulip",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "zulip-private-channel-access",
+      "project_id": "zulip",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "zulip-private-channel-access",
+      "project_id": "zulip",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "score": 1.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "score": 0.375,
+      "source": "spec_incomplete"
+    },
+    {
+      "case": "zulip-unsubscribe-self",
+      "project_id": "zulip",
+      "score": 0.0,
+      "source": "code_incomplete"
+    },
+    {
+      "case": "zulip-unsubscribe-self",
+      "project_id": "zulip",
+      "score": 0.0,
+      "source": "spec_complete"
+    },
+    {
+      "case": "zulip-unsubscribe-self",
+      "project_id": "zulip",
+      "score": 0.0,
+      "source": "spec_incomplete"
+    }
+  ],
+  "by_source": {
+    "code_incomplete": {
+      "assertion_kills": 0,
+      "assertion_only_score": 0.0,
+      "eligible_mutant_pairs": 51,
+      "eligible_mutant_verdicts": {
+        "quiet": 51
+      },
+      "eligible_suites": 15,
+      "error_kills": 0,
+      "planned_mutant_pairs": 162,
+      "planned_suites": 50,
+      "registered_score": 0.0
+    },
+    "spec_complete": {
+      "assertion_kills": 126,
+      "assertion_only_score": 0.76,
+      "eligible_mutant_pairs": 149,
+      "eligible_mutant_verdicts": {
+        "assertion_alarm": 126,
+        "error_alarm": 6,
+        "quiet": 17
+      },
+      "eligible_suites": 46,
+      "error_kills": 6,
+      "planned_mutant_pairs": 162,
+      "planned_suites": 50,
+      "registered_score": 0.8
+    },
+    "spec_incomplete": {
+      "assertion_kills": 13,
+      "assertion_only_score": 0.085,
+      "eligible_mutant_pairs": 110,
+      "eligible_mutant_verdicts": {
+        "assertion_alarm": 13,
+        "quiet": 97
+      },
+      "eligible_suites": 33,
+      "error_kills": 0,
+      "planned_mutant_pairs": 162,
+      "planned_suites": 50,
+      "registered_score": 0.085
+    }
+  },
+  "confirmatory_eligible": false,
+  "inputs_sha256": {
+    "frozen-manifest-public.json": "4d0be9dcd310d95a935915aa49bbe35fe14309a4c4c94ec529fbaa294d0f6dce",
+    "results.json": "c399f9c53baf7ef898dab0fc79d04e6a6b793f3a3af1b2f37ed7f268a1c25b10"
+  },
+  "model": "claude-opus-4-6",
+  "post_hoc": true,
+  "projects": 8,
+  "requirements": 25,
+  "schema_version": "mutation-alarm-sensitivity/v1",
+  "target_specificity": "not_established_by_aggregate_verdicts"
+}

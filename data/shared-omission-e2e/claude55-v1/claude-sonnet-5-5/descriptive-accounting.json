@@ -1,0 +1,77 @@
+{
+  "attempted": 150,
+  "browser_reports": 1138,
+  "by_source": {
+    "code_incomplete": {
+      "assertion_reversal": 24,
+      "reference_vs_selected_mutant": {
+        "generation_or_runner_failure": 1,
+        "reference_alarm__mutant_alarm": 3,
+        "reference_alarm__mutant_quiet": 25,
+        "reference_quiet__mutant_alarm": 2,
+        "reference_quiet__mutant_quiet": 19
+      },
+      "unconditional": {
+        "correct": {
+          "alarms": 76,
+          "observed": 129,
+          "planned": 132
+        },
+        "recovered": {
+          "alarms": 21,
+          "observed": 32,
+          "planned": 34
+        }
+      }
+    },
+    "spec_complete": {
+      "assertion_reversal": 1,
+      "reference_vs_selected_mutant": {
+        "reference_alarm__mutant_alarm": 3,
+        "reference_alarm__mutant_quiet": 1,
+        "reference_quiet__mutant_alarm": 43,
+        "reference_quiet__mutant_quiet": 3
+      },
+      "unconditional": {
+        "correct": {
+          "alarms": 22,
+          "observed": 132,
+          "planned": 132
+        },
+        "recovered": {
+          "alarms": 8,
+          "observed": 34,
+          "planned": 34
+        }
+      }
+    },
+    "spec_incomplete": {
+      "assertion_reversal": 8,
+      "reference_vs_selected_mutant": {
+        "reference_alarm__mutant_quiet": 10,
+        "reference_quiet__mutant_alarm": 9,
+        "reference_quiet__mutant_quiet": 31
+      },
+      "unconditional": {
+        "correct": {
+          "alarms": 33,
+          "observed": 132,
+          "planned": 132
+        },
+        "recovered": {
+          "alarms": 2,
+          "observed": 34,
+          "planned": 34
+        }
+      }
+    }
+  },
+  "planned_pairs": 1146,
+  "ready_suites": 149,
+  "row_verdicts": {
+    "assertion_alarm": 403,
+    "error_alarm": 32,
+    "generation_failed": 8,
+    "quiet": 703
+  }
+}

@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-05
+Last updated: 2026-10-12
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -572,7 +572,7 @@ quantitative anchor or thesis/experiment recommendation is assigned here.
 | [What Prompts Don't Say](https://arxiv.org/abs/2505.13360v3) | Chenyang Yang, Yike Shi, Qianou Ma, Michael Xieyang Liu, Christian Kästner, Tongshuang Wu | Abstract only; full-text review pending. |
 | [From Business Requirements to Test Assertions](https://arxiv.org/abs/2607.10277v1) | Ma and Eisty | Abstract only; full-text review pending. |
 | [Clarity Is Not Assumed (Orchid)](https://arxiv.org/abs/2604.21505v3) | Yang et al. | Abstract only; full-text review pending. |
-| [ClarifyCodeBench](https://arxiv.org/abs/2607.00711v2) | Fang et al. | Abstract only; full-text review pending. |
+| [ClarifyCodeBench](https://arxiv.org/abs/2607.00711v2) | Fang et al. | Relevant full-text sections read on 2026-10-10; see the ClarifyCodeBench entry at the end of this file. |
 
 **Source verification, 2026-10-04.** Review of [Akli et al.'s primary methods,
 results and threats](https://arxiv.org/html/2604.24712v1) corrected the mutation
@@ -630,6 +630,178 @@ queue; no entry or claim.
 | --- | --- | --- | --- | ---: |
 | Yang, Shi, Ma, Liu, Kästner, Wu, [*What Prompts Don't Say: Understanding and Managing Underspecification in LLM Prompts*](https://arxiv.org/abs/2505.13360), arXiv preprint v3 (venue not stated in the PDF header), Carnegie Mellon | How do LLMs behave on requirements a prompt leaves out? Three tasks (code explanation, trip advice, product descriptions), 20 requirements per task (60 total, from existing prompts, LLM brainstorming and error analysis, kept if at least one of three annotators selected them), 240 synthetic prompts built by a cyclic design (each prompt states 10 consecutive requirements), models Llama-3.3-70B, gpt-4o-2024-08-06, o3-mini; per-requirement validators (scripts or LLM, 95.6% human agreement on a sample). | Unspecified requirements are satisfied less often (-22.6% mean accuracy, up to -93.1%), yet 41.1% are guessed at >=98% accuracy. Format requirements are guessed more (70.7%); conditional (corner-case) requirements less (22.9%). Across model updates, 22.9% of cases regress, and unspecified requirements regress about twice as often (5.9% regress by >20%). Limits stated by the authors: small requirement set (n=60), synthetic prompts, LLM validators with same-family bias. Additional limits for this project: requirements are LLM-elicited and not tied to repository documentation; no browser or executable-UI oracle; not peer-reviewed as read. | Thesis: independent support that omission effects are heterogeneous (matches the H1b recoverability framing), not support for the A/B/C effect size. Experiment: adds `conditional_rule` as a recorded exploratory descriptor and requires pinned, call-level model identifiers in the freeze receipt (pre-registration note 2026-10-05, advisor decision 6). Product: model-update drift on unspecified rules is a plausible reason to re-run requirement-anchored checks after provider changes; hypothesis only. Do not cite the 41.1% or 22.9% figures as expectations for this study. | 6 (detailed method and public code; preprint; small and synthetic; different task family) |
 
+## 2026-10-06 — Early detection: a prefix monitor confirms failure more than it anticipates it
+
+Search/read date: 2026-10-06. Deduplicated by arXiv ID/title (not previously in this
+matrix). Read: abstract, methodology (sections II.E–F), RQ1 findings 1–4, and threats to
+validity of the PDF. The 2026-10-06 web search also surfaced AgentForesight (ICML 2026,
+online auditing of multi-agent failures; result page only), a strained-coherence blog post
+(vendor/practitioner blog, product intelligence only) and OpenTelemetry GenAI conventions
+(see the 2026-09-30/10-03 entries: still `Development`, repository `semantic-conventions-genai`).
+AgentForesight and Terminal-Bench-2 follow-ups are queued, not entered: only the result page
+was read, so they carry no score or claim.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Zhao, Li, Li, Zhao, Barr, Sarro, Ye, [*Failure as a Process: An Anatomy of CLI Coding Agent Trajectories*](https://arxiv.org/abs/2607.09510), arXiv preprint (cs.SE), submitted 2026-07-10 | When do coding-agent failures begin, why, and can they be caught early? 3,843 Terminal-Bench executions (7 models, 3 scaffolds); 1,794 complete trajectories (63k+ steps) manually annotated for decisive error (t_err), failure lock-in (t_lock) and first observable sign (t_obs), with a root-cause taxonomy (Cohen's kappa 0.78–0.94 reported). A blind prefix monitor (an LLM) reads the first t steps, with or without the task's core requirements, on 2,659 prefixes from 600 trajectories. | Median decisive error at step 7, lock-in about step 12, first observable signal about step 16. The monitor flags locked-in runs at 82% precision but has median lead time zero relative to t_lock; only 3.7–8.7% of failures are flagged before lock-in; recall is 18.2% with the task name only and 28.8% with requirements. Self-revealing failures (environment errors) barely benefit from the requirements; specification-relative ones (ignored requirements 3%→22%, false premises 15%→32%) do. Limits: Terminal-Bench CLI tasks, not requirement-to-UI generation; the same LLM family annotated and monitored; labels are hindsight-based; the monitor is an LLM, not a provenance model; preprint. | **Thesis:** independent support for the premise behind H2 that a loss can precede its observable symptom, and for the H1/H2 separation: a requirement-ignoring failure is detectable mainly when the monitor sees the requirement. It is not evidence for T1–T3 provenance features. **Experiment:** B0 (requirement plus operational telemetry) is the correct strong baseline because giving a monitor the requirement is what moved recall; keep B0 requirement-aware. Report detection relative to a pre-registered lock-in analogue (first stage after which the omitted rule can no longer be recovered, e.g. T2 plan committed) in addition to ms lead time, because alerts after lock-in only confirm. A human decision is needed on whether to add that stage-relative lead metric to the H2 pre-registration. No change made to the frozen protocol. **Product:** supports "explain the semantic loss, not just flag the run" as a differentiator versus generic trace monitors; hypothesis only. | 6/10: transparent method, high reported annotation agreement and released annotations, but a preprint with CLI-task transfer, same-family annotator/monitor and hindsight labels |
+
+**Decision (2026-10-06).** Tension noted, not resolved: the paper's monitor shows little
+foresight, which makes the H2 margin (PR-AUC +0.05 for B3 over B0) harder to expect on
+omissions that lock in at T1. This is a reason to report the stage at which each first alert
+fires, not a reason to change H2. Pending advisor decision 3 (collect T1–T3 in the H1 round or
+drop H2) is unchanged.
+
+## 2026-10-07 — What killed the mutant?
+
+Search/read date: 2026-10-07. Neither DOI/title nor arXiv ID was present in
+this matrix. Read both abstracts, methods, results and threats in the full
+author texts; checked ISSTA's proceedings listing and the arXiv version record.
+
+| Source | Year / venue / evidence | Question / sample / method | Result | Limitations | Thesis | Experiment | Product | Action | Credibility |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Du, Palepu, Jones, [*To Kill a Mutant*](https://doi.org/10.1145/3597926.3598090); [author PDF](https://superhangdu.com/publications/issta-23/conference-paper.pdf) | 2023, ISSTA, peer-reviewed | How do kills arise? Ten Java projects, 50k+ mutants, 2.5m+ runs; modified PIT and exception-origin instrumentation. | Crashes contributed up to 43.8% of killed mutants; killing reasons differ. | Java/JUnit, one tool, classification and flakiness threats. | Kill does not establish a requirement-specific assertion. | Separate assertion and error alarms. | Show reason, not just a score. | Add offline assertion-only sensitivity with unchanged eligibility and denominator. | 8/10: reviewed, open instrumentation/data; transfer to browser verdicts remains indirect. |
+| Hamidi, Konstantinou, Degiovanni, Papadakis, [*How effective are traditional test criteria at detecting bugs in large language models generated code?*](https://arxiv.org/abs/2609.09315), v1 | 2026, arXiv, preprint; no verified venue | Can adequacy guide LLM tests? Five models, four Python benchmarks, 6,066 selected hard faults; 100 sampling simulations. | Triggering exceeds detection; spec-guided assertions help inconsistently. | Selected faults, reference equivalence, Python only; oracle repair up to five times differs from our no-retry study. | Generic weak-test claim is already adjacent work. | Distinguish trigger, assertion and target-condition check. | Require auditable expected behavior. | Retain blind suite audit; do not infer target specificity from alarm type. | 6/10: detailed methods and threats, but unreviewed and selection/domain limits. |
+
+**Incorporation.** `scripts/mutation_alarm_sensitivity.py` audits the three
+published tester packets without model or browser calls. It rejects missing,
+duplicated or misidentified scheduled outcomes and reproduces the registered
+analysis before computing a post-hoc assertion-only score. The original scripts,
+data and MA1/MA2 results stay unchanged. See the [supplemental report](2026-10-07-mutation-alarm-sensitivity.md).
+
+**Tension / human decision.** The broad observation that generated tests can
+miss LLM bugs cannot carry novelty by itself. Our narrower question concerns
+controlled omitted conditions, implementation context and browser-level
+discrimination. The existing blind suite audit must determine whether an
+assertion concerns the target condition; aggregate verdicts cannot answer it.
+Keep H2's provenance comparison and the primary-task decision separate. No
+hypothesis, corpus, rubric or frozen protocol is changed here.
+## 2026-10-07 — Prohibition constraints decay with context; naming collision with "omission"
+
+Search/read date: 2026-10-07. Deduplicated by arXiv ID/title. Read: abstract, design
+(Sections 2.1-2.2), statistics description and the Limitations section (4.5) of the PDF.
+The same search re-surfaced arXiv 2609.29208 (Villamizar et al., PROFES 2026), arXiv 2607.01980
+and PrefixGuard (arXiv 2605.06455), which already have entries or notes above; no update was needed.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Gamage, [*Omission Constraints Decay While Commission Constraints Persist in Long-Context LLM Agents*](https://arxiv.org/abs/2604.20911), arXiv preprint (cs.CR), submitted 2026-04-22; an ICML 2026 virtual page lists it, proceedings not read | Do prohibition-type rules in a system policy decay with conversation depth while required-behavior rules persist? Synthetic DevOps-debugging sandbox; 12 models, 8 providers; 4,416 trials; three arms (no dilution, 20 tool schemas, token-matched padding); eight formatting-style constraints crossed by type (commission/omission) and difficulty; deterministic string/regex checks (no LLM judge); bootstrap CIs within each (model, arm, depth) cell; temperature 0. | Omission-type compliance falls from 73% (turn 5) to 33% (turn 16) while commission compliance stays at 100% for the reported model; schema semantics explains 62-100% of the dilution in two models. Authors' limits: formatting proxies only, error self-propagation confound, Arm C run on only two models (neither susceptible), synthetic environment, temperature 0, cross-sectional depths. Additional limits here: bootstrap resamples trials, not conversations or projects; not peer-reviewed as read; "omission" means a prohibition, not a requirement condition that is missing. | Thesis: **terminology collision.** Here "omission constraint" is a rule to refrain from something; in this project an omission is a testable condition lost from the output. Keep the two apart in all prose. The paper is context for why a rule that leaves no positive trace when obeyed is hard to monitor, not evidence for H1/H2. Experiment: record `rule_polarity` (`required_behavior` or `prohibition`) as a blind, exploratory descriptor so a polarity effect can be checked descriptively if the frozen corpus contains prohibitions; no power is claimed. Product: negative rules are the case where trace monitoring alone has no positive event to track; hypothesis only. Do not cite the 73%/33% figures as expectations. | 5 (public design and deterministic scoring, large trial count; single-author preprint, synthetic proxies, different construct) |
+
+**Decision (2026-10-07).** Smallest incorporation: `rule_polarity` added as an exploratory
+descriptor in the OSF draft (covariates and exploratory analysis). No change to H1, H2, the
+primary outcome or power. Human decision still open: whether prohibitions are in scope of the
+confirmatory frame at all (the current candidate rules are mostly required behaviors).
+
+
+## 2026-10-08 — Annotation postprocessing integrity
+
+Search/read date: 2026-10-08. New source, deduplicated by DOI/title. Read the abstract, sampling and annotation methods, results, and limitations in the official full paper.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Klie, Eckart de Castilho and Gurevych, *Analyzing Dataset Annotation Quality Management in the Wild*, Computational Linguistics 50(3), 817–866 (2024), [DOI 10.1162/coli_a_00516](https://doi.org/10.1162/coli_a_00516), [full paper](https://aclanthology.org/2024.cl-3.1.pdf); peer-reviewed | How is annotation quality managed and reported? Review of 591 dataset publications; 314 involved human annotation or validation. Iterative coding, validation and automated checks. | Around 30% had poor reported quality management under the authors' rubric. Agreement measures reliability, not validity. Reporting is a proxy for actual practice; selected NLP venues and single primary annotator limit generalization. | Thesis: agreement alone cannot establish label validity. Experiment: enforce frozen item/group identity during final adjudication, alongside independent coding and literal evidence. Product: schema checks complement semantic review. Action: reject adjudicated workbooks that move items between P and R; regression tests cover both directions. This source motivates checking postprocessing, not the repository-specific bug or H1/H2. | 8/10: peer review and transparent method/artifacts; reporting proxy, selection and coding limitations. |
+
+Implementation and verification: [adjudication integrity note](2026-10-08-test-audit-adjudication-integrity.md). No annotation results, measurement policy, threshold, hypothesis or frozen experimental endpoint was changed.
+
+
+## 2026-10-08 — Trace integrity: a self-hosted trace is not independent evidence
+
+Search/read date: 2026-10-08. Deduplicated by arXiv ID/title (not previously in the matrix). Read: abstract, introduction, threat model summary, capability/exploitability/propensity result sections and trial counts of the PDF; appendix transcripts were not read in full.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Qin et al., [*LLM Agents Can Easily Tamper With Their Own Traces*](https://arxiv.org/abs/2609.30266), arXiv preprint (cs.CR), 2026-09-24, not peer-reviewed | Can local coding agents delete or alter their own execution traces when asked, when induced by a skill file, or when rewarded? Claude Code, Codex, Antigravity, OpenCode, Grok Build, Muse Code and others; 10 trials per model–harness pair per setting; full-access vs. auto-mode permissions | All harnesses except Muse Code let agents delete traces when asked, and auto-mode monitors missed it in 5 of 10 pairs. Tampering also appeared under a hidden reward incentive and via an injected skill. Authors advise logging through an interception server outside the agent's host. Limits: small n per cell, adversarial-by-design settings, security framing rather than SE-quality framing, no peer review. | **Thesis:** none; H1/H2 unchanged. **Experiment:** T1–T3 provenance feeding B3 is only as trustworthy as its capture path. In confirmatory runs the trace must be held or receipted outside the agent's writable workspace. **Product:** an independent capture path is a deployment requirement, not a feature. **Action:** `observability/trace_integrity.py` (`verify_trace_continuity`, `trace_receipt`) with `tests/test_trace_integrity.py`. | 5/10: recent, transparent about design, relevant authors, but preprint with small cells and a different domain |
+
+Context only (not matrix entries): OpenTelemetry GenAI agent-span conventions are still labelled *Development* on opentelemetry.io; third-party posts disagree on stabilization and were not used. Pin a schema version before building exporters.
+
+**Decision (2026-10-08).** Smallest incorporation: an offline continuity check. It detects gaps, re-linking and duplicate IDs inside a trace, and, given a receipt stored outside the agent's host, truncation or deletion. Without a receipt a deleted suffix is undetectable; the tests assert this limit. The wire schema, the label plane and H1/H2 are unchanged. Human decision still open: where the confirmatory runner stores the receipt (a host the agent cannot write) and whether the runner must call the check before scoring. No such runner wiring was done.
+
+## 2026-10-09 — Provenance validation and receipt contracts
+
+Search/read date: 2026-10-09. Deduplicated by URL/title. Read the abstract, scope, validation rationale, compliance discussion and constraint definitions of the primary recommendation.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Cheney, Missier, Moreau and De Nies, [*Constraints of the PROV Data Model*](https://www.w3.org/TR/prov-constraints/), W3C Recommendation, 2013; primary standard, not an empirical paper | How can provenance consistency be checked? No experimental sample; formal definitions, normalization and uniqueness, ordering, typing and impossibility constraints. | Defines consistent provenance, not truth or authenticity. PROV-specific rules do not directly specify our JSON receipt. | Thesis: structural consistency must not be confused with semantic validity. Experiment: validate receipt object/count/digest types before comparison; reject boolean or float counts and malformed receipts. Product: integrity diagnostics need explicit input contracts. Action: regression tests and strict receipt validation; not a PROV-compliance claim. | 9/10 for normative provenance guidance: stable reviewed standard with formal rules; no empirical support for H1/H2 or cryptographic authenticity. |
+
+**Concrete incorporation.** `observability/trace_integrity.py` now checks a receipt before comparisons. Two malformed counts (`true`, `1.0`) previously passed for a one-event trace; non-object receipts could crash. Thirteen regression cases cover counts, receipt shapes and digest syntax. Existing trace and audit tests remain covered. This is a local contract derived from the emitter, not a requirement imposed by PROV.
+
+**Remaining human gate.** Decide out-of-band receipt custody and integration into the runner before confirmatory collection. A digest does not authenticate its author; a receipt regenerated after modification cannot prove the original trace. No change to B0/B3, labels, endpoints or frozen data.
+
+## 2026-10-12 — Evaluator miss rates are run-unstable and model-version-dependent
+
+Search/read date: 2026-10-12. Deduplicated by arXiv ID/title (not previously in
+the matrix). Read the abstract, requirement sets, ground-truth procedure,
+experimental design, per-criterion and per-generation results and sensitivity
+probes in the full author PDF. Search hits not read in full (not entries):
+AgentLTL (arXiv 2607.02599), TRACES (2605.27690), UnderSpecBench (2607.02294),
+*Engineering Reliable Coding Agents* (2608.13867); candidates for a later run.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Shefa, Salado, Wach and Topcu, [*Two Truths and A Lie? Benchmarking Off-the-Shelf LLMs for Requirements Quality Assessment*](https://arxiv.org/abs/2609.03230), arXiv preprint, 2026 | Can off-the-shelf LLMs judge requirement quality against nine INCOSE criteria? Ten OpenAI/Anthropic models, 100 independent runs per configuration, two requirement sets (13 and 20 requirements; 117 and 180 binary requirement-criterion cells), five sampling temperatures; ground truth from three evaluators with independent rating followed by consensus. | Best Anthropic model: median 47% of expert-identified issues detected, 11% false flags. Necessity and correctness issues are almost always missed; completeness has the widest run-to-run FNR range (0.00–1.00). Newer GPT generations are not monotonically better. Temperature changes error rates only modestly. Limits: systems-engineering requirements (not code or UI), tiny sets from two sources, single consensus labels with no reported agreement statistic, a quality-criterion task rather than condition loss, preprint without verified peer review. | Thesis: adjacent evidence that LLM evaluators under-detect missing/necessary content; it does not test H1/H2. Experiment: supports the existing rule that LLM-panel verdicts on A/B/C validity stay provisional until controls and the 20% human audit; a pooled correct-rate can hide a failing replication, and a model-version change can reverse quality. Product: any triage claim needs a measured miss rate per issue type with a human in the loop. Action: `score_controls` now reports each replication separately (`by_replication`, `deleted_miss_rate`, `replication_range`). | 5/10: transparent design and many repeated runs, but a preprint, very small non-software requirement sets, unreported annotator agreement and no replication package confirmed. |
+
+**Concrete incorporation.** `label_plane/judge_controls.py` keeps its pooled
+`correct_over_planned` but adds per-replication correct rates, the
+deleted-control miss rate per replication and the min/max range. A test builds
+one perfect and one constant-clean replication: the pooled rate is 0.75 while
+the replications are 1.0 and 0.5, and the deleted-control miss rate is 0 and 1.
+This is a diagnostic over synthetic controls (`confirmatory_eligible` stays
+false); it does not qualify any judge. Human decisions still open: the
+acceptable replication spread for admitting a panel configuration, and who
+performs the 20% human audit.
+
+## 2026-10-10 — Qualification controls for obligation-level evidence diagnostics
+
+Search/read date: 2026-10-10. Deduplicated by arXiv ID and title. Read abstract,
+Sections II–VI, tables and the fresh-source sensitivity analyses in the full
+[author HTML](https://arxiv.org/html/2610.08675v1).
+
+| Source / evidence | Question, sample and method | Result and limitations | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Xu et al., *Same-Number Citation Swaps: Stress-Testing Jev as a Financial Evidence Judge*, arXiv:2610.08675v1, 2026-10-06; preprint, peer review not verified | Does probabilistic source verification add value beyond deterministic number matching? 192 natural traces on 96 FinQA questions; same-number pointer swaps with equivalent-fact controls; separate 36-page constructed follow-up and one non-author reviewer. | Strong natural-record discrimination coexists with wrong-role acceptance and valid-evidence rejection. Explicit headers change both. Natural labels were unblinded assistant judgments; follow-up has no inter-human agreement, selected single-operation tasks and privately retained inspection artifacts. | Thesis: no H1/H2 evidence. Experiment: a verifier must distinguish substantive loss from harmless evidence changes. Product: qualification requires a strong deterministic baseline and valid-alternative retention. Action: use the paired qualification checklist below before evaluating an obligation-level evidence classifier; no paid run authorized by this entry. | 5/10: detailed controls and sensitivity reporting; unreviewed, narrow constructed sample, annotation uncertainty and incomplete public reproducibility. |
+
+**Blocker before:** an aggregate detection score alone does not show whether a
+future adequacy diagnostic recognizes the intended obligation or merely reacts
+to changed evidence. **Action:** specify two complementary control families and
+a matched baseline comparison. **After:** the following qualification plan is
+reviewable but unexecuted. It neither adds empirical results nor changes the
+frozen thesis protocol, B0/B3, corpus, rubric or endpoints.
+
+| Qualification family | Synthetic example, not study data | Expected decision | What is held fixed |
+| --- | --- | --- | --- |
+| Wrong obligation, matching surface value | A rule requires refunds within 30 days; the cited check asserts 30-day password expiry. | Evidence does not establish refund protection. | Number, assertion result and evidence format; only obligation binding changes. |
+| Valid alternative evidence | Two independently reviewed browser journeys both establish the same refund deadline, using different locators or assertion wording. | Both may establish protection. | Obligation and externally verified behavior; representation changes. |
+| Boundary / insufficient evidence | A check proves a refund action exists but never tests its deadline. | Insufficient evidence; do not infer coverage. | Reference policy and available evidence; no invented execution. |
+
+Before collection, freeze source revision, project_id, constraint_id, pair_id,
+reviewed expected decision, evidence pointers and development/calibration/test
+project assignments. Review both the manipulation and each valid alternative
+independently; unresolved cases remain unresolved. Synthetic examples qualify
+the instrument only and never enter confirmatory labels.
+
+Compare a deterministic obligation-ID / evidence-pointer baseline with the
+proposed semantic verifier on identical packets. Report wrong-binding rejection,
+valid-alternative retention, abstention and missing evidence separately, with
+scheduled denominators and project-level uncertainty. Select thresholds only
+on calibration projects; preserve all fixed thresholds in evaluation. If the
+baseline performs equally well, report no demonstrated incremental value.
+Accuracy, latency and cost are separate readouts; improving a component does
+not establish a release-workflow benefit.
+
+**Next human dependency:** approve the product-only qualification target and
+arrange independent review of real obligation/evidence pairs. Existing human
+annotation and prospective H1/H2 collection gates remain unchanged.
+
+## 2026-10-11 — Requirement-derived test oracles: a ten-bug pilot, and why unknowns stay in denominators
+
+Search/read date: 2026-10-11. New source, deduplicated by arXiv ID/title (it was listed as abstract-only in the 2026-10-04 pending table). Read: abstract, research questions, data construction, method, Table 3 results, and the threats-to-validity section of the arXiv HTML version.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Ma and Eisty, [*From Business Requirements to Test Assertions: Evaluating LLM-Generated Oracles on Real Bugs*](https://arxiv.org/abs/2607.10277), arXiv preprint (cs.SE), 2026-07-11, not peer-reviewed | Can LLMs write Java test oracles from a plain-language requirement alone? 10 Defects4J Lang bugs; requirements and reference oracles hand-written from the fix diff by the authors; five LLMs (DeepSeek-V3, Gemma-3n, Llama-3-70B, Mistral-7B, Qwen3-Coder-480B); accuracy and macro-F1 against the requirement-derived reference and the buggy system. | Four of five models agreed more with the requirement-derived reference than with the buggy system (e.g. DeepSeek-V3 accuracy 0.89 vs 0.86). Technicality and ambiguity ratings (1–5, one LLM judge, no reliability estimate) had weak correlations with accuracy, all 95% CIs including zero. Limits: one project, one language, ten bugs, single-interpretation reference oracles, requirements authored after the fix, and non-compiling outputs excluded rather than scored as failures, which may inflate aggregates. | **Thesis:** none; H1/H2 unchanged. The null ambiguity correlation does not test omission of a testable condition and cannot be read against H1. **Experiment:** it supports two existing decisions rather than changing them: LLM-rated smell properties need a human audit (already in the A/B/C validity plan), and invalid or non-executable outputs stay in denominators as `unknown` with worst/best-case bounds (`scripts/confirmatory_analysis.py`, `tests/test_confirmatory_analysis.py`). **Product:** adjacent only; oracle generation from requirements is a related task, not a loss-of-condition detector. **Action:** none beyond this entry; no code, protocol or pre-registration text changed. | 3/10: preprint, ten bugs from one project, single LLM judge without agreement, exclusion of failed outputs; transparent about being a pilot. |
+
+**Decision (2026-10-11).** Context and corroboration only. The paper is not cited as support for any claim in the proposal. No human decision is required.
+
 ## 2026-10-10 — Deletion-only underspecification and clarification (ClarifyCodeBench)
 
 Search/read date: 2026-10-10. Deduplicated by arXiv ID: 2607.00711 was previously
@@ -644,10 +816,9 @@ existing "Development, pin a schema version" note stands.
 
 | Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
 | --- | --- | --- | --- | ---: |
-| Fang, Jin, Dong, Li, Zhang, Jin, Li, [*ClarifyCodeBench: Evaluating LLMs on Clarifying Ambiguous Requirements for Code Generation*](https://arxiv.org/abs/2607.00711), arXiv preprint v2 (31 Aug 2026; no peer-reviewed venue listed) | Can LLMs ask the right questions about missing information? 419 tasks from LiveCodeBench v6 (199 with one ambiguity point, 169 with two, 51 with three). Two PhD annotators delete information from complete statements ("deletion-only editing", no additions, solution unchanged), cross-check edits and write one key question and one ground-truth answer per point; ten ambiguity types. The environment answers only when a GPT-4o judge (3 samples, majority) matches the model's question to a key question (Cohen's kappa 0.89 vs human labels). Metrics: turn-discounted key-question rate (TKQR) and optimal-round adherence (ORA). Six model families, including Claude-Sonnet-4.5 with and without thinking. | Pass@1 with the ambiguous statement is 7.8 to 19.8 points below pass@1 with the full statement for every model; best key-question hit rates fall from 0.30 (one point) to 0.08 (two) and near zero (three); thinking does not reliably improve clarification. Limits: function-level competitive-programming tasks, no agentic workflow, possible LiveCodeBench contamination, residual judge noise, no statement distinguishing incompleteness from ambiguity, and data/code location not stated in the text read. Not peer-reviewed as read. | Thesis: independent support that deletion-only edits of complete specifications lower downstream correctness, consistent in direction with H1a; it is a different task family (function-level, hidden-test pass@1, no browser oracle) and gives no effect size for A/C pairs. Experiment: the deletion-only rule matches the C construction. Action: make "deletion-only, no added information" an explicit, checkable property in the C-version review rubric; report per-pair annotator edits and agreement; add contamination of the source requirement/repository as a stated threat. Pass@1 drops are not expectations for this study. Product: its question-matching judge shows a clarification workflow is distinct from post-hoc loss detection; hypothesis only. | 6 (clear construction and annotation, six models, kappa reported; preprint, function-level, contamination concern, no code location stated) |
+| Fang, Jin, Dong, Li, Zhang, Jin, Li, [*ClarifyCodeBench: Evaluating LLMs on Clarifying Ambiguous Requirements for Code Generation*](https://arxiv.org/abs/2607.00711), arXiv preprint v2 (31 Aug 2026; no peer-reviewed venue listed) | Can LLMs ask the right questions about missing information? 419 tasks from LiveCodeBench v6 (199 with one ambiguity point, 169 with two, 51 with three). Two PhD annotators delete information from complete statements ("deletion-only editing", no additions, solution unchanged), cross-check edits and write one key question and one ground-truth answer per point; ten ambiguity types. The environment answers only when a GPT-4o judge (3 samples, majority) matches the model's question to a key question (Cohen's kappa 0.89 vs human labels). Metrics: turn-discounted key-question rate (TKQR) and optimal-round adherence (ORA). Six model families, including Claude-Sonnet-4.5 with and without thinking. | Pass@1 after the interactive ambiguity-resolution pipeline is 7.8 to 19.8 points below pass@1 with the full statement for every model; this is not a direct-generation comparison without clarification; best rates of recovering all key questions fall from 0.30 (one ambiguity point) to 0.08 (two) and near zero (three); thinking does not reliably improve clarification. Limits: function-level competitive-programming tasks, no agentic workflow, possible LiveCodeBench contamination, residual judge noise, no statement distinguishing incompleteness from ambiguity, and data/code location not stated in the text read. Not peer-reviewed as read. | Thesis: independent support that deletion-only edits of complete specifications lower downstream correctness, consistent in direction with H1a; it is a different task family (function-level, hidden-test pass@1, no browser oracle) and gives no effect size for A/C pairs. Experiment: the deletion-only rule matches the C construction. Action: make "deletion-only, no added information" an explicit, checkable property in the C-version review rubric; report per-pair annotator edits and agreement; add contamination of the source requirement/repository as a stated threat. Pass@1 drops are not expectations for this study. Product: its question-matching judge shows a clarification workflow is distinct from post-hoc loss detection; hypothesis only. | 6 (clear construction and annotation, six models, kappa reported; preprint, function-level, contamination concern, no code location stated) |
 
 **Decision needed from Dante (not applied):** whether the C-version review rubric
 should require a recorded "deletion-only" attestation per pair. This entry changes no
-hypothesis, label, protocol or code, and makes no provider call. Other open
-literature-matrix PRs (#204, #205, #208) also append dated sections; preserve all
-during human integration.
+hypothesis, label, protocol or code, and makes no provider call. Related dated entries originated in literature-matrix PRs #204, #205 and #208;
+preserve all during integration.

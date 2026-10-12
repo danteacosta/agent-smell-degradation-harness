@@ -1,0 +1,463 @@
+{
+  "browser_reports": 2263,
+  "confirmatory_eligible": false,
+  "controls_qualified": true,
+  "controls_sha256": "be2077b2c4daf7555d6a327cf8d3cdb4c46bbbe31a619bec4cadec14196f1f67",
+  "generation_failure_placeholders": 22,
+  "generation_failures_preserved": 3,
+  "models": {
+    "claude-opus-4-6": {
+      "browser_reports": 1131,
+      "by_source": {
+        "code_incomplete": {
+          "assertion_reference_alarm_selected_mutant_quiet": 28,
+          "discrimination": {
+            "correct": {
+              "alarms": 89,
+              "conditional_alarms": 0,
+              "conditional_pairs": 40,
+              "conditional_rate": 0.0,
+              "observed_pairs": 129,
+              "planned_pairs": 132,
+              "rate_observed": 0.689922480620155,
+              "rate_per_planned": 0.6742424242424242
+            },
+            "mutant": {
+              "alarms": 45,
+              "conditional_alarms": 0,
+              "conditional_pairs": 51,
+              "conditional_rate": 0.0,
+              "observed_pairs": 160,
+              "planned_pairs": 162,
+              "rate_observed": 0.28125,
+              "rate_per_planned": 0.2777777777777778
+            },
+            "recovered": {
+              "alarms": 25,
+              "conditional_alarms": 0,
+              "conditional_pairs": 7,
+              "conditional_rate": 0.0,
+              "observed_pairs": 32,
+              "planned_pairs": 34,
+              "rate_observed": 0.78125,
+              "rate_per_planned": 0.7352941176470589
+            }
+          },
+          "reference_selected_mutant_table": {
+            "alarm__alarm": 3,
+            "alarm__quiet": 31,
+            "generation_failed__generation_failed": 1,
+            "quiet__quiet": 15
+          },
+          "selected_mutant": {
+            "conditional_discrimination": {
+              "correct": {
+                "alarms": 0,
+                "pairs": 40,
+                "rate": 0.0
+              },
+              "mutant": {
+                "alarms": 0,
+                "pairs": 51,
+                "rate": 0.0
+              },
+              "recovered": {
+                "alarms": 0,
+                "pairs": 7,
+                "rate": 0.0
+              }
+            },
+            "eligible_pairs": 15,
+            "eligible_quiet": 15,
+            "planned_selected_pairs": 50,
+            "quiet": 46,
+            "verdicts": {
+              "assertion_alarm": 3,
+              "generation_failed": 1,
+              "quiet": 46
+            }
+          }
+        },
+        "spec_complete": {
+          "assertion_reference_alarm_selected_mutant_quiet": 1,
+          "discrimination": {
+            "correct": {
+              "alarms": 13,
+              "conditional_alarms": 7,
+              "conditional_pairs": 124,
+              "conditional_rate": 0.056451612903225805,
+              "observed_pairs": 132,
+              "planned_pairs": 132,
+              "rate_observed": 0.09848484848484848,
+              "rate_per_planned": 0.09848484848484848
+            },
+            "mutant": {
+              "alarms": 141,
+              "conditional_alarms": 132,
+              "conditional_pairs": 149,
+              "conditional_rate": 0.8859060402684564,
+              "observed_pairs": 162,
+              "planned_pairs": 162,
+              "rate_observed": 0.8703703703703703,
+              "rate_per_planned": 0.8703703703703703
+            },
+            "recovered": {
+              "alarms": 3,
+              "conditional_alarms": 0,
+              "conditional_pairs": 31,
+              "conditional_rate": 0.0,
+              "observed_pairs": 34,
+              "planned_pairs": 34,
+              "rate_observed": 0.08823529411764706,
+              "rate_per_planned": 0.08823529411764706
+            }
+          },
+          "reference_selected_mutant_table": {
+            "alarm__alarm": 3,
+            "alarm__quiet": 1,
+            "quiet__alarm": 40,
+            "quiet__quiet": 6
+          },
+          "selected_mutant": {
+            "conditional_discrimination": {
+              "correct": {
+                "alarms": 7,
+                "pairs": 124,
+                "rate": 0.056451612903225805
+              },
+              "mutant": {
+                "alarms": 132,
+                "pairs": 149,
+                "rate": 0.8859060402684564
+              },
+              "recovered": {
+                "alarms": 0,
+                "pairs": 31,
+                "rate": 0.0
+              }
+            },
+            "eligible_pairs": 46,
+            "eligible_quiet": 6,
+            "planned_selected_pairs": 50,
+            "quiet": 7,
+            "verdicts": {
+              "assertion_alarm": 40,
+              "error_alarm": 3,
+              "quiet": 7
+            }
+          }
+        },
+        "spec_incomplete": {
+          "assertion_reference_alarm_selected_mutant_quiet": 11,
+          "discrimination": {
+            "correct": {
+              "alarms": 42,
+              "conditional_alarms": 4,
+              "conditional_pairs": 91,
+              "conditional_rate": 0.04395604395604396,
+              "observed_pairs": 129,
+              "planned_pairs": 132,
+              "rate_observed": 0.32558139534883723,
+              "rate_per_planned": 0.3181818181818182
+            },
+            "mutant": {
+              "alarms": 30,
+              "conditional_alarms": 13,
+              "conditional_pairs": 110,
+              "conditional_rate": 0.11818181818181818,
+              "observed_pairs": 161,
+              "planned_pairs": 162,
+              "rate_observed": 0.18633540372670807,
+              "rate_per_planned": 0.18518518518518517
+            },
+            "recovered": {
+              "alarms": 11,
+              "conditional_alarms": 0,
+              "conditional_pairs": 20,
+              "conditional_rate": 0.0,
+              "observed_pairs": 32,
+              "planned_pairs": 34,
+              "rate_observed": 0.34375,
+              "rate_per_planned": 0.3235294117647059
+            }
+          },
+          "reference_selected_mutant_table": {
+            "alarm__alarm": 5,
+            "alarm__quiet": 11,
+            "quiet__alarm": 4,
+            "quiet__quiet": 29,
+            "runner_error__runner_error": 1
+          },
+          "selected_mutant": {
+            "conditional_discrimination": {
+              "correct": {
+                "alarms": 4,
+                "pairs": 91,
+                "rate": 0.04395604395604396
+              },
+              "mutant": {
+                "alarms": 13,
+                "pairs": 110,
+                "rate": 0.11818181818181818
+              },
+              "recovered": {
+                "alarms": 0,
+                "pairs": 20,
+                "rate": 0.0
+              }
+            },
+            "eligible_pairs": 33,
+            "eligible_quiet": 29,
+            "planned_selected_pairs": 50,
+            "quiet": 40,
+            "verdicts": {
+              "assertion_alarm": 6,
+              "error_alarm": 3,
+              "quiet": 40,
+              "runner_error": 1
+            }
+          }
+        }
+      },
+      "planned_pairs": 1146,
+      "ready_suites": 149,
+      "row_verdicts": {
+        "assertion_alarm": 421,
+        "error_alarm": 44,
+        "generation_failed": 8,
+        "quiet": 666,
+        "runner_error": 7
+      },
+      "slots": 150
+    },
+    "claude-sonnet-4-6": {
+      "browser_reports": 1132,
+      "by_source": {
+        "code_incomplete": {
+          "assertion_reference_alarm_selected_mutant_quiet": 27,
+          "discrimination": {
+            "correct": {
+              "alarms": 83,
+              "conditional_alarms": 0,
+              "conditional_pairs": 45,
+              "conditional_rate": 0.0,
+              "observed_pairs": 132,
+              "planned_pairs": 132,
+              "rate_observed": 0.6287878787878788,
+              "rate_per_planned": 0.6287878787878788
+            },
+            "mutant": {
+              "alarms": 38,
+              "conditional_alarms": 0,
+              "conditional_pairs": 57,
+              "conditional_rate": 0.0,
+              "observed_pairs": 162,
+              "planned_pairs": 162,
+              "rate_observed": 0.2345679012345679,
+              "rate_per_planned": 0.2345679012345679
+            },
+            "recovered": {
+              "alarms": 25,
+              "conditional_alarms": 0,
+              "conditional_pairs": 9,
+              "conditional_rate": 0.0,
+              "observed_pairs": 34,
+              "planned_pairs": 34,
+              "rate_observed": 0.7352941176470589,
+              "rate_per_planned": 0.7352941176470589
+            }
+          },
+          "reference_selected_mutant_table": {
+            "alarm__alarm": 3,
+            "alarm__quiet": 30,
+            "quiet__quiet": 17
+          },
+          "selected_mutant": {
+            "conditional_discrimination": {
+              "correct": {
+                "alarms": 0,
+                "pairs": 45,
+                "rate": 0.0
+              },
+              "mutant": {
+                "alarms": 0,
+                "pairs": 57,
+                "rate": 0.0
+              },
+              "recovered": {
+                "alarms": 0,
+                "pairs": 9,
+                "rate": 0.0
+              }
+            },
+            "eligible_pairs": 17,
+            "eligible_quiet": 17,
+            "planned_selected_pairs": 50,
+            "quiet": 47,
+            "verdicts": {
+              "assertion_alarm": 3,
+              "quiet": 47
+            }
+          }
+        },
+        "spec_complete": {
+          "assertion_reference_alarm_selected_mutant_quiet": 4,
+          "discrimination": {
+            "correct": {
+              "alarms": 67,
+              "conditional_alarms": 6,
+              "conditional_pairs": 68,
+              "conditional_rate": 0.08823529411764706,
+              "observed_pairs": 129,
+              "planned_pairs": 132,
+              "rate_observed": 0.5193798449612403,
+              "rate_per_planned": 0.5075757575757576
+            },
+            "mutant": {
+              "alarms": 128,
+              "conditional_alarms": 66,
+              "conditional_pairs": 87,
+              "conditional_rate": 0.7586206896551724,
+              "observed_pairs": 161,
+              "planned_pairs": 162,
+              "rate_observed": 0.7950310559006211,
+              "rate_per_planned": 0.7901234567901234
+            },
+            "recovered": {
+              "alarms": 17,
+              "conditional_alarms": 0,
+              "conditional_pairs": 14,
+              "conditional_rate": 0.0,
+              "observed_pairs": 31,
+              "planned_pairs": 34,
+              "rate_observed": 0.5483870967741935,
+              "rate_per_planned": 0.5
+            }
+          },
+          "reference_selected_mutant_table": {
+            "alarm__alarm": 19,
+            "alarm__quiet": 4,
+            "generation_failed__generation_failed": 1,
+            "quiet__alarm": 20,
+            "quiet__quiet": 6
+          },
+          "selected_mutant": {
+            "conditional_discrimination": {
+              "correct": {
+                "alarms": 6,
+                "pairs": 68,
+                "rate": 0.08823529411764706
+              },
+              "mutant": {
+                "alarms": 66,
+                "pairs": 87,
+                "rate": 0.7586206896551724
+              },
+              "recovered": {
+                "alarms": 0,
+                "pairs": 14,
+                "rate": 0.0
+              }
+            },
+            "eligible_pairs": 26,
+            "eligible_quiet": 6,
+            "planned_selected_pairs": 50,
+            "quiet": 10,
+            "verdicts": {
+              "assertion_alarm": 26,
+              "error_alarm": 13,
+              "generation_failed": 1,
+              "quiet": 10
+            }
+          }
+        },
+        "spec_incomplete": {
+          "assertion_reference_alarm_selected_mutant_quiet": 5,
+          "discrimination": {
+            "correct": {
+              "alarms": 74,
+              "conditional_alarms": 3,
+              "conditional_pairs": 60,
+              "conditional_rate": 0.05,
+              "observed_pairs": 131,
+              "planned_pairs": 132,
+              "rate_observed": 0.5648854961832062,
+              "rate_per_planned": 0.5606060606060606
+            },
+            "mutant": {
+              "alarms": 71,
+              "conditional_alarms": 9,
+              "conditional_pairs": 74,
+              "conditional_rate": 0.12162162162162163,
+              "observed_pairs": 161,
+              "planned_pairs": 162,
+              "rate_observed": 0.4409937888198758,
+              "rate_per_planned": 0.4382716049382716
+            },
+            "recovered": {
+              "alarms": 19,
+              "conditional_alarms": 0,
+              "conditional_pairs": 13,
+              "conditional_rate": 0.0,
+              "observed_pairs": 32,
+              "planned_pairs": 34,
+              "rate_observed": 0.59375,
+              "rate_per_planned": 0.5588235294117647
+            }
+          },
+          "reference_selected_mutant_table": {
+            "alarm__alarm": 21,
+            "alarm__quiet": 6,
+            "generation_failed__generation_failed": 1,
+            "quiet__alarm": 2,
+            "quiet__quiet": 20
+          },
+          "selected_mutant": {
+            "conditional_discrimination": {
+              "correct": {
+                "alarms": 3,
+                "pairs": 60,
+                "rate": 0.05
+              },
+              "mutant": {
+                "alarms": 9,
+                "pairs": 74,
+                "rate": 0.12162162162162163
+              },
+              "recovered": {
+                "alarms": 0,
+                "pairs": 13,
+                "rate": 0.0
+              }
+            },
+            "eligible_pairs": 22,
+            "eligible_quiet": 20,
+            "planned_selected_pairs": 50,
+            "quiet": 26,
+            "verdicts": {
+              "assertion_alarm": 12,
+              "error_alarm": 11,
+              "generation_failed": 1,
+              "quiet": 26
+            }
+          }
+        }
+      },
+      "planned_pairs": 1146,
+      "ready_suites": 148,
+      "row_verdicts": {
+        "assertion_alarm": 406,
+        "error_alarm": 210,
+        "generation_failed": 14,
+        "quiet": 516
+      },
+      "slots": 150
+    }
+  },
+  "new_model_calls": 0,
+  "original_failed_execution_preserved": true,
+  "planned_pairs": 2292,
+  "ready_suites": 297,
+  "runner_error_pairs": 7,
+  "unique_original_research_calls": 300
+}

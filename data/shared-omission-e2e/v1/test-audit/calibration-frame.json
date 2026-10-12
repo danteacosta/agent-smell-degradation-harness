@@ -1,0 +1,76 @@
+{
+  "schema_version": "shared-omission-test-audit-calibration/v1",
+  "tester": "claude-opus-4-6",
+  "seed": 2026100612,
+  "results_sha256": "50dccd5e84c2b6446911433f0217bda99aaab2fa0d060f39c166d0ade21a7005",
+  "items": [
+    {
+      "call_id": "so-bded97995ccdd54ecc4a",
+      "case": "immich-m2t-upload",
+      "project_id": "immich",
+      "source": "code_incomplete",
+      "group": "P",
+      "reference_verdict": "quiet",
+      "shown_mutant_verdict": "quiet",
+      "reference_slot": "immich-m2t-upload-708baa52b74eefe806d30f66",
+      "shown_mutant_slot": "immich-m2t-upload-b26dbda2fd60f5b0bc1e0a88"
+    },
+    {
+      "call_id": "so-e5815ec5a29c84838483",
+      "case": "mattermost-guest-invite-channel",
+      "project_id": "mattermost",
+      "source": "spec_incomplete",
+      "group": "P",
+      "reference_verdict": "quiet",
+      "shown_mutant_verdict": "quiet",
+      "reference_slot": "mattermost-guest-invite-channel-69f70d05d46b7b7f705e7d47",
+      "shown_mutant_slot": "mattermost-guest-invite-channel-23662fd897bf968caf817704"
+    },
+    {
+      "call_id": "so-8b48b07b5c38f8ce72b6",
+      "case": "grist-tutorial-restart",
+      "project_id": "grist",
+      "source": "code_incomplete",
+      "group": "P",
+      "reference_verdict": "quiet",
+      "shown_mutant_verdict": "quiet",
+      "reference_slot": "grist-tutorial-restart-5ac61a19a840d1a22b9596ca",
+      "shown_mutant_slot": "grist-tutorial-restart-a994444281f7140b609ba961"
+    },
+    {
+      "call_id": "so-b7fbf386ccfe5a4521bc",
+      "case": "grist-page-default-collapse",
+      "project_id": "grist",
+      "source": "code_incomplete",
+      "group": "R",
+      "reference_verdict": "assertion_alarm",
+      "shown_mutant_verdict": "quiet",
+      "reference_slot": "grist-page-default-collapse-c0ac705fe022bbf2ce84e5f2",
+      "shown_mutant_slot": "grist-page-default-collapse-8d8e047722b2cfff26d1e0be"
+    },
+    {
+      "call_id": "so-b222cf981c2ecbf8d95a",
+      "case": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "source": "code_incomplete",
+      "group": "R",
+      "reference_verdict": "assertion_alarm",
+      "shown_mutant_verdict": "quiet",
+      "reference_slot": "nextcloud-device-password-once-f55621aa3c227e5f344f1cca",
+      "shown_mutant_slot": "nextcloud-device-password-once-2a7d9d71a7121543d014844a"
+    },
+    {
+      "call_id": "so-deb48b27a302b5be6ef2",
+      "case": "mattermost-mention-add-prompt",
+      "project_id": "mattermost",
+      "source": "spec_incomplete",
+      "group": "R",
+      "reference_verdict": "assertion_alarm",
+      "shown_mutant_verdict": "assertion_alarm",
+      "reference_slot": "mattermost-mention-add-prompt-dc135500d58055f44eb4edf7",
+      "shown_mutant_slot": "mattermost-mention-add-prompt-9ac120e8a70ff020422ad887"
+    }
+  ],
+  "scored": false,
+  "confirmatory_eligible": false
+}

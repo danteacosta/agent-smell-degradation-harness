@@ -102,3 +102,7 @@ RealWorld article rule that the Delete article button is shown only to the
 article author. Qualifying that instrument would improve project diversity; it
 would still be preparation until A/B/C prompts, runtime, schedule and custody
 are frozen prospectively.
+
+## Update on 2026-10-07
+
+The [market kit and interview drafts](../product-market-kit-20261007.md) incorporate the completed Sonnet/Opus 5.5 studies alongside Astra and 4.6. They retain the supported omission claim and separate it from the unvalidated reference-based audit promise. The market research above remains the September snapshot; no new customer evidence has been collected.

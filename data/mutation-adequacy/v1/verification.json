@@ -1,0 +1,57 @@
+{
+  "integrity": "passed",
+  "analysis_regeneration": "identical",
+  "calls": 150,
+  "generation_status": {
+    "suite_ready": 149,
+    "generation_failed": 1
+  },
+  "planned_rows": 1146,
+  "actual_reports": 1138,
+  "placeholders": 8,
+  "receipt_files": 5756,
+  "by_source": {
+    "spec_complete": {
+      "verdicts": {
+        "quiet": 181,
+        "assertion_alarm": 158,
+        "error_alarm": 43
+      },
+      "kills": 137,
+      "mutant_tests": 162,
+      "recovered_alarms": 7,
+      "recovered_tests": 34,
+      "correct_other_alarms": 23,
+      "correct_other_tests": 132
+    },
+    "spec_incomplete": {
+      "verdicts": {
+        "assertion_alarm": 36,
+        "quiet": 280,
+        "error_alarm": 58,
+        "generation_failed": 8
+      },
+      "kills": 10,
+      "mutant_tests": 162,
+      "recovered_alarms": 10,
+      "recovered_tests": 34,
+      "correct_other_alarms": 36,
+      "correct_other_tests": 132
+    },
+    "code_incomplete": {
+      "verdicts": {
+        "quiet": 140,
+        "assertion_alarm": 217,
+        "error_alarm": 25
+      },
+      "kills": 100,
+      "mutant_tests": 162,
+      "recovered_alarms": 21,
+      "recovered_tests": 34,
+      "correct_other_alarms": 79,
+      "correct_other_tests": 132
+    }
+  },
+  "frozen_receipt_sha256": "4c1471ea84ab3cc98ccbf349ac987885e931e817d9691659c23f024610a2f51c",
+  "collection_receipt_sha256": "ed445b154ad91888c2de805ccec7999132c943de7865da9387f25288c43a5ae3"
+}

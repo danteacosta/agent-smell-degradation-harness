@@ -1,0 +1,63 @@
+{
+  "attempted": 150,
+  "browser_reports": 0,
+  "by_source": {
+    "code_incomplete": {
+      "conditional_false_alarm_rate": null,
+      "eligible_selected_pairs": 0,
+      "generation_failed": 0,
+      "ma_score": null,
+      "selected_mutant_verdicts": {
+        "runner_error": 50
+      },
+      "slots": 50,
+      "suite_ready": 50,
+      "unconditional_false_alarm_rate": null,
+      "verdicts": {
+        "runner_error": 382
+      }
+    },
+    "spec_complete": {
+      "conditional_false_alarm_rate": null,
+      "eligible_selected_pairs": 0,
+      "generation_failed": 1,
+      "ma_score": null,
+      "selected_mutant_verdicts": {
+        "generation_failed": 1,
+        "runner_error": 49
+      },
+      "slots": 50,
+      "suite_ready": 49,
+      "unconditional_false_alarm_rate": null,
+      "verdicts": {
+        "generation_failed": 8,
+        "runner_error": 374
+      }
+    },
+    "spec_incomplete": {
+      "conditional_false_alarm_rate": null,
+      "eligible_selected_pairs": 0,
+      "generation_failed": 1,
+      "ma_score": null,
+      "selected_mutant_verdicts": {
+        "generation_failed": 1,
+        "runner_error": 49
+      },
+      "slots": 50,
+      "suite_ready": 49,
+      "unconditional_false_alarm_rate": null,
+      "verdicts": {
+        "generation_failed": 6,
+        "runner_error": 376
+      }
+    }
+  },
+  "docker_launch_attempts": 1132,
+  "generation_failed": 2,
+  "planned_pairs": 1146,
+  "row_verdicts": {
+    "generation_failed": 14,
+    "runner_error": 1132
+  },
+  "suite_ready": 148
+}

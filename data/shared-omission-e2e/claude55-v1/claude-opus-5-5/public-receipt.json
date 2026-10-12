@@ -1,0 +1,13 @@
+{
+  "files": {
+    "descriptive-accounting.json": "c79b065b0769895d93ea831dbe0fa9c8c5c530b72cb5095e0f0690b3b9724d45",
+    "frozen-manifest-public.json": "1846a3e0f32813aca54111059aea7d7eb9e108fb021a540746a6c2d7b112ee85",
+    "results.json": "a2fb288fd5413f7e5a192eb920ac35722b33bd39c006b33c63f37aa757b33387"
+  },
+  "generation_manifest_sha256": "5efdb602d7f5ecb8f42db670f505691a673450c73c3ac24b5b8d590f70040ac9",
+  "generation_segments_receipt_sha256": {
+    "000": "a01a281cff56ecfdbf02d1a84741dd106de6dc4b7d3d13f8a16482be208c8a0d",
+    "001": "fe60b0c6e4c9fbec32fb7567b087e46ac94674a6c52933479e322da9c8eb68f7"
+  },
+  "private_collection_receipt_sha256": "015f2192512d572eb4a1ede86a5c654ce77f974914cec93d6642c8d925ee7408"
+}

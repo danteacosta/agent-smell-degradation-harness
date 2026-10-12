@@ -84,6 +84,8 @@ def score_controls(rows: list[dict], configurations: list[str], repetitions: int
         by_operation = {op: Counter(planned=3 * repetitions, correct=0) for op in
                         ("literal", "reordered", "deleted", "contradicted")}
         outcomes = {}
+        per_rep = [Counter(planned=len(cases), correct=0, deleted_planned=3, deleted_correct=0)
+                   for _ in range(repetitions)]
         for rep in range(repetitions):
             for identifier, case in cases.items():
                 key = (config, rep, identifier)
@@ -109,6 +111,8 @@ def score_controls(rows: list[dict], configurations: list[str], repetitions: int
                     or (not oracle["covered"] and status == "omitted" and response.label != "clean")))
                 counts["correct"] += correct
                 by_operation[oracle["operation"]]["correct"] += correct
+                per_rep[rep]["correct"] += correct
+                per_rep[rep]["deleted_correct"] += correct and oracle["operation"] == "deleted"
         paired = switches = 0
         for rep in range(repetitions):
             for seed in range(3):
@@ -116,7 +120,16 @@ def score_controls(rows: list[dict], configurations: list[str], repetitions: int
                 if a is not None and b is not None:
                     paired += 1
                     switches += a != b
+        # Pooled rates can hide run-to-run instability of a stochastic evaluator
+        # (Shefa et al., arXiv 2609.03230): expose each replication separately.
+        by_replication = [{"replication_id": rep, **dict(c),
+                           "correct_over_planned": c["correct"] / c["planned"],
+                           "deleted_miss_rate": 1 - c["deleted_correct"] / c["deleted_planned"]}
+                          for rep, c in enumerate(per_rep)]
+        rates = [r["correct_over_planned"] for r in by_replication]
         reports[config] = {**dict(counts), "correct_over_planned": counts["correct"] / counts["planned"],
+                           "by_replication": by_replication,
+                           "replication_range": {"min": min(rates), "max": max(rates)},
                            "by_operation": {k: dict(v) for k, v in by_operation.items()},
                            "order_pairs_planned": 3 * repetitions, "order_pairs_completed": paired,
                            "order_switches": switches,

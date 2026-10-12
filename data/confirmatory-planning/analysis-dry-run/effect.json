@@ -1,0 +1,180 @@
+{
+  "schema_version": "confirmatory-h1a-analysis/v1",
+  "status": "complete",
+  "seed": 2026100611,
+  "n_boot": 4000,
+  "decision_rule": "supported: project-bootstrap lower bound > 0.5 and exact project sign-flip p < 0.05; reversal: upper bound < 0.5 and p < 0.05; otherwise inconclusive",
+  "design": {
+    "requirements": 40,
+    "projects": 8,
+    "models": [
+      "model-1",
+      "model-2"
+    ],
+    "replications": [
+      1,
+      2
+    ],
+    "slots": 480
+  },
+  "unknown_rate": {
+    "A": 0.0375,
+    "B": 0.05,
+    "C": 0.0375
+  },
+  "h1a": {
+    "estimate": 0.7438,
+    "n_pairs": 149,
+    "n_requirements": 40,
+    "n_projects": 8,
+    "pair_outcomes": {
+      "defective_worse": 74,
+      "tie": 73,
+      "defective_better": 2
+    },
+    "ci95_project_bootstrap": [
+      0.7115,
+      0.7719
+    ],
+    "p_exact_project_sign_flip": 0.0078125,
+    "decision": "supported"
+  },
+  "h1a_unknown_bounds": {
+    "worst": {
+      "estimate": 0.7438,
+      "n_pairs": 160,
+      "n_requirements": 40,
+      "n_projects": 8,
+      "pair_outcomes": {
+        "defective_worse": 80,
+        "tie": 78,
+        "defective_better": 2
+      }
+    },
+    "best": {
+      "estimate": 0.7063,
+      "n_pairs": 160,
+      "n_requirements": 40,
+      "n_projects": 8,
+      "pair_outcomes": {
+        "defective_worse": 74,
+        "tie": 78,
+        "defective_better": 8
+      }
+    }
+  },
+  "b_control": {
+    "estimate": 0.5208,
+    "n_pairs": 147,
+    "n_requirements": 40,
+    "n_projects": 8,
+    "pair_outcomes": {
+      "defective_worse": 15,
+      "tie": 124,
+      "defective_better": 8
+    },
+    "ci95_project_bootstrap": [
+      0.5031,
+      0.5375
+    ],
+    "p_exact_project_sign_flip": 0.125,
+    "wording_effect_flag": true
+  },
+  "exploratory": {
+    "per_model": {
+      "model-1": {
+        "estimate": 0.7625,
+        "n_pairs": 74,
+        "n_requirements": 40,
+        "n_projects": 8,
+        "pair_outcomes": {
+          "defective_worse": 38,
+          "tie": 36,
+          "defective_better": 0
+        },
+        "ci95_project_bootstrap": [
+          0.7063,
+          0.8063
+        ],
+        "p_exact_project_sign_flip": 0.0078125
+      },
+      "model-2": {
+        "estimate": 0.7312,
+        "n_pairs": 75,
+        "n_requirements": 40,
+        "n_projects": 8,
+        "pair_outcomes": {
+          "defective_worse": 36,
+          "tie": 37,
+          "defective_better": 2
+        },
+        "ci95_project_bootstrap": [
+          0.7,
+          0.7625
+        ],
+        "p_exact_project_sign_flip": 0.0078125
+      }
+    },
+    "leave_one_project_out": {
+      "proj0": 0.7405,
+      "proj1": 0.7369,
+      "proj2": 0.7405,
+      "proj3": 0.7405,
+      "proj4": 0.7571,
+      "proj5": 0.744,
+      "proj6": 0.7393,
+      "proj7": 0.7512
+    },
+    "per_frame_option": {
+      "reserve": {
+        "estimate": 0.7474,
+        "n_pairs": 118,
+        "n_requirements": 32,
+        "n_projects": 8,
+        "pair_outcomes": {
+          "defective_worse": 60,
+          "tie": 56,
+          "defective_better": 2
+        }
+      },
+      "w2024": {
+        "estimate": 0.7292,
+        "n_pairs": 31,
+        "n_requirements": 8,
+        "n_projects": 8,
+        "pair_outcomes": {
+          "defective_worse": 14,
+          "tie": 17,
+          "defective_better": 0
+        }
+      }
+    },
+    "without_w2024": {
+      "estimate": 0.7474,
+      "n_pairs": 118,
+      "n_requirements": 32,
+      "n_projects": 8,
+      "pair_outcomes": {
+        "defective_worse": 60,
+        "tie": 56,
+        "defective_better": 2
+      },
+      "ci95_project_bootstrap": [
+        0.7018,
+        0.7943
+      ],
+      "p_exact_project_sign_flip": 0.0078125,
+      "note": "sensitivity only: drops requirements unevenly by project and does not keep the 8x5 design or its estimated power"
+    }
+  },
+  "confirmatory_eligible": false,
+  "synthetic": {
+    "scenario": "effect",
+    "parameters": {
+      "fail_a": 0.08,
+      "fail_b": 0.1,
+      "fail_c": 0.55,
+      "w2024_per_project": 1
+    }
+  }
+}

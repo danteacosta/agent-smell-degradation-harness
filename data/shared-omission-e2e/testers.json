@@ -1,0 +1,64 @@
+{
+  "schema_version": "shared-omission-testers/v1",
+  "rule": "Every evaluated tester run published under data/shared-omission-e2e is listed here and reported. A run whose evaluation failed is listed with status failed_evaluation and its reason, and is excluded from the summary. No run is dropped or chosen after its results are known; testers are reported separately and never pooled.",
+  "runs": [
+    {
+      "tester": "gpt-6-astra",
+      "provider": "OpenAI",
+      "status": "evaluated",
+      "results": "data/shared-omission-e2e/v1/results.json",
+      "manifest": "data/shared-omission-e2e/v1/frozen-manifest-public.json",
+      "pr": 184
+    },
+    {
+      "tester": "claude-sonnet-4-6",
+      "provider": "Anthropic",
+      "status": "failed_evaluation",
+      "reason": "Docker unavailable; no browser reports (PR #189). Superseded by the offline evaluation of the same saved suites.",
+      "results": "data/shared-omission-e2e/claude-v1/claude-sonnet-4-6/results.json",
+      "pr": 189
+    },
+    {
+      "tester": "claude-opus-4-6",
+      "provider": "Anthropic",
+      "status": "failed_evaluation",
+      "reason": "Docker unavailable; no browser reports (PR #189). Superseded by the offline evaluation of the same saved suites.",
+      "results": "data/shared-omission-e2e/claude-v1/claude-opus-4-6/results.json",
+      "pr": 189
+    },
+    {
+      "tester": "claude-sonnet-4-6",
+      "provider": "Anthropic",
+      "status": "evaluated",
+      "results": "data/shared-omission-e2e/claude-evaluation-v1/claude-sonnet-4-6/results.json",
+      "manifest": "data/shared-omission-e2e/claude-evaluation-v1/claude-sonnet-4-6/frozen-manifest-public.json",
+      "pr": 190
+    },
+    {
+      "tester": "claude-opus-4-6",
+      "provider": "Anthropic",
+      "status": "evaluated",
+      "results": "data/shared-omission-e2e/claude-evaluation-v1/claude-opus-4-6/results.json",
+      "manifest": "data/shared-omission-e2e/claude-evaluation-v1/claude-opus-4-6/frozen-manifest-public.json",
+      "pr": 190
+    },
+    {
+      "tester": "claude-sonnet-5-5",
+      "provider": "Anthropic",
+      "status": "evaluated",
+      "reason": "Docker evaluation completed: 1138 browser reports; eight generation-failure placeholders retain the single StreamSuspended failure without retry.",
+      "results": "data/shared-omission-e2e/claude55-v1/claude-sonnet-5-5/results.json",
+      "manifest": "data/shared-omission-e2e/claude55-v1/claude-sonnet-5-5/frozen-manifest-public.json",
+      "pr": 195
+    },
+    {
+      "tester": "claude-opus-5-5",
+      "provider": "Anthropic",
+      "status": "evaluated",
+      "reason": "Docker evaluation completed: all 1146 planned pairs have browser reports; no generation-failure placeholders.",
+      "results": "data/shared-omission-e2e/claude55-v1/claude-opus-5-5/results.json",
+      "manifest": "data/shared-omission-e2e/claude55-v1/claude-opus-5-5/frozen-manifest-public.json",
+      "pr": 196
+    }
+  ]
+}

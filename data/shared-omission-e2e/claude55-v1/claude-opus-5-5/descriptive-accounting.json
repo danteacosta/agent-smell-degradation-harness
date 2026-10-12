@@ -1,0 +1,75 @@
+{
+  "attempted": 150,
+  "browser_reports": 1146,
+  "by_source": {
+    "code_incomplete": {
+      "assertion_reversal": 10,
+      "reference_vs_selected_mutant": {
+        "reference_alarm__mutant_alarm": 6,
+        "reference_alarm__mutant_quiet": 11,
+        "reference_quiet__mutant_alarm": 8,
+        "reference_quiet__mutant_quiet": 25
+      },
+      "unconditional": {
+        "correct": {
+          "alarms": 52,
+          "observed": 132,
+          "planned": 132
+        },
+        "recovered": {
+          "alarms": 6,
+          "observed": 34,
+          "planned": 34
+        }
+      }
+    },
+    "spec_complete": {
+      "assertion_reversal": 0,
+      "reference_vs_selected_mutant": {
+        "reference_alarm__mutant_alarm": 1,
+        "reference_quiet__mutant_alarm": 47,
+        "reference_quiet__mutant_quiet": 2
+      },
+      "unconditional": {
+        "correct": {
+          "alarms": 14,
+          "observed": 132,
+          "planned": 132
+        },
+        "recovered": {
+          "alarms": 7,
+          "observed": 34,
+          "planned": 34
+        }
+      }
+    },
+    "spec_incomplete": {
+      "assertion_reversal": 4,
+      "reference_vs_selected_mutant": {
+        "reference_alarm__mutant_alarm": 6,
+        "reference_alarm__mutant_quiet": 6,
+        "reference_quiet__mutant_alarm": 14,
+        "reference_quiet__mutant_quiet": 24
+      },
+      "unconditional": {
+        "correct": {
+          "alarms": 29,
+          "observed": 132,
+          "planned": 132
+        },
+        "recovered": {
+          "alarms": 3,
+          "observed": 34,
+          "planned": 34
+        }
+      }
+    }
+  },
+  "planned_pairs": 1146,
+  "ready_suites": 150,
+  "row_verdicts": {
+    "assertion_alarm": 375,
+    "error_alarm": 48,
+    "quiet": 723
+  }
+}
