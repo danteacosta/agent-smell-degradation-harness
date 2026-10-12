@@ -714,3 +714,16 @@ Search/read date: 2026-10-08. Deduplicated by arXiv ID/title (not previously in 
 Context only (not matrix entries): OpenTelemetry GenAI agent-span conventions are still labelled *Development* on opentelemetry.io; third-party posts disagree on stabilization and were not used. Pin a schema version before building exporters.
 
 **Decision (2026-10-08).** Smallest incorporation: an offline continuity check. It detects gaps, re-linking and duplicate IDs inside a trace, and, given a receipt stored outside the agent's host, truncation or deletion. Without a receipt a deleted suffix is undetectable; the tests assert this limit. The wire schema, the label plane and H1/H2 are unchanged. Human decision still open: where the confirmatory runner stores the receipt (a host the agent cannot write) and whether the runner must call the check before scoring. No such runner wiring was done.
+
+
+## 2026-10-09 — Provenance validation and receipt contracts
+
+Search/read date: 2026-10-09. Deduplicated by URL/title. Read the abstract, scope, validation rationale, compliance discussion and constraint definitions of the primary recommendation.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Cheney, Missier, Moreau and De Nies, [*Constraints of the PROV Data Model*](https://www.w3.org/TR/prov-constraints/), W3C Recommendation, 2013; primary standard, not an empirical paper | How can provenance consistency be checked? No experimental sample; formal definitions, normalization and uniqueness, ordering, typing and impossibility constraints. | Defines consistent provenance, not truth or authenticity. PROV-specific rules do not directly specify our JSON receipt. | Thesis: structural consistency must not be confused with semantic validity. Experiment: validate receipt object/count/digest types before comparison; reject boolean or float counts and malformed receipts. Product: integrity diagnostics need explicit input contracts. Action: regression tests and strict receipt validation; not a PROV-compliance claim. | 9/10 for normative provenance guidance: stable reviewed standard with formal rules; no empirical support for H1/H2 or cryptographic authenticity. |
+
+**Concrete incorporation.** `observability/trace_integrity.py` now checks a receipt before comparisons. Two malformed counts (`true`, `1.0`) previously passed for a one-event trace; non-object receipts could crash. Thirteen regression cases cover counts, receipt shapes and digest syntax. Existing trace and audit tests remain covered. This is a local contract derived from the emitter, not a requirement imposed by PROV.
+
+**Remaining human gate.** Decide out-of-band receipt custody and integration into the runner before confirmatory collection. A digest does not authenticate its author; a receipt regenerated after modification cannot prove the original trace. No change to B0/B3, labels, endpoints or frozen data.

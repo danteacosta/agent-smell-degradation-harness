@@ -27,6 +27,18 @@ def verify_trace_continuity(
 ) -> list[str]:
     """Return a list of integrity problems; an empty list means none were found."""
     problems: list[str] = []
+    if receipt is not None:
+        if not isinstance(receipt, dict):
+            return ["receipt must be an object"]
+        event_count = receipt.get("event_count")
+        if type(event_count) is not int or event_count < 0:
+            problems.append("receipt event_count must be a nonnegative integer")
+        digest = receipt.get("sha256")
+        if (not isinstance(digest, str) or len(digest) != 64
+                or any(c not in "0123456789abcdef" for c in digest)):
+            problems.append("receipt sha256 must be 64 lowercase hexadecimal characters")
+        if problems:
+            return problems
     try:
         data = Path(path).read_bytes()
     except FileNotFoundError:
