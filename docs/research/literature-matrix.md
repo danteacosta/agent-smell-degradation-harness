@@ -810,6 +810,55 @@ Search/read date: 2026-10-09. Deduplicated by arXiv ID (previously abstract-only
 | --- | --- | --- | --- | ---: |
 | Yang, Xie, Yang, Hu, Huang, Zhang, Miao, Su, Wan, Pu, [*Clarity Is Not Assumed: Understanding LLM-Based Code Generation under Ambiguous Requirements (Orchid)*](https://arxiv.org/abs/2604.21505), author manuscript v3 (cs.SE; submitted 2026-04-23, revised 2026-09-27), whose header identifies ASE 2026 proceedings and DOI [10.1145/3832783.3834403](https://doi.org/10.1145/3832783.3834403); publication metadata attributed to the manuscript, not independently verified peer-review history | How does requirement ambiguity (lexical, syntactic, semantic, vagueness) affect function-level code generation? An LLM pipeline (DeepSeek-V3 injection, judge and explanation agents) rewrites HumanEval+/BigCodeBench requirements; humans curated all 1,312 variants of Orchid-HEval and Orchid-BCB (>246 person-hours) while the 3,904-variant Orchid-BCB-Expand was not curated; six models, Pass@k from n=5 samples, paired against the original requirement. | Mean Pass@1 drop 7.22 points (16.25% relative), up to 32.35 points (GPT-4, semantic, BCB-Expand); drops are uneven (Claude-3.5 31.10 points syntactic vs 2.44 semantic on HEval; DeepSeek-R1 at most about 4 points). Multi-model implementation conflict rises (HEval 30.60% to 36.45%). Models detect ambiguity in only 24.7–43.7% of cases and localize it in 11–14%. Limits: function-level only, one ambiguity per variant, single-run tables without significance tests, generator/judge/evaluated-model overlap (DeepSeek-V3, GPT-4), uncurated Expand subset, text/table disagreement for CodeLlama conflict rates, no incompleteness or omission category (left to future work), no browser or repository-level oracle. | **Thesis:** adjacent context on ambiguity (a smell family), not evidence on omission of a testable condition; it strengthens the narrow statement that omission/incompleteness is not a separately evaluated category in this benchmark and does not contradict H1a. **Experiment:** reinforces the existing generator/judge-overlap sensitivity and the need to keep the 20% human audit; the uneven per-model drops support reporting effects by model and by rule type rather than only pooled. **Product:** the low detection and localization rates motivate a requirement-anchored check that does not rely on the model noticing the gap; hypothesis only. **Action:** comparison note translated to English and corrected (docs/research/2026-10-05-orchid-comparison-note.md); no protocol, label or hypothesis change; wording of the cited figures should stay "reported by Orchid", never an expectation for this study. | 6 (public benchmark, human curation of the core subsets, large model set; author manuscript; single-run tables, overlap and no significance tests) |
 
+## 2026-10-11 — Task-specific qualification for RE diagnostics
+
+Search/read date: 2026-10-11. Deduplicated by arXiv ID/title. Read the abstract,
+both study designs, datasets, metrics, results, cross-study discussion and threats
+in the full author text.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Dąbrowski et al., [*Large Language Models for Requirements Engineering: A Cross-Task Empirical Evaluation*](https://arxiv.org/abs/2608.21531), arXiv preprint, 2026 | How does LLM performance vary across five RE activities? Study I evaluates five small open models on 1,278 NFR reviews and 512 request-type reviews, with three runs and human assessment of generated specifications. Study II evaluates two frontier models once per configuration on Rust goals, issues and Zulip discussions; a second evaluator reviews 10% of cases. | Performance is task-dependent: reported best F1 is 0.55 for NFR classification and 0.74 for request type; traceability P@5 varies by model, artefact relation and prompt. The industrial study has no exhaustive ground truth, one ecosystem, one run per configuration and only partial double review. The advertised replication package remains pending acceptance. | Thesis: adjacent evidence only; it does not measure condition loss or T1–T3 warnings. Experiment: do not transfer a model ranking, prompt or threshold across tasks. Product: qualify the exact decision and preserve human verification. Action: add an offline, project-separated qualification evaluator that reports wrong-binding rejection, valid-alternative retention and insufficient-evidence abstention separately against a deterministic baseline. | 6/10: detailed multi-task preprint and sizeable classification sets, but peer review is unverified, industrial evidence is exploratory and replication materials are not yet public. |
+
+**Concrete incorporation.** `eval/evidence_diagnostic_qualification.py` now
+validates a frozen product-qualification packet and scores only evaluation
+projects. It requires a threshold selected on calibration projects, preserves
+the scheduled denominator and reports all three semantic control families for
+both a baseline and candidate diagnostic. It rejects missing families, duplicate
+records, split drift, non-finite thresholds and inconsistent expected decisions.
+The evaluator consumes frozen decisions only: labels remain in the post-hoc
+label plane and are not detector features.
+The separate frozen-label inventory is checked against its canonical SHA-256
+receipt together with the project split, and results must cover exactly those
+identities and expected decisions.
+Deleting a failed record, adding an unplanned record, or changing a label fails
+closed before scoring. The [packet contract](evidence-diagnostic-qualification.md)
+defines the digest encoding and the external-custody limitation.
+
+This is product-instrument qualification, not new H1/H2 evidence. Synthetic
+unit-test controls do not estimate field utility. Independent semantic review,
+real obligation/evidence pairs and a frozen product target remain human gates.
+
+## 2026-10-12 — Compliance validation needs auditable human control
+
+Search/read date: 2026-10-12. Deduplicated by arXiv ID/title. Read the full
+HTML manuscript: research design, interview and survey samples, results,
+derived minimum requirements and limitations. A related paper by the same
+first author appears in the RE 2026 Doctoral Symposium proceedings; this does
+not establish peer review of the survey manuscript itself.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Lai et al., [*From Obligation to Specification: A Survey on Validating EU AI Act Requirements in Requirements Engineering*](https://arxiv.org/abs/2607.21608), arXiv preprint, 2026 | How do practitioners validate AI Act requirements, and what should an agentic assistant provide? Ten expert interviews (five industry, five academia) followed by a 15-person survey; qualitative coding plus descriptive statistics. | Work was largely manual and fragmented; respondents preferred a human-in-the-loop assistant with citations, audit logs, guardrails, access control, uncertainty and explicit missing-evidence handling. Reported willingness to pilot and expected time/coverage gains are intentions, not observed product outcomes. Limits include convenience sampling, self-report and social-desirability bias, a small mainly German sample, and no inferential statistics or field validation. | Thesis: no H1/H2 evidence. Experiment: reinforces that frozen labels and detector outputs need a visible separation. Product: compliance is a plausible discovery niche, but buyer demand and effectiveness remain unvalidated. Action: require a blind-review manifest with two distinct reviewers, frozen rubric/label hashes, and pair identity that cannot cross projects or constraints in the offline product-qualification packet. | 6/10: full methods and candid limitations, directly relevant to the workflow; exploratory preprint with a very small convenience sample and no measured product impact. |
+
+**Concrete incorporation.** `eval/evidence_diagnostic_qualification.py` now
+fails closed unless expected decisions were frozen before scoring, predictions
+were hidden from at least two distinct reviewers, and the rubric and label set
+have SHA-256 receipts. Every record has a `pair_id`; a pair cannot silently
+cross a project or constraint. This makes the review claim auditable as a
+recorded contract, but it cannot prove that reviewers were genuinely
+independent. Real reviewers and real policy/evidence pairs remain human gates.
+
 ## 2026-10-10 — Deletion-only underspecification and clarification (ClarifyCodeBench)
 
 Search/read date: 2026-10-10. Deduplicated by arXiv ID: 2607.00711 was previously
