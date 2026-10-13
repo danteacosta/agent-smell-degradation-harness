@@ -879,3 +879,21 @@ existing "Development, pin a schema version" note stands.
 should require a recorded "deletion-only" attestation per pair. This entry changes no
 hypothesis, label, protocol or code, and makes no provider call. Related dated entries originated in literature-matrix PRs #204, #205 and #208;
 preserve all during integration.
+
+
+## 2026-10-13 — Audit-ready delivery is not omission sensitivity
+
+Search/read date: 2026-10-13. New source, deduplicated by arXiv ID/title.
+Read the full nine-page PDF: framework, case-study design, operational metrics,
+cost comparison, threats to validity and conclusions.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Koch and Wellbrock, [*Agile V: A Compliance-Oriented Framework for AI-Augmented Engineering — From Concept to Audit-Ready Delivery*](https://arxiv.org/abs/2602.20684), arXiv preprint, 2026 | Can a task-level Agile/V-model workflow produce traceability and verification artifacts with few human interactions? Author-run, single-case HIL system (about 500 LOC), two cycles, eight requirements and 54 tests. Requirements, build and tests were handled in separated agent contexts; metrics were artifact completeness, requirement-level pass rate, Red-Team findings and prompt count. | The case produced the planned audit artifacts, a 100% requirement-level pass rate and six human prompts per cycle. Ten Cycle-2 findings were repaired. The reported 10–50x cost advantage compares observed agent execution with an estimated COCOMO II baseline and excludes adoption overhead. The authors identify a single bounded case, creator evaluation, model dependence, no independent auditor, and no mutation, fuzzing or formal verification. | Thesis: no H1/H2 evidence; passing all authored requirement tests does not show sensitivity to a condition omitted from both implementation and test source. Experiment: reinforces keeping test generation isolated from implementation context, already present in the anchoring study. Product: direct adjacent alternative for audit-ready evidence generation; differentiation must be diagnosing whether an existing evidence suite would catch a missing obligation. Action: retain exact frozen obligation/evidence inventories and safe pre-prediction receipts; do not claim compliance or cost savings from the offline qualification instrument. | 4/10: transparent bounded feasibility report and public artifacts, but an unreviewed author-run single case with estimated cost comparison and no external audit. |
+
+**Decision.** The paper sharpens the product boundary without changing the thesis:
+audit-artifact generation and requirement traceability are existing adjacent
+capabilities. The open question is whether an existing evaluation or evidence
+suite is *adequate under controlled obligation loss*. The frozen-inventory
+builder added in PR #215 reduces qualification-packet authoring errors; it does
+not establish product effectiveness, regulatory conformity or market demand.
