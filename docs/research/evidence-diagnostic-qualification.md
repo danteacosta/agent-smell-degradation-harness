@@ -49,3 +49,19 @@ receipt was frozen. External trusted custody and independent review of real pair
 remain human gates. Rewriting the inventory and its receipt together cannot be
 detected without that custody. Synthetic tests are contract checks, not field-utility
 estimates or H1/H2 evidence.
+
+
+## Safe authoring helper
+
+Use `freeze_label_inventory(project_split, labels)` from
+`eval.evidence_diagnostic_packet` to create the inventory and canonical receipt
+before detector predictions exist. The helper accepts exactly the six label-plane
+fields listed above, rejects prediction fields and invalid family decisions, and
+returns a deep copy so later authoring changes do not silently mutate the frozen
+inventory.
+
+Attach the returned `frozen_labels` and `frozen_labels_sha256` to the
+qualification packet. Add `diagnostic_decision` and `baseline_decision` only to
+the separate result records after review. The evaluator remains the authority:
+the helper reduces authoring mistakes but does not establish external custody,
+reviewer independence, or freeze timing.
