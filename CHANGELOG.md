@@ -14,6 +14,7 @@
 
 ### Added
 
+- `eval.provider_manifest.configuration_identity_digest` and `identity_binding_gaps`: offline content-addressed run identity (model, instructions, tools, runtime) and a readiness check for live runs; legacy metadata is still accepted.
 - Wedge reliability check CLI (`python -m wedge`) with `approve` / `warn` / `clarify` decisions and demo fixtures.
 - Tier A/B provenance tagging in `ProvenanceRecorder`; `observability.features.extract_tier_a_features` excludes oracle labels.
 - Mutation scoring for `test_gen` episodes (`eval/mutation.py`, `mutation_score` on episodes).
