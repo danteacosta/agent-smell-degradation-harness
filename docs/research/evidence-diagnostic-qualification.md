@@ -65,3 +65,7 @@ qualification packet. Add `diagnostic_decision` and `baseline_decision` only to
 the separate result records after review. The evaluator remains the authority:
 the helper reduces authoring mistakes but does not establish external custody,
 reviewer independence, or freeze timing.
+
+The authoring helper also rejects cross-project/cross-constraint pair identities
+and missing evaluation control families before issuing a receipt. This avoids
+collecting predictions for an inventory the evaluator would later reject.
