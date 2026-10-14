@@ -84,6 +84,23 @@ def test_receipt_binds_project_assignment_and_inventory_order():
     split = {"evaluation-project": "evaluation"}
     first = freeze_label_inventory(split, value)["frozen_labels_sha256"]
     reordered = freeze_label_inventory(split, list(reversed(value)))["frozen_labels_sha256"]
-    reassigned = freeze_label_inventory({"evaluation-project": "development"}, value)["frozen_labels_sha256"]
     assert first != reordered
-    assert first != reassigned
+    with pytest.raises(ValueError, match="every qualification family"):
+        freeze_label_inventory({"evaluation-project": "development"}, value)
+
+
+@pytest.mark.parametrize("field", ["project_id", "constraint_id"])
+def test_inconsistent_pairs_are_rejected_before_predictions_exist(field):
+    value = labels()
+    extra = copy.deepcopy(value[0])
+    extra["record_id"] = "other-record"
+    extra[field] = "other-identity"
+    value.append(extra)
+    split = {"evaluation-project": "evaluation", "other-identity": "development"}
+    with pytest.raises(ValueError, match="pair_id"):
+        freeze_label_inventory(split, value)
+
+
+def test_missing_control_family_is_rejected_before_freezing():
+    with pytest.raises(ValueError, match="every qualification family"):
+        freeze_label_inventory({"evaluation-project": "evaluation"}, labels()[:-1])
