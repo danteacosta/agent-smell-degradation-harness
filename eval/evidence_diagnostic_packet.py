@@ -41,6 +41,18 @@ def freeze_label_inventory(project_split: dict, labels: list[dict]) -> dict:
         if label["family"] not in FAMILIES or label["expected_decision"] != FAMILIES[label["family"]]:
             raise ValueError("family and expected decision disagree")
 
+    pairs = {}
+    evaluation_families = set()
+    for label in frozen:
+        identity = (label["project_id"], label["constraint_id"])
+        if label["pair_id"] in pairs and pairs[label["pair_id"]] != identity:
+            raise ValueError("pair_id must identify one project and constraint")
+        pairs[label["pair_id"]] = identity
+        if project_split[label["project_id"]] == "evaluation":
+            evaluation_families.add(label["family"])
+    if evaluation_families != set(FAMILIES):
+        raise ValueError("evaluation projects must contain every qualification family")
+
     canonical = json.dumps(
         {"project_split": project_split, "labels": frozen},
         sort_keys=True,
