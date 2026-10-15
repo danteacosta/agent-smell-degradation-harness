@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-12
+Last updated: 2026-10-15
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -879,3 +879,21 @@ existing "Development, pin a schema version" note stands.
 should require a recorded "deletion-only" attestation per pair. This entry changes no
 hypothesis, label, protocol or code, and makes no provider call. Related dated entries originated in literature-matrix PRs #204, #205 and #208;
 preserve all during integration.
+
+## 2026-10-15 — Seeded-omission detection in specifications by LLM ensembles (abstract level)
+
+Search/read date: 2026-10-15. Deduplicated by title and arXiv ID against this matrix:
+TraceDev (2607.18886), WiseSpec (2609.00568), UnderSpecBench (2607.02294), ClarEval
+(2603.00187), "Ask or Assume?" (2603.26233) and Orchid (2604.21505) were re-surfaced by
+the search and are already entered; no update to them. The item below was not in the
+matrix. Read: the ASE 2025 NIER program page (abstract, method summary, data, headline
+results). The paper itself, its DOI and any limitations section were not accessible, so
+this is an abstract-level entry and supports context only.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Kassab and AbdElhameed, [*Detecting and Repairing Incomplete Software Requirements with Multi-LLM Ensembles*](https://conf.researchr.org/details/ase-2025/ase-2025-nier-track/13/Detecting-and-Repairing-Incomplete-Software-Requirements-with-Multi-LLM-Ensembles), ASE 2025 NIER track (short paper; peer-review status of NIER acceptance stated by the venue, paper text not read; no DOI found) | Can an ensemble of three LLMs (DeepSeek Chat, GPT-4o Mini, Claude Sonnet 4) detect missing requirements in an SRS and propose fixes? Builds a structured domain model from the SRS, runs external and internal completeness analyses, aggregates by majority vote, weighted vote or meta-LLM fusion. Four SRSs with seeded omissions. | Reported single-model recall 0–52%; full ensemble consistently above 75%, up to 100%; suggestion plausibility 95–100%. Limits visible from the abstract: four documents, seeded omissions of unknown construction, self-built tool, "early" results, no stated threats; recall of a single model varies widely, and plausibility is not correctness. | **Thesis:** upstream-completeness precedent (find the omitted requirement in the document). It does not measure whether an omission becomes a downstream artifact defect, so it does not narrow the H1 gap; it does reinforce the already recorded point that single-LLM reviewers miss deletions. **Experiment:** weak extra support for qualifying the A/B/C review panel against authored deletion controls and reporting per-model recall, not only the ensemble result; no change to the frozen rubric. **Product:** spec-level completeness checkers are an adjacent category to position against. **Action:** context only; no hypothesis, label, protocol or code change. | 3 |
+
+**Decision needed from Dante (not applied):** none required; if the panel-qualification
+section is revisited, consider citing this as a secondary pointer after reading the full
+paper.
