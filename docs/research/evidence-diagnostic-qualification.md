@@ -69,3 +69,53 @@ reviewer independence, or freeze timing.
 The authoring helper also rejects cross-project/cross-constraint pair identities
 and missing evaluation control families before issuing a receipt. This avoids
 collecting predictions for an inventory the evaluator would later reject.
+
+## Human review handoff: applicability is not reward
+
+This is a proposed product-only review worksheet, not a change to a frozen
+thesis endpoint or the tau2 operator-sensitivity analysis. Prepare the review
+view before joining detector decisions or benchmark rewards.
+
+Keep one row per `run_id / replication_id / constraint_id`, with stable
+project, task, variant and trajectory-receipt references. Store these review
+fields outside the six-field qualification inventory:
+
+| Field | Allowed values / required evidence |
+| --- | --- |
+| obligation_source | Exact original-policy version, location and text; distinguish it from the agent's mutated input. |
+| applicability | applicable / not_applicable / uncertain; cite scenario and trajectory steps establishing the precondition. |
+| observation_status | complete / technical_failure / incomplete; missing evidence is not compliance. |
+| semantic_verdict | violated / satisfied / uncertain / not_applicable; quote the decisive action and rule, or explain uncertainty. |
+| alternative_interpretation | Record valid alternative behavior, residual mentions, exceptions and conflicting policy passages. |
+| reviewer_id | Independent reviewer identifier; preserve each first-pass judgment before adjudication. |
+| adjudication | Agreement or adjudicated verdict with rationale; never overwrite the original judgments. |
+| eval_response | Join reward and detector decisions only after the semantic verdict is frozen. |
+
+Review in two passes. First, two reviewers independently see the original rule,
+scenario and trajectory, but not reward, detector output, model identity or
+operator name when these can be masked without removing needed evidence.
+Document unavoidable unblinding (the trajectory itself may reveal treatment).
+Second, freeze and receipt those judgments, resolve disagreements under the
+approved rubric, then join the evaluation response.
+
+A candidate silent violation requires **applicability established + complete
+evidence + independently validated violation + evaluation acceptance**.
+Acceptance without a violation is not a coverage gap. Non-applicability is not
+a true negative; missing/technical records remain scheduled and separately
+reported. Operator reward sensitivity and semantic violation detection must
+have separate tables and denominators. These fields are a worksheet proposal,
+not yet an implemented validator or completed annotation.
+
+Illustrative example only: a policy requires confirmation before a consequential
+action. A successful final state does not establish that confirmation occurred.
+Review the preceding turns and the action boundary. If the precondition never
+arose, mark not_applicable; if turns are missing, mark uncertain. Only a complete
+trace establishing an applicable violation can support a candidate missed eval.
+
+Related implementation reference: [OmissionBench authors' repository](https://github.com/composo-ai/omission-bench).
+Its published construction map separates blind fact-sheet extraction, omission
+site verification, pair ground-truth gates and clinician review. This is an
+adjacent clinical-domain workflow, not evidence for H1/H2 or a validated tau2
+rubric. The paper's full text was inaccessible on 2026-10-15; only its abstract
+and the complete author-released README were read. Human approval of this
+worksheet and access to frozen real trajectories remain prerequisites.
