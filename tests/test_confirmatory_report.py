@@ -143,7 +143,7 @@ def test_small_cluster_fallback_preserves_report_schema() -> None:
 
 
 def test_length_matched_control_removes_pure_length_signal():
-    from eval.confirmatory_report import length_matched_control
+    from eval.length_control import length_matched_control
 
     # Longer episodes are more often positive, so length alone ranks well,
     # but within matched-length pairs the length-driven score is uninformative.
@@ -160,7 +160,7 @@ def test_length_matched_control_removes_pure_length_signal():
 def test_length_matched_control_reports_insufficient_pairs_and_rejects_bad_input():
     import pytest
 
-    from eval.confirmatory_report import length_matched_control
+    from eval.length_control import length_matched_control
 
     result = length_matched_control([1.0, 2.0], [0, 1], [3, 40], tolerance=3)
     assert result["n_pairs"] == 0 and result["matched_auroc"] is None
