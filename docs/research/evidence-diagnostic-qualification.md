@@ -119,3 +119,34 @@ adjacent clinical-domain workflow, not evidence for H1/H2 or a validated tau2
 rubric. The paper's full text was inaccessible on 2026-10-15; only its abstract
 and the complete author-released README were read. Human approval of this
 worksheet and access to frozen real trajectories remain prerequisites.
+
+## Executable review-view preparation
+
+`eval.blind_semantic_review.prepare_blind_review(records)` now prepares an
+allowlisted `review_view` and a separate `private_join_key`. Give reviewers
+only `review_view`, never the enclosing object. The join key retains source
+metadata and must remain in coordinator-controlled storage.
+
+Inputs require nonempty `run_id`, `replication_id`, `constraint_id`,
+`original_rule`, `scenario` and `trajectory`. The helper preserves every
+supplied row in order, rejects duplicate identities and fails on missing
+evidence instead of silently reducing the denominator. Missing trajectories
+must remain in the coordinator's scheduled inventory and exception log;
+this helper cannot recover records absent from its input.
+
+The review view contains only a sequential blind ID and the three evidence
+texts. Structured reward, model and variant fields cannot enter that view.
+This is **metadata masking, not automatic content de-identification**:
+trajectory text may reveal treatment, model identity or rewards, so a human
+disclosure screen is required before release. This function neither samples
+by outcome nor creates semantic labels, and `confirmatory_eligible` stays false.
+Keep full original evidence available; do not truncate away exceptions or
+confirmation turns merely to improve blinding.
+
+Implementation reference read on 2026-10-16:
+[OmissionBench independent-clinician pack](https://github.com/composo-ai/omission-bench/blob/main/sittings/second_clinician_sitting.py),
+module documentation and setup (lines 1–90), plus the author-clinician pack's
+sampling/masking helpers. The authors explicitly distinguish independent
+assessment from agreement and disclose incomplete checklist coverage. This
+informs the release gate, not H1/H2, clinical claims or a claim that our exporter
+implements their complete method. Code was inspected, not executed.
