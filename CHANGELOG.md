@@ -14,6 +14,8 @@
 
 ### Added
 
+- **H2 reporting**: `length_matched_control` in `eval/confirmatory_report.py` reports length-only AUROC and length-matched score AUROC as a descriptive-only control for the trace-length confound (motivated by arXiv 2610.12375, preprint). It is not part of the claim gate, and the frozen protocol is unchanged.
+
 - Wedge reliability check CLI (`python -m wedge`) with `approve` / `warn` / `clarify` decisions and demo fixtures.
 - Tier A/B provenance tagging in `ProvenanceRecorder`; `observability.features.extract_tier_a_features` excludes oracle labels.
 - Mutation scoring for `test_gen` episodes (`eval/mutation.py`, `mutation_score` on episodes).

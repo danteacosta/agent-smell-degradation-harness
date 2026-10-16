@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-12
+Last updated: 2026-10-16
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -879,3 +879,25 @@ existing "Development, pin a schema version" note stands.
 should require a recorded "deletion-only" attestation per pair. This entry changes no
 hypothesis, label, protocol or code, and makes no provider call. Related dated entries originated in literature-matrix PRs #204, #205 and #208;
 preserve all during integration.
+
+## 2026-10-16 — Trajectory monitors and the length confound (OnTrack)
+
+Search/read date: 2026-10-16. Deduplicated by arXiv ID and title against `main` and the
+open literature PRs (#217, #218): not previously entered. The same search re-surfaced
+PrefixGuard (2605.06455), "From Agent Traces to Trust" (2606.04990) and the requirement-smell
+code-generation preprint 2609.29208, which are already entered or queued; no update to them.
+Also surfaced and **not read beyond the result page, so not entered and not scored**:
+TRACES (2605.27690), "When Evidence is Sparse" (2606.05414), "Real-Time Detection and Repair of
+LLM Agent Failures" (2608.02464), AgentForesight (2605.08715). Read for the entry below: the
+full PDF text (abstract, SWE-bench setup, Table 5 discussion, sections 6.4-6.6, limitations).
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Barazandeh, Swanson, Kulkarni, Mungel, [*OnTrack: Real-Time Monitoring and Intervention in LLM Agent Trajectories via Streaming Structure-Aware Optimal Transport*](https://arxiv.org/abs/2610.12375), arXiv preprint cs.AI v1, submitted 2026-10-08 (no peer-reviewed venue listed) | Can a streaming monitor that aligns each agent step and its dependencies to recorded successful runs flag failing runs early? 2,288 usable SWE-agent trajectories (430 resolved, 1,858 unresolved; public sailplane/swe-agent-trajs). Instance-disjoint split by SWE-bench instance (228 calibration, 5 reference, remainder evaluation); lambda chosen on calibration only; AUROC at the first k steps with bootstrap CIs; baselines include cosine similarity and step count. | At k=8 the monitor beats cosine similarity by +0.057 AUROC (CI [+0.033, +0.080]), but the advantage is gone by k=15, and at k=5 **trace length alone is the best single signal**. When resolved/unresolved traces are matched on length (50 pairs), every task-generic trajectory signal falls to chance (0.526; cosine 0.540). The authors state that no task-generic trajectory signal predicts patch correctness once length is controlled and that in-distribution wrong steps need task-level semantics. A flag-density abort policy saves about 17.9% of compute at about 21% false stops on the calibration mix. Limits: one homogeneous corpus (search-read-edit-test template), five reference instances, outcome label is "resolved" (the unit is a run, not a lost requirement), the 5-of-6 correct-abort figure in the abstract rests on 6 aborts, single-author-group preprint. | **Thesis:** independent evidence that generic process signals mostly proxy run length, and that detecting a semantically wrong but locally plausible step needs task-level information. This is consistent with the H2 design (B3 adds requirement-conditioned T1-T3 provenance on top of B0), but it is not evidence that T1-T3 provenance works; SWE-bench resolution is not condition loss. **Experiment:** B0 already contains event count and latency, so a length-only comparator is partly present, but no length-matched check exists. Action taken (offline, no provider call): `eval/confirmatory_report.py::length_matched_control` reports length-only AUROC and the score AUROC on length-matched positive/negative pairs, descriptive only; it is not wired into the frozen claim gate. **Product:** monitors of this family flag runaway or looping runs, not lost requirements; supports positioning "explain which condition was lost" separately from generic trace monitors (hypothesis only, vendor-neutral). | 5/10: transparent protocol, public data, instance-disjoint split and explicit negative results, but a non-peer-reviewed preprint, narrow corpus and a run-level outcome rather than requirement loss |
+
+**Tension recorded, not resolved.** OnTrack and the 2026-10-06 prefix-monitor entry both
+suggest generic early signals add little beyond length and the requirement text. That makes the
+pre-registered H2 margin (B3 over B0, PR-AUC +0.05) harder to expect if T1-T3 features mostly
+re-encode length. **Decision needed from Dante (not applied):** whether the H2 pre-registration
+should require the length-matched control (tolerance, minimum pairs) as a reported secondary
+analysis before the claim gate; the helper is available but the frozen protocol is unchanged.

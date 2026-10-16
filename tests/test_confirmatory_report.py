@@ -140,3 +140,32 @@ def test_small_cluster_fallback_preserves_report_schema() -> None:
         "max": None,
         "max_abs_shift_from_observed": None,
     }
+
+
+def test_length_matched_control_removes_pure_length_signal():
+    from eval.confirmatory_report import length_matched_control
+
+    # Longer episodes are more often positive, so length alone ranks well,
+    # but within matched-length pairs the length-driven score is uninformative.
+    lengths = [5, 5, 6, 6, 10, 10, 11, 11, 20, 20, 21, 21]
+    labels = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+    scores = [float(n) for n in lengths]
+    result = length_matched_control(scores, labels, lengths, tolerance=0, min_pairs=6)
+    assert result["n_pairs"] == 6
+    assert result["status"] == "ok"
+    assert result["matched_auroc"] == 0.5
+    assert result["claim"] == "descriptive_only"
+
+
+def test_length_matched_control_reports_insufficient_pairs_and_rejects_bad_input():
+    import pytest
+
+    from eval.confirmatory_report import length_matched_control
+
+    result = length_matched_control([1.0, 2.0], [0, 1], [3, 40], tolerance=3)
+    assert result["n_pairs"] == 0 and result["matched_auroc"] is None
+    assert result["status"] == "insufficient_pairs"
+    with pytest.raises(ValueError):
+        length_matched_control([1.0], [0, 1], [1])
+    with pytest.raises(ValueError):
+        length_matched_control([1.0], [2], [1])
