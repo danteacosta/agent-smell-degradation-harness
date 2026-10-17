@@ -925,3 +925,10 @@ See the [primary-source verification note](2026-10-17-pr217-source-verification.
 replication-disagreement feature. If yes, pre-register it and report it alongside a
 collapse caveat. This entry changes no hypothesis, label, protocol or code, and makes
 no provider call.
+
+## Preliminary source awaiting full-paper review
+
+The [ASE 2025 NIER abstract note](2026-10-15-requirements-ensemble-abstract-note.md)
+is retained separately for context. It is not a canonical matrix entry: the full
+method, results and limitations have not been read. The admission policy above
+remains unchanged.

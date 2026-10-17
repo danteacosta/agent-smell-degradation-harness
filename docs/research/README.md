@@ -1,5 +1,7 @@
 # Research catalog
 
+- [15 October 2026: preliminary requirements-ensemble abstract](2026-10-15-requirements-ensemble-abstract-note.md): context only, awaiting full-paper review.
+
 - [17 October 2026: PR 217 primary-source verification](2026-10-17-pr217-source-verification.md): verified authorship and numerical source attribution.
 
 - [13 October 2026: preliminary run-identity sources](2026-10-13-identity-sources-preliminary.md): abstract-level context, awaiting full-text review.
