@@ -14,6 +14,7 @@
 
 ### Added
 
+- **H2 reporting**: `construction_shortcut_control` in `eval/construction_shortcut.py` (outside the confirmatory freeze) reports direction-free AUROC for construction-only fields (order, identifier, arm markers) and flags label leakage through corpus construction; descriptive only and not part of the claim gate (motivated by arXiv 2608.22808, preprint). The literature matrix also records arXiv 2608.03222 as adjacent context.
 - **H2 reporting**: `length_matched_control` in `eval/length_control.py` (outside the confirmatory freeze) reports length-only AUROC and length-matched score AUROC as a descriptive-only control for the trace-length confound (motivated by arXiv 2610.12375, preprint). It is not part of the claim gate, and the frozen protocol is unchanged.
 
 - `eval.provider_manifest.configuration_identity_digest` and `identity_binding_gaps`: offline content-addressed run identity (model, instructions, tools, runtime) and a readiness check for live runs; legacy metadata is still accepted.
