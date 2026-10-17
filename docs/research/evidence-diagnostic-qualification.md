@@ -150,3 +150,25 @@ sampling/masking helpers. The authors explicitly distinguish independent
 assessment from agreement and disclose incomplete checklist coverage. This
 informs the release gate, not H1/H2, clinical claims or a claim that our exporter
 implements their complete method. Code was inspected, not executed.
+
+## Proposed reference-authority gate
+
+Before assigning applicability or a violation, the coordinator must record
+`reference_authority` as one of:
+
+- `approved_requirement`: an authorized, versioned source and exact passage;
+- `observed_implementation`: behavior seen in code or a product, not proof of intent;
+- `inferred_candidate`: a proposed requirement awaiting stakeholder approval;
+- `unresolved`: conflicting sources, uncertain scope or missing authorization.
+
+Only `approved_requirement` can support a normative violation judgment.
+For the other categories, retain the item and record uncertainty rather than
+converting implemented or plausible behavior into a mandatory rule. Reviewers
+must see applicable exceptions and the original source version. A model-generated
+gap report cannot approve its own reference obligations.
+
+This is a proposed product-review gate, not an implemented field validator or a
+retroactive change to frozen labels. Human approval remains required. Rationale:
+the [ESEM 2026 elicitation study](https://doi.org/10.4230/LIPIcs.ESEM.2026.82)
+uses production-derived coverage; our audit requires a separately justified
+normative reference. See the dated literature-matrix entry for evidence limits.
