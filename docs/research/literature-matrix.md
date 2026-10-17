@@ -956,3 +956,20 @@ should require the length-matched control (tolerance, minimum pairs) as a report
 analysis before the claim gate; the helper is available but the frozen protocol is unchanged.
 
 Source recheck (2026-10-17): [OnTrack v1, Sections 6.2-6.6 and 7](https://arxiv.org/html/2610.12375v1) supports the numerical comparisons; Table 6 and its discussion distinguish the illustrative threshold sweep and deployment-base-rate precision from held-out validation.
+
+## 2026-10-17 — Recovered functionality is not automatically an obligation
+
+Read date: 2026-10-17; DOI/title deduplicated. Read abstract, method,
+results and threats in the publisher PDF.
+
+| Reference / evidence | Question, data, method | Result and threats | Relevance / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Kabadi et al., [Can LLMs Identify Missing Elements in Requirements Elicitation?](https://doi.org/10.4230/LIPIcs.ESEM.2026.82), 2026, ESEM Software Engineering in Practice, peer-reviewed proceedings | Three industry projects; initial, generated and production-derived stories. Sonnet 4.6 web; ten-stage elicitation; TF-IDF greedy matching at heuristic threshold 0.10. Production references contain 122/110/220 stories. | Generated stories improve recall but reduce precision. Limits: author-practitioner reference reconstruction, one model/interface, heuristic matching, evolving scope and no stage ablation. | Thesis: adjacent recoverability evidence, not H1/H2. Experiment: preserve reference authority; implementation is not normative truth. Product: discovery differs from auditing existing evals. Action: review gate below. | 7/10: reviewed industrial study with replication package; small project count and proxy reference/matching limit transfer. |
+
+**Review gate (project-specific inference, not a result of the paper).** For each
+candidate condition, distinguish an approved source requirement from observed
+implementation behavior and a newly inferred suggestion. Only an approved,
+versioned source can authorize a normative violation label. Resolve source
+conflicts and exceptions before adjudication; unresolved authority remains
+uncertain. This gate is proposed in the product review handoff and changes no
+frozen thesis rubric, corpus, hypothesis or endpoint.
