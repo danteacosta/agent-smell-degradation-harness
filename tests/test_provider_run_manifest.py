@@ -124,3 +124,55 @@ def test_runner_propagates_non_secret_prompt_identity(tmp_path) -> None:
     extra = metrics["provider_run"]["metadata"][0]["extra"]
     assert extra["prompt_template_versions"] == ["discovery-generation/v1"]
     assert extra["prompt_sha256s"] == ["a" * 64]
+
+
+def _live(**overrides):
+    base = dict(
+        run_id="r", mode="live", provider="p", model="m", model_version="m-2026-10-01",
+        seed=1, configuration_hash="a" * 64, episode_count=1, total_latency_ms=1.0,
+        total_cost_usd=0.0, extra={"prompt_sha256s": ["b" * 64]},
+    )
+    base.update(overrides)
+    return ProviderRunMetadata(**base)
+
+
+def test_configuration_digest_changes_with_each_bound_component() -> None:
+    from eval.provider_manifest import configuration_identity_digest
+
+    args = dict(
+        provider="p", model="m", model_version="v1", instructions_sha256="c" * 64,
+        tool_definitions=[{"name": "a"}, {"name": "b"}], runtime_config={"temperature": 0.0},
+    )
+    base = configuration_identity_digest(**args)
+    assert base == configuration_identity_digest(**{**args, "tool_definitions": [{"name": "b"}, {"name": "a"}]})
+    for change in (
+        {"model_version": "v2"},
+        {"instructions_sha256": "d" * 64},
+        {"tool_definitions": [{"name": "a"}]},
+        {"runtime_config": {"temperature": 0.7}},
+    ):
+        assert configuration_identity_digest(**{**args, **change}) != base
+    with pytest.raises(ValueError, match="SHA-256"):
+        configuration_identity_digest(**{**args, "instructions_sha256": "short"})
+    with pytest.raises(ValueError, match="secret"):
+        configuration_identity_digest(**{**args, "runtime_config": {"api_key": "x"}})
+
+
+def test_identity_binding_gaps_flag_unpinned_live_runs_only() -> None:
+    from eval.provider_manifest import identity_binding_gaps
+
+    assert identity_binding_gaps(_live()) == []
+    gaps = identity_binding_gaps(_live(configuration_hash="cfg", model_version="m", extra={}))
+    assert len(gaps) == 3
+    assert identity_binding_gaps(_live(mode="stub", configuration_hash="cfg", model_version="m", extra={})) == []
+
+
+@pytest.mark.parametrize("invalid", [float("nan"), float("inf"), object(), {"not-json"}])
+def test_configuration_digest_rejects_ambiguous_non_json_identity(invalid):
+    from eval.provider_manifest import configuration_identity_digest
+
+    with pytest.raises((TypeError, ValueError)):
+        configuration_identity_digest(
+            provider="p", model="m", model_version="v1", instructions_sha256="c" * 64,
+            tool_definitions=[], runtime_config={"temperature": invalid},
+        )

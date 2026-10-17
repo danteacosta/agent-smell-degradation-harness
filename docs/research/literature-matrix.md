@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-12
+Last updated: 2026-10-17
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -879,3 +879,80 @@ existing "Development, pin a schema version" note stands.
 should require a recorded "deletion-only" attestation per pair. This entry changes no
 hypothesis, label, protocol or code, and makes no provider call. Related dated entries originated in literature-matrix PRs #204, #205 and #208;
 preserve all during integration.
+
+
+## 2026-10-13 — Audit-ready delivery is not omission sensitivity
+
+Search/read date: 2026-10-13. New source, deduplicated by arXiv ID/title.
+Read the full nine-page PDF: framework, case-study design, operational metrics,
+cost comparison, threats to validity and conclusions.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Koch and Wellbrock, [*Agile V: A Compliance-Oriented Framework for AI-Augmented Engineering — From Concept to Audit-Ready Delivery*](https://arxiv.org/abs/2602.20684), arXiv preprint, 2026 | Can a task-level Agile/V-model workflow produce traceability and verification artifacts with few human interactions? Author-run, single-case HIL system (about 500 LOC), two cycles, eight requirements and 54 tests. Requirements, build and tests were handled in separated agent contexts; metrics were artifact completeness, requirement-level pass rate, Red-Team findings and prompt count. | The case produced the planned audit artifacts, a 100% requirement-level pass rate and six human prompts per cycle. Ten Cycle-2 findings were repaired. The reported 10–50x cost advantage compares observed agent execution with an estimated COCOMO II baseline and excludes adoption overhead. The authors identify a single bounded case, creator evaluation, model dependence, no independent auditor, and no mutation, fuzzing or formal verification. | Thesis: no H1/H2 evidence; passing all authored requirement tests does not show sensitivity to a condition omitted from both implementation and test source. Experiment: reinforces keeping test generation isolated from implementation context, already present in the anchoring study. Product: direct adjacent alternative for audit-ready evidence generation; differentiation must be diagnosing whether an existing evidence suite would catch a missing obligation. Action: retain exact frozen obligation/evidence inventories and safe pre-prediction receipts; do not claim compliance or cost savings from the offline qualification instrument. | 4/10: transparent bounded feasibility report and public artifacts, but an unreviewed author-run single case with estimated cost comparison and no external audit. |
+
+**Decision.** The paper sharpens the product boundary without changing the thesis:
+audit-artifact generation and requirement traceability are existing adjacent
+capabilities. The open question is whether an existing evaluation or evidence
+suite is *adequate under controlled obligation loss*. The frozen-inventory
+builder added in PR #215 reduces qualification-packet authoring errors; it does
+not establish product effectiveness, regulatory conformity or market demand.
+
+## Preliminary context outside the canonical matrix
+
+[Run-identity sources](2026-10-13-identity-sources-preliminary.md) remain abstract-level notes until full-text admission criteria are met.
+
+## 2026-10-14 — Replicate disagreement is not a sufficient proxy for lost conditions (semantic collapse)
+
+Search/read date: 2026-10-14. Deduplicated by arXiv ID (2607.01953 was absent from
+the matrix; 2507.20439 appeared only as a snippet-level mention on 2026-10-10 and is
+recorded here after reading its HTML v1). Read for 2607.01953: abstract, injection
+sources, collapse-detection procedure, model list, headline results, limitations.
+Read for 2507.20439: abstract, mutation procedure, datasets, models, metrics,
+RQ results, limitations. Not read: appendices of both. Ambig-SWE (arXiv 2502.13069)
+surfaced at snippet level only: not an entry, no claim.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Richter and Papadakis, [*Underspecification does not imply Incoherence: The Risks of Semantic Collapse in Coding Models*](https://arxiv.org/abs/2607.01953), arXiv preprint v1 (cs.SE, 2 Jul 2026, 11 pp.); no peer-reviewed venue listed | Do underspecified prompts yield behaviorally different samples? MBPP+ (378 tasks, ambiguous/incomplete/contradictory variants from Larbi et al.), HumanEval+ and LiveCodeBench v6 (182 post-2025 problems; variants from Akli et al.). Samples (k=10, T=0.8; Claude Sonnet 4.5, GPT-4.1-mini, Qwen3-32B) are grouped into behavioral-equivalence classes by identical outputs on gold tests; one class after k draws = collapse; "detrimental" = collapsed and failing. | Detrimental collapse about 3% (HumanEval), 10-16% (MBPP), 18-32% (LiveCodeBench) on the original benchmarks; under injected underspecification 23-55% of MBPP tasks (up to 5.53x), HumanEval up to 3.67x, LiveCodeBench about 1x. Average inconsistency rises about 2.79x, yet 50-73% of underspecified MBPP tasks still collapse at k=10. Detrimental collapse before any question: 11-49.7% of tasks, so clarification never triggers. Limits: Python, small functions, artificial underspecification, three models, small k, LLM-simulated user answers, clustering depends on test-suite quality; detrimental vs benign cannot be separated without an oracle. | Thesis: supports the existing separation of defect from observable loss, and the choice of an executable oracle over output agreement; it does not test omission of a condition in project-level UI requirements. Experiment: any operational signal built from replication disagreement (same A/C requirement, repeated draws) would be blind exactly when all replications lose the same condition. Do not treat low disagreement as evidence of preservation in B0 or in the C-versus-A analysis. Product: replicate-disagreement monitors cannot substitute for requirement-anchored checks. Action: if a replicate-agreement feature is ever added to B0, register it as a named feature with a collapse caveat; no code or hypothesis change made. | 5 (preprint, transparent procedure with a PAC-style stopping bound, but function-level Python and injected variants; v1 only) |
+| Larbi et al., *When Prompts Go Wrong*, [arXiv 2507.20439](https://arxiv.org/abs/2507.20439) v1 (cs.SE, July 2025); no peer-reviewed venue listed on the page read | How do ambiguity, contradiction and incompleteness in task descriptions affect code LLMs? GPT-4 mutates MBPP (974) and HumanEval (164) prompts under guidelines; for incompleteness it omits key parameters or instructions. Five researchers validated: 85% rated natural, 93% showed the intended defect. Seven model variants (DeepSeek-Coder, CodeLlama, Qwen2.5, GPT-4); Pass@1, SER, RIR, MCC. | Incompleteness gave the smallest HumanEval drops in most cases (-12.8 CodeLlama-7B to -28.7 GPT-4 points); contradiction was most severe (GPT-4 73.8% to 6.7%). Incomplete prompts mostly produced structural errors. The prose averages disagree with the table drops, so the numbers here come from the table. Limits: Python function level, greedy decoding, LLM mutation engine, possible training overlap disrupted by mutation. | Thesis: a function-level precedent that LLM-mutated incompleteness is measurable; it removes parameters or types, not a single behavioral rule, and uses no per-obligation control or rewrite arm. Experiment: reinforces the need for the B (rewrite) arm and the memorization probe, since mutation can break memorized prompts. Product: none. Action: related-work context only; no change. | 4 (preprint; authors name GPT-4 mutation bias; internal inconsistency in reported averages) |
+
+
+Source verification on 2026-10-17 confirmed the arXiv authorship of both entries.
+See the [primary-source verification note](2026-10-17-pr217-source-verification.md).
+
+**Decision needed from Dante (not applied):** whether B0 should include any
+replication-disagreement feature. If yes, pre-register it and report it alongside a
+collapse caveat. This entry changes no hypothesis, label, protocol or code, and makes
+no provider call.
+
+## Preliminary source awaiting full-paper review
+
+The [ASE 2025 NIER abstract note](2026-10-15-requirements-ensemble-abstract-note.md)
+is retained separately for context. It is not a canonical matrix entry: the full
+method, results and limitations have not been read. The admission policy above
+remains unchanged.
+
+## 2026-10-16 — Trajectory monitors and the length confound (OnTrack)
+
+Search/read date: 2026-10-16. Deduplicated by arXiv ID and title against `main` and the
+open literature PRs (#217, #218): not previously entered. The same search re-surfaced
+PrefixGuard (2605.06455), "From Agent Traces to Trust" (2606.04990) and the requirement-smell
+code-generation preprint 2609.29208, which are already entered or queued; no update to them.
+Also surfaced and **not read beyond the result page, so not entered and not scored**:
+TRACES (2605.27690), "When Evidence is Sparse" (2606.05414), "Real-Time Detection and Repair of
+LLM Agent Failures" (2608.02464), AgentForesight (2605.08715). Read for the entry below: the
+full PDF text (abstract, SWE-bench setup, Table 5 discussion, sections 6.4-6.6, limitations).
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Barazandeh, Swanson, Kulkarni, Mungel, [*OnTrack: Real-Time Monitoring and Intervention in LLM Agent Trajectories via Streaming Structure-Aware Optimal Transport*](https://arxiv.org/abs/2610.12375), arXiv preprint cs.AI v1, submitted 2026-10-08 (no peer-reviewed venue listed) | Can a streaming monitor that aligns each agent step and its dependencies to recorded successful runs flag failing runs early? 2,288 usable SWE-agent trajectories (430 resolved, 1,858 unresolved; public sailplane/swe-agent-trajs). Instance-disjoint split by SWE-bench instance (228 calibration, 5 reference, remainder evaluation); lambda chosen on calibration only; AUROC at the first k steps with bootstrap CIs; baselines include cosine similarity and step count. | At k=8 the monitor beats cosine similarity by +0.057 AUROC (CI [+0.033, +0.080]), but the advantage is gone by k=15, and at k=5 **trace length alone is the best single signal**. When resolved/unresolved traces are matched on length (50 pairs), every task-generic trajectory signal falls to chance (0.526; cosine 0.540). The authors state that no task-generic trajectory signal predicts patch correctness once length is controlled and that in-distribution wrong steps need task-level semantics. A flag-density abort policy saves about 17.9% of compute at about 21% balanced false stops on an illustrative evaluation sample; its threshold was selected after the sweep, not on held-out calibration traffic. Limits: one homogeneous corpus (search-read-edit-test template), five reference instances, outcome label is "resolved" (the unit is a run, not a lost requirement), the 5-of-6 phrase expresses approximately 83% precision after adjustment to the corpus failure base rate, not a count of six observed aborts, single-author-group preprint. | **Thesis:** independent evidence that generic process signals mostly proxy run length, and that detecting a semantically wrong but locally plausible step needs task-level information. This is consistent with the H2 design (B3 adds requirement-conditioned T1-T3 provenance on top of B0), but it is not evidence that T1-T3 provenance works; SWE-bench resolution is not condition loss. **Experiment:** B0 already contains event count and latency, so a length-only comparator is partly present, but no length-matched check exists. Action taken (offline, no provider call): `eval/length_control.py::length_matched_control` reports length-only AUROC and the score AUROC on length-matched positive/negative pairs, descriptive only; it is not wired into the frozen claim gate. **Product:** monitors of this family flag runaway or looping runs, not lost requirements; supports positioning "explain which condition was lost" separately from generic trace monitors (hypothesis only, vendor-neutral). | 5/10: transparent protocol, public data, instance-disjoint split and explicit negative results, but a non-peer-reviewed preprint, narrow corpus and a run-level outcome rather than requirement loss |
+
+**Tension recorded, not resolved.** OnTrack and the 2026-10-06 prefix-monitor entry both
+suggest generic early signals add little beyond length and the requirement text. That makes the
+pre-registered H2 margin (B3 over B0, PR-AUC +0.05) harder to expect if T1-T3 features mostly
+re-encode length. **Decision needed from Dante (not applied):** whether the H2 pre-registration
+should require the length-matched control (tolerance, minimum pairs) as a reported secondary
+analysis before the claim gate; the helper is available but the frozen protocol is unchanged.
+
+Source recheck (2026-10-17): [OnTrack v1, Sections 6.2-6.6 and 7](https://arxiv.org/html/2610.12375v1) supports the numerical comparisons; Table 6 and its discussion distinguish the illustrative threshold sweep and deployment-base-rate precision from held-out validation.
