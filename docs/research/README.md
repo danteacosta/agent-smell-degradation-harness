@@ -1,5 +1,7 @@
 # Research catalog
 
+- [13 October 2026: preliminary run-identity sources](2026-10-13-identity-sources-preliminary.md): abstract-level context, awaiting full-text review.
+
 - [6 October 2026: second-provider feasibility](2026-10-06-second-provider-feasibility.md): Google subscription versus API, measured frozen prompt sizes, prospective budgets, adapter gaps and offline memorization smoke.
 - [6 October 2026: Antigravity subscription setup](2026-10-06-antigravity-subscription-setup.md): installed account CLI, two public technical smokes, failed tool isolation and a guard that blocks unqualified research calls.
 

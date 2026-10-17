@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-12
+Last updated: 2026-10-17
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -897,3 +897,7 @@ capabilities. The open question is whether an existing evaluation or evidence
 suite is *adequate under controlled obligation loss*. The frozen-inventory
 builder added in PR #215 reduces qualification-packet authoring errors; it does
 not establish product effectiveness, regulatory conformity or market demand.
+
+## Preliminary context outside the canonical matrix
+
+[Run-identity sources](2026-10-13-identity-sources-preliminary.md) remain abstract-level notes until full-text admission criteria are met.
