@@ -1,5 +1,7 @@
 # Research catalog
 
+- [17 October 2026: PR 217 primary-source verification](2026-10-17-pr217-source-verification.md): verified authorship and numerical source attribution.
+
 - [13 October 2026: preliminary run-identity sources](2026-10-13-identity-sources-preliminary.md): abstract-level context, awaiting full-text review.
 
 - [6 October 2026: second-provider feasibility](2026-10-06-second-provider-feasibility.md): Google subscription versus API, measured frozen prompt sizes, prospective budgets, adapter gaps and offline memorization smoke.

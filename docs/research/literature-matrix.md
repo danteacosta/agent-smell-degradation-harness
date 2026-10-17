@@ -901,3 +901,27 @@ not establish product effectiveness, regulatory conformity or market demand.
 ## Preliminary context outside the canonical matrix
 
 [Run-identity sources](2026-10-13-identity-sources-preliminary.md) remain abstract-level notes until full-text admission criteria are met.
+
+## 2026-10-14 — Replicate disagreement is not a sufficient proxy for lost conditions (semantic collapse)
+
+Search/read date: 2026-10-14. Deduplicated by arXiv ID (2607.01953 was absent from
+the matrix; 2507.20439 appeared only as a snippet-level mention on 2026-10-10 and is
+recorded here after reading its HTML v1). Read for 2607.01953: abstract, injection
+sources, collapse-detection procedure, model list, headline results, limitations.
+Read for 2507.20439: abstract, mutation procedure, datasets, models, metrics,
+RQ results, limitations. Not read: appendices of both. Ambig-SWE (arXiv 2502.13069)
+surfaced at snippet level only: not an entry, no claim.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Richter and Papadakis, [*Underspecification does not imply Incoherence: The Risks of Semantic Collapse in Coding Models*](https://arxiv.org/abs/2607.01953), arXiv preprint v1 (cs.SE, 2 Jul 2026, 11 pp.); no peer-reviewed venue listed | Do underspecified prompts yield behaviorally different samples? MBPP+ (378 tasks, ambiguous/incomplete/contradictory variants from Larbi et al.), HumanEval+ and LiveCodeBench v6 (182 post-2025 problems; variants from Akli et al.). Samples (k=10, T=0.8; Claude Sonnet 4.5, GPT-4.1-mini, Qwen3-32B) are grouped into behavioral-equivalence classes by identical outputs on gold tests; one class after k draws = collapse; "detrimental" = collapsed and failing. | Detrimental collapse about 3% (HumanEval), 10-16% (MBPP), 18-32% (LiveCodeBench) on the original benchmarks; under injected underspecification 23-55% of MBPP tasks (up to 5.53x), HumanEval up to 3.67x, LiveCodeBench about 1x. Average inconsistency rises about 2.79x, yet 50-73% of underspecified MBPP tasks still collapse at k=10. Detrimental collapse before any question: 11-49.7% of tasks, so clarification never triggers. Limits: Python, small functions, artificial underspecification, three models, small k, LLM-simulated user answers, clustering depends on test-suite quality; detrimental vs benign cannot be separated without an oracle. | Thesis: supports the existing separation of defect from observable loss, and the choice of an executable oracle over output agreement; it does not test omission of a condition in project-level UI requirements. Experiment: any operational signal built from replication disagreement (same A/C requirement, repeated draws) would be blind exactly when all replications lose the same condition. Do not treat low disagreement as evidence of preservation in B0 or in the C-versus-A analysis. Product: replicate-disagreement monitors cannot substitute for requirement-anchored checks. Action: if a replicate-agreement feature is ever added to B0, register it as a named feature with a collapse caveat; no code or hypothesis change made. | 5 (preprint, transparent procedure with a PAC-style stopping bound, but function-level Python and injected variants; v1 only) |
+| Larbi et al., *When Prompts Go Wrong*, [arXiv 2507.20439](https://arxiv.org/abs/2507.20439) v1 (cs.SE, July 2025); no peer-reviewed venue listed on the page read | How do ambiguity, contradiction and incompleteness in task descriptions affect code LLMs? GPT-4 mutates MBPP (974) and HumanEval (164) prompts under guidelines; for incompleteness it omits key parameters or instructions. Five researchers validated: 85% rated natural, 93% showed the intended defect. Seven model variants (DeepSeek-Coder, CodeLlama, Qwen2.5, GPT-4); Pass@1, SER, RIR, MCC. | Incompleteness gave the smallest HumanEval drops in most cases (-12.8 CodeLlama-7B to -28.7 GPT-4 points); contradiction was most severe (GPT-4 73.8% to 6.7%). Incomplete prompts mostly produced structural errors. The prose averages disagree with the table drops, so the numbers here come from the table. Limits: Python function level, greedy decoding, LLM mutation engine, possible training overlap disrupted by mutation. | Thesis: a function-level precedent that LLM-mutated incompleteness is measurable; it removes parameters or types, not a single behavioral rule, and uses no per-obligation control or rewrite arm. Experiment: reinforces the need for the B (rewrite) arm and the memorization probe, since mutation can break memorized prompts. Product: none. Action: related-work context only; no change. | 4 (preprint; authors name GPT-4 mutation bias; internal inconsistency in reported averages) |
+
+
+Source verification on 2026-10-17 confirmed the arXiv authorship of both entries.
+See the [primary-source verification note](2026-10-17-pr217-source-verification.md).
+
+**Decision needed from Dante (not applied):** whether B0 should include any
+replication-disagreement feature. If yes, pre-register it and report it alongside a
+collapse caveat. This entry changes no hypothesis, label, protocol or code, and makes
+no provider call.
