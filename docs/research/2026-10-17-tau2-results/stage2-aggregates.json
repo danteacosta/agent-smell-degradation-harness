@@ -1,0 +1,71 @@
+{
+  "schema": "tau2-stage2-final-11h-summary/v1",
+  "status": "collection_stopped",
+  "planned_initial": 1056,
+  "attempted": 65,
+  "positive": 58,
+  "zero": 4,
+  "technical_none": 3,
+  "never_attempted": 991,
+  "excluded_outside_eligible33": 544,
+  "active": 0,
+  "valid_reward_outcomes": 62,
+  "positive_all_attempts": {
+    "numerator": 58,
+    "denominator": 65
+  },
+  "positive_valid_only": {
+    "numerator": 58,
+    "denominator": 62
+  },
+  "zero_all_attempts": {
+    "numerator": 4,
+    "denominator": 65
+  },
+  "zero_valid_only": {
+    "numerator": 4,
+    "denominator": 62
+  },
+  "per_variant": {
+    "D26": {
+      "attempted": 32,
+      "positive": 29,
+      "zero": 0,
+      "technical_none": 3
+    },
+    "D27": {
+      "attempted": 33,
+      "positive": 29,
+      "zero": 4,
+      "technical_none": 0
+    }
+  },
+  "variants_with_attempts": 2,
+  "planned_variants": 32,
+  "stop_reason": "human_deadline",
+  "deadline_utc": "2026-10-17T14:00:00Z",
+  "deadline_local": "2026-10-17T11:00:00-03:00",
+  "confirmatory": false,
+  "human_confirmed_causality": false,
+  "none_repair_attempts": 0,
+  "additional_confirmation_attempts": 0,
+  "candidate_pairs": {
+    "N": 25,
+    "D": 4
+  },
+  "proposed_reruns_not_executed": {
+    "N": 50,
+    "D": 8
+  },
+  "rule_classes": {
+    "incomplete": 32
+  },
+  "limitations": [
+    "partial_original_order_prefix",
+    "only_two_deletion_variants_observed",
+    "baseline_selected_33_task_cohort",
+    "shared_baseline_trials_not_independent_replications",
+    "adaptive_dialogues_prevent_automatic_causal_attribution",
+    "technical_none_remain_missing_observations"
+  ]
+}

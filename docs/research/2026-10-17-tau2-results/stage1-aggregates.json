@@ -1,0 +1,269 @@
+{
+  "schema": "tau2-stage1-final-offline-summary/v1",
+  "cohort_universe": 1221,
+  "cohort": {
+    "attempted": 1221,
+    "positive": 1169,
+    "zero": 25,
+    "technical_none": 27
+  },
+  "baseline50": {
+    "attempted": 200,
+    "positive": 152,
+    "zero": 39,
+    "technical_none": 9
+  },
+  "baseline33": {
+    "attempted": 132,
+    "positive": 132,
+    "zero": 0,
+    "technical_none": 0
+  },
+  "negation": {
+    "attempted": 1056,
+    "positive": 1007,
+    "zero": 25,
+    "technical_none": 24
+  },
+  "controls": {
+    "attempted": 165,
+    "positive": 162,
+    "zero": 0,
+    "technical_none": 3
+  },
+  "per_variant": {
+    "B01": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "B02": {
+      "attempted": 33,
+      "positive": 31,
+      "zero": 0,
+      "technical_none": 2
+    },
+    "B03": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "B04": {
+      "attempted": 33,
+      "positive": 32,
+      "zero": 0,
+      "technical_none": 1
+    },
+    "B05": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "N01": {
+      "attempted": 33,
+      "positive": 31,
+      "zero": 2,
+      "technical_none": 0
+    },
+    "N02": {
+      "attempted": 33,
+      "positive": 30,
+      "zero": 2,
+      "technical_none": 1
+    },
+    "N03": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "N04": {
+      "attempted": 33,
+      "positive": 30,
+      "zero": 1,
+      "technical_none": 2
+    },
+    "N05": {
+      "attempted": 33,
+      "positive": 32,
+      "zero": 0,
+      "technical_none": 1
+    },
+    "N06": {
+      "attempted": 33,
+      "positive": 31,
+      "zero": 0,
+      "technical_none": 2
+    },
+    "N07": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "N08": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "N09": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "N10": {
+      "attempted": 33,
+      "positive": 31,
+      "zero": 2,
+      "technical_none": 0
+    },
+    "N11": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "N12": {
+      "attempted": 33,
+      "positive": 27,
+      "zero": 5,
+      "technical_none": 1
+    },
+    "N13": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "N14": {
+      "attempted": 33,
+      "positive": 25,
+      "zero": 2,
+      "technical_none": 6
+    },
+    "N15": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "N16": {
+      "attempted": 33,
+      "positive": 31,
+      "zero": 1,
+      "technical_none": 1
+    },
+    "N17": {
+      "attempted": 33,
+      "positive": 30,
+      "zero": 3,
+      "technical_none": 0
+    },
+    "N18": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "N19": {
+      "attempted": 33,
+      "positive": 32,
+      "zero": 0,
+      "technical_none": 1
+    },
+    "N20": {
+      "attempted": 33,
+      "positive": 32,
+      "zero": 1,
+      "technical_none": 0
+    },
+    "N21": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "N22": {
+      "attempted": 33,
+      "positive": 30,
+      "zero": 0,
+      "technical_none": 3
+    },
+    "N23": {
+      "attempted": 33,
+      "positive": 31,
+      "zero": 1,
+      "technical_none": 1
+    },
+    "N24": {
+      "attempted": 33,
+      "positive": 31,
+      "zero": 2,
+      "technical_none": 0
+    },
+    "N25": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "N26": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "N27": {
+      "attempted": 33,
+      "positive": 30,
+      "zero": 3,
+      "technical_none": 0
+    },
+    "N28": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    },
+    "N29": {
+      "attempted": 33,
+      "positive": 31,
+      "zero": 0,
+      "technical_none": 2
+    },
+    "N30": {
+      "attempted": 33,
+      "positive": 32,
+      "zero": 0,
+      "technical_none": 1
+    },
+    "N31": {
+      "attempted": 33,
+      "positive": 31,
+      "zero": 0,
+      "technical_none": 2
+    },
+    "N32": {
+      "attempted": 33,
+      "positive": 33,
+      "zero": 0,
+      "technical_none": 0
+    }
+  },
+  "candidates_pairs": 25,
+  "candidates_by_group": {
+    "N": 25
+  },
+  "candidate_proposed_reruns_not_executed": 50,
+  "classes": {
+    "incomplete": 32
+  },
+  "covered_under_negation_confirmed": 0,
+  "detected_under_deletion_confirmed": 0,
+  "stage2_initial_remaining": 1056
+}
