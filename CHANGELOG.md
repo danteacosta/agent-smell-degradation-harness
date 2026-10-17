@@ -14,6 +14,8 @@
 
 ### Added
 
+- **H2 reporting**: `length_matched_control` in `eval/length_control.py` (outside the confirmatory freeze) reports length-only AUROC and length-matched score AUROC as a descriptive-only control for the trace-length confound (motivated by arXiv 2610.12375, preprint). It is not part of the claim gate, and the frozen protocol is unchanged.
+
 - `eval.provider_manifest.configuration_identity_digest` and `identity_binding_gaps`: offline content-addressed run identity (model, instructions, tools, runtime) and a readiness check for live runs; legacy metadata is still accepted.
 - Wedge reliability check CLI (`python -m wedge`) with `approve` / `warn` / `clarify` decisions and demo fixtures.
 - Tier A/B provenance tagging in `ProvenanceRecorder`; `observability.features.extract_tier_a_features` excludes oracle labels.
