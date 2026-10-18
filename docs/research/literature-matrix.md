@@ -973,3 +973,19 @@ versioned source can authorize a normative violation label. Resolve source
 conflicts and exceptions before adjudication; unresolved authority remains
 uncertain. This gate is proposed in the product review handoff and changes no
 frozen thesis rubric, corpus, hypothesis or endpoint.
+
+## 2026-10-18 — Review prompts can change the acceptance boundary
+
+Search/read date: 2026-10-18. DOI/title deduplicated against this branch.
+Read publisher abstract, Sections 3–4, explanation results, filter results and
+Section 8 threats; figures were not independently reproduced.
+
+| Reference / status | Question, sample, method | Findings / threats | Relevance and action | Credibility |
+| --- | --- | --- | --- | --- |
+| Jin and Chen, [Are LLMs reliable code reviewers?](https://doi.org/10.1007/s10515-026-00638-5), Automated Software Engineering 33:90, published 2026-06-26; peer-reviewed journal | Five models; over 700 Python tasks paired into over 1,400 correct/buggy instances from HumanEval, MBPP and QuixBugs; three review prompts. | Explanation/repair prompts can increase false rejection. Executable filtering reduces it but can increase false acceptance. Limits: test coverage, canonical-reference assumptions, GPT-4o augmentation coupling, prompt and runtime variability, function-level transfer. | Thesis: adjacent judge-validity evidence, not H1/H2. Experiment: distinguish verdict from rationale correctness. Product: a repair suggestion is not proof of violation. Action: proposed calibration review below. | 7/10: peer-reviewed, paired design and public artifacts; proxy labels and restricted tasks limit transfer; not reproduced here. |
+
+**Project-specific incorporation (proposal, not a frozen protocol change).**
+Use the handoff's calibration audit to distinguish an unsupported extra
+requirement from an evidenced violation. Preserve false rejections as well as
+missed violations. Human rubric approval remains necessary before applying a
+new category to real labels.
