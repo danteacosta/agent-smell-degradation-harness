@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-17
+Last updated: 2026-10-18
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -956,3 +956,32 @@ should require the length-matched control (tolerance, minimum pairs) as a report
 analysis before the claim gate; the helper is available but the frozen protocol is unchanged.
 
 Source recheck (2026-10-17): [OnTrack v1, Sections 6.2-6.6 and 7](https://arxiv.org/html/2610.12375v1) supports the numerical comparisons; Table 6 and its discussion distinguish the illustrative threshold sweep and deployment-base-rate precision from held-out validation.
+
+## 2026-10-18 — Constructed-omission validity and the limits of outcome-trained monitors
+
+Search/read date: 2026-10-18. Deduplicated by arXiv ID and title against `main` (feece1a) and
+the open literature PRs (#221-#223): neither source was previously entered. Read for both: the
+abstract and the sections named below. Also surfaced and **not read beyond the result page, so
+not entered and not scored**: TrajAudit (2605.26563), TrajMark (2609.10416), Wink (2602.17037),
+"Securing Agentic AI" (2608.01558). The arXiv listing for October 2026 returned no further
+paper combining controlled requirement loss with early warning.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Korn, Bartel, Unterbusch, Vogelsang, [*On the Viability of Requirements Generation From Code: An Experience Report*](https://arxiv.org/abs/2606.25550), arXiv preprint v1 (cs.SE, 24 Jun 2026); accepted at AIRE'26 (workshop) | Can an LLM + RAG agentic pipeline generate requirements from code, deliberately generate *non-implemented* controls, and inject labelled requirement smells? One generator model (gpt-5.4-mini); two projects (SEP, Mattermost desktop); three human evaluators; 14 smell types; a third adjudication round with a codebook. Read: abstract, Sections I, IV and V (Tables III-VI). | Of requirements the LLM was told to make non-implemented, 73.8% were judged implemented by humans (recall 0.708-0.769, precision 0.857-1.000). Smell rate in "smell-free" output was 24.5% (155 reqs, after peer review). Inter-rater smell agreement was fair at best (overall kappa = 0.213; pairwise -0.083 to 0.803). Injected smells were detected at 90.9% (any) but only 60.6% matched the intended smell; per-smell TPR ranged from 0% (passive voice) to 100%. Limits: small N, one model, two projects, qualitative experience report, rater conventions derived post hoc. | **Thesis:** independent evidence that an LLM-constructed manipulation does not reliably do what its instruction says and that single-rater smell labels are unstable. This supports keeping the omission treatment (C) separate from catalogued smells and keeping the observable loss (browser oracle verdict) separate from smell labels. **Experiment:** the panel check that C removes only the target (and that the target is actually absent) must not be self-certified by the generating model; keep the planned 20% human audit and report agreement per decision type. **Product:** synthetic-defect injection tools need human QA. **Action:** no hypothesis or code change; add to the manipulation-check threats (below). | 6 |
+| Huang, [*Organising Trajectory Evidence for Language-Model Agent Assurance: Fragments, Methods, and the Residual*](https://arxiv.org/abs/2610.04710), arXiv preprint v1 (cs.MA, 3 Oct 2026); single author; no peer-reviewed venue listed | How do rule checkers, prefix monitors, support checks and execution gates combine, and what remains unchecked? 456 released tau2-bench telecom trajectories (114 tasks x 4 trials); 20 audited when-shall rules; an "assurance ledger" classifying obligations as established / addressed-not-established / unaddressed. Read: abstract and the HTML text on the framework, early-warning requirement, evaluation and residual. | The union of flagged runs grows from 231 (benchmark oracle) to 391/401/407 as checkers are added. Monitor and oracle agree on 161 runs vs 93 expected by chance, attributed to shared labels. An outcome-trained monitor detects 161/231 oracle failures but 0/30 breaches of one specific rule; a monitor trained on that rule finds 22/30 with 42 of 64 alarms on non-violating runs. 49 runs remain unflagged and are not evidence of compliance. Limits: one benchmark, support predicates audited by a model, trials clustered within tasks, thresholds retrospective, several method families placed but not run. | **Thesis:** supports evaluating detection per obligation (constraint_id) rather than on pooled outcome failure, and treating a clean/unflagged run as "not established" rather than "compliant". It also states that a retrospective operating point cannot establish an early-warning guarantee, which is consistent with the current H2 framing as a hypothesis. **Experiment:** B0's shared-label overlap with the outcome is a leakage risk; the per-constraint breakdown already planned should be reported next to pooled PR-AUC. **Product:** a ledger view (established / not established / unaddressed) is a candidate triage output. **Action:** none to the frozen protocol; recorded as context (tau2 is a policy-compliance setting, not requirement omission). | 4 |
+
+**Tension recorded, not resolved.** Huang's overlap result (161 observed vs 93 expected) means that
+a detector trained on the same outcome labels it is scored against will look better than it is.
+The current H2 split (fit on training projects, evaluate once on separate projects) already
+addresses part of this; it does not address label-sharing between B0 features and the outcome.
+**Decision needed from Dante (not applied):** whether the pre-registration should state that B0 and
+B3 features are computed without access to the oracle verdict, and whether the human audit of the
+LLM panel should report Cohen's kappa (or equivalent) separately for "C removes only the target"
+and "B preserves meaning", given kappa = 0.213 for single-rater smell labelling in Korn et al.
+
+**Threat to validity added (text only):** *Manipulation checks performed by an LLM can pass
+constructions that did not do what was instructed* (Korn et al.: 73.8% of intended non-implemented
+controls were judged implemented by humans). Mitigation already planned: executable oracle as the
+primary outcome and a 20% human audit; this entry makes the audit a requirement to report, not an
+optional step.
