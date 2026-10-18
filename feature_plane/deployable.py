@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import ast
 import json
+import re
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -34,8 +35,16 @@ _TERMINAL_KEYS = frozenset(
         "defect_family",
         "defect_type",
         "mutation",
+        "verdict",
+        "treatment",
+        "arm",
+        "omitted_condition",
+        "removed_condition",
+        "condition_removed",
+        "target_rule",
     }
 )
+_TERMINAL_KEY_PREFIXES = ("oracle_",)
 _TERMINAL_EVENT_NAMES = frozenset(
     {
         "oracle_verdict",
@@ -66,12 +75,17 @@ _CUTOFF_ORDER = {
 }
 
 
+def _is_terminal_key(key: Any) -> bool:
+    normalized = re.sub(r"[^a-z0-9]+", "_", str(key).lower()).strip("_")
+    return normalized in _TERMINAL_KEYS or normalized.startswith(_TERMINAL_KEY_PREFIXES)
+
+
 def _contains_terminal_key(value: Any) -> str | None:
     """Return the first terminal key found in nested/serialized payloads."""
 
     if isinstance(value, Mapping):
         for key, item in value.items():
-            if str(key).lower() in _TERMINAL_KEYS:
+            if _is_terminal_key(key):
                 return str(key)
             found = _contains_terminal_key(item)
             if found:
