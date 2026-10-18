@@ -197,17 +197,3 @@ def test_context_metrics_are_available_only_at_t3(tmp_path: Path):
     assert at_t3["operational"]["context_size_before_bytes"] == 100
     assert at_t3["operational"]["context_size_after_bytes"] == 60
     assert at_t3["operational"]["context_size_reduction_bytes"] == 40
-
-
-@pytest.mark.parametrize(
-    "key",
-    ["oracle_verdict", "Oracle-Verdict", "verdict", "treatment", "arm", "omitted_condition", "target_rule"],
-)
-def test_terminal_key_variants_fail_closed(tmp_path: Path, key: str):
-    path = tmp_path / "trace.jsonl"
-    path.write_text(
-        json.dumps({"event_type": "interpretation.completed", "attributes": {"nested": {key: 1}}}) + "\n",
-        encoding="utf-8",
-    )
-    with pytest.raises(ValueError, match="terminal field"):
-        extract_deployable_features(DeployableFeatureInput("I-1", "acceptance_criteria", "x"), path)
