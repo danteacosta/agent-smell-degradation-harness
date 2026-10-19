@@ -1,5 +1,7 @@
 # Research catalog
 
+- [17 October 2026: τ² historical exploratory snapshot at the 11h collection cutoff](2026-10-17-tau2-results/README.md): historical stage 1 and partial stage 2, excluding the later resumed window, with baselines, technical interruptions, untouched missing trials, and limits on causal interpretation.
+
 - [15 October 2026: preliminary requirements-ensemble abstract](2026-10-15-requirements-ensemble-abstract-note.md): context only, awaiting full-paper review.
 
 - [17 October 2026: PR 217 primary-source verification](2026-10-17-pr217-source-verification.md): verified authorship and numerical source attribution.
