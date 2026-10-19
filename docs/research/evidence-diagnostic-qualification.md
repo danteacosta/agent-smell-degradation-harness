@@ -150,3 +150,60 @@ sampling/masking helpers. The authors explicitly distinguish independent
 assessment from agreement and disclose incomplete checklist coverage. This
 informs the release gate, not H1/H2, clinical claims or a claim that our exporter
 implements their complete method. Code was inspected, not executed.
+
+## Proposed reference-authority gate
+
+Before assigning applicability or a violation, the coordinator must record
+`reference_authority` as one of:
+
+- `approved_requirement`: an authorized, versioned source and exact passage;
+- `observed_implementation`: behavior seen in code or a product, not proof of intent;
+- `inferred_candidate`: a proposed requirement awaiting stakeholder approval;
+- `unresolved`: conflicting sources, uncertain scope or missing authorization.
+
+Only `approved_requirement` can support a normative violation judgment.
+For the other categories, retain the item and record uncertainty rather than
+converting implemented or plausible behavior into a mandatory rule. Reviewers
+must see applicable exceptions and the original source version. A model-generated
+gap report cannot approve its own reference obligations.
+
+This is a proposed product-review gate, not an implemented field validator or a
+retroactive change to frozen labels. Human approval remains required. Rationale:
+the [ESEM 2026 elicitation study](https://doi.org/10.4230/LIPIcs.ESEM.2026.82)
+uses production-derived coverage; our audit requires a separately justified
+normative reference. See the dated literature-matrix entry for evidence limits.
+
+## Proposed calibration audit: violation versus repair preference
+
+Before evaluation, rehearse the approved rubric on calibration projects only.
+For each rejection, record the exact authorized obligation, decisive observation,
+and whether the rationale instead introduces an unstated requirement or merely
+prefers a different implementation. Preserve reviewers' original decisions and
+disagreements. A suggested repair alone cannot establish a violation.
+
+Audit accepted valid alternatives as well as rejected wrong bindings; do not
+optimize solely for defect discovery. Record the exact review prompt and rubric
+version. Any revision after rehearsal requires a new freeze before evaluation;
+never revise evaluation labels merely because a model's explanation is persuasive.
+
+Rationale: [Jin and Chen (2026)](https://doi.org/10.1007/s10515-026-00638-5)
+report prompt-dependent false rejection and imperfect execution-based mitigation.
+This is a proposed product-review procedure, not an implemented validator,
+completed annotation, new experiment, or change to B0/B3 or H1/H2.
+
+## Optional expected-inventory check
+
+Pass `expected_identities=[{"run_id": "...", "replication_id": "...",
+"constraint_id": "..."}]` to `prepare_blind_review` using the coordinator's
+previously frozen scheduled inventory, never an inventory reconstructed from
+successful trajectories. The helper rejects missing or inserted identities and
+malformed or duplicate expected entries before returning a review packet.
+Input order remains unchanged; comparison is order-independent. The manifest
+and its identities do not enter the reviewer view.
+
+`inventory_coverage_checked` is false for legacy calls without the manifest.
+When true it means exact identity-set coverage of the supplied inventory only;
+it verifies neither source custody nor trajectory bytes or completeness.
+Do not remove a missing scheduled trajectory to make the check pass: retain
+an exception record and resolve it before releasing the batch. The check
+creates no labels and changes no frozen H1/H2 endpoint.
