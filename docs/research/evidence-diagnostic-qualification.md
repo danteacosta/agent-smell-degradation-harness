@@ -190,3 +190,20 @@ Rationale: [Jin and Chen (2026)](https://doi.org/10.1007/s10515-026-00638-5)
 report prompt-dependent false rejection and imperfect execution-based mitigation.
 This is a proposed product-review procedure, not an implemented validator,
 completed annotation, new experiment, or change to B0/B3 or H1/H2.
+
+## Optional expected-inventory check
+
+Pass `expected_identities=[{"run_id": "...", "replication_id": "...",
+"constraint_id": "..."}]` to `prepare_blind_review` using the coordinator's
+previously frozen scheduled inventory, never an inventory reconstructed from
+successful trajectories. The helper rejects missing or inserted identities and
+malformed or duplicate expected entries before returning a review packet.
+Input order remains unchanged; comparison is order-independent. The manifest
+and its identities do not enter the reviewer view.
+
+`inventory_coverage_checked` is false for legacy calls without the manifest.
+When true it means exact identity-set coverage of the supplied inventory only;
+it verifies neither source custody nor trajectory bytes or completeness.
+Do not remove a missing scheduled trajectory to make the check pass: retain
+an exception record and resolve it before releasing the batch. The check
+creates no labels and changes no frozen H1/H2 endpoint.
