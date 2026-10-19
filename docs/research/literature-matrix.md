@@ -989,3 +989,27 @@ Use the handoff's calibration audit to distinguish an unsupported extra
 requirement from an evidenced violation. Preserve false rejections as well as
 missed violations. Human rubric approval remains necessary before applying a
 new category to real labels.
+
+## 2026-10-19 — Source revisit: consistency is not inventory completeness
+
+Search date: 2026-10-19. The RE literature search re-surfaced the already entered
+ESEM elicitation study and cross-task evaluation. Other search-only candidates
+were not admitted or used for claims. Revisited the existing
+[W3C PROV-CONSTRAINTS](https://www.w3.org/TR/2013/REC-prov-constraints-20130430/)
+source rather than creating a duplicate bibliographic row. Read abstract,
+Sections 1.2 and 6.1, including key-object/key-properties constraints.
+
+- Status/year: W3C Recommendation, 2013; normative technical source, not an
+  empirical study. Sample, measured effect and H1/H2 results: not applicable.
+- Question/method/result: specifies consistency rules over provenance instances,
+  including identity-key constraints. This is not a claim that all scheduled
+  observations are represented or that records are trustworthy.
+- Credibility: 9/10 as an open, stable specification with formal rules; no empirical
+  validation of our workflow or product follows from it.
+- Thesis/experiment: preserve structural checks separately from semantic labels
+  and collection completeness. Product: expected inventory coverage is a separate
+  application contract, not PROV conformance.
+- Action: `prepare_blind_review` now optionally checks exact identity-set coverage
+  against a separately supplied expected inventory. This is our implementation
+  decision, not a requirement attributed to W3C. Fourteen offline tests pass.
+  External custody, authorized sources and independent semantic review remain gates.
