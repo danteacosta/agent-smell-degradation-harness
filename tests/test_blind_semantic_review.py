@@ -2,7 +2,7 @@ import copy
 
 import pytest
 
-from eval.blind_semantic_review import prepare_blind_review
+from eval.blind_semantic_review import IDENTITY, prepare_blind_review
 
 
 def row():
@@ -43,3 +43,35 @@ def test_missing_required_evidence_cannot_silently_shrink_the_batch(field):
     value[field] = ""
     with pytest.raises(ValueError, match=field):
         prepare_blind_review([row(), value])
+
+
+def identity(value):
+    return {field: value[field] for field in IDENTITY}
+
+
+def test_inventory_match_is_order_independent_and_does_not_expose_manifest():
+    records = [row(), {**row(), "run_id": "run-b"}]
+    expected = [identity(value) for value in reversed(records)]
+    before = copy.deepcopy(expected)
+    checked = prepare_blind_review(records, expected_identities=expected)
+    unchecked = prepare_blind_review(records)
+    assert checked["inventory_coverage_checked"] is True
+    assert unchecked["inventory_coverage_checked"] is False
+    assert checked["review_view"] == unchecked["review_view"]
+    assert expected == before
+
+
+@pytest.mark.parametrize("records,expected", [
+    ([row()], [identity(row()), {**identity(row()), "run_id": "run-b"}]),
+    ([row(), {**row(), "run_id": "run-b"}], [identity(row())]),
+])
+def test_inventory_rejects_missing_or_inserted_records(records, expected):
+    with pytest.raises(ValueError, match="inventory"):
+        prepare_blind_review(records, expected_identities=expected)
+
+
+@pytest.mark.parametrize("expected", [[], {}, [identity(row()), identity(row())],
+    [{**identity(row()), "reward": 1}], [{**identity(row()), "run_id": " "}]])
+def test_invalid_expected_inventory_is_rejected(expected):
+    with pytest.raises(ValueError):
+        prepare_blind_review([row()], expected_identities=expected)

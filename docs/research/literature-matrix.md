@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-17
+Last updated: 2026-10-19
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -970,3 +970,60 @@ uncertainty methods, limitations); the remainder (per-entrant boards) was not re
 | --- | --- | --- | --- | ---: |
 | Zhao et al., [*CatchBench: When Can an Agent Failure Be Caught?*](https://arxiv.org/abs/2608.22808), arXiv preprint cs.LG v4 (2026-09-17), no peer-reviewed venue listed | When can an audit score be attributed to the method rather than to the record? 1,187 declared configurations and 1,162 recorded runs, 72 entrants; one auditor scored in three information states (PRE declared configuration, LIVE trace prefix at 25/50/75/100%, POST finished trace); every comparison reported as a difference with a 95% interval, task-clustered bootstrap for tau-bench (660 runs from 165 tasks), pair-cluster bootstrap for injected/clean pairs. | A rule reading only declaration order reaches F1 1.000 on one of six configuration sources, which the authors attribute to how the corpus was built, not to auditing skill. Injected-fault substrates must pass five admissibility tests (documented fault mode; no construction-only baseline detects it; injected and clean runs distributionally comparable; detector-independent labels; human validation); both Gold substrates fail at least one and are demoted to mechanism diagnostics. At the 25% LIVE prefix the supervised auditor beats a linear size baseline (0.742 vs 0.629 ROC-AUC) but the contrast against a flexible spline size control is +0.005, interval [-0.010, +0.020]; on tau-bench no nonrandom entrant reaches 0.70 at any prefix. Limits stated by the authors: small boards and wide intervals; judge caches hold one generation without seed or repeat index, so some intervals are likely optimistic; intervals omit refitting variance; the matched size control was added after the linear results were inspected; graph detectors are seed-unstable. Domain is agent security/tool auditing and tau-bench, not requirement loss. | **Thesis:** reinforces, with an independent corpus, that a detector score is uninterpretable until label construction is tested for shortcuts and size confounds; it does not support or refute H2. **Experiment:** the H2 design already has B0 telemetry and (PR #219) a length-matched control, but no check that fields exposed only by corpus construction (episode order, identifier text, clean/defective arm markers, file order) cannot predict the label by themselves. Action taken (offline, no provider call): `eval/construction_shortcut.py::construction_shortcut_control` reports direction-free AUROC per construction-only feature and flags any at or above a threshold; descriptive only, not in the frozen claim gate. **Product:** supports publishing a per-source shortcut check with any diagnostic benchmark number. **Decision needed from Dante (not applied):** whether the H2 pre-registration lists the feature names to be tested and the threshold (default 0.9 here is a placeholder, not calibrated). | 6/10: transparent, released predictions and intervals, explicit self-critique; non-peer-reviewed preprint, small boards, domain transfer indirect |
 | Wang et al., [*Fail-Fast, Restart-Smart: Early Failure Prediction and Restart for SWE Agentic Tasks*](https://arxiv.org/abs/2608.03222), arXiv preprint cs.SE v1 (2026-08-04), no peer-reviewed venue listed | Can a small monitor on the observable trajectory prefix predict SWE-agent failure early enough to save compute or restart? SWE-bench Verified, mini-swe-agent, 11 seeds x 500 instances; instance-grouped split 350/50/100; monitor trained only on Qwen3.6-27B and tested on three other policies including one closed API; Platt-scaled scores, alarm rule from a budget-constrained grid search at target FPR 5-25%. | At 5% target FPR token savings were 14.6-20.4% (20.4% vs 12.5% for an AgentStop adaptation on the training policy); recall is modest (30.5% at 5% FPR). Restart gains over cold restart were not significant for two of three transfer policies (p = 0.31, 0.33); a state-summary input lowered recall and was dropped. Thresholds were chosen on evaluation-fold predictions (the authors report a nested cross-fit gives nearly identical operating points). Label is terminal run success, dense targets derive from replaying patches against the official evaluator, so intermediate labels are outcome-derived. One benchmark, one scaffold, one closed-API policy. | **Thesis:** adjacent, not evidence for H2: the unit is a run outcome, not a lost requirement condition. **Experiment:** useful as a design reference for instance-grouped splits, reporting alarms at fixed FPR, and nested threshold selection; its dense labels are the kind of outcome-derived signal that must stay in the label plane (consistent with the existing AgentPro boundary). No change to the protocol. **Product:** generic failure monitors target cost/looping, reinforcing the separation from explaining lost requirement conditions. **Action:** none beyond this entry. | 6/10: grouped split, multiple policies and honest non-significant results; preprint, narrow benchmark, threshold selected on evaluation folds |
+
+## 2026-10-17 — Recovered functionality is not automatically an obligation
+
+Read date: 2026-10-17; DOI/title deduplicated. Read abstract, method,
+results and threats in the publisher PDF.
+
+| Reference / evidence | Question, data, method | Result and threats | Relevance / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Kabadi et al., [Can LLMs Identify Missing Elements in Requirements Elicitation?](https://doi.org/10.4230/LIPIcs.ESEM.2026.82), 2026, ESEM Software Engineering in Practice, peer-reviewed proceedings | Three industry projects; initial, generated and production-derived stories. Sonnet 4.6 web; ten-stage elicitation; TF-IDF greedy matching at heuristic threshold 0.10. Production references contain 122/110/220 stories. | Generated stories improve recall but reduce precision. Limits: author-practitioner reference reconstruction, one model/interface, heuristic matching, evolving scope and no stage ablation. | Thesis: adjacent recoverability evidence, not H1/H2. Experiment: preserve reference authority; implementation is not normative truth. Product: discovery differs from auditing existing evals. Action: review gate below. | 7/10: reviewed industrial study with replication package; small project count and proxy reference/matching limit transfer. |
+
+**Review gate (project-specific inference, not a result of the paper).** For each
+candidate condition, distinguish an approved source requirement from observed
+implementation behavior and a newly inferred suggestion. Only an approved,
+versioned source can authorize a normative violation label. Resolve source
+conflicts and exceptions before adjudication; unresolved authority remains
+uncertain. This gate is proposed in the product review handoff and changes no
+frozen thesis rubric, corpus, hypothesis or endpoint.
+
+## 2026-10-18 — Review prompts can change the acceptance boundary
+
+Search/read date: 2026-10-18. DOI/title deduplicated against this branch.
+Read publisher abstract, Sections 3–4, explanation results, filter results and
+Section 8 threats; figures were not independently reproduced.
+
+| Reference / status | Question, sample, method | Findings / threats | Relevance and action | Credibility |
+| --- | --- | --- | --- | --- |
+| Jin and Chen, [Are LLMs reliable code reviewers?](https://doi.org/10.1007/s10515-026-00638-5), Automated Software Engineering 33:90, published 2026-06-26; peer-reviewed journal | Five models; over 700 Python tasks paired into over 1,400 correct/buggy instances from HumanEval, MBPP and QuixBugs; three review prompts. | Explanation/repair prompts can increase false rejection. Executable filtering reduces it but can increase false acceptance. Limits: test coverage, canonical-reference assumptions, GPT-4o augmentation coupling, prompt and runtime variability, function-level transfer. | Thesis: adjacent judge-validity evidence, not H1/H2. Experiment: distinguish verdict from rationale correctness. Product: a repair suggestion is not proof of violation. Action: proposed calibration review below. | 7/10: peer-reviewed, paired design and public artifacts; proxy labels and restricted tasks limit transfer; not reproduced here. |
+
+**Project-specific incorporation (proposal, not a frozen protocol change).**
+Use the handoff's calibration audit to distinguish an unsupported extra
+requirement from an evidenced violation. Preserve false rejections as well as
+missed violations. Human rubric approval remains necessary before applying a
+new category to real labels.
+
+## 2026-10-19 — Source revisit: consistency is not inventory completeness
+
+Search date: 2026-10-19. The RE literature search re-surfaced the already entered
+ESEM elicitation study and cross-task evaluation. Other search-only candidates
+were not admitted or used for claims. Revisited the existing
+[W3C PROV-CONSTRAINTS](https://www.w3.org/TR/2013/REC-prov-constraints-20130430/)
+source rather than creating a duplicate bibliographic row. Read abstract,
+Sections 1.2 and 6.1, including key-object/key-properties constraints.
+
+- Status/year: W3C Recommendation, 2013; normative technical source, not an
+  empirical study. Sample, measured effect and H1/H2 results: not applicable.
+- Question/method/result: specifies consistency rules over provenance instances,
+  including identity-key constraints. This is not a claim that all scheduled
+  observations are represented or that records are trustworthy.
+- Credibility: 9/10 as an open, stable specification with formal rules; no empirical
+  validation of our workflow or product follows from it.
+- Thesis/experiment: preserve structural checks separately from semantic labels
+  and collection completeness. Product: expected inventory coverage is a separate
+  application contract, not PROV conformance.
+- Action: `prepare_blind_review` now optionally checks exact identity-set coverage
+  against a separately supplied expected inventory. This is our implementation
+  decision, not a requirement attributed to W3C. Fourteen offline tests pass.
+  External custody, authorized sources and independent semantic review remain gates.
