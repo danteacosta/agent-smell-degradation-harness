@@ -1,4 +1,4 @@
-> Relatório entregue antes do início da etapa 2. A seção “próxima etapa” registra o estado daquela entrega; o fechamento posterior está no [resumo final](README.md).
+> Relatório entregue antes do início da etapa 2. A seção “próxima etapa” registra o estado daquela entrega; o fechamento posterior está no [snapshot histórico das 11h](README.md).
 
 # Conclusões da etapa 1: τ² airline
 
