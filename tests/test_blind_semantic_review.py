@@ -2,8 +2,7 @@ import copy
 
 import pytest
 
-from eval.blind_semantic_review import prepare_blind_review
-from eval.blind_semantic_review import IDENTITY
+from eval.blind_semantic_review import IDENTITY, prepare_blind_review
 
 
 def row():
