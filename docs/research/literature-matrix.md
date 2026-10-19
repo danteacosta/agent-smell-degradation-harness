@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-18
+Last updated: 2026-10-19
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -985,3 +985,25 @@ constructions that did not do what was instructed* (Korn et al.: 73.8% of intend
 controls were judged implemented by humans). Mitigation already planned: executable oracle as the
 primary outcome and a 20% human audit; this entry makes the audit a requirement to report, not an
 optional step.
+
+## 2026-10-19 — Natural requirement omission as a dominant agent failure cause (E2EDevBench)
+
+Search/read date: 2026-10-19. Deduplicated by arXiv ID and title against this branch and open PRs
+#221-#224: not previously entered. Read: abstract and the HTML text covering benchmark construction,
+agent frameworks, the Impl-Rate metric, the failure and root-cause taxonomy, and the stated
+limitations. Also surfaced and **not entered, not scored** (abstract page only; the omission rubric
+claimed by a search snippet was not found in the abstract): *The Verification Horizon* (2606.26300),
+AgentLens (2607.06624). arXiv 2609.29208 (Villamizar et al.) was already in the matrix.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Zeng, Li, Xie, Ye, Zhang, [*Benchmarking and Studying the LLM-based Agent System in End-to-End Software Development*](https://arxiv.org/abs/2511.04064), arXiv preprint v1 (cs.SE, 6 Nov 2025); no peer-reviewed venue listed | How well do agents build whole projects from a requirements document, and why do they fail? E2EDevBench: 50 PyPI projects (Q1 2024 to Q1 2025), LLM-drafted then human-revised requirements, no tests or skeletons given to the agent. Three workflows on one SWE-Agent base (Single, Developer-Tester, Designer-Developer-Tester); Gemini-2.5-Pro and -Flash; Impl-Rate = requirements unanimously judged implemented by three LLM-judge runs; failure causes from 1,000 sampled unimplemented requirements (Pro runs), LLM pre-annotation then human refinement. | Best configuration implements roughly half of requirements (53.5% by the paper's table). Of sampled failures, 55.8% trace to task planning, of which requirement omission is 27.9% and misinterpretation 22.2%; execution 38.6%; verification 5.7%. LLM judge vs three experts on 546 requirements: 76-84% agreement (experts among themselves 78-88%). **Limits:** only two models from one family; 50 projects; failure analysis on Pro runs only; no annotator count or agreement for the cause taxonomy; "unseen" claim rests on an assumed January 2025 cutoff; internal inconsistencies between text and tables (partial-implementation share, which architecture is best); non-unanimous judge verdicts count as not implemented. | **Thesis:** supports, as context only, that *natural* requirement omission by the agent (not the constructed omission studied here) is a frequent, planning-stage failure cause; it motivates but does not validate T1-T3 early warning, and its "omission" is a post-hoc label, not a controlled intervention. **Experiment:** reinforces two existing controls: executable oracle as primary outcome (this paper's Impl-Rate is LLM-judged) and reporting agreement for any cause labelling. **Product:** the planning-stage share is consistent with checking obligations before generation, but is not product evidence. **Action:** cite in the related-work/threats text as context; do not quote 27.9% as a population rate (one benchmark, two models, unreported labeller agreement). No protocol change. | 5/10: transparent benchmark construction and a released framework, but preprint, two models, unreported label agreement, and visible text/table inconsistencies. |
+
+**Tension recorded, not resolved.** E2EDevBench locates omission in *planning* (55.8%), whereas this
+protocol injects omission in the *requirement* and observes the artifact. If agents omit
+obligations on their own even with complete requirements, then a share of A-arm failures is expected
+and H1's "C worse than A" contrast should be read as the increment over that baseline. This is already
+what the paired design measures (A is the reference); **decision needed from Dante (not applied):**
+whether the proposal should report the A-arm failure rate of the target obligation explicitly as a
+descriptive baseline next to the paired contrast, so a reader does not infer that every C failure is
+caused by the omission.
