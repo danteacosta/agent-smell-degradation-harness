@@ -1083,3 +1083,18 @@ descriptive baseline next to the paired contrast, so a reader does not infer tha
 caused by the omission.
 
 Source verification (2026-10-19): the [Korn v1 results and discussion](https://arxiv.org/html/2606.25550v1) distinguish initial inter-rater agreement from adjudicated labels; the [Huang v1 evaluation](https://arxiv.org/html/2610.04710v1) treats shared-label overlap as correlated evidence; [E2EDevBench v1 Table 5](https://arxiv.org/html/2511.04064v1) separates all planning causes from the omission subgroup. The inferences above remain proposals.
+
+## 2026-10-20 — Dependency-aware omissions and limits of conceptual coverage
+
+Search/read date: 2026-10-20. DOI/title deduplicated. Read publisher abstract,
+method (Sections 3.1–3.4), results and threats (Sections 4–5); no reproduction.
+
+| Reference / evidence | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | --- |
+| Arora, Sabetzadeh and Briand, [An empirical study on the potential usefulness of domain models for completeness checking of requirements](https://doi.org/10.1007/s10664-019-09693-x), EMSE 24:2509–2539, 2019; peer-reviewed | Three industrial domains; 35 requirements per domain, eight experts; UML trace links and 100 randomized omission simulations. | Conceptual coverage was more sensitive to whole-requirement than segment omissions. Not observed analyst detection; ideal modeling, tacit concepts and semantic dependencies limit transfer. | Thesis: external completeness precedent, not downstream H1/H2. Experiment: add dependency review to prospective manipulation admission. Product: concept coverage cannot establish behavioral obligation coverage. | 8/10: reviewed industrial design and explicit threats; small, expert-intensive simulation rather than field effectiveness. |
+
+**Project-specific decision proposal.** Review dependencies before admitting a
+single-condition intervention; record exclusions without inspecting generated
+outcomes. Do not replace B0/B3 or add a domain model to detector inputs silently.
+See the temporal protocol's proposed admission checklist. Human approval remains
+required; no existing corpus, labels or endpoint changed.
