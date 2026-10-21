@@ -348,3 +348,10 @@ The matrix records the evidence limits. Approval is still required before adding
 fields to a frozen rubric; B0/B3, H1/H2 and existing candidate materials remain
 unchanged. A conceptual-domain-coverage comparator would require its own design
 and information-access audit, not automatic admission as a baseline.
+
+`eval/manipulation_admission.py` now prepares this review gate for human
+adjudication. It requires exact coverage of a separately frozen candidate
+inventory, at least two distinct reviewers per candidate, explicit dependency
+and non-target-preservation judgments, and rejects outcome/treatment fields.
+It does not admit candidates automatically and always marks the packet as
+non-confirmatory until human adjudication and rubric approval.
