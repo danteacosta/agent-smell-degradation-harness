@@ -1098,3 +1098,19 @@ single-condition intervention; record exclusions without inspecting generated
 outcomes. Do not replace B0/B3 or add a domain model to detector inputs silently.
 See the temporal protocol's proposed admission checklist. Human approval remains
 required; no existing corpus, labels or endpoint changed.
+
+
+## 2026-10-21 — Defect class and context determine downstream test impact
+
+Search/read date: 2026-10-21. Title deduplicated. Read the full arXiv text,
+including survey design/results, controlled experiment, results and threats.
+
+| Reference / status | Question, sample, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | --- |
+| Mund, Femmer, Méndez Fernández and Eckhardt, [Does Quality of Requirements Specifications matter? Combined Results of Two Empirical Studies](https://arxiv.org/abs/1702.07656), 2017 technical report / preprint of two empirical studies | Survey at one multinational company (42 relevant complete responses) plus a randomized controlled experiment with 41 advanced students deriving tests from three industrial use cases; injected incorrect statements and meaning-preserving negative rewrites. | Incorrect statements substantially changed test correctness; negative rewrites did not significantly change correctness or omission, though omission rose descriptively. Domain briefing did not recover a subtle incorrect statement. Limits: one company, student experiment, few defects/use cases and low power for subgroups. | Thesis: downstream harm cannot be inferred from a generic smell label. Experiment: select and admit manipulations by verified semantic loss, preserve the meaning-equivalent rewrite control, and stratify/report by defect class without treating strata as independent projects. Product: prioritize obligations and contexts where downstream users rely on written artifacts. Action: keep H1/H2 unchanged; use the executable admission packet below. | 7/10: transparent paired empirical program, industrial artifact and strong partial re-rating agreement; narrow treatments, student sample and preprint status limit generalization. |
+
+**Project-specific incorporation.** The new manipulation-admission packet checks
+frozen candidate coverage, two distinct reviewers, dependencies and preservation
+of non-target obligations before human adjudication. It rejects treatment/outcome
+fields and does not label candidates automatically. This operationalizes a design
+gate; it does not make the cited study evidence for LLM behavior or H1/H2.
