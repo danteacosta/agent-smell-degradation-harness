@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-19
+Last updated: 2026-10-21
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1098,3 +1098,19 @@ single-condition intervention; record exclusions without inspecting generated
 outcomes. Do not replace B0/B3 or add a domain model to detector inputs silently.
 See the temporal protocol's proposed admission checklist. Human approval remains
 required; no existing corpus, labels or endpoint changed.
+
+## 2026-10-21 — Incompleteness raises silent code generation: models rarely ask (HumanEvalComm)
+
+Search/read date: 2026-10-21. Deduplicated by DOI/arXiv ID and title: not previously entered
+(arXiv 2508.12358, Jin and Chen, is the preprint of the already-scored ASE journal paper on code
+reviewers; Wink, 2602.17037, was already entered). Read: abstract and the HTML text covering
+benchmark construction, models, metrics, results and stated limitations; the last ~79k characters
+of the HTML (including the full threats section) were not read.
+
+| Reference / evidence | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Wu and Fard, [*Benchmarking the Communication Competence of Code Generation for LLMs and LLM Agent*](https://arxiv.org/abs/2406.00215) (HumanEvalComm), ACM TOSEM, January 2025; peer-reviewed (arXiv v3 read) | Do code LLMs ask clarifying questions when a description is inconsistent, ambiguous or incomplete? All 164 HumanEval problems modified into 762 descriptions in six variants; one engineer modified, a second reviewed. Five code LLMs (7B–13B plus gpt-3.5-turbo) and a multi-round agent (Okanagan). Metrics: Communication Rate (response without code), Good Question Rate (GPT-3.5 judge), Pass@1. | More than 60% of responses still produced code; Pass@1 on modified problems fell 35–52% relative; incompleteness had the lowest Pass@1. With 50% of words removed, 95% of ChatGPT responses still generated code. The question-quality judge over-labels "Good" versus humans (kappa 0.72–0.96 on 60 samples per model) and false-recovery rates of 30–40% are reported. Limits: function-level Python, small or old models, single-engineer modification, internal inconsistency between abstract/Table 3 and introduction figures, LLM judge, random word-block deletion rather than single testable conditions. | **Thesis:** independent precedent that incomplete inputs yield silent, plausible code rather than visible failure, which supports the premise that loss can be invisible before T4; it says nothing about H1/H2 effect sizes or project-level UI rules. **Experiment:** reinforces that the LLM-simulated-answer/judge channel can inflate recovery, so any clarification-style arm must keep the executable oracle as outcome and must not use a judge-rated "good question" as a label. No protocol change. **Product:** a requirement-anchored check is needed because the model itself rarely signals the gap. **Action:** related-work context only; do not cite the 35–52% or 60% figures as expectations. | 6/10: TOSEM venue and public benchmark with human validation, but function-level HumanEval, subjective single-engineer edits, judge-based metrics and internal numeric inconsistencies; threats section not fully read. |
+
+Added in the same run: `tests/test_literature_matrix_integrity.py` fails if one DOI/arXiv ID is
+scored in two rows, so future runs cannot silently re-enter a source (the four abstract-only rows
+in the pending table carry no score and are exempt).
