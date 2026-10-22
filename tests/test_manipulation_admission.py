@@ -26,6 +26,8 @@ def test_prepares_complete_packet_without_automatic_admission():
     assert packet["candidate_count"] == 1
     assert packet["review_count"] == 2
     assert packet["confirmatory_eligible"] is False
+    assert packet["candidates"][0]["requires_adjudication"] is False
+    assert all(packet["candidates"][0]["agreement"].values())
     packet["candidates"][0]["reviews"][0]["reason"] = "changed"
     assert rows == before
 
@@ -88,3 +90,37 @@ def test_preserves_frozen_candidate_order_not_review_input_order():
         rows, expected_candidate_ids=["c-1", "c-2"]
     )
     assert [item["candidate_id"] for item in packet["candidates"]] == ["c-1", "c-2"]
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("removed_span", "a different span"),
+        ("target_constraint_id", "constraint-2"),
+        ("dependent_constraint_ids", ["constraint-2"]),
+        ("non_target_obligations_preserved", False),
+        ("plausible_remainder", False),
+        ("decision", "uncertain"),
+    ],
+)
+def test_surfaces_disagreement_for_human_adjudication(field, value):
+    second = review(reviewer="r-2")
+    second[field] = value
+    candidate = prepare_manipulation_admission(
+        [review(), second], expected_candidate_ids=["c-1"]
+    )["candidates"][0]
+    assert candidate["agreement"][field] is False
+    assert candidate["requires_adjudication"] is True
+
+
+def test_consensus_exclusion_still_requires_adjudication():
+    rows = [review(), review(reviewer="r-2")]
+    for row in rows:
+        row["decision"] = "exclude"
+        row["dependent_constraint_ids"] = ["constraint-2"]
+        row["reason"] = "The removed span also controls constraint-2."
+    candidate = prepare_manipulation_admission(
+        rows, expected_candidate_ids=["c-1"]
+    )["candidates"][0]
+    assert all(candidate["agreement"].values())
+    assert candidate["requires_adjudication"] is True
