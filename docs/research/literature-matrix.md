@@ -1114,3 +1114,20 @@ frozen candidate coverage, two distinct reviewers, dependencies and preservation
 of non-target obligations before human adjudication. It rejects treatment/outcome
 fields and does not label candidates automatically. This operationalizes a design
 gate; it does not make the cited study evidence for LLM behavior or H1/H2.
+
+
+## 2026-10-22 — Requirements-test gaps require contextual adjudication
+
+Search/read date: 2026-10-22. DOI/title deduplicated. Read the open-access
+version of record: abstract, method/design, case data collection, findings,
+validity scope and conclusions.
+
+| Reference / status | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | --- |
+| Bjarnason, Sharp and Regnell, [Improving requirements-test alignment by prescribing practices that mitigate communication gaps](https://doi.org/10.1007/s10664-019-09698-6), EMSE 24:2364–2409, 2019; peer-reviewed, open access | Design-science construction of Gap Finder grounded in evidence from five companies; formative mixed-method case study in one ongoing agile project using interviews, observations, a workshop and survey. | Relevant communication gaps were detected; seven of nine prescribed practices were judged practically relevant. Cross-artefact review is proposed to reduce semantic/cognitive distance. Formative, evolving design; one small-to-medium co-located case, perceived relevance rather than measured defect reduction or causal effectiveness. | Thesis: supports treating requirement-test alignment as contextual and reviewable, not as proof of H1/H2. Experiment: retain reviewer disagreement by field and route it to adjudication rather than averaging it away. Product: cross-artefact obligation review is a plausible workflow, but willingness to pay and field effectiveness remain unmeasured. Action: add disagreement summaries to the admission packet. | 8/10: peer-reviewed open study with transparent grounding and rich industrial observation; single formative case and subjective outcome limit causal claims. |
+
+**Project-specific incorporation.** `prepare_manipulation_admission` now exposes
+agreement for the removed span, target constraint, dependencies, preservation,
+remainder plausibility and decision. Any disagreement or blocking judgment is
+flagged for human adjudication. The function still makes no semantic label or
+confirmatory admission decision.
