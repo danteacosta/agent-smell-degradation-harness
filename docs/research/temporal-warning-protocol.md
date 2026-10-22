@@ -355,3 +355,7 @@ inventory, at least two distinct reviewers per candidate, explicit dependency
 and non-target-preservation judgments, and rejects outcome/treatment fields.
 It does not admit candidates automatically and always marks the packet as
 non-confirmatory until human adjudication and rubric approval.
+The packet also reports agreement separately for removed span, target
+`constraint_id`, dependency set, non-target preservation, remainder plausibility
+and recommendation. Any disagreement or blocking judgment sets
+`requires_adjudication`; reviewer disagreement is retained rather than collapsed.
