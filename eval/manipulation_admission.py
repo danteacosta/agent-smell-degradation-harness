@@ -26,6 +26,39 @@ FORBIDDEN = {
     "treatment",
 }
 DECISIONS = {"admit", "exclude", "uncertain"}
+AGREEMENT_FIELDS = (
+    "removed_span",
+    "target_constraint_id",
+    "dependent_constraint_ids",
+    "non_target_obligations_preserved",
+    "plausible_remainder",
+    "decision",
+)
+
+
+def _candidate_summary(candidate_id: str, reviews: list[dict]) -> dict:
+    agreement = {}
+    for field in AGREEMENT_FIELDS:
+        values = [
+            tuple(row[field]) if field == "dependent_constraint_ids" else row[field]
+            for row in reviews
+        ]
+        agreement[field] = len(set(values)) == 1
+
+    has_blocking_judgment = any(
+        row["decision"] != "admit"
+        or row["dependent_constraint_ids"]
+        or not row["non_target_obligations_preserved"]
+        or not row["plausible_remainder"]
+        for row in reviews
+    )
+    return {
+        "candidate_id": candidate_id,
+        "review_count": len(reviews),
+        "agreement": agreement,
+        "requires_adjudication": has_blocking_judgment or not all(agreement.values()),
+        "reviews": reviews,
+    }
 
 
 def prepare_manipulation_admission(
@@ -91,7 +124,7 @@ def prepare_manipulation_admission(
         "candidate_count": len(grouped),
         "review_count": len(reviews),
         "candidates": [
-            {"candidate_id": candidate_id, "reviews": grouped[candidate_id]}
+            _candidate_summary(candidate_id, grouped[candidate_id])
             for candidate_id in expected_candidate_ids
         ],
         "next_gate": "Human adjudication and rubric approval required before admission.",
