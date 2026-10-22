@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-21
+Last updated: 2026-10-22
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1114,3 +1114,15 @@ of the HTML (including the full threats section) were not read.
 Added in the same run: `tests/test_literature_matrix_integrity.py` fails if one DOI/arXiv ID is
 scored in two rows, so future runs cannot silently re-enter a source (the four abstract-only rows
 in the pending table carry no score and are exempt).
+
+## 2026-10-22 entry: trajectory length as an H2 baseline confound
+
+Search and reading date: 2026-10-22. Read: abstract and listing metadata of arXiv 2511.00197 only; the
+full text (task-difficulty controls, per-agent numbers, limitations) was not read, so nothing below
+exceeds what the abstract states. Also seen and not entered: RealBench (arXiv 2604.22659, repo-level
+benchmark reporting missing required functions; abstract-level only, context), and ADE-PRF (alphaXiv
+2607.07689, single-author production-health forecasting; vendor-style, product context only).
+
+| Reference / evidence | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Majgaonkar, Fei, Li, Sarro and Ye, [*Understanding Code Agent Behaviour: An Empirical Study of Success and Failure Trajectories*](https://arxiv.org/abs/2511.00197), arXiv preprint cs.SE v1, 2025-10-31; no peer-reviewed venue listed (abstract read) | How do successful and failed code-agent trajectories differ? SWE-Bench traces from OpenHands, SWE-agent and Prometheus; strategies, trajectory length/variance, fault localisation. | Failed trajectories are consistently longer with higher variance; failure patterns differ by agent; trajectories located the problematic files in 72-81% of cases, failures included. Task-difficulty control and limitations not verified (abstract only); issue-resolution, not requirement-omission, setting. | **Thesis:** none beyond context. **Experiment:** trace length is a plausible non-semantic predictor of failure, so the B3-vs-B0 gain in H2 must not come from length. B0 already carries `operational__event_count` computed on the same pre-final trace; added `test_b3_is_b0_plus_provenance_only_and_b0_keeps_trace_length_baseline` to pin that B3 = B0 + provenance-only columns with B0 values unchanged. No protocol or hypothesis change. **Product:** length-based alerts are a cheap competitor to semantic loss explanation; keep as a named baseline. | 5/10: preprint, public traces and a clear question, but unreviewed, abstract-only read, different task. |
