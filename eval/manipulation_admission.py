@@ -40,7 +40,7 @@ def _candidate_summary(candidate_id: str, reviews: list[dict]) -> dict:
     agreement = {}
     for field in AGREEMENT_FIELDS:
         values = [
-            tuple(row[field]) if field == "dependent_constraint_ids" else row[field]
+            frozenset(row[field]) if field == "dependent_constraint_ids" else row[field]
             for row in reviews
         ]
         agreement[field] = len(set(values)) == 1
