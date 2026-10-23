@@ -96,6 +96,16 @@ def test_project_splits_are_deterministic_and_disjoint() -> None:
     assert len(set(first)) == 12
 
 
+def test_project_splits_ignore_order_and_repeated_project_ids() -> None:
+    # Repeated runs/replications of one project must never straddle splits:
+    # the assignment is keyed on the project id alone, not on row multiplicity.
+    projects = [f"P-{index:02d}" for index in range(12)]
+    base = assign_project_splits(projects, seed=3)
+    shuffled_with_repeats = list(reversed(projects)) + projects[:5] * 3 + [" P-00 "]
+
+    assert assign_project_splits(shuffled_with_repeats, seed=3) == base
+
+
 def test_candidate_outputs_keep_text_only_in_private_pool(tmp_path: Path) -> None:
     source = tmp_path / "unified.csv"
     _write_fixture(source)
