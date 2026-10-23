@@ -1131,3 +1131,21 @@ agreement for the removed span, target constraint, dependencies, preservation,
 remainder plausibility and decision. Any disagreement or blocking judgment is
 flagged for human adjudication. The function still makes no semantic label or
 confirmatory admission decision.
+
+
+## 2026-10-23 — Upstream provenance is evidence, not outcome truth
+
+Search/read date: 2026-10-23. DOI/title deduplicated. Read the open-access
+version of record: abstract, review protocol, synthesis, evaluation coverage,
+threats and conclusions.
+
+| Reference / status | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | --- |
+| Mucha, Kaufmann and Riehle, [A systematic literature review of pre-requirements specification traceability](https://doi.org/10.1007/s00766-023-00412-z), Requirements Engineering 29:119–141, 2024; peer-reviewed, open access | SLR of 77 peer-reviewed papers from 1992–2022; qualitative coding of use cases, problems, solutions and techniques linking requirements to source artifacts. | Source/context recovery and change management are recurrent uses, but people/effort problems dominate; only 25 of 45 identified techniques had an evaluation and five had an elaborate evaluation. Search terminology, mixed traceability constructs, the 2022 cutoff and exclusion of agile user-story tracing constrain coverage. | Thesis: T1–T3 provenance can be useful context but is not a semantic label or evidence that a condition was preserved. Experiment: keep upstream links in the feature plane, preserve source identity and evaluate H2 on held-out projects. Product: capture burden and ROI must be measured rather than assumed. Action: no hypothesis change; keep human adjudication and report provenance availability separately from detector performance. | 8/10: peer-reviewed systematic review with a documented protocol and broad corpus; heterogeneous primary evidence and limited elaborate evaluations prevent causal effectiveness claims. |
+
+**Project-specific incorporation.** The review sharpens an existing boundary:
+provenance availability is a feature-plane property, while omission validity and
+terminal behavior remain label-plane judgments. The admission packet therefore
+continues to reject outcome/treatment fields and cannot promote a trace link to a
+confirmatory label. A future product pilot must measure capture effort and review
+time alongside detection value; the literature does not establish ROI.
