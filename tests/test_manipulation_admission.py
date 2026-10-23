@@ -124,3 +124,23 @@ def test_consensus_exclusion_still_requires_adjudication():
     )["candidates"][0]
     assert all(candidate["agreement"].values())
     assert candidate["requires_adjudication"] is True
+
+
+def test_dependency_agreement_is_order_insensitive_but_preserves_evidence():
+    first = review("c-1", "r-1")
+    first["dependent_constraint_ids"] = ["constraint-2", "constraint-3"]
+    second = review("c-1", "r-2")
+    second["dependent_constraint_ids"] = ["constraint-3", "constraint-2"]
+
+    candidate = prepare_manipulation_admission(
+        [first, second], expected_candidate_ids=["c-1"]
+    )["candidates"][0]
+
+    assert candidate["agreement"]["dependent_constraint_ids"] is True
+    assert candidate["requires_adjudication"] is True
+    assert candidate["reviews"][0]["dependent_constraint_ids"] == [
+        "constraint-2", "constraint-3"
+    ]
+    assert candidate["reviews"][1]["dependent_constraint_ids"] == [
+        "constraint-3", "constraint-2"
+    ]
