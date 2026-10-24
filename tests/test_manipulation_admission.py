@@ -144,3 +144,36 @@ def test_dependency_agreement_is_order_insensitive_but_preserves_evidence():
     assert candidate["reviews"][1]["dependent_constraint_ids"] == [
         "constraint-3", "constraint-2"
     ]
+
+
+def test_rejects_reviewer_identity_alias_by_surrounding_whitespace():
+    with pytest.raises(ValueError, match="reviewer_id must not have surrounding whitespace"):
+        prepare_manipulation_admission(
+            [review(reviewer="r-1"), review(reviewer=" r-1 ")],
+            expected_candidate_ids=["c-1"],
+        )
+
+
+@pytest.mark.parametrize(
+    "field,value,expected_message",
+    [
+        ("target_constraint_id", " constraint-1", "target_constraint_id"),
+        ("dependent_constraint_ids", ["constraint-2 "], "dependent constraint id"),
+    ],
+)
+def test_rejects_noncanonical_constraint_identifiers(field, value, expected_message):
+    malformed = review()
+    malformed[field] = value
+    with pytest.raises(ValueError, match=expected_message):
+        prepare_manipulation_admission(
+            [malformed, review(reviewer="r-2")],
+            expected_candidate_ids=["c-1"],
+        )
+
+
+def test_rejects_noncanonical_expected_candidate_id():
+    with pytest.raises(ValueError, match="expected candidate id"):
+        prepare_manipulation_admission(
+            [review(candidate=" c-1"), review(candidate=" c-1", reviewer="r-2")],
+            expected_candidate_ids=[" c-1"],
+        )
