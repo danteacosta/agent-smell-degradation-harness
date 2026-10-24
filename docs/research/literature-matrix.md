@@ -1224,3 +1224,22 @@ LLM-panel and 20% human audit only check that C removes the target and B preserv
 (previously only the `oracle_verdict` *event name* and `oracle`/`oracle_passed` keys were blocked), with a
 parametrized test. This closes part of the B0/B3 oracle-verdict feature-leakage check requested above; it is
 a guard, not proof that no other outcome-derived signal reaches the features.
+
+## 2026-10-23 entry: early outcome prediction from agent prefixes (EarlyEval) and requirements-anchored oracle cascades (REAG)
+
+Search and reading date: 2026-10-23. Deduplicated by arXiv ID: neither source was previously entered
+(AgentForesight, 2605.08715, was already referenced and is not re-scored). Read: EarlyEval abstract and
+HTML method, split, metrics and limitations sections; REAG abstract and HTML text up to character
+100,000 of 120,491 (the final ~20k characters were not read). Also seen and not entered: Orchid
+(2604.21505) was already in the matrix; "Doomed from the Start" (hidden-state abort probes) was seen only
+through a mirror page and is not scored.
+
+| Reference / evidence | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Shi, Sun, Dong, Wan, Lo and Gu, [*EarlyEval: Cheaper Agent Evaluation via Early Outcome Prediction*](https://arxiv.org/abs/2609.02783), arXiv preprint cs.CL v1, 2 Sep 2026; no peer-reviewed venue listed; code linked | Can an agent run be stopped early by predicting its final outcome from the prefix? SWE-bench Verified, TerminalBench, Toolathlon; two LightGBM heads (success/failure) on ~400 behavioral, TF-IDF/SVD textual and (SWE-bench only) gold-patch-overlap features; Platt calibration; leave-one-agent-out. | Removes 13-26% of steps at 89-97% accuracy, resolve rate shifts 1-2 pp. No step-count or trajectory-length baseline, no PR-AUC; split grouping across repeated rollouts of one task is not stated; needs a labelled trajectory pool; scaffold shift hurts. Its target is cost saving on benchmark outcomes, not detection of a specific lost constraint. | Thesis: supports the plausibility of prefix-based early warning but is not evidence for H2 (different label, no project-level split). Experiment: the missing length baseline and undeclared repeat grouping are the same confounds B0 already controls (`operational__event_count`; project-level split with replications kept together); a regression test now pins split invariance to repeated project ids. Product: a cost-saving abort framing is a separate value proposition from diagnosing requirement loss. Context only; no protocol change. | 5 |
+| Wang, Arora, Xie, Liu, Tantithamthavorn, Aleti and Jiang, [*Requirements-Augmented Generation for Trustworthy Acceptance Testing of LLM-Based Software*](https://arxiv.org/abs/2608.12970) (REAG), arXiv preprint v1, Aug 2026; header lists ASE 2026 (DOI 10.1145/3832783.3834491), proceedings not verified | How can pass/fail oracles be generated from requirements and personas for context-dependent LLM software, and how reliable are the verdicts? One production nutrition app: 300+ artifacts, 46 personas, 346 scenarios; 246 calibration and 100 evaluation oracle-output pairs; six annotators, Fleiss kappa 0.76; three-judge cascade with conformal risk control and abstention. | Cascade reaches 98.8% selective agreement at 86% coverage versus 83-90% for single judges. Single industrial case; retrieval precision is the ceiling; judges can share correlated errors; Likert quality is not defect detection; it is unclear whether the headline number is on calibration or evaluation data, and whether an item's own label is excluded from its confidence. | Thesis: adjacent (requirements-anchored oracles), not a test of constraint loss. Experiment: abstention plus calibration-before-evaluation is a pattern relevant to the planned LLM-panel audit, but correlated judge errors reinforce keeping the executable oracle as primary outcome and the 20% human audit. Product: requirements-anchored verification is in the same space as the proposed verification product; not a validation of it. Context only. | 5 |
+
+**Decision needed from Dante (not applied):** whether the pre-registration should state that H2 reports
+a trajectory-length-only baseline next to B0 (B0 already contains `operational__event_count`), and
+that all replications of a project are kept in one split. The second statement is already enforced by
+`assign_project_splits`; only the wording in the protocol is a human decision.
