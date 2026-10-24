@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-20
+Last updated: 2026-10-24
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1153,13 +1153,14 @@ time alongside detection value; the literature does not establish ROI.
 
 ## 2026-10-24 — Annotation agreement requires identity and adjudication controls
 
-Search/read date: 2026-10-24. DOI/title deduplicated. Read the version-of-record
+Search/read date: 2026-10-24. Previously entered source, revisited. Read the version-of-record
 abstract and bibliographic record, the released corpus-processing and analysis
 workflow, reported results, and stated scope; no reproduction.
 
-| Reference / status | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
-| --- | --- | --- | --- | --- |
-| Klie, Eckart de Castilho and Gurevych, [Analyzing Dataset Annotation Quality Management in the Wild](https://doi.org/10.1162/coli_a_00516), Computational Linguistics 50(3):817–866, 2024; peer-reviewed, open access | Survey of recommended annotation-quality practices followed by structured annotation and analysis of 591 NLP dataset papers; 314 reported human annotation or validation. The released workflow prepares publications in INCEpTION and analyzes exported annotations. | Most examined work used good or excellent quality management, but the authors rated 30% as subpar and found recurring mistakes in agreement and annotation-error reporting. Limits for this project: published reporting may not equal executed practice; the corpus is NLP datasets rather than requirement interventions; its quality rubric and literature coverage involve researcher judgment. | Thesis: label reliability requires process evidence in addition to an agreement number. Experiment: enforce canonical reviewer identities, preserve per-field disagreements and retain adjudication records before corpus admission. Product: expose review provenance and unresolved disagreement rather than a single opaque quality score. Action: reject identifier aliases caused by surrounding whitespace; keep agreement descriptive and human adjudication mandatory. | 8/10: peer-reviewed journal study, large documented corpus and released analysis code; observational reporting study with indirect transfer to requirements experiments. |
+This is a revisit of Klie et al., DOI `10.1162/coli_a_00516`, already scored
+in the matrix above. It adds no source or credibility score. The implementation
+action below applies the existing annotation-quality rationale to identifier checks.
+
 
 **Project-specific incorporation.** Reviewer independence now fails closed on
 noncanonical reviewer, candidate and constraint identifiers. This prevents the
