@@ -353,6 +353,10 @@ and information-access audit, not automatic admission as a baseline.
 adjudication. It requires exact coverage of a separately frozen candidate
 inventory, at least two distinct reviewers per candidate, explicit dependency
 and non-target-preservation judgments, and rejects outcome/treatment fields.
+The v1 packet accepts only the declared typed review fields; unknown metadata
+and alternate outcome-field spellings are rejected rather than copied through.
+This structural check cannot establish that free-text evidence is outcome-blind
+or that distinct reviewer identifiers represent independent people.
 It does not admit candidates automatically and always marks the packet as
 non-confirmatory until human adjudication and rubric approval.
 The packet also reports agreement separately for removed span, target

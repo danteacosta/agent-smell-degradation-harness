@@ -63,6 +63,34 @@ def test_rejects_outcome_and_treatment_leakage(field):
 
 
 @pytest.mark.parametrize(
+    "extra",
+    [
+        {"metadata": {"reward": 1, "arm": "C"}},
+        {"oracleVerdict": "pass"},
+        {"Reward": 1},
+        {"provider_id": "example"},
+        {"unreviewed_note": "extra"},
+    ],
+)
+def test_rejects_fields_outside_the_outcome_blind_review_schema(extra):
+    leaked = {**review(), **extra}
+    with pytest.raises(ValueError, match="unknown review fields"):
+        prepare_manipulation_admission(
+            [leaked, review(reviewer="r-2")], expected_candidate_ids=["c-1"]
+        )
+
+
+@pytest.mark.parametrize("decision", [[], {}, None, True])
+def test_rejects_non_string_decisions_with_a_validation_error(decision):
+    malformed = review()
+    malformed["decision"] = decision
+    with pytest.raises(ValueError, match="invalid review decision"):
+        prepare_manipulation_admission(
+            [malformed, review(reviewer="r-2")], expected_candidate_ids=["c-1"]
+        )
+
+
+@pytest.mark.parametrize(
     "field,value",
     [
         ("removed_span", ""),

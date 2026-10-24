@@ -94,6 +94,9 @@ def prepare_manipulation_admission(
         leaked = FORBIDDEN.intersection(review)
         if leaked:
             raise ValueError(f"outcome or treatment fields forbidden: {sorted(leaked)}")
+        unknown = set(review) - set(REQUIRED)
+        if unknown:
+            raise ValueError(f"unknown review fields: {sorted(map(str, unknown))}")
         missing = [field for field in REQUIRED if field not in review]
         if missing:
             raise ValueError(f"missing review fields: {missing}")
@@ -104,7 +107,7 @@ def prepare_manipulation_admission(
                 raise ValueError(f"non-empty {field} required")
         if review["candidate_id"] not in grouped:
             raise ValueError("review candidate is outside expected inventory")
-        if review["decision"] not in DECISIONS:
+        if not isinstance(review["decision"], str) or review["decision"] not in DECISIONS:
             raise ValueError("invalid review decision")
         if not isinstance(review["dependent_constraint_ids"], list) or any(
             not isinstance(value, str) or not value.strip()

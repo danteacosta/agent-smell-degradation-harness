@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-19
+Last updated: 2026-10-20
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1166,3 +1166,27 @@ noncanonical reviewer, candidate and constraint identifiers. This prevents the
 same logical reviewer or constraint from appearing distinct because of surrounding
 whitespace. Agreement remains reported per field and cannot establish label
 correctness or confirmatory eligibility by itself.
+
+## 2026-10-20 — Behavioral labelling of information-removal variants (LHAW)
+
+Search/read date: 2026-10-20. Deduplicated by arXiv ID and title: not previously entered. Read: the
+arXiv abstract page and the v2 HTML covering the variant definition (Definition 3.1), trial design,
+per-benchmark results and stated limitations (the last ~40k characters of the HTML were not read).
+Also surfaced and **not entered, not scored**: tau^tau-Bench (2609.04611; abstract only, agent
+construction task, adjacent), *Uncovering Systematic Failures of LLMs in Verifying Code Against
+Natural Language Specifications* (2508.12358; snippet only), RealBench (2604.22659; snippet only).
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Pu, Lee, Sehwag et al., [*LHAW: Controllable Underspecification for Long-Horizon Tasks*](https://arxiv.org/abs/2602.10525), arXiv preprint v2 (cs.CL, 20 Mar 2026); no peer-reviewed venue listed | Can well-specified agent tasks be turned into controllably underspecified ones, and can the effect be measured by behaviour instead of an LLM's guess of ambiguity? Information is removed along Goals/Constraints/Inputs/Context at configurable severity from TheAgentCompany, SWE-Bench Pro and MCP-Atlas; each variant gets 3 trials and is labelled outcome-critical (never succeeds), divergent (sometimes succeeds, terminal states vary) or benign (always succeeds, one terminal state); consistent-failure "new task" variants are dropped after an LLM-judge check. 285 released variants. | Pass@3 falls, e.g. MCP-Atlas 0.96 to 0.44 (0.73 with an ask-user tool) and SWE-Bench Pro 0.91 to 0.73; failures concentrate in outcome-critical variants. Vaguification yielded the most outcome-critical candidates (173/233 on TAC) and deletion more benign/divergent ones. Limits stated by the authors: prompt-level only, agents may recover information from the environment (labelled benign), no conflict/ambiguity, no cost model, no human-curated validation. Pass@3 and one environment per benchmark; not requirement-level browser oracles. | **Thesis:** independent support for labelling a removal by observed outcome rather than by smell type; the benign/divergent/outcome-critical split parallels recovered/mixed/lost in H1b. It is adjacent, not the same intervention (task prompts, not requirement documents with a rewrite control B). **Experiment:** (i) a "new task" screen is a candidate manipulation check, because an A-vs-C difference can reflect a different valid task rather than a loss; (ii) a 3-trial repeat per version fits the planned repetitions, but H1 aggregates within requirement instead of using pass@k. **Product:** supports separating "agent recovered the omission" from "agent silently diverged". **Action:** no protocol change made; decision proposal below. | 6 / 10: transparent method and public variants but preprint, pass@3 over a few models, no human validation. |
+
+**Decision needed from Dante (not applied):** whether to add to the pre-registration a manipulation
+check that flags C versions whose observed outputs are consistently different-but-valid (the LHAW
+"new task" case) as a separate stratum, rather than counting them as target-rule violations. Today the
+LLM-panel and 20% human audit only check that C removes the target and B preserves meaning.
+
+**Implementation change linked to the previous (Huang) tension:** `feature_plane/deployable.py` now rejects
+`oracle_verdict`, `oracle_result`, `oracle_status` and `oracle_outcome` as keys in pre-final attributes
+(previously only the `oracle_verdict` *event name* and `oracle`/`oracle_passed` keys were blocked), with a
+parametrized test. This closes part of the B0/B3 oracle-verdict feature-leakage check requested above; it is
+a guard, not proof that no other outcome-derived signal reaches the features.
