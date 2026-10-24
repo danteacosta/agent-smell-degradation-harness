@@ -1145,3 +1145,23 @@ through a mirror page and is not scored.
 a trajectory-length-only baseline next to B0 (B0 already contains `operational__event_count`), and
 that all replications of a project are kept in one split. The second statement is already enforced by
 `assign_project_splits`; only the wording in the protocol is a human decision.
+
+## 2026-10-24 entry: trajectory-structure diagnostics (TraceProbe) and trajectory tamper localisation (TrajMark)
+
+Search and reading date: 2026-10-24. Deduplicated by arXiv ID; neither source was previously entered.
+Read: arXiv abstract pages only (the TraceProbe PDF did not extract; no full text of either paper was read),
+so nothing below exceeds what the abstracts state. Also seen and not entered: TRACES (2605.27690) and
+Wink (2602.17037), safety/misbehaviour-recovery framing, not read.
+
+| Reference / evidence | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Shu, Chong, Zhou, Peng, Wu, Han, Zhuang, Yuan and Wang, [*What Resolve Rate Hides: Trajectory Structure Diagnostics for Coding Agents*](https://arxiv.org/abs/2607.06184) (TraceProbe), arXiv preprint cs.SE v1, 7 Jul 2026; no peer-reviewed venue listed (abstract read) | Why does a run fail, beyond pass/fail? 2,500 SWE-Bench Verified trajectories from five production settings; nine-type action taxonomy with deterministic effect labels; rule-based Insight (anti-patterns such as search loops, skipped verification) and Converge (pairwise run alignment). | File choice is too coarse to separate success from failure; function selection and completion behaviour are more informative; anti-patterns act mainly as corpus-level difficulty signals. Limitations not stated in the abstract; issue-resolution setting, no requirement-loss label, no predictive evaluation reported. | **Thesis:** none beyond context. **Experiment:** structural action features are a plausible B0 operational comparator and, like trajectory length, can track task difficulty rather than lost conditions; keep B3's gain measured against B0 within matched A/C pairs. **Product:** supports "diagnostic context that points to inspection targets" as a workflow, which differs from explaining which constraint was lost. Context only; no protocol change. | 4/10: unreviewed preprint, large public-trace sample, but abstract-only read and a different construct. |
+| Zeng, Gao, Li, Feng and Jiang, [*TrajMark: Ownership Attribution and Segment-Level Tamper Localization for Coding-Agent Trajectories*](https://arxiv.org/abs/2609.10416), arXiv preprint cs.CR/cs.SE v1, 9 Sep 2026; no peer-reviewed venue listed (abstract read) | Can a released coding-agent trajectory carry verifiable ownership and localise local edits? Training-free symmetric-key watermark; owner layer rewrites a keyed subset of READ actions; linked seals commit to protected segments. | Exact owner recovery on clean full-watermark batches (three frameworks, three LLMs); 95.5-100% of single-site edits detected; localisation to a protocol region, not an action; Pass@1 26.9% vs 26.3%. Collision/overhead partly design-level; symmetric key held by the deployer. | **Thesis:** none. **Experiment:** reinforces the existing boundary that structural verification of a trace is not independence from the agent's write domain; H2 still needs capture or a receipt outside that domain, and the watermark would alter READ actions, which must not enter feature extraction. **Product:** a possible later integrity layer for audit trails; not evidence about requirement loss. Context only. | 4/10: unreviewed preprint with reported detection rates, abstract-only read, different problem. |
+
+**Incorporation made (code, not a claim from either source):** the existing trace-integrity and
+leakage-boundary entries already cover this ground, so no protocol text changes. The same review
+exposed a gap in the deployable-feature leakage guard: terminal keys were matched by exact lowercase
+only, so `semanticLabel`, `Final-Artifact` or `OracleSpec` in a pre-final trace passed. Keys are now
+folded across camelCase, kebab-case, spaces and case before comparison
+(`feature_plane/deployable.py`), with a regression test that fails without the fix. The guard still
+cannot prove that no other outcome-derived signal reaches B0/B3.
