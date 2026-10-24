@@ -323,3 +323,43 @@ partition after independent training labels become available; then seal those
 weights before calibration/test scoring. Freeze thresholds on calibration
 only. Do not require fitted weights before collecting the data needed to fit
 them, and do not fit on held-out outcomes to fill that gap.
+
+## Proposed manipulation-admission check: dependent omissions (2026-10-20)
+
+For the next prospective source review, record for each candidate deletion:
+
+1. The exact removed span and target `constraint_id`.
+2. Whether another clause depends on that span, becomes dangling, or changes scope.
+3. Whether retaining the rest leaves a plausible specification and preserves all
+   non-target obligations; record surviving cues separately from dependencies.
+4. Independent reviewers' judgments and an adjudicated admission/exclusion reason.
+
+If a realistic deletion requires removing another independently testable
+obligation, do not admit it as a single-condition intervention. Retain it in
+the candidate/exclusion log or propose a separately designed compound treatment.
+Do not rewrite the remaining text merely to rescue the candidate, or use generated
+failures to decide admission. An exact byte-span deletion check cannot certify
+these semantic properties.
+
+Rationale: [Arora et al. (EMSE 2019)](https://doi.org/10.1007/s10664-019-09693-x)
+explicitly model dependencies among removable segments. Our checklist is a
+prospective design proposal, not their detector or a retrospective label change.
+The matrix records the evidence limits. Approval is still required before adding
+fields to a frozen rubric; B0/B3, H1/H2 and existing candidate materials remain
+unchanged. A conceptual-domain-coverage comparator would require its own design
+and information-access audit, not automatic admission as a baseline.
+
+`eval/manipulation_admission.py` now prepares this review gate for human
+adjudication. It requires exact coverage of a separately frozen candidate
+inventory, at least two distinct reviewers per candidate, explicit dependency
+and non-target-preservation judgments, and rejects outcome/treatment fields.
+The v1 packet accepts only the declared typed review fields; unknown metadata
+and alternate outcome-field spellings are rejected rather than copied through.
+This structural check cannot establish that free-text evidence is outcome-blind
+or that distinct reviewer identifiers represent independent people.
+It does not admit candidates automatically and always marks the packet as
+non-confirmatory until human adjudication and rubric approval.
+The packet also reports agreement separately for removed span, target
+`constraint_id`, dependency set, non-target preservation, remainder plausibility
+and recommendation. Any disagreement or blocking judgment sets
+`requires_adjudication`; reviewer disagreement is retained rather than collapsed.
