@@ -197,3 +197,33 @@ def test_context_metrics_are_available_only_at_t3(tmp_path: Path):
     assert at_t3["operational"]["context_size_before_bytes"] == 100
     assert at_t3["operational"]["context_size_after_bytes"] == 60
     assert at_t3["operational"]["context_size_reduction_bytes"] == 40
+
+
+@pytest.mark.parametrize(
+    ("key", "reported"),
+    [
+        ("semanticLabel", "semanticLabel"),
+        ("Final-Artifact", "Final-Artifact"),
+        ("Semantic Label", "Semantic Label"),
+        ("MUTATION_SCORE", "MUTATION_SCORE"),
+        ("OracleSpec", "OracleSpec"),
+    ],
+)
+def test_terminal_keys_are_matched_across_casing_conventions(tmp_path: Path, key: str, reported: str):
+    path = tmp_path / "trace.jsonl"
+    path.write_text(
+        json.dumps({
+            "event_type": "interpretation.completed",
+            "attributes": {"constraints": ["x"], "nested": [{key: "leak"}]},
+        }) + "\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="terminal field"):
+        extract_deployable_features(
+            DeployableFeatureInput("I-1", "acceptance_criteria", "x"), path, cutoff="T3"
+        )
+
+
+def test_benign_camel_case_keys_are_not_rejected(tmp_path: Path):
+    path = _trace(tmp_path / "trace.jsonl", unresolved=[], revisions=0)
+    extract_deployable_features(DeployableFeatureInput("I-1", "acceptance_criteria", "x"), path, cutoff="T3")
