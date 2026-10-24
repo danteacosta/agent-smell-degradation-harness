@@ -1083,3 +1083,86 @@ descriptive baseline next to the paired contrast, so a reader does not infer tha
 caused by the omission.
 
 Source verification (2026-10-19): the [Korn v1 results and discussion](https://arxiv.org/html/2606.25550v1) distinguish initial inter-rater agreement from adjudicated labels; the [Huang v1 evaluation](https://arxiv.org/html/2610.04710v1) treats shared-label overlap as correlated evidence; [E2EDevBench v1 Table 5](https://arxiv.org/html/2511.04064v1) separates all planning causes from the omission subgroup. The inferences above remain proposals.
+
+## 2026-10-20 — Dependency-aware omissions and limits of conceptual coverage
+
+Search/read date: 2026-10-20. DOI/title deduplicated. Read publisher abstract,
+method (Sections 3.1–3.4), results and threats (Sections 4–5); no reproduction.
+
+| Reference / evidence | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | --- |
+| Arora, Sabetzadeh and Briand, [An empirical study on the potential usefulness of domain models for completeness checking of requirements](https://doi.org/10.1007/s10664-019-09693-x), EMSE 24:2509–2539, 2019; peer-reviewed | Three industrial domains; 35 requirements per domain, eight experts; UML trace links and 100 randomized omission simulations. | Conceptual coverage was more sensitive to whole-requirement than segment omissions. Not observed analyst detection; ideal modeling, tacit concepts and semantic dependencies limit transfer. | Thesis: external completeness precedent, not downstream H1/H2. Experiment: add dependency review to prospective manipulation admission. Product: concept coverage cannot establish behavioral obligation coverage. | 8/10: reviewed industrial design and explicit threats; small, expert-intensive simulation rather than field effectiveness. |
+
+**Project-specific decision proposal.** Review dependencies before admitting a
+single-condition intervention; record exclusions without inspecting generated
+outcomes. Do not replace B0/B3 or add a domain model to detector inputs silently.
+See the temporal protocol's proposed admission checklist. Human approval remains
+required; no existing corpus, labels or endpoint changed.
+
+
+## 2026-10-21 — Defect class and context determine downstream test impact
+
+Search/read date: 2026-10-21. Title deduplicated. Read the full arXiv text,
+including survey design/results, controlled experiment, results and threats.
+
+| Reference / status | Question, sample, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | --- |
+| Mund, Femmer, Méndez Fernández and Eckhardt, [Does Quality of Requirements Specifications matter? Combined Results of Two Empirical Studies](https://arxiv.org/abs/1702.07656), 2017 technical report / preprint of two empirical studies | Survey at one multinational company (42 relevant complete responses) plus a randomized controlled experiment with 41 advanced students deriving tests from three industrial use cases; injected incorrect statements and meaning-preserving negative rewrites. | Incorrect statements substantially changed test correctness; negative rewrites did not significantly change correctness or omission, though omission rose descriptively. Domain briefing did not recover a subtle incorrect statement. Limits: one company, student experiment, few defects/use cases and low power for subgroups. | Thesis: downstream harm cannot be inferred from a generic smell label. Experiment: select and admit manipulations by verified semantic loss, preserve the meaning-equivalent rewrite control, and stratify/report by defect class without treating strata as independent projects. Product: prioritize obligations and contexts where downstream users rely on written artifacts. Action: keep H1/H2 unchanged; use the executable admission packet below. | 7/10: transparent paired empirical program, industrial artifact and strong partial re-rating agreement; narrow treatments, student sample and preprint status limit generalization. |
+
+**Project-specific incorporation.** The new manipulation-admission packet checks
+frozen candidate coverage, two distinct reviewers, dependencies and preservation
+of non-target obligations before human adjudication. It rejects treatment/outcome
+fields and does not label candidates automatically. This operationalizes a design
+gate; it does not make the cited study evidence for LLM behavior or H1/H2.
+
+
+## 2026-10-22 — Requirements-test gaps require contextual adjudication
+
+Search/read date: 2026-10-22. DOI/title deduplicated. Read the open-access
+version of record: abstract, method/design, case data collection, findings,
+validity scope and conclusions.
+
+| Reference / status | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | --- |
+| Bjarnason, Sharp and Regnell, [Improving requirements-test alignment by prescribing practices that mitigate communication gaps](https://doi.org/10.1007/s10664-019-09698-6), EMSE 24:2364–2409, 2019; peer-reviewed, open access | Design-science construction of Gap Finder grounded in evidence from five companies; formative mixed-method case study in one ongoing agile project using interviews, observations, a workshop and survey. | Relevant communication gaps were detected; seven of nine prescribed practices were judged practically relevant. Cross-artefact review is proposed to reduce semantic/cognitive distance. Formative, evolving design; one small-to-medium co-located case, perceived relevance rather than measured defect reduction or causal effectiveness. | Thesis: supports treating requirement-test alignment as contextual and reviewable, not as proof of H1/H2. Experiment: retain reviewer disagreement by field and route it to adjudication rather than averaging it away. Product: cross-artefact obligation review is a plausible workflow, but willingness to pay and field effectiveness remain unmeasured. Action: add disagreement summaries to the admission packet. | 8/10: peer-reviewed open study with transparent grounding and rich industrial observation; single formative case and subjective outcome limit causal claims. |
+
+**Project-specific incorporation.** `prepare_manipulation_admission` now exposes
+agreement for the removed span, target constraint, dependencies, preservation,
+remainder plausibility and decision. Any disagreement or blocking judgment is
+flagged for human adjudication. The function still makes no semantic label or
+confirmatory admission decision.
+
+
+## 2026-10-23 — Upstream provenance is evidence, not outcome truth
+
+Search/read date: 2026-10-23. DOI/title deduplicated. Read the open-access
+version of record: abstract, review protocol, synthesis, evaluation coverage,
+threats and conclusions.
+
+| Reference / status | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | --- |
+| Mucha, Kaufmann and Riehle, [A systematic literature review of pre-requirements specification traceability](https://doi.org/10.1007/s00766-023-00412-z), Requirements Engineering 29:119–141, 2024; peer-reviewed, open access | SLR of 77 peer-reviewed papers from 1992–2022; qualitative coding of use cases, problems, solutions and techniques linking requirements to source artifacts. | Source/context recovery and change management are recurrent uses, but people/effort problems dominate; only 25 of 45 identified techniques had an evaluation and five had an elaborate evaluation. Search terminology, mixed traceability constructs, the 2022 cutoff and exclusion of agile user-story tracing constrain coverage. | Thesis: T1–T3 provenance can be useful context but is not a semantic label or evidence that a condition was preserved. Experiment: keep upstream links in the feature plane, preserve source identity and evaluate H2 on held-out projects. Product: capture burden and ROI must be measured rather than assumed. Action: no hypothesis change; keep human adjudication and report provenance availability separately from detector performance. | 8/10: peer-reviewed systematic review with a documented protocol and broad corpus; heterogeneous primary evidence and limited elaborate evaluations prevent causal effectiveness claims. |
+
+**Project-specific incorporation.** The review sharpens an existing boundary:
+provenance availability is a feature-plane property, while omission validity and
+terminal behavior remain label-plane judgments. The admission packet therefore
+continues to reject outcome/treatment fields and cannot promote a trace link to a
+confirmatory label. A future product pilot must measure capture effort and review
+time alongside detection value; the literature does not establish ROI.
+
+
+## 2026-10-24 — Annotation agreement requires identity and adjudication controls
+
+Search/read date: 2026-10-24. DOI/title deduplicated. Read the version-of-record
+abstract and bibliographic record, the released corpus-processing and analysis
+workflow, reported results, and stated scope; no reproduction.
+
+| Reference / status | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | --- |
+| Klie, Eckart de Castilho and Gurevych, [Analyzing Dataset Annotation Quality Management in the Wild](https://doi.org/10.1162/coli_a_00516), Computational Linguistics 50(3):817–866, 2024; peer-reviewed, open access | Survey of recommended annotation-quality practices followed by structured annotation and analysis of 591 NLP dataset papers; 314 reported human annotation or validation. The released workflow prepares publications in INCEpTION and analyzes exported annotations. | Most examined work used good or excellent quality management, but the authors rated 30% as subpar and found recurring mistakes in agreement and annotation-error reporting. Limits for this project: published reporting may not equal executed practice; the corpus is NLP datasets rather than requirement interventions; its quality rubric and literature coverage involve researcher judgment. | Thesis: label reliability requires process evidence in addition to an agreement number. Experiment: enforce canonical reviewer identities, preserve per-field disagreements and retain adjudication records before corpus admission. Product: expose review provenance and unresolved disagreement rather than a single opaque quality score. Action: reject identifier aliases caused by surrounding whitespace; keep agreement descriptive and human adjudication mandatory. | 8/10: peer-reviewed journal study, large documented corpus and released analysis code; observational reporting study with indirect transfer to requirements experiments. |
+
+**Project-specific incorporation.** Reviewer independence now fails closed on
+noncanonical reviewer, candidate and constraint identifiers. This prevents the
+same logical reviewer or constraint from appearing distinct because of surrounding
+whitespace. Agreement remains reported per field and cannot establish label
+correctness or confirmatory eligibility by itself.
