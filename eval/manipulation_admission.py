@@ -36,6 +36,13 @@ AGREEMENT_FIELDS = (
 )
 
 
+def _require_identifier(value: object, field: str) -> None:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"non-empty {field} required")
+    if value != value.strip():
+        raise ValueError(f"{field} must not have surrounding whitespace")
+
+
 def _candidate_summary(candidate_id: str, reviews: list[dict]) -> dict:
     agreement = {}
     for field in AGREEMENT_FIELDS:
@@ -72,8 +79,8 @@ def prepare_manipulation_admission(
     """
     if not isinstance(expected_candidate_ids, list) or not expected_candidate_ids:
         raise ValueError("non-empty expected candidate inventory required")
-    if any(not isinstance(value, str) or not value.strip() for value in expected_candidate_ids):
-        raise ValueError("non-empty expected candidate ids required")
+    for value in expected_candidate_ids:
+        _require_identifier(value, "expected candidate id")
     if len(set(expected_candidate_ids)) != len(expected_candidate_ids):
         raise ValueError("duplicate expected candidate id")
     if not isinstance(reviews, list) or not reviews:
@@ -90,7 +97,9 @@ def prepare_manipulation_admission(
         missing = [field for field in REQUIRED if field not in review]
         if missing:
             raise ValueError(f"missing review fields: {missing}")
-        for field in ("candidate_id", "reviewer_id", "removed_span", "target_constraint_id", "reason"):
+        for field in ("candidate_id", "reviewer_id", "target_constraint_id"):
+            _require_identifier(review[field], field)
+        for field in ("removed_span", "reason"):
             if not isinstance(review[field], str) or not review[field].strip():
                 raise ValueError(f"non-empty {field} required")
         if review["candidate_id"] not in grouped:
@@ -102,6 +111,8 @@ def prepare_manipulation_admission(
             for value in review["dependent_constraint_ids"]
         ):
             raise ValueError("dependent_constraint_ids must be a list of non-empty strings")
+        for value in review["dependent_constraint_ids"]:
+            _require_identifier(value, "dependent constraint id")
         if len(set(review["dependent_constraint_ids"])) != len(review["dependent_constraint_ids"]):
             raise ValueError("duplicate dependent constraint id")
         for field in ("non_target_obligations_preserved", "plausible_remainder"):
