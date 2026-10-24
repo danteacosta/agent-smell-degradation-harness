@@ -1115,6 +1115,24 @@ Added in the same run: `tests/test_literature_matrix_integrity.py` fails if one 
 scored in two rows, so future runs cannot silently re-enter a source (abstract-only rows
 in the pending table carry no score and are exempt).
 
+## 2026-10-22 entry: trajectory length as an H2 baseline confound
+
+Search and reading date: 2026-10-22. Read: abstract and listing metadata of arXiv 2511.00197 only; the
+full text (task-difficulty controls, per-agent numbers, limitations) was not read, so nothing below
+exceeds what the abstract states. Also seen and not entered: RealBench (arXiv 2604.22659, repo-level
+benchmark reporting missing required functions; abstract-level only, context), and ADE-PRF (alphaXiv
+2607.07689, single-author production-health forecasting; vendor-style, product context only).
+
+### Pending full-text reading, outside the canonical matrix
+
+| Candidate and primary version | Authors | Reading status |
+| --- | --- | --- |
+| [Understanding Code Agent Behaviour: An Empirical Study of Success and Failure Trajectories](https://arxiv.org/abs/2511.00197) | Majgaonkar, Fei, Li, Sarro and Ye | Abstract and listing metadata only. Methods, results and limitations await full-text review; no credibility score or evidentiary recommendation. |
+
+The B3 = B0 + provenance regression below is an implementation invariant,
+independent of this pending source. B0 retains `operational__event_count`, and
+B3 must preserve every B0 value while adding only provenance columns. This does
+not approve a new scientific baseline or protocol change.
 ## 2026-10-21 — Defect class and context determine downstream test impact
 
 Search/read date: 2026-10-21. Title deduplicated. Read the full arXiv text,

@@ -297,6 +297,21 @@ def test_confirmatory_h2_fits_bound_raw_features_and_never_uses_oracle_label(tmp
     )
 
 
+def test_b3_is_b0_plus_provenance_only_and_b0_keeps_trace_length_baseline(tmp_path: Path):
+    episodes = _episodes()
+    for row in episodes:
+        row.pop("h2_scores", None)
+    feature_manifest = _feature_manifest(episodes, tmp_path)
+    b0 = _nested_model_features(episodes, feature_manifest, "B0")
+    b3 = _nested_model_features(episodes, feature_manifest, "B3")
+    assert all("operational__event_count" in row for row in b0)
+    for base_row, full_row in zip(b0, b3):
+        assert not any(key.startswith("provenance__") for key in base_row)
+        added = set(full_row) - set(base_row)
+        assert added and all(key.startswith("provenance__") for key in added)
+        assert {key: full_row[key] for key in base_row} == base_row
+
+
 def test_confirmatory_h2_rejects_precomputed_scores_in_v3(tmp_path: Path):
     episodes = _episodes()
     for row in episodes:
