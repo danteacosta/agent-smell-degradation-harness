@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-22
+Last updated: 2026-10-24
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1123,9 +1123,16 @@ exceeds what the abstract states. Also seen and not entered: RealBench (arXiv 26
 benchmark reporting missing required functions; abstract-level only, context), and ADE-PRF (alphaXiv
 2607.07689, single-author production-health forecasting; vendor-style, product context only).
 
-| Reference / evidence | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
-| --- | --- | --- | --- | ---: |
-| Majgaonkar, Fei, Li, Sarro and Ye, [*Understanding Code Agent Behaviour: An Empirical Study of Success and Failure Trajectories*](https://arxiv.org/abs/2511.00197), arXiv preprint cs.SE v1, 2025-10-31; no peer-reviewed venue listed (abstract read) | How do successful and failed code-agent trajectories differ? SWE-Bench traces from OpenHands, SWE-agent and Prometheus; strategies, trajectory length/variance, fault localisation. | Failed trajectories are consistently longer with higher variance; failure patterns differ by agent; trajectories located the problematic files in 72-81% of cases, failures included. Task-difficulty control and limitations not verified (abstract only); issue-resolution, not requirement-omission, setting. | **Thesis:** none beyond context. **Experiment:** trace length is a plausible non-semantic predictor of failure, so the B3-vs-B0 gain in H2 must not come from length. B0 already carries `operational__event_count` computed on the same pre-final trace; added `test_b3_is_b0_plus_provenance_only_and_b0_keeps_trace_length_baseline` to pin that B3 = B0 + provenance-only columns with B0 values unchanged. No protocol or hypothesis change. **Product:** length-based alerts are a cheap competitor to semantic loss explanation; keep as a named baseline. | 5/10: preprint, public traces and a clear question, but unreviewed, abstract-only read, different task. |
+### Pending full-text reading, outside the canonical matrix
+
+| Candidate and primary version | Authors | Reading status |
+| --- | --- | --- |
+| [Understanding Code Agent Behaviour: An Empirical Study of Success and Failure Trajectories](https://arxiv.org/abs/2511.00197) | Majgaonkar, Fei, Li, Sarro and Ye | Abstract and listing metadata only. Methods, results and limitations await full-text review; no credibility score or evidentiary recommendation. |
+
+The B3 = B0 + provenance regression below is an implementation invariant,
+independent of this pending source. B0 retains `operational__event_count`, and
+B3 must preserve every B0 value while adding only provenance columns. This does
+not approve a new scientific baseline or protocol change.
 
 ## 2026-10-23 entry: early outcome prediction from agent prefixes (EarlyEval) and requirements-anchored oracle cascades (REAG)
 
@@ -1150,18 +1157,20 @@ that all replications of a project are kept in one split. The second statement i
 
 Search and reading date: 2026-10-24. Deduplicated by arXiv ID; neither source was previously entered.
 Read: arXiv abstract pages only (the TraceProbe PDF did not extract; no full text of either paper was read),
-so nothing below exceeds what the abstracts state. Also seen and not entered: TRACES (2605.27690) and
-Wink (2602.17037), safety/misbehaviour-recovery framing, not read.
+so nothing below exceeds what the abstracts state. Also resurfaced: TRACES (2605.27690) and Wink (2602.17037), already
+referenced elsewhere in this matrix; not re-read or re-scored in this search.
 
-| Reference / evidence | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
-| --- | --- | --- | --- | ---: |
-| Shu, Chong, Zhou, Peng, Wu, Han, Zhuang, Yuan and Wang, [*What Resolve Rate Hides: Trajectory Structure Diagnostics for Coding Agents*](https://arxiv.org/abs/2607.06184) (TraceProbe), arXiv preprint cs.SE v1, 7 Jul 2026; no peer-reviewed venue listed (abstract read) | Why does a run fail, beyond pass/fail? 2,500 SWE-Bench Verified trajectories from five production settings; nine-type action taxonomy with deterministic effect labels; rule-based Insight (anti-patterns such as search loops, skipped verification) and Converge (pairwise run alignment). | File choice is too coarse to separate success from failure; function selection and completion behaviour are more informative; anti-patterns act mainly as corpus-level difficulty signals. Limitations not stated in the abstract; issue-resolution setting, no requirement-loss label, no predictive evaluation reported. | **Thesis:** none beyond context. **Experiment:** structural action features are a plausible B0 operational comparator and, like trajectory length, can track task difficulty rather than lost conditions; keep B3's gain measured against B0 within matched A/C pairs. **Product:** supports "diagnostic context that points to inspection targets" as a workflow, which differs from explaining which constraint was lost. Context only; no protocol change. | 4/10: unreviewed preprint, large public-trace sample, but abstract-only read and a different construct. |
-| Zeng, Gao, Li, Feng and Jiang, [*TrajMark: Ownership Attribution and Segment-Level Tamper Localization for Coding-Agent Trajectories*](https://arxiv.org/abs/2609.10416), arXiv preprint cs.CR/cs.SE v1, 9 Sep 2026; no peer-reviewed venue listed (abstract read) | Can a released coding-agent trajectory carry verifiable ownership and localise local edits? Training-free symmetric-key watermark; owner layer rewrites a keyed subset of READ actions; linked seals commit to protected segments. | Exact owner recovery on clean full-watermark batches (three frameworks, three LLMs); 95.5-100% of single-site edits detected; localisation to a protocol region, not an action; Pass@1 26.9% vs 26.3%. Collision/overhead partly design-level; symmetric key held by the deployer. | **Thesis:** none. **Experiment:** reinforces the existing boundary that structural verification of a trace is not independence from the agent's write domain; H2 still needs capture or a receipt outside that domain, and the watermark would alter READ actions, which must not enter feature extraction. **Product:** a possible later integrity layer for audit trails; not evidence about requirement loss. Context only. | 4/10: unreviewed preprint with reported detection rates, abstract-only read, different problem. |
+### Pending full-text reading, outside the canonical matrix
+
+| Candidate and primary version | Authors | Reading status |
+| --- | --- | --- |
+| [What Resolve Rate Hides: Trajectory Structure Diagnostics for Coding Agents](https://arxiv.org/abs/2607.06184) (TraceProbe) | Shu et al. | Abstract only. Methods, results and limitations await full-text review; no credibility score or evidentiary recommendation. |
+| [TrajMark: Ownership Attribution and Segment-Level Tamper Localization for Coding-Agent Trajectories](https://arxiv.org/abs/2609.10416) | Zeng et al. | Abstract only. Methods, results and limitations await full-text review; no credibility score or evidentiary recommendation. |
 
 **Incorporation made (code, not a claim from either source):** the existing trace-integrity and
 leakage-boundary entries already cover this ground, so no protocol text changes. The same review
 exposed a gap in the deployable-feature leakage guard: terminal keys were matched by exact lowercase
 only, so `semanticLabel`, `Final-Artifact` or `OracleSpec` in a pre-final trace passed. Keys are now
-folded across camelCase, kebab-case, spaces and case before comparison
+folded across camelCase, acronym boundaries, kebab-case, spaces and case before comparison
 (`feature_plane/deployable.py`), with a regression test that fails without the fix. The guard still
 cannot prove that no other outcome-derived signal reaches B0/B3.

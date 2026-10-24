@@ -22,6 +22,10 @@ _TERMINAL_KEYS = frozenset(
         "oracle",
         "oracle_spec",
         "oracle_passed",
+        "oracle_verdict",
+        "oracle_result",
+        "oracle_status",
+        "oracle_outcome",
         "terminal",
         "terminal_validation",
         "label",
@@ -68,13 +72,15 @@ _CUTOFF_ORDER = {
 
 
 _CAMEL_BOUNDARY = re.compile(r"(?<=[a-z0-9])(?=[A-Z])")
+_ACRONYM_BOUNDARY = re.compile(r"([A-Z]+)([A-Z][a-z])")
 _KEY_SEPARATORS = re.compile(r"[^a-z0-9]+")
 
 
 def _normalize_key(key: Any) -> str:
     """Fold camelCase, kebab-case, spaces and case to snake_case."""
 
-    return _KEY_SEPARATORS.sub("_", _CAMEL_BOUNDARY.sub("_", str(key)).lower()).strip("_")
+    words = _ACRONYM_BOUNDARY.sub(r"\1_\2", str(key))
+    return _KEY_SEPARATORS.sub("_", _CAMEL_BOUNDARY.sub("_", words).lower()).strip("_")
 
 
 def _contains_terminal_key(value: Any) -> str | None:

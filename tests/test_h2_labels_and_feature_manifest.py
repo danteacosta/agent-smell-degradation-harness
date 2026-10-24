@@ -298,12 +298,6 @@ def test_confirmatory_h2_fits_bound_raw_features_and_never_uses_oracle_label(tmp
 
 
 def test_b3_is_b0_plus_provenance_only_and_b0_keeps_trace_length_baseline(tmp_path: Path):
-    """The B3-B0 contrast must isolate provenance and not trace-length differences.
-
-    Failed coding-agent trajectories are reported to be longer than successful
-    ones (Majgaonkar et al., arXiv:2511.00197, preprint), so a length proxy has
-    to sit in the B0 baseline and be identical in B3.
-    """
     episodes = _episodes()
     for row in episodes:
         row.pop("h2_scores", None)
