@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-21
+Last updated: 2026-10-24
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1112,5 +1112,97 @@ of the HTML (including the full threats section) were not read.
 | Wu and Fard, [*Benchmarking the Communication Competence of Code Generation for LLMs and LLM Agent*](https://arxiv.org/abs/2406.00215) (HumanEvalComm), ACM TOSEM, January 2025; peer-reviewed (arXiv v3 read) | Do code LLMs ask clarifying questions when a description is inconsistent, ambiguous or incomplete? All 164 HumanEval problems modified into 762 descriptions in six variants; one engineer modified, a second reviewed. Five code LLMs (7B–13B plus gpt-3.5-turbo) and a multi-round agent (Okanagan). Metrics: Communication Rate (response without code), Good Question Rate (GPT-3.5 judge), Pass@1. | More than 60% of responses still produced code; Pass@1 on modified problems fell 35–52% relative; incompleteness had the lowest Pass@1. With 50% of words removed, 95% of ChatGPT responses still generated code. The question-quality judge over-labels "Good" versus humans (kappa 0.72–0.96 on 60 samples per model) and false-recovery rates of 30–40% are reported. Limits: function-level Python, small or old models, single-engineer modification, internal inconsistency between abstract/Table 3 and introduction figures, LLM judge, random word-block deletion rather than single testable conditions. | **Thesis:** independent precedent that incomplete inputs yield silent, plausible code rather than visible failure, which supports the premise that loss can be invisible before T4; it says nothing about H1/H2 effect sizes or project-level UI rules. **Experiment:** reinforces that the LLM-simulated-answer/judge channel can inflate recovery, so any clarification-style arm must keep the executable oracle as outcome and must not use a judge-rated "good question" as a label. No protocol change. **Product:** a requirement-anchored check is needed because the model itself rarely signals the gap. **Action:** related-work context only; do not cite the 35–52% or 60% figures as expectations. | 6/10: TOSEM venue and public benchmark with human validation, but function-level HumanEval, subjective single-engineer edits, judge-based metrics and internal numeric inconsistencies; threats section not fully read. |
 
 Added in the same run: `tests/test_literature_matrix_integrity.py` fails if one DOI/arXiv ID is
-scored in two rows, so future runs cannot silently re-enter a source (the four abstract-only rows
+scored in two rows, so future runs cannot silently re-enter a source (abstract-only rows
 in the pending table carry no score and are exempt).
+
+## 2026-10-21 — Defect class and context determine downstream test impact
+
+Search/read date: 2026-10-21. Title deduplicated. Read the full arXiv text,
+including survey design/results, controlled experiment, results and threats.
+
+| Reference / status | Question, sample, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | --- |
+| Mund, Femmer, Méndez Fernández and Eckhardt, [Does Quality of Requirements Specifications matter? Combined Results of Two Empirical Studies](https://arxiv.org/abs/1702.07656), 2017 technical report / preprint of two empirical studies | Survey at one multinational company (42 relevant complete responses) plus a randomized controlled experiment with 41 advanced students deriving tests from three industrial use cases; injected incorrect statements and meaning-preserving negative rewrites. | Incorrect statements substantially changed test correctness; negative rewrites did not significantly change correctness or omission, though omission rose descriptively. Domain briefing did not recover a subtle incorrect statement. Limits: one company, student experiment, few defects/use cases and low power for subgroups. | Thesis: downstream harm cannot be inferred from a generic smell label. Experiment: select and admit manipulations by verified semantic loss, preserve the meaning-equivalent rewrite control, and stratify/report by defect class without treating strata as independent projects. Product: prioritize obligations and contexts where downstream users rely on written artifacts. Action: keep H1/H2 unchanged; use the executable admission packet below. | 7/10: transparent paired empirical program, industrial artifact and strong partial re-rating agreement; narrow treatments, student sample and preprint status limit generalization. |
+
+**Project-specific incorporation.** The new manipulation-admission packet checks
+frozen candidate coverage, two distinct reviewers, dependencies and preservation
+of non-target obligations before human adjudication. It rejects treatment/outcome
+fields and does not label candidates automatically. This operationalizes a design
+gate; it does not make the cited study evidence for LLM behavior or H1/H2.
+
+
+## 2026-10-22 — Requirements-test gaps require contextual adjudication
+
+Search/read date: 2026-10-22. DOI/title deduplicated. Read the open-access
+version of record: abstract, method/design, case data collection, findings,
+validity scope and conclusions.
+
+| Reference / status | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | --- |
+| Bjarnason, Sharp and Regnell, [Improving requirements-test alignment by prescribing practices that mitigate communication gaps](https://doi.org/10.1007/s10664-019-09698-6), EMSE 24:2364–2409, 2019; peer-reviewed, open access | Design-science construction of Gap Finder grounded in evidence from five companies; formative mixed-method case study in one ongoing agile project using interviews, observations, a workshop and survey. | Relevant communication gaps were detected; seven of nine prescribed practices were judged practically relevant. Cross-artefact review is proposed to reduce semantic/cognitive distance. Formative, evolving design; one small-to-medium co-located case, perceived relevance rather than measured defect reduction or causal effectiveness. | Thesis: supports treating requirement-test alignment as contextual and reviewable, not as proof of H1/H2. Experiment: retain reviewer disagreement by field and route it to adjudication rather than averaging it away. Product: cross-artefact obligation review is a plausible workflow, but willingness to pay and field effectiveness remain unmeasured. Action: add disagreement summaries to the admission packet. | 8/10: peer-reviewed open study with transparent grounding and rich industrial observation; single formative case and subjective outcome limit causal claims. |
+
+**Project-specific incorporation.** `prepare_manipulation_admission` now exposes
+agreement for the removed span, target constraint, dependencies, preservation,
+remainder plausibility and decision. Any disagreement or blocking judgment is
+flagged for human adjudication. The function still makes no semantic label or
+confirmatory admission decision.
+
+
+## 2026-10-23 — Upstream provenance is evidence, not outcome truth
+
+Search/read date: 2026-10-23. DOI/title deduplicated. Read the open-access
+version of record: abstract, review protocol, synthesis, evaluation coverage,
+threats and conclusions.
+
+| Reference / status | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | --- |
+| Mucha, Kaufmann and Riehle, [A systematic literature review of pre-requirements specification traceability](https://doi.org/10.1007/s00766-023-00412-z), Requirements Engineering 29:119–141, 2024; peer-reviewed, open access | SLR of 77 peer-reviewed papers from 1992–2022; qualitative coding of use cases, problems, solutions and techniques linking requirements to source artifacts. | Source/context recovery and change management are recurrent uses, but people/effort problems dominate; only 25 of 45 identified techniques had an evaluation and five had an elaborate evaluation. Search terminology, mixed traceability constructs, the 2022 cutoff and exclusion of agile user-story tracing constrain coverage. | Thesis: T1–T3 provenance can be useful context but is not a semantic label or evidence that a condition was preserved. Experiment: keep upstream links in the feature plane, preserve source identity and evaluate H2 on held-out projects. Product: capture burden and ROI must be measured rather than assumed. Action: no hypothesis change; keep human adjudication and report provenance availability separately from detector performance. | 8/10: peer-reviewed systematic review with a documented protocol and broad corpus; heterogeneous primary evidence and limited elaborate evaluations prevent causal effectiveness claims. |
+
+**Project-specific incorporation.** The review sharpens an existing boundary:
+provenance availability is a feature-plane property, while omission validity and
+terminal behavior remain label-plane judgments. The admission packet therefore
+continues to reject outcome/treatment fields and cannot promote a trace link to a
+confirmatory label. A future product pilot must measure capture effort and review
+time alongside detection value; the literature does not establish ROI.
+
+
+## 2026-10-24 — Annotation agreement requires identity and adjudication controls
+
+Search/read date: 2026-10-24. Previously entered source, revisited. Read the version-of-record
+abstract and bibliographic record, the released corpus-processing and analysis
+workflow, reported results, and stated scope; no reproduction.
+
+This is a revisit of Klie et al., DOI `10.1162/coli_a_00516`, already scored
+in the matrix above. It adds no source or credibility score. The implementation
+action below applies the existing annotation-quality rationale to identifier checks.
+
+
+**Project-specific incorporation.** Reviewer independence now fails closed on
+noncanonical reviewer, candidate and constraint identifiers. This prevents the
+same logical reviewer or constraint from appearing distinct because of surrounding
+whitespace. Agreement remains reported per field and cannot establish label
+correctness or confirmatory eligibility by itself.
+
+## 2026-10-20 — Behavioral labelling of information-removal variants (LHAW)
+
+Search/read date: 2026-10-20. Deduplicated by arXiv ID and title: not previously entered. Read: the
+arXiv abstract page and the v2 HTML covering the variant definition (Definition 3.1), trial design,
+per-benchmark results and stated limitations (the last ~40k characters of the HTML were not read).
+Also surfaced and **not entered, not scored**: tau^tau-Bench (2609.04611; abstract only, agent
+construction task, adjacent), *Uncovering Systematic Failures of LLMs in Verifying Code Against
+Natural Language Specifications* (2508.12358; snippet only), RealBench (2604.22659; snippet only).
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Pu, Lee, Sehwag et al., [*LHAW: Controllable Underspecification for Long-Horizon Tasks*](https://arxiv.org/abs/2602.10525), arXiv preprint v2 (cs.CL, 20 Mar 2026); no peer-reviewed venue listed | Can well-specified agent tasks be turned into controllably underspecified ones, and can the effect be measured by behaviour instead of an LLM's guess of ambiguity? Information is removed along Goals/Constraints/Inputs/Context at configurable severity from TheAgentCompany, SWE-Bench Pro and MCP-Atlas; each variant gets 3 trials and is labelled outcome-critical (never succeeds), divergent (sometimes succeeds, terminal states vary) or benign (always succeeds, one terminal state); consistent-failure "new task" variants are dropped after an LLM-judge check. 285 released variants. | Pass@3 falls, e.g. MCP-Atlas 0.96 to 0.44 (0.73 with an ask-user tool) and SWE-Bench Pro 0.91 to 0.73; failures concentrate in outcome-critical variants. Vaguification yielded the most outcome-critical candidates (173/233 on TAC) and deletion more benign/divergent ones. Limits stated by the authors: prompt-level only, agents may recover information from the environment (labelled benign), no conflict/ambiguity, no cost model, no human-curated validation. Pass@3 and one environment per benchmark; not requirement-level browser oracles. | **Thesis:** independent support for labelling a removal by observed outcome rather than by smell type; the benign/divergent/outcome-critical split parallels recovered/mixed/lost in H1b. It is adjacent, not the same intervention (task prompts, not requirement documents with a rewrite control B). **Experiment:** (i) a "new task" screen is a candidate manipulation check, because an A-vs-C difference can reflect a different valid task rather than a loss; (ii) a 3-trial repeat per version fits the planned repetitions, but H1 aggregates within requirement instead of using pass@k. **Product:** supports separating "agent recovered the omission" from "agent silently diverged". **Action:** no protocol change made; decision proposal below. | 6 / 10: transparent method and public variants but preprint, pass@3 over a few models, no human validation. |
+
+**Decision needed from Dante (not applied):** whether to add to the pre-registration a manipulation
+check that flags C versions whose observed outputs are consistently different-but-valid (the LHAW
+"new task" case) as a separate stratum, rather than counting them as target-rule violations. Today the
+LLM-panel and 20% human audit only check that C removes the target and B preserves meaning.
+
+**Implementation change linked to the previous (Huang) tension:** `feature_plane/deployable.py` now rejects
+`oracle_verdict`, `oracle_result`, `oracle_status` and `oracle_outcome` as keys in pre-final attributes
+(previously only the `oracle_verdict` *event name* and `oracle`/`oracle_passed` keys were blocked), with a
+parametrized test. This closes part of the B0/B3 oracle-verdict feature-leakage check requested above; it is
+a guard, not proof that no other outcome-derived signal reaches the features.

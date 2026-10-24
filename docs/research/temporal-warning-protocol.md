@@ -348,3 +348,18 @@ The matrix records the evidence limits. Approval is still required before adding
 fields to a frozen rubric; B0/B3, H1/H2 and existing candidate materials remain
 unchanged. A conceptual-domain-coverage comparator would require its own design
 and information-access audit, not automatic admission as a baseline.
+
+`eval/manipulation_admission.py` now prepares this review gate for human
+adjudication. It requires exact coverage of a separately frozen candidate
+inventory, at least two distinct reviewers per candidate, explicit dependency
+and non-target-preservation judgments, and rejects outcome/treatment fields.
+The v1 packet accepts only the declared typed review fields; unknown metadata
+and alternate outcome-field spellings are rejected rather than copied through.
+This structural check cannot establish that free-text evidence is outcome-blind
+or that distinct reviewer identifiers represent independent people.
+It does not admit candidates automatically and always marks the packet as
+non-confirmatory until human adjudication and rubric approval.
+The packet also reports agreement separately for removed span, target
+`constraint_id`, dependency set, non-target preservation, remainder plausibility
+and recommendation. Any disagreement or blocking judgment sets
+`requires_adjudication`; reviewer disagreement is retained rather than collapsed.
