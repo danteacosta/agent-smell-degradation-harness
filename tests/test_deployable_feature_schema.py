@@ -200,6 +200,53 @@ def test_context_metrics_are_available_only_at_t3(tmp_path: Path):
 
 
 @pytest.mark.parametrize(
+    "key",
+    [
+        "semanticLabel",
+        "Final-Artifact",
+        "Semantic Label",
+        "MUTATION_SCORE",
+        "OracleSpec",
+        "ORACLESpec",
+        "SEMANTICLabel",
+        "oracleVerdict",
+        "ORACLEStatus",
+        "oracleResult",
+        "oracleOutcome",
+    ],
+)
+@pytest.mark.parametrize("serialized", [False, True])
+def test_terminal_keys_are_matched_across_casing_conventions(tmp_path: Path, key: str, serialized: bool):
+    path = tmp_path / "trace.jsonl"
+    nested = [{key: "leak"}]
+    path.write_text(
+        json.dumps({
+            "event_type": "interpretation.completed",
+            "attributes": {"constraints": ["x"], "nested": json.dumps(nested) if serialized else nested},
+        }) + "\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="terminal field"):
+        extract_deployable_features(
+            DeployableFeatureInput("I-1", "acceptance_criteria", "x"), path, cutoff="T3"
+        )
+
+
+def test_benign_camel_case_keys_are_not_rejected(tmp_path: Path):
+    path = _trace(tmp_path / "trace.jsonl", unresolved=[], revisions=0)
+    feature_input = DeployableFeatureInput("I-1", "acceptance_criteria", "x")
+    events = [json.loads(line) for line in path.read_text().splitlines()]
+    events[0]["attributes"].update({"request_id": "r-1", "http_status": "ok"})
+    path.write_text("\n".join(json.dumps(event) for event in events) + "\n")
+    before = extract_deployable_features(feature_input, path, cutoff="T3")
+    del events[0]["attributes"]["request_id"]
+    del events[0]["attributes"]["http_status"]
+    events[0]["attributes"].update({"requestId": "r-1", "HTTPStatus": "ok"})
+    path.write_text("\n".join(json.dumps(event) for event in events) + "\n")
+    assert extract_deployable_features(feature_input, path, cutoff="T3") == before
+
+
+@pytest.mark.parametrize(
     "key", ["oracle_verdict", "oracle_result", "oracle_status", "oracle_outcome", "ORACLE_VERDICT"]
 )
 def test_oracle_verdict_fields_are_rejected_from_pre_final_attributes(tmp_path: Path, key: str):

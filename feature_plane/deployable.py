@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import ast
 import json
+import re
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -70,12 +71,24 @@ _CUTOFF_ORDER = {
 }
 
 
+_CAMEL_BOUNDARY = re.compile(r"(?<=[a-z0-9])(?=[A-Z])")
+_ACRONYM_BOUNDARY = re.compile(r"([A-Z]+)([A-Z][a-z])")
+_KEY_SEPARATORS = re.compile(r"[^a-z0-9]+")
+
+
+def _normalize_key(key: Any) -> str:
+    """Fold camelCase, kebab-case, spaces and case to snake_case."""
+
+    words = _ACRONYM_BOUNDARY.sub(r"\1_\2", str(key))
+    return _KEY_SEPARATORS.sub("_", _CAMEL_BOUNDARY.sub("_", words).lower()).strip("_")
+
+
 def _contains_terminal_key(value: Any) -> str | None:
     """Return the first terminal key found in nested/serialized payloads."""
 
     if isinstance(value, Mapping):
         for key, item in value.items():
-            if str(key).lower() in _TERMINAL_KEYS:
+            if _normalize_key(key) in _TERMINAL_KEYS:
                 return str(key)
             found = _contains_terminal_key(item)
             if found:

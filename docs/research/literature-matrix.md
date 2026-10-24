@@ -1243,3 +1243,25 @@ through a mirror page and is not scored.
 a trajectory-length-only baseline next to B0 (B0 already contains `operational__event_count`), and
 that all replications of a project are kept in one split. The second statement is already enforced by
 `assign_project_splits`; only the wording in the protocol is a human decision.
+
+## 2026-10-24 entry: trajectory-structure diagnostics (TraceProbe) and trajectory tamper localisation (TrajMark)
+
+Search and reading date: 2026-10-24. Deduplicated by arXiv ID; neither source was previously entered.
+Read: arXiv abstract pages only (the TraceProbe PDF did not extract; no full text of either paper was read),
+so nothing below exceeds what the abstracts state. Also resurfaced: TRACES (2605.27690) and Wink (2602.17037), already
+referenced elsewhere in this matrix; not re-read or re-scored in this search.
+
+### Pending full-text reading, outside the canonical matrix
+
+| Candidate and primary version | Authors | Reading status |
+| --- | --- | --- |
+| [What Resolve Rate Hides: Trajectory Structure Diagnostics for Coding Agents](https://arxiv.org/abs/2607.06184) (TraceProbe) | Shu et al. | Abstract only. Methods, results and limitations await full-text review; no credibility score or evidentiary recommendation. |
+| [TrajMark: Ownership Attribution and Segment-Level Tamper Localization for Coding-Agent Trajectories](https://arxiv.org/abs/2609.10416) | Zeng et al. | Abstract only. Methods, results and limitations await full-text review; no credibility score or evidentiary recommendation. |
+
+**Incorporation made (code, not a claim from either source):** the existing trace-integrity and
+leakage-boundary entries already cover this ground, so no protocol text changes. The same review
+exposed a gap in the deployable-feature leakage guard: terminal keys were matched by exact lowercase
+only, so `semanticLabel`, `Final-Artifact` or `OracleSpec` in a pre-final trace passed. Keys are now
+folded across camelCase, acronym boundaries, kebab-case, spaces and case before comparison
+(`feature_plane/deployable.py`), with a regression test that fails without the fix. The guard still
+cannot prove that no other outcome-derived signal reaches B0/B3.
