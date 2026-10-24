@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-22
+Last updated: 2026-10-24
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1123,6 +1123,13 @@ exceeds what the abstract states. Also seen and not entered: RealBench (arXiv 26
 benchmark reporting missing required functions; abstract-level only, context), and ADE-PRF (alphaXiv
 2607.07689, single-author production-health forecasting; vendor-style, product context only).
 
-| Reference / evidence | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
-| --- | --- | --- | --- | ---: |
-| Majgaonkar, Fei, Li, Sarro and Ye, [*Understanding Code Agent Behaviour: An Empirical Study of Success and Failure Trajectories*](https://arxiv.org/abs/2511.00197), arXiv preprint cs.SE v1, 2025-10-31; no peer-reviewed venue listed (abstract read) | How do successful and failed code-agent trajectories differ? SWE-Bench traces from OpenHands, SWE-agent and Prometheus; strategies, trajectory length/variance, fault localisation. | Failed trajectories are consistently longer with higher variance; failure patterns differ by agent; trajectories located the problematic files in 72-81% of cases, failures included. Task-difficulty control and limitations not verified (abstract only); issue-resolution, not requirement-omission, setting. | **Thesis:** none beyond context. **Experiment:** trace length is a plausible non-semantic predictor of failure, so the B3-vs-B0 gain in H2 must not come from length. B0 already carries `operational__event_count` computed on the same pre-final trace; added `test_b3_is_b0_plus_provenance_only_and_b0_keeps_trace_length_baseline` to pin that B3 = B0 + provenance-only columns with B0 values unchanged. No protocol or hypothesis change. **Product:** length-based alerts are a cheap competitor to semantic loss explanation; keep as a named baseline. | 5/10: preprint, public traces and a clear question, but unreviewed, abstract-only read, different task. |
+### Pending full-text reading, outside the canonical matrix
+
+| Candidate and primary version | Authors | Reading status |
+| --- | --- | --- |
+| [Understanding Code Agent Behaviour: An Empirical Study of Success and Failure Trajectories](https://arxiv.org/abs/2511.00197) | Majgaonkar, Fei, Li, Sarro and Ye | Abstract and listing metadata only. Methods, results and limitations await full-text review; no credibility score or evidentiary recommendation. |
+
+The B3 = B0 + provenance regression below is an implementation invariant,
+independent of this pending source. B0 retains `operational__event_count`, and
+B3 must preserve every B0 value while adding only provenance columns. This does
+not approve a new scientific baseline or protocol change.
