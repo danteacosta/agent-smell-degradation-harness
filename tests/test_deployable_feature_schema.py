@@ -244,3 +244,23 @@ def test_benign_camel_case_keys_are_not_rejected(tmp_path: Path):
     events[0]["attributes"].update({"requestId": "r-1", "HTTPStatus": "ok"})
     path.write_text("\n".join(json.dumps(event) for event in events) + "\n")
     assert extract_deployable_features(feature_input, path, cutoff="T3") == before
+
+
+@pytest.mark.parametrize(
+    "key", ["oracle_verdict", "oracle_result", "oracle_status", "oracle_outcome", "ORACLE_VERDICT"]
+)
+def test_oracle_verdict_fields_are_rejected_from_pre_final_attributes(tmp_path: Path, key: str):
+    # Shared outcome labels make monitor/oracle agreement non-independent
+    # (Huang 2026, arXiv:2610.04710), so B0/B3 inputs must never carry them.
+    path = tmp_path / "trace.jsonl"
+    path.write_text(
+        json.dumps({
+            "event_type": "tool.completed",
+            "attributes": {"revisions": 0, "nested": [{key: "fail"}]},
+        }) + "\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="terminal field"):
+        extract_deployable_features(
+            DeployableFeatureInput("I-1", "acceptance_criteria", "x"), path, cutoff="T3"
+        )
