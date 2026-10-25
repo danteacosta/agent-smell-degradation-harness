@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-24
+Last updated: 2026-10-25
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1255,7 +1255,7 @@ referenced elsewhere in this matrix; not re-read or re-scored in this search.
 
 | Candidate and primary version | Authors | Reading status |
 | --- | --- | --- |
-| [What Resolve Rate Hides: Trajectory Structure Diagnostics for Coding Agents](https://arxiv.org/abs/2607.06184) (TraceProbe) | Shu et al. | Abstract only. Methods, results and limitations await full-text review; no credibility score or evidentiary recommendation. |
+| [What Resolve Rate Hides: Trajectory Structure Diagnostics for Coding Agents](https://arxiv.org/abs/2607.06184) (TraceProbe) | Shu et al. | Superseded: read via arXiv HTML on 2026-10-25; scored in the 2026-10-25 entry below. |
 | [TrajMark: Ownership Attribution and Segment-Level Tamper Localization for Coding-Agent Trajectories](https://arxiv.org/abs/2609.10416) | Zeng et al. | Abstract only. Methods, results and limitations await full-text review; no credibility score or evidentiary recommendation. |
 
 **Incorporation made (code, not a claim from either source):** the existing trace-integrity and
@@ -1265,3 +1265,16 @@ only, so `semanticLabel`, `Final-Artifact` or `OracleSpec` in a pre-final trace 
 folded across camelCase, acronym boundaries, kebab-case, spaces and case before comparison
 (`feature_plane/deployable.py`), with a regression test that fails without the fix. The guard still
 cannot prove that no other outcome-derived signal reaches B0/B3.
+
+## 2026-10-25 entry: TraceProbe read beyond the abstract
+
+Search and reading date: 2026-10-25. Read: the arXiv HTML rendering of 2607.06184v1 (abstract, diagnostic
+definitions, results tables, limitations) through a summarising fetch tool, not the PDF (it still does not
+extract); figures and appendix were not inspected, so numbers should be re-checked against the paper before
+being quoted in a thesis text. TrajMark (2609.10416) stays abstract-only and unscored. A search for new
+requirement-smell and acceptance-criteria papers returned only sources already in this matrix
+(2609.29208, 2606.25550, 2607.01980).
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Shu, Chong, Zhou, Peng, Wu, Han, Zhuang, Yuan and Wang, [*What Resolve Rate Hides: Trajectory Structure Diagnostics for Coding Agents*](https://arxiv.org/abs/2607.06184) (TraceProbe), arXiv preprint v1, 2026; no peer-reviewed venue listed | What do coding-agent trajectories reveal that resolve rate hides? 500 SWE-Bench Verified tasks x 5 agent/model settings (2,500 trajectories), 50 tasks x 3 repeats x 5 settings (750), and 266 SWE-Bench Pro Python tasks (1,330 runs). Deterministic detectors over complete trajectories (e.g. Search Loop: >=10 consecutive search/read actions with no write or validation; Re-read Churn: same file read >=3 times within 10 actions; Unsupported Completion Claim), plus oracle-grounded milestones anchored on gold-patch files and cross-run divergence against a resolved reference. | Search Loop in 41.1% of resolved vs 56.1% of failed runs; Re-read Churn 34.0% vs 44.7%; Unsupported Completion Claim 7.6% vs 9.5% (small gap). Function-level divergence from a resolved run appears a median of ~20 steps before the failed run ends; file choice alone is too coarse. Analysis is post-hoc on complete trajectories: no prefix prediction is evaluated. Thresholds were tuned on Verified; main corpus has one run per task/setting; outcomes inherit SWE-Bench test limits; semantic tags come from an LLM labeler; Python issue-to-PR repair only; no analysis of requirements or specifications. | Thesis: context only. It supports the premise that outcome-only metrics hide process differences, but it is not evidence that T1-T3 provenance detects loss of a requirement condition, and its divergence lead time is not an early-warning result. Experiment: the structural detectors are cheap, label-free candidates for the B0 operational feature set, and they would test whether H2's B3 gain exceeds generic trajectory-shape signals. Reference-based milestones use gold patches and must not enter deployable features (leakage boundary). Product: supports a "process diagnostics" category that is distinct from explaining semantic loss of a requirement. Action: no protocol or code change today. **Decision needed from Dante (not applied):** whether B0 should add structural operational features (search-loop, re-read churn, unsupported-completion flag) before the pre-registration freeze, so that B3 is compared against a stronger operational baseline. Adding them post-freeze would need a deviation record. | 5 |
