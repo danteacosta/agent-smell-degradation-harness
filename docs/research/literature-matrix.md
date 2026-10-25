@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-24
+Last updated: 2026-10-25
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1265,3 +1265,22 @@ only, so `semanticLabel`, `Final-Artifact` or `OracleSpec` in a pre-final trace 
 folded across camelCase, acronym boundaries, kebab-case, spaces and case before comparison
 (`feature_plane/deployable.py`), with a regression test that fails without the fix. The guard still
 cannot prove that no other outcome-derived signal reaches B0/B3.
+
+
+## 2026-10-25 — Dataset documentation cannot substitute for corpus admission
+
+Search/read date: 2026-10-25. DOI/title deduplicated. Read the version-of-record
+abstract and the authors' documentation workflow, recommended questions,
+benefits, limitations and retrospective/prospective use discussion; no empirical
+replication.
+
+| Reference / status | Question, data, method | Result / limitations | Relevance / concrete action | Credibility |
+| --- | --- | --- | --- | --- |
+| Gebru et al., [Datasheets for Datasets](https://doi.org/10.1145/3458723), Communications of the ACM 64(12):86–92, 2021; peer-reviewed | Proposes a question-driven datasheet documenting dataset motivation, composition, collection, preprocessing, uses, distribution and maintenance, informed by piloting and feedback across research and industry. | Structured documentation can expose assumptions and support communication, but the paper proposes a process rather than demonstrating that a datasheet makes a dataset valid, representative or fit for a particular causal claim. Retrospective completion may be incomplete and documentation creates maintenance cost. | Thesis: document the prospective candidate inventory and its scope without treating documentation as a label. Experiment: bind each admission packet to the exact ordered candidate inventory with a SHA-256 digest and preserve that digest outside the packet before review. Product: an audit trail is useful evidence, not proof of policy coverage or willingness to pay. | 8/10: peer-reviewed, widely applicable and transparent process; no controlled effectiveness estimate and only indirect fit to requirements corpora. |
+
+**Project-specific incorporation.** Manipulation-admission packets now expose
+`candidate_inventory_sha256`, computed from canonical UTF-8 JSON in frozen
+candidate order. Publishing that digest outside the review packet before review
+makes later inventory replacement detectable. The digest authenticates identity
+only: it does not establish rights, independence, annotation quality, semantic
+validity, representativeness or confirmatory eligibility.
