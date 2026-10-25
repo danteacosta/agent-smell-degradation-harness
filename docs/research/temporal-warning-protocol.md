@@ -324,6 +324,11 @@ weights before calibration/test scoring. Freeze thresholds on calibration
 only. Do not require fitted weights before collecting the data needed to fit
 them, and do not fit on held-out outcomes to fill that gap.
 
+Before releasing review packets, freeze the ordered candidate IDs and preserve
+the packet's `candidate_inventory_sha256` in an external decision record. A
+matching digest detects inventory replacement; it does not admit candidates or
+validate their semantics, rights, independence, labels or representativeness.
+
 ## Proposed manipulation-admission check: dependent omissions (2026-10-20)
 
 For the next prospective source review, record for each candidate deletion:

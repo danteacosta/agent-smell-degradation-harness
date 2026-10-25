@@ -2,7 +2,10 @@ import copy
 
 import pytest
 
-from eval.manipulation_admission import prepare_manipulation_admission
+from eval.manipulation_admission import (
+    candidate_inventory_sha256,
+    prepare_manipulation_admission,
+)
 
 
 def review(candidate="c-1", reviewer="r-1"):
@@ -205,3 +208,22 @@ def test_rejects_noncanonical_expected_candidate_id():
             [review(candidate=" c-1"), review(candidate=" c-1", reviewer="r-2")],
             expected_candidate_ids=[" c-1"],
         )
+
+
+def test_packet_commits_to_the_ordered_candidate_inventory():
+    ids = ["c-1", "c-2"]
+    rows = [
+        review("c-1", "r-1"),
+        review("c-1", "r-2"),
+        review("c-2", "r-1"),
+        review("c-2", "r-2"),
+    ]
+    packet = prepare_manipulation_admission(rows, expected_candidate_ids=ids)
+    assert packet["candidate_inventory_sha256"] == candidate_inventory_sha256(ids)
+    assert packet["candidate_inventory_sha256"] != candidate_inventory_sha256(list(reversed(ids)))
+
+
+def test_inventory_digest_is_utf8_and_json_canonical():
+    assert candidate_inventory_sha256(["ação", "c-2"]) == (
+        "b56475d55f2ae2032550dcb2cb15e964950945a1687dfc2fc3b8804b9d67fa0a"
+    )
