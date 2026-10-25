@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import copy
+import hashlib
+import json
 
 
 REQUIRED = (
@@ -41,6 +43,13 @@ def _require_identifier(value: object, field: str) -> None:
         raise ValueError(f"non-empty {field} required")
     if value != value.strip():
         raise ValueError(f"{field} must not have surrounding whitespace")
+
+
+def candidate_inventory_sha256(candidate_ids: list[str]) -> str:
+    """Digest the ordered candidate inventory for external commitment."""
+
+    payload = json.dumps(candidate_ids, ensure_ascii=False, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
 def _candidate_summary(candidate_id: str, reviews: list[dict]) -> dict:
@@ -136,6 +145,7 @@ def prepare_manipulation_admission(
         "confirmatory_eligible": False,
         "inventory_coverage_checked": True,
         "candidate_count": len(grouped),
+        "candidate_inventory_sha256": candidate_inventory_sha256(expected_candidate_ids),
         "review_count": len(reviews),
         "candidates": [
             _candidate_summary(candidate_id, grouped[candidate_id])
