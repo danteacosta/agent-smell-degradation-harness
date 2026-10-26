@@ -1317,3 +1317,36 @@ search surfaced Kurady et al., *Compositional Policy Violations* (arXiv 2609.188
 
 **Decision for the human:** none required; if the thesis text should cite Silent Omissions, treat it as
 preprint context for the omission-asymmetry threat, not as evidence for H1/H2.
+
+
+## 2026-10-26 follow-up — Equal detection rates are not evidence of adequate detection
+
+Search/read date: 2026-10-26. Revisited Ribeiro et al., CheckList, DOI
+10.18653/v1/2020.acl-main.442 (original entry above, credibility 9/10 unchanged).
+Read the primary ACL PDF abstract, test types, task results, industrial session,
+18-participant study and discussion of challenge-set limitations. No replication.
+The controlled user study was restricted to MFTs and QQP, with six participants
+per condition; severity was initially self-reported, with a further independent
+rating. These limits preclude translating its productivity results into product ROI.
+
+**Decision and implementation.** Keep minimum-functionality checks separate
+from invariance/relative contrasts. A zero contradiction-minus-deletion accuracy
+gap can occur with perfect performance, equal failure, or no collected responses.
+`score_controls` now reports absolute correct/planned rates, completed, missing,
+invalid/failed and abstained counts for each operation. Three regressions cover
+an empty-versus-perfect zero gap, mixed missing/error/abstention outcomes and
+negative gap direction. Denominators retain every planned control; no threshold,
+corpus, label, H1/H2 or provider authorization changed.
+
+Thesis: instrument qualification only, not evidence of temporal requirement loss.
+Experiment: the descriptive gap must be read alongside each operation's absolute
+rate and accounting; synthetic success cannot authorize confirmation.
+Product: a relative contrast cannot certify obligation coverage or willingness
+to pay. Next human dependency remains independent review of real frozen materials.
+
+**Reading limit for Silent Omissions.** The earlier entry records partial reading
+and remains provisional context. Today's arXiv abstract/HTML fetch failed; the
+planting method and limitations were not verified. Its numerical claims must not
+be promoted to thesis evidence on the strength of this review. The engineering
+change above is justified by an explicit counterexample and the already-read
+peer-reviewed CheckList method, not by those unverified numerical claims.
