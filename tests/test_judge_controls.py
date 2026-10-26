@@ -54,6 +54,40 @@ class JudgeControlsTests(unittest.TestCase):
         self.assertEqual(score_controls(records(), [CONFIG], 1)
                          ["configurations"][CONFIG]["omission_detection_gap"], 0)
 
+    def test_zero_gap_does_not_disguise_missing_controls_as_success(self):
+        empty = score_controls([], [CONFIG], 1)["configurations"][CONFIG]
+        perfect = score_controls(records(), [CONFIG], 1)["configurations"][CONFIG]
+        self.assertEqual(empty["omission_detection_gap"], 0)
+        self.assertEqual(perfect["omission_detection_gap"], 0)
+        for op in ("deleted", "contradicted"):
+            self.assertEqual(empty["by_operation"][op]["correct_over_planned"], 0)
+            self.assertEqual(empty["by_operation"][op]["missing"], 3)
+            self.assertEqual(perfect["by_operation"][op]["correct_over_planned"], 1)
+            self.assertEqual(perfect["by_operation"][op]["missing"], 0)
+
+    def test_operation_accounting_retains_errors_abstentions_and_missing(self):
+        rows = records()
+        deleted = [r for r, c in zip(rows, build_controls()["cases"])
+                   if c["oracle"]["operation"] == "deleted"]
+        deleted[0]["raw_response"] = None
+        deleted[1]["raw_response"] = '{"label":"not_visible","status":"uncertain"}'
+        rows.remove(deleted[2])
+        report = score_controls(rows, [CONFIG], 1)["configurations"][CONFIG]
+        op = report["by_operation"]["deleted"]
+        self.assertEqual(op, {"planned": 3, "completed": 1, "missing": 1,
+                             "invalid_or_failed": 1, "abstained": 1,
+                             "correct": 0, "correct_over_planned": 0})
+        self.assertFalse(score_controls(rows, [CONFIG], 1)["confirmatory_eligible"])
+
+    def test_gap_preserves_direction_when_contradictions_are_missed(self):
+        rows = records()
+        for row, case in zip(rows, build_controls()["cases"]):
+            if case["oracle"]["operation"] == "contradicted":
+                row["raw_response"] = '{"label":"clean","status":"covered"}'
+        report = score_controls(rows, [CONFIG], 1)["configurations"][CONFIG]
+        self.assertEqual(report["omission_detection_gap"], -1)
+        self.assertEqual(report["by_operation"]["deleted"]["correct_over_planned"], 1)
+
     def test_failures_missing_and_abstentions_do_not_disappear(self):
         rows = records()[:-1]
         rows[0]["raw_response"] = None
