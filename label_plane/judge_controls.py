@@ -81,7 +81,8 @@ def score_controls(rows: list[dict], configurations: list[str], repetitions: int
         counts = Counter(planned=len(cases) * repetitions, completed=0, missing=0,
                          invalid_or_failed=0, abstained=0, correct=0, false_covered=0,
                          contradictory_response=0)
-        by_operation = {op: Counter(planned=3 * repetitions, correct=0) for op in
+        by_operation = {op: Counter(planned=3 * repetitions, completed=0, missing=0,
+                                   invalid_or_failed=0, abstained=0, correct=0) for op in
                         ("literal", "reordered", "deleted", "contradicted")}
         outcomes = {}
         per_rep = [Counter(planned=len(cases), correct=0, deleted_planned=3, deleted_correct=0)
@@ -91,18 +92,22 @@ def score_controls(rows: list[dict], configurations: list[str], repetitions: int
                 key = (config, rep, identifier)
                 if key not in indexed:
                     counts["missing"] += 1
+                    by_operation[case["oracle"]["operation"]]["missing"] += 1
                     continue
                 try:
                     response = parse_judge_response(indexed[key], case["request"])
                 except (ValueError, TypeError):
                     counts["invalid_or_failed"] += 1
+                    by_operation[case["oracle"]["operation"]]["invalid_or_failed"] += 1
                     continue
                 counts["completed"] += 1
                 status = response.constraint_assessments[0].status
                 oracle = case["oracle"]
+                by_operation[oracle["operation"]]["completed"] += 1
                 outcomes[(rep, oracle["seed_id"], oracle["operation"])] = (response.label, status)
                 abstained = status == "uncertain" or response.label == "not_visible"
                 counts["abstained"] += abstained
+                by_operation[oracle["operation"]]["abstained"] += abstained
                 inconsistent = response.label == "clean" and status != "covered"
                 counts["contradictory_response"] += inconsistent
                 counts["false_covered"] += (not oracle["covered"] and status == "covered")
@@ -127,13 +132,14 @@ def score_controls(rows: list[dict], configurations: list[str], repetitions: int
                            "deleted_miss_rate": 1 - c["deleted_correct"] / c["deleted_planned"]}
                           for rep, c in enumerate(per_rep)]
         rates = [r["correct_over_planned"] for r in by_replication]
-        # Judges find planted wrong content far more often than planted omissions
-        # (Chen et al., arXiv 2608.01000); report the asymmetry, never pool it away.
+        # Descriptive contrast only: zero can mean equal success or equal failure.
+        # Keep absolute rates and missing/error/abstention counts by operation.
         op_rate = {k: v["correct"] / v["planned"] for k, v in by_operation.items()}
         reports[config] = {**dict(counts), "correct_over_planned": counts["correct"] / counts["planned"],
                            "by_replication": by_replication,
                            "replication_range": {"min": min(rates), "max": max(rates)},
-                           "by_operation": {k: dict(v) for k, v in by_operation.items()},
+                           "by_operation": {k: {**dict(v), "correct_over_planned": op_rate[k]}
+                                            for k, v in by_operation.items()},
                            "omission_detection_gap": op_rate["contradicted"] - op_rate["deleted"],
                            "order_pairs_planned": 3 * repetitions, "order_pairs_completed": paired,
                            "order_switches": switches,
