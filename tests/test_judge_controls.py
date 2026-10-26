@@ -43,6 +43,17 @@ class JudgeControlsTests(unittest.TestCase):
         self.assertEqual(score["order_switch_rate"], 0)
         self.assertEqual(score["by_operation"]["deleted"]["correct"], 0)
 
+    def test_omission_detection_gap_exposes_misses_that_pooling_hides(self):
+        rows = records()
+        for row, case in zip(rows, build_controls()["cases"]):
+            if case["oracle"]["operation"] == "deleted":
+                row["raw_response"] = json.dumps({"label": "clean", "status": "covered"})
+        score = score_controls(rows, [CONFIG], 1)["configurations"][CONFIG]
+        self.assertEqual(score["by_operation"]["deleted"]["correct"], 0)
+        self.assertEqual(score["omission_detection_gap"], 1)
+        self.assertEqual(score_controls(records(), [CONFIG], 1)
+                         ["configurations"][CONFIG]["omission_detection_gap"], 0)
+
     def test_failures_missing_and_abstentions_do_not_disappear(self):
         rows = records()[:-1]
         rows[0]["raw_response"] = None

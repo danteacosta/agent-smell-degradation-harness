@@ -127,10 +127,14 @@ def score_controls(rows: list[dict], configurations: list[str], repetitions: int
                            "deleted_miss_rate": 1 - c["deleted_correct"] / c["deleted_planned"]}
                           for rep, c in enumerate(per_rep)]
         rates = [r["correct_over_planned"] for r in by_replication]
+        # Judges find planted wrong content far more often than planted omissions
+        # (Chen et al., arXiv 2608.01000); report the asymmetry, never pool it away.
+        op_rate = {k: v["correct"] / v["planned"] for k, v in by_operation.items()}
         reports[config] = {**dict(counts), "correct_over_planned": counts["correct"] / counts["planned"],
                            "by_replication": by_replication,
                            "replication_range": {"min": min(rates), "max": max(rates)},
                            "by_operation": {k: dict(v) for k, v in by_operation.items()},
+                           "omission_detection_gap": op_rate["contradicted"] - op_rate["deleted"],
                            "order_pairs_planned": 3 * repetitions, "order_pairs_completed": paired,
                            "order_switches": switches,
                            "order_switch_rate": switches / paired if paired else None}
