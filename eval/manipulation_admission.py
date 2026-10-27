@@ -127,6 +127,8 @@ def prepare_manipulation_admission(
             _require_identifier(value, "dependent constraint id")
         if len(set(review["dependent_constraint_ids"])) != len(review["dependent_constraint_ids"]):
             raise ValueError("duplicate dependent constraint id")
+        if review["target_constraint_id"] in review["dependent_constraint_ids"]:
+            raise ValueError("target constraint must not be listed as its own dependency")
         for field in ("non_target_obligations_preserved", "plausible_remainder"):
             if not isinstance(review[field], bool):
                 raise ValueError(f"boolean {field} required")

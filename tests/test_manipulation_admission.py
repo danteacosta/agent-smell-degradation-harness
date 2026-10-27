@@ -227,3 +227,10 @@ def test_inventory_digest_is_utf8_and_json_canonical():
     assert candidate_inventory_sha256(["ação", "c-2"]) == (
         "b56475d55f2ae2032550dcb2cb15e964950945a1687dfc2fc3b8804b9d67fa0a"
     )
+
+
+def test_rejects_target_constraint_listed_as_its_own_dependency():
+    row = review()
+    row["dependent_constraint_ids"] = ["constraint-1"]
+    with pytest.raises(ValueError, match="own dependency"):
+        prepare_manipulation_admission([row, review(reviewer="r-2")], expected_candidate_ids=["c-1"])
