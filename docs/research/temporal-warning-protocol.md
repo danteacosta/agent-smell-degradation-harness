@@ -368,3 +368,68 @@ The packet also reports agreement separately for removed span, target
 `constraint_id`, dependency set, non-target preservation, remainder plausibility
 and recommendation. Any disagreement or blocking judgment sets
 `requires_adjudication`; reviewer disagreement is retained rather than collapsed.
+
+
+## Concrete source-draft handoff — 2026-10-27
+
+This is an engineering review queue, not a selected or admitted confirmatory
+corpus. The existing public file
+[`temporal-warning-source-drafts.json`](../../data/prepilot/temporal-warning-source-drafts.json)
+was audited at repository revision `66712467cd093b412d4787c80fed428c00ae3d60`.
+The existing `validate_candidate` implementation verified **12 source-span
+deletion pairs across six projects**, including source/license file hashes,
+source excerpt offsets, exact deletion reconstruction and target identity.
+It does not establish source rights, semantic validity, reviewer independence,
+lack of contamination, or confirmatory eligibility.
+
+Canonical JSON content digest (UTF-8, sorted object keys, compact separators,
+Unicode unescaped):
+`2ec1b291c24cffe61bf6fad1c99ffa6a4013de6f679ca82d9de1004e3e60016b`.
+
+Ordered candidate-ID digest (the admission-packet convention):
+`fbcce00ccb12dc3d8591a45309601de3bdd9d25c664de08be7ef3ec5b228bb92`.
+
+These are snapshot identifiers, **not an externally attested pre-review freeze**.
+The full-content digest and the ID-list digest bind different objects. Preserve
+both, together with the exact source revision and rubric, in the eventual
+external decision record; do not replace a content commitment with an ID hash.
+
+| Candidate ID | Project | Source locator | Proposed target ID |
+| --- | --- | --- | --- |
+| `prospective-sdoc-srs-151` | strictdoc | SDOC-SRS-151 STATEMENT | `prospective-sdoc-srs-151-c01` |
+| `prospective-sdoc-srs-110` | strictdoc | SDOC-SRS-110 STATEMENT | `prospective-sdoc-srs-110-c01` |
+| `prospective-cass-srch-002` | CASS | SRCH-002 requirement table text column | `prospective-cass-srch-002-c01` |
+| `prospective-cass-srch-006` | CASS | SRCH-006 requirement table text column | `prospective-cass-srch-006-c01` |
+| `prospective-todomvc-counter` | todomvc | ### Counter | `prospective-todomvc-counter-c01` |
+| `prospective-todomvc-clear-completed-button` | todomvc | ### Clear completed button | `prospective-todomvc-clear-completed-button-c01` |
+| `prospective-realworld-feed-articles` | realworld | ### Feed Articles | `prospective-realworld-feed-articles-c01` |
+| `prospective-realworld-unfollow-user` | realworld | ### Unfollow user | `prospective-realworld-unfollow-user-c01` |
+| `prospective-kanboard-destination-membership` | kanboard | Duplicate a task to another project | `prospective-kanboard-destination-membership-c01` |
+| `prospective-kanboard-destination-assignee` | kanboard | Duplicate a task to another project | `prospective-kanboard-destination-assignee-c01` |
+| `prospective-paperless-share-expiry` | paperless-ngx | Share Links | `prospective-paperless-share-expiry-c01` |
+| `prospective-paperless-share-no-login` | paperless-ngx | Share Links | `prospective-paperless-share-no-login-c01` |
+
+There are **10 distinct source-excerpt groups**, not 12 independent excerpts:
+the Kanboard destination-membership/destination-assignee pair shares one source
+span, and the Paperless share-expiry/share-no-login pair shares another.
+All candidate siblings remain in their project's partition. Different excerpts
+also do not establish independent semantic obligations or source families.
+No item is excluded here based on generated behavior.
+
+**Next executable human handoff.** Before any new outcomes, the custodian
+approves selection, rights and the rubric; records the above commitments
+externally; assigns two genuinely independent reviewers; and gives both the
+same pinned source/variant materials without generated outputs or model
+identities. Each reviewer supplies the fields required by
+`prepare_manipulation_admission`. Adjudicate dependency, source-faithfulness
+and non-target-preservation disagreements; retain every exclusion and reason.
+Current state remains `selection_frozen=false`, `human_approvals=0`,
+`confirmatory_eligible=false`.
+
+A single deletion can be syntactically valid without being an atomic or useful
+intervention. Related mutations can distort assessment when counted repeatedly
+([Papadakis et al., ISSTA 2016](https://discovery.ucl.ac.uk/1508136/1/ISSTA16.pdf)).
+This is an analogy motivating explicit grouping, not proof that these omission
+pairs subsume one another. Do not use future kill vectors or terminal labels to
+select a more favorable confirmatory set; any outcome-based subsumption analysis
+must be a separately labelled exploratory sensitivity analysis.
