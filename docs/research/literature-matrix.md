@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-26
+Last updated: 2026-10-27
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1361,3 +1361,21 @@ re-checked before being quoted. A search for new omission-detection papers retur
 | Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
 | --- | --- | --- | --- | ---: |
 | Ji, Zhang, Xu, Li, Gao, Wang and Cheung, [*Coding Agents Are Guessing: Measuring Action-Boundary Violations in Underspecified DevOps Instructions*](https://arxiv.org/abs/2607.02294) (UnderSpecBench), arXiv preprint, 2026; no peer-reviewed venue listed | Do coding agents stay inside the safe action boundary when DevOps instructions are underspecified? 69 task families x 32 instruction variants (intent clarity x target certainty x blast radius) = 2,208 prompts; Claude Code, Codex and OpenCode, five agent-model configurations. Variants derived by slot substitution from a hand-written explicit baseline; deterministic state-diff oracles (intended vs over-scope sets). | 55.8–67.8% of runs violated at least one boundary; target underspecification degraded action quality most, blast-radius cues barely changed behaviour. No repetitions, confidence intervals, significance tests or task-family clustering reported; pooled rates are run-weighted; no validity check of the variants; oracle not human-validated (human check only for the LLM disposition judge, kappa 0.860 on 93 cases); one safe action per task; containerised, no human gating. | Context only: a graded-underspecification design with executable oracles, in a safety domain (action scope), not requirement-condition loss in generated artifacts. It does not test H1/H2 and shows no pre-final signal. Its missing repetition and clustering are the gaps our protocol (run_id/replication_id, project-level bootstrap) already closes. No claim or hypothesis changes. | Keep the manipulation-validity review (A/B/C) as a gate: mechanical variant generation without a validity check is a threat we do not inherit. Possible later secondary factor (graded omission severity) is a human design decision. Product: wrong-target guessing suggests a different failure class than silent condition loss; do not merge them. | 5/10: preprint, public benchmark and explicit oracle design, but no statistics beyond rates, no oracle validation, domain transfer is indirect. |
+
+
+## 2026-10-27 — Redundant interventions can distort test assessment
+
+Search/read date: 2026-10-27; deduplicated by title and primary-paper URL.
+Read the primary author-deposited PDF abstract, definitions, experimental method,
+results, construct/internal/external threats and conclusion. No reproduction.
+
+| Reference / status | Question, sample, method | Finding / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | --- |
+| Papadakis, Henard, Harman, Jia and Le Traon, [Threats to the Validity of Mutation-Based Test Assessment](https://discovery.ucl.ac.uk/1508136/1/ISSTA16.pdf), ISSTA 2016; peer-reviewed proceedings, author-deposited manuscript | Five Unix utilities (Grep, Sed, Flex, Make, Gzip); mutation/test-suite simulation, compiler-equivalence filtering and observed test-kill subsumption; compares conventional and subsuming mutation scores. | Redundant mutants can inflate assessment and alter test-suite comparisons. Their Type-I-error estimate is conditional on a simulated experiment and its alternative mutation metric, not a universal false-positive probability. Surviving mutants were removed from the analysis; finite suites approximate subsumption; only five programs/tools, no requirements or LLM agents. | Thesis: methodological analogy, not H1/H2 evidence. Experiment: materialize the existing candidate queue and explicitly retain shared-source groups without inferring semantic subsumption. Product: many detected mutations do not by themselves establish broad obligation protection. Action: temporal protocol now contains a concrete 12-pair/6-project handoff, two content/identity commitments and the two shared-span groups; no admission or outcome-based filtering. | 8/10: reviewed primary empirical study, explicit algorithms and threats; synthetic comparisons, approximate subsumption and narrow code domain limit transfer. |
+
+**Bounded incorporation.** The 12 existing candidates passed the current offline
+source/deletion validator, but form only 10 distinct source-excerpt groups.
+This observation is directly computed from the candidate metadata, not inferred
+from the paper. Shared spans are not semantic equivalence or subsumption.
+Project-level inference and the human admission gate remain unchanged; no
+candidate, label, hypothesis, baseline or provider authorization changed.
