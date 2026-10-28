@@ -433,3 +433,33 @@ This is an analogy motivating explicit grouping, not proof that these omission
 pairs subsume one another. Do not use future kill vectors or terminal labels to
 select a more favorable confirmatory set; any outcome-based subsumption analysis
 must be a separately labelled exploratory sensitivity analysis.
+
+
+## Unfilled review forms — 2026-10-28
+
+The [authoring template](../../data/prepilot/temporal-warning-manipulation-review-template.json)
+contains two separate 12-row review slots for the existing candidate snapshot.
+It is a preparation artifact with **24 unfilled forms**, not 24 observations,
+human annotations, or approvals. Each row contains only the admission API's
+declared review fields; only candidate IDs are filled. All judgments and actual
+reviewer identities remain null, so the admission API rejects the untouched file.
+
+The custodian must give each reviewer only their own `reviews` list, the
+same pinned source materials and the approved rubric. Keep responses separate
+until both are complete. Slots A/B are routing labels, not reviewer identities.
+Do not show generated outputs, provider identities or the other reviewer's
+judgments. Verify content and ID commitments before distribution; a manifest
+does not prove external custody or independent people.
+
+After independent completion, combine both review lists and call
+`prepare_manipulation_admission(reviews, expected_candidate_ids=...)`.
+Record disagreement before adjudication and preserve original answers.
+Do not replace null judgments with defaults to make validation pass.
+Calibration examples and guideline revisions must be separate from scored
+candidate judgments; approve the rubric before assigning the scored review.
+
+[Paiva et al., Requirements Engineering 2026](https://doi.org/10.1007/s00766-026-00462-z)
+provide a relevant caution: human-mean correlation is not the same as adequate
+inter-rater agreement. Their linguistic-quality task is different from our
+semantic manipulation-admission task, so neither their agreement values nor a
+sample percentage is a transferable admission threshold.
