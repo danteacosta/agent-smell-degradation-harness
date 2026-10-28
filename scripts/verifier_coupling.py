@@ -77,7 +77,7 @@ def load_runs(testers_file: Path = TESTERS_FILE) -> list[dict]:
     return runs
 
 
-def suites(rows: list[dict]) -> list[dict]:
+def suites(rows: list[dict], alarms: tuple[str, ...] = ALARMS) -> list[dict]:
     """One record per suite with soundness and the set of implementations it alarms on."""
     by_call: dict[str, list[dict]] = defaultdict(list)
     for r in rows:
@@ -90,7 +90,7 @@ def suites(rows: list[dict]) -> list[dict]:
         out.append({
             "call_id": call_id, "case": rs[0]["case"], "project_id": rs[0]["project_id"], "source": rs[0]["source"],
             "sound": sound,
-            "alarms": {r["slot_id"] for r in rs if r["verdict"] in ALARMS},
+            "alarms": {r["slot_id"] for r in rs if r["verdict"] in alarms},
             "roles": {r["slot_id"]: ("reference" if r["is_reference"] else r["role"]) for r in rs},
         })
     return out
@@ -441,15 +441,16 @@ def q5_soundness(runs, all_suites) -> dict:
 
 # ---------------------------------------------------------------- driver
 
-def analyse() -> dict:
+def analyse(alarms: tuple[str, ...] = ALARMS) -> dict:
     runs = load_runs()
-    all_suites = {r["tester"]: suites(r["rows"]) for r in runs}
+    all_suites = {r["tester"]: suites(r["rows"], alarms) for r in runs}
     roles = case_roles(runs)
     shown = json.loads(MANIFEST.read_text())["selected_mutants"]
     return {
         "schema_version": SCHEMA,
         "exploratory": True,
         "post_hoc": True,
+        "alarms_counted": list(alarms),
         "confirmatory_eligible": False,
         "inputs": {"testers": str(TESTERS_FILE.relative_to(ROOT)), "manifest": str(MANIFEST.relative_to(ROOT)),
                    "context_cue": str(CONTEXT_CUE.relative_to(ROOT))},
@@ -466,10 +467,13 @@ def analyse() -> dict:
 def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--check", action="store_true", help="recompute and compare with the published file")
+    ap.add_argument("--assertion-only", action="store_true",
+                    help="count only assertion alarms (sensitivity); writes results-assertion-only.json")
     args = ap.parse_args(argv)
-    result = analyse()
+    alarms = ("assertion_alarm",) if args.assertion_only else ALARMS
+    result = analyse(alarms)
     text = json.dumps(result, indent=2, sort_keys=True) + "\n"
-    target = OUT / "results.json"
+    target = OUT / ("results-assertion-only.json" if args.assertion_only else "results.json")
     if args.check:
         if target.read_text() != text:
             raise SystemExit("verifier-coupling results differ from recomputation")

@@ -80,6 +80,13 @@ recovered-alarm rate of code-anchored suites (0.735, `results.json`) comes mostl
 unsound suites; restricted to sound suites and aggregated per tester and source, the
 "suite prefers the defect" reading is not supported.
 
+**Sensitivity: assertion alarms only.** `--assertion-only` writes
+`data/verifier-coupling/v1/results-assertion-only.json` (soundness unchanged: quiet on the
+reference). F1: one complete-source tester 0.776, all five incomplete-source testers
+0.433, difference −0.343 [−0.605, −0.105], sign-flip p = 0.047. F2: 65.4% missed by all
+five against 51.5% under independence. F3: ρ = 0.54, permutation p = 0.006, within-project
+p = 0.040. The direction of every result is unchanged.
+
 ## What this does and does not show
 
 Together, F1–F3 describe a single pattern: the obligation that the request omits is

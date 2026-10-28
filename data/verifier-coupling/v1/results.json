@@ -2294,6 +2294,10 @@
     "note": "A suite that alarms on the reference is unsound and cannot kill any mutant under the published rule.",
     "question": "How often does a suite reject the correct reference implementation?"
   },
+  "alarms_counted": [
+    "assertion_alarm",
+    "error_alarm"
+  ],
   "confirmatory_eligible": false,
   "exploratory": true,
   "inputs": {
