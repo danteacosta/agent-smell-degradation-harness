@@ -19,6 +19,13 @@
     "10": 0.3333333333333333,
     "20": 0.5
   },
+  "recall_query_first_sentence_plus_page_text": {
+    "1": 0.125,
+    "3": 0.25,
+    "5": 0.2916666666666667,
+    "10": 0.4166666666666667,
+    "20": 0.5416666666666666
+  },
   "recall_query_complete_at_1": 0.75,
   "recall_at_5_by_recovery_group": {
     "zero_recovery": {
@@ -50,7 +57,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement adding billing managers on the Billing Account page.",
-      "rank_query_first_sentence": 3
+      "rank_query_first_sentence": 3,
+      "rank_query_first_sentence_plus_page_text": 3
     },
     {
       "case": "grist-context-menu-shortcut",
@@ -72,7 +80,8 @@
       "rank_query_incomplete": 2,
       "rank_query_complete": 2,
       "query_first_sentence": "Implement the grid's menu keyboard shortcuts (Windows key bindings).",
-      "rank_query_first_sentence": 24
+      "rank_query_first_sentence": 24,
+      "rank_query_first_sentence_plus_page_text": 25
     },
     {
       "case": "grist-page-default-collapse",
@@ -103,7 +112,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the page list.",
-      "rank_query_first_sentence": 6153
+      "rank_query_first_sentence": 6153,
+      "rank_query_first_sentence_plus_page_text": 168
     },
     {
       "case": "grist-suggestions-open-copy",
@@ -130,7 +140,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement opening and editing documents.",
-      "rank_query_first_sentence": 22
+      "rank_query_first_sentence": 22,
+      "rank_query_first_sentence_plus_page_text": 22
     },
     {
       "case": "grist-tutorial-restart",
@@ -154,7 +165,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the Restart button of the tutorial popup.",
-      "rank_query_first_sentence": 2
+      "rank_query_first_sentence": 2,
+      "rank_query_first_sentence_plus_page_text": 13
     },
     {
       "case": "immich-library-single-owner",
@@ -181,7 +193,8 @@
       "rank_query_incomplete": 2,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement creating an external library.",
-      "rank_query_first_sentence": 2
+      "rank_query_first_sentence": 2,
+      "rank_query_first_sentence_plus_page_text": 3
     },
     {
       "case": "immich-m2t-upload",
@@ -202,7 +215,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the video upload check.",
-      "rank_query_first_sentence": 19
+      "rank_query_first_sentence": 19,
+      "rank_query_first_sentence_plus_page_text": 43
     },
     {
       "case": "mattermost-anonymous-team-url",
@@ -240,7 +254,8 @@
       "rank_query_incomplete": 6,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the Next button of Create a Team.",
-      "rank_query_first_sentence": 152
+      "rank_query_first_sentence": 152,
+      "rank_query_first_sentence_plus_page_text": 26
     },
     {
       "case": "mattermost-guest-invite-channel",
@@ -268,7 +283,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement Invite as guest in the Invite People dialog.",
-      "rank_query_first_sentence": 1
+      "rank_query_first_sentence": 1,
+      "rank_query_first_sentence_plus_page_text": 1
     },
     {
       "case": "mattermost-mention-add-prompt",
@@ -293,7 +309,8 @@
       "rank_query_incomplete": 13,
       "rank_query_complete": 2,
       "query_first_sentence": "Implement sending a message in the channel.",
-      "rank_query_first_sentence": 345
+      "rank_query_first_sentence": 345,
+      "rank_query_first_sentence_plus_page_text": 40
     },
     {
       "case": "mattermost-playbook-task-markdown",
@@ -320,7 +337,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement adding a task to a playbook checklist.",
-      "rank_query_first_sentence": 1
+      "rank_query_first_sentence": 1,
+      "rank_query_first_sentence_plus_page_text": 1
     },
     {
       "case": "nextcloud-device-password-once",
@@ -344,7 +362,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the device passwords in the Security settings.",
-      "rank_query_first_sentence": 1
+      "rank_query_first_sentence": 1,
+      "rank_query_first_sentence_plus_page_text": 13
     },
     {
       "case": "nextcloud-mail-delegation",
@@ -373,7 +392,8 @@
       "rank_query_incomplete": 8,
       "rank_query_complete": 4,
       "query_first_sentence": "Implement native account delegation in Mail.",
-      "rank_query_first_sentence": 32
+      "rank_query_first_sentence": 32,
+      "rank_query_first_sentence_plus_page_text": 9
     },
     {
       "case": "nextcloud-mail-favorites-up",
@@ -401,7 +421,8 @@
       "rank_query_incomplete": 16,
       "rank_query_complete": 2,
       "query_first_sentence": "Implement the message list of the Mail inbox.",
-      "rank_query_first_sentence": 94
+      "rank_query_first_sentence": 94,
+      "rank_query_first_sentence_plus_page_text": 44
     },
     {
       "case": "openproject-archived-project-selector",
@@ -430,7 +451,8 @@
       "rank_query_incomplete": 59,
       "rank_query_complete": 2,
       "query_first_sentence": "Implement the project list of the All projects dropdown in the header.",
-      "rank_query_first_sentence": 46
+      "rank_query_first_sentence": 46,
+      "rank_query_first_sentence_plus_page_text": 135
     },
     {
       "case": "openproject-more-menu-subproject",
@@ -457,7 +479,8 @@
       "rank_query_incomplete": null,
       "rank_query_complete": null,
       "query_first_sentence": "Implement the More menu of the project information page.",
-      "rank_query_first_sentence": null
+      "rank_query_first_sentence": null,
+      "rank_query_first_sentence_plus_page_text": null
     },
     {
       "case": "paperless-ai-suggestions-blank-text",
@@ -485,7 +508,8 @@
       "rank_query_incomplete": 3,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the run of the \"Apply AI Suggestions\" workflow action.",
-      "rank_query_first_sentence": 21
+      "rank_query_first_sentence": 21,
+      "rank_query_first_sentence_plus_page_text": 21
     },
     {
       "case": "paperless-custom-field-no-value",
@@ -511,7 +535,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the workflow \"Assignment\" action for custom fields.",
-      "rank_query_first_sentence": 32
+      "rank_query_first_sentence": 32,
+      "rank_query_first_sentence_plus_page_text": 37
     },
     {
       "case": "paperless-doc-title-placeholder",
@@ -535,7 +560,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement saving the title template of a workflow assignment.",
-      "rank_query_first_sentence": 12
+      "rank_query_first_sentence": 12,
+      "rank_query_first_sentence_plus_page_text": 2
     },
     {
       "case": "paperless-superuser-grant",
@@ -559,7 +585,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Edit another user account in Users & Groups.",
-      "rank_query_first_sentence": 13
+      "rank_query_first_sentence": 13,
+      "rank_query_first_sentence_plus_page_text": 1
     },
     {
       "case": "wekan-home-multi-drop",
@@ -594,7 +621,8 @@
       "rank_query_incomplete": 2,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement dropping boards on the Home row of All Boards.",
-      "rank_query_first_sentence": 3
+      "rank_query_first_sentence": 3,
+      "rank_query_first_sentence_plus_page_text": 7
     },
     {
       "case": "wekan-swimlane-below-default",
@@ -616,7 +644,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement adding swimlanes.",
-      "rank_query_first_sentence": 768
+      "rank_query_first_sentence": 768,
+      "rank_query_first_sentence_plus_page_text": 9
     },
     {
       "case": "zulip-private-channel-access",
@@ -645,7 +674,8 @@
       "rank_query_incomplete": 90,
       "rank_query_complete": 2,
       "query_first_sentence": "Implement viewing a channel's conversations.",
-      "rank_query_first_sentence": 76
+      "rank_query_first_sentence": 76,
+      "rank_query_first_sentence_plus_page_text": 84
     },
     {
       "case": "zulip-resolved-notice-auto-read",
@@ -677,7 +707,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement resolving topics.",
-      "rank_query_first_sentence": 15
+      "rank_query_first_sentence": 15,
+      "rank_query_first_sentence_plus_page_text": 16
     },
     {
       "case": "zulip-unsubscribe-self",
@@ -702,7 +733,8 @@
       "rank_query_incomplete": 1,
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the Unsubscribe buttons in the channel's subscriber list.",
-      "rank_query_first_sentence": 5
+      "rank_query_first_sentence": 5,
+      "rank_query_first_sentence_plus_page_text": 5
     }
   ]
 }

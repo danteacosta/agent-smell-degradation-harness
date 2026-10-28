@@ -31,6 +31,7 @@ source file at the snapshot does not contain the omitted words).
 |---|---:|---:|---:|---:|---:|
 | recall@k, query = incomplete request | 0.58 | 0.75 | 0.75 | 0.83 | 0.92 |
 | recall@k, query = its first sentence only | 0.13 | 0.29 | 0.33 | 0.33 | 0.50 |
+| recall@k, first sentence + visible text of the page scaffold | 0.13 | 0.25 | 0.29 | 0.42 | 0.54 |
 
 Split by the F3 groups of the coupling analysis: in the 13 requirements with a gold
 passage where no generator kept the rule, the gold passage is in the top 5 for all 13;
@@ -38,7 +39,8 @@ in the 11 where some generator kept it, for 5 of 11 (0.45).
 
 The first-sentence query ("Implement the Restart button of the tutorial popup.") is a
 ticket-title-like lower bound: it drops the documentation sentences that the full request
-shares with the gold passage.
+shares with the gold passage. Adding the visible text of the page scaffold the tester also
+receives (labels, buttons) does not help lexical retrieval much.
 
 ## Reading
 
