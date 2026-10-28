@@ -114,6 +114,13 @@
         "files": [
           "team-sharing.md"
         ],
+        "evidence": [
+          {
+            "file": "team-sharing.md",
+            "paragraph": 14,
+            "text": "none of the roles listed above provide access to billing information or management. you can add up to 10 billing managers on the 'billing account' page, which can be accessed via the user menu dropdown."
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 1,
         "rank_query_first_sentence": 3,
@@ -147,6 +154,13 @@
         "passages": 1,
         "files": [
           "keyboard-shortcuts.md"
+        ],
+        "evidence": [
+          {
+            "file": "keyboard-shortcuts.md",
+            "paragraph": 4,
+            "text": "###navigation | key (mac) | key (windows) | description | | - | - | - | | \u2193 | \u2193 | move downward to next record or field | | \u2191 | \u2191 | move upward to previous record or field | | \u2192 | \u2192 | move right to the next field | | \u2190 | \u2190 | move left to the previous field | | tab | tab | move to the next field, saving changes if editing a value | | \u21e7 tab | shift + tab | move to the previous field, saving changes if editing a value | | pagedown | pagedown | move down one page of records, or to next record in a card list | | pageup | pageup | move up one page of records, or to previous record in a card list | | \u2318 \u2191 | ctrl + \u2191 | move up to the first record | | \u2318 \u2193 | ctrl + \u2193 | move down to the last record | | home | home | move to the first field or the beginning of a row | | end | end | move to the last fie"
+          }
         ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 2,
@@ -191,6 +205,13 @@
         "files": [
           "page-widgets.md"
         ],
+        "evidence": [
+          {
+            "file": "page-widgets.md",
+            "paragraph": 12,
+            "text": "by default, nested pages will be expanded when a document is opened. you can change the default state by clicking the three-dot icon to the right of the parent page and selecting 'set default: collapse'."
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 1,
         "rank_query_first_sentence": 6153,
@@ -230,6 +251,13 @@
         "files": [
           "sharing.md"
         ],
+        "evidence": [
+          {
+            "file": "sharing.md",
+            "paragraph": 44,
+            "text": "with suggestions enabled, users (signed-in or not) automatically open a copy of a document. they make edits to this copy without modifying the original, and then submit these suggestions to be reviewed by the document owner prior to integration. this workflow can be useful in more sensitive contexts, or for crowdsourcing data easily with additional quality control."
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 1,
         "rank_query_first_sentence": 22,
@@ -265,6 +293,13 @@
         "passages": 1,
         "files": [
           "document-tutorials.md"
+        ],
+        "evidence": [
+          {
+            "file": "document-tutorials.md",
+            "paragraph": 34,
+            "text": "!!! warning \"\u26a0\ufe0f don't lose your work!\" clicking 'restart' at the bottom of the tutorial popup will refresh the page, causing any unsaved changes to be lost. be sure to save changes to the main document prior to clicking this."
+          }
         ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 1,
@@ -305,6 +340,13 @@
         "files": [
           "features/libraries.md"
         ],
+        "evidence": [
+          {
+            "file": "features/libraries.md",
+            "paragraph": 1,
+            "text": ":::info currently an external library can only belong to a single user which is selected when the library is initially created. :::"
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 14,
         "rank_query_first_sentence": 2,
@@ -337,6 +379,13 @@
         "passages": 1,
         "files": [
           "features/supported-formats.md"
+        ],
+        "evidence": [
+          {
+            "file": "features/supported-formats.md",
+            "paragraph": 6,
+            "text": "| format | extension(s) | supported? | notes | | :---------- | :-------------------------- | :----------------: | :---- | | 3gpp | .3gp .3gpp | :whitecheckmark: | | | avi | .avi | :whitecheckmark: | | | flv | .flv | :whitecheckmark: | | | m4v | .m4v | :whitecheckmark: | | | matroska | .mkv | :whitecheckmark: | | | mp2t | .mts .m2ts .m2t .ts | :whitecheckmark: | | | mp4 | .mp4 .insv | :whitecheckmark: | | | mpeg | .mpg .mpe .mpeg | :whitecheckmark: | | | mxf | .mxf | :whitecheckmark: | | | quicktime | .mov | :whitecheckmark: | | | webm | .webm | :whitecheckmark: | | | wmv | .wmv | :whitecheckmark: | |"
+          }
         ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 1,
@@ -388,6 +437,13 @@
         "files": [
           "collaborate/organize-using-teams.rst"
         ],
+        "evidence": [
+          {
+            "file": "collaborate/organize-using-teams.rst",
+            "paragraph": 20,
+            "text": "if your system admin has enabled anonymous team and channel urls (available in mattermost enterprise advanced from v11.6.0), team creation becomes a single-step flow and you will not be prompted to choose a team url. the url is assigned automatically."
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 6,
         "rank_query_first_sentence": 152,
@@ -428,6 +484,13 @@
         "files": [
           "collaborate/invite-people.rst"
         ],
+        "evidence": [
+          {
+            "file": "collaborate/invite-people.rst",
+            "paragraph": 18,
+            "text": "- can't share invitation links? contact your mattermost system admin for assistance. an ssl certificate (or a self-signed certificate) may be required for link-based invitations to work. - when inviting guests, you must select at least one channel they can access. guests are limited to the channels you specify and cannot discover other channels. - an invite link can be used by anyone and doesn\u2019t change unless it\u2019s re-generated or revoked by a system admin or team admin via team settings > access > invite code. - your system admin must enable email invitations and configure email for mattermost to send email-based invitations. - invitation links sent by email expire after 48 hours and can only be used once. - your system admin can cancel all email invitations that haven't yet been accepted "
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 3,
         "rank_query_first_sentence": 23,
@@ -464,6 +527,13 @@
         "passages": 1,
         "files": [
           "collaborate/manage-channel-members.rst"
+        ],
+        "evidence": [
+          {
+            "file": "collaborate/manage-channel-members.rst",
+            "paragraph": 24,
+            "text": "you can also @mention users to add them to a channel. if they're not a channel member, mattermost prompts you to add them."
+          }
         ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 13,
@@ -504,6 +574,13 @@
         "files": [
           "workflow-automation/work-with-playbooks.rst"
         ],
+        "evidence": [
+          {
+            "file": "workflow-automation/work-with-playbooks.rst",
+            "paragraph": 26,
+            "text": "playbook tasks consist of text rendered in markdown (when present). you can't run commands directly from a task in a playbook, but you can trigger built-in slash commands and custom slash commands , or outgoing webhooks, to run as part of the task action by starting the task with /."
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 16,
         "rank_query_first_sentence": 15,
@@ -539,6 +616,13 @@
         "passages": 1,
         "files": [
           "session_management.rst"
+        ],
+        "evidence": [
+          {
+            "file": "session_management.rst",
+            "paragraph": 9,
+            "text": ".. note:: you only have access to the device password when creating it. nextcloud does not save the plain password, so enter the password on the new client immediately."
+          }
         ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 2,
@@ -581,6 +665,13 @@
         "files": [
           "groupware/mail.rst"
         ],
+        "evidence": [
+          {
+            "file": "groupware/mail.rst",
+            "paragraph": 75,
+            "text": "the shared account then appears in the delegate's account list, marked as delegated."
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 8,
         "rank_query_first_sentence": 32,
@@ -620,6 +711,13 @@
         "passages": 1,
         "files": [
           "groupware/mail.rst"
+        ],
+        "evidence": [
+          {
+            "file": "groupware/mail.rst",
+            "paragraph": 28,
+            "text": "this setting allows you to show messages set as favorite in a separate section on top of the message list."
+          }
         ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 16,
@@ -662,6 +760,13 @@
         "files": [
           "user-guide/projects/project-settings/project-information/README.md"
         ],
+        "evidence": [
+          {
+            "file": "user-guide/projects/project-settings/project-information/README.md",
+            "paragraph": 41,
+            "text": "once archived, a project can no longer be selected from the project list accessible via header navigation. it is still visible in the project lists dashboard if you set the \"active\" filter to \"off\" (move slider to the left). you can unarchive the project there, too, using the three dots at the right end of a row and clicking unarchive."
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 59,
         "rank_query_first_sentence": 46,
@@ -700,6 +805,13 @@
         "passages": 1,
         "files": [
           "user-guide/projects/project-settings/project-information/README.md"
+        ],
+        "evidence": [
+          {
+            "file": "user-guide/projects/project-settings/project-information/README.md",
+            "paragraph": 11,
+            "text": "- add a subproject - duplicate a project - make a project public - set a project as a template - archive a project - delete a project"
+          }
         ],
         "lexical_gold_agrees": false,
         "rank_query_incomplete": 3,
@@ -741,6 +853,13 @@
         "files": [
           "usage.md"
         ],
+        "evidence": [
+          {
+            "file": "usage.md",
+            "paragraph": 171,
+            "text": "the action works with every trigger except consumption started, because suggestions are made from the document's text, which does not exist until after the document has been processed. documents whose processed text is empty or contains only whitespace are skipped."
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 3,
         "rank_query_first_sentence": 21,
@@ -779,6 +898,13 @@
         "files": [
           "usage.md"
         ],
+        "evidence": [
+          {
+            "file": "usage.md",
+            "paragraph": 142,
+            "text": "- title, see workflow placeholders below - tags, correspondent, document type and storage path - document owner - view and / or edit permissions to users or groups - custom fields, optionally with a value. if no value is set, the field is only added to the document and any value it may already have is left untouched. if a value is set, it will overwrite an existing value of that field on the document."
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 1,
         "rank_query_first_sentence": 32,
@@ -815,6 +941,13 @@
         "files": [
           "usage.md"
         ],
+        "evidence": [
+          {
+            "file": "usage.md",
+            "paragraph": 146,
+            "text": "- {{correspondent}}: assigned correspondent name - {{documenttype}}: assigned document type name - {{ownerusername}}: assigned owner username - {{added}}: added datetime - {{addedyear}}: added year - {{addedyearshort}}: added year - {{addedmonth}}: added month - {{addedmonthname}}: added month name - {{addedmonthnameshort}}: added month short name - {{addedday}}: added day - {{addedtime}}: added time in hh:mm format - {{originalfilename}}: original file name without extension - {{filename}}: current file name without extension - {{doctitle}}: current document title (cannot be used in title assignment)"
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 1,
         "rank_query_first_sentence": 12,
@@ -850,6 +983,13 @@
         "passages": 1,
         "files": [
           "usage.md"
+        ],
+        "evidence": [
+          {
+            "file": "usage.md",
+            "paragraph": 63,
+            "text": "superusers can access all parts of the front and backend application as well as any and all objects. superuser status can only be granted by another superuser."
+          }
         ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 1,
@@ -898,6 +1038,13 @@
         "files": [
           "Features/Board/Home.md"
         ],
+        "evidence": [
+          {
+            "file": "Features/Board/Home.md",
+            "paragraph": 14,
+            "text": "dropping a multi-selection does not silently choose its first board. it reports \"please select only one board\", changes nothing and keeps the selection so it can be narrowed. a one-board drag continues to set home normally."
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 2,
         "rank_query_first_sentence": 3,
@@ -931,6 +1078,13 @@
         "passages": 1,
         "files": [
           "Features/Swimlanes/Swimlanes.md"
+        ],
+        "evidence": [
+          {
+            "file": "Features/Swimlanes/Swimlanes.md",
+            "paragraph": 8,
+            "text": "use the swimlane header +, or swimlane actions \u2192 add swimlane. the existing popup offers above selected swimlane and below selected swimlane, with below selected by default. multiple titles retain their order between the selected lane and its neighbor. board write permissions still apply."
+          }
         ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 1,
@@ -972,6 +1126,13 @@
         "passages": 1,
         "files": [
           "docs/channel-permissions.mdx"
+        ],
+        "evidence": [
+          {
+            "file": "docs/channel-permissions.mdx",
+            "paragraph": 15,
+            "text": "private channels (indicated by ) are for conversations that should be visible to users who are specifically granted access. there are two types of private channels in zulip:"
+          }
         ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 90,
@@ -1018,6 +1179,18 @@
           "docs/configure-automated-notices.mdx",
           "docs/resolve-a-topic.mdx"
         ],
+        "evidence": [
+          {
+            "file": "docs/configure-automated-notices.mdx",
+            "paragraph": 13,
+            "text": "a notice is sent when a topic is resolved or unresolved. users can configure whether these notices are automatically marked as read."
+          },
+          {
+            "file": "docs/resolve-a-topic.mdx",
+            "paragraph": 6,
+            "text": "puts a \u2714 at the beginning of the topic name, e.g., example topic becomes \u2714 example topic. triggers an automated notice from notification bot indicating that you resolved the topic. users can configure whether these notices are automatically marked as read. changes whether the topic appears when using the is:resolved and -is:resolved search filters."
+          }
+        ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 1,
         "rank_query_first_sentence": 9,
@@ -1054,6 +1227,13 @@
         "passages": 1,
         "files": [
           "docs/unsubscribe-from-a-channel.mdx"
+        ],
+        "evidence": [
+          {
+            "file": "docs/unsubscribe-from-a-channel.mdx",
+            "paragraph": 4,
+            "text": "you can always unsubscribe from any channel in zulip. unsubscribing from a channel removes conversations in that channel from your inbox, recent conversations, and left sidebar. new messages will not appear in your combined feed, and you will not receive @-mention notifications in channels you're not subscribed to. the app doesn't track your unread messages in unsubscribed channels."
+          }
         ],
         "lexical_gold_agrees": true,
         "rank_query_incomplete": 2,

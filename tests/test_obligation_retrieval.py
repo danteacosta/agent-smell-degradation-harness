@@ -110,3 +110,28 @@ def test_fetch_refuses_to_reuse_an_unverified_directory(tmp_path, monkeypatch):
     monkeypatch.setattr(ob, "SOURCES", manifest)
     with pytest.raises(ob.SnapshotError, match="HEAD"):
         ob.fetch(tmp_path / "cache")
+
+
+def test_ignored_file_passes_verification_but_is_not_indexed(tmp_path):
+    # Reproduces Codex's 28/10 case: an ignored document leaves HEAD and status
+    # unchanged, so the corpus must come from committed blobs, not the working tree.
+    d, spec, g = _repo(tmp_path)
+    g("sparse-checkout", "disable")
+    (d / ".gitignore").write_text("docs/ignored.md\n")
+    g("add", ".gitignore")
+    g("commit", "-q", "-m", "ignore")
+    g("sparse-checkout", "set", "--no-cone", "/docs/", "/.gitignore")
+    spec = {**spec, "sha": g("rev-parse", "HEAD"), "paths": ["/docs/", "/.gitignore"]}
+    (d / "docs" / "ignored.md").write_text("Planted passage about pending subtasks and closing tasks.\n")
+    ob.verify_snapshot(d, spec)  # status does not see ignored files
+    texts = [p["text"] for p in ob.snapshot_passages(d, "docs", spec["paths"])]
+    assert any("closing a task completes pending subtasks" in t for t in texts)
+    assert not any("planted" in t for t in texts)
+    assert any("planted" in p["text"] for p in ob.passages(d / "docs"))  # the old path would have indexed it
+
+
+def test_snapshot_passages_read_committed_content_and_pinned_paths_only(tmp_path):
+    d, spec, g = _repo(tmp_path)
+    files = dict(ob.snapshot_files(d, "", ["/docs/"]))
+    assert list(files) == ["docs/a.md"]  # other.txt is outside the pinned paths and not a doc
+    assert files["docs/a.md"].startswith("Closing a task")

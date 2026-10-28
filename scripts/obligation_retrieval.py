@@ -25,6 +25,7 @@ from collections import Counter
 import difflib
 import json
 import math
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -73,18 +74,72 @@ def norm(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip().lower()
 
 
-def passages(root: Path) -> list[dict]:
+def _passages_from(files) -> list[dict]:
+    """files: iterable of (path relative to the passage root, text), in sorted order."""
     out = []
-    for f in sorted(root.rglob("*")):
-        if not f.is_file() or f.suffix.lower() not in DOC_EXT or ".git" in f.parts:
-            continue
-        text = strip_markup(f.read_text(errors="replace"))
+    for rel, raw in files:
+        text = strip_markup(raw)
         for i, para in enumerate(re.split(r"\n\s*\n", text)):
             ws = words(para)
             if len(ws) >= 5:
-                out.append({"file": str(f.relative_to(root)), "index": i, "terms": content(ws),
-                            "text": norm(para)})
+                out.append({"file": rel, "index": i, "terms": content(ws), "text": norm(para)})
     return out
+
+
+def passages(root: Path) -> list[dict]:
+    """Working-tree passages. Used only by tests and ad hoc inspection; run() indexes
+    the committed snapshot through snapshot_passages()."""
+    files = []
+    for f in sorted(root.rglob("*")):
+        if f.is_file() and f.suffix.lower() in DOC_EXT and ".git" not in f.parts:
+            files.append((str(f.relative_to(root)), f.read_text(errors="replace")))
+    return _passages_from(files)
+
+
+def snapshot_files(repo: Path, root_rel: str, allowed: list[str] | None = None) -> list[tuple[str, str]]:
+    """Documentation blobs tracked at HEAD under root_rel, read from the object store.
+
+    The working tree is never read, so ignored, untracked or edited files cannot enter
+    the corpus. Blobs outside the sparse paths are not available offline in a
+    blob:none clone, so only paths inside `allowed` (the pinned sparse patterns, such as
+    "/docs/user-guide/") are indexed; a missing blob raises instead of being fetched.
+    """
+    prefix = root_rel.rstrip("/") + "/" if root_rel else ""
+    listing = _git(repo, "ls-tree", "-r", "-z", "--full-tree", "HEAD", "--", root_rel or ".")
+    entries = []
+    for rec in listing.split("\0"):
+        if not rec:
+            continue
+        meta, path = rec.split("\t", 1)
+        mode, kind, sha = meta.split()
+        if kind != "blob" or mode == "120000" or Path(path).suffix.lower() not in DOC_EXT:
+            continue
+        if allowed is not None and not any(("/" + path).startswith(a.rstrip("/") + "/") for a in allowed):
+            continue
+        entries.append((path[len(prefix):] if path.startswith(prefix) else path, sha))
+    entries.sort()
+    if not entries:
+        return []
+    # GIT_NO_LAZY_FETCH stops a partial clone from silently fetching a missing blob.
+    r = subprocess.run(["git", "-C", str(repo), "cat-file", "--batch"],
+                       input="".join(sha + "\n" for _, sha in entries).encode(),
+                       capture_output=True, env={**os.environ, "GIT_NO_LAZY_FETCH": "1"})
+    if r.returncode != 0:
+        raise SnapshotError(f"{repo}: cannot read snapshot blobs: {r.stderr.decode(errors='replace')[:300]}")
+    out, buf = [], r.stdout
+    for rel, sha in entries:
+        nl = buf.index(b"\n")
+        header = buf[:nl].decode().split()
+        if header[0] != sha or header[1] != "blob":
+            raise SnapshotError(f"{repo}: blob {sha} for {rel} missing ({' '.join(header)})")
+        size = int(header[2])
+        out.append((rel, buf[nl + 1:nl + 1 + size].decode("utf-8", errors="replace")))
+        buf = buf[nl + 1 + size + 1:]
+    return out
+
+
+def snapshot_passages(repo: Path, root_rel: str, allowed: list[str] | None = None) -> list[dict]:
+    return _passages_from(snapshot_files(repo, root_rel, allowed))
 
 
 class BM25:
@@ -121,13 +176,13 @@ def source_files(d: dict, root_rel: str) -> list[str]:
     return out
 
 
-def evaluate(case: str, root: Path, cache: dict, root_rel: str = "") -> dict:
+def evaluate(case: str, repo: Path, cache: dict, root_rel: str = "", allowed: list[str] | None = None) -> dict:
     d = json.loads((CASES / f"{case}.json").read_text())
     a, c = d["arms"]["A"], d["arms"]["C"]
     span = sorted(set(content(omitted_span(a, c))))
-    key = str(root)
+    key = f"{repo}::{root_rel}"
     if key not in cache:
-        ps = passages(root)
+        ps = snapshot_passages(repo, root_rel, allowed)
         cache[key] = (ps, BM25([p["terms"] for p in ps]))
     ps, bm = cache[key]
     need = max(1, math.ceil(len(span) / 2))
@@ -165,6 +220,8 @@ def evaluate(case: str, root: Path, cache: dict, root_rel: str = "") -> dict:
         page_text = re.sub(r"<[^>]+>", " ", html)
     r_first_page = best_rank(content(words(first + " " + page_text))) if page_text else None
     semantic = {"quote": quote, "passages": len(sem), "files": sorted({ps[i]["file"] for i in sem}),
+                "evidence": [{"file": ps[i]["file"], "paragraph": ps[i]["index"], "text": ps[i]["text"][:800]}
+                             for i in sem],
                 "lexical_gold_agrees": bool(set(sem) & set(gold)),
                 "rank_query_incomplete": sem_rank(content(words(c))),
                 "rank_query_first_sentence": sem_rank(content(words(first))),
@@ -196,7 +253,7 @@ def run(cache_dir: Path) -> dict:
     rows = []
     for case in cases:
         s = src["cases"][case]
-        rows.append(evaluate(case, cache_dir / s["dir"] / s["root"], cache, s["root"]))
+        rows.append(evaluate(case, cache_dir / s["dir"], cache, s["root"], src["snapshots"][s["dir"]]["paths"]))
     usable = [r for r in rows if r["gold_passages"]]
     recall = {str(k): (sum(1 for r in usable if r["rank_query_incomplete"] and r["rank_query_incomplete"] <= k)
                        / len(usable)) if usable else None for k in KS}
