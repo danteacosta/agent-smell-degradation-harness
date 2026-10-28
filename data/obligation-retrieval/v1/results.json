@@ -1,0 +1,651 @@
+{
+  "schema_version": "obligation-retrieval/v1",
+  "exploratory": true,
+  "model_calls": 0,
+  "method": "BM25 (k1 1.5, b 0.75) over paragraph passages of the documentation snapshot; query = arm C text; gold = passage in the requirement's source documentation file with >= half of the omitted span's content words (loose variant: any file, reported per row)",
+  "requirements": 25,
+  "requirements_with_gold_passage": 24,
+  "recall_query_incomplete": {
+    "1": 0.5833333333333334,
+    "3": 0.75,
+    "5": 0.75,
+    "10": 0.8333333333333334,
+    "20": 0.9166666666666666
+  },
+  "recall_query_complete_at_1": 0.75,
+  "recall_at_5_by_recovery_group": {
+    "zero_recovery": {
+      "requirements": 13,
+      "recall_at_5": 1.0
+    },
+    "some_recovery": {
+      "requirements": 11,
+      "recall_at_5": 0.45454545454545453
+    }
+  },
+  "rows": [
+    {
+      "case": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "omitted_content_words": [
+        "10"
+      ],
+      "source_files": [
+        "team-sharing.md"
+      ],
+      "passages": 7094,
+      "gold_passages": 1,
+      "loose_gold_passages": 90,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 1,
+      "max_cover": 1,
+      "best_cover_file": "assistant.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "grist-context-menu-shortcut",
+      "project_id": "grist",
+      "omitted_content_words": [
+        "10",
+        "shift"
+      ],
+      "source_files": [
+        "keyboard-shortcuts.md"
+      ],
+      "passages": 7094,
+      "gold_passages": 6,
+      "loose_gold_passages": 125,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 1,
+      "max_cover": 2,
+      "best_cover_file": "keyboard-shortcuts.md",
+      "rank_query_incomplete": 2,
+      "rank_query_complete": 2
+    },
+    {
+      "case": "grist-page-default-collapse",
+      "project_id": "grist",
+      "omitted_content_words": [
+        "change",
+        "click",
+        "collapse",
+        "default",
+        "dot",
+        "icon",
+        "parent",
+        "right",
+        "select",
+        "state",
+        "three"
+      ],
+      "source_files": [
+        "page-widgets.md"
+      ],
+      "passages": 7094,
+      "gold_passages": 2,
+      "loose_gold_passages": 4,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 6,
+      "max_cover": 11,
+      "best_cover_file": "page-widgets.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "omitted_content_words": [
+        "automatically",
+        "copy",
+        "document",
+        "enabl",
+        "open",
+        "sign",
+        "suggestion"
+      ],
+      "source_files": [
+        "sharing.md"
+      ],
+      "passages": 7094,
+      "gold_passages": 1,
+      "loose_gold_passages": 4,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 4,
+      "max_cover": 7,
+      "best_cover_file": "sharing.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "grist-tutorial-restart",
+      "project_id": "grist",
+      "omitted_content_words": [
+        "caus",
+        "chang",
+        "lost",
+        "unsav"
+      ],
+      "source_files": [
+        "document-tutorials.md"
+      ],
+      "passages": 7094,
+      "gold_passages": 1,
+      "loose_gold_passages": 4,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 2,
+      "max_cover": 4,
+      "best_cover_file": "document-tutorials.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "immich-library-single-owner",
+      "project_id": "immich",
+      "omitted_content_words": [
+        "belong",
+        "creat",
+        "external",
+        "initially",
+        "library",
+        "select",
+        "single"
+      ],
+      "source_files": [
+        "features/libraries.md"
+      ],
+      "passages": 1338,
+      "gold_passages": 2,
+      "loose_gold_passages": 2,
+      "rank_query_incomplete_loose": 2,
+      "words_needed": 4,
+      "max_cover": 7,
+      "best_cover_file": "features/libraries.md",
+      "rank_query_incomplete": 2,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "immich-m2t-upload",
+      "project_id": "immich",
+      "omitted_content_words": [
+        "2"
+      ],
+      "source_files": [
+        "features/supported-formats.md"
+      ],
+      "passages": 1493,
+      "gold_passages": 2,
+      "loose_gold_passages": 145,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 1,
+      "max_cover": 1,
+      "best_cover_file": "FAQ.mdx",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "omitted_content_words": [
+        "admin",
+        "anonymou",
+        "app",
+        "assign",
+        "automatically",
+        "becom",
+        "channel",
+        "choose",
+        "config",
+        "creation",
+        "enabl",
+        "flow",
+        "prompt",
+        "single",
+        "step",
+        "system",
+        "team",
+        "url"
+      ],
+      "source_files": [
+        "collaborate/organize-using-teams.rst"
+      ],
+      "passages": 2320,
+      "gold_passages": 1,
+      "loose_gold_passages": 3,
+      "rank_query_incomplete_loose": 6,
+      "words_needed": 9,
+      "max_cover": 16,
+      "best_cover_file": "collaborate/organize-using-teams.rst",
+      "rank_query_incomplete": 6,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "mattermost-guest-invite-channel",
+      "project_id": "mattermost",
+      "omitted_content_words": [
+        "acces",
+        "channel",
+        "guest",
+        "invit",
+        "least",
+        "must",
+        "one",
+        "select"
+      ],
+      "source_files": [
+        "collaborate/invite-people.rst"
+      ],
+      "passages": 2320,
+      "gold_passages": 3,
+      "loose_gold_passages": 10,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 4,
+      "max_cover": 8,
+      "best_cover_file": "collaborate/invite-people.rst",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "mattermost-mention-add-prompt",
+      "project_id": "mattermost",
+      "omitted_content_words": [
+        "add",
+        "channel",
+        "mattermost",
+        "member",
+        "prompt"
+      ],
+      "source_files": [
+        "collaborate/manage-channel-members.rst"
+      ],
+      "passages": 2320,
+      "gold_passages": 16,
+      "loose_gold_passages": 85,
+      "rank_query_incomplete_loose": 2,
+      "words_needed": 3,
+      "max_cover": 5,
+      "best_cover_file": "collaborate/manage-channel-members.rst",
+      "rank_query_incomplete": 13,
+      "rank_query_complete": 2
+    },
+    {
+      "case": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "omitted_content_words": [
+        "consist",
+        "markdown",
+        "playbook",
+        "present",
+        "render",
+        "task",
+        "text"
+      ],
+      "source_files": [
+        "workflow-automation/work-with-playbooks.rst"
+      ],
+      "passages": 2320,
+      "gold_passages": 2,
+      "loose_gold_passages": 2,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 4,
+      "max_cover": 7,
+      "best_cover_file": "workflow-automation/work-with-playbooks.rst",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "omitted_content_words": [
+        "acces",
+        "creat",
+        "device",
+        "password"
+      ],
+      "source_files": [
+        "session_management.rst"
+      ],
+      "passages": 2057,
+      "gold_passages": 6,
+      "loose_gold_passages": 19,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 2,
+      "max_cover": 4,
+      "best_cover_file": "session_management.rst",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "nextcloud-mail-delegation",
+      "project_id": "nextcloud",
+      "omitted_content_words": [
+        "account",
+        "app",
+        "appear",
+        "delegat",
+        "delegate",
+        "entr",
+        "mark",
+        "shar",
+        "tag"
+      ],
+      "source_files": [
+        "groupware/mail.rst"
+      ],
+      "passages": 2057,
+      "gold_passages": 1,
+      "loose_gold_passages": 1,
+      "rank_query_incomplete_loose": 8,
+      "words_needed": 5,
+      "max_cover": 6,
+      "best_cover_file": "groupware/mail.rst",
+      "rank_query_incomplete": 8,
+      "rank_query_complete": 4
+    },
+    {
+      "case": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "omitted_content_words": [
+        "allow",
+        "favorite",
+        "messag",
+        "message",
+        "section",
+        "separate",
+        "sett",
+        "top"
+      ],
+      "source_files": [
+        "groupware/mail.rst"
+      ],
+      "passages": 2057,
+      "gold_passages": 1,
+      "loose_gold_passages": 2,
+      "rank_query_incomplete_loose": 10,
+      "words_needed": 4,
+      "max_cover": 8,
+      "best_cover_file": "groupware/mail.rst",
+      "rank_query_incomplete": 16,
+      "rank_query_complete": 2
+    },
+    {
+      "case": "openproject-archived-project-selector",
+      "project_id": "openproject",
+      "omitted_content_words": [
+        "accessible",
+        "archiv",
+        "header",
+        "longer",
+        "navigation",
+        "project",
+        "select",
+        "via"
+      ],
+      "source_files": [
+        "user-guide/projects/project-settings/project-information/README.md",
+        "getting-started/projects/README.md"
+      ],
+      "passages": 3548,
+      "gold_passages": 1,
+      "loose_gold_passages": 5,
+      "rank_query_incomplete_loose": 13,
+      "words_needed": 4,
+      "max_cover": 8,
+      "best_cover_file": "user-guide/projects/project-settings/project-information/README.md",
+      "rank_query_incomplete": 59,
+      "rank_query_complete": 2
+    },
+    {
+      "case": "openproject-more-menu-subproject",
+      "project_id": "openproject",
+      "omitted_content_words": [
+        "add",
+        "app",
+        "form",
+        "open",
+        "parent",
+        "project",
+        "subproject"
+      ],
+      "source_files": [
+        "user-guide/projects/project-settings/project-information/README.md"
+      ],
+      "passages": 3548,
+      "gold_passages": 0,
+      "loose_gold_passages": 7,
+      "rank_query_incomplete_loose": 28,
+      "words_needed": 4,
+      "max_cover": 4,
+      "best_cover_file": "user-guide/agile-boards/agile-boards-faq/README.md",
+      "rank_query_incomplete": null,
+      "rank_query_complete": null
+    },
+    {
+      "case": "paperless-ai-suggestions-blank-text",
+      "project_id": "paperless-ngx",
+      "omitted_content_words": [
+        "contain",
+        "document",
+        "empty",
+        "process",
+        "skipp",
+        "text",
+        "whitespace",
+        "whose"
+      ],
+      "source_files": [
+        "usage.md"
+      ],
+      "passages": 2219,
+      "gold_passages": 2,
+      "loose_gold_passages": 6,
+      "rank_query_incomplete_loose": 3,
+      "words_needed": 4,
+      "max_cover": 8,
+      "best_cover_file": "usage.md",
+      "rank_query_incomplete": 3,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "omitted_content_words": [
+        "add",
+        "already",
+        "document",
+        "left",
+        "may",
+        "untouch"
+      ],
+      "source_files": [
+        "usage.md"
+      ],
+      "passages": 2174,
+      "gold_passages": 6,
+      "loose_gold_passages": 21,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 3,
+      "max_cover": 6,
+      "best_cover_file": "usage.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "paperless-doc-title-placeholder",
+      "project_id": "paperless-ngx",
+      "omitted_content_words": [
+        "assignment",
+        "cannot",
+        "title",
+        "used"
+      ],
+      "source_files": [
+        "usage.md"
+      ],
+      "passages": 1949,
+      "gold_passages": 3,
+      "loose_gold_passages": 13,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 2,
+      "max_cover": 4,
+      "best_cover_file": "usage.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "paperless-superuser-grant",
+      "project_id": "paperless-ngx",
+      "omitted_content_words": [
+        "another",
+        "grant",
+        "statu",
+        "superuser"
+      ],
+      "source_files": [
+        "usage.md"
+      ],
+      "passages": 1724,
+      "gold_passages": 3,
+      "loose_gold_passages": 3,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 2,
+      "max_cover": 4,
+      "best_cover_file": "usage.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "wekan-home-multi-drop",
+      "project_id": "wekan",
+      "omitted_content_words": [
+        "board",
+        "chang",
+        "choose",
+        "dropp",
+        "first",
+        "keep",
+        "multi",
+        "narrow",
+        "noth",
+        "one",
+        "please",
+        "report",
+        "select",
+        "selection",
+        "silently"
+      ],
+      "source_files": [
+        "Features/Board/Home.md"
+      ],
+      "passages": 11395,
+      "gold_passages": 1,
+      "loose_gold_passages": 10,
+      "rank_query_incomplete_loose": 2,
+      "words_needed": 8,
+      "max_cover": 15,
+      "best_cover_file": "Features/Board/Home.md",
+      "rank_query_incomplete": 2,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "omitted_content_words": [
+        "default",
+        "select"
+      ],
+      "source_files": [
+        "Features/Swimlanes/Swimlanes.md"
+      ],
+      "passages": 11395,
+      "gold_passages": 1,
+      "loose_gold_passages": 720,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 1,
+      "max_cover": 2,
+      "best_cover_file": "Design/Design-Principles.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "zulip-private-channel-access",
+      "project_id": "zulip",
+      "omitted_content_words": [
+        "acces",
+        "channel",
+        "conversation",
+        "grant",
+        "indicat",
+        "lock",
+        "private",
+        "specifically",
+        "visible"
+      ],
+      "source_files": [
+        "docs/channel-permissions.mdx"
+      ],
+      "passages": 4038,
+      "gold_passages": 1,
+      "loose_gold_passages": 2,
+      "rank_query_incomplete_loose": 90,
+      "words_needed": 5,
+      "max_cover": 8,
+      "best_cover_file": "docs/channel-permissions.mdx",
+      "rank_query_incomplete": 90,
+      "rank_query_complete": 2
+    },
+    {
+      "case": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "omitted_content_words": [
+        "add",
+        "automatically",
+        "configure",
+        "mark",
+        "notic",
+        "read",
+        "resolv",
+        "section",
+        "sett",
+        "topic",
+        "whether"
+      ],
+      "source_files": [
+        "docs/configure-automated-notices.mdx",
+        "include/_ConfigureResolvedNoticesMarkedAsRead.mdx"
+      ],
+      "passages": 4038,
+      "gold_passages": 3,
+      "loose_gold_passages": 8,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 6,
+      "max_cover": 8,
+      "best_cover_file": "docs/configure-automated-notices.mdx",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    },
+    {
+      "case": "zulip-unsubscribe-self",
+      "project_id": "zulip",
+      "omitted_content_words": [
+        "alway",
+        "channel",
+        "unsubscribe",
+        "zulip"
+      ],
+      "source_files": [
+        "docs/unsubscribe-from-a-channel.mdx",
+        "docs/channel-permissions.mdx"
+      ],
+      "passages": 4038,
+      "gold_passages": 12,
+      "loose_gold_passages": 187,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 2,
+      "max_cover": 4,
+      "best_cover_file": "docs/unsubscribe-from-a-channel.mdx",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1
+    }
+  ]
+}

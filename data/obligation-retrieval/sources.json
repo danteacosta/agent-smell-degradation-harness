@@ -1,0 +1,340 @@
+{
+  "schema_version": "obligation-retrieval-sources/v1",
+  "note": "Documentation snapshot per QP4 requirement. Snapshots are the arm-A snapshot commits recorded in data/abc-cases; Paperless cases without a snapshot use the commit that introduced the rule, and immich-library-single-owner uses its source commit.",
+  "snapshots": {
+    "grist": {
+      "url": "https://github.com/gristlabs/grist-help",
+      "sha": "b047726e327709d214e3b63222ee052de6399934",
+      "paths": [
+        "/help/en/docs/"
+      ]
+    },
+    "mattermost": {
+      "url": "https://github.com/mattermost/docs",
+      "sha": "bd09d959514c34e72a33c24663b5946682b656ec",
+      "paths": [
+        "/source/end-user-guide/"
+      ]
+    },
+    "nextcloud": {
+      "url": "https://github.com/nextcloud/documentation",
+      "sha": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+      "paths": [
+        "/user_manual/"
+      ]
+    },
+    "openproject": {
+      "url": "https://github.com/opf/openproject",
+      "sha": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+      "paths": [
+        "/docs/user-guide/",
+        "/docs/getting-started/"
+      ]
+    },
+    "wekan": {
+      "url": "https://github.com/wekan/wekan",
+      "sha": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+      "paths": [
+        "/docs/"
+      ]
+    },
+    "zulip": {
+      "url": "https://github.com/zulip/zulip",
+      "sha": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+      "paths": [
+        "/starlight_help/src/content/"
+      ]
+    },
+    "immich-eee": {
+      "url": "https://github.com/immich-app/immich",
+      "sha": "eee793bfe4a2e48aea595ad7563bfaf038dd2cd5",
+      "paths": [
+        "/docs/docs/"
+      ]
+    },
+    "immich-a3c": {
+      "url": "https://github.com/immich-app/immich",
+      "sha": "a3c8b359f2fdc47699f1530215a23fe8bd34c454",
+      "paths": [
+        "/docs/docs/"
+      ]
+    },
+    "paperless-937feb1bef": {
+      "url": "https://github.com/paperless-ngx/paperless-ngx",
+      "sha": "937feb1befdbc5712a612e9be44a926b0b6fc84c",
+      "paths": [
+        "/docs/"
+      ]
+    },
+    "paperless-855669ddf9": {
+      "url": "https://github.com/paperless-ngx/paperless-ngx",
+      "sha": "855669ddf93e25fe5c45420781e191a7df63884d",
+      "paths": [
+        "/docs/"
+      ]
+    },
+    "paperless-63c0e2f72b": {
+      "url": "https://github.com/paperless-ngx/paperless-ngx",
+      "sha": "63c0e2f72b53ca2d38851930a4bcd1d5c8b52321",
+      "paths": [
+        "/docs/"
+      ]
+    },
+    "paperless-41bcc12cc2": {
+      "url": "https://github.com/paperless-ngx/paperless-ngx",
+      "sha": "41bcc12cc2ae01d99957518a9b88126e16bb7c71",
+      "paths": [
+        "/docs/"
+      ]
+    }
+  },
+  "cases": {
+    "grist-billing-managers-limit": {
+      "dir": "grist",
+      "root": "help/en/docs",
+      "source": {
+        "commit": "f896f91781",
+        "file": "help/en/docs/team-sharing.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "snapshot_file": "help/en/docs/team-sharing.md"
+      }
+    },
+    "grist-context-menu-shortcut": {
+      "dir": "grist",
+      "root": "help/en/docs",
+      "source": {
+        "commit": "bcdbeb35ac",
+        "file": "help/en/docs/keyboard-shortcuts.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "snapshot_file": "help/en/docs/keyboard-shortcuts.md"
+      }
+    },
+    "grist-page-default-collapse": {
+      "dir": "grist",
+      "root": "help/en/docs",
+      "source": {
+        "commit": "537c682145",
+        "file": "help/en/docs/page-widgets.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "snapshot_file": "help/en/docs/page-widgets.md"
+      }
+    },
+    "grist-suggestions-open-copy": {
+      "dir": "grist",
+      "root": "help/en/docs",
+      "source": {
+        "commit": "af6962bf5b",
+        "file": "help/en/docs/sharing.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "snapshot_file": "help/en/docs/sharing.md"
+      }
+    },
+    "grist-tutorial-restart": {
+      "dir": "grist",
+      "root": "help/en/docs",
+      "source": {
+        "commit": "4c173049c5",
+        "file": "help/en/docs/document-tutorials.md",
+        "snapshot": "b047726e327709d214e3b63222ee052de6399934",
+        "snapshot_file": "help/en/docs/document-tutorials.md"
+      }
+    },
+    "immich-library-single-owner": {
+      "dir": "immich-eee",
+      "root": "docs/docs",
+      "source": {
+        "commit": "eee793bfe4",
+        "file": "docs/docs/features/libraries.md"
+      }
+    },
+    "immich-m2t-upload": {
+      "dir": "immich-a3c",
+      "root": "docs/docs",
+      "source": {
+        "commit": "fcd372238f",
+        "file": "docs/docs/features/supported-formats.md",
+        "arm_a_snapshot_commit": "a3c8b359f2fdc47699f1530215a23fe8bd34c454",
+        "frame_end": "2026-09-30T23:59:59Z"
+      }
+    },
+    "mattermost-anonymous-team-url": {
+      "dir": "mattermost",
+      "root": "source/end-user-guide",
+      "source": {
+        "commit": "840fc4b8f5",
+        "file": "source/end-user-guide/collaborate/organize-using-teams.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "snapshot_file": "source/end-user-guide/collaborate/organize-using-teams.rst"
+      }
+    },
+    "mattermost-guest-invite-channel": {
+      "dir": "mattermost",
+      "root": "source/end-user-guide",
+      "source": {
+        "commit": "dbfcaedd0e",
+        "file": "source/end-user-guide/collaborate/invite-people.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "snapshot_file": "source/end-user-guide/collaborate/invite-people.rst"
+      }
+    },
+    "mattermost-mention-add-prompt": {
+      "dir": "mattermost",
+      "root": "source/end-user-guide",
+      "source": {
+        "commit": "6c4598422f",
+        "file": "source/end-user-guide/collaborate/manage-channel-members.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "snapshot_file": "source/end-user-guide/collaborate/manage-channel-members.rst"
+      }
+    },
+    "mattermost-playbook-task-markdown": {
+      "dir": "mattermost",
+      "root": "source/end-user-guide",
+      "source": {
+        "commit": "5fb0a2b285",
+        "file": "source/end-user-guide/workflow-automation/work-with-playbooks.rst",
+        "snapshot": "bd09d959514c34e72a33c24663b5946682b656ec",
+        "snapshot_file": "source/end-user-guide/workflow-automation/work-with-playbooks.rst"
+      }
+    },
+    "nextcloud-device-password-once": {
+      "dir": "nextcloud",
+      "root": "user_manual",
+      "source": {
+        "commit": "a806a064bc",
+        "file": "user_manual/session_management.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "snapshot_file": "user_manual/session_management.rst"
+      }
+    },
+    "nextcloud-mail-delegation": {
+      "dir": "nextcloud",
+      "root": "user_manual",
+      "source": {
+        "commit": "58b21da96d",
+        "file": "user_manual/groupware/mail.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "snapshot_file": "user_manual/groupware/mail.rst"
+      }
+    },
+    "nextcloud-mail-favorites-up": {
+      "dir": "nextcloud",
+      "root": "user_manual",
+      "source": {
+        "commit": "215c005b07",
+        "file": "user_manual/groupware/mail.rst",
+        "snapshot": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+        "snapshot_file": "user_manual/groupware/mail.rst"
+      }
+    },
+    "openproject-archived-project-selector": {
+      "dir": "openproject",
+      "root": "docs",
+      "source": {
+        "commit": "784ed0fb52",
+        "file": "docs/user-guide/projects/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "snapshot_file": "docs/user-guide/projects/project-settings/project-information/README.md",
+        "snapshot_context_file": "docs/getting-started/projects/README.md"
+      }
+    },
+    "openproject-more-menu-subproject": {
+      "dir": "openproject",
+      "root": "docs",
+      "source": {
+        "commit": "60be87235a",
+        "file": "docs/user-guide/projects/project-settings/project-information/README.md",
+        "snapshot": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+        "snapshot_file": "docs/user-guide/projects/project-settings/project-information/README.md"
+      }
+    },
+    "paperless-ai-suggestions-blank-text": {
+      "dir": "paperless-937feb1bef",
+      "root": "docs",
+      "source": {
+        "commit": "937feb1bef",
+        "file": "docs/usage.md"
+      }
+    },
+    "paperless-custom-field-no-value": {
+      "dir": "paperless-855669ddf9",
+      "root": "docs",
+      "source": {
+        "commit": "855669ddf9",
+        "file": "docs/usage.md"
+      }
+    },
+    "paperless-doc-title-placeholder": {
+      "dir": "paperless-63c0e2f72b",
+      "root": "docs",
+      "source": {
+        "commit": "63c0e2f72b",
+        "file": "docs/usage.md"
+      }
+    },
+    "paperless-superuser-grant": {
+      "dir": "paperless-41bcc12cc2",
+      "root": "docs",
+      "source": {
+        "commit": "41bcc12cc2",
+        "file": "docs/usage.md"
+      }
+    },
+    "wekan-home-multi-drop": {
+      "dir": "wekan",
+      "root": "docs",
+      "source": {
+        "commit": "aebc7d9def",
+        "file": "docs/Features/Board/Home.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "snapshot_file": "docs/Features/Board/Home.md"
+      }
+    },
+    "wekan-swimlane-below-default": {
+      "dir": "wekan",
+      "root": "docs",
+      "source": {
+        "commit": "5ed4268a61",
+        "file": "docs/Features/Swimlanes/Swimlanes.md",
+        "snapshot": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+        "snapshot_file": "docs/Features/Swimlanes/Swimlanes.md"
+      }
+    },
+    "zulip-private-channel-access": {
+      "dir": "zulip",
+      "root": "starlight_help/src/content",
+      "source": {
+        "commit": "befe49c293",
+        "file": "help/channel-permissions.md",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "snapshot_file": "starlight_help/src/content/docs/channel-permissions.mdx"
+      }
+    },
+    "zulip-resolved-notice-auto-read": {
+      "dir": "zulip",
+      "root": "starlight_help/src/content",
+      "source": {
+        "commit": "a11cc9a46e",
+        "file": "help/configure-automated-notices.md",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "snapshot_file": "starlight_help/src/content/docs/configure-automated-notices.mdx",
+        "snapshot_context": [
+          "starlight_help/src/content/include/_ConfigureResolvedNoticesMarkedAsRead.mdx"
+        ]
+      }
+    },
+    "zulip-unsubscribe-self": {
+      "dir": "zulip",
+      "root": "starlight_help/src/content",
+      "source": {
+        "commit": "bde295806c",
+        "file": "help/include/unsubscribe-user-from-channel.md",
+        "snapshot": "9778ffc23c3e83e321152a48ab32c1426e1bd941",
+        "snapshot_file": "starlight_help/src/content/docs/unsubscribe-from-a-channel.mdx",
+        "snapshot_context": [
+          "starlight_help/src/content/docs/channel-permissions.mdx"
+        ]
+      }
+    }
+  }
+}
