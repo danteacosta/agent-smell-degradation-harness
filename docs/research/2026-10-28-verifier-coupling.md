@@ -102,7 +102,14 @@ weakens test descriptions in three variants over selected faulty implementations
 Haeri and Ghelichi (arXiv 2607.06636; 4.5 removes validation rules; appendix I analyses
 partial specifications; ungrounded ensembles are a contrast); TestSuiteBench
 (arXiv 2610.13065; generates implementations and tests from the same specification; 3.2
-ablates official documentation against a refined specification). The candidate
+ablates official documentation against a refined specification). Also read on 28/10 by Claude: Liu et al., TiGanEval, *Instructions Are Evidence, Not
+Objectives* (arXiv 2610.17757; 64 SWE and research tasks, partial vs full instructions,
+requirements discoverable from the workspace, held-out evaluator; 53–67 point drop in
+Success@1; its failure analysis mentions an agent whose own validation followed its fix
+path, but agents' tests are not measured), and Gaonkar, TRACE (arXiv 2610.11678, read
+from the abstract only; paired runs and rescoring of fixed trajectories to separate
+agent from verifier effects; on τ²-bench identical reruns flipped 15–36% of task
+outcomes, which matters for reading single τ² attempts). The candidate
 contribution is therefore narrow: tracking the same removed obligation through both
 sources, separating implementation loss, conditional detection and joint escape, against
 a stable external reference. No priority over this combination is claimed.
