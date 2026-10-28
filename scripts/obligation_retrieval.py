@@ -137,6 +137,8 @@ def evaluate(case: str, root: Path, cache: dict, root_rel: str = "") -> dict:
 
     r_c = best_rank(content(words(c)))
     r_a = best_rank(content(words(a)))
+    first = re.split(r"(?<=[.!?])\s+", c.strip())[0]
+    r_first = best_rank(content(words(first)))
     gold_strict = gold
     gold = loose
     r_c_loose = best_rank(content(words(c)))
@@ -147,7 +149,8 @@ def evaluate(case: str, root: Path, cache: dict, root_rel: str = "") -> dict:
             "loose_gold_passages": len(loose), "rank_query_incomplete_loose": r_c_loose, "words_needed": need,
             "max_cover": max(cover) if cover else 0,
             "best_cover_file": ps[best]["file"] if best is not None else None,
-            "rank_query_incomplete": r_c, "rank_query_complete": r_a}
+            "rank_query_incomplete": r_c, "rank_query_complete": r_a,
+            "query_first_sentence": first, "rank_query_first_sentence": r_first}
 
 
 def run(cache_dir: Path) -> dict:
@@ -163,6 +166,8 @@ def run(cache_dir: Path) -> dict:
     usable = [r for r in rows if r["gold_passages"]]
     recall = {str(k): (sum(1 for r in usable if r["rank_query_incomplete"] and r["rank_query_incomplete"] <= k)
                        / len(usable)) if usable else None for k in KS}
+    recall_first = {str(k): (sum(1 for r in usable if r["rank_query_first_sentence"] and r["rank_query_first_sentence"] <= k)
+                             / len(usable)) if usable else None for k in KS}
     by_group = {}
     for label, sel in (("zero_recovery", [r for r in usable if det[r["case"]]["generator_recovery"] == 0]),
                        ("some_recovery", [r for r in usable if det[r["case"]]["generator_recovery"] > 0])):
@@ -175,6 +180,7 @@ def run(cache_dir: Path) -> dict:
                       "omitted span's content words (loose variant: any file, reported per row)",
             "requirements": len(rows), "requirements_with_gold_passage": len(usable),
             "recall_query_incomplete": recall,
+            "recall_query_first_sentence_of_incomplete": recall_first,
             "recall_query_complete_at_1": (sum(1 for r in usable if r["rank_query_complete"] == 1) / len(usable))
             if usable else None,
             "recall_at_5_by_recovery_group": by_group, "rows": rows}
