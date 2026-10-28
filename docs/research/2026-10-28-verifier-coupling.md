@@ -50,11 +50,16 @@ heterogeneity between requirements; it does not exclude residual association wit
 requirement, and with one to four mutants per requirement the within-requirement
 expectation is noisy. With the complete requirement no loss was missed by all five.
 
-**F3 — Generator recovery and tester detection are coupled (Q3).** Across the 25
+**F3 — Generator recovery and tester detection move together, mostly through one cluster (Q3).** Across the 25
 requirements, the share of arm-C implementations that kept the omitted rule
 (generator recovery, from the 46-case collection) correlates with the incomplete-source
 detection rate averaged over testers: Spearman ρ = 0.59; permutation p = 0.002; with
-permutations only within projects, p = 0.015. In the four requirements with a context
+permutations only within projects, p = 0.015. The correlation is carried by a
+cluster: 11 requirements have zero recovery and zero detection. Split by recovery, the
+14 requirements whose rule no generator kept have mean incomplete-source detection 0.048,
+and the 11 with some recovery have 0.242; without the zero–zero cluster, Spearman is
+−0.24 (n = 14, permutation p = 0.42). The supported reading is a dichotomy (rules never
+recovered are almost never detected), not a monotone relation. In the four requirements with a context
 cue (panel κ = 0.65), mean generator recovery is 0.375 against 0.143 and mean tester
 detection 0.200 against 0.121. In practical terms the coupling changes little here: the
 mean per-requirement product of loss and miss (an omitted rule shipped broken and
@@ -85,14 +90,14 @@ unsound suites; restricted to sound suites and aggregated per tester and source,
 reference). F1: one complete-source tester 0.776, all five incomplete-source testers
 0.433, difference −0.343 [−0.605, −0.105], sign-flip p = 0.047. F2: 65.4% missed by all
 five against 51.5% under independence. F3: ρ = 0.54, permutation p = 0.006, within-project
-p = 0.040. The direction of every result is unchanged.
+p = 0.040; dichotomy 0.038 vs 0.197. The direction of every result is unchanged.
 
 ## What this does and does not show
 
 Together, F1–F3 describe a single pattern: the obligation that the request omits is
 lost by some generators, missed by testers who receive the same request, and missed by
-all of them in the same requirements; where the remaining context lets generators
-recover the rule, testers more often detect its loss. This is a candidate thesis claim
+all of them in the same requirements; where generators never recover the rule,
+testers almost never detect its loss. This is a candidate thesis claim
 ("one omission, two blind spots"), not a confirmed mechanism.
 
 Close prior work, checked in the primary text by Codex on 28/10 (preprints, versions

@@ -1317,6 +1317,15 @@
     "question": "Are rules the generators recover also the ones testers notice from the incomplete request?",
     "requirements": 25,
     "spearman_rho": 0.5405177236505319,
+    "structure": {
+      "detection_mean_some_recovery": 0.19696969696969696,
+      "detection_mean_zero_recovery": 0.0375,
+      "permutation_p_without_zero_zero": 0.5947202639868007,
+      "requirements_at_zero_zero": 11,
+      "requirements_some_recovery": 11,
+      "requirements_zero_recovery": 14,
+      "spearman_without_zero_zero": -0.155821559241073
+    },
     "unit": "requirement; generator recovery = recovered / (recovered + confirmed mutants) in arm C of the 46-case collection, restricted to these 25 eligible requirements (each has >=1 mutant by construction)",
     "within_project_permutation_p_two_sided": 0.039648017599120046
   },

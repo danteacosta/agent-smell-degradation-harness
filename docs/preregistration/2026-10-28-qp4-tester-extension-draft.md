@@ -71,8 +71,12 @@ audit.
   incomplete-source suites (per-requirement difference > 0).
 - **H-b.** The union of all testers' incomplete-source suites detects fewer confirmed
   losses than one tester's complete-source suites (difference < 0).
-- **H-c.** Across requirements, generator recovery and incomplete-source detection
-  (mean over testers) are positively associated.
+- **H-c.** Requirements in which at least one generator implementation kept the omitted
+  rule have higher incomplete-source detection (mean over testers) than requirements in
+  which none did. In the exploratory data the rank correlation (ρ = 0.59) was carried by
+  11 requirements with zero recovery and zero detection; without them it was −0.24, so
+  the hypothesis is stated as this dichotomy (0.242 vs 0.048 exploratory), not as a
+  monotone association.
 
 ## Analysis
 
@@ -80,9 +84,11 @@ audit.
   95% project bootstrap interval; support requires the predicted sign and rejection
   after Holm correction over {H-a pooled over testers, H-b} at 0.05. Per-tester H-a
   results are reported without being counted as separate confirmations.
-- H-c: Spearman ρ with a two-sided permutation test within projects and a project
-  bootstrap interval. **Estimation only**: reported with its interval, not used as a
-  confirmatory claim (see power below).
+- H-c: difference in mean incomplete-source detection between the two recovery groups,
+  with a project bootstrap interval; Spearman ρ with the within-project permutation test
+  and the correlation without the zero–zero cluster reported alongside. **Estimation
+  only**: not used as a confirmatory claim (see power below, which simulated ρ and is
+  therefore only indicative for the dichotomy).
 - Scripts: `scripts/mutation_adequacy.py` and `scripts/verifier_coupling.py`, frozen by
   hash before collection; any change after unblinding is reported as a deviation.
 - Sensitivities: assertion alarms only; excluding the code_incomplete shown mutant;

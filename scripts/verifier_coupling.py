@@ -355,6 +355,18 @@ def q3_coupling(runs, all_suites, roles, context_cue_file: Path = CONTEXT_CUE) -
               "difference_ci95_project_bootstrap": [draws[int(0.025 * 3999)], draws[int(0.975 * 3999)]],
               "note": "loss = 1 - generator recovery; miss = 1 - incomplete-source detection; per requirement, "
                       "equal weight; truncated to requirements with >=1 confirmed mutant"}
+    # The rank correlation is dominated by requirements with zero recovery and zero
+    # detection; report the dichotomy and the correlation without that cluster.
+    none = [y for x, y in zip(xs, ys) if x == 0]
+    some = [y for x, y in zip(xs, ys) if x > 0]
+    rest = [(x, y) for x, y in zip(xs, ys) if not (x == 0 and y == 0)]
+    structure = {
+        "requirements_zero_recovery": len(none), "detection_mean_zero_recovery": mean(none),
+        "requirements_some_recovery": len(some), "detection_mean_some_recovery": mean(some),
+        "requirements_at_zero_zero": len(xs) - len(rest),
+        "spearman_without_zero_zero": spearman([a for a, _ in rest], [b for _, b in rest]),
+        "permutation_p_without_zero_zero": permutation_p([a for a, _ in rest], [b for _, b in rest]),
+    }
     by_cue = {}
     for v in (0, 1):
         sel = [r for r in rows if r["context_cue"] == v]
@@ -367,6 +379,7 @@ def q3_coupling(runs, all_suites, roles, context_cue_file: Path = CONTEXT_CUE) -
             "spearman_rho": spearman(xs, ys), "permutation_p_two_sided": permutation_p(xs, ys),
             "within_project_permutation_p_two_sided": permutation_p(xs, ys, strata=zs),
             "escape": escape,
+            "structure": structure,
             "requirements": len(xs),
             "by_context_cue": by_cue,
             "caveat": "Eligibility requires at least one confirmed mutant, so fully recovered rules are absent: "
