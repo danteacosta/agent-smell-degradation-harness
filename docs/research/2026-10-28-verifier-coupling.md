@@ -133,6 +133,11 @@ results, the τ² collection or any frozen artefact.
    them from these data.
 2. In the confirmatory collection, record tester detection next to generator recovery
    for every requirement, so the coupling (F3) is estimated without truncation.
-3. Use F2 in the related-work positioning: ensembles of testers or judges drawn from the
+3. Link F3 to the covariates proposed on 22/10. A rule that is an arbitrary product
+   choice, not determined by the rest of the request and without a sibling rule, would be
+   lost by generators and unwritable for testers alike; that would explain the zero–zero
+   cluster. Coding remaining relational cue and contractual indeterminacy blind before
+   generation, as already planned, lets the confirmatory study test this explanation.
+4. Use F2 in the related-work positioning: ensembles of testers or judges drawn from the
    same incomplete source do not cover the obligation, which separates this result from
    evaluator-diversity remedies.
