@@ -54,12 +54,14 @@ expectation is noisy. With the complete requirement no loss was missed by all fi
 requirements, the share of arm-C implementations that kept the omitted rule
 (generator recovery, from the 46-case collection) correlates with the incomplete-source
 detection rate averaged over testers: Spearman ρ = 0.59; permutation p = 0.002; with
-permutations only within projects, p = 0.015. The correlation is carried by a
-cluster: 11 requirements have zero recovery and zero detection. Split by recovery, the
-14 requirements whose rule no generator kept have mean incomplete-source detection 0.048,
-and the 11 with some recovery have 0.242; without the zero–zero cluster, Spearman is
-−0.24 (n = 14, permutation p = 0.42). The supported reading is a dichotomy (rules never
-recovered are almost never detected), not a monotone relation. Descriptively, using
+permutations only within projects, p = 0.015. Much of the correlation comes from a
+cluster: 11 requirements have zero recovery and zero detection. As a descriptive
+contrast, the 14 requirements whose rule no generator kept have mean incomplete-source
+detection 0.048, and the 11 with some recovery have 0.242. As a sensitivity, dropping the
+zero–zero cluster leaves Spearman −0.24 (n = 14, permutation p = 0.42); because that
+subset is chosen on both outcomes, this neither shows that the relation is a true
+dichotomy nor rules out a monotone relation, and the non-significant remainder is not
+evidence of no association. (Wording revised after review by Codex, 28/10.) Descriptively, using
 the existing pre-collection labels: all four requirements whose rule is numeric
 (screening panel) fall in the zero-recovery group (4 of 14 against 0 of 11); context
 cue (panel κ = 0.65) is 1 of 14 against 3 of 11; derived state 2 of 14 against 1 of 11;
@@ -96,14 +98,14 @@ unsound suites; restricted to sound suites and aggregated per tester and source,
 reference). F1: one complete-source tester 0.776, all five incomplete-source testers
 0.433, difference −0.343 [−0.605, −0.105], sign-flip p = 0.047. F2: 65.4% missed by all
 five against 51.5% under independence. F3: ρ = 0.54, permutation p = 0.006, within-project
-p = 0.040; dichotomy 0.038 vs 0.197. The direction of every result is unchanged.
+p = 0.040; recovery-group contrast 0.038 vs 0.197. The direction of every result is unchanged.
 
 ## What this does and does not show
 
 Together, F1–F3 describe a single pattern: the obligation that the request omits is
 lost by some generators, missed by testers who receive the same request, and missed by
 all of them in the same requirements; where generators never recover the rule,
-testers almost never detect its loss. This is a candidate thesis claim
+testers almost never detect its loss (a descriptive contrast on a post hoc grouping). This is a candidate thesis claim
 ("one omission, two blind spots"), not a confirmed mechanism.
 
 Close prior work, checked in the primary text by Codex on 28/10 (preprints, versions
@@ -119,7 +121,7 @@ requirements discoverable from the workspace, held-out evaluator; 53–67 point 
 Success@1; its failure analysis mentions an agent whose own validation followed its fix
 path, but agents' tests are not measured), and Gaonkar, TRACE (arXiv 2610.11678, read
 from the abstract only; paired runs and rescoring of fixed trajectories to separate
-agent from verifier effects; on τ²-bench identical reruns flipped 15–36% of task
+agent from verifier effects; identical reruns flipped 15–36% of task
 outcomes, which matters for reading single τ² attempts). The candidate
 contribution is therefore narrow: tracking the same removed obligation through both
 sources, separating implementation loss, conditional detection and joint escape, against

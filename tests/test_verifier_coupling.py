@@ -36,6 +36,23 @@ def test_suites_soundness_and_alarms():
     assert ss["s2"]["alarms"] == {"r", "m1", "m2", "c1"}
 
 
+def test_assertion_only_keeps_soundness_fixed():
+    # An error alarm on the reference makes the suite unsound in every sensitivity;
+    # --assertion-only changes only which alarms count on the other implementations.
+    rows = [
+        row("s3", "k", "r", "correct", "error_alarm", ref=True),
+        row("s3", "k", "m1", "mutant", "assertion_alarm"),
+        row("s4", "k", "r", "correct", "quiet", ref=True),
+        row("s4", "k", "m1", "mutant", "error_alarm"),
+        row("s4", "k", "m2", "mutant", "assertion_alarm"),
+    ]
+    for alarms in (vc.ALARMS, ("assertion_alarm",)):
+        ss = {s["call_id"]: s for s in vc.suites(rows, alarms=alarms)}
+        assert not ss["s3"]["sound"] and ss["s4"]["sound"]
+    only = {s["call_id"]: s for s in vc.suites(rows, alarms=("assertion_alarm",))}
+    assert only["s4"]["alarms"] == {"m2"}
+
+
 def test_detection_ignores_unsound_suites():
     ss = vc.suites(tiny_rows())
     assert vc.detection_sets(ss, "k", "spec_incomplete", {"m1", "m2"}) == {"m1"}

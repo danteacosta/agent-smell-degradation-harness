@@ -320,6 +320,33 @@ SCREENING = [ROOT / "data/llm-screening-20261002/results.json",
 MEMORIZATION_GLOB = "data/memorization-probe-*/*.json"
 
 
+def memorization_files() -> list[Path]:
+    """Memorization-probe files that actually contribute labels."""
+    out = []
+    for f in sorted(ROOT.glob(MEMORIZATION_GLOB)):
+        d = json.loads(f.read_text())
+        rows = (d.get("rows") or []) if isinstance(d, dict) else []
+        if any("memorized" in r and r.get("candidate_id") for r in rows):
+            out.append(f)
+    return out
+
+
+def input_manifest() -> dict:
+    """Every file the analysis reads, with sha256, so results are tied to their inputs."""
+    import hashlib
+
+    def entry(f: Path) -> dict:
+        return {"path": str(f.relative_to(ROOT)), "sha256": hashlib.sha256(f.read_bytes()).hexdigest()}
+
+    runs = [ROOT / r["results"] for r in json.loads(TESTERS_FILE.read_text())["runs"] if r["status"] == "evaluated"]
+    return {
+        "testers": entry(TESTERS_FILE), "manifest": entry(MANIFEST), "context_cue": entry(CONTEXT_CUE),
+        "tester_runs": [entry(f) for f in runs],
+        "covariates": {"scoreboard": entry(SCOREBOARD), "screening": [entry(f) for f in SCREENING],
+                       "memorization": [entry(f) for f in memorization_files()]},
+    }
+
+
 def covariate_crosstab(rows: list[dict]) -> dict:
     """Pre-collection labels (screening panel majority, memorization probe, context cue)
     counted in the zero-recovery and some-recovery groups. Descriptive only."""
@@ -329,7 +356,7 @@ def covariate_crosstab(rows: list[dict]) -> dict:
         for r in json.loads(f.read_text())["rows"]:
             screen[r["candidate_id"]] = r
     mem = {}
-    for f in sorted(ROOT.glob(MEMORIZATION_GLOB)):
+    for f in memorization_files():
         d = json.loads(f.read_text())
         for r in (d.get("rows") or []) if isinstance(d, dict) else []:
             if "memorized" in r and r.get("candidate_id"):
@@ -507,8 +534,7 @@ def analyse(alarms: tuple[str, ...] = ALARMS) -> dict:
         "post_hoc": True,
         "alarms_counted": list(alarms),
         "confirmatory_eligible": False,
-        "inputs": {"testers": str(TESTERS_FILE.relative_to(ROOT)), "manifest": str(MANIFEST.relative_to(ROOT)),
-                   "context_cue": str(CONTEXT_CUE.relative_to(ROOT))},
+        "inputs": input_manifest(),
         "requirements": len(roles),
         "projects": len({v["project_id"] for v in roles.values()}),
         "Q1_ensemble": q1_ensemble(runs, all_suites, roles),

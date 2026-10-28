@@ -2359,9 +2359,66 @@
   "confirmatory_eligible": false,
   "exploratory": true,
   "inputs": {
-    "context_cue": "data/context-cue/20261004-v2/results.json",
-    "manifest": "data/shared-omission-e2e/v1/frozen-manifest-public.json",
-    "testers": "data/shared-omission-e2e/testers.json"
+    "context_cue": {
+      "path": "data/context-cue/20261004-v2/results.json",
+      "sha256": "feb1e99505b81fd4b72d65dfbc335cf37732ca45ab4165e048aa5e1ccb88fe83"
+    },
+    "covariates": {
+      "memorization": [
+        {
+          "path": "data/memorization-probe-20261002/results.json",
+          "sha256": "59c3c8bc5c137044190c370ecc88eeb4fd028950fbbce81de5b4d9e84b131dee"
+        },
+        {
+          "path": "data/memorization-probe-round2-20261003/results.json",
+          "sha256": "1f06aaa1a0f04b47a586e88df1bc262ba26625193379cdc22fd09ca40c4adb66"
+        }
+      ],
+      "scoreboard": {
+        "path": "data/context-cue/20261004-v2/selected46-scoreboard.json",
+        "sha256": "d20f061fd9af2a0170ee0c0fc16380da7a7477795092ac3426a9efc6f73ec988"
+      },
+      "screening": [
+        {
+          "path": "data/llm-screening-20261002/results.json",
+          "sha256": "95e2acc6bb9757b3584359e6c7919769d57456da30cd91592c504eb937628d9f"
+        },
+        {
+          "path": "data/llm-screening-round2-20261003/results.json",
+          "sha256": "efd715003c462e0af5cdc149f23ba98744a4bea051751eb6a2e5be85f800a4d6"
+        }
+      ]
+    },
+    "manifest": {
+      "path": "data/shared-omission-e2e/v1/frozen-manifest-public.json",
+      "sha256": "d2b0108909505df0c704380c3e166a340728ee225d693df7d1c559ff8f06de78"
+    },
+    "tester_runs": [
+      {
+        "path": "data/shared-omission-e2e/v1/results.json",
+        "sha256": "030f28e185c3b22d7ab7fd4a54f8c78e84501108b573413a6968b188527e56a2"
+      },
+      {
+        "path": "data/shared-omission-e2e/claude-evaluation-v1/claude-sonnet-4-6/results.json",
+        "sha256": "370190c33249f3e3b3d06cdbc3c5b25551730359a9564d8360d0c3bdb9882291"
+      },
+      {
+        "path": "data/shared-omission-e2e/claude-evaluation-v1/claude-opus-4-6/results.json",
+        "sha256": "c399f9c53baf7ef898dab0fc79d04e6a6b793f3a3af1b2f37ed7f268a1c25b10"
+      },
+      {
+        "path": "data/shared-omission-e2e/claude55-v1/claude-sonnet-5-5/results.json",
+        "sha256": "d2d419982b5c15ed972c2b9a771a6b3249c03f4869a5ecec37b1b0206f5b0119"
+      },
+      {
+        "path": "data/shared-omission-e2e/claude55-v1/claude-opus-5-5/results.json",
+        "sha256": "a2fb288fd5413f7e5a192eb920ac35722b33bd39c006b33c63f37aa757b33387"
+      }
+    ],
+    "testers": {
+      "path": "data/shared-omission-e2e/testers.json",
+      "sha256": "4c04cbc0e2aa980cfd08e7001aa0f51a1012aacf321220e6866f73502436c7f0"
+    }
   },
   "post_hoc": true,
   "projects": 8,
