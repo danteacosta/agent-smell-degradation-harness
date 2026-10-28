@@ -65,16 +65,18 @@ records only how each one counts.
 
 | Study (sections) | Unit tested against | Soundness / filtering | Detection numerator and denominator | "Misled" notion |
 |---|---|---|---|---|
-| Huang, Zhang, Harman, Du, Cui, *Measuring the Influence of Incorrect Code on Test Generation*, arXiv 2409.09464v3 (28/3/2025; the arXiv record says under review, no venue assumed; read by Claude from the HTML, §1–8, references truncated; §3.1 per Codex) | Correct code (accuracy, coverage); a constructed set of LLM-generated incorrect solutions, or pre-patch code for BugsInPy and SWE-bench (§3.4) | Test level: coverage and detection count only tests that pass the correct code; failing tests are excluded, not counted as zero; how many were excluded is not reported (§3.4.2–3.4.3) | Percentage of bug-set programs detected by correct tests, at test or task level; "detected" is implied (a correct test failing on the buggy program) rather than defined (§3.4.3) | Share of tests that pass the incorrect code (RQ3, §5.3); denominator not stated |
-| Zhao, Zhou, Cohen (ISSTA 2026), arXiv 2607.22883 (§2.6, §7) | Buggy and fixed version of each Defects4J focal method | Each test labelled by its result on both versions (Table 2) | Effective tests: fail on buggy, pass on fixed; counted per model and condition (Table 4) | Misguided: pass on buggy, fail on fixed. Argues that Huang's count of all buggy-passing tests overstates misguidance because over 90% of those are true negatives (pass on both) (§2.6, Table 3; §7) |
+| Huang, Zhang, Harman, Du, Cui, *Measuring the Influence of Incorrect Code on Test Generation*, arXiv 2409.09464v3 (28/3/2025; the arXiv record says under review, no venue assumed; read by Claude from the HTML, §1–8, references truncated; §3.1 per Codex) | Correct code (accuracy, coverage); a constructed set of LLM-generated incorrect solutions, or pre-patch code for BugsInPy and SWE-bench (§3.4) | Two levels. Task level (§3.4.1): a task's tests count as correct only if all of them pass on the correct code. Test level (§3.4.2–3.4.3): coverage and detection count only individual tests that pass the correct code. The exact denominator and the treatment of excluded tasks are not stated in the text and were not checked in code | Percentage of bug-set programs detected by correct tests, reported at test and task level; "detected" is implied (a correct test failing on the buggy program) rather than defined (§3.4.3) | Share of tests that pass the incorrect code (RQ3, §5.3); denominator not stated |
+| Zhao, Zhou, Cohen (ISSTA 2026), arXiv 2607.22883 (§2.6, §7) | Buggy and fixed version of each Defects4J focal method | Each test labelled by its result on both versions (Table 2) | Effective tests: fail on buggy, pass on fixed; counted per model and condition (Table 4) | Misguided: pass on buggy, fail on fixed. The authors criticise Huang's measure (all buggy-passing tests) as overstating misguidance, since over 90% of those tests are true negatives that pass on both versions (§2.6, Table 3; §7); this is a critique of the metric, not a refutation of Huang's results |
 | Konstantinou, Tambon, Papadakis, arXiv 2607.05139 (§IV-E) | One faulty implementation per task and the reference | Test level: a detecting test must fail on the faulty code and pass on the reference | Detection per faulty implementation | — |
 | TestSuiteBench, arXiv 2610.13065 (§2.6) | Reference executable and its mutants | Test level: tests that fail on the reference are dropped before scoring; validity V reported separately | Mutation score M: killed mutants / mutants | — |
 | **QP4** (`scripts/mutation_adequacy.py`) | Correct reference, oracle-confirmed mutants (arm-C losses of the target obligation) and recovered implementations of the same requirement | **Suite level:** a suite is sound only if it is quiet on the reference; unusable or unsound suites stay in the denominator as zero; an error alarm on the reference makes the suite unsound in every sensitivity | Per requirement: killed confirmed mutants / confirmed mutants, mean over suites (H-a), or any sound suite of a pool (H-b, Q1); equal weight per requirement | Not used. Alarms on recovered implementations are reported separately (F5) |
 
-Consequences: Huang's and TestSuiteBench's test-level filtering can keep a suite's
-correct tests while discarding its wrong ones; QP4 scores the whole suite as zero if it
-alarms on the reference. QP4 rates are therefore conservative relative to test-level
-filtering, and none of these figures should be compared numerically with QP4's.
+Consequences: on the same batch of candidate tests, zeroing a whole suite that alarms on
+the reference is more restrictive than keeping its individually valid tests (the
+test-level variants of Huang, TestSuiteBench and Konstantinou). Huang's task-level
+variant (all tests must pass on the correct code) is closer to QP4's suite-level rule,
+but its exact denominators were not checked. Across studies the rates are not
+comparable, and no ordering of strictness or performance between studies is claimed.
 
 ## Priority
 
@@ -114,7 +116,7 @@ is not an exhaustive search, and no claim of being first rests on it.
   M 4.0%; refined V 86.7%, M 25.5%; 30 instances). TRACE closed by Codex from §5.
 - Ding §4.1–4.2 and Req2Test-Bench §3.2, §5.4–5.5, §6 read by Codex; the rest of both
   remains unread by either. Zhao et al.: §1–8 read by Claude (HTML §1–4.3, PDF §4.2–8)
-  and by Codex (full HTML). Huang et al. read by Claude (HTML v3, §1–8).
+  and by Codex in targeted checks (§2.6, §4.4, §5/Table 12, §6), not a full review. Huang et al. read by Claude (HTML v3, §1–8); §3.1 and §3.4.1–3.4.3 also checked by Codex.
 - Ungrounded Enforcement: title, authors and OpenReview id confirmed; read the abstract or
   paper when reachable.
 - Haeri and Ghelichi: Codex read I.5–I.9, G and H in the HTML; no cross-model pooling in
