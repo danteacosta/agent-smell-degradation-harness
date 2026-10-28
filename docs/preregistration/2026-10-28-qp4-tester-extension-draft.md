@@ -113,7 +113,7 @@ that the eligible QP4 sample is smaller than the admitted H1 sample (exploratory
 ## Feasibility of the eligible sample
 
 In the 46-case collection, 25 requirements (54%) were QP4-eligible: 17 had no confirmed
-mutant in their four arm-C implementations and 4 more lacked a correct A or a mutant.
+mutant in their four arm-C implementations and 4 had a mutant but no correct A.
 With the planned 8 × 5 design, about 22 eligible requirements are expected, which the
 simulation puts at power 0.71 for H-b with observed effects (0.64 halved). Reaching
 about 40 eligible requirements needs roughly 70–75 admitted ones, but the frozen #177
