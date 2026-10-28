@@ -1318,6 +1318,56 @@
     "requirements": 25,
     "spearman_rho": 0.5913014237047428,
     "structure": {
+      "covariates_by_recovery_group": {
+        "context_cue": {
+          "some_recovery": {
+            "missing": 0,
+            "positive": 3,
+            "requirements": 11
+          },
+          "zero_recovery": {
+            "missing": 0,
+            "positive": 1,
+            "requirements": 14
+          }
+        },
+        "derived_state": {
+          "some_recovery": {
+            "missing": 0,
+            "positive": 1,
+            "requirements": 11
+          },
+          "zero_recovery": {
+            "missing": 0,
+            "positive": 2,
+            "requirements": 14
+          }
+        },
+        "memorized": {
+          "some_recovery": {
+            "missing": 0,
+            "positive": 7,
+            "requirements": 11
+          },
+          "zero_recovery": {
+            "missing": 0,
+            "positive": 7,
+            "requirements": 14
+          }
+        },
+        "numeric": {
+          "some_recovery": {
+            "missing": 0,
+            "positive": 0,
+            "requirements": 11
+          },
+          "zero_recovery": {
+            "missing": 0,
+            "positive": 4,
+            "requirements": 14
+          }
+        }
+      },
       "detection_mean_some_recovery": 0.2424242424242424,
       "detection_mean_zero_recovery": 0.048214285714285716,
       "permutation_p_without_zero_zero": 0.4191790410479476,

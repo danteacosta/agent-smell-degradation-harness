@@ -314,6 +314,47 @@ def q2_agreement(runs, all_suites, roles) -> dict:
 
 # ---------------------------------------------------------------- Q3 coupling
 
+SCOREBOARD = ROOT / "data/context-cue/20261004-v2/selected46-scoreboard.json"
+SCREENING = [ROOT / "data/llm-screening-20261002/results.json",
+             ROOT / "data/llm-screening-round2-20261003/results.json"]
+MEMORIZATION_GLOB = "data/memorization-probe-*/*.json"
+
+
+def covariate_crosstab(rows: list[dict]) -> dict:
+    """Pre-collection labels (screening panel majority, memorization probe, context cue)
+    counted in the zero-recovery and some-recovery groups. Descriptive only."""
+    cand = {c: v["candidate_id"] for c, v in json.loads(SCOREBOARD.read_text())["per_case"].items()}
+    screen = {}
+    for f in SCREENING:
+        for r in json.loads(f.read_text())["rows"]:
+            screen[r["candidate_id"]] = r
+    mem = {}
+    for f in sorted(ROOT.glob(MEMORIZATION_GLOB)):
+        d = json.loads(f.read_text())
+        for r in (d.get("rows") or []) if isinstance(d, dict) else []:
+            if "memorized" in r and r.get("candidate_id"):
+                mem[r["candidate_id"]] = r["memorized"]
+
+    def vote(cid, key):
+        r = screen.get(cid)
+        if not r:
+            return None
+        vs = [v["vote"].get(key) for v in r["votes"].values() if v.get("status") == "ok"]
+        return max(set(vs), key=vs.count) if vs else None
+
+    out = {}
+    for name, get in (("numeric", lambda r: vote(cand[r["case"]], "numeric")),
+                      ("derived_state", lambda r: vote(cand[r["case"]], "derived_state")),
+                      ("context_cue", lambda r: r["context_cue"]),
+                      ("memorized", lambda r: mem.get(cand[r["case"]]))):
+        out[name] = {}
+        for label, sel in (("zero_recovery", [r for r in rows if r["generator_recovery"] == 0]),
+                           ("some_recovery", [r for r in rows if r["generator_recovery"] > 0])):
+            vals = [get(r) for r in sel]
+            out[name][label] = {"positive": sum(v in (True, 1) for v in vals), "requirements": len(sel),
+                                "missing": sum(v is None for v in vals)}
+    return out
+
 def q3_coupling(runs, all_suites, roles, context_cue_file: Path = CONTEXT_CUE) -> dict:
     testers = [r["tester"] for r in runs]
     cue = {r["case"]: r["context_cue"] for r in json.loads(context_cue_file.read_text())["rows"]}
@@ -367,6 +408,7 @@ def q3_coupling(runs, all_suites, roles, context_cue_file: Path = CONTEXT_CUE) -
         "spearman_without_zero_zero": spearman([a for a, _ in rest], [b for _, b in rest]),
         "permutation_p_without_zero_zero": permutation_p([a for a, _ in rest], [b for _, b in rest]),
     }
+    structure["covariates_by_recovery_group"] = covariate_crosstab(rows)
     by_cue = {}
     for v in (0, 1):
         sel = [r for r in rows if r["context_cue"] == v]
