@@ -1389,3 +1389,18 @@ at abstract level only (requirement-conditioned code and per-requirement test ge
 compliance; HumanEval-NFR). Method details, results and limitations were not read, so it is not scored and not
 entered. Candidate follow-up: read the full paper before citing it as prior art for requirement-anchored tests
 (a product/ablation question, not a change to H1/H2).
+
+
+## 2026-10-28 — Correlation does not establish semantic-review adequacy
+
+Search/read: 2026-10-28; DOI/title deduplicated. Read publisher abstract,
+method, human-validation design/results and threats (Sections 3–5). No replication.
+
+| Reference / status | Question, sample, method | Result / limits | Thesis, experiment, product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Paiva, Canedo and Rocha Filho, [From issue titles to requirements](https://doi.org/10.1007/s00766-026-00462-z), Requirements Engineering 31:7, published 26 May 2026; peer-reviewed | 150 OSS titles, five repositories; two generators, three prompts, 900 statements; LLM quality ratings and five humans reviewing 50 stratified items after separate calibration. | Prompt trade-offs; human alpha 0.150–0.394 despite significant human-mean correlations. Intrinsic textual quality excludes contextual completeness/correctness; score-stratified validation, few models/projects and stochastic reproducibility limit transfer. | Thesis: no H1/H2 evidence. Experiment: preserve independent judgments, separate calibration and adjudication; correlation cannot certify semantic admission. Product: drafting-quality scores do not establish obligation coverage. Action: publish two unfilled review slots for the existing 12 candidates; no synthetic human decisions. | 7/10: reviewed, explicit rubric and public replication materials; limited human sample and low agreement constrain proxy-validity claims. |
+
+**Implementation boundary.** The new template reduces manual assembly only.
+Coverage, schema, ordered-ID digest, null judgments and rejection by the existing
+admission API were checked offline. These checks do not establish semantic
+validity, source rights, independent people, external custody or a corpus freeze.
