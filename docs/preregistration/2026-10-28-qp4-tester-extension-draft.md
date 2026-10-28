@@ -68,15 +68,20 @@ audit.
 ## Hypotheses
 
 - **H-a.** For each tester, complete-source suites detect more confirmed losses than
-  incomplete-source suites (per-requirement difference > 0).
+  incomplete-source suites (per-requirement difference > 0). Estimand: the per-requirement
+  mean over suites of killed / confirmed mutants, as in the Outcomes section, averaged over
+  testers for the pooled test; the union-of-suites detection is reported as a secondary
+  description only.
 - **H-b.** The union of all testers' incomplete-source suites detects fewer confirmed
   losses than one tester's complete-source suites (difference < 0).
 - **H-c.** Requirements in which at least one generator implementation kept the omitted
   rule have higher incomplete-source detection (mean over testers) than requirements in
-  which none did. In the exploratory data the rank correlation (ρ = 0.59) was carried by
-  11 requirements with zero recovery and zero detection; without them it was −0.24, so
-  the hypothesis is stated as this dichotomy (0.242 vs 0.048 exploratory), not as a
-  monotone association.
+  which none did. Exploratory basis: a descriptive contrast of 0.242 against 0.048 and
+  ρ = 0.59, much of it from 11 requirements with zero recovery and zero detection.
+  Removing that cluster (ρ = −0.24) is a post hoc sensitivity on a subset chosen by both
+  outcomes; it does not establish a dichotomy or exclude a monotone relation. The group
+  contrast is chosen as the estimand because it is simple to pre-specify, not because the
+  data showed the relation to be dichotomous.
 
 ## Analysis
 
@@ -88,7 +93,7 @@ audit.
   with a project bootstrap interval; Spearman ρ with the within-project permutation test
   and the correlation without the zero–zero cluster reported alongside. **Estimation
   only**: not used as a confirmatory claim (see power below, which simulated ρ and is
-  therefore only indicative for the dichotomy).
+  therefore only indicative for the group contrast).
 - Scripts: `scripts/mutation_adequacy.py` and `scripts/verifier_coupling.py`, frozen by
   hash before collection; any change after unblinding is reported as a deviation.
 - Sensitivities: assertion alarms only; excluding the code_incomplete shown mutant;
@@ -96,32 +101,65 @@ audit.
 
 ## Planning simulation
 
-`scripts/qp4_prospective_power.py` resamples the 25 exploratory requirements
+`scripts/qp4_prospective_power.py` (v2) resamples the 25 exploratory requirements
 (`data/confirmatory-planning/qp4-prospective-power.json`, 1,000 replications per cell).
-Projects are clusters of resampled requirements, so real between-project heterogeneity
-is not modelled, and observed effects come from post hoc analyses.
+It is a planning aid built on post hoc effects, not evidence.
 
-| Requirements / projects | H-a observed | H-b observed / halved | H-c observed / halved |
-|---|---:|---:|---:|
-| 25 / 8 | 1.00 | 0.71 / 0.64 | 0.82 / 0.28 |
-| 40 / 8 | 1.00 | 0.91 / 0.89 | 0.98 / 0.43 |
-| 40 / 10 | 1.00 | 0.92 / 0.93 | 0.98 / 0.43 |
-| 60 / 12 | 1.00 | 0.99 / 0.99 | 1.00 / 0.60 |
-| 80 / 12 | 1.00 | 1.00 / 1.00 | 1.00 / 0.75 |
+**Correction (28/10, after review by Codex).** The v1 table is withdrawn. v1 multiplied
+every H-a and H-b contrast by the effect factor before the exact sign-flip test, which is
+invariant to positive scaling, so its "halved" column did not lower signal to noise; the
+differences between its columns were only different Monte Carlo draws (the factor was in
+the seed). v1 also tested H-a and H-b separately at 0.05, and used the union of each
+tester's suites for H-a instead of the planned mean over suites. The recommendation that
+about 40 eligible requirements suffice "even with halved effects" is withdrawn with it.
 
-"Halved" scales the H-a/H-b differences by 0.5 and, for H-c, replaces about half of the
-detection values with values from other requirements. Reading: about 40 eligible
-requirements in at least 8 projects are enough for H-a and H-b even with halved effects;
-H-c would need roughly 80 or more under attenuation, so it stays as estimation. Note
-that the eligible QP4 sample is smaller than the admitted H1 sample (exploratory: 25 of
-46), so 40 eligible requirements may require more than 40 admitted.
+Model in v2, stated as assumptions:
+
+- Estimands as registered: H-a uses the mean over suites of killed / confirmed mutants
+  (complete minus incomplete, mean over testers; observed mean 0.618); H-b uses the union
+  of all testers' incomplete-source suites minus the union of one tester's complete-source
+  suites (observed mean −0.324).
+- Effect factor f as a location shift that keeps the requirement-level spread:
+  d' = d − (1 − f)·mean(d) + u_project, clipped to [−1, 1]; f = 0.5 halves the mean
+  effect (H-a 0.309, H-b −0.162).
+- Between-project heterogeneity u_project ~ Normal(0, τ), τ ∈ {0, 0.10}, shared by the
+  requirements of a project; resampled requirements carry none of their own.
+- Decision rule as registered: Holm over {H-a, H-b} at 0.05 with the predicted sign.
+- Common random numbers across f; regression tests check invariance of the sign-flip
+  test to scaling, monotone power in f on common draws, and the Holm step.
+- For H-c, attenuation replaces a share 1 − f of detection values with values from other
+  requirements; H-c is estimation only and these figures are indicative.
+
+| Eligible requirements / projects | τ | H-a (f = 1 / 0.5) | H-b (f = 1 / 0.5) | H-c (f = 1 / 0.5) |
+|---|---:|---:|---:|---:|
+| 25 / 8 | 0 | 1.00 / 1.00 | 0.68 / 0.23 | 0.82 / 0.23 |
+| 25 / 8 | 0.10 | 1.00 / 0.96 | 0.65 / 0.21 | 0.81 / 0.27 |
+| 40 / 8 | 0 | 1.00 / 1.00 | 0.88 / 0.35 | 0.98 / 0.44 |
+| 40 / 8 | 0.10 | 1.00 / 0.99 | 0.83 / 0.27 | 0.98 / 0.46 |
+| 40 / 10 | 0 | 1.00 / 1.00 | 0.92 / 0.37 | 0.97 / 0.43 |
+| 40 / 10 | 0.10 | 1.00 / 1.00 | 0.86 / 0.33 | 0.98 / 0.41 |
+| 60 / 12 | 0 | 1.00 / 1.00 | 0.99 / 0.55 | 1.00 / 0.61 |
+| 60 / 12 | 0.10 | 1.00 / 1.00 | 0.97 / 0.49 | 1.00 / 0.62 |
+| 80 / 12 | 0 | 1.00 / 1.00 | 1.00 / 0.67 | 1.00 / 0.76 |
+| 80 / 12 | 0.10 | 1.00 / 1.00 | 0.99 / 0.58 | 1.00 / 0.76 |
+
+Reading. H-a is well powered in every cell, including with the halved effect and
+heterogeneity, so Holm adds no practical cost for H-b here (H-a almost always rejects at
+0.025, which then tests H-b at 0.05). H-b is not: with the observed effect, about 40
+eligible requirements give 0.83–0.92; with the mean effect halved, 0.27–0.37 at 40 and
+0.49–0.67 even at 60–80. The observed H-b effect comes from 25 requirements selected post
+hoc, so the halved scenario is not pessimistic. No sample size is recommended from this
+table yet: the choice depends on which H-b effect is worth detecting, which is a decision
+for Dante and Márcio, not an output of the simulation. Note that eligible requirements
+are fewer than admitted ones (exploratory: 25 of 46).
 
 ## Feasibility of the eligible sample
 
 In the 46-case collection, 25 requirements (54%) were QP4-eligible: 17 had no confirmed
 mutant in their four arm-C implementations and 4 had a mutant but no correct A.
 With the planned 8 × 5 design, about 22 eligible requirements are expected, which the
-simulation puts at power 0.71 for H-b with observed effects (0.64 halved). Reaching
+corrected simulation puts at power of about 0.65–0.68 for H-b with the observed effect and
+about 0.2 with the effect halved. Reaching
 about 40 eligible requirements needs roughly 70–75 admitted ones, but the frozen #177
 order lists only 10 (Paperless), 11 (Mattermost) and 13 (Immich) provisional admissions
 in three projects, before qualification losses. Options to decide before freezing:
@@ -133,6 +171,8 @@ in three projects, before qualification losses. Options to decide before freezin
 2. Unequal targets per project, registered before selection, drawing more from the
    longer lists (OpenProject 45, Zulip 29, Grist and WeKan 19).
 3. Accept about 22 eligible requirements and report H-b as estimation alongside H-c.
+4. Keep H-b confirmatory only if the sample reaches the size needed for the smallest H-b
+   effect judged worth detecting (to be fixed before freezing; see the planning table).
 
 ## Deviations, exclusions and missing data
 
@@ -148,6 +188,16 @@ in three projects, before qualification losses. Options to decide before freezin
 2. Whether the target of 40 applies to admitted or to QP4-eligible requirements.
 3. The deterministic assertion-target check proposed as triage: specification and
    validation on public suites; it does not replace the blind human audit.
-4. Literature positioning against Konstantinou, Tambon and Papadakis (arXiv 2607.05139),
+4. Training exposure. The protocol must not claim that requirements post-date the
+   generators' or testers' training cutoff: provider aliases have no authenticated
+   cutoff, and public dates do not prove absence of exposure. Default wording: the
+   requirements come from the frames registered in #177, and training exposure is
+   unknown. Codex proposed (28/10) adding a documentary window that starts after the
+   prospective freeze; it would have to be a new registered frame (the #177 frames end on
+   2026-09-30), and with collection planned from 15/11 it would contain only a few weeks of
+   documentation changes, so its feasibility must be checked before deciding.
+5. Claims about source versus model or number of testers are limited to the testers and
+   budgets observed (pairing within requirement does not license a universal ranking).
+6. Literature positioning against Konstantinou, Tambon and Papadakis (arXiv 2607.05139),
    Haeri and Ghelichi (arXiv 2607.06636), TestSuiteBench (arXiv 2610.13065), TiGanEval,
    TRACE and VerifierBench.
