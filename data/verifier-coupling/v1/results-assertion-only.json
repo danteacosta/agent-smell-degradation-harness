@@ -1,0 +1,2427 @@
+{
+  "Q1_ensemble": {
+    "contrast_union_all_incomplete_minus_single_complete": {
+      "ci95_project_bootstrap": [
+        -0.605072463768116,
+        -0.10535714285714289
+      ],
+      "mean_difference": -0.3426666666666667,
+      "p_exact_project_sign_flip": 0.046875,
+      "projects": 8,
+      "requirements": 25,
+      "requirements_negative": 15,
+      "requirements_positive": 8,
+      "requirements_zero": 2
+    },
+    "mean_union_detection_by_k": {
+      "code_incomplete": {
+        "1": 0.064,
+        "2": 0.114,
+        "3": 0.154,
+        "4": 0.188,
+        "5": 0.22
+      },
+      "spec_complete": {
+        "1": 0.7759999999999999,
+        "2": 0.9440000000000001,
+        "3": 0.988,
+        "4": 1.0,
+        "5": 1.0
+      },
+      "spec_incomplete": {
+        "1": 0.146,
+        "2": 0.255,
+        "3": 0.33433333333333337,
+        "4": 0.3913333333333333,
+        "5": 0.43333333333333335
+      }
+    },
+    "per_requirement": {
+      "grist-billing-managers-limit": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 4,
+        "project_id": "grist",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.8,
+          "single_tester_published_score_mean": 0.7,
+          "union_detection_by_k_testers": {
+            "1": 0.8,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        }
+      },
+      "grist-context-menu-shortcut": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 1,
+        "project_id": "grist",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.8,
+          "single_tester_published_score_mean": 0.7,
+          "union_detection_by_k_testers": {
+            "1": 0.8,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.2,
+          "single_tester_published_score_mean": 0.1,
+          "union_detection_by_k_testers": {
+            "1": 0.2,
+            "2": 0.4,
+            "3": 0.6,
+            "4": 0.8,
+            "5": 1.0
+          }
+        }
+      },
+      "grist-page-default-collapse": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 4,
+        "project_id": "grist",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.6,
+          "single_tester_published_score_mean": 0.4,
+          "union_detection_by_k_testers": {
+            "1": 0.6,
+            "2": 0.9,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.15,
+          "single_tester_published_score_mean": 0.075,
+          "union_detection_by_k_testers": {
+            "1": 0.15,
+            "2": 0.3,
+            "3": 0.45,
+            "4": 0.6,
+            "5": 0.75
+          }
+        }
+      },
+      "grist-suggestions-open-copy": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 2,
+        "project_id": "grist",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.6,
+          "single_tester_published_score_mean": 0.5,
+          "union_detection_by_k_testers": {
+            "1": 0.6,
+            "2": 0.9,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.2,
+          "single_tester_published_score_mean": 0.1,
+          "union_detection_by_k_testers": {
+            "1": 0.2,
+            "2": 0.4,
+            "3": 0.6,
+            "4": 0.8,
+            "5": 1.0
+          }
+        }
+      },
+      "grist-tutorial-restart": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.2,
+          "single_tester_published_score_mean": 0.15,
+          "union_detection_by_k_testers": {
+            "1": 0.2,
+            "2": 0.35,
+            "3": 0.45,
+            "4": 0.5,
+            "5": 0.5
+          }
+        },
+        "mutants": 4,
+        "project_id": "grist",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.8,
+          "single_tester_published_score_mean": 0.7,
+          "union_detection_by_k_testers": {
+            "1": 0.8,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.4,
+          "single_tester_published_score_mean": 0.3,
+          "union_detection_by_k_testers": {
+            "1": 0.4,
+            "2": 0.65,
+            "3": 0.8,
+            "4": 0.9,
+            "5": 1.0
+          }
+        }
+      },
+      "immich-library-single-owner": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 4,
+        "project_id": "immich",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.6,
+          "single_tester_published_score_mean": 0.6,
+          "union_detection_by_k_testers": {
+            "1": 0.6,
+            "2": 0.9,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        }
+      },
+      "immich-m2t-upload": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 4,
+        "project_id": "immich",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 1.0,
+          "single_tester_published_score_mean": 0.8,
+          "union_detection_by_k_testers": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        }
+      },
+      "mattermost-anonymous-team-url": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.06666666666666667,
+          "single_tester_published_score_mean": 0.06666666666666667,
+          "union_detection_by_k_testers": {
+            "1": 0.06666666666666667,
+            "2": 0.13333333333333333,
+            "3": 0.2,
+            "4": 0.26666666666666666,
+            "5": 0.3333333333333333
+          }
+        },
+        "mutants": 3,
+        "project_id": "mattermost",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.8,
+          "single_tester_published_score_mean": 0.7333333333333333,
+          "union_detection_by_k_testers": {
+            "1": 0.8,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.13333333333333333,
+          "single_tester_published_score_mean": 0.06666666666666667,
+          "union_detection_by_k_testers": {
+            "1": 0.13333333333333333,
+            "2": 0.2333333333333333,
+            "3": 0.3,
+            "4": 0.3333333333333333,
+            "5": 0.3333333333333333
+          }
+        }
+      },
+      "mattermost-guest-invite-channel": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 4,
+        "project_id": "mattermost",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.8,
+          "single_tester_published_score_mean": 0.75,
+          "union_detection_by_k_testers": {
+            "1": 0.8,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        }
+      },
+      "mattermost-mention-add-prompt": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 2,
+        "project_id": "mattermost",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 1.0,
+          "single_tester_published_score_mean": 0.9,
+          "union_detection_by_k_testers": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.4,
+          "single_tester_published_score_mean": 0.3,
+          "union_detection_by_k_testers": {
+            "1": 0.4,
+            "2": 0.7,
+            "3": 0.9,
+            "4": 1.0,
+            "5": 1.0
+          }
+        }
+      },
+      "mattermost-playbook-task-markdown": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 4,
+        "project_id": "mattermost",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 1.0,
+          "single_tester_published_score_mean": 0.7,
+          "union_detection_by_k_testers": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        }
+      },
+      "nextcloud-device-password-once": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.2,
+          "single_tester_published_score_mean": 0.2,
+          "union_detection_by_k_testers": {
+            "1": 0.2,
+            "2": 0.4,
+            "3": 0.6,
+            "4": 0.8,
+            "5": 1.0
+          }
+        },
+        "mutants": 2,
+        "project_id": "nextcloud",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.4,
+          "single_tester_published_score_mean": 0.4,
+          "union_detection_by_k_testers": {
+            "1": 0.4,
+            "2": 0.7,
+            "3": 0.9,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.4,
+          "single_tester_published_score_mean": 0.3,
+          "union_detection_by_k_testers": {
+            "1": 0.4,
+            "2": 0.7,
+            "3": 0.9,
+            "4": 1.0,
+            "5": 1.0
+          }
+        }
+      },
+      "nextcloud-mail-delegation": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 3,
+        "project_id": "nextcloud",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.4,
+          "single_tester_published_score_mean": 0.4,
+          "union_detection_by_k_testers": {
+            "1": 0.4,
+            "2": 0.7,
+            "3": 0.9,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        }
+      },
+      "nextcloud-mail-favorites-up": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.13333333333333333,
+          "single_tester_published_score_mean": 0.06666666666666667,
+          "union_detection_by_k_testers": {
+            "1": 0.13333333333333333,
+            "2": 0.26666666666666666,
+            "3": 0.4,
+            "4": 0.5333333333333333,
+            "5": 0.6666666666666666
+          }
+        },
+        "mutants": 3,
+        "project_id": "nextcloud",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.8,
+          "single_tester_published_score_mean": 0.7,
+          "union_detection_by_k_testers": {
+            "1": 0.8,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.4666666666666666,
+          "single_tester_published_score_mean": 0.4,
+          "union_detection_by_k_testers": {
+            "1": 0.4666666666666666,
+            "2": 0.7666666666666666,
+            "3": 0.9333333333333333,
+            "4": 1.0,
+            "5": 1.0
+          }
+        }
+      },
+      "openproject-archived-project-selector": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.2,
+          "single_tester_published_score_mean": 0.2,
+          "union_detection_by_k_testers": {
+            "1": 0.2,
+            "2": 0.4,
+            "3": 0.6,
+            "4": 0.8,
+            "5": 1.0
+          }
+        },
+        "mutants": 3,
+        "project_id": "openproject",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.8,
+          "single_tester_published_score_mean": 0.8,
+          "union_detection_by_k_testers": {
+            "1": 0.8,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.2,
+          "single_tester_published_score_mean": 0.2,
+          "union_detection_by_k_testers": {
+            "1": 0.2,
+            "2": 0.4,
+            "3": 0.6,
+            "4": 0.8,
+            "5": 1.0
+          }
+        }
+      },
+      "openproject-more-menu-subproject": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 4,
+        "project_id": "openproject",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 1.0,
+          "single_tester_published_score_mean": 0.8,
+          "union_detection_by_k_testers": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        }
+      },
+      "paperless-ai-suggestions-blank-text": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 4,
+        "project_id": "paperless-ngx",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 1.0,
+          "single_tester_published_score_mean": 0.8,
+          "union_detection_by_k_testers": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        }
+      },
+      "paperless-custom-field-no-value": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.6,
+          "single_tester_published_score_mean": 0.6,
+          "union_detection_by_k_testers": {
+            "1": 0.6,
+            "2": 0.9,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "mutants": 3,
+        "project_id": "paperless-ngx",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 1.0,
+          "single_tester_published_score_mean": 1.0,
+          "union_detection_by_k_testers": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.6,
+          "single_tester_published_score_mean": 0.6,
+          "union_detection_by_k_testers": {
+            "1": 0.6,
+            "2": 0.9,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        }
+      },
+      "paperless-doc-title-placeholder": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 4,
+        "project_id": "paperless-ngx",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.4,
+          "single_tester_published_score_mean": 0.3,
+          "union_detection_by_k_testers": {
+            "1": 0.4,
+            "2": 0.7,
+            "3": 0.9,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        }
+      },
+      "paperless-superuser-grant": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 4,
+        "project_id": "paperless-ngx",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 1.0,
+          "single_tester_published_score_mean": 1.0,
+          "union_detection_by_k_testers": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        }
+      },
+      "wekan-home-multi-drop": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 4,
+        "project_id": "wekan",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 1.0,
+          "single_tester_published_score_mean": 0.9,
+          "union_detection_by_k_testers": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        }
+      },
+      "wekan-swimlane-below-default": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 4,
+        "project_id": "wekan",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.8,
+          "single_tester_published_score_mean": 0.7,
+          "union_detection_by_k_testers": {
+            "1": 0.8,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        }
+      },
+      "zulip-private-channel-access": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 2,
+        "project_id": "zulip",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.6,
+          "single_tester_published_score_mean": 0.5,
+          "union_detection_by_k_testers": {
+            "1": 0.6,
+            "2": 0.9,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        }
+      },
+      "zulip-resolved-notice-auto-read": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.0,
+          "single_tester_published_score_mean": 0.0,
+          "union_detection_by_k_testers": {
+            "1": 0.0,
+            "2": 0.0,
+            "3": 0.0,
+            "4": 0.0,
+            "5": 0.0
+          }
+        },
+        "mutants": 4,
+        "project_id": "zulip",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.8,
+          "single_tester_published_score_mean": 0.6,
+          "union_detection_by_k_testers": {
+            "1": 0.8,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.3,
+          "single_tester_published_score_mean": 0.15,
+          "union_detection_by_k_testers": {
+            "1": 0.3,
+            "2": 0.525,
+            "3": 0.675,
+            "4": 0.75,
+            "5": 0.75
+          }
+        }
+      },
+      "zulip-unsubscribe-self": {
+        "code_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.2,
+          "single_tester_published_score_mean": 0.1,
+          "union_detection_by_k_testers": {
+            "1": 0.2,
+            "2": 0.4,
+            "3": 0.6,
+            "4": 0.8,
+            "5": 1.0
+          }
+        },
+        "mutants": 1,
+        "project_id": "zulip",
+        "spec_complete": {
+          "single_tester_any_suite_detection_mean": 0.6,
+          "single_tester_published_score_mean": 0.5,
+          "union_detection_by_k_testers": {
+            "1": 0.6,
+            "2": 0.9,
+            "3": 1.0,
+            "4": 1.0,
+            "5": 1.0
+          }
+        },
+        "spec_incomplete": {
+          "single_tester_any_suite_detection_mean": 0.2,
+          "single_tester_published_score_mean": 0.1,
+          "union_detection_by_k_testers": {
+            "1": 0.2,
+            "2": 0.4,
+            "3": 0.6,
+            "4": 0.8,
+            "5": 1.0
+          }
+        }
+      }
+    },
+    "question": "Does pooling all testers' incomplete-source suites match one tester's complete-source suites?",
+    "requirements_where_union_incomplete_reaches_single_complete": 10,
+    "testers": [
+      "gpt-6-astra",
+      "claude-sonnet-4-6",
+      "claude-opus-4-6",
+      "claude-sonnet-5-5",
+      "claude-opus-5-5"
+    ],
+    "unit": "requirement, equal weight; detection = share of confirmed mutants killed by >=1 sound suite"
+  },
+  "Q2_agreement": {
+    "by_source": {
+      "code_incomplete": {
+        "distribution_testers_detecting": {
+          "0": 67,
+          "1": 9,
+          "2": 2,
+          "3": 3,
+          "4": 0,
+          "5": 0
+        },
+        "excess_ci95_project_bootstrap": [
+          0.0,
+          0.16795938961709178
+        ],
+        "excess_missed_by_all_over_independence": 0.07980377878259304,
+        "expected_missed_by_all_if_independent": 0.7473567150445675,
+        "expected_missed_by_all_if_independent_within_requirement": 0.8148148148148148,
+        "mutants": 81,
+        "observed_detected_by_all": 0.0,
+        "observed_missed_by_all": 0.8271604938271605,
+        "tester_detection_rate": {
+          "claude-opus-4-6": 0.0,
+          "claude-opus-5-5": 0.1728395061728395,
+          "claude-sonnet-4-6": 0.0,
+          "claude-sonnet-5-5": 0.06172839506172839,
+          "gpt-6-astra": 0.037037037037037035
+        }
+      },
+      "spec_complete": {
+        "distribution_testers_detecting": {
+          "0": 0,
+          "1": 0,
+          "2": 9,
+          "3": 13,
+          "4": 30,
+          "5": 29
+        },
+        "excess_ci95_project_bootstrap": [
+          -0.0006262328888888891,
+          0.0
+        ],
+        "excess_missed_by_all_over_independence": -0.00013370485421074376,
+        "expected_missed_by_all_if_independent": 0.00013370485421074376,
+        "expected_missed_by_all_if_independent_within_requirement": 0.0,
+        "mutants": 81,
+        "observed_detected_by_all": 0.35802469135802467,
+        "observed_missed_by_all": 0.0,
+        "tester_detection_rate": {
+          "claude-opus-4-6": 0.8271604938271605,
+          "claude-opus-5-5": 0.9382716049382716,
+          "claude-sonnet-4-6": 0.5432098765432098,
+          "claude-sonnet-5-5": 0.8518518518518519,
+          "gpt-6-astra": 0.8148148148148148
+        }
+      },
+      "spec_incomplete": {
+        "distribution_testers_detecting": {
+          "0": 53,
+          "1": 12,
+          "2": 10,
+          "3": 6,
+          "4": 0,
+          "5": 0
+        },
+        "excess_ci95_project_bootstrap": [
+          0.05491007691639027,
+          0.21777863111111107
+        ],
+        "excess_missed_by_all_over_independence": 0.13952673783342417,
+        "expected_missed_by_all_if_independent": 0.5147942498208968,
+        "expected_missed_by_all_if_independent_within_requirement": 0.6368312757201645,
+        "mutants": 81,
+        "observed_detected_by_all": 0.0,
+        "observed_missed_by_all": 0.654320987654321,
+        "tester_detection_rate": {
+          "claude-opus-4-6": 0.12345679012345678,
+          "claude-opus-5-5": 0.19753086419753085,
+          "claude-sonnet-4-6": 0.1111111111111111,
+          "claude-sonnet-5-5": 0.08641975308641975,
+          "gpt-6-astra": 0.09876543209876543
+        }
+      }
+    },
+    "caveat": "Mutants of one requirement are not independent; the pooled comparison is descriptive.",
+    "question": "Do testers miss the same confirmed losses?",
+    "unit": "confirmed mutant (pooled across requirements); independence uses each tester's marginal rate"
+  },
+  "Q3_coupling": {
+    "by_context_cue": {
+      "0": {
+        "generator_recovery_mean": 0.14285714285714285,
+        "requirements": 21,
+        "tester_detection_incomplete_mean": 0.09007936507936508
+      },
+      "1": {
+        "generator_recovery_mean": 0.375,
+        "requirements": 4,
+        "tester_detection_incomplete_mean": 0.2
+      }
+    },
+    "caveat": "Eligibility requires at least one confirmed mutant, so fully recovered rules are absent: the range of generator recovery is truncated.",
+    "escape": {
+      "difference": 0.01095333333333337,
+      "difference_ci95_project_bootstrap": [
+        0.0011300131492439913,
+        0.020770202020202078
+      ],
+      "mean_loss_times_miss": 0.7426666666666667,
+      "note": "loss = 1 - generator recovery; miss = 1 - incomplete-source detection; per requirement, equal weight; truncated to requirements with >=1 confirmed mutant",
+      "product_of_mean_loss_and_mean_miss": 0.7317133333333333
+    },
+    "per_requirement": [
+      {
+        "case": "grist-billing-managers-limit",
+        "context_cue": 0,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "grist",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.0
+      },
+      {
+        "case": "grist-context-menu-shortcut",
+        "context_cue": 0,
+        "generator_recovery": 0.6666666666666666,
+        "mutants": 1,
+        "project_id": "grist",
+        "recovered": 2,
+        "tester_detection_incomplete": 0.1
+      },
+      {
+        "case": "grist-page-default-collapse",
+        "context_cue": 0,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "grist",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.075
+      },
+      {
+        "case": "grist-suggestions-open-copy",
+        "context_cue": 0,
+        "generator_recovery": 0.5,
+        "mutants": 2,
+        "project_id": "grist",
+        "recovered": 2,
+        "tester_detection_incomplete": 0.1
+      },
+      {
+        "case": "grist-tutorial-restart",
+        "context_cue": 0,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "grist",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.3
+      },
+      {
+        "case": "immich-library-single-owner",
+        "context_cue": 1,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "immich",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.0
+      },
+      {
+        "case": "immich-m2t-upload",
+        "context_cue": 0,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "immich",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.0
+      },
+      {
+        "case": "mattermost-anonymous-team-url",
+        "context_cue": 0,
+        "generator_recovery": 0.25,
+        "mutants": 3,
+        "project_id": "mattermost",
+        "recovered": 1,
+        "tester_detection_incomplete": 0.06666666666666667
+      },
+      {
+        "case": "mattermost-guest-invite-channel",
+        "context_cue": 0,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "mattermost",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.0
+      },
+      {
+        "case": "mattermost-mention-add-prompt",
+        "context_cue": 0,
+        "generator_recovery": 0.3333333333333333,
+        "mutants": 2,
+        "project_id": "mattermost",
+        "recovered": 1,
+        "tester_detection_incomplete": 0.3
+      },
+      {
+        "case": "mattermost-playbook-task-markdown",
+        "context_cue": 0,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "mattermost",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.0
+      },
+      {
+        "case": "nextcloud-device-password-once",
+        "context_cue": 1,
+        "generator_recovery": 0.5,
+        "mutants": 2,
+        "project_id": "nextcloud",
+        "recovered": 2,
+        "tester_detection_incomplete": 0.3
+      },
+      {
+        "case": "nextcloud-mail-delegation",
+        "context_cue": 0,
+        "generator_recovery": 0.25,
+        "mutants": 3,
+        "project_id": "nextcloud",
+        "recovered": 1,
+        "tester_detection_incomplete": 0.0
+      },
+      {
+        "case": "nextcloud-mail-favorites-up",
+        "context_cue": 1,
+        "generator_recovery": 0.25,
+        "mutants": 3,
+        "project_id": "nextcloud",
+        "recovered": 1,
+        "tester_detection_incomplete": 0.4
+      },
+      {
+        "case": "openproject-archived-project-selector",
+        "context_cue": 0,
+        "generator_recovery": 0.25,
+        "mutants": 3,
+        "project_id": "openproject",
+        "recovered": 1,
+        "tester_detection_incomplete": 0.2
+      },
+      {
+        "case": "openproject-more-menu-subproject",
+        "context_cue": 0,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "openproject",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.0
+      },
+      {
+        "case": "paperless-ai-suggestions-blank-text",
+        "context_cue": 0,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "paperless-ngx",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.0
+      },
+      {
+        "case": "paperless-custom-field-no-value",
+        "context_cue": 0,
+        "generator_recovery": 0.25,
+        "mutants": 3,
+        "project_id": "paperless-ngx",
+        "recovered": 1,
+        "tester_detection_incomplete": 0.6
+      },
+      {
+        "case": "paperless-doc-title-placeholder",
+        "context_cue": 0,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "paperless-ngx",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.0
+      },
+      {
+        "case": "paperless-superuser-grant",
+        "context_cue": 0,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "paperless-ngx",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.0
+      },
+      {
+        "case": "wekan-home-multi-drop",
+        "context_cue": 0,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "wekan",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.0
+      },
+      {
+        "case": "wekan-swimlane-below-default",
+        "context_cue": 0,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "wekan",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.0
+      },
+      {
+        "case": "zulip-private-channel-access",
+        "context_cue": 0,
+        "generator_recovery": 0.5,
+        "mutants": 2,
+        "project_id": "zulip",
+        "recovered": 2,
+        "tester_detection_incomplete": 0.0
+      },
+      {
+        "case": "zulip-resolved-notice-auto-read",
+        "context_cue": 0,
+        "generator_recovery": 0.0,
+        "mutants": 4,
+        "project_id": "zulip",
+        "recovered": 0,
+        "tester_detection_incomplete": 0.15
+      },
+      {
+        "case": "zulip-unsubscribe-self",
+        "context_cue": 1,
+        "generator_recovery": 0.75,
+        "mutants": 1,
+        "project_id": "zulip",
+        "recovered": 3,
+        "tester_detection_incomplete": 0.1
+      }
+    ],
+    "permutation_p_two_sided": 0.0058997050147492625,
+    "question": "Are rules the generators recover also the ones testers notice from the incomplete request?",
+    "requirements": 25,
+    "spearman_rho": 0.5405177236505319,
+    "structure": {
+      "covariates_by_recovery_group": {
+        "context_cue": {
+          "some_recovery": {
+            "missing": 0,
+            "positive": 3,
+            "requirements": 11
+          },
+          "zero_recovery": {
+            "missing": 0,
+            "positive": 1,
+            "requirements": 14
+          }
+        },
+        "derived_state": {
+          "some_recovery": {
+            "missing": 0,
+            "positive": 1,
+            "requirements": 11
+          },
+          "zero_recovery": {
+            "missing": 0,
+            "positive": 2,
+            "requirements": 14
+          }
+        },
+        "memorized": {
+          "some_recovery": {
+            "missing": 0,
+            "positive": 7,
+            "requirements": 11
+          },
+          "zero_recovery": {
+            "missing": 0,
+            "positive": 7,
+            "requirements": 14
+          }
+        },
+        "numeric": {
+          "some_recovery": {
+            "missing": 0,
+            "positive": 0,
+            "requirements": 11
+          },
+          "zero_recovery": {
+            "missing": 0,
+            "positive": 4,
+            "requirements": 14
+          }
+        }
+      },
+      "detection_mean_some_recovery": 0.19696969696969696,
+      "detection_mean_zero_recovery": 0.0375,
+      "permutation_p_without_zero_zero": 0.5947202639868007,
+      "requirements_at_zero_zero": 11,
+      "requirements_some_recovery": 11,
+      "requirements_zero_recovery": 14,
+      "spearman_without_zero_zero": -0.155821559241073
+    },
+    "unit": "requirement; generator recovery = recovered / (recovered + confirmed mutants) in arm C of the 46-case collection, restricted to these 25 eligible requirements (each has >=1 mutant by construction)",
+    "within_project_permutation_p_two_sided": 0.039648017599120046
+  },
+  "Q4_anchoring": {
+    "by_tester": {
+      "claude-opus-4-6": {
+        "code_incomplete": {
+          "ci95_project_bootstrap": [
+            0.0,
+            0.0
+          ],
+          "mean_alarm_mutant": 0.0,
+          "mean_alarm_recovered": 0.0,
+          "mean_difference": 0.0,
+          "p_exact_project_sign_flip": 1.0,
+          "per_requirement": {
+            "grist-suggestions-open-copy": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "mattermost-mention-add-prompt": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "openproject-archived-project-selector": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            }
+          },
+          "projects": 3,
+          "requirements": 3,
+          "requirements_negative": 0,
+          "requirements_positive": 0,
+          "requirements_zero": 3
+        },
+        "spec_complete": {
+          "ci95_project_bootstrap": [
+            -1.0,
+            -0.5
+          ],
+          "mean_alarm_mutant": 0.7272727272727273,
+          "mean_alarm_recovered": 0.0,
+          "mean_difference": -0.7272727272727273,
+          "p_exact_project_sign_flip": 0.03125,
+          "per_requirement": {
+            "grist-context-menu-shortcut": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "grist-suggestions-open-copy": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-anonymous-team-url": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-mention-add-prompt": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-device-password-once": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-mail-delegation": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-mail-favorites-up": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "openproject-archived-project-selector": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-private-channel-access": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-unsubscribe-self": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            }
+          },
+          "projects": 6,
+          "requirements": 11,
+          "requirements_negative": 8,
+          "requirements_positive": 0,
+          "requirements_zero": 3
+        },
+        "spec_incomplete": {
+          "ci95_project_bootstrap": [
+            -0.4,
+            0.0
+          ],
+          "mean_alarm_mutant": 0.25,
+          "mean_alarm_recovered": 0.0,
+          "mean_difference": -0.25,
+          "p_exact_project_sign_flip": 0.5,
+          "per_requirement": {
+            "grist-context-menu-shortcut": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "grist-suggestions-open-copy": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "nextcloud-device-password-once": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "nextcloud-mail-delegation": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-mail-favorites-up": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "openproject-archived-project-selector": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-private-channel-access": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            }
+          },
+          "projects": 5,
+          "requirements": 8,
+          "requirements_negative": 2,
+          "requirements_positive": 0,
+          "requirements_zero": 6
+        }
+      },
+      "claude-opus-5-5": {
+        "code_incomplete": {
+          "ci95_project_bootstrap": [
+            -0.875,
+            -0.25
+          ],
+          "mean_alarm_mutant": 0.5357142857142857,
+          "mean_alarm_recovered": 0.0,
+          "mean_difference": -0.5357142857142857,
+          "p_exact_project_sign_flip": 0.125,
+          "per_requirement": {
+            "mattermost-anonymous-team-url": {
+              "alarm_mutant": 0.5,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-mention-add-prompt": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-device-password-once": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-mail-favorites-up": {
+              "alarm_mutant": 0.25,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "openproject-archived-project-selector": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-private-channel-access": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            }
+          },
+          "projects": 5,
+          "requirements": 7,
+          "requirements_negative": 5,
+          "requirements_positive": 0,
+          "requirements_zero": 2
+        },
+        "spec_complete": {
+          "ci95_project_bootstrap": [
+            -0.893939393939394,
+            -0.25
+          ],
+          "mean_alarm_mutant": 0.712121212121212,
+          "mean_alarm_recovered": 0.13636363636363635,
+          "mean_difference": -0.5757575757575757,
+          "p_exact_project_sign_flip": 0.0625,
+          "per_requirement": {
+            "grist-context-menu-shortcut": {
+              "alarm_mutant": 0.5,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "grist-suggestions-open-copy": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-anonymous-team-url": {
+              "alarm_mutant": 0.3333333333333333,
+              "alarm_recovered": 0.5,
+              "sound_suites": 2
+            },
+            "mattermost-mention-add-prompt": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-device-password-once": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-mail-delegation": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-mail-favorites-up": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "openproject-archived-project-selector": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-private-channel-access": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-unsubscribe-self": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 1.0,
+              "sound_suites": 2
+            }
+          },
+          "projects": 6,
+          "requirements": 11,
+          "requirements_negative": 7,
+          "requirements_positive": 1,
+          "requirements_zero": 3
+        },
+        "spec_incomplete": {
+          "ci95_project_bootstrap": [
+            -0.7407407407407408,
+            -0.18181818181818182
+          ],
+          "mean_alarm_mutant": 0.42424242424242425,
+          "mean_alarm_recovered": 0.0,
+          "mean_difference": -0.42424242424242425,
+          "p_exact_project_sign_flip": 0.125,
+          "per_requirement": {
+            "grist-context-menu-shortcut": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "grist-suggestions-open-copy": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-anonymous-team-url": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-mention-add-prompt": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "nextcloud-device-password-once": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-mail-delegation": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-mail-favorites-up": {
+              "alarm_mutant": 0.6666666666666666,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "openproject-archived-project-selector": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-private-channel-access": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-unsubscribe-self": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            }
+          },
+          "projects": 6,
+          "requirements": 11,
+          "requirements_negative": 5,
+          "requirements_positive": 0,
+          "requirements_zero": 6
+        }
+      },
+      "claude-sonnet-4-6": {
+        "code_incomplete": {
+          "ci95_project_bootstrap": [
+            0.0,
+            0.0
+          ],
+          "mean_alarm_mutant": 0.0,
+          "mean_alarm_recovered": 0.0,
+          "mean_difference": 0.0,
+          "p_exact_project_sign_flip": 1.0,
+          "per_requirement": {
+            "grist-suggestions-open-copy": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "openproject-archived-project-selector": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            }
+          },
+          "projects": 3,
+          "requirements": 3,
+          "requirements_negative": 0,
+          "requirements_positive": 0,
+          "requirements_zero": 3
+        },
+        "spec_complete": {
+          "ci95_project_bootstrap": [
+            -1.0,
+            -0.375
+          ],
+          "mean_alarm_mutant": 0.7142857142857143,
+          "mean_alarm_recovered": 0.0,
+          "mean_difference": -0.7142857142857143,
+          "p_exact_project_sign_flip": 0.125,
+          "per_requirement": {
+            "grist-context-menu-shortcut": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-anonymous-team-url": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-mention-add-prompt": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "nextcloud-mail-delegation": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "nextcloud-mail-favorites-up": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-unsubscribe-self": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            }
+          },
+          "projects": 5,
+          "requirements": 7,
+          "requirements_negative": 5,
+          "requirements_positive": 0,
+          "requirements_zero": 2
+        },
+        "spec_incomplete": {
+          "ci95_project_bootstrap": [
+            -0.2333333333333333,
+            0.0
+          ],
+          "mean_alarm_mutant": 0.1,
+          "mean_alarm_recovered": 0.0,
+          "mean_difference": -0.1,
+          "p_exact_project_sign_flip": 0.5,
+          "per_requirement": {
+            "grist-context-menu-shortcut": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "mattermost-anonymous-team-url": {
+              "alarm_mutant": 0.16666666666666666,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-mail-favorites-up": {
+              "alarm_mutant": 0.3333333333333333,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "zulip-unsubscribe-self": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            }
+          },
+          "projects": 5,
+          "requirements": 5,
+          "requirements_negative": 2,
+          "requirements_positive": 0,
+          "requirements_zero": 3
+        }
+      },
+      "claude-sonnet-5-5": {
+        "code_incomplete": {
+          "ci95_project_bootstrap": [
+            -0.6,
+            0.15
+          ],
+          "mean_alarm_mutant": 0.2,
+          "mean_alarm_recovered": 0.05,
+          "mean_difference": -0.15,
+          "p_exact_project_sign_flip": 1.0,
+          "per_requirement": {
+            "grist-suggestions-open-copy": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "mattermost-mention-add-prompt": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "openproject-archived-project-selector": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-private-channel-access": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.25,
+              "sound_suites": 2
+            }
+          },
+          "projects": 5,
+          "requirements": 5,
+          "requirements_negative": 1,
+          "requirements_positive": 1,
+          "requirements_zero": 3
+        },
+        "spec_complete": {
+          "ci95_project_bootstrap": [
+            -0.925925925925926,
+            -0.6153846153846154
+          ],
+          "mean_alarm_mutant": 0.8484848484848485,
+          "mean_alarm_recovered": 0.09090909090909091,
+          "mean_difference": -0.7575757575757577,
+          "p_exact_project_sign_flip": 0.03125,
+          "per_requirement": {
+            "grist-context-menu-shortcut": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "grist-suggestions-open-copy": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "mattermost-anonymous-team-url": {
+              "alarm_mutant": 0.3333333333333333,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-mention-add-prompt": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-device-password-once": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-mail-delegation": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-mail-favorites-up": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "openproject-archived-project-selector": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-private-channel-access": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-unsubscribe-self": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 1.0,
+              "sound_suites": 2
+            }
+          },
+          "projects": 6,
+          "requirements": 11,
+          "requirements_negative": 9,
+          "requirements_positive": 0,
+          "requirements_zero": 2
+        },
+        "spec_incomplete": {
+          "ci95_project_bootstrap": [
+            -0.5333333333333333,
+            -0.038461538461538464
+          ],
+          "mean_alarm_mutant": 0.2424242424242424,
+          "mean_alarm_recovered": 0.0,
+          "mean_difference": -0.2424242424242424,
+          "p_exact_project_sign_flip": 0.25,
+          "per_requirement": {
+            "grist-context-menu-shortcut": {
+              "alarm_mutant": 0.5,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "grist-suggestions-open-copy": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-anonymous-team-url": {
+              "alarm_mutant": 0.16666666666666666,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-mention-add-prompt": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-device-password-once": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "nextcloud-mail-delegation": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-mail-favorites-up": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "openproject-archived-project-selector": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-private-channel-access": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-unsubscribe-self": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            }
+          },
+          "projects": 6,
+          "requirements": 11,
+          "requirements_negative": 4,
+          "requirements_positive": 0,
+          "requirements_zero": 7
+        }
+      },
+      "gpt-6-astra": {
+        "code_incomplete": {
+          "ci95_project_bootstrap": [
+            -1.0,
+            0.0
+          ],
+          "mean_alarm_mutant": 0.5,
+          "mean_alarm_recovered": 0.0,
+          "mean_difference": -0.5,
+          "p_exact_project_sign_flip": 1.0,
+          "per_requirement": {
+            "mattermost-mention-add-prompt": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            }
+          },
+          "projects": 2,
+          "requirements": 2,
+          "requirements_negative": 1,
+          "requirements_positive": 0,
+          "requirements_zero": 1
+        },
+        "spec_complete": {
+          "ci95_project_bootstrap": [
+            -1.0,
+            -0.5
+          ],
+          "mean_alarm_mutant": 0.7777777777777778,
+          "mean_alarm_recovered": 0.037037037037037035,
+          "mean_difference": -0.7407407407407408,
+          "p_exact_project_sign_flip": 0.03125,
+          "per_requirement": {
+            "grist-context-menu-shortcut": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "grist-suggestions-open-copy": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-anonymous-team-url": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-mention-add-prompt": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-device-password-once": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "openproject-archived-project-selector": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-private-channel-access": {
+              "alarm_mutant": 0.5,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-unsubscribe-self": {
+              "alarm_mutant": 0.5,
+              "alarm_recovered": 0.3333333333333333,
+              "sound_suites": 2
+            }
+          },
+          "projects": 6,
+          "requirements": 9,
+          "requirements_negative": 8,
+          "requirements_positive": 0,
+          "requirements_zero": 1
+        },
+        "spec_incomplete": {
+          "ci95_project_bootstrap": [
+            -0.5,
+            -0.030303030303030307
+          ],
+          "mean_alarm_mutant": 0.25,
+          "mean_alarm_recovered": 0.016666666666666666,
+          "mean_difference": -0.23333333333333334,
+          "p_exact_project_sign_flip": 0.25,
+          "per_requirement": {
+            "grist-context-menu-shortcut": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "grist-suggestions-open-copy": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-anonymous-team-url": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "mattermost-mention-add-prompt": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "nextcloud-device-password-once": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "nextcloud-mail-favorites-up": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 1
+            },
+            "openproject-archived-project-selector": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "paperless-custom-field-no-value": {
+              "alarm_mutant": 1.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-private-channel-access": {
+              "alarm_mutant": 0.0,
+              "alarm_recovered": 0.0,
+              "sound_suites": 2
+            },
+            "zulip-unsubscribe-self": {
+              "alarm_mutant": 0.5,
+              "alarm_recovered": 0.16666666666666666,
+              "sound_suites": 2
+            }
+          },
+          "projects": 6,
+          "requirements": 10,
+          "requirements_negative": 3,
+          "requirements_positive": 0,
+          "requirements_zero": 7
+        }
+      }
+    },
+    "difference": "alarm(recovered) - alarm(mutant); positive = the suite rewards the loss",
+    "question": "Within arm C, do suites alarm more on implementations that kept the rule than on those that lost it?",
+    "testers_averaged_per_requirement": {
+      "code_incomplete": {
+        "ci95_project_bootstrap": [
+          -0.5357142857142857,
+          -0.08333333333333333
+        ],
+        "mean_difference": -0.328125,
+        "p_exact_project_sign_flip": 0.125,
+        "projects": 6,
+        "requirements": 8,
+        "requirements_negative": 5,
+        "requirements_positive": 1,
+        "requirements_zero": 2
+      },
+      "spec_complete": {
+        "ci95_project_bootstrap": [
+          -0.8777777777777778,
+          -0.5365384615384615
+        ],
+        "mean_difference": -0.7037878787878787,
+        "p_exact_project_sign_flip": 0.03125,
+        "projects": 6,
+        "requirements": 11,
+        "requirements_negative": 11,
+        "requirements_positive": 0,
+        "requirements_zero": 0
+      },
+      "spec_incomplete": {
+        "ci95_project_bootstrap": [
+          -0.3875,
+          -0.14583333333333334
+        ],
+        "mean_difference": -0.26666666666666666,
+        "p_exact_project_sign_flip": 0.03125,
+        "projects": 6,
+        "requirements": 11,
+        "requirements_negative": 9,
+        "requirements_positive": 0,
+        "requirements_zero": 2
+      }
+    },
+    "unit": "requirement with >=1 recovered and >=1 mutant; sound suites; code_incomplete excludes the mutant whose code the tester saw"
+  },
+  "Q5_soundness": {
+    "by_tester": {
+      "claude-opus-4-6": {
+        "code_incomplete": {
+          "alarm_on_reference": 31,
+          "sound": 15,
+          "suites": 50
+        },
+        "spec_complete": {
+          "alarm_on_reference": 4,
+          "sound": 46,
+          "suites": 50
+        },
+        "spec_incomplete": {
+          "alarm_on_reference": 13,
+          "sound": 33,
+          "suites": 50
+        }
+      },
+      "claude-opus-5-5": {
+        "code_incomplete": {
+          "alarm_on_reference": 16,
+          "sound": 33,
+          "suites": 50
+        },
+        "spec_complete": {
+          "alarm_on_reference": 1,
+          "sound": 49,
+          "suites": 50
+        },
+        "spec_incomplete": {
+          "alarm_on_reference": 10,
+          "sound": 38,
+          "suites": 50
+        }
+      },
+      "claude-sonnet-4-6": {
+        "code_incomplete": {
+          "alarm_on_reference": 30,
+          "sound": 17,
+          "suites": 50
+        },
+        "spec_complete": {
+          "alarm_on_reference": 9,
+          "sound": 26,
+          "suites": 50
+        },
+        "spec_incomplete": {
+          "alarm_on_reference": 15,
+          "sound": 22,
+          "suites": 50
+        }
+      },
+      "claude-sonnet-5-5": {
+        "code_incomplete": {
+          "alarm_on_reference": 27,
+          "sound": 21,
+          "suites": 50
+        },
+        "spec_complete": {
+          "alarm_on_reference": 4,
+          "sound": 46,
+          "suites": 50
+        },
+        "spec_incomplete": {
+          "alarm_on_reference": 8,
+          "sound": 40,
+          "suites": 50
+        }
+      },
+      "gpt-6-astra": {
+        "code_incomplete": {
+          "alarm_on_reference": 29,
+          "sound": 19,
+          "suites": 50
+        },
+        "spec_complete": {
+          "alarm_on_reference": 8,
+          "sound": 38,
+          "suites": 50
+        },
+        "spec_incomplete": {
+          "alarm_on_reference": 1,
+          "sound": 39,
+          "suites": 50
+        }
+      }
+    },
+    "note": "A suite that alarms on the reference is unsound and cannot kill any mutant under the published rule.",
+    "question": "How often does a suite reject the correct reference implementation?"
+  },
+  "alarms_counted": [
+    "assertion_alarm"
+  ],
+  "confirmatory_eligible": false,
+  "exploratory": true,
+  "inputs": {
+    "context_cue": {
+      "path": "data/context-cue/20261004-v2/results.json",
+      "sha256": "feb1e99505b81fd4b72d65dfbc335cf37732ca45ab4165e048aa5e1ccb88fe83"
+    },
+    "covariates": {
+      "memorization": [
+        {
+          "path": "data/memorization-probe-20261002/results.json",
+          "sha256": "59c3c8bc5c137044190c370ecc88eeb4fd028950fbbce81de5b4d9e84b131dee"
+        },
+        {
+          "path": "data/memorization-probe-round2-20261003/results.json",
+          "sha256": "1f06aaa1a0f04b47a586e88df1bc262ba26625193379cdc22fd09ca40c4adb66"
+        }
+      ],
+      "scoreboard": {
+        "path": "data/context-cue/20261004-v2/selected46-scoreboard.json",
+        "sha256": "d20f061fd9af2a0170ee0c0fc16380da7a7477795092ac3426a9efc6f73ec988"
+      },
+      "screening": [
+        {
+          "path": "data/llm-screening-20261002/results.json",
+          "sha256": "95e2acc6bb9757b3584359e6c7919769d57456da30cd91592c504eb937628d9f"
+        },
+        {
+          "path": "data/llm-screening-round2-20261003/results.json",
+          "sha256": "efd715003c462e0af5cdc149f23ba98744a4bea051751eb6a2e5be85f800a4d6"
+        }
+      ]
+    },
+    "manifest": {
+      "path": "data/shared-omission-e2e/v1/frozen-manifest-public.json",
+      "sha256": "d2b0108909505df0c704380c3e166a340728ee225d693df7d1c559ff8f06de78"
+    },
+    "tester_runs": [
+      {
+        "path": "data/shared-omission-e2e/v1/results.json",
+        "sha256": "030f28e185c3b22d7ab7fd4a54f8c78e84501108b573413a6968b188527e56a2"
+      },
+      {
+        "path": "data/shared-omission-e2e/claude-evaluation-v1/claude-sonnet-4-6/results.json",
+        "sha256": "370190c33249f3e3b3d06cdbc3c5b25551730359a9564d8360d0c3bdb9882291"
+      },
+      {
+        "path": "data/shared-omission-e2e/claude-evaluation-v1/claude-opus-4-6/results.json",
+        "sha256": "c399f9c53baf7ef898dab0fc79d04e6a6b793f3a3af1b2f37ed7f268a1c25b10"
+      },
+      {
+        "path": "data/shared-omission-e2e/claude55-v1/claude-sonnet-5-5/results.json",
+        "sha256": "d2d419982b5c15ed972c2b9a771a6b3249c03f4869a5ecec37b1b0206f5b0119"
+      },
+      {
+        "path": "data/shared-omission-e2e/claude55-v1/claude-opus-5-5/results.json",
+        "sha256": "a2fb288fd5413f7e5a192eb920ac35722b33bd39c006b33c63f37aa757b33387"
+      }
+    ],
+    "testers": {
+      "path": "data/shared-omission-e2e/testers.json",
+      "sha256": "4c04cbc0e2aa980cfd08e7001aa0f51a1012aacf321220e6866f73502436c7f0"
+    }
+  },
+  "post_hoc": true,
+  "projects": 8,
+  "requirements": 25,
+  "schema_version": "verifier-coupling/v1"
+}

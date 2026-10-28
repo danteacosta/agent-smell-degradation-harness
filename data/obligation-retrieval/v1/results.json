@@ -1,0 +1,1245 @@
+{
+  "schema_version": "obligation-retrieval/v1",
+  "exploratory": true,
+  "model_calls": 0,
+  "snapshots_verified": {
+    "grist": "b047726e327709d214e3b63222ee052de6399934",
+    "immich-a3c": "a3c8b359f2fdc47699f1530215a23fe8bd34c454",
+    "immich-eee": "eee793bfe4a2e48aea595ad7563bfaf038dd2cd5",
+    "mattermost": "bd09d959514c34e72a33c24663b5946682b656ec",
+    "nextcloud": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+    "openproject": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+    "paperless-41bcc12cc2": "41bcc12cc2ae01d99957518a9b88126e16bb7c71",
+    "paperless-63c0e2f72b": "63c0e2f72b53ca2d38851930a4bcd1d5c8b52321",
+    "paperless-855669ddf9": "855669ddf93e25fe5c45420781e191a7df63884d",
+    "paperless-937feb1bef": "937feb1befdbc5712a612e9be44a926b0b6fc84c",
+    "wekan": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+    "zulip": "9778ffc23c3e83e321152a48ab32c1426e1bd941"
+  },
+  "method": "BM25 (k1 1.5, b 0.75) over paragraph passages of the documentation snapshot; query = arm C text; gold = passage in the requirement's source documentation file with >= half of the omitted span's content words (loose variant: any file, reported per row)",
+  "requirements": 25,
+  "requirements_with_gold_passage": 24,
+  "recall_query_incomplete": {
+    "1": 0.5833333333333334,
+    "3": 0.75,
+    "5": 0.75,
+    "10": 0.8333333333333334,
+    "20": 0.9166666666666666
+  },
+  "recall_query_first_sentence_of_incomplete": {
+    "1": 0.125,
+    "3": 0.2916666666666667,
+    "5": 0.3333333333333333,
+    "10": 0.3333333333333333,
+    "20": 0.5
+  },
+  "recall_query_first_sentence_plus_page_text": {
+    "1": 0.125,
+    "3": 0.25,
+    "5": 0.2916666666666667,
+    "10": 0.4166666666666667,
+    "20": 0.5416666666666666
+  },
+  "recall_query_complete_at_1": 0.75,
+  "recall_at_5_by_recovery_group": {
+    "zero_recovery": {
+      "requirements": 13,
+      "recall_at_5": 1.0
+    },
+    "some_recovery": {
+      "requirements": 11,
+      "recall_at_5": 0.45454545454545453
+    }
+  },
+  "semantic_gold": {
+    "requirements_with_semantic_gold": 25,
+    "lexical_and_semantic_gold_agree": 24,
+    "recall_query_incomplete": {
+      "1": 0.4,
+      "3": 0.68,
+      "5": 0.68,
+      "10": 0.76,
+      "20": 0.92
+    },
+    "recall_query_first_sentence_of_incomplete": {
+      "1": 0.0,
+      "3": 0.16,
+      "5": 0.16,
+      "10": 0.24,
+      "20": 0.36
+    },
+    "recall_query_first_sentence_plus_page_text": {
+      "1": 0.04,
+      "3": 0.16,
+      "5": 0.16,
+      "10": 0.32,
+      "20": 0.4
+    },
+    "recall_at_5_by_recovery_group": {
+      "zero_recovery": {
+        "requirements": 14,
+        "recall_at_5": 0.8571428571428571
+      },
+      "some_recovery": {
+        "requirements": 11,
+        "recall_at_5": 0.45454545454545453
+      }
+    }
+  },
+  "rows": [
+    {
+      "case": "grist-billing-managers-limit",
+      "project_id": "grist",
+      "omitted_content_words": [
+        "10"
+      ],
+      "source_files": [
+        "team-sharing.md"
+      ],
+      "passages": 7094,
+      "gold_passages": 1,
+      "loose_gold_passages": 90,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 1,
+      "max_cover": 1,
+      "best_cover_file": "assistant.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement adding billing managers on the Billing Account page.",
+      "rank_query_first_sentence": 3,
+      "rank_query_first_sentence_plus_page_text": 3,
+      "semantic_gold": {
+        "quote": "up to 10 billing managers",
+        "passages": 1,
+        "files": [
+          "team-sharing.md"
+        ],
+        "evidence": [
+          {
+            "file": "team-sharing.md",
+            "paragraph": 14,
+            "text": "none of the roles listed above provide access to billing information or management. you can add up to 10 billing managers on the 'billing account' page, which can be accessed via the user menu dropdown."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 3,
+        "rank_query_first_sentence_plus_page_text": 3
+      }
+    },
+    {
+      "case": "grist-context-menu-shortcut",
+      "project_id": "grist",
+      "omitted_content_words": [
+        "10",
+        "shift"
+      ],
+      "source_files": [
+        "keyboard-shortcuts.md"
+      ],
+      "passages": 7094,
+      "gold_passages": 6,
+      "loose_gold_passages": 125,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 1,
+      "max_cover": 2,
+      "best_cover_file": "keyboard-shortcuts.md",
+      "rank_query_incomplete": 2,
+      "rank_query_complete": 2,
+      "query_first_sentence": "Implement the grid's menu keyboard shortcuts (Windows key bindings).",
+      "rank_query_first_sentence": 24,
+      "rank_query_first_sentence_plus_page_text": 25,
+      "semantic_gold": {
+        "quote": "Open the context menu",
+        "passages": 1,
+        "files": [
+          "keyboard-shortcuts.md"
+        ],
+        "evidence": [
+          {
+            "file": "keyboard-shortcuts.md",
+            "paragraph": 4,
+            "text": "###navigation | key (mac) | key (windows) | description | | - | - | - | | \u2193 | \u2193 | move downward to next record or field | | \u2191 | \u2191 | move upward to previous record or field | | \u2192 | \u2192 | move right to the next field | | \u2190 | \u2190 | move left to the previous field | | tab | tab | move to the next field, saving changes if editing a value | | \u21e7 tab | shift + tab | move to the previous field, saving changes if editing a value | | pagedown | pagedown | move down one page of records, or to next record in a card list | | pageup | pageup | move up one page of records, or to previous record in a card list | | \u2318 \u2191 | ctrl + \u2191 | move up to the first record | | \u2318 \u2193 | ctrl + \u2193 | move down to the last record | | home | home | move to the first field or the beginning of a row | | end | end | move to the last fie"
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 2,
+        "rank_query_first_sentence": 41,
+        "rank_query_first_sentence_plus_page_text": 43
+      }
+    },
+    {
+      "case": "grist-page-default-collapse",
+      "project_id": "grist",
+      "omitted_content_words": [
+        "change",
+        "click",
+        "collapse",
+        "default",
+        "dot",
+        "icon",
+        "parent",
+        "right",
+        "select",
+        "state",
+        "three"
+      ],
+      "source_files": [
+        "page-widgets.md"
+      ],
+      "passages": 7094,
+      "gold_passages": 2,
+      "loose_gold_passages": 4,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 6,
+      "max_cover": 11,
+      "best_cover_file": "page-widgets.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement the page list.",
+      "rank_query_first_sentence": 6153,
+      "rank_query_first_sentence_plus_page_text": 168,
+      "semantic_gold": {
+        "quote": "Set default: Collapse",
+        "passages": 1,
+        "files": [
+          "page-widgets.md"
+        ],
+        "evidence": [
+          {
+            "file": "page-widgets.md",
+            "paragraph": 12,
+            "text": "by default, nested pages will be expanded when a document is opened. you can change the default state by clicking the three-dot icon to the right of the parent page and selecting 'set default: collapse'."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 6153,
+        "rank_query_first_sentence_plus_page_text": 168
+      }
+    },
+    {
+      "case": "grist-suggestions-open-copy",
+      "project_id": "grist",
+      "omitted_content_words": [
+        "automatically",
+        "copy",
+        "document",
+        "enabl",
+        "open",
+        "sign",
+        "suggestion"
+      ],
+      "source_files": [
+        "sharing.md"
+      ],
+      "passages": 7094,
+      "gold_passages": 1,
+      "loose_gold_passages": 4,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 4,
+      "max_cover": 7,
+      "best_cover_file": "sharing.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement opening and editing documents.",
+      "rank_query_first_sentence": 22,
+      "rank_query_first_sentence_plus_page_text": 22,
+      "semantic_gold": {
+        "quote": "automatically open a copy of a document",
+        "passages": 1,
+        "files": [
+          "sharing.md"
+        ],
+        "evidence": [
+          {
+            "file": "sharing.md",
+            "paragraph": 44,
+            "text": "with suggestions enabled, users (signed-in or not) automatically open a copy of a document. they make edits to this copy without modifying the original, and then submit these suggestions to be reviewed by the document owner prior to integration. this workflow can be useful in more sensitive contexts, or for crowdsourcing data easily with additional quality control."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 22,
+        "rank_query_first_sentence_plus_page_text": 22
+      }
+    },
+    {
+      "case": "grist-tutorial-restart",
+      "project_id": "grist",
+      "omitted_content_words": [
+        "caus",
+        "chang",
+        "lost",
+        "unsav"
+      ],
+      "source_files": [
+        "document-tutorials.md"
+      ],
+      "passages": 7094,
+      "gold_passages": 1,
+      "loose_gold_passages": 4,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 2,
+      "max_cover": 4,
+      "best_cover_file": "document-tutorials.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement the Restart button of the tutorial popup.",
+      "rank_query_first_sentence": 2,
+      "rank_query_first_sentence_plus_page_text": 13,
+      "semantic_gold": {
+        "quote": "causing any unsaved changes to be lost",
+        "passages": 1,
+        "files": [
+          "document-tutorials.md"
+        ],
+        "evidence": [
+          {
+            "file": "document-tutorials.md",
+            "paragraph": 34,
+            "text": "!!! warning \"\u26a0\ufe0f don't lose your work!\" clicking 'restart' at the bottom of the tutorial popup will refresh the page, causing any unsaved changes to be lost. be sure to save changes to the main document prior to clicking this."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 2,
+        "rank_query_first_sentence_plus_page_text": 13
+      }
+    },
+    {
+      "case": "immich-library-single-owner",
+      "project_id": "immich",
+      "omitted_content_words": [
+        "belong",
+        "creat",
+        "external",
+        "initially",
+        "library",
+        "select",
+        "single"
+      ],
+      "source_files": [
+        "features/libraries.md"
+      ],
+      "passages": 1338,
+      "gold_passages": 2,
+      "loose_gold_passages": 2,
+      "rank_query_incomplete_loose": 2,
+      "words_needed": 4,
+      "max_cover": 7,
+      "best_cover_file": "features/libraries.md",
+      "rank_query_incomplete": 2,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement creating an external library.",
+      "rank_query_first_sentence": 2,
+      "rank_query_first_sentence_plus_page_text": 3,
+      "semantic_gold": {
+        "quote": "can only belong to a single user",
+        "passages": 1,
+        "files": [
+          "features/libraries.md"
+        ],
+        "evidence": [
+          {
+            "file": "features/libraries.md",
+            "paragraph": 1,
+            "text": ":::info currently an external library can only belong to a single user which is selected when the library is initially created. :::"
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 14,
+        "rank_query_first_sentence": 2,
+        "rank_query_first_sentence_plus_page_text": 6
+      }
+    },
+    {
+      "case": "immich-m2t-upload",
+      "project_id": "immich",
+      "omitted_content_words": [
+        "2"
+      ],
+      "source_files": [
+        "features/supported-formats.md"
+      ],
+      "passages": 1493,
+      "gold_passages": 2,
+      "loose_gold_passages": 145,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 1,
+      "max_cover": 1,
+      "best_cover_file": "FAQ.mdx",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement the video upload check.",
+      "rank_query_first_sentence": 19,
+      "rank_query_first_sentence_plus_page_text": 43,
+      "semantic_gold": {
+        "quote": ".m2t",
+        "passages": 1,
+        "files": [
+          "features/supported-formats.md"
+        ],
+        "evidence": [
+          {
+            "file": "features/supported-formats.md",
+            "paragraph": 6,
+            "text": "| format | extension(s) | supported? | notes | | :---------- | :-------------------------- | :----------------: | :---- | | 3gpp | .3gp .3gpp | :whitecheckmark: | | | avi | .avi | :whitecheckmark: | | | flv | .flv | :whitecheckmark: | | | m4v | .m4v | :whitecheckmark: | | | matroska | .mkv | :whitecheckmark: | | | mp2t | .mts .m2ts .m2t .ts | :whitecheckmark: | | | mp4 | .mp4 .insv | :whitecheckmark: | | | mpeg | .mpg .mpe .mpeg | :whitecheckmark: | | | mxf | .mxf | :whitecheckmark: | | | quicktime | .mov | :whitecheckmark: | | | webm | .webm | :whitecheckmark: | | | wmv | .wmv | :whitecheckmark: | |"
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 21,
+        "rank_query_first_sentence_plus_page_text": 46
+      }
+    },
+    {
+      "case": "mattermost-anonymous-team-url",
+      "project_id": "mattermost",
+      "omitted_content_words": [
+        "admin",
+        "anonymou",
+        "app",
+        "assign",
+        "automatically",
+        "becom",
+        "channel",
+        "choose",
+        "config",
+        "creation",
+        "enabl",
+        "flow",
+        "prompt",
+        "single",
+        "step",
+        "system",
+        "team",
+        "url"
+      ],
+      "source_files": [
+        "collaborate/organize-using-teams.rst"
+      ],
+      "passages": 2320,
+      "gold_passages": 1,
+      "loose_gold_passages": 3,
+      "rank_query_incomplete_loose": 6,
+      "words_needed": 9,
+      "max_cover": 16,
+      "best_cover_file": "collaborate/organize-using-teams.rst",
+      "rank_query_incomplete": 6,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement the Next button of Create a Team.",
+      "rank_query_first_sentence": 152,
+      "rank_query_first_sentence_plus_page_text": 26,
+      "semantic_gold": {
+        "quote": "you will not be prompted to choose a team URL",
+        "passages": 1,
+        "files": [
+          "collaborate/organize-using-teams.rst"
+        ],
+        "evidence": [
+          {
+            "file": "collaborate/organize-using-teams.rst",
+            "paragraph": 20,
+            "text": "if your system admin has enabled anonymous team and channel urls (available in mattermost enterprise advanced from v11.6.0), team creation becomes a single-step flow and you will not be prompted to choose a team url. the url is assigned automatically."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 6,
+        "rank_query_first_sentence": 152,
+        "rank_query_first_sentence_plus_page_text": 26
+      }
+    },
+    {
+      "case": "mattermost-guest-invite-channel",
+      "project_id": "mattermost",
+      "omitted_content_words": [
+        "acces",
+        "channel",
+        "guest",
+        "invit",
+        "least",
+        "must",
+        "one",
+        "select"
+      ],
+      "source_files": [
+        "collaborate/invite-people.rst"
+      ],
+      "passages": 2320,
+      "gold_passages": 3,
+      "loose_gold_passages": 10,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 4,
+      "max_cover": 8,
+      "best_cover_file": "collaborate/invite-people.rst",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement Invite as guest in the Invite People dialog.",
+      "rank_query_first_sentence": 1,
+      "rank_query_first_sentence_plus_page_text": 1,
+      "semantic_gold": {
+        "quote": "you must select at least one channel they can access",
+        "passages": 1,
+        "files": [
+          "collaborate/invite-people.rst"
+        ],
+        "evidence": [
+          {
+            "file": "collaborate/invite-people.rst",
+            "paragraph": 18,
+            "text": "- can't share invitation links? contact your mattermost system admin for assistance. an ssl certificate (or a self-signed certificate) may be required for link-based invitations to work. - when inviting guests, you must select at least one channel they can access. guests are limited to the channels you specify and cannot discover other channels. - an invite link can be used by anyone and doesn\u2019t change unless it\u2019s re-generated or revoked by a system admin or team admin via team settings > access > invite code. - your system admin must enable email invitations and configure email for mattermost to send email-based invitations. - invitation links sent by email expire after 48 hours and can only be used once. - your system admin can cancel all email invitations that haven't yet been accepted "
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 3,
+        "rank_query_first_sentence": 23,
+        "rank_query_first_sentence_plus_page_text": 3
+      }
+    },
+    {
+      "case": "mattermost-mention-add-prompt",
+      "project_id": "mattermost",
+      "omitted_content_words": [
+        "add",
+        "channel",
+        "mattermost",
+        "member",
+        "prompt"
+      ],
+      "source_files": [
+        "collaborate/manage-channel-members.rst"
+      ],
+      "passages": 2320,
+      "gold_passages": 16,
+      "loose_gold_passages": 85,
+      "rank_query_incomplete_loose": 2,
+      "words_needed": 3,
+      "max_cover": 5,
+      "best_cover_file": "collaborate/manage-channel-members.rst",
+      "rank_query_incomplete": 13,
+      "rank_query_complete": 2,
+      "query_first_sentence": "Implement sending a message in the channel.",
+      "rank_query_first_sentence": 345,
+      "rank_query_first_sentence_plus_page_text": 40,
+      "semantic_gold": {
+        "quote": "Mattermost prompts you to add them",
+        "passages": 1,
+        "files": [
+          "collaborate/manage-channel-members.rst"
+        ],
+        "evidence": [
+          {
+            "file": "collaborate/manage-channel-members.rst",
+            "paragraph": 24,
+            "text": "you can also @mention users to add them to a channel. if they're not a channel member, mattermost prompts you to add them."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 13,
+        "rank_query_first_sentence": 345,
+        "rank_query_first_sentence_plus_page_text": 70
+      }
+    },
+    {
+      "case": "mattermost-playbook-task-markdown",
+      "project_id": "mattermost",
+      "omitted_content_words": [
+        "consist",
+        "markdown",
+        "playbook",
+        "present",
+        "render",
+        "task",
+        "text"
+      ],
+      "source_files": [
+        "workflow-automation/work-with-playbooks.rst"
+      ],
+      "passages": 2320,
+      "gold_passages": 2,
+      "loose_gold_passages": 2,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 4,
+      "max_cover": 7,
+      "best_cover_file": "workflow-automation/work-with-playbooks.rst",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement adding a task to a playbook checklist.",
+      "rank_query_first_sentence": 1,
+      "rank_query_first_sentence_plus_page_text": 1,
+      "semantic_gold": {
+        "quote": "Playbook tasks consist of text rendered in Markdown",
+        "passages": 1,
+        "files": [
+          "workflow-automation/work-with-playbooks.rst"
+        ],
+        "evidence": [
+          {
+            "file": "workflow-automation/work-with-playbooks.rst",
+            "paragraph": 26,
+            "text": "playbook tasks consist of text rendered in markdown (when present). you can't run commands directly from a task in a playbook, but you can trigger built-in slash commands and custom slash commands , or outgoing webhooks, to run as part of the task action by starting the task with /."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 16,
+        "rank_query_first_sentence": 15,
+        "rank_query_first_sentence_plus_page_text": 15
+      }
+    },
+    {
+      "case": "nextcloud-device-password-once",
+      "project_id": "nextcloud",
+      "omitted_content_words": [
+        "acces",
+        "creat",
+        "device",
+        "password"
+      ],
+      "source_files": [
+        "session_management.rst"
+      ],
+      "passages": 2057,
+      "gold_passages": 6,
+      "loose_gold_passages": 19,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 2,
+      "max_cover": 4,
+      "best_cover_file": "session_management.rst",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement the device passwords in the Security settings.",
+      "rank_query_first_sentence": 1,
+      "rank_query_first_sentence_plus_page_text": 13,
+      "semantic_gold": {
+        "quote": "You only have access to the device password when creating it",
+        "passages": 1,
+        "files": [
+          "session_management.rst"
+        ],
+        "evidence": [
+          {
+            "file": "session_management.rst",
+            "paragraph": 9,
+            "text": ".. note:: you only have access to the device password when creating it. nextcloud does not save the plain password, so enter the password on the new client immediately."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 2,
+        "rank_query_first_sentence": 6,
+        "rank_query_first_sentence_plus_page_text": 28
+      }
+    },
+    {
+      "case": "nextcloud-mail-delegation",
+      "project_id": "nextcloud",
+      "omitted_content_words": [
+        "account",
+        "app",
+        "appear",
+        "delegat",
+        "delegate",
+        "entr",
+        "mark",
+        "shar",
+        "tag"
+      ],
+      "source_files": [
+        "groupware/mail.rst"
+      ],
+      "passages": 2057,
+      "gold_passages": 1,
+      "loose_gold_passages": 1,
+      "rank_query_incomplete_loose": 8,
+      "words_needed": 5,
+      "max_cover": 6,
+      "best_cover_file": "groupware/mail.rst",
+      "rank_query_incomplete": 8,
+      "rank_query_complete": 4,
+      "query_first_sentence": "Implement native account delegation in Mail.",
+      "rank_query_first_sentence": 32,
+      "rank_query_first_sentence_plus_page_text": 9,
+      "semantic_gold": {
+        "quote": "marked as delegated",
+        "passages": 1,
+        "files": [
+          "groupware/mail.rst"
+        ],
+        "evidence": [
+          {
+            "file": "groupware/mail.rst",
+            "paragraph": 75,
+            "text": "the shared account then appears in the delegate's account list, marked as delegated."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 8,
+        "rank_query_first_sentence": 32,
+        "rank_query_first_sentence_plus_page_text": 9
+      }
+    },
+    {
+      "case": "nextcloud-mail-favorites-up",
+      "project_id": "nextcloud",
+      "omitted_content_words": [
+        "allow",
+        "favorite",
+        "messag",
+        "message",
+        "section",
+        "separate",
+        "sett",
+        "top"
+      ],
+      "source_files": [
+        "groupware/mail.rst"
+      ],
+      "passages": 2057,
+      "gold_passages": 1,
+      "loose_gold_passages": 2,
+      "rank_query_incomplete_loose": 10,
+      "words_needed": 4,
+      "max_cover": 8,
+      "best_cover_file": "groupware/mail.rst",
+      "rank_query_incomplete": 16,
+      "rank_query_complete": 2,
+      "query_first_sentence": "Implement the message list of the Mail inbox.",
+      "rank_query_first_sentence": 94,
+      "rank_query_first_sentence_plus_page_text": 44,
+      "semantic_gold": {
+        "quote": "in a separate section on top of the message list",
+        "passages": 1,
+        "files": [
+          "groupware/mail.rst"
+        ],
+        "evidence": [
+          {
+            "file": "groupware/mail.rst",
+            "paragraph": 28,
+            "text": "this setting allows you to show messages set as favorite in a separate section on top of the message list."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 16,
+        "rank_query_first_sentence": 94,
+        "rank_query_first_sentence_plus_page_text": 44
+      }
+    },
+    {
+      "case": "openproject-archived-project-selector",
+      "project_id": "openproject",
+      "omitted_content_words": [
+        "accessible",
+        "archiv",
+        "header",
+        "longer",
+        "navigation",
+        "project",
+        "select",
+        "via"
+      ],
+      "source_files": [
+        "user-guide/projects/project-settings/project-information/README.md",
+        "getting-started/projects/README.md"
+      ],
+      "passages": 3548,
+      "gold_passages": 1,
+      "loose_gold_passages": 5,
+      "rank_query_incomplete_loose": 13,
+      "words_needed": 4,
+      "max_cover": 8,
+      "best_cover_file": "user-guide/projects/project-settings/project-information/README.md",
+      "rank_query_incomplete": 59,
+      "rank_query_complete": 2,
+      "query_first_sentence": "Implement the project list of the All projects dropdown in the header.",
+      "rank_query_first_sentence": 46,
+      "rank_query_first_sentence_plus_page_text": 135,
+      "semantic_gold": {
+        "quote": "can no longer be selected from the project list",
+        "passages": 1,
+        "files": [
+          "user-guide/projects/project-settings/project-information/README.md"
+        ],
+        "evidence": [
+          {
+            "file": "user-guide/projects/project-settings/project-information/README.md",
+            "paragraph": 41,
+            "text": "once archived, a project can no longer be selected from the project list accessible via header navigation. it is still visible in the project lists dashboard if you set the \"active\" filter to \"off\" (move slider to the left). you can unarchive the project there, too, using the three dots at the right end of a row and clicking unarchive."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 59,
+        "rank_query_first_sentence": 46,
+        "rank_query_first_sentence_plus_page_text": 135
+      }
+    },
+    {
+      "case": "openproject-more-menu-subproject",
+      "project_id": "openproject",
+      "omitted_content_words": [
+        "add",
+        "app",
+        "form",
+        "open",
+        "parent",
+        "project",
+        "subproject"
+      ],
+      "source_files": [
+        "user-guide/projects/project-settings/project-information/README.md"
+      ],
+      "passages": 3548,
+      "gold_passages": 0,
+      "loose_gold_passages": 7,
+      "rank_query_incomplete_loose": 28,
+      "words_needed": 4,
+      "max_cover": 4,
+      "best_cover_file": "user-guide/agile-boards/agile-boards-faq/README.md",
+      "rank_query_incomplete": null,
+      "rank_query_complete": null,
+      "query_first_sentence": "Implement the More menu of the project information page.",
+      "rank_query_first_sentence": null,
+      "rank_query_first_sentence_plus_page_text": null,
+      "semantic_gold": {
+        "quote": "Add a subproject",
+        "passages": 1,
+        "files": [
+          "user-guide/projects/project-settings/project-information/README.md"
+        ],
+        "evidence": [
+          {
+            "file": "user-guide/projects/project-settings/project-information/README.md",
+            "paragraph": 11,
+            "text": "- add a subproject - duplicate a project - make a project public - set a project as a template - archive a project - delete a project"
+          }
+        ],
+        "lexical_gold_agrees": false,
+        "rank_query_incomplete": 3,
+        "rank_query_first_sentence": 367,
+        "rank_query_first_sentence_plus_page_text": 50
+      }
+    },
+    {
+      "case": "paperless-ai-suggestions-blank-text",
+      "project_id": "paperless-ngx",
+      "omitted_content_words": [
+        "contain",
+        "document",
+        "empty",
+        "process",
+        "skipp",
+        "text",
+        "whitespace",
+        "whose"
+      ],
+      "source_files": [
+        "usage.md"
+      ],
+      "passages": 2219,
+      "gold_passages": 2,
+      "loose_gold_passages": 6,
+      "rank_query_incomplete_loose": 3,
+      "words_needed": 4,
+      "max_cover": 8,
+      "best_cover_file": "usage.md",
+      "rank_query_incomplete": 3,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement the run of the \"Apply AI Suggestions\" workflow action.",
+      "rank_query_first_sentence": 21,
+      "rank_query_first_sentence_plus_page_text": 21,
+      "semantic_gold": {
+        "quote": "contains only whitespace are skipped",
+        "passages": 1,
+        "files": [
+          "usage.md"
+        ],
+        "evidence": [
+          {
+            "file": "usage.md",
+            "paragraph": 171,
+            "text": "the action works with every trigger except consumption started, because suggestions are made from the document's text, which does not exist until after the document has been processed. documents whose processed text is empty or contains only whitespace are skipped."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 3,
+        "rank_query_first_sentence": 21,
+        "rank_query_first_sentence_plus_page_text": 21
+      }
+    },
+    {
+      "case": "paperless-custom-field-no-value",
+      "project_id": "paperless-ngx",
+      "omitted_content_words": [
+        "add",
+        "already",
+        "document",
+        "left",
+        "may",
+        "untouch"
+      ],
+      "source_files": [
+        "usage.md"
+      ],
+      "passages": 2174,
+      "gold_passages": 6,
+      "loose_gold_passages": 21,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 3,
+      "max_cover": 6,
+      "best_cover_file": "usage.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement the workflow \"Assignment\" action for custom fields.",
+      "rank_query_first_sentence": 32,
+      "rank_query_first_sentence_plus_page_text": 37,
+      "semantic_gold": {
+        "quote": "any value it may already have is left untouched",
+        "passages": 1,
+        "files": [
+          "usage.md"
+        ],
+        "evidence": [
+          {
+            "file": "usage.md",
+            "paragraph": 142,
+            "text": "- title, see workflow placeholders below - tags, correspondent, document type and storage path - document owner - view and / or edit permissions to users or groups - custom fields, optionally with a value. if no value is set, the field is only added to the document and any value it may already have is left untouched. if a value is set, it will overwrite an existing value of that field on the document."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 32,
+        "rank_query_first_sentence_plus_page_text": 37
+      }
+    },
+    {
+      "case": "paperless-doc-title-placeholder",
+      "project_id": "paperless-ngx",
+      "omitted_content_words": [
+        "assignment",
+        "cannot",
+        "title",
+        "used"
+      ],
+      "source_files": [
+        "usage.md"
+      ],
+      "passages": 1949,
+      "gold_passages": 3,
+      "loose_gold_passages": 13,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 2,
+      "max_cover": 4,
+      "best_cover_file": "usage.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement saving the title template of a workflow assignment.",
+      "rank_query_first_sentence": 12,
+      "rank_query_first_sentence_plus_page_text": 2,
+      "semantic_gold": {
+        "quote": "cannot be used in title assignment",
+        "passages": 1,
+        "files": [
+          "usage.md"
+        ],
+        "evidence": [
+          {
+            "file": "usage.md",
+            "paragraph": 146,
+            "text": "- {{correspondent}}: assigned correspondent name - {{documenttype}}: assigned document type name - {{ownerusername}}: assigned owner username - {{added}}: added datetime - {{addedyear}}: added year - {{addedyearshort}}: added year - {{addedmonth}}: added month - {{addedmonthname}}: added month name - {{addedmonthnameshort}}: added month short name - {{addedday}}: added day - {{addedtime}}: added time in hh:mm format - {{originalfilename}}: original file name without extension - {{filename}}: current file name without extension - {{doctitle}}: current document title (cannot be used in title assignment)"
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 12,
+        "rank_query_first_sentence_plus_page_text": 2
+      }
+    },
+    {
+      "case": "paperless-superuser-grant",
+      "project_id": "paperless-ngx",
+      "omitted_content_words": [
+        "another",
+        "grant",
+        "statu",
+        "superuser"
+      ],
+      "source_files": [
+        "usage.md"
+      ],
+      "passages": 1724,
+      "gold_passages": 3,
+      "loose_gold_passages": 3,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 2,
+      "max_cover": 4,
+      "best_cover_file": "usage.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Edit another user account in Users & Groups.",
+      "rank_query_first_sentence": 13,
+      "rank_query_first_sentence_plus_page_text": 1,
+      "semantic_gold": {
+        "quote": "can only be granted by another superuser",
+        "passages": 1,
+        "files": [
+          "usage.md"
+        ],
+        "evidence": [
+          {
+            "file": "usage.md",
+            "paragraph": 63,
+            "text": "superusers can access all parts of the front and backend application as well as any and all objects. superuser status can only be granted by another superuser."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 13,
+        "rank_query_first_sentence_plus_page_text": 1
+      }
+    },
+    {
+      "case": "wekan-home-multi-drop",
+      "project_id": "wekan",
+      "omitted_content_words": [
+        "board",
+        "chang",
+        "choose",
+        "dropp",
+        "first",
+        "keep",
+        "multi",
+        "narrow",
+        "noth",
+        "one",
+        "please",
+        "report",
+        "select",
+        "selection",
+        "silently"
+      ],
+      "source_files": [
+        "Features/Board/Home.md"
+      ],
+      "passages": 11395,
+      "gold_passages": 1,
+      "loose_gold_passages": 10,
+      "rank_query_incomplete_loose": 2,
+      "words_needed": 8,
+      "max_cover": 15,
+      "best_cover_file": "Features/Board/Home.md",
+      "rank_query_incomplete": 2,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement dropping boards on the Home row of All Boards.",
+      "rank_query_first_sentence": 3,
+      "rank_query_first_sentence_plus_page_text": 7,
+      "semantic_gold": {
+        "quote": "does not silently choose its first board",
+        "passages": 1,
+        "files": [
+          "Features/Board/Home.md"
+        ],
+        "evidence": [
+          {
+            "file": "Features/Board/Home.md",
+            "paragraph": 14,
+            "text": "dropping a multi-selection does not silently choose its first board. it reports \"please select only one board\", changes nothing and keeps the selection so it can be narrowed. a one-board drag continues to set home normally."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 2,
+        "rank_query_first_sentence": 3,
+        "rank_query_first_sentence_plus_page_text": 7
+      }
+    },
+    {
+      "case": "wekan-swimlane-below-default",
+      "project_id": "wekan",
+      "omitted_content_words": [
+        "default",
+        "select"
+      ],
+      "source_files": [
+        "Features/Swimlanes/Swimlanes.md"
+      ],
+      "passages": 11395,
+      "gold_passages": 1,
+      "loose_gold_passages": 720,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 1,
+      "max_cover": 2,
+      "best_cover_file": "Design/Design-Principles.md",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement adding swimlanes.",
+      "rank_query_first_sentence": 768,
+      "rank_query_first_sentence_plus_page_text": 9,
+      "semantic_gold": {
+        "quote": "with Below selected by default",
+        "passages": 1,
+        "files": [
+          "Features/Swimlanes/Swimlanes.md"
+        ],
+        "evidence": [
+          {
+            "file": "Features/Swimlanes/Swimlanes.md",
+            "paragraph": 8,
+            "text": "use the swimlane header +, or swimlane actions \u2192 add swimlane. the existing popup offers above selected swimlane and below selected swimlane, with below selected by default. multiple titles retain their order between the selected lane and its neighbor. board write permissions still apply."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 768,
+        "rank_query_first_sentence_plus_page_text": 9
+      }
+    },
+    {
+      "case": "zulip-private-channel-access",
+      "project_id": "zulip",
+      "omitted_content_words": [
+        "acces",
+        "channel",
+        "conversation",
+        "grant",
+        "indicat",
+        "lock",
+        "private",
+        "specifically",
+        "visible"
+      ],
+      "source_files": [
+        "docs/channel-permissions.mdx"
+      ],
+      "passages": 4038,
+      "gold_passages": 1,
+      "loose_gold_passages": 2,
+      "rank_query_incomplete_loose": 90,
+      "words_needed": 5,
+      "max_cover": 8,
+      "best_cover_file": "docs/channel-permissions.mdx",
+      "rank_query_incomplete": 90,
+      "rank_query_complete": 2,
+      "query_first_sentence": "Implement viewing a channel's conversations.",
+      "rank_query_first_sentence": 76,
+      "rank_query_first_sentence_plus_page_text": 84,
+      "semantic_gold": {
+        "quote": "are specifically granted access",
+        "passages": 1,
+        "files": [
+          "docs/channel-permissions.mdx"
+        ],
+        "evidence": [
+          {
+            "file": "docs/channel-permissions.mdx",
+            "paragraph": 15,
+            "text": "private channels (indicated by ) are for conversations that should be visible to users who are specifically granted access. there are two types of private channels in zulip:"
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 90,
+        "rank_query_first_sentence": 76,
+        "rank_query_first_sentence_plus_page_text": 84
+      }
+    },
+    {
+      "case": "zulip-resolved-notice-auto-read",
+      "project_id": "zulip",
+      "omitted_content_words": [
+        "add",
+        "automatically",
+        "configure",
+        "mark",
+        "notic",
+        "read",
+        "resolv",
+        "section",
+        "sett",
+        "topic",
+        "whether"
+      ],
+      "source_files": [
+        "docs/configure-automated-notices.mdx",
+        "include/_ConfigureResolvedNoticesMarkedAsRead.mdx"
+      ],
+      "passages": 4038,
+      "gold_passages": 3,
+      "loose_gold_passages": 8,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 6,
+      "max_cover": 8,
+      "best_cover_file": "docs/configure-automated-notices.mdx",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement resolving topics.",
+      "rank_query_first_sentence": 15,
+      "rank_query_first_sentence_plus_page_text": 16,
+      "semantic_gold": {
+        "quote": "whether these notices are automatically marked as read",
+        "passages": 2,
+        "files": [
+          "docs/configure-automated-notices.mdx",
+          "docs/resolve-a-topic.mdx"
+        ],
+        "evidence": [
+          {
+            "file": "docs/configure-automated-notices.mdx",
+            "paragraph": 13,
+            "text": "a notice is sent when a topic is resolved or unresolved. users can configure whether these notices are automatically marked as read."
+          },
+          {
+            "file": "docs/resolve-a-topic.mdx",
+            "paragraph": 6,
+            "text": "puts a \u2714 at the beginning of the topic name, e.g., example topic becomes \u2714 example topic. triggers an automated notice from notification bot indicating that you resolved the topic. users can configure whether these notices are automatically marked as read. changes whether the topic appears when using the is:resolved and -is:resolved search filters."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 9,
+        "rank_query_first_sentence_plus_page_text": 23
+      }
+    },
+    {
+      "case": "zulip-unsubscribe-self",
+      "project_id": "zulip",
+      "omitted_content_words": [
+        "alway",
+        "channel",
+        "unsubscribe",
+        "zulip"
+      ],
+      "source_files": [
+        "docs/unsubscribe-from-a-channel.mdx",
+        "docs/channel-permissions.mdx"
+      ],
+      "passages": 4038,
+      "gold_passages": 12,
+      "loose_gold_passages": 187,
+      "rank_query_incomplete_loose": 1,
+      "words_needed": 2,
+      "max_cover": 4,
+      "best_cover_file": "docs/unsubscribe-from-a-channel.mdx",
+      "rank_query_incomplete": 1,
+      "rank_query_complete": 1,
+      "query_first_sentence": "Implement the Unsubscribe buttons in the channel's subscriber list.",
+      "rank_query_first_sentence": 5,
+      "rank_query_first_sentence_plus_page_text": 5,
+      "semantic_gold": {
+        "quote": "You can always unsubscribe from any channel",
+        "passages": 1,
+        "files": [
+          "docs/unsubscribe-from-a-channel.mdx"
+        ],
+        "evidence": [
+          {
+            "file": "docs/unsubscribe-from-a-channel.mdx",
+            "paragraph": 4,
+            "text": "you can always unsubscribe from any channel in zulip. unsubscribing from a channel removes conversations in that channel from your inbox, recent conversations, and left sidebar. new messages will not appear in your combined feed, and you will not receive @-mention notifications in channels you're not subscribed to. the app doesn't track your unread messages in unsubscribed channels."
+          }
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 2,
+        "rank_query_first_sentence": 61,
+        "rank_query_first_sentence_plus_page_text": 132
+      }
+    }
+  ]
+}
