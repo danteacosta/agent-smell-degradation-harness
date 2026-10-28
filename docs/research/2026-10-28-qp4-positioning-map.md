@@ -31,7 +31,7 @@ Other sources found by the adversarial search of 28/10 (primary text as stated):
 | Huang, Zhang, Harman, Du, Cui, *Measuring the Influence of Incorrect Code on Test Generation*, arXiv 2409.09464v3 (28/3/2025; under review per the arXiv record; read by Claude from the HTML, §1–8) | Five input conditions for the tester: description, description + correct code, description + incorrect code, correct code, incorrect code (§3.1). With the description, incorrect instead of correct code lowers test accuracy 73.9% → 47.1%, coverage 96.8% → 86.5% and detection 47.4% → 38.1% (averages, test level); on 41 real-world tasks, detection 13.5% (correct code only) vs 7.1% (incorrect code only) (§5.5) | An antecedent for manipulating the information given to the tester (and for QP4 F4); it varies the code shown, not the requirement; no removed obligation; its "misled" measure is criticised by Zhao et al. (see the counting table) |
 | Zhao, Zhou, Cohen, *Evaluating and Mitigating the Misguidance Effect of Buggy Code in LLM-Generated Unit Tests*, PACMSE 3 (ISSTA 2026), DOI 10.1145/3832204, arXiv 2607.22883 (read by Claude: §1–4.3 from the HTML, which is truncated in §4.4; §4.2–8 from the PDF, whose first part came back garbled; reference list cut at [51]) | Showing buggy code to the test generator raises misguided tests (pass on buggy, fail on fixed) from 0.46% to 3.84% and lowers effective tests from 8.51% to 2.98% on 318 Defects4J focal methods, 11 models (Table 4); a docstring-first pipeline mitigates it (Tables 6, 8); on fixed code it is comparable to code prompting (§5: CFR 21.30% → 20.10%, FAR 37.45% → 39.04%, line coverage +3.61 pp); 15.09–20.75% of generated docstrings preserve the bug (§4.4). Builds on Huang et al. (arXiv 2409.09464), whose buggy-code metric it argues overstates misguidance (§2.6, §7) | Close antecedent for F4 (code anchoring), at ISSTA itself; unit tests on Defects4J focal methods, no omitted requirement; threats (§6) name stateful, dependency-rich code where method docstrings may omit needed information; in the sections examined (§6–7), incomplete requirements are named only as a threat for stateful, dependency-rich code; no claim is made about the wider literature |
 | Qi, Liu, Lin, Zhou, Sun, Dong, *Benchmarking LLM Agents for Behaviorally Adequate Test Generation from Software Requirements* (Req2Test-Bench), arXiv 2610.36584v1, 27/10/2026 (Claude: abstract only, HTML and PDF blocked by robots for Claude; Codex read the primary HTML §3.2–4.3, §5.4–5.5, §6 and Tables 3–4) | 5,086 instances constructed from Gherkin requirements in 8 projects, but 2,051 evaluated (780 Features, one per group sharing the same StepDefinitions, §4.3); the 82.8% passing and 33.8% behaviorally adequate (kill every mutant the developer test kills) are means over the 8 projects in that evaluated subset, not over 5,086 generations; diminishing returns from scaling agents (abstract). **Informational intervention (§5.5, per Codex):** an author clarifies setup and expected outcomes using the ground truth, and kill-complete rises 2 → 14 of 17 (Algorand) and 25 → 36 of 60 (python-docx); §6 admits that a narrower reading can be valid where a test is kill-incomplete | Close to QP4 as an intervention on the information given to test writers, but not a controlled removal of one obligation, and no implementation loss or joint escape. §3.2 excludes browser and live-service scenarios. Adequacy is relative to the developer test's kills, not universal semantic truth |
-| Ding, *What the Specification Did Not Say: Specification-Oracle Gaps in Test-Graded Coding-Agent Benchmarks*, arXiv 2610.30635v1, 22/10/2026 (Claude: abstract only, HTML and PDF blocked by robots; Codex read the primary HTML §4.1–6.4 and §7) | Benchmarks grade on names, paths or literals the specification omits. The audited set G(o) covers dependencies on identifiers, paths and literals; behaviour the specification leaves open is outside it (§4.1–4.2). On SWE-Milestone, 80.6% vs 48.4% failure is an **association** in comparable units with new tests; the reported OR 4.64 is an odds ratio, not a risk ratio. §6.2 is an offline mechanical intervention without agents: renaming a hidden identifier in the reference breaks compilation in 126 of 128 Go units. §7: specification addenda are generated, and their effect on agents would need new runs. §6.4: blind, held-out expert review gives precision 58/65 and recall 13/14, with wide intervals (all per Codex) | Evaluator-side. Our arm C is an **analogous informational tension** (the frozen oracle enforces an obligation the request omits), not an instance of Ding's formal definition. QP4 reads arm-C failures as loss of a documented obligation relative to A and B, not as agent error on an uninformed requirement |
+| Ding, *What the Specification Did Not Say: Specification-Oracle Gaps in Test-Graded Coding-Agent Benchmarks*, arXiv 2610.30635v1, 22/10/2026 (Claude: abstract only, HTML and PDF blocked by robots; Codex read the primary HTML §4.1–9, Limitations and Ethics; Appendix I not read) | Benchmarks grade on names, paths or literals the specification omits. The **main formal extractor** G(o) covers dependencies on identifiers, paths and literals; behaviour the specification leaves open is outside that extractor (§4.1–4.2), but not outside the paper: Limitations reports a separate text heuristic for unspecified behaviour, and §6.5 attributes 28 of 40 hard unflagged cases to behaviour left open. On SWE-Milestone, 80.6% vs 48.4% failure is an **association** in comparable units with new tests; the reported OR 4.64 is an odds ratio, not a risk ratio. §6.2 is an offline mechanical intervention without agents: renaming a hidden identifier in the reference breaks compilation in 126 of 128 Go units. §7: specification addenda are generated, and their effect on agents has not been evaluated with new agent runs. §6.4: blind, held-out expert review gives precision 58/65 and recall 13/14, with wide intervals (all per Codex) | Evaluator-side. Our arm C is an **analogous informational tension** (the frozen oracle enforces an obligation the request omits), not an instance of the main formal extractor's definition; the paper's separate heuristic and §6.5 show it also discusses behavioural gaps, which is closer to arm C. QP4 reads arm-C failures as loss of a documented obligation relative to A and B, not as agent error on an uninformed requirement |
 | Li, Liu, Lyu, Cheng, Guan, *Ungrounded Enforcement: When Agent Benchmarks Grade on Conditions Their Specifications Do Not Determine*, NeurIPS 2026 workshop "Who Verifies the Agents?" (title, authors and OpenReview id V8QjW4TS6i confirmed on the workshop schedule page; abstract and paper not reachable from this session) | By title, the same evaluator-side gap as Ding | Content unknown; nothing is inferred beyond the title. Unreachable is an access limit, not absence |
 | Gao, Zhou, *Can Agent Benchmarks Support Their Scores? Evidence-Supported Bounds for Interactive-Agent Evaluation*, arXiv 2605.10448v1 (read by Claude: main text; appendices not reached) | Outcome-evidence gaps and benchmark conflicts in five interactive benchmarks (e.g. τ³-bench retail: 24 conflicts in 300 records) | Context for evaluator validity; agents' tests not studied |
 
@@ -87,8 +87,9 @@ comparable, and no ordering of strictness or performance between studies is clai
 
 Each item names the source and its reading status; none is a new result.
 
-1. **Arm C enforces what the request omits.** Ding (abstract; §4.1–7 per Codex) treats
-   grading on unstated identifier, path and literal dependencies as a benchmark gap;
+1. **Arm C enforces what the request omits.** Ding (abstract; §4.1–9 per Codex) treats
+   grading on unstated dependencies as a benchmark gap, with a formal extractor for
+   identifiers, paths and literals and a separate heuristic for unspecified behaviour;
    Ungrounded Enforcement is known only by its title, and nothing about its content is
    assumed. QP4's arm C is an analogous informational tension by design.
    Response available in the design: arm A and the rewording control B, the obligation
@@ -145,51 +146,55 @@ is not an exhaustive search, and no claim of being first rests on it.
 6. F4 must cite Zhao, Zhou and Cohen (ISSTA 2026) as the closest antecedent for code
    anchoring.
 7. The threats section must say that arm C creates an informational tension analogous
-   to Ding's specification–oracle gaps (his G(o) audits identifier, path and literal
-   dependencies; open behaviour is outside it, §4.1–4.2), and cite Ungrounded Enforcement
-   once read: QP4 measures loss of a documented obligation relative to A and B, not agent
+   to Ding's specification–oracle gaps (his main extractor G(o) audits identifier, path and
+   literal dependencies, §4.1–4.2; a separate text heuristic and §6.5's 28 of 40 hard
+   unflagged cases concern behaviour left open), and cite Ungrounded Enforcement once read: QP4 measures loss of a documented obligation relative to A and B, not agent
    error on an uninformed requirement.
 8. Req2Test-Bench §5.5 must be cited as a close informational intervention on test
    writers (clarifying setup and outcomes from the ground truth), distinct from removing
    one obligation and measuring implementation loss and joint escape.
 
-## Open items (concrete)
+## Reading status and backlog (consolidated 28/10)
 
-- TestSuiteBench: read (see table); Table 5 confirmed by Codex (official docs V 75.4%,
-  M 4.0%; refined V 86.7%, M 25.5%; 30 instances). TRACE closed by Codex from §5.
-- Ding §4.1–4.2 and Req2Test-Bench §3.2, §5.4–5.5, §6 read by Codex. Claude tried again
-  on 28/10 (14:5x): the arXiv HTML and PDF of both return robots_disallowed and the
-  alphaxiv mirror is not on this session's allowlist, so Claude has read only their
-  abstracts. The remaining sections of both are unread by either; this is an access
-  limit, not evidence about their content. Zhao et al.: §1–8 read by Claude (HTML §1–4.3, PDF §4.2–8)
-  and by Codex in targeted checks (§2.6, §4.4, §5/Table 12, §6), not a full review. Huang et al. read by Claude (HTML v3, §1–8); §3.1 and §3.4.1–3.4.3 also checked by Codex.
-- Ungrounded Enforcement: title, authors and OpenReview id confirmed; read the abstract or
-  paper when reachable.
-- Haeri and Ghelichi: Codex read I.5–I.9, G and H in the HTML; no cross-model pooling in
-  those sections. Other sources were not searched exhaustively for it.
-- Blind check of the RQ5 semantic gold quotes (short; can join a human audit).
-- Decisions for Dante and Márcio: smallest H-b effect of interest (fixes N), the
-  eligible-sample option, tester list and budget, workshop submission by 13/11.
-- #185 blind human audit stays pending; nothing here substitutes it.
+Read, by source and reader (details in the tables above and in the literature matrix):
+- Claude: Haeri (§3, §4.5, §5–6, App. A, E, I.2–I.5, from a truncated PDF);
+  Konstantinou (§I, III–V, VII-B, IX–X); TestSuiteBench (§1–6, App. A–E); Zhao
+  (§1–8 across HTML and PDF); Huang (§1–8); Doc2OracLL (v2 summary); Policy Loopholes;
+  Gao and Zhou (main text); abstracts only of TRACE, VerifierBench, Req2Test-Bench and
+  Ding (their HTML/PDF are blocked for this session).
+- Codex: Haeri HTML (§4.5, App. G, H, I.5–I.9); TRACE §5; VerifierBench §2.2–2.4, §4,
+  limitations; TestSuiteBench §3.2 and Table 5; Req2Test-Bench §3.2–4.3, §5.4–5.5, §6,
+  Tables 3–4, plus introduction and related work (works cited there are pointers, not
+  individually verified primaries); Ding §4.1–9, Limitations and Ethics; Zhao targeted
+  checks (§2.6, §4.4, §5/Table 12, §6); Huang §3.1, §3.4.1–3.4.3; EvalMutationBench
+  README.
 
-## Status at 28/10 (end of day): reviewed vs needs people
+Reading that can continue (no human decision needed):
+- Ding Appendix I (not read by either).
+- Req2Test-Bench sections outside those listed; the works it cites, if any becomes a
+  close antecedent, read individually from their primaries.
+- Ungrounded Enforcement abstract or paper (title, authors and OpenReview id only).
+- TRACE beyond §5 and VerifierBench beyond the sections above, if the paper text needs
+  them.
+- Cross-model pooling was found in TestSuiteBench App. A.5; no exhaustive search for
+  other instances was made.
 
-Reviewed by Codex on PR #234 (reproduction or text check; not independent validation of
-every modelling choice):
-- Coupling analysis (`--check` and assertion-only reproduced); input manifest with hashes.
-- Retrieval: snapshot verification, committed-blob indexing (ignored-file case covered),
-  semantic gold kept with quotes and per-passage evidence (agent-coded, not blind).
-- Power simulation v2 (attenuation, Holm, H-a estimand); the H-b decision sheet text.
-- Literature map and matrix, with reading status per source and per reader.
-
-Depends on people (not substitutable by models or by this map):
+Decisions that belong to people (not to Claude, Codex or this map):
 - Dante and Márcio: tester list and k; smallest H-b effect of interest or a practical
-  margin; eligible-sample option; whether H-b stays confirmatory; workshop by 13/11;
-  budget for any new collection or the RQ5 pilot.
-- A second human coder for the #185 blind audit; a blind check of the 25 semantic-gold
-  quotes (could join that audit).
-- Reading the sections of Req2Test-Bench, Ding and Ungrounded Enforcement that neither
-  Claude nor Codex has read.
+  margin with its own test; eligible-sample option; whether H-b stays confirmatory;
+  workshop submission by 13/11; budget for any new collection or for the RQ5 pilot.
+
+Human audit work (not substitutable by models):
+- The #185 blind audit with a second human coder.
+- A blind check of the 25 semantic-gold quotes for RQ5 (could join that audit).
+
+Reviewed by Codex on PR #234 (reproduction or text check, not independent validation of
+every modelling choice): coupling analysis and its hashed inputs; retrieval snapshot
+verification, committed-blob indexing and semantic-gold evidence; power simulation v2 and
+the H-b decision sheet; this map and the matrix. PR #234 is open and not merged.
+
+No priority or novelty is established by this package; the map records what the sections
+read contain.
 
 Unchanged throughout: H1 and H2; the 25-requirement, 8-project QP4 results are post hoc;
 zero and None stay distinct; τ² is out of scope.

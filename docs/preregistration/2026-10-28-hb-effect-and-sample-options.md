@@ -97,8 +97,9 @@ qualification losses.
 - The #185 blind human audit stays pending; mechanism claims stay conditional on it.
 - Arm-C failures are read as loss of a documented obligation relative to A and B, not as
   agent error on an uninformed requirement; arm C is an informational tension analogous
-  to, not an instance of, the specification–oracle gaps defined by Ding (arXiv 2610.30635,
-  §4.1–4.2).
+  to, not an instance of, the specification–oracle gaps captured by Ding's main formal
+  extractor (arXiv 2610.30635, §4.1–4.2); that paper also discusses behaviour left open
+  through a separate heuristic (Limitations, §6.5).
 - No pilot, generation or τ² activity is implied by this sheet.
 
 ## Questions to settle in one meeting
