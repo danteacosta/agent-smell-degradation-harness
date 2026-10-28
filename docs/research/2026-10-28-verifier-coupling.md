@@ -59,7 +59,13 @@ cluster: 11 requirements have zero recovery and zero detection. Split by recover
 14 requirements whose rule no generator kept have mean incomplete-source detection 0.048,
 and the 11 with some recovery have 0.242; without the zero–zero cluster, Spearman is
 −0.24 (n = 14, permutation p = 0.42). The supported reading is a dichotomy (rules never
-recovered are almost never detected), not a monotone relation. In the four requirements with a context
+recovered are almost never detected), not a monotone relation. Descriptively, using
+the existing pre-collection labels: all four requirements whose rule is numeric
+(screening panel) fall in the zero-recovery group (4 of 14 against 0 of 11); context
+cue (panel κ = 0.65) is 1 of 14 against 3 of 11; derived state 2 of 14 against 1 of 11;
+memorization probe 7 of 14 against 7 of 11. These counts are tiny and post hoc; they
+are compatible with arbitrary values and choices being lost by generators and missed
+by testers alike. In the four requirements with a context
 cue (panel κ = 0.65), mean generator recovery is 0.375 against 0.143 and mean tester
 detection 0.200 against 0.121. In practical terms the coupling changes little here: the
 mean per-requirement product of loss and miss (an omitted rule shipped broken and
