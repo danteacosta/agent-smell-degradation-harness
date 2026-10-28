@@ -110,6 +110,24 @@ H-c would need roughly 80 or more under attenuation, so it stays as estimation. 
 that the eligible QP4 sample is smaller than the admitted H1 sample (exploratory: 25 of
 46), so 40 eligible requirements may require more than 40 admitted.
 
+## Feasibility of the eligible sample
+
+In the 46-case collection, 25 requirements (54%) were QP4-eligible: 17 had no confirmed
+mutant in their four arm-C implementations and 4 more lacked a correct A or a mutant.
+With the planned 8 × 5 design, about 22 eligible requirements are expected, which the
+simulation puts at power 0.71 for H-b with observed effects (0.64 halved). Reaching
+about 40 eligible requirements needs roughly 70–75 admitted ones, but the frozen #177
+order lists only 10 (Paperless), 11 (Mattermost) and 13 (Immich) provisional admissions
+in three projects, before qualification losses. Options to decide before freezing:
+
+1. Raise arm-C draws per requirement (for example 8 instead of 4). A rough
+   Jeffreys-prior projection from the 46 cases moves expected eligibility from about
+   0.67 to 0.76; this projection is optimistic for rules never lost in four draws, and
+   the observed rate was 0.54. More draws also reduce the truncation that limits H-c.
+2. Unequal targets per project, registered before selection, drawing more from the
+   longer lists (OpenProject 45, Zulip 29, Grist and WeKan 19).
+3. Accept about 22 eligible requirements and report H-b as estimation alongside H-c.
+
 ## Deviations, exclusions and missing data
 
 - Generation failures, invalid suites and runner errors are unsound, never retried.
