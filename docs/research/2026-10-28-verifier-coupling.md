@@ -56,7 +56,10 @@ requirements, the share of arm-C implementations that kept the omitted rule
 detection rate averaged over testers: Spearman ρ = 0.59; permutation p = 0.002; with
 permutations only within projects, p = 0.015. In the four requirements with a context
 cue (panel κ = 0.65), mean generator recovery is 0.375 against 0.143 and mean tester
-detection 0.200 against 0.121. Eligibility required at least one confirmed mutant, so
+detection 0.200 against 0.121. In practical terms the coupling changes little here: the
+mean per-requirement product of loss and miss (an omitted rule shipped broken and
+unnoticed) is 0.725, against 0.710 if loss and miss rates were unrelated (difference
+0.014, project bootstrap [0.004, 0.022]), because both rates are high in this sample. Eligibility required at least one confirmed mutant, so
 fully recovered rules are absent and the recovery range is truncated.
 
 **F4 — Code anchoring shows up as rejecting the correct implementation (Q5).** Suites

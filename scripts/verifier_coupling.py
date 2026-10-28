@@ -331,6 +331,30 @@ def q3_coupling(runs, all_suites, roles, context_cue_file: Path = CONTEXT_CUE) -
     xs = [r["generator_recovery"] for r in usable]
     ys = [r["tester_detection_incomplete"] for r in usable]
     zs = [r["project_id"] for r in usable]
+    # Escape: an omitted rule is shipped broken when the generator loses it AND the
+    # incomplete-source review misses the loss. Compare the mean of the product with the
+    # product of the means (what independent loss and miss rates would give).
+    loss = [1 - x for x in xs]
+    miss = [1 - y for y in ys]
+    joint = mean([a * b for a, b in zip(loss, miss)])
+    indep = mean(loss) * mean(miss)
+    proj_idx: dict[str, list[int]] = defaultdict(list)
+    for i, p in enumerate(zs):
+        proj_idx[p].append(i)
+    projects = sorted(proj_idx)
+    rng = random.Random(SEED)
+    draws = []
+    for _ in range(4000):
+        ii = [i for p in (rng.choice(projects) for _ in projects) for i in proj_idx[p]]
+        lj = mean([loss[i] * miss[i] for i in ii])
+        li = mean([loss[i] for i in ii]) * mean([miss[i] for i in ii])
+        draws.append(lj - li)
+    draws.sort()
+    escape = {"mean_loss_times_miss": joint, "product_of_mean_loss_and_mean_miss": indep,
+              "difference": joint - indep,
+              "difference_ci95_project_bootstrap": [draws[int(0.025 * 3999)], draws[int(0.975 * 3999)]],
+              "note": "loss = 1 - generator recovery; miss = 1 - incomplete-source detection; per requirement, "
+                      "equal weight; truncated to requirements with >=1 confirmed mutant"}
     by_cue = {}
     for v in (0, 1):
         sel = [r for r in rows if r["context_cue"] == v]
@@ -342,6 +366,7 @@ def q3_coupling(runs, all_suites, roles, context_cue_file: Path = CONTEXT_CUE) -
                     "collection, restricted to these 25 eligible requirements (each has >=1 mutant by construction)",
             "spearman_rho": spearman(xs, ys), "permutation_p_two_sided": permutation_p(xs, ys),
             "within_project_permutation_p_two_sided": permutation_p(xs, ys, strata=zs),
+            "escape": escape,
             "requirements": len(xs),
             "by_context_cue": by_cue,
             "caveat": "Eligibility requires at least one confirmed mutant, so fully recovered rules are absent: "

@@ -1076,6 +1076,16 @@
       }
     },
     "caveat": "Eligibility requires at least one confirmed mutant, so fully recovered rules are absent: the range of generator recovery is truncated.",
+    "escape": {
+      "difference": 0.01427333333333336,
+      "difference_ci95_project_bootstrap": [
+        0.0040399999999998215,
+        0.021982867220962543
+      ],
+      "mean_loss_times_miss": 0.7246666666666667,
+      "note": "loss = 1 - generator recovery; miss = 1 - incomplete-source detection; per requirement, equal weight; truncated to requirements with >=1 confirmed mutant",
+      "product_of_mean_loss_and_mean_miss": 0.7103933333333333
+    },
     "per_requirement": [
       {
         "case": "grist-billing-managers-limit",
