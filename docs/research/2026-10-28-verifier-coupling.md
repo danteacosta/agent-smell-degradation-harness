@@ -38,7 +38,11 @@ Pooling all ten incomplete-source suites of the five testers still detects less 
 the two complete-source suites of a single tester: difference −0.324, project
 bootstrap 95% [−0.574, −0.088], exact project sign-flip p = 0.047 (8 projects); the
 pooled incomplete ensemble reaches the single complete tester in 11 of 25
-requirements. Budgets differ on purpose (10 suites against 2).
+requirements. Budgets differ on purpose (10 suites against 2). Antecedent: Haeri and
+Ghelichi (arXiv 2607.06636, App. I.5) report that unioning up to eight ungrounded suites
+from one tester configuration plateaus at 52% against 100% for one grounded draw; F1
+extends that observation to pooling across five models from two providers on browser
+journeys, and is not a new phenomenon.
 
 **F2 — The blind spots are shared, and they are shared at the requirement level (Q2).**
 With the incomplete request, 60.5% of the 81 confirmed losses were missed by all five
