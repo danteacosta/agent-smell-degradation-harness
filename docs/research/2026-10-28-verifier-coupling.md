@@ -45,9 +45,10 @@ With the incomplete request, 60.5% of the 81 confirmed losses were missed by all
 testers and none was caught by all five. Independent testers with the same marginal
 rates would miss 43.7% jointly; excess 0.168, project bootstrap [0.078, 0.225]. Using
 each tester's rate inside the requirement instead, the expectation is 58.6%, close to
-the observed value: the testers agree because they fail on the same requirements, not
-because of an extra mutant-level correlation. With the complete requirement no loss
-was missed by all five.
+the observed value. This is compatible with the shared misses being driven by
+heterogeneity between requirements; it does not exclude residual association within a
+requirement, and with one to four mutants per requirement the within-requirement
+expectation is noisy. With the complete requirement no loss was missed by all five.
 
 **F3 — Generator recovery and tester detection are coupled (Q3).** Across the 25
 requirements, the share of arm-C implementations that kept the omitted rule
@@ -63,20 +64,38 @@ written from the incomplete request plus the mutant's code alarm on the correct
 reference in 17–34 of 50 suites per tester (34–68%); complete-source suites do so in
 1–11 of 50 for four testers and 23 of 50 for Claude Sonnet 4.6.
 
-**F5 — No sound suite rewards the loss (Q4).** Within arm C, sound suites alarm on
-recovered implementations at most 0.136 (mean per tester and source), and in no
-tester–source pair more often than on mutants; averaged over testers, the per-requirement
-difference is negative for all three sources. The earlier pooled recovered-alarm rate of
-code-anchored suites (0.735, `results.json`) comes from unsound suites; restricted to
-sound suites the "suite prefers the defect" reading is not supported.
+**F5 — On average, sound suites do not reward the loss (Q4).** Within arm C, the mean
+alarm rate of sound suites on recovered implementations is at most 0.136 for any tester
+and source, and in no tester–source pair is the mean higher on recovered implementations
+than on mutants; averaged over testers, the per-requirement difference is negative for
+all three sources. Individual suites do: for example gpt-6-astra, zulip-unsubscribe-self,
+spec_incomplete, suite `so-de94c162478caa49462d` alarms on 1 of 3 recovered and 0 mutants;
+Claude Sonnet 5.5, zulip-private-channel-access, code_incomplete, suite
+`so-a9a97807dfcf56c582f8` alarms on 1 of 2 recovered and 0 mutants (shown mutant
+excluded); both counterexamples found in review by Codex. The earlier pooled
+recovered-alarm rate of code-anchored suites (0.735, `results.json`) comes mostly from
+unsound suites; restricted to sound suites and aggregated per tester and source, the
+"suite prefers the defect" reading is not supported.
 
 ## What this does and does not show
 
 Together, F1–F3 describe a single pattern: the obligation that the request omits is
 lost by some generators, missed by testers who receive the same request, and missed by
 all of them in the same requirements; where the remaining context lets generators
-recover the rule, it also lets testers detect its loss. This is a candidate thesis
-claim ("one omission, two blind spots"), not a confirmed mechanism.
+recover the rule, testers more often detect its loss. This is a candidate thesis claim
+("one omission, two blind spots"), not a confirmed mechanism.
+
+Close prior work, checked in the primary text by Codex on 28/10 (preprints, versions
+inspected): Konstantinou, Tambon and Papadakis, *On the risk of coding before testing*
+(arXiv 2607.05139; IV-E requires failing the faulty code and passing the reference; VII-B
+weakens test descriptions in three variants over selected faulty implementations);
+Haeri and Ghelichi (arXiv 2607.06636; 4.5 removes validation rules; appendix I analyses
+partial specifications; ungrounded ensembles are a contrast); TestSuiteBench
+(arXiv 2610.13065; generates implementations and tests from the same specification; 3.2
+ablates official documentation against a refined specification). The candidate
+contribution is therefore narrow: tracking the same removed obligation through both
+sources, separating implementation loss, conditional detection and joint escape, against
+a stable external reference. No priority over this combination is claimed.
 
 Limits: post hoc questions on known results; 25 requirements from 8 projects, selected
 because they had a confirmed loss; testers share pages and implementations, so they are

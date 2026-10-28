@@ -1,0 +1,181 @@
+{
+  "schema_version": "qp4-prospective-power/v1",
+  "planning_only": true,
+  "confirmatory_eligible": false,
+  "source": "data/verifier-coupling/v1/results.json",
+  "alpha_two_sided": 0.05,
+  "note": "Resamples 25 post hoc requirements; observed-effect power is optimistic. Projects are clusters of resampled requirements, not real projects, so between-project heterogeneity is not modelled.",
+  "seed": 2026102802,
+  "results": [
+    {
+      "requirements": 25,
+      "projects": 8,
+      "effect_factor": 1.0,
+      "replications": 1000,
+      "power": {
+        "H-a": 1.0,
+        "H-b": 0.71,
+        "H-c": 0.82
+      },
+      "correct_direction": {
+        "H-a": 1.0,
+        "H-b": 0.999,
+        "H-c": 0.999
+      },
+      "rho_median": 0.6029975831104368
+    },
+    {
+      "requirements": 25,
+      "projects": 8,
+      "effect_factor": 0.5,
+      "replications": 1000,
+      "power": {
+        "H-a": 1.0,
+        "H-b": 0.644,
+        "H-c": 0.28
+      },
+      "correct_direction": {
+        "H-a": 1.0,
+        "H-b": 1.0,
+        "H-c": 0.942
+      },
+      "rho_median": 0.3076903294432242
+    },
+    {
+      "requirements": 40,
+      "projects": 8,
+      "effect_factor": 1.0,
+      "replications": 1000,
+      "power": {
+        "H-a": 1.0,
+        "H-b": 0.91,
+        "H-c": 0.977
+      },
+      "correct_direction": {
+        "H-a": 1.0,
+        "H-b": 1.0,
+        "H-c": 1.0
+      },
+      "rho_median": 0.6003226049468943
+    },
+    {
+      "requirements": 40,
+      "projects": 8,
+      "effect_factor": 0.5,
+      "replications": 1000,
+      "power": {
+        "H-a": 1.0,
+        "H-b": 0.89,
+        "H-c": 0.426
+      },
+      "correct_direction": {
+        "H-a": 1.0,
+        "H-b": 1.0,
+        "H-c": 0.976
+      },
+      "rho_median": 0.29409452110213496
+    },
+    {
+      "requirements": 40,
+      "projects": 10,
+      "effect_factor": 1.0,
+      "replications": 1000,
+      "power": {
+        "H-a": 1.0,
+        "H-b": 0.917,
+        "H-c": 0.978
+      },
+      "correct_direction": {
+        "H-a": 1.0,
+        "H-b": 1.0,
+        "H-c": 1.0
+      },
+      "rho_median": 0.5895050683396424
+    },
+    {
+      "requirements": 40,
+      "projects": 10,
+      "effect_factor": 0.5,
+      "replications": 1000,
+      "power": {
+        "H-a": 1.0,
+        "H-b": 0.934,
+        "H-c": 0.429
+      },
+      "correct_direction": {
+        "H-a": 1.0,
+        "H-b": 1.0,
+        "H-c": 0.986
+      },
+      "rho_median": 0.3010998151118421
+    },
+    {
+      "requirements": 60,
+      "projects": 12,
+      "effect_factor": 1.0,
+      "replications": 1000,
+      "power": {
+        "H-a": 1.0,
+        "H-b": 0.987,
+        "H-c": 1.0
+      },
+      "correct_direction": {
+        "H-a": 1.0,
+        "H-b": 1.0,
+        "H-c": 1.0
+      },
+      "rho_median": 0.6033261706422709
+    },
+    {
+      "requirements": 60,
+      "projects": 12,
+      "effect_factor": 0.5,
+      "replications": 1000,
+      "power": {
+        "H-a": 1.0,
+        "H-b": 0.99,
+        "H-c": 0.601
+      },
+      "correct_direction": {
+        "H-a": 1.0,
+        "H-b": 1.0,
+        "H-c": 0.997
+      },
+      "rho_median": 0.2965443278239403
+    },
+    {
+      "requirements": 80,
+      "projects": 12,
+      "effect_factor": 1.0,
+      "replications": 1000,
+      "power": {
+        "H-a": 1.0,
+        "H-b": 1.0,
+        "H-c": 1.0
+      },
+      "correct_direction": {
+        "H-a": 1.0,
+        "H-b": 1.0,
+        "H-c": 1.0
+      },
+      "rho_median": 0.5946775412792189
+    },
+    {
+      "requirements": 80,
+      "projects": 12,
+      "effect_factor": 0.5,
+      "replications": 1000,
+      "power": {
+        "H-a": 1.0,
+        "H-b": 0.998,
+        "H-c": 0.751
+      },
+      "correct_direction": {
+        "H-a": 1.0,
+        "H-b": 1.0,
+        "H-c": 0.997
+      },
+      "rho_median": 0.29420364065175736
+    }
+  ]
+}
