@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-27
+Last updated: 2026-10-28
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1379,3 +1379,13 @@ This observation is directly computed from the candidate metadata, not inferred
 from the paper. Shared spans are not semantic equivalence or subsumption.
 Project-level inference and the human admission gate remain unchanged; no
 candidate, label, hypothesis, baseline or provider authorization changed.
+
+## 2026-10-28 search note (no new entry)
+
+Search date: 2026-10-28. One search on requirement omission in LLM code generation returned only sources already
+entered (Orchid 2604.21505, ClarifyCodeBench 2607.00711, "When Prompts Go Wrong" 2507.20439, HumanEvalComm,
+RealBench 2604.22659) plus ArchCode (Han et al., ACL 2024, doi:10.18653/v1/2024.acl-long.730). ArchCode was read
+at abstract level only (requirement-conditioned code and per-requirement test generation, ranking by requirement
+compliance; HumanEval-NFR). Method details, results and limitations were not read, so it is not scored and not
+entered. Candidate follow-up: read the full paper before citing it as prior art for requirement-anchored tests
+(a product/ablation question, not a change to H1/H2).

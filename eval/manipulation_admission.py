@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import unicodedata
 
 
 REQUIRED = (
@@ -43,6 +44,12 @@ def _require_identifier(value: object, field: str) -> None:
         raise ValueError(f"non-empty {field} required")
     if value != value.strip():
         raise ValueError(f"{field} must not have surrounding whitespace")
+
+
+def _reviewer_key(reviewer_id: str) -> str:
+    """Fold case and Unicode compatibility variants so aliases cannot pass as two reviewers."""
+
+    return unicodedata.normalize("NFKC", reviewer_id).casefold()
 
 
 def candidate_inventory_sha256(candidate_ids: list[str]) -> str:
@@ -132,7 +139,7 @@ def prepare_manipulation_admission(
         for field in ("non_target_obligations_preserved", "plausible_remainder"):
             if not isinstance(review[field], bool):
                 raise ValueError(f"boolean {field} required")
-        identity = (review["candidate_id"], review["reviewer_id"])
+        identity = (review["candidate_id"], _reviewer_key(review["reviewer_id"]))
         if identity in seen:
             raise ValueError("duplicate candidate-reviewer identity")
         seen.add(identity)

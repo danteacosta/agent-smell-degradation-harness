@@ -234,3 +234,12 @@ def test_rejects_target_constraint_listed_as_its_own_dependency():
     row["dependent_constraint_ids"] = ["constraint-1"]
     with pytest.raises(ValueError, match="own dependency"):
         prepare_manipulation_admission([row, review(reviewer="r-2")], expected_candidate_ids=["c-1"])
+
+
+@pytest.mark.parametrize("alias", ["R-1", "ｒ-1"])
+def test_rejects_reviewer_identity_alias_by_case_or_unicode_form(alias):
+    with pytest.raises(ValueError, match="duplicate candidate-reviewer identity"):
+        prepare_manipulation_admission(
+            [review(reviewer="r-1"), review(reviewer=alias)],
+            expected_candidate_ids=["c-1"],
+        )
