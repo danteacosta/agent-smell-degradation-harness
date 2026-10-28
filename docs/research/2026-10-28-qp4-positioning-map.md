@@ -30,8 +30,8 @@ Other sources found by the adversarial search of 28/10 (primary text as stated):
 |---|---|---|
 | Huang, Zhang, Harman, Du, Cui, *Measuring the Influence of Incorrect Code on Test Generation*, arXiv 2409.09464v3 (28/3/2025; under review per the arXiv record; read by Claude from the HTML, §1–8) | Five input conditions for the tester: description, description + correct code, description + incorrect code, correct code, incorrect code (§3.1). With the description, incorrect instead of correct code lowers test accuracy 73.9% → 47.1%, coverage 96.8% → 86.5% and detection 47.4% → 38.1% (averages, test level); on 41 real-world tasks, detection 13.5% (correct code only) vs 7.1% (incorrect code only) (§5.5) | An antecedent for manipulating the information given to the tester (and for QP4 F4); it varies the code shown, not the requirement; no removed obligation; its "misled" measure is criticised by Zhao et al. (see the counting table) |
 | Zhao, Zhou, Cohen, *Evaluating and Mitigating the Misguidance Effect of Buggy Code in LLM-Generated Unit Tests*, PACMSE 3 (ISSTA 2026), DOI 10.1145/3832204, arXiv 2607.22883 (read by Claude: §1–4.3 from the HTML, which is truncated in §4.4; §4.2–8 from the PDF, whose first part came back garbled; reference list cut at [51]) | Showing buggy code to the test generator raises misguided tests (pass on buggy, fail on fixed) from 0.46% to 3.84% and lowers effective tests from 8.51% to 2.98% on 318 Defects4J focal methods, 11 models (Table 4); a docstring-first pipeline mitigates it (Tables 6, 8); on fixed code it is comparable to code prompting (§5: CFR 21.30% → 20.10%, FAR 37.45% → 39.04%, line coverage +3.61 pp); 15.09–20.75% of generated docstrings preserve the bug (§4.4). Builds on Huang et al. (arXiv 2409.09464), whose buggy-code metric it argues overstates misguidance (§2.6, §7) | Close antecedent for F4 (code anchoring), at ISSTA itself; unit tests on Defects4J focal methods, no omitted requirement; threats (§6) name stateful, dependency-rich code where method docstrings may omit needed information; in the sections examined (§6–7), incomplete requirements are named only as a threat for stateful, dependency-rich code; no claim is made about the wider literature |
-| Qi, Liu, Lin, Zhou, Sun, Dong, *Benchmarking LLM Agents for Behaviorally Adequate Test Generation from Software Requirements* (Req2Test-Bench), arXiv 2610.36584v1, 27/10/2026 (Claude: abstract only, HTML blocked by robots for Claude; Codex read the primary HTML §3.2, §5.4–5.5, §6) | 5,086 Gherkin requirements from 8 projects; best configuration passes 82.8% but only 33.8% are behaviorally adequate (kill every mutant the developer test kills); diminishing returns from scaling agents (abstract). **Informational intervention (§5.5, per Codex):** an author clarifies setup and expected outcomes using the ground truth, and kill-complete rises 2 → 14 of 17 (Algorand) and 25 → 36 of 60 (python-docx); §6 admits that a narrower reading can be valid where a test is kill-incomplete | Close to QP4 as an intervention on the information given to test writers, but not a controlled removal of one obligation, and no implementation loss or joint escape. §3.2 excludes browser and live-service scenarios. Adequacy is relative to the developer test's kills, not universal semantic truth |
-| Ding, *What the Specification Did Not Say: Specification-Oracle Gaps in Test-Graded Coding-Agent Benchmarks*, arXiv 2610.30635v1, 22/10/2026 (Claude: abstract only, HTML blocked by robots; Codex read the primary HTML §4.1–4.2) | Benchmarks grade on names, paths or literals the specification omits; on SWE-Milestone, units with an unstated, non-inferable dependency fail in 80.6% of runs vs 48.4% (abstract). The audited set G(o) covers dependencies on identifiers, paths and literals; behaviour the specification leaves open is outside that set (§4.1–4.2, per Codex) | Evaluator-side. Our arm C is an **analogous informational tension** (the frozen oracle enforces an obligation the request omits), not an instance of Ding's formal definition. QP4 reads arm-C failures as loss of a documented obligation relative to A and B, not as agent error on an uninformed requirement |
+| Qi, Liu, Lin, Zhou, Sun, Dong, *Benchmarking LLM Agents for Behaviorally Adequate Test Generation from Software Requirements* (Req2Test-Bench), arXiv 2610.36584v1, 27/10/2026 (Claude: abstract only, HTML and PDF blocked by robots for Claude; Codex read the primary HTML §3.2–4.3, §5.4–5.5, §6 and Tables 3–4) | 5,086 instances constructed from Gherkin requirements in 8 projects, but 2,051 evaluated (780 Features, one per group sharing the same StepDefinitions, §4.3); the 82.8% passing and 33.8% behaviorally adequate (kill every mutant the developer test kills) are means over the 8 projects in that evaluated subset, not over 5,086 generations; diminishing returns from scaling agents (abstract). **Informational intervention (§5.5, per Codex):** an author clarifies setup and expected outcomes using the ground truth, and kill-complete rises 2 → 14 of 17 (Algorand) and 25 → 36 of 60 (python-docx); §6 admits that a narrower reading can be valid where a test is kill-incomplete | Close to QP4 as an intervention on the information given to test writers, but not a controlled removal of one obligation, and no implementation loss or joint escape. §3.2 excludes browser and live-service scenarios. Adequacy is relative to the developer test's kills, not universal semantic truth |
+| Ding, *What the Specification Did Not Say: Specification-Oracle Gaps in Test-Graded Coding-Agent Benchmarks*, arXiv 2610.30635v1, 22/10/2026 (Claude: abstract only, HTML and PDF blocked by robots; Codex read the primary HTML §4.1–6.4 and §7) | Benchmarks grade on names, paths or literals the specification omits. The audited set G(o) covers dependencies on identifiers, paths and literals; behaviour the specification leaves open is outside it (§4.1–4.2). On SWE-Milestone, 80.6% vs 48.4% failure is an **association** in comparable units with new tests; the reported OR 4.64 is an odds ratio, not a risk ratio. §6.2 is an offline mechanical intervention without agents: renaming a hidden identifier in the reference breaks compilation in 126 of 128 Go units. §7: specification addenda are generated, and their effect on agents would need new runs. §6.4: blind, held-out expert review gives precision 58/65 and recall 13/14, with wide intervals (all per Codex) | Evaluator-side. Our arm C is an **analogous informational tension** (the frozen oracle enforces an obligation the request omits), not an instance of Ding's formal definition. QP4 reads arm-C failures as loss of a documented obligation relative to A and B, not as agent error on an uninformed requirement |
 | Li, Liu, Lyu, Cheng, Guan, *Ungrounded Enforcement: When Agent Benchmarks Grade on Conditions Their Specifications Do Not Determine*, NeurIPS 2026 workshop "Who Verifies the Agents?" (title, authors and OpenReview id V8QjW4TS6i confirmed on the workshop schedule page; abstract and paper not reachable from this session) | By title, the same evaluator-side gap as Ding | Content unknown; nothing is inferred beyond the title. Unreachable is an access limit, not absence |
 | Gao, Zhou, *Can Agent Benchmarks Support Their Scores? Evidence-Supported Bounds for Interactive-Agent Evaluation*, arXiv 2605.10448v1 (read by Claude: main text; appendices not reached) | Outcome-evidence gaps and benchmark conflicts in five interactive benchmarks (e.g. τ³-bench retail: 24 conflicts in 300 records) | Context for evaluator validity; agents' tests not studied |
 
@@ -69,7 +69,12 @@ records only how each one counts.
 | Zhao, Zhou, Cohen (ISSTA 2026), arXiv 2607.22883 (§2.6, §7) | Buggy and fixed version of each Defects4J focal method | Each test labelled by its result on both versions (Table 2) | Effective tests: fail on buggy, pass on fixed; counted per model and condition (Table 4) | Misguided: pass on buggy, fail on fixed. The authors criticise Huang's measure (all buggy-passing tests) as overstating misguidance, since over 90% of those tests are true negatives that pass on both versions (§2.6, Table 3; §7); this is a critique of the metric, not a refutation of Huang's results |
 | Konstantinou, Tambon, Papadakis, arXiv 2607.05139 (§IV-E) | One faulty implementation per task and the reference | Test level: a detecting test must fail on the faulty code and pass on the reference | Detection per faulty implementation | — |
 | TestSuiteBench, arXiv 2610.13065 (§2.6) | Reference executable and its mutants | Test level: tests that fail on the reference are dropped before scoring; validity V reported separately | Mutation score M: killed mutants / mutants | — |
+| Qi, Liu, Lin, Zhou, Sun, Dong, Req2Test-Bench, arXiv 2610.36584v1 (§3.3–4.3, Tables 3–4, per Codex) | Developer-written tests and mutants for each evaluated instance; 2,051 evaluated instances (780 Features, §4.3) out of 5,086 constructed | Pass@1 uses N_exec, the instances executed after infrastructure exclusions | KillComplete@1 uses the planned population N; a test that does not pass is never kill-complete; project means with equal weight per project | — |
 | **QP4** (`scripts/mutation_adequacy.py`) | Correct reference, oracle-confirmed mutants (arm-C losses of the target obligation) and recovered implementations of the same requirement | **Suite level:** a suite is sound only if it is quiet on the reference; unusable or unsound suites stay in the denominator as zero; an error alarm on the reference makes the suite unsound in every sensitivity | Per requirement: killed confirmed mutants / confirmed mutants, mean over suites (H-a), or any sound suite of a pool (H-b, Q1); equal weight per requirement | Not used. Alarms on recovered implementations are reported separately (F5) |
+
+Req2Test-Bench §4.3 allows reruns per provider and regeneration after leakage under its
+own rules (per Codex). That is an external contract of that study and gives no
+authorisation for reruns or regeneration in QP4, where each slot is attempted once.
 
 Consequences: on the same batch of candidate tests, zeroing a whole suite that alarms on
 the reference is more restrictive than keeping its individually valid tests (the
@@ -82,9 +87,10 @@ comparable, and no ordering of strictness or performance between studies is clai
 
 Each item names the source and its reading status; none is a new result.
 
-1. **Arm C enforces what the request omits.** Ding (abstract; §4.1–4.2 per Codex) and
-   Ungrounded Enforcement (title only) treat grading on unstated conditions as a
-   benchmark defect. QP4's arm C is an analogous informational tension by design.
+1. **Arm C enforces what the request omits.** Ding (abstract; §4.1–7 per Codex) treats
+   grading on unstated identifier, path and literal dependencies as a benchmark gap;
+   Ungrounded Enforcement is known only by its title, and nothing about its content is
+   assumed. QP4's arm C is an analogous informational tension by design.
    Response available in the design: arm A and the rewording control B, the obligation
    is documented in the project, and arm-C failures are reported as loss relative to A
    and B, not as agent error. Residual threat: readers may still see C as unfair grading.
@@ -109,8 +115,11 @@ Each item names the source and its reading status; none is a new result.
 8. **Code anchoring is known** (Zhao, Huang, Haeri App. E, Konstantinou RQ1); F4 is a
    replication.
 9. **Run-to-run variance.** TRACE §5 (per Codex) finds that identical reruns flip 14.7–16.3% of
-   outcomes for three agents and 35.6% for a fourth in its setting; QP4 attempts each slot once,
-   so replication variance of single outcomes is not estimated.
+   outcomes for three agents and 35.6% for a fourth in its setting. In QP4, each slot is
+   attempted once (no rerun of the same slot), but there are repetitions per requirement
+   and condition: two generators × two repetitions per arm in the 46-case collection, and
+   two suites per tester and source. Variation across those repetitions is observable;
+   what is not observed is the variance of an identical rerun of one slot.
 
 ## Priority
 
@@ -162,3 +171,25 @@ is not an exhaustive search, and no claim of being first rests on it.
 - Decisions for Dante and Márcio: smallest H-b effect of interest (fixes N), the
   eligible-sample option, tester list and budget, workshop submission by 13/11.
 - #185 blind human audit stays pending; nothing here substitutes it.
+
+## Status at 28/10 (end of day): reviewed vs needs people
+
+Reviewed by Codex on PR #234 (reproduction or text check; not independent validation of
+every modelling choice):
+- Coupling analysis (`--check` and assertion-only reproduced); input manifest with hashes.
+- Retrieval: snapshot verification, committed-blob indexing (ignored-file case covered),
+  semantic gold kept with quotes and per-passage evidence (agent-coded, not blind).
+- Power simulation v2 (attenuation, Holm, H-a estimand); the H-b decision sheet text.
+- Literature map and matrix, with reading status per source and per reader.
+
+Depends on people (not substitutable by models or by this map):
+- Dante and Márcio: tester list and k; smallest H-b effect of interest or a practical
+  margin; eligible-sample option; whether H-b stays confirmatory; workshop by 13/11;
+  budget for any new collection or the RQ5 pilot.
+- A second human coder for the #185 blind audit; a blind check of the 25 semantic-gold
+  quotes (could join that audit).
+- Reading the sections of Req2Test-Bench, Ding and Ungrounded Enforcement that neither
+  Claude nor Codex has read.
+
+Unchanged throughout: H1 and H2; the 25-requirement, 8-project QP4 results are post hoc;
+zero and None stay distinct; τ² is out of scope.
