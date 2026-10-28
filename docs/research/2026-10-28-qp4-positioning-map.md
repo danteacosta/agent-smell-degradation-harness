@@ -108,8 +108,8 @@ Each item names the source and its reading status; none is a new result.
 7. **Pooling and shared misses are not specific** (TestSuiteBench A.5, Haeri I.5).
 8. **Code anchoring is known** (Zhao, Huang, Haeri App. E, Konstantinou RQ1); F4 is a
    replication.
-9. **Run-to-run variance.** TRACE §5 (per Codex) finds 14.7–36% outcome flips on
-   identical reruns for different agents in its setting; QP4 attempts each slot once,
+9. **Run-to-run variance.** TRACE §5 (per Codex) finds that identical reruns flip 14.7–16.3% of
+   outcomes for three agents and 35.6% for a fourth in its setting; QP4 attempts each slot once,
    so replication variance of single outcomes is not estimated.
 
 ## Priority
