@@ -78,6 +78,40 @@ variant (all tests must pass on the correct code) is closer to QP4's suite-level
 but its exact denominators were not checked. Across studies the rates are not
 comparable, and no ordering of strictness or performance between studies is claimed.
 
+## Threats to QP4 raised by the antecedents (synthesis)
+
+Each item names the source and its reading status; none is a new result.
+
+1. **Arm C enforces what the request omits.** Ding (abstract; §4.1–4.2 per Codex) and
+   Ungrounded Enforcement (title only) treat grading on unstated conditions as a
+   benchmark defect. QP4's arm C is an analogous informational tension by design.
+   Response available in the design: arm A and the rewording control B, the obligation
+   is documented in the project, and arm-C failures are reported as loss relative to A
+   and B, not as agent error. Residual threat: readers may still see C as unfair grading.
+2. **Adequacy is relative to the oracle.** TestSuiteBench (read) and Req2Test-Bench (§6
+   per Codex) define adequacy against reference tests or mutants, not universal semantic
+   truth. QP4's frozen browser oracles are authored for this study; qualification with
+   positive and negative controls mitigates but does not remove this.
+3. **Information interventions already exist.** Huang (code shown, read), Haeri (rules
+   removed, read), Req2Test-Bench §5.5 (clarification from the ground truth, per Codex),
+   Konstantinou §VII-B (weakened descriptions, read). QP4's specificity is narrower: one
+   documented obligation removed from the source of both implementation and tests.
+4. **Scope.** TestSuiteBench covers compiled CLI applications; Req2Test-Bench §3.2
+   excludes browser and live-service scenarios (per Codex); QP4 covers web pages with a
+   fixed scaffold, not full applications. Generalisation either way is not shown.
+5. **Mutants.** TestSuiteBench and Haeri use synthetic or model-produced bugs; QP4 uses
+   oracle-confirmed losses from generated implementations, but only for requirements that
+   pass the eligibility filter, which defines a conditional population.
+6. **Counting choices change rates.** Huang vs Zhao §2.6 show that the definition of a
+   misled or detecting test changes conclusions; QP4 fixes suite-level soundness and
+   reports assertion-only and per-tester sensitivities.
+7. **Pooling and shared misses are not specific** (TestSuiteBench A.5, Haeri I.5).
+8. **Code anchoring is known** (Zhao, Huang, Haeri App. E, Konstantinou RQ1); F4 is a
+   replication.
+9. **Run-to-run variance.** TRACE §5 (per Codex) finds 14.7–36% outcome flips on
+   identical reruns for different agents in its setting; QP4 attempts each slot once,
+   so replication variance of single outcomes is not estimated.
+
 ## Priority
 
 Priority remains open. The map records what the sections read do and do not contain; it
@@ -114,8 +148,11 @@ is not an exhaustive search, and no claim of being first rests on it.
 
 - TestSuiteBench: read (see table); Table 5 confirmed by Codex (official docs V 75.4%,
   M 4.0%; refined V 86.7%, M 25.5%; 30 instances). TRACE closed by Codex from §5.
-- Ding §4.1–4.2 and Req2Test-Bench §3.2, §5.4–5.5, §6 read by Codex; the rest of both
-  remains unread by either. Zhao et al.: §1–8 read by Claude (HTML §1–4.3, PDF §4.2–8)
+- Ding §4.1–4.2 and Req2Test-Bench §3.2, §5.4–5.5, §6 read by Codex. Claude tried again
+  on 28/10 (14:5x): the arXiv HTML and PDF of both return robots_disallowed and the
+  alphaxiv mirror is not on this session's allowlist, so Claude has read only their
+  abstracts. The remaining sections of both are unread by either; this is an access
+  limit, not evidence about their content. Zhao et al.: §1–8 read by Claude (HTML §1–4.3, PDF §4.2–8)
   and by Codex in targeted checks (§2.6, §4.4, §5/Table 12, §6), not a full review. Huang et al. read by Claude (HTML v3, §1–8); §3.1 and §3.4.1–3.4.3 also checked by Codex.
 - Ungrounded Enforcement: title, authors and OpenReview id confirmed; read the abstract or
   paper when reachable.
