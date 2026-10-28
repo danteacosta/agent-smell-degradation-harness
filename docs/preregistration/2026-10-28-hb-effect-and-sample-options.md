@@ -68,6 +68,10 @@ qualification losses.
 - Outcomes keep the distinction between zero (a valid failing result) and None/unknown
   (technical absence); unknowns are never imputed.
 - The #185 blind human audit stays pending; mechanism claims stay conditional on it.
+- Arm-C failures are read as loss of a documented obligation relative to A and B, not as
+  agent error on an uninformed requirement; arm C is an informational tension analogous
+  to, not an instance of, the specification–oracle gaps defined by Ding (arXiv 2610.30635,
+  §4.1–4.2).
 - No pilot, generation or τ² activity is implied by this sheet.
 
 ## Questions to settle in one meeting
