@@ -37,6 +37,7 @@ if str(ROOT) not in sys.path:
 from scripts.omitted_mention_triage import STOP, stem, words  # noqa: E402
 
 SOURCES = ROOT / "data/obligation-retrieval/sources.json"
+SEMANTIC_GOLD = ROOT / "data/obligation-retrieval/semantic-gold.json"
 OUT = ROOT / "data/obligation-retrieval/v1/results.json"
 CASES = ROOT / "data/abc-cases"
 COUPLING = ROOT / "data/verifier-coupling/v1/results.json"
@@ -67,6 +68,11 @@ def strip_markup(text: str) -> str:
     return text
 
 
+def norm(text: str) -> str:
+    text = re.sub(r"[*_`]", "", text)
+    return re.sub(r"\s+", " ", text).strip().lower()
+
+
 def passages(root: Path) -> list[dict]:
     out = []
     for f in sorted(root.rglob("*")):
@@ -76,7 +82,8 @@ def passages(root: Path) -> list[dict]:
         for i, para in enumerate(re.split(r"\n\s*\n", text)):
             ws = words(para)
             if len(ws) >= 5:
-                out.append({"file": str(f.relative_to(root)), "index": i, "terms": content(ws)})
+                out.append({"file": str(f.relative_to(root)), "index": i, "terms": content(ws),
+                            "text": norm(para)})
     return out
 
 
@@ -135,6 +142,17 @@ def evaluate(case: str, root: Path, cache: dict, root_rel: str = "") -> dict:
         rank = {i: r + 1 for r, i in enumerate(order)}
         return min((rank[i] for i in gold), default=None)
 
+    quote = json.loads(SEMANTIC_GOLD.read_text())["quotes"].get(case) if SEMANTIC_GOLD.exists() else None
+    sem = [i for i, p in enumerate(ps) if quote and norm(quote) in p["text"]]
+
+    def sem_rank(query: list[str]):
+        if not sem:
+            return None
+        sc = bm.scores(query)
+        order = sorted(range(len(ps)), key=lambda i: -sc[i])
+        rank = {i: r + 1 for r, i in enumerate(order)}
+        return min(rank[i] for i in sem)
+
     r_c = best_rank(content(words(c)))
     r_a = best_rank(content(words(a)))
     first = re.split(r"(?<=[.!?])\s+", c.strip())[0]
@@ -146,6 +164,12 @@ def evaluate(case: str, root: Path, cache: dict, root_rel: str = "") -> dict:
         html = re.sub(r"<script.*?</script>|<style.*?</style>", " ", html, flags=re.S)
         page_text = re.sub(r"<[^>]+>", " ", html)
     r_first_page = best_rank(content(words(first + " " + page_text))) if page_text else None
+    semantic = {"quote": quote, "passages": len(sem), "files": sorted({ps[i]["file"] for i in sem}),
+                "lexical_gold_agrees": bool(set(sem) & set(gold)),
+                "rank_query_incomplete": sem_rank(content(words(c))),
+                "rank_query_first_sentence": sem_rank(content(words(first))),
+                "rank_query_first_sentence_plus_page_text":
+                    sem_rank(content(words(first + " " + page_text))) if page_text else None}
     gold_strict = gold
     gold = loose
     r_c_loose = best_rank(content(words(c)))
@@ -158,7 +182,7 @@ def evaluate(case: str, root: Path, cache: dict, root_rel: str = "") -> dict:
             "best_cover_file": ps[best]["file"] if best is not None else None,
             "rank_query_incomplete": r_c, "rank_query_complete": r_a,
             "query_first_sentence": first, "rank_query_first_sentence": r_first,
-            "rank_query_first_sentence_plus_page_text": r_first_page}
+            "rank_query_first_sentence_plus_page_text": r_first_page, "semantic_gold": semantic}
 
 
 def run(cache_dir: Path) -> dict:
@@ -166,6 +190,8 @@ def run(cache_dir: Path) -> dict:
     coupling = json.loads(COUPLING.read_text())
     cases = sorted(coupling["Q1_ensemble"]["per_requirement"])
     det = {r["case"]: r for r in coupling["Q3_coupling"]["per_requirement"]}
+    for name in sorted({src["cases"][c]["dir"] for c in cases}):
+        verify_snapshot(cache_dir / name, src["snapshots"][name])
     cache: dict = {}
     rows = []
     for case in cases:
@@ -179,6 +205,24 @@ def run(cache_dir: Path) -> dict:
     recall_first_page = {str(k): (sum(1 for r in usable if r["rank_query_first_sentence_plus_page_text"]
                                        and r["rank_query_first_sentence_plus_page_text"] <= k) / len(usable))
                          if usable else None for k in KS}
+    def sem_recall(key):
+        sel = [r for r in rows if r["semantic_gold"]["passages"]]
+        return {str(k): sum(1 for r in sel if r["semantic_gold"][key] and r["semantic_gold"][key] <= k) / len(sel)
+                for k in KS} if sel else None
+
+    semantic_summary = {
+        "requirements_with_semantic_gold": sum(1 for r in rows if r["semantic_gold"]["passages"]),
+        "lexical_and_semantic_gold_agree": sum(1 for r in rows if r["semantic_gold"]["lexical_gold_agrees"]),
+        "recall_query_incomplete": sem_recall("rank_query_incomplete"),
+        "recall_query_first_sentence_of_incomplete": sem_recall("rank_query_first_sentence"),
+        "recall_query_first_sentence_plus_page_text": sem_recall("rank_query_first_sentence_plus_page_text"),
+        "recall_at_5_by_recovery_group": {
+            label: (lambda sel: {"requirements": len(sel), "recall_at_5": sum(
+                1 for r in sel if r["semantic_gold"]["rank_query_incomplete"]
+                and r["semantic_gold"]["rank_query_incomplete"] <= 5) / len(sel) if sel else None})(
+                [r for r in rows if r["semantic_gold"]["passages"] and pred(det[r["case"]]["generator_recovery"])])
+            for label, pred in (("zero_recovery", lambda v: v == 0), ("some_recovery", lambda v: v > 0))},
+    }
     by_group = {}
     for label, sel in (("zero_recovery", [r for r in usable if det[r["case"]]["generator_recovery"] == 0]),
                        ("some_recovery", [r for r in usable if det[r["case"]]["generator_recovery"] > 0])):
@@ -186,6 +230,7 @@ def run(cache_dir: Path) -> dict:
                            "recall_at_5": (sum(1 for r in sel if r["rank_query_incomplete"] and r["rank_query_incomplete"] <= 5)
                                            / len(sel)) if sel else None}
     return {"schema_version": "obligation-retrieval/v1", "exploratory": True, "model_calls": 0,
+            "snapshots_verified": {n: src["snapshots"][n]["sha"] for n in sorted({src["cases"][c]["dir"] for c in cases})},
             "method": "BM25 (k1 1.5, b 0.75) over paragraph passages of the documentation snapshot; "
                       "query = arm C text; gold = passage in the requirement's source documentation file with >= half of the "
                       "omitted span's content words (loose variant: any file, reported per row)",
@@ -195,7 +240,45 @@ def run(cache_dir: Path) -> dict:
             "recall_query_first_sentence_plus_page_text": recall_first_page,
             "recall_query_complete_at_1": (sum(1 for r in usable if r["rank_query_complete"] == 1) / len(usable))
             if usable else None,
-            "recall_at_5_by_recovery_group": by_group, "rows": rows}
+            "recall_at_5_by_recovery_group": by_group,
+            "semantic_gold": semantic_summary, "rows": rows}
+
+
+class SnapshotError(RuntimeError):
+    pass
+
+
+def _git(d: Path, *args: str) -> str:
+    r = subprocess.run(["git", "-C", str(d), *args], capture_output=True, text=True)
+    if r.returncode != 0:
+        raise SnapshotError(f"{d}: git {' '.join(args)} failed: {r.stderr.strip()}")
+    return r.stdout.strip()
+
+
+def verify_snapshot(d: Path, spec: dict) -> None:
+    """Fail closed unless d is a clean checkout of exactly the pinned snapshot.
+
+    Checks: the directory is its own git repository; HEAD is the pinned sha; origin is
+    the pinned url; the sparse-checkout patterns are the pinned paths; the working tree
+    has no modified, deleted or untracked files. An interrupted fetch (no HEAD), a cache
+    of another commit or a dirty tree raises SnapshotError.
+    """
+    if not (d / ".git").is_dir():
+        raise SnapshotError(f"{d}: not a git checkout")
+    if Path(_git(d, "rev-parse", "--show-toplevel")).resolve() != d.resolve():
+        raise SnapshotError(f"{d}: belongs to another repository")
+    head = _git(d, "rev-parse", "--verify", "--quiet", "HEAD^{commit}")
+    if head != spec["sha"]:
+        raise SnapshotError(f"{d}: HEAD {head} != pinned {spec['sha']}")
+    origin = _git(d, "config", "--get", "remote.origin.url")
+    if origin != spec["url"]:
+        raise SnapshotError(f"{d}: origin {origin} != pinned {spec['url']}")
+    sparse = _git(d, "sparse-checkout", "list").splitlines()
+    if sorted(sparse) != sorted(spec["paths"]):
+        raise SnapshotError(f"{d}: sparse paths {sparse} != pinned {spec['paths']}")
+    dirty = _git(d, "status", "--porcelain", "--untracked-files=all", "--ignored=no")
+    if dirty:
+        raise SnapshotError(f"{d}: working tree differs from the snapshot:\n{dirty[:500]}")
 
 
 def fetch(cache_dir: Path) -> None:
@@ -203,7 +286,8 @@ def fetch(cache_dir: Path) -> None:
     cache_dir.mkdir(parents=True, exist_ok=True)
     for name, s in src["snapshots"].items():
         d = cache_dir / name
-        if (d / ".git").exists():
+        if d.exists() and any(d.iterdir()):
+            verify_snapshot(d, s)  # an existing directory is reused only if it is exactly the snapshot
             continue
         d.mkdir(parents=True, exist_ok=True)
         sh = lambda *a: subprocess.run(["git", "-C", str(d), *a], check=True, capture_output=True)  # noqa: E731
@@ -212,6 +296,7 @@ def fetch(cache_dir: Path) -> None:
         sh("sparse-checkout", "set", "--no-cone", *s["paths"])
         sh("fetch", "-q", "--depth", "1", "--filter=blob:none", "origin", s["sha"])
         sh("checkout", "-q", "FETCH_HEAD")
+        verify_snapshot(d, s)
         print(f"fetched {name}")
 
 

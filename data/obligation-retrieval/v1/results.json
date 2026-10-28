@@ -2,6 +2,20 @@
   "schema_version": "obligation-retrieval/v1",
   "exploratory": true,
   "model_calls": 0,
+  "snapshots_verified": {
+    "grist": "b047726e327709d214e3b63222ee052de6399934",
+    "immich-a3c": "a3c8b359f2fdc47699f1530215a23fe8bd34c454",
+    "immich-eee": "eee793bfe4a2e48aea595ad7563bfaf038dd2cd5",
+    "mattermost": "bd09d959514c34e72a33c24663b5946682b656ec",
+    "nextcloud": "8d7403649929d9ddb1bd6a5a073d6869071db8c3",
+    "openproject": "66f582c19f87534703d2eaf92c5929d13d440cd9",
+    "paperless-41bcc12cc2": "41bcc12cc2ae01d99957518a9b88126e16bb7c71",
+    "paperless-63c0e2f72b": "63c0e2f72b53ca2d38851930a4bcd1d5c8b52321",
+    "paperless-855669ddf9": "855669ddf93e25fe5c45420781e191a7df63884d",
+    "paperless-937feb1bef": "937feb1befdbc5712a612e9be44a926b0b6fc84c",
+    "wekan": "38415f04caf9a3536fe8faaca0cda9b8aa38cf57",
+    "zulip": "9778ffc23c3e83e321152a48ab32c1426e1bd941"
+  },
   "method": "BM25 (k1 1.5, b 0.75) over paragraph passages of the documentation snapshot; query = arm C text; gold = passage in the requirement's source documentation file with >= half of the omitted span's content words (loose variant: any file, reported per row)",
   "requirements": 25,
   "requirements_with_gold_passage": 24,
@@ -37,6 +51,41 @@
       "recall_at_5": 0.45454545454545453
     }
   },
+  "semantic_gold": {
+    "requirements_with_semantic_gold": 25,
+    "lexical_and_semantic_gold_agree": 24,
+    "recall_query_incomplete": {
+      "1": 0.4,
+      "3": 0.68,
+      "5": 0.68,
+      "10": 0.76,
+      "20": 0.92
+    },
+    "recall_query_first_sentence_of_incomplete": {
+      "1": 0.0,
+      "3": 0.16,
+      "5": 0.16,
+      "10": 0.24,
+      "20": 0.36
+    },
+    "recall_query_first_sentence_plus_page_text": {
+      "1": 0.04,
+      "3": 0.16,
+      "5": 0.16,
+      "10": 0.32,
+      "20": 0.4
+    },
+    "recall_at_5_by_recovery_group": {
+      "zero_recovery": {
+        "requirements": 14,
+        "recall_at_5": 0.8571428571428571
+      },
+      "some_recovery": {
+        "requirements": 11,
+        "recall_at_5": 0.45454545454545453
+      }
+    }
+  },
   "rows": [
     {
       "case": "grist-billing-managers-limit",
@@ -58,7 +107,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement adding billing managers on the Billing Account page.",
       "rank_query_first_sentence": 3,
-      "rank_query_first_sentence_plus_page_text": 3
+      "rank_query_first_sentence_plus_page_text": 3,
+      "semantic_gold": {
+        "quote": "up to 10 billing managers",
+        "passages": 1,
+        "files": [
+          "team-sharing.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 3,
+        "rank_query_first_sentence_plus_page_text": 3
+      }
     },
     {
       "case": "grist-context-menu-shortcut",
@@ -81,7 +141,18 @@
       "rank_query_complete": 2,
       "query_first_sentence": "Implement the grid's menu keyboard shortcuts (Windows key bindings).",
       "rank_query_first_sentence": 24,
-      "rank_query_first_sentence_plus_page_text": 25
+      "rank_query_first_sentence_plus_page_text": 25,
+      "semantic_gold": {
+        "quote": "Open the context menu",
+        "passages": 1,
+        "files": [
+          "keyboard-shortcuts.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 2,
+        "rank_query_first_sentence": 41,
+        "rank_query_first_sentence_plus_page_text": 43
+      }
     },
     {
       "case": "grist-page-default-collapse",
@@ -113,7 +184,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the page list.",
       "rank_query_first_sentence": 6153,
-      "rank_query_first_sentence_plus_page_text": 168
+      "rank_query_first_sentence_plus_page_text": 168,
+      "semantic_gold": {
+        "quote": "Set default: Collapse",
+        "passages": 1,
+        "files": [
+          "page-widgets.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 6153,
+        "rank_query_first_sentence_plus_page_text": 168
+      }
     },
     {
       "case": "grist-suggestions-open-copy",
@@ -141,7 +223,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement opening and editing documents.",
       "rank_query_first_sentence": 22,
-      "rank_query_first_sentence_plus_page_text": 22
+      "rank_query_first_sentence_plus_page_text": 22,
+      "semantic_gold": {
+        "quote": "automatically open a copy of a document",
+        "passages": 1,
+        "files": [
+          "sharing.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 22,
+        "rank_query_first_sentence_plus_page_text": 22
+      }
     },
     {
       "case": "grist-tutorial-restart",
@@ -166,7 +259,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the Restart button of the tutorial popup.",
       "rank_query_first_sentence": 2,
-      "rank_query_first_sentence_plus_page_text": 13
+      "rank_query_first_sentence_plus_page_text": 13,
+      "semantic_gold": {
+        "quote": "causing any unsaved changes to be lost",
+        "passages": 1,
+        "files": [
+          "document-tutorials.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 2,
+        "rank_query_first_sentence_plus_page_text": 13
+      }
     },
     {
       "case": "immich-library-single-owner",
@@ -194,7 +298,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement creating an external library.",
       "rank_query_first_sentence": 2,
-      "rank_query_first_sentence_plus_page_text": 3
+      "rank_query_first_sentence_plus_page_text": 3,
+      "semantic_gold": {
+        "quote": "can only belong to a single user",
+        "passages": 1,
+        "files": [
+          "features/libraries.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 14,
+        "rank_query_first_sentence": 2,
+        "rank_query_first_sentence_plus_page_text": 6
+      }
     },
     {
       "case": "immich-m2t-upload",
@@ -216,7 +331,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the video upload check.",
       "rank_query_first_sentence": 19,
-      "rank_query_first_sentence_plus_page_text": 43
+      "rank_query_first_sentence_plus_page_text": 43,
+      "semantic_gold": {
+        "quote": ".m2t",
+        "passages": 1,
+        "files": [
+          "features/supported-formats.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 21,
+        "rank_query_first_sentence_plus_page_text": 46
+      }
     },
     {
       "case": "mattermost-anonymous-team-url",
@@ -255,7 +381,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the Next button of Create a Team.",
       "rank_query_first_sentence": 152,
-      "rank_query_first_sentence_plus_page_text": 26
+      "rank_query_first_sentence_plus_page_text": 26,
+      "semantic_gold": {
+        "quote": "you will not be prompted to choose a team URL",
+        "passages": 1,
+        "files": [
+          "collaborate/organize-using-teams.rst"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 6,
+        "rank_query_first_sentence": 152,
+        "rank_query_first_sentence_plus_page_text": 26
+      }
     },
     {
       "case": "mattermost-guest-invite-channel",
@@ -284,7 +421,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement Invite as guest in the Invite People dialog.",
       "rank_query_first_sentence": 1,
-      "rank_query_first_sentence_plus_page_text": 1
+      "rank_query_first_sentence_plus_page_text": 1,
+      "semantic_gold": {
+        "quote": "you must select at least one channel they can access",
+        "passages": 1,
+        "files": [
+          "collaborate/invite-people.rst"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 3,
+        "rank_query_first_sentence": 23,
+        "rank_query_first_sentence_plus_page_text": 3
+      }
     },
     {
       "case": "mattermost-mention-add-prompt",
@@ -310,7 +458,18 @@
       "rank_query_complete": 2,
       "query_first_sentence": "Implement sending a message in the channel.",
       "rank_query_first_sentence": 345,
-      "rank_query_first_sentence_plus_page_text": 40
+      "rank_query_first_sentence_plus_page_text": 40,
+      "semantic_gold": {
+        "quote": "Mattermost prompts you to add them",
+        "passages": 1,
+        "files": [
+          "collaborate/manage-channel-members.rst"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 13,
+        "rank_query_first_sentence": 345,
+        "rank_query_first_sentence_plus_page_text": 70
+      }
     },
     {
       "case": "mattermost-playbook-task-markdown",
@@ -338,7 +497,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement adding a task to a playbook checklist.",
       "rank_query_first_sentence": 1,
-      "rank_query_first_sentence_plus_page_text": 1
+      "rank_query_first_sentence_plus_page_text": 1,
+      "semantic_gold": {
+        "quote": "Playbook tasks consist of text rendered in Markdown",
+        "passages": 1,
+        "files": [
+          "workflow-automation/work-with-playbooks.rst"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 16,
+        "rank_query_first_sentence": 15,
+        "rank_query_first_sentence_plus_page_text": 15
+      }
     },
     {
       "case": "nextcloud-device-password-once",
@@ -363,7 +533,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the device passwords in the Security settings.",
       "rank_query_first_sentence": 1,
-      "rank_query_first_sentence_plus_page_text": 13
+      "rank_query_first_sentence_plus_page_text": 13,
+      "semantic_gold": {
+        "quote": "You only have access to the device password when creating it",
+        "passages": 1,
+        "files": [
+          "session_management.rst"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 2,
+        "rank_query_first_sentence": 6,
+        "rank_query_first_sentence_plus_page_text": 28
+      }
     },
     {
       "case": "nextcloud-mail-delegation",
@@ -393,7 +574,18 @@
       "rank_query_complete": 4,
       "query_first_sentence": "Implement native account delegation in Mail.",
       "rank_query_first_sentence": 32,
-      "rank_query_first_sentence_plus_page_text": 9
+      "rank_query_first_sentence_plus_page_text": 9,
+      "semantic_gold": {
+        "quote": "marked as delegated",
+        "passages": 1,
+        "files": [
+          "groupware/mail.rst"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 8,
+        "rank_query_first_sentence": 32,
+        "rank_query_first_sentence_plus_page_text": 9
+      }
     },
     {
       "case": "nextcloud-mail-favorites-up",
@@ -422,7 +614,18 @@
       "rank_query_complete": 2,
       "query_first_sentence": "Implement the message list of the Mail inbox.",
       "rank_query_first_sentence": 94,
-      "rank_query_first_sentence_plus_page_text": 44
+      "rank_query_first_sentence_plus_page_text": 44,
+      "semantic_gold": {
+        "quote": "in a separate section on top of the message list",
+        "passages": 1,
+        "files": [
+          "groupware/mail.rst"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 16,
+        "rank_query_first_sentence": 94,
+        "rank_query_first_sentence_plus_page_text": 44
+      }
     },
     {
       "case": "openproject-archived-project-selector",
@@ -452,7 +655,18 @@
       "rank_query_complete": 2,
       "query_first_sentence": "Implement the project list of the All projects dropdown in the header.",
       "rank_query_first_sentence": 46,
-      "rank_query_first_sentence_plus_page_text": 135
+      "rank_query_first_sentence_plus_page_text": 135,
+      "semantic_gold": {
+        "quote": "can no longer be selected from the project list",
+        "passages": 1,
+        "files": [
+          "user-guide/projects/project-settings/project-information/README.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 59,
+        "rank_query_first_sentence": 46,
+        "rank_query_first_sentence_plus_page_text": 135
+      }
     },
     {
       "case": "openproject-more-menu-subproject",
@@ -480,7 +694,18 @@
       "rank_query_complete": null,
       "query_first_sentence": "Implement the More menu of the project information page.",
       "rank_query_first_sentence": null,
-      "rank_query_first_sentence_plus_page_text": null
+      "rank_query_first_sentence_plus_page_text": null,
+      "semantic_gold": {
+        "quote": "Add a subproject",
+        "passages": 1,
+        "files": [
+          "user-guide/projects/project-settings/project-information/README.md"
+        ],
+        "lexical_gold_agrees": false,
+        "rank_query_incomplete": 3,
+        "rank_query_first_sentence": 367,
+        "rank_query_first_sentence_plus_page_text": 50
+      }
     },
     {
       "case": "paperless-ai-suggestions-blank-text",
@@ -509,7 +734,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the run of the \"Apply AI Suggestions\" workflow action.",
       "rank_query_first_sentence": 21,
-      "rank_query_first_sentence_plus_page_text": 21
+      "rank_query_first_sentence_plus_page_text": 21,
+      "semantic_gold": {
+        "quote": "contains only whitespace are skipped",
+        "passages": 1,
+        "files": [
+          "usage.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 3,
+        "rank_query_first_sentence": 21,
+        "rank_query_first_sentence_plus_page_text": 21
+      }
     },
     {
       "case": "paperless-custom-field-no-value",
@@ -536,7 +772,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the workflow \"Assignment\" action for custom fields.",
       "rank_query_first_sentence": 32,
-      "rank_query_first_sentence_plus_page_text": 37
+      "rank_query_first_sentence_plus_page_text": 37,
+      "semantic_gold": {
+        "quote": "any value it may already have is left untouched",
+        "passages": 1,
+        "files": [
+          "usage.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 32,
+        "rank_query_first_sentence_plus_page_text": 37
+      }
     },
     {
       "case": "paperless-doc-title-placeholder",
@@ -561,7 +808,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement saving the title template of a workflow assignment.",
       "rank_query_first_sentence": 12,
-      "rank_query_first_sentence_plus_page_text": 2
+      "rank_query_first_sentence_plus_page_text": 2,
+      "semantic_gold": {
+        "quote": "cannot be used in title assignment",
+        "passages": 1,
+        "files": [
+          "usage.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 12,
+        "rank_query_first_sentence_plus_page_text": 2
+      }
     },
     {
       "case": "paperless-superuser-grant",
@@ -586,7 +844,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Edit another user account in Users & Groups.",
       "rank_query_first_sentence": 13,
-      "rank_query_first_sentence_plus_page_text": 1
+      "rank_query_first_sentence_plus_page_text": 1,
+      "semantic_gold": {
+        "quote": "can only be granted by another superuser",
+        "passages": 1,
+        "files": [
+          "usage.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 13,
+        "rank_query_first_sentence_plus_page_text": 1
+      }
     },
     {
       "case": "wekan-home-multi-drop",
@@ -622,7 +891,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement dropping boards on the Home row of All Boards.",
       "rank_query_first_sentence": 3,
-      "rank_query_first_sentence_plus_page_text": 7
+      "rank_query_first_sentence_plus_page_text": 7,
+      "semantic_gold": {
+        "quote": "does not silently choose its first board",
+        "passages": 1,
+        "files": [
+          "Features/Board/Home.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 2,
+        "rank_query_first_sentence": 3,
+        "rank_query_first_sentence_plus_page_text": 7
+      }
     },
     {
       "case": "wekan-swimlane-below-default",
@@ -645,7 +925,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement adding swimlanes.",
       "rank_query_first_sentence": 768,
-      "rank_query_first_sentence_plus_page_text": 9
+      "rank_query_first_sentence_plus_page_text": 9,
+      "semantic_gold": {
+        "quote": "with Below selected by default",
+        "passages": 1,
+        "files": [
+          "Features/Swimlanes/Swimlanes.md"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 768,
+        "rank_query_first_sentence_plus_page_text": 9
+      }
     },
     {
       "case": "zulip-private-channel-access",
@@ -675,7 +966,18 @@
       "rank_query_complete": 2,
       "query_first_sentence": "Implement viewing a channel's conversations.",
       "rank_query_first_sentence": 76,
-      "rank_query_first_sentence_plus_page_text": 84
+      "rank_query_first_sentence_plus_page_text": 84,
+      "semantic_gold": {
+        "quote": "are specifically granted access",
+        "passages": 1,
+        "files": [
+          "docs/channel-permissions.mdx"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 90,
+        "rank_query_first_sentence": 76,
+        "rank_query_first_sentence_plus_page_text": 84
+      }
     },
     {
       "case": "zulip-resolved-notice-auto-read",
@@ -708,7 +1010,19 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement resolving topics.",
       "rank_query_first_sentence": 15,
-      "rank_query_first_sentence_plus_page_text": 16
+      "rank_query_first_sentence_plus_page_text": 16,
+      "semantic_gold": {
+        "quote": "whether these notices are automatically marked as read",
+        "passages": 2,
+        "files": [
+          "docs/configure-automated-notices.mdx",
+          "docs/resolve-a-topic.mdx"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 1,
+        "rank_query_first_sentence": 9,
+        "rank_query_first_sentence_plus_page_text": 23
+      }
     },
     {
       "case": "zulip-unsubscribe-self",
@@ -734,7 +1048,18 @@
       "rank_query_complete": 1,
       "query_first_sentence": "Implement the Unsubscribe buttons in the channel's subscriber list.",
       "rank_query_first_sentence": 5,
-      "rank_query_first_sentence_plus_page_text": 5
+      "rank_query_first_sentence_plus_page_text": 5,
+      "semantic_gold": {
+        "quote": "You can always unsubscribe from any channel",
+        "passages": 1,
+        "files": [
+          "docs/unsubscribe-from-a-channel.mdx"
+        ],
+        "lexical_gold_agrees": true,
+        "rank_query_incomplete": 2,
+        "rank_query_first_sentence": 61,
+        "rank_query_first_sentence_plus_page_text": 132
+      }
     }
   ]
 }

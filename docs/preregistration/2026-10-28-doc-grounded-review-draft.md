@@ -7,11 +7,14 @@ of scope. Any execution needs explicit authorisation of budget and models.
 
 On the frozen QP4 data, tests written from the incomplete request detect 0.18 of
 confirmed losses per tester and 0.50 with five testers pooled, against 0.82 for one tester
-with the complete requirement (`docs/research/2026-10-28-verifier-coupling.md`). The
-omitted obligation is usually present in the project's documentation: with the request
-as BM25 query, the source passage is in the top 5 for 18 of 24 requirements, and for all
-13 in which no generator kept the rule; with only the request's first sentence, for 8 of
-24 (`docs/research/2026-10-28-obligation-retrieval.md`). The question is whether giving
+with the complete requirement (`docs/research/2026-10-28-verifier-coupling.md`; union of
+each tester's suites, for these five testers and budgets). The omitted obligation is
+stated in the project's documentation for all 25 requirements (agent-coded semantic gold,
+not blind): with the request as BM25 query, the stating passage is in the top 5 for 17 of
+25 requirements (12 of 14 where no generator kept the rule); with only the request's
+first sentence, for 4 of 25 (`docs/research/2026-10-28-obligation-retrieval.md`). The
+full-request query shares wording with the documentation by construction, so it is an
+optimistic selection, not a bound on natural tickets. The question is whether giving
 the test writer access to the documentation, rather than the complete requirement,
 recovers detection, and which way of giving it works when the ticket is short.
 
@@ -67,6 +70,19 @@ Three new sources with two testers (one per provider) is 300 tester calls plus t
 browser evaluations of each suite against every implementation of its requirement, as in
 the existing runs. Exact counts and cost to be computed from the frozen manifests before
 asking for authorisation.
+
+## Positioning
+
+Grounding generated tests or oracles in documentation has strong antecedents (Doc2OracLL;
+TestSuiteBench's documentation ablation; Haeri and Ghelichi's specification sources). The
+specific question here is narrower: whether grounding recovers detection of an obligation
+removed from the request that also drove the implementation, against frozen oracles. No
+broad novelty is claimed for documentation grounding.
+
+## Status of execution
+
+No suite is generated under this draft until budget and models are authorised
+explicitly by Dante (Codex, 28/10: not under the current collaboration).
 
 ## Why it matters
 

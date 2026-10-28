@@ -1,0 +1,32 @@
+{
+  "schema_version": "obligation-retrieval-semantic-gold/v1",
+  "coder": "Claude (agent), 28/10/2026, after review by Codex; not blind to outcomes, not a human coder",
+  "rule": "For each requirement, a quote from the sentence of the documentation snapshot that states the omitted obligation of arm A. A passage is semantic gold when its markup-stripped, whitespace-normalised text contains the quote (case-insensitive), in any file of the snapshot. Quotes were located by reading arm A and searching the snapshot; the lexical gold of v1 is kept for comparison.",
+  "quotes": {
+    "grist-billing-managers-limit": "up to 10 billing managers",
+    "grist-context-menu-shortcut": "Open the context menu",
+    "grist-page-default-collapse": "Set default: Collapse",
+    "grist-suggestions-open-copy": "automatically open a copy of a document",
+    "grist-tutorial-restart": "causing any unsaved changes to be lost",
+    "immich-library-single-owner": "can only belong to a single user",
+    "immich-m2t-upload": ".m2t",
+    "mattermost-anonymous-team-url": "you will not be prompted to choose a team URL",
+    "mattermost-guest-invite-channel": "you must select at least one channel they can access",
+    "mattermost-mention-add-prompt": "Mattermost prompts you to add them",
+    "mattermost-playbook-task-markdown": "Playbook tasks consist of text rendered in Markdown",
+    "nextcloud-device-password-once": "You only have access to the device password when creating it",
+    "nextcloud-mail-delegation": "marked as delegated",
+    "nextcloud-mail-favorites-up": "in a separate section on top of the message list",
+    "openproject-archived-project-selector": "can no longer be selected from the project list",
+    "openproject-more-menu-subproject": "Add a subproject",
+    "paperless-ai-suggestions-blank-text": "contains only whitespace are skipped",
+    "paperless-custom-field-no-value": "any value it may already have is left untouched",
+    "paperless-doc-title-placeholder": "cannot be used in title assignment",
+    "paperless-superuser-grant": "can only be granted by another superuser",
+    "wekan-home-multi-drop": "does not silently choose its first board",
+    "wekan-swimlane-below-default": "with Below selected by default",
+    "zulip-private-channel-access": "are specifically granted access",
+    "zulip-resolved-notice-auto-read": "whether these notices are automatically marked as read",
+    "zulip-unsubscribe-self": "You can always unsubscribe from any channel"
+  }
+}
