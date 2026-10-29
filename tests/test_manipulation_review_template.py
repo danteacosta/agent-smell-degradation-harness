@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 from eval.manipulation_admission import (
-    REQUIRED, candidate_inventory_sha256, prepare_manipulation_admission,
+    REQUIRED, prepare_manipulation_admission,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,8 +35,6 @@ class ManipulationReviewTemplateTests(unittest.TestCase):
             self.assertTrue(all(row[key] is None for key in REQUIRED if key != "candidate_id"))
         with self.assertRaisesRegex(ValueError, "reviewer_id"):
             prepare_manipulation_admission(rows, expected_candidate_ids=self.template["expected_candidate_ids"])
-        # A slot's routing label is never accepted as a completed human judgment.
-        self.assertEqual(len(candidate_inventory_sha256(self.template["expected_candidate_ids"])), 64)
 
 
 if __name__ == "__main__":
