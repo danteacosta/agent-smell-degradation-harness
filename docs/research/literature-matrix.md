@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-28
+Last updated: 2026-10-29
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1404,3 +1404,21 @@ method, human-validation design/results and threats (Sections 3–5). No replica
 Coverage, schema, ordered-ID digest, null judgments and rejection by the existing
 admission API were checked offline. These checks do not establish semantic
 validity, source rights, independent people, external custody or a corpus freeze.
+
+
+## 2026-10-29 — ArchCode is prior art for requirement-conditioned tests
+
+Search/read date: 2026-10-29. Upgraded the 2026-10-28 abstract-only search hit,
+deduplicated by DOI. Read primary ACL PDF abstract, framework (Section 3),
+evaluation/results (Section 4), limitations and benchmark construction
+(Appendix B). Other appendices were not comprehensively read; no replication.
+
+| Reference / status | Question, sample, method | Finding / limitations | Thesis, experiment, product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Han et al., [ArchCode](https://doi.org/10.18653/v1/2024.acl-long.730), ACL 2024 long paper; peer-reviewed | Requirement inference conditions code and per-requirement tests; execution ranks candidates. HumanEval (164 tasks), CodeContests (165 test tasks), HumanEval-NFR; GPT-3.5-Turbo and WizardCoder. | Reports functional and NFR gains, with maintainability trade-offs. Small code tasks, inferred obligations and cascading-error risk; benchmark tests partly generated, then filtered/reviewed; some baselines imported rather than reproduced. | Thesis: no controlled omission intervention or T1–T3 H2 test. Experiment: separate inferred requirements from authorized reference obligations. Product: requirement-conditioned test generation is prior art; auditing an existing verifier against independently validated violations is the proposed distinction, not an established uniqueness claim. Action: retain independent admission and protect the real unfilled review template in CI. | 8/10: reviewed primary paper and released implementation; narrow tasks, author-curated benchmark and generation-dependent evidence constrain transfer. |
+
+**Concrete incorporation.** Two persistent regressions bind the review template
+to the current candidate-content digest and complete candidate coverage, and
+ensure null human judgments cannot pass the admission API. These checks protect
+the handoff only; they do not qualify semantic judgments or confirm H1/H2.
+Do not claim novelty for requirement-to-test generation itself.
