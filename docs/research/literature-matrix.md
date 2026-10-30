@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-29
+Last updated: 2026-10-30
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1422,3 +1422,17 @@ to the current candidate-content digest and complete candidate coverage, and
 ensure null human judgments cannot pass the admission API. These checks protect
 the handoff only; they do not qualify semantic judgments or confirm H1/H2.
 Do not claim novelty for requirement-to-test generation itself.
+
+
+## 2026-10-30 — Report annotation tasks, not just completed forms
+
+Search/read: 2026-10-30; deduplicated by DOI/title. Read primary ACL abstract,
+Sections 3–7 and limitations; appendices not comprehensively read; no replication.
+
+| Reference / status | Question, data, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Kunilovskaya et al., [Who Annotates in NLP?](https://doi.org/10.18653/v1/2026.emnlp-main.396), EMNLP 2026 main; peer-reviewed | Task-level annotation-reporting audit: human gold 41 papers/72 tasks; LLM extraction 1,603 papers/2,667 tasks, validated on gold. | Reporting of training, adjudication and agreement is uneven. Keyword sampling, small gold set, extraction errors and topic mismatch limit population inference; missing reporting does not prove missing practice. | Thesis: methodological context, no H1/H2 evidence. Experiment: document staffing, rubric, calibration and pre-adjudication judgments separately from routing forms; implement isolated blank assignments with material commitments. Product: an auditable handoff is not validated semantic approval. Action: offline exporter, isolation/drift/overwrite regressions, protocol reporting requirements. | 8/10: reviewed, released data/code and explicit validation; moderate extraction reliability and sampling bias limit transfer. |
+
+**Boundary.** The exporter reduces manual distribution errors, not annotation
+uncertainty. It cannot verify independent people, rights, external custody,
+source interpretation or rubric adequacy. No threshold or scientific label changes.
