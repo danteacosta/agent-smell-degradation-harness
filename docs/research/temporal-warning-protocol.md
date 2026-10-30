@@ -463,3 +463,37 @@ provide a relevant caution: human-mean correlation is not the same as adequate
 inter-rater agreement. Their linguistic-quality task is different from our
 semantic manipulation-admission task, so neither their agreement values nor a
 sample percentage is a transferable admission threshold.
+
+
+## Isolated assignment export — 2026-10-30
+
+The offline exporter avoids manually editing the combined authoring template.
+From the repository root, prepare one assignment at a time:
+
+```sh
+python -m eval.manipulation_review_handoff \
+  --template data/prepilot/temporal-warning-manipulation-review-template.json \
+  --candidates data/prepilot/temporal-warning-source-drafts.json \
+  --slot reviewer_A --output /PRIVATE/reviewer-A.json
+```
+
+Repeat with `reviewer_B` and a different private output path. The exporter checks
+the full candidate-content digest, ordered inventory, both slots' coverage,
+declared review fields and null judgments before exporting only the requested
+slot. It rejects completed forms and extra fields in either slot, and refuses
+to overwrite an existing file. It neither copies peer responses nor generates
+human judgments. The packet includes content and inventory commitments; these
+are not externally attested freezes.
+
+The custodian must separately supply the same pinned sources and approved
+rubric, verify rights and actual reviewer independence, and record distribution
+and later adjudication privately. No email is sent and no provider is called.
+Completed responses and identifiable staffing records must stay outside Git.
+
+For each human-review task, retain recruitment/expertise, relevant language
+proficiency, training/calibration, workload, compensation arrangements, rubric
+version, independent pre-adjudication judgments and disagreement resolution.
+Document unavailable information explicitly rather than infer it from filled
+forms. [Kunilovskaya et al., EMNLP 2026](https://aclanthology.org/2026.emnlp-main.396/)
+motivate task-level reporting; their reporting audit does not validate our labels
+or supply an agreement/admission threshold.
