@@ -368,3 +368,162 @@ The packet also reports agreement separately for removed span, target
 `constraint_id`, dependency set, non-target preservation, remainder plausibility
 and recommendation. Any disagreement or blocking judgment sets
 `requires_adjudication`; reviewer disagreement is retained rather than collapsed.
+
+
+## Concrete source-draft handoff — 2026-10-27
+
+This is an engineering review queue, not a selected or admitted confirmatory
+corpus. The existing public file
+[`temporal-warning-source-drafts.json`](../../data/prepilot/temporal-warning-source-drafts.json)
+was audited at repository revision `66712467cd093b412d4787c80fed428c00ae3d60`.
+The existing `validate_candidate` implementation verified **12 source-span
+deletion pairs across six projects**, including source/license file hashes,
+source excerpt offsets, exact deletion reconstruction and target identity.
+It does not establish source rights, semantic validity, reviewer independence,
+lack of contamination, or confirmatory eligibility.
+
+Canonical JSON content digest (UTF-8, sorted object keys, compact separators,
+Unicode unescaped):
+`2ec1b291c24cffe61bf6fad1c99ffa6a4013de6f679ca82d9de1004e3e60016b`.
+
+Ordered candidate-ID digest (the admission-packet convention):
+`fbcce00ccb12dc3d8591a45309601de3bdd9d25c664de08be7ef3ec5b228bb92`.
+
+These are snapshot identifiers, **not an externally attested pre-review freeze**.
+The full-content digest and the ID-list digest bind different objects. Preserve
+both, together with the exact source revision and rubric, in the eventual
+external decision record; do not replace a content commitment with an ID hash.
+
+| Candidate ID | Project | Source locator | Proposed target ID |
+| --- | --- | --- | --- |
+| `prospective-sdoc-srs-151` | strictdoc | SDOC-SRS-151 STATEMENT | `prospective-sdoc-srs-151-c01` |
+| `prospective-sdoc-srs-110` | strictdoc | SDOC-SRS-110 STATEMENT | `prospective-sdoc-srs-110-c01` |
+| `prospective-cass-srch-002` | CASS | SRCH-002 requirement table text column | `prospective-cass-srch-002-c01` |
+| `prospective-cass-srch-006` | CASS | SRCH-006 requirement table text column | `prospective-cass-srch-006-c01` |
+| `prospective-todomvc-counter` | todomvc | ### Counter | `prospective-todomvc-counter-c01` |
+| `prospective-todomvc-clear-completed-button` | todomvc | ### Clear completed button | `prospective-todomvc-clear-completed-button-c01` |
+| `prospective-realworld-feed-articles` | realworld | ### Feed Articles | `prospective-realworld-feed-articles-c01` |
+| `prospective-realworld-unfollow-user` | realworld | ### Unfollow user | `prospective-realworld-unfollow-user-c01` |
+| `prospective-kanboard-destination-membership` | kanboard | Duplicate a task to another project | `prospective-kanboard-destination-membership-c01` |
+| `prospective-kanboard-destination-assignee` | kanboard | Duplicate a task to another project | `prospective-kanboard-destination-assignee-c01` |
+| `prospective-paperless-share-expiry` | paperless-ngx | Share Links | `prospective-paperless-share-expiry-c01` |
+| `prospective-paperless-share-no-login` | paperless-ngx | Share Links | `prospective-paperless-share-no-login-c01` |
+
+There are **10 distinct source-excerpt groups**, not 12 independent excerpts:
+the Kanboard destination-membership/destination-assignee pair shares one source
+span, and the Paperless share-expiry/share-no-login pair shares another.
+All candidate siblings remain in their project's partition. Different excerpts
+also do not establish independent semantic obligations or source families.
+No item is excluded here based on generated behavior.
+
+**Next executable human handoff.** Before any new outcomes, the custodian
+approves selection, rights and the rubric; records the above commitments
+externally; assigns two genuinely independent reviewers; and gives both the
+same pinned source/variant materials without generated outputs or model
+identities. Each reviewer supplies the fields required by
+`prepare_manipulation_admission`. Adjudicate dependency, source-faithfulness
+and non-target-preservation disagreements; retain every exclusion and reason.
+Current state remains `selection_frozen=false`, `human_approvals=0`,
+`confirmatory_eligible=false`.
+
+A single deletion can be syntactically valid without being an atomic or useful
+intervention. Related mutations can distort assessment when counted repeatedly
+([Papadakis et al., ISSTA 2016](https://discovery.ucl.ac.uk/1508136/1/ISSTA16.pdf)).
+This is an analogy motivating explicit grouping, not proof that these omission
+pairs subsume one another. Do not use future kill vectors or terminal labels to
+select a more favorable confirmatory set; any outcome-based subsumption analysis
+must be a separately labelled exploratory sensitivity analysis.
+
+
+## Unfilled review forms — 2026-10-28
+
+The [authoring template](../../data/prepilot/temporal-warning-manipulation-review-template.json)
+contains two separate 12-row review slots for the existing candidate snapshot.
+It is a preparation artifact with **24 unfilled forms**, not 24 observations,
+human annotations, or approvals. Each row contains only the admission API's
+declared review fields; only candidate IDs are filled. All judgments and actual
+reviewer identities remain null, so the admission API rejects the untouched file.
+
+The custodian must give each reviewer only their own `reviews` list, the
+same pinned source materials and the approved rubric. Keep responses separate
+until both are complete. Slots A/B are routing labels, not reviewer identities.
+Do not show generated outputs, provider identities or the other reviewer's
+judgments. Verify content and ID commitments before distribution; a manifest
+does not prove external custody or independent people.
+
+After independent completion, combine both review lists and call
+`prepare_manipulation_admission(reviews, expected_candidate_ids=...)`.
+Record disagreement before adjudication and preserve original answers.
+Do not replace null judgments with defaults to make validation pass.
+Calibration examples and guideline revisions must be separate from scored
+candidate judgments; approve the rubric before assigning the scored review.
+
+[Paiva et al., Requirements Engineering 2026](https://doi.org/10.1007/s00766-026-00462-z)
+provide a relevant caution: human-mean correlation is not the same as adequate
+inter-rater agreement. Their linguistic-quality task is different from our
+semantic manipulation-admission task, so neither their agreement values nor a
+sample percentage is a transferable admission threshold.
+
+
+## Isolated assignment export — 2026-10-30
+
+The offline exporter avoids manually editing the combined authoring template.
+From the repository root, prepare one assignment at a time:
+
+```sh
+python -m eval.manipulation_review_handoff \
+  --template data/prepilot/temporal-warning-manipulation-review-template.json \
+  --candidates data/prepilot/temporal-warning-source-drafts.json \
+  --slot reviewer_A --output /PRIVATE/reviewer-A.json
+```
+
+Repeat with `reviewer_B` and a different private output path. The exporter checks
+the full candidate-content digest, ordered inventory, both slots' coverage,
+declared review fields and null judgments before exporting only the requested
+slot. It rejects completed forms and extra fields in either slot, and refuses
+to overwrite an existing file. It neither copies peer responses nor generates
+human judgments. The packet includes content and inventory commitments; these
+are not externally attested freezes.
+
+The custodian must separately supply the same pinned sources and approved
+rubric, verify rights and actual reviewer independence, and record distribution
+and later adjudication privately. No email is sent and no provider is called.
+Completed responses and identifiable staffing records must stay outside Git.
+
+For each human-review task, retain recruitment/expertise, relevant language
+proficiency, training/calibration, workload, compensation arrangements, rubric
+version, independent pre-adjudication judgments and disagreement resolution.
+Document unavailable information explicitly rather than infer it from filled
+forms. [Kunilovskaya et al., EMNLP 2026](https://aclanthology.org/2026.emnlp-main.396/)
+motivate task-level reporting; their reporting audit does not validate our labels
+or supply an agreement/admission threshold.
+
+
+## Temporal outcome accounting — 2026-10-31
+
+The offline `temporal-diagnostics/v2` report now explicitly declares
+`positive_class=terminal_defect=true`. At each cumulative horizon it reports
+`defective_labeled_episodes`, `true_alerts`, `missed_defects`,
+`nondefective_labeled_episodes`, `false_alerts` and
+`nondefective_without_alert`. Recall is true alerts divided by complete-stage,
+defective labeled episodes; false-alert rate uses complete-stage, nondefective
+labeled episodes. An empty denominator yields null, never zero. The existing
+`rate_scope` and missing-stage bounds remain mandatory context.
+
+Episode diagnostics retain the supplied terminal label and classify the first
+observed alert as true, false or unlabeled; no observed alert is reported
+separately and does not imply a complete negative prefix. Lead time remains an
+observed interval, with `first_alert_prefix_complete` retained. Do not pool
+false-alert lead times into true-warning antecedence.
+
+These outputs carry `output_plane=label_joined_diagnostics_not_features`.
+Labels are joined only after alert freezing; none of these joined fields may
+enter a T1–T3 predictor. The analyzer does not authenticate the supplied labels,
+fit H2, generate PR-AUC/calibration, or perform project-clustered inference.
+Aggregate rates are descriptive episode counts, not independent-project estimates.
+
+[Jin and Chen](https://doi.org/10.1007/s10515-026-00638-5) motivate two-sided
+error reporting; their positive class is correct code, the opposite of the
+defect-positive convention here. Their percentages and error names are not
+transferred. Six offline regressions protect polarity, both denominators,
+missing/unlabeled cases, observed lead-time classes and input immutability.

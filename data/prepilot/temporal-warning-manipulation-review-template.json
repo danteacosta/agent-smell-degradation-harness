@@ -1,0 +1,305 @@
+{
+  "schema_version": "manipulation-review-authoring-template/v1",
+  "status": "unfilled_not_admission_evidence",
+  "source_candidate_file": "data/prepilot/temporal-warning-source-drafts.json",
+  "source_revision": "1eb233148d0a9ee961c52af0be2732c77711d033",
+  "candidate_content_sha256": "2ec1b291c24cffe61bf6fad1c99ffa6a4013de6f679ca82d9de1004e3e60016b",
+  "expected_candidate_ids": [
+    "prospective-sdoc-srs-151",
+    "prospective-sdoc-srs-110",
+    "prospective-cass-srch-002",
+    "prospective-cass-srch-006",
+    "prospective-todomvc-counter",
+    "prospective-todomvc-clear-completed-button",
+    "prospective-realworld-feed-articles",
+    "prospective-realworld-unfollow-user",
+    "prospective-kanboard-destination-membership",
+    "prospective-kanboard-destination-assignee",
+    "prospective-paperless-share-expiry",
+    "prospective-paperless-share-no-login"
+  ],
+  "review_slots": [
+    {
+      "slot": "reviewer_A",
+      "reviews": [
+        {
+          "candidate_id": "prospective-sdoc-srs-151",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-sdoc-srs-110",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-cass-srch-002",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-cass-srch-006",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-todomvc-counter",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-todomvc-clear-completed-button",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-realworld-feed-articles",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-realworld-unfollow-user",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-kanboard-destination-membership",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-kanboard-destination-assignee",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-paperless-share-expiry",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-paperless-share-no-login",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "slot": "reviewer_B",
+      "reviews": [
+        {
+          "candidate_id": "prospective-sdoc-srs-151",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-sdoc-srs-110",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-cass-srch-002",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-cass-srch-006",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-todomvc-counter",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-todomvc-clear-completed-button",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-realworld-feed-articles",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-realworld-unfollow-user",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-kanboard-destination-membership",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-kanboard-destination-assignee",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-paperless-share-expiry",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        },
+        {
+          "candidate_id": "prospective-paperless-share-no-login",
+          "reviewer_id": null,
+          "removed_span": null,
+          "target_constraint_id": null,
+          "dependent_constraint_ids": null,
+          "non_target_obligations_preserved": null,
+          "plausible_remainder": null,
+          "decision": null,
+          "reason": null
+        }
+      ]
+    }
+  ],
+  "confirmatory_eligible": false,
+  "instructions": [
+    "Custodian must independently verify material hashes and approved rubric before review.",
+    "Give each reviewer only their own reviews list and the same pinned source materials; do not share the other reviewer's answers.",
+    "All null values require the assigned human reviewer's own judgment. Reviewer slots are not identities or evidence of independence.",
+    "Do not fill defaults, infer admission, attach generated outcomes, or execute provider calls.",
+    "After independent completion, concatenate the two reviews lists and pass expected_candidate_ids to prepare_manipulation_admission; adjudication and human approval remain required."
+  ]
+}
