@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-30
+Last updated: 2026-10-31
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1436,3 +1436,22 @@ Sections 3–7 and limitations; appendices not comprehensively read; no replicat
 **Boundary.** The exporter reduces manual distribution errors, not annotation
 uncertainty. It cannot verify independent people, rights, external custody,
 source interpretation or rubric adequacy. No threshold or scientific label changes.
+
+
+## 2026-10-31 — Separate detection, false alarms and trace-link recommendations
+
+Search/read date: 2026-10-31. New source deduplicated by DOI/title. Publisher
+abstract/status checked; full method, evaluation and threats read in author
+postprint arXiv:2502.04916v8 (12 March 2026). No reproduction or byte-for-byte
+comparison with the paywalled published version.
+
+| Reference / status | Question, data, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Etezadi et al., [Classifier or prompt: A case study on legal requirements traceability](https://doi.org/10.1007/s10664-026-10827-1), EMSE 31:85, 2026; peer-reviewed journal; [author postprint](https://arxiv.org/html/2502.04916v8) read | Sentence-transformer classifier and GPT-4o RICE prompts recover requirement–provision links. HIPAA: 1,891 requirements; new GDPR: 310 requirements across four documents/26 provisions; five few-shot examples withheld per document; five seeds/two temperatures. | RICE reports about 84% link recall but about 29% precision on GDPR; classifier transfer is weak. One prompted model, limited domains, expert-authored labels, few-shot dependence and proxy review cost limit external validity. | Thesis: link recovery is neither executable conformance nor temporal H2 detection. Experiment: keep numerator, denominator and positive-class semantics explicit; no new baseline adopted. Product: high recall does not establish reliable automatic compliance or low false-alarm burden. Action: retain as bounded context and separate temporal true/false/unlabeled warning accounting. | 8/10: reviewed, public artifacts, repeated prompt settings and unseen-document evaluation; narrow domain/model and proxy cost limit transfer. |
+
+**Revisited source, no duplicate entry.** Jin and Chen (original row above;
+7/10 unchanged): reread publisher abstract, paired design, confusion-matrix
+definition, error trade-offs and threats, especially benchmark-test incompleteness.
+Their positive class is correct code; our diagnostic positive class is terminal
+defect. This explicit polarity mapping motivates the six temporal-accounting
+regressions and protocol clarification. No label, threshold, H1/H2 or corpus change.
