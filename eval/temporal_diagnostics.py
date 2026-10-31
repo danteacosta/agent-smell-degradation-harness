@@ -35,6 +35,9 @@ def analyze(rows):
             'planned_episodes': len(rows), 'complete_stage_episodes': 0,
             'missing_stage_episodes': 0, 'outcome_labeled_episodes': 0,
             'nondefective_labeled_episodes': 0, 'alerts': 0, 'false_alerts': 0,
+            'defective_labeled_episodes': 0, 'true_alerts': 0,
+            'missed_defects': 0, 'nondefective_without_alert': 0,
+            'recall': None, 'positive_class': 'terminal_defect=true',
             'cost_microusd': 0, 'known_cost_microusd': 0,
             'missing_cost_episodes': 0, 'false_alert_rate': None,
             'rate_scope': 'complete_stage_labeled_episodes',
@@ -73,6 +76,12 @@ def analyze(rows):
         episodes.append({'episode_id': identifier, 'intent_id': row['intent_id'],
                          'first_alert_stage': first['stage'] if first else None,
                          'lead_time_ms': terminal-first['available_ms'] if first else None,
+                         # Joined outcomes are diagnostic labels, never alert features.
+                         'terminal_defect': defect,
+                         'alert_outcome': (
+                             'no_observed_alert' if first is None else
+                             'unlabeled_alert' if defect is None else
+                             'true_alert' if defect else 'false_alert'),
                          'first_alert_prefix_complete': (
                              all(s in stages for s in STAGES[:STAGES.index(first['stage'])+1])
                              if first else None),
@@ -103,9 +112,15 @@ def analyze(rows):
             result['outcome_labeled_episodes'] += defect is not None
             result['nondefective_labeled_episodes'] += defect is False
             result['false_alerts'] += alert and defect is False
+            result['defective_labeled_episodes'] += defect is True
+            result['true_alerts'] += alert and defect is True
+            result['missed_defects'] += not alert and defect is True
+            result['nondefective_without_alert'] += not alert and defect is False
     for result in horizons.values():
         n = result['nondefective_labeled_episodes']
         result['false_alert_rate'] = result['false_alerts']/n if n else None
+        positives = result['defective_labeled_episodes']
+        result['recall'] = result['true_alerts']/positives if positives else None
         result['cost_microusd'] = (None if result['missing_cost_episodes'] or result['missing_stage_episodes']
                                    else result['known_cost_microusd'])
         for name in ('defective', 'nondefective'):
@@ -117,6 +132,7 @@ def analyze(rows):
                     group['observed_alerts']+group['unresolved_alert_episodes'])/n
     return {'schema_version': 'temporal-diagnostics/v2', 'confirmatory_eligible': False,
             'policy': 'any_predeclared_alert_in_available_prefix',
+            'output_plane': 'label_joined_diagnostics_not_features',
             'distinct_intents': len({r['intent_id'] for r in rows}),
             'horizons': horizons, 'episodes': episodes}
 
