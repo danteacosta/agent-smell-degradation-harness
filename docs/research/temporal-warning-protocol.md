@@ -497,3 +497,33 @@ Document unavailable information explicitly rather than infer it from filled
 forms. [Kunilovskaya et al., EMNLP 2026](https://aclanthology.org/2026.emnlp-main.396/)
 motivate task-level reporting; their reporting audit does not validate our labels
 or supply an agreement/admission threshold.
+
+
+## Temporal outcome accounting — 2026-10-31
+
+The offline `temporal-diagnostics/v2` report now explicitly declares
+`positive_class=terminal_defect=true`. At each cumulative horizon it reports
+`defective_labeled_episodes`, `true_alerts`, `missed_defects`,
+`nondefective_labeled_episodes`, `false_alerts` and
+`nondefective_without_alert`. Recall is true alerts divided by complete-stage,
+defective labeled episodes; false-alert rate uses complete-stage, nondefective
+labeled episodes. An empty denominator yields null, never zero. The existing
+`rate_scope` and missing-stage bounds remain mandatory context.
+
+Episode diagnostics retain the supplied terminal label and classify the first
+observed alert as true, false or unlabeled; no observed alert is reported
+separately and does not imply a complete negative prefix. Lead time remains an
+observed interval, with `first_alert_prefix_complete` retained. Do not pool
+false-alert lead times into true-warning antecedence.
+
+These outputs carry `output_plane=label_joined_diagnostics_not_features`.
+Labels are joined only after alert freezing; none of these joined fields may
+enter a T1–T3 predictor. The analyzer does not authenticate the supplied labels,
+fit H2, generate PR-AUC/calibration, or perform project-clustered inference.
+Aggregate rates are descriptive episode counts, not independent-project estimates.
+
+[Jin and Chen](https://doi.org/10.1007/s10515-026-00638-5) motivate two-sided
+error reporting; their positive class is correct code, the opposite of the
+defect-positive convention here. Their percentages and error names are not
+transferred. Six offline regressions protect polarity, both denominators,
+missing/unlabeled cases, observed lead-time classes and input immutability.
