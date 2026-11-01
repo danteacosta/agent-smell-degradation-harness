@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-31
+Last updated: 2026-11-01
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1354,3 +1354,19 @@ Human decisions flagged: (1) whether the pre-registration should state that traj
 that the B3 gain is reported conditional on it (already consistent with the B3 = B0 + provenance invariant; this entry only
 supplies descriptive support); (2) none for TrajMark: it stays context, and any future trace-sealing feature needs an explicit
 exclusion rule for inserted actions.
+
+## 2026-11-01 entry: LLM support in human requirements inspection (Broccia et al.) and a deduplication check
+
+Search and reading date: 2026-11-01. Searches covered requirement omission/underspecification, requirement smells with
+downstream impact, and trajectory early warning. Every other hit was already in this matrix (2609.29208, 2607.09510,
+2605.26563, 2607.01953, 2603.26233) or is the ICSE-NIER paper of Vogelsang et al. (arXiv 2501.04810), which is scored
+above under its DOI; it is not re-scored. One new source was read: the arXiv HTML rendering of 2608.21298v1 in full text
+(research questions, design, analysis, effect reporting, threats). 2608.16411 (risk-free agent deployment) surfaced by
+search and was not read; it is pending and unscored.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Broccia, Frattini, Arora, ter Beek, Fantechi, Vogelsang and Ferrari, [*Human-AI Collaboration in Requirements Engineering: Evidence of the Negative Effect of LLMs on Requirements Inspection*](https://arxiv.org/abs/2608.21298), arXiv preprint v1, submitted 2026-08-21; no peer-reviewed venue listed | Does ChatGPT support change time, smell-detection accuracy and nocuous-smell classification in requirements inspection? Crossover with 34 BSc students, two game requirement documents (Arkanoid 40 requirements/21 smells; Snake 39/19), nine smell types, at most one smell per requirement; Bayesian regression per outcome | Reports lower smell-detection F1 with LLM support (about 8 points) and no clear effect on duration or classification. The text itself says the credible intervals overlap, and the learning-effect figures differ between Section 4.2 and the RQ summary, so the headline "negative effect" is stronger than the text supports. Ground truth by author consensus without agreement statistics; novice students; simplified documents; ChatGPT model not fixed | Context only. It concerns human inspectors, not agent trajectories or loss of testable conditions. Descriptive support for not assuming that an LLM-assisted smell label is more reliable than an unassisted one: any LLM-assisted pre-annotation of smells in the label plane should be reported as such and kept out of blind adjudication. No change to H1/H2, B0/B3 or frozen materials. Product: no direct evidence for or against LLM triage assistants for professionals | 4/10 |
+
+Human decision flagged: whether the annotation protocol should state that LLM-generated smell suggestions are not shown to
+blind annotators (a protocol rule, not adopted by this entry).
