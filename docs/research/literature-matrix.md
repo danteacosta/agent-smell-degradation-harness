@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-31
+Last updated: 2026-11-01
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1455,3 +1455,22 @@ definition, error trade-offs and threats, especially benchmark-test incompletene
 Their positive class is correct code; our diagnostic positive class is terminal
 defect. This explicit polarity mapping motivates the six temporal-accounting
 regressions and protocol clarification. No label, threshold, H1/H2 or corpus change.
+
+
+## 2026-11-01 — Process diagnosis is not deployable early warning
+
+Search/read: 2026-11-01; deduplicated by title/arXiv ID. COLM acceptance verified
+against the official accepted-paper list. Read author PDF v2 abstract, semantic
+MDP method, aggregate metrics/results, limitations (Appendix A) and evaluation
+protocol (C.1–C.4). Other appendices and all bifurcation algorithms were not
+comprehensively read. No reproduction; use the PDF rather than inconsistent
+earlier project-page summaries for numerical claims.
+
+| Reference / status | Question, sample, method | Finding / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Chung, Byun, Vineet and Kim, [Where Did It Go Wrong? (WebStep)](https://arxiv.org/pdf/2606.15673), COLM 2026; peer-reviewed conference, author PDF v2 read | Six agents, 1,800 task instances, ten controlled websites; GUI actions mapped into deterministic semantic MDPs; exploration/execution, coverage and post-hoc trajectory diagnosis. | Similar terminal scores hide different process failures. Synthetic worlds/templates, restricted action space, privileged task-oracle states and differing agent inputs limit transfer. Safe-pass scoring can count a missing final commit as success. | Thesis: adjacent process-evaluation evidence, not controlled requirement omission or prospective H2. Experiment: keep oracle-derived diagnostics outside features; retain absent planned episodes separately from partial traces. Product: diagnosis is not proof of obligation preservation. Action: record scope/safe-pass threats and implement execution-plan reconciliation justified by an explicit missing-row counterexample. | 7/10: reviewed, explicit environment/metrics and limitations; constructed worlds, oracle dependence and code/data still marked coming soon on the project page constrain replication/transfer. |
+
+**Implementation boundary.** Ordered planned IDs are a caller-supplied
+commitment, not independent custody. Missing whole episodes stay unlabelled;
+existing supplied-label bounds and complete-case rates do not become population
+estimates. No H1/H2 definition, split, threshold or scientific label changes.
