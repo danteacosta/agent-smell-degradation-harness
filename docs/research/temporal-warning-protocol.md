@@ -78,8 +78,8 @@ are null. Unknown terminal labels are counted separately and never imputed.
 For nondefective labels this is a missing-stage false-alert range; for defective
 labels it is a detection range. These are deterministic completion bounds, NOT
 confidence intervals, conformal prediction intervals, population estimates or
-proof that machine labels are correct. They cover only supplied rows: missing
-entire episodes must still be reconciled against the frozen execution manifest.
+proof that machine labels are correct. They cover only supplied rows; execution-plan reconciliation below reports
+entirely missing episodes separately without assigning labels.
 Changing the alert policy requires a new derivation. No project-level inference
 is performed here, and no new model training or H2 feature is introduced.
 
@@ -527,3 +527,40 @@ error reporting; their positive class is correct code, the opposite of the
 defect-positive convention here. Their percentages and error names are not
 transferred. Six offline regressions protect polarity, both denominators,
 missing/unlabeled cases, observed lead-time classes and input immutability.
+
+
+## Execution-plan reconciliation — 2026-11-01
+
+An episode that produces no diagnostic row must not disappear from execution
+accounting. Supply the ordered JSON array of episode IDs derived from the
+separately frozen execution plan:
+
+```sh
+python -m eval.temporal_diagnostics --episodes PRIVATE.jsonl \
+  --expected-episode-ids PRIVATE-planned-ids.json --output PRIVATE-report.json
+```
+
+The analyzer rejects duplicate/noncanonical planned IDs and observed IDs outside
+the plan. At each horizon, `planned_episodes` counts the supplied plan,
+`supplied_episodes` counts received rows, `missing_stage_episodes` counts partial
+rows and `missing_entire_episodes` counts planned IDs with no row at all.
+Complete-stage + partial-stage + entirely absent counts equal the planned count.
+`cohort_reconciliation` retains missing IDs in plan order and an ordered-list
+SHA-256 commitment. It does not authenticate or externally freeze that plan;
+the custodian must verify it against the approved run/replication ledger.
+
+No synthetic row, label, alert, timestamp or cost is generated for an absent
+episode. Total cost stays null when any planned episode is absent, while measured
+subtotals remain visible. Recall, false-alert rate and missing-stage bounds keep
+their existing supplied-label/complete-stage scopes; absence is not a negative
+label. Without a plan, coverage remains explicitly `supplied_rows_only`,
+and missing IDs/counts are null rather than an asserted zero.
+
+[WebStep](https://arxiv.org/pdf/2606.15673) provides adjacent process-evaluation
+context, not evidence for H1/H2. Its task-oracle semantic states and post-hoc
+bifurcations must not enter deployable T1–T3 features. Its safe-pass convention
+can count an unissued final commit as terminal success (Appendix C.3); do not
+transfer that convention to our target-obligation labels. The reconciliation
+change follows the explicit missing-row counterexample, not an effect estimate
+or threshold imported from WebStep. Seven new offline tests cover the plan and
+CLI boundary; no provider execution or confirmatory eligibility is authorized.
