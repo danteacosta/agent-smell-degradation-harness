@@ -10,7 +10,8 @@ from pathlib import Path
 from eval.manipulation_admission import REQUIRED, candidate_inventory_sha256
 
 
-def prepare_assignment(template: dict, candidates: dict, slot: str) -> dict:
+def prepare_assignment(template: dict, candidates: dict, slot: str, *,
+                       include_materials: bool = False) -> dict:
     """Check the complete template, then project only the requested blank slot.
 
     This prepares routing, not a corpus freeze, a rubric approval or human review.
@@ -47,7 +48,7 @@ def prepare_assignment(template: dict, candidates: dict, slot: str) -> dict:
                 raise ValueError("review candidate order mismatch")
             if any(row[key] is not None for key in REQUIRED if key != "candidate_id"):
                 raise ValueError("only blank review forms may be exported")
-    return {
+    packet = {
         "schema_version": "manipulation-review-assignment/v1",
         "status": "unfilled_not_admission_evidence",
         "slot": slot,
@@ -63,6 +64,38 @@ def prepare_assignment(template: dict, candidates: dict, slot: str) -> dict:
             "Keep completed responses private; adjudication and human approval remain required.",
         ],
     }
+    if include_materials:
+        # Project only review inputs; never copy target answers, exposure or outcomes.
+        source_fields = ("url", "revision", "license", "license_url", "path", "sha256",
+                         "license_path", "license_sha256", "notice_path", "notice_sha256",
+                         "locator", "start_char", "end_char")
+        materials = []
+        for record in candidates["records"]:
+            source = {key: record["source"][key] for key in source_fields
+                      if key in record["source"]}
+            for key, value in source.items():
+                expected_type = int if key in ("start_char", "end_char") else str
+                if type(value) is not expected_type:
+                    raise ValueError("source reference fields must contain scalar locators")
+            reference = record["variants"]["clean"]
+            remainder = record["variants"]["defective"]
+            if (not isinstance(reference, str) or not isinstance(remainder, str)
+                    or not isinstance(record["project_id"], str)):
+                raise ValueError("review material text and project identity required")
+            materials.append({
+                "candidate_id": record["intent_id"],
+                "project_id": record["project_id"],
+                "source_reference": source,
+                "reference_excerpt": reference,
+                "proposed_remainder": remainder,
+            })
+        packet["materials"] = materials
+        packet["materials_are_proposals_not_labels"] = True
+        packet["source_files_reverified"] = False
+        packet["instructions"].append(
+            "Attached excerpts come from the bound candidate snapshot. Independently verify "
+            "source files, surrounding context, notices and rights; no source approval is implied.")
+    return packet
 
 
 def main() -> int:
@@ -71,11 +104,14 @@ def main() -> int:
     parser.add_argument("--candidates", type=Path, required=True)
     parser.add_argument("--slot", choices=("reviewer_A", "reviewer_B"), required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--include-materials", action="store_true",
+                        help="attach source locators, reference excerpts and proposed remainders only")
     args = parser.parse_args()
     try:
         packet = prepare_assignment(
             json.loads(args.template.read_text(encoding="utf-8")),
-            json.loads(args.candidates.read_text(encoding="utf-8")), args.slot)
+            json.loads(args.candidates.read_text(encoding="utf-8")), args.slot,
+            include_materials=args.include_materials)
         # Exclusive creation keeps an earlier assignment or completed response intact.
         with args.output.open("x", encoding="utf-8") as stream:
             stream.write(json.dumps(packet, ensure_ascii=False, indent=2) + "\n")
