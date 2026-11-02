@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-11-01
+Last updated: 2026-11-02
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1370,3 +1370,18 @@ search and was not read; it is pending and unscored.
 
 Human decision flagged: whether the annotation protocol should state that LLM-generated smell suggestions are not shown to
 blind annotators (a protocol rule, not adopted by this entry).
+
+## 2026-11-02 entry: Gherkin from regulations and goal-drift probes (adjacent context only)
+
+Search and reading date: 2026-11-02. Searches covered requirement smells with acceptance-criteria generation, and
+specification-loss / provenance / early-warning for agents. Every other hit was already in this matrix (2607.01980,
+2606.25550, 2608.21298, 2607.01236, 2605.27690, 2501.04810). Two sources were read at abstract/summary level through a
+summarising fetch tool (arXiv abstract page; ICML virtual page); neither full text was inspected, so figures must be
+re-checked before being quoted. No code or protocol change follows from either; both are recorded to avoid rediscovery.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Hassani, Sabetzadeh and Amyot, [*From Law to Gherkin*](https://arxiv.org/abs/2508.20744), arXiv preprint v2 (2026-03-11), reported as accepted in *Information and Software Technology*; acceptance not verified against the venue | Can LLMs derive Gherkin scenarios from food-safety regulations? 10 participants rated 60 specifications (Claude, Llama), 120 assessments, five criteria | Ratings concentrated in the top two categories (e.g., clarity 100%, completeness 94.2%); no reliable difference across raters or models; qualitative notes still report omissions, hallucinations and mixed intents. One domain; rating scale not defined in the abstract; high perceived quality coexists with reported omissions | Thesis: supports treating perceived quality of generated criteria as insufficient evidence of retained conditions, consistent with measuring loss per constraint_id rather than by rater impression. Experiment: none. Product: reviewers over-trust fluent criteria, motivating a diagnosis of what was lost. Action: context only; do not cite as evidence of LLM acceptance-criteria quality | 5 |
+| Chen, [*Goal-Drift Probes: Anticipating Multi-Turn LLM Agent Failure From Mid-Network Activations*](https://icml.cc/virtual/2026/67962), ICML 2026 workshop poster (Agents in the Wild); workshop-level review | Can goal drift be detected from residual-stream activations before the failing action? ALFWorld, Qwen2.5-7B-Instruct ReAct (replication Llama-3-8B), about 970 pooled valid_seen trajectories; linear probes, step-index residualization, held-out task types and collections | Reports AUC 0.99 three steps ahead, at least 0.939 after linear step-index residualization, 0.88-0.91 on held-out collections. Single benchmark, 7-8B open models, offline probes, residualization only linear, no limitations section on the page | Thesis: model-internal early warning; H2 uses only T1-T3 external provenance, so this is a different observable and not a baseline. Experiment: reinforces keeping step/length controls in B0 and held-out collections as the generalisation test. Product: needs white-box access, unlike trace-level monitoring. Action: context; no baseline added (activations unavailable for provider-backed runs) | 4 |
+
+Human decision flagged: none. Neither source changes a hypothesis, metric or protocol rule.
