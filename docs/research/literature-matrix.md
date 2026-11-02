@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-11-01
+Last updated: 2026-11-02
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1474,3 +1474,19 @@ earlier project-page summaries for numerical claims.
 commitment, not independent custody. Missing whole episodes stay unlabelled;
 existing supplied-label bounds and complete-case rates do not become population
 estimates. No H1/H2 definition, split, threshold or scientific label changes.
+
+
+## 2026-11-02 — Review source evidence without treating reference code as truth
+
+Search/read: 2026-11-02; deduplicated by title/arXiv ID. COLM acceptance checked
+on the official list. Read author PDF v2 abstract, method, experimental setup,
+results and discussion/limitations (Sections 3–6); detailed appendices not
+comprehensively read. No replication.
+
+| Reference / status | Question, data, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Tu et al., [Who Guards the Benchmarks? (BenchGuard)](https://arxiv.org/pdf/2604.24955), COLM 2026; peer-reviewed conference; author PDF v2 read | Cross-artifact LLM/static auditing of instructions, references, evaluators and environments; ScienceAgentBench 102 tasks/12 confirmed discoveries, BIXBench Verified-50/24 expert-revision issues, five auditors. | Finds benchmark inconsistencies; discovery-set coverage differs from independent recall, and finding alignment is not precision. Uncalibrated confidence, incomplete expert issue sets, limited scientific domains and single-run backends constrain transfer. | Thesis: benchmark-validity context, no H1/H2 evidence. Experiment: oracle obligations need authoritative source support; keep outcome-informed audits outside blinded admission. Product: automated benchmark auditing is existing work, not exclusive novelty. Action: attach allowlisted source excerpts/remainders to isolated review forms and state the source-support rule in protocol/paper. | 8/10: reviewed, public implementation, author confirmation and independent revision set; incomplete ground truth and model-dependent auditing limit generalization. |
+
+**Boundary.** Material projection is deterministic assembly, not semantic
+validation, source-file re-verification, rights approval or independent human
+review. No model is called and no empirical result or admission is produced.
