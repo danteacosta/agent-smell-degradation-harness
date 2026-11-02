@@ -564,3 +564,29 @@ transfer that convention to our target-obligation labels. The reconciliation
 change follows the explicit missing-row counterexample, not an effect estimate
 or threshold imported from WebStep. Seven new offline tests cover the plan and
 CLI boundary; no provider execution or confirmatory eligibility is authorized.
+
+
+## Source materials in isolated assignments — 2026-11-02
+
+Use `--include-materials` with the existing assignment exporter to attach a
+strict projection of the bound candidate snapshot: candidate/project IDs,
+source/license/notice locators and hashes, the reference excerpt and proposed
+remainder. Default exports remain form-only. Each reviewer receives the same
+materials with only their own blank forms.
+
+The projection excludes proposed target answers, candidate smell classifications,
+exposure metadata, review status, generated outputs and peer judgments. Nested
+payloads in source locator fields are rejected. The full candidate-content
+commitment still binds the source snapshot, and returned objects do not alias
+the input. The packet explicitly declares proposals, `source_files_reverified=false`
+and `confirmatory_eligible=false`; it does not re-open source/license bytes or
+approve rights. Before distribution, the custodian must independently verify
+the pinned files, surrounding context, notices, rights and rubric.
+
+[BenchGuard](https://arxiv.org/pdf/2604.24955) motivates inspecting coupled
+artifacts rather than treating a reference implementation as unquestioned truth.
+Every oracle obligation must be supported by authoritative project material;
+reference-code behavior alone is insufficient. Its execution-informed audit
+may inspect outcomes, so that mode must remain separate from blinded prospective
+manipulation admission. We implement no automated semantic reviewer and import
+no confidence threshold, scientific label or model-based approval.
