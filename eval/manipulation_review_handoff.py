@@ -8,15 +8,43 @@ import json
 from pathlib import Path
 
 from eval.manipulation_admission import REQUIRED, candidate_inventory_sha256
+from eval.temporal_cohort_candidate import validate_candidate
+
+
+def _verify_source_files(candidates: dict, root: Path) -> None:
+    """Verify pinned local bytes and proposed deletion, never semantic admission."""
+    root = root.resolve()
+    for record in candidates["records"]:
+        source = record["source"]
+        start, end = source["start_char"], source["end_char"]
+        if type(start) is not int or type(end) is not int or not 0 <= start < end:
+            raise ValueError("invalid source excerpt bounds")
+        path = (root / source["path"]).resolve()
+        if not path.is_relative_to(root):
+            raise ValueError("source path escapes source root")
+        if end > len(path.read_text(encoding="utf-8")):
+            raise ValueError("invalid source excerpt bounds")
+        has_notice = "notice_path" in source
+        if has_notice != ("notice_sha256" in source):
+            raise ValueError("notice path and hash must be supplied together")
+        if has_notice:
+            notice = (root / source["notice_path"]).resolve()
+            if (not notice.is_relative_to(root)
+                    or hashlib.sha256(notice.read_bytes()).hexdigest() != source["notice_sha256"]):
+                raise ValueError("notice path or hash mismatch")
+    validate_candidate(candidates, root)
 
 
 def prepare_assignment(template: dict, candidates: dict, slot: str, *,
-                       include_materials: bool = False) -> dict:
+                       include_materials: bool = False,
+                       source_root: Path | None = None) -> dict:
     """Check the complete template, then project only the requested blank slot.
 
     This prepares routing, not a corpus freeze, a rubric approval or human review.
     Caller-supplied material hashes are not independent custody attestations.
     """
+    if source_root is not None and not include_materials:
+        raise ValueError("source root requires include_materials")
     if template.get("schema_version") != "manipulation-review-authoring-template/v1":
         raise ValueError("unsupported authoring template schema")
     if template.get("status") != "unfilled_not_admission_evidence":
@@ -95,6 +123,13 @@ def prepare_assignment(template: dict, candidates: dict, slot: str, *,
         packet["instructions"].append(
             "Attached excerpts come from the bound candidate snapshot. Independently verify "
             "source files, surrounding context, notices and rights; no source approval is implied.")
+        if source_root is not None:
+            _verify_source_files(candidates, Path(source_root))
+            packet["source_files_reverified"] = True
+            packet["source_verification_scope"] = (
+                "Local source/license/declared-notice hashes, excerpt bounds and text, "
+                "single-deletion reconstruction and constraint identity only; "
+                "not upstream authenticity, rights, novelty or semantic approval.")
     return packet
 
 
@@ -106,12 +141,14 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--include-materials", action="store_true",
                         help="attach source locators, reference excerpts and proposed remainders only")
+    parser.add_argument("--source-root", type=Path,
+                        help="verify pinned local files before export; requires --include-materials")
     args = parser.parse_args()
     try:
         packet = prepare_assignment(
             json.loads(args.template.read_text(encoding="utf-8")),
             json.loads(args.candidates.read_text(encoding="utf-8")), args.slot,
-            include_materials=args.include_materials)
+            include_materials=args.include_materials, source_root=args.source_root)
         # Exclusive creation keeps an earlier assignment or completed response intact.
         with args.output.open("x", encoding="utf-8") as stream:
             stream.write(json.dumps(packet, ensure_ascii=False, indent=2) + "\n")
@@ -125,3 +162,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
