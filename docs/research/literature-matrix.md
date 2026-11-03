@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-11-02
+Last updated: 2026-11-03
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1385,3 +1385,22 @@ re-checked before being quoted. No code or protocol change follows from either; 
 | Chen, [*Goal-Drift Probes: Anticipating Multi-Turn LLM Agent Failure From Mid-Network Activations*](https://icml.cc/virtual/2026/67962), ICML 2026 workshop poster (Agents in the Wild); workshop-level review | Can goal drift be detected from residual-stream activations before the failing action? ALFWorld, Qwen2.5-7B-Instruct ReAct (replication Llama-3-8B), about 970 pooled valid_seen trajectories; linear probes, step-index residualization, held-out task types and collections | Reports AUC 0.99 three steps ahead, at least 0.939 after linear step-index residualization, 0.88-0.91 on held-out collections. Single benchmark, 7-8B open models, offline probes, residualization only linear, no limitations section on the page | Thesis: model-internal early warning; H2 uses only T1-T3 external provenance, so this is a different observable and not a baseline. Experiment: reinforces keeping step/length controls in B0 and held-out collections as the generalisation test. Product: needs white-box access, unlike trace-level monitoring. Action: context; no baseline added (activations unavailable for provider-backed runs) | 4 |
 
 Human decision flagged: none. Neither source changes a hypothesis, metric or protocol rule.
+
+## 2026-11-03 entry: process-centric trajectory graphs with online intervention (Graphectory) and contract supervision (ContrAgent)
+
+Search and reading date: 2026-11-03. Searches covered requirement omission in LLM code generation and trajectory early
+warning/provenance for software-engineering agents. Already in this matrix and not re-scored: 2609.29208 (requirement
+smells in code generation), 2507.20439 and 2610.12375. Two sources were read. Graphectory: the arXiv HTML rendering of
+v2 up to about character 100,000 of 126,000 (research questions, data, method, main results, stated limitations); the
+tail of the monitor evaluation (Section 3.5) was not read, so the intervention figures below come from the visible text
+and must be re-checked before being quoted. ContrAgent: abstract page only. 2605.17169 (position paper on explicit
+provenance) surfaced and was not read; it is pending and unscored.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Liu, Chen, Krishna, Sinha, Ganhotra and Jabbarvand, [*Process-Centric Analysis of Agentic Software Systems*](https://doi.org/10.1145/3798271) (arXiv 2512.02393), *PACMPL* 10 (OOPSLA1), 2026, peer-reviewed | How do SWE agents behave as processes, and can online process monitoring reduce trajectory problems? SWE-agent and OpenHands with four LLMs (eight agent-model pairs), 500 SWE-bench Verified issues, about 4,000 trajectories, Pass@1. Graphectory: cyclic graph of agent actions with temporal and structural edges, phases Localization/Patching/Validation, six graph metrics; an online monitor flags plan violations and loops and intervenes | Unresolved runs show larger graphs and more back edges; metrics rise with human-rated difficulty; resolved runs usually end in Validation. The visible text reports resolution gains of 6.9-23.5% on problematic instances with monitor intervention and under 10 ms overhead. Limits stated: two agent frameworks, phase labels need human judgment (GPT-5 as third annotator), single Pass@1 runs, early terminations for one model. It evaluates repair of process pathologies, not prediction of requirement loss, and graph size is confounded with task difficulty | Context for H2 only: process structure is observable and differs between failed and resolved runs, which supports reporting trajectory length/size features inside B0 (consistent with the TraceProbe and Majgaonkar entries). It does not show that T1-T3 provenance detects omitted conditions. Design implication, not adopted: an intervening monitor changes the trajectory it measures, so confirmatory episodes should be recorded without monitor intervention. Product: closest peer for "monitor traces"; the differentiator remains explaining which requirement obligation was lost, not that the run looped. Action: record a protocol note (below) | 7 |
+| Xiao and Nuzzo, [*Symbolic Temporal Supervision of LLM Agents Using Contracts*](https://arxiv.org/abs/2609.18128) (ContrAgent), arXiv preprint v1, 2026-09-16; no peer-reviewed venue listed | Can assume-guarantee contracts in LTLf, compiled to DFAs over tool-call traces, gate agent actions online and audit traces offline? Four benchmarks (not named in the abstract) | Abstract reports verdicts matching LLM-judge and rule-based guardrail baselines with deterministic outputs and much lower per-call latency; no numbers, limitations or benchmark names were read | Adjacent context only. Contracts are specified over tool-call predicates, not over natural-language requirement obligations, so they do not address the omitted-condition problem. Useful vocabulary for the ARP gate/contract layer and a possible deterministic baseline family for B0; no change adopted. Action: read the full text before any citation beyond "related monitoring work" | 4 |
+
+Human decision flagged: whether the confirmatory protocol should state that T1-T4 episodes are recorded without any
+online intervention or rollback (a protocol rule, not adopted by this entry), and whether Graphectory-style graph metrics
+belong in the B0 feature set (a design choice that also affects the B3-minus-B0 contrast).
