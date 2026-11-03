@@ -578,7 +578,7 @@ The projection excludes proposed target answers, candidate smell classifications
 exposure metadata, review status, generated outputs and peer judgments. Nested
 payloads in source locator fields are rejected. The full candidate-content
 commitment still binds the source snapshot, and returned objects do not alias
-the input. The packet explicitly declares proposals, `source_files_reverified=false`
+the input. Without `--source-root`, the packet declares proposals, `source_files_reverified=false`
 and `confirmatory_eligible=false`; it does not re-open source/license bytes or
 approve rights. Before distribution, the custodian must independently verify
 the pinned files, surrounding context, notices, rights and rubric.
@@ -590,3 +590,43 @@ reference-code behavior alone is insufficient. Its execution-informed audit
 may inspect outcomes, so that mode must remain separate from blinded prospective
 manipulation admission. We implement no automated semantic reviewer and import
 no confidence threshold, scientific label or model-based approval.
+
+## Offline source-file verification before review — 2026-11-03
+
+The custodian can now re-open the pinned local files before exporting either
+assignment:
+
+```sh
+python -m eval.manipulation_review_handoff \
+  --template data/prepilot/temporal-warning-manipulation-review-template.json \
+  --candidates data/prepilot/temporal-warning-source-drafts.json \
+  --slot reviewer_A --include-materials --source-root . \
+  --output PRIVATE-assignment-A.json
+```
+
+`--source-root` requires material export. Verification checks source and license
+SHA-256 values, any declared NOTICE path/hash pair, source excerpt bounds and
+text, the declared single deletion and target constraint identity. Resolved paths,
+including symlinks, must stay inside the supplied root. Missing files, drift or
+invalid metadata fail before output creation. Existing responses remain protected
+by exclusive creation. Target answers are checked internally and remain excluded
+from reviewer materials. The default form-only/unverified modes are unchanged.
+
+A passing packet sets `source_files_reverified=true` with a bounded scope;
+`confirmatory_eligible` stays false and every human judgment remains null.
+This verifies the supplied local snapshot, not its upstream authenticity,
+completeness of notices, reuse rights, pretraining novelty or semantic validity.
+An attacker changing both bytes and expected hashes is outside this check;
+independent custody and comparison with the authoritative revision remain required.
+
+Validation on 2026-11-03: 18 offline unittest cases passed, including eight new
+verification cases. Both isolated assignments verified all 12 existing proposed
+pairs across six projects against freshly retrieved pinned source/license/NOTICE
+files. These are preparation checks, not reviewed corpus entries or H1/H2 evidence.
+
+[Cleland-Huang and Vierhauser (Requirements Engineering, 2026)](https://doi.org/10.1007/s00766-026-00479-4)
+provide dataset-lineage context, not H1/H2 evidence. Hash matching cannot
+establish non-exposure. Existing project holdouts and independent exposure
+controls remain required; no classification baseline or perturbation protocol
+is adopted.
+
