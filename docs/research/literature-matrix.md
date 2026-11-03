@@ -1490,3 +1490,21 @@ comprehensively read. No replication.
 **Boundary.** Material projection is deterministic assembly, not semantic
 validation, source-file re-verification, rights approval or independent human
 review. No model is called and no empirical result or admission is produced.
+
+## 2026-11-03 — Dataset lineage is not evidence of non-exposure
+
+Search/read: 2026-11-03; deduplicated by DOI/title. Read publisher abstract,
+methods, dataset, results, lineage discussion and threats (Sections 3–8).
+No replication; the linked package was not independently audited.
+
+| Reference / status | Question, data, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Cleland-Huang and Vierhauser, [Automated classification of non-functional requirements twenty years later: why this isn’t a solved problem](https://doi.org/10.1007/s00766-026-00479-4), Requirements Engineering, 2026-10-25; peer-reviewed | 55-paper retrospective; PROMISE replication with LOPO/training-only thresholds; exploratory 614-conversation DevGPT analysis. | Agentic classifiers improve under a shared protocol. Contamination, reconstructed implementations and unvalidated conversational labels limit transfer. | Thesis: adjacent, not H1/H2 evidence. Experiment: lineage and exposure differ. Product: research agenda, not demand validation. Action: pre-export source checks with human gates retained. | 8/10: reviewed, explicit methods/limits, linked artifacts; narrow benchmark and reconstruction; package not audited here. |
+
+**Implementation boundary.** `--source-root` verifies the existing proposed
+source snapshot before isolated review export, including declared NOTICE hashes.
+The operational counterexample is an exporter that can otherwise attach stale
+local files without detecting drift. The paper supplies context, not an effect
+estimate or a guarantee that hashing removes contamination. No scientific label,
+corpus freeze, threshold or human approval changes.
+
