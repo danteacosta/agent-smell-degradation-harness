@@ -1404,3 +1404,24 @@ provenance) surfaced and was not read; it is pending and unscored.
 Human decision flagged: whether the confirmatory protocol should state that T1-T4 episodes are recorded without any
 online intervention or rollback (a protocol rule, not adopted by this entry), and whether Graphectory-style graph metrics
 belong in the B0 feature set (a design choice that also affects the B3-minus-B0 contrast).
+
+## 2026-11-04 entry: explicit provenance position paper (closes pending 2605.17169) and trajectory fingerprints (ProcGrep)
+
+Search and reading date: 2026-11-04. Searches covered requirement omission in LLM code generation and trajectory early
+warning/provenance for software-engineering agents. Already in this matrix and not re-scored: 2607.18886 (TraceDev),
+2607.00711, 2604.21505, 2507.20439, 2604.11641 (CodeTracer) and 2605.27690. Both sources below were read at abstract-page
+level only (no method, data or limitation sections); every figure comes from the arXiv abstract and must be re-checked in
+the full text before being quoted. AgentGuard (Microsoft Research blog) surfaced as vendor material and is not scored.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Hu, Huang, He, Sun, Dong and Huang, [*Responsible Agentic AI Requires Explicit Provenance*](https://arxiv.org/abs/2605.17169), arXiv preprint v1, 2026-05-16, marked under review; no venue | Why must agentic systems carry explicit provenance, what must it encode, and how can it be computed across lifecycle layers? Position paper: causal attribution function, "responsibility tensor", four-layer lifecycle architecture, one worked incident | Abstract mentions "preliminary experiments" that provenance can be estimated and intervened on online; no setup, scale or results visible. Evidence is conceptual plus one illustrative incident. Provenance here serves responsibility assignment, not detection of lost requirement conditions | Thesis: vocabulary support for provenance as a prerequisite, not evidence for H2 (which tests whether T1-T3 provenance carries predictive signal beyond B0). Experiment: none. Product: positions "responsibility" framing of audit trails; the lost-obligation explanation remains the differentiator. Action: context only; do not cite as support for detection | 3 |
+| Oderinwale, [*Agent trajectories as programs: fingerprinting and programming coding-agent behavior*](https://arxiv.org/abs/2606.16988), arXiv preprint v2, 2026-11-02 (v1 2026-06-15), cs.SE; no peer-reviewed venue listed | Can coding-agent behaviour be compared procedurally across models? Ten agents on SWE-bench trajectories; induced procedural vocabulary, probe over procedural signatures, Jensen-Shannon divergence; releases ProcGrep (open source) | Abstract reports 85.7% correct attribution of unseen trajectories to the producing agent, and lower divergence between a distilled student and its teacher (0.25, about half other pairs). Single author, abstract-only reading, no limitations visible | Experiment: procedural features identify the producing model, so a pooled B0 or B3 classifier can learn provider identity instead of requirement loss. Supports (as a descriptive caution, not proof) reporting B3 minus B0 with provider as a grouping or stratifying factor and checking leave-one-provider-out where two providers exist. Product: ProcGrep is an open-source trace-audit alternative to review. Action: threat-to-validity note below; no metric changed | 4 |
+
+Threat to validity recorded (not a protocol change): with two providers, procedural trajectory features may encode which
+model produced the run. A pooled B3-versus-B0 contrast could then reflect provider identity if provider and defect
+status are unbalanced across projects. The existing project-level split already prevents project leakage; provider
+balance within the clean/defective pairs and provider-stratified reporting are the controls to confirm.
+
+Human decision flagged: whether the pre-registration should state provider-stratified (or leave-one-provider-out)
+reporting of the B3 gain, and whether to read the full text of 2606.16988 before citing it.
