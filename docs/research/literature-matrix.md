@@ -1508,3 +1508,23 @@ local files without detecting drift. The paper supplies context, not an effect
 estimate or a guarantee that hashing removes contamination. No scientific label,
 corpus freeze, threshold or human approval changes.
 
+
+## 2026-11-04 — Agreement diagnostics do not establish label validity
+
+Search/read: 2026-11-04; deduplicated by DOI/title. Read publisher abstract,
+scope, collaborative development method (Section 3), metrics and human
+validation guidance (5.5/5.7), limitations/mitigations and conclusion.
+No empirical replication or evaluation of guideline effectiveness was conducted.
+
+| Reference / status | Question, data, method | Finding / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Baltes et al., [Guidelines for empirical studies in software engineering involving large language models](https://doi.org/10.1007/s10664-026-10922-3), EMSE 32:64 (2027), online 2026-11-03; peer-reviewed journal | 22 researchers collaboratively developed seven study types/eight guidelines, with internal/external review and illustrative examples. | Reporting guidance, not measured effectiveness; examples are not a systematic review. Agreement cannot establish validity. | Thesis: methodological context, not H1/H2 evidence. Experiment: retain independent judgments and expose disagreement; thresholds/open-model choice need human decisions. Product: supports auditability, not demand. Action: offline pre-adjudication report. | 8/10: reviewed, transparent process/checklist; expert guidance without causal validation of effectiveness. |
+
+**Decision boundary.** The optional reporter provides raw per-field agreement
+and descriptive nominal decision kappa for one fixed reviewer pair, retaining
+marginals and undefined cases. This is an implementation aid, not a decision
+to adopt kappa as the primary reliability criterion. No cited alpha threshold,
+single-rater shortcut, LLM replacement or open-provider configuration is adopted.
+Human approval of rubric, staffing, metric/adequacy rules and rights remains
+pending. A proposed open-model baseline or documented exclusion remains a
+design question; this source does not silently override the current protocol.
