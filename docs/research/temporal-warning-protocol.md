@@ -630,3 +630,55 @@ establish non-exposure. Existing project holdouts and independent exposure
 controls remain required; no classification baseline or perturbation protocol
 is adopted.
 
+## Pre-adjudication agreement diagnostics — 2026-11-04
+
+Before adjudication, retain the original independent responses. The optional
+offline reporter consumes those responses and the separately approved review
+inventory; it never fills missing reviews or supplies an admission decision:
+
+```sh
+python -m eval.manipulation_review_agreement \
+  --reviews PRIVATE-independent-reviews.json \
+  --expected-candidate-ids PRIVATE-approved-review-ids.json \
+  --output PRIVATE-pre-adjudication-agreement.json
+```
+
+The existing admission validator rejects incomplete coverage, duplicate/aliased
+candidate-reviewer identities, malformed judgments and extra/outcome fields.
+The reporter additionally requires exactly the same two recorded reviewer
+identities across every candidate. It does not silently select complete cases
+from a changing reviewer pool. It binds the ordered inventory digest, not
+independent custody or the candidate/rubric content; these remain external gates.
+
+For every checklist field it reports agreeing candidates, the full candidate
+denominator and raw agreement. Dependency lists are compared as sets while
+the input responses remain untouched. For the nominal decisions
+`admit`, `exclude`, `uncertain`, it reports a 3-by-3 table with explicit reviewer
+orientation, row/column marginals, observed agreement and the marginal-based
+expected agreement. Unweighted Cohen's kappa is `(Po - Pe) / (1 - Pe)`;
+when `Pe=1`, kappa is null with `degenerate_marginals`, even if raw agreement
+is perfect. Category imbalance and small samples must be interpreted with the
+table, not hidden by a single coefficient.
+
+These are descriptive pre-adjudication diagnostics, not project-clustered
+confidence intervals, population estimates, a reliability threshold or validity
+evidence. The reporter cannot authenticate human status, blinding, independence,
+rights or whether the supplied responses preceded adjudication. Metric choice,
+adequacy criteria, calibration rounds and the rubric still require human
+approval before confirmatory use. Original private responses and adjudication
+history must be retained separately; exclusive output creation prevents overwriting.
+Blank authoring templates cannot produce an agreement report. No real review
+scores are reported because the independent reviews remain pending.
+
+[Baltes et al., EMSE, online 2026-11-03](https://doi.org/10.1007/s10664-026-10922-3)
+provide reporting guidance: agreement alone is not validity. Their illustrative
+thresholds are not adopted here. Their recommendation for an open-model baseline
+also requires an explicit design decision or justified limitation; no model,
+provider runtime or budget is added by this change.
+
+Validation: seven new synthetic pytest cases plus 39 existing admission cases
+passed. The hand-computed table yields `Po=3/4`, `Pe=5/16`, `kappa=7/11`;
+other tests cover negative kappa, degenerate consensus, reviewer/coverage drift,
+field-level disagreement, input immutability, CLI rejection and no overwrite.
+
+
