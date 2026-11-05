@@ -1425,3 +1425,28 @@ balance within the clean/defective pairs and provider-stratified reporting are t
 
 Human decision flagged: whether the pre-registration should state provider-stratified (or leave-one-provider-out)
 reporting of the B3 gain, and whether to read the full text of 2606.16988 before citing it.
+
+## 2026-11-05 entry: strained-coherence pre-failure signal (adjacent context) and provider-balance diagnostic
+
+Search and reading date: 2026-11-05. Searches covered requirement omission in LLM code generation and coding-agent
+trajectory early warning/provenance. Already in this matrix and not re-scored: 2607.09510, 2604.11641, 2505.13360 and
+2507.20439. One new source was read at arXiv abstract-page level through a summarising fetch tool; the full text was not
+inspected, so every figure must be re-checked before being quoted. 2507.07548 (developer-practice interviews, 2025) surfaced
+and was not read; it is pending and unscored.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Pandya, Zhang and Lyu, [*Strained Coherence: A Pre-Failure Signal in Coding Agent Execution Trajectories*](https://arxiv.org/abs/2606.07889), arXiv preprint v1, 2026-06-05 (cs.LG); no peer-reviewed venue listed | Does an agent acknowledging a conflict in its own reasoning and proceeding anyway predict failure? An LLM judge flags conflict spans in 44 Terminal-bench-2 trajectories (Qwen3.5-35B-A3B) with a 43-trajectory replication (Gemma4-31B); compared with a lexical baseline at matched selectivity | Reported: flagged trajectories failed 94% vs 46% unflagged (Fisher p = 0.003) on Qwen; the Gemma gap was 20 points and not significant (p = 0.31). The first flag appeared at a median of about 83-84% of elapsed trajectory time. Small samples, one benchmark, two backbones, an LLM judge reading full trajectories, and no requirement-condition label. | **Thesis:** adjacent only; it measures task failure, not loss of a testable requirement condition, and does not support H2. **Experiment:** a verbalised-conflict signal arriving late in the run is a caution that "early" must be measured as the position of the first alert relative to T4, which the H2 protocol already reports; no metric change. **Product:** contextual support for distinguishing trace monitoring from explaining semantic loss. No code or protocol change follows from the source. | 4/10: preprint with a transparent judge-versus-baseline comparison but tiny samples, an unreplicated headline effect, an LLM judge as instrument, and an outcome unrelated to requirement conditions. |
+
+### Offline action: provider-balance diagnostic (responds to the 2026-11-04 threat to validity)
+
+The 2026-11-04 entry recorded that procedural trace features may encode which provider produced a run, so a pooled
+B3-minus-B0 contrast could reflect provider identity when provider and degradation label are unbalanced. This is a
+mechanism hypothesis, not a result. `eval/provider_balance.py` adds a descriptive, non-gating report of provider x label
+counts per split with flags for single-provider splits, a provider missing a class, a degraded-rate gap above a
+configurable 0.20 (a default of this repository, not a published threshold), projects missing a provider, and missing
+provider fields; it is covered by `tests/test_provider_balance.py`. It makes no provider calls and does not change the H2
+estimand, the splits or B0/B3.
+
+Human decision flagged: whether the pre-registration should require provider-stratified (or leave-one-provider-out)
+reporting of the B3 gain and adopt a gap threshold; the function reports but does not enforce either.
