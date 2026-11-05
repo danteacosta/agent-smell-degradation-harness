@@ -1528,3 +1528,20 @@ single-rater shortcut, LLM replacement or open-provider configuration is adopted
 Human approval of rubric, staffing, metric/adequacy rules and rights remains
 pending. A proposed open-model baseline or documented exclusion remains a
 design question; this source does not silently override the current protocol.
+
+## 2026-11-05 — Elicitation coverage and agreement are different measurements
+
+Search/read: 2026-11-05; deduplicated by DOI/title. Read publisher abstract,
+pipeline/design, data and matching method, quantitative results, human-agreement
+analysis and limitations (Sections 3–9). No replication; linked package not audited.
+
+| Reference / status | Question, sample, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Curto, Semini and Marques-Neto, [Evaluating multi-LLM pipelines for early-stage software requirements elicitation](https://doi.org/10.1007/s10664-026-10981-6), EMSE 32:63 (2027), online 2026-11-03; peer-reviewed journal | Generate–Unify–Improve across four SRS cases; human study rates 145 requirements with two professionals/nine student groups. | Coverage/precision trade-off; prevalence affects agreement. Thresholded embedding alignment lacks expert pairwise validation; narrow academic scope, proprietary models and contamination risk limit transfer. | Thesis: elicitation context, not omission/H2 evidence. Experiment: retain marginals; no binary recoding, AC1 or cutoff adopted. Product: candidate elicitation requires curation, not verified conformance. Action: synthetic high-agreement/negative-kappa regression. | 7/10: reviewed, explicit method and linked artifacts; unvalidated matching and limited human sample; package not audited. |
+
+**Independent implementation rationale.** Review-content binding addresses the
+explicit counterexample of changed reasons with unchanged aggregate statistics;
+the elicitation paper does not establish that hashing authenticates annotations.
+Its prevalence discussion motivates a bounded regression, not a new reliability
+criterion or import of published observations. Existing human adjudication and
+rubric/metric approvals remain pending.
