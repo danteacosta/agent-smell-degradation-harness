@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
@@ -35,6 +36,12 @@ def summarize_agreement(reviews: list[dict], *, expected_candidate_ids: list[str
     column_totals = [sum(row[i] for row in table) for i in range(len(DECISION_ORDER))]
     marginal_product = sum(a * b for a, b in zip(row_totals, column_totals))
     denominator = n * n - marginal_product
+    # Bind every validated response, including reasons, not just aggregate counts.
+    # Canonical order ignores input row/key order while retaining original text.
+    snapshot = [row for item in candidates for row in sorted(
+        item["reviews"], key=lambda row: _reviewer_key(row["reviewer_id"]))]
+    payload = json.dumps(snapshot, sort_keys=True, ensure_ascii=False,
+                         separators=(",", ":")).encode("utf-8")
     return {
         "schema_version": "manipulation-review-agreement/v1",
         "status": "descriptive_pre_adjudication_only",
@@ -42,6 +49,12 @@ def summarize_agreement(reviews: list[dict], *, expected_candidate_ids: list[str
         "candidate_count": n,
         "review_count": len(reviews),
         "candidate_inventory_sha256": packet["candidate_inventory_sha256"],
+        "review_content_sha256": hashlib.sha256(payload).hexdigest(),
+        "review_content_digest_scope": (
+            "Validated review objects in supplied candidate-inventory order, then "
+            "NFKC/casefold reviewer sort order; JSON sorted keys, ensure_ascii=false, "
+            "compact separators, UTF-8. Original values/list order retained. "
+            "Not a raw-file checksum, custody attestation or rubric/source commitment."),
         "reviewer_order": identities,
         "field_agreement": {
             field: {
@@ -64,6 +77,7 @@ def summarize_agreement(reviews: list[dict], *, expected_candidate_ids: list[str
         "limitations": [
             "Descriptive agreement on the supplied pre-adjudication reviews, not label validity.",
             "Identity strings cannot establish human status, blinding or independence.",
+            "The review-content digest binds supplied responses, not authorship or collection time.",
             "No acceptance cutoff, project-clustered interval or population inference is supplied.",
             "Retain disagreements and original responses for human adjudication; do not overwrite them.",
         ],
@@ -93,3 +107,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
