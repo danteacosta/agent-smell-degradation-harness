@@ -681,4 +681,42 @@ passed. The hand-computed table yields `Po=3/4`, `Pe=5/16`, `kappa=7/11`;
 other tests cover negative kappa, degenerate consensus, reviewer/coverage drift,
 field-level disagreement, input immutability, CLI rejection and no overwrite.
 
+## Bind agreement diagnostics to the original responses — 2026-11-05
+
+The reporter now includes `review_content_sha256`, in addition to the ordered
+candidate-inventory digest. Previously, two batches with identical decisions
+and agreement counts but different written reasons produced identical reports.
+The new commitment binds every validated review field, including reasons,
+removed spans, original reviewer identifiers and dependency lists, without
+copying private responses into the aggregate report.
+
+Canonicalization is explicit: use the supplied candidate-inventory order, then
+sort each candidate's reviews by NFKC/casefold reviewer identity; retain original
+field values and list order; serialize with sorted object keys,
+`ensure_ascii=False`, compact comma/colon separators and UTF-8; hash with SHA-256.
+Input row order and JSON object-key order do not affect the digest. Changes to
+original text, identity spelling or dependency-list ordering do affect it, even
+where aggregate statistics are unchanged. This is not a raw-file checksum.
+
+The custodian must retain the original private responses and recompute this
+digest when checking which batch a report describes. The digest cannot establish
+authorship, collection time, independence or pre-adjudication custody, nor bind
+the rubric or candidate-source content. Those commitments remain separate gates.
+Do not publish hashes of private judgments without considering linkage and
+guessability; this report belongs with the private review evidence. No review
+score, scientific label or approval is supplied by this change.
+
+[Curto et al., EMSE, online 2026-11-03](https://doi.org/10.1007/s10664-026-10981-6)
+offer adjacent evidence about prevalence-sensitive agreement. Their binary
+elicitation judgments differ from our nominal manipulation decisions. A new
+synthetic regression checks that raw agreement of 0.80 can coexist with
+`Pe=0.82` and negative kappa; it reproduces no published observations. No AC1,
+binary recoding, cutoff or similarity-based correctness label is adopted.
+
+Validation on 2026-11-05: 49 targeted pytest cases passed, including three new
+cases for prevalence, changed reasons and canonical content binding. The CLI
+round-trip test also checks that the written digest matches the input responses.
+Original review objects remain untouched and confirmatory eligibility remains false.
+
+
 
