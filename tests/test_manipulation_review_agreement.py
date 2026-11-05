@@ -48,6 +48,44 @@ class AgreementTests(unittest.TestCase):
         report = self.summarize(rows_for([("admit", "exclude"), ("exclude", "admit")]), 2)
         self.assertEqual(report["decision_agreement"]["cohen_kappa_unweighted_nominal"], -1)
 
+    def test_high_raw_agreement_does_not_force_high_kappa(self):
+        # Synthetic prevalence example, not reconstructed observations from a paper.
+        rows = rows_for([("admit", "admit")] * 80 + [("admit", "exclude")] * 10
+                        + [("exclude", "admit")] * 10)
+        decision = self.summarize(rows, 100)["decision_agreement"]
+        self.assertEqual(decision["observed_agreement"], 0.8)
+        self.assertEqual(decision["expected_agreement_from_marginals"], 0.82)
+        self.assertAlmostEqual(decision["cohen_kappa_unweighted_nominal"], -1 / 9)
+
+    def test_changed_reasons_bind_a_different_snapshot_with_identical_statistics(self):
+        rows = rows_for([("admit", "exclude")])
+        before = copy.deepcopy(rows)
+        first = self.summarize(rows, 1)
+        changed = copy.deepcopy(rows)
+        changed[0]["reason"] = "Revised justification: obrigação café."
+        second = self.summarize(changed, 1)
+        self.assertEqual(first["decision_agreement"], second["decision_agreement"])
+        self.assertEqual(first["field_agreement"], second["field_agreement"])
+        self.assertNotEqual(first["review_content_sha256"], second["review_content_sha256"])
+        self.assertEqual(rows, before)
+        self.assertFalse(second["confirmatory_eligible"])
+
+    def test_digest_ignores_row_and_key_order_but_retains_original_evidence_values(self):
+        rows = rows_for([("admit", "exclude"), ("uncertain", "admit")])
+        first = self.summarize(rows, 2)
+        reordered = [dict(reversed(list(row.items()))) for row in reversed(rows)]
+        self.assertEqual(first, self.summarize(reordered, 2))
+        for key, value in (("reviewer_id", "R-1"),
+                           ("removed_span", "after explícit approval")):
+            changed = copy.deepcopy(rows)
+            # Keep all agreement flags unchanged while changing original evidence.
+            for row in changed:
+                if key != "reviewer_id" or row[key] == "r-1":
+                    row[key] = value
+            report = self.summarize(changed, 2)
+            self.assertEqual(first["field_agreement"], report["field_agreement"])
+            self.assertNotEqual(first["review_content_sha256"], report["review_content_sha256"])
+
     def test_same_reviewer_pair_required_without_selective_case_deletion(self):
         rows = rows_for([("admit", "exclude"), ("exclude", "admit")])
         rows[-1]["reviewer_id"] = "r-3"
@@ -91,6 +129,8 @@ class AgreementTests(unittest.TestCase):
                        "--output", str(output)]
             passed = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
             self.assertEqual(passed.returncode, 0, passed.stderr)
+            self.assertEqual(json.loads(output.read_text())["review_content_sha256"],
+                             self.summarize(rows, 1)["review_content_sha256"])
             original = output.read_bytes()
             repeated = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
             self.assertNotEqual(repeated.returncode, 0)
@@ -106,3 +146,4 @@ class AgreementTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
