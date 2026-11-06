@@ -1545,3 +1545,15 @@ the elicitation paper does not establish that hashing authenticates annotations.
 Its prevalence discussion motivates a bounded regression, not a new reliability
 criterion or import of published observations. Existing human adjudication and
 rubric/metric approvals remain pending.
+
+
+## 2026-11-06 — Artifact checks and unambiguous review inputs
+
+Search/read: 2026-11-06. Read the ESEM proceedings abstract, evaluation design,
+results and validity limitations, and RFC 8259 Section 4. Deduplicated by DOI or
+standard number. The ESEM prototype was not replicated.
+
+| Reference / status | Question, sample, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Amougou Mbida and Angermeir, [An Agentic Approach Towards Replication Package Quality Evaluation](https://doi.org/10.4230/LIPIcs.ESEM.2026.58), ESEM 2026 Emerging Results, Vision & Reflection proceedings, 2026-10-05 | Can agents assess artifact readiness? 31 operationalized criteria; five purposively selected packages, ten runs each; author comparison and seven-person pilot. | 91.4% inter-run consistency and 75.4% micro-agreement against an author reference; small familiar sample and no reference inter-rater estimate. | Thesis: adjacent reproducibility evidence only. Experiment: keep mechanical checks separate from validity and independent reproduction. Product: a related artifact-review workflow, no demand validation. Action: retain as context; do not add an LLM artifact judge. | 7/10: published proceedings, transparent setup and linked artifacts; exploratory sample and fallible reference limit transfer. |
+| Bray, [RFC 8259](https://www.rfc-editor.org/rfc/rfc8259#section-4), IETF Standards Track, 2017 | JSON interchange interoperability; normative specification, no empirical sample. | Duplicate object names can yield different decoder behavior, including retaining only the final value. | Thesis: no H1/H2 relevance as evidence. Experiment: reject duplicate members before binding review content. Product: unambiguous import is a useful interface contract. Action: strict CLI intake plus literal and escaped-key regressions. | 10/10 for JSON interoperability guidance; primary standard, not an empirical validity study. |
