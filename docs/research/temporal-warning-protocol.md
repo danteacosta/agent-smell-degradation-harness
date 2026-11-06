@@ -720,3 +720,18 @@ Original review objects remain untouched and confirmatory eligibility remains fa
 
 
 
+
+
+## Reject ambiguous review JSON before hashing — 2026-11-06
+
+The agreement CLI rejects repeated JSON object member names before schema validation
+or digest computation, including names that become identical after JSON escape
+decoding. For example, two `decision` members must not be reduced to the last
+value and then treated as an unambiguous review snapshot. This is a local input
+rule informed by [RFC 8259, Section 4](https://www.rfc-editor.org/rfc/rfc8259#section-4).
+The Python API accepts already-decoded objects and cannot detect keys discarded
+by a caller's parser. Keep original private exports and use the strict CLI for
+file intake. No review, rubric approval or confirmatory evidence is inferred.
+
+Validation: 50 targeted pytest tests passed, including the new CLI regression
+with two duplicate-name subtests (literal and escaped); neither creates a report.
