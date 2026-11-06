@@ -144,6 +144,25 @@ class AgreementTests(unittest.TestCase):
             self.assertFalse(invalid_output.exists())
 
 
+    def test_cli_rejects_duplicate_members_before_hashing_or_writing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            reviews, ids, output = [root / name for name in ("reviews.json", "ids.json", "report.json")]
+            valid = json.dumps(rows_for([("admit", "exclude")]))
+            ids.write_text('["c-0"]', encoding="utf-8")
+            command = [sys.executable, "-m", "eval.manipulation_review_agreement",
+                       "--reviews", str(reviews), "--expected-candidate-ids", str(ids),
+                       "--output", str(output)]
+            for repeated_key in ('"decision"', r'"decis\u0069on"'):
+                with self.subTest(repeated_key=repeated_key):
+                    reviews.write_text(valid.replace('"decision": "admit"',
+                                                     f'{repeated_key}: "exclude", "decision": "admit"'),
+                                       encoding="utf-8")
+                    failed = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+                    self.assertNotEqual(failed.returncode, 0)
+                    self.assertIn("duplicate JSON object member", failed.stderr)
+                    self.assertFalse(output.exists())
+
+
 if __name__ == "__main__":
     unittest.main()
-
