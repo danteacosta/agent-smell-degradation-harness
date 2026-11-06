@@ -1450,3 +1450,25 @@ estimand, the splits or B0/B3.
 
 Human decision flagged: whether the pre-registration should require provider-stratified (or leave-one-provider-out)
 reporting of the B3 gain and adopt a gap threshold; the function reports but does not enforce either.
+
+## 2026-11-06 entry: LLM-as-judge for Gherkin test-coverage evaluation (adjacent context) and an unverified benchmark lead
+
+Search and reading date: 2026-11-06. Searches covered requirement smells and LLM code generation, underspecification and
+clarification benchmarks, acceptance-criteria generation, and the OpenTelemetry GenAI convention status. Already in this
+matrix and not re-scored: 2609.29208, 2606.25550, 2607.02294, 2603.26233, 2502.13069 and 2607.01980. One new source was
+read at arXiv abstract-page level through a summarising fetch tool; the full text was not inspected, so every figure must be
+re-checked before being quoted. OpenTelemetry GenAI agent-span conventions were reported as still in Development status
+(secondary sources, not re-verified against the registry); the existing matrix position on that point is unchanged.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Huang, Chew, Dutkiewicz and Wang, [*LLM-as-a-Judge for Scalable Test Coverage Evaluation: Accuracy, Operational Reliability, and Cost*](https://arxiv.org/abs/2512.01232), arXiv preprint v1, 2025-12-01; comments report acceptance at the AAAI 2026 workshop on next-generation code development with collaborative AI agents (workshop, not a main-track venue) | How accurate, reliable and costly are LLM judges that score the coverage of Gherkin acceptance tests? 100 expert-annotated Gherkin scripts, 5 runs each (500 evaluations), 20 model configurations, rubric-driven structured JSON output; metrics MAAE, first-attempt evaluation completion rate (ECR@1) and cost per 1K evaluations | Reported: the best accuracy came from a small model (MAAE 6.07, ECR@1 96.6%, about USD 1.01 per 1K); reliability ranged from 85.4% to 100.0% and cost spanned 175x across configurations. Single 100-script set, one rubric, unspecified annotator agreement at abstract level, and the judged object is test coverage of a stated scenario, not the loss of a requirement condition. | **Thesis:** adjacent only; it does not bear on H1/H2. **Experiment:** descriptive support for reporting judge completion/parse failure rates and repeated-run variability next to judge accuracy when judges score criteria coverage; the protocol already requires repeated runs, so no metric change. **Product:** a cost range of two orders of magnitude between judge configurations is a reminder to report judge cost in any pilot. No code or protocol change follows from the source. | 4/10: workshop-level preprint with an explicit repeated-run design and open reporting of cost and failure rate, but a single small annotated set and an object of measurement different from requirement-condition loss. |
+
+### Pending, unscored lead
+
+A benchmark described in secondary news and blog coverage (reported as "Co-Design Bench", posted to arXiv around 2026-10-26;
+reported figures of 69.9% of acceptance criteria satisfied per task versus 26.4% of tasks fully completed) could not be matched to a
+verified arXiv identifier: two secondary sources give conflicting identifiers and the model name is also unconfirmed. It is
+not scored and must not be cited until the primary paper is located and read.
+
+Decision impact: none. No hypothesis, metric, protocol or frozen-material change. Human decision: none new.
