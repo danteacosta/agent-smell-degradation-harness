@@ -84,6 +84,16 @@ def summarize_agreement(reviews: list[dict], *, expected_candidate_ids: list[str
     }
 
 
+def _unique_json_object(pairs: list[tuple[str, object]]) -> dict:
+    """Reject ambiguous objects before the decoder can discard a judgment."""
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("duplicate JSON object member")
+        result[key] = value
+    return result
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--reviews", type=Path, required=True,
@@ -94,8 +104,10 @@ def main() -> int:
     args = parser.parse_args()
     try:
         report = summarize_agreement(
-            json.loads(args.reviews.read_text(encoding="utf-8")),
-            expected_candidate_ids=json.loads(args.expected_candidate_ids.read_text(encoding="utf-8")))
+            json.loads(args.reviews.read_text(encoding="utf-8"),
+                       object_pairs_hook=_unique_json_object),
+            expected_candidate_ids=json.loads(args.expected_candidate_ids.read_text(encoding="utf-8"),
+                                              object_pairs_hook=_unique_json_object))
         with args.output.open("x", encoding="utf-8") as stream:
             stream.write(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     except (OSError, ValueError, KeyError, TypeError) as error:
@@ -107,4 +119,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
