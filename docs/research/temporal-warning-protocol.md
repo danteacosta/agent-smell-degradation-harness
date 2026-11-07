@@ -735,3 +735,32 @@ file intake. No review, rubric approval or confirmatory evidence is inferred.
 
 Validation: 50 targeted pytest tests passed, including the new CLI regression
 with two duplicate-name subtests (literal and escaped); neither creates a report.
+
+
+## Qualification receipt files must match their references — 2026-11-07
+
+The temporal engineering-pilot readiness audit now opens each declared provider
+qualification report and verifies its SHA-256 before counting that provider.
+Previously only the path/hash metadata and declaration flags were checked;
+a nonexistent report with a syntactically valid hash could count. Missing,
+unreadable, changed or out-of-root files (including symlinks) now leave the
+provider unqualified and preserve no-go when two providers cannot be counted.
+
+This is a byte-integrity check, not semantic validation of the report, provider
+execution, configuration-to-report identity, authentic qualification or external
+approval. A report may still be forged together with its hash. External review
+must validate the configuration binding and runtime-native T1–T3 evidence.
+The synthetic test receipt is explicitly not provider qualification evidence.
+The historical 120-episode gate and candidate scientific design are unchanged.
+
+Validation: 28 targeted pytest cases passed, including five new receipt-file
+failure cases. The current real candidate still returns exit code 2/no_go:
+12 source pairs verified, zero reviewed intents, zero qualified providers,
+12 pending blockers, collection authorization false.
+
+[Bjarnason et al., On Randomness in Agentic Evals](https://arxiv.org/html/2602.07150v2)
+is adjacent repeated-run evidence, not a justification for promoting this gate
+or treating temperature zero as deterministic. No repetition count, power
+assumption or published variance estimate is transferred to our pilot. File
+verification follows the missing-receipt counterexample, not a result from that
+paper.
