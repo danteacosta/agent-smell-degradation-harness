@@ -1557,3 +1557,23 @@ standard number. The ESEM prototype was not replicated.
 | --- | --- | --- | --- | --- |
 | Amougou Mbida and Angermeir, [An Agentic Approach Towards Replication Package Quality Evaluation](https://doi.org/10.4230/LIPIcs.ESEM.2026.58), ESEM 2026 Emerging Results, Vision & Reflection proceedings, 2026-10-05 | Can agents assess artifact readiness? 31 operationalized criteria; five purposively selected packages, ten runs each; author comparison and seven-person pilot. | 91.4% inter-run consistency and 75.4% micro-agreement against an author reference; small familiar sample and no reference inter-rater estimate. | Thesis: adjacent reproducibility evidence only. Experiment: keep mechanical checks separate from validity and independent reproduction. Product: a related artifact-review workflow, no demand validation. Action: retain as context; do not add an LLM artifact judge. | 7/10: published proceedings, transparent setup and linked artifacts; exploratory sample and fallible reference limit transfer. |
 | Bray, [RFC 8259](https://www.rfc-editor.org/rfc/rfc8259#section-4), IETF Standards Track, 2017 | JSON interchange interoperability; normative specification, no empirical sample. | Duplicate object names can yield different decoder behavior, including retaining only the final value. | Thesis: no H1/H2 relevance as evidence. Experiment: reject duplicate members before binding review content. Product: unambiguous import is a useful interface contract. Action: strict CLI intake plus literal and escaped-key regressions. | 10/10 for JSON interoperability guidance; primary standard, not an empirical validity study. |
+
+
+## 2026-11-07 — Provider qualification and repeated-run uncertainty
+
+Search/read: 2026-11-07; deduplicated by arXiv ID/title. Read author v2 abstract,
+setup, metrics, results and recommendations; append-only context restriction
+noted. No separate limitations section was found; scope limits below include
+our assessment. Workshop search metadata was found, but its PDF was inaccessible;
+conservatively retain the author preprint status here.
+
+| Reference / status | Question, sample, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Bjarnason, Silva and Monperrus, [On Randomness in Agentic Evals](https://arxiv.org/html/2602.07150v2), 2026, author preprint v2 (2026-03-23) | SWE-Bench-Verified, three models/two scaffolds, ten repeated evaluations across temperature settings; 60,000 trajectories. | Single-run scores vary by 2.2–6.0 percentage points; variability remains at temperature zero. Benchmark/model scope and append-only contexts limit transfer. | Thesis: randomness context, not H1/H2. Experiment: retain repetitions/configuration qualification; no imported power estimate or repetition count. Product: report variability before ranking configurations. Action: contextual entry only; do not force a baseline change. | 7/10: detailed setup, metrics and linked artifacts; author preprint read, not reproduced, bounded benchmark scope. |
+
+**Independent blocker reduction.** Provider declarations now require matching
+local qualification-report bytes before they count in readiness. The new tests
+use a visibly synthetic receipt, not provider-backed observations. Matching
+bytes cannot authenticate a provider, prove native checkpoint timing or replace
+human approval. The current candidate remains no-go. CI remains an external
+blocker pending an executable runner/check result.
