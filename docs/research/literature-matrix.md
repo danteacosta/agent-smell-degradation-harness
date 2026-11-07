@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-11-03
+Last updated: 2026-11-07
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1472,3 +1472,20 @@ verified arXiv identifier: two secondary sources give conflicting identifiers an
 not scored and must not be cited until the primary paper is located and read.
 
 Decision impact: none. No hypothesis, metric, protocol or frozen-material change. Human decision: none new.
+
+## 2026-11-07 entry: omission is the dominant, least auditable error when LLMs author acceptable sets (Chen et al.)
+
+Search and reading date: 2026-11-07. Searches covered requirement omission and acceptance-criteria generation, and early
+failure prediction for coding agents. Already in this matrix and not re-scored: 2608.03222, 2605.08715, 2604.11641,
+2605.27690, 2604.21505 and 2507.20439. One new source was read: the arXiv abstract page and the first 100,000 of 258,446
+characters of the HTML rendering through a summarising fetch tool (not the PDF); the remaining text, including the
+production-deployment section, was not inspected, so figures must be re-checked before being quoted. WiseSpec (2609.00568)
+was already present and is unchanged.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Chen, Chen, Lin, Long and Vong, [*Judging Is Not Enumerating: Silent Omissions in LLM-Authored Acceptable Sets*](https://arxiv.org/abs/2608.01000), arXiv preprint v1 (cs.AI), submitted 2026-08-02; no peer-reviewed venue listed | Can a model that judges membership well also author the full acceptable set (test suite, key, rubric)? Four reference constructions: 240 word-list items with mechanically complete truth, a numeric complete-truth construction, HumanEval+/MBPP+ (164 + 378 problems; 2,464 sampled solutions, 1,560 oracle-correct and 904 oracle-wrong; suites written from the docstring), and 240 WordNet synsets with an explicitly incomplete reference. Qwen2.5 3B-72B plus other open families and two frontier APIs with reasoning disabled; greedy one-shot decoding; problem-clustered bootstrap CIs; six paired RLVR seeds | Reported: judging beats authoring by about 0.29-0.34 F1 on the algorithmic construction; authored suites admit 19-42% of oracle-correct solutions; planted over-inclusions are detected about 6-7x more often than planted omissions (d about +0.30 vs +0.09 with a CI that includes zero); a production corpus of 43,227 items shows omission-first errors at about 10:1. The authors state: one-shot greedy only, reasoning closes the algorithmic gap for some frontier models but not reliably for suite authoring, the WordNet precision is a lower bound, the gate's false-rejection figure is pool-dependent, and the omission vocabulary comes from the word-list constructions, not the code mechanism. About 70% of suite failures in the code audit are wrong expected-value assertions (over-specification), not missing checks. Not read: the final 158k characters | Thesis: adjacent, not support. It studies authors of acceptable sets, not agents implementing a requirement with a removed condition, and its code results are used only at the consequence level. It gives descriptive, off-domain context for two existing design choices: (a) omissions are the error type that audits catch least, which is consistent with keeping the human audit of panel decisions and the planted-deletion controls; (b) judging a candidate is easier than enumerating what a specification requires, so a rubric should be checked per constraint_id rather than by an open "is anything missing" question. It does not support the exploratory section-13 coupling result and must not be cited as doing so. Experiment: when the future tester/panel runs are analysed, report omission-type and over-specification-type failures separately rather than one pooled error rate. Product: supports showing reviewers an explicit per-obligation checklist instead of a free-form "missing anything?" prompt; no market claim. Action: context only; no change to H1/H2, B0/B3 or frozen materials; re-read the remaining text before any quotation | 4/10: unreviewed preprint, large and transparent (53 pages, 26 tables, CIs, seeds, stated limitations) but constructions are word lists and docstring-only code tasks, one-shot greedy, and only about 40% of the text was read |
+
+Decision impact: none. Human decision flagged: none new. The only candidate protocol rule (separate reporting of omission-type
+and over-specification-type tester failures) is already implied by per-constraint_id reporting and is recorded in the
+decision register, not adopted by this entry.
