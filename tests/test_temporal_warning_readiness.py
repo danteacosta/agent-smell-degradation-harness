@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import json
 from pathlib import Path
 import pytest
@@ -14,7 +15,9 @@ def declared():
     p=candidate();p['selection_frozen']=p['split_frozen']=True
     p['project_split']={'strictdoc':'train','CASS':'train','todomvc':'train','realworld':'calibration','kanboard':'test','paperless-ngx':'test'}
     p['independent_human_reviews']=[{'intent_id':i,'source_manifest_sha256':p['candidate_source_manifest']['sha256'],'mapping_approved':True,'manipulation_approved':True,'rights_approved':True,'prior_exposure_and_residual_cues_reviewed':True,'independent_of_author':True,'reviewer_id':'synthetic-test-reviewer'} for i in p['selected_requirements']]
-    p['qualified_provider_configurations']=[{'provider':provider,'model':'fixture','model_version':'fixture','mode':'runtime','checkpoint_source':'runtime_native','qualification_passed':True,'t1_t3_before_t4':True,'prompted_snapshot':False,'configuration_hash':'a'*64,'qualification_report_sha256':'b'*64,'qualification_report_path':'synthetic-test-only'} for provider in ['provider-a','provider-b']]
+    report_path='tests/fixtures/temporal-provider-qualification.synthetic.json'
+    report_hash=hashlib.sha256((ROOT/report_path).read_bytes()).hexdigest()
+    p['qualified_provider_configurations']=[{'provider':provider,'model':'fixture','model_version':'fixture','mode':'runtime','checkpoint_source':'runtime_native','qualification_passed':True,'t1_t3_before_t4':True,'prompted_snapshot':False,'configuration_hash':'a'*64,'qualification_report_sha256':report_hash,'qualification_report_path':report_path} for provider in ['provider-a','provider-b']]
     for field in ['rubric_frozen','annotation_blinding_verified','independent_annotators_ready','prefix_clock_and_collector_qualified','feature_and_score_policy_frozen','schedule_frozen','launch_authorized']:p[field]=True
     p['budget']={'estimated_provider_cost_usd':1,'contingency_fraction':.25,'approved_cap_usd':2}
     return p
@@ -60,6 +63,31 @@ def test_invalid_receipts_and_design_boundaries_fail_closed(change):
 def test_source_hash_cannot_be_replaced_by_a_status_flag():
     p=declared();p['candidate_source_manifest']['sha256']='0'*64
     with pytest.raises(ValueError,match='hash mismatch'):assess(p,ROOT)
+
+
+@pytest.mark.parametrize('change',['missing','hash_mismatch','directory','absolute_escape','symlink_escape'])
+def test_qualification_reports_must_exist_match_and_stay_inside_root(change,tmp_path):
+    p=declared(); c=p['qualified_provider_configurations'][1]
+    if change=='missing': c['qualification_report_path']='tests/fixtures/nonexistent-qualification.json'
+    elif change=='hash_mismatch': c['qualification_report_sha256']='0'*64
+    elif change=='directory': c['qualification_report_path']='tests/fixtures'
+    else:
+        outside=tmp_path/'outside.json';outside.write_text('synthetic only')
+        c['qualification_report_sha256']=hashlib.sha256(outside.read_bytes()).hexdigest()
+        if change=='absolute_escape': c['qualification_report_path']=str(outside)
+        else:
+            # A temporary link inside the root must not grant access outside it.
+            import tempfile
+            with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+                link=Path(directory)/'linked.json';link.symlink_to(outside)
+                c['qualification_report_path']=str(link.relative_to(ROOT))
+                r=assess(p,ROOT)
+                assert r['qualified_distinct_providers']==1 and r['decision']=='no_go'
+                return
+    r=assess(p,ROOT)
+    assert r['qualified_distinct_providers']==1
+    assert 'two_distinct_runtime_native_providers_not_qualified' in r['blockers']
+    assert r['collection_authorized_by_this_report'] is False
 
 
 def test_cli_preserves_report_while_returning_nonzero_for_no_go(tmp_path,monkeypatch):
