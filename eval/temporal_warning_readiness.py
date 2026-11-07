@@ -24,6 +24,17 @@ def _bound_file(reference, root):
     return json.loads(path.read_text())
 
 
+def _qualification_report_matches(configuration, root):
+    """Check receipt bytes, not provider behavior or qualification authenticity."""
+    try:
+        path = (root / configuration['qualification_report_path']).resolve()
+        return (path.is_relative_to(root) and path.is_file()
+                and hashlib.sha256(path.read_bytes()).hexdigest()
+                == configuration['qualification_report_sha256'])
+    except (OSError, ValueError, TypeError):
+        return False
+
+
 def assess(plan, root):
     root = Path(root).resolve(); blockers = []
     if plan.get('schema_version') != 'temporal-warning-cohort-candidate/v1':
@@ -78,7 +89,8 @@ def assess(plan, root):
                 and c.get('prompted_snapshot') is False
                 and re.fullmatch('[0-9a-f]{64}', str(c.get('configuration_hash','')))
                 and re.fullmatch('[0-9a-f]{64}', str(c.get('qualification_report_sha256','')))
-                and isinstance(c.get('qualification_report_path'), str) and c['qualification_report_path'].strip()):
+                and isinstance(c.get('qualification_report_path'), str) and c['qualification_report_path'].strip()
+                and _qualification_report_matches(c, root)):
             qualified.add(c['provider'].strip().casefold())
     if len(qualified) != 2:
         blockers.append('two_distinct_runtime_native_providers_not_qualified')
