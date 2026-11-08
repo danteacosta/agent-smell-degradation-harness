@@ -120,7 +120,12 @@ def main(argv=None):
     args=parser.parse_args(argv)
     report=assess(json.loads(args.plan.read_text()),Path.cwd())
     rendered=json.dumps(report,indent=2,allow_nan=False)+'\n'
-    if args.output:args.output.write_text(rendered)
+    if args.output:
+        try:
+            with args.output.open('x',encoding='utf-8') as stream:
+                stream.write(rendered)
+        except OSError as error:
+            parser.error(f'cannot create readiness report: {error}')
     print(rendered,end='')
     return 2 if report['decision']=='no_go' else 0
 
