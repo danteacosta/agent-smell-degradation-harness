@@ -94,3 +94,30 @@ def test_cli_preserves_report_while_returning_nonzero_for_no_go(tmp_path,monkeyp
     monkeypatch.chdir(ROOT);out=tmp_path/'readiness.json'
     assert main(['--output',str(out)])==2
     assert json.loads(out.read_text())['decision']=='no_go'
+
+
+def test_cli_never_overwrites_an_existing_report(tmp_path,monkeypatch,capsys):
+    monkeypatch.chdir(ROOT)
+    out=tmp_path/'readiness.json';original=b'previous evidence\n'
+    out.write_bytes(original)
+    with pytest.raises(SystemExit) as error:main(['--output',str(out)])
+    assert error.value.code==2
+    assert out.read_bytes()==original
+    assert 'cannot create readiness report' in capsys.readouterr().err
+
+
+def test_cli_output_cannot_replace_its_input_plan(tmp_path,monkeypatch):
+    monkeypatch.chdir(ROOT)
+    plan=tmp_path/'plan.json';original=json.dumps(candidate()).encode('utf-8')
+    plan.write_bytes(original)
+    with pytest.raises(SystemExit):main(['--plan',str(plan),'--output',str(plan)])
+    assert plan.read_bytes()==original
+
+
+def test_cli_repeated_export_preserves_first_result(tmp_path,monkeypatch):
+    monkeypatch.chdir(ROOT)
+    out=tmp_path/'readiness.json'
+    assert main(['--output',str(out)])==2
+    original=out.read_bytes()
+    with pytest.raises(SystemExit):main(['--output',str(out)])
+    assert out.read_bytes()==original
