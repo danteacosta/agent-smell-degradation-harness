@@ -764,3 +764,18 @@ or treating temperature zero as deterministic. No repetition count, power
 assumption or published variance estimate is transferred to our pilot. File
 verification follows the missing-receipt counterexample, not a result from that
 paper.
+
+
+## Preserve readiness reports and input plans — 2026-11-08
+
+Readiness CLI output now uses exclusive file creation. An existing output,
+including the input plan itself, is rejected with a nonzero exit and remains
+byte-for-byte intact. Previously `--output` could silently overwrite it.
+Choose a new report path for each retained assessment. No report is printed
+as a successful export after a creation error; ordinary no-go exports to a new
+path still return exit code 2 and preserve the no-go report.
+
+Validation: 31 targeted pytest cases passed, including three new cases for an
+existing evidence file, output equal to the input plan, and a repeated export.
+This prevents accidental replacement; it is not immutable storage or custody
+authentication and does not authorize providers or confirmatory collection.
