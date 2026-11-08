@@ -1489,3 +1489,22 @@ was already present and is unchanged.
 Decision impact: none. Human decision flagged: none new. The only candidate protocol rule (separate reporting of omission-type
 and over-specification-type tester failures) is already implied by per-constraint_id reporting and is recorded in the
 decision register, not adopted by this entry.
+
+## 2026-11-08 entry: two older sources not yet in the matrix (Veizaga et al. Paska; Krishna et al. SRS evaluation)
+
+Search and reading date: 2026-11-08. Two standard web searches covered (a) LLM requirement ambiguity and downstream code
+generation and (b) requirement smells, acceptance-criteria generation, omission and provenance/early warning. Already in this
+matrix and not re-scored: 2604.21505 (Orchid, ASE '26 per its v3 header), 2507.20439, 2608.01000, 2608.21298, 2606.25550.
+Two older sources were new to the matrix and were read at arXiv abstract-page level only (no full text; figures below must be
+re-checked before being quoted). No source on provenance tracing or early warning for requirement loss was found by these
+searches, so that gap in the related work is unchanged. Secondary pages (alphaxiv, summarisers, a university repository
+record of an unverified study reporting 33% fully accepted requirements) were not used: that record was not matched to a
+primary paper and is not scored.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Veizaga, Shin and Briand, [*Automated Smell Detection and Recommendation in Natural Language Requirements*](https://arxiv.org/abs/2305.07097), arXiv preprint v2 (cs.SE), 2023-11-25; no peer-reviewed venue listed on the page | Can NLP rules detect requirement smells and recommend fixes with Rimay controlled-language patterns? Tool Paska; one industrial financial-domain case study, 13 systems, 2,725 annotated requirements | Reported 89% precision and recall for smell detection and 96% / 94% for recommendation. Single domain; no limitations stated on the page; static text analysis only, with no downstream-output measure | Thesis: a static-smell detector is the natural B0 "static" feature family; its accuracy at flagging smells says nothing about whether a smell causes loss of a testable condition (the smell vs. observable-loss separation stays). Experiment: none adopted; if a rule-based static baseline is wanted, Paska-style detection is a candidate, human decision. Product: prior art for smell flagging, so differentiation must rest on explaining lost obligations | 4 |
+| Krishna, Gaur, Verma and Jalote, [*Using LLMs in Software Requirements Specifications: An Empirical Evaluation*](https://arxiv.org/abs/2404.17842), RE@Next! at IEEE RE 2024 (workshop track; arXiv 2024-04-27) | Can GPT-4 and CodeLlama draft an SRS and find problems in one? One university club-management system, four use cases for timing, eight criteria against an entry-level human benchmark | Authors conclude GPT-4 drafts are complete and consistent and that GPT-4 finds issues better than CodeLlama. Page gives no criteria definitions, omission scoring or statistics; one system, two models | Context only: LLMs author and validate requirements, which motivates acceptance-criteria generation as the primary task; not evidence about omission rates and not support for the section-13 result. No action beyond registration | 3 |
+
+Decision impact: none. No hypothesis, metric, protocol or frozen-material change. Human decision flagged: whether a rule-based
+static baseline (Paska-like) is wanted inside B0, to be settled together with decision 4 of the pending-decisions register.
