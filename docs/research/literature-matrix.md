@@ -1577,3 +1577,20 @@ use a visibly synthetic receipt, not provider-backed observations. Matching
 bytes cannot authenticate a provider, prove native checkpoint timing or replace
 human approval. The current candidate remains no-go. CI remains an external
 blocker pending an executable runner/check result.
+
+
+## 2026-11-08 — Explainable provenance is broader than retained evidence
+
+Search/read: 2026-11-08; deduplicated by title/arXiv ID. Read the author PDF
+abstract, stakeholder rationale, proposed methods and open challenges. Official
+ICSME program confirms the Visions and Emerging Results track. No replication
+or re-analysis of the earlier empirical studies cited by the authors.
+
+| Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Velasco et al., [On Automated and Explainable Provenance of AI-Generated Code](https://ojcchar.github.io/files/48-icsme26-ai-provenance.pdf), ICSME 2026 Visions and Emerging Results; author manuscript read | Research vision across prompt-, instance-, factor- and model-component-to-output traceability; motivates future empirical work using earlier stakeholder studies. | Proposes post-hoc causal/interpretability techniques; no completed validation of the full program. Model access, unavailable training data and faithful attribution remain challenges. | Thesis: adjacent provenance positioning, not T1–T3 early-warning or H1/H2 evidence. Experiment: retained artifacts alone do not establish causal explanation. Product: existing research direction, no exclusive novelty or demonstrated demand. Action: context only; do not import causal claims. | 7/10: recognized venue/track and explicit proposed agenda; vision rather than validated end-to-end method. |
+
+**Independent implementation rationale.** Exclusive creation of readiness
+reports addresses a reproducible overwrite counterexample, not a result claimed
+by this vision paper. Preserving evidence is necessary for audit, but does not
+establish authentic custody, causal provenance or scientific validity.
