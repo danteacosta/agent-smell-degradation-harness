@@ -189,30 +189,7 @@ two real configurations, the event adapter and private custody before collection
 Browser E2Es can qualify engineering controls; they do not replace blinded ordinal
 acceptance-criteria labels, annotation agreement or the primary label manifest.
 
-After alerts are sealed, independently double-annotate T4 under the frozen rubric,
-adjudicate, and join by run_id/replication_id/constraint_id. Evaluate B0 and B3 on
-identical eligible records; report comparator/window-specific missingness and paired
-complete-case plus missing-stage sensitivity. Primary PR-AUC means the existing
-average-precision implementation. Add supplementary recall/FPR and first observed
-alert lead time to T4. Ranker scores are not probabilities: calibration/Brier/ECE
-requires a separately frozen calibration-only probability mapping. Reuse the
-existing project-cluster bootstrap and report descriptive-only intervals when the
-small/one-class cluster design fails existing gates. Do not pool repeated generations
-as independent requirements or claim causal recovery without a cue intervention.
-
-Current dependencies: fresh corpus identities and reviews, exact split freeze,
-annotation rubric/annotators, two qualified providers, runtime/event adapter and
-budget authorization. During preparation of this candidate, neither Codex CLI nor
-Docker was available in that execution environment; no provider episode or empirical
-comparison was performed there. This is not a statement about the current Mac,
-where Codex and Docker have since supported the separate test-anchor study.
-
-### Executable preparation and candidate source review (2026-10-02)
-
-The source draft is now `data/prepilot/temporal-warning-source-drafts.json`:
-12 proposed intent pairs from six **previously exposed** public projects.
-Each clean input is an exact, hash-bound excerpt; its defective counterpart
-removes one recorded span. A proposed constraint ID and a testable obligation
+After alerts are sealed, independently double-annotate T4 under the f…392 tokens truncated…e recorded span. A proposed constraint ID and a testable obligation
 are recorded per pair. These are assistant-prepared materials, not reviewed
 scientific labels. The selection and project partition remain unfrozen.
 
@@ -779,3 +756,30 @@ Validation: 31 targeted pytest cases passed, including three new cases for an
 existing evidence file, output equal to the input plan, and a repeated export.
 This prevents accidental replacement; it is not immutable storage or custody
 authentication and does not authorize providers or confirmatory collection.
+
+## Bind the exposure audit to the candidate — 2026-11-09
+
+The generator records `candidate_content_sha256` over the parsed candidate
+manifest (sorted keys, compact JSON, ASCII escapes encoded as UTF-8, no non-finite
+numbers). The readiness gate checks it in addition to the plan's existing
+artifact byte hashes and intent coverage. A missing or different digest adds
+`exposure_audit_not_bound_to_candidate`, even if all intent IDs are unchanged.
+
+Regenerate from the exact checkout and draft under review, in a new directory:
+
+```bash
+audit_dir="$(mktemp -d)"
+python -m eval.temporal_cohort_candidate \
+  --candidate data/prepilot/temporal-warning-source-drafts.json \
+  --output "$audit_dir/exposure-audit.json"
+sha256sum "$audit_dir/exposure-audit.json"
+```
+
+Inspect the generated inventory and matches before adopting a versioned report.
+Then point the plan's `exposure_audit` reference at the new repo-relative path
+and record its byte SHA-256 and registry count. Preserve the historical report;
+do not attach a digest to it after the fact. The checked-in plan still returns
+`no_go` (13 blockers as of this check). The binding detects stale candidate
+content; it does not prove that the registry was exhaustive, that paraphrases
+were absent, or that a provider never saw either variant during training.
+Independent review, project split freeze and authorization remain separate.

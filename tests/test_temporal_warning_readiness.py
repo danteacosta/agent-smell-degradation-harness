@@ -1,8 +1,9 @@
-import copy
 import hashlib
 import json
+from tempfile import TemporaryDirectory
 from pathlib import Path
 import pytest
+from eval.temporal_cohort_candidate import audit
 from eval.temporal_warning_readiness import assess, main
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -11,6 +12,12 @@ def candidate():
     return json.loads((ROOT/'data/prepilot/temporal-warning-plan.candidate.json').read_text())
 
 
+def _write_reference(path, value):
+    path.write_text(json.dumps(value), encoding='utf-8')
+    return {'path': str(path.relative_to(ROOT)), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+
+
+@pytest.fixture
 def declared():
     p=candidate();p['selection_frozen']=p['split_frozen']=True
     p['project_split']={'strictdoc':'train','CASS':'train','todomvc':'train','realworld':'calibration','kanboard':'test','paperless-ngx':'test'}
@@ -20,33 +27,38 @@ def declared():
     p['qualified_provider_configurations']=[{'provider':provider,'model':'fixture','model_version':'fixture','mode':'runtime','checkpoint_source':'runtime_native','qualification_passed':True,'t1_t3_before_t4':True,'prompted_snapshot':False,'configuration_hash':'a'*64,'qualification_report_sha256':report_hash,'qualification_report_path':report_path} for provider in ['provider-a','provider-b']]
     for field in ['rubric_frozen','annotation_blinding_verified','independent_annotators_ready','prefix_clock_and_collector_qualified','feature_and_score_policy_frozen','schedule_frozen','launch_authorized']:p[field]=True
     p['budget']={'estimated_provider_cost_usd':1,'contingency_fraction':.25,'approved_cap_usd':2}
-    return p
+    # Empty registry is a synthetic positive case, not an exposure finding.
+    with TemporaryDirectory(dir=ROOT) as directory:
+        source = json.loads((ROOT/p['candidate_source_manifest']['path']).read_text())
+        p['exposure_audit'] = _write_reference(Path(directory)/'audit.json', audit(source, ROOT, []))
+        yield p
 
 
 def test_live_candidate_is_no_go_not_a_120_episode_gate():
     p=candidate();r=assess(p,ROOT)
     assert r['decision']=='no_go' and r['planned_episodes']==144
-    assert len(r['blockers'])==12
+    assert len(r['blockers'])==13
+    assert 'exposure_audit_not_bound_to_candidate' in r['blockers']
     assert r['reviewed_intents']==r['qualified_distinct_providers']==0
     assert p['historical_launch_gate_reference'].endswith('launch-plan.candidate.json')
 
 
-def test_declarations_never_authorize_collection_or_confirmatory_claims():
-    r=assess(declared(),ROOT)
+def test_declarations_never_authorize_collection_or_confirmatory_claims(declared):
+    r=assess(declared,ROOT)
     assert r['decision']=='prerequisites_declared'
     assert r['collection_authorized_by_this_report'] is False
     assert r['confirmatory_eligible'] is False
 
 
 @pytest.mark.parametrize('field',['selection_frozen','split_frozen','rubric_frozen','annotation_blinding_verified','independent_annotators_ready','prefix_clock_and_collector_qualified','feature_and_score_policy_frozen','schedule_frozen','launch_authorized'])
-def test_each_pending_prerequisite_keeps_no_go(field):
-    p=declared();p[field]=False
+def test_each_pending_prerequisite_keeps_no_go(field, declared):
+    p=declared;p[field]=False
     assert assess(p,ROOT)['decision']=='no_go'
 
 
 @pytest.mark.parametrize('change',['same_provider_alias','prompted_snapshot','future_boundary','unqualified','review_hash','author_review','missing_intent','split_overlap','budget_nan','budget_exceeded'])
-def test_invalid_receipts_and_design_boundaries_fail_closed(change):
-    p=declared()
+def test_invalid_receipts_and_design_boundaries_fail_closed(change, declared):
+    p=declared
     if change=='same_provider_alias':p['qualified_provider_configurations'][1]['provider']=' PROVIDER-A '
     elif change=='prompted_snapshot':p['qualified_provider_configurations'][1]['prompted_snapshot']=True
     elif change=='future_boundary':p['qualified_provider_configurations'][1]['t1_t3_before_t4']=False
@@ -60,14 +72,14 @@ def test_invalid_receipts_and_design_boundaries_fail_closed(change):
     assert assess(p,ROOT)['decision']=='no_go'
 
 
-def test_source_hash_cannot_be_replaced_by_a_status_flag():
-    p=declared();p['candidate_source_manifest']['sha256']='0'*64
+def test_source_hash_cannot_be_replaced_by_a_status_flag(declared):
+    p=declared;p['candidate_source_manifest']['sha256']='0'*64
     with pytest.raises(ValueError,match='hash mismatch'):assess(p,ROOT)
 
 
 @pytest.mark.parametrize('change',['missing','hash_mismatch','directory','absolute_escape','symlink_escape'])
-def test_qualification_reports_must_exist_match_and_stay_inside_root(change,tmp_path):
-    p=declared(); c=p['qualified_provider_configurations'][1]
+def test_qualification_reports_must_exist_match_and_stay_inside_root(change,tmp_path,declared):
+    p=declared; c=p['qualified_provider_configurations'][1]
     if change=='missing': c['qualification_report_path']='tests/fixtures/nonexistent-qualification.json'
     elif change=='hash_mismatch': c['qualification_report_sha256']='0'*64
     elif change=='directory': c['qualification_report_path']='tests/fixtures'
@@ -88,6 +100,33 @@ def test_qualification_reports_must_exist_match_and_stay_inside_root(change,tmp_
     assert r['qualified_distinct_providers']==1
     assert 'two_distinct_runtime_native_providers_not_qualified' in r['blockers']
     assert r['collection_authorized_by_this_report'] is False
+
+
+def test_legacy_audit_blocks_even_with_all_other_prerequisites_declared(declared):
+    declared['exposure_audit'] = candidate()['exposure_audit']
+    r = assess(declared, ROOT)
+    assert r['decision'] == 'no_go'
+    assert r['blockers'] == ['exposure_audit_not_bound_to_candidate']
+
+
+def test_audit_for_same_ids_cannot_clear_a_revised_pair(declared):
+    p = declared
+    source = json.loads((ROOT/p['candidate_source_manifest']['path']).read_text())
+    row = source['records'][0]
+    clean, edit = row['variants']['clean'], row['manipulation']
+    # Retain a valid single deletion, but make the defective input different.
+    edit['end'] -= 1
+    edit['text'] = clean[edit['start']:edit['end']]
+    row['variants']['defective'] = clean[:edit['start']] + clean[edit['end']:]
+    directory = (ROOT/p['exposure_audit']['path']).parent
+    p['candidate_source_manifest'] = _write_reference(directory/'revised-source.json', source)
+    for review in p['independent_human_reviews']:
+        review['source_manifest_sha256'] = p['candidate_source_manifest']['sha256']
+    r = assess(p, ROOT)
+    assert r['decision'] == 'no_go'
+    assert r['blockers'] == ['exposure_audit_not_bound_to_candidate']
+    p['exposure_audit'] = _write_reference(directory/'revised-audit.json', audit(source, ROOT, []))
+    assert assess(p, ROOT)['decision'] == 'prerequisites_declared'
 
 
 def test_cli_preserves_report_while_returning_nonzero_for_no_go(tmp_path,monkeypatch):

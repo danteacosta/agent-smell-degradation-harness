@@ -12,7 +12,7 @@ import json
 import math
 import re
 from pathlib import Path
-from eval.temporal_cohort_candidate import validate_candidate
+from eval.temporal_cohort_candidate import candidate_content_digest, validate_candidate
 
 
 def _bound_file(reference, root):
@@ -57,6 +57,8 @@ def assess(plan, root):
         raise ValueError('selected intent list differs from source manifest')
     if audit.get('pairs_verified') != 12 or set(audit.get('exact_or_contained_clean_input_matches', {})) != intents:
         raise ValueError('exposure audit does not cover the candidate cohort')
+    if audit.get('candidate_content_sha256') != candidate_content_digest(source):
+        blockers.append('exposure_audit_not_bound_to_candidate')
     if any(audit['exact_or_contained_clean_input_matches'].values()):
         blockers.append('prior_complete_input_match_requires_candidate_replacement_or_explicit_review')
     if plan.get('selection_frozen') is not True:
