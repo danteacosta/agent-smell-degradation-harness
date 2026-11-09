@@ -1508,3 +1508,23 @@ primary paper and is not scored.
 
 Decision impact: none. No hypothesis, metric, protocol or frozen-material change. Human decision flagged: whether a rule-based
 static baseline (Paska-like) is wanted inside B0, to be settled together with decision 4 of the pending-decisions register.
+
+## 2026-11-09 entry: DevIntent (intent violation rate) and an offline tester-prompt lint
+
+Search and reading date: 2026-11-09. Two standard web searches (omission in LLM code and test generation; requirement smells
+with agent trajectories and provenance). Already in this matrix and not re-scored: 2604.21505, 2507.20439, 2607.18886,
+2607.01236, 2605.27690, 2605.17169. One source was new to the matrix and was read at arXiv abstract-page level only (no full
+text; figures must be re-checked before being quoted). No source linking requirement smells or omission to trajectory-level
+early warning was found, so that related-work gap is unchanged. Secondary summary pages were not used.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Haing, Vidra and Setty, [*DevIntent: How Much Does LLM-Generated Code Violate Developer Intent?*](https://arxiv.org/abs/2608.07614), arXiv preprint v1 (cs.SE), 2026-08-07; no peer-reviewed venue listed | How often does generated code pass stated tests yet violate implicit constraints? 49-problem pilot derived from HumanEval+; implicit constraints removed from a clarified prompt and encoded as hidden constraint tests; Intent Violation Rate (IVR) = passes visible tests but fails hidden ones; two commercial models | Reported over 92% of stated tests passed, IVR 54.5% and 63.5%, described as bimodal. Small pilot, function-level, two models, unreviewed; limitations section not seen | Thesis: same construction family as the A/C omission pair (remove a condition, test it with a hidden oracle), at function level; it supports the premise that stated-test pass rates hide lost conditions but is neither browser-level nor project-grouped and does not support the section-13 numbers. Experiment: none adopted; "bimodal" is consistent with the recoverability framing but is not evidence for it. Product: motivates reporting per-constraint outcomes beside pass rates. Action: context in related work only after the full text is read | 3 |
+
+Incorporation: `eval/tester_prompt_lint.py` and `tests/test_tester_prompt_lint.py` make decision 5 of the pending-decisions register
+(tester prompts must not contain generated code) checkable if adopted. The rule follows the coupling premise of the
+2026-10-29 entry (Konstantinou et al., arXiv 2607.05139); DevIntent is not its basis. The lint is offline, non-gating and
+literal-match only (verbatim implementation lines, plus fenced blocks as a weaker signal); paraphrased code is not detected.
+
+Decision impact: none on H1/H2, B0/B3, estimands or frozen material. Human decision flagged: adopt decision 5 as a protocol
+rule (the lint then becomes a pre-collection check) or leave it unadopted.
