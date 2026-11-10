@@ -1612,3 +1612,13 @@ The implementation change addresses a concrete counterexample in the readiness
 gate: an older registry report could satisfy coverage after a valid edit to the
 same intent. Content binding improves audit reproducibility; it neither tests
 provider training membership nor changes the experimental design.
+
+## 2026-11-10 — Matched context and what a detector gain establishes
+
+Search/read: 2026-11-10. Screened recent requirements-defect, benchmark
+contamination, agent replay, and provenance work against existing titles and
+DOIs. Read the published abstract, design, results, validity and artifact statement.
+
+| Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Chen et al., [Do LLM Vulnerability-Detection Agents Reason Better? An Empirical Decomposition of Robustness, Resistance, and Grounding](https://doi.org/10.4230/LIPIcs.ESEM.2026.28), peer-reviewed ESEM 2026 Technical Track; [replication package](https://github.com/cielverse/llm-vuln-agent-reasoning-eval) | Which gains are recoverable by replaying selected tool context, and which remain after matching it? Six base models and six conditions on paired JITVUL, with SecVulEval and SV-TrustEval-C as auxiliary datasets; perturbation, misleading-cue and grounding probes. | In the largest improvement case, matched-context replay recovered much of the gain; the remaining gain was associated mainly with more positive predictions. Aggregate performance did not consistently improve robustness, resistance or grounding. Replay is conditional on agent-selected traces; synthetic cues, subset denominators and a single-author qualitative audit limit interpretation. | Thesis: incremental prediction does not establish a semantic or causal explanation. Experiment: maintain a common evaluation population and report alert rates and eligible denominators alongside discrimination. A trace-selected replay can inform a separate diagnostic but cannot substitute for pre-T4 evidence. Product: distinguish alert volume from actionable, constraint-grounded alerts. Action: document this interpretation boundary; no change to the B3–B0 estimand. | 8/10: peer-reviewed, transparent comparisons and public artifacts; external-service reruns and a different task limit replication and transfer. |

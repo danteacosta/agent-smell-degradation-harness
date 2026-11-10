@@ -56,8 +56,8 @@
     "status": "assistant_draft_pending_independent_review"
   },
   "exposure_audit": {
-    "path": "data/prepilot/temporal-warning-exposure-audit.json",
-    "sha256": "b3db5821b33dda7c990319d5456bf3424c6aca66305c851ab3346c329af555e9",
+    "path": "data/prepilot/temporal-warning-exposure-audit.bound.json",
+    "sha256": "4d75f0ca1fb0a799e145efe8732adb96f6b1e444fe279324cdfdf766cfd6e68b",
     "registry_files": 898,
     "absence_is_not_proof_of_no_exposure": true
   },

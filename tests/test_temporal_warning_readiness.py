@@ -37,8 +37,8 @@ def declared():
 def test_live_candidate_is_no_go_not_a_120_episode_gate():
     p=candidate();r=assess(p,ROOT)
     assert r['decision']=='no_go' and r['planned_episodes']==144
-    assert len(r['blockers'])==13
-    assert 'exposure_audit_not_bound_to_candidate' in r['blockers']
+    assert len(r['blockers'])==12
+    assert 'exposure_audit_not_bound_to_candidate' not in r['blockers']
     assert r['reviewed_intents']==r['qualified_distinct_providers']==0
     assert p['historical_launch_gate_reference'].endswith('launch-plan.candidate.json')
 
@@ -103,7 +103,11 @@ def test_qualification_reports_must_exist_match_and_stay_inside_root(change,tmp_
 
 
 def test_legacy_audit_blocks_even_with_all_other_prerequisites_declared(declared):
-    declared['exposure_audit'] = candidate()['exposure_audit']
+    historical = 'data/prepilot/temporal-warning-exposure-audit.json'
+    declared['exposure_audit'] = {
+        'path': historical,
+        'sha256': hashlib.sha256((ROOT/historical).read_bytes()).hexdigest(),
+    }
     r = assess(declared, ROOT)
     assert r['decision'] == 'no_go'
     assert r['blockers'] == ['exposure_audit_not_bound_to_candidate']

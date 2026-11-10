@@ -783,3 +783,34 @@ do not attach a digest to it after the fact. The checked-in plan still returns
 content; it does not prove that the registry was exhaustive, that paraphrases
 were absent, or that a provider never saw either variant during training.
 Independent review, project split freeze and authorization remain separate.
+
+### Bound report for the 144-episode draft — 2026-11-10
+
+The active plan now points to
+[`temporal-warning-exposure-audit.bound.json`](../../data/prepilot/temporal-warning-exposure-audit.bound.json).
+This is a fresh run of `audit()` for the current manifest using the explicit
+path list in the [historical report](../../data/prepilot/temporal-warning-exposure-audit.json).
+All 898 input files were verified against their historical byte hashes before
+the run; the per-path inventory and match map agreed with the historical report.
+Among 330 extracted input strings, there was no normalized exact or contained
+complete clean-input match for any of the 12 draft intents across six projects.
+The report does not cover registries beyond that pinned inventory.
+
+To reproduce this scoped replay, read the historical report's `inventory`,
+verify each file against its recorded SHA-256, and pass the listed paths and
+parsed current source manifest to `eval.temporal_cohort_candidate.audit`. Compare
+inventories by path, since the regenerated report sorts paths. A full-checkout
+scan is a separate audit and may cover a different inventory.
+
+The plan remains `no_go` with 12 blockers. This replay clears only the
+manifest-binding blocker. It does not establish novelty, screen paraphrases
+or partial clauses, qualify a provider, or replace independent exposure review.
+
+[Chen et al. (ESEM 2026)](https://doi.org/10.4230/LIPIcs.ESEM.2026.28)
+found that much of the largest observed gain in their vulnerability-detection
+comparison was recoverable by replaying selected context. For H2, report the
+eligible denominators and alert rates beside the B3–B0 comparison on the same
+held-out observations. An incremental prediction gain does not establish a
+causal explanation of the lost condition. Any diagnostic replay that uses
+information unavailable at its cutoff remains outside the confirmatory
+feature plane.
