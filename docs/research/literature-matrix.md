@@ -1528,3 +1528,18 @@ literal-match only (verbatim implementation lines, plus fenced blocks as a weake
 
 Decision impact: none on H1/H2, B0/B3, estimands or frozen material. Human decision flagged: adopt decision 5 as a protocol
 rule (the lint then becomes a pre-collection check) or leave it unadopted.
+
+## 2026-11-11 entry: search log, no new scored source
+
+Search date: 2026-11-11. Two standard web searches (requirement smells with LLM coding agents and acceptance criteria;
+trajectory provenance and early warning for requirement violation). Every candidate returned was already in this matrix
+and was not re-scored: 2609.29208, 2606.25550, 2609.00568 (WiseSpec; abstract re-read, which names no dataset or baseline),
+2603.23806, 2501.04810, 2605.17169, 2512.02393. A vendor blog (Kiro) and a secondary blog citing an unverified
+"ClarifyCodeBench" figure were seen and not used: product intelligence only, not scientific support. The related-work gap is
+unchanged: no source was found that measures requirement smells in acceptance criteria against coding-agent outcomes or
+trajectory-level early warning.
+
+Incorporation: `tests/test_decision_register.py` now checks that dates and arXiv identifiers cited by the pending-decisions
+register resolve to entries in this matrix, so the register cannot drift from its sources. No scientific content changed.
+
+Decision impact: none on H1/H2, B0/B3, estimands or frozen material.
