@@ -11,6 +11,7 @@ import hashlib
 import json
 import math
 import re
+import unicodedata
 from pathlib import Path
 from eval.temporal_cohort_candidate import candidate_content_digest, validate_candidate
 
@@ -68,7 +69,7 @@ def assess(plan, root):
     if (plan.get('split_frozen') is not True or set(split) != projects
             or sorted(split.values()) != ['calibration','test','test','train','train','train']):
         blockers.append('project_and_related_intent_split_not_frozen')
-    reviewed = set()
+    reviewers_by_intent = {intent_id: set() for intent_id in intents}
     source_hash = plan['candidate_source_manifest']['sha256']
     for review in plan.get('independent_human_reviews', []):
         if (isinstance(review, dict) and review.get('intent_id') in intents
@@ -79,7 +80,11 @@ def assess(plan, root):
                 and review.get('prior_exposure_and_residual_cues_reviewed') is True
                 and review.get('independent_of_author') is True
                 and isinstance(review.get('reviewer_id'), str) and review['reviewer_id'].strip()):
-            reviewed.add(review['intent_id'])
+            reviewer = unicodedata.normalize('NFKC', review['reviewer_id']).strip().casefold()
+            if reviewer:
+                reviewers_by_intent[review['intent_id']].add(reviewer)
+    reviewed = {intent_id for intent_id, reviewers in reviewers_by_intent.items()
+                if len(reviewers) >= 2}
     if reviewed != intents:
         blockers.append('independent_reviews_incomplete_or_not_bound_to_source')
     configurations = plan.get('qualified_provider_configurations', [])

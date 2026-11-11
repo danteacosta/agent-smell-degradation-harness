@@ -21,7 +21,7 @@ def _write_reference(path, value):
 def declared():
     p=candidate();p['selection_frozen']=p['split_frozen']=True
     p['project_split']={'strictdoc':'train','CASS':'train','todomvc':'train','realworld':'calibration','kanboard':'test','paperless-ngx':'test'}
-    p['independent_human_reviews']=[{'intent_id':i,'source_manifest_sha256':p['candidate_source_manifest']['sha256'],'mapping_approved':True,'manipulation_approved':True,'rights_approved':True,'prior_exposure_and_residual_cues_reviewed':True,'independent_of_author':True,'reviewer_id':'synthetic-test-reviewer'} for i in p['selected_requirements']]
+    p['independent_human_reviews']=[{'intent_id':i,'source_manifest_sha256':p['candidate_source_manifest']['sha256'],'mapping_approved':True,'manipulation_approved':True,'rights_approved':True,'prior_exposure_and_residual_cues_reviewed':True,'independent_of_author':True,'reviewer_id':reviewer} for i in p['selected_requirements'] for reviewer in ('reviewer-a','reviewer-b')]
     report_path='tests/fixtures/temporal-provider-qualification.synthetic.json'
     report_hash=hashlib.sha256((ROOT/report_path).read_bytes()).hexdigest()
     p['qualified_provider_configurations']=[{'provider':provider,'model':'fixture','model_version':'fixture','mode':'runtime','checkpoint_source':'runtime_native','qualification_passed':True,'t1_t3_before_t4':True,'prompted_snapshot':False,'configuration_hash':'a'*64,'qualification_report_sha256':report_hash,'qualification_report_path':report_path} for provider in ['provider-a','provider-b']]
@@ -48,6 +48,21 @@ def test_declarations_never_authorize_collection_or_confirmatory_claims(declared
     assert r['decision']=='prerequisites_declared'
     assert r['collection_authorized_by_this_report'] is False
     assert r['confirmatory_eligible'] is False
+
+
+@pytest.mark.parametrize('change,complete', [('one_per_intent', 0), ('alias', 11), ('duplicate', 11)])
+def test_each_intent_requires_two_distinct_reviewers(change, complete, declared):
+    reviews = declared['independent_human_reviews']
+    if change == 'one_per_intent':
+        reviews[:] = reviews[::2]
+    elif change == 'alias':
+        reviews[1]['reviewer_id'] = ' ＲＥＶＩＥＷＥＲ-A '
+    else:
+        reviews[1] = reviews[0].copy()
+    result = assess(declared, ROOT)
+    assert result['decision'] == 'no_go'
+    assert result['reviewed_intents'] == complete
+    assert result['blockers'] == ['independent_reviews_incomplete_or_not_bound_to_source']
 
 
 @pytest.mark.parametrize('field',['selection_frozen','split_frozen','rubric_frozen','annotation_blinding_verified','independent_annotators_ready','prefix_clock_and_collector_qualified','feature_and_score_policy_frozen','schedule_frozen','launch_authorized'])

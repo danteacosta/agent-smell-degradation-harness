@@ -814,3 +814,14 @@ held-out observations. An incremental prediction gain does not establish a
 causal explanation of the lost condition. Any diagnostic replay that uses
 information unavailable at its cutoff remains outside the confirmatory
 feature plane.
+
+## Count completed reviews per intent — 2026-11-11
+
+The 144-episode readiness audit now counts an intent as reviewed only when at
+least two distinct reviewer identifiers each have a valid approval bound to the
+current source manifest. The gate applies Unicode NFKC normalization, trims
+surrounding whitespace and folds case before deduplication. Duplicate rows
+and identifier spelling variants do not supply a second approval. This check
+implements the existing manipulation-admission requirement at readiness; it
+does not authenticate reviewers, verify independence or adjudicate disagreement.
+The candidate remains unreviewed and collection remains blocked.
