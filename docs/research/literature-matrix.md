@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-11-07
+Last updated: 2026-11-12
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1543,3 +1543,21 @@ Incorporation: `tests/test_decision_register.py` now checks that dates and arXiv
 register resolve to entries in this matrix, so the register cannot drift from its sources. No scientific content changed.
 
 Decision impact: none on H1/H2, B0/B3, estimands or frozen material.
+
+## 2026-11-12 entry: in-loop instruction-constraint enforcement (ContextCov) and failure-type-dependent remedies
+
+Search date: 2026-11-12. Two standard web searches (omission and missing-requirement detection for LLM code generation;
+trajectory early warning and provenance for coding agents). Two sources were new to this matrix and were read at
+abstract level plus the arXiv HTML method, evaluation and limitations sections (ContextCov) or abstract only (Shen et al.).
+Already-present candidates (TraceDev 2607.18886, Orchid 2604.21505, CodeTracer, TraceCaps, 2606.07889, 2605.17169) were
+not re-scored. Secondary blogs seen were not used. The related-work gap is unchanged: no source was found that measures
+omitted requirement conditions against trajectory-level early warning.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Sharma, [*ContextCov: Deriving and Enforcing Executable Constraints from Agent Instruction Files*](https://arxiv.org/abs/2603.00822), arXiv preprint v2 (cs.SE), 2026-05-04; no peer-reviewed venue listed | Can natural-language constraints in AGENTS.md-style files be turned into executable checks that stop agents from drifting from them? LLM extracts constraints (gpt-5.2-chat), routes them to process/source/architecture domains, Claude Opus 4.5 synthesises Python checks; evaluated on SWE-bench Lite (300 tasks, 12 repositories, OpenCode scaffold, GPT-5.2) against prompt-only and LLM-reflection baselines; blind human check of 384 sampled violations | Reports 88.3% constraint compliance versus 67.0% (prompt-only) and 50.3% (reflection), with functional correctness maintained; 82.81% extraction precision, judge-human agreement 85.42% (kappa 0.61). Limits: the AGENTS.md "ground truth" constraints are themselves LLM-generated from repository artifacts; one judge configuration; 12 Python-heavy repositories; no multiple-comparison correction; checks run in-loop but baselines were scored post-hoc on final patches, so the comparison mixes intervention timing with check availability | Thesis: adjacent context, not evidence for H1/H2. The constraints it enforces already exist in the instruction text; the thesis case is a condition missing from the requirement, which no extraction can recover, so it does not contradict the omission premise. Experiment: a plausible stronger operational baseline family for B0 (in-loop executable checks), to be settled with decision 4 of the pending-decisions register; no change made. Product: closest open prior art for "monitor agent against written constraints"; differentiation must rest on explaining loss of a condition absent from the written source. Action: record only | 6 (preprint; clear method and sampled human validation; LLM-generated ground truth and single scaffold limit transfer) |
+| Shen, Peng and Owen, [*Failure-Aware Enhancements for LLM Code Generation: An Empirical Study on Decision Framework*](https://arxiv.org/abs/2602.02896), SANER 2026 per arXiv listing, submitted 2026-02-02 | Which remedy (progressive prompting, self-critique, multi-model collaboration, RAG) suits which failure type? 25 GitHub projects for the main study, six projects for per-strategy tests across four failure types; models not named in the abstract | Progressive prompting 96.9% task completion versus 80.5% direct (d = 1.63); self-critique helps code-reviewable logic errors but gave 0% on external-service integration failures; remedy effectiveness depends on failure type. Limits: abstract-level reading only, task completion is not per-constraint preservation, models and oracle not verified | Thesis: weak support for reporting results per failure/rule type (already planned in section 6 of the proposal). Experiment: none. Product: failure-type-specific triage is plausible. Action: context only; re-read full text before citing any figure | 4 (peer-reviewed venue per listing but abstract-only read; no per-constraint outcome) |
+
+Decision impact: none on H1/H2, B0/B3, estimands or frozen material. Human decision flagged: whether in-loop executable
+constraint checks (ContextCov-style) belong inside B0 as an operational feature family; this is a design decision for the
+advisor, not made here.
