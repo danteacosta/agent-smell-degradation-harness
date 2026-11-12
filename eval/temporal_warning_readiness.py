@@ -70,21 +70,24 @@ def assess(plan, root):
             or sorted(split.values()) != ['calibration','test','test','train','train','train']):
         blockers.append('project_and_related_intent_split_not_frozen')
     reviewers_by_intent = {intent_id: set() for intent_id in intents}
+    unresolved_intents = set()
     source_hash = plan['candidate_source_manifest']['sha256']
     for review in plan.get('independent_human_reviews', []):
         if (isinstance(review, dict) and review.get('intent_id') in intents
                 and review.get('source_manifest_sha256') == source_hash
-                and review.get('mapping_approved') is True
-                and review.get('manipulation_approved') is True
-                and review.get('rights_approved') is True
-                and review.get('prior_exposure_and_residual_cues_reviewed') is True
-                and review.get('independent_of_author') is True
                 and isinstance(review.get('reviewer_id'), str) and review['reviewer_id'].strip()):
             reviewer = unicodedata.normalize('NFKC', review['reviewer_id']).strip().casefold()
             if reviewer:
-                reviewers_by_intent[review['intent_id']].add(reviewer)
+                intent_id = review['intent_id']
+                if all(review.get(field) is True for field in (
+                    'mapping_approved', 'manipulation_approved', 'rights_approved',
+                    'prior_exposure_and_residual_cues_reviewed', 'independent_of_author',
+                )):
+                    reviewers_by_intent[intent_id].add(reviewer)
+                else:
+                    unresolved_intents.add(intent_id)
     reviewed = {intent_id for intent_id, reviewers in reviewers_by_intent.items()
-                if len(reviewers) >= 2}
+                if len(reviewers) >= 2 and intent_id not in unresolved_intents}
     if reviewed != intents:
         blockers.append('independent_reviews_incomplete_or_not_bound_to_source')
     configurations = plan.get('qualified_provider_configurations', [])

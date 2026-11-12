@@ -825,3 +825,17 @@ and identifier spelling variants do not supply a second approval. This check
 implements the existing manipulation-admission requirement at readiness; it
 does not authenticate reviewers, verify independence or adjudicate disagreement.
 The candidate remains unreviewed and collection remains blocked.
+
+## Keep unresolved reviews visible at readiness — 2026-11-12
+
+A current-manifest receipt with a valid reviewer identifier and any missing
+or non-affirmative approval field prevents that intent from counting as
+reviewed, even when two other approvals are present. Conflicting receipts from
+the same normalized identifier also block readiness. Old-manifest receipts
+cannot satisfy or veto a decision for the current manifest.
+
+Do not delete or overwrite dissenting responses. Keep the original responses
+and pre-adjudication agreement report in private custody. A human must resolve
+the discrepancy or revise or exclude the candidate under the approved protocol
+before preparing a fresh readiness plan. The gate does not adjudicate, infer
+assent or issue scientific labels.

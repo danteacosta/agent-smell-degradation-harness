@@ -65,6 +65,23 @@ def test_each_intent_requires_two_distinct_reviewers(change, complete, declared)
     assert result['blockers'] == ['independent_reviews_incomplete_or_not_bound_to_source']
 
 
+@pytest.mark.parametrize('reviewer,decision', [(' REVIEWER-A ', False), ('reviewer-c', False),
+                                              ('reviewer-c', None)])
+def test_current_nonapproval_cannot_be_discarded(reviewer, decision, declared):
+    reviews = declared['independent_human_reviews']
+    reviews.append(dict(reviews[0], reviewer_id=reviewer, rights_approved=decision))
+    result = assess(declared, ROOT)
+    assert result['decision'] == 'no_go'
+    assert result['reviewed_intents'] == 11
+    assert result['blockers'] == ['independent_reviews_incomplete_or_not_bound_to_source']
+
+
+def test_nonapproval_from_an_old_manifest_is_not_a_current_review(declared):
+    reviews = declared['independent_human_reviews']
+    reviews.append(dict(reviews[0], source_manifest_sha256='0'*64, rights_approved=False))
+    assert assess(declared, ROOT)['decision'] == 'prerequisites_declared'
+
+
 @pytest.mark.parametrize('field',['selection_frozen','split_frozen','rubric_frozen','annotation_blinding_verified','independent_annotators_ready','prefix_clock_and_collector_qualified','feature_and_score_policy_frozen','schedule_frozen','launch_authorized'])
 def test_each_pending_prerequisite_keeps_no_go(field, declared):
     p=declared;p[field]=False
