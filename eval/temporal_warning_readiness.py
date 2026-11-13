@@ -117,6 +117,12 @@ def assess(plan, root):
     return {'schema_version':'temporal-warning-readiness/v1', 'decision':'no_go' if blockers else 'prerequisites_declared',
             'collection_authorized_by_this_report':False, 'confirmatory_eligible':False,
             'planned_episodes':144, 'pairs_verified':12, 'reviewed_intents':len(reviewed),
+            'review_status_by_intent': {
+                intent_id: ('unresolved' if intent_id in unresolved_intents
+                            else 'complete' if intent_id in reviewed
+                            else 'awaiting_approvals')
+                for intent_id in sorted(intents)
+            },
             'qualified_distinct_providers':len(qualified), 'blockers':blockers,
             'limitations':['Declarative receipts require independent authenticity verification before launch.',
                            'This audit neither runs providers nor validates scientific labels.',

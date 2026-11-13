@@ -40,6 +40,9 @@ def test_live_candidate_is_no_go_not_a_120_episode_gate():
     assert len(r['blockers'])==12
     assert 'exposure_audit_not_bound_to_candidate' not in r['blockers']
     assert r['reviewed_intents']==r['qualified_distinct_providers']==0
+    assert r['review_status_by_intent'] == {
+        intent_id: 'awaiting_approvals' for intent_id in p['selected_requirements']
+    }
     assert p['historical_launch_gate_reference'].endswith('launch-plan.candidate.json')
 
 
@@ -73,6 +76,12 @@ def test_current_nonapproval_cannot_be_discarded(reviewer, decision, declared):
     result = assess(declared, ROOT)
     assert result['decision'] == 'no_go'
     assert result['reviewed_intents'] == 11
+    assert result['review_status_by_intent'] == {
+        intent_id: 'unresolved' if intent_id == reviews[0]['intent_id'] else 'complete'
+        for intent_id in declared['selected_requirements']
+    }
+    assert 'reviewer-a' not in json.dumps(result)
+    assert 'reviewer-c' not in json.dumps(result)
     assert result['blockers'] == ['independent_reviews_incomplete_or_not_bound_to_source']
 
 

@@ -839,3 +839,15 @@ and pre-adjudication agreement report in private custody. A human must resolve
 the discrepancy or revise or exclude the candidate under the approved protocol
 before preparing a fresh readiness plan. The gate does not adjudicate, infer
 assent or issue scientific labels.
+
+## Route incomplete reviews without exposing judgments — 2026-11-13
+
+The readiness report includes `review_status_by_intent`, keyed by candidate
+intent ID: `awaiting_approvals` means fewer than two valid approvals and no
+recorded unresolved current review; `unresolved` means a current receipt
+requires custodian follow-up; `complete` means the declarative review check
+passed. Unresolved takes precedence. The status list contains no reviewer
+identifiers or judgment text. It is for the custodian: do not include it in
+blinded reviewer packets or the detector feature plane. Use the private
+original receipts to adjudicate; a missing recorded receipt does not establish
+that nobody reviewed the item.
