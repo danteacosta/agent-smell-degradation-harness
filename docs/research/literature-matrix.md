@@ -1561,3 +1561,22 @@ omitted requirement conditions against trajectory-level early warning.
 Decision impact: none on H1/H2, B0/B3, estimands or frozen material. Human decision flagged: whether in-loop executable
 constraint checks (ContextCov-style) belong inside B0 as an operational feature family; this is a design decision for the
 advisor, not made here.
+
+## 2026-11-13 entry: Unterbusch and Vogelsang (ICSE-NIER 2026) scored; it was cited in the proposal but absent here
+
+Search date: 2026-11-13. Four standard web searches (omission and missing-requirement detection; trajectory early warning
+and provenance; OpenTelemetry GenAI conventions; 2026 venue studies on requirements quality). One source was new to this
+matrix: Unterbusch and Vogelsang, which the proposal's related-work table already cites but which had no scored row.
+Read: the arXiv HTML (abstract, data, method, results, limitations) through a summarising fetch tool; the ICSE proceedings
+version was not inspected, so numbers should be re-checked against it before quotation. Already present and not re-scored:
+2609.03230, 2606.25550, 2604.21505, 2604.11641, 2607.18886, 2609.00568, TraceCaps, ContextCov, 2602.02896. OpenTelemetry
+GenAI conventions were seen only through vendor blogs (they report "Development" status and the operation names
+`invoke_agent`, `execute_tool`); the primary specification page was not retrieved, so nothing is adopted from it.
+Vendor blogs are product intelligence only.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Unterbusch and Vogelsang, [*Context-Adaptive Requirements Defect Prediction through Human-LLM Collaboration*](https://arxiv.org/abs/2601.01952), ICSE-NIER 2026 (new-ideas track; arXiv v1 read) | Can a human-LLM loop predict whether a weak word makes a requirement defective? QuRE: 2,111 Mercedes-Benz requirements with 23 weak words, balanced by undersampling to 1,266 (633 per class). gpt-4.1-mini writes a reasoning sentence plus verdict; validated examples enter a pool and the 12 most similar are retrieved per query. User feedback was simulated with label-conditioned explanations vetted by the authors. Baselines: few-shot without reasoning, fine-tuned BERT. | On the balanced set: zero-shot CoT precision 0.573 / recall 0.997 / F1 0.728; 20-example pool 0.679 / 0.972 / 0.799; 80 examples 0.685 / 0.968 / 0.802; BERT on 320 examples 0.635 / 0.804 / 0.709. Most gain arrives at 20 examples. Threats: annotator reliability unknown, benchmark oversamples hard cases, simulated feedback, one smell family, one LLM; no downstream effect measured; incompleteness/omission is not addressed. | Thesis: supports only the weaker statement that smell labels on existing requirement text are noisy and unvalidated against downstream outcomes; it is detection of a surface smell, not loss of a testable condition, and gives no evidence for H1/H2. Experiment: at precision 0.573 and recall 0.997 on a 50% prevalence set the classifier is close to flag-everything, so report prevalence, PR-AUC and a flag-all baseline beside precision/recall (already planned; no change). Reinforces keeping inter-annotator agreement for the label plane. Product: recall-first triage with correctable reasoning is a plausible reviewer UX, unvalidated. Action: none to protocol; cite as adjacent context in the "defect prediction without downstream outcome" sentence of the related-work table. | 5 |
+
+Decision impact: none on H1/H2, B0/B3, estimands or frozen material. The proposal row "Unterbusch e Vogelsang, ICSE-NIER 2026"
+now has a matching scored entry; no Drive text needed changing.
