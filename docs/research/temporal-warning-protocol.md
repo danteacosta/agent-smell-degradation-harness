@@ -851,3 +851,14 @@ identifiers or judgment text. It is for the custodian: do not include it in
 blinded reviewer packets or the detector feature plane. Use the private
 original receipts to adjudicate; a missing recorded receipt does not establish
 that nobody reviewed the item.
+
+## Reject ambiguous readiness inputs — 2026-11-14
+
+The readiness CLI rejects duplicate JSON object members at any depth in the
+plan, including spellings that decode to the same name. The same rule applies
+to the referenced source manifest and exposure audit. Their digests are
+verified against the exact bytes decoded. A repeated approval field cannot
+silently discard a dissenting value, and matching bytes alone do not make a
+document unambiguous. Invalid input exits before a readiness report is written.
+Python callers of `assess` must also reject duplicate members when decoding
+the plan, since a dictionary cannot preserve them.

@@ -16,13 +16,25 @@ from pathlib import Path
 from eval.temporal_cohort_candidate import candidate_content_digest, validate_candidate
 
 
+def _unique_json_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f'duplicate JSON object member: {key}')
+        result[key] = value
+    return result
+
+
 def _bound_file(reference, root):
     if not isinstance(reference, dict):
         raise ValueError('hash-bound artifact reference required')
     path = (root / reference['path']).resolve()
-    if not path.is_relative_to(root) or hashlib.sha256(path.read_bytes()).hexdigest() != reference['sha256']:
+    if not path.is_relative_to(root):
         raise ValueError('artifact path or hash mismatch')
-    return json.loads(path.read_text())
+    data = path.read_bytes()
+    if hashlib.sha256(data).hexdigest() != reference['sha256']:
+        raise ValueError('artifact path or hash mismatch')
+    return json.loads(data, object_pairs_hook=_unique_json_object)
 
 
 def _qualification_report_matches(configuration, root):
@@ -134,7 +146,11 @@ def main(argv=None):
     parser.add_argument('--plan',type=Path,default=Path('data/prepilot/temporal-warning-plan.candidate.json'))
     parser.add_argument('--output',type=Path)
     args=parser.parse_args(argv)
-    report=assess(json.loads(args.plan.read_text()),Path.cwd())
+    try:
+        plan = json.loads(args.plan.read_bytes(), object_pairs_hook=_unique_json_object)
+        report = assess(plan, Path.cwd())
+    except (OSError, ValueError) as error:
+        parser.error(str(error))
     rendered=json.dumps(report,indent=2,allow_nan=False)+'\n'
     if args.output:
         try:

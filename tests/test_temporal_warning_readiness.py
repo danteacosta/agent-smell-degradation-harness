@@ -12,6 +12,34 @@ def candidate():
     return json.loads((ROOT/'data/prepilot/temporal-warning-plan.candidate.json').read_text())
 
 
+@pytest.mark.parametrize('key', ['"rights_approved"', r'"rights_approv\u0065d"'])
+def test_cli_rejects_duplicate_nested_plan_members(tmp_path, monkeypatch, capsys, key):
+    monkeypatch.chdir(ROOT)
+    plan, output = tmp_path/'plan.json', tmp_path/'output.json'
+    base = candidate()
+    base['independent_human_reviews'] = [{'rights_approved': True}]
+    plan.write_text(json.dumps(base).replace('"rights_approved": true',
+                    f'{key}: false, "rights_approved": true'))
+    with pytest.raises(SystemExit) as error:
+        main(['--plan', str(plan), '--output', str(output)])
+    assert error.value.code == 2
+    assert 'duplicate JSON object member: rights_approved' in capsys.readouterr().err
+    assert not output.exists()
+
+
+def test_assess_rejects_duplicate_members_even_when_audit_hash_matches(declared):
+    reference = declared['exposure_audit']
+    path = ROOT/reference['path']
+    original = json.loads(path.read_bytes())
+    data = json.dumps(original).replace('"pairs_verified": 12',
+                                       '"pairs_verified": 0, "pairs_verified": 12').encode()
+    assert data != path.read_bytes()
+    path.write_bytes(data)
+    reference['sha256'] = hashlib.sha256(data).hexdigest()
+    with pytest.raises(ValueError, match='duplicate JSON object member: pairs_verified'):
+        assess(declared, ROOT)
+
+
 def _write_reference(path, value):
     path.write_text(json.dumps(value), encoding='utf-8')
     return {'path': str(path.relative_to(ROOT)), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
