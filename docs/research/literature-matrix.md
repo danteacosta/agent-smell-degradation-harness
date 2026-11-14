@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-10-25
+Last updated: 2026-11-02
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1297,3 +1297,369 @@ requirement-smell and acceptance-criteria papers returned only sources already i
 | Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
 | --- | --- | --- | --- | ---: |
 | Shu, Chong, Zhou, Peng, Wu, Han, Zhuang, Yuan and Wang, [*What Resolve Rate Hides: Trajectory Structure Diagnostics for Coding Agents*](https://arxiv.org/abs/2607.06184) (TraceProbe), arXiv preprint v1, 2026; no peer-reviewed venue listed | What do coding-agent trajectories reveal that resolve rate hides? 500 SWE-Bench Verified tasks x 5 agent/model settings (2,500 trajectories), 50 tasks x 3 repeats x 5 settings (750), and 266 SWE-Bench Pro Python tasks (1,330 runs). Deterministic detectors over complete trajectories (e.g. Search Loop: >=10 consecutive search/read actions with no write or validation; Re-read Churn: same file read >=3 times within 10 actions; Unsupported Completion Claim), plus oracle-grounded milestones anchored on gold-patch files and cross-run divergence against a resolved reference. | Search Loop in 41.1% of resolved vs 56.1% of failed runs; Re-read Churn 34.0% vs 44.7%; Unsupported Completion Claim 7.6% vs 9.5% (small gap). Function-level divergence from a resolved run appears a median of ~20 steps before the failed run ends; file choice alone is too coarse. Analysis is post-hoc on complete trajectories: no prefix prediction is evaluated. Thresholds were tuned on Verified; main corpus has one run per task/setting; outcomes inherit SWE-Bench test limits; semantic tags come from an LLM labeler; Python issue-to-PR repair only; no analysis of requirements or specifications. | Thesis: context only. It supports the premise that outcome-only metrics hide process differences, but it is not evidence that T1-T3 provenance detects loss of a requirement condition, and its divergence lead time is not an early-warning result. Experiment: the structural detectors are cheap, label-free candidates for the B0 operational feature set, and they would test whether H2's B3 gain exceeds generic trajectory-shape signals. Reference-based milestones use gold patches and must not enter deployable features (leakage boundary). Product: supports a "process diagnostics" category that is distinct from explaining semantic loss of a requirement. Action: no protocol or code change today. **Decision needed from Dante (not applied):** whether B0 should add structural operational features (search-loop, re-read churn, unsupported-completion flag) before the pre-registration freeze, so that B3 is compared against a stronger operational baseline. Adding them post-freeze would need a deviation record. | 5 |
+
+## 2026-10-26 entry: authoring complete acceptable sets fails by omission (Silent Omissions)
+
+Search and reading date: 2026-10-26. Read: arXiv abstract page and the first ~100k characters of the HTML
+rendering of 2608.01000v1 (task definitions, models, headline results); the planting protocol (§4) and the
+limitations section (§7.3) were not reached, so figures should be re-checked before being quoted. The same
+search surfaced Kurady et al., *Compositional Policy Violations* (arXiv 2609.18820), abstract only.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Chen, Chen, Lin, Long and Vong, [*Judging Is Not Enumerating: Silent Omissions in LLM-Authored Acceptable Sets*](https://arxiv.org/abs/2608.01000), arXiv preprint v1, 2026-08-02; no peer-reviewed venue listed | Can LLMs author the full set of acceptable answers (test suites, keys, rubrics) that define correctness? 240-item word-list predicate task, numeric predicates, WordNet synsets (incomplete truth), HumanEval+/MBPP+, a 43,227-item production deployment; Qwen2.5 3B-72B plus Llama, Mistral, Phi-4, gemma, GPT-5.1 and Claude Opus 4.8 (reasoning off/on); one-shot greedy authoring; predicate-emission control; planted over-inclusions vs omissions; RLVR with authored keys; gating and execution-based repair. | Judging beats enumerating by +0.29 to +0.34 F1 (not closed by scale); authored code suites admit only 19-42% of oracle-correct solutions; planted over-inclusions are detected 6-7x more often than omissions; production failures are omission-first at 10:1. Scope: one-shot greedy authoring, reasoning not tested for the headline result; repair depends on a reference execution; unreviewed single preprint, no independent replication; no requirements-specific arm. | Thesis: independent support that omission is the hard-to-audit error class for LLM-authored criteria, consistent with E2EDevBench; it does not show requirement-condition loss in agent trajectories. Experiment: an LLM-judge's detection of deleted conditions must be reported separately from detection of wrong content, and no LLM-authored acceptance set may serve as a label oracle. Product: omission-sensitive review needs a reference set; do not market a judge as complete. Action (made): `omission_detection_gap` added to the synthetic judge-control report (contradicted minus deleted correct rate), with a regression test; no protocol text, hypothesis or label rule changed. | 5/10: transparent scope and many models/tasks, but unreviewed, abstract/partial-text reading, non-requirements data. |
+
+### Pending full-text reading, outside the canonical matrix
+
+| Candidate and primary version | Authors | Reading status |
+| --- | --- | --- |
+| [Compositional Policy Violations: When Step-Level Compliance Fails In Agentic AI Workflows](https://arxiv.org/abs/2609.18820) | Kurady et al. | Abstract only (arXiv v2, 2026-09-17, cs.AI/cs.MA). Argues step-scoped monitors cannot detect whole-execution policy violations and that provenance must be retained; no data or results seen. No credibility score or evidentiary recommendation. Product-intelligence context only until the full text is read. |
+
+**Decision for the human:** none required; if the thesis text should cite Silent Omissions, treat it as
+preprint context for the omission-asymmetry threat, not as evidence for H1/H2.
+
+
+## 2026-10-26 follow-up — Equal detection rates are not evidence of adequate detection
+
+Search/read date: 2026-10-26. Revisited Ribeiro et al., CheckList, DOI
+10.18653/v1/2020.acl-main.442 (original entry above, credibility 9/10 unchanged).
+Read the primary ACL PDF abstract, test types, task results, industrial session,
+18-participant study and discussion of challenge-set limitations. No replication.
+The controlled user study was restricted to MFTs and QQP, with six participants
+per condition; severity was initially self-reported, with a further independent
+rating. These limits preclude translating its productivity results into product ROI.
+
+**Decision and implementation.** Keep minimum-functionality checks separate
+from invariance/relative contrasts. A zero contradiction-minus-deletion accuracy
+gap can occur with perfect performance, equal failure, or no collected responses.
+`score_controls` now reports absolute correct/planned rates, completed, missing,
+invalid/failed and abstained counts for each operation. Three regressions cover
+an empty-versus-perfect zero gap, mixed missing/error/abstention outcomes and
+negative gap direction. Denominators retain every planned control; no threshold,
+corpus, label, H1/H2 or provider authorization changed.
+
+Thesis: instrument qualification only, not evidence of temporal requirement loss.
+Experiment: the descriptive gap must be read alongside each operation's absolute
+rate and accounting; synthetic success cannot authorize confirmation.
+Product: a relative contrast cannot certify obligation coverage or willingness
+to pay. Next human dependency remains independent review of real frozen materials.
+
+**Reading limit for Silent Omissions.** The earlier entry records partial reading
+and remains provisional context. Today's arXiv abstract/HTML fetch failed; the
+planting method and limitations were not verified. Its numerical claims must not
+be promoted to thesis evidence on the strength of this review. The engineering
+change above is justified by an explicit counterexample and the already-read
+peer-reviewed CheckList method, not by those unverified numerical claims.
+
+## 2026-10-27 entry: UnderSpecBench read beyond the abstract
+
+Search and reading date: 2026-10-27. Deduplicated by arXiv ID (previously only named as an unread search hit in the
+2026-10-12 section). Read: arXiv abstract page and the arXiv HTML rendering through a summarising fetch tool (design,
+oracle, results table, limitations); the last ~6k characters and the appendix were not read, so figures should be
+re-checked before being quoted. A search for new omission-detection papers returned only sources already entered.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Ji, Zhang, Xu, Li, Gao, Wang and Cheung, [*Coding Agents Are Guessing: Measuring Action-Boundary Violations in Underspecified DevOps Instructions*](https://arxiv.org/abs/2607.02294) (UnderSpecBench), arXiv preprint, 2026; no peer-reviewed venue listed | Do coding agents stay inside the safe action boundary when DevOps instructions are underspecified? 69 task families x 32 instruction variants (intent clarity x target certainty x blast radius) = 2,208 prompts; Claude Code, Codex and OpenCode, five agent-model configurations. Variants derived by slot substitution from a hand-written explicit baseline; deterministic state-diff oracles (intended vs over-scope sets). | 55.8–67.8% of runs violated at least one boundary; target underspecification degraded action quality most, blast-radius cues barely changed behaviour. No repetitions, confidence intervals, significance tests or task-family clustering reported; pooled rates are run-weighted; no validity check of the variants; oracle not human-validated (human check only for the LLM disposition judge, kappa 0.860 on 93 cases); one safe action per task; containerised, no human gating. | Context only: a graded-underspecification design with executable oracles, in a safety domain (action scope), not requirement-condition loss in generated artifacts. It does not test H1/H2 and shows no pre-final signal. Its missing repetition and clustering are the gaps our protocol (run_id/replication_id, project-level bootstrap) already closes. No claim or hypothesis changes. Keep the manipulation-validity review (A/B/C) as a gate: mechanical variant generation without a validity check is a threat we do not inherit. Possible later secondary factor (graded omission severity) is a human design decision. Product: wrong-target guessing suggests a different failure class than silent condition loss; do not merge them. | 5/10: preprint, public benchmark and explicit oracle design, but no statistics beyond rates, no oracle validation, domain transfer is indirect. |
+
+
+## 2026-10-27 — Redundant interventions can distort test assessment
+
+Search/read date: 2026-10-27; deduplicated by title and primary-paper URL.
+Read the primary author-deposited PDF abstract, definitions, experimental method,
+results, construct/internal/external threats and conclusion. No reproduction.
+
+| Reference / status | Question, sample, method | Finding / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | --- |
+| Papadakis, Henard, Harman, Jia and Le Traon, [Threats to the Validity of Mutation-Based Test Assessment](https://discovery.ucl.ac.uk/1508136/1/ISSTA16.pdf), ISSTA 2016; peer-reviewed proceedings, author-deposited manuscript | Five Unix utilities (Grep, Sed, Flex, Make, Gzip); mutation/test-suite simulation, compiler-equivalence filtering and observed test-kill subsumption; compares conventional and subsuming mutation scores. | Redundant mutants can inflate assessment and alter test-suite comparisons. Their Type-I-error estimate is conditional on a simulated experiment and its alternative mutation metric, not a universal false-positive probability. Surviving mutants were removed from the analysis; finite suites approximate subsumption; only five programs/tools, no requirements or LLM agents. | Thesis: methodological analogy, not H1/H2 evidence. Experiment: materialize the existing candidate queue and explicitly retain shared-source groups without inferring semantic subsumption. Product: many detected mutations do not by themselves establish broad obligation protection. Action: temporal protocol now contains a concrete 12-pair/6-project handoff, two content/identity commitments and the two shared-span groups; no admission or outcome-based filtering. | 8/10: reviewed primary empirical study, explicit algorithms and threats; synthetic comparisons, approximate subsumption and narrow code domain limit transfer. |
+
+**Bounded incorporation.** The 12 existing candidates passed the current offline
+source/deletion validator, but form only 10 distinct source-excerpt groups.
+This observation is directly computed from the candidate metadata, not inferred
+from the paper. Shared spans are not semantic equivalence or subsumption.
+Project-level inference and the human admission gate remain unchanged; no
+candidate, label, hypothesis, baseline or provider authorization changed.
+
+## 2026-10-28 search note (no new entry)
+
+Search date: 2026-10-28. One search on requirement omission in LLM code generation returned only sources already
+entered (Orchid 2604.21505, ClarifyCodeBench 2607.00711, "When Prompts Go Wrong" 2507.20439, HumanEvalComm,
+RealBench 2604.22659) plus ArchCode (Han et al., ACL 2024, doi:10.18653/v1/2024.acl-long.730). ArchCode was read
+at abstract level only (requirement-conditioned code and per-requirement test generation, ranking by requirement
+compliance; HumanEval-NFR). Method details, results and limitations were not read, so it is not scored and not
+entered. Candidate follow-up: read the full paper before citing it as prior art for requirement-anchored tests
+(a product/ablation question, not a change to H1/H2).
+
+
+## 2026-10-28 — Correlation does not establish semantic-review adequacy
+
+Search/read: 2026-10-28; DOI/title deduplicated. Read publisher abstract,
+method, human-validation design/results and threats (Sections 3–5). No replication.
+
+| Reference / status | Question, sample, method | Result / limits | Thesis, experiment, product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Paiva, Canedo and Rocha Filho, [From issue titles to requirements](https://doi.org/10.1007/s00766-026-00462-z), Requirements Engineering 31:7, published 26 May 2026; peer-reviewed | 150 OSS titles, five repositories; two generators, three prompts, 900 statements; LLM quality ratings and five humans reviewing 50 stratified items after separate calibration. | Prompt trade-offs; human alpha 0.150–0.394 despite significant human-mean correlations. Intrinsic textual quality excludes contextual completeness/correctness; score-stratified validation, few models/projects and stochastic reproducibility limit transfer. | Thesis: no H1/H2 evidence. Experiment: preserve independent judgments, separate calibration and adjudication; correlation cannot certify semantic admission. Product: drafting-quality scores do not establish obligation coverage. Action: publish two unfilled review slots for the existing 12 candidates; no synthetic human decisions. | 7/10: reviewed, explicit rubric and public replication materials; limited human sample and low agreement constrain proxy-validity claims. |
+
+**Implementation boundary.** The new template reduces manual assembly only.
+Coverage, schema, ordered-ID digest, null judgments and rejection by the existing
+admission API were checked offline. These checks do not establish semantic
+validity, source rights, independent people, external custody or a corpus freeze.
+
+
+## 2026-10-29 — ArchCode is prior art for requirement-conditioned tests
+
+Search/read date: 2026-10-29. Upgraded the 2026-10-28 abstract-only search hit,
+deduplicated by DOI. Read primary ACL PDF abstract, framework (Section 3),
+evaluation/results (Section 4), limitations and benchmark construction
+(Appendix B). Other appendices were not comprehensively read; no replication.
+
+| Reference / status | Question, sample, method | Finding / limitations | Thesis, experiment, product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Han et al., [ArchCode](https://doi.org/10.18653/v1/2024.acl-long.730), ACL 2024 long paper; peer-reviewed | Requirement inference conditions code and per-requirement tests; execution ranks candidates. HumanEval (164 tasks), CodeContests (165 test tasks), HumanEval-NFR; GPT-3.5-Turbo and WizardCoder. | Reports functional and NFR gains, with maintainability trade-offs. Small code tasks, inferred obligations and cascading-error risk; benchmark tests partly generated, then filtered/reviewed; some baselines imported rather than reproduced. | Thesis: no controlled omission intervention or T1–T3 H2 test. Experiment: separate inferred requirements from authorized reference obligations. Product: requirement-conditioned test generation is prior art; auditing an existing verifier against independently validated violations is the proposed distinction, not an established uniqueness claim. Action: retain independent admission and protect the real unfilled review template in CI. | 8/10: reviewed primary paper and released implementation; narrow tasks, author-curated benchmark and generation-dependent evidence constrain transfer. |
+
+**Concrete incorporation.** Two persistent regressions bind the review template
+to the current candidate-content digest and complete candidate coverage, and
+ensure null human judgments cannot pass the admission API. These checks protect
+the handoff only; they do not qualify semantic judgments or confirm H1/H2.
+Do not claim novelty for requirement-to-test generation itself.
+
+
+## 2026-10-30 — Report annotation tasks, not just completed forms
+
+Search/read: 2026-10-30; deduplicated by DOI/title. Read primary ACL abstract,
+Sections 3–7 and limitations; appendices not comprehensively read; no replication.
+
+| Reference / status | Question, data, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Kunilovskaya et al., [Who Annotates in NLP?](https://doi.org/10.18653/v1/2026.emnlp-main.396), EMNLP 2026 main; peer-reviewed | Task-level annotation-reporting audit: human gold 41 papers/72 tasks; LLM extraction 1,603 papers/2,667 tasks, validated on gold. | Reporting of training, adjudication and agreement is uneven. Keyword sampling, small gold set, extraction errors and topic mismatch limit population inference; missing reporting does not prove missing practice. | Thesis: methodological context, no H1/H2 evidence. Experiment: document staffing, rubric, calibration and pre-adjudication judgments separately from routing forms; implement isolated blank assignments with material commitments. Product: an auditable handoff is not validated semantic approval. Action: offline exporter, isolation/drift/overwrite regressions, protocol reporting requirements. | 8/10: reviewed, released data/code and explicit validation; moderate extraction reliability and sampling bias limit transfer. |
+
+**Boundary.** The exporter reduces manual distribution errors, not annotation
+uncertainty. It cannot verify independent people, rights, external custody,
+source interpretation or rubric adequacy. No threshold or scientific label changes.
+
+
+## 2026-10-31 — Separate detection, false alarms and trace-link recommendations
+
+Search/read date: 2026-10-31. New source deduplicated by DOI/title. Publisher
+abstract/status checked; full method, evaluation and threats read in author
+postprint arXiv:2502.04916v8 (12 March 2026). No reproduction or byte-for-byte
+comparison with the paywalled published version.
+
+| Reference / status | Question, data, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Etezadi et al., [Classifier or prompt: A case study on legal requirements traceability](https://doi.org/10.1007/s10664-026-10827-1), EMSE 31:85, 2026; peer-reviewed journal; [author postprint](https://arxiv.org/html/2502.04916v8) read | Sentence-transformer classifier and GPT-4o RICE prompts recover requirement–provision links. HIPAA: 1,891 requirements; new GDPR: 310 requirements across four documents/26 provisions; five few-shot examples withheld per document; five seeds/two temperatures. | RICE reports about 84% link recall but about 29% precision on GDPR; classifier transfer is weak. One prompted model, limited domains, expert-authored labels, few-shot dependence and proxy review cost limit external validity. | Thesis: link recovery is neither executable conformance nor temporal H2 detection. Experiment: keep numerator, denominator and positive-class semantics explicit; no new baseline adopted. Product: high recall does not establish reliable automatic compliance or low false-alarm burden. Action: retain as bounded context and separate temporal true/false/unlabeled warning accounting. | 8/10: reviewed, public artifacts, repeated prompt settings and unseen-document evaluation; narrow domain/model and proxy cost limit transfer. |
+
+**Revisited source, no duplicate entry.** Jin and Chen (original row above;
+7/10 unchanged): reread publisher abstract, paired design, confusion-matrix
+definition, error trade-offs and threats, especially benchmark-test incompleteness.
+Their positive class is correct code; our diagnostic positive class is terminal
+defect. This explicit polarity mapping motivates the six temporal-accounting
+regressions and protocol clarification. No label, threshold, H1/H2 or corpus change.
+
+
+## 2026-11-01 — Process diagnosis is not deployable early warning
+
+Search/read: 2026-11-01; deduplicated by title/arXiv ID. COLM acceptance verified
+against the official accepted-paper list. Read author PDF v2 abstract, semantic
+MDP method, aggregate metrics/results, limitations (Appendix A) and evaluation
+protocol (C.1–C.4). Other appendices and all bifurcation algorithms were not
+comprehensively read. No reproduction; use the PDF rather than inconsistent
+earlier project-page summaries for numerical claims.
+
+| Reference / status | Question, sample, method | Finding / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Chung, Byun, Vineet and Kim, [Where Did It Go Wrong? (WebStep)](https://arxiv.org/pdf/2606.15673), COLM 2026; peer-reviewed conference, author PDF v2 read | Six agents, 1,800 task instances, ten controlled websites; GUI actions mapped into deterministic semantic MDPs; exploration/execution, coverage and post-hoc trajectory diagnosis. | Similar terminal scores hide different process failures. Synthetic worlds/templates, restricted action space, privileged task-oracle states and differing agent inputs limit transfer. Safe-pass scoring can count a missing final commit as success. | Thesis: adjacent process-evaluation evidence, not controlled requirement omission or prospective H2. Experiment: keep oracle-derived diagnostics outside features; retain absent planned episodes separately from partial traces. Product: diagnosis is not proof of obligation preservation. Action: record scope/safe-pass threats and implement execution-plan reconciliation justified by an explicit missing-row counterexample. | 7/10: reviewed, explicit environment/metrics and limitations; constructed worlds, oracle dependence and code/data still marked coming soon on the project page constrain replication/transfer. |
+
+**Implementation boundary.** Ordered planned IDs are a caller-supplied
+commitment, not independent custody. Missing whole episodes stay unlabelled;
+existing supplied-label bounds and complete-case rates do not become population
+estimates. No H1/H2 definition, split, threshold or scientific label changes.
+
+
+## 2026-11-02 — Review source evidence without treating reference code as truth
+
+Search/read: 2026-11-02; deduplicated by title/arXiv ID. COLM acceptance checked
+on the official list. Read author PDF v2 abstract, method, experimental setup,
+results and discussion/limitations (Sections 3–6); detailed appendices not
+comprehensively read. No replication.
+
+| Reference / status | Question, data, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Tu et al., [Who Guards the Benchmarks? (BenchGuard)](https://arxiv.org/pdf/2604.24955), COLM 2026; peer-reviewed conference; author PDF v2 read | Cross-artifact LLM/static auditing of instructions, references, evaluators and environments; ScienceAgentBench 102 tasks/12 confirmed discoveries, BIXBench Verified-50/24 expert-revision issues, five auditors. | Finds benchmark inconsistencies; discovery-set coverage differs from independent recall, and finding alignment is not precision. Uncalibrated confidence, incomplete expert issue sets, limited scientific domains and single-run backends constrain transfer. | Thesis: benchmark-validity context, no H1/H2 evidence. Experiment: oracle obligations need authoritative source support; keep outcome-informed audits outside blinded admission. Product: automated benchmark auditing is existing work, not exclusive novelty. Action: attach allowlisted source excerpts/remainders to isolated review forms and state the source-support rule in protocol/paper. | 8/10: reviewed, public implementation, author confirmation and independent revision set; incomplete ground truth and model-dependent auditing limit generalization. |
+
+**Boundary.** Material projection is deterministic assembly, not semantic
+validation, source-file re-verification, rights approval or independent human
+review. No model is called and no empirical result or admission is produced.
+
+## 2026-11-03 — Dataset lineage is not evidence of non-exposure
+
+Search/read: 2026-11-03; deduplicated by DOI/title. Read publisher abstract,
+methods, dataset, results, lineage discussion and threats (Sections 3–8).
+No replication; the linked package was not independently audited.
+
+| Reference / status | Question, data, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Cleland-Huang and Vierhauser, [Automated classification of non-functional requirements twenty years later: why this isn’t a solved problem](https://doi.org/10.1007/s00766-026-00479-4), Requirements Engineering, 2026-10-25; peer-reviewed | 55-paper retrospective; PROMISE replication with LOPO/training-only thresholds; exploratory 614-conversation DevGPT analysis. | Agentic classifiers improve under a shared protocol. Contamination, reconstructed implementations and unvalidated conversational labels limit transfer. | Thesis: adjacent, not H1/H2 evidence. Experiment: lineage and exposure differ. Product: research agenda, not demand validation. Action: pre-export source checks with human gates retained. | 8/10: reviewed, explicit methods/limits, linked artifacts; narrow benchmark and reconstruction; package not audited here. |
+
+**Implementation boundary.** `--source-root` verifies the existing proposed
+source snapshot before isolated review export, including declared NOTICE hashes.
+The operational counterexample is an exporter that can otherwise attach stale
+local files without detecting drift. The paper supplies context, not an effect
+estimate or a guarantee that hashing removes contamination. No scientific label,
+corpus freeze, threshold or human approval changes.
+
+
+## 2026-11-04 — Agreement diagnostics do not establish label validity
+
+Search/read: 2026-11-04; deduplicated by DOI/title. Read publisher abstract,
+scope, collaborative development method (Section 3), metrics and human
+validation guidance (5.5/5.7), limitations/mitigations and conclusion.
+No empirical replication or evaluation of guideline effectiveness was conducted.
+
+| Reference / status | Question, data, method | Finding / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Baltes et al., [Guidelines for empirical studies in software engineering involving large language models](https://doi.org/10.1007/s10664-026-10922-3), EMSE 32:64 (2027), online 2026-11-03; peer-reviewed journal | 22 researchers collaboratively developed seven study types/eight guidelines, with internal/external review and illustrative examples. | Reporting guidance, not measured effectiveness; examples are not a systematic review. Agreement cannot establish validity. | Thesis: methodological context, not H1/H2 evidence. Experiment: retain independent judgments and expose disagreement; thresholds/open-model choice need human decisions. Product: supports auditability, not demand. Action: offline pre-adjudication report. | 8/10: reviewed, transparent process/checklist; expert guidance without causal validation of effectiveness. |
+
+**Decision boundary.** The optional reporter provides raw per-field agreement
+and descriptive nominal decision kappa for one fixed reviewer pair, retaining
+marginals and undefined cases. This is an implementation aid, not a decision
+to adopt kappa as the primary reliability criterion. No cited alpha threshold,
+single-rater shortcut, LLM replacement or open-provider configuration is adopted.
+Human approval of rubric, staffing, metric/adequacy rules and rights remains
+pending. A proposed open-model baseline or documented exclusion remains a
+design question; this source does not silently override the current protocol.
+
+## 2026-11-05 — Elicitation coverage and agreement are different measurements
+
+Search/read: 2026-11-05; deduplicated by DOI/title. Read publisher abstract,
+pipeline/design, data and matching method, quantitative results, human-agreement
+analysis and limitations (Sections 3–9). No replication; linked package not audited.
+
+| Reference / status | Question, sample, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Curto, Semini and Marques-Neto, [Evaluating multi-LLM pipelines for early-stage software requirements elicitation](https://doi.org/10.1007/s10664-026-10981-6), EMSE 32:63 (2027), online 2026-11-03; peer-reviewed journal | Generate–Unify–Improve across four SRS cases; human study rates 145 requirements with two professionals/nine student groups. | Coverage/precision trade-off; prevalence affects agreement. Thresholded embedding alignment lacks expert pairwise validation; narrow academic scope, proprietary models and contamination risk limit transfer. | Thesis: elicitation context, not omission/H2 evidence. Experiment: retain marginals; no binary recoding, AC1 or cutoff adopted. Product: candidate elicitation requires curation, not verified conformance. Action: synthetic high-agreement/negative-kappa regression. | 7/10: reviewed, explicit method and linked artifacts; unvalidated matching and limited human sample; package not audited. |
+
+**Independent implementation rationale.** Review-content binding addresses the
+explicit counterexample of changed reasons with unchanged aggregate statistics;
+the elicitation paper does not establish that hashing authenticates annotations.
+Its prevalence discussion motivates a bounded regression, not a new reliability
+criterion or import of published observations. Existing human adjudication and
+rubric/metric approvals remain pending.
+
+
+## 2026-11-06 — Artifact checks and unambiguous review inputs
+
+Search/read: 2026-11-06. Read the ESEM proceedings abstract, evaluation design,
+results and validity limitations, and RFC 8259 Section 4. Deduplicated by DOI or
+standard number. The ESEM prototype was not replicated.
+
+| Reference / status | Question, sample, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Amougou Mbida and Angermeir, [An Agentic Approach Towards Replication Package Quality Evaluation](https://doi.org/10.4230/LIPIcs.ESEM.2026.58), ESEM 2026 Emerging Results, Vision & Reflection proceedings, 2026-10-05 | Can agents assess artifact readiness? 31 operationalized criteria; five purposively selected packages, ten runs each; author comparison and seven-person pilot. | 91.4% inter-run consistency and 75.4% micro-agreement against an author reference; small familiar sample and no reference inter-rater estimate. | Thesis: adjacent reproducibility evidence only. Experiment: keep mechanical checks separate from validity and independent reproduction. Product: a related artifact-review workflow, no demand validation. Action: retain as context; do not add an LLM artifact judge. | 7/10: published proceedings, transparent setup and linked artifacts; exploratory sample and fallible reference limit transfer. |
+| Bray, [RFC 8259](https://www.rfc-editor.org/rfc/rfc8259#section-4), IETF Standards Track, 2017 | JSON interchange interoperability; normative specification, no empirical sample. | Duplicate object names can yield different decoder behavior, including retaining only the final value. | Thesis: no H1/H2 relevance as evidence. Experiment: reject duplicate members before binding review content. Product: unambiguous import is a useful interface contract. Action: strict CLI intake plus literal and escaped-key regressions. | 10/10 for JSON interoperability guidance; primary standard, not an empirical validity study. |
+
+
+## 2026-11-07 — Provider qualification and repeated-run uncertainty
+
+Search/read: 2026-11-07; deduplicated by arXiv ID/title. Read author v2 abstract,
+setup, metrics, results and recommendations; append-only context restriction
+noted. No separate limitations section was found; scope limits below include
+our assessment. Workshop search metadata was found, but its PDF was inaccessible;
+conservatively retain the author preprint status here.
+
+| Reference / status | Question, sample, method | Result / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Bjarnason, Silva and Monperrus, [On Randomness in Agentic Evals](https://arxiv.org/html/2602.07150v2), 2026, author preprint v2 (2026-03-23) | SWE-Bench-Verified, three models/two scaffolds, ten repeated evaluations across temperature settings; 60,000 trajectories. | Single-run scores vary by 2.2–6.0 percentage points; variability remains at temperature zero. Benchmark/model scope and append-only contexts limit transfer. | Thesis: randomness context, not H1/H2. Experiment: retain repetitions/configuration qualification; no imported power estimate or repetition count. Product: report variability before ranking configurations. Action: contextual entry only; do not force a baseline change. | 7/10: detailed setup, metrics and linked artifacts; author preprint read, not reproduced, bounded benchmark scope. |
+
+**Independent blocker reduction.** Provider declarations now require matching
+local qualification-report bytes before they count in readiness. The new tests
+use a visibly synthetic receipt, not provider-backed observations. Matching
+bytes cannot authenticate a provider, prove native checkpoint timing or replace
+human approval. The current candidate remains no-go. CI remains an external
+blocker pending an executable runner/check result.
+
+
+## 2026-11-08 — Explainable provenance is broader than retained evidence
+
+Search/read: 2026-11-08; deduplicated by title/arXiv ID. Read the author PDF
+abstract, stakeholder rationale, proposed methods and open challenges. Official
+ICSME program confirms the Visions and Emerging Results track. No replication
+or re-analysis of the earlier empirical studies cited by the authors.
+
+| Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Velasco et al., [On Automated and Explainable Provenance of AI-Generated Code](https://ojcchar.github.io/files/48-icsme26-ai-provenance.pdf), ICSME 2026 Visions and Emerging Results; author manuscript read | Research vision across prompt-, instance-, factor- and model-component-to-output traceability; motivates future empirical work using earlier stakeholder studies. | Proposes post-hoc causal/interpretability techniques; no completed validation of the full program. Model access, unavailable training data and faithful attribution remain challenges. | Thesis: adjacent provenance positioning, not T1–T3 early-warning or H1/H2 evidence. Experiment: retained artifacts alone do not establish causal explanation. Product: existing research direction, no exclusive novelty or demonstrated demand. Action: context only; do not import causal claims. | 7/10: recognized venue/track and explicit proposed agenda; vision rather than validated end-to-end method. |
+
+**Independent implementation rationale.** Exclusive creation of readiness
+reports addresses a reproducible overwrite counterexample, not a result claimed
+by this vision paper. Preserving evidence is necessary for audit, but does not
+establish authentic custody, causal provenance or scientific validity.
+
+## 2026-11-09 — Asymmetric exposure and versioned evidence
+
+Search/read: 2026-11-09. Screened RE/LLM requirements, agent trajectory
+observability and evaluation validity; deduplicated against this matrix by title,
+DOI and arXiv identifier. Read the author manuscripts' abstracts, methods,
+results and validity sections; checked venue status separately.
+
+| Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Al-Kaswan et al., [Model See, Model Do?](https://doi.org/10.1145/3793302.3793341), MSR 2026 Technical Papers, peer-reviewed; [author manuscript](https://arxiv.org/abs/2601.10496), [replication package](https://doi.org/10.5281/zenodo.17423424) | Does asymmetric training exposure alter bug/fix preference? 16,899 ManySStuBs4J Java pairs; Stack-v2 Data Portraits, exposure strata, token likelihood and sampled completions on open-weight code models. | Bug-only exposure coincided with more verbatim bug reproduction; some likelihood measures changed preference across exposure strata. Bloom-filter membership is approximate, file prefixes may admit several valid completions, and results are limited to selected code models and Java single-statement repairs. | Thesis: asymmetric exposure can confound a paired contrast. Experiment: preserve which exact candidate was audited and review both variants; registry no-hit remains unknown exposure. Product: expose audit scope and unknowns in triage. Action: bind candidate content to the registry report; do not import code-completion effect sizes or treat this as H1/H2 evidence. | 8/10: peer-reviewed, explicit measures and public code/data package; indirect task and proxy exposure. |
+| Djiré et al., [Quantifying Memorization Advantage in Code LLMs](https://conf.researchr.org/details/icse-2026/icse-2026-research-track/37/Quantifying-Memorization-Advantage-in-Code-LLMs), ICSE 2026 Research Track, peer-reviewed; [author manuscript](https://arxiv.org/abs/2604.13997) | Can perturbation sensitivity proxy memorization advantage? Eight open code LLMs, 19 benchmarks across generation, understanding, vulnerability detection and bug identification; compares original and perturbed inputs. | Sensitivity varied by model and task; CVEFixes and Defects4J showed low measured advantage. Perturbations may change difficulty, and low sensitivity does not establish lack of training exposure. Results depend on the tested versions and benchmarks. | Thesis: separate novelty from performance on rewritten inputs. Experiment: review whether rewrites preserve obligations and report sensitivity only as a diagnostic. Product: do not use low sensitivity as a provenance badge. Action: retain as methodological context; no new confirmatory arm. | 8/10: peer-reviewed and broad documented evaluation, with a reproducible perturbation concept; proxy and domain limits constrain transfer. |
+| Khan and Kumar, [Soei: Structured Observability of Evidence and Intent for Multi-Agent AI Software Engineering](https://doi.org/10.48550/arXiv.2610.39468), 2026 arXiv preprint, no peer-reviewed venue verified | Can passive logs distinguish completion claims from observed checks? 45 Copilot sessions from one developer, 2,336 prompt-delimited episodes, 893 code-editing episodes; rules with blind sampled audits, path-based lineage and local ledger prototype. | The adjusted estimate of episodes without a visible post-edit check was 23.4%. External checks were invisible, the author audited their own corpus, raw data were not published, and path reuse can mistake a replaced file for the original. Digest lineage is future work. | Thesis: verification activity differs from semantic retention. Experiment: keep trace status out of the T4 label and retain content identity. Product: explore local, content-minimizing triage with explicit unknown states. Action: compare this architecture as adjacent work; do not use its rates as H2 evidence. | 6/10: transparent classifier and sensitivity analysis, but a preprint, one private corpus and limited independent replication. |
+
+The implementation change addresses a concrete counterexample in the readiness
+gate: an older registry report could satisfy coverage after a valid edit to the
+same intent. Content binding improves audit reproducibility; it neither tests
+provider training membership nor changes the experimental design.
+
+## 2026-11-10 — Matched context and what a detector gain establishes
+
+Search/read: 2026-11-10. Screened recent requirements-defect, benchmark
+contamination, agent replay, and provenance work against existing titles and
+DOIs. Read the published abstract, design, results, validity and artifact statement.
+
+| Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Chen et al., [Do LLM Vulnerability-Detection Agents Reason Better? An Empirical Decomposition of Robustness, Resistance, and Grounding](https://doi.org/10.4230/LIPIcs.ESEM.2026.28), peer-reviewed ESEM 2026 Technical Track; [replication package](https://github.com/cielverse/llm-vuln-agent-reasoning-eval) | Which gains are recoverable by replaying selected tool context, and which remain after matching it? Six base models and six conditions on paired JITVUL, with SecVulEval and SV-TrustEval-C as auxiliary datasets; perturbation, misleading-cue and grounding probes. | In the largest improvement case, matched-context replay recovered much of the gain; the remaining gain was associated mainly with more positive predictions. Aggregate performance did not consistently improve robustness, resistance or grounding. Replay is conditional on agent-selected traces; synthetic cues, subset denominators and a single-author qualitative audit limit interpretation. | Thesis: incremental prediction does not establish a semantic or causal explanation. Experiment: maintain a common evaluation population and report alert rates and eligible denominators alongside discrimination. A trace-selected replay can inform a separate diagnostic but cannot substitute for pre-T4 evidence. Product: distinguish alert volume from actionable, constraint-grounded alerts. Action: document this interpretation boundary; no change to the B3–B0 estimand. | 8/10: peer-reviewed, transparent comparisons and public artifacts; external-service reruns and a different task limit replication and transfer. |
+
+## 2026-11-11 — Acceptance specification syntax, coverage and agreement
+
+Search/read: 2026-11-11. Screened requirements defects and generation, annotation,
+agent workflow evidence and observability for overlaps. Read the published
+abstract, methods, results and limitations of the new source below.
+
+| Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Deininger and Slany, [Valid but Not Always Runnable: An Open, Reproducible Benchmark of Large Language Models Drafting Gherkin Scenarios](https://doi.org/10.3390/ai7090359), AI 7(9), 2026, peer-reviewed journal article | Can LLMs turn requirements into usable Gherkin? Eight models, 74 artifacts from three corpora and five repetitions, yielding 2,960 primary generations. Parser and Cucumber loading checks, judged coverage, a gold-reference comparison and 72 blinded generations rated by two students. | 78% loaded in Cucumber despite high syntactic validity. The judge approximated human score magnitudes but ranked individual coverage less reliably. No step bindings or application execution; the two raters authored the gold standard, the calibration sample is small, and corpus and format effects are confounded. | Thesis: syntax and runner loading are distinct from retention of a testable condition. Experiment: keep constraint-level blinded labels separate from automated syntax and runner checks; do not import judge scores or thresholds. Product: show semantic evidence separately from parse/load status. Action: retain as adjacent evidence for rubric discussion; no change to H1/H2 or label policy. | 8/10: peer-reviewed, detailed methods and open materials; limited calibration and no executable outcome validation. |
+
+## 2026-11-12 — Repository plans and independent interpretation
+
+Search/read: 2026-11-12. Screened requirements defects and annotation, agent
+workflow evidence and provenance. Deduplicated the published title, DOI and
+author-manuscript identifier. Read the abstract, methods, results and validity
+sections of the proceedings paper.
+
+| Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Abubakar et al., [An Exploratory Study of Agent Plans for Agentic AI Coding Tools in Open-Source Software](https://doi.org/10.4230/LIPIcs.ESEM.2026.54), peer-reviewed ESEM 2026 Emerging Results, Vision & Reflection; [supplement](https://zenodo.org/records/20513532) | How are agent plans preserved and what guidance do they provide? Screened 36,710 GitHub repositories and found 85 eligible Markdown plans in 10 repositories. Repository metadata, qualitative activity coding, and heading analysis; two researchers independently coded the plan activities before reconciliation. | Plans often specified implementation steps, concrete locations and validation. Pre-reconciliation SWEBOK coding had 80% raw agreement (kappa about 0.76). The directory filter misses transient and differently stored plans; few projects, manual interpretation, and uncertain authorship limit generalization. No execution outcomes were measured. | Thesis: a saved plan can record intended work but does not establish execution or retention at T4. Experiment: keep pre-adjudication judgments and resolution separate; no kappa threshold or plan-only feature is adopted from this study. Product: link a plan to runtime evidence before presenting a verification claim. Action: retain as adjacent context; enforce the existing separation of recorded approvals and human adjudication in readiness. | 7/10: peer-reviewed exploratory track, transparent coding and supplement, but narrow corpus and no outcome validation. |
+
+## 2026-11-13 — Public traces as partial evidence of coding-agent adoption
+
+Search/read: 2026-11-13. Screened requirements generation and uncertainty,
+software-agent evaluation and provenance. Deduplicated by title and DOI.
+Read abstract, sampling and detection methods, results and limitations.
+
+| Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Robbes et al., [Agentic Much? Adoption of Coding Agents on GitHub](https://doi.org/10.1145/3822180), TOSEM 2026, peer-reviewed; [author manuscript](https://arxiv.org/abs/2601.18341), [replication material](https://zenodo.org/records/19256968) | How visible is coding-agent adoption in open-source development? 128,018 selected GitHub projects; repository and contribution traces, including co-authorship signals, with different attribution heuristics and a manual analysis of sampled commits. | The February 2026 estimate ranged from 22.20% to 28.66% under the study definitions. Public activity and maturity filters restrict transfer; missing or misleading markers and unmerged work can bias detection. End artifacts cannot identify the extent or timing of human versus agent involvement. | Thesis: public attribution does not establish constraint retention or early detection. Experiment: distinguish missing recorded evidence from negative outcomes and preserve the T1–T3 cutoff. Product: use CI and PR workflows as a discovery channel, with unknown attribution explicit. Action: retain as context; do not use these rates for market sizing or as support for H1/H2. | 8/10: peer-reviewed, large documented sample and replication material, but indirect attribution and a selected public population. |
+
+## 2026-11-14 — Granularity and the limits of structural agreement
+
+Search/read: 2026-11-14. Screened software requirements and agent evaluation,
+then deduplicated by title and DOI. Read abstract, design, results and validity
+sections of the published paper below.
+
+| Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Coppola et al., [On Coding Agent Issue Localization Accuracy](https://doi.org/10.4230/LIPIcs.ESEM.2026.59), ESEM 2026 Emerging Results, Vision & Reflection, peer-reviewed | Do agent patches touch the same packages, classes and methods as human fixes? 2,441 issue-fixing commits from ten Java projects; three open-weight models using OpenCode, one run per configuration and issue; compare modified entities against historical fixes. | Agreement was better at package than class or method level. Structural overlap misses equivalent fixes, the study used one harness and one run per condition, issue-text quality was not controlled, and historic fixes may have been seen in training. | Thesis: coarse agreement does not establish condition retention. Experiment: keep constraint-level semantic judgments and stochastic repetitions; do not substitute structural overlap for labels. Product: treat location as navigation evidence rather than proof of correctness. Action: retain as context without changing H1/H2. | 7/10: peer-reviewed exploratory study with explicit design and sizable within-domain sample; single stack and reference-equivalence limitations constrain transfer and replication. |

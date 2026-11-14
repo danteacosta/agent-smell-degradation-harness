@@ -14,6 +14,13 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def candidate_content_digest(candidate):
+    """Bind a report to the parsed manifest, independent of JSON formatting."""
+    encoded = json.dumps(candidate, sort_keys=True, separators=(',', ':'),
+                         ensure_ascii=True, allow_nan=False).encode('utf-8')
+    return hashlib.sha256(encoded).hexdigest()
+
+
 def validate_candidate(candidate, root):
     root = Path(root).resolve()
     if candidate.get('selection_frozen') is not False or candidate.get('human_approvals') != 0:
@@ -73,6 +80,7 @@ def audit(candidate, root, registry_paths):
             if any(normalize(row['variants']['clean']) in normalize(v) for v in inputs):
                 matches[row['intent_id']].append(str(relative))
     return {'schema_version': 'temporal-warning-exposure-audit/v1',
+            'candidate_content_sha256': candidate_content_digest(candidate),
             'status': 'pending_independent_review', 'confirmatory_eligible': False,
             **result, 'registry_files': len(inventory), 'inventory': inventory,
             'exact_or_contained_clean_input_matches': matches,
