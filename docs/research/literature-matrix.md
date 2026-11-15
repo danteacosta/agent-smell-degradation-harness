@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-11-12
+Last updated: 2026-11-15
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1580,3 +1580,24 @@ Vendor blogs are product intelligence only.
 
 Decision impact: none on H1/H2, B0/B3, estimands or frozen material. The proposal row "Unterbusch e Vogelsang, ICSE-NIER 2026"
 now has a matching scored entry; no Drive text needed changing.
+
+## 2026-11-15 entry: probabilistic prefix-level violation prediction (ProbGuard, ASE 2026) and seeded-omission ensembles
+
+Search date: 2026-11-15. Two standard web searches (omission and missing-requirement detection for LLM code generation;
+prefix-level early warning for agent trajectories). Already present and not re-scored: TraceDev 2607.18886, Orchid
+2604.21505, 2602.02896, TRACES 2605.27690, AgentForesight 2605.08715 and the ESEM 2026 gap-identification paper. New to this
+matrix: ProbGuard (arXiv page and HTML read through a summarising fetch tool, characters 0-100000 of about 130000; the
+final ~30k characters, which may hold an appendix, were not read) and Kassab and AbdElhameed (conference page abstract only).
+JANUS 2607.19913, WURI (NeurIPS 2026 poster page) were seen only as search snippets and are
+neither read nor scored. The related-work gap is unchanged: no source found measures omitted requirement conditions against
+trajectory-prefix early warning in software-engineering agents.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Wang, Poskitt, Wei and Sun, [*ProbGuard: Proactive Runtime Monitoring for LLM Agent Safety via Probabilistic Prediction*](https://arxiv.org/abs/2508.00500), Proc. ASE 2026 (pp. 1470-1482 per arXiv listing, v4 of 2026-08-03), peer-reviewed | Can a monitor predict a formal safety violation before it happens? Predicate abstraction of states, a Discrete-Time Markov Chain learned from 30 traces per scenario (Apollo AV scenarios from muDrive; SafeAgentBench household tasks with ReAct and gpt-4o-mini), P_safe checked against a threshold theta; baselines REDriver and an unmonitored run | Reported lead times of 15.84 s (theta 0.3, no false alarms on safe traces) to 38.66 s (theta 0.7, where false positives reach 100% on the 6 safe-trace scenarios); in the embodied domain reflect mode cut unsafe behavior 65.37% retaining 80.4% of completion, stop mode 93.60% at 10.42% completion. Limits stated or visible: no train/test split described (evaluation traces may overlap the 30 training traces), the 30-trace budget is "well below" the authors' own PAC requirement (185-1,016 and 530-1e5 traces), the Markov assumption can fail under inadequate abstraction, stochastic-agent variance, ground-truth violation times come from the simulator and domains are driving and household agents, not software engineering | Thesis: shows prefix-level violation prediction is an accepted evaluation shape at an SE venue and that threshold choice trades lead time against false alarms; it is not evidence for H2 because it does not concern requirement omission, code-generation agents or project-held-out evaluation. Experiment: support for reporting false alarms per 100 episodes and first-alert lead time beside PR-AUC (already in the proposal, section 6) and for fixing the alert threshold on training projects only, since the paper's high-threshold false-positive rise (0% to 100%) shows that an unfixed threshold can make a lead-time headline uninformative. Product: contrast case: a state-abstraction DTMC monitors declared safety properties and needs a formal specification, whereas the product question here is explaining lost requirement conditions. Action: none to protocol; optionally cite as design context for lead-time and false-alarm reporting | 6 |
+| Kassab and AbdElhameed, [*Detecting and Repairing Incomplete Software Requirements with Multi-LLM Ensembles*](https://conf.researchr.org/details/ase-2025/ase-2025-nier-track/13/Detecting-and-Repairing-Incomplete-Software-Requirements-with-Multi-LLM-Ensembles), ASE 2025 NIER track (abstract only; no DOI retrieved) | Can three LLMs (DeepSeek Chat, GPT-4o Mini, Claude Sonnet 4) find omissions in an SRS and suggest fixes? Four SRSs with seeded omissions; domain model first, then external and internal completeness prompts, aggregated by majority vote, weighted vote or a meta-LLM | Reported single-model recall of 0-52% against more than 75% (up to 100%) for the ensemble, with 95-100% of suggestions judged plausible. Four documents, seeded omissions, plausibility judged without a stated protocol on the page, new-ideas track: treat as an early signal. An earlier abstract note on this paper already exists in docs/research/2026-10-15-requirements-ensemble-abstract-note.md | Thesis: context for omission detection at the requirement stage, before generation, which is the opposite end of the pipeline from T1-T3 provenance. Experiment: a multi-model panel that finds omissions in text does not test whether the generated artifact lost them; no change to the A/B/C manipulation or oracle. Product: an upstream completeness checker is a possible complement, not a substitute. Action: none; read the full paper before any quotation | 3 |
+
+Decision impact: none on H1/H2, B0/B3, estimands or frozen material. No new human decision is created; ProbGuard is
+referenced only as optional design context for decision 1 (conditional reporting) and for the existing lead-time and
+false-alarm metrics.
+
