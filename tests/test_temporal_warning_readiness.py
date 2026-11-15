@@ -12,6 +12,16 @@ def candidate():
     return json.loads((ROOT/'data/prepilot/temporal-warning-plan.candidate.json').read_text())
 
 
+@pytest.mark.parametrize('task', [None, 'code_generation'])
+def test_wrong_or_missing_primary_task_is_rejected(declared, task):
+    if task is None:
+        declared.pop('primary_task')
+    else:
+        declared['primary_task'] = task
+    with pytest.raises(ValueError, match='primary task'):
+        assess(declared, ROOT)
+
+
 @pytest.mark.parametrize('key', ['"rights_approved"', r'"rights_approv\u0065d"'])
 def test_cli_rejects_duplicate_nested_plan_members(tmp_path, monkeypatch, capsys, key):
     monkeypatch.chdir(ROOT)

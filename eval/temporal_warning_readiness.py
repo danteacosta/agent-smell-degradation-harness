@@ -54,6 +54,8 @@ def assess(plan, root):
         raise ValueError('wrong temporal cohort schema')
     if plan.get('confirmatory_eligible') is not False:
         raise ValueError('engineering pilot cannot be promoted to confirmatory')
+    if plan.get('primary_task') != 'acceptance_criteria_generation':
+        raise ValueError('primary task must be acceptance_criteria_generation')
     source = _bound_file(plan['candidate_source_manifest'], root)
     audit = _bound_file(plan['exposure_audit'], root)
     counts = validate_candidate(source, root)

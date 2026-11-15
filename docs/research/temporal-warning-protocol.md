@@ -862,3 +862,11 @@ silently discard a dissenting value, and matching bytes alone do not make a
 document unambiguous. Invalid input exits before a readiness report is written.
 Python callers of `assess` must also reject duplicate members when decoding
 the plan, since a dictionary cannot preserve them.
+
+## Preserve the primary pilot task — 2026-11-15
+
+The readiness gate requires `primary_task: acceptance_criteria_generation`.
+A missing or different task is an invalid plan, even if every other
+prerequisite is declared. The 144-episode arithmetic does not identify the
+measurement task. Browser-oracle, code-generation, and verifier-coupling studies
+require their own design decisions and cannot be admitted by relabeling this plan.
