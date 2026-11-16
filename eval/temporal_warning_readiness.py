@@ -12,6 +12,8 @@ import json
 import math
 import re
 import unicodedata
+from decimal import Decimal
+from fractions import Fraction
 from pathlib import Path
 from eval.temporal_cohort_candidate import candidate_content_digest, validate_candidate
 
@@ -46,6 +48,24 @@ def _qualification_report_matches(configuration, root):
                 == configuration['qualification_report_sha256'])
     except (OSError, ValueError, TypeError):
         return False
+
+
+def _budget_within_cap(budget):
+    if not isinstance(budget, dict):
+        return False
+    amounts = []
+    for key in ('estimated_provider_cost_usd', 'contingency_fraction', 'approved_cap_usd'):
+        value = budget.get(key)
+        if type(value) is float and math.isfinite(value):
+            value = Decimal(str(value))
+        if type(value) is not int and not (type(value) is Decimal and value.is_finite()):
+            return False
+        # Reject out-of-range decimal exponents before building a rational.
+        if type(value) is Decimal and abs(value.as_tuple().exponent) > 1000:
+            return False
+        amounts.append(Fraction(value))
+    estimate, contingency, cap = amounts
+    return estimate > 0 and contingency >= 0 and cap > 0 and estimate * (1 + contingency) <= cap
 
 
 def assess(plan, root):
@@ -123,10 +143,7 @@ def assess(plan, root):
                   'schedule_frozen','launch_authorized']:
         if plan.get(field) is not True:
             blockers.append(field+'_missing')
-    budget = plan.get('budget', {})
-    values = [budget.get(k) for k in ['estimated_provider_cost_usd','contingency_fraction','approved_cap_usd']]
-    if (any(type(v) not in (int, float) or not math.isfinite(v) for v in values)
-            or values[0] <= 0 or values[1] < 0 or values[2] <= 0 or values[0]*(1+values[1]) > values[2]):
+    if not _budget_within_cap(plan.get('budget')):
         blockers.append('finite_cost_envelope_and_approved_cap_missing')
     return {'schema_version':'temporal-warning-readiness/v1', 'decision':'no_go' if blockers else 'prerequisites_declared',
             'collection_authorized_by_this_report':False, 'confirmatory_eligible':False,
@@ -149,7 +166,8 @@ def main(argv=None):
     parser.add_argument('--output',type=Path)
     args=parser.parse_args(argv)
     try:
-        plan = json.loads(args.plan.read_bytes(), object_pairs_hook=_unique_json_object)
+        plan = json.loads(args.plan.read_bytes(), object_pairs_hook=_unique_json_object,
+                          parse_float=Decimal)
         report = assess(plan, Path.cwd())
     except (OSError, ValueError) as error:
         parser.error(str(error))

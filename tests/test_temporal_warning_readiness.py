@@ -12,6 +12,23 @@ def candidate():
     return json.loads((ROOT/'data/prepilot/temporal-warning-plan.candidate.json').read_text())
 
 
+@pytest.mark.parametrize('cap,ready', [(0.11, True), (0.10999999999999999, False)])
+def test_decimal_budget_boundary(declared, cap, ready):
+    declared['budget'] = {'estimated_provider_cost_usd': 0.1,
+                          'contingency_fraction': 0.1, 'approved_cap_usd': cap}
+    report = assess(declared, ROOT)
+    assert (report['decision'] == 'prerequisites_declared') is ready
+
+
+@pytest.mark.parametrize('budget', [None, {'estimated_provider_cost_usd': 10**400,
+                                        'contingency_fraction': 0, 'approved_cap_usd': 1}])
+def test_invalid_or_over_cap_budget_returns_no_go(declared, budget):
+    declared['budget'] = budget
+    result = assess(declared, ROOT)
+    assert result['decision'] == 'no_go'
+    assert result['blockers'] == ['finite_cost_envelope_and_approved_cap_missing']
+
+
 @pytest.mark.parametrize('task', [None, 'code_generation'])
 def test_wrong_or_missing_primary_task_is_rejected(declared, task):
     if task is None:

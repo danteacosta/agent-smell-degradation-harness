@@ -870,3 +870,13 @@ A missing or different task is an invalid plan, even if every other
 prerequisite is declared. The 144-episode arithmetic does not identify the
 measurement task. Browser-oracle, code-generation, and verifier-coupling studies
 require their own design decisions and cannot be admitted by relabeling this plan.
+
+## Check the declared provider cost envelope — 2026-11-16
+
+The readiness gate compares estimated cost, including the declared contingency,
+against the approved cap using exact arithmetic. The CLI preserves decimal
+numbers from JSON. Missing or malformed budgets, non-finite values, decimal
+exponents outside the supported range, and totals above the cap keep the pilot
+in `no_go`. A total exactly equal to the cap is permitted. Passing this check
+verifies the declared arithmetic only; it does not approve the budget, estimate
+provider prices, or authorize collection.
