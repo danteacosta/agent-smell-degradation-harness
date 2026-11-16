@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-11-15
+Last updated: 2026-11-16
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1601,3 +1601,32 @@ Decision impact: none on H1/H2, B0/B3, estimands or frozen material. No new huma
 referenced only as optional design context for decision 1 (conditional reporting) and for the existing lead-time and
 false-alarm metrics.
 
+
+## 2026-11-16 entry: LLM-generated user stories and LLM quality assessment (Quattrocchi et al., TSE 2026)
+
+Search date: 2026-11-16. Three standard web searches (omission/acceptance-criteria generation; OpenTelemetry GenAI
+conventions; the Quattrocchi venue check). Already present and not re-scored: 2609.03230, 2511.04064, 2607.01980, the ESEM 2026
+user-story completeness paper, Kassab and AbdElhameed (ASE 2025 NIER), and the `semantic-conventions-genai` repository entry.
+The `semantic-conventions-genai` repository page was re-fetched: no tagged release is listed and the page states no stability
+level for agent spans, so the existing "development, do not pin" position is unchanged. Read for the new source: the arXiv HTML
+rendering of 2507.15157v1 through a summarising fetch tool (characters 0-100000 of about 106600; the final ~6.6k characters were
+not read). Version-of-record numbers (TSE 52(5), May 2026, pp. 1773-1790, DOI 10.1109/TSE.2026.3670612) come from a search
+result and the institutional repository listing, not from the IEEE page; the arXiv v1 numbers below may differ from the published version.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Quattrocchi, Pasquale, Spoletini and Baresi, [*Can LLMs Generate User Stories and Assess Their Quality?*](https://arxiv.org/abs/2507.15157), IEEE Trans. Softw. Eng. 52(5), 2026 (arXiv v1 read; peer-reviewed venue per search listing) | Can LLMs generate user stories like human analysts, and judge story quality? Ten LLMs, one summer-camp system, 13,958 generated stories versus 53 expert and 1,530 student stories. Coverage by embedding similarity (cosine >= 0.8, threshold calibrated on a small human study); 153 stories hand-labelled on five semantic criteria by three authors; LLM labelling with no, partial and full codebook at temperature 0, agreement by conflict-aware Cohen's kappa | LLM stories reach 73.6-96.2% coverage versus 52.8% for students but are less diverse. With the full codebook the best LLM labeller reaches kappa 0.87 (human-human 0.74-0.78); smaller models fall to 0.62; Rationale Clarity is weakest. Under that labeller, rejection rates are 9.4% (expert), 14.6% (students) and 16.6-77.3% (LLMs, model-dependent). Threats: one domain; the top labeller scored the full set including its own output; 153 labelled items; the human-likeness proxy (GPTZero) is not a quality measure; no memorization test | Thesis: adjacent context only; it studies story quality, not loss of testable conditions between T1 and T4, and does not touch H1/H2. Experiment: it supports (i) an explicit codebook when LLMs assist labelling and (ii) the existing rule that a model must not be the only judge of its own family's output; it does not change the label plane, which stays blind human labels. Product: none beyond noting that codebook-guided LLM review is cheap but self-preference-prone. Action: context only; no protocol edit, no Drive text change | 7 |
+
+Decision impact: none on H1/H2, B0/B3, estimands or frozen material. No new human decision is created.
+
+### Verification note (2026-11-16, environment, not science)
+
+On the stacked head (`daily/2026-11-15`, 816d4b9) and on `origin/main` (0bb7b85), `pytest -m "not slow"` under Python 3.11.18 as root gives
+the same 49 failures on both and 2,837 passes, so the stack introduces no regression. The failures cluster in
+`test_realworld_author_ui_executor.py` (40; message "non-root collector required"), `test_collect_todomvc_pilot.py` (3),
+`test_shared_omission_testers.py` (3; "stored analysis differs from the frozen recomputation"), and one each in the focus-chain,
+mutation-alarm and todomvc-executor tests. The repository pins Linux Python 3.12 locks (`requirements-linux-py312.lock`); the root
+and interpreter differences are the probable cause, but this was not confirmed per test. Separately, `pip install -e .` creates a
+root-level `*.egg-info` that makes `tests/test_addressed_comparison_cli.py::test_missing_observations_return_nonzero_without_hiding_report`
+fail (the plan's `environment()` package list changes between in-process and subprocess launches); running tests without
+the editable install passes it. The human CI result on a Python 3.12 non-root runner remains the authoritative verification.
