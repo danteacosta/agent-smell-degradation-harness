@@ -94,7 +94,11 @@ def assess(plan, root):
         raise ValueError('exposure audit does not cover the candidate cohort')
     if audit.get('candidate_content_sha256') != candidate_content_digest(source):
         blockers.append('exposure_audit_not_bound_to_candidate')
-    if any(audit['exact_or_contained_clean_input_matches'].values()):
+    defective_matches = audit.get('exact_or_contained_defective_input_matches')
+    if not isinstance(defective_matches, dict) or set(defective_matches) != intents:
+        blockers.append('exposure_audit_missing_defective_variant_coverage')
+        defective_matches = {}
+    if any(audit['exact_or_contained_clean_input_matches'].values()) or any(defective_matches.values()):
         blockers.append('prior_complete_input_match_requires_candidate_replacement_or_explicit_review')
     if plan.get('selection_frozen') is not True:
         blockers.append('selection_not_frozen')

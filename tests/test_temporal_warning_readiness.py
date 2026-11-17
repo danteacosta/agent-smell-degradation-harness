@@ -206,7 +206,8 @@ def test_legacy_audit_blocks_even_with_all_other_prerequisites_declared(declared
     }
     r = assess(declared, ROOT)
     assert r['decision'] == 'no_go'
-    assert r['blockers'] == ['exposure_audit_not_bound_to_candidate']
+    assert r['blockers'] == ['exposure_audit_not_bound_to_candidate',
+                             'exposure_audit_missing_defective_variant_coverage']
 
 
 def test_audit_for_same_ids_cannot_clear_a_revised_pair(declared):
@@ -227,6 +228,21 @@ def test_audit_for_same_ids_cannot_clear_a_revised_pair(declared):
     assert r['blockers'] == ['exposure_audit_not_bound_to_candidate']
     p['exposure_audit'] = _write_reference(directory/'revised-audit.json', audit(source, ROOT, []))
     assert assess(p, ROOT)['decision'] == 'prerequisites_declared'
+
+
+def test_defective_only_prior_input_blocks_readiness(declared):
+    source = json.loads((ROOT/declared['candidate_source_manifest']['path']).read_text())
+    row = source['records'][0]
+    directory = (ROOT/declared['exposure_audit']['path']).parent
+    prior = directory/'prior.json'
+    prior.write_text(json.dumps({'requirement_text': row['variants']['defective']}))
+    report = audit(source, ROOT, [prior.relative_to(ROOT)])
+    assert report['exact_or_contained_clean_input_matches'][row['intent_id']] == []
+    assert report['exact_or_contained_defective_input_matches'][row['intent_id']] == [
+        str(prior.relative_to(ROOT))]
+    declared['exposure_audit'] = _write_reference(directory/'paired-audit.json', report)
+    assert assess(declared, ROOT)['blockers'] == [
+        'prior_complete_input_match_requires_candidate_replacement_or_explicit_review']
 
 
 def test_cli_preserves_report_while_returning_nonzero_for_no_go(tmp_path,monkeypatch):

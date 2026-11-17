@@ -880,3 +880,14 @@ exponents outside the supported range, and totals above the cap keep the pilot
 in `no_go`. A total exactly equal to the cap is permitted. Passing this check
 verifies the declared arithmetic only; it does not approve the budget, estimate
 provider prices, or authorize collection.
+
+## Audit both variants for prior input exposure — 2026-11-17
+
+The temporal audit now records complete normalized input matches separately for
+clean and defective variants. Readiness requires both maps to cover all candidate
+IDs and blocks on a match in either map. A prior clean input can contain its
+own defective variant; the maps describe text overlap, not exclusive exposure.
+The candidate points to the paired report. Its 898 per-file records match the
+historical inventory, with 330 extracted inputs and zero hits for either variant
+across the 12 intents. Earlier reports are retained. This screen does not cover
+paraphrases, partial inputs, private activity, or provider training data.
