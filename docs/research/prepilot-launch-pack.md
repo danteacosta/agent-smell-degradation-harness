@@ -139,6 +139,13 @@ The current conservative worksheet reserves US$0.988200 for the corrected
 120-episode exploratory configuration, including retries and the 25%
 contingency. Annotation time is a separate approval item.
 
+`python -m eval.prepilot_envelope --plan data/prepilot/launch-plan.candidate.json --assumptions <file>` turns
+explicit, human-supplied assumptions (minutes per episode, adjudication share and minutes, provider cost per
+episode, episodes per provider configuration) into the `estimated_annotation_hours` and
+`estimated_provider_cost_usd` fields. It has no defaults, never edits the plan, makes no provider calls and approves
+nothing; the numbers are arithmetic on stated assumptions, to be replaced by qualification smoke-test measurements.
+The approved cap, the annotator staffing and every go/no-go gate remain human decisions.
+
 The private handoff package must include the redacted report, append-only cost
 ledger, source and constraint hashes, configuration and protocol hashes,
 execution window, platform information, and the private input locations. Raw
