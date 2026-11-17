@@ -1630,3 +1630,11 @@ and interpreter differences are the probable cause, but this was not confirmed p
 root-level `*.egg-info` that makes `tests/test_addressed_comparison_cli.py::test_missing_observations_return_nonzero_without_hiding_report`
 fail (the plan's `environment()` package list changes between in-process and subprocess launches); running tests without
 the editable install passes it. The human CI result on a Python 3.12 non-root runner remains the authoritative verification.
+
+## 2026-11-17 search log (no new scored source)
+
+Search date: 2026-11-17. Two standard web searches (omission/missing-requirement detection in LLM code generation;
+LLM acceptance-criteria generation at ICSE/FSE/RE venues). Every result was already in the matrix (TraceDev 2607.18886,
+2507.20439, 2609.03230, Kassab and AbdElhameed, 2602.02896, 2607.01980, Quattrocchi et al., the ESEM 2026 papers) or predates
+the window (2508.06888, ASE 2025 industry showcase, seen as a snippet only and not scored). No new source was read, so nothing
+is scored. The related-work gap is unchanged. Decision impact: none on H1/H2, B0/B3, estimands or frozen material.
