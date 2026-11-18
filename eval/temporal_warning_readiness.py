@@ -90,7 +90,9 @@ def assess(plan, root):
     intents = {r['intent_id'] for r in source['records']}
     if set(plan.get('selected_requirements', [])) != intents or len(plan['selected_requirements']) != 12:
         raise ValueError('selected intent list differs from source manifest')
-    if audit.get('pairs_verified') != 12 or set(audit.get('exact_or_contained_clean_input_matches', {})) != intents:
+    clean_matches = audit.get('exact_or_contained_clean_input_matches')
+    if (audit.get('pairs_verified') != 12 or not isinstance(clean_matches, dict)
+            or set(clean_matches) != intents):
         raise ValueError('exposure audit does not cover the candidate cohort')
     if audit.get('candidate_content_sha256') != candidate_content_digest(source):
         blockers.append('exposure_audit_not_bound_to_candidate')
@@ -98,7 +100,12 @@ def assess(plan, root):
     if not isinstance(defective_matches, dict) or set(defective_matches) != intents:
         blockers.append('exposure_audit_missing_defective_variant_coverage')
         defective_matches = {}
-    if any(audit['exact_or_contained_clean_input_matches'].values()) or any(defective_matches.values()):
+    for matches in (clean_matches, defective_matches):
+        if any(not isinstance(paths, list)
+               or any(not isinstance(path, str) or not path.strip() for path in paths)
+               for paths in matches.values()):
+            raise ValueError('malformed exposure match list')
+    if any(clean_matches.values()) or any(defective_matches.values()):
         blockers.append('prior_complete_input_match_requires_candidate_replacement_or_explicit_review')
     if plan.get('selection_frozen') is not True:
         blockers.append('selection_not_frozen')

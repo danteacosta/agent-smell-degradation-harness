@@ -245,6 +245,17 @@ def test_defective_only_prior_input_blocks_readiness(declared):
         'prior_complete_input_match_requires_candidate_replacement_or_explicit_review']
 
 
+@pytest.mark.parametrize('variant', ['clean', 'defective'])
+@pytest.mark.parametrize('invalid', [None, False, '', [None]])
+def test_malformed_match_entry_is_not_a_negative_result(declared, variant, invalid):
+    path = ROOT/declared['exposure_audit']['path']
+    report = json.loads(path.read_bytes())
+    report[f'exact_or_contained_{variant}_input_matches'][declared['selected_requirements'][0]] = invalid
+    declared['exposure_audit'] = _write_reference(path, report)
+    with pytest.raises(ValueError, match='malformed exposure match list'):
+        assess(declared, ROOT)
+
+
 def test_cli_preserves_report_while_returning_nonzero_for_no_go(tmp_path,monkeypatch):
     monkeypatch.chdir(ROOT);out=tmp_path/'readiness.json'
     assert main(['--output',str(out)])==2

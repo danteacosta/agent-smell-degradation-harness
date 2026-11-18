@@ -891,3 +891,12 @@ The candidate points to the paired report. Its 898 per-file records match the
 historical inventory, with 330 extracted inputs and zero hits for either variant
 across the 12 intents. Earlier reports are retained. This screen does not cover
 paraphrases, partial inputs, private activity, or provider training data.
+
+## Distinguish missing exposure results from zero hits — 2026-11-18
+
+Each candidate entry in either match map must be a JSON array of nonblank
+path strings. Only an empty array records no matches for that variant. Null,
+booleans, scalar strings, and arrays containing invalid entries are invalid
+audit data, even if the file hash and candidate IDs match. Invalid input
+produces no readiness report. The check validates representation, not the
+completeness or authenticity of registry exposure evidence.
