@@ -1638,3 +1638,25 @@ LLM acceptance-criteria generation at ICSE/FSE/RE venues). Every result was alre
 2507.20439, 2609.03230, Kassab and AbdElhameed, 2602.02896, 2607.01980, Quattrocchi et al., the ESEM 2026 papers) or predates
 the window (2508.06888, ASE 2025 industry showcase, seen as a snippet only and not scored). No new source was read, so nothing
 is scored. The related-work gap is unchanged. Decision impact: none on H1/H2, B0/B3, estimands or frozen material.
+
+## 2026-11-18 entry: late requirement emergence (Jiang et al., arXiv 2609.03028) and a duplicate-selection audit
+
+Search date: 2026-11-18. One standard web search (requirement omission / early detection / trajectory provenance in coding agents).
+Already in the matrix and not rescored: 2511.04064, 2608.12970, "Organising Trajectory Evidence" and ReqGenX. One new source:
+
+- Jiang, Cheng, Fu, Koziolek, Li, Zhang, "Requirements After the First Edit: Mining Late Requirement Emergence and Rework in
+  Real-World Coding-Agent Sessions", arXiv 2609.03028 v1 (2 Sep 2026). Status: preprint, no venue listed. Read: abstract page
+  only (not full text), so unscored beyond a provisional credibility of 3/10.
+  Question: do requirements arriving after implementation start cause invalidation of agent-written code?
+  Data: 3,553 eligible SWE-chat sessions plus one controlled disclosure-timing experiment. Method: coded arrivals, linked them to
+  deletion/replacement of prior agent lines where the repository state could be replayed.
+  Result (as reported): about 2x invalidation after a requirement arrival vs matched non-requirement edits; advance warning had no
+  detectable effect on overwriting. Limits (abstract-level): no causal claim, wide intervals, proxy outcome, replayable sessions only.
+  Relevance: thesis - adjacent context for requirement loss over time, not for omission in the specification itself; experiment -
+  none (different treatment and outcome from the clean/defective pair design); product - supports the premise that requirement
+  changes mid-session are costly. Action: none beyond this record; read the full text before any citation.
+  Decision impact: none on H1/H2, B0/B3, estimands or frozen material.
+
+Engineering note (same date): `eval/duplicate_selection_audit.py` re-derives the 20% duplicate-coding selection from item ids and
+seed, checks the manifest hash and warns on outcome-like tokens in ids. It does not set
+`duplicate_subset_selected_outcome_blind`; that stays a human decision. Not motivated by the source above.
