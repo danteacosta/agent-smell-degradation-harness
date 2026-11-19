@@ -1660,3 +1660,17 @@ Already in the matrix and not rescored: 2511.04064, 2608.12970, "Organising Traj
 Engineering note (same date): `eval/duplicate_selection_audit.py` re-derives the 20% duplicate-coding selection from item ids and
 seed, checks the manifest hash and warns on outcome-like tokens in ids. It does not set
 `duplicate_subset_selected_outcome_blind`; that stays a human decision. Not motivated by the source above.
+
+## 2026-11-19 search log (no new scored source) and a blinding audit
+
+Search date: 2026-11-19. One standard web search (requirement omission / acceptance criteria in LLM coding agents). Every
+primary-paper hit was already in the matrix (WiseSpec 2609.00568, SWE-RPG 2608.09072, 2608.12970, DevIntent 2608.07614,
+2604.21505, 2602.02896, Prompt Coverage Adequacy 2607.02057); the remaining hits were secondary blog summaries, which are not
+scored and not used for any scientific claim. The WiseSpec abstract page was rechecked: single author, ASE 2026 SRC listing, no
+dataset, limitations or per-baseline numbers on the page, so its existing record is unchanged. Decision impact: none on H1/H2,
+B0/B3, estimands or frozen material.
+
+Engineering note (same date): `eval/blinding_audit.py` screens annotator-facing packets for nested experimental keys, fields
+outside the blinded packet schema, pair-arm tokens in item ids, duplicate ids and condition/label phrases in presented text. It
+extends the top-level-only check in `label_plane.annotation_protocol.validate_blinded_payload`. It is a heuristic screen and does
+not set `blinding_verified`; that stays a human decision. Not motivated by any source above.
