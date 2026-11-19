@@ -900,3 +900,12 @@ booleans, scalar strings, and arrays containing invalid entries are invalid
 audit data, even if the file hash and candidate IDs match. Invalid input
 produces no readiness report. The check validates representation, not the
 completeness or authenticity of registry exposure evidence.
+
+## Bind exported readiness reports to the plan — 2026-11-19
+
+The readiness CLI includes `plan_sha256`, computed from the same input bytes
+it decoded and assessed. Retain those plan bytes alongside each report. A
+format-only edit changes this byte digest; it is not a canonical-content digest.
+This supports matching an exported decision to its input and cannot establish
+approval authenticity, immutable storage, or permission to collect data. The
+Python `assess` API does not assert a byte digest for an already parsed dict.

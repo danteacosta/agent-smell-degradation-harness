@@ -12,6 +12,28 @@ def candidate():
     return json.loads((ROOT/'data/prepilot/temporal-warning-plan.candidate.json').read_text())
 
 
+def test_cli_binds_report_to_exact_plan_bytes(tmp_path, monkeypatch, capsys):
+    monkeypatch.chdir(ROOT)
+    plan, output = tmp_path/'plan.json', tmp_path/'report.json'
+    first = json.dumps(candidate()).encode()
+    plan.write_bytes(first)
+    assert main(['--plan', str(plan), '--output', str(output)]) == 2
+    old = output.read_bytes()
+    report = json.loads(old)
+    assert report['plan_sha256'] == hashlib.sha256(first).hexdigest()
+    second = b'\n' + first
+    plan.write_bytes(second)
+    assert main(['--plan', str(plan)]) == 2
+    # Both calls printed reports; use only the second one.
+    printed = capsys.readouterr().out
+    decoded = json.JSONDecoder()
+    _, offset = decoded.raw_decode(printed)
+    latest = json.loads(printed[offset:])
+    assert latest['plan_sha256'] == hashlib.sha256(second).hexdigest()
+    assert latest['plan_sha256'] != report['plan_sha256']
+    assert output.read_bytes() == old
+
+
 @pytest.mark.parametrize('cap,ready', [(0.11, True), (0.10999999999999999, False)])
 def test_decimal_budget_boundary(declared, cap, ready):
     declared['budget'] = {'estimated_provider_cost_usd': 0.1,

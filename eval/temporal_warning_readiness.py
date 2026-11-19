@@ -177,11 +177,13 @@ def main(argv=None):
     parser.add_argument('--output',type=Path)
     args=parser.parse_args(argv)
     try:
-        plan = json.loads(args.plan.read_bytes(), object_pairs_hook=_unique_json_object,
+        plan_bytes = args.plan.read_bytes()
+        plan = json.loads(plan_bytes, object_pairs_hook=_unique_json_object,
                           parse_float=Decimal)
         report = assess(plan, Path.cwd())
     except (OSError, ValueError) as error:
         parser.error(str(error))
+    report['plan_sha256'] = hashlib.sha256(plan_bytes).hexdigest()
     rendered=json.dumps(report,indent=2,allow_nan=False)+'\n'
     if args.output:
         try:
