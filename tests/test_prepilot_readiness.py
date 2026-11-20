@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+
 import copy
+import hashlib
 import json
 from pathlib import Path
 
@@ -36,7 +38,7 @@ def _ready_plan() -> dict:
                 "qualification_passed": True,
                 "qualification_report_path": f"runs/qualification-{index}.json",
                 "t1_t3_before_t4": True,
-                "configuration_hash": f"hash-{index}",
+                "configuration_hash": hashlib.sha256(f"config-{index}".encode()).hexdigest(),
             }
         )
     plan["annotation"].update(
@@ -117,3 +119,18 @@ def test_secret_like_fields_are_rejected(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="secret-like field"):
         load_launch_plan(path)
+
+
+def test_non_sha256_or_shared_configuration_hash_fails_closed() -> None:
+    plan = _ready_plan()
+    plan["provider_configurations"][0]["configuration_hash"] = "hash-0"
+    result = evaluate_launch_plan(plan)
+    assert result["decision"] == "no_go"
+    assert any("not a lowercase SHA-256 hex digest" in b for b in result["blockers"])
+
+    plan = _ready_plan()
+    shared = plan["provider_configurations"][0]["configuration_hash"]
+    plan["provider_configurations"][1]["configuration_hash"] = shared
+    result = evaluate_launch_plan(plan)
+    assert result["decision"] == "no_go"
+    assert "provider configurations must have distinct configuration hashes" in result["blockers"]

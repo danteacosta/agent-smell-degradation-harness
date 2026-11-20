@@ -1674,3 +1674,16 @@ Engineering note (same date): `eval/blinding_audit.py` screens annotator-facing 
 outside the blinded packet schema, pair-arm tokens in item ids, duplicate ids and condition/label phrases in presented text. It
 extends the top-level-only check in `label_plane.annotation_protocol.validate_blinded_payload`. It is a heuristic screen and does
 not set `blinding_verified`; that stays a human decision. Not motivated by any source above.
+
+## 2026-11-20 search log (no new scored source) and a configuration-hash check
+
+Search date: 2026-11-20. One standard web search (requirement omission / acceptance criteria / early detection in coding-agent
+trajectories). Every primary-paper hit was already in the matrix (2511.04064, TraceDev 2607.18886, 2606.26300, 2505.13360);
+the remaining hits were vendor or community blog posts (Kiro, Qodo, dev.to, Stack Overflow blog), used only as product-market
+context and not scored. The Co-Design Bench figure quoted by a vendor remains unverified and is not cited. No study of early
+detection of omitted requirements from agent trajectories was found; the related-work gap is unchanged. Decision impact: none
+on H1/H2, B0/B3, estimands or frozen material.
+
+Engineering note (same date): `eval.prepilot_readiness` now requires each provider configuration hash to be a lowercase SHA-256
+hex digest (the format `eval.provider_manifest` already requires of run metadata) and distinct across configurations. Before,
+any non-empty string such as "hash-0" cleared the blocker. Not motivated by any source above.
