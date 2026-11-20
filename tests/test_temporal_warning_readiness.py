@@ -91,7 +91,10 @@ def test_assess_rejects_duplicate_members_even_when_audit_hash_matches(declared)
 
 def _write_reference(path, value):
     path.write_text(json.dumps(value), encoding='utf-8')
-    return {'path': str(path.relative_to(ROOT)), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+    reference = {'path': str(path.relative_to(ROOT)), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+    if 'registry_files' in value:
+        reference['registry_files'] = value['registry_files']
+    return reference
 
 
 @pytest.fixture
@@ -128,6 +131,37 @@ def test_declarations_never_authorize_collection_or_confirmatory_claims(declared
     assert r['decision']=='prerequisites_declared'
     assert r['collection_authorized_by_this_report'] is False
     assert r['confirmatory_eligible'] is False
+
+
+@pytest.mark.parametrize('change', ['missing_inventory', 'count_mismatch', 'duplicate_path',
+                                  'changed_bytes', 'missing_file', 'outside_root'])
+def test_incomplete_or_changed_registry_cannot_clear_readiness(change, declared, tmp_path):
+    source = json.loads((ROOT/declared['candidate_source_manifest']['path']).read_text())
+    directory = (ROOT/declared['exposure_audit']['path']).parent
+    prior = directory/'prior.json'
+    prior.write_text('{"requirement_text": "unrelated synthetic input"}')
+    report = audit(source, ROOT, [prior.relative_to(ROOT)])
+    expected = 1
+    if change == 'missing_inventory':
+        report.pop('inventory')
+    elif change == 'count_mismatch':
+        expected = 2
+    elif change == 'duplicate_path':
+        report['inventory'] *= 2
+        report['registry_files'] = expected = 2
+    elif change == 'changed_bytes':
+        prior.write_text('{"requirement_text": "changed after exposure audit"}')
+    elif change == 'missing_file':
+        report['inventory'][0]['path'] = str(prior.relative_to(ROOT)) + '.missing'
+    else:
+        outside = tmp_path/'outside.json'
+        outside.write_bytes(prior.read_bytes())
+        report['inventory'][0]['path'] = str(outside)
+    declared['exposure_audit'] = _write_reference(directory/'scope-audit.json', report)
+    declared['exposure_audit']['registry_files'] = expected
+    result = assess(declared, ROOT)
+    assert result['decision'] == 'no_go'
+    assert result['blockers'] == ['exposure_registry_inventory_incomplete_or_changed']
 
 
 @pytest.mark.parametrize('change,complete', [('one_per_intent', 0), ('alias', 11), ('duplicate', 11)])
@@ -225,6 +259,7 @@ def test_legacy_audit_blocks_even_with_all_other_prerequisites_declared(declared
     declared['exposure_audit'] = {
         'path': historical,
         'sha256': hashlib.sha256((ROOT/historical).read_bytes()).hexdigest(),
+        'registry_files': 898,
     }
     r = assess(declared, ROOT)
     assert r['decision'] == 'no_go'

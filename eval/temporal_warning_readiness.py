@@ -68,6 +68,32 @@ def _budget_within_cap(budget):
     return estimate > 0 and contingency >= 0 and cap > 0 and estimate * (1 + contingency) <= cap
 
 
+def _exposure_inventory_matches(audit, reference, root):
+    """Verify the declared registry scope and bytes, not its exhaustiveness."""
+    expected = reference.get('registry_files')
+    inventory = audit.get('inventory')
+    if (type(expected) is not int or expected < 0
+            or type(audit.get('registry_files')) is not int
+            or audit['registry_files'] != expected
+            or not isinstance(inventory, list) or len(inventory) != expected):
+        return False
+    seen = set()
+    try:
+        for entry in inventory:
+            if not isinstance(entry, dict) or not isinstance(entry.get('path'), str):
+                return False
+            relative = Path(entry['path'])
+            path = (root / relative).resolve()
+            if (not entry['path'].strip() or relative.is_absolute()
+                    or not path.is_relative_to(root) or path in seen
+                    or hashlib.sha256(path.read_bytes()).hexdigest() != entry.get('sha256')):
+                return False
+            seen.add(path)
+    except (OSError, ValueError):
+        return False
+    return True
+
+
 def assess(plan, root):
     root = Path(root).resolve(); blockers = []
     if plan.get('schema_version') != 'temporal-warning-cohort-candidate/v1':
@@ -96,6 +122,8 @@ def assess(plan, root):
         raise ValueError('exposure audit does not cover the candidate cohort')
     if audit.get('candidate_content_sha256') != candidate_content_digest(source):
         blockers.append('exposure_audit_not_bound_to_candidate')
+    if not _exposure_inventory_matches(audit, plan['exposure_audit'], root):
+        blockers.append('exposure_registry_inventory_incomplete_or_changed')
     defective_matches = audit.get('exact_or_contained_defective_input_matches')
     if not isinstance(defective_matches, dict) or set(defective_matches) != intents:
         blockers.append('exposure_audit_missing_defective_variant_coverage')

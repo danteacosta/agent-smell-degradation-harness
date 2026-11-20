@@ -909,3 +909,28 @@ format-only edit changes this byte digest; it is not a canonical-content digest.
 This supports matching an exported decision to its input and cannot establish
 approval authenticity, immutable storage, or permission to collect data. The
 Python `assess` API does not assert a byte digest for an already parsed dict.
+
+## Verify the declared exposure registry at readiness — 2026-11-20
+
+Readiness checks the audit inventory against the plan reference's
+`registry_files`: both counts must be nonnegative integers and agree with the
+inventory length. Every inventory entry must resolve to a distinct file inside
+the repository and match its recorded byte SHA-256. Missing inventory, scope
+count changes, duplicate resolved paths, missing files, changed bytes and paths
+outside the root keep the plan in `no_go`, even when both candidate match maps
+contain only empty arrays and the audit's own digest matches.
+
+This implements a scoped evidence check, consistent with
+[Cao et al.'s HOW2BENCH](https://proceedings.mlr.press/v306/cao26ag.html)
+emphasis on inspecting benchmark quality evidence. Their position paper does
+not validate this implementation or H1/H2. The checked-in 898-file inventory
+passes this check; the candidate still has 12 other blockers, zero reviewed
+intents and zero qualified providers. Six regression cases fail against the
+prior implementation and pass with this check; the 75 affected tests pass.
+
+The scope count is a declaration, not an independently approved file allowlist.
+Matching hashes do not prove that the registry is exhaustive or that the match
+maps were computed honestly. Reviewers must still approve the inventory and
+exposure findings. Paraphrases, partial inputs, external/private activity and
+provider training exposure remain outside this screen. Synthetic tests may
+declare a zero-file scope; that is not evidence for a real cohort.
