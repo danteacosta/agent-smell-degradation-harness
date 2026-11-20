@@ -8,12 +8,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 from typing import Any, Mapping
 
 
 SCHEMA_VERSION = "prepilot-launch/v1"
 ALLOWED_STATUSES = {"draft", "blocked", "pilot_ready"}
+_SHA256_HEX = re.compile(r"[0-9a-f]{64}")
 FORBIDDEN_KEY_MARKERS = (
     "api_key",
     "apikey",
@@ -165,6 +167,7 @@ def evaluate_launch_plan(plan: Mapping[str, Any]) -> dict[str, Any]:
         blockers.append("two real provider/model configurations are required")
         configurations = []
     identities: set[tuple[str, str, str]] = set()
+    seen_hashes: set[str] = set()
     for index, raw in enumerate(configurations):
         config = _require_mapping(raw, f"provider_configurations[{index}]")
         identity = tuple(str(config.get(key, "")).strip() for key in ("provider", "model", "model_version"))
@@ -183,8 +186,18 @@ def evaluate_launch_plan(plan: Mapping[str, Any]) -> dict[str, Any]:
             blockers.append(f"provider configuration {index + 1} lacks a verified pre-final boundary")
         if config.get("prompted_snapshot") is not False:
             blockers.append(f"provider configuration {index + 1} permits prompted snapshots")
-        if not str(config.get("configuration_hash", "")).strip():
+        config_hash = str(config.get("configuration_hash", "")).strip()
+        if not config_hash:
             blockers.append(f"provider configuration {index + 1} lacks a configuration hash")
+        elif not _SHA256_HEX.fullmatch(config_hash):
+            # Same format that eval.provider_manifest requires of run metadata.
+            blockers.append(
+                f"provider configuration {index + 1} configuration hash is not a lowercase SHA-256 hex digest"
+            )
+        elif config_hash in seen_hashes:
+            blockers.append("provider configurations must have distinct configuration hashes")
+        else:
+            seen_hashes.add(config_hash)
 
     annotation = _require_mapping(plan.get("annotation"), "annotation")
     annotation_checks = {
