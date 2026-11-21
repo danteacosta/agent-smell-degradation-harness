@@ -934,3 +934,39 @@ maps were computed honestly. Reviewers must still approve the inventory and
 exposure findings. Paraphrases, partial inputs, external/private activity and
 provider training exposure remain outside this screen. Synthetic tests may
 declare a zero-file scope; that is not evidence for a real cohort.
+
+## Preserve checkpoint-specific comparison visibility — 2026-11-21
+
+The supplementary comparison now includes `project_grouped_deltas_by_stage`
+for T1, T2 and T3, each containing B3 minus B0 and B3 minus S-structure.
+Every contrast uses exactly the same held-out episodes, target constraints and
+`project_id` clusters as the existing max-prefix comparison. It reuses
+`clustered_pr_auc_delta`, including its small-cluster and degenerate-support
+gates; no new row-level resampling or detector fitting is introduced.
+
+A maximum over prefixes answers a different question from a fixed checkpoint.
+In a synthetic regression, B3 ranks defects at T1 while B0 has tied scores;
+B0 catches up at T2. The observed AP difference is 0.5 at T1 and zero at
+T2/T3 and for max-prefix ranking. These are fixture arithmetic, not pilot results.
+Tests cover both two-project descriptive output and a three-project
+nondegenerate bootstrap. The existing aggregate, FPR calibration, lead-time
+policy, primary H2 model definitions and F1 threshold policy are unchanged.
+
+These checkpoint contrasts are supplementary diagnostics. Do not select the
+most favorable checkpoint or treat their intervals as independent confirmatory
+tests. Any confirmatory checkpoint estimand or multiplicity procedure requires
+an explicit prospective human decision; it is not established by this change.
+
+### Context scope remains separate from provenance
+
+[Poulsen et al. (DESIGN 2026)](https://doi.org/10.1017/pds.2026.10607)
+report improved ambiguity-detection precision after adding project context to
+a hybrid JWST dataset. This is adjacent evidence about requirement-quality
+judgments, not downstream condition loss or temporal early warning. Their
+context was extracted partly from the original requirements, and the supplied
+context and instructions changed together. For this experiment, distinguish
+allowed project context from privileged clean counterparts, omitted-condition
+answers and label-plane materials. The existing content-only comparator remains
+a supplementary candidate pending freeze; this paper does not establish that
+provenance adds value beyond equally available content. Product triage must
+expose context scope rather than present a smell flag as proof of semantic loss.

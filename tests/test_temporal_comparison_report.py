@@ -70,3 +70,44 @@ def test_test_outcomes_do_not_change_fitted_operating_point():
 def test_project_aliases_within_test_cannot_inflate_bootstrap_clusters():
     p,o=sample();p[3]['project_id']=' TEST-1 '
     with pytest.raises(ValueError,match='bootstrap clusters'):compare(p,o,max_fpr=.05)
+
+
+@pytest.mark.parametrize('test_projects', [2, 3])
+def test_checkpoint_deltas_reveal_gain_hidden_by_max_prefix_score(test_projects):
+    p,o=sample()
+    if test_projects == 3:
+        for label in (0, 1):
+            row=copy.deepcopy(p[2+label]); outcome=copy.deepcopy(o[2+label])
+            row['project_id']='test-3'
+            row['episode_id']=row['intent_id']=f'test-3-{label}'
+            row['constraint_id']=row['episode_id']+'-c01'
+            outcome['episode_id']=row['episode_id']
+            outcome['constraint_id']=row['constraint_id']
+            p.append(row);o.append(outcome)
+    # At T1 B0 cannot discriminate; it catches up at T2. The max-prefix
+    # comparison therefore hides the earlier B3 advantage in this fixture.
+    for row in p:
+        row['stages'][0]['scores']['B0'] = .1
+    report=compare(p,o,max_fpr=.05)
+    assert report['project_grouped_deltas']['B3_minus_B0']['delta_pr_auc'] == 0
+    by_stage=report['project_grouped_deltas_by_stage']
+    assert list(by_stage) == ['T1','T2','T3']
+    for stage, expected in [('T1',.5),('T2',0),('T3',0)]:
+        assert set(by_stage[stage]) == {'B3_minus_B0','B3_minus_S-structure'}
+        for baseline in ('B0','S-structure'):
+            effect=by_stage[stage]['B3_minus_'+baseline]
+            ap=lambda detector: report['detectors'][detector]['pr_auc_average_precision_by_stage'][stage]
+            assert effect['delta_pr_auc'] == ap('B3')-ap(baseline)
+            assert effect['bootstrap']['cluster_key'] == 'project_id'
+            assert effect['bootstrap']['clusters'] == report['test_projects'] == test_projects
+            if test_projects == 2:
+                assert effect['claim'] == 'descriptive_only'
+                assert effect['ci95'] == {'low':None,'high':None}
+            else:
+                assert effect['bootstrap']['valid_for_inference'] is True
+                assert effect['bootstrap']['draws'] == 2000
+                assert effect['ci95'] == {'low':effect['delta_pr_auc'],
+                                         'high':effect['delta_pr_auc']}
+        assert by_stage[stage]['B3_minus_B0']['delta_pr_auc'] == expected
+    assert report['confirmatory_eligible'] is False
+    assert report['primary_h2_unchanged'] is True
