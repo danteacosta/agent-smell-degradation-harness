@@ -1687,3 +1687,21 @@ on H1/H2, B0/B3, estimands or frozen material.
 Engineering note (same date): `eval.prepilot_readiness` now requires each provider configuration hash to be a lowercase SHA-256
 hex digest (the format `eval.provider_manifest` already requires of run metadata) and distinct across configurations. Before,
 any non-empty string such as "hash-0" cleared the blocker. Not motivated by any source above.
+
+## 2026-11-21 entry: specification explicitness and hidden-test failure (Onagh and Nayebi) and a finite-budget check
+
+Search and reading date: 2026-11-21. One extended web search (requirement omission / acceptance criteria in LLM code generation).
+Deduplicated by arXiv ID; every other primary hit (2608.12970, 2604.21505, 2602.02896, 2607.01980, 2608.01000) is already in
+this matrix. Read: the arXiv abstract page only (no full text, no method detail beyond the abstract), so nothing below exceeds what
+the abstract states.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Onagh and Nayebi, [*How Specification Explicitness Shapes Failure in LLM-Generated Code*](https://arxiv.org/abs/2611.20195), arXiv preprint v1, 15 Nov 2026; the page states "accepted to ICSE 2026", which is inconsistent with a November 2026 submission date and is unverified | When do specifications begin to control generated behavior? Controlled experiment with 72 participants implementing and revising Python tasks with an LLM under three levels of specification explicitness, scored on hidden tests, including a requirement-change phase. Task count and element-level definitions are not stated in the abstract. | Reported: lightweight structure reduced hidden-test failures by 8.7%; explicit behavioral obligations (constraints, invariants, negative requirements, edge cases, tie-breaking, exceptions) by 47.2%; invariant violations fell 66.1% and unsupported assumptions 59.5%; after a requirement change, explicit-obligation submissions regressed more often but lost less correct behavior; without explicit obligations participants overestimated correctness by about 23 points. Not visible: limitations, per-condition contents, whether elements were removed from one base spec (a paired design) or whole specs differed, task domain, models, or statistics. Human participants steer the LLM, so the effect is not a pure model effect. Python functions with hidden tests, not browser-observable behavior or acceptance-criteria generation. | Thesis: directionally consistent with H1 (removing an explicit obligation worsens output), but it varies explicitness across whole specifications rather than removing one atomic condition with a rewrite control, so it is not a test of H1 and does not address H2. Its overconfidence finding supports why a pre-final signal is worth studying, nothing more. Experiment: no change; it reinforces reporting per-constraint outcomes and keeping the rewrite (B) control separate from the omission (C). Product: supports the framing that missing obligations become silent assumptions; context only. Action: none today. Read the full text before citing any effect size; resolve the venue claim before citing it as peer-reviewed. No human decision needed. | 4 |
+
+Decision impact: none on H1/H2, B0/B3, estimands or frozen material.
+
+Engineering note (same date): `eval.prepilot_readiness` now treats NaN, infinity, boolean and non-numeric budget fields as not
+estimated. Before, `float("nan")` for the approved cap, cost, contingency or annotation hours made every comparison false and
+cleared the budget blockers (a malformed budget could pass the gate); seven new parametrized tests fail without the fix. The gate
+still approves nothing: the cap, assumptions and all go/no-go gates remain human decisions. Not motivated by the source above.
