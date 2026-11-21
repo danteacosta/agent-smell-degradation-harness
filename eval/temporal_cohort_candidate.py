@@ -14,6 +14,13 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def candidate_content_digest(candidate):
+    """Bind a report to the parsed manifest, independent of JSON formatting."""
+    encoded = json.dumps(candidate, sort_keys=True, separators=(',', ':'),
+                         ensure_ascii=True, allow_nan=False).encode('utf-8')
+    return hashlib.sha256(encoded).hexdigest()
+
+
 def validate_candidate(candidate, root):
     root = Path(root).resolve()
     if candidate.get('selection_frozen') is not False or candidate.get('human_approvals') != 0:
@@ -59,7 +66,8 @@ def _texts(value):
 
 def audit(candidate, root, registry_paths):
     result = validate_candidate(candidate, root)
-    matches = {r['intent_id']: [] for r in candidate['records']}
+    matches = {variant: {r['intent_id']: [] for r in candidate['records']}
+               for variant in ('clean', 'defective')}
     inventory = []
     normalize = lambda value: ' '.join(value.split())
     for relative in sorted(registry_paths):
@@ -70,14 +78,17 @@ def audit(candidate, root, registry_paths):
         inputs = list(_texts(values))
         inventory.append({'path': str(relative), 'sha256': digest(path), 'input_strings': len(inputs)})
         for row in candidate['records']:
-            if any(normalize(row['variants']['clean']) in normalize(v) for v in inputs):
-                matches[row['intent_id']].append(str(relative))
+            for variant, variant_matches in matches.items():
+                if any(normalize(row['variants'][variant]) in normalize(v) for v in inputs):
+                    variant_matches[row['intent_id']].append(str(relative))
     return {'schema_version': 'temporal-warning-exposure-audit/v1',
+            'candidate_content_sha256': candidate_content_digest(candidate),
             'status': 'pending_independent_review', 'confirmatory_eligible': False,
             **result, 'registry_files': len(inventory), 'inventory': inventory,
-            'exact_or_contained_clean_input_matches': matches,
+            'exact_or_contained_clean_input_matches': matches['clean'],
+            'exact_or_contained_defective_input_matches': matches['defective'],
             'unmatched_is_not_unexposed': True,
-            'limitations': ['Whitespace-normalized text audit; paraphrases and omitted-clause exposure can escape it.',
+            'limitations': ['Whitespace-normalized text audit; paraphrases and partial variant exposure can escape it.',
                            'Public and previously used projects; pretraining and external/private usage are unknown.',
                            'Independent review, selection and split freeze remain required.']}
 

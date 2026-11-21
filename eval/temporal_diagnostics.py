@@ -7,6 +7,7 @@ externally as construction, machine, or human labels.
 """
 from __future__ import annotations
 import argparse
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -26,15 +27,29 @@ def _bound_counts():
             'alert_rate_lower': None, 'alert_rate_upper': None}
 
 
-def analyze(rows):
+def analyze(rows, *, expected_episode_ids=None):
+    # Reconcile supplied observations against a separately frozen execution plan.
+    if expected_episode_ids is not None:
+        if not isinstance(expected_episode_ids, list) or any(
+            not isinstance(value, str) or not value.strip() or value != value.strip()
+            for value in expected_episode_ids
+        ):
+            raise ValueError('expected episode ids must be a list of canonical nonempty strings')
+        if len(set(expected_episode_ids)) != len(expected_episode_ids):
+            raise ValueError('duplicate expected episode id')
+    planned = len(rows) if expected_episode_ids is None else len(expected_episode_ids)
     episodes = []
     seen = set()
     horizons = {}
     for horizon in range(1, 4):
         horizons['+'.join(STAGES[:horizon])] = {
-            'planned_episodes': len(rows), 'complete_stage_episodes': 0,
+            'planned_episodes': planned, 'supplied_episodes': len(rows),
+            'missing_entire_episodes': None, 'complete_stage_episodes': 0,
             'missing_stage_episodes': 0, 'outcome_labeled_episodes': 0,
             'nondefective_labeled_episodes': 0, 'alerts': 0, 'false_alerts': 0,
+            'defective_labeled_episodes': 0, 'true_alerts': 0,
+            'missed_defects': 0, 'nondefective_without_alert': 0,
+            'recall': None, 'positive_class': 'terminal_defect=true',
             'cost_microusd': 0, 'known_cost_microusd': 0,
             'missing_cost_episodes': 0, 'false_alert_rate': None,
             'rate_scope': 'complete_stage_labeled_episodes',
@@ -73,6 +88,12 @@ def analyze(rows):
         episodes.append({'episode_id': identifier, 'intent_id': row['intent_id'],
                          'first_alert_stage': first['stage'] if first else None,
                          'lead_time_ms': terminal-first['available_ms'] if first else None,
+                         # Joined outcomes are diagnostic labels, never alert features.
+                         'terminal_defect': defect,
+                         'alert_outcome': (
+                             'no_observed_alert' if first is None else
+                             'unlabeled_alert' if defect is None else
+                             'true_alert' if defect else 'false_alert'),
                          'first_alert_prefix_complete': (
                              all(s in stages for s in STAGES[:STAGES.index(first['stage'])+1])
                              if first else None),
@@ -103,10 +124,27 @@ def analyze(rows):
             result['outcome_labeled_episodes'] += defect is not None
             result['nondefective_labeled_episodes'] += defect is False
             result['false_alerts'] += alert and defect is False
+            result['defective_labeled_episodes'] += defect is True
+            result['true_alerts'] += alert and defect is True
+            result['missed_defects'] += not alert and defect is True
+            result['nondefective_without_alert'] += not alert and defect is False
+    missing_ids = None
+    plan_digest = None
+    if expected_episode_ids is not None:
+        if seen - set(expected_episode_ids):
+            raise ValueError('observed episode is outside the expected execution plan')
+        missing_ids = [value for value in expected_episode_ids if value not in seen]
+        plan_digest = hashlib.sha256(json.dumps(
+            expected_episode_ids, ensure_ascii=False, separators=(',', ':')
+        ).encode('utf-8')).hexdigest()
     for result in horizons.values():
+        result['missing_entire_episodes'] = None if missing_ids is None else len(missing_ids)
         n = result['nondefective_labeled_episodes']
         result['false_alert_rate'] = result['false_alerts']/n if n else None
+        positives = result['defective_labeled_episodes']
+        result['recall'] = result['true_alerts']/positives if positives else None
         result['cost_microusd'] = (None if result['missing_cost_episodes'] or result['missing_stage_episodes']
+                                   or result['missing_entire_episodes']
                                    else result['known_cost_microusd'])
         for name in ('defective', 'nondefective'):
             group = result['missing_stage_bounds'][name]
@@ -117,6 +155,13 @@ def analyze(rows):
                     group['observed_alerts']+group['unresolved_alert_episodes'])/n
     return {'schema_version': 'temporal-diagnostics/v2', 'confirmatory_eligible': False,
             'policy': 'any_predeclared_alert_in_available_prefix',
+            'output_plane': 'label_joined_diagnostics_not_features',
+            'cohort_reconciliation': {
+                'scope': 'supplied_rows_only' if expected_episode_ids is None else 'expected_execution_plan',
+                'expected_episode_ids_sha256': plan_digest,
+                'missing_episode_ids': missing_ids,
+                'plan_authenticity_verified': False},
+
             'distinct_intents': len({r['intent_id'] for r in rows}),
             'horizons': horizons, 'episodes': episodes}
 
@@ -125,9 +170,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--episodes', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--expected-episode-ids', type=Path,
+                        help='JSON array of episode IDs from the separately frozen execution plan')
     args = parser.parse_args()
     rows = [json.loads(line) for line in args.episodes.read_text().splitlines() if line.strip()]
-    report = analyze(rows)
+    expected = (json.loads(args.expected_episode_ids.read_text(encoding='utf-8'))
+                if args.expected_episode_ids else None)
+    report = analyze(rows, expected_episode_ids=expected)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open('x', encoding='utf-8') as handle:
         json.dump(report, handle, indent=2, sort_keys=True)

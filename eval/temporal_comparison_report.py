@@ -91,6 +91,7 @@ def compare(predictions, outcomes, *, max_fpr):
               'test_projects': len({r['project_id'] for r in test}),
               'limitations': ['Input sealing, trained-model provenance and complete schedule require external verification.',
                              'Empirical calibration FPR budget is not a test-set guarantee.',
+                             'Checkpoint deltas are supplementary diagnostics, not independent confirmatory tests or a basis for selecting the best stage.',
                              'Project-bootstrap validity gates apply; this engineering pilot is not confirmatory.']}
     max_scores = {}
     for detector in DETECTORS:
@@ -119,6 +120,15 @@ def compare(predictions, outcomes, *, max_fpr):
     report['project_grouped_deltas'] = {
         'B3_minus_'+baseline: clustered_pr_auc_delta(test, max_scores['B3'], max_scores[baseline], y)
         for baseline in ('B0', 'S-structure')}
+    # Max-prefix ranking can conceal when an advantage was first observable.
+    # Retain the same held-out episodes and project clusters at every checkpoint.
+    report['project_grouped_deltas_by_stage'] = {
+        stage: {
+            'B3_minus_'+baseline: clustered_pr_auc_delta(
+                test, [r['stages'][i]['scores']['B3'] for r in test],
+                [r['stages'][i]['scores'][baseline] for r in test], y)
+            for baseline in ('B0', 'S-structure')}
+        for i, stage in enumerate(STAGES)}
     return report
 
 
