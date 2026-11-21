@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 from pathlib import Path
 from typing import Any, Mapping
@@ -42,6 +43,18 @@ def _assert_no_secret_fields(value: Any, *, path: str = "plan") -> None:
     elif isinstance(value, list):
         for index, item in enumerate(value):
             _assert_no_secret_fields(item, path=f"{path}[{index}]")
+
+
+def _budget_number(value: Any) -> float | None:
+    """Return a finite real number, or None for missing/bool/NaN/inf/non-numeric."""
+
+    if isinstance(value, bool) or value is None:
+        return None
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    return number if math.isfinite(number) else None
 
 
 def load_launch_plan(path: Path | str) -> dict[str, Any]:
@@ -212,17 +225,25 @@ def evaluate_launch_plan(plan: Mapping[str, Any]) -> dict[str, Any]:
     blockers.extend(message for message, passed in annotation_checks.items() if not passed)
 
     budget = _require_mapping(plan.get("budget"), "budget")
-    estimated_cost = float(budget.get("estimated_provider_cost_usd", 0.0))
-    contingency = float(budget.get("contingency_fraction", 0.0))
-    cap = float(budget.get("approved_cap_usd", 0.0))
-    estimated_hours = float(budget.get("estimated_annotation_hours", 0.0))
-    projected_cost = estimated_cost * (1.0 + contingency)
-    if estimated_cost <= 0 or contingency < 0 or cap <= 0:
+    estimated_cost = _budget_number(budget.get("estimated_provider_cost_usd"))
+    contingency = _budget_number(budget.get("contingency_fraction"))
+    cap = _budget_number(budget.get("approved_cap_usd"))
+    estimated_hours = _budget_number(budget.get("estimated_annotation_hours"))
+    # NaN/inf/bool/non-numeric values are treated as "not estimated": every
+    # comparison with NaN is False, which would otherwise let a malformed
+    # budget slip past the cap check.
+    cost_inputs = (estimated_cost, contingency, cap)
+    if any(value is None for value in cost_inputs) or estimated_cost <= 0 or contingency < 0 or cap <= 0:
         blockers.append("provider budget and contingency must be estimated and approved")
-    elif projected_cost > cap:
-        blockers.append("provider cost plus contingency exceeds the approved cap")
-    if estimated_hours <= 0:
+        projected_cost = 0.0
+        estimated_cost = contingency = cap = 0.0
+    else:
+        projected_cost = estimated_cost * (1.0 + contingency)
+        if projected_cost > cap:
+            blockers.append("provider cost plus contingency exceeds the approved cap")
+    if estimated_hours is None or estimated_hours <= 0:
         blockers.append("annotation effort has not been estimated")
+        estimated_hours = 0.0
 
     gates = _require_mapping(plan.get("go_no_go"), "go_no_go")
     required_gates = (

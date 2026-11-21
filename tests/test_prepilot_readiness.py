@@ -134,3 +134,26 @@ def test_non_sha256_or_shared_configuration_hash_fails_closed() -> None:
     result = evaluate_launch_plan(plan)
     assert result["decision"] == "no_go"
     assert "provider configurations must have distinct configuration hashes" in result["blockers"]
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "blocker"),
+    [
+        ("estimated_provider_cost_usd", float("nan"), "provider budget and contingency must be estimated and approved"),
+        ("approved_cap_usd", float("inf"), "provider budget and contingency must be estimated and approved"),
+        ("approved_cap_usd", float("nan"), "provider budget and contingency must be estimated and approved"),
+        ("contingency_fraction", float("nan"), "provider budget and contingency must be estimated and approved"),
+        ("estimated_provider_cost_usd", True, "provider budget and contingency must be estimated and approved"),
+        ("estimated_annotation_hours", float("nan"), "annotation effort has not been estimated"),
+        ("estimated_annotation_hours", "many", "annotation effort has not been estimated"),
+    ],
+)
+def test_non_finite_or_non_numeric_budget_fails_closed(field: str, value: object, blocker: str) -> None:
+    plan = _ready_plan()
+    plan["budget"][field] = value
+
+    report = evaluate_launch_plan(plan)
+
+    assert report["decision"] == "no_go"
+    assert blocker in report["blockers"]
+    assert report["confirmatory_authorized"] is False
