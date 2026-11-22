@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-11-16
+Last updated: 2026-11-22
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1705,3 +1705,22 @@ Engineering note (same date): `eval.prepilot_readiness` now treats NaN, infinity
 estimated. Before, `float("nan")` for the approved cap, cost, contingency or annotation hours made every comparison false and
 cleared the budget blockers (a malformed budget could pass the gate); seven new parametrized tests fail without the fix. The gate
 still approves nothing: the cap, assumptions and all go/no-go gates remain human decisions. Not motivated by the source above.
+
+## 2026-11-22 entry: persisting user corrections as scoped rules (TellOnce) and a stricter annotator-count check
+
+Search and reading date: 2026-11-22. Two standard web searches (LLM requirement incompleteness / acceptance criteria; agent
+trace provenance and constraint violation). Deduplicated by arXiv ID: 2606.07889 (strained coherence), 2603.00822 (ContextCov),
+2604.11641, 2603.23806 and TraceCaps (ICSE 2026 NIER) are already in this matrix; the ESEM 2026 missing-elements paper is already
+logged. Read: the arXiv abstract page only (no full text), so nothing below exceeds what the abstract states.
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Zhou et al., [*TellOnce: Correcting Coding Agents Once, Improving Their Future Actions*](https://arxiv.org/abs/2606.13174), arXiv preprint (v1 11 Jun 2026, v2 25 Oct 2026); no peer-reviewed venue listed | Do stored user corrections change later agent behavior? A diagnostic from anonymized real agent interactions plus ClawArena, MemoryArena and SWE-Together across three models; a layer turns corrections into persistent, scoped, revisable rules and reusable checks, frozen before evaluation on later tasks | Abstract reports Mem0-based agents violating 57.5% of applicable preference checks, and TellOnce lowering violations versus PGMem by 19.3-42.3 points (ClawArena) and 3.0-22.9 points (MemoryArena), with task performance "broadly comparable". No limitations in the abstract; the baseline set, the check oracle and any leakage controls could not be assessed | Thesis: context only. It supports that stored constraints are not reliably honored later (the loss phenomenon H1 targets) but concerns user preferences, not requirement defects, and gives no T1-T3 provenance. Experiment: none; do not add as a baseline without reading the method. Product: contrast for future work (mitigation by rule persistence versus diagnosis of where a condition was lost). Action: read the full text before any citation | 3 (preprint, abstract only; adjacent) |
+
+Decision impact: none on H1/H2, B0/B3, estimands or frozen material.
+
+Engineering note (same date): `eval.prepilot_readiness` computed the trained-annotator blocker as `int(value) >= 2`. That coerced the
+string `"2"` and the float `2.9` into a passing count, and raised (crashing the gate instead of reporting a blocker) on `null` or
+NaN. The check now requires a real non-boolean integer; nine parametrized tests plus a positive control were added, and five fail
+without the change. The gate still approves nothing: whether two annotators are actually trained, the rubric and staffing remain
+human gates. Not motivated by the source above.

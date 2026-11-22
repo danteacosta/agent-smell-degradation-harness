@@ -57,6 +57,16 @@ def _budget_number(value: Any) -> float | None:
     return number if math.isfinite(number) else None
 
 
+def _is_count_at_least(value: Any, minimum: int) -> bool:
+    """True only for a real integer count; bool/str/float/None/NaN fail closed.
+
+    The previous ``int(value)`` coerced ``"2"`` and ``2.9`` to a passing count and
+    raised (crashing the gate instead of reporting a blocker) on ``None``/``NaN``.
+    """
+
+    return isinstance(value, int) and not isinstance(value, bool) and value >= minimum
+
+
 def load_launch_plan(path: Path | str) -> dict[str, Any]:
     plan = json.loads(Path(path).read_text(encoding="utf-8"))
     if not isinstance(plan, dict):
@@ -216,7 +226,9 @@ def evaluate_launch_plan(plan: Mapping[str, Any]) -> dict[str, Any]:
     annotation_checks = {
         "annotation rubric path is missing": bool(str(annotation.get("rubric_path", "")).strip()),
         "annotation rubric is not frozen": annotation.get("rubric_frozen") is True,
-        "at least two trained annotators are required": int(annotation.get("trained_annotators", 0)) >= 2,
+        "at least two trained annotators are required": _is_count_at_least(
+            annotation.get("trained_annotators"), 2
+        ),
         "20% double coding is not reserved": annotation.get("duplicate_subset_fraction") == 0.2,
         "duplicate subset is not selected outcome-blind": annotation.get("duplicate_subset_selected_outcome_blind") is True,
         "annotation blinding has not been verified": annotation.get("blinding_verified") is True,

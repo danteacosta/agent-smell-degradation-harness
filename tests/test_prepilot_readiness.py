@@ -157,3 +157,17 @@ def test_non_finite_or_non_numeric_budget_fails_closed(field: str, value: object
     assert report["decision"] == "no_go"
     assert blocker in report["blockers"]
     assert report["confirmatory_authorized"] is False
+
+
+@pytest.mark.parametrize("value", [None, "2", 1.9, 2.0, float("nan"), True, [2], 1, -3])
+def test_trained_annotator_count_must_be_a_real_integer(value: object) -> None:
+    plan = _ready_plan()
+    plan["annotation"]["trained_annotators"] = value
+    report = evaluate_launch_plan(plan)
+    assert report["decision"] == "no_go"
+    assert "at least two trained annotators are required" in report["blockers"]
+
+
+def test_two_integer_annotators_still_clears_the_blocker() -> None:
+    report = evaluate_launch_plan(_ready_plan())
+    assert "at least two trained annotators are required" not in report["blockers"]
