@@ -86,9 +86,17 @@ def compare(predictions, outcomes, *, max_fpr):
             raise ValueError('both outcome classes required in calibration and test')
     test = samples['test']; calibration = samples['calibration']
     y = [labels[r['episode_id']]['terminal_defect'] for r in test]
+    cohort_counts = {}
+    for split, subset in samples.items():
+        defective = sum(labels[r['episode_id']]['terminal_defect'] for r in subset)
+        cohort_counts[split] = {
+            'episodes': len(subset), 'projects': len({r['project_id'] for r in subset}),
+            'defective_episodes': defective, 'nondefective_episodes': len(subset)-defective,
+            'defect_prevalence': defective/len(subset)}
     report = {'schema_version': 'temporal-comparison-supplement/v1', 'confirmatory_eligible': False,
               'primary_h2_unchanged': True, 'detectors': {}, 'test_episodes': len(test),
               'test_projects': len({r['project_id'] for r in test}),
+              'cohort_counts_by_split': cohort_counts,
               'limitations': ['Input sealing, trained-model provenance and complete schedule require external verification.',
                              'Empirical calibration FPR budget is not a test-set guarantee.',
                              'Checkpoint deltas are supplementary diagnostics, not independent confirmatory tests or a basis for selecting the best stage.',
@@ -109,13 +117,18 @@ def compare(predictions, outcomes, *, max_fpr):
                                     'lead_time_ms': labels[row['episode_id']]['terminal_ms']-first['available_ms'] if first else None,
                                     'lead_time_scope': 'true_positive' if first and positive else 'false_positive' if first else 'no_alert'})
         negatives = y.count(0); positives = y.count(1)
+        tp = sum(r['alert'] and r['terminal_defect'] == 1 for r in episode_results)
+        fp = sum(r['alert'] and r['terminal_defect'] == 0 for r in episode_results)
         max_scores[detector] = [maximum(r) for r in test]
         report['detectors'][detector] = {
             'policy': policy, 'policy_unit': 'episode_any_T1_T2_T3_alert',
             'pr_auc_average_precision_by_stage': {stage: average_precision([r['stages'][i]['scores'][detector] for r in test], y) for i, stage in enumerate(STAGES)},
             'pr_auc_max_prefix_score': average_precision(max_scores[detector], y),
-            'recall': sum(r['alert'] and r['terminal_defect'] == 1 for r in episode_results)/positives,
-            'fpr': sum(r['alert'] and r['terminal_defect'] == 0 for r in episode_results)/negatives,
+            'confusion_counts': {'true_positives': tp, 'false_positives': fp,
+                                 'false_negatives': positives-tp, 'true_negatives': negatives-fp},
+            'precision': tp/(tp+fp) if tp+fp else None,
+            'recall': tp/positives,
+            'fpr': fp/negatives,
             'episodes': episode_results}
     report['project_grouped_deltas'] = {
         'B3_minus_'+baseline: clustered_pr_auc_delta(test, max_scores['B3'], max_scores[baseline], y)

@@ -26,6 +26,61 @@ def test_same_episodes_project_grouped_comparison_and_leadtime():
     assert r['confirmatory_eligible'] is False
 
 
+@pytest.mark.parametrize('mode', ['mixed', 'no_alerts'])
+def test_operating_point_counts_and_precision_have_explicit_denominators(mode):
+    p,o=sample()
+    if mode == 'mixed':
+        # One TP, FP, FN and TN among the four held-out episodes.
+        for row in p:
+            if row['split'] == 'test':
+                score=.9 if row['project_id'] == 'test-1' else .1
+                for stage in row['stages']:
+                    stage['scores']={detector:score for detector in DETECTORS}
+        expected={'true_positives':1,'false_positives':1,
+                  'false_negatives':1,'true_negatives':1}
+        precision=.5
+    else:
+        # Every calibration threshold with a true alert violates max_fpr=0.
+        for row in p:
+            if row['episode_id'] == 'cal-0':
+                for stage in row['stages']:
+                    stage['scores']={detector:.95 for detector in DETECTORS}
+        expected={'true_positives':0,'false_positives':0,
+                  'false_negatives':2,'true_negatives':2}
+        precision=None
+    report=compare(p,o,max_fpr=0)
+    assert report['cohort_counts_by_split'] == {
+        'calibration':{'episodes':2,'projects':1,'defective_episodes':1,
+                       'nondefective_episodes':1,'defect_prevalence':.5},
+        'test':{'episodes':4,'projects':2,'defective_episodes':2,
+                'nondefective_episodes':2,'defect_prevalence':.5}}
+    for detector in DETECTORS:
+        result=report['detectors'][detector]
+        assert result['confusion_counts'] == expected
+        assert sum(result['confusion_counts'].values()) == 4
+        assert result['precision'] == precision
+        assert result['recall'] == (.5 if mode == 'mixed' else 0)
+        assert result['fpr'] == (.5 if mode == 'mixed' else 0)
+        assert result['policy_unit'] == 'episode_any_T1_T2_T3_alert'
+
+
+def test_class_composition_uses_observed_counts_not_assumed_balance():
+    p,o=sample()
+    extra=copy.deepcopy(p[3]); outcome=copy.deepcopy(o[3])
+    extra['episode_id']=extra['intent_id']='test-extra-positive'
+    extra['constraint_id']='test-extra-positive-c01'
+    outcome['episode_id']=extra['episode_id'];outcome['constraint_id']=extra['constraint_id']
+    p.append(extra);o.append(outcome)
+    report=compare(p,o,max_fpr=0)
+    assert report['cohort_counts_by_split']['test'] == {
+        'episodes':5,'projects':2,'defective_episodes':3,
+        'nondefective_episodes':2,'defect_prevalence':.6}
+    assert report['cohort_counts_by_split']['calibration']['episodes'] == 2
+    for detector in DETECTORS:
+        assert report['detectors'][detector]['confusion_counts'] == {
+            'true_positives':3,'false_positives':0,'false_negatives':0,'true_negatives':2}
+
+
 def test_episode_budget_does_not_accumulate_three_stage_false_alarms():
     p,o=sample()
     # Three different calibration negatives exceed .9 in different checkpoints.

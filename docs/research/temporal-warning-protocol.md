@@ -970,3 +970,39 @@ answers and label-plane materials. The existing content-only comparator remains
 a supplementary candidate pending freeze; this paper does not establish that
 provenance adds value beyond equally available content. Product triage must
 expose context scope rather than present a smell flag as proof of semantic loss.
+
+## Export rate denominators and class composition — 2026-11-22
+
+The supplementary comparison exports `cohort_counts_by_split` for calibration
+and test: observed episode and project counts, defective and nondefective
+episode counts, and defect prevalence. Each detector also exports
+`confusion_counts` (TP, FP, FN, TN) and precision for its existing
+`episode_any_T1_T2_T3_alert` policy.
+
+The positive outcome is `terminal_defect=1` for the one predeclared target
+constraint per episode. Recall is TP/(TP+FN), FPR is FP/(FP+TN), and precision
+is TP/(TP+FP). If no alerts occur, precision is null, not zero; recall and FPR
+remain computable because admission requires both outcome classes in each split.
+All four confusion counts sum to the observed held-out episode count. These
+are pooled episode-level descriptions, not equally weighted project averages
+or counts of independently sampled projects. Project bootstrap remains unchanged.
+
+The change makes reported rates auditable and exposes class composition beside
+AP. It does not alter thresholds, primary H2/F1 definitions, checkpoint scores,
+the target-constraint scope, or missing-cohort admission. A zero observed FPR is
+not a deployment guarantee, and precision is not a probability-calibration metric.
+Three new synthetic cases cover mixed errors, no alerts and unequal class sizes;
+all 50 affected tests pass. No provider was run.
+
+### Adjacent evidence: execution-grounded acceptance tests
+
+[Shi and Song's ReqTestAgent](https://doi.org/10.3389/frai.2026.1960601)
+separates canonical compatibility from mutation strength and distinguishes
+instance means from pooled mutant rates. This supports explicit metric scopes
+and denominators, not importing its effect estimates. Its accepted reference
+implementation and source-provided ambiguity annotations are evaluation
+conditions. They do not establish a label oracle for our acceptance-criteria
+generation task. Reference feedback used to repair a generated artifact would
+be a separate intervention, not evidence that T1–T3 provenance alone predicts
+unmitigated condition loss. The paper does not validate H1/H2 or demonstrate a
+reduction in human triage effort.
