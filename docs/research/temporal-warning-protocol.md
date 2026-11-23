@@ -1006,3 +1006,39 @@ generation task. Reference feedback used to repair a generated artifact would
 be a separate intervention, not evidence that T1–T3 provenance alone predicts
 unmitigated condition loss. The paper does not validate H1/H2 or demonstrate a
 reduction in human triage effort.
+
+## Preserve temporal comparison inputs and prior exports — 2026-11-23
+
+The comparison CLI creates its output exclusively: an existing report, either
+input file, or an existing symlink cannot be replaced through `--output`.
+Use a new versioned destination for each export and retain prior evidence.
+The CLI now decodes predictions and outcomes from retained byte snapshots and
+computes `input_sha256` from those same snapshots. It does not reread the files
+after analysis to assign a possibly different input identity.
+
+Four regression cases reproduce overwriting against the prior implementation
+and verify preservation after the change. A fifth changes both temporary input
+files after analysis and verifies that the exported hashes still identify the
+bytes actually analyzed. All 55 affected tests pass. Exclusive creation and
+byte identity do not establish independently sealed inputs, authorship or
+immutable custody; retain the exact analyzed input versions separately.
+Detector scores, threshold fitting, metric definitions, project grouping and
+confirmatory eligibility are unchanged.
+
+### Boundary condition from static prompt-defect detection
+
+[Akli et al. (Findings of EMNLP 2026)](https://doi.org/10.18653/2026.findings-emnlp.1908)
+report different code-generation effects across defect types and benchmarks;
+remaining sample I/O can encode a textually omitted condition. For our existing
+residual-cue review, inspect examples and all permitted context as well as the
+edited sentence. A syntactically valid deletion is not evidence that a condition
+became unrecoverable. This is a boundary condition for interpreting H1, not a
+reason to exclude null or recovered outcomes after observing them.
+
+SpecValidator predicts description-defect categories. Its labels and scores
+must not substitute for blinded terminal condition-loss labels or establish H2.
+The paper is an adjacent static-input comparator reference, not a reproduction
+of B0 or evidence for temporal provenance. Any learned comparator would require
+a separate prospective definition and training-only fit. The independent CLI
+preservation fix follows the evidence-custody contract, not an effect measured
+by this paper.

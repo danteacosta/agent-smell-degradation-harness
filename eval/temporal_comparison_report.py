@@ -145,13 +145,27 @@ def compare(predictions, outcomes, *, max_fpr):
     return report
 
 
-if __name__ == '__main__':
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--predictions', type=Path, required=True)
     parser.add_argument('--outcomes', type=Path, required=True)
     parser.add_argument('--max-fpr', type=float, required=True)
     parser.add_argument('--output', type=Path, required=True)
-    args = parser.parse_args()
-    report = compare(json.loads(args.predictions.read_text()), json.loads(args.outcomes.read_text()), max_fpr=args.max_fpr)
-    report['input_sha256'] = {name: hashlib.sha256(path.read_bytes()).hexdigest() for name, path in [('predictions', args.predictions), ('outcomes', args.outcomes)]}
-    args.output.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
+    args = parser.parse_args(argv)
+    try:
+        inputs = {name: path.read_bytes() for name, path in (
+            ('predictions', args.predictions), ('outcomes', args.outcomes))}
+        report = compare(json.loads(inputs['predictions']), json.loads(inputs['outcomes']),
+                         max_fpr=args.max_fpr)
+        report['input_sha256'] = {name: hashlib.sha256(data).hexdigest()
+                                  for name, data in inputs.items()}
+        rendered = json.dumps(report, indent=2, allow_nan=False)+'\n'
+        with args.output.open('x', encoding='utf-8') as stream:
+            stream.write(rendered)
+    except (OSError, ValueError) as error:
+        parser.error(str(error))
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

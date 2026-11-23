@@ -1,6 +1,13 @@
 import copy
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
 import pytest
 from eval.temporal_comparison_report import compare, DETECTORS
+
+ROOT=Path(__file__).resolve().parents[1]
 
 
 def sample():
@@ -13,6 +20,50 @@ def sample():
                                 'stages':[{'stage':stage,'available_ms':i+1,'scores':{d:.9 if label else .1 for d in DETECTORS}} for i,stage in enumerate(['T1','T2','T3'])]})
             outcomes.append({'episode_id':identifier,'constraint_id':identifier+'-c01','terminal_defect':label,'terminal_ms':10})
     return predictions,outcomes
+
+
+@pytest.mark.parametrize('destination', ['existing_report','predictions','outcomes','linked_predictions'])
+def test_cli_preserves_existing_evidence(destination, tmp_path):
+    p,o=sample()
+    predictions=tmp_path/'predictions.json';outcomes=tmp_path/'outcomes.json'
+    previous=tmp_path/'previous-report.json'
+    predictions.write_text(json.dumps(p));outcomes.write_text(json.dumps(o))
+    previous.write_bytes(b'previous evidence must remain unchanged\n')
+    originals={path:path.read_bytes() for path in (predictions,outcomes,previous)}
+    output={'existing_report':previous,'predictions':predictions,'outcomes':outcomes}.get(destination)
+    if destination == 'linked_predictions':
+        output=tmp_path/'linked.json';output.symlink_to(predictions)
+    result=subprocess.run([sys.executable,'-m','eval.temporal_comparison_report',
+                           '--predictions',str(predictions),'--outcomes',str(outcomes),
+                           '--max-fpr','0.05','--output',str(output)],
+                          cwd=ROOT,capture_output=True,text=True)
+    assert result.returncode != 0
+    assert {path:path.read_bytes() for path in originals} == originals
+
+
+def test_cli_hashes_the_same_input_bytes_it_analyzed(tmp_path, monkeypatch):
+    from eval import temporal_comparison_report as module
+    p,o=sample()
+    predictions=tmp_path/'predictions.json';outcomes=tmp_path/'outcomes.json'
+    output=tmp_path/'report.json'
+    original={predictions:json.dumps(p).encode()+b'\n',outcomes:json.dumps(o).encode()+b'\n'}
+    for path,data in original.items():path.write_bytes(data)
+    real_compare=module.compare
+    def compare_then_change_files(*args, **kwargs):
+        result=real_compare(*args, **kwargs)
+        # Simulate input files changing after analysis, before export.
+        for path,data in original.items():path.write_bytes(b'\n'+data)
+        return result
+    monkeypatch.setattr(module,'compare',compare_then_change_files)
+    assert module.main(['--predictions',str(predictions),'--outcomes',str(outcomes),
+                        '--max-fpr','0.05','--output',str(output)]) == 0
+    report=json.loads(output.read_bytes())
+    assert report['test_episodes'] == 4
+    assert report['input_sha256'] == {
+        'predictions':hashlib.sha256(original[predictions]).hexdigest(),
+        'outcomes':hashlib.sha256(original[outcomes]).hexdigest()}
+    assert all(hashlib.sha256(path.read_bytes()).hexdigest() != report['input_sha256'][name]
+               for name,path in [('predictions',predictions),('outcomes',outcomes)])
 
 
 def test_same_episodes_project_grouped_comparison_and_leadtime():
