@@ -15,7 +15,9 @@ import unicodedata
 from decimal import Decimal
 from fractions import Fraction
 from pathlib import Path
-from eval.temporal_cohort_candidate import candidate_content_digest, validate_candidate
+from eval.temporal_cohort_candidate import (
+    audit as audit_exposure, candidate_content_digest, validate_candidate,
+)
 
 
 def _unique_json_object(pairs):
@@ -120,9 +122,11 @@ def assess(plan, root):
     if (audit.get('pairs_verified') != 12 or not isinstance(clean_matches, dict)
             or set(clean_matches) != intents):
         raise ValueError('exposure audit does not cover the candidate cohort')
-    if audit.get('candidate_content_sha256') != candidate_content_digest(source):
+    candidate_bound = audit.get('candidate_content_sha256') == candidate_content_digest(source)
+    if not candidate_bound:
         blockers.append('exposure_audit_not_bound_to_candidate')
-    if not _exposure_inventory_matches(audit, plan['exposure_audit'], root):
+    inventory_matches = _exposure_inventory_matches(audit, plan['exposure_audit'], root)
+    if not inventory_matches:
         blockers.append('exposure_registry_inventory_incomplete_or_changed')
     defective_matches = audit.get('exact_or_contained_defective_input_matches')
     if not isinstance(defective_matches, dict) or set(defective_matches) != intents:
@@ -135,6 +139,15 @@ def assess(plan, root):
             raise ValueError('malformed exposure match list')
     if any(clean_matches.values()) or any(defective_matches.values()):
         blockers.append('prior_complete_input_match_requires_candidate_replacement_or_explicit_review')
+    if candidate_bound and inventory_matches and set(defective_matches) == intents:
+        reproduced = audit_exposure(
+            source, root, [Path(entry['path']) for entry in audit['inventory']])
+        if any(set(reported[intent_id]) != set(reproduced[key][intent_id])
+               for key, reported in (
+                   ('exact_or_contained_clean_input_matches', clean_matches),
+                   ('exact_or_contained_defective_input_matches', defective_matches))
+               for intent_id in intents):
+            blockers.append('exposure_match_maps_not_reproducible')
     if plan.get('selection_frozen') is not True:
         blockers.append('selection_not_frozen')
     projects = {r['project_id'] for r in source['records']}

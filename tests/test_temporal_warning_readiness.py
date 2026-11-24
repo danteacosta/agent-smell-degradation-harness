@@ -303,6 +303,25 @@ def test_defective_only_prior_input_blocks_readiness(declared):
 
 
 @pytest.mark.parametrize('variant', ['clean', 'defective'])
+def test_hash_bound_audit_cannot_hide_reproducible_input_matches(declared, variant):
+    source = json.loads((ROOT/declared['candidate_source_manifest']['path']).read_text())
+    row = source['records'][0]
+    directory = (ROOT/declared['exposure_audit']['path']).parent
+    prior = directory/'prior-input.json'
+    prior.write_text(json.dumps({'requirement_text':row['variants'][variant]}))
+    report = audit(source, ROOT, [prior.relative_to(ROOT)])
+    assert report[f'exact_or_contained_{variant}_input_matches'][row['intent_id']]
+    # Keep the true inventory, file hashes and candidate digest; suppress hits.
+    for name in ('clean', 'defective'):
+        for paths in report[f'exact_or_contained_{name}_input_matches'].values():
+            paths.clear()
+    declared['exposure_audit'] = _write_reference(directory/'suppressed-hits.json', report)
+    result = assess(declared, ROOT)
+    assert result['decision'] == 'no_go'
+    assert result['blockers'] == ['exposure_match_maps_not_reproducible']
+
+
+@pytest.mark.parametrize('variant', ['clean', 'defective'])
 @pytest.mark.parametrize('invalid', [None, False, '', [None]])
 def test_malformed_match_entry_is_not_a_negative_result(declared, variant, invalid):
     path = ROOT/declared['exposure_audit']['path']

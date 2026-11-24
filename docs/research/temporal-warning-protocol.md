@@ -1042,3 +1042,43 @@ of B0 or evidence for temporal provenance. Any learned comparator would require
 a separate prospective definition and training-only fit. The independent CLI
 preservation fix follows the evidence-custody contract, not an effect measured
 by this paper.
+
+## Reproduce exposure findings before readiness — 2026-11-24
+
+For a candidate-bound audit with a verified inventory and complete match maps,
+readiness reruns the existing whitespace-normalized exact/contained-input screen
+over that inventory for both clean and defective variants. It compares the
+per-intent path sets with the submitted findings. A disagreement adds
+`exposure_match_maps_not_reproducible` and keeps `no_go`; matching file hashes
+alone cannot clear an incorrectly empty result map. Path ordering does not
+change the comparison.
+
+Two new synthetic cases retain correct candidate/file/audit hashes while
+suppressing matches for clean or defective inputs. They fail against the
+previous gate and pass with the fix. All 77 affected tests pass. The active
+898-file candidate audit reproduces, but the plan still returns `no_go` with
+12 other blockers, zero reviewed intents and zero qualified providers.
+No provider calls or collection authorization were introduced.
+
+This reproduces the declared screen; it does not expand its inventory or prove
+absence of paraphrases, partial-clause exposure, external/private usage or
+training exposure. Independent review and frozen source custody remain required.
+A mismatching report must be investigated and replaced through the reviewed,
+versioned workflow; the gate does not silently repair evidence or approve it.
+
+### Retrospective attribution is not prospective warning
+
+[Wang et al.'s TSE survey](https://doi.org/10.1109/TSE.2026.3717765)
+separates trajectory-based attribution, monitoring and enhancement and discusses
+observability and repair utility as distinct evaluation concerns. Its conceptual
+failure-step definition uses inevitability under feasible continuations.
+Our target is observed loss of a predeclared testable condition; do not replace
+that label with an irreversible-failure or responsible-agent annotation.
+
+Rich complete traces may help retrospective debugging, while the H2 detector
+may access only permitted evidence available at its T1–T3 cutoff. Diagnostic
+access to T4, terminal judgments, replay outcomes or future messages must not
+enter the feature plane. The survey is secondary evidence, not validation of
+our detector or of this exposure implementation. For the separate product line,
+measure diagnostic usefulness and saved effort directly rather than infer them
+from detection or attribution accuracy.
