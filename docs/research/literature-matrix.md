@@ -1724,3 +1724,16 @@ string `"2"` and the float `2.9` into a passing count, and raised (crashing the 
 NaN. The check now requires a real non-boolean integer; nine parametrized tests plus a positive control were added, and five fail
 without the change. The gate still approves nothing: whether two annotators are actually trained, the rubric and staffing remain
 human gates. Not motivated by the source above.
+
+## 2026-11-25 search log (no new scored source)
+
+Search date: 2026-11-25. One standard web search on omitted or incomplete requirements in LLM code generation. Primary hits (Orchid, 2604.21505; When Prompts Go Wrong, 2507.20439; What Prompts Don't Say, 2505.13360) were
+checked against the matrix by arXiv ID and are not re-scored here; BigCodeBench omission of setup code is
+adjacent and was not read beyond the snippet, so it is not entered. No hypothesis, metric or protocol change.
+
+**Project-specific check (code, not a literature claim).** `eval/corpus_declaration_audit.py` re-derives the
+plan's self-declared corpus flags (unique intents, licences/rights, near-clone review, manipulation checks)
+from `data/prepilot/corpus-manifest.json`. The checked-in declarations match the manifest. It surfaces one
+warning for human decision: every manipulation check in the manifest was made by an LLM panel
+(`llm-blind-panel-v1`), and the freeze reviewer is an automated operator id, so `manifest_frozen` and
+`manipulation_checks_complete` do not yet imply independent human review.
