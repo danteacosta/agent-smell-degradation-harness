@@ -64,6 +64,15 @@ def _texts(value):
             yield from _texts(item)
 
 
+def _unique_json_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f'duplicate JSON object member: {key}')
+        result[key] = value
+    return result
+
+
 def audit(candidate, root, registry_paths):
     result = validate_candidate(candidate, root)
     matches = {variant: {r['intent_id']: [] for r in candidate['records']}
@@ -73,8 +82,11 @@ def audit(candidate, root, registry_paths):
     for relative in sorted(registry_paths):
         path = Path(root) / relative
         text = path.read_text()
-        values = ([json.loads(line) for line in text.splitlines() if line.strip()]
-                  if path.suffix == '.jsonl' else json.loads(text))
+        # Reject ambiguous objects before a duplicate member can hide prior input.
+        values = ([json.loads(line, object_pairs_hook=_unique_json_object)
+                   for line in text.splitlines() if line.strip()]
+                  if path.suffix == '.jsonl' else
+                  json.loads(text, object_pairs_hook=_unique_json_object))
         inputs = list(_texts(values))
         inventory.append({'path': str(relative), 'sha256': digest(path), 'input_strings': len(inputs)})
         for row in candidate['records']:

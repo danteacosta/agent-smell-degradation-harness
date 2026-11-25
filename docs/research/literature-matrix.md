@@ -1744,3 +1744,25 @@ Search/read: 2026-11-24. Screened requirements/LLM-assisted RE, agent process ev
 | Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
 | --- | --- | --- | --- | --- |
 | J. Wang et al., [A Survey for LLM Agent Trajectory Analysis: From Failure Attribution to Enhancement](https://doi.org/10.1109/TSE.2026.3717765), IEEE TSE 52(11):3406–3426, 2026; peer-reviewed survey; [authors' PDF](https://raw.githubusercontent.com/IcyFeather233/Awesome-LLM-Agent-Trajectory-Analysis/main/LLMAgentTraceAnalysisSurvey.pdf) | How are agent trajectories classified, attributed, monitored and used for improvement? Four-database search plus venue search; 1,652 retrieved records, 55 retained; two reviewers with adjudication and quality screening. | Synthesizes taxonomies, attribution methods, enhancement, tools and benchmarks. Limited step localization and benchmark diversity remain; diagnostic accuracy need not imply repair utility. Title-based retrieval and quality thresholds can affect recall; 31 included works were preprints, and reported methods/metrics are heterogeneous. | Thesis: condition loss, inevitable failure and responsible-agent labels are different constructs. Experiment: retain prefix-only access and separate retrospective replay from H2 features. Product: evaluate usefulness/saved effort separately. Action: add the protocol distinction; do not import effect rates or benchmark labels. Reproducing exposure findings is an independent implementation control, not a survey result. | 8/10: recognized peer-reviewed journal, explicit search and reviewer process, accessible author text; mixed primary-evidence status, cutoff and heterogeneous evaluations limit inference. |
+
+
+## 2026-11-25 — Rubric scope and ambiguous exposure records
+
+Search/read: 2026-11-25. Screened requirement defects and LLM-assisted RE,
+agent process evaluation, provenance/telemetry, stochastic evaluation and
+privacy/product integration. Deduplicated by DOI/title against this matrix.
+Read the publisher abstract, methods, rubric construction, format comparison
+and limitations below. The SBSI mapping-study DOI 10.5753/sbsi.2026.248317 was
+discovered but its full text was not retrieved; defer incorporation. Other
+search hits remain screening leads, not evidence read or adopted.
+
+| Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Sabatucci et al., [A Methodology for the Systematic Evaluation of LLMs in Requirement Engineering Tasks with No Ground Truth](https://doi.org/10.3390/systems14060598), Systems 14(6):598, 2026; peer-reviewed journal | Can structured knowledge support evaluation? Six synthetic profiles, eight factors, 48 rubric entries; ten models compared across formats using an LLM judge. | Reports stronger commercial-model convergence, not correctness validation. Shared RAG/rubric knowledge risks circularity; synthetic domain and judge bias limit transfer. The text also conflicts on whether results are presented and dates Opus 4.5 to February 2025. | Thesis: convergence does not establish condition-loss validity. Experiment: retain blind labels/holdout. Product: rubric traceability is context only. Action: protocol boundary; no imported rates or substitution of labels. Parser fix independently motivated. | 6/10: peer-reviewed, accessible method; small surrogate task, reporting inconsistencies and no independent replication constrain trust. |
+
+Independent implementation follow-through: reject duplicate raw registry members
+before audit/replay can silently discard exposed text. Eight regressions failed
+before the fix; 88 affected tests pass afterward, including two readiness
+integration checks. Existing 898-file replay remains valid; 12 empirical gates
+remain open. This strengthens evidence preparation without changing H1/H2,
+the label plane, corpus commitments or the separate product line.

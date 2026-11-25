@@ -41,3 +41,34 @@ def test_prior_input_match_is_reported_without_granting_prospective_status(tmp_p
     assert report['unmatched_is_not_unexposed'] is True
     assert report['confirmatory_eligible'] is False
     assert report['inventory'][0]['input_strings']==1
+
+
+@pytest.mark.parametrize('suffix', ['.json', '.jsonl'])
+@pytest.mark.parametrize('variant', ['clean', 'defective'])
+@pytest.mark.parametrize('duplicate_key', ['requirement_text', r'requirement_\u0074ext'])
+def test_duplicate_registry_members_cannot_hide_prior_exposure(tmp_path, suffix, variant, duplicate_key):
+    c=candidate()
+    for r in c['records']:
+        for key in ['path', 'license_path']:
+            relative=r['source'][key];destination=tmp_path/relative
+            destination.parent.mkdir(parents=True,exist_ok=True)
+            destination.write_bytes((ROOT/relative).read_bytes())
+    # Ordinary json.loads silently drops the exposed input in this nested object.
+    payload='{"input":{"requirement_text":'+json.dumps(c['records'][0]['variants'][variant])+',"'+duplicate_key+'":"unrelated"}}'
+    relative='prior'+suffix
+    (tmp_path/relative).write_text(payload+'\n')
+    with pytest.raises(ValueError, match='duplicate JSON object member: requirement_text'):
+        audit(c,tmp_path,[relative])
+
+
+def test_valid_jsonl_preserves_matches_across_lines(tmp_path):
+    c=candidate()
+    for r in c['records']:
+        for key in ['path', 'license_path']:
+            relative=r['source'][key];destination=tmp_path/relative
+            destination.parent.mkdir(parents=True,exist_ok=True)
+            destination.write_bytes((ROOT/relative).read_bytes())
+    (tmp_path/'prior.jsonl').write_text(json.dumps({'prompt':'unrelated'})+'\n\n'+json.dumps({'input':{'requirement_text':c['records'][0]['variants']['defective']}})+'\n')
+    report=audit(c,tmp_path,['prior.jsonl'])
+    assert report['exact_or_contained_defective_input_matches'][c['records'][0]['intent_id']]==['prior.jsonl']
+    assert report['inventory'][0]['input_strings']==2

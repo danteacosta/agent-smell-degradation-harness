@@ -302,6 +302,21 @@ def test_defective_only_prior_input_blocks_readiness(declared):
         'prior_complete_input_match_requires_candidate_replacement_or_explicit_review']
 
 
+@pytest.mark.parametrize('suffix', ['.json', '.jsonl'])
+def test_readiness_rejects_duplicate_registry_members_with_correct_hashes(declared, suffix):
+    source = json.loads((ROOT/declared['candidate_source_manifest']['path']).read_text())
+    directory = (ROOT/declared['exposure_audit']['path']).parent
+    prior = directory/('ambiguous-input'+suffix)
+    prior.write_text(json.dumps({'requirement_text':'unrelated'})+'\n')
+    report = audit(source, ROOT, [prior.relative_to(ROOT)])
+    # Model the old last-member-wins result while binding the actual raw bytes.
+    prior.write_text('{"requirement_text":'+json.dumps(source['records'][0]['variants']['clean'])+',"requirement_text":"unrelated"}\n')
+    report['inventory'][0]['sha256'] = hashlib.sha256(prior.read_bytes()).hexdigest()
+    declared['exposure_audit'] = _write_reference(directory/'ambiguous-audit.json', report)
+    with pytest.raises(ValueError, match='duplicate JSON object member: requirement_text'):
+        assess(declared, ROOT)
+
+
 @pytest.mark.parametrize('variant', ['clean', 'defective'])
 def test_hash_bound_audit_cannot_hide_reproducible_input_matches(declared, variant):
     source = json.loads((ROOT/declared['candidate_source_manifest']['path']).read_text())

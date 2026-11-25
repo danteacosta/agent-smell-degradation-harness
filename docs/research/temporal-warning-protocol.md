@@ -1082,3 +1082,32 @@ enter the feature plane. The survey is secondary evidence, not validation of
 our detector or of this exposure implementation. For the separate product line,
 measure diagnostic usefulness and saved effort directly rather than infer them
 from detection or attribution accuracy.
+
+
+## Reject ambiguous exposure registry objects — 2026-11-25
+
+The exposure screen now rejects duplicate JSON object members, at every nesting
+depth, in registry JSON files and each nonblank JSONL record. Decoded member
+identity is used, so an escaped spelling cannot bypass the check. A malformed
+registry raises a validation error before a negative exposure finding can be
+used; readiness propagates that rejection. File hashes and replay alone cannot
+detect a shared last-member-wins parsing error.
+
+Eight synthetic regressions cover both variants, both formats and literal or
+Unicode-escaped duplicate names; all eight failed before the correction.
+A valid multiline JSONL case retains its match and input count. Two integration
+cases bind the actual ambiguous file bytes to otherwise consistent negative
+audit findings and verify that readiness rejects them. All 88 affected tests
+pass. The existing 898-file registry still reproduces; the active plan remains
+`no_go` with 12 blockers, zero reviewed intents and zero qualified providers.
+No historical inputs were rewritten and no provider runtime was invoked.
+The screen still cannot establish absence of paraphrase, external or training
+exposure; independent review and launch authorization remain human gates.
+
+### Rubric construction does not validate terminal labels
+
+[Sabatucci et al.](https://doi.org/10.3390/systems14060598) propose structured
+rubrics but acknowledge shared-knowledge circularity and task simplification.
+Their format-convergence study does not validate our acceptance-criteria loss
+labels. Retain blinded independent annotation and project holdout.
+The parser correction is an independently demonstrated implementation defect.
