@@ -1,6 +1,6 @@
 # Literature matrix
 
-Last updated: 2026-11-22
+Last updated: 2026-11-26
 Canonical policy: deduplicate by DOI, then by normalized title. A source enters this
 matrix only after its abstract and the relevant method, results, and limitations
 have been read. Product-only sources must not support scientific claims.
@@ -1737,3 +1737,14 @@ from `data/prepilot/corpus-manifest.json`. The checked-in declarations match the
 warning for human decision: every manipulation check in the manifest was made by an LLM panel
 (`llm-blind-panel-v1`), and the freeze reviewer is an automated operator id, so `manifest_frozen` and
 `manipulation_checks_complete` do not yet imply independent human review.
+
+## 2026-11-26 entry: ARC-V industrial requirements-driven code verification (FSE Companion 2026)
+
+Search and reading date: 2026-11-26. One standard web search (omitted requirements / acceptance criteria / early detection). Deduplicated by arXiv ID:
+2608.01000 and 2511.04064 are already in this matrix. Read: the full text of the ARC-V paper (abstract, architecture, evaluation, lessons, related work).
+
+| Source / status | Question, sample and method | Findings / limitations | Thesis, experiment, product and action | Credibility |
+| --- | --- | --- | --- | ---: |
+| Baker, Manu, Moussa and Sarro, *Industrial Deployment of an AI Multi-Agent System for Requirements-Driven Code Verification* (ARC-V), FSE Companion 2026, Montreal, 5-9 Jul 2026; industry-track paper, [PDF](https://solar.cs.ucl.ac.uk/pdf/baker2026fse.pdf); no DOI checked | Can LLM agents assess Jira user stories against organisational standards (ESRA) and check commits against requirements to predict defects (AC2)? Retrospective evaluation on 84 historical tickets from 13 teams (35 random stories for ESRA, reviewed manually by developers; 51 tickets traced from resolved bugs for AC2), then production monitoring. One model (GPT-4o-mini, temperature 0), prompts tuned on the same historical data | Abstract reports quality-score gains of 8.5 (value statements) and 4 points (acceptance criteria) and a "79% early defect discovery rate". The body defines the 79% as the share of tickets AC2 predicted defective at commit time that were in fact defective in production, i.e. a precision-type figure. It is not recall of production-escaping bugs, so the abstract's "vast majority of production-escaping bugs" wording is stronger than the body supports. 65% of tickets had a commit addressing the feedback. No baseline, no FPR or recall, no confidence intervals; ESRA accuracy is judged by developers; prompts tuned on the evaluation data; single proprietary model; the 23% defect-reduction figure is an extrapolation from "about 30% of escaped defects relate to missed requirements" | Thesis: industrial support that missing/weak acceptance criteria are a practitioner pain point and that requirement-to-code checks at commit time are being deployed; it is not evidence for T1-T3 provenance or for H1/H2. Experiment: a reminder to report recall, FPR and PR-AUC with project-clustered intervals rather than precision alone, and to keep tuning data disjoint from held-out projects (already required). Product: closest industrial analogue of a requirement-aware checker; note its adoption lesson (feedback is ignored when not surfaced in the PR or ticket) for the CI/PR integration of any future product. Action: context only, no protocol, hypothesis or metric change; cite in related work as a deployment report, never for effect sizes | 5 / 10: peer-reviewed industry-track companion, real deployment, transparent about adoption; but no baseline, no recall/FPR, tuning on evaluation data, proprietary model and data, and an abstract that overstates the metric |
+
+Decision impact: none on H1/H2, B0/B3, estimands or frozen material.
