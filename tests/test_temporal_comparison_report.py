@@ -178,6 +178,34 @@ def test_project_aliases_within_test_cannot_inflate_bootstrap_clusters():
     with pytest.raises(ValueError,match='bootstrap clusters'):compare(p,o,max_fpr=.05)
 
 
+@pytest.mark.parametrize('alias', ['ｃａｌ', 'ℂal'])
+def test_unicode_project_alias_cannot_cross_calibration_test(alias):
+    p,o=sample()
+    for row in p:
+        if row['project_id'] == 'test-1':
+            row['project_id']=alias
+    with pytest.raises(ValueError,match='project aliases|crosses calibration/test'):
+        compare(p,o,max_fpr=.05)
+
+
+@pytest.mark.parametrize('alias', ['ｔｅｓｔ－１', 'test-１'])
+def test_unicode_project_alias_cannot_manufacture_third_bootstrap_cluster(alias):
+    p,o=sample(); p[3]['project_id']=alias
+    with pytest.raises(ValueError,match='bootstrap clusters'):
+        compare(p,o,max_fpr=.05)
+
+
+def test_consistent_unicode_project_identity_preserves_grouped_results():
+    p,o=sample(); before=compare(p,o,max_fpr=.05)
+    for row in p:
+        if row['project_id'] == 'test-1':
+            row['project_id']='ｔｅｓｔ－１'
+    after=compare(p,o,max_fpr=.05)
+    assert after['test_projects'] == before['test_projects'] == 2
+    assert after['project_grouped_deltas'] == before['project_grouped_deltas']
+    assert after['project_grouped_deltas_by_stage'] == before['project_grouped_deltas_by_stage']
+
+
 @pytest.mark.parametrize('test_projects', [2, 3])
 def test_checkpoint_deltas_reveal_gain_hidden_by_max_prefix_score(test_projects):
     p,o=sample()

@@ -1111,3 +1111,34 @@ rubrics but acknowledge shared-knowledge circularity and task simplification.
 Their format-convergence study does not validate our acceptance-criteria loss
 labels. Retain blinded independent annotation and project holdout.
 The parser correction is an independently demonstrated implementation defect.
+
+
+## Preserve project identity across Unicode spellings — 2026-11-26
+
+The supplementary temporal comparison now uses Unicode NFKC normalization before
+the existing whitespace/case normalization when checking project identity.
+Different raw spellings with the same normalized identity are rejected, rather
+than silently merged or rewritten. This prevents compatibility characters from
+placing one project in calibration and test, or manufacturing additional
+bootstrap clusters. A consistently spelled Unicode identifier remains valid.
+
+Four synthetic regressions failed against the previous comparison: two
+calibration/test aliases and two aliases that inflated held-out cluster counts.
+A fifth control verifies that consistently used Unicode project names preserve
+the grouped results. All 60 affected tests pass. Scores, terminal labels,
+constraint matching, operating-point fitting, bootstrap policy and primary
+H1/H2 definitions are unchanged; this change applies to
+`eval.temporal_comparison_report`, not every identity consumer in the repository.
+
+NFKC is an integrity check, not an entity-resolution system. Cross-script
+lookalikes, repository forks, shared upstream sources and related intents still
+require a reviewed source-group map and frozen project assignments. A larger
+cluster count does not establish independent projects or external validity.
+
+### Assessability is not annotation correctness
+
+[Unterbusch et al.'s preprint](https://doi.org/10.48550/arXiv.2611.07772)
+finds higher perceived assessability for context-adapted requirements; behavioral
+correctness was not measured. Record annotator context fit as a validity concern,
+not a substitute for blinded condition-loss labels. Any corpus redesign remains
+a human decision, separate from this demonstrated identity bug.

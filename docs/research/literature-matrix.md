@@ -1766,3 +1766,26 @@ before the fix; 88 affected tests pass afterward, including two readiness
 integration checks. Existing 898-file replay remains valid; 12 empirical gates
 remain open. This strengthens evidence preparation without changing H1/H2,
 the label plane, corpus commitments or the separate product line.
+
+
+## 2026-11-26 — Project identity and assessor context
+
+Search/read: 2026-11-26. Screened requirements defects and acceptance generation,
+agent process evaluation, provenance/privacy tools, grouped empirical methods
+and product alternatives. Deduplicated by DOI/title against this matrix. Read
+the new paper's abstract, design/materials, analysis, results and limitations
+from the full author-text PDF via an arXiv mirror. Publisher access to the SBSI
+mapping study remained unavailable; process-attribution paper 2608.22960 also
+could not be retrieved in full. Neither lead is treated as newly read evidence.
+
+| Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Unterbusch et al., [Adapt the Object to the Subject: Representative Study Material for Empirical Software Engineering](https://doi.org/10.48550/arXiv.2611.07772), 2026, arXiv v1; preprint, proceedings status unverified | Does context adaptation improve perceived representativeness/assessability? 31 practitioners, 20 ratings each; randomized, blinded 2×2 within-subject design; Bayesian ordinal analysis and sensitivity checks. | Adapted requirements received better perceived ratings; actual task correctness was unmeasured. Convenience recruitment, partial unblinding, one generator and participant/material confounding limit inference. | Thesis: confidence is not condition preservation. Experiment: document annotator context fit; retain blind labels. Product: perceived usefulness needs behavioral validation. Action: protocol validity note; no synthetic-corpus replacement or imported effects. | 7/10: transparent controlled design and explicit threats; preprint status, proxy outcomes and unreplicated materials constrain confidence. |
+
+Independent implementation follow-through: the supplementary temporal comparison
+rejects NFKC-equivalent project aliases before split and cluster checks. Four new
+cases reproduce the prior bypass; 60 affected tests pass after correction,
+including a consistent-Unicode positive control. The source above motivates the
+assessor-context note, not the parser/identity fix. Corpus/rubric review, genuine
+project independence, provider qualification and runtime authorization remain
+open human gates.

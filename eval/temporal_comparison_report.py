@@ -9,6 +9,7 @@ import argparse
 import hashlib
 import json
 import math
+import unicodedata
 from pathlib import Path
 from eval.temporal_comparator import fit_fpr_threshold, STAGES
 from eval.confirmatory_report import clustered_pr_auc_delta
@@ -56,7 +57,8 @@ def compare(predictions, outcomes, *, max_fpr):
         if row['constraint_id'] != labels[identifier]['constraint_id']:
             raise ValueError('target constraint mismatch')
         seen.add(identifier)
-        split = row['split']; project = row['project_id'].strip().casefold()
+        split = row['split']
+        project = unicodedata.normalize('NFKC', row['project_id']).strip().casefold()
         if split not in samples:
             raise ValueError('only calibration and test scores admitted')
         if project_names.setdefault(project, row['project_id']) != row['project_id']:
