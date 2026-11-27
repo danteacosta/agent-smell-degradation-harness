@@ -11,7 +11,7 @@
     "data/confirmatory/precision-plan.candidate.json": "1ec4902d417940e3dd54f0411187edd8d5a2ca508812b554b06d5adcaf9e2bc2",
     "data/confirmatory/precision-sensitivity.candidate.json": "7063501cbb8bffb72886adbde2b89da17758b5b9427f8a0f50d2ebbed145601d",
     "docs/thesis-product-boundary.md": "5f15ef9a25ddbfb38c2e9216b89536b00e60ddce75741e557412251b976f9946",
-    "eval/confirmatory_report.py": "f5e1eed9733f810392374b357582e5f2021abd4c6b987babed97eeebae82ba76",
+    "eval/confirmatory_report.py": "12046a4f7019de25a216a0b69031cdcd6679cc959c16b43d351a471c40223634",
     "eval/experiment.py": "7f08be7666b9621f7771d6837c66cf740ec587eb7d684fe34d4fe8432182b01a",
     "eval/feature_manifest.py": "179302f7eb1745f5065d64a92cc367b8b8911fa08d80e0437df2434bb18767cb",
     "eval/h2_detection.py": "da3dbe0aecd7957ef1e36dabc2dcb1872e6a713fe1f8625891c44ed8183ca543",
