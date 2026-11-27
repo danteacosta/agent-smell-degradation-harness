@@ -1789,3 +1789,28 @@ including a consistent-Unicode positive control. The source above motivates the
 assessor-context note, not the parser/identity fix. Corpus/rubric review, genuine
 project independence, provider qualification and runtime authorization remain
 open human gates.
+
+
+## 2026-11-27 — Explicit evidence gates and acceptance-criteria validation
+
+Search/read: 2026-11-27. Screened requirement defects/LLM-assisted RE, agent
+process evaluation, observability/privacy, grouped evaluation and product
+validation workflows. Deduplicated by DOI/title. Read the new preprint's
+abstract, retrieval method, implementation, logging, workflow and evaluation
+limitations, first through a mirror and then the original arXiv PDF.
+The already incorporated Jin/Chen and Gherkin studies resurfaced without a
+verified update and receive no duplicate rows. The aerospace NER article
+10.1007/s10515-026-00694-x was screened at abstract level as adjacent; its
+empirical details were not incorporated.
+
+| Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Abbasi, Ihantola, Mikkonen and Mäkitalo, [Validating Multi-Model AI-Generated Acceptance Criteria in Requirements Engineering](https://doi.org/10.48550/arXiv.2611.32374), 2026 v1, submitted November 24; preprint; authors announce VeriFAI/LNCS acceptance, official publication forthcoming | How can validation be inspectable? Working four-model prototype with optional TF-IDF retrieval and logged human selection/edit/finalization. No completed evaluation sample or accuracy estimate is reported. | Implements an accountable workflow; project-specific correctness and criterion-level authoritative traceability remain unverified. Illustrative output is not a quality benchmark. | Thesis: validation workflow differs from H1/H2 evidence. Experiment: retain raw T4 separately from edited outcomes. Product: adjacent comparison/ratification workflow; assess effort and correctness independently. Action: protocol distinction; no imported labels/effect. | 6/10: inspectable architecture and candid limits; preprint/prototype, no completed evaluation or independent replication. |
+
+Independent implementation follow-through: H2 claim finalization requires an
+explicit boolean bootstrap-validity result rather than assuming it from an
+absent receipt. Five new cases reproduce previous failures; 77 affected tests
+pass after correction, including an actual grouped-estimator positive control.
+The new source informs the raw/finalized artifact distinction, not this code
+defect. Neither addition supplies missing corpus review, labels, qualified
+providers or runtime authorization.
