@@ -84,13 +84,35 @@ def audit_corpus_declarations(plan: Mapping[str, Any], manifest: Mapping[str, An
     projects = len({str(r.get("project_id", "")) for r in records if r.get("project_id")})
     if projects != manifest.get("project_count"):
         discrepancies.append("manifest project_count disagrees with records")
+    per_project = Counter(str(r.get("project_id", "")) for r in records if r.get("project_id"))
+    max_share = round(max(per_project.values()) / len(records), 4) if per_project and records else 0.0
+    removed = [str(r.get("removed_constraint_id", "")).strip() for r in records]
+    if any(not c for c in removed) or len(set(removed)) != len(removed):
+        discrepancies.append("removed_constraint_id is missing or shared between records")
+    if records and max_share > 0.5:
+        warnings.append(
+            f"project_concentration: one project holds {max_share:.0%} of records; "
+            "project-level split and clustered bootstrap would be fragile"
+        )
+    if records:
+        warnings.append(
+            "single_constraint_load: each record removes exactly one constraint, so the corpus "
+            "cannot probe constraint accumulation (cf. Constraint Decay, COLM 2026); a descriptive "
+            "limitation, not a defect"
+        )
     return {
         "schema_version": SCHEMA_VERSION,
         "claim_level": "non_confirmatory_pre_pilot",
         "consistent": not discrepancies,
         "discrepancies": discrepancies,
         "warnings": warnings,
-        "derived": {"unique_intents": unique_intents, "projects": projects, "records": len(records)},
+        "derived": {
+            "unique_intents": unique_intents,
+            "projects": projects,
+            "records": len(records),
+            "max_project_share": max_share,
+            "defect_family_counts": dict(sorted(Counter(str(r.get("defect_family", "")) for r in records).items())),
+        },
         "approves_nothing": True,
     }
 
