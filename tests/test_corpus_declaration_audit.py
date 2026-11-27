@@ -57,3 +57,26 @@ def test_cli_exit_codes(tmp_path: Path, capsys) -> None:
     path.write_text(json.dumps(bad))
     assert main(["--manifest", str(path)]) == 2
     capsys.readouterr()
+
+
+def test_concentration_and_constraint_load_are_descriptive_warnings() -> None:
+    report = audit_corpus_declarations(PLAN, MANIFEST)
+    assert any(w.startswith("single_constraint_load") for w in report["warnings"])
+    assert 0 < report["derived"]["max_project_share"] <= 1
+    assert sum(report["derived"]["defect_family_counts"].values()) == 12
+
+
+def test_shared_removed_constraint_id_is_flagged() -> None:
+    m = copy.deepcopy(MANIFEST)
+    m["records"][1]["removed_constraint_id"] = m["records"][0]["removed_constraint_id"]
+    report = audit_corpus_declarations(PLAN, m)
+    assert any("removed_constraint_id" in d for d in report["discrepancies"])
+
+
+def test_single_project_corpus_triggers_concentration_warning() -> None:
+    m = copy.deepcopy(MANIFEST)
+    for r in m["records"]:
+        r["project_id"] = "ONE"
+    m["project_count"] = 1
+    report = audit_corpus_declarations(PLAN, m)
+    assert any(w.startswith("project_concentration") for w in report["warnings"])
