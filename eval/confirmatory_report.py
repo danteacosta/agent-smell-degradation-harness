@@ -176,7 +176,9 @@ def finalize_h2_claim(effect: dict[str, Any], *, margin: float = 0.05) -> dict[s
     effect = dict(effect)
     effect["margin"] = margin
     low = effect.get("ci95", {}).get("low")
-    bootstrap_valid = effect.get("bootstrap", {}).get("valid_for_inference", True)
+    bootstrap = effect.get("bootstrap")
+    bootstrap_valid = (isinstance(bootstrap, Mapping)
+                       and bootstrap.get("valid_for_inference") is True)
     if not bootstrap_valid:
         effect["claim"] = "descriptive_only"
     elif (

@@ -53,6 +53,11 @@ def validate_freeze(
     files = manifest.get("files")
     if not isinstance(files, dict) or not files:
         raise ValueError("confirmatory freeze files are required")
+    if require_confirmed:
+        missing = sorted(set(DEFAULT_FREEZE_FILES) - set(files))
+        if missing:
+            raise ValueError("confirmatory freeze missing required protocol files: "
+                             + ", ".join(missing))
     mismatches: list[str] = []
     for relative, expected_hash in files.items():
         path = root / str(relative)

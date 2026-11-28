@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from eval.confirmatory_report import clustered_pr_auc_delta, finalize_h2_claim
 
 
@@ -140,6 +142,31 @@ def test_small_cluster_fallback_preserves_report_schema() -> None:
         "max": None,
         "max_abs_shift_from_observed": None,
     }
+
+
+@pytest.mark.parametrize('bootstrap', [None, {}, {'valid_for_inference': None},
+                                      {'valid_for_inference': 1},
+                                      {'valid_for_inference': 'true'},
+                                      {'valid_for_inference': False}])
+def test_missing_or_nonboolean_bootstrap_validity_cannot_support_h2(bootstrap):
+    effect={'delta_pr_auc':.20, 'ci95':{'low':.10,'high':.30},
+            'bootstrap':bootstrap, 'claim':'supported'}
+    assert finalize_h2_claim(effect)['claim'] == 'descriptive_only'
+    assert effect['claim'] == 'supported'  # Do not rewrite the input evidence.
+
+
+def test_absent_bootstrap_cannot_default_to_supported_h2():
+    effect={'delta_pr_auc':.20, 'ci95':{'low':.10,'high':.30}}
+    assert finalize_h2_claim(effect)['claim'] == 'descriptive_only'
+
+
+def test_explicit_valid_grouped_report_preserves_h2_margin_rule():
+    rows=[{'project_id':project} for project in ('a','b','c') for _ in (0,1)]
+    labels=[0,1]*3
+    effect=clustered_pr_auc_delta(rows,[.1,.9]*3,[.5]*6,labels,draws=100)
+    assert effect['bootstrap']['valid_for_inference'] is True
+    assert finalize_h2_claim(effect)['claim'] == 'supported'
+    assert finalize_h2_claim(effect,margin=.6)['claim'] == 'not_supported'
 
 
 def test_length_matched_control_removes_pure_length_signal():

@@ -78,8 +78,8 @@ are null. Unknown terminal labels are counted separately and never imputed.
 For nondefective labels this is a missing-stage false-alert range; for defective
 labels it is a detection range. These are deterministic completion bounds, NOT
 confidence intervals, conformal prediction intervals, population estimates or
-proof that machine labels are correct. They cover only supplied rows: missing
-entire episodes must still be reconciled against the frozen execution manifest.
+proof that machine labels are correct. They cover only supplied rows; execution-plan reconciliation below reports
+entirely missing episodes separately without assigning labels.
 Changing the alert policy requires a new derivation. No project-level inference
 is performed here, and no new model training or H2 feature is introduced.
 
@@ -189,30 +189,7 @@ two real configurations, the event adapter and private custody before collection
 Browser E2Es can qualify engineering controls; they do not replace blinded ordinal
 acceptance-criteria labels, annotation agreement or the primary label manifest.
 
-After alerts are sealed, independently double-annotate T4 under the frozen rubric,
-adjudicate, and join by run_id/replication_id/constraint_id. Evaluate B0 and B3 on
-identical eligible records; report comparator/window-specific missingness and paired
-complete-case plus missing-stage sensitivity. Primary PR-AUC means the existing
-average-precision implementation. Add supplementary recall/FPR and first observed
-alert lead time to T4. Ranker scores are not probabilities: calibration/Brier/ECE
-requires a separately frozen calibration-only probability mapping. Reuse the
-existing project-cluster bootstrap and report descriptive-only intervals when the
-small/one-class cluster design fails existing gates. Do not pool repeated generations
-as independent requirements or claim causal recovery without a cue intervention.
-
-Current dependencies: fresh corpus identities and reviews, exact split freeze,
-annotation rubric/annotators, two qualified providers, runtime/event adapter and
-budget authorization. During preparation of this candidate, neither Codex CLI nor
-Docker was available in that execution environment; no provider episode or empirical
-comparison was performed there. This is not a statement about the current Mac,
-where Codex and Docker have since supported the separate test-anchor study.
-
-### Executable preparation and candidate source review (2026-10-02)
-
-The source draft is now `data/prepilot/temporal-warning-source-drafts.json`:
-12 proposed intent pairs from six **previously exposed** public projects.
-Each clean input is an exact, hash-bound excerpt; its defective counterpart
-removes one recorded span. A proposed constraint ID and a testable obligation
+After alerts are sealed, independently double-annotate T4 under the f…392 tokens truncated…e recorded span. A proposed constraint ID and a testable obligation
 are recorded per pair. These are assistant-prepared materials, not reviewed
 scientific labels. The selection and project partition remain unfrozen.
 
@@ -368,3 +345,874 @@ The packet also reports agreement separately for removed span, target
 `constraint_id`, dependency set, non-target preservation, remainder plausibility
 and recommendation. Any disagreement or blocking judgment sets
 `requires_adjudication`; reviewer disagreement is retained rather than collapsed.
+
+
+## Concrete source-draft handoff — 2026-10-27
+
+This is an engineering review queue, not a selected or admitted confirmatory
+corpus. The existing public file
+[`temporal-warning-source-drafts.json`](../../data/prepilot/temporal-warning-source-drafts.json)
+was audited at repository revision `66712467cd093b412d4787c80fed428c00ae3d60`.
+The existing `validate_candidate` implementation verified **12 source-span
+deletion pairs across six projects**, including source/license file hashes,
+source excerpt offsets, exact deletion reconstruction and target identity.
+It does not establish source rights, semantic validity, reviewer independence,
+lack of contamination, or confirmatory eligibility.
+
+Canonical JSON content digest (UTF-8, sorted object keys, compact separators,
+Unicode unescaped):
+`2ec1b291c24cffe61bf6fad1c99ffa6a4013de6f679ca82d9de1004e3e60016b`.
+
+Ordered candidate-ID digest (the admission-packet convention):
+`fbcce00ccb12dc3d8591a45309601de3bdd9d25c664de08be7ef3ec5b228bb92`.
+
+These are snapshot identifiers, **not an externally attested pre-review freeze**.
+The full-content digest and the ID-list digest bind different objects. Preserve
+both, together with the exact source revision and rubric, in the eventual
+external decision record; do not replace a content commitment with an ID hash.
+
+| Candidate ID | Project | Source locator | Proposed target ID |
+| --- | --- | --- | --- |
+| `prospective-sdoc-srs-151` | strictdoc | SDOC-SRS-151 STATEMENT | `prospective-sdoc-srs-151-c01` |
+| `prospective-sdoc-srs-110` | strictdoc | SDOC-SRS-110 STATEMENT | `prospective-sdoc-srs-110-c01` |
+| `prospective-cass-srch-002` | CASS | SRCH-002 requirement table text column | `prospective-cass-srch-002-c01` |
+| `prospective-cass-srch-006` | CASS | SRCH-006 requirement table text column | `prospective-cass-srch-006-c01` |
+| `prospective-todomvc-counter` | todomvc | ### Counter | `prospective-todomvc-counter-c01` |
+| `prospective-todomvc-clear-completed-button` | todomvc | ### Clear completed button | `prospective-todomvc-clear-completed-button-c01` |
+| `prospective-realworld-feed-articles` | realworld | ### Feed Articles | `prospective-realworld-feed-articles-c01` |
+| `prospective-realworld-unfollow-user` | realworld | ### Unfollow user | `prospective-realworld-unfollow-user-c01` |
+| `prospective-kanboard-destination-membership` | kanboard | Duplicate a task to another project | `prospective-kanboard-destination-membership-c01` |
+| `prospective-kanboard-destination-assignee` | kanboard | Duplicate a task to another project | `prospective-kanboard-destination-assignee-c01` |
+| `prospective-paperless-share-expiry` | paperless-ngx | Share Links | `prospective-paperless-share-expiry-c01` |
+| `prospective-paperless-share-no-login` | paperless-ngx | Share Links | `prospective-paperless-share-no-login-c01` |
+
+There are **10 distinct source-excerpt groups**, not 12 independent excerpts:
+the Kanboard destination-membership/destination-assignee pair shares one source
+span, and the Paperless share-expiry/share-no-login pair shares another.
+All candidate siblings remain in their project's partition. Different excerpts
+also do not establish independent semantic obligations or source families.
+No item is excluded here based on generated behavior.
+
+**Next executable human handoff.** Before any new outcomes, the custodian
+approves selection, rights and the rubric; records the above commitments
+externally; assigns two genuinely independent reviewers; and gives both the
+same pinned source/variant materials without generated outputs or model
+identities. Each reviewer supplies the fields required by
+`prepare_manipulation_admission`. Adjudicate dependency, source-faithfulness
+and non-target-preservation disagreements; retain every exclusion and reason.
+Current state remains `selection_frozen=false`, `human_approvals=0`,
+`confirmatory_eligible=false`.
+
+A single deletion can be syntactically valid without being an atomic or useful
+intervention. Related mutations can distort assessment when counted repeatedly
+([Papadakis et al., ISSTA 2016](https://discovery.ucl.ac.uk/1508136/1/ISSTA16.pdf)).
+This is an analogy motivating explicit grouping, not proof that these omission
+pairs subsume one another. Do not use future kill vectors or terminal labels to
+select a more favorable confirmatory set; any outcome-based subsumption analysis
+must be a separately labelled exploratory sensitivity analysis.
+
+
+## Unfilled review forms — 2026-10-28
+
+The [authoring template](../../data/prepilot/temporal-warning-manipulation-review-template.json)
+contains two separate 12-row review slots for the existing candidate snapshot.
+It is a preparation artifact with **24 unfilled forms**, not 24 observations,
+human annotations, or approvals. Each row contains only the admission API's
+declared review fields; only candidate IDs are filled. All judgments and actual
+reviewer identities remain null, so the admission API rejects the untouched file.
+
+The custodian must give each reviewer only their own `reviews` list, the
+same pinned source materials and the approved rubric. Keep responses separate
+until both are complete. Slots A/B are routing labels, not reviewer identities.
+Do not show generated outputs, provider identities or the other reviewer's
+judgments. Verify content and ID commitments before distribution; a manifest
+does not prove external custody or independent people.
+
+After independent completion, combine both review lists and call
+`prepare_manipulation_admission(reviews, expected_candidate_ids=...)`.
+Record disagreement before adjudication and preserve original answers.
+Do not replace null judgments with defaults to make validation pass.
+Calibration examples and guideline revisions must be separate from scored
+candidate judgments; approve the rubric before assigning the scored review.
+
+[Paiva et al., Requirements Engineering 2026](https://doi.org/10.1007/s00766-026-00462-z)
+provide a relevant caution: human-mean correlation is not the same as adequate
+inter-rater agreement. Their linguistic-quality task is different from our
+semantic manipulation-admission task, so neither their agreement values nor a
+sample percentage is a transferable admission threshold.
+
+
+## Isolated assignment export — 2026-10-30
+
+The offline exporter avoids manually editing the combined authoring template.
+From the repository root, prepare one assignment at a time:
+
+```sh
+python -m eval.manipulation_review_handoff \
+  --template data/prepilot/temporal-warning-manipulation-review-template.json \
+  --candidates data/prepilot/temporal-warning-source-drafts.json \
+  --slot reviewer_A --output /PRIVATE/reviewer-A.json
+```
+
+Repeat with `reviewer_B` and a different private output path. The exporter checks
+the full candidate-content digest, ordered inventory, both slots' coverage,
+declared review fields and null judgments before exporting only the requested
+slot. It rejects completed forms and extra fields in either slot, and refuses
+to overwrite an existing file. It neither copies peer responses nor generates
+human judgments. The packet includes content and inventory commitments; these
+are not externally attested freezes.
+
+The custodian must separately supply the same pinned sources and approved
+rubric, verify rights and actual reviewer independence, and record distribution
+and later adjudication privately. No email is sent and no provider is called.
+Completed responses and identifiable staffing records must stay outside Git.
+
+For each human-review task, retain recruitment/expertise, relevant language
+proficiency, training/calibration, workload, compensation arrangements, rubric
+version, independent pre-adjudication judgments and disagreement resolution.
+Document unavailable information explicitly rather than infer it from filled
+forms. [Kunilovskaya et al., EMNLP 2026](https://aclanthology.org/2026.emnlp-main.396/)
+motivate task-level reporting; their reporting audit does not validate our labels
+or supply an agreement/admission threshold.
+
+
+## Temporal outcome accounting — 2026-10-31
+
+The offline `temporal-diagnostics/v2` report now explicitly declares
+`positive_class=terminal_defect=true`. At each cumulative horizon it reports
+`defective_labeled_episodes`, `true_alerts`, `missed_defects`,
+`nondefective_labeled_episodes`, `false_alerts` and
+`nondefective_without_alert`. Recall is true alerts divided by complete-stage,
+defective labeled episodes; false-alert rate uses complete-stage, nondefective
+labeled episodes. An empty denominator yields null, never zero. The existing
+`rate_scope` and missing-stage bounds remain mandatory context.
+
+Episode diagnostics retain the supplied terminal label and classify the first
+observed alert as true, false or unlabeled; no observed alert is reported
+separately and does not imply a complete negative prefix. Lead time remains an
+observed interval, with `first_alert_prefix_complete` retained. Do not pool
+false-alert lead times into true-warning antecedence.
+
+These outputs carry `output_plane=label_joined_diagnostics_not_features`.
+Labels are joined only after alert freezing; none of these joined fields may
+enter a T1–T3 predictor. The analyzer does not authenticate the supplied labels,
+fit H2, generate PR-AUC/calibration, or perform project-clustered inference.
+Aggregate rates are descriptive episode counts, not independent-project estimates.
+
+[Jin and Chen](https://doi.org/10.1007/s10515-026-00638-5) motivate two-sided
+error reporting; their positive class is correct code, the opposite of the
+defect-positive convention here. Their percentages and error names are not
+transferred. Six offline regressions protect polarity, both denominators,
+missing/unlabeled cases, observed lead-time classes and input immutability.
+
+
+## Execution-plan reconciliation — 2026-11-01
+
+An episode that produces no diagnostic row must not disappear from execution
+accounting. Supply the ordered JSON array of episode IDs derived from the
+separately frozen execution plan:
+
+```sh
+python -m eval.temporal_diagnostics --episodes PRIVATE.jsonl \
+  --expected-episode-ids PRIVATE-planned-ids.json --output PRIVATE-report.json
+```
+
+The analyzer rejects duplicate/noncanonical planned IDs and observed IDs outside
+the plan. At each horizon, `planned_episodes` counts the supplied plan,
+`supplied_episodes` counts received rows, `missing_stage_episodes` counts partial
+rows and `missing_entire_episodes` counts planned IDs with no row at all.
+Complete-stage + partial-stage + entirely absent counts equal the planned count.
+`cohort_reconciliation` retains missing IDs in plan order and an ordered-list
+SHA-256 commitment. It does not authenticate or externally freeze that plan;
+the custodian must verify it against the approved run/replication ledger.
+
+No synthetic row, label, alert, timestamp or cost is generated for an absent
+episode. Total cost stays null when any planned episode is absent, while measured
+subtotals remain visible. Recall, false-alert rate and missing-stage bounds keep
+their existing supplied-label/complete-stage scopes; absence is not a negative
+label. Without a plan, coverage remains explicitly `supplied_rows_only`,
+and missing IDs/counts are null rather than an asserted zero.
+
+[WebStep](https://arxiv.org/pdf/2606.15673) provides adjacent process-evaluation
+context, not evidence for H1/H2. Its task-oracle semantic states and post-hoc
+bifurcations must not enter deployable T1–T3 features. Its safe-pass convention
+can count an unissued final commit as terminal success (Appendix C.3); do not
+transfer that convention to our target-obligation labels. The reconciliation
+change follows the explicit missing-row counterexample, not an effect estimate
+or threshold imported from WebStep. Seven new offline tests cover the plan and
+CLI boundary; no provider execution or confirmatory eligibility is authorized.
+
+
+## Source materials in isolated assignments — 2026-11-02
+
+Use `--include-materials` with the existing assignment exporter to attach a
+strict projection of the bound candidate snapshot: candidate/project IDs,
+source/license/notice locators and hashes, the reference excerpt and proposed
+remainder. Default exports remain form-only. Each reviewer receives the same
+materials with only their own blank forms.
+
+The projection excludes proposed target answers, candidate smell classifications,
+exposure metadata, review status, generated outputs and peer judgments. Nested
+payloads in source locator fields are rejected. The full candidate-content
+commitment still binds the source snapshot, and returned objects do not alias
+the input. Without `--source-root`, the packet declares proposals, `source_files_reverified=false`
+and `confirmatory_eligible=false`; it does not re-open source/license bytes or
+approve rights. Before distribution, the custodian must independently verify
+the pinned files, surrounding context, notices, rights and rubric.
+
+[BenchGuard](https://arxiv.org/pdf/2604.24955) motivates inspecting coupled
+artifacts rather than treating a reference implementation as unquestioned truth.
+Every oracle obligation must be supported by authoritative project material;
+reference-code behavior alone is insufficient. Its execution-informed audit
+may inspect outcomes, so that mode must remain separate from blinded prospective
+manipulation admission. We implement no automated semantic reviewer and import
+no confidence threshold, scientific label or model-based approval.
+
+## Offline source-file verification before review — 2026-11-03
+
+The custodian can now re-open the pinned local files before exporting either
+assignment:
+
+```sh
+python -m eval.manipulation_review_handoff \
+  --template data/prepilot/temporal-warning-manipulation-review-template.json \
+  --candidates data/prepilot/temporal-warning-source-drafts.json \
+  --slot reviewer_A --include-materials --source-root . \
+  --output PRIVATE-assignment-A.json
+```
+
+`--source-root` requires material export. Verification checks source and license
+SHA-256 values, any declared NOTICE path/hash pair, source excerpt bounds and
+text, the declared single deletion and target constraint identity. Resolved paths,
+including symlinks, must stay inside the supplied root. Missing files, drift or
+invalid metadata fail before output creation. Existing responses remain protected
+by exclusive creation. Target answers are checked internally and remain excluded
+from reviewer materials. The default form-only/unverified modes are unchanged.
+
+A passing packet sets `source_files_reverified=true` with a bounded scope;
+`confirmatory_eligible` stays false and every human judgment remains null.
+This verifies the supplied local snapshot, not its upstream authenticity,
+completeness of notices, reuse rights, pretraining novelty or semantic validity.
+An attacker changing both bytes and expected hashes is outside this check;
+independent custody and comparison with the authoritative revision remain required.
+
+Validation on 2026-11-03: 18 offline unittest cases passed, including eight new
+verification cases. Both isolated assignments verified all 12 existing proposed
+pairs across six projects against freshly retrieved pinned source/license/NOTICE
+files. These are preparation checks, not reviewed corpus entries or H1/H2 evidence.
+
+[Cleland-Huang and Vierhauser (Requirements Engineering, 2026)](https://doi.org/10.1007/s00766-026-00479-4)
+provide dataset-lineage context, not H1/H2 evidence. Hash matching cannot
+establish non-exposure. Existing project holdouts and independent exposure
+controls remain required; no classification baseline or perturbation protocol
+is adopted.
+
+## Pre-adjudication agreement diagnostics — 2026-11-04
+
+Before adjudication, retain the original independent responses. The optional
+offline reporter consumes those responses and the separately approved review
+inventory; it never fills missing reviews or supplies an admission decision:
+
+```sh
+python -m eval.manipulation_review_agreement \
+  --reviews PRIVATE-independent-reviews.json \
+  --expected-candidate-ids PRIVATE-approved-review-ids.json \
+  --output PRIVATE-pre-adjudication-agreement.json
+```
+
+The existing admission validator rejects incomplete coverage, duplicate/aliased
+candidate-reviewer identities, malformed judgments and extra/outcome fields.
+The reporter additionally requires exactly the same two recorded reviewer
+identities across every candidate. It does not silently select complete cases
+from a changing reviewer pool. It binds the ordered inventory digest, not
+independent custody or the candidate/rubric content; these remain external gates.
+
+For every checklist field it reports agreeing candidates, the full candidate
+denominator and raw agreement. Dependency lists are compared as sets while
+the input responses remain untouched. For the nominal decisions
+`admit`, `exclude`, `uncertain`, it reports a 3-by-3 table with explicit reviewer
+orientation, row/column marginals, observed agreement and the marginal-based
+expected agreement. Unweighted Cohen's kappa is `(Po - Pe) / (1 - Pe)`;
+when `Pe=1`, kappa is null with `degenerate_marginals`, even if raw agreement
+is perfect. Category imbalance and small samples must be interpreted with the
+table, not hidden by a single coefficient.
+
+These are descriptive pre-adjudication diagnostics, not project-clustered
+confidence intervals, population estimates, a reliability threshold or validity
+evidence. The reporter cannot authenticate human status, blinding, independence,
+rights or whether the supplied responses preceded adjudication. Metric choice,
+adequacy criteria, calibration rounds and the rubric still require human
+approval before confirmatory use. Original private responses and adjudication
+history must be retained separately; exclusive output creation prevents overwriting.
+Blank authoring templates cannot produce an agreement report. No real review
+scores are reported because the independent reviews remain pending.
+
+[Baltes et al., EMSE, online 2026-11-03](https://doi.org/10.1007/s10664-026-10922-3)
+provide reporting guidance: agreement alone is not validity. Their illustrative
+thresholds are not adopted here. Their recommendation for an open-model baseline
+also requires an explicit design decision or justified limitation; no model,
+provider runtime or budget is added by this change.
+
+Validation: seven new synthetic pytest cases plus 39 existing admission cases
+passed. The hand-computed table yields `Po=3/4`, `Pe=5/16`, `kappa=7/11`;
+other tests cover negative kappa, degenerate consensus, reviewer/coverage drift,
+field-level disagreement, input immutability, CLI rejection and no overwrite.
+
+## Bind agreement diagnostics to the original responses — 2026-11-05
+
+The reporter now includes `review_content_sha256`, in addition to the ordered
+candidate-inventory digest. Previously, two batches with identical decisions
+and agreement counts but different written reasons produced identical reports.
+The new commitment binds every validated review field, including reasons,
+removed spans, original reviewer identifiers and dependency lists, without
+copying private responses into the aggregate report.
+
+Canonicalization is explicit: use the supplied candidate-inventory order, then
+sort each candidate's reviews by NFKC/casefold reviewer identity; retain original
+field values and list order; serialize with sorted object keys,
+`ensure_ascii=False`, compact comma/colon separators and UTF-8; hash with SHA-256.
+Input row order and JSON object-key order do not affect the digest. Changes to
+original text, identity spelling or dependency-list ordering do affect it, even
+where aggregate statistics are unchanged. This is not a raw-file checksum.
+
+The custodian must retain the original private responses and recompute this
+digest when checking which batch a report describes. The digest cannot establish
+authorship, collection time, independence or pre-adjudication custody, nor bind
+the rubric or candidate-source content. Those commitments remain separate gates.
+Do not publish hashes of private judgments without considering linkage and
+guessability; this report belongs with the private review evidence. No review
+score, scientific label or approval is supplied by this change.
+
+[Curto et al., EMSE, online 2026-11-03](https://doi.org/10.1007/s10664-026-10981-6)
+offer adjacent evidence about prevalence-sensitive agreement. Their binary
+elicitation judgments differ from our nominal manipulation decisions. A new
+synthetic regression checks that raw agreement of 0.80 can coexist with
+`Pe=0.82` and negative kappa; it reproduces no published observations. No AC1,
+binary recoding, cutoff or similarity-based correctness label is adopted.
+
+Validation on 2026-11-05: 49 targeted pytest cases passed, including three new
+cases for prevalence, changed reasons and canonical content binding. The CLI
+round-trip test also checks that the written digest matches the input responses.
+Original review objects remain untouched and confirmatory eligibility remains false.
+
+
+
+
+
+## Reject ambiguous review JSON before hashing — 2026-11-06
+
+The agreement CLI rejects repeated JSON object member names before schema validation
+or digest computation, including names that become identical after JSON escape
+decoding. For example, two `decision` members must not be reduced to the last
+value and then treated as an unambiguous review snapshot. This is a local input
+rule informed by [RFC 8259, Section 4](https://www.rfc-editor.org/rfc/rfc8259#section-4).
+The Python API accepts already-decoded objects and cannot detect keys discarded
+by a caller's parser. Keep original private exports and use the strict CLI for
+file intake. No review, rubric approval or confirmatory evidence is inferred.
+
+Validation: 50 targeted pytest tests passed, including the new CLI regression
+with two duplicate-name subtests (literal and escaped); neither creates a report.
+
+
+## Qualification receipt files must match their references — 2026-11-07
+
+The temporal engineering-pilot readiness audit now opens each declared provider
+qualification report and verifies its SHA-256 before counting that provider.
+Previously only the path/hash metadata and declaration flags were checked;
+a nonexistent report with a syntactically valid hash could count. Missing,
+unreadable, changed or out-of-root files (including symlinks) now leave the
+provider unqualified and preserve no-go when two providers cannot be counted.
+
+This is a byte-integrity check, not semantic validation of the report, provider
+execution, configuration-to-report identity, authentic qualification or external
+approval. A report may still be forged together with its hash. External review
+must validate the configuration binding and runtime-native T1–T3 evidence.
+The synthetic test receipt is explicitly not provider qualification evidence.
+The historical 120-episode gate and candidate scientific design are unchanged.
+
+Validation: 28 targeted pytest cases passed, including five new receipt-file
+failure cases. The current real candidate still returns exit code 2/no_go:
+12 source pairs verified, zero reviewed intents, zero qualified providers,
+12 pending blockers, collection authorization false.
+
+[Bjarnason et al., On Randomness in Agentic Evals](https://arxiv.org/html/2602.07150v2)
+is adjacent repeated-run evidence, not a justification for promoting this gate
+or treating temperature zero as deterministic. No repetition count, power
+assumption or published variance estimate is transferred to our pilot. File
+verification follows the missing-receipt counterexample, not a result from that
+paper.
+
+
+## Preserve readiness reports and input plans — 2026-11-08
+
+Readiness CLI output now uses exclusive file creation. An existing output,
+including the input plan itself, is rejected with a nonzero exit and remains
+byte-for-byte intact. Previously `--output` could silently overwrite it.
+Choose a new report path for each retained assessment. No report is printed
+as a successful export after a creation error; ordinary no-go exports to a new
+path still return exit code 2 and preserve the no-go report.
+
+Validation: 31 targeted pytest cases passed, including three new cases for an
+existing evidence file, output equal to the input plan, and a repeated export.
+This prevents accidental replacement; it is not immutable storage or custody
+authentication and does not authorize providers or confirmatory collection.
+
+## Bind the exposure audit to the candidate — 2026-11-09
+
+The generator records `candidate_content_sha256` over the parsed candidate
+manifest (sorted keys, compact JSON, ASCII escapes encoded as UTF-8, no non-finite
+numbers). The readiness gate checks it in addition to the plan's existing
+artifact byte hashes and intent coverage. A missing or different digest adds
+`exposure_audit_not_bound_to_candidate`, even if all intent IDs are unchanged.
+
+Regenerate from the exact checkout and draft under review, in a new directory:
+
+```bash
+audit_dir="$(mktemp -d)"
+python -m eval.temporal_cohort_candidate \
+  --candidate data/prepilot/temporal-warning-source-drafts.json \
+  --output "$audit_dir/exposure-audit.json"
+sha256sum "$audit_dir/exposure-audit.json"
+```
+
+Inspect the generated inventory and matches before adopting a versioned report.
+Then point the plan's `exposure_audit` reference at the new repo-relative path
+and record its byte SHA-256 and registry count. Preserve the historical report;
+do not attach a digest to it after the fact. The checked-in plan still returns
+`no_go` (13 blockers as of this check). The binding detects stale candidate
+content; it does not prove that the registry was exhaustive, that paraphrases
+were absent, or that a provider never saw either variant during training.
+Independent review, project split freeze and authorization remain separate.
+
+### Bound report for the 144-episode draft — 2026-11-10
+
+The active plan now points to
+[`temporal-warning-exposure-audit.bound.json`](../../data/prepilot/temporal-warning-exposure-audit.bound.json).
+This is a fresh run of `audit()` for the current manifest using the explicit
+path list in the [historical report](../../data/prepilot/temporal-warning-exposure-audit.json).
+All 898 input files were verified against their historical byte hashes before
+the run; the per-path inventory and match map agreed with the historical report.
+Among 330 extracted input strings, there was no normalized exact or contained
+complete clean-input match for any of the 12 draft intents across six projects.
+The report does not cover registries beyond that pinned inventory.
+
+To reproduce this scoped replay, read the historical report's `inventory`,
+verify each file against its recorded SHA-256, and pass the listed paths and
+parsed current source manifest to `eval.temporal_cohort_candidate.audit`. Compare
+inventories by path, since the regenerated report sorts paths. A full-checkout
+scan is a separate audit and may cover a different inventory.
+
+The plan remains `no_go` with 12 blockers. This replay clears only the
+manifest-binding blocker. It does not establish novelty, screen paraphrases
+or partial clauses, qualify a provider, or replace independent exposure review.
+
+[Chen et al. (ESEM 2026)](https://doi.org/10.4230/LIPIcs.ESEM.2026.28)
+found that much of the largest observed gain in their vulnerability-detection
+comparison was recoverable by replaying selected context. For H2, report the
+eligible denominators and alert rates beside the B3–B0 comparison on the same
+held-out observations. An incremental prediction gain does not establish a
+causal explanation of the lost condition. Any diagnostic replay that uses
+information unavailable at its cutoff remains outside the confirmatory
+feature plane.
+
+## Count completed reviews per intent — 2026-11-11
+
+The 144-episode readiness audit now counts an intent as reviewed only when at
+least two distinct reviewer identifiers each have a valid approval bound to the
+current source manifest. The gate applies Unicode NFKC normalization, trims
+surrounding whitespace and folds case before deduplication. Duplicate rows
+and identifier spelling variants do not supply a second approval. This check
+implements the existing manipulation-admission requirement at readiness; it
+does not authenticate reviewers, verify independence or adjudicate disagreement.
+The candidate remains unreviewed and collection remains blocked.
+
+## Keep unresolved reviews visible at readiness — 2026-11-12
+
+A current-manifest receipt with a valid reviewer identifier and any missing
+or non-affirmative approval field prevents that intent from counting as
+reviewed, even when two other approvals are present. Conflicting receipts from
+the same normalized identifier also block readiness. Old-manifest receipts
+cannot satisfy or veto a decision for the current manifest.
+
+Do not delete or overwrite dissenting responses. Keep the original responses
+and pre-adjudication agreement report in private custody. A human must resolve
+the discrepancy or revise or exclude the candidate under the approved protocol
+before preparing a fresh readiness plan. The gate does not adjudicate, infer
+assent or issue scientific labels.
+
+## Route incomplete reviews without exposing judgments — 2026-11-13
+
+The readiness report includes `review_status_by_intent`, keyed by candidate
+intent ID: `awaiting_approvals` means fewer than two valid approvals and no
+recorded unresolved current review; `unresolved` means a current receipt
+requires custodian follow-up; `complete` means the declarative review check
+passed. Unresolved takes precedence. The status list contains no reviewer
+identifiers or judgment text. It is for the custodian: do not include it in
+blinded reviewer packets or the detector feature plane. Use the private
+original receipts to adjudicate; a missing recorded receipt does not establish
+that nobody reviewed the item.
+
+## Reject ambiguous readiness inputs — 2026-11-14
+
+The readiness CLI rejects duplicate JSON object members at any depth in the
+plan, including spellings that decode to the same name. The same rule applies
+to the referenced source manifest and exposure audit. Their digests are
+verified against the exact bytes decoded. A repeated approval field cannot
+silently discard a dissenting value, and matching bytes alone do not make a
+document unambiguous. Invalid input exits before a readiness report is written.
+Python callers of `assess` must also reject duplicate members when decoding
+the plan, since a dictionary cannot preserve them.
+
+## Preserve the primary pilot task — 2026-11-15
+
+The readiness gate requires `primary_task: acceptance_criteria_generation`.
+A missing or different task is an invalid plan, even if every other
+prerequisite is declared. The 144-episode arithmetic does not identify the
+measurement task. Browser-oracle, code-generation, and verifier-coupling studies
+require their own design decisions and cannot be admitted by relabeling this plan.
+
+## Check the declared provider cost envelope — 2026-11-16
+
+The readiness gate compares estimated cost, including the declared contingency,
+against the approved cap using exact arithmetic. The CLI preserves decimal
+numbers from JSON. Missing or malformed budgets, non-finite values, decimal
+exponents outside the supported range, and totals above the cap keep the pilot
+in `no_go`. A total exactly equal to the cap is permitted. Passing this check
+verifies the declared arithmetic only; it does not approve the budget, estimate
+provider prices, or authorize collection.
+
+## Audit both variants for prior input exposure — 2026-11-17
+
+The temporal audit now records complete normalized input matches separately for
+clean and defective variants. Readiness requires both maps to cover all candidate
+IDs and blocks on a match in either map. A prior clean input can contain its
+own defective variant; the maps describe text overlap, not exclusive exposure.
+The candidate points to the paired report. Its 898 per-file records match the
+historical inventory, with 330 extracted inputs and zero hits for either variant
+across the 12 intents. Earlier reports are retained. This screen does not cover
+paraphrases, partial inputs, private activity, or provider training data.
+
+## Distinguish missing exposure results from zero hits — 2026-11-18
+
+Each candidate entry in either match map must be a JSON array of nonblank
+path strings. Only an empty array records no matches for that variant. Null,
+booleans, scalar strings, and arrays containing invalid entries are invalid
+audit data, even if the file hash and candidate IDs match. Invalid input
+produces no readiness report. The check validates representation, not the
+completeness or authenticity of registry exposure evidence.
+
+## Bind exported readiness reports to the plan — 2026-11-19
+
+The readiness CLI includes `plan_sha256`, computed from the same input bytes
+it decoded and assessed. Retain those plan bytes alongside each report. A
+format-only edit changes this byte digest; it is not a canonical-content digest.
+This supports matching an exported decision to its input and cannot establish
+approval authenticity, immutable storage, or permission to collect data. The
+Python `assess` API does not assert a byte digest for an already parsed dict.
+
+## Verify the declared exposure registry at readiness — 2026-11-20
+
+Readiness checks the audit inventory against the plan reference's
+`registry_files`: both counts must be nonnegative integers and agree with the
+inventory length. Every inventory entry must resolve to a distinct file inside
+the repository and match its recorded byte SHA-256. Missing inventory, scope
+count changes, duplicate resolved paths, missing files, changed bytes and paths
+outside the root keep the plan in `no_go`, even when both candidate match maps
+contain only empty arrays and the audit's own digest matches.
+
+This implements a scoped evidence check, consistent with
+[Cao et al.'s HOW2BENCH](https://proceedings.mlr.press/v306/cao26ag.html)
+emphasis on inspecting benchmark quality evidence. Their position paper does
+not validate this implementation or H1/H2. The checked-in 898-file inventory
+passes this check; the candidate still has 12 other blockers, zero reviewed
+intents and zero qualified providers. Six regression cases fail against the
+prior implementation and pass with this check; the 75 affected tests pass.
+
+The scope count is a declaration, not an independently approved file allowlist.
+Matching hashes do not prove that the registry is exhaustive or that the match
+maps were computed honestly. Reviewers must still approve the inventory and
+exposure findings. Paraphrases, partial inputs, external/private activity and
+provider training exposure remain outside this screen. Synthetic tests may
+declare a zero-file scope; that is not evidence for a real cohort.
+
+## Preserve checkpoint-specific comparison visibility — 2026-11-21
+
+The supplementary comparison now includes `project_grouped_deltas_by_stage`
+for T1, T2 and T3, each containing B3 minus B0 and B3 minus S-structure.
+Every contrast uses exactly the same held-out episodes, target constraints and
+`project_id` clusters as the existing max-prefix comparison. It reuses
+`clustered_pr_auc_delta`, including its small-cluster and degenerate-support
+gates; no new row-level resampling or detector fitting is introduced.
+
+A maximum over prefixes answers a different question from a fixed checkpoint.
+In a synthetic regression, B3 ranks defects at T1 while B0 has tied scores;
+B0 catches up at T2. The observed AP difference is 0.5 at T1 and zero at
+T2/T3 and for max-prefix ranking. These are fixture arithmetic, not pilot results.
+Tests cover both two-project descriptive output and a three-project
+nondegenerate bootstrap. The existing aggregate, FPR calibration, lead-time
+policy, primary H2 model definitions and F1 threshold policy are unchanged.
+
+These checkpoint contrasts are supplementary diagnostics. Do not select the
+most favorable checkpoint or treat their intervals as independent confirmatory
+tests. Any confirmatory checkpoint estimand or multiplicity procedure requires
+an explicit prospective human decision; it is not established by this change.
+
+### Context scope remains separate from provenance
+
+[Poulsen et al. (DESIGN 2026)](https://doi.org/10.1017/pds.2026.10607)
+report improved ambiguity-detection precision after adding project context to
+a hybrid JWST dataset. This is adjacent evidence about requirement-quality
+judgments, not downstream condition loss or temporal early warning. Their
+context was extracted partly from the original requirements, and the supplied
+context and instructions changed together. For this experiment, distinguish
+allowed project context from privileged clean counterparts, omitted-condition
+answers and label-plane materials. The existing content-only comparator remains
+a supplementary candidate pending freeze; this paper does not establish that
+provenance adds value beyond equally available content. Product triage must
+expose context scope rather than present a smell flag as proof of semantic loss.
+
+## Export rate denominators and class composition — 2026-11-22
+
+The supplementary comparison exports `cohort_counts_by_split` for calibration
+and test: observed episode and project counts, defective and nondefective
+episode counts, and defect prevalence. Each detector also exports
+`confusion_counts` (TP, FP, FN, TN) and precision for its existing
+`episode_any_T1_T2_T3_alert` policy.
+
+The positive outcome is `terminal_defect=1` for the one predeclared target
+constraint per episode. Recall is TP/(TP+FN), FPR is FP/(FP+TN), and precision
+is TP/(TP+FP). If no alerts occur, precision is null, not zero; recall and FPR
+remain computable because admission requires both outcome classes in each split.
+All four confusion counts sum to the observed held-out episode count. These
+are pooled episode-level descriptions, not equally weighted project averages
+or counts of independently sampled projects. Project bootstrap remains unchanged.
+
+The change makes reported rates auditable and exposes class composition beside
+AP. It does not alter thresholds, primary H2/F1 definitions, checkpoint scores,
+the target-constraint scope, or missing-cohort admission. A zero observed FPR is
+not a deployment guarantee, and precision is not a probability-calibration metric.
+Three new synthetic cases cover mixed errors, no alerts and unequal class sizes;
+all 50 affected tests pass. No provider was run.
+
+### Adjacent evidence: execution-grounded acceptance tests
+
+[Shi and Song's ReqTestAgent](https://doi.org/10.3389/frai.2026.1960601)
+separates canonical compatibility from mutation strength and distinguishes
+instance means from pooled mutant rates. This supports explicit metric scopes
+and denominators, not importing its effect estimates. Its accepted reference
+implementation and source-provided ambiguity annotations are evaluation
+conditions. They do not establish a label oracle for our acceptance-criteria
+generation task. Reference feedback used to repair a generated artifact would
+be a separate intervention, not evidence that T1–T3 provenance alone predicts
+unmitigated condition loss. The paper does not validate H1/H2 or demonstrate a
+reduction in human triage effort.
+
+## Preserve temporal comparison inputs and prior exports — 2026-11-23
+
+The comparison CLI creates its output exclusively: an existing report, either
+input file, or an existing symlink cannot be replaced through `--output`.
+Use a new versioned destination for each export and retain prior evidence.
+The CLI now decodes predictions and outcomes from retained byte snapshots and
+computes `input_sha256` from those same snapshots. It does not reread the files
+after analysis to assign a possibly different input identity.
+
+Four regression cases reproduce overwriting against the prior implementation
+and verify preservation after the change. A fifth changes both temporary input
+files after analysis and verifies that the exported hashes still identify the
+bytes actually analyzed. All 55 affected tests pass. Exclusive creation and
+byte identity do not establish independently sealed inputs, authorship or
+immutable custody; retain the exact analyzed input versions separately.
+Detector scores, threshold fitting, metric definitions, project grouping and
+confirmatory eligibility are unchanged.
+
+### Boundary condition from static prompt-defect detection
+
+[Akli et al. (Findings of EMNLP 2026)](https://doi.org/10.18653/2026.findings-emnlp.1908)
+report different code-generation effects across defect types and benchmarks;
+remaining sample I/O can encode a textually omitted condition. For our existing
+residual-cue review, inspect examples and all permitted context as well as the
+edited sentence. A syntactically valid deletion is not evidence that a condition
+became unrecoverable. This is a boundary condition for interpreting H1, not a
+reason to exclude null or recovered outcomes after observing them.
+
+SpecValidator predicts description-defect categories. Its labels and scores
+must not substitute for blinded terminal condition-loss labels or establish H2.
+The paper is an adjacent static-input comparator reference, not a reproduction
+of B0 or evidence for temporal provenance. Any learned comparator would require
+a separate prospective definition and training-only fit. The independent CLI
+preservation fix follows the evidence-custody contract, not an effect measured
+by this paper.
+
+## Reproduce exposure findings before readiness — 2026-11-24
+
+For a candidate-bound audit with a verified inventory and complete match maps,
+readiness reruns the existing whitespace-normalized exact/contained-input screen
+over that inventory for both clean and defective variants. It compares the
+per-intent path sets with the submitted findings. A disagreement adds
+`exposure_match_maps_not_reproducible` and keeps `no_go`; matching file hashes
+alone cannot clear an incorrectly empty result map. Path ordering does not
+change the comparison.
+
+Two new synthetic cases retain correct candidate/file/audit hashes while
+suppressing matches for clean or defective inputs. They fail against the
+previous gate and pass with the fix. All 77 affected tests pass. The active
+898-file candidate audit reproduces, but the plan still returns `no_go` with
+12 other blockers, zero reviewed intents and zero qualified providers.
+No provider calls or collection authorization were introduced.
+
+This reproduces the declared screen; it does not expand its inventory or prove
+absence of paraphrases, partial-clause exposure, external/private usage or
+training exposure. Independent review and frozen source custody remain required.
+A mismatching report must be investigated and replaced through the reviewed,
+versioned workflow; the gate does not silently repair evidence or approve it.
+
+### Retrospective attribution is not prospective warning
+
+[Wang et al.'s TSE survey](https://doi.org/10.1109/TSE.2026.3717765)
+separates trajectory-based attribution, monitoring and enhancement and discusses
+observability and repair utility as distinct evaluation concerns. Its conceptual
+failure-step definition uses inevitability under feasible continuations.
+Our target is observed loss of a predeclared testable condition; do not replace
+that label with an irreversible-failure or responsible-agent annotation.
+
+Rich complete traces may help retrospective debugging, while the H2 detector
+may access only permitted evidence available at its T1–T3 cutoff. Diagnostic
+access to T4, terminal judgments, replay outcomes or future messages must not
+enter the feature plane. The survey is secondary evidence, not validation of
+our detector or of this exposure implementation. For the separate product line,
+measure diagnostic usefulness and saved effort directly rather than infer them
+from detection or attribution accuracy.
+
+
+## Reject ambiguous exposure registry objects — 2026-11-25
+
+The exposure screen now rejects duplicate JSON object members, at every nesting
+depth, in registry JSON files and each nonblank JSONL record. Decoded member
+identity is used, so an escaped spelling cannot bypass the check. A malformed
+registry raises a validation error before a negative exposure finding can be
+used; readiness propagates that rejection. File hashes and replay alone cannot
+detect a shared last-member-wins parsing error.
+
+Eight synthetic regressions cover both variants, both formats and literal or
+Unicode-escaped duplicate names; all eight failed before the correction.
+A valid multiline JSONL case retains its match and input count. Two integration
+cases bind the actual ambiguous file bytes to otherwise consistent negative
+audit findings and verify that readiness rejects them. All 88 affected tests
+pass. The existing 898-file registry still reproduces; the active plan remains
+`no_go` with 12 blockers, zero reviewed intents and zero qualified providers.
+No historical inputs were rewritten and no provider runtime was invoked.
+The screen still cannot establish absence of paraphrase, external or training
+exposure; independent review and launch authorization remain human gates.
+
+### Rubric construction does not validate terminal labels
+
+[Sabatucci et al.](https://doi.org/10.3390/systems14060598) propose structured
+rubrics but acknowledge shared-knowledge circularity and task simplification.
+Their format-convergence study does not validate our acceptance-criteria loss
+labels. Retain blinded independent annotation and project holdout.
+The parser correction is an independently demonstrated implementation defect.
+
+
+## Preserve project identity across Unicode spellings — 2026-11-26
+
+The supplementary temporal comparison now uses Unicode NFKC normalization before
+the existing whitespace/case normalization when checking project identity.
+Different raw spellings with the same normalized identity are rejected, rather
+than silently merged or rewritten. This prevents compatibility characters from
+placing one project in calibration and test, or manufacturing additional
+bootstrap clusters. A consistently spelled Unicode identifier remains valid.
+
+Four synthetic regressions failed against the previous comparison: two
+calibration/test aliases and two aliases that inflated held-out cluster counts.
+A fifth control verifies that consistently used Unicode project names preserve
+the grouped results. All 60 affected tests pass. Scores, terminal labels,
+constraint matching, operating-point fitting, bootstrap policy and primary
+H1/H2 definitions are unchanged; this change applies to
+`eval.temporal_comparison_report`, not every identity consumer in the repository.
+
+NFKC is an integrity check, not an entity-resolution system. Cross-script
+lookalikes, repository forks, shared upstream sources and related intents still
+require a reviewed source-group map and frozen project assignments. A larger
+cluster count does not establish independent projects or external validity.
+
+### Assessability is not annotation correctness
+
+[Unterbusch et al.'s preprint](https://doi.org/10.48550/arXiv.2611.07772)
+finds higher perceived assessability for context-adapted requirements; behavioral
+correctness was not measured. Record annotator context fit as a validity concern,
+not a substitute for blinded condition-loss labels. Any corpus redesign remains
+a human decision, separate from this demonstrated identity bug.
+
+
+## Require explicit bootstrap validity before H2 support — 2026-11-27
+
+`finalize_h2_claim` no longer assumes inference validity when the bootstrap
+receipt or its `valid_for_inference` member is absent. Only the boolean
+`true` in a mapping permits the existing effect-margin and positive-lower-bound
+rule to be evaluated for support. Missing, null, false or nonboolean validity
+leaves the result `descriptive_only`, including when an incoming report contains
+a stale `supported` claim. The input mapping is not rewritten.
+
+Eight new cases cover absent/incomplete/null receipts, nonboolean and negative
+validity, and a positive control generated by the actual three-project grouped
+estimator. Five cases fail against the previous implementation. The positive
+control still supports a sufficient effect and rejects a margin above that
+effect. All 77 affected tests pass. The estimand, average-precision calculation,
+project bootstrap, degeneracy policy and H2 margin are unchanged.
+
+This is a necessary local reporting check, not authentication of a supplied
+receipt or proof that corpus, labels, split, providers and launch prerequisites
+are valid. The active engineering candidate still returns `no_go`: 12 blockers,
+zero reviewed intents and zero qualified providers. No new scientific
+observations or provider-backed runtime are introduced.
+
+### Keep raw generation separate from reviewer-finalized criteria
+
+[Abbasi et al.'s prototype preprint](https://doi.org/10.48550/arXiv.2611.32374)
+separates model outputs, human interventions and finalized criteria; it reports
+no completed accuracy evaluation. For our experiment, preserve the raw T4
+artifact before any review or repair. Blind annotation assesses that fixed
+artifact; a reviewer-edited artifact is a separate intervention outcome and
+must not overwrite T4 or its labels. For the separate product line, selection,
+editing and finalization logs may support a future validation workflow, but
+final acceptance or RAG context is not independent correctness evidence.
+
+
+## Require the full protocol inventory at the confirmatory freeze gate — 2026-11-28
+
+When `validate_freeze(..., require_confirmed=True)` is used, every path in the
+existing `DEFAULT_FREEZE_FILES` inventory must be present before hash validation
+can succeed. A manifest cannot omit the detector, split policy, annotation
+rubric, agreement implementation or other listed protocol material while
+passing on the remaining correct hashes. Additional hash-bound files remain
+allowed. Custom candidate subsets still support offline drift checks without
+granting access through the confirmatory gate.
+
+Twenty-one synthetic regressions each remove a different required path while
+retaining correct hashes for the remaining files; all fail against the previous
+validator. Complete-inventory and candidate-subset controls pass after the fix.
+All 27 freeze tests pass, including the current checked-in candidate manifest.
+The existing hash correction in commit `1ad8550` is preserved byte-for-byte;
+the real manifest remains `candidate`. The mandatory inventory itself is not
+expanded or changed.
+
+This closes a completeness bypass at the existing execution gate. It does not
+authenticate a confirmation, prove outcome blindness, freeze the corpus or
+supply qualified providers. The active 144-episode engineering plan remains
+`no_go` with 12 blockers, zero reviewed intents and zero qualified providers.
+No provider runtime or confirmation was performed.
+
+### Comparable harness artifacts are not condition-loss evidence
+
+[OpenRE-Bench](https://doi.org/10.48550/arXiv.2611.13925) uses a shared adapter
+contract and reproducible mining snapshots. Its within-run semantic similarity
+and structural verifiability scores are not our constraint-level loss labels;
+its Phase 1–4 contract is not a mapping to our temporal T1–T4 definitions.
+Retain the main harness as the only confirmatory evidence producer.
+
+The paper describes post-cutoff re-mining as contamination-free. Do not adopt
+that guarantee: a published training cutoff and newer issue window do not
+independently establish absence of exposure, shared source content or later
+provider updates. Any future corpus use requires source/license review,
+project grouping, exposure screening and explicit human admission. Product
+adapter interoperability remains separate from H1/H2 validation.

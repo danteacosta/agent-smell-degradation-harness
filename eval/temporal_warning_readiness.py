@@ -11,17 +11,89 @@ import hashlib
 import json
 import math
 import re
+import unicodedata
+from decimal import Decimal
+from fractions import Fraction
 from pathlib import Path
-from eval.temporal_cohort_candidate import validate_candidate
+from eval.temporal_cohort_candidate import (
+    audit as audit_exposure, candidate_content_digest, validate_candidate,
+)
+
+
+def _unique_json_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f'duplicate JSON object member: {key}')
+        result[key] = value
+    return result
 
 
 def _bound_file(reference, root):
     if not isinstance(reference, dict):
         raise ValueError('hash-bound artifact reference required')
     path = (root / reference['path']).resolve()
-    if not path.is_relative_to(root) or hashlib.sha256(path.read_bytes()).hexdigest() != reference['sha256']:
+    if not path.is_relative_to(root):
         raise ValueError('artifact path or hash mismatch')
-    return json.loads(path.read_text())
+    data = path.read_bytes()
+    if hashlib.sha256(data).hexdigest() != reference['sha256']:
+        raise ValueError('artifact path or hash mismatch')
+    return json.loads(data, object_pairs_hook=_unique_json_object)
+
+
+def _qualification_report_matches(configuration, root):
+    """Check receipt bytes, not provider behavior or qualification authenticity."""
+    try:
+        path = (root / configuration['qualification_report_path']).resolve()
+        return (path.is_relative_to(root) and path.is_file()
+                and hashlib.sha256(path.read_bytes()).hexdigest()
+                == configuration['qualification_report_sha256'])
+    except (OSError, ValueError, TypeError):
+        return False
+
+
+def _budget_within_cap(budget):
+    if not isinstance(budget, dict):
+        return False
+    amounts = []
+    for key in ('estimated_provider_cost_usd', 'contingency_fraction', 'approved_cap_usd'):
+        value = budget.get(key)
+        if type(value) is float and math.isfinite(value):
+            value = Decimal(str(value))
+        if type(value) is not int and not (type(value) is Decimal and value.is_finite()):
+            return False
+        # Reject out-of-range decimal exponents before building a rational.
+        if type(value) is Decimal and abs(value.as_tuple().exponent) > 1000:
+            return False
+        amounts.append(Fraction(value))
+    estimate, contingency, cap = amounts
+    return estimate > 0 and contingency >= 0 and cap > 0 and estimate * (1 + contingency) <= cap
+
+
+def _exposure_inventory_matches(audit, reference, root):
+    """Verify the declared registry scope and bytes, not its exhaustiveness."""
+    expected = reference.get('registry_files')
+    inventory = audit.get('inventory')
+    if (type(expected) is not int or expected < 0
+            or type(audit.get('registry_files')) is not int
+            or audit['registry_files'] != expected
+            or not isinstance(inventory, list) or len(inventory) != expected):
+        return False
+    seen = set()
+    try:
+        for entry in inventory:
+            if not isinstance(entry, dict) or not isinstance(entry.get('path'), str):
+                return False
+            relative = Path(entry['path'])
+            path = (root / relative).resolve()
+            if (not entry['path'].strip() or relative.is_absolute()
+                    or not path.is_relative_to(root) or path in seen
+                    or hashlib.sha256(path.read_bytes()).hexdigest() != entry.get('sha256')):
+                return False
+            seen.add(path)
+    except (OSError, ValueError):
+        return False
+    return True
 
 
 def assess(plan, root):
@@ -30,6 +102,8 @@ def assess(plan, root):
         raise ValueError('wrong temporal cohort schema')
     if plan.get('confirmatory_eligible') is not False:
         raise ValueError('engineering pilot cannot be promoted to confirmatory')
+    if plan.get('primary_task') != 'acceptance_criteria_generation':
+        raise ValueError('primary task must be acceptance_criteria_generation')
     source = _bound_file(plan['candidate_source_manifest'], root)
     audit = _bound_file(plan['exposure_audit'], root)
     counts = validate_candidate(source, root)
@@ -44,10 +118,36 @@ def assess(plan, root):
     intents = {r['intent_id'] for r in source['records']}
     if set(plan.get('selected_requirements', [])) != intents or len(plan['selected_requirements']) != 12:
         raise ValueError('selected intent list differs from source manifest')
-    if audit.get('pairs_verified') != 12 or set(audit.get('exact_or_contained_clean_input_matches', {})) != intents:
+    clean_matches = audit.get('exact_or_contained_clean_input_matches')
+    if (audit.get('pairs_verified') != 12 or not isinstance(clean_matches, dict)
+            or set(clean_matches) != intents):
         raise ValueError('exposure audit does not cover the candidate cohort')
-    if any(audit['exact_or_contained_clean_input_matches'].values()):
+    candidate_bound = audit.get('candidate_content_sha256') == candidate_content_digest(source)
+    if not candidate_bound:
+        blockers.append('exposure_audit_not_bound_to_candidate')
+    inventory_matches = _exposure_inventory_matches(audit, plan['exposure_audit'], root)
+    if not inventory_matches:
+        blockers.append('exposure_registry_inventory_incomplete_or_changed')
+    defective_matches = audit.get('exact_or_contained_defective_input_matches')
+    if not isinstance(defective_matches, dict) or set(defective_matches) != intents:
+        blockers.append('exposure_audit_missing_defective_variant_coverage')
+        defective_matches = {}
+    for matches in (clean_matches, defective_matches):
+        if any(not isinstance(paths, list)
+               or any(not isinstance(path, str) or not path.strip() for path in paths)
+               for paths in matches.values()):
+            raise ValueError('malformed exposure match list')
+    if any(clean_matches.values()) or any(defective_matches.values()):
         blockers.append('prior_complete_input_match_requires_candidate_replacement_or_explicit_review')
+    if candidate_bound and inventory_matches and set(defective_matches) == intents:
+        reproduced = audit_exposure(
+            source, root, [Path(entry['path']) for entry in audit['inventory']])
+        if any(set(reported[intent_id]) != set(reproduced[key][intent_id])
+               for key, reported in (
+                   ('exact_or_contained_clean_input_matches', clean_matches),
+                   ('exact_or_contained_defective_input_matches', defective_matches))
+               for intent_id in intents):
+            blockers.append('exposure_match_maps_not_reproducible')
     if plan.get('selection_frozen') is not True:
         blockers.append('selection_not_frozen')
     projects = {r['project_id'] for r in source['records']}
@@ -55,18 +155,25 @@ def assess(plan, root):
     if (plan.get('split_frozen') is not True or set(split) != projects
             or sorted(split.values()) != ['calibration','test','test','train','train','train']):
         blockers.append('project_and_related_intent_split_not_frozen')
-    reviewed = set()
+    reviewers_by_intent = {intent_id: set() for intent_id in intents}
+    unresolved_intents = set()
     source_hash = plan['candidate_source_manifest']['sha256']
     for review in plan.get('independent_human_reviews', []):
         if (isinstance(review, dict) and review.get('intent_id') in intents
                 and review.get('source_manifest_sha256') == source_hash
-                and review.get('mapping_approved') is True
-                and review.get('manipulation_approved') is True
-                and review.get('rights_approved') is True
-                and review.get('prior_exposure_and_residual_cues_reviewed') is True
-                and review.get('independent_of_author') is True
                 and isinstance(review.get('reviewer_id'), str) and review['reviewer_id'].strip()):
-            reviewed.add(review['intent_id'])
+            reviewer = unicodedata.normalize('NFKC', review['reviewer_id']).strip().casefold()
+            if reviewer:
+                intent_id = review['intent_id']
+                if all(review.get(field) is True for field in (
+                    'mapping_approved', 'manipulation_approved', 'rights_approved',
+                    'prior_exposure_and_residual_cues_reviewed', 'independent_of_author',
+                )):
+                    reviewers_by_intent[intent_id].add(reviewer)
+                else:
+                    unresolved_intents.add(intent_id)
+    reviewed = {intent_id for intent_id, reviewers in reviewers_by_intent.items()
+                if len(reviewers) >= 2 and intent_id not in unresolved_intents}
     if reviewed != intents:
         blockers.append('independent_reviews_incomplete_or_not_bound_to_source')
     configurations = plan.get('qualified_provider_configurations', [])
@@ -78,7 +185,8 @@ def assess(plan, root):
                 and c.get('prompted_snapshot') is False
                 and re.fullmatch('[0-9a-f]{64}', str(c.get('configuration_hash','')))
                 and re.fullmatch('[0-9a-f]{64}', str(c.get('qualification_report_sha256','')))
-                and isinstance(c.get('qualification_report_path'), str) and c['qualification_report_path'].strip()):
+                and isinstance(c.get('qualification_report_path'), str) and c['qualification_report_path'].strip()
+                and _qualification_report_matches(c, root)):
             qualified.add(c['provider'].strip().casefold())
     if len(qualified) != 2:
         blockers.append('two_distinct_runtime_native_providers_not_qualified')
@@ -87,14 +195,17 @@ def assess(plan, root):
                   'schedule_frozen','launch_authorized']:
         if plan.get(field) is not True:
             blockers.append(field+'_missing')
-    budget = plan.get('budget', {})
-    values = [budget.get(k) for k in ['estimated_provider_cost_usd','contingency_fraction','approved_cap_usd']]
-    if (any(type(v) not in (int, float) or not math.isfinite(v) for v in values)
-            or values[0] <= 0 or values[1] < 0 or values[2] <= 0 or values[0]*(1+values[1]) > values[2]):
+    if not _budget_within_cap(plan.get('budget')):
         blockers.append('finite_cost_envelope_and_approved_cap_missing')
     return {'schema_version':'temporal-warning-readiness/v1', 'decision':'no_go' if blockers else 'prerequisites_declared',
             'collection_authorized_by_this_report':False, 'confirmatory_eligible':False,
             'planned_episodes':144, 'pairs_verified':12, 'reviewed_intents':len(reviewed),
+            'review_status_by_intent': {
+                intent_id: ('unresolved' if intent_id in unresolved_intents
+                            else 'complete' if intent_id in reviewed
+                            else 'awaiting_approvals')
+                for intent_id in sorted(intents)
+            },
             'qualified_distinct_providers':len(qualified), 'blockers':blockers,
             'limitations':['Declarative receipts require independent authenticity verification before launch.',
                            'This audit neither runs providers nor validates scientific labels.',
@@ -106,9 +217,21 @@ def main(argv=None):
     parser.add_argument('--plan',type=Path,default=Path('data/prepilot/temporal-warning-plan.candidate.json'))
     parser.add_argument('--output',type=Path)
     args=parser.parse_args(argv)
-    report=assess(json.loads(args.plan.read_text()),Path.cwd())
+    try:
+        plan_bytes = args.plan.read_bytes()
+        plan = json.loads(plan_bytes, object_pairs_hook=_unique_json_object,
+                          parse_float=Decimal)
+        report = assess(plan, Path.cwd())
+    except (OSError, ValueError) as error:
+        parser.error(str(error))
+    report['plan_sha256'] = hashlib.sha256(plan_bytes).hexdigest()
     rendered=json.dumps(report,indent=2,allow_nan=False)+'\n'
-    if args.output:args.output.write_text(rendered)
+    if args.output:
+        try:
+            with args.output.open('x',encoding='utf-8') as stream:
+                stream.write(rendered)
+        except OSError as error:
+            parser.error(f'cannot create readiness report: {error}')
     print(rendered,end='')
     return 2 if report['decision']=='no_go' else 0
 
