@@ -14,12 +14,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Any, Mapping
 
 SCHEMA_VERSION = "corpus-declaration-audit/v1"
 _REQUIRED_RIGHTS = ("derivative_use_allowed", "external_provider_processing_allowed")
+_SHA256 = re.compile(r"^[0-9a-f]{64}$")
 _MANIPULATION_FLAGS = (
     "clean_variant_realistic",
     "constraint_independently_auditable",
@@ -81,6 +83,27 @@ def audit_corpus_declarations(plan: Mapping[str, Any], manifest: Mapping[str, An
             "llm_only_manipulation_review: every manipulation check is by an LLM panel "
             f"({sorted(reviewers)}); human audit and independence remain open decisions"
         )
+    # Pair integrity: a clean/defective pair whose hashes are missing, malformed or equal
+    # carries no manipulation, so H1 would compare a requirement with itself.
+    for r in records:
+        rid = r.get("source_intent_id")
+        clean = r.get("clean_requirement_sha256")
+        defective = r.get("defective_requirement_sha256")
+        if not (isinstance(clean, str) and _SHA256.match(clean) and isinstance(defective, str) and _SHA256.match(defective)):
+            discrepancies.append(f"{rid}: clean/defective requirement hash missing or not a SHA-256 hex digest")
+        elif clean == defective:
+            discrepancies.append(f"{rid}: clean and defective requirement hashes are identical (no manipulation)")
+    # Leakage: a near-clone group that spans projects defeats a project-level holdout.
+    group_projects: dict[str, set[str]] = {}
+    for r in records:
+        group = str(r.get("near_clone_group", "")).strip()
+        if group and r.get("project_id"):
+            group_projects.setdefault(group, set()).add(str(r["project_id"]))
+    for group, members in sorted(group_projects.items()):
+        if len(members) > 1:
+            discrepancies.append(
+                f"near_clone_group {group} spans projects {sorted(members)}; project-level holdout would leak"
+            )
     projects = len({str(r.get("project_id", "")) for r in records if r.get("project_id")})
     if projects != manifest.get("project_count"):
         discrepancies.append("manifest project_count disagrees with records")

@@ -80,3 +80,23 @@ def test_single_project_corpus_triggers_concentration_warning() -> None:
     m["project_count"] = 1
     report = audit_corpus_declarations(PLAN, m)
     assert any(w.startswith("project_concentration") for w in report["warnings"])
+
+
+def test_identical_or_malformed_pair_hashes_fail() -> None:
+    m = copy.deepcopy(MANIFEST)
+    m["records"][0]["defective_requirement_sha256"] = m["records"][0]["clean_requirement_sha256"]
+    report = audit_corpus_declarations(PLAN, m)
+    assert any("identical" in d for d in report["discrepancies"])
+    m = copy.deepcopy(MANIFEST)
+    m["records"][1]["clean_requirement_sha256"] = "not-a-hash"
+    assert any("SHA-256" in d for d in audit_corpus_declarations(PLAN, m)["discrepancies"])
+    del m["records"][2]["defective_requirement_sha256"]
+    assert not audit_corpus_declarations(PLAN, m)["consistent"]
+
+
+def test_near_clone_group_spanning_projects_is_a_leakage_discrepancy() -> None:
+    m = copy.deepcopy(MANIFEST)
+    other = next(r for r in m["records"] if r["project_id"] != m["records"][0]["project_id"])
+    other["near_clone_group"] = m["records"][0]["near_clone_group"]
+    report = audit_corpus_declarations(PLAN, m)
+    assert any("holdout would leak" in d for d in report["discrepancies"])
