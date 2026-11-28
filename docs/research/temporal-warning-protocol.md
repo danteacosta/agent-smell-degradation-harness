@@ -1176,3 +1176,43 @@ artifact; a reviewer-edited artifact is a separate intervention outcome and
 must not overwrite T4 or its labels. For the separate product line, selection,
 editing and finalization logs may support a future validation workflow, but
 final acceptance or RAG context is not independent correctness evidence.
+
+
+## Require the full protocol inventory at the confirmatory freeze gate — 2026-11-28
+
+When `validate_freeze(..., require_confirmed=True)` is used, every path in the
+existing `DEFAULT_FREEZE_FILES` inventory must be present before hash validation
+can succeed. A manifest cannot omit the detector, split policy, annotation
+rubric, agreement implementation or other listed protocol material while
+passing on the remaining correct hashes. Additional hash-bound files remain
+allowed. Custom candidate subsets still support offline drift checks without
+granting access through the confirmatory gate.
+
+Twenty-one synthetic regressions each remove a different required path while
+retaining correct hashes for the remaining files; all fail against the previous
+validator. Complete-inventory and candidate-subset controls pass after the fix.
+All 27 freeze tests pass, including the current checked-in candidate manifest.
+The existing hash correction in commit `1ad8550` is preserved byte-for-byte;
+the real manifest remains `candidate`. The mandatory inventory itself is not
+expanded or changed.
+
+This closes a completeness bypass at the existing execution gate. It does not
+authenticate a confirmation, prove outcome blindness, freeze the corpus or
+supply qualified providers. The active 144-episode engineering plan remains
+`no_go` with 12 blockers, zero reviewed intents and zero qualified providers.
+No provider runtime or confirmation was performed.
+
+### Comparable harness artifacts are not condition-loss evidence
+
+[OpenRE-Bench](https://doi.org/10.48550/arXiv.2611.13925) uses a shared adapter
+contract and reproducible mining snapshots. Its within-run semantic similarity
+and structural verifiability scores are not our constraint-level loss labels;
+its Phase 1–4 contract is not a mapping to our temporal T1–T4 definitions.
+Retain the main harness as the only confirmatory evidence producer.
+
+The paper describes post-cutoff re-mining as contamination-free. Do not adopt
+that guarantee: a published training cutoff and newer issue window do not
+independently establish absence of exposure, shared source content or later
+provider updates. Any future corpus use requires source/license review,
+project grouping, exposure screening and explicit human admission. Product
+adapter interoperability remains separate from H1/H2 validation.

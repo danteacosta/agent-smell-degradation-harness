@@ -1814,3 +1814,26 @@ pass after correction, including an actual grouped-estimator positive control.
 The new source informs the raw/finalized artifact distinction, not this code
 defect. Neither addition supplies missing corpus review, labels, qualified
 providers or runtime authorization.
+
+
+## 2026-11-28 — Freeze inventory and comparable RE harnesses
+
+Search/read: 2026-11-28. Screened requirement smells/acceptance generation, agent
+evaluation, provenance/telemetry, stochastic/grouped methods and product
+integration. Deduplicated by DOI/title. Read OpenRE-Bench's full five-page paper
+(method, mining audit, reference runs, limitations) and the pinned artifact
+README at `msr2027-v1.0`; no external code or provider run was executed.
+Previously entered context-aware ambiguity and acceptance-testing papers
+resurfaced without a verified update and were not duplicated.
+
+| Reference / status | Question, data, method | Contribution / limits | Thesis / experiment / product / action | Credibility |
+| --- | --- | --- | --- | --- |
+| Cheng et al., [OpenRE-Bench: A Benchmark Harness for Multi-Agent Requirements Engineering with Mined GitHub Issues](https://doi.org/10.48550/arXiv.2611.13925), 2026 v1, November 10; preprint; [pinned artifact](https://github.com/haowei614/OpenRE-Bench-Artifact/tree/msr2027-v1.0) | Can heterogeneous RE frameworks share evaluation contracts? 3,000 fetched issues, 1,396 filtered, 18 aggregated into five mined cases plus five handcrafted cases; three adapters, three-seed reference runs. | Reproducible mining and artifact contracts; proxy scores, scaffolds, reimplementations, small suite and one reference model limit inference. Post-cutoff mining is not independently demonstrated absence of contamination. | Thesis: structural validity differs from condition preservation. Experiment: keep independent labels and exposure review. Product: adapter-contract context only. Action: protocol boundary; no corpus/labels imported or H1/H2 claim. | 7/10: detailed mining audit, versioned artifacts and explicit limits; preprint, restricted demonstration and no independent replication here. |
+
+Independent implementation follow-through: the confirmatory freeze validator
+now requires its already-declared minimum protocol inventory, rather than only
+checking whichever hashes a submitted manifest happens to contain. Twenty-one
+regressions reproduce omitted-file acceptance before the fix; all 27 freeze
+tests pass afterward. The real candidate manifest and the intervening human/
+collaborator hash correction are preserved. The source above informs the
+comparability/contamination boundary, not this independently reproduced bypass.
